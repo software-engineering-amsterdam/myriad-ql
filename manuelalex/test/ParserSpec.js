@@ -13,7 +13,8 @@ describe('DataSource', () => {
     let imports = {};
 
     before(() => loadDependencies({
-            Parser: System.normalizeSync('./src/Parser.js')
+            Parser: System.normalizeSync('./src/Parser.js'),
+            Form: System.normalizeSync('./src/Form.js')
         }
         ).then((importedObjects) => {
             imports = importedObjects;
@@ -23,9 +24,9 @@ describe('DataSource', () => {
     describe('Parser.parse', () => {
         it('returns valid parsed text', () => {
             let parser = new imports.Parser();
-
+            let form = new imports.Form("My valid input");
             // TODO make actual input
-            expect(parser.parse('My valid input')).to.equal('My valid input');
+            expect(parser.parse('My valid input')._name).to.equal(form._name);
         });
     });
 });

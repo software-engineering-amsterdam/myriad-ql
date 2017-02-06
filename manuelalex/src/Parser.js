@@ -2,6 +2,7 @@
  * Created by alexvanmanen on 06-02-17.
  */
 
+import Form             from './Form.js';
 
 export default class Parser {
 
@@ -11,6 +12,6 @@ export default class Parser {
      * @returns {*}
      */
     parse(text){
-        return text;
+        return new Form(text);
     }
 }
