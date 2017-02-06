@@ -35,6 +35,6 @@ type Expression
 
 
 type ValueType
-    = String
-    | Boolean
-    | Integer
+    = StringType
+    | BooleanType
+    | IntegerType

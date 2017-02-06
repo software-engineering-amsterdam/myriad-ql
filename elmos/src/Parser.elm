@@ -81,7 +81,7 @@ fieldLabel =
 valueType : Parser s ValueType
 valueType =
     choice
-        [ string "string" $> String
-        , string "boolean" $> Boolean
-        , string "integer" $> Integer
+        [ string "string" $> StringType
+        , string "boolean" $> BooleanType
+        , string "integer" $> IntegerType
         ]
