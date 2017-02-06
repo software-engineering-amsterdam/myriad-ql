@@ -1,3 +1,6 @@
+//options {backtrack=true; memorize=true;}
+//package org.uva.ak_bvdb.taxfree.raw;
+
 /** This grammar is an example illustrating the three kinds
  * of comments.
  */
