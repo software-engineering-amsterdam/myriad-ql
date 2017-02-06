@@ -79,14 +79,14 @@ describe Parser do
     end
   end
   #
-  # context 'if_body' do
+  # context 'block' do
   #   it 'should parse' do
-  #     expect(parser.if_body.parse('
+  #     expect(parser.block.parse('
   #       {
   #       "What was the selling price?"
   #         sellingPrice: money
   #       }
-  #     ')).to eq({if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
+  #     ')).to eq({block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
   #   end
   # end
 
@@ -97,7 +97,7 @@ describe Parser do
           "What was the selling price?"
           sellingPrice: money
         }
-      ')).to eq({condition: 'hasSoldHouse', if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
+      ')).to eq({condition: 'hasSoldHouse', block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
     end
   end
 
@@ -110,7 +110,7 @@ describe Parser do
           "Private debts for the sold house:"
             privateDebt: money
         }
-      ')).to eq({condition: 'hasSoldHouse', if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}, question: {label: 'Private debts for the sold house:', variable: 'privateDebt', type: 'money'}]})
+      ')).to eq({condition: 'hasSoldHouse', block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}, question: {label: 'Private debts for the sold house:', variable: 'privateDebt', type: 'money'}]})
     end
   end
 end
