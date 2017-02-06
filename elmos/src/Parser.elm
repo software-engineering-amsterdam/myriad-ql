@@ -38,6 +38,7 @@ field =
         <*> fieldLabel
         <*> (whitespace1 *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
+        <*> (maybe (whitespace *> string "=" *> expression))
 
 
 ifBlock : Parser s IfBlock
@@ -54,7 +55,17 @@ ifBlock =
 -}
 expression : Parser s Expression
 expression =
-    choice [ Var <$> variableName ]
+    lazy <|
+        \() ->
+            choice
+                [ Var <$> variableName
+                , ParensExpression <$> parensExpression
+                ]
+
+
+parensExpression : Parser s Expression
+parensExpression =
+    parens (expression)
 
 
 fieldLabel : Parser s String

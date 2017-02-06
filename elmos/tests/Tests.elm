@@ -15,7 +15,7 @@ all =
         , Combine.ExtraTests.all
         , test "QuestionLabel" <|
             \() ->
-                Expect.equal (parseToMaybe questionLabel "\"Is this a question?\"") (Just "Is this a question?")
+                Expect.equal (parseToMaybe fieldLabel "\"Is this a question?\"") (Just "Is this a question?")
         ]
 
 

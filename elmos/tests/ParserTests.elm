@@ -13,6 +13,7 @@ all =
         , varNameTests
         , fieldTests
         , valueTypeTests
+        , expressionTests
         ]
 
 
@@ -41,9 +42,9 @@ fieldTests : Test
 fieldTests =
     testWithParser Parser.field
         "field"
-        [ ( "should parse a simple field", "\"label\" id: integer", Just { label = "label", id = "id", valueType = Integer } )
+        [ ( "should parse a simple field", "\"label\" id: integer", Just { label = "label", id = "id", valueType = Integer, valueExpression = Nothing } )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
-        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just { label = "label", id = "id", valueType = Integer } )
+        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just { label = "label", id = "id", valueType = Integer, valueExpression = Nothing } )
         , ( "id should be a varName", "\"label\" Other: integer", Nothing )
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         ]
@@ -56,4 +57,13 @@ valueTypeTests =
         [ ( "should parse string", "string", Just String )
         , ( "should parse boolean", "boolean", Just Boolean )
         , ( "should parse integer", "integer", Just Integer )
+        ]
+
+
+expressionTests : Test
+expressionTests =
+    testWithParser Parser.expression
+        "expression"
+        [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
+        , ( "Should parse expression between parentheses", "(someVarName)", Just (ParensExpression (Var "someVarName")) )
         ]
