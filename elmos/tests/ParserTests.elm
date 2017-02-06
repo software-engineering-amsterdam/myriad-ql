@@ -11,6 +11,7 @@ all =
     describe "ParserTests"
         [ formTokenTests
         , varNameTests
+        , fieldTests
         , valueTypeTests
         ]
 
@@ -23,8 +24,6 @@ formTokenTests =
         ]
 
 
-{-| TODO more tests with special characters?
--}
 varNameTests : Test
 varNameTests =
     testWithParser Parser.variableName
@@ -35,6 +34,18 @@ varNameTests =
         , ( "should support camel case variable names", "fooBarBaz", Just "fooBarBaz" )
         , ( "should support underscores", "a_b", Just "a_b" )
         , ( "should not support question mark", "a?b", Nothing )
+        ]
+
+
+fieldTests : Test
+fieldTests =
+    testWithParser Parser.field
+        "field"
+        [ ( "should parse a simple field", "\"label\" id: integer", Just { label = "label", id = "id", valueType = Integer } )
+        , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
+        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just { label = "label", id = "id", valueType = Integer } )
+        , ( "id should be a varName", "\"label\" Other: integer", Nothing )
+        , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         ]
 
 

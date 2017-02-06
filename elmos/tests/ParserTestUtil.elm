@@ -1,4 +1,4 @@
-module ParserTestUtil exposing (TestParserInput, testWithParser)
+module ParserTestUtil exposing (TestParserInput, testWithParser, parseToMaybe)
 
 import Combine exposing (Parser, end, (<*))
 import Test exposing (Test, describe, test)

@@ -4,26 +4,18 @@ import Test exposing (..)
 import Combine exposing (..)
 import Expect
 import Parser exposing (..)
-import AST exposing (..)
 import ParserTests
+import Combine.ExtraTests
 
 
 all : Test
 all =
     describe "QL Parser"
         [ ParserTests.all
+        , Combine.ExtraTests.all
         , test "QuestionLabel" <|
             \() ->
                 Expect.equal (parseToMaybe questionLabel "\"Is this a question?\"") (Just "Is this a question?")
-        , test "FormQuestion" <|
-            \() ->
-                Expect.equal (parseToMaybe field "\"label\" id: integer")
-                    (Just
-                        { label = "label"
-                        , id = "id"
-                        , valueType = Integer
-                        }
-                    )
         ]
 
 

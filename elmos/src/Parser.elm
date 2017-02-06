@@ -2,6 +2,7 @@ module Parser exposing (..)
 
 import Combine exposing (..)
 import AST exposing (..)
+import Combine.Extra exposing (whitespace1)
 
 
 form : Parser s Form
@@ -35,7 +36,7 @@ field : Parser s Field
 field =
     succeed Field
         <*> questionLabel
-        <*> (whitespace *> variableName)
+        <*> (whitespace1 *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
 
 
