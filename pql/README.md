@@ -2,5 +2,6 @@
 
 For Software Construction 2017
 
-*Adrian Zborowski* [@Asqares](https://twitter.com/Asqares)
-*Jeffrey Panneman* [@adrzbr](https://twitter.com/adrzbr)
+*Adrian Zborowski* [@adrzbr](https://twitter.com/adrzbr)
+
+*Jeffrey Panneman* [@Asqares](https://twitter.com/Asqares)
