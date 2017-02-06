@@ -4,3 +4,5 @@ bin/
 # Package Files #
 *.war
 *.ear
+
+out/
