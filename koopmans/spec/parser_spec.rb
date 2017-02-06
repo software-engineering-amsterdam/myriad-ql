@@ -78,42 +78,33 @@ describe Parser do
       expect(parser.condition.parse('(hasSoldHouse)')).to eq({condition: 'hasSoldHouse'})
     end
   end
-  #
-  # context 'block' do
-  #   it 'should parse' do
-  #     expect(parser.block.parse('
-  #       {
-  #       "What was the selling price?"
-  #         sellingPrice: money
-  #       }
-  #     ')).to eq({block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
-  #   end
-  # end
 
-  context 'if block with 1 question' do
-    if_block = 'if (hasSoldHouse) {
+  context 'block' do
+    block = '{
+              "What was the selling price?"
+              sellingPrice: money
+            }'
+
+    it 'should parse' do
+      expect(parser.block).to parse(block)
+    end
+
+    it 'should parse into properties' do
+      expect(parser.block.parse(block)).to include(:block)
+    end
+  end
+
+  context 'if statement with 1 question' do
+    if_statement = 'if (hasSoldHouse) {
                   "What was the selling price?"
                     sellingPrice: money
                 }'
 
     it 'should parse' do
-      expect(parser.if_block).to parse(if_block)
+      expect(parser.if_statement).to parse(if_statement)
     end
     it 'should parse into properties' do
-      expect(parser.if_block.parse(if_block)).to include(:if_block)
-    end
-  end
-
-  context 'if block with 2 question' do
-    it 'should parse' do
-      expect(parser.if_block.parse('
-        if (hasSoldHouse) {
-          "What was the selling price?"
-            sellingPrice: money
-          "Private debts for the sold house:"
-            privateDebt: money
-        }
-      ')).to eq({condition: 'hasSoldHouse', block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}, question: {label: 'Private debts for the sold house:', variable: 'privateDebt', type: 'money'}]})
+      expect(parser.if_statement.parse(if_statement)).to include(:if_statement)
     end
   end
 end

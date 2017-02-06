@@ -14,8 +14,8 @@ class Parser < Parslet::Parser
 
   # if block
   rule(:condition) { str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')') }
-  rule(:block) { str('{') >> (str('}').absent? >> question).repeat.as(:block) >> str('}') }
-  rule(:if_block) { (spaces? >> str('if') >> spaces? >> condition >> spaces? >> block >> spaces?).as(:block) }
+  rule(:block) { str('{') >> questions.as(:block) >> str('}') }
+  rule(:if_statement) { (spaces? >> str('if') >> spaces? >> condition >> spaces? >> block >> spaces?).as(:if_statement) }
 
   root :question
 end
