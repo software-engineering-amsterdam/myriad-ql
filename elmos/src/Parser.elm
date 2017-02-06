@@ -35,7 +35,7 @@ formItem =
 field : Parser s Field
 field =
     succeed Field
-        <*> questionLabel
+        <*> fieldLabel
         <*> (whitespace1 *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
 
@@ -57,8 +57,8 @@ expression =
     choice [ Var <$> variableName ]
 
 
-questionLabel : Parser s String
-questionLabel =
+fieldLabel : Parser s String
+fieldLabel =
     string "\"" *> regex "[^\\\"]+" <* string "\""
 
 
