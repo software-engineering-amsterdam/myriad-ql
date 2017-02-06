@@ -64,4 +64,21 @@ describe Parser do
       ')
     end
   end
+
+  context 'condition' do
+    it 'should parse' do
+      expect(parser.condition).to parse('(hasSoldHouse)')
+    end
+  end
+
+  context 'if block' do
+    it 'should parse' do
+      expect(parser.if_block).to parse('
+        if (hasSoldHouse) {
+          "What was the selling price?"
+          sellingPrice: money
+        }
+      ')
+    end
+  end
 end

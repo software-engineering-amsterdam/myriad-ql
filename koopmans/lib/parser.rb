@@ -11,5 +11,10 @@ class Parser < Parslet::Parser
   rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces?).as(:question) }
 
   rule(:questions) { question.repeat }
+
+  # if block
+  rule(:condition) { str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')') }
+  rule(:if_body) { str('{') >> (str('}').absent? >> question).repeat.as(:if_body) >> str('}') }
+  rule(:if_block) { spaces? >> str('if') >> spaces? >> condition >> spaces? >> if_body >> spaces?}
   root :question
 end
