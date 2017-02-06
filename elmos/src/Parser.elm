@@ -9,7 +9,7 @@ form : Parser s Form
 form =
     succeed Form
         <*> (formToken *> whitespace *> variableName <* maybe whitespace)
-        <*> between (string "{") (string "}") (many formItem)
+        <*> block
 
 
 formToken : Parser s String
@@ -46,9 +46,14 @@ ifBlock =
     lazy <|
         \() ->
             succeed IfBlock
-                <*> (string "(" *> expression <* string ")")
-                <*> (string "{" *> many formItem <* string "}")
-                <*> (maybe (whitespace *> string "else" *> whitespace *> string "{" *> whitespace *> many formItem <* whitespace <* string "}"))
+                <*> (string "if" *> whitespace *> parens expression <* whitespace)
+                <*> block
+                <*> (maybe (whitespace *> string "else" *> whitespace *> block))
+
+
+block : Parser s (List FormItem)
+block =
+    lazy <| \() -> braces (whitespace *> many formItem <* whitespace)
 
 
 {-| TODO add more
