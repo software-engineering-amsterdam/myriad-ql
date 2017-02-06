@@ -1,0 +1,7 @@
+AllCops:
+  Include:
+    - 'lib/**'
+    - 'spec/**'
+
+Metrics/LineLength:
+  Max: 100
