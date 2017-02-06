@@ -94,7 +94,7 @@ describe Parser do
     block = '{
               "What was the selling price?"
               sellingPrice: money
-            }'
+             }'
 
     it 'should parse' do
       expect(parser.block).to parse(block)
@@ -107,9 +107,9 @@ describe Parser do
 
   context 'if statement with 1 question' do
     if_statement = 'if (hasSoldHouse) {
-                  "What was the selling price?"
-                    sellingPrice: money
-                }'
+                      "What was the selling price?"
+                        sellingPrice: money
+                    }'
 
     it 'should parse' do
       expect(parser.if_statement).to parse(if_statement)
