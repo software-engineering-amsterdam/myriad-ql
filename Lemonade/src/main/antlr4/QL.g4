@@ -1,10 +1,44 @@
 grammar QL;
+options {backtrack=true; memoize=true;}
+ 
+form
+    : question* EOF
+    ;
 
-assign : STRING COLON STRING PERIOD ;
+question
+    : FORM LBRACE TYPE Ident RBRACE
+    ;
 
-COLON : ':' ;
-PERIOD : '.' ;
+// Tokens
+WS  : (' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
+    ;
 
-STRING : ('a'..'z') ;
+TYPE
+    : 'boolean'
+    ;
 
-WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip ;
+LBRACE
+    : '{'
+    ;
+
+RBRACE
+    : '}'
+    ;
+
+COMMENT
+    : '/*' .*? '*/'  -> channel(HIDDEN)
+    ;
+
+FORM
+    : 'form'
+    ;
+
+Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+
+Int
+    : ('0'..'9')+
+    ;
+
+Str
+    : '"' .*? '"'
+    ;
