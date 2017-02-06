@@ -1,0 +1,169 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "comma-dangle": [2, "never"],
+    "default-case": 2,
+    "no-multi-spaces": [2, {"exceptions": {"VariableDeclarator": true, "ImportDeclaration": true}}],
+    "no-console": 0,
+    "no-underscore-dangle": 0,
+    "quotes": [2, "single"],
+    "semi": 2,
+
+    // enforces no braces where they can be omitted
+    // http://eslint.org/docs/rules/arrow-body-style
+    "arrow-body-style": ["error", "as-needed", {
+      requireReturnForObjectLiteral: false
+    }],
+    // require parens in arrow function arguments
+    // http://eslint.org/docs/rules/arrow-parens
+    "arrow-parens": ["error","always", {
+      requireForBlockBody: true
+    }],
+    // require space before/after arrow function"s arrow
+    // http://eslint.org/docs/rules/arrow-spacing
+    "arrow-spacing": ["error", { before: true, after: true }],
+
+    // verify super() callings in constructors
+    "constructor-super": "error",
+    // disallow modifying variables of class declarations
+    // http://eslint.org/docs/rules/no-class-assign
+    "no-class-assign": "error",
+
+    // disallow arrow functions where they could be confused with comparisons
+    // http://eslint.org/docs/rules/no-confusing-arrow
+    "no-confusing-arrow": ["error", {
+      allowParens: true,
+    }],
+
+    // disallow modifying variables that are declared using const
+    "no-const-assign": "error",
+
+    // disallow duplicate class members
+    // http://eslint.org/docs/rules/no-dupe-class-members
+    "no-dupe-class-members": "error",
+
+
+    // disallow symbol constructor
+    // http://eslint.org/docs/rules/no-new-symbol
+    "no-new-symbol": "error",
+
+    // disallow to use this/super before super() calling in constructors.
+    // http://eslint.org/docs/rules/no-this-before-super
+    "no-this-before-super": "error",
+
+    // disallow useless computed property keys
+    // http://eslint.org/docs/rules/no-useless-computed-key
+    "no-useless-computed-key": "error",
+
+    // disallow unnecessary constructor
+    // http://eslint.org/docs/rules/no-useless-constructor
+    "no-useless-constructor": "error",
+
+    // disallow renaming import, export, and destructured assignments to the same name
+    // http://eslint.org/docs/rules/no-useless-rename
+    "no-useless-rename": ["error", {
+      ignoreDestructuring: false,
+      ignoreImport: false,
+      ignoreExport: false,
+    }],
+
+    // require let or const instead of var
+    "no-var": "error",
+
+    // suggest using arrow functions as callbacks
+    "prefer-arrow-callback": ["error", {
+      allowNamedFunctions: false,
+      allowUnboundThis: true,
+    }],
+
+    // suggest using of const declaration for variables that are never modified after declared
+    "prefer-const": ["error", {
+      destructuring: "any",
+      ignoreReadBeforeAssign: true,
+    }],
+
+    // Prefer destructuring from arrays and objects
+    // http://eslint.org/docs/rules/prefer-destructuring
+    // TODO: enable
+    "prefer-destructuring": ["warn", {
+      array: true,
+      object: true,
+    }, {
+      enforceForRenamedProperties: false,
+    }],
+
+    // enforce that class methods use "this"
+    // http://eslint.org/docs/rules/class-methods-use-this
+    "class-methods-use-this": ["error", {
+      exceptMethods: [],
+    }],
+
+    // require return statements to either always or never specify values
+    "consistent-return": "error",
+
+    // specify curly brace conventions for all control statements
+    curly: ["error", "multi-line"],
+
+    // require the use of === and !==
+    // http://eslint.org/docs/rules/eqeqeq
+    eqeqeq: ["error", "allow-null"],
+
+    // disallow the use of alert, confirm, and prompt
+    "no-alert": "warn",
+
+    // disallow unnecessary function binding
+    "no-extra-bind": "error",
+    
+    // disallow creation of functions within loops
+    "no-loop-func": "error",
+
+    // disallow declaring the same variable more then once
+    "no-redeclare": "error",
+
+    // disallow use of assignment in return statement
+    "no-return-assign": "error",
+
+    // disallow redundant `return await`
+    "no-return-await": "error",
+
+    // disallow use of `javascript:` urls.
+    "no-script-url": "error",
+
+    // disallow self assignment
+    // http://eslint.org/docs/rules/no-self-assign
+    "no-self-assign": "error",
+
+    // disallow comparisons where both sides are exactly the same
+    "no-self-compare": "error",
+
+    // disallow use of comma operator
+    "no-sequences": "error",
+
+    // disallow redundant return; keywords
+    // http://eslint.org/docs/rules/no-useless-return
+    "no-useless-return": "error",
+
+    // disallow use of undeclared variables unless mentioned in a /*global */ block
+    "no-undef": "error",
+
+    // disallow use of undefined when initializing variables
+    "no-undef-init": "error",
+
+    // disallow declaration of variables that are not used in the code
+    "no-unused-vars": ["error", { vars: "local", args: "after-used" }],
+
+    // disallow use of variables before they are defined
+    "no-use-before-define": "error"
+
+
+    //"valid-jsdoc": 2 /* We"ll want this enabled for ready-to-release code */
+  }
+}
