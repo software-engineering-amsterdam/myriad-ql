@@ -75,18 +75,42 @@ describe Parser do
 
   context 'condition' do
     it 'should parse' do
-      expect(parser.condition).to parse('(hasSoldHouse)')
+      expect(parser.condition.parse('(hasSoldHouse)')).to eq({condition: 'hasSoldHouse'})
     end
   end
+  #
+  # context 'if_body' do
+  #   it 'should parse' do
+  #     expect(parser.if_body.parse('
+  #       {
+  #       "What was the selling price?"
+  #         sellingPrice: money
+  #       }
+  #     ')).to eq({if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
+  #   end
+  # end
 
-  context 'if block' do
+  context 'if block with 1 question' do
     it 'should parse' do
-      expect(parser.if_block).to parse('
+      expect(parser.if_block.parse('
         if (hasSoldHouse) {
           "What was the selling price?"
           sellingPrice: money
         }
-      ')
+      ')).to eq({condition: 'hasSoldHouse', if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
+    end
+  end
+
+  context 'if block with 2 question' do
+    it 'should parse' do
+      expect(parser.if_block.parse('
+        if (hasSoldHouse) {
+          "What was the selling price?"
+            sellingPrice: money
+          "Private debts for the sold house:"
+            privateDebt: money
+        }
+      ')).to eq({condition: 'hasSoldHouse', if_body: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}, question: {label: 'Private debts for the sold house:', variable: 'privateDebt', type: 'money'}]})
     end
   end
 end
