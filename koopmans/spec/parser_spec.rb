@@ -10,7 +10,7 @@ describe Parser do
     it 'should parse' do
       expect(parser.label).to parse(label)
     end
-    it 'should parse into property' do
+    it 'should parse into properties' do
       expect(parser.label.parse(label)).to include(:label)
     end
   end
@@ -20,7 +20,7 @@ describe Parser do
     it 'should parse' do
       expect(parser.variable).to parse(variable)
     end
-    it 'should parse into property' do
+    it 'should parse into properties' do
       expect(parser.variable.parse(variable)).to include(:variable)
     end
   end
@@ -30,7 +30,7 @@ describe Parser do
     it 'should parse' do
       expect(parser.type).to parse(type)
     end
-    it 'should parse into property' do
+    it 'should parse into properties' do
       expect(parser.type.parse(type)).to include(:type)
     end
   end
@@ -74,8 +74,12 @@ describe Parser do
   end
 
   context 'condition' do
+    condition = '(hasSoldHouse)'
     it 'should parse' do
-      expect(parser.condition.parse('(hasSoldHouse)')).to eq({condition: 'hasSoldHouse'})
+      expect(parser.condition.parse(condition)).to eq({condition: 'hasSoldHouse'})
+    end
+    it 'should parse into property' do
+      expect(parser.condition.parse(condition)).to include(:condition)
     end
   end
 
