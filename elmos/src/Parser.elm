@@ -1,6 +1,20 @@
 module Parser exposing (..)
 
 import Combine exposing (..)
+import AST exposing (..)
+
+
+form : Parser s Form
+form =
+    succeed Form
+        <*> (formToken *> whitespace *> variableName <* maybe whitespace <* string "{")
+        <*> (many formItem <* string "}")
+
+
+formItem : Parser s FormItem
+formItem =
+    choice
+        [ FieldItem <$> field ]
 
 
 formToken : Parser s String
@@ -15,14 +29,9 @@ variableName =
     regex "\\w+"
 
 
-form : Parser s Form
-form =
-    map Form (formToken *> whitespace *> variableName <* maybe whitespace <* string "{" <* string "}")
-
-
-question : Parser s Question
-question =
-    succeed Question
+field : Parser s Field
+field =
+    succeed Field
         <*> questionLabel
         <*> (whitespace *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
@@ -35,22 +44,8 @@ questionLabel =
 
 valueType : Parser s ValueType
 valueType =
-    choice [ string "integer" $> Integer ]
-
-
-type alias Form =
-    { name : String
-    }
-
-
-type alias Question =
-    { label : String
-    , id : String
-    , valueType : ValueType
-    }
-
-
-type ValueType
-    = String
-    | Boolean
-    | Integer
+    choice
+        [ string "string" $> String
+        , string "boolean" $> Boolean
+        , string "integer" $> Integer
+        ]
