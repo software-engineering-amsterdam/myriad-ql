@@ -14,19 +14,3 @@ class Parser < Parslet::Parser
 
   root :question
 end
-
-
-# def parse(str)
-#   parser = Parser.new
-#   parser.parse(str)
-# rescue Parslet::ParseFailed => failure
-#   puts failure
-# end
-
-# p parse '"How much is?"' # => "1 + 2 + 3"@0
-# p parse 'hasSoldHouse:'
-# p parse '"How much is?"
-#
-# hasSoldHouse:      boolean'
-# p parse 'hasSoldHouse: boolean'
-# p parse "a + 2"      # fails, see below
