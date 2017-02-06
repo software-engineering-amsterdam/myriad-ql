@@ -1,13 +1,26 @@
 /**
  * Define a grammar called Hello
  */
+
 grammar Hello;
+
+//@parser::header
+//{
+//	package org.uva.sea.ql.parser.antlr;
+//}
+//
+//@lexer::header
+//{
+//	package org.uva.sea.ql.parser.antlr;
+//}
+
+
 
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
     |  '-' x=unExpr { $result = new Neg($x.result); }
     |  '!' x=unExpr { $result = new Not($x.result); }
-    //|  x=primary    { $result = $x.result; }
+    |  x=primary    { $result = $x.result; }
     ;
     
 mulExpr returns [Expr result]
@@ -70,19 +83,21 @@ orExpr returns [Expr result]
 
 root: 'form' ID block;
 
-block: '{' content* '}';
+block: '{' question* '}';
 
-content : ( ID':' STRING type );
+question : ( ID':' STRING type computed_question* );
 
 type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 
-computed_question: type '=' '(' addExpr | mulExpr ')' ;
+computed_question: '(' addExpr | mulExpr ')' ;
 
-//statement
-// : 'if' condition_block ('else if' condition_block)* ('else' stat_block)?
-// ;
+statement
+ : 'if' relExpr block ('else if' relExpr block)* ('else' block)? ;
 
-primary: ID | INT;
+primary returns [Expr result]: 
+         // ID { $result = IntLiteral(ID.text, ID.getLine()) } | 
+		 INT{ $result = IntLiteral(INT.text, INT.getLine())}
+		 ;
 
 // TODO look up conventions tokens/names capital letters
 ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
