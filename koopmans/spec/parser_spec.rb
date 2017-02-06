@@ -7,6 +7,7 @@ describe Parser do
 
   context 'label' do
     label = '"How much is?"'
+
     it 'should parse' do
       expect(parser.label).to parse(label)
     end
@@ -17,6 +18,7 @@ describe Parser do
 
   context 'variable' do
     variable = 'hasSoldHouse:'
+
     it 'should parse' do
       expect(parser.variable).to parse(variable)
     end
@@ -27,6 +29,7 @@ describe Parser do
 
   context 'type' do
     type = 'boolean'
+
     it 'should parse' do
       expect(parser.type).to parse(type)
     end
@@ -37,6 +40,7 @@ describe Parser do
 
   context 'question' do
     question = '"How much is?" hasSoldHouse: boolean'
+
     it 'should parse' do
       expect(parser.question).to parse(question)
     end
@@ -50,6 +54,7 @@ describe Parser do
                         hasSoldHouse: boolean
                      "Did you buy a house in 2010?"
                         hasBoughtHouse: boolean'
+
     it 'should parse' do
       expect(parser.questions).to parse(two_questions)
     end
@@ -65,6 +70,7 @@ describe Parser do
                           hasBoughtHouse: boolean
                        "Did you enter a loan?"
                           hasMaintLoan: boolean'
+
     it 'should parse' do
       expect(parser.questions).to parse(three_questions)
     end
@@ -75,6 +81,7 @@ describe Parser do
 
   context 'condition' do
     condition = '(hasSoldHouse)'
+
     it 'should parse' do
       expect(parser.condition.parse(condition)).to eq({condition: 'hasSoldHouse'})
     end
