@@ -56,7 +56,7 @@ public class QLLexer extends Lexer {
     public QLLexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
     }
-    public String getGrammarFileName() { return "/Users/tvdstorm/SEA/courses/sc/2012-2013/repos/sea-of-ql/prototypes/QLJava/src/org/uva/sea/ql/parser/antlr/QL.g"; }
+    public String getGrammarFileName() { return "/Users/tvdstorm/SEA/courses/sc/2012-2013/repos/sea-of-ql/prototypes/QLJava/src/org/uva/sea/ql/parser/antlr/QL.g4"; }
 
     // $ANTLR start "T__9"
     public final void mT__9() throws RecognitionException {
