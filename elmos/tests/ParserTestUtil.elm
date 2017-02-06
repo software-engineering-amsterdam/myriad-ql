@@ -1,6 +1,6 @@
 module ParserTestUtil exposing (TestParserInput, testWithParser)
 
-import Combine exposing (Parser)
+import Combine exposing (Parser, end, (<*))
 import Test exposing (Test, describe, test)
 import Expect
 
@@ -23,7 +23,7 @@ testParser p ( name, input, output ) =
 
 parseToMaybe : Parser () res -> String -> Maybe res
 parseToMaybe p s =
-    case Combine.parse p s of
+    case Combine.parse (p <* end) s of
         Err e ->
             Nothing
 

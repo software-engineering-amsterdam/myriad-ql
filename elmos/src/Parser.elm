@@ -7,14 +7,8 @@ import AST exposing (..)
 form : Parser s Form
 form =
     succeed Form
-        <*> (formToken *> whitespace *> variableName <* maybe whitespace <* string "{")
-        <*> (many formItem <* string "}")
-
-
-formItem : Parser s FormItem
-formItem =
-    choice
-        [ FieldItem <$> field ]
+        <*> (formToken *> whitespace *> variableName <* maybe whitespace)
+        <*> between (string "{") (string "}") (many formItem)
 
 
 formToken : Parser s String
@@ -26,7 +20,15 @@ formToken =
 -}
 variableName : Parser s String
 variableName =
-    regex "\\w+"
+    regex "[a-z0-9][a-zA-Z0-9_]*"
+
+
+formItem : Parser s FormItem
+formItem =
+    choice
+        [ FieldItem <$> field
+        , IfItem <$> ifBlock
+        ]
 
 
 field : Parser s Field
@@ -35,6 +37,23 @@ field =
         <*> questionLabel
         <*> (whitespace *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
+
+
+ifBlock : Parser s IfBlock
+ifBlock =
+    lazy <|
+        \() ->
+            succeed IfBlock
+                <*> (string "(" *> expression <* string ")")
+                <*> (string "{" *> many formItem <* string "}")
+                <*> (maybe (whitespace *> string "else" *> whitespace *> string "{" *> whitespace *> many formItem <* whitespace <* string "}"))
+
+
+{-| TODO add more
+-}
+expression : Parser s Expression
+expression =
+    choice [ Var <$> variableName ]
 
 
 questionLabel : Parser s String

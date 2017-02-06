@@ -22,7 +22,7 @@ type alias Field =
 type alias IfBlock =
     { expression : Expression
     , thenBranch : List FormItem
-    , elseBranch : List FormItem
+    , elseBranch : Maybe (List FormItem)
     }
 
 
