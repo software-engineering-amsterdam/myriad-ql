@@ -1,6 +1,15 @@
 module Parser exposing (..)
 
 import Combine exposing (..)
+import AST exposing (..)
+import Combine.Extra exposing (whitespace1)
+
+
+form : Parser s Form
+form =
+    succeed Form
+        <*> (formToken *> whitespace *> variableName <* maybe whitespace)
+        <*> block
 
 
 formToken : Parser s String
@@ -12,45 +21,67 @@ formToken =
 -}
 variableName : Parser s String
 variableName =
-    regex "\\w+"
+    regex "[a-z0-9][a-zA-Z0-9_]*"
 
 
-form : Parser s Form
-form =
-    map Form (formToken *> whitespace *> variableName <* maybe whitespace <* string "{" <* string "}")
+formItem : Parser s FormItem
+formItem =
+    choice
+        [ FieldItem <$> field
+        , IfItem <$> ifBlock
+        ]
 
 
-question : Parser s Question
-question =
-    succeed Question
-        <*> questionLabel
-        <*> (whitespace *> variableName)
+field : Parser s Field
+field =
+    succeed Field
+        <*> fieldLabel
+        <*> (whitespace1 *> variableName)
         <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
+        <*> (maybe (whitespace *> string "=" *> expression))
 
 
-questionLabel : Parser s String
-questionLabel =
+ifBlock : Parser s IfBlock
+ifBlock =
+    lazy <|
+        \() ->
+            succeed IfBlock
+                <*> (string "if" *> whitespace *> parens expression <* whitespace)
+                <*> block
+                <*> (maybe (whitespace *> string "else" *> whitespace *> block))
+
+
+block : Parser s (List FormItem)
+block =
+    lazy <| \() -> braces (whitespace *> many formItem <* whitespace)
+
+
+{-| TODO add more
+-}
+expression : Parser s Expression
+expression =
+    lazy <|
+        \() ->
+            choice
+                [ Var <$> variableName
+                , ParensExpression <$> parensExpression
+                ]
+
+
+parensExpression : Parser s Expression
+parensExpression =
+    parens (expression)
+
+
+fieldLabel : Parser s String
+fieldLabel =
     string "\"" *> regex "[^\\\"]+" <* string "\""
 
 
 valueType : Parser s ValueType
 valueType =
-    choice [ string "integer" $> Integer ]
-
-
-type alias Form =
-    { name : String
-    }
-
-
-type alias Question =
-    { label : String
-    , id : String
-    , valueType : ValueType
-    }
-
-
-type ValueType
-    = String
-    | Boolean
-    | Integer
+    choice
+        [ string "string" $> StringType
+        , string "boolean" $> BooleanType
+        , string "integer" $> IntegerType
+        ]
