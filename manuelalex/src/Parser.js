@@ -3,10 +3,14 @@
  */
 
 
-export class Parser {
+export default class Parser {
 
+    /**
+     * TODO
+     * @param text
+     * @returns {*}
+     */
     parse(text){
-
         return text;
     }
 }
