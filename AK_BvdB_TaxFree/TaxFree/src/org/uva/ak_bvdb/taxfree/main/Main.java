@@ -13,11 +13,8 @@ public class Main {
     }
 
     public Main() {
-        // Some sample exec's
-//        java -jar C:\School\UvA\Projecten\myriad-ql\prototypes\QLJava\lib\antlr-3.4-complete-no-antlrv2.jar QL.g
-        // java -jar raw\antlr-4.6-complete.jar raw\Grammar.g
         System.out.println("** Starting TaxFree **");
-        System.out.println(executeCommand("java -jar libs\\antlr-4.6-complete.jar src\\org\\uva\\ak_bvdb\\taxfree\\raw\\Grammar.g"));
+        System.out.println(executeCommand("java -jar libs\\antlr-4.6-complete.jar Grammar.g -o generated"));
         System.out.println("** Finished TaxFree **");
     }
 
@@ -29,7 +26,7 @@ public class Main {
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-            String line = "";
+            String line;
             while ((line = reader.readLine())!= null) {
                 output.append(line + "\n");
             }
