@@ -1,3 +1,15 @@
+//options {backtrack=true; memoize=true;}
+/*
+@parser::header
+{
+package org.uva.ak_bvdb.taxfree.raw;
+}
+
+@lexer::header
+{
+package org.uva.ak_bvdb.taxfree.raw;
+*/
+
 /** This grammar is an example illustrating the three kinds
  * of comments.
  */
