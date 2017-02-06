@@ -1,20 +1,83 @@
 grammar QL;
 options {backtrack=true; memoize=true;}
- 
+
 form
-    : question* EOF
+    : FORM LBRACE questions RBRACE EOF
+    ;
+
+questions
+    : question questions
+    | question
     ;
 
 question
-    : FORM LBRACE TYPE Ident RBRACE
+    : identifier COLON label type_specifier
     ;
+
+
+expr
+    :
+
+label
+    : Str
+    ;
+
+identifier
+    : Ident
+    ;
+
+
+
+type_specifier
+    : BOOLEAN
+    | STRING
+    | INTEGER
+    | DATE
+    | DECIMAL
+    | CURRENCY
+    ;
+
+boolean
+    : AND
+    | OR
+    | BANG
+    ;
+
+comparison
+    : GT
+    | LT
+    | LE
+    | GE
+    | NOT_EQUAL
+    | EQUAL_EQUAL
+    ;
+
+//Operators
+PLUS : '+';
+MINUS : '-';
+PRODUCT : '*';
+DIVIDE : '/';
 
 // Tokens
-WS  : (' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
-    ;
 
-TYPE
-    : 'boolean'
+BOOLEAN : 'boolean' ;
+STRING : 'string' ;
+INTEGER : 'integer' ;
+DATE : 'date' ;
+DECIMAL : 'decimal' ;
+CURRENCY : 'currency' ;
+AND : '&&' ;
+OR : '||' ;
+BANG : '!' ;
+LT : '<' ;
+GT : '>' ;
+LE : '<=' ;
+GE : '>=' ;
+NOT_EQUAL : '!=' ;
+EQUAL_EQUAL : '==' ;
+
+COLON
+    : ':'
     ;
 
 LBRACE
@@ -23,10 +86,6 @@ LBRACE
 
 RBRACE
     : '}'
-    ;
-
-COMMENT
-    : '/*' .*? '*/'  -> channel(HIDDEN)
     ;
 
 FORM
@@ -41,4 +100,8 @@ Int
 
 Str
     : '"' .*? '"'
+    ;
+
+COMMENT
+    : '/*' .*? '*/'  -> channel(HIDDEN)
     ;
