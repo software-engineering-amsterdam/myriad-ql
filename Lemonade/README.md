@@ -1,4 +1,4 @@
 # Lemonade
 Team members:
-* Dimitri Belfor (@DBelf)
-* Sander Ginn (@sanderginn)
+* Dimitri Belfor ([@DBelf](http://www.github.com/dbelf))
+* Sander Ginn ([@sanderginn](http://www.github.com/sanderginn))
