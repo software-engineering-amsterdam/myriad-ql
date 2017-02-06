@@ -10,6 +10,6 @@ class Parser < Parslet::Parser
   rule(:type) { (str('boolean') | str('money')).as(:type) }
   rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces?).as(:question) }
 
-  rule(:questions) { question.repeat }
+  rule(:questions) { question.repeat.as(:questions) }
   root :question
 end
