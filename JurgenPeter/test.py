@@ -38,4 +38,4 @@ block <<= ZeroOrMore(statement)
 
 form = "form" + identifier + "{" + block + "}"
 
-print(expression.parseString("(x < 3) == true || false"))
+print(expression.parseString("(x < 3) == true && false"))
