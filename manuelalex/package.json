@@ -1,0 +1,30 @@
+{
+  "name": "manuelalex",
+  "version": "0.0.1",
+  "description": "Software Construction - QL & QSL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/software-engineering-amsterdam/myriad-ql.git"
+  },
+  "keywords": [
+    "Software",
+    "Construction",
+    "QL",
+    "QSL"
+  ],
+  "author": "Manuel Overdijk, Alex van Manen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/software-engineering-amsterdam/myriad-ql/issues"
+  },
+  "homepage": "https://github.com/software-engineering-amsterdam/myriad-ql#readme",
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.15.0",
+    "jspm": "^0.17.0-beta.31"
+  }
+}
