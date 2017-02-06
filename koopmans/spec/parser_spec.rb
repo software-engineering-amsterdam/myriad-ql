@@ -68,6 +68,9 @@ describe Parser do
     it 'should parse' do
       expect(parser.questions).to parse(three_questions)
     end
+    it 'should parse into properties' do
+      expect(parser.questions.parse(three_questions)).to include(:questions)
+    end
   end
 
   context 'condition' do
