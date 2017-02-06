@@ -1,7 +1,7 @@
 from pyparsing import *
 
 identifier = Word(alphas)
-datatype = oneOf("boolean integer string date money decimal")
+datatype = oneOf("boolean string integer date decimal money")
 
 mul_op = oneOf("* /")
 add_op = oneOf("+ -")
@@ -30,7 +30,6 @@ bool_expr <<= operatorPrecedence(bool_atom, [(neg_op, 1, opAssoc.RIGHT),
 expression = bool_expr ^ num_expr
 
 block = Forward()
-
 question = identifier + ":" + QuotedString("\"") + datatype + Optional("=" + expression)
 conditional = Literal("if") + Literal("(") + bool_expr + Literal(")") + Literal("{") + block + Literal("}")
 statement = question ^ conditional
