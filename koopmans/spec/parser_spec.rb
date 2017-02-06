@@ -91,13 +91,16 @@ describe Parser do
   # end
 
   context 'if block with 1 question' do
+    if_block = 'if (hasSoldHouse) {
+                  "What was the selling price?"
+                    sellingPrice: money
+                }'
+
     it 'should parse' do
-      expect(parser.if_block.parse('
-        if (hasSoldHouse) {
-          "What was the selling price?"
-          sellingPrice: money
-        }
-      ')).to eq({condition: 'hasSoldHouse', block: [{question: {label: 'What was the selling price?', variable: 'sellingPrice', type: 'money'}}]})
+      expect(parser.if_block).to parse(if_block)
+    end
+    it 'should parse into properties' do
+      expect(parser.if_block.parse(if_block)).to include(:if_block)
     end
   end
 
