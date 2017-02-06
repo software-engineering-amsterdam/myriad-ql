@@ -16,6 +16,7 @@ type alias Field =
     { label : String
     , id : String
     , valueType : ValueType
+    , valueExpression : Maybe Expression
     }
 
 
@@ -30,6 +31,7 @@ type alias IfBlock =
 -}
 type Expression
     = Var String
+    | ParensExpression Expression
 
 
 type ValueType

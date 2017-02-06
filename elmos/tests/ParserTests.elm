@@ -13,6 +13,7 @@ all =
         , varNameTests
         , fieldTests
         , valueTypeTests
+        , expressionTests
         ]
 
 
@@ -56,4 +57,13 @@ valueTypeTests =
         [ ( "should parse string", "string", Just String )
         , ( "should parse boolean", "boolean", Just Boolean )
         , ( "should parse integer", "integer", Just Integer )
+        ]
+
+
+expressionTests : Test
+expressionTests =
+    testWithParser Parser.expression
+        "expression"
+        [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
+        , ( "Should parse expression between parentheses", "(someVarName)", Just (ParensExpression (Var "someVarName")) )
         ]
