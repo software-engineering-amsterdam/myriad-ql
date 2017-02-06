@@ -12,6 +12,7 @@ all =
         [ formTokenTests
         , varNameTests
         , fieldTests
+        , ifBlockTests
         , valueTypeTests
         , expressionTests
         ]
@@ -48,6 +49,42 @@ fieldTests =
         , ( "id should be a varName", "\"label\" Other: integer", Nothing )
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         ]
+
+
+ifBlockTests : Test
+ifBlockTests =
+    let
+        basicBlockContent =
+            [ FieldItem { label = "label", id = "id", valueType = Integer, valueExpression = Nothing }
+            ]
+    in
+        testWithParser Parser.ifBlock
+            "ifBlock"
+            [ ( "should parser an simple if block"
+              , "if (x) { \"label\" id: integer }"
+              , Just
+                    { expression = Var "x"
+                    , thenBranch = basicBlockContent
+                    , elseBranch = Nothing
+                    }
+              )
+            , ( "should allow no whitespace"
+              , "if(x){\"label\" id:integer}"
+              , Just
+                    { expression = Var "x"
+                    , thenBranch = basicBlockContent
+                    , elseBranch = Nothing
+                    }
+              )
+            , ( "should parse if with else block"
+              , "if (x) {\"label\" id: integer} else {\"label\" id: integer}"
+              , Just
+                    { expression = Var "x"
+                    , thenBranch = basicBlockContent
+                    , elseBranch = Just basicBlockContent
+                    }
+              )
+            ]
 
 
 valueTypeTests : Test
