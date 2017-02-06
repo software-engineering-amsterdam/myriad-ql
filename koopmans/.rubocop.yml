@@ -5,3 +5,6 @@ AllCops:
 
 Metrics/LineLength:
   Max: 100
+
+Metrics/ModuleLength:
+  Enabled: false

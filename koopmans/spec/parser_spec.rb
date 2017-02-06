@@ -28,4 +28,28 @@ describe Parser do
       expect(parser.question).to parse('"How much is?" hasSoldHouse: boolean')
     end
   end
+
+  context 'two questions' do
+    it 'should parse' do
+      expect(parser.questions).to parse('
+        "Did you sell a house in 2010?"
+          hasSoldHouse: boolean
+        "Did you buy a house in 2010?"
+          hasBoughtHouse: boolean
+      ')
+    end
+  end
+
+  context 'three questions' do
+    it 'should parse' do
+      expect(parser.questions).to parse('
+        "Did you sell a house in 2010?"
+          hasSoldHouse: boolean
+        "Did you buy a house in 2010?"
+          hasBoughtHouse: boolean
+        "Did you enter a loan?"
+          hasMaintLoan: boolean
+      ')
+    end
+  end
 end
