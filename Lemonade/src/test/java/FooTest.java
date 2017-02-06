@@ -17,5 +17,12 @@
  *  under the License.
  */
 
+import org.junit.Test;
+
 public class FooTest {
+
+    @Test
+    public void happyCase() throws Exception {
+
+    }
 }
