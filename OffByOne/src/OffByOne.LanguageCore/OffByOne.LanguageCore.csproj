@@ -1,16 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>b3fd3dbf-5a24-4d04-89e2-890197bbe323</ProjectGuid>
+    <ProjectGuid>{B3FD3DBF-5A24-4D04-89E2-890197BBE323}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OffByOne.LanguageCore</RootNamespace>
     <AssemblyName>OffByOne.LanguageCore</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>OffByOne.LanguageCore.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,26 +31,57 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>OffByOne.LanguageCore.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Ast\AstNode.cs" />
+    <Compile Include="Ast\Expressions\Binary\AddExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\AndExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\Base\BinaryExpression.cs" />
+    <Compile Include="Ast\Expressions\Expression.cs" />
+    <Compile Include="Ast\Expressions\Binary\DivideExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\EqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\GreaterThanExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\GreaterThanOrEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\LessThanExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\LessThanOrEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\MultiplyExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
+    <Compile Include="Ast\Expressions\LiteralExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\PositiveExpression.cs" />
+    <Compile Include="Ast\Expressions\VariableExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="OffByOne.LanguageCore.ruleset" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+  <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets'))" />
+  </Target>
+</Project>
