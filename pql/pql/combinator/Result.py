@@ -4,4 +4,4 @@ class Result:
         self.pos = pos
 
     def __repr__(self):
-        return 'Result(%s, %d)' % (self.value, self.pos)
+        return 'Result(value: %s, pos: %d)' % (self.value, self.pos)
