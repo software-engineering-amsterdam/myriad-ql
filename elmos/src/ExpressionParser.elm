@@ -9,9 +9,18 @@ expression : Parser s Expression
 expression =
     lazy <|
         \() ->
-            chainl addOp <|
-                chainl mulOp <|
-                    chainl compareOp atom
+            chainl compareOp <|
+                chainl equalsOp <|
+                    chainl addOp <|
+                        chainl mulOp atom
+
+
+equalsOp : Parser s (Expression -> Expression -> Expression)
+equalsOp =
+    choice
+        [ EqualToExpression <$ string "=="
+        , NotEqualToExpression <$ string "!="
+        ]
 
 
 compareOp : Parser s (Expression -> Expression -> Expression)
@@ -42,12 +51,14 @@ mulOp =
 
 atom : Parser s Expression
 atom =
-    choice
-        [ Integer <$> int
-        , Var <$> variableName
-        , Boolean <$> (True <$ string "true" <|> False <$ string "false")
-        , ParensExpression <$> (parens expression)
-        ]
+    whitespace
+        *> choice
+            [ Integer <$> int
+            , Var <$> variableName
+            , Boolean <$> (True <$ string "true" <|> False <$ string "false")
+            , ParensExpression <$> (parens expression)
+            ]
+        <* whitespace
 
 
 variableName : Parser s String
