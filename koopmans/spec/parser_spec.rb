@@ -61,12 +61,13 @@ describe Parser do
     end
   end
 
-  # context 'question with expression' do
-  #   question = '"Value residue:" valueResidue: money = (sellingPrice - privateDebt)'
-  #   it 'parses' do
-  #     expect(parser.question).to parse(question)
-  #   end
-  # end
+  context 'question with expression' do
+    question = '"Value residue:" valueResidue: money = (sellingPrice - privateDebt)'
+    it 'parses' do
+      expect(parser.question).to parse(question)
+      expect(parser.question.parse(question)[:question]).to include(:expression)
+    end
+  end
 
   context 'two questions' do
     two_questions = '"Did you sell a house in 2010?"

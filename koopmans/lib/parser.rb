@@ -13,7 +13,7 @@ class Parser < Parslet::Parser
   rule(:operator) { (str('+') | str('-')).as(:operator) }
   rule(:expression) { str('(') >> (str(')').absent? >> (spaces? >> variable2 >> spaces? >> (operator >> spaces? >> variable2 >> spaces?).repeat) ).repeat.as(:expression) >> str(')') }
 
-  rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces?).as(:question) }
+  rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces? >> ( str('=') >> spaces? >> expression >> spaces? ).maybe ).as(:question) }
 
   rule(:questions) { question.repeat.as(:questions) }
 
