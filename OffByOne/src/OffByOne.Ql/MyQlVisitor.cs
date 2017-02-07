@@ -23,8 +23,8 @@
 
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
-            string id = context.Identifier(0).GetText();
-            string question = context.StringLiteral(0).GetText();
+            string id = context.Identifier().GetText();
+            string question = context.StringLiteral().GetText();
             switch (context.Type().GetText())
             {
                 case "boolean":

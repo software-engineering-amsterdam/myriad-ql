@@ -1,7 +1,7 @@
 ﻿grammar Ql;
 
 form : 'form' Identifier '{' stat+ '}' ;
-question : StringLiteral + Identifier + ':' + Type ;
+question : StringLiteral Identifier ':' + Type ;
 stat
 	: question
 	| if
