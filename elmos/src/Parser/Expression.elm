@@ -21,12 +21,12 @@ expressions =
 
 andOp : Parser s (Expression -> Expression -> Expression)
 andOp =
-    AndExpression <$ string "&&"
+    LogicExpression And <$ string "&&"
 
 
 orOp : Parser s (Expression -> Expression -> Expression)
 orOp =
-    OrExpression <$ string "||"
+    LogicExpression Or <$ string "||"
 
 
 comparisonOp : Parser s (Expression -> Expression -> Expression)

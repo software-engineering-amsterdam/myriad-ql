@@ -79,8 +79,8 @@ logicalTests : Test
 logicalTests =
     testWithParser expression
         "logicalTests"
-        [ ( "Should parse AND", "x&&y", Just (AndExpression (Var "x") (Var "y")) )
-        , ( "Should parse OR", "x||y", Just (OrExpression (Var "x") (Var "y")) )
-        , ( "AND should preced OR", "x && y || z", Just (OrExpression (AndExpression (Var "x") (Var "y")) (Var "z")) )
-        , ( "OR should be preceded by AND", "x || y && z", Just (OrExpression (Var "x") (AndExpression (Var "y") (Var "z"))) )
+        [ ( "Should parse AND", "x&&y", Just (LogicExpression And (Var "x") (Var "y")) )
+        , ( "Should parse OR", "x||y", Just (LogicExpression Or (Var "x") (Var "y")) )
+        , ( "AND should preced OR", "x && y || z", Just (LogicExpression Or (LogicExpression And (Var "x") (Var "y")) (Var "z")) )
+        , ( "OR should be preceded by AND", "x || y && z", Just (LogicExpression Or (Var "x") (LogicExpression And (Var "y") (Var "z"))) )
         ]
