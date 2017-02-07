@@ -32,8 +32,8 @@ orOp =
 comparisonOp : Parser s (Expression -> Expression -> Expression)
 comparisonOp =
     choice
-        [ EqualToExpression <$ string "=="
-        , NotEqualToExpression <$ string "!="
+        [ ComparisonExpression Equal <$ string "=="
+        , ComparisonExpression NotEqual <$ string "!="
         ]
 
 

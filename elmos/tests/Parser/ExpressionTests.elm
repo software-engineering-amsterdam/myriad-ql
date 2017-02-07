@@ -62,12 +62,12 @@ comparisonTests : Test
 comparisonTests =
     testWithParser expression
         "comparisonTests"
-        [ ( "Should parse equal comparison", "x == y", Just (EqualToExpression (Var "x") (Var "y")) )
-        , ( "Should parse not equal comparison", "x != y", Just (NotEqualToExpression (Var "x") (Var "y")) )
+        [ ( "Should parse equal comparison", "x == y", Just (ComparisonExpression Equal (Var "x") (Var "y")) )
+        , ( "Should parse not equal comparison", "x != y", Just (ComparisonExpression NotEqual (Var "x") (Var "y")) )
         , ( "Should parse comparison with correct precedence"
           , "x + y == y < z"
           , Just
-                (EqualToExpression
+                (ComparisonExpression Equal
                     (ArithmeticExpression Plus (Var "x") (Var "y"))
                     (LessThanExpression (Var "y") (Var "z"))
                 )

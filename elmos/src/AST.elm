@@ -37,9 +37,8 @@ type Expression
     | LessThanExpression Expression Expression
     | GreaterThanOrEqualExpression Expression Expression
     | LessThanOrEqualExpression Expression Expression
-    | EqualToExpression Expression Expression
-    | NotEqualToExpression Expression Expression
     | LogicExpression Logic Expression Expression
+    | ComparisonExpression Comparison Expression Expression
 
 
 type Operator
@@ -52,6 +51,11 @@ type Operator
 type Logic
     = And
     | Or
+
+
+type Comparison
+    = Equal
+    | NotEqual
 
 
 type ValueType
