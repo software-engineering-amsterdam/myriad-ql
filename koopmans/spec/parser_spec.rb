@@ -57,40 +57,33 @@ describe Parser do
 
   context 'block' do
     it 'parses' do
-      expect(parser.block).to parse('
-        {
+      expect(parser.block).to parse('{
           "What was the selling price?"
             sellingPrice: money
-        }
-      ')
+        }')
     end
   end
 
   context 'if statement with one question' do
     it 'parses' do
-      expect(parser.if_statement).to parse('
-        if (hasSoldHouse) {
+      expect(parser.if_statement).to parse('if (hasSoldHouse) {
           "What was the selling price?"
             sellingPrice: money
-        }
-      ')
+        }')
     end
   end
 
   context 'form' do
     it 'parses' do
-      expect(parser.form).to parse('
-        form taxOfficeExample {
+      expect(parser.form).to parse('form taxOfficeExample {
           "Did you sell a house in 2010?"
             hasSoldHouse: boolean
           "Did you buy a house in 2010?"
             hasBoughtHouse: boolean
           "Did you enter a loan?"
             hasMaintLoan: boolean
-        }
-      ')
-      expect(parser.form).to parse('
-        form taxOfficeExample {
+        }')
+      expect(parser.form).to parse('form taxOfficeExample {
           "Did you sell a house in 2010?"
             hasSoldHouse: boolean
           "Did you buy a house in 2010?"
@@ -107,8 +100,7 @@ describe Parser do
               valueResidue: money =
                 (sellingPrice - privateDebt)
           }
-        }
-      ')
+        }')
     end
   end
 end
