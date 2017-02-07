@@ -63,8 +63,12 @@ class Parser < Parslet::Parser
     left_parenthesis >> (variable >> (arithmetic >> variable).repeat).repeat.as(:expression) >> right_parenthesis
   end
 
+  rule(:assignment?) do
+    (assign >> expression).maybe
+  end
+
   rule(:question) do
-    (label >> variable_assignment >> type >> (assign >> expression).maybe).as(:question)
+    (label >> variable_assignment >> type >> assignment?).as(:question)
   end
 
   # if block
