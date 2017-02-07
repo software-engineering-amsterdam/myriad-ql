@@ -147,6 +147,7 @@ valueTypeTests =
         [ ( "should parse string", "string", Just StringType )
         , ( "should parse boolean", "boolean", Just BooleanType )
         , ( "should parse integer", "integer", Just IntegerType )
+        , ( "should parse money as integer", "money", Just IntegerType )
         ]
 
 

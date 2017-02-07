@@ -85,4 +85,5 @@ valueType =
         [ string "string" $> StringType
         , string "boolean" $> BooleanType
         , string "integer" $> IntegerType
+        , string "money" $> IntegerType
         ]
