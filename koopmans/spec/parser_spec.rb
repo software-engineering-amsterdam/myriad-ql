@@ -8,7 +8,7 @@ describe Parser do
   context 'label' do
     label = '"How much is?"'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.label).to parse(label)
       expect(parser.label.parse(label)).to include(:label)
     end
@@ -17,7 +17,7 @@ describe Parser do
   context 'variable' do
     variable = 'hasSoldHouse:'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.variable).to parse(variable)
       expect(parser.variable.parse(variable)).to include(:variable)
     end
@@ -26,7 +26,7 @@ describe Parser do
   context 'type' do
     type = 'boolean'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.type).to parse(type)
       expect(parser.type.parse(type)).to include(:type)
     end
@@ -34,7 +34,7 @@ describe Parser do
 
   context 'variable2' do
     variable2 = 'sellingPrice'
-    it 'should parse' do
+    it 'parses' do
       expect(parser.variable2).to parse(variable2)
       expect(parser.variable2.parse(variable2)).to include(:variable2)
     end
@@ -42,7 +42,7 @@ describe Parser do
 
   context 'expression' do
     expression = '(sellingPrice - privateDebt + anotherVariable)'
-    it 'should parse' do
+    it 'parses' do
       expect(parser.expression).to parse(expression)
       expect(parser.expression.parse(expression)).to include(:expression)
       expect(parser.expression.parse(expression)[:expression]).to all include(:variable2)
@@ -55,7 +55,7 @@ describe Parser do
   context 'question' do
     question = '"How much is?" hasSoldHouse: boolean'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.question).to parse(question)
       expect(parser.question.parse(question)).to include(:question)
     end
@@ -63,7 +63,7 @@ describe Parser do
 
   # context 'question with expression' do
   #   question = '"Value residue:" valueResidue: money = (sellingPrice - privateDebt)'
-  #   it 'should parse' do
+  #   it 'parses' do
   #     expect(parser.question).to parse(question)
   #   end
   # end
@@ -74,7 +74,7 @@ describe Parser do
                      "Did you buy a house in 2010?"
                         hasBoughtHouse: boolean'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.questions).to parse(two_questions)
       expect(parser.questions.parse(two_questions)).to include(:questions)
     end
@@ -88,7 +88,7 @@ describe Parser do
                        "Did you enter a loan?"
                           hasMaintLoan: boolean'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.questions).to parse(three_questions)
       expect(parser.questions.parse(three_questions)).to include(:questions)
     end
@@ -97,10 +97,10 @@ describe Parser do
   context 'condition' do
     condition = '(hasSoldHouse)'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.condition.parse(condition)).to eq({condition: 'hasSoldHouse'})
     end
-    it 'should parse into property' do
+    it 'parses into property' do
       expect(parser.condition.parse(condition)).to include(:condition)
     end
   end
@@ -111,11 +111,11 @@ describe Parser do
               sellingPrice: money
              }'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.block).to parse(block)
     end
 
-    it 'should parse into properties' do
+    it 'parses into properties' do
       expect(parser.block.parse(block)).to include(:block)
     end
   end
@@ -126,7 +126,7 @@ describe Parser do
                         sellingPrice: money
                     }'
 
-    it 'should parse' do
+    it 'parses' do
       expect(parser.if_statement).to parse(if_statement)
       expect(parser.if_statement.parse(if_statement)).to include(:if_statement)
     end
