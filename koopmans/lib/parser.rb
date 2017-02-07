@@ -43,18 +43,13 @@ class Parser < Parslet::Parser
     (spaces? >> label >> variable_assignment >> type >> (equal_to >> expression).maybe >> spaces? ).as(:question)
   end
 
-  rule(:questions) do
-    question.repeat.as(:questions)
-  end
-
-
   # if block
   rule(:condition) do
     str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')')
   end
 
   rule(:block) do
-    str('{') >> (questions >> if_statement.maybe).as(:block) >> str('}')
+    str('{') >> (str('}').absent? >> question | if_statement).repeat.as(:block) >> str('}')
   end
 
   rule(:if_statement) do

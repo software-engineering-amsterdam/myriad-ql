@@ -77,31 +77,31 @@ describe Parser do
     end
   end
 
-  context 'two questions' do
-    two_questions = '"Did you sell a house in 2010?"
-        hasSoldHouse: boolean
-      "Did you buy a house in 2010?"
-        hasBoughtHouse: boolean'
-
-    it 'parses' do
-      expect(parser.questions).to parse(two_questions)
-      expect(parser.questions.parse(two_questions)).to include(:questions)
-    end
-  end
-
-  context 'three questions' do
-    three_questions = '"Did you sell a house in 2010?"
-      hasSoldHouse: boolean
-        "Did you buy a house in 2010?"
-      hasBoughtHouse: boolean
-        "Did you enter a loan?"
-      hasMaintLoan: boolean'
-
-    it 'parses' do
-      expect(parser.questions).to parse(three_questions)
-      expect(parser.questions.parse(three_questions)).to include(:questions)
-    end
-  end
+  # context 'two questions' do
+  #   two_questions = '"Did you sell a house in 2010?"
+  #       hasSoldHouse: boolean
+  #     "Did you buy a house in 2010?"
+  #       hasBoughtHouse: boolean'
+  #
+  #   it 'parses' do
+  #     expect(parser.questions).to parse(two_questions)
+  #     expect(parser.questions.parse(two_questions)).to include(:questions)
+  #   end
+  # end
+  #
+  # context 'three questions' do
+  #   three_questions = '"Did you sell a house in 2010?"
+  #     hasSoldHouse: boolean
+  #       "Did you buy a house in 2010?"
+  #     hasBoughtHouse: boolean
+  #       "Did you enter a loan?"
+  #     hasMaintLoan: boolean'
+  #
+  #   it 'parses' do
+  #     expect(parser.questions).to parse(three_questions)
+  #     expect(parser.questions.parse(three_questions)).to include(:questions)
+  #   end
+  # end
 
   context 'condition' do
     condition = '(hasSoldHouse)'
