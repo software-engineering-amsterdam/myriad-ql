@@ -1,25 +1,41 @@
 grammar QL;
 
 form
-    : FORM LBRACE questions RBRACE EOF
+    : FORMKEY identifier LBRACE formbod RBRACE EOF
     ;
 
+formbod
+    : questions
+    | questions conditional
+    ;
+    
 questions
     : question questions
     | question
     ;
 
+
 question
     : identifier COLON label type_specifier
     ;
 
+expr
+    : BOOLEAN
+    | INT
+    | unaryoperator expr
+    | expr binaryoperator expr
+    ;
+
+conditional
+    : CONDKEY LPAREN expr RPAREN LBRACE questions RBRACE
+    ;
 
 label
-    : Str
+    : STR
     ;
 
 identifier
-    : Ident
+    : IDENT
     ;
 
 type_specifier
@@ -31,46 +47,37 @@ type_specifier
     | CURRENCY
     ;
 
-booleans
-    : AND
-    | OR
-    | BANG
+unaryoperator
+    : BANG
     ;
 
-comparisons
-    : GT
+binaryoperator
+    : AND
+    | OR
+    | GT
     | LT
     | LE
     | GE
     | NOT_EQUAL
     | EQUAL_EQUAL
+    | PLUS
+    | MINUS
+    | PRODUCT
+    | DIVIDE
     ;
 
 //Operators
-PLUS : '+';
-MINUS : '-';
-PRODUCT : '*';
-DIVIDE : '/';
-
-// Tokens
-
-BOOL
-    : 'boolean'
+PLUS
+    : '+'
     ;
-STRING
-    : 'string'
+MINUS
+    : '-'
     ;
-INTEGER
-    : 'integer'
+PRODUCT
+    : '*'
     ;
-DATE
-    : 'date'
-    ;
-DECIMAL
-    : 'decimal'
-    ;
-CURRENCY
-    : 'currency'
+DIVIDE
+    : '/'
     ;
 AND
     : '&&'
@@ -100,6 +107,31 @@ EQUAL_EQUAL
     : '=='
     ;
 
+// Other Tokens
+
+BOOLEAN
+    : 'True' | 'False'
+    ;
+
+BOOL
+    : 'boolean'
+    ;
+STRING
+    : 'string'
+    ;
+INTEGER
+    : 'integer'
+    ;
+DATE
+    : 'date'
+    ;
+DECIMAL
+    : 'decimal'
+    ;
+CURRENCY
+    : 'currency'
+    ;
+
 COLON
     : ':'
     ;
@@ -112,22 +144,38 @@ RBRACE
     : '}'
     ;
 
-FORM
+LPAREN
+    : '('
+    ;
+
+RPAREN
+    : ')'
+    ;
+
+CONDKEY
+    : 'if'
+    ;
+
+FORMKEY
     : 'form'
     ;
 
-Ident
+IDENT
     : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
-Int
+INT
     : ('0'..'9')+
     ;
 
-Str
+STR
     : '"' .*? '"'
     ;
 
 COMMENT
     : '/*' .*? '*/'  -> channel(HIDDEN)
+    ;
+
+WS
+    : [ \t\r\n]+ -> channel(HIDDEN)
     ;
