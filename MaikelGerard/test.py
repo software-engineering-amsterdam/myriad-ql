@@ -8,42 +8,43 @@ eq7 = [['388.923', '+', ['39.9', '*', 'hoi']]]
 eq8 = ['!', '100']
 
 
-def temp(eq):
-    t = []
-
-    #for bla in eq:
-    #    t.append(createExpressions(bla))
-    return createExpressions(eq)
+def divide_expressions(eq):
+    splitted_expr = split_expression(eq)
+    return remove_redudant_lists(splitted_expr)
 
 
-def removeLists(eq):
-    if isinstance(eq, list) and len(eq) == 1:
-        return removeLists(eq)
+def remove_redudant_lists(expression):
+    if isinstance(expression, list):
+        if len(expression) == 1 and isinstance(expression[0], list):
+            return expression[0]
+        else:
+            temp = []
+            for expr in expression:
+                if isinstance(expr, list):
+                    temp.append(remove_redudant_lists(expr))
+                else:
+                    temp.append(expr)
+            return temp
     else:
-        return eq
+        return expression
 
 
-def createExpressions(eq):
+def split_expression(expression):
+    if isinstance(expression, str):
+        return expression
 
-    if isinstance(eq, str):
-        return eq
-
-    if len(eq) > 2:
-        res = createExpressions(eq[2:])
-        if isinstance(res, list):
-            return [eq[:2] + res]
-        return eq[:2] + [res]
-
-    elif len(eq) == 2:
-        return [eq[0], createExpressions(eq[1])]
+    if len(expression) > 2:
+        return [expression[:2] + split_expression(expression[2:])]
+    elif len(expression) == 2:
+        return [expression[0], split_expression(expression[1])]
     else:
-        return eq
+        return expression
 
-print temp(parsedEq[0])
-print temp(eq2)
-print temp(eq3[0])
-print temp(eq4[0])
-print temp(eq5[0])
-print temp(eq6)
-print temp(eq7[0])
-print temp(eq8)
+print divide_expressions(parsedEq[0])
+print divide_expressions(eq2)
+print divide_expressions(eq3[0])
+print divide_expressions(eq4[0])
+print divide_expressions(eq5[0])
+print divide_expressions(eq6)
+print divide_expressions(eq7[0])
+print divide_expressions(eq8)
