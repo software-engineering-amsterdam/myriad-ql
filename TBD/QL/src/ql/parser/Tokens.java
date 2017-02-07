@@ -1,4 +1,4 @@
-// Output created by jacc on Tue Feb 07 13:21:49 CET 2017
+// Output created by jacc on Tue Feb 07 13:29:35 CET 2017
 
 package ql.parser;
 
@@ -6,19 +6,21 @@ interface Tokens {
     int ENDINPUT = 0;
     int AND = 1;
     int EQ = 2;
-    int GEQ = 3;
-    int INT = 4;
-    int LEQ = 5;
-    int NEQ = 6;
-    int OR = 7;
-    int STRING = 8;
-    int TYPEBOOL = 9;
-    int TYPEINT = 10;
-    int TYPESTRING = 11;
-    int UMIN = 12;
-    int UNOT = 13;
-    int UPLUS = 14;
-    int error = 15;
+    int FALSE = 3;
+    int GEQ = 4;
+    int INT = 5;
+    int LEQ = 6;
+    int NEQ = 7;
+    int OR = 8;
+    int STRING = 9;
+    int TRUE = 10;
+    int TYPEBOOL = 11;
+    int TYPEINT = 12;
+    int TYPESTRING = 13;
+    int UMIN = 14;
+    int UNOT = 15;
+    int UPLUS = 16;
+    int error = 17;
     // '!' (code=33)
     // '"' (code=34)
     // '(' (code=40)

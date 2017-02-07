@@ -17,7 +17,7 @@ public class Lexer implements Tokens {
     private static final Map<String, Integer> KEYWORDS = new HashMap<String, Integer>();
 
     private int token;
-    private ASTNode yylval;
+    private Object yylval;
     private int c = ' ';
 
 
@@ -30,6 +30,8 @@ public class Lexer implements Tokens {
         KEYWORDS.put("boolean", TYPEBOOL);
         KEYWORDS.put("int", TYPEINT);
         KEYWORDS.put("string", TYPESTRING);
+        KEYWORDS.put("true", TRUE);
+        KEYWORDS.put("false", FALSE);
     }
 
 
@@ -93,7 +95,7 @@ public class Lexer implements Tokens {
         return token;
     }
 
-    public ASTNode getSemantic() {
+    public Object getSemantic() {
         return yylval;
     }
 }
