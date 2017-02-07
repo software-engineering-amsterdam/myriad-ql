@@ -1,6 +1,6 @@
-module Parser.Token exposing (..)
+module Parser.Token exposing (variableName, quotedString)
 
-import Combine exposing (..)
+import Combine exposing (Parser, string, regex, (*>), (<*))
 
 
 variableName : Parser s String

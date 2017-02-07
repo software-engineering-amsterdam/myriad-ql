@@ -5,6 +5,7 @@ import Combine exposing (..)
 import Combine.Num exposing (int)
 import List exposing (foldr)
 import Parser.Token exposing (variableName)
+import Combine.Extra exposing (trimmed)
 
 
 expression : Parser s Expression
@@ -64,11 +65,11 @@ multiplyOp =
 
 atom : Parser s Expression
 atom =
-    whitespace
-        *> choice
+    trimmed
+        (choice
             [ Integer <$> int
             , Var <$> variableName
             , Boolean <$> (True <$ string "true" <|> False <$ string "false")
-            , ParensExpression <$> (parens expression)
+            , ParensExpression <$> parens expression
             ]
-        <* whitespace
+        )

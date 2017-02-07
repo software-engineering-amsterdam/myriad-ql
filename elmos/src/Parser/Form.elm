@@ -52,7 +52,7 @@ ifBlock =
             succeed IfBlock
                 <*> (string "if" *> whitespace *> parens Expression.expression <* whitespace)
                 <*> block
-                <*> (maybe (whitespace *> string "else" *> whitespace *> block))
+                <*> maybe (whitespace *> string "else" *> whitespace *> block)
 
 
 block : Parser s (List FormItem)

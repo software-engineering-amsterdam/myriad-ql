@@ -1,6 +1,6 @@
-module Combine.Extra exposing (whitespace1)
+module Combine.Extra exposing (whitespace1, trimmed)
 
-import Combine exposing (Parser, fail, succeed, whitespace, (>>=))
+import Combine exposing (Parser, fail, succeed, whitespace, (>>=), (<*), (*>))
 
 
 whitespace1 : Parser s String
@@ -14,3 +14,8 @@ nonEmpty s =
         fail "Expected non empty parse"
     else
         succeed s
+
+
+trimmed : Parser s p -> Parser s p
+trimmed parser =
+    whitespace *> parser <* whitespace
