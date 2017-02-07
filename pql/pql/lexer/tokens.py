@@ -1,8 +1,11 @@
 #!/usr/bin/python
 
-import pql.lexer.lexer as lexer
 
-token_exprs = [
+def get_tokens():
+    return __token_definitions
+
+"""Internal variable, should be exposed through method tokens()"""
+__token_definitions = [
     # The skip-overs
     (r'[ \n\t]+',           None),
     (r'#[^\n]*',            None),
@@ -49,7 +52,3 @@ token_exprs = [
     # Unidentifiable
     (r'.*',                 "UNINDENTIFIED"),
 ]
-
-
-def lex_characters(characters):
-    return lexer.lex(characters, token_exprs)

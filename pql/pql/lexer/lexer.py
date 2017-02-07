@@ -1,8 +1,14 @@
 import sys
 import re
 
+from pql.lexer.tokens import get_tokens
 
-def lex(characters, token_exprs):
+
+def lex_using_default_tokens(characters):
+    return __lex(characters, get_tokens())
+
+
+def __lex(characters, token_exprs):
     pos = 0
     tokens = []
     while pos < len(characters):
