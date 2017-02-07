@@ -8,8 +8,8 @@ class Alternate(Parser):
 
     def __call__(self, tokens, pos):
         left_result = self.left(tokens, pos)
-
         if left_result:
             return left_result
         else:
-            return self.right(tokens, pos)
+            right_result = self.right(tokens, pos)
+            return right_result

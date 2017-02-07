@@ -1,2 +1,4 @@
-elm-stuff
-node_modules
+/elm-stuff
+/node_modules
+/tests/elm-stuff
+/tests/node_modules

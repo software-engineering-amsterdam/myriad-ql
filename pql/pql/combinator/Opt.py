@@ -1,5 +1,5 @@
-import pql.combinator.Parser as Parser
-import pql.combinator.Result as Result
+from pql.combinator.Parser import Parser
+from pql.combinator.Result import Result
 
 
 class Opt(Parser):
