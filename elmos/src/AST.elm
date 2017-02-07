@@ -32,7 +32,7 @@ type Expression
     | ParensExpression Expression
     | MultiplyExpression Expression Expression
     | DivideExpression Expression Expression
-    | AddExpression Expression Expression
+    | PlusExpression Expression Expression
     | MinusExpression Expression Expression
     | LargerThenExpression Expression Expression
     | SmallerThenExpression Expression Expression
