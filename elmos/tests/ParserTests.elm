@@ -1,22 +1,37 @@
 module ParserTests exposing (all)
 
-import Parser exposing (..)
-import ExpressionParser exposing (..)
-import Test exposing (Test, test, concat, describe)
 import AST exposing (..)
-import ParserTestUtil exposing (testWithParser)
+import Expect
+import ExpressionParser exposing (..)
+import Parser exposing (..)
+import ParserTestUtil exposing (parseToMaybe, testWithParser)
+import Samples.Form
+import Test exposing (Test, concat, describe, test)
 
 
 all : Test
 all =
     describe "ParserTests"
-        [ formTokenTests
+        [ sampleTests
+        , formTokenTests
         , varNameTests
         , fieldTests
         , ifBlockTests
         , valueTypeTests
         , expressionTests
         ]
+
+
+sampleTests : Test
+sampleTests =
+    describe "sample tests"
+        (Samples.Form.goodSamples
+            |> List.indexedMap
+                (\n input ->
+                    test ("Sample " ++ toString (n + 1)) <|
+                        \() -> parseToMaybe Parser.form input |> Expect.notEqual Nothing
+                )
+        )
 
 
 formTokenTests : Test

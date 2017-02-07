@@ -10,8 +10,8 @@ import Combine.ExtraTests
 all : Test
 all =
     describe "QL Parser"
-        [ Combine.ExtraTests.all
-        , ParserTests.all
+        [ ParserTests.all
+        , Combine.ExtraTests.all
         , ExpressionParserTests.all
         ]
 

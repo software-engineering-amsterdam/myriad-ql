@@ -8,9 +8,11 @@ import Combine.Extra exposing (whitespace1)
 
 form : Parser s Form
 form =
-    succeed Form
-        <*> (formToken *> whitespace *> variableName <* maybe whitespace)
+    (succeed Form
+        <*> (formToken *> whitespace *> variableName <* whitespace)
         <*> block
+    )
+        <* whitespace
 
 
 formToken : Parser s String
@@ -23,8 +25,8 @@ formItem =
     lazy <|
         \() ->
             choice
-                [ FieldItem <$> field
-                , IfItem <$> ifBlock
+                [ IfItem <$> ifBlock
+                , FieldItem <$> field
                 ]
 
 
@@ -33,8 +35,8 @@ field =
     succeed Field
         <*> fieldLabel
         <*> (whitespace1 *> variableName)
-        <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
-        <*> (maybe (whitespace *> string "=" *> expression))
+        <*> (whitespace *> string ":" *> whitespace *> valueType)
+        <*> maybe (whitespace *> string "=" *> whitespace *> expression)
 
 
 ifBlock : Parser s IfBlock
@@ -49,7 +51,12 @@ ifBlock =
 
 block : Parser s (List FormItem)
 block =
-    lazy <| \() -> braces (whitespace *> many formItem <* whitespace)
+    lazy <| \() -> braces (whitespace *> formItems <* whitespace)
+
+
+formItems : Parser s (List FormItem)
+formItems =
+    lazy <| \() -> sepBy1 whitespace1 formItem
 
 
 expression : Parser s Expression
