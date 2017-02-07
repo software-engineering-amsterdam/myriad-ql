@@ -21,7 +21,7 @@ def parse_form(parser):
         if (hasSoldHouse + newPrice + 4 + 23) {
             sellingPrice: "Price the house was sold for:" money
             privateDebt: "Private debts for the sold house:" money
-            valueResidue: "Value residue:" money(300 * 100)
+            valueResidue: "Value residue:" money(300 * 100 - 20 * 10 * (25 - 3))
             if (newPrice > 20) {
                 privateDebt: "Private debts for the sold house:" money
             }
