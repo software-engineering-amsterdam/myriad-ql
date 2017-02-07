@@ -9,19 +9,22 @@ expression : Parser s Expression
 expression =
     lazy <|
         \() ->
-            chainl logicalOp <|
-                chainl comparisonOp <|
-                    chainl relationalOp <|
-                        chainl addOp <|
-                            chainl multiplyOp atom
+            chainl orOp <|
+                chainl andOp <|
+                    chainl comparisonOp <|
+                        chainl relationalOp <|
+                            chainl addOp <|
+                                chainl multiplyOp atom
 
 
-logicalOp : Parser s (Expression -> Expression -> Expression)
-logicalOp =
-    choice
-        [ AndExpression <$ string "&&"
-        , OrExpression <$ string "||"
-        ]
+andOp : Parser s (Expression -> Expression -> Expression)
+andOp =
+    AndExpression <$ string "&&"
+
+
+orOp : Parser s (Expression -> Expression -> Expression)
+orOp =
+    OrExpression <$ string "||"
 
 
 comparisonOp : Parser s (Expression -> Expression -> Expression)

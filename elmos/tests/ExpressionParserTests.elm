@@ -13,6 +13,7 @@ all =
         , arithmeticTests
         , relationalTests
         , comparisonTests
+        , logicalTests
         ]
 
 
@@ -71,4 +72,15 @@ comparisonTests =
                     (LessThanExpression (Var "y") (Var "z"))
                 )
           )
+        ]
+
+
+logicalTests : Test
+logicalTests =
+    testWithParser ExpressionParser.expression
+        "logicalTests"
+        [ ( "Should parse AND", "x&&y", Just (AndExpression (Var "x") (Var "y")) )
+        , ( "Should parse OR", "x||y", Just (OrExpression (Var "x") (Var "y")) )
+        , ( "AND should preced OR", "x && y || z", Just (OrExpression (AndExpression (Var "x") (Var "y")) (Var "z")) )
+        , ( "OR should be preceded by AND", "x || y && z", Just (OrExpression (Var "x") (AndExpression (Var "y") (Var "z"))) )
         ]
