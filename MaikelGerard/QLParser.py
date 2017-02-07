@@ -40,12 +40,11 @@ class QuestionnaireParser(object):
         )
 
         block = pp.Forward()
-        if_cond = pp.Group(
+        if_cond = \
             self.KW_IF + self.embrace(expression) + self.embrace(block, "curly")
-        )
-        conditional = if_cond + pp.Optional(
-            pp.Group(self.KW_ELSE + self.embrace(block, "curly"))
-        )
+
+        conditional = pp.Group(if_cond + pp.Optional(
+            self.KW_ELSE + self.embrace(block, "curly")))
 
         block << pp.Group(pp.OneOrMore(question | conditional))
 

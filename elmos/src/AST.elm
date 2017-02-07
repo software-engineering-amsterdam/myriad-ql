@@ -32,18 +32,34 @@ type Expression
     | Integer Int
     | Boolean Bool
     | ParensExpression Expression
-    | MultiplyExpression Expression Expression
-    | DivideExpression Expression Expression
-    | PlusExpression Expression Expression
-    | MinusExpression Expression Expression
-    | GreaterThanExpression Expression Expression
-    | LessThanExpression Expression Expression
-    | GreaterThanOrEqualExpression Expression Expression
-    | LessThanOrEqualExpression Expression Expression
-    | EqualToExpression Expression Expression
-    | NotEqualToExpression Expression Expression
-    | AndExpression Expression Expression
-    | OrExpression Expression Expression
+    | ArithmeticExpression Operator Expression Expression
+    | RelationExpression Relation Expression Expression
+    | LogicExpression Logic Expression Expression
+    | ComparisonExpression Comparison Expression Expression
+
+
+type Operator
+    = Plus
+    | Minus
+    | Divide
+    | Multiply
+
+
+type Logic
+    = And
+    | Or
+
+
+type Comparison
+    = Equal
+    | NotEqual
+
+
+type Relation
+    = LessThan
+    | LessThanOrEqual
+    | GreaterThan
+    | GreaterThanOrEqual
 
 
 type ValueType

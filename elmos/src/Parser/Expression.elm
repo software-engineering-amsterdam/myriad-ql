@@ -1,9 +1,11 @@
-module ExpressionParser exposing (..)
+module Parser.Expression exposing (..)
 
+import AST exposing (..)
 import Combine exposing (..)
 import Combine.Num exposing (int)
-import AST exposing (..)
 import List exposing (foldr)
+import Parser.Token exposing (variableName)
+import Combine.Extra exposing (trimmed)
 
 
 expression : Parser s Expression
@@ -19,60 +21,55 @@ expressions =
 
 andOp : Parser s (Expression -> Expression -> Expression)
 andOp =
-    AndExpression <$ string "&&"
+    LogicExpression And <$ string "&&"
 
 
 orOp : Parser s (Expression -> Expression -> Expression)
 orOp =
-    OrExpression <$ string "||"
+    LogicExpression Or <$ string "||"
 
 
 comparisonOp : Parser s (Expression -> Expression -> Expression)
 comparisonOp =
     choice
-        [ EqualToExpression <$ string "=="
-        , NotEqualToExpression <$ string "!="
+        [ ComparisonExpression Equal <$ string "=="
+        , ComparisonExpression NotEqual <$ string "!="
         ]
 
 
 relationalOp : Parser s (Expression -> Expression -> Expression)
 relationalOp =
     choice
-        [ GreaterThanOrEqualExpression <$ string ">="
-        , LessThanOrEqualExpression <$ string "<="
-        , GreaterThanExpression <$ string ">"
-        , LessThanExpression <$ string "<"
+        [ RelationExpression GreaterThanOrEqual <$ string ">="
+        , RelationExpression LessThanOrEqual <$ string "<="
+        , RelationExpression GreaterThan <$ string ">"
+        , RelationExpression LessThan <$ string "<"
         ]
 
 
 addOp : Parser s (Expression -> Expression -> Expression)
 addOp =
     choice
-        [ PlusExpression <$ string "+"
-        , MinusExpression <$ string "-"
+        [ ArithmeticExpression Plus <$ string "+"
+        , ArithmeticExpression Minus <$ string "-"
         ]
 
 
 multiplyOp : Parser s (Expression -> Expression -> Expression)
 multiplyOp =
     choice
-        [ MultiplyExpression <$ string "*"
-        , DivideExpression <$ string "/"
+        [ ArithmeticExpression Multiply <$ string "*"
+        , ArithmeticExpression Divide <$ string "/"
         ]
 
 
 atom : Parser s Expression
 atom =
-    whitespace
-        *> choice
+    trimmed
+        (choice
             [ Integer <$> int
             , Var <$> variableName
             , Boolean <$> (True <$ string "true" <|> False <$ string "false")
-            , ParensExpression <$> (parens expression)
+            , ParensExpression <$> parens expression
             ]
-        <* whitespace
-
-
-variableName : Parser s String
-variableName =
-    regex "[a-z0-9][a-zA-Z0-9_]*"
+        )
