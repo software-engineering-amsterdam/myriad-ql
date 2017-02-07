@@ -1,5 +1,6 @@
 module Parser exposing (..)
 
+import ExpressionParser exposing (..)
 import Combine exposing (..)
 import AST exposing (..)
 import Combine.Extra exposing (whitespace1)
@@ -17,19 +18,14 @@ formToken =
     string "form"
 
 
-{-| TODO: fix tests
--}
-variableName : Parser s String
-variableName =
-    regex "[a-z0-9][a-zA-Z0-9_]*"
-
-
 formItem : Parser s FormItem
 formItem =
-    choice
-        [ FieldItem <$> field
-        , IfItem <$> ifBlock
-        ]
+    lazy <|
+        \() ->
+            choice
+                [ FieldItem <$> field
+                , IfItem <$> ifBlock
+                ]
 
 
 field : Parser s Field

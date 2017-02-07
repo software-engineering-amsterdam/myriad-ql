@@ -1,6 +1,7 @@
 module ParserTests exposing (all)
 
-import Parser
+import Parser exposing (..)
+import ExpressionParser exposing (..)
 import Test exposing (Test, test, concat, describe)
 import AST exposing (..)
 import ParserTestUtil exposing (testWithParser)
@@ -28,7 +29,7 @@ formTokenTests =
 
 varNameTests : Test
 varNameTests =
-    testWithParser Parser.variableName
+    testWithParser ExpressionParser.variableName
         "variableName"
         [ ( "should not parse an empty string", "", Nothing )
         , ( "should parse a single lower case character", "a", Just "a" )

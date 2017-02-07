@@ -29,6 +29,8 @@ type alias IfBlock =
 
 type Expression
     = Var String
+    | Integer Int
+    | Boolean Bool
     | ParensExpression Expression
     | MultiplyExpression Expression Expression
     | DivideExpression Expression Expression
