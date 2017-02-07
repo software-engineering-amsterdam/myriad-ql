@@ -15,9 +15,6 @@ question
     ;
 
 
-expr
-    :
-
 label
     : Str
     ;
@@ -26,10 +23,8 @@ identifier
     : Ident
     ;
 
-
-
 type_specifier
-    : BOOLEAN
+    : BOOL
     | STRING
     | INTEGER
     | DATE
@@ -43,7 +38,7 @@ boolean
     | BANG
     ;
 
-comparison
+comparisons
     : GT
     | LT
     | LE
@@ -60,7 +55,7 @@ DIVIDE : '/';
 
 // Tokens
 
-BOOLEAN : 'boolean' ;
+BOOL : 'boolean' ;
 STRING : 'string' ;
 INTEGER : 'integer' ;
 DATE : 'date' ;

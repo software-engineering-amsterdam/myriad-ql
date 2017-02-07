@@ -17,5 +17,5 @@
  *  under the License.
  */
 
-public class FooTest {
+public class ParseTest {
 }
