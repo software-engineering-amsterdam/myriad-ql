@@ -40,10 +40,10 @@ comparisonOp =
 relationalOp : Parser s (Expression -> Expression -> Expression)
 relationalOp =
     choice
-        [ GreaterThanOrEqualExpression <$ string ">="
-        , LessThanOrEqualExpression <$ string "<="
-        , GreaterThanExpression <$ string ">"
-        , LessThanExpression <$ string "<"
+        [ RelationExpression GreaterThanOrEqual <$ string ">="
+        , RelationExpression LessThanOrEqual <$ string "<="
+        , RelationExpression GreaterThan <$ string ">"
+        , RelationExpression LessThan <$ string "<"
         ]
 
 

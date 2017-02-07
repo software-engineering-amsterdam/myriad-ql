@@ -43,14 +43,15 @@ relationalTests : Test
 relationalTests =
     testWithParser expression
         "relationalTests"
-        [ ( "Should parse less than relation", "x < y", Just (LessThanExpression (Var "x") (Var "y")) )
-        , ( "Should parse greater than relation", "x > y", Just (GreaterThanExpression (Var "x") (Var "y")) )
-        , ( "Should parse less than equal relation", "x <= y", Just (LessThanOrEqualExpression (Var "x") (Var "y")) )
-        , ( "Should parse greater than equal relation", "x >= y", Just (GreaterThanOrEqualExpression (Var "x") (Var "y")) )
+        [ ( "Should parse less than relation", "x < y", Just (RelationExpression LessThan (Var "x") (Var "y")) )
+        , ( "Should parse greater than relation", "x > y", Just (RelationExpression GreaterThan (Var "x") (Var "y")) )
+        , ( "Should parse less than equal relation", "x <= y", Just (RelationExpression LessThanOrEqual (Var "x") (Var "y")) )
+        , ( "Should parse greater than equal relation", "x >= y", Just (RelationExpression GreaterThanOrEqual (Var "x") (Var "y")) )
         , ( "Should parse relation with arithmetic"
           , "x+y < z * a"
           , Just
-                (LessThanExpression
+                (RelationExpression
+                    LessThan
                     (ArithmeticExpression Plus (Var "x") (Var "y"))
                     (ArithmeticExpression Multiply (Var "z") (Var "a"))
                 )
@@ -69,7 +70,7 @@ comparisonTests =
           , Just
                 (ComparisonExpression Equal
                     (ArithmeticExpression Plus (Var "x") (Var "y"))
-                    (LessThanExpression (Var "y") (Var "z"))
+                    (RelationExpression LessThan (Var "y") (Var "z"))
                 )
           )
         ]

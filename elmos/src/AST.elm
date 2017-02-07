@@ -33,10 +33,7 @@ type Expression
     | Boolean Bool
     | ParensExpression Expression
     | ArithmeticExpression Operator Expression Expression
-    | GreaterThanExpression Expression Expression
-    | LessThanExpression Expression Expression
-    | GreaterThanOrEqualExpression Expression Expression
-    | LessThanOrEqualExpression Expression Expression
+    | RelationExpression Relation Expression Expression
     | LogicExpression Logic Expression Expression
     | ComparisonExpression Comparison Expression Expression
 
@@ -56,6 +53,13 @@ type Logic
 type Comparison
     = Equal
     | NotEqual
+
+
+type Relation
+    = LessThan
+    | LessThanOrEqual
+    | GreaterThan
+    | GreaterThanOrEqual
 
 
 type ValueType
