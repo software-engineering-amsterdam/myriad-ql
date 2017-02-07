@@ -26,7 +26,7 @@
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
-AlternativeQL.iml
+*.iml
 
 ## File-based project format:
 *.iws
