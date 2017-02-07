@@ -83,3 +83,91 @@ badExample6 =
 }
 """
     )
+
+
+badExample7 : ( String, String )
+badExample7 =
+    ( "cyclic dependency over 4 fields"
+    , """form myForm {
+  "Value 1:"
+    bool1: boolean = (bool2)
+
+  "Value 2:"
+    bool2: boolean = (bool3)
+
+  "Value 3:"
+    bool3: boolean = (bool4)
+
+  "Value 4:"
+    bool4: boolean = (bool1)
+}
+"""
+    )
+
+
+badExample8 : ( String, String )
+badExample8 =
+    ( "arithmitic with boolean values"
+    , """form myForm {
+  "Value 1:"
+    bool1: boolean
+
+  "Value 2:"
+    bool2: boolean
+
+  "Computation:"
+    myNumber: number = (bool1 + bool2)
+}
+"""
+    )
+
+
+badExample9 : ( String, String )
+badExample9 =
+    ( "arithmetic with string values"
+    , """form myForm {
+  "Value 1:"
+    text1: string
+
+  "Value 2:"
+    text2: string
+
+  "Computation:"
+    myNumber: number = (text1 + text2)
+}
+"""
+    )
+
+
+badExample10 : ( String, String )
+badExample10 =
+    ( "boolean logic with string values"
+    , """form myForm {
+  "Value 1:"
+    text1: string
+
+  "Value 2:"
+    text2: string
+
+  "Value 3:"
+    bool1: bool = (text1 && text2)
+}
+"""
+    )
+
+
+badExample11 : ( String, String )
+badExample11 =
+    ( "boolean logic with numeric values"
+    , """form myForm {
+  "Value 1:"
+    number1: money
+
+  "Value 2:"
+    number2: money
+
+  "Value 3:"
+    bool1: bool = (number1 && number2)
+}
+"""
+    )
