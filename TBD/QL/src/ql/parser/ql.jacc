@@ -3,7 +3,7 @@
 %interface QLTokens
 %start form
 
-%token ':' '"' TYPEBOOL TYPEINT TYPESTRING TRUE FALSE FORM
+%token ':' '"' TYPEBOOL TYPEINT TYPESTRING TYPEMONEY TYPEFLOAT TYPEDATE TRUE FALSE FORM
 %token <QLString> STRING
 %token <QLInt> INT
 %token <QLFloat> FLOAT
@@ -58,6 +58,9 @@ import ql.ast.expressions.*;
  type : TYPEBOOL        {$$ = Type.TYPEBOOL;}
        | TYPEINT        {$$ = Type.TYPEINT;}
        | TYPESTRING     {$$ = Type.TYPESTRING;}
+       | TYPEMONEY     {$$ = Type.TYPEMONEY;}
+       | TYPEFLOAT     {$$ = Type.TYPEFLOAT;}
+       | TYPEDATE     {$$ = Type.TYPEDATE;}
        ;
 
  if :  IF '(' expr ')' '{' statements '}' {$$ = new If($3, $6);}

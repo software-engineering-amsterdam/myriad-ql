@@ -1,4 +1,4 @@
-// Output created by jacc on Tue Feb 07 14:59:30 CET 2017
+// Output created by jacc on Tue Feb 07 15:08:20 CET 2017
 
 package ql.parser;
 
@@ -21,12 +21,15 @@ interface QLTokens {
     int STRING = 15;
     int TRUE = 16;
     int TYPEBOOL = 17;
-    int TYPEINT = 18;
-    int TYPESTRING = 19;
-    int UMIN = 20;
-    int UNOT = 21;
-    int UPLUS = 22;
-    int error = 23;
+    int TYPEDATE = 18;
+    int TYPEFLOAT = 19;
+    int TYPEINT = 20;
+    int TYPEMONEY = 21;
+    int TYPESTRING = 22;
+    int UMIN = 23;
+    int UNOT = 24;
+    int UPLUS = 25;
+    int error = 26;
     // '!' (code=33)
     // '"' (code=34)
     // '(' (code=40)
