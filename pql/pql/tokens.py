@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import pql.lexer.lexer as lexer
 
 token_exprs = [
