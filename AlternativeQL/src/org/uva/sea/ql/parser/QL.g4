@@ -1,33 +1,37 @@
 grammar QL;
 
 form
-    :   T_FORM T_STRING T_OPEN_BRACKET (declaration)* T_CLOSE_BRACKET
+    :   FORM ID OPEN_BRACKET (declaration)* CLOSE_BRACKET
     ;
 
 declaration
-    :   question T_SEMICOLON
+    :   question SEMICOLON
     |   statement
     ;
 
 question
-    :   type T_STRING T_COLON T_TEXT default_value?
-    |   type T_ASSIGN expression T_COLON T_TEXT default_value?
+    :   type ID COLON STRING defaulvalue?
+    |   type ASSIGN expression COLON STRING defaulvalue?
     ;
 
 statement
-    :   T_IF T_OPEN_PARENT expression T_CLOSE_PARENT T_OPEN_BRACKET declaration* T_CLOSE_BRACKET (T_ELSE statement)?
+    :   IF OPEN_PARENT expression CLOSE_PARENT OPEN_BRACKET declaration* CLOSE_BRACKET (ELSE statement)?
     ;
 
-default_value
-    :   T_ASSIGN expression
+defaulvalue
+    :   ASSIGN expression
     ;
 
 expression
-    :
-    |   T_OPEN_PARENT expression T_CLOSE_PARENT
-    |   '!' expression
-    |   expression '*'<assoc=left> expression
-    |   expression '/'<assoc=left> expression
+    :   boolean_literal
+    |   string_literal
+    |   float_literal
+    |   integer_literal
+    |   parameter
+    |   OPEN_PARENT expression CLOSE_PARENT
+    |   <assoc=right> '!' expression
+    |   <assoc=left> expression '/' expression
+    |   <assoc=left> expression '*' expression
     |   expression '-' expression
     |   expression '+' expression
     |   expression '>' expression
@@ -39,54 +43,64 @@ expression
     |   expression '<=' expression
     |   expression '>=' expression
     |   expression ('&&'|'||') expression
-    |   literal
     ;
 
-literal
-    :
-    |   T_BOOLEAN
-    |   T_INTEGER
-    |   T_MONEY
-    |   T_FLOAT
-    |   T_STRING
+parameter
+    :   ID
+    ;
+
+boolean_literal
+    :   BOOLEAN
+    ;
+
+string_literal
+    :   STRING
+    ;
+
+float_literal
+    :   FLOAT
+    ;
+
+integer_literal
+    :   INTEGER
     ;
 
 type
     :   'boolean'
     |   'float'
     |   'money'
-    |   'string'
+    |   'ID'
     |   'integer'
     |   'date'
     ;
 
-T_ASSIGN : '=';
-T_IF : 'if';
-T_ELSE : 'else';
-T_TEXT :   '"' (T_ESC | ~ ["\\])* '"';
-T_COLON :   ':';
-T_FORM :   'form';
-T_STRING : ([a-zA-Z0-9_])+;
-T_MONEY : [0-9].([0-9])?;
-T_FLOAT : [0-9].([0-9])?;
-T_INTEGER : [0-9];
-T_BOOLEAN : 'true' | 'false';
-T_OPEN_BRACKET :   '{';
-T_CLOSE_BRACKET: '}';
-T_OPEN_PARENT : '(';
-T_CLOSE_PARENT : ')';
+ASSIGN : '=';
+IF : 'if';
+ELSE : 'else';
+COLON : ':';
+FORM : 'form';
+BOOLEAN : 'true' | 'false';
+OPEN_BRACKET :   '{';
+CLOSE_BRACKET: '}';
+OPEN_PARENT : '(';
+CLOSE_PARENT : ')';
+SEMICOLON : ';';
+
 LINE_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
-T_SEMICOLON : ';';
+STRING : '"' (ESC | ~ ["\\])* '"';
+FLOAT : [0-9]+ '.' [0-9]+;
+ID : [a-zA-Z][a-zA-Z0-9_]+;
+INTEGER : [0-9]+;
 
 WS  :  [ \t\r\n\u000C]+ -> skip
     ;
 
-fragment T_ESC
-   : '\\' (["\\/bfnrt] | T_UNICODE)
+fragment ESC
+   : '\\' (["\\/bfnrt] | UNICODE)
    ;
-fragment T_UNICODE
-   : 'u' T_HEX T_HEX T_HEX T_HEX
+fragment UNICODE
+   : 'u' HEX HEX HEX HEX
    ;
-fragment T_HEX
+fragment HEX
    : [0-9a-fA-F]
    ;
