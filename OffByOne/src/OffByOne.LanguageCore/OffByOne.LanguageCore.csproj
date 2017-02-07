@@ -65,9 +65,20 @@
     <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
     <Compile Include="Ast\Expressions\Unary\PositiveExpression.cs" />
     <Compile Include="Ast\Expressions\VariableExpression.cs" />
+    <Compile Include="Ast\Statements\Branch\ElseStatement.cs" />
+    <Compile Include="Ast\Statements\FormStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\Base\QuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\BooleanQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\DateQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\DecimalQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\IntegerQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Statement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
     <None Include="OffByOne.LanguageCore.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
