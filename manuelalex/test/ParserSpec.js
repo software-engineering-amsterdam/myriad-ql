@@ -25,6 +25,8 @@ describe('DataSource', () => {
         it('returns valid parsed text', () => {
             let parser = new imports.Parser();
             let form = new imports.Form("My valid input");
+            //parser.lexer("");
+
             // TODO make actual input
             expect(parser.parse('My valid input')._name).to.equal(form._name);
         });
