@@ -1,5 +1,6 @@
 module Parser exposing (..)
 
+import ExpressionParser exposing (..)
 import Combine exposing (..)
 import AST exposing (..)
 import Combine.Extra exposing (whitespace1)
@@ -7,9 +8,11 @@ import Combine.Extra exposing (whitespace1)
 
 form : Parser s Form
 form =
-    succeed Form
-        <*> (formToken *> whitespace *> variableName <* maybe whitespace)
+    (succeed Form
+        <*> (formToken *> whitespace *> variableName <* whitespace)
         <*> block
+    )
+        <* whitespace
 
 
 formToken : Parser s String
@@ -17,19 +20,14 @@ formToken =
     string "form"
 
 
-{-| TODO: fix tests
--}
-variableName : Parser s String
-variableName =
-    regex "[a-z0-9][a-zA-Z0-9_]*"
-
-
 formItem : Parser s FormItem
 formItem =
-    choice
-        [ FieldItem <$> field
-        , IfItem <$> ifBlock
-        ]
+    lazy <|
+        \() ->
+            choice
+                [ IfItem <$> ifBlock
+                , FieldItem <$> field
+                ]
 
 
 field : Parser s Field
@@ -37,8 +35,8 @@ field =
     succeed Field
         <*> fieldLabel
         <*> (whitespace1 *> variableName)
-        <*> (maybe whitespace *> string ":" *> maybe whitespace *> valueType)
-        <*> (maybe (whitespace *> string "=" *> expression))
+        <*> (whitespace *> string ":" *> whitespace *> valueType)
+        <*> maybe (whitespace *> string "=" *> whitespace *> expression)
 
 
 ifBlock : Parser s IfBlock
@@ -53,11 +51,14 @@ ifBlock =
 
 block : Parser s (List FormItem)
 block =
-    lazy <| \() -> braces (whitespace *> many formItem <* whitespace)
+    lazy <| \() -> braces (whitespace *> formItems <* whitespace)
 
 
-{-| TODO add more
--}
+formItems : Parser s (List FormItem)
+formItems =
+    lazy <| \() -> sepBy1 whitespace1 formItem
+
+
 expression : Parser s Expression
 expression =
     lazy <|

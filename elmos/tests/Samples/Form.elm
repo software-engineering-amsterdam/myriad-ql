@@ -1,8 +1,37 @@
-module Samples exposing (..)
+module Samples.Form exposing (..)
+
+
+goodSamples : List String
+goodSamples =
+    [ goodExample1
+    , goodExample2
+    , goodExample3
+    ]
 
 
 goodExample1 : String
 goodExample1 =
+    """form taxOfficeExample {
+  "Did you sell a house in 2010?"
+    hasSoldHouse: boolean
+}
+"""
+
+
+goodExample2 : String
+goodExample2 =
+    """form taxOfficeExample {
+  "Did you sell a house in 2010?"
+    hasSoldHouse: boolean
+
+  "Did you buy a house in 2010?"
+    hasBoughtHouse: boolean
+}
+"""
+
+
+goodExample3 : String
+goodExample3 =
     """form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
@@ -20,5 +49,4 @@ goodExample1 =
       valueResidue: money =
         (sellingPrice - privateDebt)
   }
-
 }"""
