@@ -12,6 +12,13 @@ dis_op = "||"
 con_op = "&&"
 eq_op = oneOf("== !=")
 
+semicolon = Suppress(":")
+bracket_open = Suppress("{")
+bracket_close = Suppress("}")
+assignment = Suppress("=")
+
+
+
 num_expr = Forward()
 num_atom = Word(nums) ^ identifier ^ "(" + num_expr + ")"
 num_expr <<= operatorPrecedence(num_atom, [(sign_op, 1, opAssoc.RIGHT),
@@ -30,11 +37,11 @@ bool_expr <<= operatorPrecedence(bool_atom, [(neg_op, 1, opAssoc.RIGHT),
 expression = bool_expr ^ num_expr
 
 block = Forward()
-question = identifier + ":" + QuotedString("\"") + datatype + Optional("=" + expression)
-conditional = Literal("if") + Literal("(") + bool_expr + Literal(")") + Literal("{") + block + Literal("}")
-statement = question ^ conditional
+question = identifier + semicolon + QuotedString("\"") + datatype + Optional(assignment + Group(expression))
+conditional = Literal("if") + Group(bool_expr) + bracket_open + block + bracket_close
+statement = Group(question ^ conditional)
 block <<= ZeroOrMore(statement)
 
-form = "form" + identifier + "{" + block + "}"
+form = Literal("form") + identifier + bracket_open + block + bracket_close
 
-print(expression.parseString("(x < 3) == true || false"))
+print(form.parseFile("JurgenPeter/testForm.txt"))
