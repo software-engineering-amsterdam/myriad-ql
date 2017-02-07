@@ -116,10 +116,14 @@ class ExpressionNode(Node):
         super(ExpressionNode, self).__init__("expression")
 
         self.right = None
+        self.op = None
         self.left = None
 
-        # Postfix operators
-        if expr_data[0] in ['!', '-']:
+        # A single variable or number
+        if not isinstance(expr_data, list):
+            self.left = expr_data
+
+        elif expr_data[0] in ['!', '-']:  # Postfix operators
             self.op = expr_data[0]
             self.right = self.add_expression(expr_data[1])
 
@@ -138,13 +142,14 @@ class ExpressionNode(Node):
         output = ""
         if self.left is not None:
             if isinstance(self.left, ExpressionNode):
-                output += "({}) ".format(self.left)
+                output += "({})".format(self.left)
             else:
-                output += "{} ".format(self.left)
-        if isinstance(self.right, ExpressionNode):
-            output += "{} ({})".format(self.op, self.right)
-        else:
-            output += "{} {}".format(self.op, self.right)
+                output += "{}".format(self.left)
+        if self.right is not None:
+            if isinstance(self.right, ExpressionNode):
+                output += " {} ({})".format(self.op, self.right)
+            else:
+                output += " {} {}".format(self.op, self.right)
         return output
 
 
@@ -159,7 +164,7 @@ if __name__ == '__main__':
             sellingPrice: "Price the house was sold for:" money
             privateDebt: "Private debts for the sold house:" money
             valueResidue: "Value residue:" money(300 * 100 - 20 * 10 * (25 - 3))
-            if (newPrice > 20) {
+            if (newPrice) {
                 privateDebt: "Private debts for the sold house:" money
             }
             else {
