@@ -1,11 +1,10 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Combine exposing (..)
 import Combine.ExtraTests
 import Parser.ExpressionTests as ExpressionTests
 import Parser.FormTests as FormTests
 import Parser.TokenTests as TokenTests
-import Test exposing (..)
+import Test exposing (Test, describe)
 
 
 all : Test
@@ -16,13 +15,3 @@ all =
         , ExpressionTests.all
         , TokenTests.all
         ]
-
-
-parseToMaybe : Parser () res -> String -> Maybe res
-parseToMaybe p s =
-    case Combine.parse p s of
-        Err e ->
-            Nothing
-
-        Ok ( _, _, res ) ->
-            Just res

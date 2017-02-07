@@ -1,4 +1,4 @@
-module Samples.Form exposing (..)
+module Samples.Form exposing (goodSamples)
 
 
 goodSamples : List String

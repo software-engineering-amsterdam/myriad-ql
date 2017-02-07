@@ -1,11 +1,17 @@
 module Parser.FormTests exposing (all)
 
-import AST exposing (..)
+import AST
+    exposing
+        ( FormItem(FieldItem, IfItem)
+        , ValueType(IntegerType, BooleanType, StringType)
+        , Expression(Var, Integer, ArithmeticExpression)
+        , Operator(Plus)
+        )
 import Expect
-import Parser.Form as Form exposing (..)
+import Parser.Form as Form
 import ParserTestUtil exposing (parseToMaybe, testWithParser)
-import Samples.Form
-import Test exposing (Test, concat, describe, test)
+import Samples.Form as Samples
+import Test exposing (Test, describe, test)
 
 
 all : Test
@@ -24,7 +30,7 @@ all =
 sampleTests : Test
 sampleTests =
     describe "sample tests"
-        (Samples.Form.goodSamples
+        (Samples.goodSamples
             |> List.indexedMap
                 (\n input ->
                     test ("Sample " ++ toString (n + 1)) <|

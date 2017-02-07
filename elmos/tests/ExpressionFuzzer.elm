@@ -1,4 +1,4 @@
-module ExpressionFuzzer exposing (..)
+module ExpressionFuzzer exposing (expression)
 
 import Char
 import Fuzz exposing (Fuzzer, frequencyOrCrash, intRange, constant)

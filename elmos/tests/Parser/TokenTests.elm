@@ -2,7 +2,7 @@ module Parser.TokenTests exposing (all)
 
 import Parser.Token as Token
 import ParserTestUtil exposing (testWithParser)
-import Test exposing (Test, test, concat, describe)
+import Test exposing (Test, describe)
 
 
 all : Test
