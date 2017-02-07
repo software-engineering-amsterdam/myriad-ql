@@ -1,10 +1,14 @@
 ﻿grammar Ql;
 
-form : 'form' Identifier '{' (question|if)+ '}' ;
+form : 'form' Identifier '{' stat+ '}' ;
 question : StringLiteral + Identifier + ':' + Type ;
+stat
+	: question
+	| if
+	;
 
-if : 'if' booleanExpression '{' question+ '}' else? ;
-else : 'else' (if | '{' question+ '}') ;
+if : 'if' booleanExpression '{' stat+ '}' else? ;
+else : 'else' (if | '{' stat+ '}') ;
 
 booleanExpression
 	: 'true'
