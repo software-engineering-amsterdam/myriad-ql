@@ -24,7 +24,7 @@ testParser p ( name, input, output ) =
 parseToMaybe : Parser () res -> String -> Maybe res
 parseToMaybe p s =
     case Combine.parse (p <* end) s of
-        Err e ->
+        Err _ ->
             Nothing
 
         Ok ( _, _, res ) ->

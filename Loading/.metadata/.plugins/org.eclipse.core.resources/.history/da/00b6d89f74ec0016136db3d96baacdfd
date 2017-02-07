@@ -1,0 +1,23 @@
+import org.antlr.v4.runtime.*;
+    import org.antlr.v4.runtime.tree.*;
+    public class HelloRunner 
+    {
+        public static void main( String[] args) throws Exception 
+        {
+        	
+        	String tmp = "// dit is een comment\n"
+        			+ "form bla { "
+        			+ "Name: \"Vraag?\" boolean }\n"
+        			+ "// dit is een comment2\n";
+        	
+            ANTLRInputStream input = new ANTLRInputStream( tmp );
+
+            HelloLexer lexer = new HelloLexer(input);
+
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+            HelloParser parser = new HelloParser(tokens);
+            ParseTree tree = parser.root(); // begin parsing at rule 'r'
+            System.out.println(tree.toStringTree(parser)); // print LISP-style tree
+        }
+    }

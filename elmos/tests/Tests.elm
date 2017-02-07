@@ -1,29 +1,17 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Test exposing (..)
-import Combine exposing (..)
-import Expect
-import Parser exposing (..)
-import ParserTests
 import Combine.ExtraTests
+import Parser.ExpressionTests as ExpressionTests
+import Parser.FormTests as FormTests
+import Parser.TokenTests as TokenTests
+import Test exposing (Test, describe)
 
 
 all : Test
 all =
     describe "QL Parser"
-        [ ParserTests.all
+        [ FormTests.all
         , Combine.ExtraTests.all
-        , test "QuestionLabel" <|
-            \() ->
-                Expect.equal (parseToMaybe fieldLabel "\"Is this a question?\"") (Just "Is this a question?")
+        , ExpressionTests.all
+        , TokenTests.all
         ]
-
-
-parseToMaybe : Parser () res -> String -> Maybe res
-parseToMaybe p s =
-    case Combine.parse p s of
-        Err e ->
-            Nothing
-
-        Ok ( _, _, res ) ->
-            Just res
