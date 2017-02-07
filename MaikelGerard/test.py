@@ -1,4 +1,7 @@
+from QL_Parser import QuestionnaireParser
+
 parsedEq = [['!', ['30', '+', '239.0', '-', '239', '+', '239']]]
+eq1 = ['20', '*', '50', '/', '2']
 eq2 = ['30']
 eq3 = [['newPrice', '*', '1000']]
 eq4 = [['40', '*', '30']]
@@ -6,7 +9,6 @@ eq5 = [['40', '+', '30']]
 eq6 = ['hoi']
 eq7 = [['388.923', '+', ['39.9', '*', 'hoi']]]
 eq8 = ['!', '100']
-
 
 def divide_expressions(eq):
     splitted_expr = split_expression(eq)
@@ -40,11 +42,25 @@ def split_expression(expression):
     else:
         return expression
 
-print divide_expressions(parsedEq[0])
-print divide_expressions(eq2)
-print divide_expressions(eq3[0])
-print divide_expressions(eq4[0])
-print divide_expressions(eq5[0])
-print divide_expressions(eq6)
-print divide_expressions(eq7[0])
-print divide_expressions(eq8)
+
+def binary_expr(expr):
+    # When handed a string instead of a list, just return the string.
+    if isinstance(expr, str):
+        return expr
+
+    # Case: expr op expr
+    if len(expr) > 2:
+        return [expr[:2] + binary_expr(expr[2:])]
+    # Case: op expr
+    elif len(expr) == 2:
+        return [expr.asList()]
+    else:
+        return expr
+
+parser = QuestionnaireParser()
+expr = parser.define_expression()
+eq9 = expr.parseString("5 + 10 / 234 / 1 - 20 && (19 * 12) || 2", parseAll=True)
+print eq9.asList()
+eq10 = expr.parseString("10 && 20 || 2", parseAll=True)
+print eq10.asList()
+print expr.parseString('30 + 239.0 - 239 * 239', parseAll=True).asList()
