@@ -1,4 +1,4 @@
-// Generated from QL.g4 by ANTLR 4.6
+// Generated from QLParser.g4 by ANTLR 4.6
 package org.ql.parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class QLParser extends Parser {
+public class QLParserParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -80,7 +80,7 @@ public class QLParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "QL.g4"; }
+	public String getGrammarFileName() { return "QLParser.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -91,15 +91,15 @@ public class QLParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public QLParser(TokenStream input) {
+	public QLParserParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class FormContext extends ParserRuleContext {
-		public TerminalNode FORM() { return getToken(QLParser.FORM, 0); }
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
-		public TerminalNode OPEN_BRACKET() { return getToken(QLParser.OPEN_BRACKET, 0); }
-		public TerminalNode CLOSE_BRACKET() { return getToken(QLParser.CLOSE_BRACKET, 0); }
+		public TerminalNode FORM() { return getToken(QLParserParser.FORM, 0); }
+		public TerminalNode ID() { return getToken(QLParserParser.ID, 0); }
+		public TerminalNode OPEN_BRACKET() { return getToken(QLParserParser.OPEN_BRACKET, 0); }
+		public TerminalNode CLOSE_BRACKET() { return getToken(QLParserParser.CLOSE_BRACKET, 0); }
 		public List<DeclarationContext> declaration() {
 			return getRuleContexts(DeclarationContext.class);
 		}
@@ -112,11 +112,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_form; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterForm(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterForm(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitForm(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitForm(this);
 		}
 	}
 
@@ -166,7 +166,7 @@ public class QLParser extends Parser {
 		public QuestionContext question() {
 			return getRuleContext(QuestionContext.class,0);
 		}
-		public TerminalNode SEMICOLON() { return getToken(QLParser.SEMICOLON, 0); }
+		public TerminalNode SEMICOLON() { return getToken(QLParserParser.SEMICOLON, 0); }
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
@@ -176,11 +176,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_declaration; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterDeclaration(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterDeclaration(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitDeclaration(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitDeclaration(this);
 		}
 	}
 
@@ -231,13 +231,13 @@ public class QLParser extends Parser {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
-		public TerminalNode COLON() { return getToken(QLParser.COLON, 0); }
-		public TerminalNode STRING() { return getToken(QLParser.STRING, 0); }
+		public TerminalNode ID() { return getToken(QLParserParser.ID, 0); }
+		public TerminalNode COLON() { return getToken(QLParserParser.COLON, 0); }
+		public TerminalNode STRING() { return getToken(QLParserParser.STRING, 0); }
 		public DefaulvalueContext defaulvalue() {
 			return getRuleContext(DefaulvalueContext.class,0);
 		}
-		public TerminalNode ASSIGN() { return getToken(QLParser.ASSIGN, 0); }
+		public TerminalNode ASSIGN() { return getToken(QLParserParser.ASSIGN, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -247,11 +247,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_question; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterQuestion(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterQuestion(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitQuestion(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitQuestion(this);
 		}
 	}
 
@@ -325,21 +325,21 @@ public class QLParser extends Parser {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
-		public TerminalNode IF() { return getToken(QLParser.IF, 0); }
-		public TerminalNode OPEN_PARENT() { return getToken(QLParser.OPEN_PARENT, 0); }
+		public TerminalNode IF() { return getToken(QLParserParser.IF, 0); }
+		public TerminalNode OPEN_PARENT() { return getToken(QLParserParser.OPEN_PARENT, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode CLOSE_PARENT() { return getToken(QLParser.CLOSE_PARENT, 0); }
-		public TerminalNode OPEN_BRACKET() { return getToken(QLParser.OPEN_BRACKET, 0); }
-		public TerminalNode CLOSE_BRACKET() { return getToken(QLParser.CLOSE_BRACKET, 0); }
+		public TerminalNode CLOSE_PARENT() { return getToken(QLParserParser.CLOSE_PARENT, 0); }
+		public TerminalNode OPEN_BRACKET() { return getToken(QLParserParser.OPEN_BRACKET, 0); }
+		public TerminalNode CLOSE_BRACKET() { return getToken(QLParserParser.CLOSE_BRACKET, 0); }
 		public List<DeclarationContext> declaration() {
 			return getRuleContexts(DeclarationContext.class);
 		}
 		public DeclarationContext declaration(int i) {
 			return getRuleContext(DeclarationContext.class,i);
 		}
-		public TerminalNode ELSE() { return getToken(QLParser.ELSE, 0); }
+		public TerminalNode ELSE() { return getToken(QLParserParser.ELSE, 0); }
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
@@ -349,11 +349,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterStatement(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitStatement(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitStatement(this);
 		}
 	}
 
@@ -416,7 +416,7 @@ public class QLParser extends Parser {
 	}
 
 	public static class DefaulvalueContext extends ParserRuleContext {
-		public TerminalNode ASSIGN() { return getToken(QLParser.ASSIGN, 0); }
+		public TerminalNode ASSIGN() { return getToken(QLParserParser.ASSIGN, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -426,11 +426,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_defaulvalue; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterDefaulvalue(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterDefaulvalue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitDefaulvalue(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitDefaulvalue(this);
 		}
 	}
 
@@ -473,25 +473,25 @@ public class QLParser extends Parser {
 		public ParameterContext parameter() {
 			return getRuleContext(ParameterContext.class,0);
 		}
-		public TerminalNode OPEN_PARENT() { return getToken(QLParser.OPEN_PARENT, 0); }
+		public TerminalNode OPEN_PARENT() { return getToken(QLParserParser.OPEN_PARENT, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode CLOSE_PARENT() { return getToken(QLParser.CLOSE_PARENT, 0); }
+		public TerminalNode CLOSE_PARENT() { return getToken(QLParserParser.CLOSE_PARENT, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterExpression(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterExpression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitExpression(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitExpression(this);
 		}
 	}
 
@@ -762,18 +762,18 @@ public class QLParser extends Parser {
 	}
 
 	public static class ParameterContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
+		public TerminalNode ID() { return getToken(QLParserParser.ID, 0); }
 		public ParameterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_parameter; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterParameter(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterParameter(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitParameter(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitParameter(this);
 		}
 	}
 
@@ -799,18 +799,18 @@ public class QLParser extends Parser {
 	}
 
 	public static class Boolean_literalContext extends ParserRuleContext {
-		public TerminalNode BOOLEAN() { return getToken(QLParser.BOOLEAN, 0); }
+		public TerminalNode BOOLEAN() { return getToken(QLParserParser.BOOLEAN, 0); }
 		public Boolean_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_boolean_literal; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterBoolean_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterBoolean_literal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitBoolean_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitBoolean_literal(this);
 		}
 	}
 
@@ -836,18 +836,18 @@ public class QLParser extends Parser {
 	}
 
 	public static class String_literalContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(QLParser.STRING, 0); }
+		public TerminalNode STRING() { return getToken(QLParserParser.STRING, 0); }
 		public String_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_string_literal; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterString_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterString_literal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitString_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitString_literal(this);
 		}
 	}
 
@@ -873,18 +873,18 @@ public class QLParser extends Parser {
 	}
 
 	public static class Float_literalContext extends ParserRuleContext {
-		public TerminalNode FLOAT() { return getToken(QLParser.FLOAT, 0); }
+		public TerminalNode FLOAT() { return getToken(QLParserParser.FLOAT, 0); }
 		public Float_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_float_literal; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterFloat_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterFloat_literal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitFloat_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitFloat_literal(this);
 		}
 	}
 
@@ -910,18 +910,18 @@ public class QLParser extends Parser {
 	}
 
 	public static class Integer_literalContext extends ParserRuleContext {
-		public TerminalNode INTEGER() { return getToken(QLParser.INTEGER, 0); }
+		public TerminalNode INTEGER() { return getToken(QLParserParser.INTEGER, 0); }
 		public Integer_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_integer_literal; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterInteger_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterInteger_literal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitInteger_literal(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitInteger_literal(this);
 		}
 	}
 
@@ -953,11 +953,11 @@ public class QLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterType(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitType(this);
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitType(this);
 		}
 	}
 
