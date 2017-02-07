@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using OffByOne.LanguageCore.Ast.Expressions;
+
     public class IfStatement : Statement
     {
         public IfStatement(Expression condition, IList statements, ElseStatement elseStatement = null)

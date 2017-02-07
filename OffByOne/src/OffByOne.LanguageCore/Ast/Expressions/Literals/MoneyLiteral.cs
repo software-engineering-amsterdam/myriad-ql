@@ -7,6 +7,7 @@
         {
             this.Value = value;
         }
+
         public float Value { get; set; }
     }
 }

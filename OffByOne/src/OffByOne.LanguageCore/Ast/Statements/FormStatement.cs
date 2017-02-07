@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Statements
 {
     using System.Collections;
+
     public class FormStatement : Statement
     {
         public FormStatement(string identifier, IList statements)

@@ -6,6 +6,7 @@
         {
             this.Value = value;
         }
+
         public decimal Value { get; set; }
     }
 }

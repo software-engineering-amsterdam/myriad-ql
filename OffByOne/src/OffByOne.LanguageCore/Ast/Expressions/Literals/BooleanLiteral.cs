@@ -6,6 +6,7 @@
         {
             this.Value = value;
         }
+
         public bool Value { get; set; }
     }
 }

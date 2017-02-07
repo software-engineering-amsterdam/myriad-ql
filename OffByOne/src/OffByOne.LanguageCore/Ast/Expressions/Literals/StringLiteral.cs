@@ -6,6 +6,7 @@
         {
             this.Value = value;
         }
+
         public string Value { get; set; }
     }
 }

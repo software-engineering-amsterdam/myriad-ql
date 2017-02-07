@@ -40,7 +40,6 @@
                 default:
                     throw new ArgumentException("Unsupported question type.");
             }
-
         }
 
         public override AstNode VisitIf([NotNull] QlParser.IfContext context)
@@ -48,9 +47,10 @@
             ElseStatement elseStat = null;
             if (context.@else() != null)
             {
-                elseStat = (ElseStatement) this.Visit(context.@else());
+                elseStat = (ElseStatement)this.Visit(context.@else());
             }
-            Expression condition = (Expression) this.Visit(context.booleanExpression());
+
+            Expression condition = (Expression)this.Visit(context.booleanExpression());
             IList statements = this.VisitStatements(context.stat());
 
             return new IfStatement(condition, statements, elseStat);
