@@ -13,13 +13,21 @@ public abstract class Node {
         registerToParent();
     }
 
-    public void addChild(Node child) {
-        mChildren.add(child);
-    }
-
     private void registerToParent() {
-        if(mParent != null) {
+        if (mParent != null) {
             mParent.addChild(this);
         }
     }
+
+    public boolean addChild(Node child) {
+        if (false == mChildren.contains(child)) {
+            mChildren.add(child);
+        } else {
+            LogUtil.logError(child.mName + " already registered to " + mName);
+            return false;
+        }
+        return true;
+    }
+
+
 }
