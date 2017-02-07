@@ -43,7 +43,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:variable_assignment) do
-    variable.as(:variable) >> colon
+    variable >> colon
   end
 
   rule(:type) do
