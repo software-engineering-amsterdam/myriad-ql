@@ -9,8 +9,19 @@ expression : Parser s Expression
 expression =
     lazy <|
         \() ->
-            chainl addOp
-                (chainl mulOp atom)
+            chainl addOp <|
+                chainl mulOp <|
+                    chainl compareOp atom
+
+
+compareOp : Parser s (Expression -> Expression -> Expression)
+compareOp =
+    choice
+        [ LargerOrEqualExpression <$ string ">="
+        , SmallerOrEqualExpression <$ string "<="
+        , LargerThenExpression <$ string ">"
+        , SmallerThenExpression <$ string "<"
+        ]
 
 
 addOp : Parser s (Expression -> Expression -> Expression)
@@ -35,6 +46,7 @@ atom =
         [ Integer <$> int
         , Var <$> variableName
         , Boolean <$> (True <$ string "true" <|> False <$ string "false")
+        , ParensExpression <$> (parens expression)
         ]
 
 
