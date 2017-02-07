@@ -4,7 +4,7 @@
 
     public class NegativeExpression : UnaryExpression
     {
-        public NegativeExpression(Expression expression) 
+        public NegativeExpression(Expression expression)
             : base(expression)
         {
         }

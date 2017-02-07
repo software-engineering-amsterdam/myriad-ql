@@ -5,8 +5,8 @@
     public class OrExpression : BinaryExpression
     {
         public OrExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

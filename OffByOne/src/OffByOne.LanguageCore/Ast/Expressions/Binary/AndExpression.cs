@@ -5,8 +5,8 @@
     public class AndExpression : BinaryExpression
     {
         public AndExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

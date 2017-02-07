@@ -5,8 +5,8 @@
     public class EqualExpression : BinaryExpression
     {
         public EqualExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

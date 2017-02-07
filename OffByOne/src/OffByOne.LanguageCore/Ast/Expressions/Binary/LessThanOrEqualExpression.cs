@@ -5,8 +5,8 @@
     public class LessThanOrEqualExpression : BinaryExpression
     {
         public LessThanOrEqualExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

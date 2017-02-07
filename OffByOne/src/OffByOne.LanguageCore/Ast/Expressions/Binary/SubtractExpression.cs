@@ -5,8 +5,8 @@
     public class SubtractExpression : BinaryExpression
     {
         public SubtractExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

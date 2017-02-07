@@ -4,7 +4,7 @@
 
     public class NotExpression : UnaryExpression
     {
-        public NotExpression(Expression expression) 
+        public NotExpression(Expression expression)
             : base(expression)
         {
         }

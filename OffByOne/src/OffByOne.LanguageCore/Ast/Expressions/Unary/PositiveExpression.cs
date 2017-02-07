@@ -4,7 +4,7 @@
 
     public class PositiveExpression : UnaryExpression
     {
-        public PositiveExpression(Expression expression) 
+        public PositiveExpression(Expression expression)
             : base(expression)
         {
         }

@@ -5,8 +5,8 @@
     public class GreaterThanExpression : BinaryExpression
     {
         public GreaterThanExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

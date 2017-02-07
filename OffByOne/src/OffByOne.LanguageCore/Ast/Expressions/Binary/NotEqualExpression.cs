@@ -7,8 +7,8 @@
     public class NotEqualExpression : BinaryExpression
     {
         public NotEqualExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

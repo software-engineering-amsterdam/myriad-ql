@@ -5,8 +5,8 @@
     public class DivideExpression : BinaryExpression
     {
         public DivideExpression(
-            Expression leftExpression, 
-            Expression rightExpression) 
+            Expression leftExpression,
+            Expression rightExpression)
             : base(leftExpression, rightExpression)
         {
         }

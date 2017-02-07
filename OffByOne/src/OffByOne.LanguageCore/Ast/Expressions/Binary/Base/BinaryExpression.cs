@@ -3,7 +3,7 @@
     public abstract class BinaryExpression : Expression
     {
         protected BinaryExpression(
-            Expression leftExpression, 
+            Expression leftExpression,
             Expression rightExpression)
         {
             this.LeftExpression = leftExpression;
