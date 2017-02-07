@@ -52,8 +52,6 @@ block =
     lazy <| \() -> braces (whitespace *> many formItem <* whitespace)
 
 
-{-| TODO add more
--}
 expression : Parser s Expression
 expression =
     lazy <|
