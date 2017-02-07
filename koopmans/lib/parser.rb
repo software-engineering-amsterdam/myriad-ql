@@ -2,25 +2,69 @@ require 'parslet'
 
 # parser for forms
 class Parser < Parslet::Parser
-  rule(:spaces) { match('\s').repeat(1) }
-  rule(:spaces?) { spaces.maybe }
+  rule(:spaces) do
+    match('\s').repeat(1)
+  end
+  rule(:spaces?) do
+    spaces.maybe
+  end
 
-  rule(:label) { str('"') >> (str('"').absent? >> any).repeat.as(:label) >> str('"') }
-  rule(:variable) { (str(':').absent? >> any).repeat.as(:variable) >> str(':') }
-  rule(:type) { (str('boolean') | str('money')).as(:type) }
 
-  rule(:variable2) { match('\w+').repeat(1).as(:variable2) }
-  rule(:operator) { (str('+') | str('-')).as(:operator) }
-  rule(:expression) { str('(') >> (str(')').absent? >> (spaces? >> variable2 >> spaces? >> (operator >> spaces? >> variable2 >> spaces?).repeat) ).repeat.as(:expression) >> str(')') }
+  # question(s) with optional expression
+  rule(:label) do
+    str('"') >> (str('"').absent? >> any).repeat.as(:label) >> str('"') >> spaces?
+  end
 
-  rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces? >> ( str('=') >> spaces? >> expression >> spaces? ).maybe ).as(:question) }
+  rule(:variable_assignment) do
+    (str(':').absent? >> any).repeat.as(:variable) >> str(':') >> spaces?
+  end
 
-  rule(:questions) { question.repeat.as(:questions) }
+  rule(:type) do
+    (str('boolean') | str('money') | str('integer') | str('string')).as(:type) >> spaces?
+  end
+
+  rule(:variable) do
+    match('\w+').repeat(1).as(:variable) >> spaces?
+  end
+
+  rule(:arithmetic) do
+    match('[-+/*]').as(:arithmetic) >> spaces?
+  end
+
+  rule(:expression) do
+    str('(') >> (str(')').absent? >> (variable >> (arithmetic >> variable).repeat)).repeat.as(:expression) >> str(')')
+  end
+
+  rule(:equal_to) do
+    str('=') >> spaces?
+  end
+
+  rule(:question) do
+    (spaces? >> label >> variable_assignment >> type >> (equal_to >> expression).maybe >> spaces? ).as(:question)
+  end
+
+  rule(:questions) do
+    question.repeat.as(:questions)
+  end
+
 
   # if block
-  rule(:condition) { str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')') }
-  rule(:block) { str('{') >> questions.as(:block) >> str('}') }
-  rule(:if_statement) { (spaces? >> str('if') >> spaces? >> condition >> spaces? >> block >> spaces?).as(:if_statement) }
+  rule(:condition) do
+    str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')')
+  end
+
+  rule(:block) do
+    str('{') >> (questions >> if_statement.maybe).as(:block) >> str('}')
+  end
+
+  rule(:if_statement) do
+    (str('if') >> spaces? >> condition >> spaces? >> block >> spaces?).as(:if_statement)
+  end
+
+  # form
+  rule(:form) do
+    (str('form') >> spaces? >> variable >> block >> spaces?).as(:form)
+  end
 
   root :question
 end
