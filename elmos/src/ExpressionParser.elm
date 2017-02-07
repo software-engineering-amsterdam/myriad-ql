@@ -3,18 +3,18 @@ module ExpressionParser exposing (..)
 import Combine exposing (..)
 import Combine.Num exposing (int)
 import AST exposing (..)
+import List exposing (foldr)
 
 
 expression : Parser s Expression
 expression =
     lazy <|
-        \() ->
-            chainl orOp <|
-                chainl andOp <|
-                    chainl comparisonOp <|
-                        chainl relationalOp <|
-                            chainl addOp <|
-                                chainl multiplyOp atom
+        \() -> foldr chainl atom expressions
+
+
+expressions : List (Parser s (Expression -> Expression -> Expression))
+expressions =
+    [ orOp, andOp, comparisonOp, relationalOp, addOp, multiplyOp ]
 
 
 andOp : Parser s (Expression -> Expression -> Expression)
