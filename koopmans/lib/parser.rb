@@ -9,7 +9,6 @@ class Parser < Parslet::Parser
     spaces.maybe
   end
 
-
   # question(s) with optional expression
   rule(:label) do
     str('"') >> (str('"').absent? >> any).repeat.as(:label) >> str('"') >> spaces?
@@ -32,7 +31,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:expression) do
-    str('(') >> (str(')').absent? >> (variable >> (arithmetic >> variable).repeat)).repeat.as(:expression) >> str(')')
+    str('(') >> (str(')').absent? >> (variable >> (arithmetic >> variable).repeat)).repeat.as(:expression) >> str(')') >> spaces?
   end
 
   rule(:equal_to) do
@@ -40,25 +39,25 @@ class Parser < Parslet::Parser
   end
 
   rule(:question) do
-    (spaces? >> label >> variable_assignment >> type >> (equal_to >> expression).maybe >> spaces? ).as(:question)
+    (label >> variable_assignment >> type >> (equal_to >> expression).maybe).as(:question)
   end
 
   # if block
   rule(:condition) do
-    str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')')
+    str('(') >> (str(')').absent? >> any).repeat.as(:condition) >> str(')') >> spaces?
   end
 
   rule(:block) do
-    str('{') >> (str('}').absent? >> question | if_statement).repeat.as(:block) >> str('}')
+    str('{') >> (str('}').absent? >> spaces? >> question | if_statement).repeat.as(:block) >> str('}') >> spaces?
   end
 
   rule(:if_statement) do
-    (str('if') >> spaces? >> condition >> spaces? >> block >> spaces?).as(:if_statement)
+    (str('if') >> spaces? >> condition >> block).as(:if_statement)
   end
 
   # form
   rule(:form) do
-    (str('form') >> spaces? >> variable >> block >> spaces?).as(:form)
+    (spaces? >> str('form') >> spaces? >> variable >> block).as(:form)
   end
 
   root :question
