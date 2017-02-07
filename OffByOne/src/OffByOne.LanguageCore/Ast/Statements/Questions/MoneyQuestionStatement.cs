@@ -4,7 +4,7 @@
 
     public class MoneyQuestionStatement : QuestionStatement
     {
-        protected MoneyQuestionStatement(
+        public MoneyQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)

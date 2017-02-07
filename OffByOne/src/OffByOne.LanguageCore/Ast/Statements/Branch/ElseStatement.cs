@@ -1,13 +1,14 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Statements.Branch
 {
-    using OffByOne.LanguageCore.Ast.Expressions;
+    using System.Collections;
+
     public class ElseStatement : Statement
     {
-        protected ElseStatement(Statement[] statements)
+        public ElseStatement(IList statements)
         {
             this.Statements = statements;
         }
 
-        public Statement[] Statements { get; private set; }
+        public IList Statements { get; private set; }
     }
 }

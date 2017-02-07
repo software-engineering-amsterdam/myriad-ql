@@ -4,7 +4,7 @@
 
     public class BooleanQuestionStatement : QuestionStatement
     {
-        protected BooleanQuestionStatement(
+        public BooleanQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)

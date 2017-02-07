@@ -2,5 +2,11 @@
 {
     public class VariableExpression : Expression
     {
+        public VariableExpression(string identifier)
+        {
+            this.Identifier = identifier;
+        }
+
+        public string Identifier { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 
     public class StringQuestionStatement : QuestionStatement
     {
-        protected StringQuestionStatement(
+        public StringQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)

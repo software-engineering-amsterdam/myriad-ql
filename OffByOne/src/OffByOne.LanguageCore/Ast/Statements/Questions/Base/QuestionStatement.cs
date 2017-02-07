@@ -2,6 +2,7 @@
 {
     public class QuestionStatement : Statement
     {
+        // TODO: Debate whether we really need subclasses or if a Type field would be sufficient.
         protected QuestionStatement(string identifier, string question)
         {
             this.Identifier = identifier;

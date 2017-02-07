@@ -4,7 +4,7 @@
 
     public class IntegerQuestionStatement : QuestionStatement
     {
-        protected IntegerQuestionStatement(
+        public IntegerQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)

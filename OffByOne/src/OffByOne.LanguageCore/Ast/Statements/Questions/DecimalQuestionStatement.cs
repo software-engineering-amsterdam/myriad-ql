@@ -4,7 +4,7 @@
 
     public class DecimalQuestionStatement : QuestionStatement
     {
-        protected DecimalQuestionStatement(
+        public DecimalQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)

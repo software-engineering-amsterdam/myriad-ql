@@ -1,9 +1,10 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Statements.Branch
 {
+    using System.Collections;
     using OffByOne.LanguageCore.Ast.Expressions;
     public class IfStatement : Statement
     {
-        protected IfStatement(Expression condition, Statement[] statements, ElseStatement elseStatement = null)
+        public IfStatement(Expression condition, IList statements, ElseStatement elseStatement = null)
         {
             this.Condition = condition;
             this.Statements = statements;
@@ -12,7 +13,7 @@
 
         public Expression Condition { get; set; }
 
-        public Statement[] Statements { get; private set; }
+        public IList Statements { get; private set; }
 
         public Statement ElseStatement { get; private set; }
     }
