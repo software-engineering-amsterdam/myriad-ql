@@ -9,6 +9,7 @@
 %token <QLInt> INT
 %token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
 %token '(' ')'
+%token IF ELSE '{' '}'
 
 %left OR
 %left AND
@@ -22,6 +23,7 @@
 %type <Statement> statement
 %type <Question> question
 %type <Type> type
+%type <If> if
 
 
 
@@ -53,6 +55,9 @@ import ql.ast.expression.*;
        | TYPESTRING     {$$ = TYPESTRING;}
        ;
 
+ if :  IF '(' expr ')' '{' statements '}' {$$ = new If($3, $6);}
+     | IF '(' expr ')' '{' statements '}' ELSE '{' statements '}' {$$ = new If($3, $6, $10);}
+     ;
 
 
 %%
