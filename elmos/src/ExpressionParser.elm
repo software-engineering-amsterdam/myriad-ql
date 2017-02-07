@@ -9,15 +9,15 @@ expression : Parser s Expression
 expression =
     lazy <|
         \() ->
-            chainl combineOp <|
+            chainl relationalOp <|
                 chainl compareOp <|
                     chainl equalsOp <|
                         chainl addOp <|
                             chainl mulOp atom
 
 
-combineOp : Parser s (Expression -> Expression -> Expression)
-combineOp =
+relationalOp : Parser s (Expression -> Expression -> Expression)
+relationalOp =
     choice
         [ AndExpression <$ string "&&"
         , OrExpression <$ string "||"
