@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OffByOne.LanguageCore\OffByOne.LanguageCore.csproj">
+      <Project>{b3fd3dbf-5a24-4d04-89e2-890197bbe323}</Project>
+      <Name>OffByOne.LanguageCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="OffByOne.Ql.ruleset" />
@@ -65,8 +69,7 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-    <Compile Include="Main.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="MyQlVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
