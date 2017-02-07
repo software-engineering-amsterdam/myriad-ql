@@ -4,7 +4,7 @@ import Combine exposing (..)
 import Combine.ExtraTests
 import Parser.ExpressionTests as ExpressionTests
 import Parser.FormTests as FormTests
-import Parser.TokenParserTests as TokenParserTests
+import Parser.TokenTests as TokenTests
 import Test exposing (..)
 
 
@@ -14,7 +14,7 @@ all =
         [ FormTests.all
         , Combine.ExtraTests.all
         , ExpressionTests.all
-        , TokenParserTests.all
+        , TokenTests.all
         ]
 
 

@@ -52,7 +52,7 @@ formItemsTests =
                 , IfItem
                     { expression = Var "bar"
                     , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = Just ([ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ])
+                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
                     }
                 ]
           )

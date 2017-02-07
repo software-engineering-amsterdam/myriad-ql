@@ -1,7 +1,7 @@
 module Parser.ExpressionTests exposing (all)
 
 import Parser.Expression exposing (expression)
-import Test exposing (Test, test, concat, describe)
+import Test exposing (Test, describe)
 import AST exposing (..)
 import ParserTestUtil exposing (testWithParser)
 
