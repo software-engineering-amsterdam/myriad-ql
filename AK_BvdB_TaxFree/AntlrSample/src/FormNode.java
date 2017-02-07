@@ -5,7 +5,7 @@ import java.util.List;
  */
 public class FormNode extends Node {
 
-    public FormNode(int type, Node parent, List<Node> children) {
-        super(type, parent, children);
+    public FormNode(String name, Node parent) {
+        super(name, parent);
     }
 }

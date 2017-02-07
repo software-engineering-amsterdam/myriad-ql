@@ -34,8 +34,8 @@ trait ExpressionParser extends JavaTokenParsers {
 
   def integer: Parser[Value] = """\d+""".r ^^ (x => Value(x.toInt))
 
-  private def buildParser(childParser: Parser[ExpressionNode], operationRegex: Regex): Parser[ExpressionNode] = {
-    childParser ~ rep(operationRegex ~ childParser) ^^ {
+  private def buildParser(child: Parser[ExpressionNode], ops: Regex): Parser[ExpressionNode] = {
+    child ~ rep(ops ~ child) ^^ {
       case head ~ tail => tail.foldLeft(head) {
         case (lhs, operation ~ rhs) => InfixOperation(lhs, operation, rhs)
       }

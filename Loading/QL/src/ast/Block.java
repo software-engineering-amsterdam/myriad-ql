@@ -3,9 +3,10 @@ package ast;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Block extends Node {
+public class Block extends Node { // TODO rename block
 	
 	private List<Question> questions;
+	private List<Statement> statements;
 	
 	public List<Question> getQuestions() {
 		return questions;
@@ -13,19 +14,15 @@ public class Block extends Node {
 	
 	public Block() {
 		this.questions = new ArrayList<Question>();
+		this.statements = new ArrayList<Statement>();
 	}
 	
-	public Block(String tmp) {
-		this.questions = new ArrayList<Question>();
-	}
-	
-	public Block(List<Question> questions) {
-		// TODO parse into different questions
-		this.questions = questions;
-	}
-	
-	public void add(Question question) {
+	public void addQuestion(Question question) {
 		this.questions.add(question);
+	}
+	
+	public void addStatement(Statement statement) {
+		this.statements.add(statement);
 	}
 	
 	void print() {

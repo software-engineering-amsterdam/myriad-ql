@@ -1,7 +1,14 @@
-module Parser.Expression exposing (..)
+module Parser.Expression exposing (expression)
 
-import AST exposing (..)
-import Combine exposing (..)
+import AST
+    exposing
+        ( Expression(Integer, ParensExpression, Var, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
+        , Logic(And, Or)
+        , Comparison(Equal, NotEqual)
+        , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
+        , Operator(Plus, Minus, Multiply, Divide)
+        )
+import Combine exposing (Parser, chainl, choice, lazy, string, parens, (<$), (<$>), (*>), (<*), (<|>))
 import Combine.Num exposing (int)
 import List exposing (foldr)
 import Parser.Token exposing (variableName)

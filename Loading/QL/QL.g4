@@ -8,16 +8,20 @@ grammar QL;
 
 root returns [Form result] 
 		: 'form' ID block 
-		{ $result = new Form($ID.text, new Block($block.text)); };
+		{ $result = new Form($ID.text, $block.result); };
 
 block returns [Block result]
 		@init {
 			$result = new Block();
 		}
-		: '{' (question { $result.add(new Question($question.text)); } )*  '}'
+		: '{' (question { $result.addQuestion($question.result); } 
+			| statement { $result.addStatement($statement.result); }
+		)*  '}'
 		; 
 		
-question: STRING;
+// TODO replace by other definition		
+question returns [Question result]
+	: STRING { $result = new Question($STRING.text); };
 
 // question : ( ID':' STRING type computed_question* | statement );
 
@@ -25,9 +29,9 @@ type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
-statement
- : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)?
- | WHILE parenthesisExpr block
+statement returns [Statement result]
+ : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement(true, $block.result)}
+ | WHILE parenthesisExpr block { $result = new Statement(true, $block.result)}
  ;
 
 parenthesisExpr
