@@ -26,8 +26,18 @@ expression
     :
     |   T_OPEN_PARENT expression T_CLOSE_PARENT
     |   '!' expression
-    |   expression ('*'|'+'|'-'|'/') expression
-    |   expression ('>'|'<'|'=='|'!='|'<='|'>=') expression
+    |   expression '*'<assoc=left> expression
+    |   expression '/'<assoc=left> expression
+    |   expression '-' expression
+    |   expression '+' expression
+    |   expression '>' expression
+    |   expression '<' expression
+    |   expression '==' expression
+    |   expression '!=' expression
+    |   expression '<=' expression
+    |   expression '>=' expression
+    |   expression '<=' expression
+    |   expression '>=' expression
     |   expression ('&&'|'||') expression
     |   literal
     ;
