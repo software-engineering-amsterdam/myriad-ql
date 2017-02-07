@@ -36,10 +36,10 @@ type Expression
     | DivideExpression Expression Expression
     | PlusExpression Expression Expression
     | MinusExpression Expression Expression
-    | LargerThenExpression Expression Expression
-    | SmallerThenExpression Expression Expression
-    | LargerOrEqualExpression Expression Expression
-    | SmallerOrEqualExpression Expression Expression
+    | GreaterThanExpression Expression Expression
+    | LessThanExpression Expression Expression
+    | GreaterThanOrEqualExpression Expression Expression
+    | LessOrThanEqualExpression Expression Expression
     | EqualToExpression Expression Expression
     | NotEqualToExpression Expression Expression
     | AndExpression Expression Expression
