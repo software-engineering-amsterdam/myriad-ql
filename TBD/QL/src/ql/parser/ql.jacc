@@ -1,10 +1,9 @@
 %package ql.parser
 %class Parser
 %interface Tokens
-%semantic ql.ast.ASTNode
 %start form
 
-%token ':' '"' TYPEBOOL TYPEINT TYPESTRING
+%token ':' '"' TYPEBOOL TYPEINT TYPESTRING TRUE FALSE
 %token <QLString> STRING
 %token <QLInt> INT
 %token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
