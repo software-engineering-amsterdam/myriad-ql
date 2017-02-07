@@ -1,0 +1,9 @@
+package ast;
+
+abstract class ExpressionNode
+{
+}
+
+public class Expression {
+
+}

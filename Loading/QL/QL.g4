@@ -1,8 +1,10 @@
-/**
- * Define a grammar called Hello
- */
-
 grammar QL;
+
+@parser::header
+{
+    import ast.IntegerAtom;
+    import ast.*;
+}
 
 root: 'form' ID block;
 
@@ -27,6 +29,8 @@ expr
  | atom boolOp atom
  | atom arithOp atom
  | '!' atom
+ | '+' atom
+ | '-' atom
  | atom
  ;
 
@@ -39,14 +43,16 @@ boolOp
 arithOp
  : '+' | '-' | '/' | '*';
 
-atom
- : DECIMAL
- | MONEY
- | INT
- | STRING
- | BOOL
- | DDMMYY
- | ID
+atom  returns [Atom result]
+ : // DECIMAL
+ // | MONEY
+ INT { System.out.println($INT.text); 
+ 	$result = new IntegerAtom(Integer.parseInt($INT.text)); 
+             }
+ // | STRING
+ // | BOOL
+ // | DDMMYY
+ // | ID
  ;
 
 // TODO look up conventions tokens/names capital letters
