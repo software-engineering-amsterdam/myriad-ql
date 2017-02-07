@@ -2,58 +2,39 @@ package parser
 
 import parser.ast._
 
-import scala.annotation.tailrec
+import scala.util.matching.Regex
 import scala.util.parsing.combinator.JavaTokenParsers
 
 /**
   * Created by jasper on 07/02/17.
   */
 trait ExpressionParser extends JavaTokenParsers {
-  def expr: Parser[ExpressionNode] = comp ~ rep("""\&\&|\|\|""" ~ comp) ^^ {
-    case lhs ~ tail => parseList(lhs, tail.map(x => (x._1, x._2)))
-  }
+  //Infix operators:
+  def expr: Parser[ExpressionNode] = buildParser(comp, """\&\&|\|\|""".r)
 
-  def comp: Parser[ExpressionNode] = addSub ~ rep(""">|<|>=|<=|!=|==""".r ~ addSub) ^^ {
-    case lhs ~ tail => parseList(lhs, tail.map(x => (x._1, x._2)))
-  }
+  def comp: Parser[ExpressionNode] = buildParser(addSub, """>|<|>=|<=|!=|==""".r)
 
-  def addSub: Parser[ExpressionNode] = term ~ rep("""\+|-""".r ~ term) ^^ {
-    case lhs ~ tail => parseList(lhs, tail.map(x => (x._1, x._2)))
-  }
+  def addSub: Parser[ExpressionNode] = buildParser(term,"""\+|-""".r)
 
-  def term: Parser[ExpressionNode] = factor ~ rep("""\*|/""".r ~ factor) ^^ {
-    case lhs ~ tail => parseList(lhs, tail.map(x => (x._1, x._2)))
-  }
+  def term: Parser[ExpressionNode] = buildParser(factor, """\*|/""".r)
 
+  def factor: Parser[ExpressionNode] = prefixOp | integer | identifier | "(" ~> expr <~ ")"
 
-  def factor: Parser[ExpressionNode] = (
-    value
-      | """\+|-|!""".r ~ value ^^ {
-      case op ~ value => PrefixOperation(op, value);
+  def prefixOp: Parser[PrefixOperation] =
+    """\+|-|!""".r ~ factor ^^ {
+      case op ~ value => PrefixOperation(op, value)
     }
-    )
 
-  def value: Parser[ExpressionNode] = (
-    ident ^^ (s => Identifier(s))
-      | "(" ~> expr <~ ")"
-      | integer
-    )
+  //Ident taken from JavaTokenParsers, equals Java Identifier.
+  def identifier: Parser[Identifier] = ident ^^ (s => Identifier(s))
 
   def integer: Parser[Value] = """\d+""".r ^^ (x => Value(x.toInt))
 
-
-  private def parseList(lhs: ExpressionNode, list: List[(String, ExpressionNode)]): ExpressionNode = {
-    list match {
-      case Nil => lhs
-      case head :: tail => InfixOperation(lhs, head._1, parseList(head._2, tail));
+  private def buildParser(childParser: Parser[ExpressionNode], operationRegex: Regex): Parser[ExpressionNode] = {
+    childParser ~ rep(operationRegex ~ childParser) ^^ {
+      case head ~ tail => tail.foldLeft(head) {
+        case (lhs, operation ~ rhs) => InfixOperation(lhs, operation, rhs)
+      }
     }
-  }
-}
-
-
-object ExpressionParser extends ExpressionParser{
-  def main(args: Array[String]) = {
-    val input = "(-(+1++1)*22-+50/+300) + BLA"
-    println(parseAll(expr, input))
   }
 }
