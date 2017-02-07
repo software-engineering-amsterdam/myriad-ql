@@ -31,7 +31,7 @@ type_specifier
     | CURRENCY
     ;
 
-boolean
+booleans
     : AND
     | OR
     | BANG
@@ -54,21 +54,51 @@ DIVIDE : '/';
 
 // Tokens
 
-BOOL : 'boolean' ;
-STRING : 'string' ;
-INTEGER : 'integer' ;
-DATE : 'date' ;
-DECIMAL : 'decimal' ;
-CURRENCY : 'currency' ;
-AND : '&&' ;
-OR : '||' ;
-BANG : '!' ;
-LT : '<' ;
-GT : '>' ;
-LE : '<=' ;
-GE : '>=' ;
-NOT_EQUAL : '!=' ;
-EQUAL_EQUAL : '==' ;
+BOOL
+    : 'boolean'
+    ;
+STRING
+    : 'string'
+    ;
+INTEGER
+    : 'integer'
+    ;
+DATE
+    : 'date'
+    ;
+DECIMAL
+    : 'decimal'
+    ;
+CURRENCY
+    : 'currency'
+    ;
+AND
+    : '&&'
+    ;
+OR
+    : '||'
+    ;
+BANG
+    : '!'
+    ;
+LT
+    : '<'
+    ;
+GT
+    : '>'
+    ;
+LE
+    : '<='
+    ;
+GE
+    : '>='
+    ;
+NOT_EQUAL
+    : '!='
+    ;
+EQUAL_EQUAL
+    : '=='
+    ;
 
 COLON
     : ':'
@@ -86,7 +116,9 @@ FORM
     : 'form'
     ;
 
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+Ident
+    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
 
 Int
     : ('0'..'9')+
