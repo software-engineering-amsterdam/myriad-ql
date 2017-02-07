@@ -1,4 +1,4 @@
-module Samples exposing (..)
+module Samples.Parsing exposing (..)
 
 
 goodExample1 : String
