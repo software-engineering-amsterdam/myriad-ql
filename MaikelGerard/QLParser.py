@@ -9,9 +9,9 @@ class QuestionnaireParser(object):
     LIT_L_BRACE = pp.Literal("(").suppress()
     LIT_R_BRACE = pp.Literal(")").suppress()
 
-    KW_FORM = pp.Keyword("form")
-    KW_IF = pp.Keyword("if")
-    KW_ELSE = pp.Keyword("else")
+    KW_FORM = pp.Keyword("form").setParseAction(lambda s, l, t: "@" + t[0])
+    KW_IF = pp.Keyword("if").setParseAction(lambda s, l, t: "@" + t[0])
+    KW_ELSE = pp.Keyword("else").setParseAction(lambda s, l, t: "@" + t[0])
 
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
     TYPE_VAR = pp.Word(pp.alphas, pp.alphanums + "_")
@@ -46,6 +46,7 @@ class QuestionnaireParser(object):
         conditional = if_cond + pp.Optional(
             pp.Group(self.KW_ELSE + self.embrace(block, "curly"))
         )
+
         block << pp.Group(pp.OneOrMore(question | conditional))
 
         form = self.KW_FORM + self.TYPE_VAR + self.embrace(block, "curly")
