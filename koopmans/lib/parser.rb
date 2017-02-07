@@ -20,7 +20,12 @@ class Parser < Parslet::Parser
           left_parenthesis: '(',
           right_parenthesis: ')',
           quote: '"',
-          colon: ':'
+          colon: ':',
+          subtract: '-',
+          add: '+',
+          multiply: '*',
+          divide: '/'
+
 
 
   # question(s) with optional expression
@@ -41,7 +46,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:arithmetic) do
-    match('[-+/*]').as(:arithmetic) >> spaces?
+    subtract | add | multiply | divide
   end
 
   rule(:expression) do
