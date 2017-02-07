@@ -3,6 +3,8 @@ form ExampleForm {
    boolean hasBoughtHouse: "Did you bought a house in 2017?";
 
    if (hasBoughtHouse) {
-
+        money sellingPrice: "Price the house was sold for:";
+        money privateDebt: "Private debts for the sold house:";
+        money valueResidue: "Value residue:" = (3 - sellingPrice - privateDebt);
    }
 }

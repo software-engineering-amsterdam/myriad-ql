@@ -1,16 +1,17 @@
 grammar QL;
 
 form
-    :   T_FORM T_NAME T_OPEN_BRACKET (declaration T_SEMICOLON)* T_CLOSE_BRACKET
+    :   T_FORM T_STRING T_OPEN_BRACKET (declaration)* T_CLOSE_BRACKET
     ;
 
 declaration
-    :   question
+    :   question T_SEMICOLON
     |   statement
     ;
 
 question
-    :   type T_NAME T_COLON T_STRING default_value?
+    :   type T_STRING T_COLON T_TEXT default_value?
+    |   type T_ASSIGN expression T_COLON T_TEXT default_value?
     ;
 
 statement
@@ -23,6 +24,21 @@ default_value
 
 expression
     :
+    |   T_OPEN_PARENT expression T_CLOSE_PARENT
+    |   '!' expression
+    |   expression ('*'|'+'|'-'|'/') expression
+    |   expression ('>'|'<'|'=='|'!='|'<='|'>=') expression
+    |   expression ('&&'|'||') expression
+    |   literal
+    ;
+
+literal
+    :
+    |   T_BOOLEAN
+    |   T_INTEGER
+    |   T_MONEY
+    |   T_FLOAT
+    |   T_STRING
     ;
 
 type
@@ -31,16 +47,20 @@ type
     |   'money'
     |   'string'
     |   'integer'
+    |   'date'
     ;
-
 
 T_ASSIGN : '=';
 T_IF : 'if';
 T_ELSE : 'else';
-T_STRING :   '"' (T_ESC | ~ ["\\])* '"';
+T_TEXT :   '"' (T_ESC | ~ ["\\])* '"';
 T_COLON :   ':';
 T_FORM :   'form';
-T_NAME : ([a-zA-Z0-9_])+;
+T_STRING : ([a-zA-Z0-9_])+;
+T_MONEY : [0-9].([0-9])?;
+T_FLOAT : [0-9].([0-9])?;
+T_INTEGER : [0-9];
+T_BOOLEAN : 'true' | 'false';
 T_OPEN_BRACKET :   '{';
 T_CLOSE_BRACKET: '}';
 T_OPEN_PARENT : '(';
