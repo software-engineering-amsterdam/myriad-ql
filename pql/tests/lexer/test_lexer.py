@@ -52,5 +52,64 @@ class TestLexer(unittest.TestCase):
         self.assertEqual('}', result_set[3][0])
         self.assertEqual('RCURLY', result_set[3][1])
 
+    def test_lex_if_declaration(self):
+        test_string_declaration = 'if (hasSoldHouse) { }'
+        result_set = lexer.lex_using_default_tokens(test_string_declaration)
+
+        self.assertTrue(len(result_set) == 6, 'Length of result was {}, should be 6'.format(len(result_set)))
+        self.assertEqual('if', result_set[0][0])
+        self.assertEqual('IF', result_set[0][1])
+
+        self.assertEqual('(', result_set[1][0])
+        self.assertEqual('LPAREN', result_set[1][1])
+
+        self.assertEqual('hasSoldHouse', result_set[2][0])
+        self.assertEqual('IDENTIFIER', result_set[2][1])
+
+        self.assertEqual(')', result_set[3][0])
+        self.assertEqual('RPAREN', result_set[3][1])
+
+        self.assertEqual('{', result_set[4][0])
+        self.assertEqual('LCURLY', result_set[4][1])
+
+        self.assertEqual('}', result_set[5][0])
+        self.assertEqual('RCURLY', result_set[5][1])
+
+    def test_lex_declaration_combi_value(self):
+        test_string_declaration = '\"Value residue:\" \n valueResidue: money = (sellingPrice - privateDebt)'
+        result_set = lexer.lex_using_default_tokens(test_string_declaration)
+
+        self.assertTrue(len(result_set) == 10, 'Length of result was {}, should be 10'.format(len(result_set)))
+        self.assertEqual('"Value residue:"', result_set[0][0])
+        self.assertEqual('FIELD', result_set[0][1])
+
+        self.assertEqual('valueResidue', result_set[1][0])
+        self.assertEqual('IDENTIFIER', result_set[1][1])
+
+        self.assertEqual(':', result_set[2][0])
+        self.assertEqual('COLON', result_set[2][1])
+
+        self.assertEqual('money', result_set[3][0])
+        self.assertEqual('MONEY', result_set[3][1])
+
+        self.assertEqual('=', result_set[4][0])
+        self.assertEqual('ASSIGN', result_set[4][1])
+
+        self.assertEqual('(', result_set[5][0])
+        self.assertEqual('LPAREN', result_set[5][1])
+
+        self.assertEqual('sellingPrice', result_set[6][0])
+        self.assertEqual('IDENTIFIER', result_set[6][1])
+
+        self.assertEqual('-', result_set[7][0])
+        self.assertEqual('MINUS', result_set[7][1])
+
+        self.assertEqual('privateDebt', result_set[8][0])
+        self.assertEqual('IDENTIFIER', result_set[8][1])
+
+        self.assertEqual(')', result_set[9][0])
+        self.assertEqual('RPAREN', result_set[9][1])
+
+
 if __name__ == '__main__':
     unittest.main()
