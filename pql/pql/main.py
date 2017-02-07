@@ -1,7 +1,7 @@
 import sys
 import os
 import io
-from tokens import *
+from pql.lexer.lexer import lex_using_default_tokens
 
 if __name__ == '__main__':
 
@@ -17,6 +17,6 @@ if __name__ == '__main__':
     ql_char = ql_file.read()
     ql_file.close()
 
-    tokens = lex_characters(ql_char)
+    tokens = lex_using_default_tokens(ql_char)
     for token in tokens:
         print(token)
