@@ -31,11 +31,11 @@ arithmeticTests : Test
 arithmeticTests =
     testWithParser expression
         "arithmeticTests"
-        [ ( "Should parse simple add", "2+3", Just (PlusExpression (Integer 2) (Integer 3)) )
-        , ( "Should parse bigger add", "2+3+4", Just (PlusExpression (PlusExpression (Integer 2) (Integer 3)) (Integer 4)) )
-        , ( "Should parse plus and multiplication", "2+3*4", Just (PlusExpression (Integer 2) (MultiplyExpression (Integer 3) (Integer 4))) )
-        , ( "Should parse minus and division", "2-3/4", Just (MinusExpression (Integer 2) (DivideExpression (Integer 3) (Integer 4))) )
-        , ( "Should parse variables", "x+y", Just (PlusExpression (Var "x") (Var "y")) )
+        [ ( "Should parse simple add", "2+3", Just (ArithmeticExpression Plus (Integer 2) (Integer 3)) )
+        , ( "Should parse bigger add", "2+3+4", Just (ArithmeticExpression Plus (ArithmeticExpression Plus (Integer 2) (Integer 3)) (Integer 4)) )
+        , ( "Should parse plus and multiplication", "2+3*4", Just (ArithmeticExpression Plus (Integer 2) (ArithmeticExpression Multiply (Integer 3) (Integer 4))) )
+        , ( "Should parse minus and division", "2-3/4", Just (ArithmeticExpression Minus (Integer 2) (ArithmeticExpression Divide (Integer 3) (Integer 4))) )
+        , ( "Should parse variables", "x+y", Just (ArithmeticExpression Plus (Var "x") (Var "y")) )
         ]
 
 
@@ -51,8 +51,8 @@ relationalTests =
           , "x+y < z * a"
           , Just
                 (LessThanExpression
-                    (PlusExpression (Var "x") (Var "y"))
-                    (MultiplyExpression (Var "z") (Var "a"))
+                    (ArithmeticExpression Plus (Var "x") (Var "y"))
+                    (ArithmeticExpression Multiply (Var "z") (Var "a"))
                 )
           )
         ]
@@ -68,7 +68,7 @@ comparisonTests =
           , "x + y == y < z"
           , Just
                 (EqualToExpression
-                    (PlusExpression (Var "x") (Var "y"))
+                    (ArithmeticExpression Plus (Var "x") (Var "y"))
                     (LessThanExpression (Var "y") (Var "z"))
                 )
           )

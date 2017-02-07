@@ -32,10 +32,7 @@ type Expression
     | Integer Int
     | Boolean Bool
     | ParensExpression Expression
-    | MultiplyExpression Expression Expression
-    | DivideExpression Expression Expression
-    | PlusExpression Expression Expression
-    | MinusExpression Expression Expression
+    | ArithmeticExpression Operator Expression Expression
     | GreaterThanExpression Expression Expression
     | LessThanExpression Expression Expression
     | GreaterThanOrEqualExpression Expression Expression
@@ -44,6 +41,13 @@ type Expression
     | NotEqualToExpression Expression Expression
     | AndExpression Expression Expression
     | OrExpression Expression Expression
+
+
+type Operator
+    = Plus
+    | Minus
+    | Divide
+    | Multiply
 
 
 type ValueType

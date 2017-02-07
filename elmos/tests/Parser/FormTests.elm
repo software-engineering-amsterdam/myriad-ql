@@ -87,7 +87,7 @@ fieldTests =
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         , ( "should parse field with expression"
           , "\"label\" id: integer = 1 +3"
-          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (PlusExpression (Integer 1) (Integer 3)) }
+          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (ArithmeticExpression Plus (Integer 1) (Integer 3)) }
           )
         ]
 

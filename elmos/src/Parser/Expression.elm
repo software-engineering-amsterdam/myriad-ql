@@ -50,16 +50,16 @@ relationalOp =
 addOp : Parser s (Expression -> Expression -> Expression)
 addOp =
     choice
-        [ PlusExpression <$ string "+"
-        , MinusExpression <$ string "-"
+        [ ArithmeticExpression Plus <$ string "+"
+        , ArithmeticExpression Minus <$ string "-"
         ]
 
 
 multiplyOp : Parser s (Expression -> Expression -> Expression)
 multiplyOp =
     choice
-        [ MultiplyExpression <$ string "*"
-        , DivideExpression <$ string "/"
+        [ ArithmeticExpression Multiply <$ string "*"
+        , ArithmeticExpression Divide <$ string "/"
         ]
 
 
