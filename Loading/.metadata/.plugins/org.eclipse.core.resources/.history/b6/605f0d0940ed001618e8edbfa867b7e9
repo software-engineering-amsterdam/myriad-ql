@@ -1,6 +1,6 @@
 package ast;
 
-public class Form extends Node {
+public class Form {
 	
 	private final String id;
 	private Block block;

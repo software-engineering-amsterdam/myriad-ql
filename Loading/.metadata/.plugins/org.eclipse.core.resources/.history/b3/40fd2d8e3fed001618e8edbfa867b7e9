@@ -1,6 +1,6 @@
 package ast;
 
-public class Form extends Node {
+public class Form {
 	
 	private final String id;
 	private Block block;
@@ -13,9 +13,10 @@ public class Form extends Node {
 		return block;
 	}
 
-	public Form(String id, Block block) {
+	public Form() {
 		this.id = id;
 		this.block = block;
 	}
+	
 	
 }

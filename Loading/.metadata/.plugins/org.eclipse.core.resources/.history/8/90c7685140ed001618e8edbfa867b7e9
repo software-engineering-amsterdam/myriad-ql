@@ -7,7 +7,7 @@ grammar QL;
 }
 
 root returns [Form result] 
-: 'form' ID block { $result = new Form($ID.text, new Block($block.text)); };
+: 'form' ID block { $result = new Form(ID.text, New Block(block.text)); };
 
 block: '{' .* '}';
 

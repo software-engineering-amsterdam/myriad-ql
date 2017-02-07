@@ -6,10 +6,9 @@ grammar QL;
     import ast.*;
 }
 
-root returns [Form result] 
-: 'form' ID block { $result = new Form($ID.text, new Block($block.text)); };
+root: 'form' ID block;
 
-block: '{' .* '}';
+block: '{' question* '}';
 
 //question : ( ID':' STRING type computed_question* | statement );
 //
