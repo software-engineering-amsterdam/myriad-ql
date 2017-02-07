@@ -1,10 +1,15 @@
 package org.ql.parser;
 
-/**
- * Created by AJ on 2/7/2017.
- */
+import org.ql.ast.Form;
+
+import java.io.File;
+
 public class Parser {
-    public void parse(String sourceFile) {
+    public Form parse(String code) {
+
+    }
+
+    public Form parse(File sourceFile) {
 
     }
 }
