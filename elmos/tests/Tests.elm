@@ -2,20 +2,17 @@ module Tests exposing (..)
 
 import Test exposing (..)
 import Combine exposing (..)
-import Expect
-import Parser exposing (..)
 import ParserTests
+import ExpressionParserTests
 import Combine.ExtraTests
 
 
 all : Test
 all =
     describe "QL Parser"
-        [ ParserTests.all
-        , Combine.ExtraTests.all
-        , test "QuestionLabel" <|
-            \() ->
-                Expect.equal (parseToMaybe fieldLabel "\"Is this a question?\"") (Just "Is this a question?")
+        [ Combine.ExtraTests.all
+        , ParserTests.all
+        , ExpressionParserTests.all
         ]
 
 
