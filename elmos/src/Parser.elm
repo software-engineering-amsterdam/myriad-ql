@@ -20,6 +20,11 @@ formToken =
     string "form"
 
 
+formItems : Parser s (List FormItem)
+formItems =
+    lazy <| \() -> sepBy1 whitespace1 formItem
+
+
 formItem : Parser s FormItem
 formItem =
     lazy <|
@@ -52,11 +57,6 @@ ifBlock =
 block : Parser s (List FormItem)
 block =
     lazy <| \() -> braces (whitespace *> formItems <* whitespace)
-
-
-formItems : Parser s (List FormItem)
-formItems =
-    lazy <| \() -> sepBy1 whitespace1 formItem
 
 
 expression : Parser s Expression
