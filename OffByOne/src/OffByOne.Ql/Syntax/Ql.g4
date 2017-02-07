@@ -13,6 +13,7 @@ booleanExpression
 	| 'not' booleanExpression
 	| booleanExpression ('and'|'or') booleanExpression
 	| numericExpression ('>'|'<'|'=='|'<='|'>=') numericExpression
+	| Date ('>'|'<'|'=='|'<='|'>=') Date
 	;
 
 numericExpression
@@ -30,12 +31,21 @@ Type
 	| 'decimal'
 	| 'money'
 	;
-NumericLiteral: '-'? (Int+ | (Int+ '.' Int+)) ;
+
+NumericLiteral : Money | Decimal | SignedInt;
+
+SignedInt : '-'? Int+ ;
+Money : SignedInt '.' Digit Digit ;
+Decimal : SignedInt '.' [0-9]+ ;
+Date : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
 
 fragment
-Int: [0-9] | ([1-9][0-9]*) ;
+Int: Digit | ([1-9] Digit*) ;
 
-StringLiteral : '"' (Escaped | . )*? '"';
+fragment
+Digit: [0-9] ;
+
+StringLiteral : '"' (Escaped | . )*? '"' ;
 
 fragment
 Escaped : '\\' [btnr"\\] ;
