@@ -1,4 +1,4 @@
-// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/parser/QL.g4 by ANTLR 4.6
+// Generated from QL.g4 by ANTLR 4.6
 package org.ql.parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
