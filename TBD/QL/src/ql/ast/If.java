@@ -1,5 +1,4 @@
 package ql.ast;
-import ql.ast.expression.Expr;
 
 /**
  * Created by Erik on 6-2-2017.

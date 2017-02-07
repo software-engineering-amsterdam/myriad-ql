@@ -1,7 +1,6 @@
 package ql.ast;
 
-import ql.ast.expression.Expr;
-import ql.ast.type.QLString;
+import ql.ast.literals.QLString;
 
 /**
  * Created by Erik on 6-2-2017.

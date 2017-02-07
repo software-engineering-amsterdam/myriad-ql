@@ -3,9 +3,8 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
-import ql.ast.ASTNode;
-import ql.ast.type.QLInt;
-import ql.ast.type.QLString;
+import ql.ast.literals.QLInt;
+import ql.ast.literals.QLString;
 
 import java.io.IOException;
 import java.io.Reader;

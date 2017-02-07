@@ -6,7 +6,10 @@
 %token ':' '"' TYPEBOOL TYPEINT TYPESTRING TRUE FALSE
 %token <QLString> STRING
 %token <QLInt> INT
-%token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
+%token <QLFloat> FLOAT
+%token <QLIdent> IDENT
+%token <QLBoolean> BOOLEAN
+%token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!' '='
 %token '(' ')'
 
 %left OR
@@ -21,14 +24,14 @@
 %type <Statement> statement
 %type <Question> question
 %type <Type> type
-
+%type <Expr> expr
 
 
 
 %{
 import ql.ast.*;
-import ql.ast.type.*;
-import ql.ast.expression.*;
+import ql.ast.literals.*;
+import ql.ast.expressions.*;
 %}
 
 %%
@@ -44,7 +47,8 @@ import ql.ast.expression.*;
  statement : question                   {$$ = $1;}
            ;
 
- question : '"' STRING '"' STRING ':' type      {$$ = new Question($2, $4, $6);}
+ question : '"' STRING '"' STRING ':' type '=' expr      {$$ = new Question($2, $4, $6, $8);}
+          | '"' STRING '"' STRING ':' type               {$$ = new Question($2, $4, $6);}
           ;
 
  type : TYPEBOOL        {$$ = TYPEBOOL;}
@@ -52,6 +56,31 @@ import ql.ast.expression.*;
        | TYPESTRING     {$$ = TYPESTRING;}
        ;
 
+
+
+
+
+ expr	 : '+' expr	%prec UPLUS { $$ = new Pos($2); }
+		 | '-' expr	%prec UMIN  { $$ = new Neg($2); }
+		 | '!' expr %prec UNOT  { $$ = new Not($2); }
+		 | expr '*' expr		{ $$ = new Mul($1, $3); }
+		 | expr '/' expr 		{ $$ = new Div($1, $3); }
+		 | expr '+' expr		{ $$ = new Add($1, $3); }
+		 | expr '-' expr		{ $$ = new Sub($1, $3); }
+		 | expr EQ expr		    { $$ = new Eq($1, $3); }
+		 | expr NEQ expr		{ $$ = new NEq($1, $3); }
+		 | expr '>' expr		{ $$ = new GT($1, $3); }
+		 | expr '<' expr		{ $$ = new LT($1, $3); }
+		 | expr GEQ expr		{ $$ = new GEq($1, $3); }
+		 | expr LEQ expr		{ $$ = new LEq($1, $3); }
+		 | expr AND expr	    { $$ = new And($1, $3); }
+	     | expr OR expr  		{ $$ = new Or($1, $3); }
+		 | INT					{ $$ = $1; }
+		 | IDENT         		{ $$ = $1; }
+		 | FLOAT                { $$ = $1; }
+		 | BOOLEAN              { $$ = $1; }
+		 | '(' expr ')'			{ $$ = $2; }
+		 ;
 
 
 %%
