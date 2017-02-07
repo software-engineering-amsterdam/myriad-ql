@@ -65,6 +65,7 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Compile Include="Main.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +76,7 @@
     </None>
     <Antlr4 Include="Syntax\Ql.g4">
       <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
     </Antlr4>
   </ItemGroup>
   <ItemGroup />
