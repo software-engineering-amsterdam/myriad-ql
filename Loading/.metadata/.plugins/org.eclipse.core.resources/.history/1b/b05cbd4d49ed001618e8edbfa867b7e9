@@ -17,12 +17,13 @@ public class Block extends Node { // TODO rename block
 		this.statements = new ArrayList<Statement>();
 	}
 	
-	public void addQuestion(Question question) {
-		this.questions.add(question);
+	public Block(String tmp) {
+		this.questions = new ArrayList<Question>();
+		this.statements = new ArrayList<Statement>();
 	}
 	
-	public void addStatement(Statement statement) {
-		this.statements.add(statement);
+	public void addQuestion(Question question) {
+		this.questions.add(question);
 	}
 	
 	void print() {

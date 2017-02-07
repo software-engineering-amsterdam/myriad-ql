@@ -16,7 +16,7 @@ public class Main {
 		
 		 QLParser parser = new QLParser(tokens);
 		 // ParseTree tree = parser.root(); // begin parsing at rule 'root'
-		 System.out.println(parser.root().result.getBlock().getQuestions());
+		 System.out.println(parser.root().result.getBlock().getContent());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
 	}
 }

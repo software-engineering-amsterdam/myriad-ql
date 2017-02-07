@@ -19,7 +19,6 @@ block returns [Block result]
 		)*  '}'
 		; 
 		
-// TODO replace by other definition		
 question returns [Question result]
 	: STRING { $result = new Question($STRING.text); };
 
