@@ -26,6 +26,7 @@ class Parser < Parslet::Parser
           add: '+',
           multiply: '*',
           divide: '/',
+          assign: '=',
 
           boolean: 'boolean',
           integer: 'integer',
@@ -42,16 +43,16 @@ class Parser < Parslet::Parser
     quote >> match('[^"]').repeat.as(:label) >> quote
   end
 
-  rule(:variable_assignment) do
-    variable >> colon
-  end
-
   rule(:type) do
     (boolean | integer | string | money).as(:type)
   end
 
   rule(:variable) do
     match('\w+').repeat(1).as(:variable) >> spaces?
+  end
+
+  rule(:variable_assignment) do
+    variable >> colon
   end
 
   rule(:arithmetic) do
@@ -62,12 +63,8 @@ class Parser < Parslet::Parser
     left_parenthesis >> (variable >> (arithmetic >> variable).repeat).repeat.as(:expression) >> right_parenthesis
   end
 
-  rule(:equal_to) do
-    str('=') >> spaces?
-  end
-
   rule(:question) do
-    (label >> variable_assignment >> type >> (equal_to >> expression).maybe).as(:question)
+    (label >> variable_assignment >> type >> (assign >> expression).maybe).as(:question)
   end
 
   # if block
