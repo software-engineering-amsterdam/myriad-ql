@@ -11,17 +11,26 @@ class Form:
         self.statements = statements
 
     def __str__(self):
-        return "form {} [\n{}\n]".format(self.name, "\n".join([str(s) for s in self.statements]))
+        return "form {} [\n{}\n]".format(self.name, "\n".join(
+            [str(s) for s in self.statements]))
 
 
 class Conditional:
 
-    def __init__(self, condition, statements):
+    def __init__(self, condition, statements, alternative=None):
         self.condition = condition
         self.statements = statements
+        self.alternative = alternative
 
     def __str__(self):
-        return "if {} [\n{}\n]".format(str(self.condition), "\n".join([str(s) for s in self.statements]))
+        if self.alternative is not None:
+            return "if {} [\n{}\n]\nelse [\n{}\n]".format(
+                str(self.condition), "\n".join(
+                    [str(s) for s in self.statements]),
+                "\n".join([str(s) for s in self.alternative]))
+        return "if {} [\n{}\n]".format(str(self.condition), "\n".join(
+            [str(s) for s in self.statements]))
+
 
 class Question:
 
@@ -33,8 +42,10 @@ class Question:
 
     def __str__(self):
         if self.expression is not None:
-            return "{}: \"{}\" {} = {}".format(self.name, self.label, self.datatype.name, str(self.expression))
+            return "{}: \"{}\" {} = {}".format(
+                self.name, self.label, self.datatype.name, str(self.expression))
         return "{}: \"{}\" {}".format(self.name, self.label, self.datatype.name)
+
 
 class UnaryOperator:
 
@@ -54,7 +65,9 @@ class BinaryOperator:
         self.right = right
 
     def __str__(self):
-        return "{} {} {}".format(str(self.left), self.operator.name, str(self.right))
+        return "({} {} {})".format(
+            str(self.left), self.operator.name, str(self.right))
+
 
 class Identifier:
 
@@ -63,6 +76,7 @@ class Identifier:
 
     def __str__(self):
         return self.name
+
 
 class Constant:
 
