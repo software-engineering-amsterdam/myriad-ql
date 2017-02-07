@@ -8,6 +8,11 @@ class Parser < Parslet::Parser
   rule(:label) { str('"') >> (str('"').absent? >> any).repeat.as(:label) >> str('"') }
   rule(:variable) { (str(':').absent? >> any).repeat.as(:variable) >> str(':') }
   rule(:type) { (str('boolean') | str('money')).as(:type) }
+
+  rule(:variable2) { match('\w+').repeat(1).as(:variable2) }
+  rule(:operator) { (str('+') | str('-')).as(:operator) }
+  rule(:expression) { str('(') >> (str(')').absent? >> (spaces? >> variable2 >> spaces? >> (operator >> spaces? >> variable2 >> spaces?).repeat) ).repeat.as(:expression) >> str(')') }
+
   rule(:question) { (spaces? >> label >> spaces? >> variable >> spaces? >> type >> spaces?).as(:question) }
 
   rule(:questions) { question.repeat.as(:questions) }

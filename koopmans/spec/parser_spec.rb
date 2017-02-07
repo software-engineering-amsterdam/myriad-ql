@@ -38,6 +38,26 @@ describe Parser do
     end
   end
 
+  context 'variable2' do
+    variable2 = 'sellingPrice'
+    it 'should parse' do
+      expect(parser.variable2).to parse(variable2)
+    end
+    it 'should parse into properties' do
+      expect(parser.variable2.parse(variable2)).to include(:variable2)
+    end
+  end
+
+  context 'expression' do
+    expression = '(sellingPrice - privateDebt + anotherVariable )'
+    it 'should parse' do
+      expect(parser.expression).to parse(expression)
+    end
+    it 'should parse into properties' do
+      expect(parser.expression.parse(expression)[:expression]).to match(:variable2)
+    end
+  end
+
   context 'question' do
     question = '"How much is?" hasSoldHouse: boolean'
 
@@ -48,6 +68,13 @@ describe Parser do
       expect(parser.question.parse(question)).to include(:question)
     end
   end
+
+  # context 'question with expression' do
+  #   question = '"Value residue:" valueResidue: money = (sellingPrice - privateDebt)'
+  #   it 'should parse' do
+  #     expect(parser.question).to parse(question)
+  #   end
+  # end
 
   context 'two questions' do
     two_questions = '"Did you sell a house in 2010?"
