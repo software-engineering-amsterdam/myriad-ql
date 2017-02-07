@@ -1,14 +1,25 @@
-/**
- * Define a grammar called Hello
- */
-
 grammar QL;
 
-root: 'form' ID block;
+@parser::header
+{
+    import ast.IntegerAtom;
+    import ast.*;
+}
 
-block: '{' question* '}';
+root returns [Form result] 
+		: 'form' ID block 
+		{ $result = new Form($ID.text, new Block($block.text)); };
 
-question : ( ID':' STRING type computed_question* | statement );
+block returns [Block result]
+		@init {
+			$result = new Block();
+		}
+		: '{' (question { $result.add(new Question($question.text)); } )*  '}'
+		; 
+		
+question: STRING;
+
+// question : ( ID':' STRING type computed_question* | statement );
 
 type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 
@@ -27,6 +38,8 @@ expr
  | atom boolOp atom
  | atom arithOp atom
  | '!' atom
+ | '+' atom
+ | '-' atom
  | atom
  ;
 
@@ -39,14 +52,16 @@ boolOp
 arithOp
  : '+' | '-' | '/' | '*';
 
-atom
- : DECIMAL
- | MONEY
- | INT
- | STRING
- | BOOL
- | DDMMYY
- | ID
+atom  returns [Atom result]
+ : // DECIMAL
+ // | MONEY
+ INT { System.out.println($INT.text); 
+ 	$result = new IntegerAtom(Integer.parseInt($INT.text)); 
+             }
+ // | STRING
+ // | BOOL
+ // | DDMMYY
+ // | ID
  ;
 
 // TODO look up conventions tokens/names capital letters

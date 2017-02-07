@@ -1,0 +1,21 @@
+package ast;
+
+public class Form {
+	
+	private final String id;
+	private Block block;
+
+	public String getId() {
+		return id;
+	}
+	
+	public Block getBlock() {
+		return block;
+	}
+
+	public Form() {
+		this.id = id;
+		this.block = block;
+	}
+	
+}

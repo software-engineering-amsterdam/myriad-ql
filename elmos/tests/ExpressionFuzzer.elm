@@ -1,4 +1,4 @@
-module ExpressionFuzzer exposing (..)
+module ExpressionFuzzer exposing (expression)
 
 import Char
 import Fuzz exposing (Fuzzer, frequencyOrCrash, intRange, constant)
@@ -19,14 +19,14 @@ expression =
 exprToString : ExprPart -> String
 exprToString x =
     case x of
-        Literal x ->
-            x
+        Literal y ->
+            y
 
-        Operator left x right ->
-            String.concat [ exprToString left, x, exprToString right ]
+        Operator left y right ->
+            String.concat [ exprToString left, y, exprToString right ]
 
-        Parenthesized x ->
-            wrapInParens (exprToString x)
+        Parenthesized y ->
+            wrapInParens (exprToString y)
 
 
 wrapInParens : String -> String
