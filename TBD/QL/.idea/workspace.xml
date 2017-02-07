@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/type/QLBoolean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/type/QLFloat.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/type/QLInt.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/type/QLString.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/Expr.java" afterPath="$PROJECT_DIR$/src/ql/ast/expression/Expr.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/type/QLIdent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Question.java" afterPath="$PROJECT_DIR$/src/ql/ast/Question.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/Lexer.java" afterPath="$PROJECT_DIR$/src/ql/parser/Lexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/Parser.java" afterPath="$PROJECT_DIR$/src/ql/parser/Parser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/Tokens.java" afterPath="$PROJECT_DIR$/src/ql/parser/Tokens.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/ql.jacc" afterPath="$PROJECT_DIR$/src/ql/parser/ql.jacc" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,12 +20,25 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ql.jacc" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ql.jacc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+            <state relative-caret-position="766">
+              <caret line="71" column="16" lean-forward="false" selection-start-line="71" selection-start-column="11" selection-end-line="71" selection-end-column="16" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QLIdent.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLIdent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <element signature="e#148#149#0" expanded="true" />
+                <element signature="e#186#187#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,8 +82,8 @@
       <file leaf-file-name="QLString.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLString.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+            <state relative-caret-position="136">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="12" selection-end-column="5" />
               <folding>
                 <element signature="e#195#196#0" expanded="true" />
                 <element signature="e#235#236#0" expanded="true" />
@@ -109,16 +114,6 @@
                 <element signature="e#190#191#0" expanded="true" />
                 <element signature="e#228#229#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ASTNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/ASTNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -205,6 +200,7 @@
         <option value="$PROJECT_DIR$/src/ql/ast/Question.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/Parser.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/ql.jacc" />
+        <option value="$PROJECT_DIR$/src/ql/ast/type/QLIdent.java" />
       </list>
     </option>
   </component>
@@ -788,7 +784,7 @@
       <workItem from="1486378963827" duration="62000" />
       <workItem from="1486381447137" duration="7335000" />
       <workItem from="1486460499451" duration="366000" />
-      <workItem from="1486463924804" duration="6216000" />
+      <workItem from="1486463924804" duration="6350000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -811,11 +807,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486468526987</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added ast types">
+      <created>1486470168554</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1486470168554</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13979000" />
+    <option name="totallyTimeSpent" value="14113000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -891,7 +894,8 @@
     <MESSAGE value="jacc and beginning of ASt" />
     <MESSAGE value="ast and parsing" />
     <MESSAGE value="new branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="new branch" />
+    <MESSAGE value="added ast types" />
+    <option name="LAST_COMMIT_MESSAGE" value="added ast types" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1184,17 +1188,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
-          <folding>
-            <element signature="e#195#196#0" expanded="true" />
-            <element signature="e#235#236#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLBoolean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1267,9 +1260,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+        <state relative-caret-position="766">
+          <caret line="71" column="16" lean-forward="false" selection-start-line="71" selection-start-column="11" selection-end-line="71" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLString.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#235#236#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/type/QLIdent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="e#148#149#0" expanded="true" />
+            <element signature="e#186#187#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
