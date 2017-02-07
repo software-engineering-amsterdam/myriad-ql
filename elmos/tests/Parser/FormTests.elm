@@ -1,9 +1,8 @@
-module ParserTests exposing (all)
+module Parser.FormTests exposing (all)
 
 import AST exposing (..)
 import Expect
-import ExpressionParser exposing (..)
-import Parser exposing (..)
+import Parser.Form as Form exposing (..)
 import ParserTestUtil exposing (parseToMaybe, testWithParser)
 import Samples.Form
 import Test exposing (Test, concat, describe, test)
@@ -14,13 +13,11 @@ all =
     describe "ParserTests"
         [ sampleTests
         , formTokenTests
-        , varNameTests
         , fieldTests
         , ifBlockTests
         , formItemTests
         , formItemsTests
         , valueTypeTests
-        , expressionTests
         ]
 
 
@@ -31,35 +28,22 @@ sampleTests =
             |> List.indexedMap
                 (\n input ->
                     test ("Sample " ++ toString (n + 1)) <|
-                        \() -> parseToMaybe Parser.form input |> Expect.notEqual Nothing
+                        \() -> parseToMaybe Form.form input |> Expect.notEqual Nothing
                 )
         )
 
 
 formTokenTests : Test
 formTokenTests =
-    testWithParser Parser.formToken
+    testWithParser Form.formToken
         "formToken"
         [ ( "should parse a form token", "form", Just "form" )
         ]
 
 
-varNameTests : Test
-varNameTests =
-    testWithParser ExpressionParser.variableName
-        "variableName"
-        [ ( "should not parse an empty string", "", Nothing )
-        , ( "should parse a single lower case character", "a", Just "a" )
-        , ( "should not parse a single upper case character", "B", Nothing )
-        , ( "should support camel case variable names", "fooBarBaz", Just "fooBarBaz" )
-        , ( "should support underscores", "a_b", Just "a_b" )
-        , ( "should not support question mark", "a?b", Nothing )
-        ]
-
-
 formItemsTests : Test
 formItemsTests =
-    testWithParser Parser.formItems
+    testWithParser Form.formItems
         "formItemTests"
         [ ( "should parse multiple form items"
           , "\"label\" id: integer\nif (bar) { \"label\" id: integer } else { \"label\" id: integer }"
@@ -77,7 +61,7 @@ formItemsTests =
 
 formItemTests : Test
 formItemTests =
-    testWithParser Parser.formItem
+    testWithParser Form.formItem
         "formItemTests"
         [ ( "should parse a simple field", "\"label\" id: integer", Just <| FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
         , ( "should parse an if block"
@@ -94,13 +78,17 @@ formItemTests =
 
 fieldTests : Test
 fieldTests =
-    testWithParser Parser.field
+    testWithParser Form.field
         "field"
         [ ( "should parse a simple field", "\"label\" id: integer", Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
         , ( "allows no whitespace after the colon", "\"label\" id:integer", Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
         , ( "id should be a varName", "\"label\" Other: integer", Nothing )
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
+        , ( "should parse field with expression"
+          , "\"label\" id: integer = 1 +3"
+          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (PlusExpression (Integer 1) (Integer 3)) }
+          )
         ]
 
 
@@ -111,7 +99,7 @@ ifBlockTests =
             [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
             ]
     in
-        testWithParser Parser.ifBlock
+        testWithParser Form.ifBlock
             "ifBlock"
             [ ( "should parser an simple if block"
               , "if (x) { \"label\" id: integer }"
@@ -142,19 +130,10 @@ ifBlockTests =
 
 valueTypeTests : Test
 valueTypeTests =
-    testWithParser Parser.valueType
+    testWithParser Form.valueType
         "valueType"
         [ ( "should parse string", "string", Just StringType )
         , ( "should parse boolean", "boolean", Just BooleanType )
         , ( "should parse integer", "integer", Just IntegerType )
         , ( "should parse money as integer", "money", Just IntegerType )
-        ]
-
-
-expressionTests : Test
-expressionTests =
-    testWithParser Parser.expression
-        "expression"
-        [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
-        , ( "Should parse expression between parentheses", "(someVarName)", Just (ParensExpression (Var "someVarName")) )
         ]

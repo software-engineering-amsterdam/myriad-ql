@@ -1,9 +1,10 @@
-module Parser exposing (..)
+module Parser.Form exposing (..)
 
-import ExpressionParser exposing (..)
-import Combine exposing (..)
 import AST exposing (..)
+import Combine exposing (..)
 import Combine.Extra exposing (whitespace1)
+import Parser.Expression as Expression
+import Parser.Token exposing (quotedString, variableName)
 
 
 form : Parser s Form
@@ -38,10 +39,10 @@ formItem =
 field : Parser s Field
 field =
     succeed Field
-        <*> fieldLabel
+        <*> quotedString
         <*> (whitespace1 *> variableName)
         <*> (whitespace *> string ":" *> whitespace *> valueType)
-        <*> maybe (whitespace *> string "=" *> whitespace *> expression)
+        <*> maybe (whitespace *> string "=" *> whitespace *> Expression.expression)
 
 
 ifBlock : Parser s IfBlock
@@ -49,7 +50,7 @@ ifBlock =
     lazy <|
         \() ->
             succeed IfBlock
-                <*> (string "if" *> whitespace *> parens expression <* whitespace)
+                <*> (string "if" *> whitespace *> parens Expression.expression <* whitespace)
                 <*> block
                 <*> (maybe (whitespace *> string "else" *> whitespace *> block))
 
@@ -57,26 +58,6 @@ ifBlock =
 block : Parser s (List FormItem)
 block =
     lazy <| \() -> braces (whitespace *> formItems <* whitespace)
-
-
-expression : Parser s Expression
-expression =
-    lazy <|
-        \() ->
-            choice
-                [ Var <$> variableName
-                , ParensExpression <$> parensExpression
-                ]
-
-
-parensExpression : Parser s Expression
-parensExpression =
-    parens (expression)
-
-
-fieldLabel : Parser s String
-fieldLabel =
-    string "\"" *> regex "[^\\\"]+" <* string "\""
 
 
 valueType : Parser s ValueType

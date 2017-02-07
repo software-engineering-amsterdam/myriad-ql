@@ -1,18 +1,20 @@
 module Tests exposing (..)
 
-import Test exposing (..)
 import Combine exposing (..)
-import ParserTests
-import ExpressionParserTests
 import Combine.ExtraTests
+import Parser.ExpressionTests as ExpressionTests
+import Parser.FormTests as FormTests
+import Parser.TokenParserTests as TokenParserTests
+import Test exposing (..)
 
 
 all : Test
 all =
     describe "QL Parser"
-        [ ParserTests.all
+        [ FormTests.all
         , Combine.ExtraTests.all
-        , ExpressionParserTests.all
+        , ExpressionTests.all
+        , TokenParserTests.all
         ]
 
 

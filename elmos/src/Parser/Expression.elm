@@ -1,9 +1,10 @@
-module ExpressionParser exposing (..)
+module Parser.Expression exposing (..)
 
+import AST exposing (..)
 import Combine exposing (..)
 import Combine.Num exposing (int)
-import AST exposing (..)
 import List exposing (foldr)
+import Parser.Token exposing (variableName)
 
 
 expression : Parser s Expression
@@ -71,8 +72,3 @@ atom =
             , ParensExpression <$> (parens expression)
             ]
         <* whitespace
-
-
-variableName : Parser s String
-variableName =
-    regex "[a-z0-9][a-zA-Z0-9_]*"
