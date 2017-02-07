@@ -32,6 +32,8 @@ public class Lexer implements Tokens {
         KEYWORDS.put("string", TYPESTRING);
         KEYWORDS.put("true", TRUE);
         KEYWORDS.put("false", FALSE);
+        KEYWORDS.put("if", IF);
+        KEYWORDS.put("else", ELSE);
     }
 
 
