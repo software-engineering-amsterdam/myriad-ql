@@ -19,6 +19,6 @@ if __name__ == '__main__':
     ql_char = ql_file.read()
     ql_file.close()
 
-    tokens = imp_lex(ql_char)
+    tokens = lex_characters(ql_char)
     for token in tokens:
         print(token)

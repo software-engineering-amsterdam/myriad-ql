@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import lexer
+import pql.lexer.lexer as lexer
 
 token_exprs = [
     # The skip-overs
@@ -41,7 +41,7 @@ token_exprs = [
 
     # String literal
     # (r'\"(\\.|[^"])*\"',    "DOUBLE_STRING_LITERAL"), # Or a field?
-    (r'\"(\\.|[^"])*\"',    "FIELD"), # Or a double string literal?
+    (r'\"(\\.|[^"])*\"',    "FIELD"),  # Or a double string literal?
 
     # Identifier
     (r'([a-zA-Z])+',        "IDENTIFIER"),
@@ -51,5 +51,5 @@ token_exprs = [
 ]
 
 
-def imp_lex(characters):
+def lex_characters(characters):
     return lexer.lex(characters, token_exprs)
