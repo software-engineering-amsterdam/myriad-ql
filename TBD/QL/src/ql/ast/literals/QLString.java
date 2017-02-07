@@ -12,4 +12,9 @@ public class QLString implements ASTNode, QLLiteral {
     public QLString(String qlString){
         this.qlString = qlString;
     }
+
+    @Override
+    public String toString() {
+        return qlString;
+    }
 }

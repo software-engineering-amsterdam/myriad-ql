@@ -1,24 +1,26 @@
 package ql.ast;
 
+import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLString;
 
 /**
  * Created by Erik on 6-2-2017.
  */
 public class Question implements ASTNode, Statement {
-    private QLString id;
+    private QLIdent id;
     private QLString question;
     private Type type;
     private Expr expr;
 
-    public Question(QLString id, QLString question, Type type, Expr expr) {
+    public Question(QLIdent id, QLString question, Type type, Expr expr) {
         this.id = id;
         this.question = question;
         this.type = type;
         this.expr = expr;
+        System.out.println(question);
     }
 
-    public Question(QLString id, QLString question, Type type) {
+    public Question(QLIdent id, QLString question, Type type) {
         this(id, question, type, null);
     }
 }

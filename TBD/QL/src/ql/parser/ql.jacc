@@ -1,9 +1,9 @@
 %package ql.parser
-%class Parser
-%interface Tokens
+%class QLParser
+%interface QLTokens
 %start form
 
-%token ':' '"' TYPEBOOL TYPEINT TYPESTRING TRUE FALSE
+%token ':' '"' TYPEBOOL TYPEINT TYPESTRING TRUE FALSE FORM
 %token <QLString> STRING
 %token <QLInt> INT
 %token <QLFloat> FLOAT
@@ -38,7 +38,8 @@ import ql.ast.expressions.*;
 
 %%
 
- form : statements { result = new Form($1); }
+ form : FORM IDENT '{' statements '}'  { result = new Form($2, $4); }
+      | FORM IDENT '{' '}'             { result = new Form($2, null); }
       ;
 
  statements : statement statements      {$$ = new Statements($1, $2);}
@@ -47,15 +48,16 @@ import ql.ast.expressions.*;
 
 
  statement : question                   {$$ = $1;}
+           | if                         {$$ = $1;}
            ;
 
- question : '"' STRING '"' STRING ':' type '=' expr      {$$ = new Question($2, $4, $6, $8);}
-          | '"' STRING '"' STRING ':' type               {$$ = new Question($2, $4, $6);}
+ question : STRING IDENT ':' type '=' expr      {$$ = new Question($2, $1, $4, $6);}
+          | STRING IDENT ':' type               {$$ = new Question($2, $1, $4);}
           ;
 
- type : TYPEBOOL        {$$ = TYPEBOOL;}
-       | TYPEINT        {$$ = TYPEINT;}
-       | TYPESTRING     {$$ = TYPESTRING;}
+ type : TYPEBOOL        {$$ = Type.TYPEBOOL;}
+       | TYPEINT        {$$ = Type.TYPEINT;}
+       | TYPESTRING     {$$ = Type.TYPESTRING;}
        ;
 
  if :  IF '(' expr ')' '{' statements '}' {$$ = new If($3, $6);}
@@ -89,7 +91,7 @@ import ql.ast.expressions.*;
 
 
 %%
-private Lexer lexer;
+private QLLexer lexer;
 
 private Form result;
 
@@ -97,7 +99,7 @@ public Form getResult() {
   return result;
 }
 
-public Parser(Lexer lexer) {
+public QLParser(QLLexer lexer) {
   this.lexer = lexer;
 }
 

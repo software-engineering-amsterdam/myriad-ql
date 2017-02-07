@@ -3,6 +3,7 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
+import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLInt;
 import ql.ast.literals.QLString;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Lexer implements Tokens {
+public class QLLexer implements QLTokens {
     private static final Map<String, Integer> KEYWORDS = new HashMap<String, Integer>();
 
     private int token;
@@ -22,10 +23,11 @@ public class Lexer implements Tokens {
 
     private final Reader input;
 
-    public Lexer(Reader input) {
+    public QLLexer(Reader input) {
         this.input = input;
         nextChar();
 
+        KEYWORDS.put("form", FORM);
         KEYWORDS.put("boolean", TYPEBOOL);
         KEYWORDS.put("int", TYPEINT);
         KEYWORDS.put("string", TYPESTRING);
@@ -48,6 +50,9 @@ public class Lexer implements Tokens {
     }
 
     public int nextToken() {
+        StringBuilder stringBuilder;
+        String name;
+
         for (;;) {
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
                 nextChar();
@@ -58,6 +63,21 @@ public class Lexer implements Tokens {
             }
 
             switch (c) {
+                case '{': nextChar(); return token = '{';
+                case '}': nextChar(); return token = '}';
+                case ':': nextChar(); return token = ':';
+                case '"':
+                    stringBuilder = new StringBuilder();
+                    nextChar();
+                    while (c != (int)'"'){
+                        stringBuilder.append((char)c);
+                        nextChar();
+                    }
+                    nextChar();
+
+                    name = stringBuilder.toString();
+                    this.yylval = new QLString(name);
+                    return token = STRING;
                 default:
                     if (Character.isDigit(c)) {
                         int n = 0;
@@ -72,21 +92,21 @@ public class Lexer implements Tokens {
                     }
 
                     if (Character.isLetter(c)) {
-                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder = new StringBuilder();
                         do {
                             stringBuilder.append((char)c);
                             nextChar();
                         }
                         while (Character.isLetterOrDigit(c));
 
-                        String name = stringBuilder.toString();
+                        name = stringBuilder.toString();
 
                         if (KEYWORDS.containsKey(name)) {
                             return token = KEYWORDS.get(name);
                         }
 
-                        this.yylval = new QLString(name);
-                        return token = STRING;
+                        this.yylval = new QLIdent(name);
+                        return token = IDENT;
                     }
             }
         }
