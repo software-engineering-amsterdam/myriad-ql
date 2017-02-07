@@ -43,6 +43,8 @@ def parse_expr(expr):
     ex7 = '10 && 20 || 2'
     ex8 = '!5 + !10'
     ex9 = '!(5 + 10 / 234 / 1 - !20 && (19 * 12) || 2)'
+    ex10 = "!!8"
+    ex11 = "300 * 100 - 20 * 10 * (25 - 3)"
 
     # Test examples. NOTE: Example 1 cannot be done for now.
     print expr.parseString(ex1, parseAll=True)[0]
@@ -54,3 +56,5 @@ def parse_expr(expr):
     print expr.parseString(ex7, parseAll=True)[0]
     print expr.parseString(ex8, parseAll=True)[0]
     print expr.parseString(ex9, parseAll=True)[0]
+    print expr.parseString(ex10, parseAll=True)[0]
+    print expr.parseString(ex11, parseAll=True)[0]

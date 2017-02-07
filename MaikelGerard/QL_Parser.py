@@ -60,33 +60,26 @@ class QuestionnaireParser(object):
         )
 
         return pp.infixNotation(expression_types, [
-            (pp.oneOf('- !'), 1, pp.opAssoc.RIGHT, self.parse_stuff),
-            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.parse_stuff),
-            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.parse_stuff),
-            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.parse_stuff),
-            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT, self.parse_stuff),
-            (pp.Literal('&&'), 2, pp.opAssoc.LEFT, self.parse_stuff),
-            (pp.Literal('||'), 2, pp.opAssoc.LEFT, self.parse_stuff),
+            (pp.oneOf('- !'), 1, pp.opAssoc.RIGHT),
+            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.Literal('&&'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.Literal('||'), 2, pp.opAssoc.LEFT, self.convert_expr),
         ])
 
-    def parse_stuff(self, s, l, t):
-        print t[0]
-        print self.binary_expr(t[0])
-        return self.binary_expr(t[0])
+    def convert_expr(self, s, l, t):
+        # Convert the expression to a binary expression.
+        expr = t[0].asList()
+        binary_expr = self.to_binary_expr(expr)
 
-    def binary_expr(self, expr):
-        # When handed a string instead of a list, just return the string.
-        if isinstance(expr, str):
-            return expr
+        return pp.ParseResults(binary_expr)
 
-        # Case: expr op expr
-        if len(expr) > 2:
-            return [expr[:2] + self.binary_expr(expr[2:])]
-        # Case: op expr
-        elif len(expr) == 2:
-            return [expr.asList()]
-        else:
+    def to_binary_expr(self, expr):
+        if len(expr) <= 2:
             return expr
+        return [expr[:2] + self.to_binary_expr(expr[2:])]
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str)
