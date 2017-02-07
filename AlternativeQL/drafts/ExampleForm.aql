@@ -5,6 +5,6 @@ form ExampleForm {
    if (hasBoughtHouse) {
         money sellingPrice: "Price the house was sold for:";
         money privateDebt: "Private debts for the sold house:";
-        money valueResidue: "Value residue:" = (3 - sellingPrice - privateDebt);
+        money valueResidue: "Value residue:" = (3 - sellingPrice * privateDebt);
    }
 }
