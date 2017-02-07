@@ -7,6 +7,5 @@ import parser.FormParser
   */
 object Main extends App {
   val filename = "src/main/resources/example.ql"
-  val reader = new FileReader(filename)
-  println(FormParser(reader))
+  println(FormParser(new FileReader(filename)))
 }
