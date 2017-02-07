@@ -55,8 +55,6 @@ import ql.ast.expression.*;
 
 
 
-
-
 %%
 private Lexer lexer;
 
