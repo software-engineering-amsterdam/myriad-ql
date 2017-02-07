@@ -7,7 +7,7 @@ public class BoolQuestion extends QuestionNode {
 
     private boolean mValue;
 
-    public BoolQuestion(int type, Node parent, List<Node> children) {
-        super(type, parent, children);
+    public BoolQuestion(String name, Node parent) {
+        super(name, parent);
     }
 }
