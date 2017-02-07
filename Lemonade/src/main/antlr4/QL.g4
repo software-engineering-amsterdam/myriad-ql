@@ -1,5 +1,4 @@
 grammar QL;
-options {backtrack=true; memoize=true;}
 
 form
     : FORM LBRACE questions RBRACE EOF
