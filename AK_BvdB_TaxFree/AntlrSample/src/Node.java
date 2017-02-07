@@ -1,15 +1,25 @@
-/**
- * Created by Alex on 7-2-2017.
- */
-public class Node<T> {
+import java.util.ArrayList;
 
-    private final Class<T> type;
+public abstract class Node {
 
-    public Node(Class<T> type) {
-        this.type = type;
+    private String mName;
+    private Node mParent;
+    private ArrayList<Node> mChildren;
+
+    public Node(String name, Node parent) {
+        mChildren = new ArrayList<>();
+        mName = name;
+        mParent = parent;
+        registerToParent();
     }
 
-    public Class<T> getMyType() {
-        return this.type;
+    public void addChild(Node child) {
+        mChildren.add(child);
+    }
+
+    private void registerToParent() {
+        if(mParent != null) {
+            mParent.addChild(this);
+        }
     }
 }
