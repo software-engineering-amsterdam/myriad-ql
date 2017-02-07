@@ -1,22 +1,33 @@
 import sys
-import os
 import io
 from pql.lexer.lexer import lex_using_default_tokens
 
-if __name__ == '__main__':
 
+def open_file(path):
     try:
-        ql_file = io.open(sys.argv[1], "r")
-    except IndexError:
-        print(" ".join(["Usage: python pql.py", str(os.path.join("path", "to", "your", "file"))]))
-        sys.exit(1)
+        return io.open(path, "r")
     except FileNotFoundError:
-        print("The given file could not be found.")
-        sys.exit(1)
+        print("The given file could not be found. Usage: python pql.py path\\to\\your\\file")
+    return None
 
-    ql_char = ql_file.read()
-    ql_file.close()
 
-    tokens = lex_using_default_tokens(ql_char)
-    for token in tokens:
-        print(token)
+def main(sys_args):
+    def read_file_for_text(file):
+        ql_char = file.read()
+        ql_file.close()
+        return ql_char
+
+    def print_result(token_stream):
+        for token in token_stream:
+            print(token)
+
+    ql_file = open_file(sys_args[1])
+    if ql_file is None:
+        sys.exit(2)
+
+    characters = read_file_for_text(ql_file)
+    tokens = lex_using_default_tokens(characters)
+    print_result(tokens)
+
+if __name__ == '__main__':
+    main(sys.argv)
