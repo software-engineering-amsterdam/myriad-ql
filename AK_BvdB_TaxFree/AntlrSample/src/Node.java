@@ -1,35 +1,25 @@
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by Alex on 7-2-2017.
- */
 public abstract class Node {
 
-    private int mName;
-    private final int mType;
+    private String mName;
     private Node mParent;
-    private List<Node> mChildren;
+    private ArrayList<Node> mChildren;
 
-    public Node(int type, Node parent) {
-        mType = type;
-        mParent = parent;
+    public Node(String name, Node parent) {
         mChildren = new ArrayList<>();
-    }
-
-    public int getMyType() {
-        return mType;
-    }
-
-    public Node getParent() {
-        return mParent;
-    }
-
-    public List<Node> getChildren() {
-        return mChildren;
+        mName = name;
+        mParent = parent;
+        registerToParent();
     }
 
     public void addChild(Node child) {
         mChildren.add(child);
+    }
+
+    private void registerToParent() {
+        if(mParent != null) {
+            mParent.addChild(this);
+        }
     }
 }
