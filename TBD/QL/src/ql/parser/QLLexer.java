@@ -55,8 +55,24 @@ public class QLLexer implements QLTokens {
     public int nextToken() {
         StringBuilder stringBuilder;
         String name;
+        boolean inComment = false;
 
         for (;;) {
+            // Skip comments
+            if (inComment) {
+                while (c != '*' && c != -1) {
+                    nextChar();
+                }
+                if (c == '*') {
+                    nextChar();
+                    if (c == '/') {
+                        nextChar();
+                        inComment = false;
+                    }
+                    continue;
+                }
+            }
+            // Skip whitespaces
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
                 nextChar();
             }
@@ -66,13 +82,40 @@ public class QLLexer implements QLTokens {
             }
 
             switch (c) {
-                case '(': nextChar(); return token = '(';
-                case ')': nextChar(); return token = ')';
-                case '=': nextChar(); return token = '=';
-                case '-': nextChar(); return token = '-';
-                case '{': nextChar(); return token = '{';
-                case '}': nextChar(); return token = '}';
-                case ':': nextChar(); return token = ':';
+                case '*':
+                    nextChar();
+                    if(inComment && c == '/') {
+                        inComment = false;
+                        nextChar();
+                        continue;
+                    }
+                    return token = '*';
+                case '/':
+                    nextChar();
+                    if(c == '*') {
+                        inComment = true;
+                        nextChar();
+                        continue;
+                    }
+                    else if (c == '/') {
+                        while (c != '\n') {
+                            nextChar();
+                        }
+                        continue;
+                    }
+                    return token = '/';
+                case '&':
+                    nextChar();
+                    if(c == '&') {
+                        return token = AND;
+                    }
+                    throw new RuntimeException("Unexpected character: " + (char)c);
+                case '|':
+                    nextChar();
+                    if(c == '|') {
+                        return token = OR;
+                    }
+                    throw new RuntimeException("Unexpected character: " + (char)c);
                 case '"':
                     stringBuilder = new StringBuilder();
                     nextChar();
@@ -85,6 +128,37 @@ public class QLLexer implements QLTokens {
                     name = stringBuilder.toString();
                     this.yylval = new QLString(name);
                     return token = STRING;
+                case '!':
+                    nextChar();
+                    if(c == '=') {
+                        return token = NEQ;
+                    }
+                    return token = '!';
+                case '<':
+                    nextChar();
+                    if(c == '=') {
+                        return token = LEQ;
+                    }
+                    return token = '<';
+                case '=':
+                    nextChar();
+                    if(c == '=') {
+                        return token = EQ;
+                    }
+                    return token = '=';
+                case '>':
+                    nextChar();
+                    if(c == '=') {
+                        return token = GEQ;
+                    }
+                    return token = '>';
+                case '+': nextChar(); return token = '+';
+                case '-': nextChar(); return token = '-';
+                case '(': nextChar(); return token = '(';
+                case ')': nextChar(); return token = ')';
+                case '{': nextChar(); return token = '{';
+                case '}': nextChar(); return token = '}';
+                case ':': nextChar(); return token = ':';
                 default:
                     if (Character.isDigit(c)) {
                         int n = 0;
