@@ -1,8 +1,10 @@
-// Output created by jacc on Tue Feb 07 12:42:59 CET 2017
+// Output created by jacc on Tue Feb 07 13:21:49 CET 2017
 
 package ql.parser;
 
 import ql.ast.*;
+import ql.ast.type.*;
+import ql.ast.expression.*;
 
 class Parser implements Tokens {
     private int yyss = 100;
@@ -58,8 +60,8 @@ class Parser implements Tokens {
                     }
                 case 17:
                     switch (yytok) {
-                        case '"':
                         case ENDINPUT:
+                        case '"':
                             yyn = yyr4();
                             continue;
                     }
@@ -214,8 +216,8 @@ class Parser implements Tokens {
                     }
                 case 26:
                     switch (yytok) {
-                        case '"':
                         case ENDINPUT:
+                        case '"':
                             yyn = yyr5();
                             continue;
                     }
@@ -233,8 +235,8 @@ class Parser implements Tokens {
                     }
                 case 27:
                     switch (yytok) {
-                        case '"':
                         case ENDINPUT:
+                        case '"':
                             yyn = yyr6();
                             continue;
                     }
@@ -252,8 +254,8 @@ class Parser implements Tokens {
                     }
                 case 28:
                     switch (yytok) {
-                        case '"':
                         case ENDINPUT:
+                        case '"':
                             yyn = yyr7();
                             continue;
                     }
@@ -271,8 +273,8 @@ class Parser implements Tokens {
                     }
                 case 29:
                     switch (yytok) {
-                        case '"':
                         case ENDINPUT:
+                        case '"':
                             yyn = yyr8();
                             continue;
                     }
@@ -310,7 +312,7 @@ class Parser implements Tokens {
     }
 
     private int yyr5() { // question : '"' STRING '"' STRING ':' type
-        {yyrv = new Question(((String)yysv[yysp-5]), ((String)yysv[yysp-3]), ((Type)yysv[yysp-1]));}
+        {yyrv = new Question(((QLString)yysv[yysp-5]), ((QLString)yysv[yysp-3]), ((Type)yysv[yysp-1]));}
         yysv[yysp-=6] = yyrv;
         return 2;
     }

@@ -1,11 +1,21 @@
 %package ql.parser
 %class Parser
 %interface Tokens
+%semantic ql.ast.ASTNode
 %start form
 
 %token ':' '"' TYPEBOOL TYPEINT TYPESTRING
-%token <String> STRING
-%token <int> INT
+%token <QLString> STRING
+%token <QLInt> INT
+%token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
+%token '(' ')'
+
+%left OR
+%left AND
+%left '>' '<' GEQ LEQ NEQ EQ
+%left '+' '-'
+%left '*' '/'
+%left UMIN UPLUS UNOT
 
 %type <Form> form
 %type <Statements> statements
@@ -18,6 +28,8 @@
 
 %{
 import ql.ast.*;
+import ql.ast.type.*;
+import ql.ast.expression.*;
 %}
 
 %%
@@ -40,6 +52,7 @@ import ql.ast.*;
        | TYPEINT        {$$ = TYPEINT;}
        | TYPESTRING     {$$ = TYPESTRING;}
        ;
+
 
 
 
