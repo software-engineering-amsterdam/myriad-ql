@@ -18,5 +18,5 @@ if __name__ == '__main__':
     ql_file.close()
 
     tokens = lex_using_default_tokens(ql_char)
-    for token in tokens:
-        print(token)
+    # for token in tokens:
+    #     print(token)
