@@ -4,105 +4,67 @@
 
 grammar Hello;
 
-//@parser::header
-//{
-//	package org.uva.sea.ql.parser.antlr;
-//}
-//
-//@lexer::header
-//{
-//	package org.uva.sea.ql.parser.antlr;
-//}
-
-
-
-unExpr returns [Expr result]
-    :  '+' x=unExpr { $result = new Pos($x.result); }
-    |  '-' x=unExpr { $result = new Neg($x.result); }
-    |  '!' x=unExpr { $result = new Not($x.result); }
-    |  x=primary    { $result = $x.result; }
-    ;
-    
-mulExpr returns [Expr result]
-    :   lhs=unExpr { $result=$lhs.result; } ( op=( '*' | '/' ) rhs=unExpr 
-    { 
-      if ($op.text.equals("*")) {
-        $result = new Mul($result, rhs);
-      }
-      if ($op.text.equals("<=")) {
-        $result = new Div($result, rhs);      
-      }
-    })*
-    ;
-    
-  
-addExpr returns [Expr result]
-    :   lhs=mulExpr { $result=$lhs.result; } ( op=('+' | '-') rhs=mulExpr
-    { 
-      if ($op.text.equals("+")) {
-        $result = new Add($result, rhs);
-      }
-      if ($op.text.equals("-")) {
-        $result = new Sub($result, rhs);      
-      }
-    })*
-    ;
-  
-relExpr returns [Expr result]
-    :   lhs=addExpr { $result=$lhs.result; } ( op=('<'|'<='|'>'|'>='|'=='|'!=') rhs=addExpr 
-    { 
-      if ($op.text.equals("<")) {
-        $result = new LT($result, rhs);
-      }
-      if ($op.text.equals("<=")) {
-        $result = new LEq($result, rhs);      
-      }
-      if ($op.text.equals(">")) {
-        $result = new GT($result, rhs);
-      }
-      if ($op.text.equals(">=")) {
-        $result = new GEq($result, rhs);      
-      }
-      if ($op.text.equals("==")) {
-        $result = new Eq($result, rhs);
-      }
-      if ($op.text.equals("!=")) {
-        $result = new NEq($result, rhs);
-      }
-    })*
-    ;
-    
-andExpr returns [Expr result]
-    :   lhs=relExpr { $result=$lhs.result; } ( '&&' rhs=relExpr { $result = new And($result, rhs); } )*
-    ;
-    
-
-orExpr returns [Expr result]
-    :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
-    ;
-
 root: 'form' ID block;
 
 block: '{' question* '}';
 
-question : ( ID':' STRING type computed_question* );
+question : ( ID':' STRING type computed_question* | statement );
 
 type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 
-computed_question: '(' addExpr | mulExpr ')' ;
+computed_question: '(' type '-' type | type '+' type ')' ;
 
 statement
- : 'if' relExpr block ('else if' relExpr block)* ('else' block)? ;
+ : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)?
+ | WHILE parenthesisExpr block
+ ;
 
-primary returns [Expr result]: 
-         // ID { $result = IntLiteral(ID.text, ID.getLine()) } | 
-		 INT{ $result = IntLiteral(INT.text, INT.getLine())}
-		 ;
+parenthesisExpr
+ : '(' expr ')';
+
+expr
+ : atom relOp atom
+ | atom boolOp atom
+ | atom arithOp atom
+ | '!' atom
+ | atom
+ ;
+
+relOp
+ : '==' | '!=' | '<=' | '>=' | '>' | '<';
+
+boolOp
+ : '&&' | '||';
+
+arithOp
+ : '+' | '-' | '/' | '*';
+
+atom
+ : DECIMAL
+ | MONEY
+ | INT
+ | STRING
+ | BOOL
+ | DDMMYY
+ | ID
+ ;
 
 // TODO look up conventions tokens/names capital letters
+BOOL: ('true' | 'false');
+IF : 'if';
+ELSE : 'else';
+WHILE : 'while';
+
 ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 
 INT: ('0'..'9')+;
+
+TWO_DIGIT: ('0'..'9')('0'..'9');
+
+DECIMAL : INT '.' INT | '.' INT;
+MONEY : INT '.' TWO_DIGIT;
+
+DDMMYY : TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ; // TODO check valid date
 
 STRING: ('"' .*? '"');
 

@@ -27,11 +27,23 @@ type alias IfBlock =
     }
 
 
-{-| TODO Add other cases
--}
 type Expression
     = Var String
+    | Integer Int
+    | Boolean Bool
     | ParensExpression Expression
+    | MultiplyExpression Expression Expression
+    | DivideExpression Expression Expression
+    | PlusExpression Expression Expression
+    | MinusExpression Expression Expression
+    | GreaterThanExpression Expression Expression
+    | LessThanExpression Expression Expression
+    | GreaterThanOrEqualExpression Expression Expression
+    | LessThanOrEqualExpression Expression Expression
+    | EqualToExpression Expression Expression
+    | NotEqualToExpression Expression Expression
+    | AndExpression Expression Expression
+    | OrExpression Expression Expression
 
 
 type ValueType
