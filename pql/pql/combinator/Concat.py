@@ -1,5 +1,5 @@
-from pql.combinator.Parser import Parser
-from pql.combinator.Result import Result
+from combinator.Parser import Parser
+from combinator.Result import Result
 
 
 class Concat(Parser):

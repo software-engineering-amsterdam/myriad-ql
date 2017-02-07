@@ -1,6 +1,7 @@
 import sys
 import io
 from lexer.lexer import lex_using_default_tokens
+from parser.parser import aexp
 
 
 def open_file(path):
@@ -19,8 +20,6 @@ def main(sys_args):
     ql_file.close()
 
     tokens = lex_using_default_tokens(ql_char)
-#    for token in tokens:
-#        print(token)
 
 if __name__ == '__main__':
     main(sys.argv)
