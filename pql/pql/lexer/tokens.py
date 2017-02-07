@@ -1,6 +1,3 @@
-#!/usr/bin/python
-
-
 def get_tokens():
     return __token_definitions
 
