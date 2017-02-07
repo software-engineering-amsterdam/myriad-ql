@@ -1,0 +1,52 @@
+%package ql.parser
+%class Parser
+%interface Tokens
+%semantic ql.ast.ASTNode
+%start form
+
+%token <StringNode> STRING
+%token <IntNode> INT
+%token ':' '"'
+%token <TypeNode>
+
+
+
+%{
+import ql.ast.*;
+import ql.ast.types.*;
+%}
+
+%%
+
+ form : question { result = new FormNode($1); }
+      ;
+
+ statements : statement statements      {$$ = 12;}
+            | statement                 {$$ = 12;}
+            ;
+
+
+ statement : question                   {$$ = 12;}
+           ;
+
+ question : '"' STRING '"' STRING ':' TYPE      {$$ = new StringNode("test");}
+          ;
+
+
+
+%%
+private Lexer lexer;
+
+private FormNode result;
+
+public FormNode getResult() {
+  return result;
+}
+
+public Parser(Lexer lexer) {
+  this.lexer = lexer;
+}
+
+private void yyerror(String msg) {
+  System.err.println(msg);
+}

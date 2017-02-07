@@ -17,6 +17,7 @@ all =
         , varNameTests
         , fieldTests
         , ifBlockTests
+        , formItemTests
         , valueTypeTests
         , expressionTests
         ]
@@ -52,6 +53,23 @@ varNameTests =
         , ( "should support camel case variable names", "fooBarBaz", Just "fooBarBaz" )
         , ( "should support underscores", "a_b", Just "a_b" )
         , ( "should not support question mark", "a?b", Nothing )
+        ]
+
+
+formItemTests : Test
+formItemTests =
+    testWithParser Parser.formItem
+        "formItemTests"
+        [ ( "should parse a simple field", "\"label\" id: integer", Just <| FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
+        , ( "should parse an if block"
+          , "if (bar) { \"label\" id: integer } else { \"label\" id: integer }"
+          , Just <|
+                IfItem
+                    { expression = Var "bar"
+                    , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    }
+          )
         ]
 
 

@@ -1,8 +1,8 @@
-#!/usr/bin/python
+def get_tokens():
+    return __token_definitions
 
-import lexer
-
-token_exprs = [
+"""Internal variable, should be exposed through method tokens()"""
+__token_definitions = [
     # The skip-overs
     (r'[ \n\t]+',           None),
     (r'#[^\n]*',            None),
@@ -41,15 +41,11 @@ token_exprs = [
 
     # String literal
     # (r'\"(\\.|[^"])*\"',    "DOUBLE_STRING_LITERAL"), # Or a field?
-    (r'\"(\\.|[^"])*\"',    "FIELD"), # Or a double string literal?
+    (r'\"(\\.|[^"])*\"',    "FIELD"),  # Or a double string literal?
 
     # Identifier
     (r'([a-zA-Z])+',        "IDENTIFIER"),
 
     # Unidentifiable
-    (r'.*',                 "UNINDENTIFIED"),
+    # (r'.*',                 "UNINDENTIFIED"),
 ]
-
-
-def imp_lex(characters):
-    return lexer.lex(characters, token_exprs)
