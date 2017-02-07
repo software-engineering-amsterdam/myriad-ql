@@ -10,8 +10,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.label).to parse(label)
-    end
-    it 'should parse into properties' do
       expect(parser.label.parse(label)).to include(:label)
     end
   end
@@ -21,8 +19,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.variable).to parse(variable)
-    end
-    it 'should parse into properties' do
       expect(parser.variable.parse(variable)).to include(:variable)
     end
   end
@@ -32,8 +28,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.type).to parse(type)
-    end
-    it 'should parse into properties' do
       expect(parser.type.parse(type)).to include(:type)
     end
   end
@@ -42,19 +36,19 @@ describe Parser do
     variable2 = 'sellingPrice'
     it 'should parse' do
       expect(parser.variable2).to parse(variable2)
-    end
-    it 'should parse into properties' do
       expect(parser.variable2.parse(variable2)).to include(:variable2)
     end
   end
 
   context 'expression' do
-    expression = '(sellingPrice - privateDebt + anotherVariable )'
+    expression = '(sellingPrice - privateDebt + anotherVariable)'
     it 'should parse' do
       expect(parser.expression).to parse(expression)
-    end
-    it 'should parse into properties' do
-      expect(parser.expression.parse(expression)[:expression]).to match(:variable2)
+      expect(parser.expression.parse(expression)).to include(:expression)
+      expect(parser.expression.parse(expression)[:expression]).to all include(:variable2)
+      expect(parser.expression.parse(expression)[:expression][1]).to include(:operator)
+      expect(parser.expression.parse(expression)[:expression][2]).to include(:operator)
+      expect(parser.expression.parse(expression)[:expression].length).to be(3)
     end
   end
 
@@ -63,8 +57,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.question).to parse(question)
-    end
-    it 'should parse into properties' do
       expect(parser.question.parse(question)).to include(:question)
     end
   end
@@ -84,8 +76,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.questions).to parse(two_questions)
-    end
-    it 'should parse into properties' do
       expect(parser.questions.parse(two_questions)).to include(:questions)
     end
   end
@@ -100,8 +90,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.questions).to parse(three_questions)
-    end
-    it 'should parse into properties' do
       expect(parser.questions.parse(three_questions)).to include(:questions)
     end
   end
@@ -140,8 +128,6 @@ describe Parser do
 
     it 'should parse' do
       expect(parser.if_statement).to parse(if_statement)
-    end
-    it 'should parse into properties' do
       expect(parser.if_statement.parse(if_statement)).to include(:if_statement)
     end
   end
