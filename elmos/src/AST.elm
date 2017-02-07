@@ -39,7 +39,7 @@ type Expression
     | GreaterThanExpression Expression Expression
     | LessThanExpression Expression Expression
     | GreaterThanOrEqualExpression Expression Expression
-    | LessOrThanEqualExpression Expression Expression
+    | LessThanOrEqualExpression Expression Expression
     | EqualToExpression Expression Expression
     | NotEqualToExpression Expression Expression
     | AndExpression Expression Expression

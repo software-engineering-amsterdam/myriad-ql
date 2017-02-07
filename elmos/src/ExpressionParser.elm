@@ -17,10 +17,10 @@ expression =
 compareOp : Parser s (Expression -> Expression -> Expression)
 compareOp =
     choice
-        [ LargerOrEqualExpression <$ string ">="
-        , SmallerOrEqualExpression <$ string "<="
-        , LargerThenExpression <$ string ">"
-        , SmallerThenExpression <$ string "<"
+        [ GreaterThanOrEqualExpression <$ string ">="
+        , LessThanOrEqualExpression <$ string "<="
+        , GreaterThanExpression <$ string ">"
+        , LessThanExpression <$ string "<"
         ]
 
 
