@@ -9,31 +9,31 @@ expression : Parser s Expression
 expression =
     lazy <|
         \() ->
-            chainl relationalOp <|
-                chainl compareOp <|
-                    chainl equalsOp <|
+            chainl logicalOp <|
+                chainl comparisonOp <|
+                    chainl relationalOp <|
                         chainl addOp <|
-                            chainl mulOp atom
+                            chainl multiplyOp atom
 
 
-relationalOp : Parser s (Expression -> Expression -> Expression)
-relationalOp =
+logicalOp : Parser s (Expression -> Expression -> Expression)
+logicalOp =
     choice
         [ AndExpression <$ string "&&"
         , OrExpression <$ string "||"
         ]
 
 
-equalsOp : Parser s (Expression -> Expression -> Expression)
-equalsOp =
+comparisonOp : Parser s (Expression -> Expression -> Expression)
+comparisonOp =
     choice
         [ EqualToExpression <$ string "=="
         , NotEqualToExpression <$ string "!="
         ]
 
 
-compareOp : Parser s (Expression -> Expression -> Expression)
-compareOp =
+relationalOp : Parser s (Expression -> Expression -> Expression)
+relationalOp =
     choice
         [ GreaterThanOrEqualExpression <$ string ">="
         , LessThanOrEqualExpression <$ string "<="
@@ -50,8 +50,8 @@ addOp =
         ]
 
 
-mulOp : Parser s (Expression -> Expression -> Expression)
-mulOp =
+multiplyOp : Parser s (Expression -> Expression -> Expression)
+multiplyOp =
     choice
         [ MultiplyExpression <$ string "*"
         , DivideExpression <$ string "/"

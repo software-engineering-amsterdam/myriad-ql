@@ -68,7 +68,7 @@ comparisonTests =
           , Just
                 (EqualToExpression
                     (PlusExpression (Var "x") (Var "y"))
-                    (LessThanExpression (Var "x") (Var "y"))
+                    (LessThanExpression (Var "y") (Var "z"))
                 )
           )
         ]
