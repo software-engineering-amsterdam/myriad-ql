@@ -9,18 +9,22 @@ import scala.util.parsing.combinator.JavaTokenParsers
   * Created by jasper on 07/02/17.
   */
 trait ExpressionParser extends JavaTokenParsers {
-  //Infix operators:
   def expr: Parser[ExpressionNode] = buildParser(comp, """\&\&|\|\|""".r)
 
-  def comp: Parser[ExpressionNode] = buildParser(addSub, """>|<|>=|<=|!=|==""".r)
+  def comp: Parser[ExpressionNode] = buildParser(subAdd, """>|<|>=|<=|!=|==""".r)
 
-  def addSub: Parser[ExpressionNode] = buildParser(term,"""\+|-""".r)
+  def subAdd: Parser[ExpressionNode] = buildParser(mulDiv,"""-|\+""".r)
 
-  def term: Parser[ExpressionNode] = buildParser(factor, """\*|/""".r)
+  def mulDiv: Parser[ExpressionNode] = buildParser(factor, """\*|/""".r)
 
-  def factor: Parser[ExpressionNode] = prefixOp | integer | identifier | "(" ~> expr <~ ")"
+  def factor: Parser[ExpressionNode] = (
+    prefix
+      | integer
+      | identifier
+      | "(" ~> expr <~ ")"
+    )
 
-  def prefixOp: Parser[PrefixOperation] =
+  def prefix: Parser[PrefixOperation] =
     """\+|-|!""".r ~ factor ^^ {
       case op ~ value => PrefixOperation(op, value)
     }
