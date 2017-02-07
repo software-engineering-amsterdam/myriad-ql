@@ -1,11 +1,11 @@
-package Parser
+package parser
 
 import scala.util.parsing.combinator.JavaTokenParsers
 
 /**
   * Created by jasper on 07/02/17.
   */
-object FormParser extends ExpressionParser {
+object formParser extends JavaTokenParsers with ExpressionParser {
   def typeName: Parser[Any] = (
     "boolean"
       | "string"
@@ -14,12 +14,19 @@ object FormParser extends ExpressionParser {
       | "decimal"
       | "money"
     )
+
   def label: Parser[Any] = stringLiteral
-  def typeDecl: Parser[Any] = typeName ~ (("("~expr~")")?)
+
+  def typeDecl: Parser[Any] = typeName ~ opt("(" ~ expr ~ ")")
+
   def question: Parser[Any] = ident ~ ":" ~ label ~ typeDecl
-  def conditional: Parser[Any] = "if" ~ "("~expr~")" ~ block
+
+  def conditional: Parser[Any] = "if" ~ "(" ~ expr ~ ")" ~ block
+
   def statement: Parser[Any] = conditional | question
-  def block: Parser[Any] = "{" ~> (statement*) <~ "}"
+
+  def block: Parser[Any] = "{" ~> rep(statement) <~ "}"
+
   def form: Parser[Any] = "form" ~ ident ~ block
 
   def apply(input: String): Any = parseAll(form, input) match {
@@ -43,9 +50,7 @@ object FormParser extends ExpressionParser {
       """
     val input1 =
       """
-      form Box1HouseOwning {
-        hasSoldHouse: "Did you sell a house in 2010?" boolean
-        valueResidue: "Value residue:" money(sellingPrice - privateDebt-5)
+      form ident {
       }
       """
 
