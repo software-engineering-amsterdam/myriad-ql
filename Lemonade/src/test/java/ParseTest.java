@@ -17,11 +17,8 @@
  *  under the License.
  */
 
-
-public class ParseTest {
-
 import org.junit.Test;
-    
+public class ParseTest {
     @Test
     public void happyCase() throws Exception {
 
