@@ -37,7 +37,6 @@ class Parser < Parslet::Parser
           form_: 'form'
 
 
-
   # question(s) with optional expression
   rule(:label) do
     quote >> match('[^"]').repeat.as(:label) >> quote
@@ -71,6 +70,7 @@ class Parser < Parslet::Parser
     (label >> variable_assignment >> type >> assignment?).as(:question)
   end
 
+
   # if block
   rule(:condition) do
     left_parenthesis >> variable.as(:condition) >> right_parenthesis
@@ -83,6 +83,7 @@ class Parser < Parslet::Parser
   rule(:if_statement) do
     (if_ >> condition >> block).as(:if_statement)
   end
+
 
   # form
   rule(:form) do
