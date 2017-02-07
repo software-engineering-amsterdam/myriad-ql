@@ -9,9 +9,20 @@ import ParserTestUtil exposing (testWithParser)
 all : Test
 all =
     describe "ParserTests"
-        [ arithmeticTests
+        [ atomTests
+        , arithmeticTests
+        , relationalTests
         , comparisonTests
-        , atomTests
+        ]
+
+
+atomTests : Test
+atomTests =
+    testWithParser ExpressionParser.expression
+        "atomTests"
+        [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
+        , ( "Should parse int literal", "2", Just (Integer 2) )
+        , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Integer 2)) )
         ]
 
 
@@ -27,15 +38,15 @@ arithmeticTests =
         ]
 
 
-comparisonTests : Test
-comparisonTests =
+relationalTests : Test
+relationalTests =
     testWithParser ExpressionParser.expression
-        "comparisonTests"
-        [ ( "Should parse less than comparison", "x < y", Just (LessThanExpression (Var "x") (Var "y")) )
-        , ( "Should parse greater than comparison", "x > y", Just (GreaterThanExpression (Var "x") (Var "y")) )
-        , ( "Should parse less than equal comparison", "x <= y", Just (LessThanOrEqualExpression (Var "x") (Var "y")) )
-        , ( "Should parse greater than equal comparison", "x >= y", Just (GreaterThanOrEqualExpression (Var "x") (Var "y")) )
-        , ( "Should parse comparison with arithmetic"
+        "relationalTests"
+        [ ( "Should parse less than relation", "x < y", Just (LessThanExpression (Var "x") (Var "y")) )
+        , ( "Should parse greater than relation", "x > y", Just (GreaterThanExpression (Var "x") (Var "y")) )
+        , ( "Should parse less than equal relation", "x <= y", Just (LessThanOrEqualExpression (Var "x") (Var "y")) )
+        , ( "Should parse greater than equal relation", "x >= y", Just (GreaterThanOrEqualExpression (Var "x") (Var "y")) )
+        , ( "Should parse relation with arithmetic"
           , "x+y < z * a"
           , Just
                 (LessThanExpression
@@ -46,11 +57,18 @@ comparisonTests =
         ]
 
 
-atomTests : Test
-atomTests =
+comparisonTests : Test
+comparisonTests =
     testWithParser ExpressionParser.expression
-        "atomTests"
-        [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
-        , ( "Should parse int literal", "2", Just (Integer 2) )
-        , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Integer 2)) )
+        "comparisonTests"
+        [ ( "Should parse equal comparison", "x == y", Just (EqualToExpression (Var "x") (Var "y")) )
+        , ( "Should parse not equal comparison", "x != y", Just (NotEqualToExpression (Var "x") (Var "y")) )
+        , ( "Should parse comparison with correct precedence"
+          , "x + y == y < z"
+          , Just
+                (EqualToExpression
+                    (PlusExpression (Var "x") (Var "y"))
+                    (LessThanExpression (Var "x") (Var "y"))
+                )
+          )
         ]
