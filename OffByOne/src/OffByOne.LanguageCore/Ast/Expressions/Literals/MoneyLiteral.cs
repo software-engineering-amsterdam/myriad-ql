@@ -3,7 +3,7 @@
     public class MoneyLiteral : Expression
     {
         // TODO: Should we verify/ensure that the float has the right precision for money?
-        protected MoneyLiteral(float value)
+        public MoneyLiteral(float value)
         {
             this.Value = value;
         }

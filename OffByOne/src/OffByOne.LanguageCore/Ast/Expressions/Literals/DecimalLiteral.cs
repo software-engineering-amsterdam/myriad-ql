@@ -2,7 +2,7 @@
 {
     public class DecimalLiteral : Expression
     {
-        protected DecimalLiteral(decimal value)
+        public DecimalLiteral(decimal value)
         {
             this.Value = value;
         }

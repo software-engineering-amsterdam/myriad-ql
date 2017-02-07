@@ -4,7 +4,7 @@
 
     public class DateQuestionStatement : QuestionStatement
     {
-        protected DateQuestionStatement(
+        public DateQuestionStatement(
             string identifier,
             string question)
             : base(identifier, question)
