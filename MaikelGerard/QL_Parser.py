@@ -40,8 +40,8 @@ class QuestionnaireParser(object):
         )
 
         block = pp.Forward()
-        if_cond = \
-            self.KW_IF + self.embrace(expression) + self.embrace(block, "curly")
+        if_cond = self.KW_IF + self.embrace(expression) +\
+            self.embrace(block, "curly")
 
         conditional = pp.Group(if_cond + pp.Optional(
             self.KW_ELSE + self.embrace(block, "curly")))
