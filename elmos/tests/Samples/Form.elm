@@ -6,6 +6,7 @@ goodSamples =
     [ goodExample1
     , goodExample2
     , goodExample3
+    , goodExample4
     ]
 
 
@@ -32,6 +33,17 @@ goodExample2 =
 
 goodExample3 : String
 goodExample3 =
+    """form taxOfficeExample {
+    if (hasSoldHouse) {
+      "What was the selling price?"
+        sellingPrice: money
+    }
+  }
+  """
+
+
+goodExample4 : String
+goodExample4 =
     """form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
