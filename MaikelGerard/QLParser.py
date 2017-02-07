@@ -40,14 +40,17 @@ class QuestionnaireParser(object):
         )
 
         block = pp.Forward()
-        if_cond = self.KW_IF + self.embrace(expression) +\
-            self.embrace(block, "curly")
+        if_cond = pp.Group(
+            self.KW_IF + self.embrace(expression) + self.embrace(block, "curly")
+        )
         conditional = if_cond + pp.Optional(
-            self.KW_ELSE + self.embrace(block, "curly")
+            pp.Group(self.KW_ELSE + self.embrace(block, "curly"))
         )
         block << pp.Group(pp.OneOrMore(question | conditional))
 
-        return self.KW_FORM + self.TYPE_VAR + self.embrace(block, "curly")
+        form = self.KW_FORM + self.TYPE_VAR + self.embrace(block, "curly")
+        form_block = pp.Group(form)
+        return pp.OneOrMore(form_block)
 
     def define_expression(self):
         # Define expressions including operator precedence. Based on:
@@ -62,49 +65,9 @@ class QuestionnaireParser(object):
             (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT),
             (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT),
             (pp.oneOf('== !='), 2, pp.opAssoc.LEFT),
-            (pp.oneOf('&&'), 2, pp.opAssoc.LEFT),
-            (pp.oneOf('||'), 2, pp.opAssoc.LEFT),
+            (pp.Literal('&&'), 2, pp.opAssoc.LEFT),
+            (pp.Literal('||'), 2, pp.opAssoc.LEFT),
         ])
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str)
-
-if __name__ == '__main__':
-    # Define full grammar and expression grammar.
-    parser = QuestionnaireParser()
-    expr = parser.define_expression()
-
-    # Examples to test.
-    ex1 = 'hasSoldHouse: "Did you sell a house in 2010?" boolean'
-    ex2 = """
-    form Box1HouseOwning {
-        hasSoldHouse: "Did you sell a house in 2010?" boolean
-        hasBoughtHouse: "Did you buy a house in 2010?" boolean
-        hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
-
-        if (hasSoldHouse + newPrice + 4 + 23) {
-            sellingPrice: "Price the house was sold for:" money
-            privateDebt: "Private debts for the sold house:" money
-            valueResidue: "Value residue:" money(300 * 100)
-            if (newPrice > 20) {
-                privateDebt: "Private debts for the sold house:" money
-            }
-            else {
-                privateDebt: "Private debts for the sold house:" money
-            }
-        }
-    }
-    """
-    ex3 = '30 + 239.0 - 239 * 239'
-    ex4 = '30'
-    ex5 = 'newPrice * 1000'
-    ex6 = '(40 + 30)'
-    ex7 = '((40 + 30))'
-
-    # Test examples. NOTE: Example 1 cannot be done for now.
-    print parser.parse(ex2)
-    print expr.parseString(ex3)
-    print expr.parseString(ex4)
-    print expr.parseString(ex5)
-    print expr.parseString(ex6)
-    print expr.parseString(ex7)
