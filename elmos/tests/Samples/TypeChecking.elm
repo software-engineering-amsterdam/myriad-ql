@@ -1,4 +1,20 @@
-module Samples.TypeChecking exposing (..)
+module Samples.TypeChecking exposing (badExamples)
+
+
+badExamples : List ( String, String )
+badExamples =
+    [ badExample1
+    , badExample2
+    , badExample3
+    , badExample4
+    , badExample5
+    , badExample6
+    , badExample7
+    , badExample8
+    , badExample9
+    , badExample10
+    , badExample11
+    ]
 
 
 badExample1 : ( String, String )

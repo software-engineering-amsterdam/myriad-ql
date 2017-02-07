@@ -1,0 +1,27 @@
+package ast;
+
+import java.util.List;
+import java.util.Collections;
+
+public class Block extends Node {
+	
+	private List<Question> questions;
+	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	
+	public Block() {
+		this.questions = Collections.emptyList();
+	}
+	
+	public Block(List<Question> questions) {
+		// TODO parse into different questions
+		this.questions = questions;
+	}
+	
+	void print() {
+		// System.out.println(questions.first);
+	}
+	
+}

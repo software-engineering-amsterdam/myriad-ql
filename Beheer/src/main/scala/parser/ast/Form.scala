@@ -5,16 +5,15 @@ package parser.ast
   */
 sealed trait FormNode
 
-case class Form(identifier: String, block: Block) extends FormNode
-
-case class Block(statements: List[Statement]) extends FormNode
-
-
 sealed trait Statement extends FormNode
+
+case class Form(identifier: String, block: Block) extends Statement
+
+case class Block(statements: List[Statement]) extends Statement
 
 case class Conditional(condition: ExpressionNode, block: Block) extends Statement
 
-case class Question(identifier: String, label: String, typedecl: TypeDeclaration) extends Statement
+case class Question(identifier: String, label: String, typeDeclaration: TypeDeclaration) extends Statement
 
 
 sealed trait TypeDeclaration extends FormNode

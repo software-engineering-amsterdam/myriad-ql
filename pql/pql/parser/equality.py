@@ -1,2 +1,0 @@
-from equality import *
-

@@ -1,6 +1,6 @@
 import sys
 import io
-from pql.lexer.lexer import lex_using_default_tokens
+from lexer.lexer import lex_using_default_tokens
 
 
 def open_file(path):

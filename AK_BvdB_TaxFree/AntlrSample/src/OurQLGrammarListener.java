@@ -7,29 +7,15 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         System.out.println("ENTERED FORM");
 //        List list = ctx.children;
         printChildren(ctx);
+//        Node ourAST = new Node(QLGrammarParser.RULE_form, null, ctx);
+        ASTFactory.generateAST(ctx);
         super.enterForm(ctx);
     }
 
     private void printChildren(ParseTree ctx) {
         if (ctx.getChildCount() == 0) {
-//            switch (((TerminalNode) ctx).getSymbol().getTokenIndex()) {
-//                case QLGrammarParser.RULE_form:
-            switch (((TerminalNode) ctx).getSymbol().getTokenIndex()) {
-                case QLGrammarParser.RULE_form:
-                    break;
-                case QLGrammarParser.QUESTION:
-                    break;
-                case QLGrammarParser.RULE_question:
-                    break;
-                case QLGrammarParser.RULE_ifStatement:
-                    break;
-                default:
-                    break;
-            }
-//            if ((((TerminalNode) ctx).getSymbol().getTokenIndex()) < QLGrammarParser.ruleNames.length) {
-//            System.out.println("- Symbol: " + ctx.getText() + " | " + ((TerminalNode) ctx).getSymbol().getTokenIndex() + " | " + QLGrammarParser.ruleNames[((TerminalNode) ctx).getSymbol().getTokenIndex()]);
-            System.out.println("- Symbol: " + ctx.getText() + " | " + ((TerminalNode) ctx).getSymbol().getTokenIndex() + " | " + ((TerminalNode) ctx).getSymbol().getTokenIndex());
-//            }
+//            if (validRule(((TerminalNode) ctx).getSymbol().getType())) {
+                System.out.println("Symbol! " + ((TerminalNode) ctx).getSymbol().getType() + " | " + ctx.getText() );
 //            }
         } else {
             System.out.println("Found children:");
@@ -41,6 +27,10 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
             case "a": break;
             default: break;
         }
+    }
+
+    private boolean validRule(int ruleType) {
+        return ruleType < QLGrammarParser.ruleNames.length;
     }
 
     @Override
