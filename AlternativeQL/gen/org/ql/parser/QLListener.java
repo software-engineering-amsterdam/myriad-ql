@@ -1,5 +1,5 @@
-// Generated from C:/Users/AJ/Documents/SoftwareConstruction/myriad-ql/AlternativeQL/src/org/uva/sea/ql/parser\QL.g4 by ANTLR 4.6
-package org.uva.sea.ql.parser;
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/parser/QL.g4 by ANTLR 4.6
+package org.ql.parser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -48,15 +48,15 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitStatement(QLParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#default_value}.
+	 * Enter a parse tree produced by {@link QLParser#defaulvalue}.
 	 * @param ctx the parse tree
 	 */
-	void enterDefault_value(QLParser.Default_valueContext ctx);
+	void enterDefaulvalue(QLParser.DefaulvalueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#default_value}.
+	 * Exit a parse tree produced by {@link QLParser#defaulvalue}.
 	 * @param ctx the parse tree
 	 */
-	void exitDefault_value(QLParser.Default_valueContext ctx);
+	void exitDefaulvalue(QLParser.DefaulvalueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -68,15 +68,55 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitExpression(QLParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#literal}.
+	 * Enter a parse tree produced by {@link QLParser#parameter}.
 	 * @param ctx the parse tree
 	 */
-	void enterLiteral(QLParser.LiteralContext ctx);
+	void enterParameter(QLParser.ParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#literal}.
+	 * Exit a parse tree produced by {@link QLParser#parameter}.
 	 * @param ctx the parse tree
 	 */
-	void exitLiteral(QLParser.LiteralContext ctx);
+	void exitParameter(QLParser.ParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#boolean_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean_literal(QLParser.Boolean_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#boolean_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean_literal(QLParser.Boolean_literalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#string_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterString_literal(QLParser.String_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#string_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitString_literal(QLParser.String_literalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#float_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloat_literal(QLParser.Float_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#float_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloat_literal(QLParser.Float_literalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#integer_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterInteger_literal(QLParser.Integer_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#integer_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitInteger_literal(QLParser.Integer_literalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#type}.
 	 * @param ctx the parse tree

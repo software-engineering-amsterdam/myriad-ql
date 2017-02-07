@@ -1,5 +1,5 @@
-// Generated from C:/Users/AJ/Documents/SoftwareConstruction/myriad-ql/AlternativeQL/src/org/uva/sea/ql/parser\QL.g4 by ANTLR 4.6
-package org.uva.sea.ql.parser;
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/parser/QL.g4 by ANTLR 4.6
+package org.ql.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -64,13 +64,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefault_value(QLParser.Default_valueContext ctx) { }
+	@Override public void enterDefaulvalue(QLParser.DefaulvalueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefault_value(QLParser.Default_valueContext ctx) { }
+	@Override public void exitDefaulvalue(QLParser.DefaulvalueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,13 +88,61 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLiteral(QLParser.LiteralContext ctx) { }
+	@Override public void enterParameter(QLParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLiteral(QLParser.LiteralContext ctx) { }
+	@Override public void exitParameter(QLParser.ParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBoolean_literal(QLParser.Boolean_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolean_literal(QLParser.Boolean_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterString_literal(QLParser.String_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitString_literal(QLParser.String_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFloat_literal(QLParser.Float_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFloat_literal(QLParser.Float_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInteger_literal(QLParser.Integer_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInteger_literal(QLParser.Integer_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
