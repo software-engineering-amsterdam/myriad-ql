@@ -25,7 +25,7 @@ class Parser < Parslet::Parser
 
   # question(s) with optional expression
   rule(:label) do
-    str('"') >> (str('"').absent? >> any).repeat.as(:label) >> str('"') >> spaces?
+    quote >> match('[^"]').repeat.as(:label) >> quote
   end
 
   rule(:variable_assignment) do
