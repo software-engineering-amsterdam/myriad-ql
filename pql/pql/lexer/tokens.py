@@ -47,5 +47,5 @@ __token_definitions = [
     (r'([a-zA-Z])+',        "IDENTIFIER"),
 
     # Unidentifiable
-    (r'.*',                 "UNINDENTIFIED"),
+    # (r'.*',                 "UNINDENTIFIED"),
 ]

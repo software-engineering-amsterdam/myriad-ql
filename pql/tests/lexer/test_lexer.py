@@ -3,6 +3,14 @@ import pql.lexer.lexer as lexer
 
 
 class TestLexer(unittest.TestCase):
+    def test_lex_unknown(self):
+        test_string = '$$ Bills'
+
+        with self.assertRaises(SystemExit) as cm:
+            lexer.lex_using_default_tokens(test_string)
+
+        the_exception = cm.exception
+        self.assertEqual(the_exception.code, 1)
 
     def test_lex_single_field(self):
         test_string = '"Did you enter a loan?"'
