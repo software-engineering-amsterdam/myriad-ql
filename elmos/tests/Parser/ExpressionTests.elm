@@ -2,7 +2,14 @@ module Parser.ExpressionTests exposing (all)
 
 import Parser.Expression exposing (expression)
 import Test exposing (Test, describe)
-import AST exposing (..)
+import AST
+    exposing
+        ( Expression(Var, Integer, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
+        , Operator(Plus, Minus, Divide, Multiply)
+        , Relation(LessThan, GreaterThan, GreaterThanOrEqual, LessThanOrEqual)
+        , Comparison(Equal, NotEqual)
+        , Logic(And, Or)
+        )
 import ParserTestUtil exposing (testWithParser)
 
 
