@@ -1,1 +1,7 @@
-hello bauke
+form {
+    "Did you sell a house?" ->
+        hasSoldHouse  : boolean
+    if (hasSoldHouse)       {
+        "What's the price of the house?" -> soldHousePrice : money
+    }
+}
