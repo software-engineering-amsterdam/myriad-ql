@@ -3,10 +3,6 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
-import ql.ast.ASTNode;
-import ql.ast.types.IntNode;
-import ql.ast.types.StringNode;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
@@ -17,7 +13,7 @@ public class Lexer implements Tokens {
     private static final Map<String, Integer> KEYWORDS = new HashMap<String, Integer>();
 
     private int token;
-    private ASTNode yylval;
+    private Object yylval;
     private int c = ' ';
 
 
@@ -26,6 +22,10 @@ public class Lexer implements Tokens {
     public Lexer(Reader input) {
         this.input = input;
         nextChar();
+
+        KEYWORDS.put("boolean", TYPEBOOL);
+        KEYWORDS.put("int", TYPEINT);
+        KEYWORDS.put("string", TYPESTRING);
     }
 
 
@@ -59,7 +59,7 @@ public class Lexer implements Tokens {
                             nextChar();
                         } while (Character.isDigit(c));
 
-                        this.yylval = new IntNode(n);
+                        this.yylval = n;
                         return token = INT;
 
                     }
@@ -78,7 +78,7 @@ public class Lexer implements Tokens {
                             return token = KEYWORDS.get(name);
                         }
 
-                        this.yylval = new StringNode(name);
+                        this.yylval = name;
                         return token = STRING;
                     }
             }
@@ -89,7 +89,7 @@ public class Lexer implements Tokens {
         return token;
     }
 
-    public ASTNode getSemantic() {
+    public Object getSemantic() {
         return yylval;
     }
 }

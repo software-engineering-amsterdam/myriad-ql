@@ -1,45 +1,55 @@
 %package ql.parser
 %class Parser
 %interface Tokens
-%semantic ql.ast.ASTNode
 %start form
 
-%token <StringNode> STRING
-%token <IntNode> INT
-%token ':' '"'
-%token <TypeNode>
+%token ':' '"' TYPEBOOL TYPEINT TYPESTRING
+%token <String> STRING
+%token <int> INT
+
+%type <Form> form
+%type <Statements> statements
+%type <Statement> statement
+%type <Question> question
+%type <Type> type
+
 
 
 
 %{
 import ql.ast.*;
-import ql.ast.types.*;
 %}
 
 %%
 
- form : question { result = new FormNode($1); }
+ form : statements { result = new Form($1); }
       ;
 
- statements : statement statements      {$$ = 12;}
-            | statement                 {$$ = 12;}
+ statements : statement statements      {$$ = new Statements($1, $2);}
+            | statement                 {$$ = new Statements($1);}
             ;
 
 
- statement : question                   {$$ = 12;}
+ statement : question                   {$$ = $1;}
            ;
 
- question : '"' STRING '"' STRING ':' TYPE      {$$ = new StringNode("test");}
+ question : '"' STRING '"' STRING ':' type      {$$ = new Question($2, $4, $6);}
           ;
+
+ type : TYPEBOOL        {$$ = TYPEBOOL;}
+       | TYPEINT        {$$ = TYPEINT;}
+       | TYPESTRING     {$$ = TYPESTRING;}
+       ;
+
 
 
 
 %%
 private Lexer lexer;
 
-private FormNode result;
+private Form result;
 
-public FormNode getResult() {
+public Form getResult() {
   return result;
 }
 
