@@ -2,18 +2,17 @@ module Parser.Form exposing (..)
 
 import AST exposing (..)
 import Combine exposing (..)
-import Combine.Extra exposing (whitespace1)
+import Combine.Extra exposing (whitespace1, trimmed)
 import Parser.Expression as Expression
 import Parser.Token exposing (quotedString, variableName)
 
 
 form : Parser s Form
 form =
-    (succeed Form
-        <*> (formToken *> whitespace *> variableName <* whitespace)
-        <*> block
-    )
-        <* whitespace
+    trimmed <|
+        succeed Form
+            <*> (formToken *> whitespace1 *> variableName)
+            <*> (whitespace *> block)
 
 
 formToken : Parser s String
@@ -41,8 +40,8 @@ field =
     succeed Field
         <*> quotedString
         <*> (whitespace1 *> variableName)
-        <*> (whitespace *> string ":" *> whitespace *> valueType)
-        <*> maybe (whitespace *> string "=" *> whitespace *> Expression.expression)
+        <*> (trimmed (string ":") *> valueType)
+        <*> maybe (trimmed (string "=") *> Expression.expression)
 
 
 ifBlock : Parser s IfBlock
@@ -50,14 +49,14 @@ ifBlock =
     lazy <|
         \() ->
             succeed IfBlock
-                <*> (string "if" *> whitespace *> parens Expression.expression <* whitespace)
+                <*> (string "if" *> trimmed (parens Expression.expression))
                 <*> block
-                <*> maybe (whitespace *> string "else" *> whitespace *> block)
+                <*> maybe (trimmed (string "else") *> block)
 
 
 block : Parser s (List FormItem)
 block =
-    lazy <| \() -> braces (whitespace *> formItems <* whitespace)
+    lazy <| \() -> braces <| trimmed formItems
 
 
 valueType : Parser s ValueType
