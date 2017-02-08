@@ -25,16 +25,24 @@ form taxOfficeExample {
 
 '''
 
-colon = ':'
-lcurly = '{'
-rcurly = '}'
+colon = Suppress(':')
 word = Word(alphas)
-field_type = oneOf('boolean')
+field_type = oneOf('boolean money')
 form_type = oneOf('form')
+evaluation = 'if'
+condition = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\')
+
+codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\')
+codeblock_quoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\', unquoteResults=False)
 
 field_name = word
 field_display = QuotedString('"')
 form_name = word
 
-field = field_display + field_name + colon + field_type
-form = form_type + form_name + lcurly + OneOrMore(field) + rcurly
+
+question = field_display + field_name + colon + field_type
+evaluate = evaluation + condition + codeblock_quoted
+field = question | evaluate
+
+form_outer = form_type + form_name + codeblock_unquoted
+form_inner = OneOrMore(field)
