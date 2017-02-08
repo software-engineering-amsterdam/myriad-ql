@@ -25,7 +25,8 @@
         {
             string id = context.Identifier(0).GetText();
             string question = context.StringLiteral(0).GetText();
-            switch (context.Type().GetText())
+            var type = context.Type().GetText();
+            switch (type)
             {
                 case "boolean":
                     return new BooleanQuestionStatement(id, question);
@@ -38,7 +39,7 @@
                 case "string":
                     return new StringQuestionStatement(id, question);
                 default:
-                    throw new ArgumentException("Unsupported question type.");
+                    throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }
         }
 

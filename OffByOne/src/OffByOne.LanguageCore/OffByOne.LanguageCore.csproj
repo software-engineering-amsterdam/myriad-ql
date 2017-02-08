@@ -80,6 +80,11 @@
     <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
     <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
+    <Compile Include="Ast\Style\Page.cs" />
+    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
+    <Compile Include="Ast\Style\Rule.cs" />
+    <Compile Include="Ast\Style\Section.cs" />
+    <Compile Include="Ast\Style\StyleSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

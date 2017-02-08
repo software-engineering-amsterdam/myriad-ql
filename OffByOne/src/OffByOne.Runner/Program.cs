@@ -10,7 +10,7 @@
     {
         public static void Main(string[] args)
         {
-            ICharStream input = new AntlrInputStream("form questionaire { \"I haz question?\" myQuestion: boolean if true { \"a\" b: string } else { \"c\" d: money } }");
+            ICharStream input = new AntlrInputStream("form questionaire { \"I haz question?\" myQuestion: boolean if (true) { \"a\" b: string } else { \"c\" d: money } }");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
             var v = new MyQlVisitor();
