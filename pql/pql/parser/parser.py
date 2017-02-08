@@ -1,18 +1,18 @@
-from lexer.tokens import *
-from combinator.combinators import *
+from pql.lexer.tokens import *
+from pql.combinator.combinators import *
 # from combinator.Reserved import Reserved
 # from combinator.Lazy import Lazy
 # from combinator.Tag import Tag
 # from combinator.Opt import Opt
 # from combinator.Exp import Exp
 # from combinator.Phrase import Phrase
-from ast.Aexp import IntAexp
-from ast.Aexp import VarAexp
-from ast.Aexp import BinopAexp
-from ast.Bexp import RelopBexp
-from ast.Bexp import AndBexp
-from ast.Bexp import OrBexp, NotBexp
-from ast.Statement import AssignStatement, CompoundStatement, IfStatement, WhileStatement
+from pql.ast.Aexp import IntAexp
+from pql.ast.Aexp import VarAexp
+from pql.ast.Aexp import BinopAexp
+from pql.ast.Bexp import RelopBexp
+from pql.ast.Bexp import AndBexp
+from pql.ast.Bexp import OrBexp, NotBexp
+from pql.ast.Statement import AssignStatement, CompoundStatement, IfStatement, WhileStatement
 from functools import reduce
 
 # colon = Tag(COLON)

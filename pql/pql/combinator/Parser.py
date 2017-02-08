@@ -1,7 +1,7 @@
-from combinator.Concat import Concat
-from combinator.Exp import Exp
-from combinator.Alternate import Alternate
-from combinator.Process import Process
+from pql.combinator.Concat import Concat
+from pql.combinator.Exp import Exp
+from pql.combinator.Alternate import Alternate
+from pql.combinator.Process import Process
 
 # TODO: Finish the documentation
 

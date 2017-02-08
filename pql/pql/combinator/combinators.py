@@ -43,6 +43,7 @@ class Parser:
         """
         return Process(self, function)
 
+
 class Alternate(Parser):
     def __init__(self, left, right):
         self.left = left
@@ -55,6 +56,7 @@ class Alternate(Parser):
         else:
             right_result = self.right(tokens, pos)
             return right_result
+
 
 class Concat(Parser):
     def __init__(self, left, right):
@@ -69,6 +71,7 @@ class Concat(Parser):
                 combined_value = (left_result.value, right_result.value)
                 return Result(combined_value, right_result.pos)
         return None
+
 
 class Exp(Parser):
     def __init__(self, parser, separator):
@@ -90,6 +93,7 @@ class Exp(Parser):
                 result = next_result
         return result
 
+
 class Lazy(Parser):
     def __init__(self, parser_func):
         self.parser = None
@@ -99,6 +103,7 @@ class Lazy(Parser):
         if not self.parser:
             self.parser = self.parser_func()
         return self.parser(tokens, pos)
+
 
 class Opt(Parser):
     def __init__(self, parser):
@@ -111,6 +116,7 @@ class Opt(Parser):
         else:
             return Result(None, pos)
 
+
 class Phrase(Parser):
     def __init__(self, parser):
         self.parser = parser
@@ -122,6 +128,7 @@ class Phrase(Parser):
         else:
             return None
 
+
 class Process(Parser):
     def __init__(self, parser, function):
         self.parser = parser
@@ -132,6 +139,7 @@ class Process(Parser):
         if result:
             result.value = self.function(result.value)
             return result
+
 
 class Rep(Parser):
     def __init__(self, parser):
@@ -146,6 +154,7 @@ class Rep(Parser):
             result = self.parser(tokens, pos)
         return Result(results, pos)
 
+
 class Reserved(Parser):
     def __init__(self, value, tag):
         self.value = value
@@ -159,6 +168,7 @@ class Reserved(Parser):
         else:
             return None
 
+
 class Result:
     def __init__(self, value, pos):
         self.value = value
@@ -166,6 +176,7 @@ class Result:
 
     def __repr__(self):
         return 'Result(value: %s, pos: %d)' % (self.value, self.pos)
+
 
 class Tag(Parser):
     def __init__(self, tag):

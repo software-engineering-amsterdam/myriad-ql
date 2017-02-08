@@ -1,4 +1,4 @@
-from ast.equality import Equality
+from pql.ast.equality import Equality
 
 
 class Statement(Equality):
