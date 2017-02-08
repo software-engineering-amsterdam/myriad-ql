@@ -1,10 +1,9 @@
 package parser
 
-import java.io.{InputStreamReader, Reader, StringReader}
+import java.io.{Reader, StringReader}
 
 import parser.ast._
 
-import scala.util.Success
 import scala.util.parsing.combinator.JavaTokenParsers
 
 /**
@@ -48,7 +47,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
       case ident ~ block => Form(ident, block)
     }
 
-  def parseForm(input: Reader): Form ={
+  def parseForm(input: Reader): Form = {
     parseAll(form, input) match {
       case Success(result, _) => result
       case failure: NoSuccess => scala.sys.error(failure.msg)
@@ -57,7 +56,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
 }
 
 object FormParser {
-  def apply(input: Reader): Form = new FormParser().parseForm(Reader)
-
   def apply(input: String): Form = apply(new StringReader(input))
+
+  def apply(input: Reader): Form = new FormParser().parseForm(input)
 }
