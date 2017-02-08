@@ -58,7 +58,7 @@ formItemsTests =
                 , IfItem
                     { expression = Var "bar"
                     , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
                     }
                 ]
           )
@@ -76,7 +76,7 @@ formItemTests =
                 IfItem
                     { expression = Var "bar"
                     , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
                     }
           )
         ]
@@ -112,7 +112,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Nothing
+                    , elseBranch = []
                     }
               )
             , ( "should allow no whitespace"
@@ -120,7 +120,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Nothing
+                    , elseBranch = []
                     }
               )
             , ( "should parse if with else block"
@@ -128,7 +128,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Just basicBlockContent
+                    , elseBranch = basicBlockContent
                     }
               )
             ]

@@ -1,7 +1,6 @@
 module TypeChecker.Checker exposing (..)
 
 import AST exposing (..)
-import Set exposing (..)
 import DictSet exposing (..)
 
 
@@ -36,10 +35,9 @@ declaredVars item =
             DictSet.fromList toString [ ( id, valueType ) ]
 
         IfItem { thenBranch, elseBranch } ->
-            elseBranch
-                |> Maybe.map declaredVarFromList
-                |> Maybe.withDefault emptyIndex
-                |> DictSet.intersect (declaredVarFromList thenBranch)
+            DictSet.intersect
+                (declaredVarFromList thenBranch)
+                (declaredVarFromList elseBranch)
 
 
 getQuestionId : FormItem -> Maybe String

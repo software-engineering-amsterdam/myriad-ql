@@ -51,7 +51,12 @@ ifBlock =
             succeed IfBlock
                 <*> (string "if" *> trimmed (parens Expression.expression))
                 <*> block
-                <*> maybe (trimmed (string "else") *> block)
+                <*> (elseBranch <|> succeed [])
+
+
+elseBranch : Parser s (List FormItem)
+elseBranch =
+    trimmed (string "else") *> block
 
 
 block : Parser s (List FormItem)

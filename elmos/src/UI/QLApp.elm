@@ -115,7 +115,10 @@ getFieldsForItem item =
             [ field ]
 
         AST.IfItem { thenBranch, elseBranch } ->
-            List.concat [ getFieldsForItems thenBranch, (elseBranch |> Maybe.map getFieldsForItems |> Maybe.withDefault []) ]
+            List.concat
+                [ getFieldsForItems thenBranch
+                , getFieldsForItems elseBranch
+                ]
 
 
 getFieldsForItems : List FormItem -> List AST.Field
