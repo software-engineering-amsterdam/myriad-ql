@@ -59,7 +59,8 @@ class WickedDSL:
 
 			self.parse_structure()
 
-		print(self.__ql_structure)
+		if(self._verbose):
+			print(self.__ql_structure)
 
 	def get_id(self):
 		tmp = self.__id_counter
