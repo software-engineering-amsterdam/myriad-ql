@@ -28,7 +28,6 @@ form taxOfficeExample {
 colon = ':'
 lcurly = '{'
 rcurly = '}'
-dquote = '"'
 word = Word(alphas)
 field_type = oneOf('CharField BoolField')
 form_type = oneOf('form')
