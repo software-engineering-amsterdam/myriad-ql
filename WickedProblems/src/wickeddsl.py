@@ -28,14 +28,13 @@ form taxOfficeExample {
 colon = ':'
 lcurly = '{'
 rcurly = '}'
-dquote = '"'
 word = Word(alphas)
-field_type = oneOf('CharField BoolField')
+field_type = oneOf('boolean')
 form_type = oneOf('form')
 
 field_name = word
-field_display = word
+field_display = QuotedString('"')
 form_name = word
 
-field = dquote + field_display + dquote + field_name + colon + field_type
+field = field_display + field_name + colon + field_type
 form = form_type + form_name + lcurly + OneOrMore(field) + rcurly

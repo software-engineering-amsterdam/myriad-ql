@@ -22,6 +22,9 @@ class WickedDSL:
 			self.__ql_content = ql_file_stream.readlines()
 		self.__ql_content = [x.strip() for x in self.__ql_content]
 
+		self.__ql_content = ' '.join(self.__ql_content)
+
+		# print(self.__ql_content)
 		print(wickeddsl.form.parseString(self.__ql_content))
 
 
