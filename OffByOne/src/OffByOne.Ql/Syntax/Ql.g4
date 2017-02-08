@@ -1,7 +1,7 @@
 ﻿grammar Ql;
 
 form : 'form' Identifier '{' stat+ '}' ;
-question : StringLiteral + Identifier + ':' + Type ;
+question : StringLiteral Identifier ':' + Type ;
 stat
 	: question
 	| if
@@ -11,20 +11,26 @@ if : 'if' booleanExpression '{' stat+ '}' else? ;
 else : 'else' (if | '{' stat+ '}') ;
 
 booleanExpression
-	: 'true'
-	| 'false'
+	: BooleanLiteral
 	| Identifier
+	| '(' booleanExpression ')'
 	| 'not' booleanExpression
 	| booleanExpression ('and'|'or') booleanExpression
 	| numericExpression ('>'|'<'|'=='|'<='|'>=') numericExpression
-	| Date ('>'|'<'|'=='|'<='|'>=') Date
+	| dateExpression ('>'|'<'|'=='|'<='|'>=') dateExpression
 	;
 
 numericExpression
 	: NumericLiteral
 	| Identifier
+	| '(' numericExpression ')'
 	| numericExpression ('*'|'/') numericExpression
 	| numericExpression ('+'|'-') numericExpression
+	;
+
+dateExpression
+	: DateLiteral
+	| Identifier
 	;
 
 Type 
@@ -36,12 +42,22 @@ Type
 	| 'money'
 	;
 
-NumericLiteral : Money | Decimal | SignedInt;
+BooleanLiteral
+	: 'true'
+	| 'false'
+	;
+
+NumericLiteral 
+	: Money 
+	| Decimal 
+	| SignedInt
+	;
+
+DateLiteral : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
 
 SignedInt : '-'? Int+ ;
 Money : SignedInt '.' Digit Digit ;
 Decimal : SignedInt '.' [0-9]+ ;
-Date : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
 
 fragment
 Int: Digit | ([1-9] Digit*) ;

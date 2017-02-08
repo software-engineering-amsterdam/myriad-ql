@@ -2,7 +2,7 @@
 {
     public class IntegerLiteral : Expression
     {
-        protected IntegerLiteral(int value)
+        public IntegerLiteral(int value)
         {
             this.Value = value;
         }

@@ -2,7 +2,7 @@
 {
     public class StringLiteral : Expression
     {
-        protected StringLiteral(string value)
+        public StringLiteral(string value)
         {
             this.Value = value;
         }
