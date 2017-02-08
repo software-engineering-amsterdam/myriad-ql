@@ -59,8 +59,7 @@ class WickedDSL:
 
 			self.parse_structure()
 
-		if(self._verbose):
-			print(self.__ql_structure)
+		print(self.__ql_structure)
 
 	def get_id(self):
 		tmp = self.__id_counter
@@ -75,12 +74,22 @@ class WickedDSL:
 		if(len(fields) > 0):
 			# Store all fields (tuples of 3: name, variable, type)
 			for x in range(0,int(len(fields)/3)):
+				try:
+					if(fields[3*x+3] == "="):
+						fields[3*x+2:3*x+5] = [' '.join(fields[3*x+2:3*x+5])]
+					else:
+						pass
+				except IndexError:
+					if(self._verbose):
+						print("Appears that we don't have a statement")
 				self.__ql_structure.append(((self.get_id(), self.__parent),fields[3*x],fields[3*x+1],fields[3*x+2]))
 		self.__ql_content = self.__ql_content[len(self.__ql_content)-1]
 
+	# use pyparsing to parse parts of the form. might add some logic here later.
 	def parse_block(self):
-		# self.__parent += 1
 		self.__ql_content = wickeddsl.form_inner.parseString(self.__ql_content)
+		if(self._verbose):
+			print(self.__ql_content)
 
 	def needs_refining(self):
 		for x in range(0,len(self.__ql_structure)-1):
