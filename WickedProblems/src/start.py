@@ -3,7 +3,7 @@ req_version = (3,0)
 cur_version = sys.version_info
 
 if cur_version >= req_version:
-	from pyparsing import *
+	from pyparsing import ParseException
 	import argparse
 	import wickeddsl
 else:
@@ -19,6 +19,9 @@ class WickedDSL:
 	__ql_structure = []
 	__parent = 0
 	__id_counter = 0
+
+	def __init__(self, ql_file = None):
+		self._ql_file = ql_file
 
 	def main(self):
 		with open(self._ql_file, 'r') as ql_file_stream:
