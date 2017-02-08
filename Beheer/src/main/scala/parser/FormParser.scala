@@ -57,10 +57,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
 }
 
 object FormParser {
-  def apply(input: Reader): Form = {
-      val parser = new FormParser()
-      parser.parseForm(input)
-    }
+  def apply(input: Reader): Form = new FormParser().parseForm(Reader)
 
   def apply(input: String): Form = apply(new StringReader(input))
 }
