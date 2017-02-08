@@ -1,6 +1,6 @@
 from enum import Enum
 
-Datatype = Enum("Datatype", "boolean string integer date decimal money")
+Datatype = Enum("Datatype", "boolean string integer decimal money")
 Operator = Enum("Operator", "+ - * / ! && || < > <= >= == !=")
 
 
@@ -25,10 +25,9 @@ class Conditional:
     def __str__(self):
         if self.alternative is not None:
             return "if {} [\n{}\n]\nelse [\n{}\n]".format(
-                str(self.condition), "\n".join(
-                    [str(s) for s in self.statements]),
+                self.condition, "\n".join([str(s) for s in self.statements]),
                 "\n".join([str(s) for s in self.alternative]))
-        return "if {} [\n{}\n]".format(str(self.condition), "\n".join(
+        return "if {} [\n{}\n]".format(self.condition, "\n".join(
             [str(s) for s in self.statements]))
 
 
@@ -43,8 +42,9 @@ class Question:
     def __str__(self):
         if self.expression is not None:
             return "{}: \"{}\" {} = {}".format(
-                self.name, self.label, self.datatype.name, str(self.expression))
-        return "{}: \"{}\" {}".format(self.name, self.label, self.datatype.name)
+                self.name, self.label, self.datatype.name, self.expression)
+        return "{}: \"{}\" {}".format(
+            self.name, self.label, self.datatype.name)
 
 
 class UnaryOperator:
@@ -54,7 +54,7 @@ class UnaryOperator:
         self.right = right
 
     def __str__(self):
-        return "{}{}".format(self.operator.name, str(self.right))
+        return "{}{}".format(self.operator.name, self.right)
 
 
 class BinaryOperator:
@@ -66,7 +66,7 @@ class BinaryOperator:
 
     def __str__(self):
         return "({} {} {})".format(
-            str(self.left), self.operator.name, str(self.right))
+            self.left, self.operator.name, self.right)
 
 
 class Identifier:

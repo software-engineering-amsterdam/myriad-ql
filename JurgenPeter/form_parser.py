@@ -3,12 +3,14 @@ from form_ast import *
 
 
 class Grammar:
-    dataType = oneOf("boolean string integer date decimal money")
-    identifier = Word(alphas)
-    identifier.addCondition(
+    dataType = oneOf("boolean string integer decimal money")
+
+    identifier = Word(alphas).addCondition(
         lambda tokens: tokens[0] not in ["true", "false", "form", "if", "else"]
     )
-    bool_val = oneOf("true false")
+
+    true = Literal("true").setParseAction(lambda _: True)
+    false = Literal("false").setParseAction(lambda _: False)
 
     mul_op = oneOf("* /")
     add_op = oneOf("+ -")
@@ -29,9 +31,9 @@ class Grammar:
                                               (mul_op, 2, opAssoc.LEFT),
                                               (add_op, 2, opAssoc.LEFT)]))
 
-    compr_expr = num_expr + compr_op + num_expr
+    compr_expr = Group(num_expr + compr_op + num_expr)
 
-    bool_atom = identifier ^ bool_val ^ Group(compr_expr)
+    bool_atom = identifier ^ true ^ false ^ compr_expr
     bool_expr = Group(infixNotation(bool_atom, [(neg_op, 1, opAssoc.RIGHT),
                                                 (eq_op, 2, opAssoc.LEFT),
                                                 (con_op, 2, opAssoc.LEFT),
@@ -45,8 +47,8 @@ class Grammar:
         Optional(assignment + expression)
 
     conditional = Literal("if") + bool_expr + bracket_open + Group(block) +\
-        bracket_close + Optional(Literal("else") + bracket_open + Group(block) +
-                                 bracket_close)
+        bracket_close + Optional(Suppress("else") + bracket_open +
+                                 Group(block) + bracket_close)
 
     statement = Group(question ^ conditional)
     block <<= ZeroOrMore(statement)
@@ -84,10 +86,10 @@ class Parser:
         if len(tokens) == 3 and tokens[0] == "if":
             return Conditional(Parser.parse_expression(tokens[1]),
                                [Parser.parse_statement(t) for t in tokens[2]])
-        if len(tokens) == 5 and tokens[0] == "if" and tokens[3] == "else":
+        if len(tokens) == 4 and tokens[0] == "if":
             return Conditional(Parser.parse_expression(tokens[1]),
                                [Parser.parse_statement(t) for t in tokens[2]],
-                               [Parser.parse_statement(t) for t in tokens[4]])
+                               [Parser.parse_statement(t) for t in tokens[3]])
         return None
 
     @staticmethod
@@ -105,18 +107,19 @@ class Parser:
             return Constant(tokens, Datatype.integer)
         if type(tokens) == float:
             return Constant(tokens, Datatype.decimal)
+        if type(tokens) == bool:
+            return Constant(tokens, Datatype.boolean)
         if type(tokens) == str:
             if hasattr(Datatype, tokens):
                 return Datatype[tokens]
-            if tokens == "true":
-                return Constant(True, Datatype.boolean)
-            if tokens == "false":
-                return Constant(False, Datatype.boolean)
-            if tokens[0] == "\"" and tokens[-1] == "\"" and len(tokens) >= 2:
+            if hasattr(Operator, tokens):
+                return Operator[tokens]
+            if len(tokens) >= 2 and tokens[0] == tokens[-1] == "\"":
                 return Constant(tokens[1:-1], Datatype.string)
-            # TODO: check date
             return Identifier(tokens)
         else:
+            # When the argument is a list of parsed groups and tokens, the
+            # inner groups are resursively parsed into expressions first.
             tokens = [Parser.parse_expression(t) for t in tokens]
             if len(tokens) == 2:
                 return UnaryOperator(*tokens[0:2])
