@@ -29,7 +29,7 @@ colon = ':'
 lcurly = '{'
 rcurly = '}'
 word = Word(alphas)
-field_type = oneOf('CharField BoolField')
+field_type = oneOf('boolean')
 form_type = oneOf('form')
 
 field_name = word
