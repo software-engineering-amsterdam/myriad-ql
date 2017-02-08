@@ -2,12 +2,11 @@
 {
     public class MoneyLiteral : Expression
     {
-        // TODO: Should we verify/ensure that the float has the right precision for money?
-        public MoneyLiteral(float value)
+        public MoneyLiteral(decimal value)
         {
             this.Value = value;
         }
 
-        public float Value { get; set; }
+        public decimal Value { get; set; }
     }
 }
