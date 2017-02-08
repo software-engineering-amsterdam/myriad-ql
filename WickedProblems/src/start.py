@@ -4,12 +4,12 @@ cur_version = sys.version_info
 
 if cur_version >= req_version:
 	from pyparsing import ParseException
+	from wickeddsl import WickedDSL
 	import argparse
-	import wickeddsl
 else:
    exit("Did you forget to run it using python >= 3.0 ??")
 
-class WickedDSL:
+class WickedQL:
 	# internal
 	_verbose = False
 	_ql_file = None
@@ -20,17 +20,12 @@ class WickedDSL:
 	__parent = 0
 	__id_counter = 0
 
-	def __init__(self, ql_file = None):
+	def __init__(self, ql_file=None):
 		self._ql_file = ql_file
 
 	def main(self):
-		with open(self._ql_file, 'r') as ql_file_stream:
-			self.__ql_content = ql_file_stream.readlines()
+		self.__ql_content = WickedDSL.loadFile(self._ql_file)
 
-		self.__ql_content = [x.strip() for x in self.__ql_content]
-
-		# squash the list into a string
-		self.__ql_content = ' '.join(self.__ql_content)
 		# Do the initial format to make sure all blocks can be extracted
 		if(self.__ql_content.count('\}') > 0):
 			raise Exception("Illegal token \"}\"")
@@ -39,7 +34,7 @@ class WickedDSL:
 		self.__ql_content = self.__ql_content.replace('}','\}', self.__ql_content.count('}')-1)
 
 		# extract the main block (i.e. parse the form)
-		self.__ql_content = wickeddsl.form_outer.parseString(self.__ql_content)
+		self.__ql_content = WickedDSL.form_outer.parseString(self.__ql_content)
 
 		# init the main form structure
 		self.__ql_structure.append(((self.get_id(), None), self.__ql_content[1]))
@@ -91,7 +86,7 @@ class WickedDSL:
 
 	# use pyparsing to parse parts of the form. might add some logic here later.
 	def parse_block(self):
-		self.__ql_content = wickeddsl.form_inner.parseString(self.__ql_content)
+		self.__ql_content = WickedDSL.form_inner.parseString(self.__ql_content)
 		if(self._verbose):
 			print(self.__ql_content)
 
@@ -107,8 +102,8 @@ class WickedDSL:
 		return False
 
 if __name__ == '__main__':
-	wicked = WickedDSL()
-	parser = argparse.ArgumentParser(description='WickedDSL Start File')
+	wicked = WickedQL()
+	parser = argparse.ArgumentParser(description='WickedQL Start File')
 
 	parser.add_argument(
 		"-v", "--verbose",
