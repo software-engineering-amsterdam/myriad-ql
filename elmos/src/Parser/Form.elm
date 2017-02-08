@@ -11,8 +11,13 @@ form : Parser s Form
 form =
     trimmed <|
         succeed Form
-            <*> (formToken *> whitespace1 *> variableName)
+            <*> formDeclaration
             <*> (whitespace *> block)
+
+
+formDeclaration : Parser s String
+formDeclaration =
+    formToken *> whitespace1 *> variableName
 
 
 formToken : Parser s String
@@ -61,14 +66,14 @@ elseBranch =
 
 block : Parser s (List FormItem)
 block =
-    lazy <| \() -> braces <| trimmed formItems
+    lazy <| \() -> braces (trimmed formItems)
 
 
 valueType : Parser s ValueType
 valueType =
     choice
-        [ string "string" $> StringType
-        , string "boolean" $> BooleanType
-        , string "integer" $> IntegerType
-        , string "money" $> IntegerType
+        [ stringAs "string" StringType
+        , stringAs "boolean" BooleanType
+        , stringAs "integer" IntegerType
+        , stringAs "money" IntegerType
         ]

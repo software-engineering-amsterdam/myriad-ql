@@ -10,73 +10,107 @@ import AST
         )
 import Combine exposing (Parser, chainl, choice, lazy, string, parens, (<$), (<$>), (*>), (<*), (<|>))
 import Combine.Num exposing (int)
+import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
 import Parser.Token exposing (variableName)
-import Combine.Extra exposing (trimmed)
+
+
+type alias BinaryOperator =
+    Expression -> Expression -> Expression
 
 
 expression : Parser s Expression
 expression =
-    lazy <|
-        \() -> foldr chainl atom expressions
+    lazy <| \() -> foldr chainl atom precedenceOrderedExpressions
 
 
-expressions : List (Parser s (Expression -> Expression -> Expression))
-expressions =
-    [ orOp, andOp, comparisonOp, relationalOp, addOp, multiplyOp ]
+precedenceOrderedExpressions : List (Parser s BinaryOperator)
+precedenceOrderedExpressions =
+    [ orOp
+    , andOp
+    , comparisonOp
+    , relationalOp
+    , addOp
+    , multiplyOp
+    ]
 
 
-andOp : Parser s (Expression -> Expression -> Expression)
-andOp =
-    LogicExpression And <$ string "&&"
-
-
-orOp : Parser s (Expression -> Expression -> Expression)
+orOp : Parser s BinaryOperator
 orOp =
-    LogicExpression Or <$ string "||"
+    stringAs "||" (LogicExpression Or)
 
 
-comparisonOp : Parser s (Expression -> Expression -> Expression)
+andOp : Parser s BinaryOperator
+andOp =
+    stringAs "&&" (LogicExpression And)
+
+
+comparisonOp : Parser s BinaryOperator
 comparisonOp =
     choice
-        [ ComparisonExpression Equal <$ string "=="
-        , ComparisonExpression NotEqual <$ string "!="
+        [ stringAs "==" (ComparisonExpression Equal)
+        , stringAs "!=" (ComparisonExpression NotEqual)
         ]
 
 
-relationalOp : Parser s (Expression -> Expression -> Expression)
+relationalOp : Parser s BinaryOperator
 relationalOp =
     choice
-        [ RelationExpression GreaterThanOrEqual <$ string ">="
-        , RelationExpression LessThanOrEqual <$ string "<="
-        , RelationExpression GreaterThan <$ string ">"
-        , RelationExpression LessThan <$ string "<"
+        [ stringAs ">=" (RelationExpression GreaterThanOrEqual)
+        , stringAs "<=" (RelationExpression LessThanOrEqual)
+        , stringAs ">" (RelationExpression GreaterThan)
+        , stringAs "<" (RelationExpression LessThan)
         ]
 
 
-addOp : Parser s (Expression -> Expression -> Expression)
+addOp : Parser s BinaryOperator
 addOp =
     choice
-        [ ArithmeticExpression Plus <$ string "+"
-        , ArithmeticExpression Minus <$ string "-"
+        [ stringAs "+" (ArithmeticExpression Plus)
+        , stringAs "-" (ArithmeticExpression Minus)
         ]
 
 
-multiplyOp : Parser s (Expression -> Expression -> Expression)
+multiplyOp : Parser s BinaryOperator
 multiplyOp =
     choice
-        [ ArithmeticExpression Multiply <$ string "*"
-        , ArithmeticExpression Divide <$ string "/"
+        [ stringAs "*" (ArithmeticExpression Multiply)
+        , stringAs "/" (ArithmeticExpression Divide)
         ]
 
 
 atom : Parser s Expression
 atom =
-    trimmed
-        (choice
-            [ Integer <$> int
-            , Var <$> variableName
-            , Boolean <$> (True <$ string "true" <|> False <$ string "false")
-            , ParensExpression <$> parens expression
-            ]
-        )
+    lazy <| \() -> trimmed anyAtom
+
+
+anyAtom : Parser s Expression
+anyAtom =
+    lazy <|
+        \() ->
+            choice
+                [ varAtom
+                , integerAtom
+                , booleanAtom
+                , parensAtom
+                ]
+
+
+integerAtom : Parser s Expression
+integerAtom =
+    Integer <$> int
+
+
+varAtom : Parser s Expression
+varAtom =
+    Var <$> variableName
+
+
+booleanAtom : Parser s Expression
+booleanAtom =
+    Boolean <$> (stringAs "true" True <|> stringAs "false" False)
+
+
+parensAtom : Parser s Expression
+parensAtom =
+    ParensExpression <$> parens expression
