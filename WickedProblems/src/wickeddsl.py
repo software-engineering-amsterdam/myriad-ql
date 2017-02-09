@@ -8,6 +8,8 @@ class WickedDSL:
     equals = '='
     word = Word(alphas)
     field_type = oneOf('boolean money')
+    page_type = oneOf('page')
+    stylesheet_type = oneOf('stylesheet')
     form_type = oneOf('form')
     evaluation = 'if'
     condition_unquoted = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\')
@@ -16,18 +18,21 @@ class WickedDSL:
     codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\')
     codeblock_quoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\', unquoteResults=False)
 
-    field_name = word
+    name = word
     field_display = QuotedString('"')
-    form_name = word
 
-    question = field_display + field_name + colon + field_type
+    question = field_display + name + colon + field_type
     evaluate = evaluation + condition_unquoted + codeblock_quoted
-    statement = field_display + field_name + colon + field_type + equals + condition_quoted
+    statement = field_display + name + colon + field_type + equals + condition_quoted
+
+    page = page_type + name + codeblock_unquoted
 
     field = statement | question | evaluate
 
-    form_outer = form_type + form_name + codeblock_unquoted
+    form_outer = form_type + name + codeblock_unquoted
     form_inner = OneOrMore(field)
+
+    stylesheet = stylesheet_type + name + OneOrMore(page)
 
     def loadFile(ql_file):
         # open the file as a list of strings
@@ -37,4 +42,10 @@ class WickedDSL:
         __ql_content = [x.strip() for x in __ql_content]
 
         # squash the list into a string and return
-        return ' '.join(__ql_content)
+        __ql_content =  ' '.join(__ql_content)
+
+        # Do the initial format to make sure all blocks can be extracted
+        if(__ql_content.count('\}') > 0):
+            raise Exception("Illegal token \"}\"")
+
+        return __ql_content

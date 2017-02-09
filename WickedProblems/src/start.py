@@ -24,12 +24,11 @@ class WickedQL:
 		self._ql_file = ql_file
 
 	def main(self):
-		self.__ql_content = WickedDSL.loadFile(self._ql_file)
-
-		# Do the initial format to make sure all blocks can be extracted
-		if(self.__ql_content.count('\}') > 0):
-			raise Exception("Illegal token \"}\"")
-
+		try:
+			self.__ql_content = WickedDSL.loadFile(self._ql_file)
+		except Exception:
+			exit("Could not load QL File")
+			
 		# escape all but the last bracket
 		self.__ql_content = self.__ql_content.replace('}','\}', self.__ql_content.count('}')-1)
 
