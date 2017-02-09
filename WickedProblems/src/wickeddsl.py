@@ -9,29 +9,43 @@ class WickedDSL:
     word = Word(alphas)
     field_type = oneOf('boolean money')
     page_type = oneOf('page')
+    settings_type = oneOf('default')
     stylesheet_type = oneOf('stylesheet')
+    stylesheet_section = 'section'
+    stylesheet_content = oneOf('question')
     form_type = oneOf('form')
+    widget = 'widget'
+    widget_noarg = oneOf('spinbox checkbox')
     evaluation = 'if'
-    condition_unquoted = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\')
-    condition_quoted = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\', unquoteResults=False)
-
-    codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\')
-    codeblock_quoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\', unquoteResults=False)
-
-    name = word
     field_display = QuotedString('"')
 
+    condition_unquoted = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\')
+    condition_quoted = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\', unquoteResults=False)
+    codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\')
+    codeblock_quoted = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\', unquoteResults=False)
+    radio = QuotedString(quoteChar="radio(", endQuoteChar=")", escChar='\\', unquoteResults=False)
+
+    widget_arg = radio
+    widget_type = widget_noarg | widget_arg
+    default = settings_type + field_type + ((widget + widget_type) | codeblock_quoted)
+    name = word
+    identifier = word
     question = field_display + name + colon + field_type
     evaluate = evaluation + condition_unquoted + codeblock_quoted
     statement = field_display + name + colon + field_type + equals + condition_quoted
-
+    question_widget = identifier + widget + widget_type
+    question_nowidget = identifier
+    widgetnowidget = question_widget | identifier
+    questionnoquestion = stylesheet_content + widgetnowidget
+    codeblocknocodeblock = codeblock_quoted | questionnoquestion
+    section = field_display + codeblocknocodeblock
     page = page_type + name + codeblock_unquoted
-
+    page_content = stylesheet_section + (section | (question_widget | question_nowidget))
+    page_layout = default | page_content
+    content_type = OneOrMore(page_layout)
     field = statement | question | evaluate
-
     form_outer = form_type + name + codeblock_unquoted
     form_inner = OneOrMore(field)
-
     stylesheet = stylesheet_type + name + OneOrMore(page)
 
     def load_file(ql_file):
