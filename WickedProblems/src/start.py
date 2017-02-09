@@ -40,18 +40,12 @@ class WickedQL:
 		self.__ql_content = self.__ql_content[len(self.__ql_content)-1]
 
 		while True:
-			if(self._verbose):
-				print(self.__ql_content)
-				print(self.__ql_structure)
-
 			try:
 				self.parse_block()
 			except ParseException:
 				if not self.needs_refining():
 					break;
 				else:
-					if(self._verbose):
-						print(self.__ql_content)
 					self.parse_block()
 
 			self.parse_structure()
