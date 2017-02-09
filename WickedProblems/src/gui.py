@@ -13,19 +13,30 @@ else:
 class WickedQLS(Frame):
     # internal
     _verbose = False
-    __root = None
+    _ql_file = None
+
     # private
+    __root = None
     __ql_content = None
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, ql_file=None):
         master.minsize(width=800, height=600)
         master.maxsize(width=800, height=600)
         super().__init__(master)
         self.pack()
         self.__root = master
+        self._ql_file = ql_file
+
+    def main(self):
+        if(self.__ql_content is None):
+            exit("No QLS Content Loaded")
+        # extract the main block (i.e. parse the form)
+        self.__ql_content = WickedDSL.stylesheet.parseString(self.__ql_content)
+
+        print(self.__ql_content)
 
     def load_ql(self, ql_file):
-        self.__ql_content = WickedDSL.loadFile(ql_file)
+        self.__ql_content = WickedDSL.load_file(ql_file)
 
     def start_gui(self):
         if(self.__ql_content is None):
@@ -56,23 +67,20 @@ class WickedQLS(Frame):
 if __name__ == '__main__':
     root = Tk()
     # Load QL data
-
     gui = WickedQLS(master=root)
 
     parser = argparse.ArgumentParser(description='WickedQLS Start File')
-    parser.add_argument(
-        "-v", "--verbose",
-        help="increase output verbosity",
-        action="store_true",
-        default=False
-    )
+    parser.add_argument("-v", "--verbose",
+                        help="increase output verbosity",
+                        action="store_true",
+                        default=False
+                        )
 
-    parser.add_argument(
-        "-f", dest="ql_file",
-        help="Specify the QL file",
-        action="store",
-        default=None
-    )
+    parser.add_argument("-f", dest="ql_file",
+                        help="Specify the QL file",
+                        action="store",
+                        default=None
+                        )
 
     args = parser.parse_args()
     gui._verbose = args.verbose
@@ -83,4 +91,5 @@ if __name__ == '__main__':
         print("No QL File Specified... Exiting")
         exit(-1)
 
-    gui.start_gui()
+    gui.main()
+    # gui.start_gui()
