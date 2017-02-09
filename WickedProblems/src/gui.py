@@ -53,9 +53,6 @@ class WickedQLS(Frame):
 
         self.__root.mainloop()
 
-    def say_hi(self):
-        print("hi there, everyone!")
-
 if __name__ == '__main__':
     root = Tk()
     # Load QL data
