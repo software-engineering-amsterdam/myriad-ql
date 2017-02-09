@@ -25,7 +25,7 @@ class WickedQL:
 
 	def main(self):
 		try:
-			self.__ql_content = WickedDSL.loadFile(self._ql_file)
+			self.__ql_content = WickedDSL.load_file(self._ql_file)
 		except Exception:
 			exit("Could not load QL File")
 
@@ -70,7 +70,7 @@ class WickedQL:
 	# use pyparsing to parse parts of the form. might add some logic here later.
 	def parse_block(self):
 		self.__ql_content = WickedDSL.form_inner.parseString(self.__ql_content)
-		
+
 		if(self._verbose):
 			print(self.__ql_content)
 

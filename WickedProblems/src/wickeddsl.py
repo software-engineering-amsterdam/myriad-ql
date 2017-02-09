@@ -34,7 +34,7 @@ class WickedDSL:
 
     stylesheet = stylesheet_type + name + OneOrMore(page)
 
-    def loadFile(ql_file):
+    def load_file(ql_file):
         # open the file as a list of strings
         with open(ql_file, 'r') as ql_file_stream:
             __ql_content = ql_file_stream.readlines()
@@ -64,5 +64,5 @@ class WickedDSL:
                 except IndexError:
                     pass
                 __ql_structure.append(((__id, __parent),fields[3*x],fields[3*x+1],fields[3*x+2]))
-                
+
         return (__ql_content[len(__ql_content)-1], __ql_structure)
