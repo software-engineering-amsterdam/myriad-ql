@@ -66,3 +66,20 @@ class WickedDSL:
                 __ql_structure.append(((__id, __parent),fields[3*x],fields[3*x+1],fields[3*x+2]))
 
         return (__ql_content[len(__ql_content)-1], __ql_structure)
+
+    def escape_curlies(__ql_content):
+        lcurly = 0
+        rcurly = 0
+        replacements = []
+        for x in range(0,len(__ql_content)):
+            if(__ql_content[x] == "{"):
+                lcurly += 1
+            elif(__ql_content[x] == "}"):
+                if(lcurly > 1):
+                    replacements.append(x)
+                lcurly -= 1
+
+        for x in range(0, len(replacements)):
+            __ql_content = __ql_content[:replacements[x]+x]+"\\"+__ql_content[replacements[x]+x:]
+
+        return __ql_content

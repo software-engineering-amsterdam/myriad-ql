@@ -30,7 +30,7 @@ class WickedQL:
 			exit("Could not load QL File")
 
 		# escape all but the last bracket
-		self.__ql_content = self.__ql_content.replace('}','\}', self.__ql_content.count('}')-1)
+		self.__ql_content = WickedDSL.escape_curlies(self.__ql_content)
 
 		# extract the main block (i.e. parse the form)
 		self.__ql_content = WickedDSL.form_outer.parseString(self.__ql_content)
