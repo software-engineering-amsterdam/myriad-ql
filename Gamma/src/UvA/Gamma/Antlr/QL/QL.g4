@@ -38,7 +38,7 @@ SUB: '-';
 
 NUMBER: ('0'..'9')+;
 
-QUESTION: '"'(.)+'"' ;
+QUESTION: '"'(~'"')+'"' ;
 ID: [a-zA-Z]+;
 
 //symbols

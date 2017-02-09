@@ -1,4 +1,4 @@
-package UvA.Gamma.Antlr.QL;// Generated from QL/QL.g4 by ANTLR 4.6
+package UvA.Gamma.Antlr.QL;// Generated from Gamma/src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
