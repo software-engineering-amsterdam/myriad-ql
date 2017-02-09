@@ -9,7 +9,7 @@
     {
         public IfStatement(
             Expression condition,
-            IReadOnlyList<Statement> statements,
+            IList<Statement> statements,
             ElseStatement elseStatement = null)
         {
             this.Condition = condition;
@@ -19,7 +19,7 @@
 
         public Expression Condition { get; private set; }
 
-        public IReadOnlyList<Statement> Statements { get; private set; }
+        public IList<Statement> Statements { get; private set; }
 
         public Statement ElseStatement { get; private set; }
     }

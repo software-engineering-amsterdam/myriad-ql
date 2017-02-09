@@ -57,7 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Antlr4 Include="CalculatorGrammar.g4">
+    <Antlr4 Include="Parser\QlsGrammar.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>OffByOne.Qls</CustomToolNamespace>
     </Antlr4>
