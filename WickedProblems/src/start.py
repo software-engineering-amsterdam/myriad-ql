@@ -28,7 +28,7 @@ class WickedQL:
 			self.__ql_content = WickedDSL.loadFile(self._ql_file)
 		except Exception:
 			exit("Could not load QL File")
-			
+
 		# escape all but the last bracket
 		self.__ql_content = self.__ql_content.replace('}','\}', self.__ql_content.count('}')-1)
 
@@ -65,27 +65,12 @@ class WickedQL:
 		return tmp
 
 	def parse_structure(self):
-		fields = self.__ql_content[0:len(self.__ql_content)]
-		if(self._verbose):
-			print(fields)
-
-		if(len(fields) > 0):
-			# Store all fields (tuples of 3: name, variable, type)
-			for x in range(0,int(len(fields)/3)):
-				try:
-					if(fields[3*x+3] == "="):
-						fields[3*x+2:3*x+5] = [' '.join(fields[3*x+2:3*x+5])]
-					else:
-						pass
-				except IndexError:
-					if(self._verbose):
-						print("Appears that we don't have a statement")
-				self.__ql_structure.append(((self.get_id(), self.__parent),fields[3*x],fields[3*x+1],fields[3*x+2]))
-		self.__ql_content = self.__ql_content[len(self.__ql_content)-1]
+		(self.__ql_content,self.__ql_structure) = WickedDSL.parse_structure(self.__ql_content, self.__ql_structure, self.get_id(), self.__parent)
 
 	# use pyparsing to parse parts of the form. might add some logic here later.
 	def parse_block(self):
 		self.__ql_content = WickedDSL.form_inner.parseString(self.__ql_content)
+		
 		if(self._verbose):
 			print(self.__ql_content)
 
