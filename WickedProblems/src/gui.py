@@ -11,6 +11,9 @@ else:
     exit("Did you forget to run it using python >= 3.0 ??")
 
 class WickedQLS(Frame):
+    # public
+    num_pages = 0
+
     # internal
     _verbose = False
     _ql_file = None
@@ -18,6 +21,7 @@ class WickedQLS(Frame):
     # private
     __root = None
     __ql_content = None
+    __pages = []
 
     def __init__(self, master=None, ql_file=None):
         master.minsize(width=800, height=600)
@@ -30,10 +34,40 @@ class WickedQLS(Frame):
     def main(self):
         if(self.__ql_content is None):
             exit("No QLS Content Loaded")
-        # extract the main block (i.e. parse the form)
+
+        # fix bracketing
+        self.__ql_content = WickedDSL.escape_curlies(self.__ql_content)
+
+        # print(self.__ql_content)
+
+        # extract the main block (i.e. parse the stylesheet)
         self.__ql_content = WickedDSL.stylesheet.parseString(self.__ql_content)
 
-        print(self.__ql_content)
+        # determine the number of pages
+        self.num_pages = int((len(self.__ql_content) - 2) / 3)
+
+        # first two k/v types are the type identifier and the name
+        self.name = self.__ql_content[1]
+        del self.__ql_content[0:2]
+
+        # construct pages
+        for x in range(0, self.num_pages):
+            current_page = {'id': x, 'name': '', 'content': []}
+            # parse the content
+            if(self.__ql_content[3*x] != "page"):
+                raise Exception("Not a page?!")
+            current_page['name'] = self.__ql_content[3*x+1]
+            # construct the content
+            current_content = WickedDSL.escape_curlies(self.__ql_content[3*x+2])
+            # current_content = self.__ql_content[3*x+2]
+            current_content = WickedDSL.content_type.parseString(current_content)
+            print(current_content)
+            # current_page['content'] = self.__ql_content[3*x+1]
+            # current_page['content'].append()
+            self.__pages.append(current_page)
+
+
+        # print(self.__ql_content)
 
     def load_ql(self, ql_file):
         self.__ql_content = WickedDSL.load_file(ql_file)
