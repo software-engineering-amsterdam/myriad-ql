@@ -1,7 +1,23 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Style.Rules
 {
-    // TODO: Fuck. Need value types.
-    public class ValueTypeRule
+    using System.Collections.Generic;
+
+    using OffByOne.LanguageCore.Ast.Style.Properties.Base;
+    using OffByOne.LanguageCore.Ast.Style.Rules.Base;
+    using OffByOne.LanguageCore.Ast.Style.Widgets.Base;
+    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+
+    public class ValueTypeRule : Rule
     {
+        public ValueTypeRule(
+            ValueType valueType,
+            Widget widget,
+            ICollection<Property> properties)
+            : base(widget, properties)
+        {
+            this.ValueType = valueType;
+        }
+
+        public ValueType ValueType { get; set; }
     }
 }
