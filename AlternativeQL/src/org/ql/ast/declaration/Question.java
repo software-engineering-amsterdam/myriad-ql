@@ -1,6 +1,10 @@
-package org.ql.ast;
+package org.ql.ast.declaration;
 
-public class Question {
+import org.ql.ast.Identifier;
+import org.ql.ast.declaration.Declaration;
+import org.ql.ast.type.Type;
+
+public class Question extends Declaration {
     private final Identifier id;
     private String question;
     private Type type;

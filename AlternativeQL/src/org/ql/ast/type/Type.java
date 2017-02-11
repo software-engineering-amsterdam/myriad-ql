@@ -1,4 +1,4 @@
-package org.ql.ast;
+package org.ql.ast.type;
 
 public class Type {
     private String type;

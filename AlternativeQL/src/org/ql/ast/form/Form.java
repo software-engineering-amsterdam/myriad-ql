@@ -1,4 +1,6 @@
-package org.ql.ast;
+package org.ql.ast.form;
+
+import org.ql.ast.Identifier;
 
 public class Form {
     private final Identifier name;
