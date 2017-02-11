@@ -1,6 +1,8 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
-    public class MoneyLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class MoneyLiteral : Literal
     {
         public MoneyLiteral(decimal value)
         {

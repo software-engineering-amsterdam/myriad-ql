@@ -1,6 +1,8 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
-    public class StringLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class StringLiteral : Literal
     {
         public StringLiteral(string value)
         {

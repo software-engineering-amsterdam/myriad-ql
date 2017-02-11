@@ -12,6 +12,11 @@
     {
         public static void Main(string[] args)
         {
+            TestQlGrammar();
+        }
+
+        private static void TestQlGrammar()
+        {
             ICharStream input = new AntlrInputStream(@"
                 form questionaire { 
                     ""What is your birth date?"" 
@@ -31,11 +36,46 @@
                             exit: boolean
                     }
                 }");
-            QlLexer lexer = new QlLexer(input);
-            QlParser parser = new QlParser(new CommonTokenStream(lexer));
+            var lexer = new QlLexer(input);
+            var parser = new QlParser(new CommonTokenStream(lexer));
             var v = new MyQlVisitor();
-            AstNode tree = v.Visit(parser.form());
+            var tree = v.Visit(parser.form());
             Console.WriteLine("Done!");
+        }
+
+        private static void TestQlsGrammar()
+        {
+            ICharStream input = new AntlrInputStream(@"
+                stylesheet taxOfficeExample {
+                  page Housing {
+                    section ""Buying""
+                      question hasBoughtHouse  
+                        widget checkbox 
+                    section ""Loaning""  
+                      question hasMaintLoan
+                  } 
+                  page Selling { 
+                    section ""Selling"" {
+                      question hasSoldHouse
+                        widget radio(""Yes"", ""No"") 
+                      section ""You sold a house"" {
+                        question sellingPrice
+                          widget spinbox
+                        question privateDebt
+                          widget spinbox 
+                        question valueResidue
+                        default money {
+                          width: 400
+                          font: ""Arial"" 
+                          fontsize: 14
+                          color: #999999
+                          widget spinbox
+                        }        
+                      }
+                    }
+                    default boolean widget radio(""Yes"", ""No"")
+                  }
+                }");
         }
     }
 }

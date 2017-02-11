@@ -1,8 +1,10 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
     using System;
 
-    public class DateLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class DateLiteral : Literal
     {
         public DateLiteral(DateTime value)
         {

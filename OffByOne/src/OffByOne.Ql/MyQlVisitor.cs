@@ -11,8 +11,8 @@
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Expressions;
     using OffByOne.LanguageCore.Ast.Expressions.Binary;
-    using OffByOne.LanguageCore.Ast.Expressions.Literals;
     using OffByOne.LanguageCore.Ast.Expressions.Unary;
+    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.Statements;
     using OffByOne.LanguageCore.Ast.Statements.Branch;
     using OffByOne.LanguageCore.Ast.Statements.Questions;

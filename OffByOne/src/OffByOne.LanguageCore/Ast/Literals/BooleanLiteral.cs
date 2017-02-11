@@ -1,6 +1,8 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
-    public class BooleanLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class BooleanLiteral : Literal
     {
         public BooleanLiteral(bool value)
         {

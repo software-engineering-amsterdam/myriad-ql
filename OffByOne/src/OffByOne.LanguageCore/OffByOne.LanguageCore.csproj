@@ -49,9 +49,10 @@
     <Compile Include="Ast\Expressions\Binary\AndExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\Base\BinaryExpression.cs" />
     <Compile Include="Ast\Expressions\BracketExpression.cs" />
-    <Compile Include="Ast\Expressions\Literals\BooleanLiteral.cs" />
-    <Compile Include="Ast\Expressions\Literals\DateLiteral.cs" />
-    <Compile Include="Ast\Expressions\Literals\DecimalLiteral.cs" />
+    <Compile Include="Ast\Literals\Base\Literal.cs" />
+    <Compile Include="Ast\Literals\BooleanLiteral.cs" />
+    <Compile Include="Ast\Literals\DateLiteral.cs" />
+    <Compile Include="Ast\Literals\DecimalLiteral.cs" />
     <Compile Include="Ast\Expressions\Expression.cs" />
     <Compile Include="Ast\Expressions\Binary\DivideExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\EqualExpression.cs" />
@@ -63,9 +64,9 @@
     <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
-    <Compile Include="Ast\Expressions\Literals\IntegerLiteral.cs" />
-    <Compile Include="Ast\Expressions\Literals\MoneyLiteral.cs" />
-    <Compile Include="Ast\Expressions\Literals\StringLiteral.cs" />
+    <Compile Include="Ast\Literals\IntegerLiteral.cs" />
+    <Compile Include="Ast\Literals\MoneyLiteral.cs" />
+    <Compile Include="Ast\Literals\StringLiteral.cs" />
     <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
     <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
     <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
@@ -83,9 +84,26 @@
     <Compile Include="Ast\Statements\Statement.cs" />
     <Compile Include="Ast\Style\Page.cs" />
     <Compile Include="Ast\Style\Properties\Base\Property.cs" />
-    <Compile Include="Ast\Style\Rule.cs" />
+    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
+    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
+    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
+    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
     <Compile Include="Ast\Style\Section.cs" />
     <Compile Include="Ast\Style\StyleSheet.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
+    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +116,7 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

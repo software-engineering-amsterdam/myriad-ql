@@ -1,6 +1,8 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
-    public class IntegerLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class IntegerLiteral : Literal
     {
         public IntegerLiteral(int value)
         {
