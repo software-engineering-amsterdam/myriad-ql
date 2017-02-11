@@ -22,6 +22,7 @@ class WickedQLS(Frame):
     __root = None
     __ql_content = None
     __pages = []
+    __id_counter = 0
 
     def __init__(self, master=None, ql_file=None):
         master.minsize(width=800, height=600)
@@ -52,7 +53,7 @@ class WickedQLS(Frame):
 
         # construct pages
         for x in range(0, self.num_pages):
-            current_page = {'id': x, 'name': '', 'content': []}
+            current_page = {'id': self.get_id(), 'name': '', 'content': []}
             # parse the content
             if(self.__ql_content[3*x] != "page"):
                 raise Exception("Not a page?!")
@@ -60,14 +61,61 @@ class WickedQLS(Frame):
             # construct the content
             current_content = WickedDSL.escape_curlies(self.__ql_content[3*x+2])
             # current_content = self.__ql_content[3*x+2]
-            current_content = WickedDSL.content_type.parseString(current_content)
-            print(current_content)
-            # current_page['content'] = self.__ql_content[3*x+1]
-            # current_page['content'].append()
+            parsed_content = WickedDSL.content_type.parseString(current_content)
+            # store the parsed content
+            content_holder = self.get_new_content_holder(current_page['id'])
+            __skip_next = False
+            for x in range(0, len(parsed_content)):
+                if(__skip_next):
+                    __skip_next = False
+                    continue
+                if(parsed_content[x] is "section"): # create new section
+                    # current_page['content'].append(content_holder)
+                    content_holder['name'] = parsed_content[x+1]
+                    __skip_next = True
+                    if content_holder is not None:
+                        current_page['content'].append(content_holder)
+                        content_holder = self.get_new_content_holder(current_page['id'])
+                # print(parsed_content[x])
+                content_holder['content'] += parsed_content[x] + " "
+                # print(content_holder)
+            current_page['content'].append(content_holder)
+
+            # continue
+
+            # see if we need to further refine the parsed content
+            # parsed_content = self.parse_refine(parsed_content)
+
             self.__pages.append(current_page)
 
+        # DEBUG
+        if(self._verbose):
+            for page in self.__pages:
+                print(page)
+                for content in page['content']:
+                    print(content)
+                print("\n")
 
         # print(self.__ql_content)
+
+    def get_new_content_holder(self, parent_id):
+        return {'id': self.get_id(),'parent': parent_id,
+                'name': None,'type': None,'content': ""}
+
+    def get_id(self):
+        tmp = self.__id_counter
+        self.__id_counter += 1
+        return tmp
+
+    def parse_refine(self,content):
+        for x in range(0, len(content)):
+            if '{' in content[x]:
+                # parse the codeblock
+                parsed_content = WickedDSL.codeblock_unquoted.parseString(content[x])
+                if(len(parsed_content) > 1): # more than 1 codeblock
+                    pass
+                else: # 1 codeblock
+                    print(parsed_content)
 
     def load_ql(self, ql_file):
         self.__ql_content = WickedDSL.load_file(ql_file)
