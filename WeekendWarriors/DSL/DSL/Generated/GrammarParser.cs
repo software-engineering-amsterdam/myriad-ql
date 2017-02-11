@@ -35,18 +35,19 @@ public partial class GrammarParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, ID=2, WS=3;
+		Unit=1, Form=2, ConditionalQuestions=3, Statement=4, QuestionWithVariable=5, 
+		Expression=6, Constant=7, EscapeSequence=8;
 	public const int
-		RULE_r = 0;
+		RULE_unitthing = 0;
 	public static readonly string[] ruleNames = {
-		"r"
+		"unitthing"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'hello'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, "ID", "WS"
+		null, "Unit", "Form", "ConditionalQuestions", "Statement", "QuestionWithVariable", 
+		"Expression", "Constant", "EscapeSequence"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -77,32 +78,31 @@ public partial class GrammarParser : Parser {
 	{
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
-	public partial class RContext : ParserRuleContext {
-		public ITerminalNode ID() { return GetToken(GrammarParser.ID, 0); }
-		public RContext(ParserRuleContext parent, int invokingState)
+	public partial class UnitthingContext : ParserRuleContext {
+		public ITerminalNode Unit() { return GetToken(GrammarParser.Unit, 0); }
+		public UnitthingContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_r; } }
+		public override int RuleIndex { get { return RULE_unitthing; } }
 		public override void EnterRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
-			if (typedListener != null) typedListener.EnterR(this);
+			if (typedListener != null) typedListener.EnterUnitthing(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
-			if (typedListener != null) typedListener.ExitR(this);
+			if (typedListener != null) typedListener.ExitUnitthing(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public RContext r() {
-		RContext _localctx = new RContext(Context, State);
-		EnterRule(_localctx, 0, RULE_r);
+	public UnitthingContext unitthing() {
+		UnitthingContext _localctx = new UnitthingContext(Context, State);
+		EnterRule(_localctx, 0, RULE_unitthing);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 2; Match(T__0);
-			State = 3; Match(ID);
+			State = 2; Match(Unit);
 			}
 		}
 		catch (RecognitionException re) {
@@ -120,10 +120,9 @@ public partial class GrammarParser : Parser {
 	private static string _serializeATN()
 	{
 	    StringBuilder sb = new StringBuilder();
-	    sb.Append("\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3\x5");
-		sb.Append("\b\x4\x2\t\x2\x3\x2\x3\x2\x3\x2\x3\x2\x2\x2\x3\x2\x2\x2\x6\x2");
-		sb.Append("\x4\x3\x2\x2\x2\x4\x5\a\x3\x2\x2\x5\x6\a\x4\x2\x2\x6\x3\x3\x2");
-		sb.Append("\x2\x2\x2");
+	    sb.Append("\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3\n\a");
+		sb.Append("\x4\x2\t\x2\x3\x2\x3\x2\x3\x2\x2\x2\x3\x2\x2\x2\x5\x2\x4\x3");
+		sb.Append("\x2\x2\x2\x4\x5\a\x3\x2\x2\x5\x3\x3\x2\x2\x2\x2");
 	    return sb.ToString();
 	}
 

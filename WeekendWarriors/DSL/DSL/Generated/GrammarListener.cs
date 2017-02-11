@@ -31,13 +31,13 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface IGrammarListener : IParseTreeListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GrammarParser.r"/>.
+	/// Enter a parse tree produced by <see cref="GrammarParser.unitthing"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterR([NotNull] GrammarParser.RContext context);
+	void EnterUnitthing([NotNull] GrammarParser.UnitthingContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="GrammarParser.r"/>.
+	/// Exit a parse tree produced by <see cref="GrammarParser.unitthing"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitR([NotNull] GrammarParser.RContext context);
+	void ExitUnitthing([NotNull] GrammarParser.UnitthingContext context);
 }
