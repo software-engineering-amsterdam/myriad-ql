@@ -104,6 +104,12 @@
     <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
     <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
     <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
+    <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
+    <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
+    <Compile Include="Ast\ValueTypes\DateValueType.cs" />
+    <Compile Include="Ast\ValueTypes\IntegerValueType.cs" />
+    <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
+    <Compile Include="Ast\ValueTypes\StringValueType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
