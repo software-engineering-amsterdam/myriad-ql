@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.6.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr4.Runtime.Standard.4.6.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\HelloBaseListener.cs" />
+    <Compile Include="Generated\HelloLexer.cs" />
+    <Compile Include="Generated\HelloListener.cs" />
+    <Compile Include="Generated\HelloParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Generated\Hello.tokens" />
+    <None Include="Generated\HelloLexer.tokens" />
+    <None Include="Grammar\Hello.g4" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>java org.antlr.v4.Tool -Dlanguage=CSharp "$(ProjectDir)\Grammar\Hello.g4" -o "$(ProjectDir)\Generated"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
