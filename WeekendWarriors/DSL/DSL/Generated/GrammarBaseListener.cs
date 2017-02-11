@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Hello.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -27,25 +27,25 @@ using IToken = Antlr4.Runtime.IToken;
 using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 
 /// <summary>
-/// This class provides an empty implementation of <see cref="IHelloListener"/>,
+/// This class provides an empty implementation of <see cref="IGrammarListener"/>,
 /// which can be extended to create a listener which only needs to handle a subset
 /// of the available methods.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.6")]
 [System.CLSCompliant(false)]
-public partial class HelloBaseListener : IHelloListener {
+public partial class GrammarBaseListener : IGrammarListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="HelloParser.r"/>.
+	/// Enter a parse tree produced by <see cref="GrammarParser.r"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterR([NotNull] HelloParser.RContext context) { }
+	public virtual void EnterR([NotNull] GrammarParser.RContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="HelloParser.r"/>.
+	/// Exit a parse tree produced by <see cref="GrammarParser.r"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitR([NotNull] HelloParser.RContext context) { }
+	public virtual void ExitR([NotNull] GrammarParser.RContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Hello.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -31,7 +31,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.6")]
 [System.CLSCompliant(false)]
-public partial class HelloParser : Parser {
+public partial class GrammarParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -59,37 +59,37 @@ public partial class HelloParser : Parser {
 		}
 	}
 
-	public override string GrammarFileName { get { return "Hello.g4"; } }
+	public override string GrammarFileName { get { return "Grammar.g4"; } }
 
 	public override string[] RuleNames { get { return ruleNames; } }
 
 	public override string SerializedAtn { get { return _serializedATN; } }
 
-	static HelloParser() {
+	static GrammarParser() {
 		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
 		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
 			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
 		}
 	}
 
-	public HelloParser(ITokenStream input)
+	public GrammarParser(ITokenStream input)
 		: base(input)
 	{
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 	public partial class RContext : ParserRuleContext {
-		public ITerminalNode ID() { return GetToken(HelloParser.ID, 0); }
+		public ITerminalNode ID() { return GetToken(GrammarParser.ID, 0); }
 		public RContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
 		public override int RuleIndex { get { return RULE_r; } }
 		public override void EnterRule(IParseTreeListener listener) {
-			IHelloListener typedListener = listener as IHelloListener;
+			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.EnterR(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
-			IHelloListener typedListener = listener as IHelloListener;
+			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.ExitR(this);
 		}
 	}

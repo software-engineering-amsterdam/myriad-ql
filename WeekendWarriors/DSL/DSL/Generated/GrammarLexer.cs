@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Hello.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -28,7 +28,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.6")]
 [System.CLSCompliant(false)]
-public partial class HelloLexer : Lexer {
+public partial class GrammarLexer : Lexer {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
@@ -42,7 +42,7 @@ public partial class HelloLexer : Lexer {
 	};
 
 
-	public HelloLexer(ICharStream input)
+	public GrammarLexer(ICharStream input)
 		: base(input)
 	{
 		Interpreter = new LexerATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
@@ -65,7 +65,7 @@ public partial class HelloLexer : Lexer {
 		}
 	}
 
-	public override string GrammarFileName { get { return "Hello.g4"; } }
+	public override string GrammarFileName { get { return "Grammar.g4"; } }
 
 	public override string[] RuleNames { get { return ruleNames; } }
 
@@ -73,7 +73,7 @@ public partial class HelloLexer : Lexer {
 
 	public override string SerializedAtn { get { return _serializedATN; } }
 
-	static HelloLexer() {
+	static GrammarLexer() {
 		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
 		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
 			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);

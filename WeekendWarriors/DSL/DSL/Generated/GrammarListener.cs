@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Hello.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -25,19 +25,19 @@ using IToken = Antlr4.Runtime.IToken;
 
 /// <summary>
 /// This interface defines a complete listener for a parse tree produced by
-/// <see cref="HelloParser"/>.
+/// <see cref="GrammarParser"/>.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.6")]
 [System.CLSCompliant(false)]
-public interface IHelloListener : IParseTreeListener {
+public interface IGrammarListener : IParseTreeListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="HelloParser.r"/>.
+	/// Enter a parse tree produced by <see cref="GrammarParser.r"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterR([NotNull] HelloParser.RContext context);
+	void EnterR([NotNull] GrammarParser.RContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="HelloParser.r"/>.
+	/// Exit a parse tree produced by <see cref="GrammarParser.r"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitR([NotNull] HelloParser.RContext context);
+	void ExitR([NotNull] GrammarParser.RContext context);
 }
