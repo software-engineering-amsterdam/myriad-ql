@@ -35,17 +35,77 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class GrammarBaseListener : IGrammarListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GrammarParser.unitthing"/>.
+	/// Enter a parse tree produced by <see cref="GrammarParser.unit"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterUnitthing([NotNull] GrammarParser.UnitthingContext context) { }
+	public virtual void EnterUnit([NotNull] GrammarParser.UnitContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="GrammarParser.unitthing"/>.
+	/// Exit a parse tree produced by <see cref="GrammarParser.unit"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitUnitthing([NotNull] GrammarParser.UnitthingContext context) { }
+	public virtual void ExitUnit([NotNull] GrammarParser.UnitContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.form"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterForm([NotNull] GrammarParser.FormContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.form"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitForm([NotNull] GrammarParser.FormContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterStatement([NotNull] GrammarParser.StatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitStatement([NotNull] GrammarParser.StatementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.question"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterQuestion([NotNull] GrammarParser.QuestionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.question"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitQuestion([NotNull] GrammarParser.QuestionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.conditionalBlock"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterConditionalBlock([NotNull] GrammarParser.ConditionalBlockContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.conditionalBlock"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitConditionalBlock([NotNull] GrammarParser.ConditionalBlockContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterExpression([NotNull] GrammarParser.ExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitExpression([NotNull] GrammarParser.ExpressionContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

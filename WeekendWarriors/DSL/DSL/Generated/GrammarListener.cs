@@ -31,13 +31,63 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface IGrammarListener : IParseTreeListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GrammarParser.unitthing"/>.
+	/// Enter a parse tree produced by <see cref="GrammarParser.unit"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterUnitthing([NotNull] GrammarParser.UnitthingContext context);
+	void EnterUnit([NotNull] GrammarParser.UnitContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="GrammarParser.unitthing"/>.
+	/// Exit a parse tree produced by <see cref="GrammarParser.unit"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitUnitthing([NotNull] GrammarParser.UnitthingContext context);
+	void ExitUnit([NotNull] GrammarParser.UnitContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.form"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterForm([NotNull] GrammarParser.FormContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.form"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitForm([NotNull] GrammarParser.FormContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStatement([NotNull] GrammarParser.StatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStatement([NotNull] GrammarParser.StatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.question"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterQuestion([NotNull] GrammarParser.QuestionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.question"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitQuestion([NotNull] GrammarParser.QuestionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.conditionalBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterConditionalBlock([NotNull] GrammarParser.ConditionalBlockContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.conditionalBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitConditionalBlock([NotNull] GrammarParser.ConditionalBlockContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="GrammarParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression([NotNull] GrammarParser.ExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="GrammarParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression([NotNull] GrammarParser.ExpressionContext context);
 }
