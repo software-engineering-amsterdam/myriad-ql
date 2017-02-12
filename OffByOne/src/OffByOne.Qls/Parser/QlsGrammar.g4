@@ -1,34 +1,33 @@
 grammar QlsGrammar;
 
 stylesheet
-    : Stylesheet Identifier styleSheetBody*
+    : Stylesheet Identifier (page)+
     ;
 
-styleSheetBody
-    : Page Identifier OpenBracket pageBody* CloseBracket #pageStyleBody
-    | Default type styleStatement #defaultValueTypeRule
+page
+    : Page Identifier OpenBracket (section|defaultBlock)+ CloseBracket
     ;
 
-pageBody
-    : Section StringLiteral OpenBracket pageBody CloseBracket
-    | Section StringLiteral pageBody
-    | Question Identifier styleStatement
-    | Question Identifier
-    | defaultTypeStatement
+section
+    : Section StringLiteral OpenBracket (question|section|defaultBlock)+ CloseBracket
     ;
 
-defaultTypeStatement
-    : Default type OpenBracket styleStatement* CloseBracket
-    | Default type styleStatement
-    ;
-
-styleStatement
-	: Widget widgetType
-	| Identifier Colon literal
+question	
+	: Question Identifier widget?
 	;
 
+widget
+	: Widget widgetType 
+	;
 
-// Types
+defaultBlock
+	: Default type widget
+	| Default type OpenBracket (styleRule)+ widget CloseBracket
+	;
+
+styleRule
+	: Identifier Colon literal
+	;
 
 widgetType
     : 'checkbox'
@@ -43,8 +42,8 @@ optionsList
 	;
 
 option
-	: StringLiteral ',' option
-	| StringLiteral
+	: literal ',' option
+	| literal
 	;
 
 type

@@ -9,34 +9,34 @@
 
     public class CustomQlsVisitor : QlsGrammarBaseVisitor<AstNode>
     {
-        public override AstNode VisitStylesheet(QlsGrammarParser.StylesheetContext context)
-        {
-            var id = context.Identifier().GetText();
-            var nodes = context
-                .styleSheetBody()
-                .Select(this.VisitStyleSheetBody)
-                .ToList();
+        ////public override AstNode VisitStylesheet(QlsGrammarParser.StylesheetContext context)
+        ////{
+        ////    var id = context.Identifier().GetText();
+        ////    var nodes = context
+        ////        .styleSheetBody()
+        ////        .Select(this.VisitStyleSheetBody)
+        ////        .ToList();
 
-            return new StyleSheet(id, nodes);
-        }
+        ////    return new StyleSheet(id, nodes);
+        ////}
 
-        public override AstNode VisitPageStyleBody(QlsGrammarParser.PageStyleBodyContext context)
-        {
-            var id = context.Identifier().GetText();
-            var nodes = context
-                .pageBody()
-                .Select(x => (Section)this.VisitPageBody(x))
-                .ToList();
+        ////public override AstNode VisitPageStyleBody(QlsGrammarParser.PageStyleBodyContext context)
+        ////{
+        ////    var id = context.Identifier().GetText();
+        ////    var nodes = context
+        ////        .pageBody()
+        ////        .Select(x => (Section)this.VisitPageBody(x))
+        ////        .ToList();
 
-            return new Page(id, nodes);
-        }
+        ////    return new Page(id, nodes);
+        ////}
 
-        public override AstNode VisitDefaultValueTypeRule(QlsGrammarParser.DefaultValueTypeRuleContext context)
-        {
-            var type = context.type().GetText();
+        ////public override AstNode VisitDefaultValueTypeRule(QlsGrammarParser.DefaultValueTypeRuleContext context)
+        ////{
+        ////    var type = context.type().GetText();
 
-            return base.VisitDefaultValueTypeRule(context);
-        }
+        ////    return base.VisitDefaultValueTypeRule(context);
+        ////}
 
         ////// TODO: Move to a different class
         ////private ValueType GetValueType(string input)
