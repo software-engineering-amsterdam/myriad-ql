@@ -50,13 +50,11 @@
             ICharStream input = new AntlrInputStream(@"
                 stylesheet taxOfficeExample
                   page Housing {
-                    section ""Buying"" {
+                    section ""Buying""
                       question hasBoughtHouse  
                         widget checkbox 
-                    }
-                    section ""Loaning"" { 
+                    section ""Loaning""  
                       question hasMaintLoan
-                    }
                   } 
                   page Selling { 
                     section ""Selling"" {

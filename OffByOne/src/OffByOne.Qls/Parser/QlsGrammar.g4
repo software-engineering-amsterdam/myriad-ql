@@ -1,32 +1,32 @@
 grammar QlsGrammar;
 
 stylesheet
-    : Stylesheet Identifier (page)+
+    : STYLESHEET Identifier (page)+
     ;
 
 page
-    : Page Identifier OpenBracket (section|defaultBlock)+ CloseBracket
+    : PAGE Identifier OPEN_BRACKET (section|defaultBlock)+ CLOSE_BRACKET
     ;
 
 section
-    : Section StringLiteral OpenBracket (question|section|defaultBlock)+ CloseBracket
+    : SECTION StringLiteral OPEN_BRACKET? (question|section|defaultBlock)+ CLOSE_BRACKET?
     ;
 
 question	
-	: Question Identifier widget?
+	: QUESTION Identifier widget?
 	;
 
 widget
-	: Widget widgetType 
+	: WIDGET widgetType 
 	;
 
 defaultBlock
-	: Default type widget
-	| Default type OpenBracket (styleRule)+ widget CloseBracket
+	: DEFAULT type widget
+	| DEFAULT type OPEN_BRACKET (styleRule)+ widget CLOSE_BRACKET
 	;
 
 styleRule
-	: Identifier Colon literal
+	: Identifier COLON literal
 	;
 
 widgetType
@@ -38,7 +38,7 @@ widgetType
     ;
 
 optionsList
-	: OpenParenthesis option Closeparenthesis
+	: OPEN_PARENTHESIS option CLOSE_PARENTHESIS
 	;
 
 option
@@ -64,20 +64,22 @@ literal
 
 // Lexer tokens. Move to separate file?
 
-Stylesheet : 'stylesheet';
-Page : 'page';
-Question : 'question';
-Section: 'section';
-Widget: 'widget';
-Default: 'default';
+// Keywords
+STYLESHEET : 'stylesheet';
+PAGE : 'page';
+QUESTION : 'question';
+SECTION: 'section';
+WIDGET: 'widget';
+DEFAULT: 'default';
 
 
-OpenBracket : '{';
-CloseBracket : '}';
-OpenParenthesis : '(';
-Closeparenthesis : ')';
-Semicolon : ';';
-Colon: ':';
+// Syntax
+OPEN_BRACKET : '{';
+CLOSE_BRACKET : '}';
+OPEN_PARENTHESIS : '(';
+CLOSE_PARENTHESIS : ')';
+SEMICOLON : ';';
+COLON: ':';
 
 WhiteSpace : (' ' | '\t' | '\n' | '\r') -> channel(HIDDEN);
 
