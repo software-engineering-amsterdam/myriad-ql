@@ -177,5 +177,5 @@ if __name__ == '__main__':
     """
 
     parser = QuestionnaireParser()
-    print QuestionnaireAST(parser.parse(form1)).root
+    print (QuestionnaireAST(parser.parse(form1)).root)
 
