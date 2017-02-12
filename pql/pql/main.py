@@ -1,5 +1,6 @@
 import sys
 import io
+from pql.parser.parser import PQLParser
 
 
 def open_file(path):
@@ -16,6 +17,10 @@ def main(sys_args):
         sys.exit(2)
     ql_char = ql_file.read()
     ql_file.close()
+    parser = PQLParser()
+    input = "form taxOfficeExample {}"
+    # print(parser.start_parse_form_block(ql_char))
+    print(parser.start_parse_form_block(input))
 
 
 if __name__ == '__main__':
