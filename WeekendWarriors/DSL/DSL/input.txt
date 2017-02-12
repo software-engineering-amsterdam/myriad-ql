@@ -1,4 +1,1 @@
-form Box1HouseOwning {
-   "Did you sell a house in 2010?" abc: boolean
-   "Did you by a house in 2010?" cba: boolean
-}
+(aap + noot / boom + roos && false - (Floris != "homokoning")) <= 20
