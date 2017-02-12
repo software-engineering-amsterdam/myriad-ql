@@ -1,7 +1,6 @@
 import sys
 import io
-from lexer.lexer import lex_using_default_tokens
-from pql.parser.parser import aexp
+
 
 def open_file(path):
     try:
@@ -17,8 +16,6 @@ def main(sys_args):
         sys.exit(2)
     ql_char = ql_file.read()
     ql_file.close()
-
-    tokens = lex_using_default_tokens(ql_char)
 
 
 if __name__ == '__main__':
