@@ -1,3 +1,0 @@
-(aap + noot / boom + roos && 
-// appel
-false - (Floris != "homokoning")) <= 20
