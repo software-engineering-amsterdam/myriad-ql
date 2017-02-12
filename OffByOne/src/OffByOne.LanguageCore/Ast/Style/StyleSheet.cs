@@ -6,14 +6,14 @@
     {
         public StyleSheet(
             string id,
-            ICollection<Page> pages)
+            ICollection<AstNode> pages)
         {
             this.Id = id;
-            this.Pages = pages;
+            this.Nodes = pages;
         }
 
         public string Id { get; private set; }
 
-        public ICollection<Page> Pages { get; private set; }
+        public ICollection<AstNode> Nodes { get; private set; }
     }
 }

@@ -7,12 +7,14 @@
     using OffByOne.LanguageCore.Ast;
     using OffByOne.Ql;
     using OffByOne.Ql.Generated;
+    using OffByOne.Qls;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            TestQlGrammar();
+            ////TestQlGrammar();
+            TestQlsGrammar();
         }
 
         private static void TestQlGrammar()
@@ -46,7 +48,7 @@
         private static void TestQlsGrammar()
         {
             ICharStream input = new AntlrInputStream(@"
-                stylesheet taxOfficeExample {
+                stylesheet taxOfficeExample
                   page Housing {
                     section ""Buying""
                       question hasBoughtHouse  
@@ -74,8 +76,13 @@
                       }
                     }
                     default boolean widget radio(""Yes"", ""No"")
-                  }
-                }");
+                  }");
+
+            var lexer = new QlsGrammarLexer(input);
+            var parser = new QlsGrammarParser(new CommonTokenStream(lexer));
+            var visitor = new CustomQlsVisitor();
+            var astTree = visitor.Visit(parser.stylesheet());
+            Console.WriteLine("QLS AST conversion done.");
         }
     }
 }
