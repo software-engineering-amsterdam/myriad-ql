@@ -2,7 +2,7 @@ module Parser.Form exposing (..)
 
 import AST exposing (..)
 import Combine exposing (..)
-import Combine.Extra exposing (whitespace1, trimmed)
+import Combine.Extra exposing (whitespace1, trimmed, stringAs)
 import Parser.Expression as Expression
 import Parser.Token exposing (quotedString, variableName)
 
