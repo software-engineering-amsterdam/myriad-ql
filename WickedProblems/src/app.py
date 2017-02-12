@@ -1,40 +1,13 @@
 from grammar.ql import QL
+import os
 
 
 def start():
     parser = QL()
-    print("Hello Start")
-    parseTree = parser.parse('''
-    form taxOfficeExample {
-        "Did you sell a house in 2010?"
-            hasSoldHouse: boolean
-        "Did you buy a house in 2010?"
-            hasBoughtHouse: boolean
-        "Did you enter a loan?"
-            hasMaintLoan: boolean
-
-        if (hasSoldHouse) {
-            "What was the selling price?"
-            sellingPrice: money
-            "Private debts for the sold house:"
-            privateDebt: money
-            "Value residue:"
-            valueResidue: money =
-                (sellingPrice + privateDebt)
-        }
-        if (hasSoldHouse + apples) {
-            "What was the selling price?"
-            sellingPrice: money
-            "Private debts for the sold house:"
-            privateDebt: money
-            "Value residue:"
-            valueResidue: money =
-                (sellingPrice + privateDebt)
-        }
-        "Is this questions being printed?"
-            isPrinted: boolean
-    }
-    ''')
+    fileName = "./WickedProblems/src/tests/input/tax_office_example.ql"
+    with open(os.path.abspath(fileName), 'r') as qlsource:
+        ql = qlsource.read().replace('\n', '')
+    parseTree = parser.parse(ql)
     print(parseTree.asXML())
 
 if __name__ == '__main__':
