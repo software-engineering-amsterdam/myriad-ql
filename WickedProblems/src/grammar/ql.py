@@ -31,9 +31,4 @@ BNF
 <identifier> ::= <Ident>
 <dataType> ::= <boolean>|<money>
 <boolean> ::= true | false
-
-
-
-
-
 '''
