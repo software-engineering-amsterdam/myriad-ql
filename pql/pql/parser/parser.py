@@ -9,4 +9,4 @@ class PQLParser(object):
         self.TYPE_FORM = OneOrMore(self.LIT_FORM)
 
     def start_parse_form_block(self, input_string):
-        print(self.TYPE_FORM.parseString(input_string))
+        return self.TYPE_FORM.parseString(input_string)
