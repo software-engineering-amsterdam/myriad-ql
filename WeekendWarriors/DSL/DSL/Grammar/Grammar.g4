@@ -4,7 +4,7 @@ grammar Grammar;
 /**
  *	Lexer rules
  */
-Whitespace: [ \t\r\n\u000C]+ -> channel(HIDDEN);
+Whitespace: [ \t\r\n\u000C]+ -> skip;
 Comment: '/*' .*? '*/' -> skip;
 SingleComment: '//' ~('\r' | '\n')* -> skip;
 
@@ -36,39 +36,16 @@ form: FormStatement Identifier statement;
 statement: LeftBracket (question | conditionalBlock)* RightBracket;
 question: StringLiteral Identifier TypeDeclarator Type (AssignmentOperator LeftParenthesis expression RightParenthesis | /* nothing */);
 conditionalBlock: IfStatement LeftParenthesis expression RightParenthesis statement (ElseStatement statement | /* nothing */);
-//expression: 
-//	booleanExpression | comparisonExpression | arithmeticExpression |
-//	parenthesisExpression | StringLiteral | BooleanLiteral | NumberLiteral | Identifier;
 
-//// Boolean operators
-//booleanExpression: andExpression | orExpression | notExpression;
-//andExpression: expression '&&' expression;
-//orExpression: expression '||' expression;
-//notExpression: '!' expression;
-
-//// Comparison operators
-//comparisonExpression: lessThanExpression | lessThanExpression | lessThanOrEqualExpression 
-// | greaterThanExpression | greaterThanOrEqualExpression | notEqualToExpression | equalToExpression;
-//lessThanExpression: expression '<' expression;
-//lessThanOrEqualExpression: expression '<=' expression;
-//greaterThanExpression: expression '>' expression;
-//greaterThanOrEqualExpression: expression '>=' expression;
-//notEqualToExpression: expression '!=' expression;
-//equalToExpression: expression '==' expression;
-
-//// Basic arithmetic
-//arithmeticExpression: additionExpression | subtractionExpression | multiplicationExpression | divisionExpression;
-//divisionExpression: expression '/' expression;
-//multiplicationExpression: expression '*' expression;
-//additionExpression: expression '+' expression;
-//subtractionExpression: expression '-' expression;
-
-//// Parenthesis
-//parenthesisExpression: '(' expression ')';
-
+/* Precedence based on C(++) precedence: http://en.cppreference.com/w/cpp/language/operator_precedence */
 expression: 
-	( LeftParenthesis expression RightParenthesis )	|
-	expression ('&&' | '||' | '<' | '<=' | '>' | '>=' | '!=' | '==' | '/' | '*' | '+' | '-' ) expression | 
-	('!' expression) | 
 	(StringLiteral | BooleanLiteral | NumberLiteral | Identifier) 	
+	| ( LeftParenthesis expression RightParenthesis )	
+	| ('!' expression) 
+	| expression ( '/' | '*' ) expression 
+	| expression ( '+' | '-' ) expression  		
+	| expression ('<' | '<=' | '>' | '>=' ) expression 	
+	| expression ('!=' | '==' ) expression 
+	| expression  ('&&' ) expression 
+	| expression  ('||' ) expression 	
 ;
