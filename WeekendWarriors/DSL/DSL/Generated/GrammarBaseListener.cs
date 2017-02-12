@@ -35,18 +35,6 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class GrammarBaseListener : IGrammarListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GrammarParser.unit"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterUnit([NotNull] GrammarParser.UnitContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="GrammarParser.unit"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitUnit([NotNull] GrammarParser.UnitContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="GrammarParser.form"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
