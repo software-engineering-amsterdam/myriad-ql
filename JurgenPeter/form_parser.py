@@ -11,11 +11,10 @@ def createbinop(tokens):
 
 
 class Grammar:
-    identifier = Word(alphas)
-    identifier.addCondition(
+    identifier = Word(alphas).addCondition(
         lambda tokens: tokens[0] not in """true false form if else boolean
                                         string integer decimal money""".split())
-    identifier.addParseAction(lambda tokens: Iden(tokens[0]))
+    identifier.addParseAction(lambda tokens: Variable(tokens[0]))
 
     datatype = oneOf("boolean string integer decimal money")
     datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
@@ -33,20 +32,20 @@ class Grammar:
         op.setParseAction(lambda tokens: Operator[tokens[0]])
 
     semicolon = Suppress(":")
-    bracket_open = Suppress("{")
-    bracket_close = Suppress("}")
+    braces_open = Suppress("{")
+    braces_close = Suppress("}")
     assignment = Suppress("=")
 
     integer = pyparsing_common.integer
-    integer.addParseAction(lambda tokens: Const(tokens[0], Datatype.integer))
+    integer.addParseAction(lambda tokens: Constant(tokens[0], Datatype.integer))
     decimal = pyparsing_common.real
-    decimal.addParseAction(lambda tokens: Const(tokens[0], Datatype.decimal))
+    decimal.addParseAction(lambda tokens: Constant(tokens[0], Datatype.decimal))
     true = Literal("true")
-    true.setParseAction(lambda _: Const(True, Datatype.boolean))
+    true.setParseAction(lambda _: Constant(True, Datatype.boolean))
     false = Literal("false")
-    false.setParseAction(lambda _: Const(False, Datatype.boolean))
+    false.setParseAction(lambda _: Constant(False, Datatype.boolean))
     string = QuotedString("\"")
-    string.setParseAction(lambda tokens: Const(tokens[0], Datatype.string))
+    string.setParseAction(lambda tokens: Constant(tokens[0], Datatype.string))
 
     num_atom = identifier ^ integer ^ decimal
     num_expr = infixNotation(num_atom, [(sign_op, 1, opAssoc.RIGHT,
@@ -75,18 +74,22 @@ class Grammar:
 
     question = identifier + semicolon + QuotedString("\"") + datatype +\
         Optional(assignment + expression)
-    question.setParseAction(lambda tokens: Quest(*tokens))
+    question.setParseAction(lambda tokens: Question(*tokens))
 
-    conditional = Suppress("if") + bool_expr + bracket_open + block +\
-        bracket_close + Optional(Suppress("else") + bracket_open +
-                                 block + bracket_close)
-    conditional.setParseAction(lambda tokens: Cond(*tokens))
+    conditional = Suppress("if") + bool_expr + braces_open + block +\
+        braces_close + Optional(Suppress("else") + braces_open +
+                                 block + braces_close)
+    conditional.setParseAction(lambda tokens: Condition(*tokens))
 
     statement = question ^ conditional
 
     block <<= Group(ZeroOrMore(statement))
     block.addParseAction(lambda tokens: tokens.asList())
 
-    form = Suppress("form") + identifier + bracket_open + block +\
-        bracket_close
+    formname = Word(alphas).addCondition(
+        lambda tokens: tokens[0] not in """true false form if else boolean
+                                        string integer decimal money""".split())
+
+    form = Suppress("form") + formname + braces_open + block +\
+        braces_close
     form.setParseAction(lambda tokens: Form(*tokens))

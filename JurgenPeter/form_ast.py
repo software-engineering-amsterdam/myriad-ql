@@ -18,30 +18,7 @@ class Form:
         return self.__dict__ == other.__dict__
 
 
-class Cond:
-
-    def __init__(self, condition, statements, alternative=None):
-        self.condition = condition
-        self.statements = statements
-        self.alternative = alternative
-
-    def __str__(self, indent=0):
-        if self.alternative is not None:
-            return "{}if {} [\n{}\n{}]\n{}else [\n{}\n]".format(
-                " " * indent, self.condition,
-                "\n".join([s.__str__(indent + 4) for s in self.statements]),
-                " " * indent, " " * indent,
-                "\n".join([s.__str__(indent + 4) for s in self.alternative]))
-        return "{}if {} [\n{}\n{}]".format(
-            " " * indent, self.condition,
-            "\n".join([s.__str__(indent + 4) for s in self.statements]),
-            " " * indent)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
-class Quest:
+class Question:
 
     def __init__(self, name, label, datatype, expression=None):
         self.name = name
@@ -56,6 +33,29 @@ class Quest:
                 self.expression)
         return "{}{}: \"{}\" {}".format(
             " " * indent, self.name, self.label, self.datatype.name)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+
+class Condition:
+
+    def __init__(self, condition, statements, alternatives=None):
+        self.condition = condition
+        self.statements = statements
+        self.alternatives = alternatives
+
+    def __str__(self, indent=0):
+        if self.alternatives is not None:
+            return "{}if {} [\n{}\n{}]\n{}else [\n{}\n]".format(
+                " " * indent, self.condition,
+                "\n".join([s.__str__(indent + 4) for s in self.statements]),
+                " " * indent, " " * indent,
+                "\n".join([s.__str__(indent + 4) for s in self.alternatives]))
+        return "{}if {} [\n{}\n{}]".format(
+            " " * indent, self.condition,
+            "\n".join([s.__str__(indent + 4) for s in self.statements]),
+            " " * indent)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -88,7 +88,7 @@ class BinOp:
         return self.__dict__ == other.__dict__
 
 
-class Iden:
+class Variable:
 
     def __init__(self, name):
         self.name = name
@@ -100,7 +100,7 @@ class Iden:
         return self.__dict__ == other.__dict__
 
 
-class Const:
+class Constant:
 
     def __init__(self, value, datatype):
         self.value = value
