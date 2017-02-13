@@ -2,28 +2,28 @@ package org.ql.ast.form;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
-import org.ql.ast.declaration.Declaration;
+import org.ql.ast.Statement;
 
 import java.util.List;
 
 public class Form implements Node {
     private final Identifier name;
-    private final List<Declaration> declarations;
+    private final List<Statement> statements;
 
-    public Form(Identifier name, List<Declaration> declarations) {
+    public Form(Identifier name, List<Statement> statements) {
         this.name = name;
-        this.declarations = declarations;
+        this.statements = statements;
     }
 
     public Identifier getName() {
         return name;
     }
 
-    public List<Declaration> getDeclarations() {
-        return declarations;
+    public List<Statement> getStatements() {
+        return statements;
     }
 
-    public Declaration getDeclaration(int index) {
-        return declarations.get(index);
+    public Statement getStatement(int index) {
+        return statements.get(index);
     }
 }

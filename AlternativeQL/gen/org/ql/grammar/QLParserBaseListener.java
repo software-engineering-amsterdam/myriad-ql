@@ -28,37 +28,25 @@ public class QLParserBaseListener implements QLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx) { }
+	@Override public void enterQuestion(QLParserParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx) { }
+	@Override public void exitQuestion(QLParserParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatementDeclaration(QLParserParser.StatementDeclarationContext ctx) { }
+	@Override public void enterIf(QLParserParser.IfContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatementDeclaration(QLParserParser.StatementDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIfStatement(QLParserParser.IfStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIfStatement(QLParserParser.IfStatementContext ctx) { }
+	@Override public void exitIf(QLParserParser.IfContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

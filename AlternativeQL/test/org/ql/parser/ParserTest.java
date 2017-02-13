@@ -2,16 +2,9 @@ package org.ql.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.ql.ast.declaration.Declaration;
 import org.ql.ast.form.Form;
-import org.ql.ast.declaration.Question;
-import org.ql.ast.literal.BooleanLiteral;
-import org.ql.ast.literal.FloatLiteral;
-import org.ql.ast.literal.IntegerLiteral;
-import org.ql.ast.literal.StringLiteral;
+import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
-
-import java.util.ArrayList;
 
 public class ParserTest extends Assert {
     @Test
@@ -27,7 +20,7 @@ public class ParserTest extends Assert {
     }
 
     @Test
-    public void shouldCreateFormWithQuestionDeclarations() {
+    public void shouldCreateFormWithQuestionStatements() {
         Parser parser = new Parser();
         String inputCode = "form MyNewForm {" +
                 "    boolean hasSoldHouse: \"Did you sell a house in 2010?\";\n" +
@@ -36,10 +29,10 @@ public class ParserTest extends Assert {
 
         Form ast = parser.parse(inputCode);
 
-        assertSame(2, ast.getDeclarations().size());
-        assertTrue(ast.getDeclaration(0) instanceof Question);
-        assertEquals("hasSoldHouse", ((Question) ast.getDeclaration(0)).getId().toString());
-        assertEquals("Did you sell a house in 2010?", ((Question) ast.getDeclaration(0)).getQuestion().toString());
-        assertEquals(Type.BOOLEAN, ((Question) ast.getDeclaration(0)).getType());
+        assertSame(2, ast.getStatements().size());
+        assertTrue(ast.getStatement(0) instanceof Question);
+        assertEquals("hasSoldHouse", ((Question) ast.getStatement(0)).getId().toString());
+        assertEquals("Did you sell a house in 2010?", ((Question) ast.getStatement(0)).getQuestion().toString());
+        assertEquals(Type.BOOLEAN, ((Question) ast.getStatement(0)).getType());
     }
 }

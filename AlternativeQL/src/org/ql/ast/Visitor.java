@@ -1,8 +1,7 @@
 package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.ql.ast.declaration.Declaration;
-import org.ql.ast.declaration.Question;
+import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
 import org.ql.ast.literal.StringLiteral;
 import org.ql.ast.type.Type;
@@ -17,17 +16,17 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     @Override
     public Node visitForm(QLParserParser.FormContext ctx) {
 
-        List<Declaration> declarations = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
-        for (QLParserParser.DeclarationContext declaration : ctx.declaration()) {
-            declarations.add((Declaration) visit(declaration));
+        for (QLParserParser.StatementContext declaration : ctx.statement()) {
+            statements.add((Statement) visit(declaration));
         }
 
-        return new Form((Identifier) visit(ctx.id), declarations);
+        return new Form((Identifier) visit(ctx.id), statements);
     }
 
     @Override
-    public Node visitQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx) {
+    public Node visitQuestion(QLParserParser.QuestionContext ctx) {
         String question = ctx.questionMsg.getText();
         return new Question(
             (Identifier) visit(ctx.id),
@@ -37,12 +36,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     }
 
     @Override
-    public Node visitStatementDeclaration(QLParserParser.StatementDeclarationContext ctx) {
-        return null;
-    }
-
-    @Override
-    public Node visitIfStatement(QLParserParser.IfStatementContext ctx) {
+    public Node visitIf(QLParserParser.IfContext ctx) {
         return null;
     }
 

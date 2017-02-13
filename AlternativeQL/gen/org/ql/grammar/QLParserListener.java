@@ -18,41 +18,29 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitForm(QLParserParser.FormContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code questionDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code questionDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code statementDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterStatementDeclaration(QLParserParser.StatementDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code statementDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitStatementDeclaration(QLParserParser.StatementDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ifStatement}
+	 * Enter a parse tree produced by the {@code question}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfStatement(QLParserParser.IfStatementContext ctx);
+	void enterQuestion(QLParserParser.QuestionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ifStatement}
+	 * Exit a parse tree produced by the {@code question}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfStatement(QLParserParser.IfStatementContext ctx);
+	void exitQuestion(QLParserParser.QuestionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code if}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf(QLParserParser.IfContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf(QLParserParser.IfContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParserParser#defaultValue}.
 	 * @param ctx the parse tree

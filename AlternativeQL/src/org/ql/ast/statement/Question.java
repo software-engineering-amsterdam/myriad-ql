@@ -1,11 +1,11 @@
-package org.ql.ast.declaration;
+package org.ql.ast.statement;
 
 import org.ql.ast.Identifier;
-import org.ql.ast.declaration.Declaration;
+import org.ql.ast.Statement;
 import org.ql.ast.literal.StringLiteral;
 import org.ql.ast.type.Type;
 
-public class Question extends Declaration {
+public class Question implements Statement {
     private final Identifier id;
     private final StringLiteral question;
     private final Type type;

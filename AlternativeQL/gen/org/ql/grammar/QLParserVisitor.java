@@ -17,26 +17,19 @@ public interface QLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForm(QLParserParser.FormContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code questionDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuestionDeclaration(QLParserParser.QuestionDeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code statementDeclaration}
-	 * labeled alternative in {@link QLParserParser#declaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStatementDeclaration(QLParserParser.StatementDeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ifStatement}
+	 * Visit a parse tree produced by the {@code question}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIfStatement(QLParserParser.IfStatementContext ctx);
+	T visitQuestion(QLParserParser.QuestionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf(QLParserParser.IfContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParserParser#defaultValue}.
 	 * @param ctx the parse tree
