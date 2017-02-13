@@ -201,7 +201,7 @@ all =
                     |> Expect.equal (Just Values.undefined)
         , test "not equal undefined variables" <|
             \() ->
-                asExpression "unknown /= unknown"
+                asExpression "unknown != unknown"
                     |> Maybe.map (Evaluator.evaluate sampleData)
                     |> Expect.equal (Just Values.undefined)
         ]
