@@ -11,6 +11,7 @@ type FormValue
     = Str String
     | Boolean Bool
     | Integer Int
+    | Undefined
 
 
 removeKeys : List String -> FormData -> FormData

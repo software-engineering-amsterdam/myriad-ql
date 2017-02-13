@@ -40,6 +40,9 @@ init =
 
   "Age?"
     age : integer
+  "Age2?"
+    age : integer
+
   "Wallet"
     wallet : money
 

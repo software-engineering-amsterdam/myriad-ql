@@ -2,12 +2,13 @@ module UI.Widget.Boolean exposing (view)
 
 import Html exposing (Html, div, label, input)
 import Html.Attributes exposing (type_, id, class, checked)
-import UI.FormData as FormData
+import Html.Events exposing (onCheck)
+import UI.FormData as FormData exposing (FormValue(Boolean))
 import UI.Widget.Base exposing (WidgetContext)
 
 
 view : WidgetContext msg -> Html msg
-view { field, formData } =
+view { field, formData, onChange } =
     let
         isChecked =
             FormData.getBoolean field.id formData
@@ -19,6 +20,7 @@ view { field, formData } =
                     [ type_ "checkbox"
                     , id field.id
                     , checked isChecked
+                    , onCheck (Boolean >> onChange)
                     ]
                     []
                 ]
