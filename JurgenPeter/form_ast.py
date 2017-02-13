@@ -6,13 +6,13 @@ Operator = Enum("Operator", "+ - * / ! && || < > <= >= == !=")
 
 class Form:
 
-    def __init__(self, name, statements):
-        self.name = name
+    def __init__(self, identifier, statements):
+        self.identifier = identifier
         self.statements = statements
 
     def __str__(self):
         return "form {} [\n{}\n]".format(
-            self.name, "\n".join([s.__str__(4) for s in self.statements]))
+            self.identifier, "\n".join([s.__str__(4) for s in self.statements]))
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -20,8 +20,8 @@ class Form:
 
 class Question:
 
-    def __init__(self, name, label, datatype, expression=None):
-        self.name = name
+    def __init__(self, identifier, label, datatype, expression=None):
+        self.identifier = identifier
         self.label = label
         self.datatype = datatype
         self.expression = expression
@@ -29,16 +29,16 @@ class Question:
     def __str__(self, indent=0):
         if self.expression is not None:
             return "{}{}: \"{}\" {} = {}".format(
-                " " * indent, self.name, self.label, self.datatype.name,
+                " " * indent, self.identifier, self.label, self.datatype.name,
                 self.expression)
         return "{}{}: \"{}\" {}".format(
-            " " * indent, self.name, self.label, self.datatype.name)
+            " " * indent, self.identifier, self.label, self.datatype.name)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
 
-class Condition:
+class Conditional:
 
     def __init__(self, condition, statements, alternatives=None):
         self.condition = condition
@@ -90,11 +90,11 @@ class BinOp:
 
 class Variable:
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, identifier):
+        self.identifier = identifier
 
     def __str__(self):
-        return self.name
+        return self.identifier
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

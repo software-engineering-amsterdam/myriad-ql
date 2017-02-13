@@ -4,36 +4,53 @@ from form_parser import *
 
 class TestGrammar(TestCase):
     correctSentences = [
+        (Grammar.expression, "3"),
+        (Grammar.expression, "+3"),
+        (Grammar.expression, "-3"),
+        (Grammar.expression, "3.0"),
+        (Grammar.expression, "3."),
+        (Grammar.expression, "\"three\""),
+        (Grammar.expression, "true"),
+        (Grammar.expression, "false"),
+        (Grammar.expression, "!true"),
+        (Grammar.expression, "x"),
+
         (Grammar.expression, "x <= 3"),
+        (Grammar.expression, "2 == 2.0"),
         (Grammar.expression, "x * 3"),
-        (Grammar.expression, "x + y / 4"),
+        (Grammar.expression, "x * 3 + 5"),
+        (Grammar.expression, "x * (3 + 5)"),
         (Grammar.expression, "x && true"),
-        (Grammar.expression, "false == true"), # FIXME fails test due to grammar bug
-        (Grammar.expression, "true || !false"),
+        (Grammar.expression, "false || 3 > 2 && true"),
+        (Grammar.expression, "x == 3"),
+        (Grammar.expression, "3 != 3.0"),
+        (Grammar.expression, "2 < 16"),
+        (Grammar.expression, "10. > 4 && hasBoughtHouse"),
+
         (Grammar.question, "x : \"y\" integer"),
+        (Grammar.question, "x : \"y\" decimal"),
+        (Grammar.question, "x : \"y\" boolean"),
+        (Grammar.question, "x : \"y\" money"),
+        (Grammar.question, "x : \"y\" string"),
         (Grammar.question, "x : \"y\" integer = 2 + 3"),
+        (Grammar.question, "x : \"y\" string = \"hello world\""),
         (Grammar.conditional, "if true { }"),
         (Grammar.conditional, "if true { } else { }"),
         (Grammar.form, "form FormName { }")
     ]
 
     incorrectSentences = [
-        (Grammar.expression, "x <= false"),
         (Grammar.expression, "x * * 3"),
         (Grammar.expression, "x + form"),
-        (Grammar.expression, "x && 0"),
-        (Grammar.expression, "false == 0"),
-        (Grammar.expression, "true * false"),
-        (Grammar.expression, ""),
+        (Grammar.expression, "x + if"),
+        (Grammar.expression, "x + else"),
         (Grammar.question, "x : y integer"),
         (Grammar.question, "\"x\" : \"y\" integer"),
         (Grammar.question, "x : \"y\" float"),
         (Grammar.question, "x : \"y\" integer == 3"),
-        (Grammar.question, "x : \"y\" integer = 3 * * 3"),
         (Grammar.question, "x : \"y\" integer ="),
-        (Grammar.conditional, "if 2 { }"),
-        (Grammar.conditional, "if true { pass }"),
-        (Grammar.conditional, "if true && 3 { }"),
+        (Grammar.question, "x : \"y\" integer = 3 * * 3"),
+        (Grammar.conditional, "if true then { }"),
         (Grammar.conditional, "if true { } else false { }"),
     ]
 
@@ -101,27 +118,27 @@ class TestParser(TestCase):
                                       Constant(False, Datatype.boolean)))),
 
         (Grammar.question,
-         "x : \"y\" integer", Question(Variable("x"),
-                                    "y",
-                                    Datatype.integer)),
+         "x : \"y\" integer", Question("x",
+                                       "y",
+                                       Datatype.integer)),
         (Grammar.question,
-         "x : \"y\" integer = 2 + 3", Question(Variable("x"),
-                                            "y",
-                                            Datatype.integer,
-                                            BinOp(Constant(2, Datatype.integer),
-                                                  Operator["+"],
-                                                  Constant(3, Datatype.integer)))),
+         "x : \"y\" integer = 2 + 3", Question("x",
+                                               "y",
+                                               Datatype.integer,
+                                               BinOp(Constant(2, Datatype.integer),
+                                                     Operator["+"],
+                                                     Constant(3, Datatype.integer)))),
 
         (Grammar.conditional,
          "if true { x : \"y\" integer }",
-         Condition(Constant(True, Datatype.boolean),
-              [Question(Variable("x"),
-                     "y",
-                     Datatype.integer)])),
+         Conditional(Constant(True, Datatype.boolean),
+                     [Question("x",
+                               "y",
+                               Datatype.integer)])),
         (Grammar.conditional,
-         "if true { }", Condition(Constant(True, Datatype.boolean), [])),
+         "if true { }", Conditional(Constant(True, Datatype.boolean), [])),
         (Grammar.conditional,
-         "if true { } else { }", Condition(Constant(True, Datatype.boolean), [], [])),
+         "if true { } else { }", Conditional(Constant(True, Datatype.boolean), [], [])),
 
         (Grammar.form, "form FormName { }", Form("FormName", [])),
 
@@ -130,31 +147,32 @@ class TestParser(TestCase):
          if x > 6 { y: \"yLabel\" boolean = true }
          else { y: \"yLabel\" boolean = false }}""",
          Form("FormName",
-              [Question(Variable("x"),
-                     "xLabel",
-                     Datatype.integer,
-                     BinOp(Constant(2, Datatype.integer),
-                           Operator["*"],
-                           Constant(3, Datatype.integer))),
-               Condition(BinOp(Variable("x"),
-                         Operator[">"], Constant(6,
-                         Datatype.integer)),
-                         [Question(Variable("y"),
-                                   "yLabel",
-                                   Datatype.boolean,
-                                   Constant(True, Datatype.boolean))],
-                         [Question(Variable("y"),
-                                   "yLabel",
-                                   Datatype.boolean,
-                                   Constant(False, Datatype.boolean))])])),
-        #TODO: Test relational expression using boolean
+              [Question("x",
+                        "xLabel",
+                        Datatype.integer,
+                        BinOp(Constant(2, Datatype.integer),
+                              Operator["*"],
+                              Constant(3, Datatype.integer))),
+               Conditional(BinOp(Variable("x"),
+                                 Operator[">"],
+                                 Constant(6, Datatype.integer)),
+                           [Question("y",
+                                     "yLabel",
+                                     Datatype.boolean,
+                                     Constant(True, Datatype.boolean))],
+                           [Question("y",
+                                     "yLabel",
+                                     Datatype.boolean,
+                                     Constant(False, Datatype.boolean))])])),
+
         #TODO: Test more datatypes (e.g. Money, decimal)
-        #TODO: Test Parenthesis
+        #TODO: Test parenthesis
         #TODO: Test unOps
     ]
 
     def testParseExpression(self):
         for grammar, sentence, tree in self.cases:
+            #print(sentence)
             result = grammar.parseString(sentence, parseAll=True)[0]
             self.assertEqual(result, tree)
 
