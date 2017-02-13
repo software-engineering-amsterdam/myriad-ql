@@ -39,25 +39,12 @@ def parse(input_string):
          (signop, 2, opAssoc.LEFT),]
     )
 
-    bool_prec = infixNotation(
-        bool_operand,
-        [("!", 1, opAssoc.RIGHT),
-         ("&", 2, opAssoc.LEFT),
-         ("|", 2, opAssoc.LEFT)]
-    )
-
     # Expressions
     arithmetic_expr = \
         Group(arith_prec)
 
-    boolean_expr = \
-        Group(bool_prec)
-
     arithmetic_statement = \
         OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
-
-    boolean_statement = \
-        OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
     assignment_expr = \
         identifier.setResultsName("identifier") + \
