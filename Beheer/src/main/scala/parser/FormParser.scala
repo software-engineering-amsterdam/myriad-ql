@@ -13,13 +13,13 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
     | "integer"
     | "date"
     | "decimal"
-    | "money" ) ^^ (s => Type(s))
+    | "money"
+  ) ^^ (s => Type(s))
 
   def label: Parser[String] = stringLiteral
 
-
   def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeName ~ opt("("~>expr<~")") ^^ {
+    ident ~ ":" ~ label ~ typeName ~ opt("(" ~> expr <~ ")") ^^ {
       case identifier ~ ":" ~ label ~ typeName ~ expr =>
         Question(identifier, label, typeName, expr)
     }

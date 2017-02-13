@@ -1,10 +1,10 @@
 package model
 
-import parser.ast.{ExpressionNode, Type}
+import parser.ast.{ ExpressionNode, Type }
 
 case class Form(questions: Seq[Question])
 
-sealed trait Question{
+sealed trait Question {
   val identifier: String
   val label: String
   val show: Seq[ExpressionNode]

@@ -8,31 +8,31 @@ import org.scalacheck.Gen
 object ExpressionGenerator {
   def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size))
 
-  private def unaryExpression(maxDepth: Int): Gen[String] = for {
+  private def sizedExpression(maxDepth: Int): Gen[String] = maxDepth match {
+    case 0 => identOrNumber
+    case x => for {
+      newDepth <- Gen.choose(0, Math.max(x - 1, 0))
+      expression <- Gen.oneOf(identOrNumber, prefixExpression(newDepth), infixExpression(newDepth))
+    } yield expression
+  }
+
+  private def prefixExpression(maxDepth: Int): Gen[String] = for {
     newDepth <- Gen.choose(0, Math.max(maxDepth - 1, 0))
     operator <- prefixOperator
     expr <- sizedExpression(newDepth)
   } yield operator + "(" + expr + ")"
 
-  private def sizedExpression(maxDepth: Int): Gen[String] = maxDepth match {
-    case 0 => identOrNumber
-    case x => for {
-      newDepth <- Gen.choose(0, Math.max(x - 1, 0))
-      expression <- Gen.oneOf(identOrNumber, unaryExpression(newDepth), multiExpression(newDepth))
-    } yield expression
-  }
-
-  private def multiExpression(maxDepth: Int): Gen[String] = maxDepth match {
+  private def infixExpression(maxDepth: Int): Gen[String] = maxDepth match {
     case 0 => identOrNumber
     case x => for {
       newDepth <- Gen.choose(0, Math.max(x - 1, 0))
       numOperators <- Gen.choose(1, 10)
       expression <- sizedExpression(newDepth)
-      tail <- multiExpressionTail(numOperators, newDepth)
-    } yield "("+expression + tail+")"
+      tail <- infixExpressionTail(numOperators, newDepth)
+    } yield "(" + expression + tail + ")"
   }
 
-  private def multiExpressionTail(length: Int, depth: Int): Gen[String] = length match {
+  private def infixExpressionTail(length: Int, depth: Int): Gen[String] = length match {
     case 0 => for {
       expression <- sizedExpression(depth)
       operator <- infixOperator
@@ -40,7 +40,7 @@ object ExpressionGenerator {
     case l => for {
       expression <- sizedExpression(depth)
       operator <- infixOperator
-      tail <- multiExpressionTail(l - 1, depth)
+      tail <- infixExpressionTail(l - 1, depth)
     } yield operator + expression + tail
   }
 

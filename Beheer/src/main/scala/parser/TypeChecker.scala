@@ -1,6 +1,6 @@
 package parser
 
-import model.{ComputedQuestion, OpenQuestion}
+import model.{ ComputedQuestion, OpenQuestion }
 import parser.ast._
 
 class TypeChecker {
@@ -27,7 +27,7 @@ class TypeChecker {
   def checkReferences(questions: Seq[model.Question]) = {
     questions.flatMap {
       case OpenQuestion(_, _, show, _) => show
-      case ComputedQuestion(_, _, show, _, value) => value +:show
+      case ComputedQuestion(_, _, show, _, value) => value +: show
     }
 
   }
