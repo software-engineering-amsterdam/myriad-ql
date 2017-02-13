@@ -1,33 +1,101 @@
 require 'tk'
-class Gui
-  def question(label)
-    answer =  TkVariable.new (true);
+# class Gui
+#
+#     #
+#     # TkLabel.new {
+#     #   textvariable answer
+#     #   pack('side' => 'top', 'fill' => 'x')
+#     # }
+#
+#     def launch
+#       Tk.mainloop
+#     end
+#
+#     def question(label)
+#       frame = TkFrame.new {
+#         pack('side' => 'left')
+#       }
+#
+#       answer =  TkVariable.new (true);
+#
+#       TkLabel.new(frame) {
+#         text label
+#         pack
+#       }
+#
+#       TkRadioButton.new(frame) do
+#         text 'Yes'
+#         variable answer
+#         value true
+#         pack
+#         # command proc {@answer['textvariable'].value = answer.value}
+#       end
+#
+#       x = TkRadioButton.new(frame) do
+#         text 'No'
+#         variable answer
+#         value false
+#         pack
+#         # command proc {answer['textvariable'].value = answer.value}
+#       end
+#
+#       frame.pack_forget
+#       # frame.pack
+#     end
+# end
 
-    TkLabel.new {
-      text label
+class GUIQuestion
+  attr_accessor :frame
+  attr_accessor :variable
+  attr_accessor :hidden
+
+  def initialize(label, variable, hidden = false)
+    self.frame = TkFrame.new {
       pack('side' => 'top', 'fill' => 'x')
     }
 
-    TkRadioButton.new do
+    # variable =  TkVariable.new (true);
+
+    TkLabel.new(frame) do
+      text label
+      pack
+    end
+
+    TkRadioButton.new(frame) do
       text 'Yes'
-      variable answer
+      variable variable
       value true
-      pack('side' => 'top', 'fill' => 'x')
-      command proc {p answer}
+      pack
+      # command proc {@answer['textvariable'].value = answer.value}
     end
 
-    TkRadioButton.new do
+    TkRadioButton.new(frame) do
       text 'No'
-      variable answer
+      variable variable
       value false
-      pack('side' => 'top', 'fill' => 'x')
-      command proc {p answer}
+      pack
+      # command proc {answer['textvariable'].value = answer.value}
     end
 
+    # frame.pack_forget
   end
 
-  def launch
-    Tk.mainloop
+  def toggle
+    if hidden
+      self.frame.pack
+      self.hidden = false
+    else
+      self.frame.pack_forget
+      self.hidden = true
+    end
   end
-
 end
+
+v = TkVariable.new(true)
+q1 = GUIQuestion.new('hola', v)
+q2 = GUIQuestion.new('hola2', v)
+# q1.toggle
+# q1.toggle
+
+
+Tk.mainloop
