@@ -27,16 +27,8 @@ public class Parenthesis extends Unary {
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
-    @Override
-    public Type inferType(Type exprType) {
-        if (exprType.equals(new BooleanType()) || exprType.equals(new IntegerType()) || exprType.equals(new StringType())) {
-            return exprType;
-        }
-
-        return new UndefinedType();
-    }
 }

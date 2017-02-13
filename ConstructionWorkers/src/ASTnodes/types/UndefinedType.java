@@ -9,20 +9,11 @@ import ASTnodes.CodeLocation;
 
 public class UndefinedType extends Type {
 
-    public UndefinedType() {
-        super();
-    }
 
     public UndefinedType(CodeLocation location) {
         super(location);
     }
 
-    /*
-    @Override
-    public UnknownValue getDefaultValue() {
-        return new UnknownValue();
-    }
-    */
 
     @Override
     public String getTypeName() {
@@ -30,7 +21,7 @@ public class UndefinedType extends Type {
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
+    public <T> T accept(AllVisitors<T> visitor) {
         new AssertionError("Undefined type with no accept was accessed.");
         return null;
     }

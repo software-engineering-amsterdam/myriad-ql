@@ -31,8 +31,8 @@ public class Multiplication extends Numerical {
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override
@@ -40,22 +40,5 @@ public class Multiplication extends Numerical {
         return left + "*" + right;
     }
 
-    @Override
-    public Type inferType(Type left, Type right) {
-
-        if (left.equals(right)) {
-            if (left.equals(new IntegerType())) {
-                return left;
-            }
-        } else {
-            if (left.equals(new IntegerType()) && right.equals(new IntegerType())) {
-                return right;
-            } else if (right.equals(new IntegerType()) && left.equals(new IntegerType())) {
-                return left;
-            }
-        }
-
-        return new UndefinedType();
-    }
 
 }

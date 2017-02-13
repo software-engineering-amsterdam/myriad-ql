@@ -1,5 +1,4 @@
-package antlr;
-// Generated from C:/Users/LGGX/IdeaProjects/QL/src\QL.g4 by ANTLR 4.6
+package antlr;// Generated from C:/Users/LGGX/IdeaProjects/QL/src\QL.g4 by ANTLR 4.6
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -28,13 +27,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNormalQuestion(QLParser.NormalQuestionContext ctx) { }
+	@Override public void enterQuestion(QLParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNormalQuestion(QLParser.NormalQuestionContext ctx) { }
+	@Override public void exitQuestion(QLParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,6 +87,18 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMoneyType(QLParser.MoneyTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMoneyType(QLParser.MoneyTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStringType(QLParser.StringTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -100,6 +111,30 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOrExpression(QLParser.OrExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOrExpression(QLParser.OrExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAndExpression(QLParser.AndExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndExpression(QLParser.AndExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStringExpression(QLParser.StringExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -107,18 +142,6 @@ public class QLBaseListener implements QLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringExpression(QLParser.StringExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMulDivExpression(QLParser.MulDivExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMulDivExpression(QLParser.MulDivExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -160,6 +183,18 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMoneyExpression(QLParser.MoneyExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMoneyExpression(QLParser.MoneyExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIdentifierExpression(QLParser.IdentifierExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -172,13 +207,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogicalAndExpression(QLParser.LogicalAndExpressionContext ctx) { }
+	@Override public void enterEqualityExpression(QLParser.EqualityExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogicalAndExpression(QLParser.LogicalAndExpressionContext ctx) { }
+	@Override public void exitEqualityExpression(QLParser.EqualityExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -196,25 +231,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonExpression(QLParser.ComparisonExpressionContext ctx) { }
+	@Override public void enterMultDivExpression(QLParser.MultDivExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonExpression(QLParser.ComparisonExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLogicalOrExpression(QLParser.LogicalOrExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLogicalOrExpression(QLParser.LogicalOrExpressionContext ctx) { }
+	@Override public void exitMultDivExpression(QLParser.MultDivExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

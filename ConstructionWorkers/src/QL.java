@@ -45,15 +45,6 @@ public class QL {
             System.out.println(s.getSections());
         }
 
-        /*
-        boolean isFormTypesCorrect = performTypeChecking(qlForm);
-        if (!isFormTypesCorrect) {
-            System.err.println("Form is not type correct. Cannot evaluate and render. Please fix the errors.");
-            System.exit(-1);
-        }
-
-        this.renderUI(qlForm);
-        */
     }
 
     private Form buildForm(InputStream inputStream) throws IOException {

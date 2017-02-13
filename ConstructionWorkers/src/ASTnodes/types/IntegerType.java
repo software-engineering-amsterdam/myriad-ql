@@ -8,20 +8,10 @@ import ASTnodes.CodeLocation;
  */
 public class IntegerType extends Type {
 
-    public IntegerType() {
-        super();
-    }
 
     public IntegerType(CodeLocation location) {
         super(location);
     }
-
-    /*
-    @Override
-    public IntegerValue getDefaultValue() {
-        return new IntegerValue(0);
-    }
-    */
 
     @Override
     public String getTypeName() {
@@ -30,7 +20,7 @@ public class IntegerType extends Type {
 
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 }

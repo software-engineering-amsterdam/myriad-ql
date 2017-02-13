@@ -25,18 +25,9 @@ public class IDENTIFIER extends Literal {
         return this.name;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof IDENTIFIER)) {
-            return false;
-        }
-
-        IDENTIFIER other = (IDENTIFIER) obj;
-        return (this.getName().equals(other.getName()));
-    }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 }

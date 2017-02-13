@@ -15,15 +15,4 @@ public abstract class Logic extends Binary {
         super(location);
     }
 
-    @Override
-    public Type inferType(Type left, Type right) {
-
-        if (left.equals(right)) {
-            if (left.equals(new BooleanType())) {
-                return new BooleanType();
-            }
-        }
-
-        return new UndefinedType();
-    }
 }

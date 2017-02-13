@@ -8,27 +8,18 @@ import ASTnodes.CodeLocation;
  */
 public class BooleanType extends Type {
 
-    public BooleanType() {
-        super();
-    }
-
     public BooleanType(CodeLocation location) {
         super(location);
     }
-    /*
-    @Override
-    public BooleanValue getDefaultValue() {
-        return new BooleanValue(false);
-    }
-    */
+
     @Override
     public String getTypeName() {
         return "Boolean";
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
 }

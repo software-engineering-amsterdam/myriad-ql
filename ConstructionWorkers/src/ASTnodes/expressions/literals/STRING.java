@@ -13,11 +13,6 @@ public class STRING extends Literal {
     private final Type type;
     private final String literal;
 
-    public STRING(String literal) {
-        super(null);
-        this.literal = literal;
-        this.type = new StringType();
-    }
 
     public STRING(String literal, CodeLocation location) {
         super(location);
@@ -35,22 +30,8 @@ public class STRING extends Literal {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof STRING)) {
-            return false;
-        }
-        STRING lit2 = (STRING) obj;
-        return literal.equals(lit2.getLiteral());
-    }
-
-    @Override
-    public int hashCode() {
-        return literal.hashCode();
-    }
-
-    @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

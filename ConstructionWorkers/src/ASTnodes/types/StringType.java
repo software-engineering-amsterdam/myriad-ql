@@ -8,20 +8,11 @@ import ASTnodes.CodeLocation;
  */
 public class StringType extends Type {
 
-    public StringType() {
-        super();
-    }
 
     public StringType(CodeLocation location) {
         super(location);
     }
 
-    /*
-    @Override
-    public StringValue getDefaultValue() {
-        return new StringValue("");
-    }
-    */
 
     @Override
     public String getTypeName() {
@@ -29,7 +20,7 @@ public class StringType extends Type {
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 }

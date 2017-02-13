@@ -19,5 +19,4 @@ public abstract class Unary extends Expression {
         return expression;
     }
 
-    public abstract Type inferType(Type exprType);
 }

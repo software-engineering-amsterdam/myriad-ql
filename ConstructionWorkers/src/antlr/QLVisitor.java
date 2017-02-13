@@ -1,7 +1,4 @@
-package antlr;
-// Generated from C:/Users/LGGX/IdeaProjects/QL/src\QL.g4 by ANTLR 4.6
-
-
+package antlr;// Generated from C:/Users/LGGX/IdeaProjects/QL/src\QL.g4 by ANTLR 4.6
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -19,12 +16,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForm(QLParser.FormContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code normalQuestion}
+	 * Visit a parse tree produced by the {@code question}
 	 * labeled alternative in {@link QLParser#section}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNormalQuestion(QLParser.NormalQuestionContext ctx);
+	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code expressionQuestion}
 	 * labeled alternative in {@link QLParser#section}.
@@ -54,6 +51,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIntType(QLParser.IntTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code moneyType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyType(QLParser.MoneyTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code stringType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
@@ -61,19 +65,26 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringType(QLParser.StringTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code orExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrExpression(QLParser.OrExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code andExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndExpression(QLParser.AndExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code stringExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStringExpression(QLParser.StringExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code mulDivExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMulDivExpression(QLParser.MulDivExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolExpression}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -96,6 +107,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIntExpression(QLParser.IntExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code moneyExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyExpression(QLParser.MoneyExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code identifierExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -103,12 +121,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code logicalAndExpression}
+	 * Visit a parse tree produced by the {@code equalityExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogicalAndExpression(QLParser.LogicalAndExpressionContext ctx);
+	T visitEqualityExpression(QLParser.EqualityExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code parenthesisExpression}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -117,19 +135,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthesisExpression(QLParser.ParenthesisExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code comparisonExpression}
+	 * Visit a parse tree produced by the {@code multDivExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComparisonExpression(QLParser.ComparisonExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code logicalOrExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalOrExpression(QLParser.LogicalOrExpressionContext ctx);
+	T visitMultDivExpression(QLParser.MultDivExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code unaryExpression}
 	 * labeled alternative in {@link QLParser#expression}.

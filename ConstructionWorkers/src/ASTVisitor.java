@@ -14,16 +14,14 @@ import ASTnodes.sections.ExpressionQuestion;
 import ASTnodes.sections.IfStatement;
 import ASTnodes.sections.Question;
 import ASTnodes.sections.Section;
-import ASTnodes.types.BooleanType;
-import ASTnodes.types.IntegerType;
-import ASTnodes.types.StringType;
-import ASTnodes.types.Type;
+import ASTnodes.types.*;
 import antlr.QLBaseVisitor;
 import antlr.QLParser;
 import antlr.QLVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +61,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Question visitNormalQuestion(QLParser.NormalQuestionContext ctx) {
+    public Question visitQuestion(QLParser.QuestionContext ctx) {
         Type type = (Type) ctx.type().accept(this);
         IDENTIFIER identifier = new IDENTIFIER(ctx.Identifier().getText(), getCodeLocation(ctx));
         String label = removeStringQuotes(ctx.STRING().getText());
@@ -112,7 +110,12 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Equality visitComparisonExpression(QLParser.ComparisonExpressionContext ctx) {
+    public MoneyType visitMoneyType(QLParser.MoneyTypeContext ctx) {
+        return new MoneyType(getCodeLocation(ctx));
+    }
+
+    @Override
+    public Equality visitEqualityExpression(QLParser.EqualityExpressionContext ctx) {
         Expression left = (Expression) ctx.expression().get(0).accept(this);
         Expression right = (Expression) ctx.expression().get(1).accept(this);
 
@@ -135,7 +138,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Numerical visitMulDivExpression(QLParser.MulDivExpressionContext ctx) {
+    public Numerical visitMultDivExpression(QLParser.MultDivExpressionContext ctx) {
         Expression left = (Expression) ctx.expression(0).accept(this);
         Expression right = (Expression) ctx.expression(1).accept(this);
 
@@ -189,7 +192,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Logic visitLogicalAndExpression(QLParser.LogicalAndExpressionContext ctx) {
+    public Logic visitAndExpression(QLParser.AndExpressionContext ctx) {
         Expression left = (Expression) ctx.expression(0).accept(this);
         Expression right = (Expression) ctx.expression(1).accept(this);
 
@@ -197,7 +200,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Logic visitLogicalOrExpression(QLParser.LogicalOrExpressionContext ctx) {
+    public Logic visitOrExpression(QLParser.OrExpressionContext ctx) {
         Expression left = (Expression) ctx.expression(0).accept(this);
         Expression right = (Expression) ctx.expression(1).accept(this);
 
@@ -208,6 +211,11 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     @Override
     public INTEGER visitIntExpression(QLParser.IntExpressionContext ctx) {
         return new INTEGER(Integer.parseInt(ctx.getText()), getCodeLocation(ctx));
+    }
+
+    @Override
+    public MONEY visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+        return new MONEY(BigDecimal.valueOf(Double.parseDouble(ctx.getText())), getCodeLocation(ctx));
     }
 
     @Override

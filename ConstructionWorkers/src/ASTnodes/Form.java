@@ -28,8 +28,8 @@ public class Form extends Node {
         return sections;
     }
 
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
 }

@@ -24,5 +24,4 @@ public abstract class Binary extends Expression {
         return right;
     }
 
-    public abstract Type inferType(Type left, Type right);
 }

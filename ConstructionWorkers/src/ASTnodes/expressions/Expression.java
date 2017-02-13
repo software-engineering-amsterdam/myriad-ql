@@ -20,6 +20,6 @@ public abstract class Expression extends Node {
         return this.currentType;
     }
 
-    public abstract <T, U> T accept(AllVisitors<T, U> visitor, U context);
+    public abstract <T> T accept(AllVisitors<T> visitor);
 
 }

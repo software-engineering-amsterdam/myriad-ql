@@ -15,16 +15,4 @@ public abstract class Numerical extends Binary {
         super(location);
     }
 
-    @Override
-    public Type inferType(Type left, Type right) {
-
-        if (left.equals(right)) {
-            if (left.equals(new IntegerType())) {
-                return left;
-            }
-        }
-
-        return new UndefinedType();
-    }
-
 }

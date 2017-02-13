@@ -33,28 +33,12 @@ public class Question extends Section {
     public Type getType() {
         return type;
     }
-    /*
-    public Value getDefaultValue() {
-        return type.getDefaultValue();
-    }
-    */
-    @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
-    }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Question)) {
-            return false;
-        }
-        Question q2 = (ExpressionQuestion) obj;
-        return identifier.equals(q2.getIdentifier());
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
-    @Override
-    public int hashCode() {
-        return identifier.hashCode();
-    }
+
 
 }

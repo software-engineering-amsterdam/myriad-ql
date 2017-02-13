@@ -9,15 +9,10 @@ import ASTnodes.visitors.AllVisitors;
  */
 public abstract class Type extends Node {
 
-    public Type() {
-        super();
-    }
-
     public Type(CodeLocation location) {
         super(location);
     }
 
-    //public abstract Value getDefaultValue();
 
     public abstract String getTypeName();
 
@@ -34,5 +29,5 @@ public abstract class Type extends Node {
         return (this.getClass().hashCode());
     }
 
-    public abstract <T, U> T accept(AllVisitors<T, U> visitor, U context);
+    public abstract <T> T accept(AllVisitors<T> visitor);
 }

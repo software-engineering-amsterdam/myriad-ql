@@ -13,6 +13,6 @@ public abstract class Section extends Node {
         super(location);
     }
 
-    public abstract <T, U> T accept(AllVisitors<T, U> visitor, U context);
+    public abstract <T> T accept(AllVisitors<T> visitor);
 
 }

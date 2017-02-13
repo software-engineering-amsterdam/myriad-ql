@@ -15,13 +15,4 @@ public abstract class Equality extends Binary {
         super(location);
     }
 
-    @Override
-    public Type inferType(Type left, Type right) {
-        if (left.equals(right)) {
-            return new BooleanType();
-        }
-
-        return new UndefinedType();
-    }
-
 }

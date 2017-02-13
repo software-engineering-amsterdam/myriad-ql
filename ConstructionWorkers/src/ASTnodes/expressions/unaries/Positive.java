@@ -23,8 +23,8 @@ public class Positive extends Unary {
     }
 
     @Override
-    public <T, U> T accept(AllVisitors<T, U> visitor, U context) {
-        return visitor.visit(this, context);
+    public <T> T accept(AllVisitors<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override
@@ -32,12 +32,5 @@ public class Positive extends Unary {
         return "+" + expression;
     }
 
-    @Override
-    public Type inferType(Type exprType) {
-        if (exprType.equals(new IntegerType())) {
-            return exprType;
-        }
 
-        return new UndefinedType();
-    }
 }
