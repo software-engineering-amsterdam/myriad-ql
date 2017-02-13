@@ -8,13 +8,18 @@ import UI.Widget.Base exposing (WidgetContext)
 
 view : WidgetContext -> Html msg
 view { field, formData } =
-    div [ class "checkbox" ]
-        [ label []
-            [ input
-                [ type_ "checkbox"
-                , id field.id
-                , checked (FormData.getBoolean field.id formData)
+    let
+        isChecked =
+            FormData.getBoolean field.id formData
+                |> Maybe.withDefault False
+    in
+        div [ class "checkbox" ]
+            [ label []
+                [ input
+                    [ type_ "checkbox"
+                    , id field.id
+                    , checked isChecked
+                    ]
+                    []
                 ]
-                []
             ]
-        ]

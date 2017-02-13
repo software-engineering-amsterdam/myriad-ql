@@ -28,17 +28,37 @@ withBoolean k v =
     Dict.insert k (Boolean v)
 
 
-getBoolean : String -> FormData -> Bool
+withString : String -> String -> FormData -> FormData
+withString k v =
+    Dict.insert k (Str v)
+
+
+getBoolean : String -> FormData -> Maybe Bool
 getBoolean key data =
     Dict.get key data
         |> Maybe.andThen onBoolean
-        |> Maybe.withDefault False
+
+
+getString : String -> FormData -> Maybe String
+getString key data =
+    Dict.get key data
+        |> Maybe.andThen onString
 
 
 onBoolean : FormValue -> Maybe Bool
 onBoolean formValue =
     case formValue of
         Boolean b ->
+            Just b
+
+        _ ->
+            Nothing
+
+
+onString : FormValue -> Maybe String
+onString formValue =
+    case formValue of
+        Str b ->
             Just b
 
         _ ->
