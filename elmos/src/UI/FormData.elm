@@ -44,6 +44,11 @@ onBoolean formValue =
             Nothing
 
 
+withFormValue : String -> FormValue -> FormData -> FormData
+withFormValue =
+    Dict.insert
+
+
 withString : String -> String -> FormData -> FormData
 withString k v =
     Dict.insert k (Str v)
