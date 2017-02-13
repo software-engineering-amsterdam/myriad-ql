@@ -7,8 +7,12 @@ form
     ;
 
 statement
-    :   type id=identifier ':' questionMsg=STRING_LITERAL defaultValue? ';'  #question
-    |   'if' '(' expression ')' '{' statement* '}' ('else' statement)?       #if
+    :   type id=identifier ':' text=questionText defaultValue? ';'          #question
+    |   'if' '(' expression ')' '{' statement* '}' ('else' statement)?      #if
+    ;
+
+questionText
+    : STRING_LITERAL
     ;
 
 defaultValue

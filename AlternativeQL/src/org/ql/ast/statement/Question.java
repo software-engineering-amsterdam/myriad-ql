@@ -2,17 +2,17 @@ package org.ql.ast.statement;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
-import org.ql.ast.literal.StringLiteral;
+import org.ql.ast.statement.question.Text;
 import org.ql.ast.type.Type;
 
 public class Question implements Statement {
     private final Identifier id;
-    private final StringLiteral question;
+    private final Text questionText;
     private final Type type;
 
-    public Question(Identifier id, StringLiteral question, Type type) {
+    public Question(Identifier id, Text questionText, Type type) {
         this.id = id;
-        this.question = question;
+        this.questionText = questionText;
         this.type = type;
     }
 
@@ -20,8 +20,8 @@ public class Question implements Statement {
         return id;
     }
 
-    public StringLiteral getQuestion() {
-        return question;
+    public Text getQuestionText() {
+        return questionText;
     }
 
     public Type getType() {

@@ -1,9 +1,11 @@
 package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
 import org.ql.ast.literal.StringLiteral;
+import org.ql.ast.statement.question.Text;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
 import org.ql.grammar.QLParserVisitor;
@@ -27,17 +29,30 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitQuestion(QLParserParser.QuestionContext ctx) {
-        String question = ctx.questionMsg.getText();
         return new Question(
             (Identifier) visit(ctx.id),
-            new StringLiteral(question.substring(1, question.length() - 1)),
+            (Text) visit(ctx.text),
             (Type) visit(ctx.type())
         );
     }
 
     @Override
+    public Node visitTerminal(TerminalNode node) {
+        return super.visitTerminal(node);
+    }
+
+    @Override
     public Node visitIf(QLParserParser.IfContext ctx) {
         return null;
+    }
+
+    @Override
+    public Node visitQuestionText(QLParserParser.QuestionTextContext ctx) {
+        return new Text(removeQuotes(ctx.getText()));
+    }
+
+    private String removeQuotes(String text) {
+        return text.substring(1, text.length() - 1);
     }
 
     @Override
@@ -67,8 +82,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
-        String text = ctx.STRING_LITERAL().getText();
-        return new StringLiteral(text.substring(1, text.length() - 1));
+        return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
     }
 
     @Override

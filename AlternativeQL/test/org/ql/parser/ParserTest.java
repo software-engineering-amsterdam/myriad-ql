@@ -32,7 +32,7 @@ public class ParserTest extends Assert {
         assertSame(2, ast.getStatements().size());
         assertTrue(ast.getStatement(0) instanceof Question);
         assertEquals("hasSoldHouse", ((Question) ast.getStatement(0)).getId().toString());
-        assertEquals("Did you sell a house in 2010?", ((Question) ast.getStatement(0)).getQuestion().toString());
+        assertEquals("Did you sell a house in 2010?", ((Question) ast.getStatement(0)).getQuestionText().toString());
         assertEquals(Type.BOOLEAN, ((Question) ast.getStatement(0)).getType());
     }
 }
