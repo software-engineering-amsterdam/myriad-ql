@@ -30,9 +30,9 @@ class Grammar:
     assignment = Suppress("=")
 
     integer = pyparsing_common.integer
-    integer.addParseAction(lambda i: Const(i, Datatype.integer))
+    integer.addParseAction(lambda tokens: Const(tokens[0], Datatype.integer))
     decimal = pyparsing_common.real
-    decimal.addParseAction(lambda d: Const(d, Datatype.decimal))
+    decimal.addParseAction(lambda tokens: Const(tokens[0], Datatype.decimal))
     true = Literal("true")
     true.setParseAction(lambda _: Const(True, Datatype.boolean))
     false = Literal("false")
@@ -81,4 +81,3 @@ class Grammar:
     form = Suppress("form") + identifier + bracket_open + block +\
         bracket_close
     form.setParseAction(lambda tokens: Form(*tokens))
-
