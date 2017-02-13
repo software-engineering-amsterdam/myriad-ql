@@ -13,10 +13,12 @@ contents = reader.read_file('../examples/simple_questionnaire.ql')
 parser = Parser.new
 parsed = parser.parse(contents)
 
-pp parsed
+# pp parsed
 
 ast = Ast.new
 form = ast.apply(parsed)
+
+pp form
 
 # gui = Gui.new
 # gui.question('joe?')

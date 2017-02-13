@@ -1,5 +1,6 @@
 require_relative 'question'
 require_relative 'form'
+require_relative 'if_statement'
 
 # replaces the words node
 class Ast < Parslet::Transform
@@ -18,7 +19,7 @@ class Ast < Parslet::Transform
     Question.new(label, variable, type)
   end
 
-  rule(:if_statement => {:condition => {:variable => simple(:x)}, :block => [subtree(:block)]}) do
-    x
+  rule(:if_statement => {:condition => {:variable => simple(:x)}, :block => subtree(:block)}) do
+    IfStatement.new(x, block)
   end
 end
