@@ -1,5 +1,5 @@
 form taxOfficeExample {
-  boolean hasSoldHouse("Did you sell a house in 2010?") : BOOL;
+  boolean hasSoldHouse("Did you sell a house in 2010");
   boolean hasBoughtHouse("Did you buy a house in 2010?") : BOOL;
   boolean hasMaintLoan("Did you enter a loan?") : BOOL;
 
