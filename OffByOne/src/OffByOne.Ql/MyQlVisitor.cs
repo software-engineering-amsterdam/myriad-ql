@@ -153,7 +153,7 @@
 
         public override AstNode VisitMoneyLiteral([NotNull] QlParser.MoneyLiteralContext context)
         {
-            return new MoneyLiteral(float.Parse(context.GetText()));
+            return new MoneyLiteral(decimal.Parse(context.GetText()));
         }
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
