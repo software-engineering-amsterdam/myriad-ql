@@ -2,7 +2,7 @@ package ast;
 
 import ast.expression.Expression;
 
-public class Statement extends Node {
+public class Statement implements Node {
 	
 	// private boolean evaluate; // TODO change name
 	private Expression expression; // TODO change name
@@ -15,5 +15,11 @@ public class Statement extends Node {
 
 	public Expression getExpression() {
 		return expression;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 }

@@ -1,7 +1,8 @@
 package org.uva.taxfree.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.uva.taxfree.util.LogWindow;
+
+import javax.swing.*;
 
 public class QuestionNode extends Node {
 
@@ -16,27 +17,29 @@ public class QuestionNode extends Node {
         //addChild(new DescriptionNode());
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return (null != mValue);
     }
 
+    public JComponent getWidget() {
+        return mValue.getWidget(mDescription);
+    }
+
     // look at dynamic dispatch
-    private Value createValue(String type){
-        switch(type)
-        {
-            case "string":
-            {
+    private Value createValue(String type) {
+        switch (type) {
+            case "string": {
                 return new StringValue();
             }
-            case "boolean":
-            {
+            case "boolean": {
                 return new BooleanValue();
             }
-            default:
-            {
+            default: {
                 LogWindow.error(type + " does not represent a valid type!");
             }
         }
         return null;
     }
+
+
 }

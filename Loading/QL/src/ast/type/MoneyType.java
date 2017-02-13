@@ -6,5 +6,10 @@ public class MoneyType extends Type {
 	public MoneyType() {
 		super("money");
 	}
-
+	
+	@Override
+	public void accept(ast.Visitor v) {
+		v.visit(this);		
+	}
+	
 }

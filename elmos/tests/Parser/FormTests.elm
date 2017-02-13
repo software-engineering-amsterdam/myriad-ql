@@ -58,8 +58,19 @@ formItemsTests =
                 , IfItem
                     { expression = Var "bar"
                     , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
                     }
+                ]
+          )
+        , ( "should parse multiple form items"
+          , """"label"
+          id: integer = bar
+
+          "label"
+          id: integer"""
+          , Just
+                [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "bar") }
+                , FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
                 ]
           )
         ]
@@ -76,7 +87,7 @@ formItemTests =
                 IfItem
                     { expression = Var "bar"
                     , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = Just [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
+                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
                     }
           )
         ]
@@ -95,6 +106,10 @@ fieldTests =
           , "\"label\" id: integer = 1 +3"
           , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (ArithmeticExpression Plus (Integer 1) (Integer 3)) }
           )
+        , ( "should parse field with expression that is only a var name"
+          , "\"label\" id: integer = someVarName"
+          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "someVarName") }
+          )
         ]
 
 
@@ -112,7 +127,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Nothing
+                    , elseBranch = []
                     }
               )
             , ( "should allow no whitespace"
@@ -120,7 +135,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Nothing
+                    , elseBranch = []
                     }
               )
             , ( "should parse if with else block"
@@ -128,7 +143,7 @@ ifBlockTests =
               , Just
                     { expression = Var "x"
                     , thenBranch = basicBlockContent
-                    , elseBranch = Just basicBlockContent
+                    , elseBranch = basicBlockContent
                     }
               )
             ]
