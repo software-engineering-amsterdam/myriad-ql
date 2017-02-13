@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
@@ -54,10 +55,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomQlsVisitor.cs" />
+    <Compile Include="obj\Debug\QlsGrammarLexer.cs" />
+    <Compile Include="obj\Debug\QlsGrammarParser.cs" />
+    <Compile Include="obj\Debug\QlsGrammarVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Antlr4 Include="CalculatorGrammar.g4">
+    <Antlr4 Include="Parser\QlsGrammar.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>OffByOne.Qls</CustomToolNamespace>
     </Antlr4>
@@ -68,6 +73,12 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OffByOne.LanguageCore\OffByOne.LanguageCore.csproj">
+      <Project>{b3fd3dbf-5a24-4d04-89e2-890197bbe323}</Project>
+      <Name>OffByOne.LanguageCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

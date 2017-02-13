@@ -1,8 +1,10 @@
-﻿namespace OffByOne.LanguageCore.Ast.Expressions.Literals
+﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
     using System;
 
-    public class DateLiteral : Expression
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
+    public class DateLiteral : Literal
     {
         public DateLiteral(DateTime value)
         {
@@ -11,6 +13,7 @@
 
         // TODO: Is this the right place for parsing the date?
         // TODO: Or should we do it completely different anyway?
+        // TODO: Parse the date
         public DateLiteral(string dateString)
         {
             int day = int.Parse(dateString.Substring(1, 2));

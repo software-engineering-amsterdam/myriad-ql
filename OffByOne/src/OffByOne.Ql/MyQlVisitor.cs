@@ -2,12 +2,17 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
+
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Expressions;
     using OffByOne.LanguageCore.Ast.Expressions.Binary;
-    using OffByOne.LanguageCore.Ast.Expressions.Literals;
     using OffByOne.LanguageCore.Ast.Expressions.Unary;
+    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.Statements;
     using OffByOne.LanguageCore.Ast.Statements.Branch;
     using OffByOne.LanguageCore.Ast.Statements.Questions;
@@ -19,16 +24,17 @@
         public override AstNode VisitForm([NotNull] QlParser.FormContext context)
         {
             string id = context.Identifier().GetText();
-            IList statements = this.VisitStatements(context.stat());
+            var statements = this.VisitStatements(context.stat());
 
-            return new FormStatement(id, statements);
+            return new FormStatement(id, (IList<Statement>)statements);
         }
 
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
-            string id = context.Identifier().GetText();
-            string question = context.StringLiteral().GetText();
-            switch (context.Type().GetText())
+            var id = context.Identifier().GetText();
+            var question = context.StringLiteral().GetText();
+            var type = context.Type().GetText();
+            switch (type)
             {
                 case "boolean":
                     return new BooleanQuestionStatement(id, question);
@@ -43,7 +49,7 @@
                 case "date":
                     return new DateQuestionStatement(id, question);
                 default:
-                   throw new ArgumentException("Unsupported question type.");
+                    throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }
         }
 
@@ -55,15 +61,15 @@
                 elseStat = (ElseStatement)this.Visit(context.@else());
             }
 
-            Expression condition = (Expression)this.Visit(context.booleanExpression());
-            IList statements = this.VisitStatements(context.stat());
+            var condition = (Expression)this.Visit(context.booleanExpression());
+            var statements = this.VisitStatements(context.stat());
 
-            return new IfStatement(condition, statements, elseStat);
+            return new IfStatement(condition, (IList<Statement>)statements, elseStat);
         }
 
         public override AstNode VisitElse([NotNull] QlParser.ElseContext context)
         {
-            IList statements = new ArrayList();
+            IList<AstNode> statements = new List<AstNode>();
             if (context.@if() != null)
             {
                 statements.Add(this.Visit(context.@if()));
@@ -73,7 +79,7 @@
                 statements = this.VisitStatements(context.stat());
             }
 
-            return new ElseStatement(statements);
+            return new ElseStatement((IList<Statement>)statements);
         }
 
         // TODO: Probably split this or something.
@@ -133,10 +139,10 @@
             }
         }
 
-        private AstNode VisitBinaryExpression([NotNull] QlParser.BooleanExpressionContext context)
+        private AstNode VisitBinaryExpression([NotNull] IParseTree context)
         {
-            Expression lhs = (Expression)this.Visit(context.GetChild(0));
-            Expression rhs = (Expression)this.Visit(context.GetChild(2));
+            var lhs = (Expression)this.Visit(context.GetChild(0));
+            var rhs = (Expression)this.Visit(context.GetChild(2));
 
             string op = context.GetChild(1).GetText();
             switch (op)
@@ -168,13 +174,10 @@
             }
         }
 
-        private IList VisitStatements([NotNull] QlParser.StatContext[] stats)
+        private IList<AstNode> VisitStatements([NotNull] IReadOnlyCollection<QlParser.StatContext> stats)
         {
-            IList statements = new ArrayList(stats.Length);
-            foreach (var stat in stats)
-            {
-                statements.Add(this.Visit(stat));
-            }
+            var statements = new List<AstNode>(stats.Count);
+            statements.AddRange(stats.Select(this.Visit));
 
             return statements;
         }
