@@ -4,29 +4,41 @@
 @builtin "whitespace.ne" # `_` means arbitrary amount of whitespace
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
-@{% let toString = (data) => data.join().split(",").join("");%}
-@{% let Question = require('./Question.js');  let question = (data, location, reject) => { return data;return new Question({name: data[0], propertyName: data[3][0], type: data[6][0]}) }; %}
-@{% let PostProcessor = require('./PostProcessor.js'); %}
+@{% let FormPostProcessor = require('./processors/FormPostProcessor.js'); %}
 
 
-form         -> "form " formName openBrace newLine  statements  newLine closedBrace
+form         -> "form " formName openBrace newLine statements newLine closedBrace                           {% FormPostProcessor.form %}
 formName     -> letters
-statements   -> statement:*
-statement    -> question | if_statement | answer
-question     -> "question " prime sentence prime newLine propertyName ":" space propertyType newLine {% PostProcessor.question %}
-if_statement -> "if " parOpen propertyName parClose space openBrace newLine statements newLine closedBrace
-answer       -> "answer " prime sentence prime newLine allocation {% function(data){console.log(data)} %}
+statements   -> statement:*                                                                                 {% FormPostProcessor.statements %}
+
+statement    -> question
+              | if_statement
+              | answer                                                                                      {% FormPostProcessor.statement %}
+
+question     -> "question " prime sentence prime newLine propertyName ":" space propertyType newLine        {% FormPostProcessor.question %}
+if_statement -> "if " parOpen propertyName parClose space openBrace newLine statements newLine closedBrace  {% FormPostProcessor.ifStatement %}
+answer       -> "answer " prime sentence prime newLine allocation                                           {% FormPostProcessor.answer %}
 allocation   -> propertyName ": " propertyType space assignOp space expression newLine
-expression   -> "(" propertyName space operator space propertyName ")"
-operator     -> "+" | "-" | "*" | "/"
+expression   -> "(" propertyName space operator space propertyName ")"                                      {% FormPostProcessor.expression %}
+operator     -> "+"
+              | "-"
+              | "*"
+              | "/"
+
 assignOp     -> "="
 
 
 propertyName -> letters
-propertyType -> "boolean" | "string" | "integer" | "date" | "decimal" | "money"
-newLine      -> "\n" {% PostProcessor.toNull %}
-sentence     -> [\w|\s|?|:]:+ {% PostProcessor.toString %}
-letters      -> [a-zA-Z]:+ {% PostProcessor.toString %}
+propertyType -> "boolean"
+              | "string"
+              | "integer"
+              | "date"
+              | "decimal"
+              | "money"
+
+newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
+sentence     -> [\w|\s|?|:]:+                                                                               {% FormPostProcessor.toString %}
+letters      -> [a-zA-Z]:+                                                                                  {% FormPostProcessor.toString %}
 prime        -> "`"
 openBrace    -> "{"
 closedBrace  -> "}"

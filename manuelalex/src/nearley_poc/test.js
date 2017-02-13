@@ -33,7 +33,7 @@ module.exports = class test {
         } catch (parseError){
             console.log(`Error at character ${parseError.offset}`);
         } finally{
-            console.log(JSON.stringify(result));
+            console.log(`Result: ${JSON.stringify(result)}`);
         }
     }
 };
