@@ -86,3 +86,45 @@ class TestMain(unittest.TestCase):
         self.assertTrue(self.second_field[0], "Did you buy a house in 2010?")
         self.assertTrue(self.second_field[1], "hasBoughtHouse")
         self.assertTrue(self.second_field[2], "boolean")
+
+    def test_parse_form_empty_if(self):
+        self.input_string = """
+        form taxOfficeExample {
+            if (hasSoldHouse) { }
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
+    def test_parse_form_if_empty_expression(self):
+        self.input_string = """
+        form taxOfficeExample {
+            if () {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+            }
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
+    def test_parse_form_if(self):
+        self.input_string = """
+        form taxOfficeExample {
+            if (hasSoldHouse) {
+                "What was the selling price?"        sellingPrice: money
+            }
+        }
+        """
+        self.result = parse(self.input_string)
+        self.assertTrue(len(self.result[0]), 3)
+
+        self.if_block = self.result[1][0]
+        self.if_statement = self.if_block[0]
+
+        self.assertTrue(self.if_statement[0], "if")
+        self.assertTrue(self.if_statement[1], "hasSoldHouse")
+
+        self.first_field = self.if_block[1]
+        self.assertTrue(self.first_field[0], "What was the selling price?")
+        self.assertTrue(self.first_field[1], "sellingPrice")
+        self.assertTrue(self.first_field[2], "money")
