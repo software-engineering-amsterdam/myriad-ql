@@ -3,7 +3,7 @@ grammar QLParser;
 import QLLexer;
 
 form
-    :   'form' id=identifier '{' declaration* '}'
+    :   'form' id=identifier '{' declarations=declaration* '}'
     ;
 
 declaration
