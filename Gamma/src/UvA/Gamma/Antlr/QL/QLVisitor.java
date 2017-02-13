@@ -1,4 +1,4 @@
-package UvA.Gamma.Antlr.QL;// Generated from Gamma/src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
+package UvA.Gamma.Antlr.QL;// Generated from src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -36,11 +36,25 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInput(QLParser.InputContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#type}.
+	 * Visit a parse tree produced by {@link QLParser#baseType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType(QLParser.TypeContext ctx);
+	T visitBaseType(QLParser.BaseTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code base_type}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBase_type(QLParser.Base_typeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code expression}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(QLParser.ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#condition}.
 	 * @param ctx the parse tree
