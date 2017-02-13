@@ -1,37 +1,45 @@
 ﻿grammar Ql;
 
 form : 'form' Identifier '{' stat+ '}' ;
-question : StringLiteral Identifier ':' + Type ;
+question : StringLiteral Identifier ':' Type ;
 stat
 	: question
-	| if
+	| ifStat
 	;
 
-if : 'if' booleanExpression '{' stat+ '}' else? ;
-else : 'else' (if | '{' stat+ '}') ;
-
-booleanExpression
-	: BooleanLiteral
-	| Identifier
-	| '(' booleanExpression ')'
-	| 'not' booleanExpression
-	| booleanExpression ('and'|'or') booleanExpression
-	| numericExpression ('>'|'<'|'=='|'<='|'>=') numericExpression
-	| dateExpression ('>'|'<'|'=='|'<='|'>=') dateExpression
+ifStat  
+	: 'if' '(' expression ')' '{' stat+ '}' elseStat
+	| 'if' '(' expression ')' '{' stat+ '}'
 	;
 
-numericExpression
-	: NumericLiteral
-	| Identifier
-	| '(' numericExpression ')'
-	| numericExpression ('*'|'/') numericExpression
-	| numericExpression ('+'|'-') numericExpression
+elseStat : 'else' '{' elseStats=stat+ '}';
+
+expression
+	: literal									# ExpressionLiteral
+	| Identifier								# ExpressionIdentifier
+	| '(' expression ')'						# ExpressionBracket
+	| expression BinaryOperator expression		# ExpressionBinary
+	| UnaryOperator expression					# ExpressionUnary
 	;
 
-dateExpression
-	: DateLiteral
-	| Identifier
+BinaryOperator
+	: '*' | '/'
+	| '+' | '-'
+	| '>'|'<'|'=='|'<='|'>='
+	| 'and' | 'or'
 	;
+
+UnaryOperator : 'not';
+
+literal
+	: DateLiteral	 # DateLiteral
+	| BooleanLiteral # BooleanLiteral
+	| Money			 # MoneyLiteral
+	| Decimal		 # DecimalLiteral
+	| SignedInt		 # IntegerLiteral
+	| StringLiteral  # StringLiteral
+	;
+
 
 Type 
 	: 'boolean'
@@ -45,12 +53,6 @@ Type
 BooleanLiteral
 	: 'true'
 	| 'false'
-	;
-
-NumericLiteral 
-	: Money 
-	| Decimal 
-	| SignedInt
 	;
 
 DateLiteral : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
