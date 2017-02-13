@@ -23,9 +23,11 @@
         public override AstNode VisitForm([NotNull] QlParser.FormContext context)
         {
             string id = context.Identifier().GetText();
-            var statements = this.VisitStatements(context.stat());
+            var statements = context.stat()
+                .Select(x => (Statement)this.Visit(x))
+                .ToList();
 
-            return new FormStatement(id, (IList<Statement>)statements);
+            return new FormStatement(id, statements);
         }
 
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
@@ -159,14 +161,6 @@
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
         {
             return new StringLiteral(context.GetText());
-        }
-
-        private IList<AstNode> VisitStatements([NotNull] IReadOnlyCollection<QlParser.StatContext> stats)
-        {
-            var statements = new List<AstNode>(stats.Count);
-            statements.AddRange(stats.Select(this.Visit));
-
-            return statements;
         }
     }
 }
