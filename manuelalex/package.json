@@ -136,5 +136,8 @@
         "format": "cjs"
       }
     }
+  },
+  "dependencies": {
+    "nearley-make": "^1.0.0"
   }
 }

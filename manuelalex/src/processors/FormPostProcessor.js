@@ -4,10 +4,10 @@
 
 const PostProcessor     = require('./PostProcessor.js');
 
-const Form              = require('./../Form.js');
-const Question          = require('./../statements/Question.js');
-const Answer            = require('./../statements/Answer.js');
-const IFStatement       = require('./../statements/IFStatement.js');
+const Form              = require('../Form.js');
+const Question          = require('../statements/Question.js');
+const Answer            = require('../statements/Answer.js');
+const IFStatement       = require('../statements/IFStatement.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
 
