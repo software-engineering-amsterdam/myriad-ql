@@ -1,17 +1,11 @@
 module UI.FormData exposing (..)
 
 import Dict exposing (Dict)
+import Values exposing (Value)
 
 
 type alias FormData =
-    Dict String FormValue
-
-
-type FormValue
-    = Str String
-    | Boolean Bool
-    | Integer Int
-    | Undefined
+    Dict String Value
 
 
 removeKeys : List String -> FormData -> FormData
@@ -26,67 +20,37 @@ empty =
 
 withBoolean : String -> Bool -> FormData -> FormData
 withBoolean k v =
-    Dict.insert k (Boolean v)
+    Dict.insert k (Values.bool v)
 
 
 getBoolean : String -> FormData -> Maybe Bool
 getBoolean key data =
     Dict.get key data
-        |> Maybe.andThen onBoolean
+        |> Maybe.andThen Values.asBool
 
 
-onBoolean : FormValue -> Maybe Bool
-onBoolean formValue =
-    case formValue of
-        Boolean b ->
-            Just b
-
-        _ ->
-            Nothing
-
-
-withFormValue : String -> FormValue -> FormData -> FormData
+withFormValue : String -> Value -> FormData -> FormData
 withFormValue =
     Dict.insert
 
 
 withString : String -> String -> FormData -> FormData
 withString k v =
-    Dict.insert k (Str v)
+    Dict.insert k (Values.string v)
 
 
 getString : String -> FormData -> Maybe String
 getString key data =
     Dict.get key data
-        |> Maybe.andThen onString
-
-
-onString : FormValue -> Maybe String
-onString formValue =
-    case formValue of
-        Str b ->
-            Just b
-
-        _ ->
-            Nothing
+        |> Maybe.andThen Values.asString
 
 
 withInteger : String -> Int -> FormData -> FormData
 withInteger k v =
-    Dict.insert k (Integer v)
+    Dict.insert k (Values.int v)
 
 
 getInteger : String -> FormData -> Maybe Int
 getInteger key data =
     Dict.get key data
-        |> Maybe.andThen onInteger
-
-
-onInteger : FormValue -> Maybe Int
-onInteger formValue =
-    case formValue of
-        Integer b ->
-            Just b
-
-        _ ->
-            Nothing
+        |> Maybe.andThen Values.asInt

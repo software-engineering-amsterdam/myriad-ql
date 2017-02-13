@@ -4,15 +4,16 @@ import Dict
 import Expect
 import Test exposing (Test, describe, test, fuzz2)
 import UI.FormData as FormData exposing (..)
+import Values
 import Fuzz exposing (string, bool, int)
 
 
 startingFormData : FormData
 startingFormData =
     Dict.fromList
-        [ ( "foo", Integer 1 )
-        , ( "bar", Str "Hello" )
-        , ( "baz", Boolean True )
+        [ ( "foo", Values.int 1 )
+        , ( "bar", Values.string "Hello" )
+        , ( "baz", Values.bool True )
         ]
 
 
@@ -22,7 +23,7 @@ all =
         [ test "removeFields" <|
             \() ->
                 FormData.removeKeys [ "foo", "baz" ] startingFormData
-                    |> Expect.equal (Dict.fromList [ ( "bar", Str "Hello" ) ])
+                    |> Expect.equal (Dict.fromList [ ( "bar", Values.string "Hello" ) ])
         , test "getBoolean for existing value" <|
             \() ->
                 FormData.getBoolean "baz" startingFormData |> Expect.equal (Just True)
