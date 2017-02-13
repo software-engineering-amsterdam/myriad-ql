@@ -3,61 +3,75 @@ from form_ast import *
 
 
 class Grammar:
-    dataType = oneOf("boolean string integer decimal money")
+    datatype = oneOf("boolean string integer decimal money")
+    datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
-    identifier = Word(alphas).addCondition(
+    identifier = Word(alphas)
+    identifier.addCondition(
         lambda tokens: tokens[0] not in """true false form if else boolean
                                         string integer decimal money""".split()
     )
+    identifier.setParseAction(lambda tokens: Iden(tokens[0]))
 
-    true = Literal("true").setParseAction(lambda _: True)
-    false = Literal("false").setParseAction(lambda _: False)
+    true = Literal("true").setParseAction(lambda _: Const(True, Datatype.boolean))
+    false = Literal("false").setParseAction(lambda _: Const(False, Datatype.boolean))
 
-    mul_op = oneOf("* /")
-    add_op = oneOf("+ -")
-    sign_op = oneOf("+ -")
-    neg_op = "!"
-    dis_op = "||"
-    con_op = "&&"
-    eq_op = oneOf("== !=")
-    compr_op = oneOf("< > <= >=") # FIXME == != in compr_expr
+    mul_op = oneOf("* /").setParseAction(lambda tokens: Operator[tokens[0]])
+    add_op = oneOf("+ -").setParseAction(lambda tokens: Operator[tokens[0]])
+    sign_op = oneOf("+ -").setParseAction(lambda tokens: Operator[tokens[0]])
+    neg_op = Literal("!").setParseAction(lambda tokens: Operator[tokens[0]])
+    dis_op = Literal("||").setParseAction(lambda tokens: Operator[tokens[0]])
+    con_op = Literal("&&").setParseAction(lambda tokens: Operator[tokens[0]])
+    eq_op = oneOf("== !=").setParseAction(lambda tokens: Operator[tokens[0]])
+    compr_op = oneOf("< > <= >=").setParseAction(lambda tokens: Operator[tokens[0]]) # FIXME == != in compr_expr
 
     semicolon = Suppress(":")
     bracket_open = Suppress("{")
     bracket_close = Suppress("}")
     assignment = Suppress("=")
 
-    num_atom = identifier ^ pyparsing_common.integer ^ pyparsing_common.real
-    num_expr = Group(infixNotation(num_atom, [(sign_op, 1, opAssoc.RIGHT),
-                                              (mul_op, 2, opAssoc.LEFT),
-                                              (add_op, 2, opAssoc.LEFT)]))
+    integer = pyparsing_common.integer.addParseAction(lambda i: Const(i, Datatype.integer))
+    decimal = pyparsing_common.real.addParseAction(lambda d: Const(d, Datatype.decimal))
 
-    compr_expr = Group(num_expr + compr_op + num_expr)
+    num_atom = identifier ^ integer ^ decimal
+    num_expr = infixNotation(num_atom, [(sign_op, 1, opAssoc.RIGHT, lambda tokens: UnOp(*tokens[0])),
+                                              (mul_op, 2, opAssoc.LEFT, lambda tokens: BinOp(*tokens[0])),
+                                              (add_op, 2, opAssoc.LEFT, lambda tokens: BinOp(*tokens[0]))])
+
+    compr_expr = num_expr + compr_op + num_expr
+    compr_expr.setParseAction(lambda tokens: BinOp(*tokens))
 
     bool_atom = identifier ^ true ^ false ^ compr_expr # FIXME compr_expr break eq_op in bool_expr
-    bool_expr = Group(infixNotation(bool_atom, [(neg_op, 1, opAssoc.RIGHT),
-                                                (eq_op, 2, opAssoc.LEFT),
-                                                (con_op, 2, opAssoc.LEFT),
-                                                (dis_op, 2, opAssoc.LEFT)]))
+    bool_expr = infixNotation(bool_atom, [(neg_op, 1, opAssoc.RIGHT, lambda tokens: UnOp(*tokens[0])),
+                                                (eq_op, 2, opAssoc.LEFT, lambda tokens: BinOp(*tokens[0])),
+                                                (con_op, 2, opAssoc.LEFT, lambda tokens: BinOp(*tokens[0])),
+                                                (dis_op, 2, opAssoc.LEFT, lambda tokens: BinOp(*tokens[0]))])
 
     expression = bool_expr ^ num_expr
 
     block = Forward()
 
-    question = identifier + semicolon + QuotedString("\"") + dataType +\
+    question = identifier + semicolon + QuotedString("\"") + datatype +\
         Optional(assignment + expression)
+    question.setParseAction(lambda tokens: Quest(*tokens))
 
-    conditional = Literal("if") + bool_expr + bracket_open + Group(block) +\
+    conditional = Suppress("if") + bool_expr + bracket_open + block +\
         bracket_close + Optional(Suppress("else") + bracket_open +
-                                 Group(block) + bracket_close)
+                                 block + bracket_close)
+    conditional.setParseAction(lambda tokens: Cond(*tokens))
 
-    statement = Group(question ^ conditional)
-    block <<= ZeroOrMore(statement)
+    statement = question ^ conditional
+    block <<= Group(ZeroOrMore(statement))
 
-    form = Literal("form") + identifier + bracket_open + Group(block) +\
+    form = Suppress("form") + identifier + bracket_open + block +\
         bracket_close
+    form.setParseAction(lambda tokens: Form(*tokens))
 
 
+f = Grammar.form.parseFile("testForm.txt")[0]
+print(f)
+
+"""
 class Parser:
 
     @staticmethod
@@ -129,3 +143,4 @@ class Parser:
             while len(tokens) >= 3:
                 tokens = [BinOp(*tokens[0:3])] + tokens[3:]
             return tokens[0]
+"""
