@@ -1,4 +1,4 @@
-// Generated from D:/Software Engineering/Software Construction/Lab assignment/myriad-ql/vanVlaanderenDerksen/QLJava/src/sc/ql/antlr/QL.g4 by ANTLR 4.5.3
+// Generated from QL.g4 by ANTLR 4.5.3
 package sc.ql.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -16,13 +16,37 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParse(QLParser.ParseContext ctx) { }
+	@Override public void enterForm(QLParser.FormContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParse(QLParser.ParseContext ctx) { }
+	@Override public void exitForm(QLParser.FormContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuestions(QLParser.QuestionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestions(QLParser.QuestionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuestion(QLParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestion(QLParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -40,13 +64,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnExpr(QLParser.UnExprContext ctx) { }
+	@Override public void enterExpression(QLParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUnExpr(QLParser.UnExprContext ctx) { }
+	@Override public void exitExpression(QLParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
