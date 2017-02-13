@@ -1,6 +1,6 @@
 module TypeChecker.BadReferencesTests exposing (all)
 
-import TypeChecker.BadReferences exposing (checkUndefinedVarReferences)
+import TypeChecker.BadReferences exposing (badReferences)
 import Parser.Form exposing (form)
 import Test exposing (..)
 import ParserTestUtil exposing (parseToMaybe)
@@ -8,8 +8,8 @@ import Set
 import Expect
 
 
-undefinedVarExample1 : String
-undefinedVarExample1 =
+badReferencesExample1 : String
+badReferencesExample1 =
     """form taxOfficeExample {
         if (hasSoldHouse) {
             "What was the selling price?"
@@ -18,8 +18,8 @@ undefinedVarExample1 =
       }"""
 
 
-undefinedVarExample2 : String
-undefinedVarExample2 =
+badReferencesExample2 : String
+badReferencesExample2 =
     """form taxOfficeExample {
         "What was the selling price?"
         sellingPrice: money = price * 2
@@ -91,27 +91,35 @@ goodExample4 =
 all : Test
 all =
     describe "BadReferences"
-        [ testExamplesWithoutUnusedVars ]
+        [ testExamplesWithoutBadRefences ]
 
 
-testExamplesWithoutUnusedVars : Test
-testExamplesWithoutUnusedVars =
-    describe "testExamplesWithoutUnusedVars"
-        [ parseAndFindNoUndefinedVariableReferences "Order of definition/usage should not matter 1" goodExample1
-        , parseAndFindNoUndefinedVariableReferences "Order of definition/usage should not matter 2" goodExample2
-        , parseAndFindNoUndefinedVariableReferences "Order of definition/usage should not matter 3" goodExample3
-        , parseAndFindNoUndefinedVariableReferences "Should not find any undefined used vars" goodExample4
+testFindBadReferences : Test
+testFindBadReferences =
+    describe "testFindBadReferences"
+        [ parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "hasSoldHouse" ])
+        , parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "price" ])
         ]
 
 
-parseAndFindNoUndefinedVariableReferences : String -> String -> Test
-parseAndFindNoUndefinedVariableReferences message input =
+testExamplesWithoutBadRefences : Test
+testExamplesWithoutBadRefences =
+    describe "testExamplesWithoutBadRefences"
+        [ parseAndFindExpectedBadReferences "Order of definition/usage should not matter 1" goodExample1 Set.empty
+        , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 2" goodExample2 Set.empty
+        , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 3" goodExample3 Set.empty
+        , parseAndFindExpectedBadReferences "Should not find any undefined used vars" goodExample4 Set.empty
+        ]
+
+
+parseAndFindExpectedBadReferences : String -> String -> Set.Set String -> Test
+parseAndFindExpectedBadReferences message input expectedBadReferences =
     test message <|
         \() ->
-            parseAndGetUndefinedVariables input
-                |> Expect.equal (Just Set.empty)
+            parseAndGetBadReferences input
+                |> Expect.equal (Just expectedBadReferences)
 
 
-parseAndGetUndefinedVariables : String -> Maybe (Set.Set String)
-parseAndGetUndefinedVariables rawForm =
-    Maybe.map checkUndefinedVarReferences (parseToMaybe form rawForm)
+parseAndGetBadReferences : String -> Maybe (Set.Set String)
+parseAndGetBadReferences rawForm =
+    Maybe.map badReferences (parseToMaybe form rawForm)
