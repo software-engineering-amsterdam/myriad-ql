@@ -1,6 +1,6 @@
 package ast;
 
-public class Form extends Node {
+public class Form implements Node {
 	
 	private final String id;
 	private Block block;
@@ -16,6 +16,11 @@ public class Form extends Node {
 	public Form(String id, Block block) {
 		this.id = id;
 		this.block = block;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
 	}
 	
 }

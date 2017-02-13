@@ -1,6 +1,6 @@
 package ast;
 
-public class Question extends Node {
+public class Question implements Node {
 	
 	final private String variable;
 	final private String label;
@@ -22,6 +22,12 @@ public class Question extends Node {
 
 	public String getType() {
 		return type;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 
 }
