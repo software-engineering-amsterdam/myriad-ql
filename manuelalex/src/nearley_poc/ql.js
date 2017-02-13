@@ -20,8 +20,7 @@ function $(o) {
     };
 }
 
- let toString = (data) => data.join().split(",").join("");
- let Question = require('./Question.js');  let question = (data, location, reject) => { return new Question({name: data[0], propertyName: data[3][0], type: data[6][0]}) }; var grammar = {
+ let PostProcessor = require('./PostProcessor.js'); var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["wschar", "_$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
@@ -152,13 +151,13 @@ function $(o) {
     {"name": "statement", "symbols": ["question"]},
     {"name": "statement", "symbols": ["if_statement"]},
     {"name": "statement", "symbols": ["answer"]},
-    {"name": "question", "symbols": ["sentence", {"literal":"?"}, "newLine", "propertyName", {"literal":":"}, "_", "propertyType", "newLine"], "postprocess": question},
+    {"name": "question", "symbols": ["sentence", {"literal":"?"}, "newLine", "propertyName", {"literal":":"}, "_", "propertyType", "newLine"], "postprocess": PostProcessor.question},
     {"name": "if_statement$string$1", "symbols": [{"literal":"i"}, {"literal":"f"}, {"literal":" "}, {"literal":"("}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement$string$2", "symbols": [{"literal":")"}, {"literal":" "}, {"literal":"{"}, {"literal":"\n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement$string$3", "symbols": [{"literal":"\n"}, {"literal":"}"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement", "symbols": ["if_statement$string$1", "propertyName", "if_statement$string$2", "statements", "if_statement$string$3"]},
     {"name": "answer$string$1", "symbols": [{"literal":":"}, {"literal":"\n"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "answer", "symbols": ["sentence", "answer$string$1", "allocation"]},
+    {"name": "answer", "symbols": ["sentence", "answer$string$1", "allocation"], "postprocess": function(data){console.log(data)}},
     {"name": "allocation$string$1", "symbols": [{"literal":"v"}, {"literal":"a"}, {"literal":"l"}, {"literal":"u"}, {"literal":"e"}, {"literal":"R"}, {"literal":"e"}, {"literal":"s"}, {"literal":"i"}, {"literal":"d"}, {"literal":"u"}, {"literal":"e"}, {"literal":":"}, {"literal":" "}, {"literal":"m"}, {"literal":"o"}, {"literal":"n"}, {"literal":"e"}, {"literal":"y"}, {"literal":" "}, {"literal":"="}, {"literal":" "}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "allocation", "symbols": ["allocation$string$1", "expression", {"literal":"\n"}]},
     {"name": "expression", "symbols": [{"literal":"("}, "propertyName", "_", "operator", "_", "propertyName", {"literal":")"}]},
@@ -171,13 +170,13 @@ function $(o) {
     {"name": "propertyType", "symbols": ["propertyType$string$1"]},
     {"name": "propertyType$string$2", "symbols": [{"literal":"m"}, {"literal":"o"}, {"literal":"n"}, {"literal":"e"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "propertyType", "symbols": ["propertyType$string$2"]},
-    {"name": "newLine", "symbols": [{"literal":"\n"}], "postprocess": ()=> null},
+    {"name": "newLine", "symbols": [{"literal":"\n"}], "postprocess": PostProcessor.toNull},
     {"name": "sentence$ebnf$1", "symbols": [/[\w|\s]/]},
     {"name": "sentence$ebnf$1", "symbols": [/[\w|\s]/, "sentence$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "sentence", "symbols": ["sentence$ebnf$1"], "postprocess": toString},
+    {"name": "sentence", "symbols": ["sentence$ebnf$1"], "postprocess": PostProcessor.toString},
     {"name": "letters$ebnf$1", "symbols": [/[a-zA-Z]/]},
     {"name": "letters$ebnf$1", "symbols": [/[a-zA-Z]/, "letters$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "letters", "symbols": ["letters$ebnf$1"], "postprocess": toString}
+    {"name": "letters", "symbols": ["letters$ebnf$1"], "postprocess": PostProcessor.toString}
 ]
   , ParserStart: "form"
 }
