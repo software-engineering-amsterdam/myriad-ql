@@ -2,7 +2,7 @@ module Parser.Expression exposing (expression)
 
 import AST
     exposing
-        ( Expression(Integer, ParensExpression, Var, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
+        ( Expression(Integer, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
         , Logic(And, Or)
         , Comparison(Equal, NotEqual)
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
@@ -12,7 +12,7 @@ import Combine exposing (Parser, chainl, choice, lazy, string, parens, (<$), (<$
 import Combine.Num exposing (int)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
-import Parser.Token exposing (variableName)
+import Parser.Token exposing (variableName, quotedString)
 
 
 type alias BinaryOperator =
@@ -91,6 +91,7 @@ anyAtom =
         \() ->
             choice
                 [ integerAtom
+                , stringAtom
                 , booleanAtom
                 , parensAtom
                 , varAtom
@@ -100,6 +101,11 @@ anyAtom =
 integerAtom : Parser s Expression
 integerAtom =
     Integer <$> int
+
+
+stringAtom : Parser s Expression
+stringAtom =
+    Str <$> quotedString
 
 
 varAtom : Parser s Expression
