@@ -21,8 +21,11 @@ class Form:
         return "form {} [\n{}\n]".format(self.name,
             "\n".join([s.__str__(4) for s in self.statements]))
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class Conditional:
+
+class Cond:
 
     def __init__(self, condition, statements, alternative=None):
         self.condition = condition
@@ -40,8 +43,11 @@ class Conditional:
             "\n".join([s.__str__(indentation + 4) for s in self.statements]),
             " " * indentation)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class Question:
+
+class Quest:
 
     def __init__(self, name, label, datatype, expression=None):
         self.name = name
@@ -57,8 +63,11 @@ class Question:
         return "{}{}: \"{}\" {}".format(
             " " * indentation, self.name, self.label, self.datatype.name)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class UnaryOperator:
+
+class UnOp:
 
     def __init__(self, operator, right):
         self.operator = operator
@@ -67,8 +76,11 @@ class UnaryOperator:
     def __str__(self):
         return "{}{}".format(self.operator.name, self.right)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class BinaryOperator:
+
+class BinOp:
 
     def __init__(self, left, operator, right):
         self.operator = operator
@@ -78,8 +90,11 @@ class BinaryOperator:
     def __str__(self):
         return "({} {} {})".format(self.left, self.operator.name, self.right)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class Identifier:
+
+class Iden:
 
     def __init__(self, name):
         self.name = name
@@ -87,8 +102,11 @@ class Identifier:
     def __str__(self):
         return self.name
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
-class Constant:
+
+class Const:
 
     def __init__(self, value, datatype):
         self.value = value
@@ -96,3 +114,6 @@ class Constant:
 
     def __str__(self):
         return str(self.value)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

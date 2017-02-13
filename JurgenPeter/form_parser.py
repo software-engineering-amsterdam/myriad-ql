@@ -20,7 +20,7 @@ class Grammar:
     dis_op = "||"
     con_op = "&&"
     eq_op = oneOf("== !=")
-    compr_op = oneOf("< > <= >= == !=")
+    compr_op = oneOf("< > <= >=") # FIXME == != in compr_expr
 
     semicolon = Suppress(":")
     bracket_open = Suppress("{")
@@ -85,39 +85,39 @@ class Parser:
     @staticmethod
     def parse_conditional(tokens):
         if len(tokens) == 3 and tokens[0] == "if":
-            return Conditional(Parser.parse_expression(tokens[1]),
-                               [Parser.parse_statement(t) for t in tokens[2]])
+            return Cond(Parser.parse_expression(tokens[1]),
+                        [Parser.parse_statement(t) for t in tokens[2]])
         if len(tokens) == 4 and tokens[0] == "if":
-            return Conditional(Parser.parse_expression(tokens[1]),
-                               [Parser.parse_statement(t) for t in tokens[2]],
-                               [Parser.parse_statement(t) for t in tokens[3]])
+            return Cond(Parser.parse_expression(tokens[1]),
+                        [Parser.parse_statement(t) for t in tokens[2]],
+                        [Parser.parse_statement(t) for t in tokens[3]])
         return None
 
     @staticmethod
     def parse_question(tokens):
         if len(tokens) == 3:
-            return Question(tokens[0], tokens[1], Datatype[tokens[2]])
+            return Quest(tokens[0], tokens[1], Datatype[tokens[2]])
         elif len(tokens) == 4:
-            return Question(tokens[0], tokens[1], Datatype[tokens[2]],
-                            Parser.parse_expression(tokens[3]))
+            return Quest(tokens[0], tokens[1], Datatype[tokens[2]],
+                         Parser.parse_expression(tokens[3]))
         return None
 
     @staticmethod
     def parse_expression(tokens):
         if type(tokens) == int:
-            return Constant(tokens, Datatype.integer)
+            return Const(tokens, Datatype.integer)
         if type(tokens) == float:
-            return Constant(tokens, Datatype.decimal)
+            return Const(tokens, Datatype.decimal)
         if type(tokens) == bool:
-            return Constant(tokens, Datatype.boolean)
+            return Const(tokens, Datatype.boolean)
         if type(tokens) == str:
             if hasattr(Datatype, tokens):
                 return Datatype[tokens]
             if hasattr(Operator, tokens):
                 return Operator[tokens]
             if len(tokens) >= 2 and tokens[0] == tokens[-1] == "\"":
-                return Constant(tokens[1:-1], Datatype.string)
-            return Identifier(tokens)
+                return Const(tokens[1:-1], Datatype.string)
+            return Iden(tokens)
         else:
             # When the argument is a list of (grouped) tokens, these are
             # recursively parsed into expressions first. That way, we can build
@@ -125,7 +125,7 @@ class Parser:
             # afterwards.
             tokens = [Parser.parse_expression(t) for t in tokens]
             if len(tokens) == 2:
-                return UnaryOperator(*tokens[0:2])
+                return UnOp(*tokens[0:2])
             while len(tokens) >= 3:
-                tokens = [BinaryOperator(*tokens[0:3])] + tokens[3:]
+                tokens = [BinOp(*tokens[0:3])] + tokens[3:]
             return tokens[0]

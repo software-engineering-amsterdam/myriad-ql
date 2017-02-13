@@ -49,36 +49,40 @@ class TestGrammar(TestCase):
 
 
 class TestParser(TestCase):
-    '''
     expressions = [
-        ("2 + 3", BinaryOperator(Constant(2, Datatype.integer),
+        ("2 + 3", BinOp(Const(2, Datatype.integer),
                                  Operator["+"],
-                                 Constant(3, Datatype.integer))),
-        ("2 + 3 + 4", BinrayOperator(BinaryOperator(Constant(2,
+                                 Const(3, Datatype.integer))),
+        ("2 + 3 + 4", BinOp(BinOp(Const(2,
                                                              Datatype.integer),
                                                     Operator["+"],
-                                                    Constant(3,
+                                                    Const(3,
                                                              Datatype.integer)),
                                      Operator["+"],
-                                     Constant(4, Datatype.integer)),
-        ("2 * 3 + 4", BinrayOperator(BinaryOperator(Constant(2,
+                                     Const(4, Datatype.integer))),
+        ("2 * 3 + 4", BinOp(BinOp(Const(2,
                                                              Datatype.integer),
                                                     Operator["*"],
-                                                    Constant(3,
+                                                    Const(3,
                                                              Datatype.integer)),
                                      Operator["+"],
-                                     Constant(4, Datatype.integer)),
-        ("2 + 3 * 4", BinrayOperator(Constant(2, Datatype.integer),
+                                     Const(4, Datatype.integer))),
+        ("2 + 3 * 4", BinOp(Const(2, Datatype.integer),
                                      Operator["+"],
-                                     BinaryOperator(Constant(3,
+                                     BinOp(Const(3,
                                                              Datatype.integer),
                                                     Operator["*"],
-                                                    Constant(4,
-                                                             Datatype.integer))),
-    }
-    '''
+                                                    Const(4,
+                                                             Datatype.integer))))
+    ]
 
     def testParseExpression(self):
+        for sentence, tree in self.expressions:
+            self.assertEqual(Parser.parse_expression(
+                Grammar.expression.parseString(sentence, parseAll=True)), tree)
+
+
+    def testParseExpression2(self):
         forms = [
             ("2 + 3", "(2 + 3)"),
             ("2 + 3 + 4", "((2 + 3) + 4)"),
