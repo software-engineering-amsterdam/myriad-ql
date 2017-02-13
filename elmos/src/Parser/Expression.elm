@@ -26,13 +26,14 @@ expression =
 
 precedenceOrderedExpressions : List (Parser s BinaryOperator)
 precedenceOrderedExpressions =
-    [ orOp
-    , andOp
-    , comparisonOp
-    , relationalOp
-    , addOp
-    , multiplyOp
-    ]
+    List.map trimmed <|
+        [ orOp
+        , andOp
+        , comparisonOp
+        , relationalOp
+        , addOp
+        , multiplyOp
+        ]
 
 
 orOp : Parser s BinaryOperator
@@ -81,7 +82,7 @@ multiplyOp =
 
 atom : Parser s Expression
 atom =
-    lazy <| \() -> trimmed anyAtom
+    lazy <| \() -> anyAtom
 
 
 anyAtom : Parser s Expression
@@ -113,4 +114,4 @@ booleanAtom =
 
 parensAtom : Parser s Expression
 parensAtom =
-    ParensExpression <$> parens expression
+    ParensExpression <$> parens (trimmed expression)
