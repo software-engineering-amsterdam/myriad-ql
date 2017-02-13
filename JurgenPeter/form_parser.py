@@ -2,12 +2,19 @@ from pyparsing import *
 from form_ast import *
 
 
+# TODO please improve nesting/grouping
+# TODO move to better location
+def createbinop(tokens):
+    if len(tokens[0]) >= 3:
+        return createbinop([[BinOp(*tokens[0][0:3])] + tokens[0][3:]])
+    return tokens[0][0]
+
+
 class Grammar:
     identifier = Word(alphas)
     identifier.addCondition(lambda tokens:
-        tokens[0] not in """true false form if else boolean string integer
-                            decimal money""".split())
-    identifier.setParseAction(lambda tokens: Iden(tokens[0]))
+        tokens[0] not in "true false form if else boolean string integer decimal money".split())
+    identifier.addParseAction(lambda tokens: Iden(tokens[0]))
 
     datatype = oneOf("boolean string integer decimal money")
     datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
@@ -44,9 +51,9 @@ class Grammar:
     num_expr = infixNotation(num_atom, [(sign_op, 1, opAssoc.RIGHT,
                                          lambda tokens: UnOp(*tokens[0])),
                                         (mul_op, 2, opAssoc.LEFT,
-                                         lambda tokens: BinOp(*tokens[0])),
+                                         createbinop),
                                         (add_op, 2, opAssoc.LEFT,
-                                         lambda tokens: BinOp(*tokens[0]))])
+                                         createbinop)])
 
     rel_expr = num_expr + rel_op + num_expr
     rel_expr.setParseAction(lambda tokens: BinOp(*tokens))
@@ -55,17 +62,17 @@ class Grammar:
     bool_expr = infixNotation(bool_atom, [(neg_op, 1, opAssoc.RIGHT,
                                            lambda tokens: UnOp(*tokens[0])),
                                           (eq_op, 2, opAssoc.LEFT,
-                                           lambda tokens: BinOp(*tokens[0])),
+                                           createbinop),
                                           (con_op, 2, opAssoc.LEFT,
-                                           lambda tokens: BinOp(*tokens[0])),
+                                           createbinop),
                                           (dis_op, 2, opAssoc.LEFT,
-                                           lambda tokens: BinOp(*tokens[0]))])
+                                           createbinop)])
 
     expression = bool_expr ^ num_expr
 
     block = Forward()
 
-    question = identifier + semicolon + string + datatype +\
+    question = identifier + semicolon + QuotedString("\"") + datatype +\
         Optional(assignment + expression)
     question.setParseAction(lambda tokens: Quest(*tokens))
 
@@ -76,7 +83,7 @@ class Grammar:
 
     statement = question ^ conditional
 
-    block <<= Group(ZeroOrMore(statement))
+    block <<= Group(ZeroOrMore(statement)).addParseAction(lambda tokens: tokens.asList())
 
     form = Suppress("form") + identifier + bracket_open + block +\
         bracket_close

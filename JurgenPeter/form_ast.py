@@ -4,13 +4,6 @@ Datatype = Enum("Datatype", "boolean string integer decimal money")
 Operator = Enum("Operator", "+ - * / ! && || < > <= >= == !=")
 
 
-class Node:
-
-    # TODO generic tree node comparison based on attrs dictionary
-    def __eq__(self, other):
-        return True
-
-
 class Form:
 
     def __init__(self, name, statements):

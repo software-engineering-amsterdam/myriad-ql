@@ -112,20 +112,34 @@ class TestParser(TestCase):
                                                   Operator["+"],
                                                   Const(3, Datatype.integer)))),
 
-        (Grammar.conditional, "if true { }", Cond(True, [])),
-        (Grammar.conditional, "if true { } else { }", Cond(True, [], [])),
+        (Grammar.conditional,
+         "if true { x : \"y\" integer }", Cond(Const(True, Datatype.boolean), [Quest(Iden("x"),
+                                    "y",
+                                    Datatype.integer)])),
+        (Grammar.conditional,
+         "if true { }", Cond(Const(True, Datatype.boolean), [])),
+        (Grammar.conditional,
+         "if true { } else { }", Cond(Const(True, Datatype.boolean), [], [])),
 
-        (Grammar.form, "form FormName { }", Form("FormName", []))
+        (Grammar.form, "form FormName { }", Form(Iden("FormName"), [])),
+
+        (Grammar.form, "form FormName { x: \"xLabel\" integer = 2 * 3\nif x > 6 { y: \"yLabel\" boolean = true }\nelse { y: \"yLabel\" boolean = false }}",
+         Form(Iden("FormName"),
+              [Quest(Iden("x"),
+                    "xLabel",
+                    Datatype.integer,
+                    BinOp(Const(2, Datatype.integer),
+                          Operator["*"],
+                          Const(3, Datatype.integer))),
+               Cond(BinOp(Iden("x"), Operator[">"], Const(6, Datatype.integer)),
+                    [Quest(Iden("y"), "yLabel", Datatype.boolean, Const(True, Datatype.boolean))],
+                    [Quest(Iden("y"), "yLabel", Datatype.boolean, Const(False, Datatype.boolean))])]))
 
     ]
 
     def testParseExpression(self):
         for grammar, sentence, tree in self.cases:
-            print(sentence)
-
             parsedTree = grammar.parseString(sentence, parseAll=True)[0]
-            print(tree)
-            print(parsedTree)
             self.assertEqual(parsedTree, tree)
 
 
