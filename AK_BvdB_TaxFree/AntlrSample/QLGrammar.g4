@@ -1,5 +1,9 @@
 grammar QLGrammar;
 
+@header {
+package org.uva.taxfree.gen;
+}
+
 form : 'form {' statement* '}';
 statement : ifStatement
           | question
