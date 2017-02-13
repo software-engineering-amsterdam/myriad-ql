@@ -122,42 +122,45 @@ class TestParser(TestCase):
     def testParseExpression(self):
         for grammar, sentence, tree in self.cases:
             print(sentence)
-            self.assertEqual(grammar.parseString(sentence, parseAll=True), tree)
+
+            parsedTree = grammar.parseString(sentence, parseAll=True)[0]
+            print(tree)
+            print(parsedTree)
+            self.assertEqual(parsedTree, tree)
 
 
-    def testParseExpression2(self):
-        forms = [
-            ("2 + 3", "(2 + 3)"),
-            ("2 + 3 + 4", "((2 + 3) + 4)"),
-            ("2 * 3 + 4", "((2 * 3) + 4)"),
-            ("2 + 3 * 4", "(2 + (3 * 4))"),
-            ("(2 + 3) * 4", "((2 + 3) * 4)"),
-            ("+2", "+2"),
-            ("2 + - 7", "(2 + -7)"),
-            ("2 / x", "(2 / x)"),
-            ("2 + x + y", "((2 + x) + y)"),
-            ("true", "True"),
-            ("false", "False"),
-            ("true && x || !y", "((True && x) || !y)"),
-            ("2 + 7.0", "(2 + 7.0)"),
-            ("2 + 8", "(2 + 8)"),
-            ("2 + 7.", "(2 + 7.0)"),
-            ("3 <= 6 || x", "((3 <= 6) || x)")
-        ]
-        for form, result in forms:
-            self.assertEqual(str(Parser.parse_expression(
-                Grammar.expression.parseString(form, parseAll=True))), result,
-                "incorrect ast")
+    # def testParseExpression2(self):
+    #     forms = [
+    #         ("2 + 3", "(2 + 3)"),
+    #         ("2 + 3 + 4", "((2 + 3) + 4)"),
+    #         ("2 * 3 + 4", "((2 * 3) + 4)"),
+    #         ("2 + 3 * 4", "(2 + (3 * 4))"),
+    #         ("(2 + 3) * 4", "((2 + 3) * 4)"),
+    #         ("+2", "+2"),
+    #         ("2 + - 7", "(2 + -7)"),
+    #         ("2 / x", "(2 / x)"),
+    #         ("2 + x + y", "((2 + x) + y)"),
+    #         ("true", "True"),
+    #         ("false", "False"),
+    #         ("true && x || !y", "((True && x) || !y)"),
+    #         ("2 + 7.0", "(2 + 7.0)"),
+    #         ("2 + 8", "(2 + 8)"),
+    #         ("2 + 7.", "(2 + 7.0)"),
+    #         ("3 <= 6 || x", "((3 <= 6) || x)")
+    #     ]
+    #     for form, result in forms:
+    #         self.assertEqual(str(Grammar.expression.parseString(form, parseAll=True)), result,
+    #             "incorrect ast")
 
-    def testParseConditional(self):
-        forms = [
-            ("if true { }", "if True [\n\n]"),
-            ("if true { } else { }", "if True [\n\n]\nelse [\n\n]"),
-        ]
-        for form, result in forms:
-            self.assertEqual(str(Parser.parse_conditional(
-                Grammar.conditional.parseString(form, parseAll=True))),
-                result, "incorrect ast")
+    # def testParseConditional(self):
+    #     forms = [
+    #         ("if true { }", "if True [\n\n]"),
+    #         ("if true { } else { }", "if True [\n\n]\nelse [\n\n]"),
+    #     ]
+    #     for form, result in forms:
+    #         self.assertEqual(str(Parser.parse_conditional(
+    #             Grammar.conditional.parseString(form, parseAll=True))),
+    #             result, "incorrect ast")
 
 
 if __name__ == "__main__":
