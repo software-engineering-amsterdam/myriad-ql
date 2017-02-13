@@ -21,11 +21,14 @@ Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 /**
  * Parser rules
  */
-form: 'form' Identifier statement;
-statement: '{' (question | computedQuestion | conditionalBlock)* '}';
+form: 'form' Identifier '{' statement* '}';
+statement: question | computedQuestion | conditionalBlock;
 computedQuestion: question '(' expression ')';
 question: Identifier ':' StringLiteral Type;
-conditionalBlock: 'if' '(' expression ')' statement ('else' statement)?;
+conditionalBlock: 'if' '(' condition ')'  '{' thenBlock '}' ('else'  '{' elseBlock '}')?;
+condition: expression; 
+thenBlock: statement*;
+elseBlock: statement*;
 
 /* Precedence based on C(++) precedence: http://en.cppreference.com/w/cpp/language/operator_precedence */
 expression: 
