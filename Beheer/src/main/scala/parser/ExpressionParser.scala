@@ -5,9 +5,6 @@ import parser.ast._
 import scala.util.matching.Regex
 import scala.util.parsing.combinator.JavaTokenParsers
 
-/**
-  * Created by jasper on 07/02/17.
-  */
 trait ExpressionParser extends JavaTokenParsers {
   def expr: Parser[ExpressionNode] = infixOperationParser(comp, """\&\&|\|\|""".r)
 
@@ -19,10 +16,10 @@ trait ExpressionParser extends JavaTokenParsers {
 
   def factor: Parser[ExpressionNode] = (
     prefix
-      | integer
-      | identifier
-      | "(" ~> expr <~ ")"
-    )
+    | integer
+    | identifier
+    | "(" ~> expr <~ ")"
+  )
 
   def prefix: Parser[PrefixOperation] =
     """\+|-|!""".r ~ factor ^^ {
