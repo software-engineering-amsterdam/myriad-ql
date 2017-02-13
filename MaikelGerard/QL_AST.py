@@ -1,5 +1,4 @@
 from QL_Parser import QuestionnaireParser
-import re
 
 
 class QuestionnaireAST(object):
@@ -189,3 +188,4 @@ if __name__ == '__main__':
     parser = QuestionnaireParser()
     print parser.parse(form1)
     print QuestionnaireAST(parser.parse(form1)).root
+

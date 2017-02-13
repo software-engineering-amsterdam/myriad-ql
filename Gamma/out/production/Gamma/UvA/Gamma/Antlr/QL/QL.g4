@@ -6,11 +6,14 @@ formItem: input # in
         | condition  #cond
         ;
 
-input: ID':' QUESTION type;
+input: QUESTION ID':' type;
 
-type: BOOL | STRING | INT | DATE | DEC | MONEY | '('intExpr')';
+baseType: BOOL | STRING | INT | DATE | DEC | MONEY;
+type: baseType                      #basetype
+    | baseType '=' '('intExpr')'    #expression
+    ;
 
-condition: 'if' '('boolExpr')' BRACKET_OPEN formItem BRACKET_CLOSE;
+condition: 'if' '('boolExpr')' BRACKET_OPEN (formItem)* BRACKET_CLOSE;
 
 boolExpr: boolExpr op=('&&' | '||') boolExpr                          # andor
         | intExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') intExpr  # comparison
@@ -38,7 +41,7 @@ SUB: '-';
 
 NUMBER: ('0'..'9')+;
 
-QUESTION: '"'(.)+'"' ;
+QUESTION: '"'(~'"')+'"' ;
 ID: [a-zA-Z]+;
 
 //symbols

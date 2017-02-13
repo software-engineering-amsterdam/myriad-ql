@@ -105,13 +105,14 @@ class QuestionnaireParser(object):
         ])
 
     def convert_expr(self, s, l, t):
-        # Convert the expression to a binary expression.
+        # Converting ParseResult to List for easier manipulation.
         expr = t[0].asList()
         binary_expr = self.to_binary_expr(expr)
 
         return pp.ParseResults(binary_expr)
 
     def to_binary_expr(self, expr):
+        # Group together every pair of sub-expressions.
         if len(expr) <= 2:
             return expr
         return [expr[:2] + self.to_binary_expr(expr[2:])]
