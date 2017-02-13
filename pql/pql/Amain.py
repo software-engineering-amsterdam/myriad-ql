@@ -19,7 +19,8 @@ from pyparsing import *
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
     number = Word(nums + ".")
-    operand = number | identifier
+    arith_operand = number | identifier
+    bool_operand = Literal("true") | Literal("false") | identifier
     form = Literal("form")
     if_lit = Literal("if")
     l_curly = Suppress("{")
@@ -31,10 +32,18 @@ def parse(input_string):
     data_types = oneOf(["boolean", "money", "string"])
     signop = oneOf(["+", "-"])
     multop = oneOf(["*", "/"])
+
     arith_prec = operatorPrecedence(
-        operand,
+        arith_operand,
         [(multop, 2, opAssoc.LEFT),
          (signop, 2, opAssoc.LEFT),]
+    )
+
+    bool_prec = infixNotation(
+        bool_operand,
+        [("!", 1, opAssoc.RIGHT),
+         ("&", 2, opAssoc.LEFT),
+         ("|", 2, opAssoc.LEFT)]
     )
 
     # Expressions
@@ -45,6 +54,9 @@ def parse(input_string):
 
     arithmetic_statement = \
         OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
+    #
+    # boolean_statement = \
+    #     OneOrMore(boo)
 
     assignment_expr = \
         identifier.setResultsName("identifier") + \
@@ -57,7 +69,7 @@ def parse(input_string):
 
     field_expr = \
         Group(
-            quotedString.setResultsName("question_literal") +
+            quotedString.setResultsName("question_literal").addParseAction(removeQuotes) +
             assignment_expr.setResultsName("assignment_expression")
         )
 
@@ -67,7 +79,7 @@ def parse(input_string):
             Group(
                 if_lit +
                 l_paren +
-                arithmetic_statement.setResultsName("arithmetic_expression") +
+                arithmetic_statement +
                 r_paren
             ) +
             l_curly +
