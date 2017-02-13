@@ -7,11 +7,11 @@ public class Main {
 // 		 String tmp = "form Testing { Name1: \"Question\" boolean\n"
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
-		 		//+ "Name1: \"Question\" boolean\n"
-		 		//+ "if (\"text\" == \"text\") {"
-		 		//+ "Name2: \"Question\" boolean\n"
-		 		//+ " }"
-				//+ "Name3: \"Question\" boolean\n"
+		 		+ "Name1: \"Question\" boolean\n"
+		 		+ "if (22.12.16 == \"text\") {"
+		 		+ "Name2: \"Question\" boolean\n"
+		 		+ " }"
+				+ "Name3: \"Question\" boolean\n"
 		 		+ " }";
 		
 		 ANTLRInputStream input = new ANTLRInputStream( tmp );

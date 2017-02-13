@@ -1,21 +1,22 @@
 package ast.expresssion;
 
+import ast.atom.Atom;
 
 public abstract class Expression {
 
-	private String lhs;
-	private String rhs;
-	protected boolean eval;
+	final private Atom lhs;
+	final private Atom rhs;
+	// protected boolean eval;
 
-	public Expression(String lhs, String rhs) {
+	public Expression(Atom lhs, Atom rhs) {
 		// TODO fix eval check
 		this.lhs = lhs;
 		this.rhs = rhs;
 		// this.eval = lhs == rhs;
 	}
 
-	public boolean isEval() {
-		return eval;
-	}
+//	public boolean isEval() {
+//		return eval;
+//	}
 
 }

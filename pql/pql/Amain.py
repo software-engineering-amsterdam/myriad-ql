@@ -32,59 +32,67 @@ if __name__ == '__main__':
     # Tokens
     identifier = Word(alphas, alphanums + '_')
     number = Word(nums + ".")
-    form = Suppress("form")
+    form = Literal("form")
+    if_lit = Literal("if")
     lcurly = Suppress("{")
     rcurly = Suppress("}")
     lparen = Suppress("(")
     rparen = Suppress(")")
     colon = Suppress(":")
     assign = Suppress("=")
+    data_types = oneOf(["boolean", "money"])
 
     # Expressions
     arithmeticExpr = \
-        identifier + \
-        Optional(
-            oneOf(["+", "-"]) + \
-            identifier
+        Group(
+            identifier +
+            Optional(
+                oneOf(["+", "-"]) +
+                identifier
+            )
         )
 
+    arithmeticStmt = \
+        OneOrMore(arithmeticExpr | (lparen + arithmeticExpr + rparen))
+
     assignmentExpr = \
-        identifier.setResultsName("lhs") + \
+        identifier.setResultsName("identifier") + \
         colon + \
-        identifier.setResultsName("rhs") + \
+        data_types + \
         Optional(
-            assign + \
-            lparen + \
-            arithmeticExpr.setResultsName("aexpr") + \
-            rparen
+            assign +
+            arithmeticStmt
         )
 
     fieldExpr = \
-        quotedString.setResultsName("field") + \
-        assignmentExpr.setResultsName("assexpr")
+        Group(
+            quotedString.setResultsName("question_literal") +
+            assignmentExpr.setResultsName("assignment_expression")
+        )
 
     # Statements
     if_stmt = \
-        Suppress("if") + \
-        lparen + \
-        arithmeticExpr.setResultsName("aexpr") + \
-        rparen + \
-        lcurly + \
-        OneOrMore(fieldExpr) + \
-        rcurly
+        Group(
+            Group(
+                if_lit +
+                lparen +
+                arithmeticStmt.setResultsName("arithmetic_expression") +
+                rparen
+            ) +
+            lcurly +
+            OneOrMore(fieldExpr) +
+            rcurly
+        )
 
     # Program
     program = \
-        form + \
-        identifier.setResultsName("fi") + \
+        Group(
+            form +
+            identifier.setResultsName("form_identifier")
+        ) + \
         lcurly + \
         Group(
-            Optional(
-                Group(
-                    fieldExpr | if_stmt
-                ) + \
-                ZeroOrMore(Group(fieldExpr | if_stmt))
-            )
+            ZeroOrMore(fieldExpr | if_stmt)
         ) + \
         rcurly
 
