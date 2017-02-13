@@ -1,4 +1,4 @@
-package UvA.Gamma.Antlr.QL;// Generated from Gamma/src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
+package UvA.Gamma.Antlr.QL;// Generated from src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -18,26 +18,28 @@ public class QLParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		BOOL=18, STRING=19, INT=20, DATE=21, DEC=22, MONEY=23, ADD=24, SUB=25, 
-		NUMBER=26, QUESTION=27, ID=28, BRACKET_OPEN=29, BRACKET_CLOSE=30, WHITESPACE=31;
+		T__17=18, BOOL=19, STRING=20, INT=21, DATE=22, DEC=23, MONEY=24, ADD=25, 
+		SUB=26, NUMBER=27, QUESTION=28, ID=29, BRACKET_OPEN=30, BRACKET_CLOSE=31, 
+		WHITESPACE=32;
 	public static final int
-		RULE_form = 0, RULE_formItem = 1, RULE_input = 2, RULE_type = 3, RULE_condition = 4, 
-		RULE_boolExpr = 5, RULE_intExpr = 6;
+		RULE_form = 0, RULE_formItem = 1, RULE_input = 2, RULE_baseType = 3, RULE_type = 4, 
+		RULE_condition = 5, RULE_boolExpr = 6, RULE_intExpr = 7;
 	public static final String[] ruleNames = {
-		"form", "formItem", "input", "type", "condition", "boolExpr", "intExpr"
+		"form", "formItem", "input", "baseType", "type", "condition", "boolExpr", 
+		"intExpr"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'form'", "':'", "'('", "')'", "'if'", "'&&'", "'||'", "'<'", "'>'", 
-		"'<='", "'>='", "'!='", "'=='", "'true'", "'false'", "'*'", "'/'", "'boolean'", 
-		"'string'", "'integer'", "'date'", "'decimal'", "'money'", "'+'", "'-'", 
-		null, null, null, "'{'", "'}'"
+		null, "'form'", "':'", "'='", "'('", "')'", "'if'", "'&&'", "'||'", "'<'", 
+		"'>'", "'<='", "'>='", "'!='", "'=='", "'true'", "'false'", "'*'", "'/'", 
+		"'boolean'", "'string'", "'integer'", "'date'", "'decimal'", "'money'", 
+		"'+'", "'-'", null, null, null, "'{'", "'}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, "BOOL", "STRING", "INT", "DATE", "DEC", 
-		"MONEY", "ADD", "SUB", "NUMBER", "QUESTION", "ID", "BRACKET_OPEN", "BRACKET_CLOSE", 
-		"WHITESPACE"
+		null, null, null, null, null, null, null, "BOOL", "STRING", "INT", "DATE", 
+		"DEC", "MONEY", "ADD", "SUB", "NUMBER", "QUESTION", "ID", "BRACKET_OPEN", 
+		"BRACKET_CLOSE", "WHITESPACE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -116,27 +118,27 @@ public class QLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14);
-			match(T__0);
-			setState(15);
-			match(ID);
 			setState(16);
+			match(T__0);
+			setState(17);
+			match(ID);
+			setState(18);
 			match(BRACKET_OPEN);
-			setState(20);
+			setState(22);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__4 || _la==ID) {
+			while (_la==T__5 || _la==QUESTION) {
 				{
 				{
-				setState(17);
+				setState(19);
 				formItem();
 				}
 				}
-				setState(22);
+				setState(24);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(23);
+			setState(25);
 			match(BRACKET_CLOSE);
 			}
 		}
@@ -189,22 +191,22 @@ public class QLParser extends Parser {
 		FormItemContext _localctx = new FormItemContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_formItem);
 		try {
-			setState(27);
+			setState(29);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case ID:
+			case QUESTION:
 				_localctx = new InContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(25);
+				setState(27);
 				input();
 				}
 				break;
-			case T__4:
+			case T__5:
 				_localctx = new CondContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(26);
+				setState(28);
 				condition();
 				}
 				break;
@@ -224,8 +226,8 @@ public class QLParser extends Parser {
 	}
 
 	public static class InputContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public TerminalNode QUESTION() { return getToken(QLParser.QUESTION, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -246,13 +248,13 @@ public class QLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(29);
-			match(ID);
-			setState(30);
-			match(T__1);
 			setState(31);
 			match(QUESTION);
 			setState(32);
+			match(ID);
+			setState(33);
+			match(T__1);
+			setState(34);
 			type();
 			}
 		}
@@ -267,89 +269,122 @@ public class QLParser extends Parser {
 		return _localctx;
 	}
 
-	public static class TypeContext extends ParserRuleContext {
+	public static class BaseTypeContext extends ParserRuleContext {
 		public TerminalNode BOOL() { return getToken(QLParser.BOOL, 0); }
 		public TerminalNode STRING() { return getToken(QLParser.STRING, 0); }
 		public TerminalNode INT() { return getToken(QLParser.INT, 0); }
 		public TerminalNode DATE() { return getToken(QLParser.DATE, 0); }
 		public TerminalNode DEC() { return getToken(QLParser.DEC, 0); }
 		public TerminalNode MONEY() { return getToken(QLParser.MONEY, 0); }
-		public IntExprContext intExpr() {
-			return getRuleContext(IntExprContext.class,0);
+		public BaseTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
+		@Override public int getRuleIndex() { return RULE_baseType; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBaseType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BaseTypeContext baseType() throws RecognitionException {
+		BaseTypeContext _localctx = new BaseTypeContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_baseType);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(36);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOL) | (1L << STRING) | (1L << INT) | (1L << DATE) | (1L << DEC) | (1L << MONEY))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TypeContext extends ParserRuleContext {
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
+	 
+		public TypeContext() { }
+		public void copyFrom(TypeContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class Base_typeContext extends TypeContext {
+		public BaseTypeContext baseType() {
+			return getRuleContext(BaseTypeContext.class,0);
+		}
+		public Base_typeContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitType(this);
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBase_type(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpressionContext extends TypeContext {
+		public BaseTypeContext baseType() {
+			return getRuleContext(BaseTypeContext.class,0);
+		}
+		public IntExprContext intExpr() {
+			return getRuleContext(IntExprContext.class,0);
+		}
+		public ExpressionContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitExpression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_type);
+		enterRule(_localctx, 8, RULE_type);
 		try {
-			setState(44);
+			setState(45);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case BOOL:
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
+				_localctx = new Base_typeContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(34);
-				match(BOOL);
+				setState(38);
+				baseType();
 				}
 				break;
-			case STRING:
+			case 2:
+				_localctx = new ExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(35);
-				match(STRING);
-				}
-				break;
-			case INT:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(36);
-				match(INT);
-				}
-				break;
-			case DATE:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(37);
-				match(DATE);
-				}
-				break;
-			case DEC:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(38);
-				match(DEC);
-				}
-				break;
-			case MONEY:
-				enterOuterAlt(_localctx, 6);
-				{
 				setState(39);
-				match(MONEY);
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 7);
-				{
+				baseType();
 				setState(40);
 				match(T__2);
 				setState(41);
-				intExpr(0);
-				setState(42);
 				match(T__3);
+				setState(42);
+				intExpr(0);
+				setState(43);
+				match(T__4);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -368,10 +403,13 @@ public class QLParser extends Parser {
 			return getRuleContext(BoolExprContext.class,0);
 		}
 		public TerminalNode BRACKET_OPEN() { return getToken(QLParser.BRACKET_OPEN, 0); }
-		public FormItemContext formItem() {
-			return getRuleContext(FormItemContext.class,0);
-		}
 		public TerminalNode BRACKET_CLOSE() { return getToken(QLParser.BRACKET_CLOSE, 0); }
+		public List<FormItemContext> formItem() {
+			return getRuleContexts(FormItemContext.class);
+		}
+		public FormItemContext formItem(int i) {
+			return getRuleContext(FormItemContext.class,i);
+		}
 		public ConditionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -385,23 +423,36 @@ public class QLParser extends Parser {
 
 	public final ConditionContext condition() throws RecognitionException {
 		ConditionContext _localctx = new ConditionContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_condition);
+		enterRule(_localctx, 10, RULE_condition);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
-			match(T__4);
 			setState(47);
-			match(T__2);
+			match(T__5);
 			setState(48);
-			boolExpr(0);
-			setState(49);
 			match(T__3);
+			setState(49);
+			boolExpr(0);
 			setState(50);
-			match(BRACKET_OPEN);
+			match(T__4);
 			setState(51);
-			formItem();
-			setState(52);
+			match(BRACKET_OPEN);
+			setState(55);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==T__5 || _la==QUESTION) {
+				{
+				{
+				setState(52);
+				formItem();
+				}
+				}
+				setState(57);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(58);
 			match(BRACKET_CLOSE);
 			}
 		}
@@ -484,28 +535,28 @@ public class QLParser extends Parser {
 		int _parentState = getState();
 		BoolExprContext _localctx = new BoolExprContext(_ctx, _parentState);
 		BoolExprContext _prevctx = _localctx;
-		int _startState = 10;
-		enterRecursionRule(_localctx, 10, RULE_boolExpr, _p);
+		int _startState = 12;
+		enterRecursionRule(_localctx, 12, RULE_boolExpr, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(61);
+			setState(67);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				{
 				_localctx = new ComparisonContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(55);
+				setState(61);
 				intExpr(0);
-				setState(56);
+				setState(62);
 				((ComparisonContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12))) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__13))) != 0)) ) {
 					((ComparisonContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
@@ -513,7 +564,7 @@ public class QLParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(57);
+				setState(63);
 				intExpr(0);
 				}
 				break;
@@ -522,7 +573,7 @@ public class QLParser extends Parser {
 				_localctx = new BoolIdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(59);
+				setState(65);
 				match(ID);
 				}
 				break;
@@ -531,9 +582,9 @@ public class QLParser extends Parser {
 				_localctx = new BoolContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(60);
+				setState(66);
 				_la = _input.LA(1);
-				if ( !(_la==T__13 || _la==T__14) ) {
+				if ( !(_la==T__14 || _la==T__15) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -545,9 +596,9 @@ public class QLParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(68);
+			setState(74);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -556,12 +607,12 @@ public class QLParser extends Parser {
 					{
 					_localctx = new AndorContext(new BoolExprContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_boolExpr);
-					setState(63);
+					setState(69);
 					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-					setState(64);
+					setState(70);
 					((AndorContext)_localctx).op = _input.LT(1);
 					_la = _input.LA(1);
-					if ( !(_la==T__5 || _la==T__6) ) {
+					if ( !(_la==T__6 || _la==T__7) ) {
 						((AndorContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 					}
 					else {
@@ -569,14 +620,14 @@ public class QLParser extends Parser {
 						_errHandler.reportMatch(this);
 						consume();
 					}
-					setState(65);
+					setState(71);
 					boolExpr(5);
 					}
 					} 
 				}
-				setState(70);
+				setState(76);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
 			}
 		}
@@ -660,14 +711,14 @@ public class QLParser extends Parser {
 		int _parentState = getState();
 		IntExprContext _localctx = new IntExprContext(_ctx, _parentState);
 		IntExprContext _prevctx = _localctx;
-		int _startState = 12;
-		enterRecursionRule(_localctx, 12, RULE_intExpr, _p);
+		int _startState = 14;
+		enterRecursionRule(_localctx, 14, RULE_intExpr, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(74);
+			setState(80);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
@@ -676,7 +727,7 @@ public class QLParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(72);
+				setState(78);
 				match(NUMBER);
 				}
 				break;
@@ -685,7 +736,7 @@ public class QLParser extends Parser {
 				_localctx = new IntIdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(73);
+				setState(79);
 				match(ID);
 				}
 				break;
@@ -693,27 +744,27 @@ public class QLParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(84);
+			setState(90);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(82);
+					setState(88);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
 						_localctx = new DivContext(new IntExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_intExpr);
-						setState(76);
+						setState(82);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(77);
+						setState(83);
 						((DivContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__15 || _la==T__16) ) {
+						if ( !(_la==T__16 || _la==T__17) ) {
 							((DivContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -721,7 +772,7 @@ public class QLParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(78);
+						setState(84);
 						intExpr(5);
 						}
 						break;
@@ -729,9 +780,9 @@ public class QLParser extends Parser {
 						{
 						_localctx = new AddContext(new IntExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_intExpr);
-						setState(79);
+						setState(85);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(80);
+						setState(86);
 						((AddContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==ADD || _la==SUB) ) {
@@ -742,16 +793,16 @@ public class QLParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(81);
+						setState(87);
 						intExpr(4);
 						}
 						break;
 					}
 					} 
 				}
-				setState(86);
+				setState(92);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
 			}
 		}
@@ -768,9 +819,9 @@ public class QLParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 5:
-			return boolExpr_sempred((BoolExprContext)_localctx, predIndex);
 		case 6:
+			return boolExpr_sempred((BoolExprContext)_localctx, predIndex);
+		case 7:
 			return intExpr_sempred((IntExprContext)_localctx, predIndex);
 		}
 		return true;
@@ -793,30 +844,30 @@ public class QLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3!Z\4\2\t\2\4\3\t\3"+
-		"\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\2\7\2\25\n\2\f"+
-		"\2\16\2\30\13\2\3\2\3\2\3\3\3\3\5\3\36\n\3\3\4\3\4\3\4\3\4\3\4\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5/\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6"+
-		"\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7@\n\7\3\7\3\7\3\7\7\7E\n\7\f\7\16"+
-		"\7H\13\7\3\b\3\b\3\b\5\bM\n\b\3\b\3\b\3\b\3\b\3\b\3\b\7\bU\n\b\f\b\16"+
-		"\bX\13\b\3\b\2\4\f\16\t\2\4\6\b\n\f\16\2\7\3\2\n\17\3\2\20\21\3\2\b\t"+
-		"\3\2\22\23\3\2\32\33`\2\20\3\2\2\2\4\35\3\2\2\2\6\37\3\2\2\2\b.\3\2\2"+
-		"\2\n\60\3\2\2\2\f?\3\2\2\2\16L\3\2\2\2\20\21\7\3\2\2\21\22\7\36\2\2\22"+
-		"\26\7\37\2\2\23\25\5\4\3\2\24\23\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26"+
-		"\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7 \2\2\32\3\3\2\2\2\33\36"+
-		"\5\6\4\2\34\36\5\n\6\2\35\33\3\2\2\2\35\34\3\2\2\2\36\5\3\2\2\2\37 \7"+
-		"\36\2\2 !\7\4\2\2!\"\7\35\2\2\"#\5\b\5\2#\7\3\2\2\2$/\7\24\2\2%/\7\25"+
-		"\2\2&/\7\26\2\2\'/\7\27\2\2(/\7\30\2\2)/\7\31\2\2*+\7\5\2\2+,\5\16\b\2"+
-		",-\7\6\2\2-/\3\2\2\2.$\3\2\2\2.%\3\2\2\2.&\3\2\2\2.\'\3\2\2\2.(\3\2\2"+
-		"\2.)\3\2\2\2.*\3\2\2\2/\t\3\2\2\2\60\61\7\7\2\2\61\62\7\5\2\2\62\63\5"+
-		"\f\7\2\63\64\7\6\2\2\64\65\7\37\2\2\65\66\5\4\3\2\66\67\7 \2\2\67\13\3"+
-		"\2\2\289\b\7\1\29:\5\16\b\2:;\t\2\2\2;<\5\16\b\2<@\3\2\2\2=@\7\36\2\2"+
-		">@\t\3\2\2?8\3\2\2\2?=\3\2\2\2?>\3\2\2\2@F\3\2\2\2AB\f\6\2\2BC\t\4\2\2"+
-		"CE\5\f\7\7DA\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2\2G\r\3\2\2\2HF\3\2\2"+
-		"\2IJ\b\b\1\2JM\7\34\2\2KM\7\36\2\2LI\3\2\2\2LK\3\2\2\2MV\3\2\2\2NO\f\6"+
-		"\2\2OP\t\5\2\2PU\5\16\b\7QR\f\5\2\2RS\t\6\2\2SU\5\16\b\6TN\3\2\2\2TQ\3"+
-		"\2\2\2UX\3\2\2\2VT\3\2\2\2VW\3\2\2\2W\17\3\2\2\2XV\3\2\2\2\n\26\35.?F"+
-		"LTV";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"`\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\7\2"+
+		"\27\n\2\f\2\16\2\32\13\2\3\2\3\2\3\3\3\3\5\3 \n\3\3\4\3\4\3\4\3\4\3\4"+
+		"\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6\60\n\6\3\7\3\7\3\7\3\7\3\7\3"+
+		"\7\7\78\n\7\f\7\16\7;\13\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bF\n"+
+		"\b\3\b\3\b\3\b\7\bK\n\b\f\b\16\bN\13\b\3\t\3\t\3\t\5\tS\n\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\7\t[\n\t\f\t\16\t^\13\t\3\t\2\4\16\20\n\2\4\6\b\n\f\16"+
+		"\20\2\b\3\2\25\32\3\2\13\20\3\2\21\22\3\2\t\n\3\2\23\24\3\2\33\34a\2\22"+
+		"\3\2\2\2\4\37\3\2\2\2\6!\3\2\2\2\b&\3\2\2\2\n/\3\2\2\2\f\61\3\2\2\2\16"+
+		"E\3\2\2\2\20R\3\2\2\2\22\23\7\3\2\2\23\24\7\37\2\2\24\30\7 \2\2\25\27"+
+		"\5\4\3\2\26\25\3\2\2\2\27\32\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\33"+
+		"\3\2\2\2\32\30\3\2\2\2\33\34\7!\2\2\34\3\3\2\2\2\35 \5\6\4\2\36 \5\f\7"+
+		"\2\37\35\3\2\2\2\37\36\3\2\2\2 \5\3\2\2\2!\"\7\36\2\2\"#\7\37\2\2#$\7"+
+		"\4\2\2$%\5\n\6\2%\7\3\2\2\2&\'\t\2\2\2\'\t\3\2\2\2(\60\5\b\5\2)*\5\b\5"+
+		"\2*+\7\5\2\2+,\7\6\2\2,-\5\20\t\2-.\7\7\2\2.\60\3\2\2\2/(\3\2\2\2/)\3"+
+		"\2\2\2\60\13\3\2\2\2\61\62\7\b\2\2\62\63\7\6\2\2\63\64\5\16\b\2\64\65"+
+		"\7\7\2\2\659\7 \2\2\668\5\4\3\2\67\66\3\2\2\28;\3\2\2\29\67\3\2\2\29:"+
+		"\3\2\2\2:<\3\2\2\2;9\3\2\2\2<=\7!\2\2=\r\3\2\2\2>?\b\b\1\2?@\5\20\t\2"+
+		"@A\t\3\2\2AB\5\20\t\2BF\3\2\2\2CF\7\37\2\2DF\t\4\2\2E>\3\2\2\2EC\3\2\2"+
+		"\2ED\3\2\2\2FL\3\2\2\2GH\f\6\2\2HI\t\5\2\2IK\5\16\b\7JG\3\2\2\2KN\3\2"+
+		"\2\2LJ\3\2\2\2LM\3\2\2\2M\17\3\2\2\2NL\3\2\2\2OP\b\t\1\2PS\7\35\2\2QS"+
+		"\7\37\2\2RO\3\2\2\2RQ\3\2\2\2S\\\3\2\2\2TU\f\6\2\2UV\t\6\2\2V[\5\20\t"+
+		"\7WX\f\5\2\2XY\t\7\2\2Y[\5\20\t\6ZT\3\2\2\2ZW\3\2\2\2[^\3\2\2\2\\Z\3\2"+
+		"\2\2\\]\3\2\2\2]\21\3\2\2\2^\\\3\2\2\2\13\30\37/9ELRZ\\";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

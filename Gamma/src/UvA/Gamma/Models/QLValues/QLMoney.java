@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * Created by Tjarco on 13-02-17.
  */
-public class QLMoney extends QLValue<Double> {
+public class  QLMoney extends QLValue<Double> {
 
     public QLMoney(){
         super(Type.MONEY);

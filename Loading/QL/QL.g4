@@ -20,17 +20,13 @@ block returns [Block result]
 			| statement { $result.addStatement($statement.result); })*  
 		  '}'
 		; 
-		
-// TODO replace by other definition		
-// question returns [Question result]
-	// : STRING { $result = new Question($STRING.text); };
 
 // TODO decide on maximum characters on one line
 question returns [Question result]
 		: ID ':' STRING type
-		{ $result = new Question($ID.text, $STRING.text, $type.text); }
+		{ $result = new Question($ID.text, $STRING.text, $type.result); }
 		| ID ':' STRING type computed_question
-		{ $result = new Question($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, Integer.parseInt($computed_question.text));}
 		;
 
 type returns [Type result]
@@ -72,12 +68,10 @@ binOp returns [BinaryExpression result]
  | '||' { $result = new OrExpression(); }
  ;
 
+// TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
   ;
-
-arithOp
- : '+' | '-' | '/' | '*';
 
 atom returns [Atom result]
  :  DECIMAL { System.out.println($DECIMAL.text);
@@ -99,7 +93,7 @@ atom returns [Atom result]
  ;
 
 // TODO look up conventions tokens/names capital letters
-BOOL: ('true' | 'false');
+BOOL: 'true' | 'false';
 IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
@@ -115,7 +109,7 @@ MONEY : INT '.' TWO_DIGIT;
 
 DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT; // TODO check valid date
 
-STRING: ('"' .*? '"');
+STRING: '"' .*? '"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
