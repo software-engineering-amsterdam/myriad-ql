@@ -7,7 +7,7 @@ public class StringLiteral {
         this.stringLiteral = stringLiteral;
     }
 
-    public String getStringLiteral() {
+    public String toString() {
         return stringLiteral;
     }
 }
