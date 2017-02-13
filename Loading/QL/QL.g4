@@ -36,22 +36,23 @@ type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 computed_question: '(' type '-' type | type '+' type ')' ;
 
 statement returns [Statement result]
- : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement(true, $block.result)}
- | WHILE parenthesisExpr block { $result = new Statement(true, $block.result)}
+ : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);}
+ | WHILE parenthesisExpr block { $result = new Statement($parenthesisExpr.result, $block.result);}
  ;
 
-parenthesisExpr
- : '(' expr ')';
+parenthesisExpr returns [Expression result]
+ : '(' expr ')' { $result = $expr.result; };
 
-expr
- : atom relOp atom
- | atom boolOp atom
- | atom arithOp atom
- | '!' atom
- | '+' atom
- | '-' atom
- | atom
- ;
+expr returns [Expression result]
+ : lhs=atom '==' rhs=atom { $result = new Expression($lhs.result, $rhs.result); };
+// | atom relOp atom
+// | atom boolOp atom
+// | atom arithOp atom
+// | '!' atom
+// | '+' atom
+// | '-' atom
+// | atom
+// ;
 
 relOp
  : '==' | '!=' | '<=' | '>=' | '>' | '<';
@@ -62,13 +63,15 @@ boolOp
 arithOp
  : '+' | '-' | '/' | '*';
 
-atom  returns [Atom result]
+atom returns [Atom result]
  : // DECIMAL
  // | MONEY
- 	INT 
+   INT 
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
- // | STRING
+ | STRING { System.out.println($STRING.text);
+    $result = new StringAtom($STRING.text);
+            }
  // | BOOL
  // | DDMMYY
  // | ID

@@ -61,13 +61,26 @@ class QuestionnaireParser(object):
 
         return pp.infixNotation(expression_types, [
             (pp.oneOf('- !'), 1, pp.opAssoc.RIGHT),
-            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT),
-            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT),
-            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT),
-            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT),
-            (pp.Literal('&&'), 2, pp.opAssoc.LEFT),
-            (pp.Literal('||'), 2, pp.opAssoc.LEFT),
+            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.Literal('&&'), 2, pp.opAssoc.LEFT, self.convert_expr),
+            (pp.Literal('||'), 2, pp.opAssoc.LEFT, self.convert_expr),
         ])
+
+    def convert_expr(self, s, l, t):
+        # Converting ParseResult to List for easier manipulation.
+        expr = t[0].asList()
+        binary_expr = self.to_binary_expr(expr)
+
+        return pp.ParseResults(binary_expr)
+
+    def to_binary_expr(self, expr):
+        # Group together every pair of sub-expressions.
+        if len(expr) <= 2:
+            return expr
+        return [expr[:2] + self.to_binary_expr(expr[2:])]
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str)

@@ -16,12 +16,15 @@ HOST_VIRTUALENV = $(HOST_VIRTUALENV_DIR)/.dirstamp
 
 .PHONY: install_virtualenv
 
-install_virtualenv :
+install_virtualenv:
 	virtualenv --python=python$(PYVER_MAJOR).$(PYVER_MINOR) $(HOST_OUT_INSTALL)/usr
 	touch $(HOST_VIRTUALENV)
 
 	$(HOST_OUT_INSTALL)/usr/bin/pip install pyparsing
 	$(HOST_OUT_INSTALL)/usr/bin/pip install argparse
+
+run: install_virtualenv
+	$(HOST_OUT_INSTALL)/usr/bin/python src/start.py -f wicked.ql
 
 clean: FORCE
 	rm -Rf $(HOST_OUT_INSTALL)

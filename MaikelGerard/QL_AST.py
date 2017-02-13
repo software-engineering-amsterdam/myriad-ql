@@ -101,7 +101,8 @@ class ConditionalNode(Node):
             self.else_block = BlockNode("else", input[4])
 
     def __str__(self, indent=0):
-        output = indent * "  " + "{}:\n".format(self.node_type)
+        output = indent * "  " + "{}:({})\n".format(self.node_type,
+                                                    self.expression)
 
         for child in self.children:
             output += child.__str__(indent + 1)
@@ -111,15 +112,46 @@ class ConditionalNode(Node):
 
 
 class ExpressionNode(Node):
-    def __init__(self, input):
+    def __init__(self, expr_data):
         super(ExpressionNode, self).__init__("expression")
 
-        self.left = input[0]
-        self.op = input[1]
+        self.right = None
+        self.op = None
+        self.left = None
+
+        # A single variable or number
+        if not isinstance(expr_data, list):
+            self.left = expr_data
+
+        elif expr_data[0] in ['!', '-']:  # Postfix operators
+            self.op = expr_data[0]
+            self.right = self.add_expression(expr_data[1])
+
+        else:  # Infix operators
+            self.left = self.add_expression(expr_data[0])
+            self.op = expr_data[1]
+            self.right = self.add_expression(expr_data[2])
+
+    @staticmethod
+    def add_expression(expr_data):
+        if isinstance(expr_data, list):
+            return ExpressionNode(expr_data)
+        return expr_data
 
     def __str__(self, indent=0):
-        output = indent * "  " + "{}:".format(self.node_type)
+        output = ""
+        if self.left is not None:
+            if isinstance(self.left, ExpressionNode):
+                output += "({})".format(self.left)
+            else:
+                output += "{}".format(self.left)
+        if self.right is not None:
+            if isinstance(self.right, ExpressionNode):
+                output += " {} ({})".format(self.op, self.right)
+            else:
+                output += " {} {}".format(self.op, self.right)
         return output
+
 
 if __name__ == '__main__':
     form1 = """
@@ -132,7 +164,7 @@ if __name__ == '__main__':
             sellingPrice: "Price the house was sold for:" money
             privateDebt: "Private debts for the sold house:" money
             valueResidue: "Value residue:" money(300 * 100 - 20 * 10 * (25 - 3))
-            if (newPrice > 20) {
+            if (newPrice) {
                 privateDebt: "Private debts for the sold house:" money
             }
             else {
@@ -145,5 +177,5 @@ if __name__ == '__main__':
     """
 
     parser = QuestionnaireParser()
-    print QuestionnaireAST(parser.parse(form1)).root
+    print (QuestionnaireAST(parser.parse(form1)).root)
 

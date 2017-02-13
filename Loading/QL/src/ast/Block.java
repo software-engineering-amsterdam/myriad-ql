@@ -1,5 +1,6 @@
 package ast;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -10,6 +11,10 @@ public class Block extends Node { // TODO rename block
 	
 	public List<Question> getQuestions() {
 		return questions;
+	}
+
+	public List<Statement> getStatements() {
+		return statements;
 	}
 	
 	public Block() {
@@ -26,9 +31,4 @@ public class Block extends Node { // TODO rename block
 	public void addStatement(Statement statement) {
 		this.statements.add(statement);
 	}
-	
-	void print() {
-		// System.out.println(questions.first);
-	}
-	
 }
