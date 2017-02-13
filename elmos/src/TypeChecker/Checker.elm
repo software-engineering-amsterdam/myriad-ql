@@ -2,15 +2,18 @@ module TypeChecker.Checker exposing (..)
 
 import AST exposing (..)
 import DictSet exposing (..)
+import Set
 
 
 type alias Index a =
     DictSet String a
 
 
-checkUndefinedQuestions : Form -> List String
-checkUndefinedQuestions a =
-    []
+checkUndefinedVarReferences : Form -> Set.Set String
+checkUndefinedVarReferences form =
+    Set.diff
+        (usedVarsFromList form.items |> Set.fromList)
+        (declaredVarFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
 
 
 emptyIndex : Index a
@@ -23,12 +26,12 @@ mergeIndex =
     List.foldr DictSet.union emptyIndex
 
 
-declaredVarFromList : List FormItem -> DictSet String ( String, ValueType )
+declaredVarFromList : List FormItem -> Index ( String, ValueType )
 declaredVarFromList =
     List.map declaredVars >> mergeIndex
 
 
-declaredVars : FormItem -> DictSet String ( String, ValueType )
+declaredVars : FormItem -> Index ( String, ValueType )
 declaredVars item =
     case item of
         FieldItem { id, valueType } ->
@@ -40,11 +43,53 @@ declaredVars item =
                 (declaredVarFromList elseBranch)
 
 
-getQuestionId : FormItem -> Maybe String
-getQuestionId question =
-    case question of
-        FieldItem { id } ->
-            Just id
+usedVarsFromList : List FormItem -> List String
+usedVarsFromList formItems =
+    List.map usedVarsFromItem formItems
+        |> List.concat
 
-        IfItem _ ->
-            Nothing
+
+usedVarsFromItem : FormItem -> List String
+usedVarsFromItem item =
+    expressionFromItem item
+        |> Maybe.map usedVars
+        |> Maybe.withDefault []
+
+
+expressionFromItem : FormItem -> Maybe Expression
+expressionFromItem item =
+    case item of
+        FieldItem { valueExpression } ->
+            valueExpression
+
+        IfItem { expression } ->
+            Just expression
+
+
+usedVars : Expression -> List String
+usedVars expression =
+    case expression of
+        Var s ->
+            [ s ]
+
+        Integer _ ->
+            []
+
+        Boolean _ ->
+            []
+
+        ParensExpression expr ->
+            usedVars expr
+
+        -- Kunnen deze niet samen? Bijvoorbeeld door middel van "BinaryExpression"
+        ArithmeticExpression _ exprLeft exprRight ->
+            usedVars exprLeft ++ usedVars exprRight
+
+        RelationExpression _ exprLeft exprRight ->
+            usedVars exprLeft ++ usedVars exprRight
+
+        LogicExpression _ exprLeft exprRight ->
+            usedVars exprLeft ++ usedVars exprRight
+
+        ComparisonExpression _ exprLeft exprRight ->
+            usedVars exprLeft ++ usedVars exprRight

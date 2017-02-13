@@ -62,6 +62,17 @@ formItemsTests =
                     }
                 ]
           )
+        , ( "should parse multiple form items"
+          , """"label"
+          id: integer = bar
+
+          "label"
+          id: integer"""
+          , Just
+                [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "bar") }
+                , FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
+                ]
+          )
         ]
 
 
@@ -94,6 +105,10 @@ fieldTests =
         , ( "should parse field with expression"
           , "\"label\" id: integer = 1 +3"
           , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (ArithmeticExpression Plus (Integer 1) (Integer 3)) }
+          )
+        , ( "should parse field with expression that is only a var name"
+          , "\"label\" id: integer = someVarName"
+          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "someVarName") }
           )
         ]
 
