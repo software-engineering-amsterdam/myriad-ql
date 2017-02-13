@@ -89,10 +89,10 @@ anyAtom =
     lazy <|
         \() ->
             choice
-                [ varAtom
-                , integerAtom
+                [ integerAtom
                 , booleanAtom
                 , parensAtom
+                , varAtom
                 ]
 
 

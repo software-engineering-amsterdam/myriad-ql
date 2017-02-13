@@ -4,7 +4,7 @@ import Parser.Expression exposing (expression)
 import Test exposing (Test, describe)
 import AST
     exposing
-        ( Expression(Var, Integer, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
+        ( Expression(Var, Integer, Boolean, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
         , Operator(Plus, Minus, Divide, Multiply)
         , Relation(LessThan, GreaterThan, GreaterThanOrEqual, LessThanOrEqual)
         , Comparison(Equal, NotEqual)
@@ -31,6 +31,7 @@ atomTests =
         [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
         , ( "Should parse int literal", "2", Just (Integer 2) )
         , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Integer 2)) )
+        , ( "Should parse parens boolean literal", "true", Just (Boolean True) )
         ]
 
 
