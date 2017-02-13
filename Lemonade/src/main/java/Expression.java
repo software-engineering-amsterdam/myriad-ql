@@ -3,7 +3,6 @@
  */
 public abstract class Expression {
     private Types type;
-
     private OperatorType operator;
 
     private int left;
