@@ -4,17 +4,21 @@ import ast.atom.Atom;
 
 public abstract class BinaryExpression extends Expression {
 
-	final private Atom lhs;
-	final private Atom rhs;
+	private Atom lhs;
+	private Atom rhs;
 	// protected boolean eval;
-
-	public BinaryExpression(Atom lhs, Atom rhs) {
-		// TODO fix eval check
+	
+	// TODO is this preferred over a constructor with lhs and rhs?
+	public BinaryExpression() {
+//		this.lhs = lhs;
+//		this.rhs = rhs;
+	}
+	
+	public void setElements(Atom lhs, Atom rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
-		// this.eval = lhs == rhs;
 	}
-
+	
 //	public boolean isEval() {
 //		return eval;
 //	}
