@@ -2,7 +2,82 @@ from unittest import TestCase, main
 from form_parser import *
 
 
+class TestGrammar(TestCase):
+    correctSentences = [
+        (Grammar.expression, "x <= 3"),
+        (Grammar.expression, "x * 3"),
+        (Grammar.expression, "x + y / 4"),
+        (Grammar.expression, "x && true"),
+        (Grammar.expression, "false == true"), # FIXME fails test due to grammar bug
+        (Grammar.expression, "true || !false"),
+        (Grammar.question, "x : \"y\" integer"),
+        (Grammar.question, "x : \"y\" integer = 2 + 3"),
+        (Grammar.conditional, "if true { }"),
+        (Grammar.conditional, "if true { } else { }"),
+        (Grammar.form, "form FormName { }")
+    ]
+
+    incorrectSentences = [
+        (Grammar.expression, "x <= false"),
+        (Grammar.expression, "x * * 3"),
+        (Grammar.expression, "x + form"),
+        (Grammar.expression, "x && 0"),
+        (Grammar.expression, "false == 0"),
+        (Grammar.expression, "true * false"),
+        (Grammar.expression, ""),
+        (Grammar.question, "x : y integer"),
+        (Grammar.question, "\"x\" : \"y\" integer"),
+        (Grammar.question, "x : \"y\" float"),
+        (Grammar.question, "x : \"y\" integer == 3"),
+        (Grammar.question, "x : \"y\" integer = 3 * * 3"),
+        (Grammar.question, "x : \"y\" integer ="),
+        (Grammar.conditional, "if 2 { }"),
+        (Grammar.conditional, "if true { pass }"),
+        (Grammar.conditional, "if true && 3 { }"),
+        (Grammar.conditional, "if true { } else false { }"),
+    ]
+
+    def testCorrectSentences(self):
+        for grammar, sentence in self.correctSentences:
+            self.assertTrue(grammar.parseString(sentence, parseAll=True))
+
+    def testIncorrectSentences(self):
+        for grammar, sentence in self.incorrectSentences:
+            self.assertRaises(ParseException,
+                              lambda grammar, sentence: grammar.parseString(
+                                  sentence, parseAll=True), grammar, sentence)
+
+
 class TestParser(TestCase):
+    '''
+    expressions = [
+        ("2 + 3", BinaryOperator(Constant(2, Datatype.integer),
+                                 Operator["+"],
+                                 Constant(3, Datatype.integer))),
+        ("2 + 3 + 4", BinrayOperator(BinaryOperator(Constant(2,
+                                                             Datatype.integer),
+                                                    Operator["+"],
+                                                    Constant(3,
+                                                             Datatype.integer)),
+                                     Operator["+"],
+                                     Constant(4, Datatype.integer)),
+        ("2 * 3 + 4", BinrayOperator(BinaryOperator(Constant(2,
+                                                             Datatype.integer),
+                                                    Operator["*"],
+                                                    Constant(3,
+                                                             Datatype.integer)),
+                                     Operator["+"],
+                                     Constant(4, Datatype.integer)),
+        ("2 + 3 * 4", BinrayOperator(Constant(2, Datatype.integer),
+                                     Operator["+"],
+                                     BinaryOperator(Constant(3,
+                                                             Datatype.integer),
+                                                    Operator["*"],
+                                                    Constant(4,
+                                                             Datatype.integer))),
+    }
+    '''
+
     def testParseExpression(self):
         forms = [
             ("2 + 3", "(2 + 3)"),
@@ -36,29 +111,6 @@ class TestParser(TestCase):
             self.assertEqual(str(Parser.parse_conditional(
                 Grammar.conditional.parseString(form, parseAll=True))),
                 result, "incorrect ast")
-
-    def testGrammar(self):
-        forms = [(Grammar.expression, "x <= false"),
-                 (Grammar.expression, "x * * 3"),
-                 (Grammar.expression, "x + form"),
-                 (Grammar.expression, "x && 0"),
-                 (Grammar.expression, "false == 0"),
-                 (Grammar.expression, "true * false"),
-                 (Grammar.expression, ""),
-                 (Grammar.question, "x : y integer"),
-                 (Grammar.question, "\"x\" : \"y\" integer"),
-                 (Grammar.question, "x : \"y\" float"),
-                 (Grammar.question, "x : \"y\" integer == 3"),
-                 (Grammar.question, "x : \"y\" integer = 3 * * 3"),
-                 (Grammar.question, "x : \"y\" integer ="),
-                 (Grammar.conditional, "if 2 { }"),
-                 (Grammar.conditional, "if true { pass }"),
-                 (Grammar.conditional, "if true && 3 { }"),
-                 ]
-        for grammar, form in forms:
-            self.assertRaises(ParseException,
-                              lambda grammar, form: grammar.parseString(
-                                  form, parseAll=True), grammar, form)
 
 
 if __name__ == "__main__":

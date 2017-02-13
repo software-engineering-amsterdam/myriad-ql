@@ -4,6 +4,13 @@ Datatype = Enum("Datatype", "boolean string integer decimal money")
 Operator = Enum("Operator", "+ - * / ! && || < > <= >= == !=")
 
 
+class Node:
+
+    # TODO generic tree node comparison based on attrs dictionary
+    def __eq__(self, other):
+        return True
+
+
 class Form:
 
     def __init__(self, name, statements):
@@ -11,8 +18,8 @@ class Form:
         self.statements = statements
 
     def __str__(self):
-        return "form {} [\n{}\n]".format(self.name, "\n".join(
-            [str(s) for s in self.statements]))
+        return "form {} [\n{}\n]".format(self.name,
+            "\n".join([s.__str__(4) for s in self.statements]))
 
 
 class Conditional:
@@ -22,13 +29,16 @@ class Conditional:
         self.statements = statements
         self.alternative = alternative
 
-    def __str__(self):
+    def __str__(self, indentation=0):
         if self.alternative is not None:
-            return "if {} [\n{}\n]\nelse [\n{}\n]".format(
-                self.condition, "\n".join([str(s) for s in self.statements]),
-                "\n".join([str(s) for s in self.alternative]))
-        return "if {} [\n{}\n]".format(self.condition, "\n".join(
-            [str(s) for s in self.statements]))
+            return "{}if {} [\n{}\n{}]\n{}else [\n{}\n]".format(
+                " " * indentation, self.condition,
+                "\n".join([s.__str__(indentation + 4) for s in self.statements]),
+                " " * indentation, " " * indentation,
+                "\n".join([s.__str__(indentation + 4) for s in self.alternative]))
+        return "{}if {} [\n{}\n{}]".format(" " * indentation, self.condition,
+            "\n".join([s.__str__(indentation + 4) for s in self.statements]),
+            " " * indentation)
 
 
 class Question:
@@ -39,12 +49,13 @@ class Question:
         self.datatype = datatype
         self.expression = expression
 
-    def __str__(self):
+    def __str__(self, indentation=0):
         if self.expression is not None:
-            return "{}: \"{}\" {} = {}".format(
-                self.name, self.label, self.datatype.name, self.expression)
-        return "{}: \"{}\" {}".format(
-            self.name, self.label, self.datatype.name)
+            return "{}{}: \"{}\" {} = {}".format(
+                " " * indentation, self.name, self.label, self.datatype.name,
+                self.expression)
+        return "{}{}: \"{}\" {}".format(
+            " " * indentation, self.name, self.label, self.datatype.name)
 
 
 class UnaryOperator:
@@ -65,8 +76,7 @@ class BinaryOperator:
         self.right = right
 
     def __str__(self):
-        return "({} {} {})".format(
-            self.left, self.operator.name, self.right)
+        return "({} {} {})".format(self.left, self.operator.name, self.right)
 
 
 class Identifier:

@@ -5,6 +5,6 @@ form BoxHouseOwning {
     if true {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
-        valueResidue: "Value residue:" money = 3 >= 5 && true
+        valueResidue: "Value residue:" money = sellingPrice - privateDebt
     }
 }

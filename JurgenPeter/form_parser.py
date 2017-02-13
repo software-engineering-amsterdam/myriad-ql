@@ -6,7 +6,8 @@ class Grammar:
     dataType = oneOf("boolean string integer decimal money")
 
     identifier = Word(alphas).addCondition(
-        lambda tokens: tokens[0] not in ["true", "false", "form", "if", "else"]
+        lambda tokens: tokens[0] not in """true false form if else boolean
+                                        string integer decimal money""".split()
     )
 
     true = Literal("true").setParseAction(lambda _: True)
@@ -15,11 +16,11 @@ class Grammar:
     mul_op = oneOf("* /")
     add_op = oneOf("+ -")
     sign_op = oneOf("+ -")
-    compr_op = oneOf("< > <= >= == !=")
     neg_op = "!"
     dis_op = "||"
     con_op = "&&"
     eq_op = oneOf("== !=")
+    compr_op = oneOf("< > <= >= == !=")
 
     semicolon = Suppress(":")
     bracket_open = Suppress("{")
@@ -33,7 +34,7 @@ class Grammar:
 
     compr_expr = Group(num_expr + compr_op + num_expr)
 
-    bool_atom = identifier ^ true ^ false ^ compr_expr
+    bool_atom = identifier ^ true ^ false ^ compr_expr # FIXME compr_expr break eq_op in bool_expr
     bool_expr = Group(infixNotation(bool_atom, [(neg_op, 1, opAssoc.RIGHT),
                                                 (eq_op, 2, opAssoc.LEFT),
                                                 (con_op, 2, opAssoc.LEFT),
@@ -118,8 +119,10 @@ class Parser:
                 return Constant(tokens[1:-1], Datatype.string)
             return Identifier(tokens)
         else:
-            # When the argument is a list of parsed groups and tokens, the
-            # inner groups are resursively parsed into expressions first.
+            # When the argument is a list of (grouped) tokens, these are
+            # recursively parsed into expressions first. That way, we can build
+            # the parse tree node for the current expression immediately
+            # afterwards.
             tokens = [Parser.parse_expression(t) for t in tokens]
             if len(tokens) == 2:
                 return UnaryOperator(*tokens[0:2])
