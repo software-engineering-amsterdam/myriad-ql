@@ -30,6 +30,12 @@ init =
         |> update (OnDslInput """form taxOfficeExample {
   "Name?"
     name : string
+
+  "Age?"
+    age : integer
+  "Wallet"
+    wallet : money
+
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
@@ -55,6 +61,7 @@ baseFormData =
     FormData.empty
         |> FormData.withBoolean "hasSoldHouse" True
         |> FormData.withString "name" "Paco"
+        |> FormData.withInteger "age" 25
 
 
 update : Msg -> Model -> Model

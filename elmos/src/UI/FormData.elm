@@ -28,21 +28,10 @@ withBoolean k v =
     Dict.insert k (Boolean v)
 
 
-withString : String -> String -> FormData -> FormData
-withString k v =
-    Dict.insert k (Str v)
-
-
 getBoolean : String -> FormData -> Maybe Bool
 getBoolean key data =
     Dict.get key data
         |> Maybe.andThen onBoolean
-
-
-getString : String -> FormData -> Maybe String
-getString key data =
-    Dict.get key data
-        |> Maybe.andThen onString
 
 
 onBoolean : FormValue -> Maybe Bool
@@ -55,10 +44,42 @@ onBoolean formValue =
             Nothing
 
 
+withString : String -> String -> FormData -> FormData
+withString k v =
+    Dict.insert k (Str v)
+
+
+getString : String -> FormData -> Maybe String
+getString key data =
+    Dict.get key data
+        |> Maybe.andThen onString
+
+
 onString : FormValue -> Maybe String
 onString formValue =
     case formValue of
         Str b ->
+            Just b
+
+        _ ->
+            Nothing
+
+
+withInteger : String -> Int -> FormData -> FormData
+withInteger k v =
+    Dict.insert k (Integer v)
+
+
+getInteger : String -> FormData -> Maybe Int
+getInteger key data =
+    Dict.get key data
+        |> Maybe.andThen onInteger
+
+
+onInteger : FormValue -> Maybe Int
+onInteger formValue =
+    case formValue of
+        Integer b ->
             Just b
 
         _ ->

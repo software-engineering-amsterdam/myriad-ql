@@ -4,7 +4,7 @@ import Dict
 import Expect
 import Test exposing (Test, describe, test, fuzz2)
 import UI.FormData as FormData exposing (..)
-import Fuzz exposing (string)
+import Fuzz exposing (string, bool, int)
 
 
 startingFormData : FormData
@@ -32,6 +32,12 @@ all =
         , test "getBoolean for wrong type" <|
             \() ->
                 FormData.getBoolean "foo" startingFormData |> Expect.equal Nothing
+        , fuzz2 string bool "withString should always allow to lookup the value with a getString" <|
+            \k v ->
+                startingFormData
+                    |> FormData.withBoolean k v
+                    |> FormData.getBoolean k
+                    |> Expect.equal (Just v)
         , test "getString for existing value" <|
             \() ->
                 FormData.getString "bar" startingFormData |> Expect.equal (Just "Hello")
@@ -46,5 +52,20 @@ all =
                 startingFormData
                     |> FormData.withString k v
                     |> FormData.getString k
+                    |> Expect.equal (Just v)
+        , test "getInteger for existing value" <|
+            \() ->
+                FormData.getInteger "foo" startingFormData |> Expect.equal (Just 1)
+        , test "getInteger for missing value" <|
+            \() ->
+                FormData.getInteger "missing" startingFormData |> Expect.equal Nothing
+        , test "getInteger for wrong type" <|
+            \() ->
+                FormData.getInteger "baz" startingFormData |> Expect.equal Nothing
+        , fuzz2 string int "withInteger should always allow to lookup the value with a getInteger" <|
+            \k v ->
+                startingFormData
+                    |> FormData.withInteger k v
+                    |> FormData.getInteger k
                     |> Expect.equal (Just v)
         ]
