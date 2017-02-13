@@ -1,5 +1,10 @@
+package org.uva.taxfree.ast;
+
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.uva.taxfree.gen.QLGrammarParser;
+import org.uva.taxfree.model.FormNode;
+import org.uva.taxfree.model.Node;
 
 /**
  * Created by Alex on 7-2-2017.
@@ -7,7 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class ASTFactory {
 
     public static Node generateAST(ParseTree parseTree) {
-        Node rootNode = new FormNode("Form", null)
+        Node rootNode = new FormNode("Form", null);
         return generateNode(parseTree, rootNode);
     }
 

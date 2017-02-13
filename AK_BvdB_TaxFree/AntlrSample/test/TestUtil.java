@@ -1,4 +1,4 @@
-import org.testng.Assert;
+package test;
 
 import java.io.File;
 import java.io.IOException;
