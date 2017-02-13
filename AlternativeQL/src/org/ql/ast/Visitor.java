@@ -18,8 +18,8 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
         List<Statement> statements = new ArrayList<>();
 
-        for (QLParserParser.StatementContext declaration : ctx.statement()) {
-            statements.add((Statement) visit(declaration));
+        for (QLParserParser.StatementContext statementContext : ctx.statement()) {
+            statements.add((Statement) visit(statementContext));
         }
 
         return new Form((Identifier) visit(ctx.id), statements);
