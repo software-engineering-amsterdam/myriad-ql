@@ -22,19 +22,18 @@ def parse(input_string):
     operand = number | identifier
     form = Literal("form")
     if_lit = Literal("if")
-    lcurly = Suppress("{")
-    rcurly = Suppress("}")
-    lparen = Suppress("(")
-    rparen = Suppress(")")
+    l_curly = Suppress("{")
+    r_curly = Suppress("}")
+    l_paren = Suppress("(")
+    r_paren = Suppress(")")
     colon = Suppress(":")
     assign = Suppress("=")
-    data_types = oneOf(["boolean", "money"])
+    data_types = oneOf(["boolean", "money", "string"])
     signop = oneOf(["+", "-"])
     multop = oneOf(["*", "/"])
     arith_prec = operatorPrecedence(
         operand,
-        [(signop, 1, opAssoc.RIGHT),
-         (multop, 2, opAssoc.LEFT),
+        [(multop, 2, opAssoc.LEFT),
          (signop, 2, opAssoc.LEFT),]
     )
 
@@ -45,7 +44,7 @@ def parse(input_string):
         )
 
     arithmetic_statement = \
-        OneOrMore(arithmetic_expr | (lparen + arithmetic_expr + rparen))
+        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
 
     assignment_expr = \
         identifier.setResultsName("identifier") + \
@@ -67,13 +66,13 @@ def parse(input_string):
         Group(
             Group(
                 if_lit +
-                lparen +
+                l_paren +
                 arithmetic_statement.setResultsName("arithmetic_expression") +
-                rparen
+                r_paren
             ) +
-            lcurly +
+            l_curly +
             OneOrMore(field_expr) +
-            rcurly
+            r_curly
         )
 
     # Program
@@ -82,11 +81,11 @@ def parse(input_string):
             form +
             identifier.setResultsName("form_identifier")
         ) + \
-        lcurly + \
+        l_curly + \
         Group(
             ZeroOrMore(field_expr | if_stmt)
         ) + \
-        rcurly
+        r_curly
 
     tokens = program.parseString(input_string)
     print(tokens)
