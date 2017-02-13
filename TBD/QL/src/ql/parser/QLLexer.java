@@ -3,6 +3,7 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
+import ql.ast.literals.QLFloat;
 import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLInt;
 import ql.ast.literals.QLString;
@@ -167,9 +168,21 @@ public class QLLexer implements QLTokens {
                             nextChar();
                         } while (Character.isDigit(c));
 
+                        nextChar();
+                        if(c == '.') {
+                            nextChar();
+                            int counter = 1;
+                            do {
+                                n = n + (c - '0')/(counter*10);
+                                nextChar();
+                                counter *= 10;
+                            } while (Character.isDigit(c));
+                            this.yylval = new QLFloat(n);
+                            return token = FLOAT;
+                        }
+
                         this.yylval = new QLInt(n);
                         return token = INT;
-
                     }
 
                     if (Character.isLetter(c)) {
