@@ -38,13 +38,17 @@ conditionalBlock: IfStatement LeftParenthesis expression RightParenthesis statem
 
 /* Precedence based on C(++) precedence: http://en.cppreference.com/w/cpp/language/operator_precedence */
 expression: 
-	(StringLiteral | BooleanLiteral | NumberLiteral | Identifier) 	
-	| ( LeftParenthesis expression RightParenthesis )	
-	| ('!' expression) 
-	| expression ( '/' | '*' ) expression 
-	| expression ( '+' | '-' ) expression  		
-	| expression ('<' | '<=' | '>' | '>=' ) expression
-	| expression ('!=' | '==' ) expression 
-	| expression  ('&&' ) expression 
-	| expression  ('||' ) expression 	
+	StringLiteral #String
+	| BooleanLiteral #Bool
+	| NumberLiteral #Number
+	| Identifier #ID	
+	| LeftParenthesis expression RightParenthesis #Parens
+	| ('!' expression) #NOT
+	| ('-' expression) #MINUS
+	| expression op=( '/' | '*' ) expression #MulDiv
+	| expression op=( '+' | '-' ) expression #AddSub		
+	| expression op=('<' | '<=' | '>' | '>=' ) expression #Comparison
+	| expression op=('!=' | '==' ) expression #Equality
+	| expression ('&&' ) expression #And
+	| expression ('||' ) expression #Or	
 ;

@@ -64,7 +64,9 @@ namespace Tests.QL.DSL
             LexerTestHarness.TokenTypes("true", new List<string> { "BooleanLiteral" });
             LexerTestHarness.TokenTypes("false", new List<string> { "BooleanLiteral" });
             LexerTestHarness.TokenTypes("123456789", new List<string> { "NumberLiteral" });
-            LexerTestHarness.TokenTypes("-5060", new List<string> { "NumberLiteral" });
+            /* We do not allow negative numberLiterals in the lexer as it 
+             * will lead to trouble at the parser end. For example, is 10-5 <10>,<-5>
+             * or is it <10>-<5>? This should be tested in the parser unit  tests! */
         }
     }
 }
