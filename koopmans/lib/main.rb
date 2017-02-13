@@ -1,6 +1,7 @@
 require_relative 'reader'
 require_relative 'parser'
 require_relative 'gui'
+require_relative 'ast'
 require 'pp'
 
 
@@ -14,6 +15,9 @@ parsed = parser.parse(contents)
 
 pp parsed
 
-gui = Gui.new
-gui.question('joe?')
-gui.launch
+ast = Ast.new
+form = ast.apply(parsed)
+
+# gui = Gui.new
+# gui.question('joe?')
+# gui.launch
