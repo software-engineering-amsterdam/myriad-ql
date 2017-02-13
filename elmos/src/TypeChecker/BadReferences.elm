@@ -10,7 +10,7 @@ badReferences : Form -> Set.Set String
 badReferences form =
     Set.diff
         (usedVarsFromList form.items |> Set.fromList)
-        (declaredVarFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
+        (declaredVarsFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
 
 
 usedVarsFromList : List FormItem -> List String
