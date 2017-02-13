@@ -1,6 +1,6 @@
 # read files
 class Reader
   def read_file(path)
-    File.read('examples/simple_questionnaire.ql')
+    File.read(path)
   end
 end
