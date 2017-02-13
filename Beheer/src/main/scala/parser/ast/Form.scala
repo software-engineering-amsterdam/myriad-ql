@@ -2,11 +2,11 @@ package parser.ast
 
 sealed trait FormNode
 
+case class Form(identifier: String, block: Block) extends FormNode
+
+case class Block(statements: Seq[Statement]) extends FormNode
+
 sealed trait Statement extends FormNode
-
-case class Form(identifier: String, block: Block) extends Statement
-
-case class Block(statements: List[Statement]) extends Statement
 
 case class Conditional(condition: ExpressionNode, block: Block) extends Statement
 
