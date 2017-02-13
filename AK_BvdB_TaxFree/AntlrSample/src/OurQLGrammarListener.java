@@ -1,10 +1,9 @@
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
-        System.out.println("ENTERED FORM");
+//        System.out.println("ENTERED FORM");
 //        List list = ctx.children;
         printChildren(ctx);
 //        Node ourAST = new Node(QLGrammarParser.RULE_form, null, ctx);
@@ -15,10 +14,10 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     private void printChildren(ParseTree ctx) {
         if (ctx.getChildCount() == 0) {
 //            if (validRule(((TerminalNode) ctx).getSymbol().getType())) {
-                System.out.println("Symbol! " + ((TerminalNode) ctx).getSymbol().getType() + " | " + ctx.getText() );
+//                System.out.println("Symbol! " + ((TerminalNode) ctx).getSymbol().getType() + " | " + ctx.getText() );
 //            }
         } else {
-            System.out.println("Found children:");
+//            System.out.println("Found children:");
             for (int i = 0; i < ctx.getChildCount(); i++) {
                 printChildren(ctx.getChild(i));
             }
