@@ -1,23 +1,20 @@
 package parser
 
-import java.io.{Reader, StringReader}
+import java.io.{ Reader, StringReader }
 
 import parser.ast._
 
 import scala.util.parsing.combinator.JavaTokenParsers
 
-/**
-  * Created by jasper on 07/02/17.
-  */
 class FormParser extends JavaTokenParsers with ExpressionParser {
   def typeName: Parser[String] = (
     "boolean"
-      | "string"
-      | "integer"
-      | "date"
-      | "decimal"
-      | "money"
-    )
+    | "string"
+    | "integer"
+    | "date"
+    | "decimal"
+    | "money"
+  )
 
   def label: Parser[String] = stringLiteral
 
