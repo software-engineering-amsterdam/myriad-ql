@@ -52,15 +52,16 @@ if __name__ == '__main__':
             )
         )
 
+    arithmeticStmt = \
+        OneOrMore(arithmeticExpr | (lparen + arithmeticExpr + rparen))
+
     assignmentExpr = \
         identifier.setResultsName("identifier") + \
         colon + \
         data_types + \
         Optional(
             assign +
-            lparen +
-            arithmeticExpr.setResultsName("aexpr") +
-            rparen
+            arithmeticStmt
         )
 
     fieldExpr = \
@@ -75,7 +76,7 @@ if __name__ == '__main__':
             Group(
                 if_lit +
                 lparen +
-                arithmeticExpr.setResultsName("arithmetic_expression") +
+                arithmeticStmt.setResultsName("arithmetic_expression") +
                 rparen
             ) +
             lcurly +
