@@ -18,13 +18,13 @@
  */
 
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.Trees;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class ParseTest {
     @Test
@@ -37,32 +37,41 @@ public class ParseTest {
         TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
         QLParser parser = new QLParser(inputTokenStream);
 
-        //parser.addErrorListener(new TestErrorListener());
-
         QLParser.ExprContext context = parser.expr();
-        System.out.println(context.toString());
     }
 
-    public void testParseTree() throws IOException {
+    @Test
+    public void testWalk() throws IOException {
+        String simpleForm = "form naam {tmp : \"echt?\" boolean}";
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
 
-        // Create an input stream that receives text from the terminal
-        ANTLRInputStream input = new ANTLRInputStream(System.in);
-
-        // Create an Lexer that receives the char stream
         QLLexer lexer = new QLLexer(input);
-
-        // Create a token stream from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        // Create a parser that receives the token stream
         QLParser parser = new QLParser(tokens);
+        ParseTree tree = parser.form();
 
-        // Create a parser tree starting from the first rule
-        QLParser.FormContext tree = parser.form();
+        ParseTreeWalker walker = new ParseTreeWalker();
 
-        List<String> ruleNames = Arrays.asList(QLParser.ruleNames);
-        //Generates the GUI
-        TreeViewer view = new TreeViewer(ruleNames, tree);
-        view.open();
+        QLLoader loader = new QLLoader();
+
+        walker.walk(loader, tree);
+        //System.out.println(loader.names);
     }
+//
+//    @Test
+//    public void printParse() throws IOException {
+//        String simpleForm = "form bla {tmp : \"ja?\" boolean if (True) { tmpNest : \"nee?\" boolean}}";
+//        // create a CharStream that reads from standard input
+//        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
+//        // create a lexer that feeds off of input CharStream
+//        QLLexer lexer = new QLLexer(input);
+//        // create a buffer of tokens pulled from the lexer
+//        CommonTokenStream tokens = new CommonTokenStream(lexer);
+//        // create a parser that feeds off the tokens buffer
+//        QLParser parser = new QLParser(tokens);
+//        ParseTree tree = parser.form(); // begin parsing at form rule
+//        System.out.println(tree.toStringTree(parser));
+//    }
 }
+

@@ -1,22 +1,35 @@
 grammar QL;
 
 form
-    : FORMKEY identifier LBRACE formbod RBRACE EOF
+    : FORMKEY identifier LBRACE statements RBRACE EOF
     ;
 
-formbod
-    : questions
-    | questions conditional
+statements
+    : statements statement
+    | statement
     ;
-    
+
+statement
+    : questions
+    | conditionals
+    ;
+
 questions
     : question questions
     | question
     ;
 
-
 question
     : identifier COLON label type_specifier
+    ;
+
+conditionals
+    : conditional conditionals
+    | conditional
+    ;
+
+conditional
+    : CONDKEY LPAREN expr RPAREN LBRACE questions RBRACE
     ;
 
 expr
@@ -24,10 +37,6 @@ expr
     | INT
     | unaryoperator expr
     | expr binaryoperator expr
-    ;
-
-conditional
-    : CONDKEY LPAREN expr RPAREN LBRACE questions RBRACE
     ;
 
 label
@@ -49,6 +58,7 @@ type_specifier
 
 unaryoperator
     : BANG
+    | MINUS
     ;
 
 binaryoperator
