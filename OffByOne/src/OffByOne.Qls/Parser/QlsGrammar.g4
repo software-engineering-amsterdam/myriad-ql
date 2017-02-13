@@ -9,7 +9,7 @@ page
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACKET? (question|section|defaultBlock)+ CLOSE_BRACKET?
+    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)+ CLOSE_BRACKET
     ;
 
 question	

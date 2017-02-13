@@ -2,20 +2,21 @@
 {
     using System.Collections.Generic;
 
+    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.Style.Rules.Base;
 
     public class Section : AstNode
     {
         public Section(
-            string name,
-            ICollection<Rule> rules)
+            StringLiteral name,
+            ICollection<AstNode> nodes)
         {
             this.Name = name;
-            this.Rules = rules;
+            this.Nodes = nodes;
         }
 
-        public string Name { get; private set; }
+        public StringLiteral Name { get; private set; }
 
-        public ICollection<Rule> Rules { get; private set; }
+        public ICollection<AstNode> Nodes { get; private set; }
     }
 }

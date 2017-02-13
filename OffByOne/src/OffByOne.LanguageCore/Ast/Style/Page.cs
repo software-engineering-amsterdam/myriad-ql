@@ -4,14 +4,14 @@
 
     public class Page : AstNode
     {
-        public Page(string name, ICollection<Section> sections)
+        public Page(string id, ICollection<AstNode> nodes)
         {
-            this.Name = name;
-            this.Sections = sections;
+            this.Id = id;
+            this.Nodes = nodes;
         }
 
-        public string Name { get; private set; }
+        public string Id { get; private set; }
 
-        public ICollection<Section> Sections { get; private set; }
+        public ICollection<AstNode> Nodes { get; private set; }
     }
 }
