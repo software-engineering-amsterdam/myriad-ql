@@ -2,7 +2,7 @@ grammar QL;
 
 @parser::header
 {
-    import ast.IntegerAtom;
+    import ast.atom.*;
     import ast.*;
 }
 
@@ -70,17 +70,22 @@ arithOp
  : '+' | '-' | '/' | '*';
 
 atom returns [Atom result]
- : // DECIMAL
- // | MONEY
-   INT 
+ :  DECIMAL { System.out.println($DECIMAL.text);
+                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
+  | MONEY { System.out.println($MONEY.text);
+           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
+  | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
  | STRING { System.out.println($STRING.text);
     $result = new StringAtom($STRING.text);
             }
- // | BOOL
- // | DDMMYY
- // | ID
+ | BOOL { System.out.println($BOOL.text);
+           $result = new BoolAtom(Boolean.valueOf($BOOL.text); }
+ | DDMMYY { System.out.println($DDMMYY.text);
+            $result = new DateAtom($DDMMYY.text); }
+ | ID { System.out.println($ID.text);
+                 $result = new StringAtom($ID.text); }
  ;
 
 // TODO look up conventions tokens/names capital letters
@@ -98,7 +103,7 @@ TWO_DIGIT: ('0'..'9')('0'..'9');
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
-DDMMYY : TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ; // TODO check valid date
+DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT; // TODO check valid date
 
 STRING: ('"' .*? '"');
 

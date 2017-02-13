@@ -1,4 +1,4 @@
-package ast;
+package ast.atom;
 
 public class IntegerAtom extends Atom {
 
