@@ -24,24 +24,17 @@ module.exports = class test {
     }
 
     _run() {
-
         let result;
         // Create a Parser object from our grammar.
         try{
             const parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
             result = parser.feed(test1).results;
 
-        } catch (error){
+        } catch (parseError){
             console.log(`Error at character ${parseError.offset}`);
         } finally{
             console.log(JSON.stringify(result));
         }
-
-
-
-
-
-
     }
 };
 

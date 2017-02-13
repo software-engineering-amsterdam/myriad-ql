@@ -4,6 +4,7 @@
 @builtin "whitespace.ne" # `_` means arbitrary amount of whitespace
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
+@{% let toString = (data) => data.join().split(",").join("");%}
 
 
 form         -> "form " formName "{" newLine  statements  newLine "}"
@@ -20,8 +21,8 @@ operator     -> "+" | "-" | "*" | "/"
 propertyName -> letters
 propertyType -> "boolean" | "money"
 newLine      -> "\n"
-sentence     -> [\w|\s]:+
-letters      -> [a-zA-Z]:+
+sentence     -> [\w|\s]:+ {% toString %}
+letters      -> [a-zA-Z]:+ {% toString %}
 
 
 
