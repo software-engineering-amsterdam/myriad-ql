@@ -35,11 +35,11 @@ question returns [Question result]
 
 type returns [Type result]
 	: 'boolean' { $result = new BooleanType(); }
-	| 'date' 
-	| 'decimal' 
-	| 'integer' 
-	| 'money' 
-	| 'string'; //{ $result = new Type($t.text) }; // TODO should this be a specific type?
+	| 'date' 	{ $result = new DateType(); }
+	| 'decimal' { $result = new DecimalType(); } 
+	| 'integer' { $result = new IntegerType(); }
+	| 'money'   { $result = new MoneyType(); }
+	| 'string'  { $result = new StringType(); };
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -53,14 +53,8 @@ parenthesisExpr returns [Expression result]
 
 expr returns [Expression result]
  :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
- 
- 
-// | atom boolOp atom
-// | atom arithOp atom
-// | '!' atom
-// | '+' atom
-// | '-' atom
-// | atom
+ | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ | atom { $result = $atom.result; }
  ;
 
 binOp returns [BinaryExpression result]
@@ -74,10 +68,13 @@ binOp returns [BinaryExpression result]
  | '-'  { $result = new SubExpression(); }
  | '/'  { $result = new DivExpression(); }
  | '*'  { $result = new MulExpression(); }
+ | '&&' { $result = new AndExpression(); }
+ | '||' { $result = new OrExpression(); }
  ;
 
-boolOp
- : '&&' | '||';
+unaryOp returns [UnaryExpression result]
+  : '!' { $result = new NotExpression(); }
+  ;
 
 arithOp
  : '+' | '-' | '/' | '*';
