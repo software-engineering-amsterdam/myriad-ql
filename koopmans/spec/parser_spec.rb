@@ -18,12 +18,12 @@ describe Parser do
     end
   end
 
-  context 'integer' do
-    it 'parses' do
-      expect(parser.integer).to parse('1')
-      expect(parser.integer).to_not parse('a')
-    end
-  end
+  # context 'integer' do
+  #   it 'parses' do
+  #     expect(parser.integer).to parse('1')
+  #     expect(parser.integer).to_not parse('a')
+  #   end
+  # end
 
   context 'type' do
     it 'parses' do
@@ -52,7 +52,7 @@ describe Parser do
   context 'arithmatic' do
     it 'parses' do
       expect(parser.expression).to parse('(5 - 1 + 20)')
-      expect(parser.expression).to_not parse('(5 *+ 1)')
+      expect(parser.expression).to_not parse('(5 -* 1 + 20)')
     end
   end
 

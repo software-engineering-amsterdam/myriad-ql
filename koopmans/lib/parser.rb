@@ -9,16 +9,16 @@ class Parser < Parslet::Parser
     spaces.maybe
   end
 
-  rule(:integer) do
-    match('[0-9]').repeat(1).as(:integer) >> spaces?
-  end
+  # rule(:integer) do
+  #   match('[0-9]').repeat(1).as(:integer) >> spaces?
+  # end
 
   rule(:calculation) do
-    integer.as(:left) >> operator.as(:operator) >> expression.as(:right)
+    variable.as(:left) >> operator.as(:operator) >> expression.as(:right)
   end
 
   rule(:expression) do
-    left_parenthesis >> expression.as(:expression) >> right_parenthesis | calculation | integer
+    left_parenthesis >> expression.as(:expression) >> right_parenthesis | calculation | variable
   end
 
   def self.symbols(symbols)
