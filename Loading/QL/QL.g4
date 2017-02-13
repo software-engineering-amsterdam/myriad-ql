@@ -55,12 +55,6 @@ expr returns [Expression result]
  :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
  
  
-// lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); }
-//  | lhs = atom '!=' rhs = atom { $result = new NEqExpression($lhs.result, $rhs.result); } 
-//  | lhs = atom '<=' rhs = atom { $result = new LEqExpression($lhs.result, $rhs.result); }
-//  | lhs = atom '>=' rhs = atom { $result = new GEqExpression($lhs.result, $rhs.result); }
-//  | lhs = atom '>'  rhs = atom { $result = new GExpression($lhs.result, $rhs.result); }
-//  | lhs = atom '<'  rhs = atom { $result = new LExpression($lhs.result, $rhs.result); }
 // | atom boolOp atom
 // | atom arithOp atom
 // | '!' atom
@@ -73,8 +67,14 @@ binOp returns [BinaryExpression result]
  : '==' { $result = new EqExpression(); }
  | '!=' { $result = new NEqExpression(); }
  | '<=' { $result = new LEqExpression(); }
+ | '>=' { $result = new GEqExpression(); }
+ | '>'  { $result = new GExpression(); }
+ | '<'  { $result = new LExpression(); }
+ | '+'  { $result = new AddExpression(); }
+ | '-'  { $result = new SubExpression(); }
+ | '/'  { $result = new DivExpression(); }
+ | '*'  { $result = new MulExpression(); }
  ;
-// | '<=' | '>=' | '>' | '<';
 
 boolOp
  : '&&' | '||';
