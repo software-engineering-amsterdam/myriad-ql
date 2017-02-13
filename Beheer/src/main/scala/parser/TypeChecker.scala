@@ -2,6 +2,7 @@ package parser
 
 import model.{ ComputedQuestion, OpenQuestion }
 import parser.ast._
+import scala.language.postfixOps
 
 class TypeChecker {
 
@@ -13,7 +14,24 @@ class TypeChecker {
     } else {
       val labels = questions.map(_.label)
       val warnings = labels.diff(labels.distinct).distinct.map(l => s"Duplicate label: $l")
-      Right((model.Form(questions), warnings))
+      val references = checkReferences(questions)
+      references match {
+        case Left(e) => Left(s"Reference(s) to undefined identifier found: ${e.mkString("\n", "\n", "")}")
+        case Right(_) =>
+          Right((model.Form(questions), warnings))
+      }
+    }
+  }
+
+  def checkReferences(questions: Seq[model.Question]): Either[Seq[String], Boolean] = {
+    val referencedIdentifiers = questions.flatMap {
+      case OpenQuestion(_, _, show, _) => show
+      case ComputedQuestion(_, _, show, _, value) => value +: show
+    }.flatMap(extractIdentifiers).distinct.toSet
+    val definedIdentifiers = questions.map(_.identifier).distinct.toSet
+    referencedIdentifiers -- definedIdentifiers toSeq match {
+      case Nil => Right(true)
+      case list => Left(list)
     }
   }
 
@@ -21,14 +39,6 @@ class TypeChecker {
     case Conditional(condition, Block(statements)) => statements.flatMap(buildModel(_, condition +: conditionals))
     case Question(identifier, label, typename, None) => Seq(OpenQuestion(identifier, label, conditionals, typename))
     case Question(identifier, label, typename, Some(expr)) => Seq(ComputedQuestion(identifier, label, conditionals, typename, expr))
-
-  }
-
-  def checkReferences(questions: Seq[model.Question]) = {
-    questions.flatMap {
-      case OpenQuestion(_, _, show, _) => show
-      case ComputedQuestion(_, _, show, _, value) => value +: show
-    }
 
   }
 
