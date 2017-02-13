@@ -1,7 +1,7 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
-import Html exposing (Html, div, text, h3, form, textarea, pre, hr)
+import AST exposing (Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
+import Html exposing (Html, div, text, h3, form, textarea, pre, hr, ul, li, p)
 import Html.Attributes exposing (class, style, defaultValue, rows, cols)
 import Html.Events exposing (onInput)
 import Parser.Parser as Parser
@@ -11,6 +11,7 @@ import UI.Widget.String as StringWidget
 import UI.Widget.Base as BaseWidget
 import UI.FormData as FormData exposing (FormData)
 import Values exposing (Value)
+import Evaluator
 import Dict
 
 
@@ -105,7 +106,30 @@ view model =
         , model.parsedForm
             |> Maybe.map (viewForm model)
             |> Maybe.withDefault (div [] [])
+        , viewExpressions model
         ]
+
+
+viewExpressions : Model -> Html msg
+viewExpressions model =
+    let
+        exprs =
+            model.parsedForm
+                |> Maybe.map (.items >> List.concatMap getExpressions)
+                |> Maybe.withDefault []
+    in
+        div []
+            [ ul []
+                (List.map
+                    (\item ->
+                        li []
+                            [ p [] [ text <| toString item ]
+                            , p [] [ text <| toString <| Evaluator.evaluate model.formData item ]
+                            ]
+                    )
+                    exprs
+                )
+            ]
 
 
 viewForm : Model -> Form -> Html Msg
@@ -148,6 +172,22 @@ getFieldsForItem item =
             List.concat
                 [ getFieldsForItems thenBranch
                 , getFieldsForItems elseBranch
+                ]
+
+
+getExpressions : FormItem -> List Expression
+getExpressions item =
+    case item of
+        AST.FieldItem field ->
+            field.valueExpression
+                |> Maybe.map List.singleton
+                |> Maybe.withDefault []
+
+        AST.IfItem { expression, thenBranch, elseBranch } ->
+            List.concat
+                [ [ expression ]
+                , List.concatMap getExpressions thenBranch
+                , List.concatMap getExpressions elseBranch
                 ]
 
 
