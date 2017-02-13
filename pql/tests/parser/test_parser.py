@@ -128,3 +128,77 @@ class TestMain(unittest.TestCase):
         self.assertTrue(self.first_field[0], "What was the selling price?")
         self.assertTrue(self.first_field[1], "sellingPrice")
         self.assertTrue(self.first_field[2], "money")
+
+    def test_parse_form_single_assignment(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
+        }
+        """
+        self.result = parse(self.input_string)
+        self.assertTrue(len(self.result[0]), 3)
+
+        self.assign_block = self.result[1][0]
+        self.assertTrue(self.assign_block[0], "Value residue:")
+        self.assertTrue(self.assign_block[1], "valueResidue")
+        self.assertTrue(self.assign_block[2], "money")
+
+        self.assign_statement = self.assign_block[3][0]
+        self.assertTrue(self.assign_statement[0], "sellingPrice")
+        self.assertTrue(self.assign_statement[1], "-")
+        self.assertTrue(self.assign_statement[1], "privateDebt")
+
+    def test_parse_form_single_assignment_incorrect_equals(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money := (sellingPrice - privateDebt)
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
+    def test_parse_form_single_assignment_missing_equals(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money  (sellingPrice - privateDebt)
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
+    def test_parse_form_single_assignment_without_parenthesis(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  sellingPrice - privateDebt
+        }
+        """
+        self.result = parse(self.input_string)
+        self.assertTrue(len(self.result[0]), 3)
+
+        self.assign_block = self.result[1][0]
+        self.assertTrue(self.assign_block[0], "Value residue:")
+        self.assertTrue(self.assign_block[1], "valueResidue")
+        self.assertTrue(self.assign_block[2], "money")
+
+        self.assign_statement = self.assign_block[3][0]
+        self.assertTrue(self.assign_statement[0], "sellingPrice")
+        self.assertTrue(self.assign_statement[1], "-")
+        self.assertTrue(self.assign_statement[1], "privateDebt")
+
+    def test_parse_form_single_assignment_missing_second_expression(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = sellingPrice -
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
+    def test_parse_form_single_assignment_missing_first_expression(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  - sellingPrice
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(self.input_string)

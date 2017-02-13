@@ -1,4 +1,4 @@
-// Generated from D:/Software Engineering/Software Construction/Lab assignment/myriad-ql/vanVlaanderenDerksen/QLJava/src/sc/ql/antlr/QL.g4 by ANTLR 4.5.3
+// Generated from QL.g4 by ANTLR 4.5.3
 package sc.ql.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -8,15 +8,35 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QLListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link QLParser#parse}.
+	 * Enter a parse tree produced by {@link QLParser#form}.
 	 * @param ctx the parse tree
 	 */
-	void enterParse(QLParser.ParseContext ctx);
+	void enterForm(QLParser.FormContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#parse}.
+	 * Exit a parse tree produced by {@link QLParser#form}.
 	 * @param ctx the parse tree
 	 */
-	void exitParse(QLParser.ParseContext ctx);
+	void exitForm(QLParser.FormContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#questions}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestions(QLParser.QuestionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#questions}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestions(QLParser.QuestionsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion(QLParser.QuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion(QLParser.QuestionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#primary}.
 	 * @param ctx the parse tree
@@ -28,15 +48,15 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitPrimary(QLParser.PrimaryContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#unExpr}.
+	 * Enter a parse tree produced by {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterUnExpr(QLParser.UnExprContext ctx);
+	void enterExpression(QLParser.ExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#unExpr}.
+	 * Exit a parse tree produced by {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitUnExpr(QLParser.UnExprContext ctx);
+	void exitExpression(QLParser.ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#calcExpr}.
 	 * @param ctx the parse tree

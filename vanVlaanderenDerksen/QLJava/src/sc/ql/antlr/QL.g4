@@ -2,17 +2,26 @@ grammar QL;
 
 @header {package sc.ql.antlr;}
 
-parse
-	: unExpr EOF
+form
+	: 'form' question+ 'endform' EOF
+	;
+
+questions
+	: question
+	| questions question
+	;
+
+question
+	: STR NAME TYPE
 	;
 
 primary
-	: Int
- 	| Str
- 	| Bool
+	: INT
+ 	| STR
+ 	| BOOL
  	;
 
-unExpr
+expression
 	: primary calcExpr primary
 	| primary relExpr primary
 	| primary boolExpr primary
@@ -41,26 +50,32 @@ boolExpr
 
 
 // Tokens
+BOOL
+	: ('true'|'false')
+	;
+	
+TYPE
+	: 'boolean'
+	| 'text'
+	| 'number'
+	;
+
+INT
+	: ('0'..'9')+
+	;
+
+NAME
+	: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')+
+	;
+
+STR
+	: '"' .*? '"'
+	;
+
 WS
-	:	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
+	: [ \t\n\r]+ -> skip
     ;
 
 COMMENT
-    :	'/*' .* '*/' -> channel(HIDDEN)
+    : '/*' .*? '*/' -> channel(HIDDEN)
     ;
-
-Ident
-	:	('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-	;
-
-Int
-	: 	('0'..'9')+
-	;
-
-Str
-	: '"' .* '"'
-	;
-
-Bool
-	: ('true'|'false'|'TRUE'|'FALSE')
-	;
