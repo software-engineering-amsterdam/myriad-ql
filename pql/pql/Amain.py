@@ -29,7 +29,7 @@ def parse(input_string):
     r_paren = Suppress(")")
     colon = Suppress(":")
     assign = Suppress("=")
-    data_types = oneOf(["boolean", "money", "string"])
+    data_types = oneOf(["boolean", "money", "string", "integer"])
     signop = oneOf(["+", "-"])
     multop = oneOf(["*", "/"])
 
@@ -48,15 +48,16 @@ def parse(input_string):
 
     # Expressions
     arithmetic_expr = \
-        Group(
-            arith_prec
-        )
+        Group(arith_prec)
+
+    boolean_expr = \
+        Group(bool_prec)
 
     arithmetic_statement = \
         OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
-    #
-    # boolean_statement = \
-    #     OneOrMore(boo)
+
+    boolean_statement = \
+        OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
     assignment_expr = \
         identifier.setResultsName("identifier") + \
