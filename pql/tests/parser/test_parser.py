@@ -35,7 +35,7 @@ class TestMain(unittest.TestCase):
         self.result = parse(self.input_string)
         self.assertEqual(len(self.result[0]), 2)
         self.assertEqual(len(self.result[1][0]), 3)
-        self.assertEqual(self.result[1][0][0], '\"Did you sell a house in 2010?\"')
+        self.assertEqual(self.result[1][0][0], 'Did you sell a house in 2010?')
         self.assertEqual(self.result[1][0][1], "hasSoldHouse")
         self.assertEqual(self.result[1][0][2], "boolean")
 
@@ -50,9 +50,24 @@ class TestMain(unittest.TestCase):
         self.assertEqual(len(self.result[1][0]), 3)
 
         self.first_assignment = self.result[1][0]
-        self.assertEqual(self.first_assignment[0], "\"Example:\"")
+        self.assertEqual(self.first_assignment[0], "Example:")
         self.assertEqual(self.first_assignment[1], "testValue")
         self.assertEqual(self.first_assignment[2], "string")
+
+    def test_parse_form_single_assignment_int_type(self):
+        self.input_string = """
+        form taxOfficeExample {
+            "Example:" testValue: integer
+        }
+        """
+        self.result = parse(self.input_string)
+        self.assertEqual(len(self.result[0]), 2)
+        self.assertEqual(len(self.result[1][0]), 3)
+
+        self.first_assignment = self.result[1][0]
+        self.assertEqual(self.first_assignment[0], "Example:")
+        self.assertEqual(self.first_assignment[1], "testValue")
+        self.assertEqual(self.first_assignment[2], "integer")
 
     def test_parse_form_single_single_field_wrong_type_declaration(self):
         self.input_string = """
@@ -93,12 +108,12 @@ class TestMain(unittest.TestCase):
         self.assertEqual(len(self.result[1][0]), 3)
 
         self.first_field = self.result[1][0]
-        self.assertEqual(self.first_field[0], "\"Did you sell a house in 2010?\"")
+        self.assertEqual(self.first_field[0], "Did you sell a house in 2010?")
         self.assertEqual(self.first_field[1], "hasSoldHouse")
         self.assertEqual(self.first_field[2], "boolean")
 
         self.second_field = self.result[1][1]
-        self.assertEqual(self.second_field[0], "\"Did you buy a house in 2010?\"")
+        self.assertEqual(self.second_field[0], "Did you buy a house in 2010?")
         self.assertEqual(self.second_field[1], "hasBoughtHouse")
         self.assertEqual(self.second_field[2], "boolean")
 
@@ -140,7 +155,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(self.if_statement[1][0], "hasSoldHouse")
 
         self.first_field = self.if_block[1]
-        self.assertEqual(self.first_field[0], '\"What was the selling price?\"')
+        self.assertEqual(self.first_field[0], 'What was the selling price?')
         self.assertEqual(self.first_field[1], "sellingPrice")
         self.assertEqual(self.first_field[2], "money")
 
@@ -152,7 +167,7 @@ class TestMain(unittest.TestCase):
         """
         self.result = parse(self.input_string)
         self.assign_block = self.result[1][0]
-        self.assertEqual(self.assign_block[0], "\"Value residue:\"")
+        self.assertEqual(self.assign_block[0], "Value residue:")
         self.assertEqual(self.assign_block[1], "valueResidue")
         self.assertEqual(self.assign_block[2], "money")
 
@@ -188,7 +203,7 @@ class TestMain(unittest.TestCase):
         self.result = parse(self.input_string)
 
         self.assign_block = self.result[1][0]
-        self.assertEqual(self.assign_block[0], "\"Value residue:\"")
+        self.assertEqual(self.assign_block[0], "Value residue:")
         self.assertEqual(self.assign_block[1], "valueResidue")
         self.assertEqual(self.assign_block[2], "money")
 
