@@ -9,7 +9,7 @@ import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Base as BaseWidget
-import UI.FormData as FormData exposing (FormData)
+import UI.FormData as FormData exposing (FormData, FormValue)
 
 
 type alias Model =
@@ -20,6 +20,7 @@ type alias Model =
 
 type Msg
     = OnDslInput String
+    | OnFieldChange String FormValue
 
 
 init : Model
@@ -77,6 +78,13 @@ update msg model =
                     , parsedForm = parsedForm
                 }
 
+        OnFieldChange fieldId newValue ->
+            let
+                _ =
+                    Debug.log ("Newvalue " ++ fieldId) newValue
+            in
+                model
+
 
 view : Model -> Html Msg
 view model =
@@ -109,7 +117,12 @@ viewForm formDsl =
 
 viewField : AST.Field -> Html Msg
 viewField field =
-    BaseWidget.container { field = field, formData = baseFormData } <|
+    BaseWidget.container
+        { field = field
+        , formData = baseFormData
+        , onChange = OnFieldChange field.id
+        }
+    <|
         case field.valueType of
             StringType ->
                 StringWidget.view

@@ -6,7 +6,7 @@ import UI.FormData as FormData
 import UI.Widget.Base exposing (WidgetContext)
 
 
-view : WidgetContext -> Html msg
+view : WidgetContext msg -> Html msg
 view { field, formData } =
     let
         isChecked =

@@ -6,7 +6,7 @@ import UI.Widget.Base exposing (WidgetContext)
 import UI.FormData as FormData
 
 
-view : WidgetContext -> Html msg
+view : WidgetContext msg -> Html msg
 view { field, formData } =
     let
         textValue =
