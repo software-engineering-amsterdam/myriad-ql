@@ -1,4 +1,6 @@
-from QL_Parser import QuestionnaireParser
+from Parser import QuestionnaireParser
+from ParserToken import ParserToken
+import json
 
 
 class QuestionnaireAST(object):
@@ -23,6 +25,13 @@ class Node(object):
     def add_child(self, node):
         self.children.append(node)
 
+    @staticmethod
+    def create_token(json_str):
+        data = json.loads(json_str)
+        token_data = ParserToken(data["val"], data["line"],
+                           data["col"], var_type=data["type"])
+        return token_data.convert_to_type()
+
     def __str__(self, indent=0):
         output = "{}:\n".format(self.node_type)
 
@@ -37,7 +46,7 @@ class FormNode(Node):
         assert form_data[0] == "@form", \
             "Form is of invalid type: " + form_data[0]
 
-        self.name = form_data[1]
+        self.name = self.create_token(form_data[1])
 
         block = BlockNode("block", form_data[2])
         self.add_child(block)
@@ -72,9 +81,9 @@ class QuestionNode(Node):
     def __init__(self, question):
         super(QuestionNode, self).__init__("question")
 
-        self.name = question[0]
-        self.question = question[1]
-        self.type = question[2]
+        self.name = self.create_token(question[0])
+        self.question = self.create_token(question[1])
+        self.type = self.create_token(question[2])
 
         self.computed = len(question) > 3
         self.expression = None
@@ -86,7 +95,7 @@ class QuestionNode(Node):
             self.node_type, self.question, self.type
         )
         if self.computed:
-            output += " ({})".format(self.expression.__str__(0))
+            output += " = ({})".format(self.expression.__str__(0))
         output += "\n"
         return output
 
@@ -162,12 +171,10 @@ class ExpressionNode(Node):
 class TermNode(Node):
     def __init__(self, term_data):
         super(TermNode, self).__init__("Term")
-        self.data = term_data
-        print type(self.data)
-        print self.data
+        self.data = self.create_token(term_data)
 
     def __str__(self, indent=0):
-        return "HIER:{}_{}".format(str(self.data), self.data.var_type)
+        return "{}:{}".format(self.data, self.data.type)
 
 if __name__ == '__main__':
     form1 = """
@@ -176,7 +183,7 @@ if __name__ == '__main__':
         "Did you buy a house in 2010?" hasBoughtHouse: boolean
         "Did you enter a loan?" hasMaintLoan: boolean
 
-        if (hasSoldHouse > 500) {
+        if (true == false * 100 && 5 - 8.0) {
             "What was the selling price?" sellingPrice: money
             "Private debts for the sold house:" privateDebt: money
             "Value residue:" valueResidue: money = (sellingPrice -

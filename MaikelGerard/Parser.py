@@ -1,26 +1,5 @@
 import pyparsing as pp
-
-
-class Token(object):
-    def __init__(self, s, loc, token, var_type):
-        if var_type == "int":
-            self.val = int(token)
-        elif var_type == "dec":
-            self.val = float(token)
-        elif var_type == "bool":
-            self.val = bool(token)
-        else:
-            self.val = token
-
-        self.var_type = var_type
-        print self.val
-        print self.var_type
-
-        self.line = pp.lineno(loc, s)
-        self.col = pp.col(loc, s)
-
-    #def __str__(self):
-    #    return str(self.val)
+from ParserToken import ParserToken
 
 
 class QuestionnaireParser(object):
@@ -38,7 +17,7 @@ class QuestionnaireParser(object):
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
     TYPE_VAR = pp.Word(pp.alphas, pp.alphanums + "_")
     TYPE_DECIMAL = pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)")
-    TYPE_BOOL = pp.Regex("true|false")
+    TYPE_BOOL = pp.oneOf("true false")
     TYPE_INT = pp.Word(pp.nums)
 
     def __init__(self):
@@ -91,11 +70,11 @@ class QuestionnaireParser(object):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
         expression_types = pp.Combine(
-            self.TYPE_VAR | self.TYPE_DECIMAL | self.TYPE_INT | self.TYPE_BOOL
+            self.TYPE_BOOL | self.TYPE_VAR | self.TYPE_DECIMAL | self.TYPE_INT
         )
 
         return pp.infixNotation(expression_types, [
-            (pp.oneOf('- !'), 1, pp.opAssoc.RIGHT),
+            (pp.oneOf('- + !'), 1, pp.opAssoc.RIGHT),
             (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.convert_expr),
             (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.convert_expr),
             (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.convert_expr),
@@ -119,7 +98,9 @@ class QuestionnaireParser(object):
 
     @staticmethod
     def create_token(s, l, t, var_type="str"):
-        return Token(s, l, t[0], var_type)
+        line = pp.lineno(l, s)
+        col = pp.col(l, s)
+        return ParserToken(t[0], line, col, var_type).to_json()
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str)
