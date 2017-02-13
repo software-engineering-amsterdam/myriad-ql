@@ -4,6 +4,8 @@ grammar QL;
 {
     import ast.atom.*;
     import ast.*;
+    import ast.type.*;
+    import ast.expression.*;
 }
 
 root returns [Form result] 
@@ -32,12 +34,12 @@ question returns [Question result]
 		;
 
 type returns [Type result]
-	: t = ('boolean' 
+	: 'boolean' { $result = new BooleanType(); }
 	| 'date' 
 	| 'decimal' 
 	| 'integer' 
 	| 'money' 
-	| 'string') { $result = new Type($t.text) };
+	| 'string'; //{ $result = new Type($t.text) }; // TODO should this be a specific type?
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -50,7 +52,7 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- : lhs=atom '==' rhs=atom { $result = new Expression($lhs.result, $rhs.result); };
+ : lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); };
 // | atom relOp atom
 // | atom boolOp atom
 // | atom arithOp atom
