@@ -1,78 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="369677d1-7def-4cbf-b749-82a77ef77e32" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QL/src/ast/ComputedQuestion.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QL/src/ast/type/DecimalType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Loading.iml" afterPath="$PROJECT_DIR$/.idea/Loading.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/1b/700dcb6a44ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/1b/700dcb6a44ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/22/e0891f3444ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/22/e0891f3444ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/2d/709c7e2f42ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/2d/709c7e2f42ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/2f/4033983c46ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/2f/4033983c46ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/32/d03c0e834aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/32/d03c0e834aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/33/2021f9274aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/33/2021f9274aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/33/608f7bae3ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/33/608f7bae3ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/38/f04004413bed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/38/f04004413bed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/3f/30838ea646ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/3f/30838ea646ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/41/a018c5913ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/41/a018c5913ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4b/e0041f7a3ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4b/e0041f7a3ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4e/50ac280c44ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4e/50ac280c44ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4f/904b0b214aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/4f/904b0b214aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/50/d0c2b0874aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/50/d0c2b0874aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/56/501db39046ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/56/501db39046ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/57/306bd92648ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/57/306bd92648ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/59/403905664aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/59/403905664aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/5c/c02b38b249ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/5c/c02b38b249ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/5e/d0c032743ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/5e/d0c032743ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6/400d51063aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6/400d51063aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/61/10f7e82c3aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/61/10f7e82c3aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/65/a036f32c42ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/65/a036f32c42ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/65/b0eadb223bed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/65/b0eadb223bed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/66/30e7455149ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/66/30e7455149ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6d/501b45153ced001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6d/501b45153ced001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6f/9070fe1245ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/6f/9070fe1245ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/76/f0b388543aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/76/f0b388543aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/78/40e9b5c944ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/78/40e9b5c944ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/79/009caeb03ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/79/009caeb03ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/79/90430edb3aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/79/90430edb3aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7c/703170b73ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7c/703170b73ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7d/e0fdbc6f42ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7d/e0fdbc6f42ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7f/90c975f14aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/7f/90c975f14aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8/90c7685140ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8/90c7685140ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8a/d04220e84aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8a/d04220e84aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8f/40eb71f145ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/8f/40eb71f145ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/90/b0e9da4f42ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/90/b0e9da4f42ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/94/40436ac44aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/94/40436ac44aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/99/20eea43848ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/99/20eea43848ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/9d/500bbddf4aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/9d/500bbddf4aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/a1/c01701643ded001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/a1/c01701643ded001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/a1/d04959d847ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/a1/d04959d847ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/b6/f007452144ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/b6/f007452144ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/c3/80b11d0445ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/c3/80b11d0445ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/c7/a0d5aa5f40ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/c7/a0d5aa5f40ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/cd/603d97043ced001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/cd/603d97043ced001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/cf/10270edb3bed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/cf/10270edb3bed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d0/c03cbe6f4aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d0/c03cbe6f4aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d2/f03770933aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d2/f03770933aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d5/a0f9856d42ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/d5/a0f9856d42ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/dc/e02b46974aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/dc/e02b46974aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/dc/f04306513aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/dc/f04306513aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/de/108f5cdf3aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/de/108f5cdf3aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e/80242e0d3bed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e/80242e0d3bed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e2/908d339f3eed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e2/908d339f3eed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e3/008e8da23eed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e3/008e8da23eed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e7/0016ab4140ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e7/0016ab4140ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e8/c0679dbb3aed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/e8/c0679dbb3aed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/fc/90bc379d49ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/fc/90bc379d49ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/fc/d08927fb39ed001618e8edbfa867b7e9" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.history/fc/d08927fb39ed001618e8edbfa867b7e9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/QL/2017/2/6/refactorings.history" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/QL/2017/2/6/refactorings.history" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/QL.g4" afterPath="$PROJECT_DIR$/QL/QL.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/src/ast/Question.java" afterPath="$PROJECT_DIR$/QL/src/ast/Question.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/src/ast/type/DateType.java" afterPath="$PROJECT_DIR$/QL/src/ast/type/DateType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/src/ast/type/IntegerType.java" afterPath="$PROJECT_DIR$/QL/src/ast/type/IntegerType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/src/ast/type/MoneyType.java" afterPath="$PROJECT_DIR$/QL/src/ast/type/MoneyType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QL/src/ast/type/StringType.java" afterPath="$PROJECT_DIR$/QL/src/ast/type/StringType.java" />
+    <list default="true" id="369677d1-7def-4cbf-b749-82a77ef77e32" name="Default" comment="Loading - fix types">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -89,11 +20,11 @@
     <favorites_list name="Loading" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="QL.g4" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="QL.g4" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QL/QL.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="510">
               <caret line="35" column="14" lean-forward="false" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="14" />
               <folding>
                 <element signature="e#13#125#1" expanded="true" />
@@ -102,10 +33,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QL/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
+            <state relative-caret-position="221">
               <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
               <folding />
             </state>
@@ -166,6 +107,7 @@
         <option value="$PROJECT_DIR$/QL/src/ast/type/MoneyType.java" />
         <option value="$PROJECT_DIR$/QL/src/ast/type/StringType.java" />
         <option value="$PROJECT_DIR$/QL/src/ast/type/DecimalType.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -191,7 +133,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -214,80 +156,14 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="QL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ast" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Loading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ast" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="type" />
+              <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,131 +187,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Ferro\Documents\test\myriad-ql\Loading\QL\src" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../AK_BvdB_TaxFree/AntlrSample/src/AST.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.mylyn/tasks.xml.zip</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QL/.indexes/history.index</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QL/.markers.snap</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QL/.syncinfo.snap</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/7.snap</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/278575457.index</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/QL/QL.g4</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../MaikelGerard/QL_AST.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../MaikelGerard/QL_Parser.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../pql/pql/Amain.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../pql/tests/parser/test_parser.py</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../AK_BvdB_TaxFree/AntlrSample/src/BoolQuestion.java</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -691,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1486987215990</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Loading - fix types">
+      <created>1486989415156</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1486989415156</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -705,38 +463,38 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3640553" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27458397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.6298003" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" x="0" y="0" width="1354" height="733" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33026114" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3640553" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2708018" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33026114" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -777,7 +535,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Loading - Added Atoms" />
     <MESSAGE value="Loading - expressions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Loading - expressions" />
+    <MESSAGE value="Loading - fix types" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading - fix types" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -846,7 +605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="15" column="4" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -854,7 +612,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -862,7 +619,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -870,7 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -878,7 +633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,7 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -894,7 +647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,7 +654,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="6" lean-forward="false" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -910,9 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -920,47 +668,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QL/src/ast/Expression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="28" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/QL/src/ast/Expression.java" />
     <entry file="file://$PROJECT_DIR$/gen/QLVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/Expression.java~Stashed changes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/Expression.java~Stashed changes" />
     <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/NEqExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -968,7 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -976,7 +698,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -984,7 +705,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -992,23 +712,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="53" lean-forward="false" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/SingleExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/SingleExpression.java" />
     <entry file="file://$PROJECT_DIR$/QL/src/ast/expression/OrExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="52" lean-forward="false" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1016,7 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="52" lean-forward="false" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1024,7 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="36" lean-forward="false" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1032,7 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="19" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1040,7 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1048,7 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1056,13 +762,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="30" lean-forward="false" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/QL/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="221">
           <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
           <folding />
         </state>
@@ -1072,7 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="12" column="1" lean-forward="false" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1080,7 +784,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="369" column="68" lean-forward="false" selection-start-line="369" selection-start-column="68" selection-end-line="369" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,7 +791,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1096,10 +798,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-          <folding>
-            <element signature="e#77#78#0" expanded="true" />
-            <element signature="e#97#98#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1107,10 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-          <folding>
-            <element signature="e#106#107#0" expanded="true" />
-            <element signature="e#129#130#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1118,7 +812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1126,10 +819,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding>
-            <element signature="e#158#159#0" expanded="true" />
-            <element signature="e#181#182#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1137,7 +826,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1145,7 +833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1153,17 +840,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/QL/QL.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="510">
           <caret line="35" column="14" lean-forward="false" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="14" />
           <folding>
             <element signature="e#13#125#1" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
