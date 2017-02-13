@@ -1,7 +1,7 @@
 package ast.atom;
 
-import ast.Node;
+import ast.expression.Expression;
 
-public class Atom extends Node {
+public class Atom extends Expression {
 
 }

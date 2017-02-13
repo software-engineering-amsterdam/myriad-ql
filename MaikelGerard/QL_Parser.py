@@ -1,9 +1,31 @@
 import pyparsing as pp
 
 
+class Token(object):
+    def __init__(self, s, loc, token, var_type):
+        if var_type == "int":
+            self.val = int(token)
+        elif var_type == "dec":
+            self.val = float(token)
+        elif var_type == "bool":
+            self.val = bool(token)
+        else:
+            self.val = token
+
+        self.var_type = var_type
+        print self.val
+        print self.var_type
+
+        self.line = pp.lineno(loc, s)
+        self.col = pp.col(loc, s)
+
+    #def __str__(self):
+    #    return str(self.val)
+
+
 class QuestionnaireParser(object):
+    LIT_IS = pp.Literal("=").suppress()
     LIT_COLON = pp.Literal(":").suppress()
-    LIT_QUOTE = pp.Literal('"')
     LIT_L_CURLY = pp.Literal("{").suppress()
     LIT_R_CURLY = pp.Literal("}").suppress()
     LIT_L_BRACE = pp.Literal("(").suppress()
@@ -16,12 +38,25 @@ class QuestionnaireParser(object):
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
     TYPE_VAR = pp.Word(pp.alphas, pp.alphanums + "_")
     TYPE_DECIMAL = pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)")
+    TYPE_BOOL = pp.Regex("true|false")
     TYPE_INT = pp.Word(pp.nums)
 
     def __init__(self):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
         pp.quotedString.setParseAction(pp.removeQuotes)
+        pp.quotedString.setParseAction(self.create_token)
+
+        # Set to parse action obtain token location
+        self.TYPE_NAME.setParseAction(self.create_token)
+        self.TYPE_VAR.setParseAction(
+            lambda s, l, t: self.create_token(s, l, t, var_type="var"))
+        self.TYPE_DECIMAL.setParseAction(
+            lambda s, l, t: self.create_token(s, l, t, var_type="dec"))
+        self.TYPE_INT.setParseAction(
+            lambda s, l, t: self.create_token(s, l, t, var_type="int"))
+        self.TYPE_BOOL.setParseAction(
+            lambda s, l, t: self.create_token(s, l, t, var_type="bool"))
 
         self.grammar = self.define_grammar()
 
@@ -35,8 +70,8 @@ class QuestionnaireParser(object):
         expression = self.define_expression()
 
         question = pp.Group(
-            self.TYPE_VAR + self.LIT_COLON + pp.quotedString +
-            self.TYPE_NAME + pp.Optional(self.embrace(expression))
+            pp.quotedString + self.TYPE_VAR + self.LIT_COLON +
+            self.TYPE_NAME + pp.Optional(self.LIT_IS + self.embrace(expression))
         )
 
         block = pp.Forward()
@@ -56,7 +91,7 @@ class QuestionnaireParser(object):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
         expression_types = pp.Combine(
-            self.TYPE_VAR | self.TYPE_DECIMAL | self.TYPE_INT
+            self.TYPE_VAR | self.TYPE_DECIMAL | self.TYPE_INT | self.TYPE_BOOL
         )
 
         return pp.infixNotation(expression_types, [
@@ -81,6 +116,10 @@ class QuestionnaireParser(object):
         if len(expr) <= 2:
             return expr
         return [expr[:2] + self.to_binary_expr(expr[2:])]
+
+    @staticmethod
+    def create_token(s, l, t, var_type="str"):
+        return Token(s, l, t[0], var_type)
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str)

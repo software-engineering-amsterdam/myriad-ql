@@ -35,11 +35,11 @@ question returns [Question result]
 
 type returns [Type result]
 	: 'boolean' { $result = new BooleanType(); }
-	| 'date' 
-	| 'decimal' 
-	| 'integer' 
-	| 'money' 
-	| 'string'; //{ $result = new Type($t.text) }; // TODO should this be a specific type?
+	| 'date' 	{ $result = new DateType(); }
+	| 'decimal' { $result = new DecimalType(); } 
+	| 'integer' { $result = new IntegerType(); }
+	| 'money'   { $result = new MoneyType(); }
+	| 'string'  { $result = new StringType(); };
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -52,21 +52,29 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- : lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); };
-// | atom relOp atom
-// | atom boolOp atom
-// | atom arithOp atom
-// | '!' atom
-// | '+' atom
-// | '-' atom
-// | atom
-// ;
+ :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ | atom { $result = $atom.result; }
+ ;
 
-relOp
- : '==' | '!=' | '<=' | '>=' | '>' | '<';
+binOp returns [BinaryExpression result]
+ : '==' { $result = new EqExpression(); }
+ | '!=' { $result = new NEqExpression(); }
+ | '<=' { $result = new LEqExpression(); }
+ | '>=' { $result = new GEqExpression(); }
+ | '>'  { $result = new GExpression(); }
+ | '<'  { $result = new LExpression(); }
+ | '+'  { $result = new AddExpression(); }
+ | '-'  { $result = new SubExpression(); }
+ | '/'  { $result = new DivExpression(); }
+ | '*'  { $result = new MulExpression(); }
+ | '&&' { $result = new AndExpression(); }
+ | '||' { $result = new OrExpression(); }
+ ;
 
-boolOp
- : '&&' | '||';
+unaryOp returns [UnaryExpression result]
+  : '!' { $result = new NotExpression(); }
+  ;
 
 arithOp
  : '+' | '-' | '/' | '*';
@@ -83,7 +91,7 @@ atom returns [Atom result]
     $result = new StringAtom($STRING.text);
             }
  | BOOL { System.out.println($BOOL.text);
-           $result = new BoolAtom(Boolean.valueOf($BOOL.text); }
+           $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
  | DDMMYY { System.out.println($DDMMYY.text);
             $result = new DateAtom($DDMMYY.text); }
  | ID { System.out.println($ID.text);
