@@ -18,6 +18,13 @@ describe Parser do
     end
   end
 
+  context 'integer' do
+    it 'parses' do
+      expect(parser.integer).to parse('1')
+      expect(parser.integer).to_not parse('a')
+    end
+  end
+
   context 'type' do
     it 'parses' do
       expect(parser.type).to parse('boolean')
@@ -30,9 +37,9 @@ describe Parser do
     end
   end
 
-  context 'arithmetic' do
+  context 'operator' do
     it 'parses' do
-      expect(parser.arithmetic).to parse('+')
+      expect(parser.operator).to parse('+')
     end
   end
 
@@ -41,6 +48,14 @@ describe Parser do
       expect(parser.expression).to parse('(sellingPrice - privateDebt + anotherVariable)')
     end
   end
+
+  context 'arithmatic' do
+    it 'parses' do
+      expect(parser.expression).to parse('(5 - 1 + 20)')
+      expect(parser.expression).to_not parse('(5 *+ 1)')
+    end
+  end
+
 
   context 'question' do
     it 'parses' do

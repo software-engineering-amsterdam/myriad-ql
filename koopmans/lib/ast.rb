@@ -19,6 +19,14 @@ class Ast < Parslet::Transform
     Question.new(label, variable, type)
   end
 
+  # create Question with expression
+  # TODO parse expression
+
+  # rule(:label => simple(:label), :variable => simple(:variable), :type => simple(:type), :expression => subtree(:expression)) do
+  #   # TODO parse expression
+  #   # Question.new(label, variable, type)
+  # end
+
   rule(:if_statement => {:condition => {:variable => simple(:x)}, :block => subtree(:block)}) do
     IfStatement.new(x, block)
   end

@@ -9,6 +9,18 @@ class Parser < Parslet::Parser
     spaces.maybe
   end
 
+  rule(:integer) do
+    match('[0-9]').repeat(1).as(:integer) >> spaces?
+  end
+
+  rule(:calculation) do
+    integer.as(:left) >> operator.as(:operator) >> expression.as(:right)
+  end
+
+  rule(:expression) do
+    left_parenthesis >> expression.as(:expression) >> right_parenthesis | calculation | integer
+  end
+
   def self.symbols(symbols)
     symbols.each do |name, symbol|
       rule(name) { str(symbol) }
@@ -28,10 +40,10 @@ class Parser < Parslet::Parser
           divide: '/',
           assign: '=',
 
-          boolean: 'boolean',
-          integer: 'integer',
-          string: 'string',
-          money: 'money',
+          boolean_type: 'boolean',
+          integer_type: 'integer',
+          string_type: 'string',
+          money_type: 'money',
 
           if_: 'if',
           form_: 'form'
@@ -43,7 +55,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:type) do
-    (boolean | integer | string | money).as(:type) >> spaces?
+    (boolean_type | integer_type | string_type | money_type).as(:type) >> spaces?
   end
 
   rule(:variable) do
@@ -54,12 +66,8 @@ class Parser < Parslet::Parser
     variable >> colon >> spaces?
   end
 
-  rule(:arithmetic) do
-    (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
-  end
-
-  rule(:expression) do
-    left_parenthesis >> (variable >> (arithmetic >> variable).repeat).repeat.as(:expression) >> right_parenthesis
+  rule(:operator) do
+    (subtract | add | multiply | divide).as(:operator) >> spaces?
   end
 
   rule(:assignment?) do
