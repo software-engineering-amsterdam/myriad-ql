@@ -91,9 +91,24 @@ class GUIQuestion
   end
 end
 
+class GUIIf
+  attr_accessor :condition
+  attr_accessor :questions
+
+  def initialize(condition, questions)
+    condition = condition
+    questions = questions
+  end
+end
+
 v = TkVariable.new(true)
+v2 = TkVariable.new(true)
 q1 = GUIQuestion.new('hola', v)
-q2 = GUIQuestion.new('hola2', v)
+# q2 = GUIQuestion.new('hola2', v)
+q3 = GUIQuestion.new('hola3', v2)
+
+ifs = GUIIf.new(v, [q3])
+
 # q1.toggle
 # q1.toggle
 
