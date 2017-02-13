@@ -1,31 +1,35 @@
 grammar QL;
 
-form: 'form'  ID  BRACKET_OPEN (formItem)*  BRACKET_CLOSE;
+form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: input # in
-        | condition  #cond
+formItem: input         #in
+        | computed      #comp
+        | condition     #cond
         ;
 
 input: QUESTION ID':' type;
 
-baseType: BOOL | STRING | INT | DATE | DEC | MONEY;
-type: baseType                      #basetype
-    | baseType '=' '('intExpr')'    #expression
-    ;
+computed: QUESTION ID':' type '=' '('expression')';
 
-condition: 'if' '('boolExpr')' BRACKET_OPEN (formItem)* BRACKET_CLOSE;
+type: BOOL | STRING | INT | DATE | DEC | MONEY;
 
-boolExpr: boolExpr op=('&&' | '||') boolExpr                          # andor
+condition: 'if' '('boolExpr')' '{' (formItem)* '}';
+
+expression: boolExpr
+          | intExpr
+          ;
+
+boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr            # andor
         | intExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') intExpr  # comparison
         | ID                                                          # boolId
         | ('true' | 'false')                                          # bool
         ;
 
-intExpr: intExpr op=('*' | '/') intExpr # div
-    | intExpr op=('+' | '-') intExpr    # add
-    | NUMBER                            # int
-    | ID                                # intId
-    ;
+intExpr: intExpr op=('*' | '/') intExpr    # div
+       | intExpr op=('+' | '-') intExpr    # add
+       | NUMBER                            # int
+       | ID                                # intId
+       ;
 
 //datatypes
 BOOL:   'boolean';
@@ -35,18 +39,10 @@ DATE:   'date';
 DEC:    'decimal';
 MONEY:  'money';
 
-//Operands
-ADD: '+';
-SUB: '-';
-
 NUMBER: ('0'..'9')+;
 
 QUESTION: '"'(~'"')+'"' ;
 ID: [a-zA-Z]+;
-
-//symbols
-BRACKET_OPEN: '{';
-BRACKET_CLOSE: '}';
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;

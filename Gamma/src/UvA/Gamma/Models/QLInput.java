@@ -3,12 +3,12 @@ package UvA.Gamma.Models;
 import UvA.Gamma.Models.QLValues.QLInt;
 import UvA.Gamma.Models.QLValues.QLValue;
 
-public class Input {
+public class QLInput {
     private String identifier;
     private String question;
     private QLValue value;
 
-    public Input(String identifier, String question, String type) {
+    public QLInput(String identifier, String question, String type) {
         this.identifier = identifier;
         this.question = question;
         QLValue.Type t = QLValue.Type.valueOf(type.toUpperCase());

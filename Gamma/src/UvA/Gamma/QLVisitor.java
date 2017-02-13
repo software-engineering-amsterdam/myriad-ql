@@ -3,7 +3,7 @@ package UvA.Gamma;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.Models.QLForm;
-import UvA.Gamma.Models.Input;
+import UvA.Gamma.Models.QLInput;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.HashMap;
@@ -40,21 +40,13 @@ public class QLVisitor extends QLBaseVisitor<Object> {
     }
 
     @Override
-    public Input visitInput(QLParser.InputContext ctx) {
+    public QLInput visitInput(QLParser.InputContext ctx) {
         String id = ctx.ID().getText();
         String question = ctx.QUESTION().getText();
         String type = (String) visit(ctx.type());
-        Input input = new Input(id, question, type);
+        QLInput input = new QLInput(id, question, type);
         form.addInput(input);
         return input;
-    }
-
-    @Override
-    public Object visitType(QLParser.TypeContext ctx) {
-        if (ctx.intExpr() != null) {
-            return String.valueOf(visit(ctx.intExpr()));
-        }
-        return ctx.getText();
     }
 
     //Expressions
