@@ -1,6 +1,8 @@
 package org.ql.ast.literal;
 
-public class StringLiteral {
+import org.ql.ast.Node;
+
+public class StringLiteral implements Node {
     private String stringLiteral;
 
     public StringLiteral(String stringLiteral) {

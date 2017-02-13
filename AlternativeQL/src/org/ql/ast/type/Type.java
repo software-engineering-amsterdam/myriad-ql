@@ -1,5 +1,7 @@
 package org.ql.ast.type;
 
-public enum Type {
+import org.ql.ast.Node;
+
+public enum Type implements Node {
     BOOLEAN, FLOAT, INTEGER, STRING, MONEY, DATE
 }

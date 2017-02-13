@@ -1,15 +1,16 @@
 package org.ql.ast.form;
 
 import org.ql.ast.Identifier;
+import org.ql.ast.Node;
 import org.ql.ast.declaration.Declaration;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Form {
+public class Form implements Node {
     private final Identifier name;
-    private final ArrayList<Declaration> declarations;
+    private final List<Declaration> declarations;
 
-    public Form(Identifier name, ArrayList<Declaration> declarations) {
+    public Form(Identifier name, List<Declaration> declarations) {
         this.name = name;
         this.declarations = declarations;
     }
@@ -18,7 +19,7 @@ public class Form {
         return name;
     }
 
-    public ArrayList<Declaration> getDeclarations() {
+    public List<Declaration> getDeclarations() {
         return declarations;
     }
 

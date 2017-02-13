@@ -1,4 +1,6 @@
 package org.ql.ast.declaration;
 
-public abstract class Declaration {
+import org.ql.ast.Node;
+
+public abstract class Declaration implements Node {
 }
