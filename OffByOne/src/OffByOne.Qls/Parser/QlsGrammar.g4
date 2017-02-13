@@ -1,15 +1,15 @@
 grammar QlsGrammar;
 
 stylesheet
-    : STYLESHEET Identifier (page)+
+    : STYLESHEET Identifier (page)*
     ;
 
 page
-    : PAGE Identifier OPEN_BRACKET (section|defaultBlock)+ CLOSE_BRACKET
+    : PAGE Identifier OPEN_BRACKET (section|defaultBlock)* CLOSE_BRACKET
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)+ CLOSE_BRACKET
+    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)* CLOSE_BRACKET
     ;
 
 question	
@@ -22,7 +22,7 @@ widget
 
 defaultBlock
 	: DEFAULT type widget
-	| DEFAULT type OPEN_BRACKET (styleRule)+ widget CLOSE_BRACKET
+	| DEFAULT type OPEN_BRACKET (styleRule)* widget CLOSE_BRACKET
 	;
 
 styleRule
