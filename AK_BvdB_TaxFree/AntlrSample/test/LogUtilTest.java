@@ -1,5 +1,8 @@
+package test;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.uva.taxfree.util.LogUtil;
 
 import java.io.File;
 

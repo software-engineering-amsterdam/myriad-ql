@@ -1,12 +1,16 @@
-//package main;
+package org.uva.taxfree.main;//package main;
 
 import org.antlr.v4.gui.TestRig;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.uva.taxfree.ast.OurQLGrammarListener;
+import org.uva.taxfree.gen.QLGrammarLexer;
+import org.uva.taxfree.gen.QLGrammarParser;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by Alex on 7-2-2017.

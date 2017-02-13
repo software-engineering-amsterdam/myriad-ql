@@ -1,3 +1,7 @@
+package org.uva.taxfree.model;
+
+import org.uva.taxfree.util.LogUtil;
+
 import java.util.ArrayList;
 
 public abstract class Node {
