@@ -25,9 +25,9 @@ form taxOfficeExample {
 
 '''
 BNF
-<form> ::= <type> <identifier> '{' <blockBody> '}'
-<blockBody> ::= <question> | <conditional>
-<conditional> ::= 'if' '(' <exp> | <boolean> ')' '{' <blockBody> '}'
+<form> ::= <type> <identifier> '{' <block_body> '}'
+<block_body> ::= <question> | <conditional>
+<conditional> ::= 'if' '(' <exp> | <boolean> ')' '{' <block_body> '}'
 <question> ::= <label> <variable> ':' <data_type>
 <question_value> ::= expr | data_type
 <type> ::= <Ident>
@@ -76,12 +76,12 @@ class QL(Grammar):
                            exp + rpar)("assignment")
         question_value = Group((assignment | data_type))("question_value")
         question = Group(label + variable + colon + question_value)("question")
-        blockBody = Forward()
+        block_body = Forward()
         conditional = Group(if_key("conditional_statement") + lpar + (exp | variable) + rpar +
-                            lbrace + blockBody + rbrace)("conditional")
-        blockBody << ZeroOrMore(question| conditional)('form_elements')
-        form = formType + identifier("identifier") + lbrace + blockBody + rbrace("form")
-        grammar << form
+                            lbrace + block_body + rbrace)("conditional")
+        block_body << ZeroOrMore(question| conditional)('form_elements')
+        form = Group(formType + identifier("identifier") + lbrace + block_body + rbrace)("form")
+        grammar << (form | block_body | question_value | assignment | exp)
         return grammar
 
     def parse(self, input_string):
