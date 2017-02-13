@@ -48,29 +48,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\GrammarBaseListener.cs" />
+    <Compile Include="Generated\GrammarBaseVisitor.cs" />
     <Compile Include="Generated\GrammarLexer.cs" />
     <Compile Include="Generated\GrammarListener.cs" />
     <Compile Include="Generated\GrammarParser.cs" />
+    <Compile Include="Generated\GrammarVisitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <AntlrTokens Include="Generated\Grammar.tokens">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>DSL.Generated</CustomToolNamespace>
-    </AntlrTokens>
-    <AntlrTokens Include="Generated\GrammarLexer.tokens">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>DSL.Generated</CustomToolNamespace>
-    </AntlrTokens>
     <None Include="Grammar\Grammar.g4" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>java org.antlr.v4.Tool -Dlanguage=CSharp "$(ProjectDir)\Grammar\Grammar.g4" -o "$(ProjectDir)\Generated"</PreBuildEvent>
+    <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\Grammar\Grammar.g4" -o "$(ProjectDir)\Generated"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

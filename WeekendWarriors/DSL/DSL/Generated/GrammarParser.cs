@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
+// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\DSL\DSL\\Grammar\Grammar.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -35,12 +35,14 @@ public partial class GrammarParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, Whitespace=14, MultiLineComment=15, 
-		SingleLineComment=16, StringLiteral=17, BooleanLiteral=18, NumberLiteral=19, 
-		LeftParenthesis=20, RightParenthesis=21, LeftBracket=22, RightBracket=23, 
-		TypeDeclarator=24, IfStatement=25, ElseStatement=26, FormStatement=27, 
-		AssignmentOperator=28, Type=29, Identifier=30;
+		Whitespace=1, MultiLineComment=2, SingleLineComment=3, StringLiteral=4, 
+		BooleanLiteral=5, NumberLiteral=6, LeftParenthesis=7, RightParenthesis=8, 
+		LeftBracket=9, RightBracket=10, TypeDeclarator=11, IfStatement=12, ElseStatement=13, 
+		FormStatement=14, AssignmentOperator=15, NotOperator=16, MinusOperator=17, 
+		DivisionOperator=18, MultiplyOperator=19, AdditionOperator=20, SubtractionOperator=21, 
+		LessThanOperator=22, LessThanOrEqualsOperator=23, GreaterThanOperator=24, 
+		GreaterThanOrEqualsOperator=25, NotEqualOperator=26, EqualsOperator=27, 
+		AndOperator=28, OrOperator=29, Type=30, Identifier=31;
 	public const int
 		RULE_form = 0, RULE_statement = 1, RULE_question = 2, RULE_conditionalBlock = 3, 
 		RULE_expression = 4;
@@ -49,16 +51,19 @@ public partial class GrammarParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'!'", "'/'", "'*'", "'+'", "'-'", "'<'", "'<='", "'>'", "'>='", 
-		"'!='", "'=='", "'&&'", "'||'", null, null, null, null, null, null, "'('", 
-		"')'", "'{'", "'}'", "':'", "'if'", "'else'", "'form'", "'='"
+		null, null, null, null, null, null, null, "'('", "')'", "'{'", "'}'", 
+		"':'", "'if'", "'else'", "'form'", "'='", "'!'", null, "'/'", "'*'", "'+'", 
+		null, "'<'", "'<='", "'>'", "'>='", "'!='", "'=='", "'&&'", "'||'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, "Whitespace", "MultiLineComment", "SingleLineComment", "StringLiteral", 
+		null, "Whitespace", "MultiLineComment", "SingleLineComment", "StringLiteral", 
 		"BooleanLiteral", "NumberLiteral", "LeftParenthesis", "RightParenthesis", 
 		"LeftBracket", "RightBracket", "TypeDeclarator", "IfStatement", "ElseStatement", 
-		"FormStatement", "AssignmentOperator", "Type", "Identifier"
+		"FormStatement", "AssignmentOperator", "NotOperator", "MinusOperator", 
+		"DivisionOperator", "MultiplyOperator", "AdditionOperator", "SubtractionOperator", 
+		"LessThanOperator", "LessThanOrEqualsOperator", "GreaterThanOperator", 
+		"GreaterThanOrEqualsOperator", "NotEqualOperator", "EqualsOperator", "AndOperator", 
+		"OrOperator", "Type", "Identifier"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -107,6 +112,11 @@ public partial class GrammarParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.ExitForm(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitForm(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -160,6 +170,11 @@ public partial class GrammarParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.ExitStatement(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -236,6 +251,11 @@ public partial class GrammarParser : Parser {
 			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.ExitQuestion(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitQuestion(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -309,6 +329,11 @@ public partial class GrammarParser : Parser {
 			IGrammarListener typedListener = listener as IGrammarListener;
 			if (typedListener != null) typedListener.ExitConditionalBlock(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConditionalBlock(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -355,30 +380,292 @@ public partial class GrammarParser : Parser {
 	}
 
 	public partial class ExpressionContext : ParserRuleContext {
-		public ITerminalNode StringLiteral() { return GetToken(GrammarParser.StringLiteral, 0); }
-		public ITerminalNode BooleanLiteral() { return GetToken(GrammarParser.BooleanLiteral, 0); }
-		public ITerminalNode NumberLiteral() { return GetToken(GrammarParser.NumberLiteral, 0); }
-		public ITerminalNode Identifier() { return GetToken(GrammarParser.Identifier, 0); }
-		public ITerminalNode LeftParenthesis() { return GetToken(GrammarParser.LeftParenthesis, 0); }
+		public ExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expression; } }
+	 
+		public ExpressionContext() { }
+		public virtual void CopyFrom(ExpressionContext context) {
+			base.CopyFrom(context);
+		}
+	}
+	public partial class OrContext : ExpressionContext {
 		public ExpressionContext[] expression() {
 			return GetRuleContexts<ExpressionContext>();
 		}
 		public ExpressionContext expression(int i) {
 			return GetRuleContext<ExpressionContext>(i);
 		}
-		public ITerminalNode RightParenthesis() { return GetToken(GrammarParser.RightParenthesis, 0); }
-		public ExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_expression; } }
+		public ITerminalNode OrOperator() { return GetToken(GrammarParser.OrOperator, 0); }
+		public OrContext(ExpressionContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
+			if (typedListener != null) typedListener.EnterOr(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IGrammarListener typedListener = listener as IGrammarListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
+			if (typedListener != null) typedListener.ExitOr(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitOr(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class MulDivContext : ExpressionContext {
+		public IToken op;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode DivisionOperator() { return GetToken(GrammarParser.DivisionOperator, 0); }
+		public ITerminalNode MultiplyOperator() { return GetToken(GrammarParser.MultiplyOperator, 0); }
+		public MulDivContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterMulDiv(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitMulDiv(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMulDiv(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class AddSubContext : ExpressionContext {
+		public IToken op;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode AdditionOperator() { return GetToken(GrammarParser.AdditionOperator, 0); }
+		public ITerminalNode SubtractionOperator() { return GetToken(GrammarParser.SubtractionOperator, 0); }
+		public AddSubContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterAddSub(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitAddSub(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAddSub(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class ParensContext : ExpressionContext {
+		public ITerminalNode LeftParenthesis() { return GetToken(GrammarParser.LeftParenthesis, 0); }
+		public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public ITerminalNode RightParenthesis() { return GetToken(GrammarParser.RightParenthesis, 0); }
+		public ParensContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterParens(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitParens(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParens(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class StringContext : ExpressionContext {
+		public ITerminalNode StringLiteral() { return GetToken(GrammarParser.StringLiteral, 0); }
+		public StringContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterString(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitString(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitString(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class MINUSContext : ExpressionContext {
+		public ITerminalNode SubtractionOperator() { return GetToken(GrammarParser.SubtractionOperator, 0); }
+		public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public MINUSContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterMINUS(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitMINUS(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMINUS(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class NOTContext : ExpressionContext {
+		public ITerminalNode NotOperator() { return GetToken(GrammarParser.NotOperator, 0); }
+		public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public NOTContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterNOT(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitNOT(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNOT(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class NumberContext : ExpressionContext {
+		public ITerminalNode NumberLiteral() { return GetToken(GrammarParser.NumberLiteral, 0); }
+		public NumberContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterNumber(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitNumber(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNumber(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class BoolContext : ExpressionContext {
+		public ITerminalNode BooleanLiteral() { return GetToken(GrammarParser.BooleanLiteral, 0); }
+		public BoolContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterBool(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitBool(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBool(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class ComparisonContext : ExpressionContext {
+		public IToken op;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode LessThanOperator() { return GetToken(GrammarParser.LessThanOperator, 0); }
+		public ITerminalNode LessThanOrEqualsOperator() { return GetToken(GrammarParser.LessThanOrEqualsOperator, 0); }
+		public ITerminalNode GreaterThanOperator() { return GetToken(GrammarParser.GreaterThanOperator, 0); }
+		public ITerminalNode GreaterThanOrEqualsOperator() { return GetToken(GrammarParser.GreaterThanOrEqualsOperator, 0); }
+		public ComparisonContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterComparison(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitComparison(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitComparison(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class AndContext : ExpressionContext {
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode AndOperator() { return GetToken(GrammarParser.AndOperator, 0); }
+		public AndContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterAnd(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitAnd(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAnd(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class IDContext : ExpressionContext {
+		public ITerminalNode Identifier() { return GetToken(GrammarParser.Identifier, 0); }
+		public IDContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterID(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitID(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitID(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class EqualityContext : ExpressionContext {
+		public IToken op;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode NotEqualOperator() { return GetToken(GrammarParser.NotEqualOperator, 0); }
+		public ITerminalNode EqualsOperator() { return GetToken(GrammarParser.EqualsOperator, 0); }
+		public EqualityContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.EnterEquality(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IGrammarListener typedListener = listener as IGrammarListener;
+			if (typedListener != null) typedListener.ExitEquality(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IGrammarVisitor<TResult> typedVisitor = visitor as IGrammarVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitEquality(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -399,47 +686,75 @@ public partial class GrammarParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 54;
+			State = 59;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case StringLiteral:
+				{
+				_localctx = new StringContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+
+				State = 47; Match(StringLiteral);
+				}
+				break;
 			case BooleanLiteral:
+				{
+				_localctx = new BoolContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 48; Match(BooleanLiteral);
+				}
+				break;
 			case NumberLiteral:
+				{
+				_localctx = new NumberContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 49; Match(NumberLiteral);
+				}
+				break;
 			case Identifier:
 				{
-				State = 47;
-				_la = TokenStream.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << StringLiteral) | (1L << BooleanLiteral) | (1L << NumberLiteral) | (1L << Identifier))) != 0)) ) {
-				ErrorHandler.RecoverInline(this);
-				}
-				else {
-					ErrorHandler.ReportMatch(this);
-				    Consume();
-				}
+				_localctx = new IDContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 50; Match(Identifier);
 				}
 				break;
 			case LeftParenthesis:
 				{
-				{
-				State = 48; Match(LeftParenthesis);
-				State = 49; expression(0);
-				State = 50; Match(RightParenthesis);
-				}
+				_localctx = new ParensContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 51; Match(LeftParenthesis);
+				State = 52; expression(0);
+				State = 53; Match(RightParenthesis);
 				}
 				break;
-			case T__0:
+			case NotOperator:
 				{
-				{
-				State = 52; Match(T__0);
-				State = 53; expression(0);
+				_localctx = new NOTContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 55; Match(NotOperator);
+				State = 56; expression(8);
 				}
+				break;
+			case SubtractionOperator:
+				{
+				_localctx = new MINUSContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 57; Match(SubtractionOperator);
+				State = 58; expression(7);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 76;
+			State = 81;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -448,109 +763,109 @@ public partial class GrammarParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 74;
+					State = 79;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
 					case 1:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new MulDivContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 56;
+						State = 61;
 						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
-						State = 57;
+						State = 62;
+						((MulDivContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
-						if ( !(_la==T__1 || _la==T__2) ) {
-						ErrorHandler.RecoverInline(this);
+						if ( !(_la==DivisionOperator || _la==MultiplyOperator) ) {
+							((MulDivContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 58; expression(7);
+						State = 63; expression(7);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new AddSubContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 59;
+						State = 64;
 						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
-						State = 60;
+						State = 65;
+						((AddSubContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
-						if ( !(_la==T__3 || _la==T__4) ) {
-						ErrorHandler.RecoverInline(this);
+						if ( !(_la==AdditionOperator || _la==SubtractionOperator) ) {
+							((AddSubContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 61; expression(6);
+						State = 66; expression(6);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new ComparisonContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 62;
+						State = 67;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
-						State = 63;
+						State = 68;
+						((ComparisonContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__8))) != 0)) ) {
-						ErrorHandler.RecoverInline(this);
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LessThanOperator) | (1L << LessThanOrEqualsOperator) | (1L << GreaterThanOperator) | (1L << GreaterThanOrEqualsOperator))) != 0)) ) {
+							((ComparisonContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 64; expression(5);
+						State = 69; expression(5);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new EqualityContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 65;
+						State = 70;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 66;
+						State = 71;
+						((EqualityContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
-						if ( !(_la==T__9 || _la==T__10) ) {
-						ErrorHandler.RecoverInline(this);
+						if ( !(_la==NotEqualOperator || _la==EqualsOperator) ) {
+							((EqualityContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 67; expression(4);
+						State = 72; expression(4);
 						}
 						break;
 					case 5:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new AndContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 68;
+						State = 73;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						{
-						State = 69; Match(T__11);
-						}
-						State = 70; expression(3);
+						State = 74; Match(AndOperator);
+						State = 75; expression(3);
 						}
 						break;
 					case 6:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new OrContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 71;
+						State = 76;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						{
-						State = 72; Match(T__12);
-						}
-						State = 73; expression(2);
+						State = 77; Match(OrOperator);
+						State = 78; expression(2);
 						}
 						break;
 					}
 					} 
 				}
-				State = 78;
+				State = 83;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,6,Context);
 			}
@@ -589,41 +904,43 @@ public partial class GrammarParser : Parser {
 	private static string _serializeATN()
 	{
 	    StringBuilder sb = new StringBuilder();
-	    sb.Append("\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3 R\x4");
+	    sb.Append("\x3\x430\xD6D1\x8206\xAD2D\x4417\xAEF1\x8D80\xAADD\x3!W\x4");
 		sb.Append("\x2\t\x2\x4\x3\t\x3\x4\x4\t\x4\x4\x5\t\x5\x4\x6\t\x6\x3\x2\x3");
 		sb.Append("\x2\x3\x2\x3\x2\x3\x3\x3\x3\x3\x3\a\x3\x14\n\x3\f\x3\xE\x3\x17");
 		sb.Append("\v\x3\x3\x3\x3\x3\x3\x4\x3\x4\x3\x4\x3\x4\x3\x4\x3\x4\x3\x4");
 		sb.Append("\x3\x4\x3\x4\x3\x4\x5\x4%\n\x4\x3\x5\x3\x5\x3\x5\x3\x5\x3\x5");
 		sb.Append("\x3\x5\x3\x5\x3\x5\x5\x5/\n\x5\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6");
-		sb.Append("\x3\x6\x3\x6\x3\x6\x5\x6\x39\n\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3");
-		sb.Append("\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3");
-		sb.Append("\x6\x3\x6\x3\x6\x3\x6\a\x6M\n\x6\f\x6\xE\x6P\v\x6\x3\x6\x2\x3");
-		sb.Append("\n\a\x2\x4\x6\b\n\x2\a\x4\x2\x13\x15  \x3\x2\x4\x5\x3\x2\x6");
-		sb.Append("\a\x3\x2\b\v\x3\x2\f\rX\x2\f\x3\x2\x2\x2\x4\x10\x3\x2\x2\x2");
-		sb.Append("\x6\x1A\x3\x2\x2\x2\b&\x3\x2\x2\x2\n\x38\x3\x2\x2\x2\f\r\a\x1D");
-		sb.Append("\x2\x2\r\xE\a \x2\x2\xE\xF\x5\x4\x3\x2\xF\x3\x3\x2\x2\x2\x10");
-		sb.Append("\x15\a\x18\x2\x2\x11\x14\x5\x6\x4\x2\x12\x14\x5\b\x5\x2\x13");
-		sb.Append("\x11\x3\x2\x2\x2\x13\x12\x3\x2\x2\x2\x14\x17\x3\x2\x2\x2\x15");
-		sb.Append("\x13\x3\x2\x2\x2\x15\x16\x3\x2\x2\x2\x16\x18\x3\x2\x2\x2\x17");
-		sb.Append("\x15\x3\x2\x2\x2\x18\x19\a\x19\x2\x2\x19\x5\x3\x2\x2\x2\x1A");
-		sb.Append("\x1B\a\x13\x2\x2\x1B\x1C\a \x2\x2\x1C\x1D\a\x1A\x2\x2\x1D$\a");
-		sb.Append("\x1F\x2\x2\x1E\x1F\a\x1E\x2\x2\x1F \a\x16\x2\x2 !\x5\n\x6\x2");
-		sb.Append("!\"\a\x17\x2\x2\"%\x3\x2\x2\x2#%\x3\x2\x2\x2$\x1E\x3\x2\x2\x2");
-		sb.Append("$#\x3\x2\x2\x2%\a\x3\x2\x2\x2&\'\a\x1B\x2\x2\'(\a\x16\x2\x2");
-		sb.Append("()\x5\n\x6\x2)*\a\x17\x2\x2*.\x5\x4\x3\x2+,\a\x1C\x2\x2,/\x5");
-		sb.Append("\x4\x3\x2-/\x3\x2\x2\x2.+\x3\x2\x2\x2.-\x3\x2\x2\x2/\t\x3\x2");
-		sb.Append("\x2\x2\x30\x31\b\x6\x1\x2\x31\x39\t\x2\x2\x2\x32\x33\a\x16\x2");
-		sb.Append("\x2\x33\x34\x5\n\x6\x2\x34\x35\a\x17\x2\x2\x35\x39\x3\x2\x2");
-		sb.Append("\x2\x36\x37\a\x3\x2\x2\x37\x39\x5\n\x6\x2\x38\x30\x3\x2\x2\x2");
-		sb.Append("\x38\x32\x3\x2\x2\x2\x38\x36\x3\x2\x2\x2\x39N\x3\x2\x2\x2:;");
-		sb.Append("\f\b\x2\x2;<\t\x3\x2\x2<M\x5\n\x6\t=>\f\a\x2\x2>?\t\x4\x2\x2");
-		sb.Append("?M\x5\n\x6\b@\x41\f\x6\x2\x2\x41\x42\t\x5\x2\x2\x42M\x5\n\x6");
-		sb.Append("\a\x43\x44\f\x5\x2\x2\x44\x45\t\x6\x2\x2\x45M\x5\n\x6\x6\x46");
-		sb.Append("G\f\x4\x2\x2GH\a\xE\x2\x2HM\x5\n\x6\x5IJ\f\x3\x2\x2JK\a\xF\x2");
-		sb.Append("\x2KM\x5\n\x6\x4L:\x3\x2\x2\x2L=\x3\x2\x2\x2L@\x3\x2\x2\x2L");
-		sb.Append("\x43\x3\x2\x2\x2L\x46\x3\x2\x2\x2LI\x3\x2\x2\x2MP\x3\x2\x2\x2");
-		sb.Append("NL\x3\x2\x2\x2NO\x3\x2\x2\x2O\v\x3\x2\x2\x2PN\x3\x2\x2\x2\t");
-		sb.Append("\x13\x15$.\x38LN");
+		sb.Append("\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x5\x6>\n\x6");
+		sb.Append("\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6");
+		sb.Append("\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\x3\x6\a\x6R\n\x6");
+		sb.Append("\f\x6\xE\x6U\v\x6\x3\x6\x2\x3\n\a\x2\x4\x6\b\n\x2\x6\x3\x2\x14");
+		sb.Append("\x15\x3\x2\x16\x17\x3\x2\x18\x1B\x3\x2\x1C\x1D\x61\x2\f\x3\x2");
+		sb.Append("\x2\x2\x4\x10\x3\x2\x2\x2\x6\x1A\x3\x2\x2\x2\b&\x3\x2\x2\x2");
+		sb.Append("\n=\x3\x2\x2\x2\f\r\a\x10\x2\x2\r\xE\a!\x2\x2\xE\xF\x5\x4\x3");
+		sb.Append("\x2\xF\x3\x3\x2\x2\x2\x10\x15\a\v\x2\x2\x11\x14\x5\x6\x4\x2");
+		sb.Append("\x12\x14\x5\b\x5\x2\x13\x11\x3\x2\x2\x2\x13\x12\x3\x2\x2\x2");
+		sb.Append("\x14\x17\x3\x2\x2\x2\x15\x13\x3\x2\x2\x2\x15\x16\x3\x2\x2\x2");
+		sb.Append("\x16\x18\x3\x2\x2\x2\x17\x15\x3\x2\x2\x2\x18\x19\a\f\x2\x2\x19");
+		sb.Append("\x5\x3\x2\x2\x2\x1A\x1B\a\x6\x2\x2\x1B\x1C\a!\x2\x2\x1C\x1D");
+		sb.Append("\a\r\x2\x2\x1D$\a \x2\x2\x1E\x1F\a\x11\x2\x2\x1F \a\t\x2\x2");
+		sb.Append(" !\x5\n\x6\x2!\"\a\n\x2\x2\"%\x3\x2\x2\x2#%\x3\x2\x2\x2$\x1E");
+		sb.Append("\x3\x2\x2\x2$#\x3\x2\x2\x2%\a\x3\x2\x2\x2&\'\a\xE\x2\x2\'(\a");
+		sb.Append("\t\x2\x2()\x5\n\x6\x2)*\a\n\x2\x2*.\x5\x4\x3\x2+,\a\xF\x2\x2");
+		sb.Append(",/\x5\x4\x3\x2-/\x3\x2\x2\x2.+\x3\x2\x2\x2.-\x3\x2\x2\x2/\t");
+		sb.Append("\x3\x2\x2\x2\x30\x31\b\x6\x1\x2\x31>\a\x6\x2\x2\x32>\a\a\x2");
+		sb.Append("\x2\x33>\a\b\x2\x2\x34>\a!\x2\x2\x35\x36\a\t\x2\x2\x36\x37\x5");
+		sb.Append("\n\x6\x2\x37\x38\a\n\x2\x2\x38>\x3\x2\x2\x2\x39:\a\x12\x2\x2");
+		sb.Append(":>\x5\n\x6\n;<\a\x17\x2\x2<>\x5\n\x6\t=\x30\x3\x2\x2\x2=\x32");
+		sb.Append("\x3\x2\x2\x2=\x33\x3\x2\x2\x2=\x34\x3\x2\x2\x2=\x35\x3\x2\x2");
+		sb.Append("\x2=\x39\x3\x2\x2\x2=;\x3\x2\x2\x2>S\x3\x2\x2\x2?@\f\b\x2\x2");
+		sb.Append("@\x41\t\x2\x2\x2\x41R\x5\n\x6\t\x42\x43\f\a\x2\x2\x43\x44\t");
+		sb.Append("\x3\x2\x2\x44R\x5\n\x6\b\x45\x46\f\x6\x2\x2\x46G\t\x4\x2\x2");
+		sb.Append("GR\x5\n\x6\aHI\f\x5\x2\x2IJ\t\x5\x2\x2JR\x5\n\x6\x6KL\f\x4\x2");
+		sb.Append("\x2LM\a\x1E\x2\x2MR\x5\n\x6\x5NO\f\x3\x2\x2OP\a\x1F\x2\x2PR");
+		sb.Append("\x5\n\x6\x4Q?\x3\x2\x2\x2Q\x42\x3\x2\x2\x2Q\x45\x3\x2\x2\x2");
+		sb.Append("QH\x3\x2\x2\x2QK\x3\x2\x2\x2QN\x3\x2\x2\x2RU\x3\x2\x2\x2SQ\x3");
+		sb.Append("\x2\x2\x2ST\x3\x2\x2\x2T\v\x3\x2\x2\x2US\x3\x2\x2\x2\t\x13\x15");
+		sb.Append("$.=QS");
 	    return sb.ToString();
 	}
 
