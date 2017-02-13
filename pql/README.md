@@ -7,3 +7,8 @@ For Software Construction 2017
 *Jeffrey Panneman* [@Asqares](https://twitter.com/Asqares)
 
 [References](https://drive.google.com/drive/folders/0B99P4-IO02sGMUVzcUd1dDdTbTg?usp=sharing)
+
+Steps:
+1. Lexing
+2. Parsing
+3. Evaluating

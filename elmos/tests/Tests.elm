@@ -1,43 +1,17 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Test exposing (..)
-import Combine exposing (..)
-import Expect
-import Parser exposing (..)
+import Combine.ExtraTests
+import Parser.ExpressionTests as ExpressionTests
+import Parser.FormTests as FormTests
+import Parser.TokenTests as TokenTests
+import Test exposing (Test, describe)
 
 
 all : Test
 all =
     describe "QL Parser"
-        [ test "FormToken" <|
-            \() ->
-                Expect.equal (parseToMaybe formToken "form") (Just "form")
-        , test "FormQuestion" <|
-            \() ->
-                Expect.equal (parseToMaybe question "\"label\" id: integer")
-                    (Just
-                        { label = "label"
-                        , id = "id"
-                        , valueType = Integer
-                        }
-                    )
-        , test "FormQuestion" <|
-            \() ->
-                Expect.equal (parseToMaybe question "\"label\" id: integer")
-                    (Just
-                        { label = "label"
-                        , id = "id"
-                        , valueType = Integer
-                        }
-                    )
+        [ FormTests.all
+        , Combine.ExtraTests.all
+        , ExpressionTests.all
+        , TokenTests.all
         ]
-
-
-parseToMaybe : Parser () res -> String -> Maybe res
-parseToMaybe p s =
-    case Combine.parse p s of
-        Err e ->
-            Nothing
-
-        Ok ( _, _, res ) ->
-            Just res
