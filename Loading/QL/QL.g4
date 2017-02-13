@@ -52,15 +52,15 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- : lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); };
-// | atom relOp atom
+ : lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); }
+ | lhs = atom '!=' rhs = atom { $result = new NEqExpression($lhs.result, $rhs.result); } 
 // | atom boolOp atom
 // | atom arithOp atom
 // | '!' atom
 // | '+' atom
 // | '-' atom
 // | atom
-// ;
+ ;
 
 relOp
  : '==' | '!=' | '<=' | '>=' | '>' | '<';
