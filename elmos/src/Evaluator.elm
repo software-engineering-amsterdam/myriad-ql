@@ -37,13 +37,10 @@ evaluate data expression =
 
                 rightValue =
                     evaluate data right
-
-                f =
-                    applicativeForOperator op
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Integer l, Values.Integer r ) ->
-                        Values.int (f l r)
+                        Values.int (applicativeForOperator op l r)
 
                     _ ->
                         Undefined
@@ -70,22 +67,31 @@ evaluate data expression =
 
                 rightValue =
                     evaluate data right
-
-                f =
-                    applicativeForLogic op
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Boolean l, Values.Boolean r ) ->
-                        Values.bool (f l r)
+                        Values.bool (applicativeForLogic op l r)
 
                     _ ->
                         Values.undefined
 
         ComparisonExpression op left right ->
-            Values.bool <|
-                (applicativeForComparison op)
-                    (evaluate data left)
-                    (evaluate data right)
+            let
+                leftValue =
+                    evaluate data left
+
+                rightValue =
+                    evaluate data right
+            in
+                case ( leftValue, rightValue ) of
+                    ( Values.Undefined, _ ) ->
+                        Values.undefined
+
+                    ( _, Values.Undefined ) ->
+                        Values.undefined
+
+                    ( a, b ) ->
+                        Values.bool (applicativeForComparison op a b)
 
 
 applicativeForOperator : Operator -> Int -> Int -> Int
