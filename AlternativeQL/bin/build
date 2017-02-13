@@ -1,6 +1,6 @@
 #!/bin/bash
-cd src/org/ql/parser
-antlr4 QLParser.g4 -o ../../../../gen/org/ql/parser -package org.ql.parser
+cd src/org/ql/grammar
+antlr4 QLParser.g4 -o ../../../../gen/org/ql/grammar -package org.ql.grammar
 cd ../../../../
-javac  gen/org/ql/parser/*.java -d out
+javac  gen/org/ql/grammar/*.java -d out
 

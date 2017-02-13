@@ -12,8 +12,8 @@ declaration
     ;
 
 question
-    :   type ID COLON STRING defaulvalue?
-    |   type ASSIGN expression COLON STRING defaulvalue?
+    :   type ID COLON STRING_LITERAL defaulvalue?
+    |   type ASSIGN expression COLON STRING_LITERAL defaulvalue?
     ;
 
 statement
@@ -25,53 +25,40 @@ defaulvalue
     ;
 
 expression
-    :   boolean_literal
-    |   string_literal
-    |   float_literal
-    |   integer_literal
+    :   literal
     |   parameter
     |   OPEN_PARENT expression CLOSE_PARENT
-    |   <assoc=right> '!' expression
-    |   <assoc=left> expression '/' expression
-    |   <assoc=left> expression '*' expression
-    |   expression '-' expression
-    |   expression '+' expression
-    |   expression '>' expression
-    |   expression '<' expression
-    |   expression '==' expression
-    |   expression '!=' expression
-    |   expression '<=' expression
-    |   expression '>=' expression
-    |   expression '<=' expression
-    |   expression '>=' expression
-    |   expression ('&&'|'||') expression
+    |   <assoc=right> BANG expression
+    |   <assoc=left> expression DIV expression
+    |   <assoc=left> expression MUL expression
+    |   expression SUB expression
+    |   expression ADD expression
+    |   expression GT expression
+    |   expression LT expression
+    |   expression EQUAL expression
+    |   expression NOTEQUAL expression
+    |   expression LE expression
+    |   expression GE expression
+    |   expression AND expression
+    |   expression OR expression
     ;
 
 parameter
     :   ID
     ;
 
-boolean_literal
-    :   BOOLEAN
-    ;
-
-string_literal
-    :   STRING
-    ;
-
-float_literal
-    :   FLOAT
-    ;
-
-integer_literal
-    :   INTEGER
+literal
+    :   BOOLEAN_LITERAL
+    |   STRING_LITERAL
+    |   FLOAT_LITERAL
+    |   INTEGER_LITERAL
     ;
 
 type
-    :   'boolean'
-    |   'float'
-    |   'money'
-    |   'ID'
-    |   'integer'
-    |   'date'
+    :   BOOLEAN
+    |   FLOAT
+    |   INTEGER
+    |   STRING
+    |   MONEY
+    |   DATE
     ;

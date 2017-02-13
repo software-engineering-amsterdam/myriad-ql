@@ -1,4 +1,4 @@
-// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/grammar/QLParser.g4 by ANTLR 4.6
+// Generated from QLParser.g4 by ANTLR 4.6
 package org.ql.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -78,45 +78,15 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitParameter(QLParserParser.ParameterContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParserParser#boolean_literal}.
+	 * Enter a parse tree produced by {@link QLParserParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void enterBoolean_literal(QLParserParser.Boolean_literalContext ctx);
+	void enterLiteral(QLParserParser.LiteralContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParserParser#boolean_literal}.
+	 * Exit a parse tree produced by {@link QLParserParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void exitBoolean_literal(QLParserParser.Boolean_literalContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParserParser#string_literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterString_literal(QLParserParser.String_literalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParserParser#string_literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitString_literal(QLParserParser.String_literalContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParserParser#float_literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterFloat_literal(QLParserParser.Float_literalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParserParser#float_literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitFloat_literal(QLParserParser.Float_literalContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParserParser#integer_literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterInteger_literal(QLParserParser.Integer_literalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParserParser#integer_literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitInteger_literal(QLParserParser.Integer_literalContext ctx);
+	void exitLiteral(QLParserParser.LiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParserParser#type}.
 	 * @param ctx the parse tree
