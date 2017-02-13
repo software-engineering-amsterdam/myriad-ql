@@ -79,7 +79,8 @@ class WickedQLS(Frame):
                     content_holder['name'] = parsed_content[x+1]
                     __skip_next = True
                 # print(parsed_content[x])
-                content_holder['content'] += parsed_content[x] + " "
+                else:
+                    content_holder['content'] += parsed_content[x] + " "
                 # print(content_holder)
             current_page['content'].append(content_holder)
 
