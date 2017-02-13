@@ -1,5 +1,6 @@
 require_relative 'reader'
 require_relative 'parser'
+require_relative 'gui'
 require 'pp'
 
 class Main
@@ -11,5 +12,7 @@ class Main
   parser = Parser.new
   parsed = parser.parse(contents)
 
-  pp parsed
+  gui = Gui.new
+  gui.new_question('"joe?"')
+  gui.launch
 end
