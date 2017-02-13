@@ -5,6 +5,7 @@ import io
 # the needed methods from the pyparsing package
 from pyparsing import *
 
+
 # NOTES
 # # # #
 # The prototypical pyparsing program has the following structure:
@@ -14,6 +15,77 @@ from pyparsing import *
 # • Use the grammar to parse the input text
 # • Process the results from parsing the input text
 # # # #
+
+def parse(input_string):
+    identifier = Word(alphas, alphanums + '_')
+    number = Word(nums + ".")
+    form = Literal("form")
+    if_lit = Literal("if")
+    lcurly = Suppress("{")
+    rcurly = Suppress("}")
+    lparen = Suppress("(")
+    rparen = Suppress(")")
+    colon = Suppress(":")
+    assign = Suppress("=")
+    data_types = oneOf(["boolean", "money"])
+
+    # Expressions
+    arithmetic_expr = \
+        Group(
+            identifier +
+            Optional(
+                oneOf(["+", "-"]) +
+                identifier
+            )
+        )
+
+    arithmetic_statement = \
+        OneOrMore(arithmetic_expr | (lparen + arithmetic_expr + rparen))
+
+    assignment_expr = \
+        identifier.setResultsName("identifier") + \
+        colon + \
+        data_types + \
+        Optional(
+            assign +
+            arithmetic_statement
+        )
+
+    field_expr = \
+        Group(
+            quotedString.setResultsName("question_literal") +
+            assignment_expr.setResultsName("assignment_expression")
+        )
+
+    # Statements
+    if_stmt = \
+        Group(
+            Group(
+                if_lit +
+                lparen +
+                arithmetic_statement.setResultsName("arithmetic_expression") +
+                rparen
+            ) +
+            lcurly +
+            OneOrMore(field_expr) +
+            rcurly
+        )
+
+    # Program
+    program = \
+        Group(
+            form +
+            identifier.setResultsName("form_identifier")
+        ) + \
+        lcurly + \
+        Group(
+            ZeroOrMore(field_expr | if_stmt)
+        ) + \
+        rcurly
+
+    tokens = program.parseString(input_string)
+    print(tokens)
+    return tokens
 
 
 if __name__ == '__main__':
@@ -28,74 +100,4 @@ if __name__ == '__main__':
 
     ql_str = ql_file.read()
     ql_file.close()
-
-    # Tokens
-    identifier = Word(alphas, alphanums + '_')
-    number = Word(nums + ".")
-    form = Literal("form")
-    if_lit = Literal("if")
-    lcurly = Suppress("{")
-    rcurly = Suppress("}")
-    lparen = Suppress("(")
-    rparen = Suppress(")")
-    colon = Suppress(":")
-    assign = Suppress("=")
-    data_types = oneOf(["boolean", "money"])
-
-    # Expressions
-    arithmeticExpr = \
-        Group(
-            identifier +
-            Optional(
-                oneOf(["+", "-"]) +
-                identifier
-            )
-        )
-
-    arithmeticStmt = \
-        OneOrMore(arithmeticExpr | (lparen + arithmeticExpr + rparen))
-
-    assignmentExpr = \
-        identifier.setResultsName("identifier") + \
-        colon + \
-        data_types + \
-        Optional(
-            assign +
-            arithmeticStmt
-        )
-
-    fieldExpr = \
-        Group(
-            quotedString.setResultsName("question_literal") +
-            assignmentExpr.setResultsName("assignment_expression")
-        )
-
-    # Statements
-    if_stmt = \
-        Group(
-            Group(
-                if_lit +
-                lparen +
-                arithmeticStmt.setResultsName("arithmetic_expression") +
-                rparen
-            ) +
-            lcurly +
-            OneOrMore(fieldExpr) +
-            rcurly
-        )
-
-    # Program
-    program = \
-        Group(
-            form +
-            identifier.setResultsName("form_identifier")
-        ) + \
-        lcurly + \
-        Group(
-            ZeroOrMore(fieldExpr | if_stmt)
-        ) + \
-        rcurly
-
-    tokens = program.parseString(ql_str)
-
-    print(tokens)
+    parse(ql_str)
