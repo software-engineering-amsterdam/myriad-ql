@@ -1,6 +1,6 @@
 package org.uva.taxfree.model;
 
-import org.uva.taxfree.util.LogUtil;
+import org.uva.taxfree.util.LogWindow;
 
 import java.util.ArrayList;
 
@@ -27,11 +27,13 @@ public abstract class Node {
         if (false == mChildren.contains(child)) {
             mChildren.add(child);
         } else {
-            LogUtil.logError(child.mName + " already registered to " + mName);
+            LogWindow.error(child.mName + " already registered to " + mName);
             return false;
         }
         return true;
     }
 
-
+    public String getName() {
+        return mName;
+    }
 }
