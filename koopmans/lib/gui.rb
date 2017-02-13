@@ -1,15 +1,29 @@
 require 'tk'
 class Gui
+  def question(label)
+    answer =  TkVariable.new (true);
 
-  def init
-    @root = TkRoot.new { title 'Form' }
-  end
-
-  def new_question(label)
-    TkLabel.new(@root) do
+    TkLabel.new {
       text label
-      pack { padx 15 ; pady 15; side 'left' }
+      pack('side' => 'top', 'fill' => 'x')
+    }
+
+    TkRadioButton.new do
+      text 'Yes'
+      variable answer
+      value true
+      pack('side' => 'top', 'fill' => 'x')
+      command proc {p answer}
     end
+
+    TkRadioButton.new do
+      text 'No'
+      variable answer
+      value false
+      pack('side' => 'top', 'fill' => 'x')
+      command proc {p answer}
+    end
+
   end
 
   def launch

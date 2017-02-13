@@ -7,7 +7,8 @@ describe Gui do
 
   context 'question' do
     it 'parses' do
-      p gui
+      gui.launch
+
       # expect(parser.label).to parse('"How much is?"')
     end
   end
