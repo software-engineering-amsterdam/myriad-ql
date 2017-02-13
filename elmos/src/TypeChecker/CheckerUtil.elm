@@ -18,8 +18,8 @@ mergeIndex =
     (List.foldr DictSet.union (emptyIndex))
 
 
-declaredVarFromList : List FormItem -> Index ( String, ValueType )
-declaredVarFromList =
+declaredVarsFromList : List FormItem -> Index ( String, ValueType )
+declaredVarsFromList =
     List.map declaredVars >> mergeIndex
 
 
@@ -31,8 +31,8 @@ declaredVars item =
 
         IfItem { thenBranch, elseBranch } ->
             DictSet.intersect
-                (declaredVarFromList thenBranch)
-                (declaredVarFromList elseBranch)
+                (declaredVarsFromList thenBranch)
+                (declaredVarsFromList elseBranch)
 
 
 expressionFromItem : FormItem -> Maybe Expression

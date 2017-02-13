@@ -1,4 +1,4 @@
-module TypeChecker.BadReferences exposing (checkUndefinedVarReferences)
+module TypeChecker.BadReferences exposing (badReferences)
 
 import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
@@ -6,11 +6,11 @@ import DictSet exposing (..)
 import Set
 
 
-checkUndefinedVarReferences : Form -> Set.Set String
-checkUndefinedVarReferences form =
+badReferences : Form -> Set.Set String
+badReferences form =
     Set.diff
         (usedVarsFromList form.items |> Set.fromList)
-        (declaredVarFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
+        (declaredVarsFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
 
 
 usedVarsFromList : List FormItem -> List String
