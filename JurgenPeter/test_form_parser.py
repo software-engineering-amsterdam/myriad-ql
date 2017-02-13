@@ -113,9 +113,11 @@ class TestParser(TestCase):
                                                   Const(3, Datatype.integer)))),
 
         (Grammar.conditional,
-         "if true { x : \"y\" integer }", Cond(Const(True, Datatype.boolean), [Quest(Iden("x"),
-                                    "y",
-                                    Datatype.integer)])),
+         "if true { x : \"y\" integer }",
+         Cond(Const(True, Datatype.boolean),
+              [Quest(Iden("x"),
+                     "y",
+                     Datatype.integer)])),
         (Grammar.conditional,
          "if true { }", Cond(Const(True, Datatype.boolean), [])),
         (Grammar.conditional,
@@ -123,24 +125,32 @@ class TestParser(TestCase):
 
         (Grammar.form, "form FormName { }", Form(Iden("FormName"), [])),
 
-        (Grammar.form, "form FormName { x: \"xLabel\" integer = 2 * 3\nif x > 6 { y: \"yLabel\" boolean = true }\nelse { y: \"yLabel\" boolean = false }}",
+        (Grammar.form,
+         """form FormName { x: \"xLabel\" integer = 2 * 3
+         if x > 6 { y: \"yLabel\" boolean = true }
+         else { y: \"yLabel\" boolean = false }}""",
          Form(Iden("FormName"),
               [Quest(Iden("x"),
-                    "xLabel",
-                    Datatype.integer,
-                    BinOp(Const(2, Datatype.integer),
-                          Operator["*"],
-                          Const(3, Datatype.integer))),
+                     "xLabel",
+                     Datatype.integer,
+                     BinOp(Const(2, Datatype.integer),
+                           Operator["*"],
+                           Const(3, Datatype.integer))),
                Cond(BinOp(Iden("x"), Operator[">"], Const(6, Datatype.integer)),
-                    [Quest(Iden("y"), "yLabel", Datatype.boolean, Const(True, Datatype.boolean))],
-                    [Quest(Iden("y"), "yLabel", Datatype.boolean, Const(False, Datatype.boolean))])]))
-
+                    [Quest(Iden("y"),
+                           "yLabel",
+                           Datatype.boolean,
+                           Const(True, Datatype.boolean))],
+                    [Quest(Iden("y"),
+                           "yLabel",
+                           Datatype.boolean,
+                           Const(False, Datatype.boolean))])]))
     ]
 
     def testParseExpression(self):
         for grammar, sentence, tree in self.cases:
-            parsedTree = grammar.parseString(sentence, parseAll=True)[0]
-            self.assertEqual(parsedTree, tree)
+            result = grammar.parseString(sentence, parseAll=True)[0]
+            self.assertEqual(result, tree)
 
 
     # def testParseExpression2(self):
