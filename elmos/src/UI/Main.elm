@@ -2,7 +2,7 @@ module UI.Main exposing (main)
 
 import CssFrameworks
 import CssFrameworks.Bootstrap exposing (bootstrap)
-import Html exposing (Html, beginnerProgram, div, node, program, text)
+import Html exposing (Html, beginnerProgram, div)
 import UI.QLApp as App exposing (Model, Msg)
 
 

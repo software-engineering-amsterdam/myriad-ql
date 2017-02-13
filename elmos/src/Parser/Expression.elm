@@ -8,7 +8,7 @@ import AST
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
         , Operator(Plus, Minus, Multiply, Divide)
         )
-import Combine exposing (Parser, chainl, choice, lazy, string, parens, (<$), (<$>), (*>), (<*), (<|>))
+import Combine exposing (Parser, chainl, choice, lazy, parens, (<$), (<$>), (*>), (<*), (<|>))
 import Combine.Num exposing (int)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)

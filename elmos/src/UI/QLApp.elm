@@ -1,7 +1,7 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (ValueType(StringType, IntegerType, BooleanType), Form, FormItem(FieldItem))
-import Html exposing (Html, div, form, text, h3, textarea, pre, hr)
+import AST exposing (ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
+import Html exposing (Html, div, text, h3, textarea, pre, hr)
 import Html.Attributes exposing (class, style, defaultValue, rows, cols)
 import Html.Events exposing (onInput)
 import Parser.Parser as Parser
