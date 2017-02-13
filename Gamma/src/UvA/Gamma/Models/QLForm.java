@@ -1,13 +1,14 @@
 package UvA.Gamma.Models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tjarco on 08-02-17.
  */
 
 public class QLForm {
-    private ArrayList<Input> inputs;
+    private List<QLInput> inputs;
     private String identifier;
 
     public QLForm(String identifier){
@@ -15,11 +16,11 @@ public class QLForm {
         this.identifier = identifier;
     }
 
-    public void addInput(Input input){
+    public void addInput(QLInput input){
         inputs.add(input);
     }
 
-    public ArrayList<Input> getInputs() {
+    public List<QLInput> getInputs() {
         return inputs;
     }
 

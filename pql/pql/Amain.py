@@ -19,33 +19,45 @@ from pyparsing import *
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
     number = Word(nums + ".")
-    operand = number | identifier
+    arith_operand = number | identifier
+    bool_operand = Literal("true") | Literal("false") | identifier
     form = Literal("form")
     if_lit = Literal("if")
-    lcurly = Suppress("{")
-    rcurly = Suppress("}")
-    lparen = Suppress("(")
-    rparen = Suppress(")")
+    l_curly = Suppress("{")
+    r_curly = Suppress("}")
+    l_paren = Suppress("(")
+    r_paren = Suppress(")")
     colon = Suppress(":")
     assign = Suppress("=")
-    data_types = oneOf(["boolean", "money"])
+    data_types = oneOf(["boolean", "money", "string", "integer"])
     signop = oneOf(["+", "-"])
     multop = oneOf(["*", "/"])
+
     arith_prec = operatorPrecedence(
-        operand,
-        [(signop, 1, opAssoc.RIGHT),
-         (multop, 2, opAssoc.LEFT),
+        arith_operand,
+        [(multop, 2, opAssoc.LEFT),
          (signop, 2, opAssoc.LEFT),]
+    )
+
+    bool_prec = infixNotation(
+        bool_operand,
+        [("!", 1, opAssoc.RIGHT),
+         ("&", 2, opAssoc.LEFT),
+         ("|", 2, opAssoc.LEFT)]
     )
 
     # Expressions
     arithmetic_expr = \
-        Group(
-            arith_prec
-        )
+        Group(arith_prec)
+
+    boolean_expr = \
+        Group(bool_prec)
 
     arithmetic_statement = \
-        OneOrMore(arithmetic_expr | (lparen + arithmetic_expr + rparen))
+        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
+
+    boolean_statement = \
+        OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
     assignment_expr = \
         identifier.setResultsName("identifier") + \
@@ -58,7 +70,7 @@ def parse(input_string):
 
     field_expr = \
         Group(
-            quotedString.setResultsName("question_literal") +
+            quotedString.setResultsName("question_literal").addParseAction(removeQuotes) +
             assignment_expr.setResultsName("assignment_expression")
         )
 
@@ -67,13 +79,13 @@ def parse(input_string):
         Group(
             Group(
                 if_lit +
-                lparen +
-                arithmetic_statement.setResultsName("arithmetic_expression") +
-                rparen
+                l_paren +
+                arithmetic_statement +
+                r_paren
             ) +
-            lcurly +
+            l_curly +
             OneOrMore(field_expr) +
-            rcurly
+            r_curly
         )
 
     # Program
@@ -82,11 +94,11 @@ def parse(input_string):
             form +
             identifier.setResultsName("form_identifier")
         ) + \
-        lcurly + \
+        l_curly + \
         Group(
             ZeroOrMore(field_expr | if_stmt)
         ) + \
-        rcurly
+        r_curly
 
     tokens = program.parseString(input_string)
     print(tokens)
