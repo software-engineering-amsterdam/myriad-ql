@@ -3,19 +3,19 @@
  */
 public class Conditional extends ASTNode{
 
-    private Expression expr;
+    private Expression condition;
     private List<Question> question;
 
     //How are we going to validate expressions referring to questions declared above?
     public Conditional (Expression expr, Question question) {
-        this.expr = expr;
+        this.condition = expr;
         this.question = question;
     }
     public Question getQuestion() {
         return question;
     }
-    public Expression getExpr() {
-        return expr;
+    public Expression getCondition() {
+        return condition;
     }
 
     //Validate the expression and test whether it can be reduced to a bool.

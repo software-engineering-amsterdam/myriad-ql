@@ -21,22 +21,27 @@ import java.util.List;
 //Maybe everything inherits from the ASTNode class so we can easily walk through
 //the constructed tree?
 public class Form extends ASTNode{
-    public String value();
+    private String identifier;
+
+    public Form(String identifier){
+        this.identifier = identifier;
+    }
+
 }
 
 //Huh? Waarom maak je nog een losse form body class
-class FormBody extends Form {
-    private final Form questions;
-
-    public FormBody(Form questions) {
-        this.questions = questions;
-    }
-
-    @Override
-    public String value() {
-        return this.questions.value();
-    }
-}
+//class FormBody extends Form {
+//    private final Form questions;
+//
+//    public FormBody(Form questions) {
+//        this.questions = questions;
+//    }
+//
+//    @Override
+//    public String value() {
+//        return this.questions.value();
+//    }
+//}
 
 //class Questions implements Form {
 //    private final List<Form> questionList;
