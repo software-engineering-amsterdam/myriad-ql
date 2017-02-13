@@ -20,7 +20,8 @@ function $(o) {
     };
 }
 
- let toString = (data) => data.join().split(",").join("");var grammar = {
+ let toString = (data) => data.join().split(",").join("");
+ let Question = require('./Question.js');  let question = (data, location, reject) => { return new Question({name: data[0], propertyName: data[3][0], type: data[6][0]}) }; var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["wschar", "_$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
@@ -143,7 +144,7 @@ function $(o) {
         }
         },
     {"name": "form$string$1", "symbols": [{"literal":"f"}, {"literal":"o"}, {"literal":"r"}, {"literal":"m"}, {"literal":" "}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "form", "symbols": ["form$string$1", "formName", {"literal":"{"}, "newLine", "statements", "newLine", {"literal":"}"}], "postprocess": function(data, location, reject){ console.log(data); return data}},
+    {"name": "form", "symbols": ["form$string$1", "formName", {"literal":"{"}, "newLine", "statements", "newLine", {"literal":"}"}]},
     {"name": "formName", "symbols": ["letters"]},
     {"name": "statements$ebnf$1", "symbols": []},
     {"name": "statements$ebnf$1", "symbols": ["statement", "statements$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
@@ -151,7 +152,7 @@ function $(o) {
     {"name": "statement", "symbols": ["question"]},
     {"name": "statement", "symbols": ["if_statement"]},
     {"name": "statement", "symbols": ["answer"]},
-    {"name": "question", "symbols": ["sentence", {"literal":"?"}, "newLine", "propertyName", {"literal":":"}, "_", "propertyType", "newLine"]},
+    {"name": "question", "symbols": ["sentence", {"literal":"?"}, "newLine", "propertyName", {"literal":":"}, "_", "propertyType", "newLine"], "postprocess": question},
     {"name": "if_statement$string$1", "symbols": [{"literal":"i"}, {"literal":"f"}, {"literal":" "}, {"literal":"("}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement$string$2", "symbols": [{"literal":")"}, {"literal":" "}, {"literal":"{"}, {"literal":"\n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement$string$3", "symbols": [{"literal":"\n"}, {"literal":"}"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -170,7 +171,7 @@ function $(o) {
     {"name": "propertyType", "symbols": ["propertyType$string$1"]},
     {"name": "propertyType$string$2", "symbols": [{"literal":"m"}, {"literal":"o"}, {"literal":"n"}, {"literal":"e"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "propertyType", "symbols": ["propertyType$string$2"]},
-    {"name": "newLine", "symbols": [{"literal":"\n"}]},
+    {"name": "newLine", "symbols": [{"literal":"\n"}], "postprocess": ()=> null},
     {"name": "sentence$ebnf$1", "symbols": [/[\w|\s]/]},
     {"name": "sentence$ebnf$1", "symbols": [/[\w|\s]/, "sentence$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "sentence", "symbols": ["sentence$ebnf$1"], "postprocess": toString},
