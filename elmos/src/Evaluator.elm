@@ -9,7 +9,7 @@ import AST
         , Comparison(Equal, NotEqual)
         )
 import Dict exposing (Dict)
-import Values exposing (Value(Str, Boolean, Integer, Undefined))
+import Values exposing (Value(Undefined))
 
 
 evaluate : Dict String Value -> Expression -> Value
