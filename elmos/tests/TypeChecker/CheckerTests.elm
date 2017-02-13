@@ -111,11 +111,8 @@ parseAndFindNoUndefinedVariableReferences : String -> String -> Test
 parseAndFindNoUndefinedVariableReferences message input =
     test message <|
         \() ->
-            let
-                output =
-                    parseAndGetUndefinedVariables input
-            in
-                Expect.equal output <| Just (Set.empty)
+            parseAndGetUndefinedVariables input
+                |> Expect.equal (Just Set.empty)
 
 
 parseAndGetUndefinedVariables : String -> Maybe (Set.Set String)
