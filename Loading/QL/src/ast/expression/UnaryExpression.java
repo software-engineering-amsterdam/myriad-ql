@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.atom.Atom;
 
-public class UnaryExpression extends Expression {
+public abstract class UnaryExpression extends Expression {
     private Atom lhs;
     // protected boolean eval;
 

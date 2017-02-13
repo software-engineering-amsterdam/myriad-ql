@@ -8,7 +8,7 @@ grammar QL;
     import ast.expression.*;
 }
 
-root returns [Form result] 
+form returns [Form result] 
 		: 'form' ID block 
 		{ $result = new Form($ID.text, $block.result); };
 
@@ -48,8 +48,8 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom {  $unaryOp.result.setElements($atom.result); } // TODO return expression
  | atom { $result = $atom.result; }
  ;
 
