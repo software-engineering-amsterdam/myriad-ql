@@ -1,7 +1,7 @@
 import UnitTests.testParsing as testParse
-import QLParser
+import QL_Parser
 
 if __name__ == "__main__":
-    parser = QLParser.QuestionnaireParser()
+    parser = QL_Parser.QuestionnaireParser()
 
     testParse.test_parser(parser)

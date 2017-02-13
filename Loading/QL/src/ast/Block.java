@@ -1,19 +1,34 @@
 package ast;
 
-public class Block extends Node {
+import javax.swing.plaf.nimbus.State;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Block extends Node { // TODO rename block
 	
-	private String content;
+	private List<Question> questions;
+	private List<Statement> statements;
 	
-	public String getContent() {
-		return content;
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public List<Statement> getStatements() {
+		return statements;
 	}
 	
-	public Block(String content) {
-		this.content = content;
+	public Block() {
+		this.questions = new ArrayList<Question>();
+		this.statements = new ArrayList<Statement>();
 	}
 	
-	void print() {
-		System.out.println(content);
+	
+	// TODO template for add Questions/Statement?
+	public void addQuestion(Question question) {
+		this.questions.add(question);
 	}
 	
+	public void addStatement(Statement statement) {
+		this.statements.add(statement);
+	}
 }
