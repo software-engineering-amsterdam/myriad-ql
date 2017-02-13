@@ -1,4 +1,6 @@
 from QL_Parser import QuestionnaireParser
+import re
+
 
 class QuestionnaireAST(object):
     def __init__(self, parser_output):
@@ -33,7 +35,8 @@ class Node(object):
 class FormNode(Node):
     def __init__(self, form_data):
         super(FormNode, self).__init__("form")
-        assert form_data[0] == "@form", "Form is of invalid type: " + form_data[0]
+        assert form_data[0] == "@form", \
+            "Form is of invalid type: " + form_data[0]
 
         self.name = form_data[1]
 
@@ -67,38 +70,42 @@ class BlockNode(Node):
 
 
 class QuestionNode(Node):
-    def __init__(self, input):
+    def __init__(self, question):
         super(QuestionNode, self).__init__("question")
 
-        self.name = input[0]
-        self.question = input[1]
-        self.type = input[2]
+        self.name = question[0]
+        self.question = question[1]
+        self.type = question[2]
 
-        self.computed = len(input) > 3
+        self.computed = len(question) > 3
         self.expression = None
         if self.computed:
-            self.expression = ExpressionNode(input[3])
+            self.expression = ExpressionNode(question[3])
 
     def __str__(self, indent=0):
         output = indent * "  " + "{}: {} {}".format(
             self.node_type, self.question, self.type
         )
         if self.computed:
-            output += "({})".format(self.expression.__str__(0))
+            output += " ({})".format(self.expression.__str__(0))
         output += "\n"
         return output
 
 
 class ConditionalNode(Node):
-    def __init__(self, input):
+    def __init__(self, cond):
         super(ConditionalNode, self).__init__("conditional")
 
-        self.expression = ExpressionNode(input[1])
-        self.add_child(BlockNode("if", input[2]))
+        assert cond[0] == "@if", \
+            "creating conditional node while having {} data".format(cond[0])
+        self.expression = ExpressionNode(cond[1])
+        self.add_child(BlockNode("if", cond[2]))
 
         self.else_block = None
-        if len(input) == 5:
-            self.else_block = BlockNode("else", input[4])
+        if len(cond) == 5:
+            assert cond[3] == "@else", \
+                "Invalid else condition {}".format(cond[3])
+            self.else_block = BlockNode("else", cond[4])
 
     def __str__(self, indent=0):
         output = indent * "  " + "{}:({})\n".format(self.node_type,
@@ -121,9 +128,9 @@ class ExpressionNode(Node):
 
         # A single variable or number
         if not isinstance(expr_data, list):
-            self.left = expr_data
+            self.left = TermNode(expr_data)
 
-        elif expr_data[0] in ['!', '-']:  # Postfix operators
+        elif expr_data[0] in ['!', '-']:  # Prefix operators
             self.op = expr_data[0]
             self.right = self.add_expression(expr_data[1])
 
@@ -136,7 +143,7 @@ class ExpressionNode(Node):
     def add_expression(expr_data):
         if isinstance(expr_data, list):
             return ExpressionNode(expr_data)
-        return expr_data
+        return TermNode(expr_data)
 
     def __str__(self, indent=0):
         output = ""
@@ -153,29 +160,32 @@ class ExpressionNode(Node):
         return output
 
 
+class TermNode(Node):
+    def __init__(self, term_data):
+        super(TermNode, self).__init__("Term")
+        self.data = term_data
+        print type(self.data)
+        print self.data
+
+    def __str__(self, indent=0):
+        return "HIER:{}_{}".format(str(self.data), self.data.var_type)
+
 if __name__ == '__main__':
     form1 = """
-    form Box1HouseOwning {
-        hasSoldHouse: "Did you sell a house in 2010?" boolean
-        hasBoughtHouse: "Did you buy a house in 2010?" boolean
-        hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
+    form taxOfficeExample {
+        "Did you sell a house in 2010?" hasSoldHouse: boolean
+        "Did you buy a house in 2010?" hasBoughtHouse: boolean
+        "Did you enter a loan?" hasMaintLoan: boolean
 
-        if (hasSoldHouse + newPrice + 4 + 23) {
-            sellingPrice: "Price the house was sold for:" money
-            privateDebt: "Private debts for the sold house:" money
-            valueResidue: "Value residue:" money(300 * 100 - 20 * 10 * (25 - 3))
-            if (newPrice) {
-                privateDebt: "Private debts for the sold house:" money
-            }
-            else {
-                privateDebt: "Private debts for the sold house:" money
-            }
+        if (hasSoldHouse > 500) {
+            "What was the selling price?" sellingPrice: money
+            "Private debts for the sold house:" privateDebt: money
+            "Value residue:" valueResidue: money = (sellingPrice -
+            privateDebt)
         }
-
-        letTheDogsOut: "Who let the dogs out?" boolean
     }
     """
 
     parser = QuestionnaireParser()
+    print parser.parse(form1)
     print QuestionnaireAST(parser.parse(form1)).root
-
