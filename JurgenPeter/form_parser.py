@@ -12,8 +12,9 @@ def createbinop(tokens):
 
 class Grammar:
     identifier = Word(alphas)
-    identifier.addCondition(lambda tokens:
-        tokens[0] not in "true false form if else boolean string integer decimal money".split())
+    identifier.addCondition(
+        lambda tokens: tokens[0] not in """true false form if else boolean
+                                        string integer decimal money""".split())
     identifier.addParseAction(lambda tokens: Iden(tokens[0]))
 
     datatype = oneOf("boolean string integer decimal money")
@@ -83,7 +84,8 @@ class Grammar:
 
     statement = question ^ conditional
 
-    block <<= Group(ZeroOrMore(statement)).addParseAction(lambda tokens: tokens.asList())
+    block <<= Group(ZeroOrMore(statement))
+    block.addParseAction(lambda tokens: tokens.asList())
 
     form = Suppress("form") + identifier + bracket_open + block +\
         bracket_close

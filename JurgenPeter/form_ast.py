@@ -11,8 +11,8 @@ class Form:
         self.statements = statements
 
     def __str__(self):
-        return "form {} [\n{}\n]".format(self.name,
-            "\n".join([s.__str__(4) for s in self.statements]))
+        return "form {} [\n{}\n]".format(
+            self.name, "\n".join([s.__str__(4) for s in self.statements]))
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -25,16 +25,17 @@ class Cond:
         self.statements = statements
         self.alternative = alternative
 
-    def __str__(self, indentation=0):
+    def __str__(self, indent=0):
         if self.alternative is not None:
             return "{}if {} [\n{}\n{}]\n{}else [\n{}\n]".format(
-                " " * indentation, self.condition,
-                "\n".join([s.__str__(indentation + 4) for s in self.statements]),
-                " " * indentation, " " * indentation,
-                "\n".join([s.__str__(indentation + 4) for s in self.alternative]))
-        return "{}if {} [\n{}\n{}]".format(" " * indentation, self.condition,
-            "\n".join([s.__str__(indentation + 4) for s in self.statements]),
-            " " * indentation)
+                " " * indent, self.condition,
+                "\n".join([s.__str__(indent + 4) for s in self.statements]),
+                " " * indent, " " * indent,
+                "\n".join([s.__str__(indent + 4) for s in self.alternative]))
+        return "{}if {} [\n{}\n{}]".format(
+            " " * indent, self.condition,
+            "\n".join([s.__str__(indent + 4) for s in self.statements]),
+            " " * indent)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -48,13 +49,13 @@ class Quest:
         self.datatype = datatype
         self.expression = expression
 
-    def __str__(self, indentation=0):
+    def __str__(self, indent=0):
         if self.expression is not None:
             return "{}{}: \"{}\" {} = {}".format(
-                " " * indentation, self.name, self.label, self.datatype.name,
+                " " * indent, self.name, self.label, self.datatype.name,
                 self.expression)
         return "{}{}: \"{}\" {}".format(
-            " " * indentation, self.name, self.label, self.datatype.name)
+            " " * indent, self.name, self.label, self.datatype.name)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
