@@ -7,6 +7,7 @@ if cur_version >= req_version:
     from tkinter import *
     from wickeddsl import WickedDSL
     import argparse
+    from pprint import pprint
 else:
     exit("Did you forget to run it using python >= 3.0 ??")
 
@@ -63,7 +64,8 @@ class WickedQLS(Frame):
             # current_content = self.__ql_content[3*x+2]
             parsed_content = WickedDSL.content_type.parseString(current_content)
             # store the parsed content
-            content_holder = self.get_new_content_holder(current_page['id'])
+            # content_holder = self.get_new_content_holder(current_page['id'])
+            content_holder = None
             __skip_next = False
             for x in range(0, len(parsed_content)):
                 if(__skip_next):
@@ -71,11 +73,11 @@ class WickedQLS(Frame):
                     continue
                 if(parsed_content[x] is "section"): # create new section
                     # current_page['content'].append(content_holder)
-                    content_holder['name'] = parsed_content[x+1]
-                    __skip_next = True
                     if content_holder is not None:
                         current_page['content'].append(content_holder)
-                        content_holder = self.get_new_content_holder(current_page['id'])
+                    content_holder = self.get_new_content_holder(current_page['id'])
+                    content_holder['name'] = parsed_content[x+1]
+                    __skip_next = True
                 # print(parsed_content[x])
                 content_holder['content'] += parsed_content[x] + " "
                 # print(content_holder)
@@ -90,11 +92,12 @@ class WickedQLS(Frame):
 
         # DEBUG
         if(self._verbose):
-            for page in self.__pages:
-                print(page)
-                for content in page['content']:
-                    print(content)
-                print("\n")
+            pprint(self.__pages)
+            # for page in self.__pages:
+            #     print(page)
+            #     for content in page['content']:
+            #         print(content)
+            #     print("\n")
 
         # print(self.__ql_content)
 
