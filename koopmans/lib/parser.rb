@@ -90,5 +90,5 @@ class Parser < Parslet::Parser
     (spaces? >> form_ >> variable >> block).as(:form)
   end
 
-  root :question
+  root :form
 end

@@ -9,7 +9,7 @@ class Main
 
   # parse content
   parser = Parser.new
-  parsed = parser.form.parse(contents)
+  parsed = parser.parse(contents)
 
   pp parsed
 end
