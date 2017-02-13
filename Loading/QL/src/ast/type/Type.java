@@ -1,6 +1,6 @@
 package ast.type;
 
-abstract public class Type {
+public abstract class Type {
 	
 	final private String type;
 	

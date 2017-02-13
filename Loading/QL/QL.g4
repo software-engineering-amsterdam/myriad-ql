@@ -4,6 +4,7 @@ grammar QL;
 {
     import ast.IntegerAtom;
     import ast.*;
+    import ast.type.*;
 }
 
 root returns [Form result] 
@@ -32,12 +33,12 @@ question returns [Question result]
 		;
 
 type returns [Type result]
-	: t = ('boolean' 
+	: 'boolean' { $result = new BooleanType(); }
 	| 'date' 
 	| 'decimal' 
 	| 'integer' 
 	| 'money' 
-	| 'string') { $result = new Type($t.text) };
+	| 'string'; //{ $result = new Type($t.text) }; // TODO should this be a specific type?
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
