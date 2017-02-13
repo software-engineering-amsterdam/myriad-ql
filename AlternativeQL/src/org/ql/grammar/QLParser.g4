@@ -3,16 +3,12 @@ grammar QLParser;
 import QLLexer;
 
 form
-    :   'form' id=identifier '{' declaration* '}'
-    ;
-
-declaration
-    :   type id=identifier ':' questionMsg=STRING_LITERAL defaultValue? ';'  #questionDeclaration
-    |   statement                                                #statementDeclaration
+    :   'form' id=identifier '{' statement* '}'
     ;
 
 statement
-    :   'if' '(' expression ')' '{' declaration* '}' ('else' statement)?    #ifStatement
+    :   type id=identifier ':' questionMsg=STRING_LITERAL defaultValue? ';'  #question
+    |   'if' '(' expression ')' '{' statement* '}' ('else' statement)?       #if
     ;
 
 defaultValue
