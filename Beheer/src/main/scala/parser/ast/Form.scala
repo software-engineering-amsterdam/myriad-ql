@@ -10,10 +10,7 @@ sealed trait Statement extends FormNode
 
 case class Conditional(condition: ExpressionNode, block: Block) extends Statement
 
-case class Question(identifier: String, label: String, typeDeclaration: TypeDeclaration) extends Statement
+case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode] = None) extends Statement
 
-sealed trait TypeDeclaration extends FormNode
+case class Type(typeName: String) extends FormNode
 
-case class BareType(typeName: String) extends TypeDeclaration
-
-case class ValueType(typeName: String, value: ExpressionNode) extends TypeDeclaration

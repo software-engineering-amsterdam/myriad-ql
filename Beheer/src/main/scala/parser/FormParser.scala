@@ -7,27 +7,26 @@ import parser.ast._
 import scala.util.parsing.combinator.JavaTokenParsers
 
 class FormParser extends JavaTokenParsers with ExpressionParser {
-  def typeName: Parser[String] = (
+  def typeName: Parser[Type] = (
     "boolean"
     | "string"
     | "integer"
     | "date"
     | "decimal"
-    | "money"
-  )
+    | "money" ) ^^ (s => Type(s))
 
   def label: Parser[String] = stringLiteral
 
-  def typeDeclaration: Parser[TypeDeclaration] =
-    typeName ~ opt("(" ~> expr <~ ")") ^^ {
-      case name ~ None => BareType(name)
-      case name ~ Some(value) => ValueType(name, value)
-    }
 
   def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeDeclaration ^^ {
-      case identifier ~ ":" ~ label ~ typeDeclaration =>
-        Question(identifier, label, typeDeclaration)
+    ident ~ ":" ~ label ~ typeName ^^ {
+      case identifier ~ ":" ~ label ~ typeName =>
+        Question(identifier, label, typeName)
+    }
+
+  def computedQuestion : Parser[Question] =
+    question ~ "(" ~ expr ~ ")" ^^ {
+      case question ~ "(" ~ expr ~ ")" => question.copy(expressionNode = Some(expr))
     }
 
   def conditional: Parser[Conditional] =
@@ -35,7 +34,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
       case "(" ~ expr ~ ")" ~ block => Conditional(expr, block)
     }
 
-  def statement: Parser[Statement] = conditional | question
+  def statement: Parser[Statement] = conditional | computedQuestion | question
 
   def block: Parser[Block] = "{" ~> rep(statement) <~ "}" ^^ (xs => Block(xs))
 

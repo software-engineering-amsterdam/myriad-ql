@@ -1,5 +1,6 @@
 package parser
 
+import model.{ComputedQuestion, OpenQuestion}
 import parser.ast._
 
 class TypeChecker {
@@ -18,13 +19,15 @@ class TypeChecker {
 
   private def buildModel(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[model.Question] = statement match {
     case Conditional(condition, Block(statements)) => statements.flatMap(buildModel(_, condition +: conditionals))
-    case ast.Question(identifier, label, typeDeclaration) => Seq(model.Question(identifier, label, conditionals, typeDeclaration))
+    case Question(identifier, label, typename, None) => Seq(OpenQuestion(identifier, label, conditionals, typename))
+    case Question(identifier, label, typename, Some(expr)) => Seq(ComputedQuestion(identifier, label, conditionals, typename, expr))
+
   }
 
   def checkReferences(questions: Seq[model.Question]) = {
     questions.flatMap {
-      case model.Question(_, _, show, ValueType(_, expr)) => expr +: show
-      case model.Question(_, _, show, _) => show
+      case OpenQuestion(_, _, show, _) => show
+      case ComputedQuestion(_, _, show, _, value) => value +:show
     }
 
   }
