@@ -16,10 +16,35 @@ import static org.junit.Assert.assertEquals;
 
 public class QLTest {
 
+    @Test
+    public void emptyForm() throws IOException {
+        String form = "form taxOfficeExample { }";
+        String expected = "(form form (formId taxOfficeExample) { })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
 
     @Test
-    public void test() throws IOException {
-        InputStream inputStream = new ByteArrayInputStream("form taxOfficeExample { }".getBytes());
+    public void oneQuestion() throws IOException {
+        String form = "form taxOfficeExample { \"Did you sell a house in 2010?\" hasSoldHouse: boolean }";
+        String expected = "(form form (formId taxOfficeExample) { (questions (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
+    @Test
+    public void multipleQuestions() throws IOException {
+        String form = "form taxOfficeExample { \"Did you sell a house in 2010?\" hasSoldHouse: boolean \"Did you buy a house in 2010?\" hasBoughtHouse: boolean }";
+        String expected = "(form form (formId taxOfficeExample) { (questions (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) (questions (question \"Did you buy a house in 2010?\" hasBoughtHouse : (valueType boolean))) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
+    private String getParseTree(String form) throws IOException {
+        InputStream inputStream = new ByteArrayInputStream(form.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -27,7 +52,7 @@ public class QLTest {
         QLParser parser = new QLParser(tokens);
         ParseTree tree = parser.form();
 
-        assertEquals(tree.toStringTree(parser), "(form form (formId taxOfficeExample) { })");
+        return tree.toStringTree(parser);
     }
 
 }
