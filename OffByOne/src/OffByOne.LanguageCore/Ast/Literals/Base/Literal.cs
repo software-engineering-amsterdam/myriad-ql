@@ -2,7 +2,13 @@
 {
     using OffByOne.LanguageCore.Ast.Expressions;
 
-    public abstract class Literal : Expression
+    public abstract class Literal<T> : Expression
     {
+        protected Literal(T value)
+        {
+            this.Value = value;
+        }
+
+        public T Value { get; private set; }
     }
 }

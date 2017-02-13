@@ -2,13 +2,11 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class BooleanLiteral : Literal
+    public class BooleanLiteral : Literal<bool>
     {
         public BooleanLiteral(bool value)
+            : base(value)
         {
-            this.Value = value;
         }
-
-        public bool Value { get; private set; }
     }
 }

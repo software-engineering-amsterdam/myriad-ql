@@ -135,7 +135,7 @@
 
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
-            return new DateLiteral(context.DateLiteral().GetText());
+            return new DateLiteral(DateLiteral.Parse(context.DateLiteral().GetText()));
         }
 
         public override AstNode VisitBooleanLiteral([NotNull] QlParser.BooleanLiteralContext context)

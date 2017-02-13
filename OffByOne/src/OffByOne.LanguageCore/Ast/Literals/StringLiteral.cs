@@ -2,13 +2,11 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class StringLiteral : Literal
+    public class StringLiteral : Literal<string>
     {
         public StringLiteral(string value)
+            : base(value)
         {
-            this.Value = value;
         }
-
-        public string Value { get; private set; }
     }
 }

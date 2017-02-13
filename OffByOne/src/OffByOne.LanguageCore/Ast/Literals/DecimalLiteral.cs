@@ -2,13 +2,11 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class DecimalLiteral : Literal
+    public class DecimalLiteral : Literal<decimal>
     {
         public DecimalLiteral(decimal value)
+            : base(value)
         {
-            this.Value = value;
         }
-
-        public decimal Value { get; private set; }
     }
 }
