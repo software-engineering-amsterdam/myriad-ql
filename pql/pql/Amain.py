@@ -19,6 +19,7 @@ from pyparsing import *
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
     number = Word(nums + ".")
+    operand = number | identifier
     form = Literal("form")
     if_lit = Literal("if")
     lcurly = Suppress("{")
@@ -28,15 +29,19 @@ def parse(input_string):
     colon = Suppress(":")
     assign = Suppress("=")
     data_types = oneOf(["boolean", "money"])
+    signop = oneOf(["+", "-"])
+    multop = oneOf(["*", "/"])
+    arith_prec = operatorPrecedence(
+        operand,
+        [(signop, 1, opAssoc.RIGHT),
+         (multop, 2, opAssoc.LEFT),
+         (signop, 2, opAssoc.LEFT),]
+    )
 
     # Expressions
     arithmetic_expr = \
         Group(
-            identifier +
-            Optional(
-                oneOf(["+", "-"]) +
-                identifier
-            )
+            arith_prec
         )
 
     arithmetic_statement = \
