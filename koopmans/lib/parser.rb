@@ -11,7 +11,7 @@ class Parser < Parslet::Parser
 
   def self.symbols(symbols)
     symbols.each do |name, symbol|
-      rule(name) { str(symbol) >> spaces? }
+      rule(name) { str(symbol) }
     end
   end
 
@@ -39,11 +39,11 @@ class Parser < Parslet::Parser
 
   # question(s) with optional expression
   rule(:label) do
-    quote >> match('[^"]').repeat.as(:label) >> quote
+    quote >> match('[^"]').repeat.as(:label) >> quote >> spaces?
   end
 
   rule(:type) do
-    (boolean | integer | string | money).as(:type)
+    (boolean | integer | string | money).as(:type) >> spaces?
   end
 
   rule(:variable) do
@@ -51,11 +51,11 @@ class Parser < Parslet::Parser
   end
 
   rule(:variable_assignment) do
-    variable >> colon
+    variable >> colon >> spaces?
   end
 
   rule(:arithmetic) do
-    (subtract | add | multiply | divide).as(:arithmetic)
+    (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
   end
 
   rule(:expression) do
@@ -63,21 +63,21 @@ class Parser < Parslet::Parser
   end
 
   rule(:assignment?) do
-    (assign >> expression).maybe
+    (assign >> spaces? >> expression).maybe >> spaces?
   end
 
   rule(:question) do
-    (label >> variable_assignment >> type >> assignment?).as(:question)
+    (label >> variable_assignment >> type >> assignment?).as(:question) >> spaces?
   end
 
 
   # if block
   rule(:condition) do
-    left_parenthesis >> variable.as(:condition) >> right_parenthesis
+    spaces? >> left_parenthesis >> spaces? >> variable.as(:condition) >> right_parenthesis >> spaces?
   end
 
   rule(:block) do
-    left_brace >> (question | if_statement).repeat.as(:block) >> right_brace
+    left_brace >> spaces? >> (question | if_statement).repeat.as(:block) >> right_brace >> spaces?
   end
 
   rule(:if_statement) do
@@ -87,7 +87,7 @@ class Parser < Parslet::Parser
 
   # form
   rule(:form) do
-    (spaces? >> form_ >> variable >> block).as(:form)
+    (spaces? >> form_ >> spaces? >> variable >> spaces? >> block).as(:form)
   end
 
   root :form

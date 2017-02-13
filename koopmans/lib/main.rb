@@ -12,6 +12,8 @@ class Main
   parser = Parser.new
   parsed = parser.parse(contents)
 
+  pp parsed
+
   gui = Gui.new
   gui.new_question('"joe?"')
   gui.launch
