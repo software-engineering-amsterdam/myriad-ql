@@ -5,25 +5,31 @@
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
 @{% let toString = (data) => data.join().split(",").join("");%}
-@{% let Question = require('./Question.js');  let question = (data, location, reject) => { return new Question({name: data[0], propertyName: data[3][0], type: data[6][0]}) }; %}
+@{% let Question = require('./Question.js');  let question = (data, location, reject) => { return data;return new Question({name: data[0], propertyName: data[3][0], type: data[6][0]}) }; %}
 
 
-form         -> "form " formName "{" newLine  statements  newLine "}"
+form         -> "form " formName openBrace newLine  statements  newLine closedBrace
 formName     -> letters
 statements   -> statement:*
 statement    -> question | if_statement | answer
-question     -> sentence "?" newLine propertyName ":" _ propertyType newLine {% question  %}
-if_statement -> "if (" propertyName ") {\n" statements "\n}"
-answer       -> sentence ":\n" allocation
-allocation   -> "valueResidue: money = " expression "\n"
-expression   -> "(" propertyName _ operator _ propertyName ")"
+question     -> "question " prime sentence prime newLine propertyName ":" space propertyType newLine
+if_statement -> "if " parOpen propertyName parClose space openBrace newLine statements newLine closedBrace
+answer       -> "answer " prime sentence prime newLine allocation
+allocation   -> propertyName ": " propertyType space assignOp space expression newLine
+expression   -> "(" propertyName space operator space propertyName ")"
 operator     -> "+" | "-" | "*" | "/"
+assignOp     -> "="
+
 
 propertyName -> letters
-propertyType -> "boolean" | "money"
+propertyType -> "boolean" | "string" | "integer" | "date" | "decimal" | "money"
 newLine      -> "\n" {% ()=> null %}
-sentence     -> [\w|\s]:+ {% toString %}
+sentence     -> [\w|\s|?|:]:+ {% toString %}
 letters      -> [a-zA-Z]:+ {% toString %}
-
-
+prime        -> "`"
+openBrace    -> "{"
+closedBrace  -> "}"
+parOpen      -> "("
+parClose     -> ")"
+space        -> _
 
