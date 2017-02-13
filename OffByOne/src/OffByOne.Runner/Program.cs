@@ -18,17 +18,15 @@
                     ""Do you want to continue?""
                         continue: boolean
 
-                    if birthDate < '01-01-2000' and continue { 
+                    if (birthDate < '01-01-2000' and continue) { 
                         ""How much money do you spend on alcoholic beverages?""
                             alcoholicBeverages: money
-                    } else if continue {
-                        ""How much money do you spend on soda?""
-                            soda: money 
                     } else {
                         ""Okay. Goodbye?""
                             exit: boolean
                     }
                 }");
+            ICharStream input2 = new AntlrInputStream("true or false");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
             var v = new MyQlVisitor();
