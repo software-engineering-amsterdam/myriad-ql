@@ -143,7 +143,7 @@ function $(o) {
         }
         },
     {"name": "form$string$1", "symbols": [{"literal":"f"}, {"literal":"o"}, {"literal":"r"}, {"literal":"m"}, {"literal":" "}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "form", "symbols": ["form$string$1", "formName", {"literal":"{"}, "newLine", "statements", "newLine", {"literal":"}"}]},
+    {"name": "form", "symbols": ["form$string$1", "formName", {"literal":"{"}, "newLine", "statements", "newLine", {"literal":"}"}], "postprocess": function(data, location, reject){ console.log(data); return data}},
     {"name": "formName", "symbols": ["letters"]},
     {"name": "statements$ebnf$1", "symbols": []},
     {"name": "statements$ebnf$1", "symbols": ["statement", "statements$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},

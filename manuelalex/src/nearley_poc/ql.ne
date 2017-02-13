@@ -7,7 +7,7 @@
 @{% let toString = (data) => data.join().split(",").join("");%}
 
 
-form         -> "form " formName "{" newLine  statements  newLine "}"
+form         -> "form " formName "{" newLine  statements  newLine "}" {% function(data, location, reject){ console.log(data); return data} %}
 formName     -> letters
 statements   -> statement:*
 statement    -> question | if_statement | answer
