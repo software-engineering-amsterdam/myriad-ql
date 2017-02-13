@@ -1,13 +1,20 @@
 module UI.Widget.Boolean exposing (view)
 
 import Html exposing (Html, div, label, input)
-import Html.Attributes exposing (type_, id, class)
-import AST exposing (Field)
+import Html.Attributes exposing (type_, id, class, checked)
+import UI.FormData as FormData
+import UI.Widget.Base exposing (WidgetContext)
 
 
-view : Field -> Html msg
-view field =
+view : WidgetContext -> Html msg
+view { field, formData } =
     div [ class "checkbox" ]
         [ label []
-            [ input [ type_ "checkbox", id field.id ] [] ]
+            [ input
+                [ type_ "checkbox"
+                , id field.id
+                , checked (FormData.getBoolean field.id formData)
+                ]
+                []
+            ]
         ]
