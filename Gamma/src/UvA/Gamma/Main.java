@@ -4,9 +4,10 @@ import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.Antlr.calculator.CalculatorBaseVisitor;
 import UvA.Gamma.Antlr.calculator.CalculatorParser;
-import UvA.Gamma.Models.Form;
+import UvA.Gamma.Models.QLForm;
 import UvA.Gamma.Models.Input;
-import UvA.Gamma.Models.QLType;
+import UvA.Gamma.Models.QLValues.QLMoney;
+import UvA.Gamma.Models.QLValues.QLValue;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -19,6 +20,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        QLMoney money = new QLMoney(12.346);
+        System.out.println("money: " + money);
+        money.setValue(12.0);
+        System.out.println("money: " + money);
+
         String test = "form test { first: \"how old are you?\" integer \n" +
                 "second: \"That is true!\" boolean }";
         InputStream is = new ByteArrayInputStream(test.getBytes());
@@ -30,9 +36,9 @@ public class Main {
         QLVisitor visitor = new QLVisitor();
         visitor.visit(parseTree);
 
-        Form form = visitor.getForm();
+        QLForm form = visitor.getForm();
         for(Input i : form.getInputs()){
-            if (i.getType() == QLType.BOOLEAN){
+            if (i.getType() == QLValue.Type.BOOLEAN){
                 i.setValue(false);
             }
             System.out.println(i);

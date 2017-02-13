@@ -1,5 +1,7 @@
 package ast;
 
+import ast.expression.Expression;
+
 public class Statement extends Node {
 	
 	// private boolean evaluate; // TODO change name

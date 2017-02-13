@@ -1,14 +1,22 @@
 package UvA.Gamma.Models;
 
+import UvA.Gamma.Models.QLValues.QLInt;
+import UvA.Gamma.Models.QLValues.QLValue;
+
 public class Input {
     private String identifier;
     private String question;
     private QLValue value;
 
-    public Input(String identifier, String question, QLValue value) {
+    public Input(String identifier, String question, String type) {
         this.identifier = identifier;
         this.question = question;
-        this.value = value;
+        QLValue.Type t = QLValue.Type.valueOf(type.toUpperCase());
+        switch (t){
+            case INTEGER:
+                value = new QLInt();
+                break;
+        }
     }
 
 
@@ -16,12 +24,18 @@ public class Input {
         return value;
     }
 
-    public QLType getType(){
+    public QLValue.Type getType(){
         return value.getType();
     }
 
-    public void setValue(Object value) {
-        this.value.setValue(value);
+
+    //TODO: Better exception
+    public void setValue(Object value) throws ClassCastException{
+        switch (this.value.getType()){
+            case INTEGER:
+                ((QLInt)value).setValue((Integer)value);
+                break;
+        }
     }
 
 
