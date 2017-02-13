@@ -14,15 +14,29 @@ BooleanLiteral: 'true' | 'false';
 NumberLiteral: '1'..'9' ('0'..'9')*;
 
 // Tokens
-LeftParenthesis		: '(';
-RightParenthesis	: ')';
-LeftBracket			: '{';
-RightBracket		: '}';
-TypeDeclarator		: ':';
-IfStatement			: 'if';
-ElseStatement		: 'else';
-FormStatement		: 'form';
-AssignmentOperator	: '=';
+LeftParenthesis				: '(';
+RightParenthesis			: ')';
+LeftBracket					: '{';
+RightBracket				: '}';
+TypeDeclarator				: ':';
+IfStatement					: 'if';
+ElseStatement				: 'else';
+FormStatement				: 'form';
+AssignmentOperator			: '=';
+NotOperator					: '!';
+MinusOperator				: '-';
+DivisionOperator			: '/';
+MultiplyOperator			: '*';
+AdditionOperator			: '+';
+SubtractionOperator			: '-';
+LessThanOperator			: '<';
+LessThanOrEqualsOperator	: '<=';
+GreaterThanOperator			: '>';
+GreaterThanOrEqualsOperator	: '>=';
+NotEqualOperator			: '!=';
+EqualsOperator				: '==';
+AndOperator					: '&&';
+OrOperator					: '||';
 
 // Allowed: a-zA-Z_$ as first char followed by a-zA-Z0-9_$ -> unspecified if correct
 Type: 'boolean' | 'int' | 'string';
@@ -43,12 +57,12 @@ expression:
 	| NumberLiteral #Number
 	| Identifier #ID	
 	| LeftParenthesis expression RightParenthesis #Parens
-	| ('!' expression) #NOT
-	| ('-' expression) #MINUS
-	| expression op=( '/' | '*' ) expression #MulDiv
-	| expression op=( '+' | '-' ) expression #AddSub		
-	| expression op=('<' | '<=' | '>' | '>=' ) expression #Comparison
-	| expression op=('!=' | '==' ) expression #Equality
-	| expression ('&&' ) expression #And
-	| expression ('||' ) expression #Or	
+	| NotOperator expression #NOT
+	| SubtractionOperator expression #MINUS
+	| expression op=(DivisionOperator | MultiplyOperator) expression #MulDiv
+	| expression op=(AdditionOperator | SubtractionOperator) expression #AddSub		
+	| expression op=(LessThanOperator | LessThanOrEqualsOperator | GreaterThanOperator | GreaterThanOrEqualsOperator) expression #Comparison
+	| expression op=(NotEqualOperator | EqualsOperator) expression #Equality
+	| expression AndOperator expression #And
+	| expression OrOperator expression #Or	
 ;
