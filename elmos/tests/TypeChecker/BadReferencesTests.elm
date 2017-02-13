@@ -1,9 +1,9 @@
-module TypeChecker.CheckerTests exposing (all)
+module TypeChecker.BadReferencesTests exposing (all)
 
+import TypeChecker.BadReferences exposing (checkUndefinedVarReferences)
 import Parser.Form exposing (form)
 import Test exposing (..)
 import ParserTestUtil exposing (parseToMaybe)
-import TypeChecker.Checker exposing (..)
 import Set
 import Expect
 
