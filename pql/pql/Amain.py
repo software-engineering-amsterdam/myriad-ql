@@ -40,6 +40,7 @@ if __name__ == '__main__':
     colon = Suppress(":")
     assign = Suppress("=")
 
+    # Expressions
     arithmeticExpr = \
         identifier + \
         Optional(
@@ -62,6 +63,7 @@ if __name__ == '__main__':
         quotedString.setResultsName("field") + \
         assignmentExpr.setResultsName("assexpr")
 
+    # Statements
     if_stmt = \
         Suppress("if") + \
         lparen + \
@@ -71,7 +73,8 @@ if __name__ == '__main__':
         OneOrMore(fieldExpr) + \
         rcurly
 
-    formExpr = \
+    # Program
+    program = \
         form + \
         identifier.setResultsName("fi") + \
         lcurly + \
@@ -85,6 +88,6 @@ if __name__ == '__main__':
         ) + \
         rcurly
 
-    tokens = formExpr.parseString(ql_str)
+    tokens = program.parseString(ql_str)
 
     print(tokens)
