@@ -1,3 +1,10 @@
 .idea/
 
 target/
+src/main/antlr4/QL.tokens
+src/main/antlr4/QLBaseListener.java
+src/main/antlr4/QLLexer.java
+src/main/antlr4/QLLexer.tokens
+src/main/antlr4/QLListener.java
+src/main/antlr4/QLParser.java
+src/main/antlr4/test.sh
