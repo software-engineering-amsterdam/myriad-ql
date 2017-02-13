@@ -7,6 +7,6 @@
             this.Identifier = identifier;
         }
 
-        public string Identifier { get; set; }
+        public string Identifier { get; private set; }
     }
 }

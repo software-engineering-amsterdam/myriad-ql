@@ -22,6 +22,6 @@
             this.Value = new DateTime(year, month, day);
         }
 
-        public DateTime Value { get; set; }
+        public DateTime Value { get; private set; }
     }
 }

@@ -9,6 +9,6 @@
             this.Value = value;
         }
 
-        public decimal Value { get; set; }
+        public decimal Value { get; private set; }
     }
 }

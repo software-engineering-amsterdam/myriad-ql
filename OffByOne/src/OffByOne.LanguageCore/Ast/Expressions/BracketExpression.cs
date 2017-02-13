@@ -7,6 +7,6 @@
             this.Expression = expression;
         }
 
-        public Expression Expression { get; set; }
+        public Expression Expression { get; private set; }
     }
 }

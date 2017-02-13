@@ -12,8 +12,8 @@
             this.Values = values;
         }
 
-        public string DefaultValue { get; set; }
+        public string DefaultValue { get; private set; }
 
-        public ICollection<string> Values { get; set; }
+        public ICollection<string> Values { get; private set; }
     }
 }

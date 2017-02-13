@@ -10,8 +10,8 @@
             this.Statements = statements;
         }
 
-        public string Identifier { get; set; }
+        public string Identifier { get; private set; }
 
-        public IList<Statement> Statements { get; set; }
+        public IList<Statement> Statements { get; private set; }
     }
 }

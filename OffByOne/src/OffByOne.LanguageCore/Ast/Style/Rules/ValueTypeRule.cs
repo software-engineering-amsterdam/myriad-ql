@@ -18,6 +18,6 @@
             this.ValueType = valueType;
         }
 
-        public ValueType ValueType { get; set; }
+        public ValueType ValueType { get; private set; }
     }
 }
