@@ -49,37 +49,80 @@ class TestGrammar(TestCase):
 
 
 class TestParser(TestCase):
-    expressions = [
-        ("2 + 3", BinOp(Const(2, Datatype.integer),
-                                 Operator["+"],
-                                 Const(3, Datatype.integer))),
-        ("2 + 3 + 4", BinOp(BinOp(Const(2,
-                                                             Datatype.integer),
-                                                    Operator["+"],
-                                                    Const(3,
-                                                             Datatype.integer)),
-                                     Operator["+"],
-                                     Const(4, Datatype.integer))),
-        ("2 * 3 + 4", BinOp(BinOp(Const(2,
-                                                             Datatype.integer),
-                                                    Operator["*"],
-                                                    Const(3,
-                                                             Datatype.integer)),
-                                     Operator["+"],
-                                     Const(4, Datatype.integer))),
-        ("2 + 3 * 4", BinOp(Const(2, Datatype.integer),
-                                     Operator["+"],
-                                     BinOp(Const(3,
-                                                             Datatype.integer),
-                                                    Operator["*"],
-                                                    Const(4,
-                                                             Datatype.integer))))
+    cases = [
+        (Grammar.expression,
+         "2 + 3", BinOp(Const(2, Datatype.integer),
+                        Operator["+"],
+                        Const(3, Datatype.integer))),
+        (Grammar.expression,
+         "2 + 3 + 4", BinOp(BinOp(Const(2, Datatype.integer),
+                                  Operator["+"],
+                                  Const(3, Datatype.integer)),
+                            Operator["+"],
+                            Const(4, Datatype.integer))),
+        (Grammar.expression,
+         "2 * 3 + 4", BinOp(BinOp(Const(2, Datatype.integer),
+                                  Operator["*"],
+                                  Const(3, Datatype.integer)),
+                            Operator["+"],
+                            Const(4, Datatype.integer))),
+        (Grammar.expression,
+         "2 + 3 * 4", BinOp(Const(2, Datatype.integer),
+                            Operator["+"],
+                            BinOp(Const(3, Datatype.integer),
+                                  Operator["*"],
+                                  Const(4, Datatype.integer)))),
+        (Grammar.expression,
+         "x <= 3", BinOp(Iden("x"),
+                         Operator["<="],
+                         Const(3, Datatype.integer))),
+        (Grammar.expression,
+         "x * 3", BinOp(Iden("x"),
+                        Operator["*"],
+                        Const(3, Datatype.integer))),
+        (Grammar.expression,
+         "x + 4 / y", BinOp(Iden("x"),
+                            Operator["+"],
+                            BinOp(Const(4, Datatype.integer),
+                                  Operator["/"],
+                                  Iden("y")))),
+        (Grammar.expression,
+         "x || true", BinOp(Iden("x"),
+                            Operator["||"],
+                            Const(True, Datatype.boolean))),
+        (Grammar.expression,
+         "false == true", BinOp(Const(False, Datatype.boolean),
+                                Operator["=="],
+                                Const(True, Datatype.boolean))),
+        (Grammar.expression,
+         "true && !false", BinOp(Const(True, Datatype.boolean),
+                                 Operator["&&"],
+                                 UnOp(Operator["!"],
+                                      Const(False, Datatype.boolean)))),
+
+        (Grammar.question,
+         "x : \"y\" integer", Quest(Iden("x"),
+                                    "y",
+                                    Datatype.integer)),
+        (Grammar.question,
+         "x : \"y\" integer = 2 + 3", Quest(Iden("x"),
+                                            "y",
+                                            Datatype.integer,
+                                            BinOp(Const(2, Datatype.integer),
+                                                  Operator["+"],
+                                                  Const(3, Datatype.integer)))),
+
+        (Grammar.conditional, "if true { }", Cond(True, [])),
+        (Grammar.conditional, "if true { } else { }", Cond(True, [], [])),
+
+        (Grammar.form, "form FormName { }", Form("FormName", []))
+
     ]
 
     def testParseExpression(self):
-        for sentence, tree in self.expressions:
-            self.assertEqual(Parser.parse_expression(
-                Grammar.expression.parseString(sentence, parseAll=True)), tree)
+        for grammar, sentence, tree in self.cases:
+            print(sentence)
+            self.assertEqual(grammar.parseString(sentence, parseAll=True), tree)
 
 
     def testParseExpression2(self):
