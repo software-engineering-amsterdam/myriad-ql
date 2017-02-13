@@ -1,4 +1,4 @@
-module Values exposing (Value, string, bool, int, undefined, asString, asBool, asInt)
+module Values exposing (Value(Str, Boolean, Integer, Undefined), string, bool, int, undefined, asString, asBool, asInt)
 
 
 type Value
