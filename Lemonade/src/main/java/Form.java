@@ -18,13 +18,14 @@
  */
 
 import java.util.List;
-
-public interface Form {
+//Maybe everything inherits from the ASTNode class so we can easily walk through
+//the constructed tree?
+public class Form extends ASTNode{
     public String value();
 }
 
 //Huh? Waarom maak je nog een losse form body class
-class FormBody implements Form {
+class FormBody extends Form {
     private final Form questions;
 
     public FormBody(Form questions) {

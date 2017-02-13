@@ -2,6 +2,7 @@
  * Created by dimitribelfor on 07/02/2017.
  */
 public class Conditional extends ASTNode{
+
     private Expression expr;
     private List<Question> question;
 
