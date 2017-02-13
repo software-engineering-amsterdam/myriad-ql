@@ -21,6 +21,19 @@ all =
         , relationalTests
         , comparisonTests
         , logicalTests
+        , whitespaceTests
+        ]
+
+
+whitespaceTests : Test
+whitespaceTests =
+    testWithParser expression
+        "whitespaceTests"
+        [ ( "Should not parse surrounding whitespace", " 1 ", Nothing )
+        , ( "Should not parse whitespace before", " 1", Nothing )
+        , ( "Should not parse whitespace after", "1 ", Nothing )
+        , ( "Should not parse whitespace within parens", "( 1 )", Just (ParensExpression (Integer 1)) )
+        , ( "Should parse whitespace within operators", "1 + 2", Just (ArithmeticExpression Plus (Integer 1) (Integer 2)) )
         ]
 
 
