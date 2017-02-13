@@ -8,25 +8,13 @@ namespace Tests.QL.DSL
     public class LexerTest
     {
         [TestMethod]
-        public void Tokens()
-        {
-            LexerTestHarness.TokenTypes("(", new List<string> { "LeftParenthesis" });
-            LexerTestHarness.TokenTypes(")", new List<string> { "RightParenthesis" });
-            LexerTestHarness.TokenTypes("{", new List<string> { "LeftBracket" });
-            LexerTestHarness.TokenTypes("}", new List<string> { "RightBracket" });
-            LexerTestHarness.TokenTypes(":", new List<string> { "TypeDeclarator" });
-            LexerTestHarness.TokenTypes("=", new List<string> { "AssignmentOperator" });
-        }
-
-        [TestMethod]
         public void Reservedwords()
         {
-            LexerTestHarness.TokenTypes("if", new List<string> { "IfStatement" });
-            LexerTestHarness.TokenTypes("else", new List<string> { "ElseStatement" });
-            LexerTestHarness.TokenTypes("form", new List<string> { "FormStatement" });
             LexerTestHarness.TokenTypes("boolean", new List<string> { "Type" });
             LexerTestHarness.TokenTypes("int", new List<string> { "Type" });
             LexerTestHarness.TokenTypes("string", new List<string> { "Type" });
+            LexerTestHarness.TokenTypes("money", new List<string> { "Type" });
+            LexerTestHarness.TokenTypes("decimal", new List<string> { "Type" });
         }
 
         [TestMethod]
@@ -64,9 +52,11 @@ namespace Tests.QL.DSL
             LexerTestHarness.TokenTypes("true", new List<string> { "BooleanLiteral" });
             LexerTestHarness.TokenTypes("false", new List<string> { "BooleanLiteral" });
             LexerTestHarness.TokenTypes("123456789", new List<string> { "NumberLiteral" });
-            /* We do not allow negative numberLiterals in the lexer as it 
-             * will lead to trouble at the parser end. For example, is 10-5 <10>,<-5>
-             * or is it <10>-<5>? This should be tested in the parser unit  tests! */
+            LexerTestHarness.TokenTypes("123.456", new List<string> { "MoneyLiteral" });
+            /* We do not allow negative number/money literals in the lexer as it will
+             * will lead to trouble at the parser end. For example, is 10-5 would then
+             * be tokenized as <10>,<-5> while it could also be the expression 10-5
+             * we choose to resolve this ambiguity after parsing */
         }
     }
 }
