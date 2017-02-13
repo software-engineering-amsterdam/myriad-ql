@@ -18,7 +18,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:expression) do
-    left_parenthesis >> expression.as(:expression) >> right_parenthesis | calculation | variable
+    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable
   end
 
   def self.symbols(symbols)
