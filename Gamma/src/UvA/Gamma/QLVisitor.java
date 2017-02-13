@@ -2,10 +2,8 @@ package UvA.Gamma;
 
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
-import UvA.Gamma.Models.Form;
+import UvA.Gamma.Models.QLForm;
 import UvA.Gamma.Models.Input;
-import UvA.Gamma.Models.QLType;
-import UvA.Gamma.Models.QLValue;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.HashMap;
@@ -17,14 +15,14 @@ import java.util.Map;
 
 public class QLVisitor extends QLBaseVisitor<Object> {
     Map<String, String> ids;
-    private Form form;
+    private QLForm form;
 
     QLVisitor() {
         ids = new HashMap<>();
-        form = new Form();
+        form = new QLForm("");
     }
 
-    public Form getForm(){
+    public QLForm getForm(){
         return this.form;
     }
 
@@ -34,7 +32,7 @@ public class QLVisitor extends QLBaseVisitor<Object> {
     }
 
     @Override
-    public Form visitForm(QLParser.FormContext ctx) {
+    public QLForm visitForm(QLParser.FormContext ctx) {
         for (QLParser.FormItemContext formItemContext: ctx.formItem()){
             visit(formItemContext);
         }
@@ -46,8 +44,7 @@ public class QLVisitor extends QLBaseVisitor<Object> {
         String id = ctx.ID().getText();
         String question = ctx.QUESTION().getText();
         String type = (String) visit(ctx.type());
-        QLValue value = new QLValue(QLType.valueOf(type.toUpperCase()), null);
-        Input input = new Input(id, question, value);
+        Input input = new Input(id, question, type);
         form.addInput(input);
         return input;
     }
