@@ -18,6 +18,16 @@ removeKeys keys formData =
     List.foldl Dict.remove formData keys
 
 
+empty : FormData
+empty =
+    Dict.empty
+
+
+withBoolean : String -> Bool -> FormData -> FormData
+withBoolean k v =
+    Dict.insert k (Boolean v)
+
+
 getBoolean : String -> FormData -> Bool
 getBoolean key data =
     Dict.get key data

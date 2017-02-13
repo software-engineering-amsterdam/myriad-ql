@@ -9,6 +9,7 @@ import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Base as BaseWidget
+import UI.FormData as FormData exposing (FormData)
 
 
 type alias Model =
@@ -43,7 +44,14 @@ init =
       valueResidue: money =
         (sellingPrice - privateDebt)
   }
+
 }""")
+
+
+baseFormData : FormData
+baseFormData =
+    FormData.empty
+        |> FormData.withBoolean "hasSoldHouse" True
 
 
 update : Msg -> Model -> Model
@@ -91,7 +99,7 @@ viewForm formDsl =
 
 viewField : AST.Field -> Html Msg
 viewField field =
-    BaseWidget.container field <|
+    BaseWidget.container { field = field, formData = baseFormData } <|
         case field.valueType of
             StringType ->
                 StringWidget.view
