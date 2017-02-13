@@ -7,3 +7,6 @@
 1486466920974	Delete elements
 1486474298296	Rename type 'Integer'
 1486479084525	Encapsulate field 'content'
+1486750791456	Encapsulate field 'variable'
+1486750808380	Encapsulate field 'label'
+1486750817265	Encapsulate field 'type'

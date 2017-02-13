@@ -15,15 +15,21 @@ block returns [Block result]
 			$result = new Block();
 		}
 		: '{' (question { $result.addQuestion($question.result); } 
-			| statement { $result.addStatement($statement.result); }
-		)*  '}'
+			| statement { $result.addStatement($statement.result); })*  
+		  '}'
 		; 
 		
 // TODO replace by other definition		
-question returns [Question result]
-	: STRING { $result = new Question($STRING.text); };
+// question returns [Question result]
+	// : STRING { $result = new Question($STRING.text); };
 
-// question : ( ID':' STRING type computed_question* | statement );
+// TODO decide on maximum characters on one line
+question returns [Question result]
+		: ID ':' STRING type
+		{ $result = new Question($ID.text, $STRING.text, $type.text); }
+		| ID ':' STRING type computed_question
+		{ $result = new Question($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		;
 
 type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
 
@@ -59,9 +65,9 @@ arithOp
 atom  returns [Atom result]
  : // DECIMAL
  // | MONEY
- INT { System.out.println($INT.text); 
- 	$result = new IntegerAtom(Integer.parseInt($INT.text)); 
-             }
+ 	INT 
+ 	{ System.out.println($INT.text); 
+ 	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
  // | STRING
  // | BOOL
  // | DDMMYY
