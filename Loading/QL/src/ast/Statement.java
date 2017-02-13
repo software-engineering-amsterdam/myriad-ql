@@ -1,8 +1,8 @@
 package ast;
 
-public class Statement {
-
-
+public class Statement extends Node {
+	
+	// private boolean evaluate; // TODO change name
 	private Expression expression; // TODO change name
 	private Block block;
 	

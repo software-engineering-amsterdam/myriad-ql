@@ -1,18 +1,39 @@
 package ast;
 
-public class Question {
+public class Question extends Node {
 	
-	private String content;
+	final private String variable;
+	final private String label;
+	final private String type;
+	private int computedQuestion;
 	
-	public Question(String content) {
-		this.setContent(content);
+	public Question(String variable, String label, String type) {
+		this.variable = variable;
+		this.label = label;
+		this.type = type;
+	}
+	
+	// TODO Could be a computed question with inheritance of Question
+	public Question(String variable, String label, String type, int computedQuestion) {
+		this.variable = variable;
+		this.label = label;
+		this.type = type;
+		this.computedQuestion = computedQuestion;
+	}
+	
+	public String getVariable() {
+		return variable;
 	}
 
-	public String getContent() {
-		return content;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public String getType() {
+		return type;
+	}
+	
+	public int getComputedQuestion() {
+		return computedQuestion;
 	}
 }
