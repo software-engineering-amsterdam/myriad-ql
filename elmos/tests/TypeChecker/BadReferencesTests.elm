@@ -8,9 +8,6 @@ import Set
 import Expect
 
 
--- Hoe kan je dit nu mooier maken?
-
-
 undefinedVarExample1 : String
 undefinedVarExample1 =
     """form taxOfficeExample {
@@ -93,7 +90,7 @@ goodExample4 =
 
 all : Test
 all =
-    describe "CheckerTests"
+    describe "BadReferences"
         [ testExamplesWithoutUnusedVars ]
 
 
