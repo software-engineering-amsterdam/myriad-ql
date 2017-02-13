@@ -31,7 +31,13 @@ question returns [Question result]
 		{ $result = new Question($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
 		;
 
-type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
+type returns [Type result]
+	: t = ('boolean' 
+	| 'date' 
+	| 'decimal' 
+	| 'integer' 
+	| 'money' 
+	| 'string') { $result = new Type($t.text) };
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
