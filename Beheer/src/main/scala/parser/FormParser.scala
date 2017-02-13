@@ -19,14 +19,9 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
 
 
   def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeName ^^ {
-      case identifier ~ ":" ~ label ~ typeName =>
-        Question(identifier, label, typeName)
-    }
-
-  def computedQuestion : Parser[Question] =
-    question ~ "(" ~ expr ~ ")" ^^ {
-      case question ~ "(" ~ expr ~ ")" => question.copy(expressionNode = Some(expr))
+    ident ~ ":" ~ label ~ typeName ~ opt("("~>expr<~")") ^^ {
+      case identifier ~ ":" ~ label ~ typeName ~ expr =>
+        Question(identifier, label, typeName, expr)
     }
 
   def conditional: Parser[Conditional] =
@@ -34,7 +29,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
       case "(" ~ expr ~ ")" ~ block => Conditional(expr, block)
     }
 
-  def statement: Parser[Statement] = conditional | computedQuestion | question
+  def statement: Parser[Statement] = conditional | question
 
   def block: Parser[Block] = "{" ~> rep(statement) <~ "}" ^^ (xs => Block(xs))
 
