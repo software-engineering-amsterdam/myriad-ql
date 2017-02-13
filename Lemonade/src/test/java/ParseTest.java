@@ -17,7 +17,6 @@
  *  under the License.
  */
 
-import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
@@ -25,8 +24,35 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.StringReader;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.BitSet;
+
+import org.antlr.v4.runtime.ANTLRErrorListener;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.TokenSource;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParseTest {
+
+    private String simpleForm;
+
+    @Before
+    public void setUp() throws Exception {
+        simpleForm = "form { test : \"test string\" boolean }";
+    }
+
     @Test
     public void testExploratoryString() throws IOException {
 
@@ -57,6 +83,82 @@ public class ParseTest {
 
         walker.walk(loader, tree);
         //System.out.println(loader.names);
+    }
+    public void happyCase() throws Exception {
+        TestErrorListener errorListener = new TestErrorListener();
+        QLParser.FormContext context = parseForm(simpleForm, errorListener);
+
+        assertThat(errorListener.isFailed()).isFalse();
+
+        assertThat(context.getChild(0).getText()).isEqualTo("form");
+        assertThat(context.getChild(1).getText()).isEqualTo("{");
+        assertThat(context.getChild(2).getText()).isEqualTo("test:\"test string\"boolean");
+        assertThat(context.getChild(3).getText()).isEqualTo("}");
+    }
+
+    private QLParser.FormContext parseForm(String form, TestErrorListener errorListener) throws Exception {
+        CharStream inputCharStream = new ANTLRInputStream(new StringReader(form));
+        TokenSource tokenSource = new QLLexer(inputCharStream);
+        TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
+        QLParser parser = new QLParser(inputTokenStream);
+
+        parser.addErrorListener(errorListener);
+
+        return parser.form();
+    }
+
+    class TestErrorListener implements ANTLRErrorListener {
+
+        private boolean failed = false;
+
+        public boolean isFailed() {
+            return failed;
+        }
+
+        public void setFailed(final boolean failed) {
+            this.failed = failed;
+        }
+
+        @Override public void syntaxError(
+                final Recognizer<?, ?> recognizer,
+                final Object o,
+                final int i,
+                final int i1,
+                final String s,
+                final RecognitionException e) {
+            setFailed(true);
+        }
+
+        @Override public void reportAmbiguity(
+                final Parser parser,
+                final DFA dfa,
+                final int i,
+                final int i1,
+                final boolean b,
+                final BitSet bitSet,
+                final ATNConfigSet atnConfigSet) {
+            setFailed(true);
+        }
+
+        @Override public void reportAttemptingFullContext(
+                final Parser parser,
+                final DFA dfa,
+                final int i,
+                final int i1,
+                final BitSet bitSet,
+                final ATNConfigSet atnConfigSet) {
+            setFailed(true);
+        }
+
+        @Override public void reportContextSensitivity(
+                final Parser parser,
+                final DFA dfa,
+                final int i,
+                final int i1,
+                final int i2,
+                final ATNConfigSet atnConfigSet) {
+            setFailed(true);
+        }
     }
 //
 //    @Test
