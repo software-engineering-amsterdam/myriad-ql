@@ -26,7 +26,7 @@ question returns [Question result]
 		: ID ':' STRING type
 		{ $result = new Question($ID.text, $STRING.text, $type.text); }
 		| ID ':' STRING type computed_question
-		{ $result = new Question($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
 		;
 
 type returns [Type result]
