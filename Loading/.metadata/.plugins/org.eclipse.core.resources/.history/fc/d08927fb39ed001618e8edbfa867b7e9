@@ -1,6 +1,6 @@
 @parser::header
 {
-    import ast.IntegerAtom
+    import ast.atom.IntegerAtom
 }
 
 grammar QL;
