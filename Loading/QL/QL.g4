@@ -52,18 +52,29 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- : lhs = atom '==' rhs = atom { $result = new EqExpression($lhs.result, $rhs.result); };
-// | atom relOp atom
+ :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
+ 
+ 
 // | atom boolOp atom
 // | atom arithOp atom
 // | '!' atom
 // | '+' atom
 // | '-' atom
 // | atom
-// ;
+ ;
 
-relOp
- : '==' | '!=' | '<=' | '>=' | '>' | '<';
+binOp returns [BinaryExpression result]
+ : '==' { $result = new EqExpression(); }
+ | '!=' { $result = new NEqExpression(); }
+ | '<=' { $result = new LEqExpression(); }
+ | '>=' { $result = new GEqExpression(); }
+ | '>'  { $result = new GExpression(); }
+ | '<'  { $result = new LExpression(); }
+ | '+'  { $result = new AddExpression(); }
+ | '-'  { $result = new SubExpression(); }
+ | '/'  { $result = new DivExpression(); }
+ | '*'  { $result = new MulExpression(); }
+ ;
 
 boolOp
  : '&&' | '||';
@@ -83,7 +94,7 @@ atom returns [Atom result]
     $result = new StringAtom($STRING.text);
             }
  | BOOL { System.out.println($BOOL.text);
-           $result = new BoolAtom(Boolean.valueOf($BOOL.text); }
+           $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
  | DDMMYY { System.out.println($DDMMYY.text);
             $result = new DateAtom($DDMMYY.text); }
  | ID { System.out.println($ID.text);

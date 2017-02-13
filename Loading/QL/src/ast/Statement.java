@@ -1,6 +1,6 @@
 package ast;
 
-import ast.expresssion.Expression;
+import ast.expression.Expression;
 
 public class Statement extends Node {
 	
