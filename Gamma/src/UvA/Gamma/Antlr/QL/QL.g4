@@ -2,33 +2,33 @@ grammar QL;
 
 form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: input         #in
+formItem: question      #in
         | computed      #comp
         | condition     #cond
         ;
 
-input: QUESTION ID':' type;
+question: STRING_LITERAL ID':' type;
 
-computed: QUESTION ID':' type '=' '('expression')';
+computed: STRING_LITERAL ID':' type '=' '('expression')';
 
 type: BOOL | STRING | INT | DATE | DEC | MONEY;
 
 condition: 'if' '('boolExpr')' '{' (formItem)* '}';
 
 expression: boolExpr
-          | intExpr
+          | numExpr
           ;
 
 boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr            # andor
-        | intExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') intExpr  # comparison
+        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr  # comparison
         | ID                                                          # boolId
         | ('true' | 'false')                                          # bool
         ;
 
-intExpr: intExpr op=('*' | '/') intExpr    # div
-       | intExpr op=('+' | '-') intExpr    # add
-       | NUMBER                            # int
-       | ID                                # intId
+numExpr: numExpr op=('*' | '/') numExpr    # div
+       | numExpr op=('+' | '-') numExpr    # add
+       | NUMBER                            # num
+       | ID                                # numId
        ;
 
 //datatypes
@@ -39,10 +39,10 @@ DATE:   'date';
 DEC:    'decimal';
 MONEY:  'money';
 
-NUMBER: ('0'..'9')+;
+NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
-QUESTION: '"'(~'"')+'"' ;
-ID: [a-zA-Z]+;
+STRING_LITERAL: '"'(~'"')+'"' ;
+ID: [a-zA-Z][a-zA-Z0-9]+;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;
