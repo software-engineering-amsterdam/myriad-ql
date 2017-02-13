@@ -9,7 +9,8 @@ import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Base as BaseWidget
-import UI.FormData as FormData exposing (FormData, FormValue)
+import UI.FormData as FormData exposing (FormData)
+import Values exposing (Value)
 import Dict
 
 
@@ -22,7 +23,7 @@ type alias Model =
 
 type Msg
     = OnDslInput String
-    | OnFieldChange String FormValue
+    | OnFieldChange String Value
 
 
 init : Model

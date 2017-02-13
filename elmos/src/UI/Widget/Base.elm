@@ -3,13 +3,14 @@ module UI.Widget.Base exposing (WidgetContext, container)
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
 import AST exposing (Field)
-import UI.FormData exposing (FormData, FormValue)
+import UI.FormData exposing (FormData)
+import Values exposing (Value)
 
 
 type alias WidgetContext msg =
     { field : Field
     , formData : FormData
-    , onChange : FormValue -> msg
+    , onChange : Value -> msg
     }
 
 
