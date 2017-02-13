@@ -28,11 +28,12 @@ BNF
 <form> ::= <type> <identifier> '{' <blockBody> '}'
 <blockBody> ::= <question> | <conditional>
 <conditional> ::= 'if' '(' <exp> | <boolean> ')' '{' <blockBody> '}'
-<question> ::= <label> <variable> ':' <dataType>
+<question> ::= <label> <variable> ':' <data_type>
+<question_value> ::= expr | data_type
 <type> ::= <Ident>
 <identifier> ::= <Ident>
-<dataType> ::= <boolean>|<money>
-<boolean> ::= true | false
+<data_type> ::= <boolean>|<money>
+<boolean> ::= 'true' | 'false'
 '''
 
 
@@ -52,29 +53,34 @@ class QL(Grammar):
         colon = Literal(':').suppress()
         equals = Literal('=').suppress()
 
+        # Keywords
+        if_key = Keyword("if")
+        true_key = Keyword("true")
+        false_key = Keyword("false")
+
+        
         identifier = Word(alphanums)
         variable = identifier("variable")
         formType = identifier("type")
         label = QuotedString('"')("label")
-        dataType = Literal('boolean')(
-            "dataType") | Literal('money')("dataType")
-        mathOperator = Group(Literal('+')("addOp") | Literal('-')("minOp")
-                             | Literal('/')("divOp") | Literal('*')("mulOp"))("mathOp")
-        ifIdent = Literal('if').suppress()("conditionalStatement")
+        data_type = Literal('boolean')(
+            "data_type") | Literal('money')("data_type")
+        mathOperator = Group(Literal('+')("add_op") | Literal('-')("sub_op")
+                             | Literal('/')("div_op") | Literal('*')("mul_op"))("math_op")
         comparisonOperators = (Literal('==') | Literal('!=') | Literal(
             '>=') | Literal('<=')) | Literal('<') | Literal('>')
 
         exp = Group(variable + (mathOperator |
                                 comparisonOperators) + variable)("expression")
-        assignment = Group(dataType + equals + lpar +
+        assignment = Group(data_type + equals + lpar +
                            exp + rpar)("assignment")
-        questionValue = Group((assignment | dataType))("questionValue")
-        question = Group(label + variable + colon + questionValue)("question")
+        question_value = Group((assignment | data_type))("question_value")
+        question = Group(label + variable + colon + question_value)("question")
         blockBody = Forward()
-        conditional = Group(ifIdent + lpar + (exp | variable) + rpar +
-                            lbrace + Group(blockBody)("body") + rbrace)("conditional")
-        blockBody << ZeroOrMore(question | conditional)
-        form = formType + identifier("identifier") + lbrace + Group(blockBody)("body") + rbrace("form")
+        conditional = Group(if_key("conditional_statement") + lpar + (exp | variable) + rpar +
+                            lbrace + blockBody + rbrace)("conditional")
+        blockBody << ZeroOrMore(question| conditional)('form_elements')
+        form = formType + identifier("identifier") + lbrace + blockBody + rbrace("form")
         grammar << form
         return grammar
 
