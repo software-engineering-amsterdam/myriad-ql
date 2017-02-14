@@ -33,8 +33,8 @@ class Parser < Parslet::Parser
           divide: '/',
 
           less: '<',
-          greater: '>',
           less_equal: '<=',
+          greater: '>',
           greater_equal: '>=',
           equal: '==',
           not_equal: '!=',
@@ -53,7 +53,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:comparison) do
-    (less | greater | less_equal | greater_equal | equal | not_equal).as(:comparison) >> spaces?
+    ( less_equal | greater_equal | equal | not_equal | less | greater ).as(:comparison) >> spaces?
   end
 
   rule(:boolean) do

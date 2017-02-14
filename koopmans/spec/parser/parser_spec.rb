@@ -62,7 +62,7 @@ describe Parser do
 
   context 'comparison' do
     it 'parses' do
-      expect(parser.comparison).to parse('<')
+      expect(parser.comparison).to parse('<=')
     end
   end
 
