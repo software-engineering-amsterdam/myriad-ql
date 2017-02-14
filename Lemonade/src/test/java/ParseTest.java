@@ -48,7 +48,7 @@ public class ParseTest {
     @Test
     public void testExploratoryString() throws IOException {
 
-        String simpleForm = "form name {test : \"test string\" boolean}";
+        String simpleForm = "form name {bla : \"oke?\" currency}";
 
         CharStream inputCharStream = new ANTLRInputStream(new StringReader(simpleForm));
         TokenSource tokenSource = new QLLexer(inputCharStream);
@@ -61,6 +61,23 @@ public class ParseTest {
             Token t = (Token)o;
             System.out.println(t);
         }
+        QLParser.FormContext context = parser.form();
+    }
+
+    @Test
+    public void testWalk() throws IOException {
+        String simpleForm = "form naam {tmp : \"echt?\" boolean}\u001a";
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
+
+        QLLexer lexer = new QLLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        QLParser parser = new QLParser(tokens);
+        ParseTree tree = parser.form();
+
+        ParseTreeWalker walker = new ParseTreeWalker();
+
+        QLLoader loader = new QLLoader();
 
     }
 
