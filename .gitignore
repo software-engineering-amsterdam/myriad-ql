@@ -5,3 +5,15 @@ WeekendWarriors/DSL/DSL/obj/
 WeekendWarriors/DSL/DSL/Java/
 WeekendWarriors/DSL/Tests/bin/
 WeekendWarriors/DSL/Tests/obj/
+
+# plz
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
