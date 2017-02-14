@@ -1,9 +1,9 @@
-require_relative 'reader'
-require_relative 'parser'
-# require_relative 'gui'
-require_relative 'ast'
-require 'pp'
+require_relative 'parser/reader'
+require_relative 'parser/parser'
+require_relative 'ast/ast'
+require_relative 'ast/variable'
 
+require 'pp'
 
 # read file
 reader = Reader.new
@@ -13,12 +13,12 @@ contents = reader.read_file('../examples/simple_questionnaire.ql')
 parser = Parser.new
 parsed = parser.parse(contents)
 
-# pp parsed
+pp parsed
 
 ast = Ast.new
 form = ast.apply(parsed)
 
-pp parsed
+# pp parsed
 pp form
 
 # gui = Gui.new
