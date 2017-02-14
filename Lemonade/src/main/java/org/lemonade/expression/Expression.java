@@ -1,12 +1,14 @@
-/**
- * Created by dimitribelfor on 07/02/2017.
- */
+package org.lemonade.expression;
+
+import org.lemonade.QLOperatorType;
+import org.lemonade.QLType;
+
 public abstract class Expression {
-    private Types type;
-    private OperatorType operator;
+    private QLType type;
+    private QLOperatorType operator;
 
     private int left;
-    public Expression (Types type, int value) {
+    public Expression (QLType type, int value) {
         this.type = type;
         this.left = value;
     }
@@ -15,7 +17,7 @@ public abstract class Expression {
         return left;
     }
 
-    public OperatorType getOperator() {
+    public QLOperatorType getOperator() {
         return operator;
     }
 

@@ -1,9 +1,10 @@
+package org.lemonade;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dimitribelfor on 07/02/2017.
- */
+import org.lemonade.expression.Expression;
+
 public class Conditional extends ASTNode{
 
     private Expression condition;
@@ -27,5 +28,5 @@ public class Conditional extends ASTNode{
         this.questions.add(question);
     }
 
-    //Validate the expression and test whether it can be reduced to a bool.
+    //Validate the org.lemonade.expression and test whether it can be reduced to a bool.
 }
