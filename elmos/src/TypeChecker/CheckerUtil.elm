@@ -1,45 +1,46 @@
 module TypeChecker.CheckerUtil exposing (..)
 
 import AST exposing (..)
-import DictSet exposing (..)
+import List.Extra
 
 
-type alias Index a =
-    DictSet String a
+type alias QuestionTypeRelations =
+    List ( String, ValueType )
 
 
-emptyIndex : Index a
-emptyIndex =
-    DictSet.empty toString
+removeListFrom : List a -> List a -> List a
+removeListFrom source target =
+    List.foldl List.Extra.remove target source
 
 
-mergeIndex : List (Index a) -> Index a
-mergeIndex =
-    List.foldr DictSet.union emptyIndex
+intersectLists : List a -> List a -> List a
+intersectLists a b =
+    removeListFrom a <| removeListFrom a b
 
 
-declaredVarsFromList : List FormItem -> Index ( String, ValueType )
-declaredVarsFromList =
-    List.map declaredVars >> mergeIndex
+questionIds : QuestionTypeRelations -> List String
+questionIds =
+    List.map Tuple.first
 
 
-declaredVars : FormItem -> Index ( String, ValueType )
-declaredVars item =
+questionTypeRelationsFromBlock : Block -> QuestionTypeRelations
+questionTypeRelationsFromBlock =
+    List.map questionTypeRelationsFromItem >> List.concat
+
+
+questionTypeRelationsFromItem : FormItem -> QuestionTypeRelations
+questionTypeRelationsFromItem item =
     case item of
-        FieldItem { id, valueType } ->
-            DictSet.fromList toString [ ( id, valueType ) ]
+        Field _ id valueType ->
+            [ ( id, valueType ) ]
 
-        IfItem { thenBranch, elseBranch } ->
-            DictSet.intersect
-                (declaredVarsFromList thenBranch)
-                (declaredVarsFromList elseBranch)
+        ComputedField _ id valueType _ ->
+            [ ( id, valueType ) ]
 
+        IfThen _ _ ->
+            []
 
-expressionFromItem : FormItem -> Maybe Expression
-expressionFromItem item =
-    case item of
-        FieldItem { valueExpression } ->
-            valueExpression
-
-        IfItem { expression } ->
-            Just expression
+        IfThenElse _ thenBranch elseBranch ->
+            intersectLists
+                (questionTypeRelationsFromBlock thenBranch)
+                (questionTypeRelationsFromBlock elseBranch)

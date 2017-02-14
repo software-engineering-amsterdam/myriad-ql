@@ -2,7 +2,6 @@ module TypeChecker.BadReferences exposing (badReferences)
 
 import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
-import DictSet exposing (..)
 import Set
 
 
@@ -10,7 +9,7 @@ badReferences : Form -> Set.Set String
 badReferences form =
     Set.diff
         (usedVarsFromList form.items |> Set.fromList)
-        (declaredVarsFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
+        (questionTypeRelationsFromBlock form.items |> questionIds |> Set.fromList)
 
 
 usedVarsFromList : List FormItem -> List String
@@ -24,6 +23,22 @@ usedVarsFromItem item =
     expressionFromItem item
         |> Maybe.map usedVars
         |> Maybe.withDefault []
+
+
+expressionFromItem : FormItem -> Maybe Expression
+expressionFromItem item =
+    case item of
+        Field _ _ _ ->
+            Nothing
+
+        ComputedField _ _ _ expression ->
+            Just expression
+
+        IfThen expression _ ->
+            Just expression
+
+        IfThenElse expression _ _ ->
+            Just expression
 
 
 usedVars : Expression -> List String
