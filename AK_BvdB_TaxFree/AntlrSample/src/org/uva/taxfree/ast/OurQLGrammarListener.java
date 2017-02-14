@@ -3,21 +3,22 @@ package org.uva.taxfree.ast;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.uva.taxfree.gen.QLGrammarListener;
+import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.FormNode;
 import org.uva.taxfree.model.Node;
 import org.uva.taxfree.model.QuestionNode;
 
-public class OurQLGrammarListener implements QLGrammarListener {
-    private AST mAST;
+public class OurQLGrammarListener extends QLGrammarBaseListener {
+
+    private Ast mAst;
     private Node mCurrentParent;
 
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
         Node newFormNode = new FormNode("FORM", mCurrentParent);
-        if (mAST == null) {
-            mAST = new AST(newFormNode);
+        if (mAst == null) {
+            mAst = new Ast(newFormNode);
         }
         mCurrentParent = newFormNode;
     }
@@ -27,11 +28,11 @@ public class OurQLGrammarListener implements QLGrammarListener {
         new QuestionNode(ctx.VARNAME().toString(), ctx.VARTYPE().toString(), mCurrentParent);
     }
 
-    public AST getAST() {
-        return mAST;
+    public Ast getAst() {
+        return mAst;
     }
 
-    // Intentionally left blank
+    // Intentionally left blank other methods
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
 
