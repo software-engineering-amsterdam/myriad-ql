@@ -2,33 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/BinOp.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/And.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Add.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/Add.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/And.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/And.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Div.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/Div.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Eq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/Eq.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/GEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/GEq.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/GT.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/GT.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/LEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/LEq.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/LT.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/LT.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Mul.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/Mul.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/NEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/NEq.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Neg.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/unop/Neg.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Not.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/unop/Not.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Or.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Or.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Pos.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/unop/Pos.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/Sub.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/numop/Sub.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Question.java" afterPath="$PROJECT_DIR$/src/ql/ast/Question.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Statements.java" afterPath="$PROJECT_DIR$/src/ql/ast/Statements.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLParser.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.txt" afterPath="$PROJECT_DIR$/test.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,14 +22,34 @@
       <file leaf-file-name="TypeASTVisitor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="179" column="49" lean-forward="false" selection-start-line="179" selection-start-column="49" selection-end-line="179" selection-end-column="49" />
+            <state relative-caret-position="387">
+              <caret line="35" column="39" lean-forward="true" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2215#2216#0" expanded="true" />
-                <element signature="e#2254#2255#0" expanded="true" />
-                <element signature="e#3059#3060#0" expanded="true" />
-                <element signature="e#3098#3099#0" expanded="true" />
+                <element signature="e#2404#2405#0" expanded="true" />
+                <element signature="e#2443#2444#0" expanded="true" />
+                <element signature="e#2492#2493#0" expanded="true" />
+                <element signature="e#2531#2532#0" expanded="true" />
+                <element signature="e#2580#2581#0" expanded="true" />
+                <element signature="e#2619#2620#0" expanded="true" />
+                <element signature="e#2667#2668#0" expanded="true" />
+                <element signature="e#2706#2707#0" expanded="true" />
+                <element signature="e#2755#2756#0" expanded="true" />
+                <element signature="e#2794#2795#0" expanded="true" />
+                <element signature="e#2842#2843#0" expanded="true" />
+                <element signature="e#2881#2882#0" expanded="true" />
+                <element signature="e#2930#2931#0" expanded="true" />
+                <element signature="e#2969#2970#0" expanded="true" />
+                <element signature="e#3017#3018#0" expanded="true" />
+                <element signature="e#3056#3057#0" expanded="true" />
+                <element signature="e#3105#3106#0" expanded="true" />
+                <element signature="e#3144#3145#0" expanded="true" />
+                <element signature="e#3420#3421#0" expanded="true" />
+                <element signature="e#3459#3460#0" expanded="true" />
+                <element signature="e#3734#3735#0" expanded="true" />
+                <element signature="e#3773#3774#0" expanded="true" />
+                <element signature="e#4049#4050#0" expanded="true" />
+                <element signature="e#4088#4089#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -982,7 +977,7 @@
       <workItem from="1486987262994" duration="3062000" />
       <workItem from="1487068766308" duration="4000" />
       <workItem from="1487069917118" duration="3641000" />
-      <workItem from="1487073598071" duration="1586000" />
+      <workItem from="1487073598071" duration="2088000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1061,11 +1056,25 @@
       <option name="project" value="LOCAL" />
       <updated>1487072276030</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Type checker and expr refactor">
+      <created>1487075210876</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1487075210876</updated>
+    </task>
+    <task id="LOCAL-00013" summary="finished type checker">
+      <created>1487075545838</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1487075545838</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34924000" />
+    <option name="totallyTimeSpent" value="35426000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1119,11 +1128,13 @@
     <MESSAGE value="Added visitor" />
     <MESSAGE value="fixed ignore" />
     <MESSAGE value="Added printVisitor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added printVisitor" />
+    <MESSAGE value="Type checker and expr refactor" />
+    <MESSAGE value="finished type checker" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished type checker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1516,14 +1527,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="179" column="49" lean-forward="false" selection-start-line="179" selection-start-column="49" selection-end-line="179" selection-end-column="49" />
+        <state relative-caret-position="387">
+          <caret line="35" column="39" lean-forward="true" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2215#2216#0" expanded="true" />
-            <element signature="e#2254#2255#0" expanded="true" />
-            <element signature="e#3059#3060#0" expanded="true" />
-            <element signature="e#3098#3099#0" expanded="true" />
+            <element signature="e#2404#2405#0" expanded="true" />
+            <element signature="e#2443#2444#0" expanded="true" />
+            <element signature="e#2492#2493#0" expanded="true" />
+            <element signature="e#2531#2532#0" expanded="true" />
+            <element signature="e#2580#2581#0" expanded="true" />
+            <element signature="e#2619#2620#0" expanded="true" />
+            <element signature="e#2667#2668#0" expanded="true" />
+            <element signature="e#2706#2707#0" expanded="true" />
+            <element signature="e#2755#2756#0" expanded="true" />
+            <element signature="e#2794#2795#0" expanded="true" />
+            <element signature="e#2842#2843#0" expanded="true" />
+            <element signature="e#2881#2882#0" expanded="true" />
+            <element signature="e#2930#2931#0" expanded="true" />
+            <element signature="e#2969#2970#0" expanded="true" />
+            <element signature="e#3017#3018#0" expanded="true" />
+            <element signature="e#3056#3057#0" expanded="true" />
+            <element signature="e#3105#3106#0" expanded="true" />
+            <element signature="e#3144#3145#0" expanded="true" />
+            <element signature="e#3420#3421#0" expanded="true" />
+            <element signature="e#3459#3460#0" expanded="true" />
+            <element signature="e#3734#3735#0" expanded="true" />
+            <element signature="e#3773#3774#0" expanded="true" />
+            <element signature="e#4049#4050#0" expanded="true" />
+            <element signature="e#4088#4089#0" expanded="true" />
           </folding>
         </state>
       </provider>
