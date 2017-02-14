@@ -1,6 +1,9 @@
 from unittest import TestCase, main
 from grammar import *
 
+from expression_ast import *
+from form_ast import *
+
 
 class TestGrammar(TestCase):
 
@@ -73,28 +76,21 @@ class TestGrammar(TestCase):
 
     expectedParseResults = [
         (Grammar.expression,
-         "-2", UnOp(Operator["-"],
-                    Constant(2, Datatype.integer))),
+         "-2", MinOp(Constant(2, Datatype.integer))),
         (Grammar.expression,
-         "+x", UnOp(Operator["+"],
-                    Variable("x"))),
+         "+x", PlusOp(Variable("x"))),
 
         (Grammar.expression,
-         "2 + 3", BinOp(Constant(2, Datatype.integer),
-                        Operator["+"],
+         "2 + 3", AddOp(Constant(2, Datatype.integer),
                         Constant(3, Datatype.integer))),
         (Grammar.expression,
-         "+2 + -3", BinOp(UnOp(Operator["+"],
-                               Constant(2, Datatype.integer)),
-                          Operator["+"],
-                          UnOp(Operator["-"],
-                               Constant(3, Datatype.integer)))),
+         "+2 + -3", AddOp(PlusOp(Constant(2, Datatype.integer)),
+                          MinOp(Constant(3, Datatype.integer)))),
         (Grammar.expression,
-         "2 + 3 + 4", BinOp(BinOp(Constant(2, Datatype.integer),
-                                  Operator["+"],
+         "2 + 3 + 4", AddOp(AddOp(Constant(2, Datatype.integer),
                                   Constant(3, Datatype.integer)),
-                            Operator["+"],
                             Constant(4, Datatype.integer))),
+        """
         (Grammar.expression,
          "2 + 3 - 4", BinOp(BinOp(Constant(2, Datatype.integer),
                                   Operator["+"],
@@ -170,6 +166,9 @@ class TestGrammar(TestCase):
                                                BinOp(Constant(2, Datatype.integer),
                                                      Operator["+"],
                                                      Constant(3, Datatype.integer)))),
+        """
+        
+
 
         (Grammar.conditional,
          "if true { x : \"y\" integer }",
@@ -201,12 +200,10 @@ class TestGrammar(TestCase):
               [Question("x",
                         "xLabel",
                         Datatype.integer,
-                        BinOp(Constant(2, Datatype.integer),
-                              Operator["*"],
+                        MulOp(Constant(2, Datatype.integer),
                               Constant(3, Datatype.integer))),
-               Conditional(BinOp(Variable("x"),
-                                 Operator[">"],
-                                 Constant(6, Datatype.integer)),
+               Conditional(GtOp(Variable("x"),
+                                Constant(6, Datatype.integer)),
                            [Question("y",
                                      "yLabel",
                                      Datatype.boolean,

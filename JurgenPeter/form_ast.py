@@ -1,4 +1,5 @@
 from enum import Enum
+from expression_ast import *
 
 Datatype = Enum("Datatype", "boolean string integer decimal money")
 Operator = Enum("Operator", "+ - * / ! && || < > <= >= == !=")
@@ -57,58 +58,6 @@ class Conditional:
             " " * indent, self.condition,
             "\n".join([s.__str__(indent + 4) for s in self.statements]),
             " " * indent)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
-class UnOp:
-
-    def __init__(self, operator, right):
-        self.operator = operator
-        self.right = right
-
-    def __str__(self):
-        return "{}{}".format(self.operator.name, self.right)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
-class BinOp:
-
-    def __init__(self, left, operator, right):
-        self.left = left
-        self.operator = operator
-        self.right = right
-
-    def __str__(self):
-        return "({} {} {})".format(self.left, self.operator.name, self.right)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
-class Variable:
-
-    def __init__(self, identifier):
-        self.identifier = identifier
-
-    def __str__(self):
-        return self.identifier
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
-class Constant:
-
-    def __init__(self, value, datatype):
-        self.value = value
-        self.datatype = datatype
-
-    def __str__(self):
-        return str(self.value)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
