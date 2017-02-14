@@ -1,3 +1,5 @@
+require_relative '../ast/type'
+require_relative '../ast/expression'
 require 'parslet'
 
 # parser for forms
@@ -31,8 +33,12 @@ class Parser < Parslet::Parser
     variable_or_literal.as(:left) >> operator >> expression.as(:right)
   end
 
+  # rule(:operator) do
+  #   (str('-') | str('+') | str('*') | str('/') | str('<=') | str('>=') | str('==') | str('!=') | str('<') | str('>') | str('&&') | str('||') | str('!')).as(:operator) >> spaces?
+  # end
+
   rule(:operator) do
-    (str('-') | str('+') | str('*') | str('/') | str('<=') | str('>=') | str('==') | str('!=') | str('<') | str('>') | str('&&') | str('||') | str('!')).as(:operator) >> spaces?
+    BinaryExpression.descendants.map { |type| str(type.to_operator) }.reduce(&:|).as(:operator) >> spaces?
   end
 
   rule(:expression) do
@@ -41,8 +47,12 @@ class Parser < Parslet::Parser
 
 
   # question
+  # rule(:type) do
+  #   (str('boolean') | str('integer') | str('date') | str('decimal') | str('string') | str('money')).as(:type) >> spaces?
+  # end
+
   rule(:type) do
-    (str('boolean') | str('integer') | str('date') | str('decimal') | str('string') | str('money')).as(:type) >> spaces?
+    Type.descendants.map { |type| str(type.to_type) }.reduce(&:|).as(:type) >> spaces?
   end
 
 
