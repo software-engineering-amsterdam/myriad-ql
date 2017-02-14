@@ -2,11 +2,11 @@ package org.lemonade;
 
 import java.util.Stack;
 
-public class QLLoader extends org.lemonade.QLBaseListener {
+public class QLLoader extends QLBaseListener {
     private Stack<Object> stack = new Stack<>();
 
     @Override
-    public void exitForm(org.lemonade.QLParser.FormContext ctx) {
+    public void exitForm(QLParser.FormContext ctx) {
         String id = ctx.identifier().getText();
     }
 

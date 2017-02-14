@@ -37,12 +37,6 @@ public class ParseTest {
         TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
         QLParser parser = new QLParser(inputTokenStream);
 
-        QLParser.ExprContext context = parser.expr();
-        CommonTokenStream tokens = new CommonTokenStream(tokenSource);
-        for(Object o : tokens.getTokens()) {
-            Token t = (Token)o;
-            System.out.println(t);
-        }
         QLParser.FormContext context = parser.form();
     }
 
@@ -77,7 +71,7 @@ public class ParseTest {
 
     private QLParser.FormContext parseForm(String form, TestErrorListener errorListener) throws Exception {
         CharStream inputCharStream = new ANTLRInputStream(new StringReader(form));
-        TokenSource tokenSource = new org.lemonade.QLLexer(inputCharStream);
+        TokenSource tokenSource = new QLLexer(inputCharStream);
         TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
         QLParser parser = new QLParser(inputTokenStream);
 
