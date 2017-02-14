@@ -11,8 +11,9 @@ public class Main {
 		InputStream input = new FileInputStream("samples/sample-ql.frm");
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
         QLParser parser = new QLParser(new CommonTokenStream(lexer));
+        ParseTree tree = parser.form();
         
-        System.out.println(parser.form());
+        System.out.println(tree.toStringTree(parser));
     }
 	
 }
