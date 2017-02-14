@@ -6,26 +6,32 @@ class Parser < Parslet::Parser
 
   rule(:lparen) { str('\(') }
   rule(:rparen) { str('\)') }
+  rule(:quote) { str('"') }
+  rule(:qmark) { str('?') }
+  rule(:alnum) { match['a-zA-z0-9'].repeat(1) }
+  rule(:num) { match['0-9'].repeat(1) }
 
-  rule(:comment) { str('#') >> space? >> match['a-zA-z'].repeat(1) }
+  rule(:comment) { str('#') >> space? >> alnum }
 
   rule(:type) { str('text') | str('bool') | str('number') | str('money') }
 
-  rule(:literal) { text | number }
-  rule(:text) { match['"a-zA-z"'].repeat(1) }
-  rule(:number) { match['0-9'].repeat(1) }
+  rule(:literal) { string | integer | boolean }
+  rule(:string) { quote >> alnum >> quote }
+  rule(:integer) { num }
+  rule(:boolean) { str('true') | str('false') }
   rule(:operator) { str('+') | str('-') | str('*') | str('/') }
 
-  rule(:identifier) { match['a-zA-z'].repeat(1) }
+  rule(:identifier) { alnum }
   rule(:expression) { lparen >> space? >> (operation | identifier | literal) >> space? >> rparen }
   rule(:operation) { expression >> space? >> operator >> space? >> expression }
+  rule(:block) { ((if_statement | item) >> space).repeat(1) }
 
-  rule(:value?) { str('=>') >> spaces? >> expression }
+  rule(:if_statement) { str('if') >> space >> expression >> space >> block >> space >> (str('else') >> space >> block >> space).maybe >> str('end') }
 
-  rule(:question) { str('"') >> match['a-zA-z\?'].repeat(1) >> str('"') >> spaces? }
-  rule(:answer) { type >> spaces? >> identifier >> spaces? >> value? >> spaces? }
+  rule(:question) { quote >> alnum >> qmark >> quote }
+  rule(:answer) { type >> spaces? >> identifier >> (spaces? >> str('=>') >> spaces? >> expression).maybe }
 
-  rule(:item) { question >> answer }
+  rule(:item) { question >> spaces? >> answer }
 
-  rule(:form)
+  rule(:form) { str('form') >> space >> identifier >> space >> block >> space >> str('end') }
 end

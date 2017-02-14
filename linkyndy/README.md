@@ -13,7 +13,7 @@ form festivalParticipationSurvey
     # Fields have identifiers too
     bool participatedLastYear
 
-  if participatedLastYear
+  if (participatedLastYear)
     "How many festivals did you participate in?"
       number numberOfFestivals
 
