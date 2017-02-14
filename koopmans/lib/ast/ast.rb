@@ -6,45 +6,99 @@ require_relative 'literal'
 
 # replaces the words node
 class Ast < Parslet::Transform
-  # create form
+
+  # form
   rule(form: {variable: simple(:variable), block: subtree(:block)}) do
     Form.new(Variable.new(variable), block)
   end
 
-  # create variable
+
+
+  # questions
+  def self.types(types)
+    types.each do |name, class_name|
+      rule(question: {string: simple(:string), variable: simple(:variable), type: name.to_s}) do
+        Question.new(string, Variable.new(variable), class_name.new)
+      end
+      rule(question: {string: simple(:string), variable: simple(:variable), type: name.to_s, expression: subtree(:expression)}) do
+        Question.new(string, Variable.new(variable), class_name.new, expression)
+      end
+    end
+  end
+
+  types boolean: BooleanType,
+        integer: IntegerType,
+        date: DateType,
+        decimal: DecimalType,
+        string: StringType,
+        money: MoneyType
+
+  # if statement
+  rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
+    IfStatement.new(expression, block)
+  end
+
+
+
+  # variable
   rule(variable: simple(:variable)) do
     Variable.new(variable)
   end
 
-  # create variable with negation
-  negation_types = {'!' => BooleanNegation,
-                    '-' => IntegerNegation}
-  rule(negation: simple(:negation), variable: simple(:variable)) do
-    negation_types[negation.to_s].new(Variable.new(variable))
+  # negative variable
+  def self.negation_types(negation_types)
+    negation_types.each do |name, class_name|
+      rule(negation: name.to_s, variable: simple(:variable)) do
+        class_name.new(Variable.new(variable))
+      end
+    end
   end
 
-  # Questions
-  types = {'boolean' => BooleanType,
-           'integer' => IntegerType,
-           'date' => DateType,
-           'decimal' => DecimalType,
-           'string' => StringType,
-           'money' => MoneyType}
+  negation_types '!': BooleanNegation,
+                 '-': IntegerNegation
 
-  # create Question
-  rule(question: {string: simple(:string), variable: simple(:variable), type: simple(:type)}) do
-    Question.new(string, Variable.new(variable), types[type.to_s].new)
+  # arithmetic
+  def self.arithmetics(arithmetics)
+    arithmetics.each do |name, class_name|
+      rule({left: subtree(:left), arithmetic: name.to_s, right: subtree(:right)}) do
+        class_name.new(left, right)
+      end
+    end
   end
 
-  # create Question with assignment
-  rule(question: {string: simple(:string), variable: simple(:variable), type: simple(:type), expression: subtree(:expression)}) do
-    Question.new(string, variable, types[type.to_s].new, expression)
+  arithmetics '-': Subtract,
+              '+': Add,
+              '*': Multiply,
+              '/': Divide
+
+  # boolean
+  def self.booleans(booleans)
+    booleans.each do |name, class_name|
+      rule({left: subtree(:left), boolean: name.to_s, right: subtree(:right)}) do
+        class_name.new(left, right)
+      end
+    end
   end
 
-  # create if statement
-  rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
-    IfStatement.new(expression, block)
+  booleans '||': Or,
+           '&&': And
+
+  # comparison
+  def self.comparisons(comparisons)
+    comparisons.each do |name, class_name|
+      rule({left: subtree(:left), comparison: name.to_s, right: subtree(:right)}) do
+        class_name.new(left, right)
+      end
+    end
   end
+
+  comparisons '<': Less,
+              '>': Greater,
+              '<=': LessEqual,
+              '>=': GreaterEqual,
+              '==': Equal,
+              '!=': NotEqual
+
 
 
   # boolean literal
@@ -52,6 +106,7 @@ class Ast < Parslet::Transform
     BooleanLiteral.new(boolean)
   end
 
+  # negative boolean literal
   rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
     BooleanNegation.new(BooleanLiteral.new(boolean))
   end
@@ -61,6 +116,7 @@ class Ast < Parslet::Transform
     IntegerLiteral.new(integer)
   end
 
+  # negative integer literal
   rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
     IntegerNegation.new(IntegerLiteral.new(integer))
   end
@@ -70,32 +126,4 @@ class Ast < Parslet::Transform
     StringLiteral.new(string)
   end
 
-  # arithmetic expressions
-  arithmetics = {'-' => Subtract,
-                 '+' => Add,
-                 '*' => Multiply,
-                 '/' => Divide}
-
-  rule({left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
-    arithmetics[arithmetic.to_s].new(left, right)
-  end
-
-  # boolean expressions
-  booleans = {'||' => Or,
-              '&&' => And}
-
-  rule({left: subtree(:left), boolean: simple(:boolean), right: subtree(:right)}) do
-    booleans[boolean.to_s].new(left, right)
-  end
-
-  comparisons = {'<' => Less,
-                 '>' => Greater,
-                 '<=' => LessEqual,
-                 '>=' => GreaterEqual,
-                 '==' => Equal,
-                 '!=' => NotEqual}
-  # comparison expressions
-  rule({left: subtree(:left), comparison: simple(:comparison), right: subtree(:right)}) do
-    comparisons[comparison.to_s].new(left, right)
-  end
 end
