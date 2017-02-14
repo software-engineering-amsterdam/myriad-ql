@@ -126,7 +126,7 @@ class TestParser(unittest.TestCase):
         """
         self.expected_result = \
             ['form', 'taxOfficeExample',
-             [[['if', 'hasSoldHouse'], ['What was the selling price?', 'sellingPrice', 'money']]]]
+             [['if', 'hasSoldHouse', ['What was the selling price?', 'sellingPrice', 'money']]]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
