@@ -1,12 +1,13 @@
 package ql.ast.expressions.numop;
 
 import ql.ast.Expr;
+import ql.ast.expressions.NumOp;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Mul implements Expr {
+public class Mul implements NumOp {
     private Expr left, right;
 
     public Mul(Expr left, Expr right){

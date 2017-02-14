@@ -2,12 +2,13 @@ package ql.ast.expressions.numop;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
+import ql.ast.expressions.NumOp;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class GEq implements Expr {
+public class GEq implements NumOp {
     private Expr left, right;
 
     public GEq(Expr left, Expr right){

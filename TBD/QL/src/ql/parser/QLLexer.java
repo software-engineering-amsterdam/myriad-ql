@@ -3,10 +3,7 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
-import ql.ast.literals.QLFloat;
-import ql.ast.literals.QLIdent;
-import ql.ast.literals.QLInt;
-import ql.ast.literals.QLString;
+import ql.ast.literals.*;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -168,9 +165,35 @@ public class QLLexer implements QLTokens {
                             nextChar();
                         } while (Character.isDigit(c));
 
-                        nextChar();
-                        if(c == '.') {
+                        if(c == '-') {
                             nextChar();
+                            int day = n;
+                            int month = 0;
+                            int year = 0;
+
+                            do {
+                                month = 10 * month + (c - '0');
+                                nextChar();
+                            } while (Character.isDigit(c));
+                            System.out.println("Day " + day + " and month " + month);
+                            if (c == '-') {
+                                nextChar();
+                                System.out.println("here with " + (char) c);
+                                do {
+                                    year = 10 * year + (c - '0');
+                                    nextChar();
+                                } while (Character.isDigit(c));
+                                System.out.println("Date: " + day + "-" + month + "-" + year);
+                                this.yylval = new QLDate(day, month, year);
+                                return token = DATE;
+                            }
+                        } else if(c == '.') {
+                            nextChar();
+                            // Parse floats without digits after the comma
+                            if(!Character.isDigit(c)) {
+                                this.yylval = new QLFloat(n);
+                                return token = FLOAT;
+                            }
                             int counter = 1;
                             do {
                                 n = n + (c - '0')/(counter*10);

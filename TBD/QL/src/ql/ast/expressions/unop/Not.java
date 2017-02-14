@@ -2,12 +2,13 @@ package ql.ast.expressions.unop;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
+import ql.ast.expressions.UnOp;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Not implements Expr {
+public class Not implements UnOp {
     private Expr expr;
 
     public Not(Expr expr){
