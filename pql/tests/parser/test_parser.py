@@ -6,7 +6,7 @@ from pyparsing import ParseException
 class TestParser(TestCase):
     def test_parse_simple_empty_form(self):
         self.input_string = "form taxOfficeExample {}"
-        self.expected_result = ['form', 'taxOfficeExample', []]
+        self.expected_result = ['taxOfficeExample', []]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -31,7 +31,7 @@ class TestParser(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        self.expected_result = ['form', 'taxOfficeExample', [['Did you sell a house in 2010?', 'hasSoldHouse', 'boolean']]]
+        self.expected_result = ['taxOfficeExample', [['Did you sell a house in 2010?', 'hasSoldHouse', 'boolean']]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -41,7 +41,7 @@ class TestParser(TestCase):
             "Example:" testValue: string
         }
         """
-        self.expected_result = ['form', 'taxOfficeExample', [['Example:', 'testValue', 'string']]]
+        self.expected_result = ['taxOfficeExample', [['Example:', 'testValue', 'string']]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -51,7 +51,7 @@ class TestParser(TestCase):
             "Example:" testValue: integer
         }
         """
-        self.expected_result = ['form', 'taxOfficeExample', [['Example:', 'testValue', 'integer']]]
+        self.expected_result = ['taxOfficeExample', [['Example:', 'testValue', 'integer']]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -89,9 +89,9 @@ class TestParser(TestCase):
             "Did you buy a house in 2010?"  hasBoughtHouse: boolean
         }
         """
-        self.expected_result = \
-            ['form', 'taxOfficeExample', [['Did you sell a house in 2010?', 'hasSoldHouse', 'boolean'],
-                                          ['Did you buy a house in 2010?', 'hasBoughtHouse', 'boolean']]]
+        self.expected_result = ['taxOfficeExample',
+                                [['Did you sell a house in 2010?', 'hasSoldHouse', 'boolean'],
+                                 ['Did you buy a house in 2010?', 'hasBoughtHouse', 'boolean']]]
 
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
@@ -124,9 +124,8 @@ class TestParser(TestCase):
             }
         }
         """
-        self.expected_result = \
-            ['taxOfficeExample',
-             [['hasSoldHouse', ['What was the selling price?', 'sellingPrice', 'money']]]]
+        self.expected_result = ['taxOfficeExample',
+                                [['hasSoldHouse', ['hat was the selling price', 'sellingPrice', 'money']]]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -136,9 +135,9 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
         }
         """
-        self.expected_result = \
-            ['form', 'taxOfficeExample',
-             [['Value residue:', 'valueResidue', 'money', ['sellingPrice', '-', 'privateDebt']]]]
+        self.expected_result = ['taxOfficeExample',
+                                [['Value residue:', 'valueResidue', 'money', ['sellingPrice', '-', 'privateDebt']]]]
+
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
