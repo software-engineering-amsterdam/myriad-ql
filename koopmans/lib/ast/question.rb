@@ -5,6 +5,6 @@ class Question
     @label = label
     @variable = variable
     @type = type
-    @assignment = expression
+    @assignment = expression if expression
   end
 end
