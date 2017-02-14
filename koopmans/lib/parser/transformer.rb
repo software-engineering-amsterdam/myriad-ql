@@ -1,18 +1,17 @@
-require_relative 'statement'
-require_relative 'form'
-require_relative 'expression'
-require_relative 'type'
-require_relative 'literal'
+require_relative '../ast/statement'
+require_relative '../ast/form'
+require_relative '../ast/expression'
+require_relative '../ast/type'
+require_relative '../ast/literal'
 require 'parslet'
 
-# replaces the words node
-class Ast < Parslet::Transform
+# defines rules to match parts of a captured tree and transform them into abstract syntax tree
+class Transformer < Parslet::Transform
 
   # form
   rule(form: {variable: simple(:variable), block: subtree(:block)}) do
     Form.new(Variable.new(variable), block)
   end
-
 
 
   # questions
@@ -38,7 +37,6 @@ class Ast < Parslet::Transform
   rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
     IfStatement.new(expression, block)
   end
-
 
 
   # variable
@@ -99,7 +97,6 @@ class Ast < Parslet::Transform
               '>=': GreaterEqual,
               '==': Equal,
               '!=': NotEqual
-
 
 
   # boolean literal

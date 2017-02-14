@@ -1,5 +1,5 @@
-# read files
-class Reader
+# reads files
+class FileReader
   def read_file(path)
     File.read(path)
   end
