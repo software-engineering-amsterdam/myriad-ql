@@ -5,15 +5,7 @@ import parser.ast._
 
 import scala.annotation.tailrec
 
-sealed trait Issue
-
-case class Warning(message: String) extends Issue
-
-case class Error(message: String) extends Issue
-
-class FormChecker(form: Form) {
-  type Errors = Seq[Error]
-  type Warnings = Seq[Warning]
+class FormChecker(form: Form) extends Checker[model.Form] {
 
   private lazy val questions: Seq[model.Question] = form.block.statements.flatMap(buildModel(_, Nil))
   private lazy val questionLabels: Seq[String] = questions.map(_.label)

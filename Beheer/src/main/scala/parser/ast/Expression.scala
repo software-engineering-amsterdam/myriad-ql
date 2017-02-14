@@ -14,8 +14,6 @@ case class DecimalValue(value: BigDecimal) extends ExpressionNode
 
 case class MoneyValue(value: BigDecimal) extends ExpressionNode
 
-case class IntValue(value: Int) extends ExpressionNode
-
 case class BooleanValue(value: Boolean) extends ExpressionNode
 
 case class DateValue(value: Date) extends ExpressionNode

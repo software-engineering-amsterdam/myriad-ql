@@ -38,9 +38,9 @@ trait ExpressionParser extends JavaTokenParsers {
 
   def money: Parser[MoneyValue] = "$" ~> decimal ^^ (x => MoneyValue(x.value))
 
-  def decimal: Parser[DecimalValue] = """\d*.\d+""".r ^^ (x => DecimalValue(BigDecimal.valueOf(x.toDouble)))
+  def decimal: Parser[DecimalValue] = """\d*.\d+""".r ^^ (x => DecimalValue(BigDecimal(x)))
 
-  def integer: Parser[IntValue] = """\d+""".r ^^ (x => IntValue(x.toInt))
+  def integer: Parser[DecimalValue] = """\d+""".r ^^ (x => DecimalValue(BigDecimal(x).setScale(0)))
 
   def date: Parser[DateValue] = """\d\d\d\d-\d\d-\d\d""".r ^^ (x => DateValue(dateFormat.parse(x)))
 
