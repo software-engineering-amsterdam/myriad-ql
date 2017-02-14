@@ -16,7 +16,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
     | "money"
   ) ^^ (s => Type(s))
 
-  def label: Parser[String] = stringLiteral ^^ (s => s.stripPrefix("\"").stripSuffix("\""))
+  def label: Parser[String] = stringLiteral ^^ (x => x.stripPrefix("\"").stripSuffix("\""))
 
   def question: Parser[Question] =
     ident ~ ":" ~ label ~ typeName ~ opt("(" ~> expr <~ ")") ^^ {

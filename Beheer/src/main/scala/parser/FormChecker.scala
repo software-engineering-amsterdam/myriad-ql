@@ -1,24 +1,28 @@
 package parser
 
-import model.{ ComputedQuestion, OpenQuestion }
+import model.{ComputedQuestion, OpenQuestion}
 import parser.ast._
 
 import scala.annotation.tailrec
 
 sealed trait Issue
-sealed trait Warning extends Issue
-case class DuplicateLabel(label: String) extends Warning
 
-sealed trait Error extends Issue
-case class DuplicateIdentifier(identifier: String) extends Error
-case class UndefinedReference(identifier: String) extends Error
-case class CyclicDependency(question: String) extends Error
+case class Warning(message: String) extends Issue
+
+case class Error(message: String) extends Issue
 
 class FormChecker(form: Form) {
+  type Errors = Seq[Error]
+  type Warnings = Seq[Warning]
+
   private lazy val questions: Seq[model.Question] = form.block.statements.flatMap(buildModel(_, Nil))
   private lazy val questionLabels: Seq[String] = questions.map(_.label)
   private lazy val questionIdentifiers: Seq[String] = questions.map(_.identifier)
-  private lazy val questionReferences: Map[String, Set[String]] = questions.map(q => (q.identifier, extractExpressions(q).flatMap(e => extractIdentifiers(e)).toSet)).toMap
+  private lazy val questionExpressions: Map[String, Seq[ExpressionNode]] = questions.map(q => (q.identifier, extractExpressions(q))).toMap
+  private lazy val questionReferences: Map[String, Set[String]] = questionExpressions.map {
+    case (q, Nil) => (q, Set.empty: Set[String])
+    case (q, e) => (q, e.map(extractIdentifiers).reduce(_ ++ _))
+  }
 
   private lazy val errors = List(duplicateIdentifiers, undefinedReferences, dependencyCycles)
   private lazy val warnings = List(duplicateLabels)
@@ -30,33 +34,31 @@ class FormChecker(form: Form) {
     }
   }
 
-  private def duplicateIdentifiers: Seq[DuplicateIdentifier] =
-    questionIdentifiers.diff(questionIdentifiers.distinct).distinct.map(i => DuplicateIdentifier(i))
+  private def duplicateIdentifiers: Errors =
+    questionIdentifiers.diff(questionIdentifiers.distinct).distinct.map(i => Error(s"Duplicate identifier: $i"))
 
-  private def duplicateLabels: Seq[DuplicateLabel] =
-    questionLabels.diff(questionLabels.distinct).distinct.map(i => DuplicateLabel(i))
-
-  private def undefinedReferences: Seq[UndefinedReference] = {
+  private def undefinedReferences: Errors = {
     val allReferencedIdentifiers = questionReferences.values.flatten.toSet
-    (allReferencedIdentifiers -- questionIdentifiers.toSet).toSeq.map(i => UndefinedReference(i))
+    (allReferencedIdentifiers -- questionIdentifiers.toSet).map(i => Error(s"Undefined reference: $i")).toSeq
   }
 
-  private def dependencyCycles: Seq[CyclicDependency] =
-    questionIdentifiers.filter(findCycle).map(q => CyclicDependency(q))
+  private def dependencyCycles: Errors =
+    questionIdentifiers.filter(findCycle).map(q => Error(s"Dependency cycle in question: $q"))
 
   private def findCycle(rootIdentifier: String): Boolean = {
     @tailrec
-    def findCycleInLayer(currentLayer: Seq[String], visited: Set[String]): Boolean = {
-      currentLayer match {
-        case Nil => false
-        case ids =>
-          lazy val newVisited = visited ++ ids
-          lazy val nextLayer = ids.flatMap(questionReferences.getOrElse(_, Set.empty) -- visited)
-          ids.contains(rootIdentifier) || findCycleInLayer(nextLayer, newVisited)
-      }
+    def findCycleInLayer(currentLayer: Set[String], visited: Set[String]): Boolean = {
+      lazy val newVisited = visited ++ currentLayer
+      lazy val nextLayer = currentLayer.flatMap(questionReferences.getOrElse(_, Set.empty) -- visited)
+
+      currentLayer.nonEmpty && (currentLayer.contains(rootIdentifier) || findCycleInLayer(nextLayer, newVisited))
     }
-    findCycleInLayer(questionReferences.getOrElse(rootIdentifier, Set.empty).toSeq, Set.empty)
+
+    findCycleInLayer(questionReferences.getOrElse(rootIdentifier, Set.empty), Set.empty)
   }
+
+  private def duplicateLabels: Warnings =
+    questionLabels.diff(questionLabels.distinct).distinct.map(l => Warning(s"Duplicate label: $l"))
 
   private def buildModel(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[model.Question] = statement match {
     case Conditional(condition, Block(statements)) => statements.flatMap(buildModel(_, condition +: conditionals))
@@ -69,11 +71,11 @@ class FormChecker(form: Form) {
     case ComputedQuestion(_, _, show, _, value) => value +: show
   }
 
-  private def extractIdentifiers(expressionNode: ExpressionNode): Seq[String] = expressionNode match {
-    case Identifier(value) => Seq(value)
+  private def extractIdentifiers(expressionNode: ExpressionNode): Set[String] = expressionNode match {
+    case Identifier(value) => Set(value)
     case PrefixOperation(_, rhs) => extractIdentifiers(rhs)
     case InfixOperation(lhs, _, rhs) => extractIdentifiers(lhs) ++ extractIdentifiers(rhs)
-    case _ => Nil
+    case _ => Set.empty
   }
 
 }
