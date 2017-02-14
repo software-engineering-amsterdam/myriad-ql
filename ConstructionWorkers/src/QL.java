@@ -1,7 +1,12 @@
+/**
+ * QL.java.
+ *
+ * Actually a test class...
+ */
 
 import ASTnodes.Form;
-import ASTnodes.sections.IfStatement;
-import ASTnodes.sections.Section;
+import ASTnodes.statements.IfStatement;
+import ASTnodes.statements.Statement;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,55 +15,55 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by LGGX on 11-Feb-17.
- */
 public class QL {
 
-    public static final String EXTENSION = "ql";
+    private static final String ALLOWED_EXTENSION = "ql";
 
-    public static void main(String[] arguments) throws Exception {
-        run("C:\\Users\\LGGX\\Desktop\\test.ql");
-    }
+    private QL(String fileName) throws IOException, IllegalArgumentException {
 
-    public static QL run(String qlFileName) throws IOException, IllegalArgumentException {
-        return new QL(qlFileName);
-    }
-
-    private QL(String qlFileName) throws IOException, IllegalArgumentException {
-
-        if (!this.fileExists(qlFileName)) {
+        if (!this.fileExists(fileName)) {
             throw new IOException();
         }
 
-        if (!this.correctExtension(qlFileName, EXTENSION)) {
+        if (!this.correctExtension(fileName)) {
             throw new IllegalArgumentException();
         }
 
-        InputStream qlInputStream = new FileInputStream(qlFileName);
+        InputStream qlInputStream = new FileInputStream(fileName);
+        Form qlAST = this.getAST(qlInputStream);
 
-        Form qlForm = this.buildForm(qlInputStream);
-        Section section = qlForm.getSections().get(3);
-        if (section instanceof IfStatement)
+        // Test...
+
+        Statement statement = qlAST.getStatements().get(3);
+        if (statement instanceof IfStatement)
         {
-            IfStatement s = (IfStatement) section;
-            System.out.println(s.getSections());
+            IfStatement s = (IfStatement) statement;
+            System.out.println(s.getStatements());
         }
-
     }
 
-    private Form buildForm(InputStream inputStream) throws IOException {
-        ASTBuilder qlAstBuilder = new ASTBuilder(inputStream);
-        return qlAstBuilder.buildForm();
-    }
-
-    private boolean fileExists(String filename) {
-        Path path = Paths.get(filename);
+    private boolean fileExists(String fileName) {
+        Path path = Paths.get(fileName);
         return Files.exists(path);
     }
 
-    private boolean correctExtension(String filename, String extension) {
-        String fileExtension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
-        return fileExtension.equals(extension);
+    private boolean correctExtension(String fileName) {
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+        return fileExtension.equals(ALLOWED_EXTENSION);
+    }
+
+    private Form getAST(InputStream inputStream) throws IOException {
+        ASTBuilder qlAstBuilder = new ASTBuilder(inputStream);
+        return qlAstBuilder.buildAST();
+    }
+
+    // Test...
+
+    public static void main(String[] arguments) throws Exception {
+        run("C:\\Users\\vince\\Desktop\\test.ql");
+    }
+
+    private static QL run(String qlFileName) throws IOException, IllegalArgumentException {
+        return new QL(qlFileName);
     }
 }

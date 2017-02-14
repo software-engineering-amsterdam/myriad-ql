@@ -1,3 +1,6 @@
+/**
+ * ASTVisitor.java.
+ */
 
 import ASTnodes.CodeLocation;
 import ASTnodes.Form;
@@ -9,11 +12,12 @@ import ASTnodes.expressions.binaries.logic.Logic;
 import ASTnodes.expressions.binaries.logic.OR;
 import ASTnodes.expressions.binaries.numerical.*;
 import ASTnodes.expressions.literals.*;
+import ASTnodes.expressions.literals.MyInteger;
 import ASTnodes.expressions.unaries.*;
-import ASTnodes.sections.ExpressionQuestion;
-import ASTnodes.sections.IfStatement;
-import ASTnodes.sections.Question;
-import ASTnodes.sections.Section;
+import ASTnodes.statements.ComputedQuestion;
+import ASTnodes.statements.IfStatement;
+import ASTnodes.statements.SimpleQuestion;
+import ASTnodes.statements.Statement;
 import ASTnodes.types.*;
 import antlr.QLBaseVisitor;
 import antlr.QLParser;
@@ -26,13 +30,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by LGGX on 10-Feb-17.
- */
 public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
-    private static final String GRAMMAR_ERROR = "It no worky!";
+    private static final String GRAMMAR_ERROR = "Why u no work! \\(-o-)/";
 
     private Form abstractSyntaxTree;
 
@@ -50,48 +50,47 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
-        IDENTIFIER identifier = new IDENTIFIER(ctx.Identifier().getText(), getCodeLocation(ctx));
-        List<Section> sections = new ArrayList<Section>();
+        Identifier identifier = new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
+        List<Statement> statements = new ArrayList<>();
 
-        for (QLParser.SectionContext currentStatement : ctx.section()) {
-            sections.add((Section) currentStatement.accept(this));
+        for (QLParser.StatementContext currentStatement : ctx.statement()) {
+            statements.add((Statement) currentStatement.accept(this));
         }
 
-        return new Form(identifier, sections, getCodeLocation(ctx));
+        return new Form(identifier, statements, getCodeLocation(ctx));
     }
 
     @Override
-    public Question visitQuestion(QLParser.QuestionContext ctx) {
+    public SimpleQuestion visitSimpleQuestion(QLParser.SimpleQuestionContext ctx) {
         Type type = (Type) ctx.type().accept(this);
-        IDENTIFIER identifier = new IDENTIFIER(ctx.Identifier().getText(), getCodeLocation(ctx));
+        Identifier identifier = new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
         String label = removeStringQuotes(ctx.STRING().getText());
 
-        return new Question(identifier, label, type, getCodeLocation(ctx));
+        return new SimpleQuestion(identifier, label, type, getCodeLocation(ctx));
     }
 
     @Override
-    public ExpressionQuestion visitExpressionQuestion(QLParser.ExpressionQuestionContext ctx) {
+    public ComputedQuestion visitComputedQuestion(QLParser.ComputedQuestionContext ctx) {
         Type type = (Type) ctx.type().accept(this);
-        IDENTIFIER identifier = new IDENTIFIER(ctx.Identifier().getText(), getCodeLocation(ctx));
+        Identifier identifier = new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
         String label = removeStringQuotes(ctx.STRING().getText());
         Expression expression = (Expression) ctx.expression().accept(this);
 
-        return new ExpressionQuestion(identifier, label, type, expression, getCodeLocation(ctx));
+        return new ComputedQuestion(identifier, label, type, expression, getCodeLocation(ctx));
     }
 
     @Override
     public IfStatement visitIfStatement(QLParser.IfStatementContext ctx) {
         Expression expression = (Expression) ctx.expression().accept(this);
 
-        List<Section> sections = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
-        for (QLParser.SectionContext section : ctx.section()) {
-            Section stat = (Section) section.accept(this);
-            sections.add(stat);
+        for (QLParser.StatementContext section : ctx.statement()) {
+            Statement stat = (Statement) section.accept(this);
+            statements.add(stat);
         }
 
-        //System.out.println(sections);
-        return new IfStatement(expression, sections, getCodeLocation(ctx));
+        return new IfStatement(expression, statements, getCodeLocation(ctx));
     }
 
     @Override
@@ -115,7 +114,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Equality visitEqualityExpression(QLParser.EqualityExpressionContext ctx) {
+    public Equality visitComparisonExpression(QLParser.ComparisonExpressionContext ctx) {
         Expression left = (Expression) ctx.expression().get(0).accept(this);
         Expression right = (Expression) ctx.expression().get(1).accept(this);
 
@@ -168,10 +167,10 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Parenthesis visitParenthesisExpression(QLParser.ParenthesisExpressionContext ctx) {
+    public Parentheses visitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx) {
         Expression expression = (Expression) ctx.expression().accept(this);
 
-        return new Parenthesis(expression, getCodeLocation(ctx));
+        return new Parentheses(expression, getCodeLocation(ctx));
     }
 
     @Override
@@ -205,32 +204,31 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
         Expression right = (Expression) ctx.expression(1).accept(this);
 
         return new OR(left, right, getCodeLocation(ctx));
-
     }
 
     @Override
-    public INTEGER visitIntExpression(QLParser.IntExpressionContext ctx) {
-        return new INTEGER(Integer.parseInt(ctx.getText()), getCodeLocation(ctx));
+    public MyInteger visitIntExpression(QLParser.IntExpressionContext ctx) {
+        return new MyInteger(java.lang.Integer.parseInt(ctx.getText()), getCodeLocation(ctx));
     }
 
     @Override
-    public MONEY visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
-        return new MONEY(BigDecimal.valueOf(Double.parseDouble(ctx.getText())), getCodeLocation(ctx));
+    public Money visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+        return new Money(BigDecimal.valueOf(Double.parseDouble(ctx.getText())), getCodeLocation(ctx));
     }
 
     @Override
-    public IDENTIFIER visitIdentifierExpression( QLParser.IdentifierExpressionContext ctx) {
-        return new IDENTIFIER(ctx.Identifier().getText(), getCodeLocation(ctx));
+    public Identifier visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
+        return new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
     }
 
     @Override
-    public BOOLEAN visitBoolExpression(QLParser.BoolExpressionContext ctx) {
-        return new BOOLEAN(Boolean.parseBoolean(ctx.getText()), getCodeLocation(ctx));
+    public MyBoolean visitBoolExpression(QLParser.BoolExpressionContext ctx) {
+        return new MyBoolean(Boolean.parseBoolean(ctx.getText()), getCodeLocation(ctx));
     }
 
     @Override
-    public STRING visitStringExpression(QLParser.StringExpressionContext ctx) {
-        return new STRING(removeStringQuotes(ctx.getText()), getCodeLocation(ctx));
+    public MyString visitStringExpression(QLParser.StringExpressionContext ctx) {
+        return new MyString(removeStringQuotes(ctx.getText()), getCodeLocation(ctx));
     }
 
     private CodeLocation getCodeLocation(ParserRuleContext ctx) {
@@ -240,5 +238,4 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     private String removeStringQuotes(String targetString) {
         return targetString.substring(1, targetString.length() - 1);
     }
-
 }

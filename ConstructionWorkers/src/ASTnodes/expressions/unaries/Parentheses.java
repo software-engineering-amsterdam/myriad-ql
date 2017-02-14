@@ -1,17 +1,17 @@
 /**
- * Addition.java.
+ * Parentheses.java.
  */
 
-package ASTnodes.expressions.binaries.numerical;
+package ASTnodes.expressions.unaries;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
 import ASTnodes.visitors.AllVisitors;
 
-public class Addition extends Numerical {
+public class Parentheses extends Unary {
 
-    public Addition(Expression left, Expression right, CodeLocation location) {
-        super(left, right, location);
+    public Parentheses(Expression expression, CodeLocation location) {
+        super(expression, location);
     }
 
     @Override

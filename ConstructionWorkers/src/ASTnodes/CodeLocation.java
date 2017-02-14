@@ -1,23 +1,23 @@
+/**
+ * CodeLocation.java.
+ */
+
 package ASTnodes;
 
-/**
- * Created by LGGX on 09-Feb-17.
- */
 public class CodeLocation {
 
-    private final int startLine;
+    private final int startingLine;
 
-    public CodeLocation(int startLine) {
-        this.startLine = startLine;
+    public CodeLocation(int startingLine) {
+        this.startingLine = startingLine;
     }
 
-    public int getStartLine() {
-        return startLine;
+    public int getStartingLine() {
+        return startingLine;
     }
 
     @Override
     public String toString() {
-        return "Code line: " + startLine;
+        return "Code starting line: " + startingLine;
     }
-
 }

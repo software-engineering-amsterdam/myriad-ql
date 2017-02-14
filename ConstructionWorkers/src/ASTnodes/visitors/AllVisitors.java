@@ -1,3 +1,7 @@
+/**
+ * AllVisitors.java.
+ */
+
 package ASTnodes.visitors;
 
 import ASTnodes.Form;
@@ -5,34 +9,31 @@ import ASTnodes.expressions.binaries.equality.*;
 import ASTnodes.expressions.binaries.logic.*;
 import ASTnodes.expressions.binaries.numerical.*;
 import ASTnodes.expressions.literals.*;
-import ASTnodes.sections.*;
+import ASTnodes.expressions.literals.MyInteger;
+import ASTnodes.statements.*;
 import ASTnodes.types.*;
 import ASTnodes.expressions.unaries.*;
-
-/**
- * Created by LGGX on 09-Feb-17.
- */
 
 public interface AllVisitors<T> {
 
     T visit(Form structure);
 
-    T visit(Question section);
-    T visit(ExpressionQuestion section);
-    T visit(IfStatement section);
+    T visit(SimpleQuestion statement);
+    T visit(ComputedQuestion statement);
+    T visit(IfStatement statement);
 
     T visit(BooleanType type);
     T visit(StringType type);
     T visit(IntegerType type);
     T visit(MoneyType type);
 
-    T visit(BOOLEAN literal);
-    T visit(INTEGER literal);
-    T visit(STRING literal);
-    T visit(IDENTIFIER literal);
-    T visit(MONEY literal);
+    T visit(MyBoolean literal);
+    T visit(MyInteger literal);
+    T visit(MyString literal);
+    T visit(Identifier literal);
+    T visit(Money literal);
 
-    T visit(Parenthesis expression);
+    T visit(Parentheses expression);
     T visit(Negation expression);
     T visit(Negative expression);
     T visit(Positive expression);
@@ -51,5 +52,4 @@ public interface AllVisitors<T> {
     T visit(Subtraction expression);
     T visit(Multiplication expression);
     T visit(Division expression);
-
 }

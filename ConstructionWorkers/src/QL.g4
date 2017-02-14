@@ -2,13 +2,13 @@ grammar QL;
 
 // Complete form (i.e., the topmost node).
 form
-    : 'form' Identifier '{' section* '}';
+    : 'form' IDENTIFIER '{' statement* '}';
 
-// Statement. Can be a 'title', a question, or an if-statement.
-section
-    : type Identifier '(' STRING ')' ';'                    # question
-    | type Identifier '(' STRING ')' ':' expression ';'     # expressionQuestion
-    | 'if' '(' expression ')' '{' (section)* '}'            # ifStatement
+// Statement. Can be a simple question, a computed question, or an if-statement.
+statement
+    : type IDENTIFIER '(' STRING ')' ';'                    # simpleQuestion
+    | type IDENTIFIER '(' STRING ')' ':' expression ';'     # computedQuestion
+    | 'if' '(' expression ')' '{' statement* '}'            # ifStatement
     ;
 
 // All alowed types.
@@ -21,18 +21,18 @@ type
 
 // Expressions (logical and numerical).
 expression
-    : '(' expression ')'                                                # parenthesisExpression
+    : '(' expression ')'                                                # parenthesesExpression
     | op=('+'|'-'|'!') expression                                       # unaryExpression
     | expression op=('*' | '/') expression                              # multDivExpression
     | expression op=('+' | '-') expression                              # addSubExpression
-    | expression op=('>' | '>=' | '<' | '<=' | '==' | '!=') expression  # equalityExpression
+    | expression op=('>' | '>=' | '<' | '<=' | '==' | '!=') expression  # comparisonExpression
     | expression '&&' expression                                        # andExpression
     | expression '||' expression                                        # orExpression
     | BOOL                                                              # boolExpression
     | STRING                                                            # stringExpression
     | INT                                                               # intExpression
     | MONEY                                                             # moneyExpression
-    | Identifier                                                        # identifierExpression
+    | IDENTIFIER                                                        # identifierExpression
     ;
 
 // Boolean definition.
@@ -41,11 +41,11 @@ BOOL
     | 'false'
     ;
 
-// String definition.
+// String definition (i.e., a question).
 STRING
     : '"' (ESC | ~["\\])* '"';
 
-// Integer definition.
+// MyInteger definition.
 INT
     : [0-9]+;
 
@@ -54,7 +54,7 @@ MONEY
     : [0-9]+ '.' [0-9][0-9];
 
 // Identifier definition.
-Identifier
+IDENTIFIER
     : [a-zA-Z]+;
 
 // Single-line comment definition (matches anything after '//' until newline).
@@ -65,7 +65,7 @@ LINE_COMMENT
 MULTI_LINE_COMMENT
     : '/*' .*? '*/' -> channel(HIDDEN);
 
-// Ignore whitespace.
+// Whitespace defintion.
 WS
     : [ \r\t\u000C\n]+ -> channel(HIDDEN);
 

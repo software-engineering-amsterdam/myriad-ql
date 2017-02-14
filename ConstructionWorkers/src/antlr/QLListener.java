@@ -1,4 +1,5 @@
-package antlr;// Generated from C:/Users/LGGX/IdeaProjects/QL/src\QL.g4 by ANTLR 4.6
+// Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.g4 by ANTLR 4.6
+package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -17,38 +18,38 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitForm(QLParser.FormContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code question}
-	 * labeled alternative in {@link QLParser#section}.
+	 * Enter a parse tree produced by the {@code simpleQuestion}
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterQuestion(QLParser.QuestionContext ctx);
+	void enterSimpleQuestion(QLParser.SimpleQuestionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code question}
-	 * labeled alternative in {@link QLParser#section}.
+	 * Exit a parse tree produced by the {@code simpleQuestion}
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitQuestion(QLParser.QuestionContext ctx);
+	void exitSimpleQuestion(QLParser.SimpleQuestionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expressionQuestion}
-	 * labeled alternative in {@link QLParser#section}.
+	 * Enter a parse tree produced by the {@code computedQuestion}
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpressionQuestion(QLParser.ExpressionQuestionContext ctx);
+	void enterComputedQuestion(QLParser.ComputedQuestionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code expressionQuestion}
-	 * labeled alternative in {@link QLParser#section}.
+	 * Exit a parse tree produced by the {@code computedQuestion}
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpressionQuestion(QLParser.ExpressionQuestionContext ctx);
+	void exitComputedQuestion(QLParser.ComputedQuestionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ifStatement}
-	 * labeled alternative in {@link QLParser#section}.
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterIfStatement(QLParser.IfStatementContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ifStatement}
-	 * labeled alternative in {@link QLParser#section}.
+	 * labeled alternative in {@link QLParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(QLParser.IfStatementContext ctx);
@@ -64,6 +65,18 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBoolType(QLParser.BoolTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stringType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringType(QLParser.StringTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stringType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringType(QLParser.StringTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code intType}
 	 * labeled alternative in {@link QLParser#type}.
@@ -89,18 +102,6 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitMoneyType(QLParser.MoneyTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code stringType}
-	 * labeled alternative in {@link QLParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterStringType(QLParser.StringTypeContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code stringType}
-	 * labeled alternative in {@link QLParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitStringType(QLParser.StringTypeContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code orExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -112,6 +113,18 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrExpression(QLParser.OrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parenthesesExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesesExpression(QLParser.ParenthesesExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parenthesesExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code andExpression}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -197,30 +210,6 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitIdentifierExpression(QLParser.IdentifierExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code equalityExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqualityExpression(QLParser.EqualityExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code equalityExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqualityExpression(QLParser.EqualityExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code parenthesisExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterParenthesisExpression(QLParser.ParenthesisExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code parenthesisExpression}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitParenthesisExpression(QLParser.ParenthesisExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code multDivExpression}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -232,6 +221,18 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMultDivExpression(QLParser.MultDivExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code comparisonExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpression(QLParser.ComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code comparisonExpression}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpression(QLParser.ComparisonExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code unaryExpression}
 	 * labeled alternative in {@link QLParser#expression}.

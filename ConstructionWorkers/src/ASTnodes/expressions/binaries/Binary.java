@@ -1,19 +1,22 @@
+/**
+ * Binary.java.
+ */
+
 package ASTnodes.expressions.binaries;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
-import ASTnodes.types.Type;
 
-/**
- * Created by LGGX on 10-Feb-17.
- */
 public abstract class Binary extends Expression {
 
-    private Expression left;
-    private Expression right;
+    // Final?
+    private final Expression left;
+    private final Expression right;
 
-    public Binary(CodeLocation location) {
+    public Binary(Expression left, Expression right, CodeLocation location) {
         super(location);
+        this.left = left;
+        this.right = right;
     }
 
     public Expression getLeft() {
@@ -23,5 +26,4 @@ public abstract class Binary extends Expression {
     public Expression getRight() {
         return right;
     }
-
 }

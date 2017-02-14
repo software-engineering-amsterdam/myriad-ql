@@ -1,31 +1,32 @@
+/**
+ * Form.java.
+ */
+
 package ASTnodes;
 
-/**
- * Created by LGGX on 09-Feb-17.
- */
-import ASTnodes.expressions.literals.IDENTIFIER;
-import ASTnodes.sections.Section;
+import ASTnodes.expressions.literals.Identifier;
+import ASTnodes.statements.Statement;
 import ASTnodes.visitors.AllVisitors;
 
 import java.util.List;
 
 public class Form extends Node {
 
-    private final IDENTIFIER identifier;
-    private final List<Section> sections;
+    private final Identifier identifier;
+    private final List<Statement> statements;
 
-    public Form(IDENTIFIER identifier, List<Section> sections, CodeLocation location) {
+    public Form(Identifier identifier, List<Statement> statements, CodeLocation location) {
         super(location);
         this.identifier = identifier;
-        this.sections = sections;
+        this.statements = statements;
     }
 
-    public IDENTIFIER getIdentifier() {
+    public Identifier getIdentifier() {
         return identifier;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public List<Statement> getStatements() {
+        return statements;
     }
 
     public <T> T accept(AllVisitors<T> visitor) {
