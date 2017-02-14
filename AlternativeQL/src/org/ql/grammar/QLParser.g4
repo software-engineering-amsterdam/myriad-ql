@@ -22,7 +22,7 @@ defaultValue
 expression
     :   BOOLEAN_LITERAL                                        #booleanLiteral
     |   STRING_LITERAL                                         #stringLiteral
-    |   FLOAT_LITERAL                                          #floatLiteral
+    |   DECIMAL_LITERAL                                        #decimalLiteral
     |   INTEGER_LITERAL                                        #integerLiteral
     |   ID                                                     #parameter
     |   '(' expression ')'                                     #group

@@ -2,11 +2,14 @@ package org.ql.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.ql.ast.expression.literals.BooleanLiteral;
+import org.ql.ast.expression.literal.Boolean;
+import org.ql.ast.expression.literal.Decimal;
 import org.ql.ast.form.Form;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
+
+import java.math.BigDecimal;
 
 public class ParserTest extends Assert {
     @Test
@@ -43,13 +46,15 @@ public class ParserTest extends Assert {
         Parser parser = new Parser();
         String inputCode = "form MyNewForm {" +
                 "    boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;\n" +
-                "    boolean hasBoughtHouse: \"Did you buy a house in 2010?\" = false;" +
+                "    boolean hasBoughtHouse: \"Did you buy a house in 2010?\" = false;\n" +
+                "    money hasBoughtHouse: \"Did you buy a house in 2010?\" = 145.23;" +
                 "}";
 
         Form ast = parser.parse(inputCode);
 
-        assertEquals(true, ((BooleanLiteral) ((Question) ast.getStatement(0)).getDefaultValue()).getBooleanLiteral());
-        assertEquals(false, ((BooleanLiteral) ((Question) ast.getStatement(1)).getDefaultValue()).getBooleanLiteral());
+        assertEquals(true, ((Boolean) ((Question) ast.getStatement(0)).getDefaultValue()).getBooleanLiteral());
+        assertEquals(false, ((Boolean) ((Question) ast.getStatement(1)).getDefaultValue()).getBooleanLiteral());
+        assertEquals("145.23", ((Decimal) ((Question) ast.getStatement(2)).getDefaultValue()).getDecimalLiteral().toPlainString());
     }
 
     @Test

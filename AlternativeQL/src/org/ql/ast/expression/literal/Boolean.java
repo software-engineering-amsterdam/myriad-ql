@@ -1,11 +1,11 @@
-package org.ql.ast.expression.literals;
+package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
 
-public class BooleanLiteral implements Expression {
+public class Boolean implements Expression {
     private boolean booleanLiteral;
 
-    public BooleanLiteral(boolean booleanLiteral) {
+    public Boolean(boolean booleanLiteral) {
         this.booleanLiteral = booleanLiteral;
     }
 

@@ -1,11 +1,11 @@
-package org.ql.ast.expression.literals;
+package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
 
-public class IntegerLiteral implements Expression {
+public class Integer implements Expression {
     private int integerLiteral;
 
-    public IntegerLiteral(int integerLiteral) {
+    public Integer(int integerLiteral) {
         this.integerLiteral = integerLiteral;
     }
 

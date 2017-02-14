@@ -2,10 +2,10 @@ lexer grammar QLLexer;
 
 LINE_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
 
-// literals
+// literal
 STRING_LITERAL : '"' (ESCAPE_QUOTE | ~ ["\\])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
-FLOAT_LITERAL : [0-9]+ '.' [0-9]+;
+DECIMAL_LITERAL : [0-9]+ '.' [0-9]+;
 INTEGER_LITERAL : [0-9]+;
 
 // names

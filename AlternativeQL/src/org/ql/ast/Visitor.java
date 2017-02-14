@@ -2,20 +2,21 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.literals.BooleanLiteral;
-import org.ql.ast.expression.literals.FloatLiteral;
-import org.ql.ast.expression.literals.IntegerLiteral;
+import org.ql.ast.expression.literal.Boolean;
+import org.ql.ast.expression.literal.Decimal;
+import org.ql.ast.expression.literal.Integer;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
-import org.ql.ast.expression.literals.StringLiteral;
+import org.ql.ast.expression.literal.String;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
 import org.ql.grammar.QLParserVisitor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
         return new QuestionText(removeQuotes(ctx.getText()));
     }
 
-    private String removeQuotes(String text) {
+    private java.lang.String removeQuotes(java.lang.String text) {
         return text.substring(1, text.length() - 1);
     }
 
@@ -125,7 +126,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
-        return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
+        return new Boolean(java.lang.Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
     }
 
     @Override
@@ -145,7 +146,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
-        return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
+        return new String(removeQuotes(ctx.STRING_LITERAL().getText()));
     }
 
     @Override
@@ -165,12 +166,12 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitFloatLiteral(QLParserParser.FloatLiteralContext ctx) {
-        return new FloatLiteral(Float.parseFloat(ctx.FLOAT_LITERAL().getText()));
+        return new Decimal(new BigDecimal(ctx.FLOAT_LITERAL().getText()));
     }
 
     @Override
     public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
-        return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
+        return new Integer(java.lang.Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
     }
 
     @Override
