@@ -40,6 +40,12 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitExpression(QLParser.ExpressionContext ctx) {
+        System.out.println(ctx.getText());
+        return super.visitExpression(ctx);
+    }
+
+    @Override
     public Number visitAdd(QLParser.AddContext ctx) {
         Number left = (Number)visit(ctx.numExpr(0));
         Number right  = (Number)visit(ctx.numExpr(1));

@@ -21,7 +21,7 @@ public class Main extends Application{
 //        MainScreen mainScreen = new MainScreen();
 //        mainScreen.initUI(primaryStage);
 
-        String test = "form test {\"how old are you?\" first: boolean = (true && false || true) \n}";
+        String test = "form test {\"how old are you?\"  valueResidue: money = (2 - 1)}";
         InputStream is = new ByteArrayInputStream(test.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(is);
         QLLexer lexer = new QLLexer(input);
@@ -32,6 +32,7 @@ public class Main extends Application{
         visitor.visit(parseTree);
 
         Form form = visitor.getForm();
+        System.out.println(new MathExpr("3/2").evaluate());
 //        for(QLInput i : form.getInputs()){
 //            if (i.getType() == QLValue.Type.BOOLEAN){
 //                i.setValue(false);
