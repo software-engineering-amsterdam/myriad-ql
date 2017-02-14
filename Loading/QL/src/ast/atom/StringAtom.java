@@ -15,8 +15,7 @@ public class StringAtom extends Atom {
 	}
 
 	@Override
-	public Number add() {
-		// TODO Auto-generated method stub
+	public Number add(Atom other) {
 		return null;
 	}
 
@@ -26,7 +25,7 @@ public class StringAtom extends Atom {
 	}
 
 	@Override
-	public Number div() {
+	public Number div(Atom other) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,4 +40,9 @@ public class StringAtom extends Atom {
     public Boolean getValue() {        
     	return null;
     }
+
+	@Override
+	public String getString() {
+		return value;
+	}
 }

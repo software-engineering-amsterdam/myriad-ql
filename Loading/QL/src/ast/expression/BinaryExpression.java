@@ -27,10 +27,22 @@ public class BinaryExpression extends Expression {
 		return rhs;
 	}
 	
-//	public Number evaluate() {
-//		return null;
-//	}
-	
+	public Number evaluate() {
+		return null;
+	}
+
+	public Boolean evaluate2() {
+		return null;
+	}
+
+	public Boolean evaluate3() {
+		return null;
+	}
+
+	public Number evaluate4() {
+		return null;
+	}
+
 @Override 
 public void accept(Visitor v) {
 		v.visit(this);

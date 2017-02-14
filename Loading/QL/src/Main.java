@@ -11,12 +11,15 @@ public class Main {
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
 		 		+ "Name1: \"Question\" boolean\n"
-		 		+ "if (22.12.2016 == \"text\") {"
+		 		+ "if (\"text1\" == \"text2\") {"
 		 		+ "Name2: \"Question\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question\" boolean\n"
-				+ "if (3.232 + 1) {"
+				+ "if (11/22) {"
 				+ "Name4: \"Question\" boolean\n"
+				+ "} "
+				+ "if (tru && true) {"
+				+ "Name5: \"Question\" boolean\n"
 				+ "}"
 		 		+ " }";
 		

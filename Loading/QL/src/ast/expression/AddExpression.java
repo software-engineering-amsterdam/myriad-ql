@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 
-public class AddExpression extends ArithExpression {
+public class AddExpression extends BinaryExpression {
 	
 	public Number evaluate() {
 		
@@ -15,8 +15,8 @@ public class AddExpression extends ArithExpression {
 
 		
 		// TODO add round function or return int
-		return Math.round((getLhs().getNumber().doubleValue() + 
-				getRhs().getNumber().doubleValue()) * 100.0 ) / 100.0;
+//		return Math.round((getLhs().getNumber().doubleValue() +
+//				getRhs().getNumber().doubleValue()) * 100.0 ) / 100.0;
 	}
 	
 	@Override

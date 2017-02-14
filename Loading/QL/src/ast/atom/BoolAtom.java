@@ -10,19 +10,19 @@ public class BoolAtom extends Atom {
     public BoolAtom(Boolean value) {
     	this.value = value;
     }
-    
+
 	@Override
-	public Number add() {
+	public Number add(Atom other) {
 		return null;
 	}
-    
-    @Override
+
+	@Override
     public Boolean and(Atom other) {
     	return value && other.getValue();
     }
 	
 	@Override
-	public Number div() {
+	public Number div(Atom other) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -31,7 +31,12 @@ public class BoolAtom extends Atom {
     public Boolean getValue() {
         return this.value;
     }
-    
+
+	@Override
+	public String getString() {
+		return null;
+	}
+
 	@Override
     public Number getNumber() {
     	return null;

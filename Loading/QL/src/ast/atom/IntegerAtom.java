@@ -28,9 +28,9 @@ public class IntegerAtom extends Atom {
 	}
 
 	@Override
-	public Number div() {
+	public Number div(Atom other) {
 		// TODO Auto-generated method stub
-		return null;
+		return value / other.getNumber().floatValue();
 	}
 
 	@Override
@@ -38,8 +38,13 @@ public class IntegerAtom extends Atom {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-    @Override
+
+	@Override
+	public String getString() {
+		return null;
+	}
+
+	@Override
     public Number getNumber() {
         return this.value;
     }
