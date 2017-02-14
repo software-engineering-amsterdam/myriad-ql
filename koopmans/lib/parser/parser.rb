@@ -113,7 +113,7 @@ class Parser < Parslet::Parser
 
   # form
   rule(:form) do
-    spaces? >> (str('form') >> spaces? >> variable_or_literal >> spaces? >> block).as(:form)
+    spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form)
   end
 
   root :form
