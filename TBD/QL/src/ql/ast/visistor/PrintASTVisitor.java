@@ -1,7 +1,12 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
-import ql.ast.expressions.*;
+import ql.ast.expressions.binop.And;
+import ql.ast.expressions.binop.Or;
+import ql.ast.expressions.numop.*;
+import ql.ast.expressions.unop.Neg;
+import ql.ast.expressions.unop.Not;
+import ql.ast.expressions.unop.Pos;
 import ql.ast.literals.*;
 
 /**
@@ -20,8 +25,9 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
 
     @Override
     public Void visit(If node) {
-        node.getIfBlock().accept(this);
-        System.out.print("if {\n");
+        System.out.print("if (");
+        node.getExpression().accept(this);
+        System.out.print("){\n");
         node.getIfBlock().accept(this);
         System.out.print("}");
         if (node.hasElseBlock()) {
@@ -41,7 +47,7 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
         System.out.print(" : ");
         System.out.print(typeToString(node.getType()));
 
-        if (node.getExpr() != null) {
+        if (node.hasExpr()) {
             System.out.print(" =\n");
             node.getExpr().accept(this);
         }
@@ -50,7 +56,7 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
 
     @Override
     public Void visit(Statements node) {
-        if (node.getCurrent() != null) {
+        if (node.hasCurrent()) {
             node.getCurrent().accept(this);
         }
         System.out.print("\n");

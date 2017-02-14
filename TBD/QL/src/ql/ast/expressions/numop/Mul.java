@@ -1,4 +1,4 @@
-package ql.ast.expressions;
+package ql.ast.expressions.numop;
 
 import ql.ast.Expr;
 import ql.ast.visistor.ASTVisitor;
@@ -6,7 +6,7 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Mul {
+public class Mul implements Expr {
     private Expr left, right;
 
     public Mul(Expr left, Expr right){

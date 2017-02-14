@@ -1,7 +1,9 @@
 package ql;
 
+import ql.ast.Type;
 import ql.ast.visistor.ASTVisitor;
 import ql.ast.visistor.PrintASTVisitor;
+import ql.ast.visistor.TypeASTVisitor;
 import ql.parser.QLLexer;
 import ql.parser.QLParser;
 
@@ -16,7 +18,7 @@ public class Main {
     public static void main(String[] args){
         Reader reader = null;
         try {
-            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\test.txt");
+            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
 
@@ -29,6 +31,9 @@ public class Main {
 
             ASTVisitor<Void> printVisitor = new PrintASTVisitor();
             printVisitor.visit(parser.getResult());
+
+            ASTVisitor<Type> typeVisitor = new TypeASTVisitor();
+            typeVisitor.visit(parser.getResult());
 
 
         } catch (FileNotFoundException e) {

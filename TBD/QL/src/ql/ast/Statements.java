@@ -18,8 +18,8 @@ public class Statements implements ASTNode {
         this(current, null);
     }
 
-    public Statements next() {
-        return this.next;
+    public boolean hasCurrent() {
+        return this.current != null;
     }
 
     public boolean hasNext() {

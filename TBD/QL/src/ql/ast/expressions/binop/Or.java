@@ -1,16 +1,16 @@
-package ql.ast.expressions;
+package ql.ast.expressions.binop;
 
-import ql.ast.ASTNode;
 import ql.ast.Expr;
+import ql.ast.expressions.BinOp;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Sub implements ASTNode, Expr {
+public class Or implements BinOp {
     private Expr left, right;
 
-    public Sub(Expr left, Expr right){
+    public Or(Expr left, Expr right){
         this.left = left;
         this.right = right;
     }

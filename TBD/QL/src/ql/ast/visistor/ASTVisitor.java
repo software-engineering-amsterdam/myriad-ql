@@ -1,7 +1,12 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
-import ql.ast.expressions.*;
+import ql.ast.expressions.binop.And;
+import ql.ast.expressions.binop.Or;
+import ql.ast.expressions.numop.*;
+import ql.ast.expressions.unop.Neg;
+import ql.ast.expressions.unop.Not;
+import ql.ast.expressions.unop.Pos;
 import ql.ast.literals.*;
 
 /**

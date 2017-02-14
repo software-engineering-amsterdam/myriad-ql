@@ -1,4 +1,4 @@
-package ql.ast.expressions;
+package ql.ast.expressions.numop;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
@@ -7,10 +7,10 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class And implements ASTNode, Expr {
+public class LT implements Expr {
     private Expr left, right;
 
-    public And(Expr left, Expr right){
+    public LT(Expr left, Expr right){
         this.left = left;
         this.right = right;
     }
@@ -26,5 +26,4 @@ public class And implements ASTNode, Expr {
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
-
 }

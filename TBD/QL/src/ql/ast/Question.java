@@ -41,6 +41,10 @@ public class Question implements Statement {
         return expr;
     }
 
+    public boolean hasExpr() {
+        return expr != null;
+    }
+
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }

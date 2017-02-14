@@ -1,4 +1,4 @@
-package ql.ast.expressions;
+package ql.ast.expressions.numop;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
@@ -7,7 +7,7 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class GEq implements ASTNode, Expr {
+public class GEq implements Expr {
     private Expr left, right;
 
     public GEq(Expr left, Expr right){

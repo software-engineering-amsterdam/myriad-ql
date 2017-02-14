@@ -1,4 +1,4 @@
-package ql.ast.expressions;
+package ql.ast.expressions.numop;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
@@ -7,10 +7,10 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class LEq implements ASTNode, Expr {
+public class Eq implements Expr {
     private Expr left, right;
 
-    public LEq(Expr left, Expr right){
+    public Eq(Expr left, Expr right){
         this.left = left;
         this.right = right;
     }
