@@ -81,8 +81,8 @@ formItemTests =
 
 fieldTests : Test
 fieldTests =
-    testWithParser Form.field
-        "field"
+    testWithParser Form.formItem
+        "field and computed fields"
         [ ( "should parse a simple field", "\"label\" id: integer", Just (Field "label" "id" IntegerType) )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
         , ( "allows no whitespace after the colon", "\"label\" id:integer", Just (Field "label" "id" IntegerType) )
@@ -106,9 +106,9 @@ ifBlockTests =
             [ Field "label" "id" IntegerType
             ]
     in
-        testWithParser Form.field
+        testWithParser Form.formItem
             "ifThen and ifThenElse"
-            [ ( "should parser an simple if block"
+            [ ( "should parse a simple if block"
               , "if (x) { \"label\" id: integer }"
               , Just (IfThen (Var "x") basicBlockContent)
               )

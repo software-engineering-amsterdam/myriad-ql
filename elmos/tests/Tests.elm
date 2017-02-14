@@ -12,7 +12,7 @@ import Test exposing (Test, describe)
 
 all : Test
 all =
-    describe "QL Parser"
+    describe "QL"
         [ FormTests.all
         , Combine.ExtraTests.all
         , ExpressionTests.all
