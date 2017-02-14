@@ -1,8 +1,8 @@
-package org.ql.ast.literal;
+package org.ql.ast.expression;
 
-import org.ql.ast.Node;
+import org.ql.ast.Expression;
 
-public class FloatLiteral implements Node {
+public class FloatLiteral implements Expression {
     private float floatLiteral;
 
     public FloatLiteral(float floatLiteral) {

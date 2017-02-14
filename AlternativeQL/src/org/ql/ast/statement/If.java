@@ -6,16 +6,16 @@ import org.ql.ast.Node;
 import java.util.List;
 
 public class If implements Statement, Node {
-    private Expression expression;
+    private Expression condition;
     private List<Statement> statements;
 
-    public If(Expression expression, List<Statement> statements) {
-        this.expression = expression;
+    public If(Expression condition, List<Statement> statements) {
+        this.condition = condition;
         this.statements = statements;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getCondition() {
+        return condition;
     }
 
     public List<Statement> getStatements() {

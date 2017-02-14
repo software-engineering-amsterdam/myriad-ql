@@ -120,19 +120,19 @@ public interface QLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringLiteral(QLParserParser.StringLiteralContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code param}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParam(QLParserParser.ParamContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code decrement}
 	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDecrement(QLParserParser.DecrementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parameter}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameter(QLParserParser.ParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code equals}
 	 * labeled alternative in {@link QLParserParser#expression}.

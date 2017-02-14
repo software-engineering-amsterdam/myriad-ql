@@ -2,13 +2,14 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.ql.ast.literal.BooleanLiteral;
-import org.ql.ast.literal.FloatLiteral;
-import org.ql.ast.literal.IntegerLiteral;
+import org.ql.ast.expression.Parameter;
+import org.ql.ast.expression.BooleanLiteral;
+import org.ql.ast.expression.FloatLiteral;
+import org.ql.ast.expression.IntegerLiteral;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.question.Question;
 import org.ql.ast.form.Form;
-import org.ql.ast.literal.StringLiteral;
+import org.ql.ast.expression.StringLiteral;
 import org.ql.ast.statement.Statement;
 import org.ql.ast.statement.question.Text;
 import org.ql.ast.type.Type;
@@ -72,7 +73,52 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     }
 
     @Override
-    public Node visitExpression(QLParserParser.ExpressionContext ctx) {
+    public Node visitNegation(QLParserParser.NegationContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitProduct(QLParserParser.ProductContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitGrouped(QLParserParser.GroupedContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitIncrement(QLParserParser.IncrementContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitSubtraction(QLParserParser.SubtractionContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitNotEqual(QLParserParser.NotEqualContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitLogicalAnd(QLParserParser.LogicalAndContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitLowerThan(QLParserParser.LowerThanContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitDivision(QLParserParser.DivisionContext ctx) {
         return null;
     }
 
@@ -92,8 +138,33 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     }
 
     @Override
+    public Node visitAddition(QLParserParser.AdditionContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitGreaterThan(QLParserParser.GreaterThanContext ctx) {
+        return null;
+    }
+
+    @Override
     public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
         return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
+    }
+
+    @Override
+    public Node visitDecrement(QLParserParser.DecrementContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitEquals(QLParserParser.EqualsContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) {
+        return null;
     }
 
     @Override
@@ -104,6 +175,11 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     @Override
     public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
         return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
+    }
+
+    @Override
+    public Node visitLogicalOr(QLParserParser.LogicalOrContext ctx) {
+        return null;
     }
 
     @Override

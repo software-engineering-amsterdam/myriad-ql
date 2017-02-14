@@ -24,7 +24,7 @@ expression
     |   STRING_LITERAL                              #stringLiteral
     |   FLOAT_LITERAL                               #floatLiteral
     |   INTEGER_LITERAL                             #integerLiteral
-    |   ID                                          #param
+    |   ID                                          #parameter
     |   '(' expression ')'                          #grouped
     |   '!' expression                              #negation
     |   '++' expression                             #decrement

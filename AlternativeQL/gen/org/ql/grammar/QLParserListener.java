@@ -194,18 +194,6 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitStringLiteral(QLParserParser.StringLiteralContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code param}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterParam(QLParserParser.ParamContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code param}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitParam(QLParserParser.ParamContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code decrement}
 	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
@@ -217,6 +205,18 @@ public interface QLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDecrement(QLParserParser.DecrementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parameter}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameter(QLParserParser.ParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parameter}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameter(QLParserParser.ParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code equals}
 	 * labeled alternative in {@link QLParserParser#expression}.

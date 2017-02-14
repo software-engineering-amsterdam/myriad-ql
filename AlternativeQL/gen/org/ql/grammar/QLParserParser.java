@@ -673,23 +673,6 @@ public class QLParserParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ParamContext extends ExpressionContext {
-		public TerminalNode ID() { return getToken(QLParserParser.ID, 0); }
-		public ParamContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterParam(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitParam(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLParserVisitor ) return ((QLParserVisitor<? extends T>)visitor).visitParam(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class DecrementContext extends ExpressionContext {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -706,6 +689,23 @@ public class QLParserParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLParserVisitor ) return ((QLParserVisitor<? extends T>)visitor).visitDecrement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ParameterContext extends ExpressionContext {
+		public TerminalNode ID() { return getToken(QLParserParser.ID, 0); }
+		public ParameterContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitParameter(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLParserVisitor ) return ((QLParserVisitor<? extends T>)visitor).visitParameter(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -928,7 +928,7 @@ public class QLParserParser extends Parser {
 				break;
 			case ID:
 				{
-				_localctx = new ParamContext(_localctx);
+				_localctx = new ParameterContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(69);

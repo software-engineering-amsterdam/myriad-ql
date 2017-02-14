@@ -1,8 +1,8 @@
-package org.ql.ast.literal;
+package org.ql.ast.expression;
 
-import org.ql.ast.Node;
+import org.ql.ast.Expression;
 
-public class IntegerLiteral implements Node {
+public class IntegerLiteral implements Expression {
     private int integerLiteral;
 
     public IntegerLiteral(int integerLiteral) {

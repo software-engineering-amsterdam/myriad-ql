@@ -1,6 +1,8 @@
-package org.ql.ast;
+package org.ql.ast.expression;
 
-public class Parameter implements Node {
+import org.ql.ast.Expression;
+
+public class Parameter implements Expression {
     private final String id;
 
     public Parameter(String id) {
