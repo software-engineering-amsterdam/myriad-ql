@@ -1,2 +1,7 @@
-.idea/
+.idea
+.idea/workspace.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/uiDesigner.xml
+.idea/modules.xml
 QL.iml
