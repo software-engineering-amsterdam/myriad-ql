@@ -15,15 +15,19 @@ categorise
     ;
 
 ifCase
-    : ID
-    | NUMBER
-    | ifCase '>' ifCase
-    | ifCase '<' ifCase
-    | ifCase '<=' ifCase
-    | ifCase '>=' ifCase
-    | ifCase '==' ifCase
+    : ifCaseArgs
+    | ifCaseArgs '>' ifCaseArgs
+    | ifCaseArgs '<' ifCaseArgs
+    | ifCaseArgs '<=' ifCaseArgs
+    | ifCaseArgs '>=' ifCaseArgs
+    | ifCaseArgs '==' ifCaseArgs
     | ifCase 'AND' ifCase
     | ifCase 'OR' ifCase
+    ;
+
+ifCaseArgs
+    : ID
+    | NUMBER
     ;
 
 caseNewInput
