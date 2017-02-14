@@ -17,7 +17,8 @@ type Msg
 
 init : Model
 init =
-    Model exampleDsl Nothing
+    Model "" Nothing
+        |> update (OnDslInput exampleDsl)
 
 
 exampleDsl : String
