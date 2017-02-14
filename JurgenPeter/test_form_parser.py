@@ -74,9 +74,22 @@ class TestGrammar(TestCase):
 class TestParser(TestCase):
     cases = [
         (Grammar.expression,
+         "-2", UnOp(Operator["-"],
+                    Constant(2, Datatype.integer))),
+        (Grammar.expression,
+         "+x", UnOp(Operator["+"],
+                    Variable("x"))),
+
+        (Grammar.expression,
          "2 + 3", BinOp(Constant(2, Datatype.integer),
                         Operator["+"],
                         Constant(3, Datatype.integer))),
+        (Grammar.expression,
+         "+2 + -3", BinOp(UnOp(Operator["+"],
+                               Constant(2, Datatype.integer)),
+                          Operator["+"],
+                          UnOp(Operator["-"],
+                               Constant(3, Datatype.integer)))),
         (Grammar.expression,
          "2 + 3 + 4", BinOp(BinOp(Constant(2, Datatype.integer),
                                   Operator["+"],
@@ -100,6 +113,18 @@ class TestParser(TestCase):
                                     Operator["+"],
                                     Constant(3, Datatype.integer)),
                               Operator["*"],
+                              Constant(4, Datatype.integer))),
+        (Grammar.expression,
+         "1 / (2 / 4)", BinOp(Constant(1, Datatype.integer),
+                              Operator["/"],
+                              BinOp(Constant(2, Datatype.integer),
+                                    Operator["/"],
+                                    Constant(4, Datatype.integer)))),
+        (Grammar.expression,
+         "(1 / 2) / 4", BinOp(BinOp(Constant(1, Datatype.integer),
+                                    Operator["/"],
+                                    Constant(2, Datatype.integer)),
+                              Operator["/"],
                               Constant(4, Datatype.integer))),
         (Grammar.expression,
          "x <= 3", BinOp(Variable("x"),
@@ -155,9 +180,16 @@ class TestParser(TestCase):
         (Grammar.form, "form FormName { }", Form("FormName", [])),
 
         (Grammar.form,
-         """form FormName { x: \"xLabel\" integer = 2 * 3
-         if x > 6 { y: \"yLabel\" boolean = true }
-         else { y: \"yLabel\" boolean = false }}""",
+         """
+         form FormName {
+            x: \"xLabel\" integer = 2 * 3
+            if x > 6 {
+                y: \"yLabel\" boolean = true
+            }
+            else {
+                y: \"yLabel\" boolean = false
+            }
+        }""",
          Form("FormName",
               [Question("x",
                         "xLabel",
@@ -178,8 +210,6 @@ class TestParser(TestCase):
                                      Constant(False, Datatype.boolean))])])),
 
         #TODO: Test more datatypes (e.g. Money, decimal)
-        #TODO: Test parenthesis
-        #TODO: Test unOps
     ]
 
     def testParseExpression(self):
