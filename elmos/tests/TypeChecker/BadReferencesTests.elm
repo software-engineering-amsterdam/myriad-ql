@@ -29,12 +29,10 @@ badReferencesExample2 =
 badReferencesExample3 : String
 badReferencesExample3 =
     """form taxOfficeExample {
-        "What was the selling price?"
-        sellingPrice: integer = 10
         if(true){
-          if(sellingPrice){
+          if(true){
               "Question ?"
-              y: integer
+              y: integer = sellingPrice
           }
         }
       }"""
@@ -102,10 +100,51 @@ goodExample4 =
 """
 
 
+goodExample5 : String
+goodExample5 =
+    """ form taxOfficeExample {
+      if (true) {
+        "conditionL"
+        amount: integer
+
+        if(amount < 3) {
+          "Final1"
+          finalAmount : integer = amount * 2
+        }
+      }
+    }"""
+
+
+goodExample6 : String
+goodExample6 =
+    """ form taxOfficeExample {
+      if (true) {
+        "amountL"
+        amount : integer
+
+        "conditionL"
+        condition: boolean
+
+        if(condition) {
+          "Final1"
+          finalAmount : integer = amount * 2
+        } else {
+          "Final2"
+          finalAmount : integer = amount
+        }
+      } else {
+        "Final3"
+        finalAmount : integer
+      }
+    }"""
+
+
 all : Test
 all =
     describe "BadReferences"
-        [ testExamplesWithoutBadRefences ]
+        [ testExamplesWithoutBadRefences
+        , testFindBadReferences
+        ]
 
 
 testFindBadReferences : Test
@@ -113,7 +152,7 @@ testFindBadReferences =
     describe "testFindBadReferences"
         [ parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "hasSoldHouse" ])
         , parseAndFindExpectedBadReferences "Bad reference in question" badReferencesExample2 (Set.fromList [ "price" ])
-        , parseAndFindExpectedBadReferences "Bad reference in nested If block" badReferencesExample2 (Set.fromList [ "sellingPrice" ])
+        , parseAndFindExpectedBadReferences "Bad reference in nested If block" badReferencesExample3 (Set.fromList [ "sellingPrice" ])
         ]
 
 
@@ -124,6 +163,8 @@ testExamplesWithoutBadRefences =
         , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 2" goodExample2 Set.empty
         , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 3" goodExample3 Set.empty
         , parseAndFindExpectedBadReferences "Should not find any undefined used vars" goodExample4 Set.empty
+        , parseAndFindExpectedBadReferences "Should not find any undefined used vars in nested example" goodExample5 Set.empty
+        , parseAndFindExpectedBadReferences "Should not find any undefined used vars in complex nested example" goodExample6 Set.empty
         ]
 
 
@@ -132,7 +173,7 @@ parseAndFindExpectedBadReferences message input expectedBadReferences =
     test message <|
         \() ->
             parseAndGetBadReferences input
-                |> Expect.equal (Just expectedBadReferences)
+                |> Expect.equal (Just (expectedBadReferences))
 
 
 parseAndGetBadReferences : String -> Maybe (Set.Set String)

@@ -2,27 +2,65 @@ module TypeChecker.BadReferences exposing (badReferences)
 
 import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
-import Set
+import Set exposing (..)
 
 
-badReferences : Form -> Set.Set String
+badReferences : Form -> Set String
 badReferences form =
-    Set.diff
-        (usedVarsFromBlock form.items |> Set.fromList)
-        (questionTypeRelationsFromBlock form.items |> questionIds |> Set.fromList)
+    badReferencesInBlock Set.empty form.items
 
 
-usedVarsFromBlock : Block -> List String
-usedVarsFromBlock formItems =
-    List.map usedVarsFromItem formItems
-        |> List.concat
+badReferencesInBlock : Set String -> Block -> Set String
+badReferencesInBlock parentIdentifiers block =
+    let
+        availableIdentifiers =
+            availableIdentifiersOnScope parentIdentifiers block
+
+        usedIdentifiers =
+            usedIdentifiersFromBlock block
+
+        badReferences =
+            Set.diff usedIdentifiers availableIdentifiers
+    in
+        List.foldl (\item -> badReferencesInFormItem availableIdentifiers item |> Set.union) badReferences block
 
 
-usedVarsFromItem : FormItem -> List String
-usedVarsFromItem item =
+availableIdentifiersOnScope : Set String -> Block -> Set String
+availableIdentifiersOnScope parentIdentifiers block =
+    questionTypeRelationsFromBlock block
+        |> questionIds
+        |> Set.fromList
+        |> Set.union parentIdentifiers
+
+
+badReferencesInFormItem : Set String -> FormItem -> Set String
+badReferencesInFormItem availableIdentifiers formItem =
+    case formItem of
+        Field _ _ _ ->
+            Set.empty
+
+        ComputedField _ _ _ _ ->
+            Set.empty
+
+        IfThen _ thenBranch ->
+            badReferencesInBlock availableIdentifiers thenBranch
+
+        IfThenElse _ thenBranch elseBranch ->
+            Set.union
+                (badReferencesInBlock availableIdentifiers thenBranch)
+                (badReferencesInBlock availableIdentifiers elseBranch)
+
+
+usedIdentifiersFromBlock : Block -> Set String
+usedIdentifiersFromBlock block =
+    List.foldl (\item -> usedIdentifiersFromItem item |> Set.union) Set.empty block
+
+
+usedIdentifiersFromItem : FormItem -> Set String
+usedIdentifiersFromItem item =
     expressionFromItem item
-        |> Maybe.map usedVars
-        |> Maybe.withDefault []
+        |> Maybe.map usedIdentifiers
+        |> Maybe.withDefault Set.empty
 
 
 expressionFromItem : FormItem -> Maybe Expression
@@ -41,32 +79,32 @@ expressionFromItem item =
             Just expression
 
 
-usedVars : Expression -> List String
-usedVars expression =
+usedIdentifiers : Expression -> Set String
+usedIdentifiers expression =
     case expression of
         Var s ->
-            [ s ]
+            Set.singleton s
 
         Integer _ ->
-            []
+            Set.empty
 
         Boolean _ ->
-            []
+            Set.empty
 
         AST.Str _ ->
-            []
+            Set.empty
 
         ParensExpression expr ->
-            usedVars expr
+            usedIdentifiers expr
 
         ArithmeticExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
         RelationExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
         LogicExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
         ComparisonExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)

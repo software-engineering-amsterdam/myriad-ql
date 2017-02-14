@@ -1,10 +1,6 @@
 module TypeChecker.CheckerUtilTests exposing (all)
 
-import AST
 import Expect
-import DictSet
-import Parser.Form exposing (..)
-import ParserTestUtil
 import Test exposing (Test, describe, test)
 import TypeChecker.CheckerUtil exposing (..)
 
@@ -13,7 +9,8 @@ all : Test
 all =
     describe
         "TypeCheckerUtil"
-        [ testIntersectLists
+        [ testRemoveListFrom
+        , testIntersectLists
         ]
 
 
@@ -24,6 +21,12 @@ exampleFormItems =
 
     "Did you buy a house in 2010?"
     hasBoughtHouse: boolean"""
+
+
+testRemoveListFrom : Test
+testRemoveListFrom =
+    test "should correctly remove list" <|
+        \() -> removeListFrom [ 2, 3, 4 ] [ 1, 2, 3, 4 ] |> Expect.equal [ 1 ]
 
 
 testIntersectLists : Test
