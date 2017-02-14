@@ -5,7 +5,7 @@ require_relative '../ast/type'
 require_relative '../ast/literal'
 require 'parslet'
 
-# replaces the words node
+# defines rules to match parts of a captured tree and transform them into abstract syntax tree
 class Transformer < Parslet::Transform
 
   # form
