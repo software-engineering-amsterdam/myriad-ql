@@ -28,20 +28,31 @@ def parse(input_string):
     l_paren = Suppress("(")
     r_paren = Suppress(")")
     colon = Suppress(":")
-    assign = Suppress("=")
     data_types = oneOf(["boolean", "money", "string", "integer"])
-    signop = oneOf(["+", "-"])
-    multop = oneOf(["*", "/"])
 
-    arith_prec = operatorPrecedence(
+    mult_op = oneOf(["*", "/"])
+    additive_op = oneOf(["+", "-"])
+    rat_op = oneOf(["<", "<=", ">", ">="])
+    eqal_op = oneOf(["==", "!="])
+    con_and_op = Literal("&&")
+    con_or_op = Literal("||")
+    assign_op = Suppress("=")
+
+    arith_prec = infixNotation(
         arith_operand,
-        [(multop, 2, opAssoc.LEFT),
-         (signop, 2, opAssoc.LEFT),]
+        [
+            (mult_op, 2, opAssoc.LEFT),
+            (additive_op, 2, opAssoc.LEFT),
+            (rat_op, 2, opAssoc.LEFT),
+            (eqal_op, 2, opAssoc.LEFT),
+            (con_and_op, 2, opAssoc.LEFT),
+            (con_or_op, 2, opAssoc.LEFT),
+        ]
     )
 
     # Expressions
     arithmetic_expr = \
-        Group(arith_prec)
+        arith_prec
 
     arithmetic_statement = \
         OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
@@ -51,7 +62,7 @@ def parse(input_string):
         colon + \
         data_types + \
         Optional(
-            assign +
+            assign_op +
             arithmetic_statement
         )
 
@@ -88,7 +99,7 @@ def parse(input_string):
         r_curly
 
     tokens = program.parseString(input_string)
-    print(tokens)
+    # print(tokens)
     return tokens
 
 
