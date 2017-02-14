@@ -1,17 +1,7 @@
 package org.ql.ast.type;
 
-public class Type {
-    private String type;
+import org.ql.ast.Node;
 
-    public Type(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+public enum Type implements Node {
+    BOOLEAN, FLOAT, INTEGER, STRING, MONEY, DATE
 }

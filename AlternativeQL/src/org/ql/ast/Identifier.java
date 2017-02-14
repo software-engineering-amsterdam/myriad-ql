@@ -1,6 +1,6 @@
 package org.ql.ast;
 
-public class Identifier {
+public class Identifier implements Node {
     private final String id;
 
     public Identifier(String id) {
