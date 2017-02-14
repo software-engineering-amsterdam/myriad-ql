@@ -6,6 +6,7 @@ import ast.atom.*;
 import ast.expression.*;
 import ast.type.*;
 
+// In order traversal
 public class Visitor {
 	
 	public void visit(Form form) {
@@ -66,7 +67,7 @@ public class Visitor {
 	}
 
 	public void visit(IntegerAtom integerAtom) {
-		System.out.println(integerAtom.getValue());
+//		System.out.println(integerAtom.getValue());
 	}
 
 	public void visit(MoneyAtom moneyAtom) {
