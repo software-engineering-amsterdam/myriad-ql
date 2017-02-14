@@ -9,8 +9,7 @@ grammar QL;
 }
 
 form returns [Form result] 
-		: 'form' ID block 
-		{ $result = new Form($ID.text, $block.result); };
+		: 'form' ID block { $result = new Form($ID.text, $block.result); };
 
 block returns [Block result]
 		@init {
@@ -35,7 +34,8 @@ type returns [Type result]
 	| 'decimal' { $result = new DecimalType(); } 
 	| 'integer' { $result = new IntegerType(); }
 	| 'money'   { $result = new MoneyType(); }
-	| 'string'  { $result = new StringType(); };
+	| 'string'  { $result = new StringType(); }
+	;
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -109,7 +109,7 @@ TWO_DIGIT: ('0'..'9')('0'..'9');
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
-DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT; // TODO check valid date
+DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
 STRING: '"' .*? '"';
 
