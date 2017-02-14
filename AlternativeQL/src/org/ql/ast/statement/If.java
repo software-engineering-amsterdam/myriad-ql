@@ -7,19 +7,25 @@ import org.ql.ast.Statement;
 import java.util.List;
 
 public class If implements Statement, Node {
-    private Expression condition;
-    private List<Statement> statements;
+    private final Expression condition;
+    private final List<Statement> thenStatements;
+    private final List<Statement> elseStatements;
 
-    public If(Expression condition, List<Statement> statements) {
+    public If(Expression condition, List<Statement> thenStatements, List<Statement> elseStatements) {
         this.condition = condition;
-        this.statements = statements;
+        this.thenStatements = thenStatements;
+        this.elseStatements = elseStatements;
     }
 
     public Expression getCondition() {
         return condition;
     }
 
-    public List<Statement> getStatements() {
-        return statements;
+    public List<Statement> getThenStatements() {
+        return thenStatements;
+    }
+
+    public List<Statement> getElseStatements() {
+        return elseStatements;
     }
 }

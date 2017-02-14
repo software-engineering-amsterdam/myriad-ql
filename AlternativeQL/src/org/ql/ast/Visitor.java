@@ -45,13 +45,20 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitIf(QLParserParser.IfContext ctx) {
-        List<Statement> statements = new ArrayList<>();
+        return new If(
+            (Expression) visit(ctx.expression()),
+            createStatements(ctx.thenStatements),
+            createStatements(ctx.elseStatements)
+        );
+    }
 
-        for (QLParserParser.StatementContext statementContext : ctx.statement()) {
-            statements.add((Statement) visit(statementContext));
+    private List<Statement> createStatements(List<QLParserParser.StatementContext> statementsContext) {
+        List<Statement> thenStatements = new ArrayList<>();
+
+        for (QLParserParser.StatementContext statementContext : statementsContext) {
+            thenStatements.add((Statement) visit(statementContext));
         }
-
-        return new If((Expression) visit(ctx.expression()), statements);
+        return thenStatements;
     }
 
     @Override

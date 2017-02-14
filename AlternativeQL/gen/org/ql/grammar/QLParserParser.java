@@ -206,6 +206,9 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class IfContext extends StatementContext {
+		public StatementContext statement;
+		public List<StatementContext> thenStatements = new ArrayList<StatementContext>();
+		public List<StatementContext> elseStatements = new ArrayList<StatementContext>();
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -291,7 +294,8 @@ public class QLParserParser extends Parser {
 					{
 					{
 					setState(39);
-					statement();
+					((IfContext)_localctx).statement = statement();
+					((IfContext)_localctx).thenStatements.add(((IfContext)_localctx).statement);
 					}
 					}
 					setState(44);
@@ -316,7 +320,8 @@ public class QLParserParser extends Parser {
 						{
 						{
 						setState(48);
-						statement();
+						((IfContext)_localctx).statement = statement();
+						((IfContext)_localctx).elseStatements.add(((IfContext)_localctx).statement);
 						}
 						}
 						setState(53);
