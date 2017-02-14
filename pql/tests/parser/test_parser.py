@@ -196,3 +196,16 @@ class TestParser(TestCase):
         """
         with self.assertRaises(ParseException):
             parse(self.input_string)
+
+    def test_parse_form_if_inside_if(self):
+        self.input_string = """
+        form taxOfficeExample {
+            if (hasSoldHouse) {
+                "What was the selling price?"        sellingPrice: money
+                    if (blaat) {
+                        "What was the buying price?"        buyingPrice: money
+                    }
+            }
+        }
+        """
+        parse(self.input_string)
