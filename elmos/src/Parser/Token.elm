@@ -11,7 +11,7 @@ parseLoc =
 
 withLoc : Parser state (Location -> res) -> Parser state res
 withLoc p =
-    withLocation (asLocation >> \loc -> ((|>) loc) <$> p)
+    withLocation (asLocation >> \loc -> (|>) loc <$> p)
 
 
 asLocation : Combine.ParseLocation -> Location
@@ -21,7 +21,7 @@ asLocation { line, column } =
 
 x : Combine.ParseLocation -> (Location -> a) -> a
 x start =
-    ((|>) (Location start.line start.column))
+    (|>) (Location start.line start.column)
 
 
 identifier : Parser s Id

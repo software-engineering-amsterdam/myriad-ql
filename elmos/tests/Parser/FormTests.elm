@@ -70,14 +70,14 @@ formItemTests =
     testWithParserAndMap Form.formItem
         removeLocationFromFormItem
         "formItem"
-        [ ( "should parse a simple field", "\"label\" id: integer", Just <| Field "label" ( "id", (Location 0 0) ) IntegerType )
+        [ ( "should parse a simple field", "\"label\" id: integer", Just <| Field "label" ( "id", Location 0 0 ) IntegerType )
         , ( "should parse an if block"
           , "if (bar) { \"label\" id: integer } else { \"label\" id: integer }"
           , Just <|
                 IfThenElse
-                    (Var ( "bar", (Location 0 0) ))
-                    [ Field "label" ( "id", (Location 0 0) ) IntegerType ]
-                    [ Field "label" ( "id", (Location 0 0) ) IntegerType ]
+                    (Var ( "bar", Location 0 0 ))
+                    [ Field "label" ( "id", Location 0 0 ) IntegerType ]
+                    [ Field "label" ( "id", Location 0 0 ) IntegerType ]
           )
         ]
 
@@ -87,18 +87,18 @@ fieldTests =
     testWithParserAndMap Form.formItem
         removeLocationFromFormItem
         "field and computed fields"
-        [ ( "should parse a simple field", "\"label\" id: integer", Just (Field "label" ( "id", (Location 0 0) ) IntegerType) )
+        [ ( "should parse a simple field", "\"label\" id: integer", Just (Field "label" ( "id", Location 0 0 ) IntegerType) )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
-        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just (Field "label" ( "id", (Location 0 0) ) IntegerType) )
+        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just (Field "label" ( "id", Location 0 0 ) IntegerType) )
         , ( "id should be a varName", "\"label\" Other: integer", Nothing )
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         , ( "should parse field with expression"
           , "\"label\" id: integer = 1 +3"
-          , Just (ComputedField "label" ( "id", (Location 0 0) ) IntegerType (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 3)))
+          , Just (ComputedField "label" ( "id", Location 0 0 ) IntegerType (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 3)))
           )
         , ( "should parse field with expression that is only a var name"
           , "\"label\" id: integer = someVarName"
-          , Just (ComputedField "label" ( "id", (Location 0 0) ) IntegerType (Var ( "someVarName", (Location 0 0) )))
+          , Just (ComputedField "label" ( "id", Location 0 0 ) IntegerType (Var ( "someVarName", Location 0 0 )))
           )
         ]
 
@@ -107,7 +107,7 @@ ifBlockTests : Test
 ifBlockTests =
     let
         basicBlockContent =
-            [ Field "label" ( "id", (Location 0 0) ) IntegerType
+            [ Field "label" ( "id", Location 0 0 ) IntegerType
             ]
     in
         testWithParserAndMap Form.formItem
@@ -115,15 +115,15 @@ ifBlockTests =
             "ifThen and ifThenElse"
             [ ( "should parse a simple if block"
               , "if (x) { \"label\" id: integer }"
-              , Just (IfThen (Var ( "x", (Location 0 0) )) basicBlockContent)
+              , Just (IfThen (Var ( "x", Location 0 0 )) basicBlockContent)
               )
             , ( "should allow no whitespace"
               , "if(x){\"label\" id:integer}"
-              , Just (IfThen (Var ( "x", (Location 0 0) )) basicBlockContent)
+              , Just (IfThen (Var ( "x", Location 0 0 )) basicBlockContent)
               )
             , ( "should parse if with else block"
               , "if (x) {\"label\" id: integer} else {\"label\" id: integer}"
-              , Just (IfThenElse (Var ( "x", (Location 0 0) )) basicBlockContent basicBlockContent)
+              , Just (IfThenElse (Var ( "x", Location 0 0 )) basicBlockContent basicBlockContent)
               )
             ]
 

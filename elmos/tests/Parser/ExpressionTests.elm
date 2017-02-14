@@ -44,7 +44,7 @@ atomTests =
     testWithParserAndMap expression
         removeLocactionFromExpression
         "atomTests"
-        [ ( "Should parse varName", "someVarName", Just (Var ( "someVarName", (Location 0 0) )) )
+        [ ( "Should parse varName", "someVarName", Just (Var ( "someVarName", Location 0 0 )) )
         , ( "Should parse int literal", "2", Just (Integer (Location 0 0) 2) )
         , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Location 0 0) (Integer (Location 0 0) 2)) )
         , ( "Should parse parens boolean literal", "true", Just (Boolean (Location 0 0) True) )

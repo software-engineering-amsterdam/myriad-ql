@@ -34,7 +34,7 @@ testWithParserAndMap p f name tests =
 testParser : Parser () b -> (b -> c) -> TestParserInput c -> Test
 testParser p f ( name, input, output ) =
     test name <|
-        \() -> parseToMaybe p input |> (Maybe.map f) |> Expect.equal output
+        \() -> parseToMaybe p input |> Maybe.map f |> Expect.equal output
 
 
 parseToMaybe : Parser () res -> String -> Maybe res

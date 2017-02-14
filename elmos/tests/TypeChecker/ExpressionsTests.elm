@@ -42,7 +42,7 @@ all =
                     |> Expect.equal (Err [ Error (ArithmeticExpressionTypeMismatch Plus (Location 0 0) IntegerType BooleanType) ])
         , test "type mismatch for arithmetic expression when both sides do error " <|
             \() ->
-                Expressions.getType Dict.empty (ArithmeticExpression Plus (Location 0 0) (Var ( "a", (Location 0 0) )) (Var ( "b", Location 0 0 )))
+                Expressions.getType Dict.empty (ArithmeticExpression Plus (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", Location 0 0 )))
                     |> Expect.equal
                         (Err
                             [ (Error (UndefinedExpressionVariable "a" (Location 0 0)))
@@ -63,7 +63,7 @@ all =
                     |> Expect.equal (Err [ Error (RelationExpressionTypeMismatch GreaterThan (Location 0 0) IntegerType BooleanType) ])
         , test "type mismatch for relation expression when both sides do error" <|
             \() ->
-                Expressions.getType Dict.empty (RelationExpression GreaterThan (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", (Location 0 0) )))
+                Expressions.getType Dict.empty (RelationExpression GreaterThan (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", Location 0 0 )))
                     |> Expect.equal
                         (Err
                             [ (Error (UndefinedExpressionVariable "a" (Location 0 0)))
@@ -84,7 +84,7 @@ all =
                     |> Expect.equal (Err [ Error (LogicExpressionTypeMismatch And (Location 0 0) IntegerType BooleanType) ])
         , test "type mismatch for logic expression when both sides do error" <|
             \() ->
-                Expressions.getType Dict.empty (LogicExpression Or (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", (Location 0 0) )))
+                Expressions.getType Dict.empty (LogicExpression Or (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", Location 0 0 )))
                     |> Expect.equal
                         (Err
                             [ (Error (UndefinedExpressionVariable "a" (Location 0 0)))
@@ -109,7 +109,7 @@ all =
                     |> Expect.equal (Err [ Error (ComparisonExpressionTypeMismatch NotEqual (Location 0 0) BooleanType IntegerType) ])
         , test "type mismatch for logic expression when both sides do error" <|
             \() ->
-                Expressions.getType Dict.empty (ComparisonExpression Equal (Location 0 0) (Var ( "a", (Location 0 0) )) (Var ( "b", (Location 0 0) )))
+                Expressions.getType Dict.empty (ComparisonExpression Equal (Location 0 0) (Var ( "a", Location 0 0 )) (Var ( "b", Location 0 0 )))
                     |> Expect.equal
                         (Err
                             [ (Error (UndefinedExpressionVariable "a" (Location 0 0)))
