@@ -3,7 +3,7 @@ import unittest
 from pql.Amain import *
 
 
-class TestMain(unittest.TestCase):
+class TestParser(unittest.TestCase):
     def test_parse_simple_empty_form(self):
         self.input_string = "form taxOfficeExample {}"
         self.result = parse(self.input_string)
