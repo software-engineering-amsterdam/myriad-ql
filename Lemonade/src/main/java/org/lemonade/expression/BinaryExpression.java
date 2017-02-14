@@ -7,7 +7,7 @@ public class BinaryExpression extends Expression {
     private int right;
     private QLOperatorType.BinaryOperator operator;
 
-    BinaryExpression(QLType type, QLOperatorType.BinaryOperator operator, int left, int right) {
+    public BinaryExpression(QLType type, QLOperatorType.BinaryOperator operator, int left, int right) {
         super(type, left);
         this.right = right;
         this.operator = operator;
