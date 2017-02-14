@@ -69,7 +69,7 @@ class Parser < Parslet::Parser
 
   # variables or literals
   rule(:variable_or_literal) do
-    (variable | boolean_literal | integer_literal | string_literal) >> spaces?
+    (boolean_literal | integer_literal | string_literal | variable) >> spaces?
   end
 
   rule(:variable) do
