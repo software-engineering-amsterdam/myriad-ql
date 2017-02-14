@@ -143,9 +143,16 @@ class TestParser(TestCase):
         (Grammar.form, "form FormName { }", Form("FormName", [])),
 
         (Grammar.form,
-         """form FormName { x: \"xLabel\" integer = 2 * 3
-         if x > 6 { y: \"yLabel\" boolean = true }
-         else { y: \"yLabel\" boolean = false }}""",
+         """
+         form FormName {
+            x: \"xLabel\" integer = 2 * 3
+            if x > 6 {
+                y: \"yLabel\" boolean = true
+            }
+            else {
+                y: \"yLabel\" boolean = false
+            }
+        }""",
          Form("FormName",
               [Question("x",
                         "xLabel",
