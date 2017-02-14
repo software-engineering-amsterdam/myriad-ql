@@ -14,13 +14,6 @@ class SingletonExpression
   end
 end
 
-# singletons: ! -
-class BooleanNegation < SingletonExpression
-end
-
-class IntegerNegation < SingletonExpression
-end
-
 class BinaryExpression
   attr_reader :left, :right
 
@@ -30,12 +23,22 @@ class BinaryExpression
   end
 end
 
-# booleans && ||
+
+# negations: ! -
+class BooleanNegation < SingletonExpression
+end
+
+class IntegerNegation < SingletonExpression
+end
+
+
+# booleans: && ||
 class And < BinaryExpression
 end
 
 class Or < BinaryExpression
 end
+
 
 # arithmetic: - + * /
 class Subtract < BinaryExpression
