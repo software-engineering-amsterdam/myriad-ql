@@ -141,7 +141,7 @@ class BinOpNode(Node):
         self.right = binop[2]
 
     def __str__(self, ident=0):
-         return "({} {} {})".format(str(self.left), str(self.op), str(self.right))
+        return "({} {} {})".format(str(self.left), str(self.op), str(self.right))
 
 
 class MonOpNode(Node):
