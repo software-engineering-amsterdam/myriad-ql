@@ -33,9 +33,9 @@ public class MakeForm extends QLBaseListener {
     }
 
     @Override public void exitBlock (final QLParser.BlockContext ctx) {
-        System.err.println();
-        ArrayList<Question> child = questions.pop();
-        getForm().addChild(child);
+//        System.err.println();
+//        ArrayList<Question> child = questions.pop();
+//        getForm().addChild(child);
     }
 
     @Override public void enterQuestion(final QLParser.QuestionContext ctx) {

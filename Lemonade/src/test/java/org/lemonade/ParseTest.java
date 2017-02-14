@@ -1,20 +1,24 @@
 package org.lemonade;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.BitSet;
-import java.util.List;
 
+import org.antlr.v4.runtime.ANTLRErrorListener;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.TokenSource;
+import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Before;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -133,20 +137,20 @@ public class ParseTest {
             setFailed(true);
         }
     }
-//
-//    @Test
-//    public void printParse() throws IOException {
-//        String simpleForm = "form bla {tmp : \"ja?\" boolean if (True) { tmpNest : \"nee?\" boolean}}";
-//        // create a CharStream that reads from standard input
-//        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
-//        // create a lexer that feeds off of input CharStream
-//        QLLexer lexer = new QLLexer(input);
-//        // create a buffer of tokens pulled from the lexer
-//        CommonTokenStream tokens = new CommonTokenStream(lexer);
-//        // create a parser that feeds off the tokens buffer
-//        QLParser parser = new QLParser(tokens);
-//        ParseTree tree = parser.form(); // begin parsing at form rule
-//        System.out.println(tree.toStringTree(parser));
-//    }
+    //
+    //    @Test
+    //    public void printParse() throws IOException {
+    //        String simpleForm = "form bla {tmp : \"ja?\" boolean if (True) { tmpNest : \"nee?\" boolean}}";
+    //        // create a CharStream that reads from standard input
+    //        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
+    //        // create a lexer that feeds off of input CharStream
+    //        QLLexer lexer = new QLLexer(input);
+    //        // create a buffer of tokens pulled from the lexer
+    //        CommonTokenStream tokens = new CommonTokenStream(lexer);
+    //        // create a parser that feeds off the tokens buffer
+    //        QLParser parser = new QLParser(tokens);
+    //        ParseTree tree = parser.form(); // begin parsing at form rule
+    //        System.out.println(tree.toStringTree(parser));
+    //    }
 }
 
