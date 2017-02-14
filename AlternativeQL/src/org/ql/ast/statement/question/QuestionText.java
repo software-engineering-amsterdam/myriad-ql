@@ -2,10 +2,10 @@ package org.ql.ast.statement.question;
 
 import org.ql.ast.Node;
 
-public class Text implements Node {
+public class QuestionText implements Node {
     private final String questionText;
 
-    public Text(String questionText) {
+    public QuestionText(String questionText) {
         this.questionText = questionText;
     }
 

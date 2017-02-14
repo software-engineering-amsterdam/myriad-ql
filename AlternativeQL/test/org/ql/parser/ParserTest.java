@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.ql.ast.form.Form;
 import org.ql.ast.statement.If;
-import org.ql.ast.statement.question.Question;
+import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
 
 public class ParserTest extends Assert {

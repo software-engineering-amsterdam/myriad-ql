@@ -7,11 +7,11 @@ import org.ql.ast.expression.BooleanLiteral;
 import org.ql.ast.expression.FloatLiteral;
 import org.ql.ast.expression.IntegerLiteral;
 import org.ql.ast.statement.If;
-import org.ql.ast.statement.question.Question;
+import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
 import org.ql.ast.expression.StringLiteral;
 import org.ql.ast.statement.Statement;
-import org.ql.ast.statement.question.Text;
+import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
 import org.ql.grammar.QLParserVisitor;
@@ -37,7 +37,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     public Node visitQuestion(QLParserParser.QuestionContext ctx) {
         return new Question(
             (Identifier) visit(ctx.id),
-            (Text) visit(ctx.text),
+            (QuestionText) visit(ctx.text),
             (Type) visit(ctx.type())
         );
     }
@@ -60,7 +60,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitQuestionText(QLParserParser.QuestionTextContext ctx) {
-        return new Text(removeQuotes(ctx.getText()));
+        return new QuestionText(removeQuotes(ctx.getText()));
     }
 
     private String removeQuotes(String text) {
