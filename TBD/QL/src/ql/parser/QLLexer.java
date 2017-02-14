@@ -170,30 +170,7 @@ public class QLLexer implements QLTokens {
                             n = 10 * n + (c - '0');
                             nextChar();
                         } while (Character.isDigit(c));
-
-                      /*  if(c == '-') {
-                            nextChar();
-                            int day = n;
-                            int month = 0;
-                            int year = 0;
-
-                            do {
-                                month = 10 * month + (c - '0');
-                                nextChar();
-                            } while (Character.isDigit(c));
-                            System.out.println("Day " + day + " and month " + month);
-                            if (c == '-') {
-                                nextChar();
-                                System.out.println("here with " + (char) c);
-                                do {
-                                    year = 10 * year + (c - '0');
-                                    nextChar();
-                                } while (Character.isDigit(c));
-                                System.out.println("Date: " + day + "-" + month + "-" + year);
-                                this.yylval = new QLDate(day, month, year);
-                                return token = DATE;
-                            }
-                        } else */if(c == '.') {
+                        if(c == '.') {
                             nextChar();
                             // Parse floats without digits after the comma
                             if(!Character.isDigit(c)) {

@@ -9,7 +9,6 @@
 %token <QLFloat> FLOAT
 %token <QLIdent> IDENT
 %token <QLBoolean> BOOLEAN
-%token <QLDate> DATE
 %token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!' '='
 %token '(' ')'
 %token IF ELSE '{' '}'
