@@ -9,7 +9,6 @@ import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
-import org.ql.ast.form.Form;
 import org.ql.ast.expression.literal.String;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;

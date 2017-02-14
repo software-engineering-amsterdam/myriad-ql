@@ -1,4 +1,4 @@
-package org.ql.ast.form;
+package org.ql.ast;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;

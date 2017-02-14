@@ -2,15 +2,12 @@ package org.ql.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.literal.Boolean;
 import org.ql.ast.expression.literal.Decimal;
-import org.ql.ast.form.Form;
+import org.ql.ast.Form;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
-
-import java.math.BigDecimal;
 
 public class ParserTest extends Assert {
     @Test
