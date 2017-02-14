@@ -16,21 +16,25 @@ public class IntegerAtom extends Atom {
 	}
 
 	@Override
-	public Number add(Atom other) {
-		// TODO Auto-generated method stub
-		return value + other.getNumber().intValue();
+	public Atom add(Atom other) {
+		
+		if (other.getNumber() == null) {
+			return null;
+		}
+		
+		return new IntegerAtom(value + other.getNumber().intValue());
 	}
 
 	@Override
-	public Boolean and(Atom other) {
+	public Atom and(Atom other) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public Number div(Atom other) {
+	public Atom div(Atom other) {
 		// TODO Auto-generated method stub
-		return value / other.getNumber().floatValue();
+		return new IntegerAtom(Math.round(value / other.getNumber().floatValue()));
 	}
 
 	@Override
@@ -48,4 +52,19 @@ public class IntegerAtom extends Atom {
     public Number getNumber() {
         return this.value;
     }
+
+	@Override
+	public Atom plus() {
+		return new IntegerAtom(+ value);
+	}
+
+	@Override
+	public Atom min() {
+		return new IntegerAtom(- value);
+	}
+
+	@Override
+	public Atom not() {
+		return null;
+	}
 }

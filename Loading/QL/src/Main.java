@@ -1,3 +1,5 @@
+import java.util.Map;
+
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -35,6 +37,14 @@ public class Main {
 		 Environment environment = new Environment();
 		 EvalVisitor ASTVisitor = new EvalVisitor(environment);
 		 ASTVisitor.visit(form);
+		 
+		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
+		 Map<String, String> answers = QVisitor.getEnvironment().getAnswers();
+		 
+		 for (String answer : answers.keySet()) {
+			 System.out.println(answer);
+		 }
+		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree

@@ -8,4 +8,10 @@ public class GExpression extends BinaryExpression {
 	public void accept(Visitor v) {
 		v.visit(this);
 	}
+
+	@Override
+	public Atom evaluate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

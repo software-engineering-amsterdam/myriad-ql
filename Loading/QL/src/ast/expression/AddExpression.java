@@ -1,22 +1,13 @@
 package ast.expression;
 
 import ast.Visitor;
+import ast.atom.Atom;
 
 public class AddExpression extends BinaryExpression {
 	
-	public Number evaluate() {
-		
-		if (getLhs().getNumber() == null || getRhs().getNumber() == null) {
-			// throw exception!
-		} 
+	public Atom evaluate() {
 		
 		return getLhs().add(getRhs());
-		
-
-		
-		// TODO add round function or return int
-//		return Math.round((getLhs().getNumber().doubleValue() +
-//				getRhs().getNumber().doubleValue()) * 100.0 ) / 100.0;
 	}
 	
 	@Override

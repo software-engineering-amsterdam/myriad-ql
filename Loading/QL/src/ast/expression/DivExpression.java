@@ -1,11 +1,12 @@
 package ast.expression;
 
 import ast.Visitor;
+import ast.atom.Atom;
 
 public class DivExpression extends BinaryExpression {
 
 	@Override
-	public Number evaluate4() {
+	public Atom evaluate() {
 		if (getLhs() == null || getRhs() == null) {
 			// throw exception!
 		}
