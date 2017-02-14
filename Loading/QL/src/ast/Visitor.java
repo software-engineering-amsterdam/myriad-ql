@@ -61,5 +61,11 @@ public class Visitor {
 		System.out.println("LEAF");
 		
 	}
+
+	public void visit(UnaryExpression expression) {
+		
+		visit(expression.getLhs());
+		
+	}
 	
 }

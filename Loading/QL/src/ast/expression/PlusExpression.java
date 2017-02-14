@@ -1,12 +1,13 @@
 package ast.expression;
 
 import ast.Visitor;
-import ast.atom.Atom;
 
-public class NotExpression extends UnaryExpression {
-	
+public class PlusExpression extends UnaryExpression {
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
+		
 	}
+
 }

@@ -3,16 +3,20 @@ package ast.expression;
 import ast.atom.Atom;
 
 public abstract class UnaryExpression extends Expression {
-    private Atom lhs;
+    private Atom lhs; // TODO rename?
     // protected boolean eval;
-
-    // TODO is this preferred over a constructor with lhs and rhs?
+    
+    // TODO remove empty constructor?
     public UnaryExpression() {
-//		this.lhs = lhs;
-//		this.rhs = rhs;
+    }
+    
+    // TODO not pretty to return a unary expression
+    public UnaryExpression setElements(Atom lhs) {
+        this.lhs = lhs;
+        return this;
     }
 
-    public void setElements(Atom lhs) {
-        this.lhs = lhs;
-    }
+	public Atom getLhs() {
+		return lhs;
+	}
 }

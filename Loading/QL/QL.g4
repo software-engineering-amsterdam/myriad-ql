@@ -49,7 +49,7 @@ parenthesisExpr returns [Expression result]
 
 expr returns [Expression result]
  :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom {  $unaryOp.result.setElements($atom.result); } // TODO return expression
+ | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  | atom { $result = $atom.result; }
  ;
 
@@ -71,6 +71,8 @@ binOp returns [BinaryExpression result]
 // TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
+  | '+' { $result = new PlusExpression(); }
+  | '-' { $result = new MinusExpression(); }
   ;
 
 atom returns [Atom result]
