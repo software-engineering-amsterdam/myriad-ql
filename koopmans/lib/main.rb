@@ -1,6 +1,6 @@
 require_relative 'reader'
 require_relative 'parser'
-require_relative 'gui'
+# require_relative 'gui'
 require_relative 'ast'
 require 'pp'
 

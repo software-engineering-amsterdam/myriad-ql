@@ -37,22 +37,39 @@ describe Parser do
     end
   end
 
-  context 'operator' do
+  context 'arithmetic' do
     it 'parses' do
-      expect(parser.operator).to parse('+')
+      expect(parser.arithmetic).to parse('+')
     end
   end
 
-  context 'expression' do
+  context 'arithmetic expression' do
     it 'parses' do
       expect(parser.expression).to parse('(sellingPrice - privateDebt + anotherVariable)')
     end
   end
 
-  context 'arithmatic' do
+  context 'booleans' do
     it 'parses' do
-      expect(parser.expression).to parse('(5 - 1 + 20)')
-      expect(parser.expression).to_not parse('(5 -* 1 + 20)')
+      expect(parser.booleans).to parse('&&')
+    end
+  end
+
+  context 'boolean expression' do
+    it 'parses' do
+      expect(parser.expression).to parse('(true && false)')
+    end
+  end
+
+  context 'comparisons' do
+    it 'parses' do
+      expect(parser.comparisons).to parse('<')
+    end
+  end
+
+  context 'comparison expression' do
+    it 'parses' do
+      expect(parser.expression).to parse('(5 < 10)')
     end
   end
 

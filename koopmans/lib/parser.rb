@@ -13,14 +13,6 @@ class Parser < Parslet::Parser
   #   match('[0-9]').repeat(1).as(:integer) >> spaces?
   # end
 
-  rule(:calculation) do
-    variable.as(:left) >> operator.as(:operator) >> expression.as(:right)
-  end
-
-  rule(:expression) do
-    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable
-  end
-
   def self.symbols(symbols)
     symbols.each do |name, symbol|
       rule(name) { str(symbol) }
@@ -33,15 +25,47 @@ class Parser < Parslet::Parser
           right_parenthesis: ')',
           quote: '"',
           colon: ':',
+          assign: '=',
 
           subtract: '-',
           add: '+',
           multiply: '*',
           divide: '/',
-          assign: '='
+
+          less: '<',
+          greater: '>',
+          less_equal: '<=',
+          greater_equal: '>=',
+          equal: '==',
+          not_equal: '!=',
+
+          logical_and: '&&',
+          logical_or: '||',
+          negate: '!'
+
+  # expression
+  rule(:calculation) do
+    variable.as(:left) >> (booleans | comparisons | arithmetic) >> expression.as(:right)
+  end
+
+  rule(:arithmetic) do
+    (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
+  end
+
+  rule(:comparisons) do
+    (less | less_equal | greater_equal | equal | not_equal).as(:comparisons) >> spaces?
+  end
+
+  rule(:booleans) do
+    (logical_and | logical_or | negate).as(:booleans) >> spaces?
+  end
+
+  rule(:expression) do
+    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable
+  end
 
 
-  # question(s) with optional expression
+  # question with optional expression
   rule(:label) do
     quote >> match('[^"]').repeat.as(:label) >> quote >> spaces?
   end
@@ -56,10 +80,6 @@ class Parser < Parslet::Parser
 
   rule(:variable_assignment) do
     variable >> colon >> spaces?
-  end
-
-  rule(:operator) do
-    (subtract | add | multiply | divide).as(:operator) >> spaces?
   end
 
   rule(:assignment?) do
