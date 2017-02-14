@@ -1,7 +1,7 @@
 package com.mcsa;
 
-import com.mcsa.gen.ExpLexer;
-import com.mcsa.gen.ExpParser;
+import com.mcsa.antlr.QLLexer;
+import com.mcsa.antlr.QLParser;
 import org.antlr.v4.runtime.*;
 
 import java.io.BufferedReader;
@@ -25,9 +25,9 @@ public class EvaluateExample {
         if(!in.isEmpty()) {
             String input = in;
             ANTLRInputStream inputStream = new ANTLRInputStream(input);
-            ExpLexer lexer = new ExpLexer(inputStream);
+            QLLexer lexer = new QLLexer(inputStream);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
-            ExpParser parser = new ExpParser(tokens);
+            QLParser parser = new QLParser(tokens);
             return parser.start().getText();
         }
         else
