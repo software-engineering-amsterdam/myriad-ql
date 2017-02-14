@@ -42,7 +42,6 @@ public class Visitor {
 		
 		statement.getExpression().accept(this);
 		statement.getBlock().accept(this);
-//		visit(statement.getBlock()); // TODO circular dependencies?
 	}
 	
 	// TODO for types, atoms, expression can we only visit the general classes
@@ -56,8 +55,7 @@ public class Visitor {
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
-		unaryExpression.getLhs().accept(this);
-		
+		unaryExpression.getLhs().accept(this);		
 	}
 
 	public void visit(BoolAtom boolAtom) {
@@ -74,6 +72,10 @@ public class Visitor {
 	
 	public void visit(IntegerAtom integerAtom) {
 		System.out.println(integerAtom.getValue());
+	}
+	
+	public void visit(MoneyAtom moneyAtom) {
+		System.out.println(moneyAtom.getValue());
 	}
 	
 	public void visit(StringAtom stringAtom) {
