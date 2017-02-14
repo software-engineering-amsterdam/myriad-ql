@@ -64,24 +64,6 @@ public class ParseTest {
 
     }
 
-    @Test
-    public void testWalk() throws IOException {
-        String simpleForm = "form naam {tmp : \"echt?\" boolean}";
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
-
-        QLLexer lexer = new QLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        QLParser parser = new QLParser(tokens);
-        ParseTree tree = parser.form();
-
-        ParseTreeWalker walker = new ParseTreeWalker();
-
-        QLLoader loader = new QLLoader();
-
-        walker.walk(loader, tree);
-        //System.out.println(loader.names);
-    }
     public void happyCase() throws Exception {
         TestErrorListener errorListener = new TestErrorListener();
         QLParser.FormContext context = parseForm(simpleForm, errorListener);

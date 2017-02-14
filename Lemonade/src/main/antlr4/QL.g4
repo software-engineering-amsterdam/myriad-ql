@@ -33,18 +33,18 @@ conditional
     ;
 
 expr
-    : unaryoperator expr
+    : BOOLEAN
+    | INT
+    | unaryoperator expr
     | expr binaryoperator expr
-    | BOOLEAN
-    | INTEGER
     ;
 
 label
-    : STRING
+    : STR
     ;
 
 identifier
-    : IDENTIFIER
+    : IDENT
     ;
 
 type_specifier
@@ -76,8 +76,11 @@ binaryoperator
     | '||'
     ;
 
+IDENT
+    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
 
-INTEGER
+INT
     : ('0'..'9')+
     ;
 
@@ -85,11 +88,7 @@ BOOLEAN
     : 'true' | 'false'
     ;
 
-IDENTIFIER
-    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-    ;
-
-STRING
+STR
     : '"' .*? '"'
     ;
 
@@ -97,6 +96,6 @@ COMMENT
     : '/*' .*? '*/'  -> channel(HIDDEN)
     ;
 
-WHITESPACE
+WS
     : [ \t\r\n]+ -> channel(HIDDEN)
     ;
