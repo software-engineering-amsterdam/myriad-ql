@@ -5,9 +5,22 @@ require 'parser/parser'
 describe Parser do
   let(:parser) { Parser.new }
 
-  context 'label' do
+  context 'boolean literal' do
     it 'parses' do
-      expect(parser.label).to parse('"How much is?"')
+      expect(parser.boolean_literal).to parse('true')
+      expect(parser.boolean_literal).to_not parse('True')
+    end
+  end
+
+  context 'integer literal' do
+    it 'parses' do
+      expect(parser.integer_literal).to parse('42')
+    end
+  end
+
+  context 'string literal' do
+    it 'parses' do
+      expect(parser.string_literal).to parse('"How much is?"')
     end
   end
 
@@ -16,13 +29,6 @@ describe Parser do
       expect(parser.variable_assignment).to parse('hasSoldHouse:')
     end
   end
-
-  # context 'integer' do
-  #   it 'parses' do
-  #     expect(parser.integer).to parse('1')
-  #     expect(parser.integer).to_not parse('a')
-  #   end
-  # end
 
   context 'type' do
     it 'parses' do

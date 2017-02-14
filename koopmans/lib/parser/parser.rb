@@ -9,10 +9,6 @@ class Parser < Parslet::Parser
     spaces.maybe
   end
 
-  # rule(:integer) do
-  #   match('[0-9]').repeat(1).as(:integer) >> spaces?
-  # end
-
   def self.symbols(symbols)
     symbols.each do |name, symbol|
       rule(name) { str(symbol) }
@@ -45,7 +41,7 @@ class Parser < Parslet::Parser
 
   # expression
   rule(:calculation) do
-    variable.as(:left) >> (boolean | comparison | arithmetic) >> expression.as(:right)
+    variable_or_literal.as(:left) >> (boolean | comparison | arithmetic) >> expression.as(:right)
   end
 
   rule(:arithmetic) do
@@ -61,25 +57,39 @@ class Parser < Parslet::Parser
   end
 
   rule(:expression) do
-    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable
+    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable_or_literal
   end
 
 
-  # question with optional expression
-  rule(:label) do
-    quote >> match('[^"]').repeat.as(:label) >> quote >> spaces?
-  end
-
+  # question
   rule(:type) do
     (str('boolean') | str('integer') | str('date') | str('decimal') | str('string') | str('money')).as(:type) >> spaces?
   end
 
+
+  # variables or literals
+  rule(:variable_or_literal) do
+    (variable | boolean_literal | integer_literal | string_literal) >> spaces?
+  end
+
   rule(:variable) do
-    match('\w+').repeat(1).as(:variable) >> spaces?
+    match('\w+').repeat(1).as(:variable)
+  end
+
+  rule(:integer_literal) do
+    match('[0-9]').repeat(1).as(:integer)
+  end
+
+  rule(:boolean_literal) do
+    (str('true') | str('false')).as(:boolean)
+  end
+
+  rule(:string_literal) do
+    quote >> match('[^"]').repeat.as(:string) >> quote >> spaces?
   end
 
   rule(:variable_assignment) do
-    variable >> colon >> spaces?
+    variable_or_literal >> colon >> spaces?
   end
 
   rule(:assignment?) do
@@ -87,7 +97,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:question) do
-    (label >> variable_assignment >> type >> assignment?).as(:question) >> spaces?
+    (string_literal >> variable_assignment >> type >> assignment?).as(:question) >> spaces?
   end
 
 
@@ -103,7 +113,7 @@ class Parser < Parslet::Parser
 
   # form
   rule(:form) do
-    spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form)
+    spaces? >> (str('form') >> spaces? >> variable_or_literal >> spaces? >> block).as(:form)
   end
 
   root :form

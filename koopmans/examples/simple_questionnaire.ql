@@ -6,7 +6,7 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
-  if (hasSoldHouse) {
+  if (hasSoldHouse && hasBoughtHouse) {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"

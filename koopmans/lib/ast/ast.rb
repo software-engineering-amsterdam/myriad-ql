@@ -17,23 +17,23 @@ class Ast < Parslet::Transform
     Variable.new(variable)
   end
 
+  types = {'boolean' => BooleanType,
+           'integer' => IntegerType,
+           'date' => DateType,
+           'decimal' => DecimalType,
+           'string' => StringType,
+           'money' => MoneyType}
+
   # create Question
   rule(question: {label: simple(:label), variable: simple(:variable), type: simple(:type)}) do
     # Question.new(label, Variable.new(variable), Object.const_get((type.to_s.capitalize + 'Type')))
-    Question.new(label, Variable.new(variable), type)
+    Question.new(label, Variable.new(variable), types[type.to_s].new)
   end
 
-  # def question_type(type)
-  #   case type
-  #     when 'boolean'
-  #       BooleanType.new
-  #
-  #   end
-  # end
-
-  # rule(type: simple(:boolean)) do
-  #   nil
-  # end
+  # create Question with assignment
+  rule(question: {label: simple(:label), variable: simple(:variable), type: simple(:type), expression: subtree(:expression)}) do
+    Question.new(label, variable, types[type.to_s].new, expression)
+  end
 
   # create if statement
   rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
@@ -51,9 +51,7 @@ class Ast < Parslet::Transform
   #   Question.new(label, variable, type)
   # end
   #
-  rule(question: {label: simple(:label), variable: simple(:variable), type: simple(:type), expression: subtree(:expression)}) do
-    Question.new(label, variable, type, expression)
-  end
+
   #
   # # create Question with expression
   # # TODO parse expression
@@ -77,18 +75,30 @@ class Ast < Parslet::Transform
   # # end
 
 
+  # arithmetic expressions
   rule({left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
-    arithmetics = {'-' => Subtract, '+' => Add, '*' => Multiply, '/' => Divide}
+    arithmetics = {'-' => Subtract,
+                   '+' => Add,
+                   '*' => Multiply,
+                   '/' => Divide}
     arithmetics[arithmetic.to_s].new(left, right)
   end
 
+  # boolean expressions
   rule({left: subtree(:left), boolean: simple(:boolean), right: subtree(:right)}) do
-    booleans = {'||' => Or, '&&' => And}
+    booleans = {'||' => Or,
+                '&&' => And}
     booleans[boolean.to_s].new(left, right)
   end
 
+  # comparison expressions
   rule({left: subtree(:left), comparison: simple(:comparison), right: subtree(:right)}) do
-    comparisons = {'<' => Less, '>' => Greater, '<=' => LessEqual, '>=' => GreaterEqual, '==' => Equal, '!=' => NotEqual}
+    comparisons = {'<' => Less,
+                   '>' => Greater,
+                   '<=' => LessEqual,
+                   '>=' => GreaterEqual,
+                   '==' => Equal,
+                   '!=' => NotEqual}
     comparisons[comparison.to_s].new(left, right)
   end
 
