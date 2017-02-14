@@ -68,7 +68,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:integer_literal) do
-    match('[0-9]').repeat(1).as(:integer)
+     match('[0-9]').repeat(1).as(:integer)
   end
 
   rule(:boolean_literal) do

@@ -47,21 +47,17 @@ class Transformer < Parslet::Transform
     end
   end
 
-
-
-  # boolean literal
-  rule(boolean: simple(:boolean)) do
-    BooleanLiteral.new(boolean)
+  Literal.descendants.each do |literal|
+    rule("#{literal.to_type}": simple(:value)) do
+      literal.new(value)
+    end
   end
 
+
+  # TODO: zijn we hier niet al aan het type checken?? syntax is correct in principe
   # negative boolean literal
   rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
     BooleanNegation.new(BooleanLiteral.new(boolean))
-  end
-
-  # integer literal
-  rule(integer: simple(:integer)) do
-    IntegerLiteral.new(integer)
   end
 
   # negative integer literal
@@ -69,8 +65,4 @@ class Transformer < Parslet::Transform
     IntegerNegation.new(IntegerLiteral.new(integer))
   end
 
-  # string literal
-  rule(string: simple(:string)) do
-    StringLiteral.new(string)
-  end
 end
