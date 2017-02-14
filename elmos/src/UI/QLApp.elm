@@ -1,6 +1,6 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
+import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import Html exposing (Html, div, text, h3, form, textarea, pre, hr, ul, li, p)
 import Html.Attributes exposing (class, style, defaultValue, rows, cols)
 import Html.Events exposing (onInput)
@@ -138,15 +138,16 @@ viewForm model formDsl =
         (List.map (viewField model) (getFields formDsl))
 
 
-viewField : Model -> AST.Field -> Html Msg
-viewField model field =
+viewField : Model -> ( Label, Id, ValueType ) -> Html Msg
+viewField model ( label, identifier, valueType ) =
     BaseWidget.container
-        { field = field
+        { identifier = identifier
+        , label = label
         , formData = model.formData
-        , onChange = OnFieldChange field.id
+        , onChange = OnFieldChange identifier
         }
     <|
-        case field.valueType of
+        case valueType of
             StringType ->
                 StringWidget.view
 
@@ -157,40 +158,53 @@ viewField model field =
                 IntegerWidget.view
 
 
-getFields : Form -> List AST.Field
+getFields : Form -> List ( Label, Id, ValueType )
 getFields =
     .items >> getFieldsForItems
 
 
-getFieldsForItem : FormItem -> List AST.Field
+getFieldsForItem : FormItem -> List ( Label, Id, ValueType )
 getFieldsForItem item =
     case item of
-        AST.FieldItem field ->
-            [ field ]
+        Field label identifier valueType ->
+            [ ( label, identifier, valueType ) ]
 
-        AST.IfItem { thenBranch, elseBranch } ->
+        ComputedField label identifier valueType _ ->
+            [ ( label, identifier, valueType ) ]
+
+        IfThen _ thenBranch ->
+            getFieldsForItems thenBranch
+
+        IfThenElse _ thenBranch elseBranch ->
             List.concat
                 [ getFieldsForItems thenBranch
                 , getFieldsForItems elseBranch
                 ]
 
 
+getFieldsForItems : List FormItem -> List ( Label, Id, ValueType )
+getFieldsForItems =
+    List.concatMap getFieldsForItem
+
+
 getExpressions : FormItem -> List Expression
 getExpressions item =
     case item of
-        AST.FieldItem field ->
-            field.valueExpression
-                |> Maybe.map List.singleton
-                |> Maybe.withDefault []
+        Field _ _ _ ->
+            []
 
-        AST.IfItem { expression, thenBranch, elseBranch } ->
+        ComputedField _ _ _ valueExpression ->
+            [ valueExpression ]
+
+        IfThen expression thenBranch ->
+            List.concat
+                [ [ expression ]
+                , List.concatMap getExpressions thenBranch
+                ]
+
+        IfThenElse expression thenBranch elseBranch ->
             List.concat
                 [ [ expression ]
                 , List.concatMap getExpressions thenBranch
                 , List.concatMap getExpressions elseBranch
                 ]
-
-
-getFieldsForItems : List FormItem -> List AST.Field
-getFieldsForItems =
-    List.concatMap getFieldsForItem
