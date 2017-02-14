@@ -1,3 +1,26 @@
+class Variable
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+class SingletonExpression
+  attr_reader :expression
+
+  def initialize(expression)
+    @expression = expression
+  end
+end
+
+# singletons: ! -
+class BooleanNegation < SingletonExpression
+end
+
+class IntegerNegation < SingletonExpression
+end
+
 class BinaryExpression
   attr_reader :left, :right
 
@@ -7,17 +30,12 @@ class BinaryExpression
   end
 end
 
-
-# booleans && || !
+# booleans && ||
 class And < BinaryExpression
 end
 
 class Or < BinaryExpression
 end
-
-# class Negate < BinaryExpression
-# end
-
 
 # arithmetic: - + * /
 class Subtract < BinaryExpression

@@ -37,7 +37,7 @@ class Parser < Parslet::Parser
 
           logical_and: '&&',
           logical_or: '||',
-          negate: '!'
+          negation: '!'
 
   # expression
   rule(:calculation) do
@@ -53,7 +53,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:boolean) do
-    (logical_and | logical_or | negate).as(:boolean) >> spaces?
+    (logical_and | logical_or | negation).as(:boolean) >> spaces?
   end
 
   rule(:expression) do
@@ -69,7 +69,19 @@ class Parser < Parslet::Parser
 
   # variables or literals
   rule(:variable_or_literal) do
-    (boolean_literal | integer_literal | string_literal | variable) >> spaces?
+    ((boolean_negation? >> boolean_literal) | (integer_negation? >> integer_literal) | string_literal | (negation? >> variable)) >> spaces?
+  end
+
+  rule(:integer_negation?) do
+    subtract.maybe.as(:integer_negation)
+  end
+
+  rule(:boolean_negation?) do
+    negation.maybe.as(:boolean_negation)
+  end
+
+  rule(:negation?) do
+    (negation | subtract).as(:negation).maybe
   end
 
   rule(:variable) do

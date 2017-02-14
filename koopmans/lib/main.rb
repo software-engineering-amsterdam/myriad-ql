@@ -1,7 +1,6 @@
 require_relative 'parser/reader'
 require_relative 'parser/parser'
 require_relative 'ast/ast'
-require_relative 'ast/variable'
 
 require 'pp'
 

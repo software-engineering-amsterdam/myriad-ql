@@ -1,8 +1,6 @@
-require_relative 'question'
+require_relative 'statement'
 require_relative 'form'
-require_relative 'if_statement'
-require_relative 'binary_expression'
-require_relative 'variable'
+require_relative 'expression'
 require_relative 'type'
 require_relative 'literal'
 
@@ -18,6 +16,14 @@ class Ast < Parslet::Transform
     Variable.new(variable)
   end
 
+  # create variable with negation
+  negation_types = {'!' => BooleanNegation,
+                    '-' => IntegerNegation}
+  rule(negation: simple(:negation), variable: simple(:variable)) do
+    negation_types[negation.to_s].new(Variable.new(variable))
+  end
+
+  # Questions
   types = {'boolean' => BooleanType,
            'integer' => IntegerType,
            'date' => DateType,
@@ -27,7 +33,6 @@ class Ast < Parslet::Transform
 
   # create Question
   rule(question: {string: simple(:string), variable: simple(:variable), type: simple(:type)}) do
-    # Question.new(string, Variable.new(variable), Object.const_get((type.to_s.capitalize + 'Type')))
     Question.new(string, Variable.new(variable), types[type.to_s].new)
   end
 
@@ -42,88 +47,55 @@ class Ast < Parslet::Transform
   end
 
 
-  # literals
+  # boolean literal
   rule(boolean: simple(:boolean)) do
     BooleanLiteral.new(boolean)
   end
 
+  rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
+    BooleanNegation.new(BooleanLiteral.new(boolean))
+  end
+
+  # integer literal
   rule(integer: simple(:integer)) do
     IntegerLiteral.new(integer)
   end
 
+  rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
+    IntegerNegation.new(IntegerLiteral.new(integer))
+  end
+
+  # string literal
   rule(string: simple(:string)) do
     StringLiteral.new(string)
   end
 
-
-  # # create Form
-  # rule(form: {variable: simple(:variable), block: subtree(:block)}) do
-  #   Form.new(variable, block)
-  # end
-  #
-  # # create Question
-  # rule(question: {string: simple(:string), variable: simple(:variable), type: simple(:type)}) do
-  #   Question.new(string, variable, type)
-  # end
-  #
-
-  #
-  # # create Question with expression
-  # # TODO parse expression
-  # #
-  # # rule(
-  # #     :left => simple(:left),
-  # #     :right => simple(:right),
-  # #     :operator => '+')                     { Addition.new(left, right) }
-  #
-  # # rule(:string => simple(:string), :variable => simple(:variable), :type => simple(:type), :expression => subtree(:expression)) do
-  # #   # TODO parse expression
-  # #   # Question.new(string, variable, type)
-  # # end
-  #
-  # # rule(expression: {left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
-  # #   nil
-  # # end
-  # #
-  # # rule(expression: {variable: simple(:x)}) do
-  # #   nil
-  # # end
-
-
   # arithmetic expressions
+  arithmetics = {'-' => Subtract,
+                 '+' => Add,
+                 '*' => Multiply,
+                 '/' => Divide}
+
   rule({left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
-    arithmetics = {'-' => Subtract,
-                   '+' => Add,
-                   '*' => Multiply,
-                   '/' => Divide}
     arithmetics[arithmetic.to_s].new(left, right)
   end
 
   # boolean expressions
+  booleans = {'||' => Or,
+              '&&' => And}
+
   rule({left: subtree(:left), boolean: simple(:boolean), right: subtree(:right)}) do
-    booleans = {'||' => Or,
-                '&&' => And}
     booleans[boolean.to_s].new(left, right)
   end
 
+  comparisons = {'<' => Less,
+                 '>' => Greater,
+                 '<=' => LessEqual,
+                 '>=' => GreaterEqual,
+                 '==' => Equal,
+                 '!=' => NotEqual}
   # comparison expressions
   rule({left: subtree(:left), comparison: simple(:comparison), right: subtree(:right)}) do
-    comparisons = {'<' => Less,
-                   '>' => Greater,
-                   '<=' => LessEqual,
-                   '>=' => GreaterEqual,
-                   '==' => Equal,
-                   '!=' => NotEqual}
     comparisons[comparison.to_s].new(left, right)
   end
-
-  #
-  # # rule(if_statement: {expresision: subtree(:expression), block: subtree(:block)}) do
-  # #   # IfStatement.new(expression, block)
-  # #   nil
-  # # end
-  # rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
-  #   IfStatement.new(expression, block)
-  # end
-
 end

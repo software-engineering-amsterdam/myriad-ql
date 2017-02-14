@@ -1,9 +1,9 @@
 class Form
   attr_reader :variable
-  attr_reader :block
+  attr_reader :statements
 
-  def initialize(variable, block)
+  def initialize(variable, statements)
     @variable = variable
-    @block = block
+    @statements = statements
   end
 end
