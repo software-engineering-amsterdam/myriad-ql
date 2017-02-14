@@ -1,9 +1,11 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.GUI.MainScreen;
+import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -31,6 +33,17 @@ public class Condition implements  FormItem {
 
     public void setExpression(String expression) {
         this.expression = expression;
+    }
+
+    @Override
+    public StringProperty getStringValueProperty() {
+        return null;
+    }
+
+    @Override
+    public boolean hasID(String id) {
+        Predicate<FormItem> predicate = e -> e.hasID(id);
+        return formItems.stream().anyMatch(predicate);
     }
 
     @Override
