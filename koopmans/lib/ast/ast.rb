@@ -41,10 +41,6 @@ class Ast < Parslet::Transform
   end
 
 
-
-
-
-
   # # create Form
   # rule(form: {variable: simple(:variable), block: subtree(:block)}) do
   #   Form.new(variable, block)
@@ -80,13 +76,22 @@ class Ast < Parslet::Transform
   # #   nil
   # # end
 
-  # rule({left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
-  #   ArithmeticExpression.new(left, arithmetic, right)
-  # end
-  #
-  # rule({left: subtree(:left), boolean: simple(:boolean), right: subtree(:right)}) do
-  #   BooleanExpression.new(left, boolean, right)
-  # end
+
+  rule({left: subtree(:left), arithmetic: simple(:arithmetic), right: subtree(:right)}) do
+    arithmetics = {'-' => Subtract, '+' => Add, '*' => Multiply, '/' => Divide}
+    arithmetics[arithmetic.to_s].new(left, right)
+  end
+
+  rule({left: subtree(:left), boolean: simple(:boolean), right: subtree(:right)}) do
+    booleans = {'||' => Or, '&&' => And}
+    booleans[boolean.to_s].new(left, right)
+  end
+
+  rule({left: subtree(:left), comparison: simple(:comparison), right: subtree(:right)}) do
+    comparisons = {'<' => Less, '>' => Greater, '<=' => LessEqual, '>=' => GreaterEqual, '==' => Equal, '!=' => NotEqual}
+    comparisons[comparison.to_s].new(left, right)
+  end
+
   #
   # # rule(if_statement: {expresision: subtree(:expression), block: subtree(:block)}) do
   # #   # IfStatement.new(expression, block)

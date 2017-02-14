@@ -1,5 +1,5 @@
 require 'rspec'
-require 'reader'
+require 'parser/reader'
 
 describe Reader do
   let(:reader) { Reader.new }

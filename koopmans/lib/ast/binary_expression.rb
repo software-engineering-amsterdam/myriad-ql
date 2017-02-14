@@ -1,12 +1,53 @@
 class BinaryExpression
-  attr_reader :left, :symbol, :right
+  attr_reader :left, :right
 
-  def initialize(left, symbol, right)
+  def initialize(left, right)
     @left = left
-    @symbol = symbol
     @right = right
   end
 end
 
-class BooleanExpression < BinaryExpression
+
+# booleans && || !
+class And < BinaryExpression
+end
+
+class Or < BinaryExpression
+end
+
+# class Negate < BinaryExpression
+# end
+
+
+# arithmetic: - + * /
+class Subtract < BinaryExpression
+end
+
+class Add < BinaryExpression
+end
+
+class Multiply < BinaryExpression
+end
+
+class Divide < BinaryExpression
+end
+
+
+# comparisons: < > <= >= == !=
+class Less < BinaryExpression
+end
+
+class Greater < BinaryExpression
+end
+
+class LessEqual < BinaryExpression
+end
+
+class GreaterEqual < BinaryExpression
+end
+
+class Equal< BinaryExpression
+end
+
+class NotEqual < BinaryExpression
 end

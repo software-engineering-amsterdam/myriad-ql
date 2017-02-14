@@ -1,7 +1,6 @@
 require 'rspec'
 require 'parslet/rig/rspec'
-require 'parser'
-require 'pp'
+require 'parser/parser'
 
 describe Parser do
   let(:parser) { Parser.new }
