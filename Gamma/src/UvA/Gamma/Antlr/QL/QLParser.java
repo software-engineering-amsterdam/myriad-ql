@@ -153,46 +153,22 @@ public class QLParser extends Parser {
 	}
 
 	public static class FormItemContext extends ParserRuleContext {
+		public QuestionContext question() {
+			return getRuleContext(QuestionContext.class,0);
+		}
+		public ComputedContext computed() {
+			return getRuleContext(ComputedContext.class,0);
+		}
+		public ConditionContext condition() {
+			return getRuleContext(ConditionContext.class,0);
+		}
 		public FormItemContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_formItem; }
-	 
-		public FormItemContext() { }
-		public void copyFrom(FormItemContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class CompContext extends FormItemContext {
-		public ComputedContext computed() {
-			return getRuleContext(ComputedContext.class,0);
-		}
-		public CompContext(FormItemContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitComp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class QuesContext extends FormItemContext {
-		public QuestionContext question() {
-			return getRuleContext(QuestionContext.class,0);
-		}
-		public QuesContext(FormItemContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitQues(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class CondContext extends FormItemContext {
-		public ConditionContext condition() {
-			return getRuleContext(ConditionContext.class,0);
-		}
-		public CondContext(FormItemContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitCond(this);
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitFormItem(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -205,7 +181,6 @@ public class QLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
-				_localctx = new QuesContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(29);
@@ -213,7 +188,6 @@ public class QLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new CompContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(30);
@@ -221,7 +195,6 @@ public class QLParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new CondContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(31);

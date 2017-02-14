@@ -1,6 +1,7 @@
 package UvA.Gamma;
 
 import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
@@ -21,7 +22,8 @@ public class Main extends Application{
 //        MainScreen mainScreen = new MainScreen();
 //        mainScreen.initUI(primaryStage);
 
-        String test = "form test {\"how old are you?\" first: boolean = (true && false || true) \n}";
+
+        String test = "form test {\"how old are you?\" first: integer = (1+2) \n}";
         InputStream is = new ByteArrayInputStream(test.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(is);
         QLLexer lexer = new QLLexer(input);
@@ -32,12 +34,9 @@ public class Main extends Application{
         visitor.visit(parseTree);
 
         Form form = visitor.getForm();
-//        for(QLInput i : form.getInputs()){
-//            if (i.getType() == QLValue.Type.BOOLEAN){
-//                i.setValue(false);
-//            }
-//            System.out.println(i);
-//        }
+        for (FormItem item : form.getFormItems()){
+            System.out.println(item);
+        }
 
     }
 

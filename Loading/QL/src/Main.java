@@ -15,7 +15,7 @@ public class Main {
 		 		+ "Name2: \"Question\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question\" boolean\n"
-				+ "if (3.2 + 1) {"
+				+ "if (3.232 + 1) {"
 				+ "Name4: \"Question\" boolean\n"
 				+ "}"
 		 		+ " }";

@@ -27,9 +27,9 @@ public class BinaryExpression extends Expression {
 		return rhs;
 	}
 	
-	public Number evaluate() {
-		return null;
-	}
+//	public Number evaluate() {
+//		return null;
+//	}
 	
 @Override 
 public void accept(Visitor v) {

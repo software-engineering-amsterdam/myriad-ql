@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
+from parser.parser import parse
+from pyparsing import ParseException
 
-from pql.Amain import *
 
-
-class TestParser(unittest.TestCase):
+class TestParser(TestCase):
     def test_parse_simple_empty_form(self):
         self.input_string = "form taxOfficeExample {}"
         self.expected_result = ['taxOfficeExample', []]

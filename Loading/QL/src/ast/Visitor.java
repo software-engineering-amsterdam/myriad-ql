@@ -63,7 +63,7 @@ public class Visitor {
 	}
 
 	public void visit(DecimalAtom decimalAtom) {
-		System.out.println(decimalAtom.getValue());
+		//System.out.println(decimalAtom.getValue());
 	}
 
 	public void visit(IntegerAtom integerAtom) {
@@ -71,7 +71,7 @@ public class Visitor {
 	}
 
 	public void visit(MoneyAtom moneyAtom) {
-		System.out.println(moneyAtom.getValue());
+		//System.out.println(moneyAtom.getValue());
 	}
 
 	public void visit(StringAtom stringAtom) {
