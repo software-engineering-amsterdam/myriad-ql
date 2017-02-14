@@ -5,6 +5,7 @@ take a string and return instead a stream of tokens. PLY is often used as a
 single script but in this case we use a class for better encapsulation and code
 organisation.
 """
+import logging
 import ply.lex as lex
 from ply.lex import TOKEN
 
@@ -106,11 +107,16 @@ class QLLexer(object):
         """
         # Following the recommendations in the Hitchhiker's guide to Python
         # (http://docs.python-guide.org/en/latest/writing/logging/)
-        print('Illegal character "{value}"'.format(value=t.value[0]))
+        self.log.error('Character not parsed: {value}'.format(
+            value=t.value[0]))
         t.lexer.skip(1)
 
     def __init__(self, **kwargs):
         """Initialises the lexer. It complies with PLY requirements."""
+        logging.basicConfig(
+            format='%(asctime)s %(levelname)-s %(message)s',
+            datefmt='%m/%d/%Y %I:%M:%S %p')
+        self.log = logging.getLogger()
         self.lexer = lex.lex(module=self, debug=0, **kwargs)
 
     def getLexer(self):
