@@ -13,7 +13,6 @@ class Ast < Parslet::Transform
   end
 
 
-
   # questions
   def self.types(types)
     types.each do |name, class_name|
@@ -37,7 +36,6 @@ class Ast < Parslet::Transform
   rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
     IfStatement.new(expression, block)
   end
-
 
 
   # variable
@@ -98,7 +96,6 @@ class Ast < Parslet::Transform
               '>=': GreaterEqual,
               '==': Equal,
               '!=': NotEqual
-
 
 
   # boolean literal
