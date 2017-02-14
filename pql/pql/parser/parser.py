@@ -68,12 +68,12 @@ def parse(input_string):
 
     if_stmt = \
         Group(
-            if_lit + \
-            l_paren + \
-            arithmetic_statement + \
-            r_paren + \
-            l_curly + \
-            OneOrMore(field_expr) + \
+            if_lit +
+            l_paren +
+            arithmetic_statement +
+            r_paren +
+            l_curly +
+            OneOrMore(field_expr) +
             r_curly
         )
 

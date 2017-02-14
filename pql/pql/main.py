@@ -1,4 +1,3 @@
-# import sys
 from sys import exit
 from sys import argv
 from io import open
