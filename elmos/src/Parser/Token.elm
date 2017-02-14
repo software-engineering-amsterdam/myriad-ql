@@ -1,10 +1,11 @@
-module Parser.Token exposing (variableName, quotedString)
+module Parser.Token exposing (identifier, quotedString)
 
+import AST exposing (Id)
 import Combine exposing (Parser, string, regex, (*>), (<*))
 
 
-variableName : Parser s String
-variableName =
+identifier : Parser s Id
+identifier =
     regex "[a-z][a-zA-Z0-9_]*"
 
 

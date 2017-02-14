@@ -12,7 +12,7 @@ import Combine exposing (Parser, chainl, choice, lazy, parens, (<$), (<$>), (*>)
 import Combine.Num exposing (int)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
-import Parser.Token exposing (variableName, quotedString)
+import Parser.Token exposing (identifier, quotedString)
 
 
 type alias BinaryOperator =
@@ -110,7 +110,7 @@ stringAtom =
 
 varAtom : Parser s Expression
 varAtom =
-    Var <$> variableName
+    Var <$> identifier
 
 
 booleanAtom : Parser s Expression

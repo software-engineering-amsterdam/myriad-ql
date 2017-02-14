@@ -15,6 +15,10 @@ type alias Form =
     }
 
 
+type alias Block =
+    List FormItem
+
+
 type FormItem
     = Field Label Id ValueType
     | ComputedField Label Id ValueType Expression
@@ -22,12 +26,8 @@ type FormItem
     | IfThenElse Expression Block Block
 
 
-type alias Block =
-    List FormItem
-
-
 type Expression
-    = Var String
+    = Var Id
     | Str String
     | Integer Int
     | Boolean Bool
