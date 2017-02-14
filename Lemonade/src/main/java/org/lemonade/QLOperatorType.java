@@ -1,8 +1,6 @@
-/**
- * Created by dimitribelfor on 07/02/2017.
- * Wrapper for the operator enumerators.
- */
-public class OperatorType {
+package org.lemonade;
+
+public class QLOperatorType {
     public enum BinaryOperator {
         AND, OR, GT, LT, LE, GE, NOT_EQUAL, EQUAL_EQUAL, PLUS,
         MINUS, PRODUCT, DIVIDE;

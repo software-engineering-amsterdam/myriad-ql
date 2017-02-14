@@ -1,9 +1,8 @@
+package org.lemonade;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dimitribelfor on 13/02/2017.
- */
 public class ASTNode {
     private int lineNo;//Start in the code (for errors)
     private List<ASTNode> children;

@@ -1,9 +1,7 @@
-import java.util.ArrayList;
+package org.lemonade;
+
 import java.util.Stack;
 
-/**
- * Created by dimitribelfor on 07/02/2017.
- */
 public class QLLoader extends QLBaseListener {
     private Stack<Object> stack = new Stack<>();
 

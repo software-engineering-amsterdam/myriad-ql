@@ -24,8 +24,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.StringReader;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.BitSet;
 
 import org.antlr.v4.runtime.ANTLRErrorListener;
@@ -40,7 +38,7 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.junit.Before;
-import org.junit.Test;
+import org.lemonade.QLLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
