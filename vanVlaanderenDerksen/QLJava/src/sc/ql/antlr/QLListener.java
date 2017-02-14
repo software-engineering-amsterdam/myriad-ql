@@ -18,35 +18,25 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitForm(QLParser.FormContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#questions}.
+	 * Enter a parse tree produced by {@link QLParser#form_element}.
 	 * @param ctx the parse tree
 	 */
-	void enterQuestions(QLParser.QuestionsContext ctx);
+	void enterForm_element(QLParser.Form_elementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#questions}.
+	 * Exit a parse tree produced by {@link QLParser#form_element}.
 	 * @param ctx the parse tree
 	 */
-	void exitQuestions(QLParser.QuestionsContext ctx);
+	void exitForm_element(QLParser.Form_elementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#question}.
+	 * Enter a parse tree produced by {@link QLParser#conditional_block}.
 	 * @param ctx the parse tree
 	 */
-	void enterQuestion(QLParser.QuestionContext ctx);
+	void enterConditional_block(QLParser.Conditional_blockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#question}.
+	 * Exit a parse tree produced by {@link QLParser#conditional_block}.
 	 * @param ctx the parse tree
 	 */
-	void exitQuestion(QLParser.QuestionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrimary(QLParser.PrimaryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrimary(QLParser.PrimaryContext ctx);
+	void exitConditional_block(QLParser.Conditional_blockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -57,34 +47,4 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(QLParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParser#calcExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterCalcExpr(QLParser.CalcExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParser#calcExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitCalcExpr(QLParser.CalcExprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParser#relExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelExpr(QLParser.RelExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParser#relExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelExpr(QLParser.RelExprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link QLParser#boolExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBoolExpr(QLParser.BoolExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParser#boolExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBoolExpr(QLParser.BoolExprContext ctx);
 }

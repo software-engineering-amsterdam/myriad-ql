@@ -13,7 +13,7 @@ public class Visitor {
 		// TODO or getBlock().accept()  // TODO violates the law of Demeter
 		// Is it correct do you have an accept
 		// method in getBlock if you don't use it?
-		visit(form.getBlock());	
+		form.getBlock().accept(this);	
 	}
 	
 	public void visit(Block block) {
@@ -21,12 +21,12 @@ public class Visitor {
 		// TODO generalize
 		List<Question> questions = block.getQuestions();		
 		for (Question question : questions) {
-			visit(question);
+			question.accept(this);
 		}
 		
 		List<Statement> statements = block.getStatements();
 		for (Statement statement : statements) {
-			visit(statement);
+			statement.accept(this);
 		}
 	}
 	
@@ -34,14 +34,14 @@ public class Visitor {
 		
 		System.out.println(question.getVariable());
 		
-		visit(question.getType());
+		question.getType().accept(this);
 		
 	}
 	
 	public void visit(Statement statement) {
 		
-		visit(statement.getExpression());
-		visit(statement.getBlock()); // TODO circulair dependencies?
+		statement.getExpression().accept(this);
+		statement.getBlock().accept(this);
 	}
 	
 	// TODO for types, atoms, expression can we only visit the general classes
@@ -49,23 +49,107 @@ public class Visitor {
 		type.accept(this);		
 	}
 	
-	public void visit(BinaryExpression expression) {
-		
-		visit(expression.getLhs());
-		visit(expression.getRhs());
-	}
-	
-
-	public void visit(Atom atom) {
-		// Your in the leave finished!
-		System.out.println("LEAF");
-		
+	public void visit(BinaryExpression binaryExpression) {
+		binaryExpression.getLhs().accept(this);
+		binaryExpression.getRhs().accept(this);	
 	}
 
-	public void visit(UnaryExpression expression) {
-		
-		visit(expression.getLhs());
-		
+	public void visit(UnaryExpression unaryExpression) {
+		unaryExpression.getLhs().accept(this);		
+	}
+
+	public void visit(BoolAtom boolAtom) {
+		System.out.println(boolAtom.getValue());
 	}
 	
+	public void visit(DateAtom dateAtom) {
+		System.out.println(dateAtom.getValue());
+	}
+	
+	public void visit(DecimalAtom decimalAtom) {
+		System.out.println(decimalAtom.getValue());
+	}
+	
+	public void visit(IntegerAtom integerAtom) {
+		System.out.println(integerAtom.getValue());
+	}
+	
+	public void visit(MoneyAtom moneyAtom) {
+		System.out.println(moneyAtom.getValue());
+	}
+	
+	public void visit(StringAtom stringAtom) {
+		System.out.println(stringAtom.getValue());
+	}
+
+// TODO really not needed
+//	public void visit(AddExpression addExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(AndExpression andExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(DivExpression divExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(GEqExpression gEqExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(GExpression gExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(LEqExpression lEqExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(LExpression lExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(MinusExpression minusExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(MulExpression mulExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(NEqExpression nEqExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(NotExpression notExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(OrExpression orExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(PlusExpression plusExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void visit(SubExpression subExpression) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 }

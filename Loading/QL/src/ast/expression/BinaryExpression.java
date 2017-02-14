@@ -11,8 +11,6 @@ public class BinaryExpression extends Expression {
 	
 	// TODO is this preferred over a constructor with lhs and rhs?
 	public BinaryExpression() {
-//		this.lhs = lhs;
-//		this.rhs = rhs;
 	}
 	
 	public BinaryExpression setElements(Atom lhs, Atom rhs) {
@@ -29,10 +27,10 @@ public class BinaryExpression extends Expression {
 		return rhs;
 	}
 	
-	@Override // TODO or should this be an abstract class without accept here?
-	public void accept(Visitor v) {
+@Override 
+public void accept(Visitor v) {
 		v.visit(this);
-		
+	
 	}
 	
 //	public boolean isEval() {
