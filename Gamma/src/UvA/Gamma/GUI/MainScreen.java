@@ -1,5 +1,8 @@
 package UvA.Gamma.GUI;
 
+import UvA.Gamma.AST.Computed;
+import UvA.Gamma.AST.Condition;
+import UvA.Gamma.AST.Question;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,7 +18,7 @@ import javafx.stage.Stage;
 
 
 /**
- * Created by Tjarco on 13-02-17.
+ * Created by Tjarco, 13-02-17.
  */
 public class MainScreen{
 
@@ -47,5 +50,15 @@ public class MainScreen{
         stage.show();
     }
 
+    public void showQuestion(Question question){
 
+    }
+
+    public void showComputed(Computed computed){
+
+    }
+
+    public void showCondtion(Condition condition){
+
+    }
 }

@@ -7,25 +7,26 @@ form
 	;
 
 form_element
-	: STR ID TYPE ('=' expression)?
-	| 'if' conditional_block ('else if' conditional_block)* ('else' form_element+)? 'endif'
+	: STR ID TYPE 																			#Question
+	| STR ID TYPE '=' expression 															#calcQuestion
+	| 'if' conditional_block ('else if' conditional_block)* ('else' form_element+)? 'endif' #if_statement
 	;
 
 conditional_block
 	: '(' expression ')' form_element+
 	;
-
+	
 expression
-	: '(' expression ')' 
-	| '!' expression
-	| expression op=('*'|'/') expression
-	| expression op=('+'|'-') expression
-	| expression op=('<'|'<='|'>'|'>='|'=='|'!=') expression
-	| expression op=('&&'|'||') expression
-	| BOOL
-	| INT
-	| ID
-	| STR
+	: '(' expression ')' 												#parenExpr
+	| '!' expression													#boolExpr
+	| left=expression op=('*'|'/') right=expression						#opExpr
+	| left=expression op=('+'|'-') right=expression						#opExpr
+	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr
+	| left=expression op=('&&'|'||') right=expression					#boolExpr
+	| atom=BOOL															#boolAtom
+	| atom=INT															#intAtom
+	| atom=ID															#idAtom
+	| atom=STR															#strAtom
 	;
 
 BOOL

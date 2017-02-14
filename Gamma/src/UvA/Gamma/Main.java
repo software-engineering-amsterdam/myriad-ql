@@ -1,6 +1,7 @@
 package UvA.Gamma;
 
 import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
@@ -21,7 +22,8 @@ public class Main extends Application{
 //        MainScreen mainScreen = new MainScreen();
 //        mainScreen.initUI(primaryStage);
 
-        String test = "form test {\"how old are you?\"  valueResidue: money = (2 - 1)}";
+
+        String test = "form test {\"how old are you?\" first: integer = (1+2) \n}";
         InputStream is = new ByteArrayInputStream(test.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(is);
         QLLexer lexer = new QLLexer(input);
@@ -39,6 +41,9 @@ public class Main extends Application{
 //            }
 //            System.out.println(i);
 //        }
+        for (FormItem item : form.getFormItems()){
+            System.out.println(item);
+        }
 
     }
 

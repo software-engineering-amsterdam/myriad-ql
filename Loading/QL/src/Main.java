@@ -15,7 +15,7 @@ public class Main {
 		 		+ "Name2: \"Question\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question\" boolean\n"
-				+ "if (true) {"
+				+ "if (3.2 + 1) {"
 				+ "Name4: \"Question\" boolean\n"
 				+ "}"
 		 		+ " }";
@@ -29,7 +29,8 @@ public class Main {
 		 QLParser parser = new QLParser(tokens);
 		 // System.out.println(parser.form().result.getBlock().getStatements().get(0).getExpression().print());
 		 Form form = parser.form().result;
-		 Visitor ASTVisitor = new Visitor();
+		 Environment environment = new Environment();
+		 EvalVisitor ASTVisitor = new EvalVisitor(environment);
 		 ASTVisitor.visit(form);
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());

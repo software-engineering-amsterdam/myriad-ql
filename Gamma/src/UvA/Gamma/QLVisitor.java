@@ -1,7 +1,6 @@
 package UvA.Gamma;
 
-import UvA.Gamma.AST.ASTNode;
-import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.*;
 import UvA.Gamma.AST.Values.Boolean;
 import UvA.Gamma.AST.Values.Number;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
@@ -12,7 +11,7 @@ import UvA.Gamma.Antlr.QL.QLParser;
  * Created by Tjarco on 08-02-17.
  */
 
-public class QLVisitor extends QLBaseVisitor<ASTNode> {
+public class QLVisitor extends QLBaseVisitor<ASTNode>{
     private Form form;
 
     QLVisitor() {
@@ -26,9 +25,35 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
         for (QLParser.FormItemContext formItemContext: ctx.formItem()){
-            visit(formItemContext);
+            form.addFormItem((FormItem)visit(formItemContext));
         }
         return form;
+    }
+
+    @Override
+    public Question visitQuestion(QLParser.QuestionContext ctx) {
+        Question question = new Question();
+        question.setQuestion(ctx.STRING_LITERAL().getText());
+        question.setId(ctx.ID().getText());
+        question.setType(ctx.type().getText());
+        return question;
+    }
+
+    @Override
+    public Computed visitComputed(QLParser.ComputedContext ctx) {
+        Computed computed = new Computed();
+        computed.setLabel(ctx.STRING_LITERAL().getText());
+        computed.setId(ctx.ID().getText());
+        computed.setType(ctx.type().getText());
+        computed.setExpression(visit(ctx.expression()).toString());
+        return computed;
+    }
+
+    @Override
+    public Condition visitCondition(QLParser.ConditionContext ctx) {
+        Condition condition = new Condition();
+        condition.setExpression(visit(ctx.boolExpr()).toString());
+        return condition;
     }
 
     //Expressions

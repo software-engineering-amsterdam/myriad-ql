@@ -9,8 +9,9 @@ public class IntegerAtom extends Atom {
     public IntegerAtom(Integer value) {
         this.value = value;
     }
-
-    public Integer getValue() {
+    
+    @Override
+    public Number getNumber() {
         return this.value;
     }
 	

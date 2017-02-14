@@ -10,7 +10,8 @@ public class DecimalAtom extends Atom {
         this.value = value;
     }
 
-    public Float getValue() {
+    @Override
+    public Number getNumber() {
         return this.value;
     }
     
