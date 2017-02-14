@@ -51,13 +51,6 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdAtom(QLParser.IdAtomContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code notExpr}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotExpr(QLParser.NotExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code opExpr}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -86,19 +79,19 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolAtom(QLParser.BoolAtomContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code relExpr}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelExpr(QLParser.RelExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code boolExpr}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBoolExpr(QLParser.BoolExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relExpr}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelExpr(QLParser.RelExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code parenExpr}
 	 * labeled alternative in {@link QLParser#expression}.

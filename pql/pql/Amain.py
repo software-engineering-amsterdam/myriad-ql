@@ -19,10 +19,15 @@ from pyparsing import *
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
     number = Word(nums + ".")
+
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | identifier
-    form = Literal("form")
-    if_lit = Literal("if")
+
+    # Reserved keywords
+    form = Suppress("form")
+    if_lit = Suppress("if")
+
+    # Reserved symbols
     l_curly = Suppress("{")
     r_curly = Suppress("}")
     l_paren = Suppress("(")
@@ -30,6 +35,7 @@ def parse(input_string):
     colon = Suppress(":")
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
+    # Reserved operators
     mult_op = oneOf(["*", "/"])
     additive_op = oneOf(["+", "-"])
     rat_op = oneOf(["<", "<=", ">", ">="])
@@ -38,6 +44,7 @@ def parse(input_string):
     con_or_op = Literal("||")
     assign_op = Suppress("=")
 
+    # Arithmetic precedence
     arith_prec = infixNotation(
         arith_operand,
         [
@@ -60,29 +67,26 @@ def parse(input_string):
     assignment_expr = \
         identifier.setResultsName("identifier") + \
         colon + \
-        data_types + \
+        data_types.setResultsName("data_type") + \
         Optional(
             assign_op +
-            arithmetic_statement
+            arithmetic_statement.setResultsName("arithmetic_statement")
         )
 
     field_expr = \
         Group(
-            quotedString.setResultsName("question_literal").addParseAction(removeQuotes) +
-            assignment_expr.setResultsName("assignment_expression")
+            quotedString.addParseAction(removeQuotes) +
+            assignment_expr
         )
 
-    # Statements
     if_stmt = \
         Group(
-            Group(
-                if_lit +
-                l_paren +
-                arithmetic_statement +
-                r_paren
-            ) +
-            l_curly +
-            OneOrMore(field_expr) +
+            if_lit + \
+            l_paren + \
+            arithmetic_statement + \
+            r_paren + \
+            l_curly + \
+            OneOrMore(field_expr) + \
             r_curly
         )
 
@@ -92,8 +96,8 @@ def parse(input_string):
         identifier.setResultsName("form_identifier") + \
         l_curly + \
         Group(
-            ZeroOrMore(field_expr | if_stmt)
-        ) + \
+            ZeroOrMore(field_expr.setResultsName("field_expression*") | if_stmt.setResultsName("if_statement*"))
+        ).setResultsName("form_statement_list") + \
         r_curly
 
     tokens = program.parseString(input_string)

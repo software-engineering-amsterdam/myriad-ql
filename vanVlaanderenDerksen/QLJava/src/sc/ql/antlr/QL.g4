@@ -15,10 +15,10 @@ form_element
 conditional_block
 	: '(' expression ')' form_element+
 	;
-
+	
 expression
 	: '(' expression ')' 												#parenExpr
-	| '!' expression													#notExpr
+	| '!' expression													#boolExpr
 	| left=expression op=('*'|'/') right=expression						#opExpr
 	| left=expression op=('+'|'-') right=expression						#opExpr
 	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr

@@ -384,17 +384,6 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NotExprContext extends ExpressionContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public NotExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitNotExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class OpExprContext extends ExpressionContext {
 		public ExpressionContext left;
 		public Token op;
@@ -442,23 +431,6 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class RelExprContext extends ExpressionContext {
-		public ExpressionContext left;
-		public Token op;
-		public ExpressionContext right;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public RelExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitRelExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class BoolExprContext extends ExpressionContext {
 		public ExpressionContext left;
 		public Token op;
@@ -473,6 +445,23 @@ public class QLParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBoolExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class RelExprContext extends ExpressionContext {
+		public ExpressionContext left;
+		public Token op;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public RelExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitRelExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -522,7 +511,7 @@ public class QLParser extends Parser {
 				break;
 			case T__9:
 				{
-				_localctx = new NotExprContext(_localctx);
+				_localctx = new BoolExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(59);
