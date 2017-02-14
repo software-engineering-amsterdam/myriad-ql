@@ -1,21 +1,18 @@
 package org.uva.taxfree.model;
 
-import org.uva.taxfree.util.LogWindow;
-
 import java.util.ArrayList;
 
 public abstract class Node {
 
-    private String mName;
     private Node mParent;
     private ArrayList<Node> mChildren;
 
-    public Node(String name, Node parent) {
+    public Node(Node parent) {
         mChildren = new ArrayList<>();
-        mName = name;
         mParent = parent;
         registerToParent();
     }
+
 
     private void registerToParent() {
         if (mParent != null) {
@@ -24,16 +21,13 @@ public abstract class Node {
     }
 
     public boolean addChild(Node child) {
-        if (false == mChildren.contains(child)) {
-            mChildren.add(child);
-        } else {
-            LogWindow.error(child.mName + " already registered to " + mName);
+        if (mChildren.contains(child)) {
             return false;
+            //throw new ASTException("duplicate registration of child");
         }
+        mChildren.add(child);
         return true;
     }
 
-    public String getName() {
-        return mName;
-    }
+    public abstract String getId();
 }
