@@ -9,16 +9,16 @@ import Expect
 
 exampleForm : Form
 exampleForm =
-    { id = "exampleForm"
+    { id = ( "exampleForm", (Location 0 0) )
     , items =
-        [ Field "Name" "name" StringType
-        , ComputedField "Name with prefix" "nameWithPrefix" StringType (Var "name")
-        , Field "Has house" "hasHouse" BooleanType
-        , IfThen (Var "hasHouse")
-            [ Field "Price" "price" IntegerType ]
-        , IfThenElse (ComparisonExpression Equal (Var "name") (Str "John"))
-            [ Field "Is your name john?" "isJohn" BooleanType ]
-            [ Field "Are you sure your name is not john?" "sure" BooleanType ]
+        [ Field "Name" ( "name", (Location 0 0) ) StringType
+        , ComputedField "Name with prefix" ( "nameWithPrefix", (Location 0 0) ) StringType (Var ( "name", Location 0 0 ))
+        , Field "Has house" ( "hasHouse", (Location 0 0) ) BooleanType
+        , IfThen (Var ( "hasHouse", (Location 0 0) ))
+            [ Field "Price" ( "price", (Location 0 0) ) IntegerType ]
+        , IfThenElse (ComparisonExpression Equal (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
+            [ Field "Is your name john?" ( "isJohn", (Location 0 0) ) BooleanType ]
+            [ Field "Are you sure your name is not john?" ( "sure", (Location 0 0) ) BooleanType ]
         ]
     }
 

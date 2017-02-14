@@ -12,24 +12,24 @@ type alias VariableTypes =
 getType : VariableTypes -> Expression -> Result (List Message) ValueType
 getType variableTypes expression =
     case expression of
-        Var x ->
+        Var ( name, loc ) ->
             Result.fromMaybe
-                [ Messages.undefinedExpressionVariable x () ]
-                (Dict.get x variableTypes)
+                [ Messages.undefinedExpressionVariable name loc ]
+                (Dict.get name variableTypes)
 
-        AST.Str _ ->
+        AST.Str _ _ ->
             Ok StringType
 
-        AST.Integer _ ->
+        AST.Integer _ _ ->
             Ok IntegerType
 
-        AST.Boolean _ ->
+        AST.Boolean _ _ ->
             Ok BooleanType
 
-        ParensExpression inner ->
+        ParensExpression _ inner ->
             getType variableTypes inner
 
-        ArithmeticExpression op left right ->
+        ArithmeticExpression op loc left right ->
             let
                 handleSideTypes ( leftType, rightType ) =
                     case ( leftType, rightType ) of
@@ -37,11 +37,11 @@ getType variableTypes expression =
                             Ok IntegerType
 
                         ( l, r ) ->
-                            Err [ Messages.arithmeticExpressionTypeMismatch op l r ]
+                            Err [ Messages.arithmeticExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
-        RelationExpression op left right ->
+        RelationExpression op loc left right ->
             let
                 handleSideTypes ( leftType, rightType ) =
                     case ( leftType, rightType ) of
@@ -49,11 +49,11 @@ getType variableTypes expression =
                             Ok BooleanType
 
                         ( l, r ) ->
-                            Err [ Messages.relationExpressionTypeMismatch op l r ]
+                            Err [ Messages.relationExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
-        LogicExpression op left right ->
+        LogicExpression op loc left right ->
             let
                 handleSideTypes ( leftType, rightType ) =
                     case ( leftType, rightType ) of
@@ -61,17 +61,17 @@ getType variableTypes expression =
                             Ok BooleanType
 
                         ( l, r ) ->
-                            Err [ Messages.logicExpressionTypeMismatch op l r ]
+                            Err [ Messages.logicExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
-        ComparisonExpression op left right ->
+        ComparisonExpression op loc left right ->
             let
                 handleSideTypes ( leftType, rightType ) =
                     if leftType == rightType then
                         Ok BooleanType
                     else
-                        Err [ Messages.comparisonExpressionTypeMismatch op leftType rightType ]
+                        Err [ Messages.comparisonExpressionTypeMismatch op loc leftType rightType ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 

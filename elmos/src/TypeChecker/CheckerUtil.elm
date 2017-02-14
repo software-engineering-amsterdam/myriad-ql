@@ -31,10 +31,10 @@ questionTypeRelationsFromBlock =
 questionTypeRelationsFromItem : FormItem -> QuestionTypeRelations
 questionTypeRelationsFromItem item =
     case item of
-        Field _ id valueType ->
+        Field _ ( id, _ ) valueType ->
             [ ( id, valueType ) ]
 
-        ComputedField _ id valueType _ ->
+        ComputedField _ ( id, _ ) valueType _ ->
             [ ( id, valueType ) ]
 
         IfThen _ _ ->

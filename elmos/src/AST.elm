@@ -5,8 +5,12 @@ type alias Label =
     String
 
 
+type Location
+    = Location Int Int
+
+
 type alias Id =
-    String
+    ( String, Location )
 
 
 type alias Form =
@@ -28,14 +32,14 @@ type FormItem
 
 type Expression
     = Var Id
-    | Str String
-    | Integer Int
-    | Boolean Bool
-    | ParensExpression Expression
-    | ArithmeticExpression Operator Expression Expression
-    | RelationExpression Relation Expression Expression
-    | LogicExpression Logic Expression Expression
-    | ComparisonExpression Comparison Expression Expression
+    | Str Location String
+    | Integer Location Int
+    | Boolean Location Bool
+    | ParensExpression Location Expression
+    | ArithmeticExpression Operator Location Expression Expression
+    | RelationExpression Relation Location Expression Expression
+    | LogicExpression Logic Location Expression Expression
+    | ComparisonExpression Comparison Location Expression Expression
 
 
 type Operator
