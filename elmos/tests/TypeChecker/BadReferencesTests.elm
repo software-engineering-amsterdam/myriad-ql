@@ -26,6 +26,20 @@ badReferencesExample2 =
       }"""
 
 
+badReferencesExample3 : String
+badReferencesExample3 =
+    """form taxOfficeExample {
+        "What was the selling price?"
+        sellingPrice: integer = 10
+        if(true){
+          if(sellingPrice){
+              "Question ?"
+              y: integer
+          }
+        }
+      }"""
+
+
 goodExample1 : String
 goodExample1 =
     """form taxOfficeExample {
@@ -98,7 +112,8 @@ testFindBadReferences : Test
 testFindBadReferences =
     describe "testFindBadReferences"
         [ parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "hasSoldHouse" ])
-        , parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "price" ])
+        , parseAndFindExpectedBadReferences "Bad reference in question" badReferencesExample2 (Set.fromList [ "price" ])
+        , parseAndFindExpectedBadReferences "Bad reference in nested If block" badReferencesExample2 (Set.fromList [ "sellingPrice" ])
         ]
 
 
