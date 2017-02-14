@@ -77,8 +77,8 @@ class UnOp:
 class BinOp:
 
     def __init__(self, left, operator, right):
-        self.operator = operator
         self.left = left
+        self.operator = operator
         self.right = right
 
     def __str__(self):

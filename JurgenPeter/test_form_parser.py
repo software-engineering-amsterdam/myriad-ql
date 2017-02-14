@@ -14,15 +14,18 @@ class TestGrammar(TestCase):
         (Grammar.expression, "false"),
         (Grammar.expression, "!true"),
         (Grammar.expression, "x"),
+        (Grammar.expression, "hasBoughtHouse"),
 
+        (Grammar.expression, "2 + + 2"),
         (Grammar.expression, "x <= 3"),
+        (Grammar.expression, "1 / 0"),
         (Grammar.expression, "2 == 2.0"),
         (Grammar.expression, "x * 3"),
         (Grammar.expression, "x * 3 + 5"),
         (Grammar.expression, "x * (3 + 5)"),
         (Grammar.expression, "x && true"),
         (Grammar.expression, "false || 3 > 2 && true"),
-        (Grammar.expression, "x == 3"),
+        (Grammar.expression, "x == 3 != false"),
         (Grammar.expression, "3 != 3.0"),
         (Grammar.expression, "2 < 16"),
         (Grammar.expression, "10. > 4 && hasBoughtHouse"),
@@ -41,6 +44,8 @@ class TestGrammar(TestCase):
 
     incorrectSentences = [
         (Grammar.expression, "x * * 3"),
+        (Grammar.expression, "x * 3 *"),
+        (Grammar.expression, "f(x)"),
         (Grammar.expression, "x + form"),
         (Grammar.expression, "x + if"),
         (Grammar.expression, "x + else"),
@@ -52,6 +57,7 @@ class TestGrammar(TestCase):
         (Grammar.question, "x : \"y\" integer = 3 * * 3"),
         (Grammar.conditional, "if true then { }"),
         (Grammar.conditional, "if true { } else false { }"),
+        (Grammar.form, "form { }"),
     ]
 
     def testCorrectSentences(self):
@@ -89,6 +95,12 @@ class TestParser(TestCase):
                             BinOp(Constant(3, Datatype.integer),
                                   Operator["*"],
                                   Constant(4, Datatype.integer)))),
+        (Grammar.expression,
+         "(2 + 3) * 4", BinOp(BinOp(Constant(2, Datatype.integer),
+                                    Operator["+"],
+                                    Constant(3, Datatype.integer)),
+                              Operator["*"],
+                              Constant(4, Datatype.integer))),
         (Grammar.expression,
          "x <= 3", BinOp(Variable("x"),
                          Operator["<="],
