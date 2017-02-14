@@ -24,6 +24,10 @@ public class Number implements ASTNode{
         return (int)value;
     }
 
+    public boolean isInteger(){
+        return value % 1 == 0;
+    }
+
     public Number add(Number toAdd){
         this.value += toAdd.doubleValue();
         return this;
