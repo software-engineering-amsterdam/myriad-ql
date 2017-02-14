@@ -34,15 +34,21 @@ public class Main {
 		 QLParser parser = new QLParser(tokens);
 		 // System.out.println(parser.form().result.getBlock().getStatements().get(0).getExpression().print());
 		 Form form = parser.form().result;
+
+		 System.out.println("----");
+
 		 Environment environment = new Environment();
 		 EvalVisitor ASTVisitor = new EvalVisitor(environment);
 		 ASTVisitor.visit(form);
+
+		 System.out.println("----");
 		 
 		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
+		 QVisitor.visit(form);
 		 Map<String, String> answers = QVisitor.getEnvironment().getAnswers();
 		 
 		 for (String answer : answers.keySet()) {
-			 System.out.println(answer);
+			 System.out.println("Answer: " + answer);
 		 }
 		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());

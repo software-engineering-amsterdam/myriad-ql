@@ -10,8 +10,8 @@ public class Environment {
 	Map<String, String> answers;
 	
 	Environment() {
-		atoms = new HashMap<String, Atom>(); // TODO do we want a hashmap?
-		answers = new HashMap<String, String>();
+//		atoms = new HashMap<String, Atom>(); // TODO do we want a hashmap?
+		answers = new HashMap<>();
 	}
 	
 	public void addAnswer(String question, String answer) {

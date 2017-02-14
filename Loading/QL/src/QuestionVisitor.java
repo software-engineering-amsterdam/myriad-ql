@@ -20,7 +20,7 @@ public class QuestionVisitor extends Visitor {
 	public void visit(Question question) {	
 		question.getType().accept(this);
 		
-		environment.addAnswer(question.getLabel(), "answer"); // TODO implement answer	
+		environment.addAnswer(question.getLabel(), "answer"); // TODO implement answer
 	}
 	
 }
