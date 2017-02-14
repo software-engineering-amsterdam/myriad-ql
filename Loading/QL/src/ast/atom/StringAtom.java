@@ -9,8 +9,8 @@ public class StringAtom extends Atom {
         this.value = value;
     }
 
-    public String getValue() {
-        return this.value;
+    public Number getValue() {        
+    	return null;
     }
     
 	@Override

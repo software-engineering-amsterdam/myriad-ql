@@ -6,6 +6,7 @@ import ast.atom.*;
 import ast.expression.*;
 import ast.type.*;
 
+// In order traversal
 public class Visitor {
 	
 	public void visit(Form form) {
@@ -30,16 +31,11 @@ public class Visitor {
 		}
 	}
 	
-	public void visit(Question question) {
-		
-		System.out.println(question.getVariable());
-		
-		question.getType().accept(this);
-		
+	public void visit(Question question) {	
+		question.getType().accept(this);		
 	}
 	
-	public void visit(Statement statement) {
-		
+	public void visit(Statement statement) {		
 		statement.getExpression().accept(this);
 		statement.getBlock().accept(this); // TODO circulair dependencies?
 	}
@@ -71,7 +67,7 @@ public class Visitor {
 	}
 
 	public void visit(IntegerAtom integerAtom) {
-		System.out.println(integerAtom.getValue());
+//		System.out.println(integerAtom.getValue());
 	}
 
 	public void visit(MoneyAtom moneyAtom) {

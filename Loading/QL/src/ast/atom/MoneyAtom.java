@@ -9,8 +9,9 @@ public class MoneyAtom extends Atom {
     public MoneyAtom(Float value) {
         this.value = value;
     }
-
-    public Float  getValue() {
+    
+    @Override
+    public Number  getNumber() {
         return this.value;
     }
     
