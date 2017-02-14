@@ -21,11 +21,11 @@ type alias BinaryOperator =
 
 expression : Parser s Expression
 expression =
-    lazy <| \() -> foldr chainl atom precedenceOrderedExpressions
+    lazy <| \() -> foldr chainl atom precedenceOrderedOperators
 
 
-precedenceOrderedExpressions : List (Parser s BinaryOperator)
-precedenceOrderedExpressions =
+precedenceOrderedOperators : List (Parser s BinaryOperator)
+precedenceOrderedOperators =
     List.map trimmed <|
         [ orOp
         , andOp

@@ -11,18 +11,8 @@ form : Parser s Form
 form =
     trimmed <|
         succeed Form
-            <*> formDeclaration
+            <*> (string "form" *> whitespace1 *> variableName)
             <*> (whitespace *> block)
-
-
-formDeclaration : Parser s String
-formDeclaration =
-    formToken *> whitespace1 *> variableName
-
-
-formToken : Parser s String
-formToken =
-    string "form"
 
 
 formItems : Parser s (List FormItem)
