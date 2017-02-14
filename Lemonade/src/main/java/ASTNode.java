@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class ASTNode {
         this.children = new ArrayList<ASTNode>();
     }
 
-    public addChild (ASTNode child) {
+    public void addChild (ASTNode child) {
         this.children.add(child);
     }
 }

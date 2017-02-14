@@ -1,7 +1,7 @@
 grammar QL;
 
 form
-    : FORMKEY identifier LBRACE statements RBRACE EOF
+    : FORMKEY identifier '{' statements '}' EOF
     ;
 
 statements
@@ -20,7 +20,7 @@ questions
     ;
 
 question
-    : identifier COLON label type_specifier
+    : identifier ':' label type_specifier
     ;
 
 conditionals
@@ -29,156 +29,70 @@ conditionals
     ;
 
 conditional
-    : CONDKEY LPAREN expr RPAREN LBRACE questions RBRACE
+    : IFKEY '(' expr ')' '{' questions '}'
     ;
 
 expr
-    : BOOLEAN
-    | INT
+    : 'true' | 'false'
+    | INTEGER
     | unaryoperator expr
     | expr binaryoperator expr
     ;
 
 label
-    : STR
+    : STRING
     ;
 
 identifier
-    : IDENT
+    : IDENTIFIER
     ;
 
 type_specifier
-    : BOOL
-    | STRING
-    | INTEGER
-    | DATE
-    | DECIMAL
-    | CURRENCY
+    : 'boolean'
+    | 'string'
+    | 'integer'
+    | 'date'
+    | 'decimal'
+    | 'currency'
     ;
 
 unaryoperator
-    : BANG
-    | MINUS
+    : '-'
+    | '!'
     ;
 
 binaryoperator
-    : AND
-    | OR
-    | GT
-    | LT
-    | LE
-    | GE
-    | NOT_EQUAL
-    | EQUAL_EQUAL
-    | PLUS
-    | MINUS
-    | PRODUCT
-    | DIVIDE
-    ;
-
-//Operators
-PLUS
-    : '+'
-    ;
-MINUS
-    : '-'
-    ;
-PRODUCT
     : '*'
-    ;
-DIVIDE
-    : '/'
-    ;
-AND
-    : '&&'
-    ;
-OR
-    : '||'
-    ;
-BANG
-    : '!'
-    ;
-LT
-    : '<'
-    ;
-GT
-    : '>'
-    ;
-LE
-    : '<='
-    ;
-GE
-    : '>='
-    ;
-NOT_EQUAL
-    : '!='
-    ;
-EQUAL_EQUAL
-    : '=='
-    ;
-
-// Other Tokens
-
-BOOLEAN
-    : 'True' | 'False'
-    ;
-
-BOOL
-    : 'boolean'
-    ;
-STRING
-    : 'string'
-    ;
-INTEGER
-    : 'integer'
-    ;
-DATE
-    : 'date'
-    ;
-DECIMAL
-    : 'decimal'
-    ;
-CURRENCY
-    : 'currency'
-    ;
-
-COLON
-    : ':'
-    ;
-
-LBRACE
-    : '{'
-    ;
-
-RBRACE
-    : '}'
-    ;
-
-LPAREN
-    : '('
-    ;
-
-RPAREN
-    : ')'
-    ;
-
-CONDKEY
-    : 'if'
+    | '/'
+    | '+'
+    | '-'
+    | '<'
+    | '<='
+    | '>'
+    | '>='
+    | '=='
+    | '!='
+    | '&&'
+    | '||'
     ;
 
 FORMKEY
     : 'form'
     ;
 
-IDENT
-    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+IFKEY
+    : 'if'
     ;
 
-INT
+INTEGER
     : ('0'..'9')+
     ;
 
-STR
+IDENTIFIER
+    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
+
+STRING
     : '"' .*? '"'
     ;
 
@@ -186,6 +100,6 @@ COMMENT
     : '/*' .*? '*/'  -> channel(HIDDEN)
     ;
 
-WS
+WHITESPACE
     : [ \t\r\n]+ -> channel(HIDDEN)
     ;

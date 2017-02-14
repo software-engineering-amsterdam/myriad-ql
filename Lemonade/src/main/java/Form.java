@@ -23,7 +23,8 @@ import java.util.List;
 public class Form extends ASTNode{
     private String identifier;
 
-    public Form(String identifier){
+    public Form(String identifier, int lineNo){
+        super(lineNo);
         this.identifier = identifier;
     }
 
