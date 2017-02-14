@@ -27,8 +27,23 @@ class Node(object):
 
 
 class Form(Node):
-    def __init__(self, content):
-        print(content)
-        assert content[0] == 'form', 'First encountered type should be a form'
+    def __init__(self, parsed_output):
         super(Form, self).__init__('form')
-        self.name = content[1]
+        self.name = parsed_output.form_identifier
+        if parsed_output.form_statement_list:
+            field_expressions = parsed_output.form_statement_list['field_expression']
+            # TODO Check how to handle this in case key is not there
+            # if_blocks = parsed_output.form_statement_list['if_statement']
+            # There should always be at least one field
+            for field_expression in field_expressions:
+                self.add_child(Field(field_expression))
+            # TODO Check how to only do this in case list is not empty pythonically
+            # for if_block in if_blocks:
+            #     self.add_child(if_block)
+
+
+class Field(Node):
+    def __init__(self, parsed_output):
+        super(Field, self).__init__('field')
+        self.name = parsed_output.identifier
+        self.title = parsed_output.title

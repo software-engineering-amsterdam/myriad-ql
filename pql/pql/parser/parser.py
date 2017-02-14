@@ -62,7 +62,7 @@ def parse(input_string):
 
     field_expr = \
         Group(
-            QuotedString('"', unquoteResults=True) +
+            QuotedString('"', unquoteResults=True).setResultsName("title") +
             assignment_expr
         )
 
