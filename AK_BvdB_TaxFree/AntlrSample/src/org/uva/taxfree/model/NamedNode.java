@@ -1,14 +1,14 @@
 package org.uva.taxfree.model;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
-public abstract class QuestionNode extends Node {
+public abstract class NamedNode extends Node {
 
     private String mDescription;
     private String mId;
 
-    public QuestionNode(String description, String id, Node parent) {
-        super(parent);
+    public NamedNode(String description, String id) {
         mDescription = description;
         mId = id;
     }
@@ -22,7 +22,12 @@ public abstract class QuestionNode extends Node {
 
     protected abstract void fillPanel(JPanel parent);
 
-    public String getId(){
+    public String getId() {
         return mId;
     }
+
+    protected void addQuestion(ArrayList<NamedNode> list) {
+        list.add(this);
+    }
+
 }

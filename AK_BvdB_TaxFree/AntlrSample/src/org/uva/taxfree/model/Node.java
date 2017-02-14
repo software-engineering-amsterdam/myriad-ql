@@ -7,17 +7,8 @@ public abstract class Node {
     private Node mParent;
     private ArrayList<Node> mChildren;
 
-    public Node(Node parent) {
+    public Node() {
         mChildren = new ArrayList<>();
-        mParent = parent;
-        registerToParent();
-    }
-
-
-    private void registerToParent() {
-        if (mParent != null) {
-            mParent.addChild(this);
-        }
     }
 
     public boolean addChild(Node child) {
@@ -30,4 +21,21 @@ public abstract class Node {
     }
 
     public abstract String getId();
+
+    public void retrieveQuestions(ArrayList<NamedNode> list) {
+        for (Node child : mChildren) {
+            child.addQuestion(list);
+        }
+        addQuestion(list);
+    }
+
+    protected void addQuestion(ArrayList<NamedNode> list) {
+        // Intentionally left blank
+    }
+
+    public boolean isVisible(){
+        return false;
+    }
+
+    public abstract String getType();
 }
