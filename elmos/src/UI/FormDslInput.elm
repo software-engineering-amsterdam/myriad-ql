@@ -56,8 +56,8 @@ exampleDsl =
 
 
 asForm : Model -> Maybe Form
-asForm (Model _ form) =
-    form
+asForm (Model _ maybeForm) =
+    maybeForm
 
 
 update : Msg -> Model -> Model

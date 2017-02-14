@@ -10,7 +10,7 @@ import AST
         )
 import Dict exposing (Dict)
 import Environment exposing (Environment)
-import Values exposing (Value(Undefined))
+import Values exposing (Value)
 
 
 evaluate : Environment -> Expression -> Value
