@@ -41,4 +41,46 @@ describe Transformer do
       expect(transformer.apply(negation: '-', variable: 'sellingPrice')).to be_a(IntegerNegation)
     end
   end
+
+  describe 'expressions' do
+    context 'arithmetic' do
+      it 'transforms' do
+        expect(transformer.apply({left: {}, arithmetic: '/', right: {}})).to be_a(Divide)
+      end
+    end
+
+    context 'boolean' do
+      it 'transforms' do
+        expect(transformer.apply({left: {}, boolean: '&&', right: {}})).to be_a(And)
+      end
+    end
+
+    context 'comparison' do
+      it 'transforms' do
+        expect(transformer.apply({left: {}, comparison: '<', right: {}})).to be_a(Less)
+      end
+    end
+  end
+
+
+  describe 'statements' do
+    context 'questions' do
+      it 'transforms' do
+        expect(transformer.apply(question: {string: '"How much is?"', variable: 'hasSoldHouse', type: 'boolean'})).to be_a(Question)
+        expect(transformer.apply(question: {string: '"Value residue:"', variable: 'valueResidue', type: 'money', expression: '(sellingPrice - privateDebt)'})).to be_a(Question)
+      end
+    end
+
+    context 'if statement' do
+      it 'transforms' do
+        expect(transformer.apply(if_statement: {expression: 'hasSoldHouse', block: {}})).to be_a(IfStatement)
+      end
+    end
+  end
+
+  describe 'form' do
+    it 'transforms' do
+      expect(transformer.apply(form: {variable: 'taxOfficeExample', block: {}})).to be_a(Form)
+    end
+  end
 end
