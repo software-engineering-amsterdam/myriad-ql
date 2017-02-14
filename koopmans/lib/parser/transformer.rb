@@ -13,25 +13,15 @@ class Transformer < Parslet::Transform
     Form.new(Variable.new(variable), block)
   end
 
-
   # questions
-  def self.types(types)
-    types.each do |name, class_name|
-      rule(question: {string: simple(:string), variable: simple(:variable), type: name.to_s}) do
-        Question.new(string, Variable.new(variable), class_name.new)
-      end
-      rule(question: {string: simple(:string), variable: simple(:variable), type: name.to_s, expression: subtree(:expression)}) do
-        Question.new(string, Variable.new(variable), class_name.new, expression)
-      end
+  [BooleanType, IntegerType,DateType, DecimalType, StringType, MoneyType].each do |type|
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.to_type}) do
+      Question.new(string, Variable.new(variable), type.new)
+    end
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.to_type, expression: subtree(:expression)}) do
+      Question.new(string, Variable.new(variable), type.new, expression)
     end
   end
-
-  types boolean: BooleanType,
-        integer: IntegerType,
-        date: DateType,
-        decimal: DecimalType,
-        string: StringType,
-        money: MoneyType
 
   # if statement
   rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
@@ -45,39 +35,19 @@ class Transformer < Parslet::Transform
   end
 
   # negative variable
-  def self.negation_types(negation_types)
-    negation_types.each do |name, class_name|
-      rule(negation: name.to_s, variable: simple(:variable)) do
-        class_name.new(Variable.new(variable))
-      end
+  [BooleanNegation, IntegerNegation].each do |singleton_expression|
+    rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
+      singleton_expression.new(Variable.new(variable))
     end
   end
 
-  negation_types '!': BooleanNegation,
-                 '-': IntegerNegation
-
-  def self.operators(operators)
-    operators.each do |name, class_name|
-      rule({left: subtree(:left), operator: name.to_s, right: subtree(:right)}) do
-        class_name.new(left, right)
-      end
+  [Subtract, Add, Multiply, Divide, Or, And, Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual].each do |binary_expression|
+    rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
+      binary_expression.new(left, right)
     end
   end
 
-  operators '-': Subtract,
-            '+': Add,
-            '*': Multiply,
-            '/': Divide,
 
-            '||': Or,
-            '&&': And,
-
-            '<': Less,
-            '>': Greater,
-            '<=': LessEqual,
-            '>=': GreaterEqual,
-            '==': Equal,
-            '!=': NotEqual
 
   # boolean literal
   rule(boolean: simple(:boolean)) do
