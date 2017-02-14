@@ -17,19 +17,7 @@ class MattExperiment {
 
      static void parsingTheString(String stringToParse) {
 
-       /* //just readin' a file
-        File file = new File("src/input/input.QL");
-        FileInputStream fis = new FileInputStream(file);
-        byte[] data = new byte[(int) file.length()];
-        fis.read(data);
-        fis.close();
-
-        //stick it in a string
-        String inputString = new String(data, "UTF-8");*/
-
-        //parse that shit
         evalExampleExpression(stringToParse);
-
 
     }
 
