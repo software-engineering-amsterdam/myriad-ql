@@ -5,40 +5,37 @@ import com.mcsa.antlr.QLListener;
 import com.mcsa.antlr.QLParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
  * Created by matt on 14/02/2017.
  */
-public class MattExperiment {
+class MattExperiment {
 
 
-    public static void main(String[] args) throws IOException {
+     static void parsingTheString(String stringToParse) {
 
-        //just readin' a file
-        File file = new File("/Users/matt/Repos/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/input/input.QL");
+       /* //just readin' a file
+        File file = new File("src/input/input.QL");
         FileInputStream fis = new FileInputStream(file);
         byte[] data = new byte[(int) file.length()];
         fis.read(data);
         fis.close();
 
         //stick it in a string
-        String inputString = new String(data, "UTF-8");
+        String inputString = new String(data, "UTF-8");*/
 
         //parse that shit
-        evalExampleExpression(inputString);
+        evalExampleExpression(stringToParse);
 
 
     }
 
-    public static void evalExampleExpression(String in) {
+     static void evalExampleExpression(String input) {
 
-        String input = in;
+       // String input = in;
         // Get our lexer
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
 
