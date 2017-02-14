@@ -18,7 +18,6 @@ public class Question implements Statement {
         this.question = question;
         this.type = type;
         this.expr = expr;
-        System.out.println(question);
     }
 
     public Question(QLIdent id, QLString question, Type type) {

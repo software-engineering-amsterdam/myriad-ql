@@ -7,7 +7,7 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLIdent implements ASTNode, QLLiteral {
+public class QLIdent implements QLLiteral {
     private String qlIdent;
 
     public QLIdent(String qlIdent){

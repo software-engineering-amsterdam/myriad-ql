@@ -35,6 +35,9 @@
 import ql.ast.*;
 import ql.ast.literals.*;
 import ql.ast.expressions.*;
+import ql.ast.expressions.binop.*;
+import ql.ast.expressions.numop.*;
+import ql.ast.expressions.unop.*;
 %}
 
 %%
@@ -89,10 +92,13 @@ import ql.ast.expressions.*;
 		 | INT					{ $$ = $1; }
 		 | IDENT         		{ $$ = $1; }
 		 | FLOAT                { $$ = $1; }
-		 | BOOLEAN              { $$ = $1; }
+		 | boolean              { $$ = $1; }
 		 | '(' expr ')'			{ $$ = $2; }
 		 ;
 
+boolean     : TRUE              { $$ = new QLBoolean(true);}
+            | FALSE              { $$ = new QLBoolean(false);}
+            ;
 
 %%
 private QLLexer lexer;

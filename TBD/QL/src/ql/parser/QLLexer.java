@@ -105,12 +105,14 @@ public class QLLexer implements QLTokens {
                 case '&':
                     nextChar();
                     if(c == '&') {
+                        nextChar();
                         return token = AND;
                     }
                     throw new RuntimeException("Unexpected character: " + (char)c);
                 case '|':
                     nextChar();
                     if(c == '|') {
+                        nextChar();
                         return token = OR;
                     }
                     throw new RuntimeException("Unexpected character: " + (char)c);
@@ -129,24 +131,28 @@ public class QLLexer implements QLTokens {
                 case '!':
                     nextChar();
                     if(c == '=') {
+                        nextChar();
                         return token = NEQ;
                     }
                     return token = '!';
                 case '<':
                     nextChar();
                     if(c == '=') {
+                        nextChar();
                         return token = LEQ;
                     }
                     return token = '<';
                 case '=':
                     nextChar();
                     if(c == '=') {
+                        nextChar();
                         return token = EQ;
                     }
                     return token = '=';
                 case '>':
                     nextChar();
                     if(c == '=') {
+                        nextChar();
                         return token = GEQ;
                     }
                     return token = '>';
@@ -165,7 +171,7 @@ public class QLLexer implements QLTokens {
                             nextChar();
                         } while (Character.isDigit(c));
 
-                        if(c == '-') {
+                      /*  if(c == '-') {
                             nextChar();
                             int day = n;
                             int month = 0;
@@ -187,7 +193,7 @@ public class QLLexer implements QLTokens {
                                 this.yylval = new QLDate(day, month, year);
                                 return token = DATE;
                             }
-                        } else if(c == '.') {
+                        } else */if(c == '.') {
                             nextChar();
                             // Parse floats without digits after the comma
                             if(!Character.isDigit(c)) {
