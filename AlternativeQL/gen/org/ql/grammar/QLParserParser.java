@@ -1161,7 +1161,7 @@ public class QLParserParser extends Parser {
 						break;
 					case 13:
 						{
-						_localctx = new DecrementContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new IncrementContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(114);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
@@ -1171,7 +1171,7 @@ public class QLParserParser extends Parser {
 						break;
 					case 14:
 						{
-						_localctx = new IncrementContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new DecrementContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(116);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
