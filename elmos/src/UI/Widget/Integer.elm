@@ -4,7 +4,7 @@ import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, defaultValue, id)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
-import UI.FormData as FormData
+import Environment
 import Values exposing (Value(Integer, Undefined))
 
 

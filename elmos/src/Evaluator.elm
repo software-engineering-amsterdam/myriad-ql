@@ -9,14 +9,15 @@ import AST
         , Comparison(Equal, NotEqual)
         )
 import Dict exposing (Dict)
+import Environment exposing (Environment)
 import Values exposing (Value(Undefined))
 
 
-evaluate : Dict String Value -> Expression -> Value
-evaluate data expression =
+evaluate : Environment -> Expression -> Value
+evaluate env expression =
     case expression of
         Var x ->
-            Dict.get x data |> Maybe.withDefault Values.undefined
+            Dict.get x env |> Maybe.withDefault Values.undefined
 
         AST.Str str ->
             Values.string str
@@ -28,30 +29,30 @@ evaluate data expression =
             Values.bool boolean
 
         ParensExpression inner ->
-            evaluate data inner
+            evaluate env inner
 
         ArithmeticExpression op left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Integer l, Values.Integer r ) ->
                         Values.int (applicativeForOperator op l r)
 
                     _ ->
-                        Undefined
+                        Values.undefined
 
         RelationExpression op left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Integer l, Values.Integer r ) ->
@@ -63,10 +64,10 @@ evaluate data expression =
         LogicExpression op left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Boolean l, Values.Boolean r ) ->
@@ -78,10 +79,10 @@ evaluate data expression =
         ComparisonExpression op left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Undefined, _ ) ->

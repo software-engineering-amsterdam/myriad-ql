@@ -3,7 +3,7 @@ module UI.Widget.Base exposing (WidgetContext, container)
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
 import AST exposing (Id)
-import UI.FormData exposing (FormData)
+import Environment (FormData)
 import Values exposing (Value)
 
 

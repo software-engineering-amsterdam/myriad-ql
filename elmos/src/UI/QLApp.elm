@@ -9,7 +9,7 @@ import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Base as BaseWidget
-import UI.FormData as FormData exposing (FormData)
+import Environment exposing (FormData)
 import Values exposing (Value)
 import Evaluator
 import Dict
