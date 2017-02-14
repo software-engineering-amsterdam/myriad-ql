@@ -1,12 +1,12 @@
-require_relative 'statement'
-require_relative 'form'
-require_relative 'expression'
-require_relative 'type'
-require_relative 'literal'
+require_relative '../ast/statement'
+require_relative '../ast/form'
+require_relative '../ast/expression'
+require_relative '../ast/type'
+require_relative '../ast/literal'
 require 'parslet'
 
 # replaces the words node
-class Ast < Parslet::Transform
+class Transformer < Parslet::Transform
 
   # form
   rule(form: {variable: simple(:variable), block: subtree(:block)}) do

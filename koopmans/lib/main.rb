@@ -1,6 +1,6 @@
 require_relative 'parser/reader'
 require_relative 'parser/parser'
-require_relative 'ast/ast'
+require_relative 'parser/transformer'
 
 require 'pp'
 
@@ -14,8 +14,8 @@ parsed = parser.parse(contents)
 
 pp parsed
 
-ast = Ast.new
-form = ast.apply(parsed)
+transformer = Transformer.new
+form = transformer.apply(parsed)
 
 # pp parsed
 pp form
