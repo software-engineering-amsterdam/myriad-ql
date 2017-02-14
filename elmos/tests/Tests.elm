@@ -15,10 +15,10 @@ import Test exposing (Test, describe)
 all : Test
 all =
     describe "QL"
-        [ FormTests.all
-        , Combine.ExtraTests.all
+        [ TokenTests.all
         , ExpressionTests.all
-        , TokenTests.all
+        , FormTests.all
+        , Combine.ExtraTests.all
         , EnvironmentTests.all
         , TypeCheckerTests.all
         , EvaluatorTests.all

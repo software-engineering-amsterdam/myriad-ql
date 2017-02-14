@@ -11,7 +11,7 @@ import AST
         , Logic(And, Or)
         , Location(Location)
         )
-import ParserTestUtil exposing (testWithParser)
+import ParserTestUtil exposing (testWithParserAndMap, removeLocactionFromExpression)
 
 
 all : Test
@@ -28,7 +28,8 @@ all =
 
 whitespaceTests : Test
 whitespaceTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "whitespaceTests"
         [ ( "Should not parse surrounding whitespace", " 1 ", Nothing )
         , ( "Should not parse whitespace before", " 1", Nothing )
@@ -40,7 +41,8 @@ whitespaceTests =
 
 atomTests : Test
 atomTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "atomTests"
         [ ( "Should parse varName", "someVarName", Just (Var ( "someVarName", (Location 0 0) )) )
         , ( "Should parse int literal", "2", Just (Integer (Location 0 0) 2) )
@@ -52,7 +54,8 @@ atomTests =
 
 arithmeticTests : Test
 arithmeticTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "arithmeticTests"
         [ ( "Should parse simple add", "2+3", Just (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) )
         , ( "Should parse bigger add", "2+3+4", Just (ArithmeticExpression Plus (Location 0 0) (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) (Integer (Location 0 0) 4)) )
@@ -64,7 +67,8 @@ arithmeticTests =
 
 relationalTests : Test
 relationalTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "relationalTests"
         [ ( "Should parse less than relation", "x < y", Just (RelationExpression LessThan (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
         , ( "Should parse greater than relation", "x > y", Just (RelationExpression GreaterThan (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
@@ -85,7 +89,8 @@ relationalTests =
 
 comparisonTests : Test
 comparisonTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "comparisonTests"
         [ ( "Should parse equal comparison", "x == y", Just (ComparisonExpression Equal (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
         , ( "Should parse not equal comparison", "x != y", Just (ComparisonExpression NotEqual (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
@@ -103,7 +108,8 @@ comparisonTests =
 
 logicalTests : Test
 logicalTests =
-    testWithParser expression
+    testWithParserAndMap expression
+        removeLocactionFromExpression
         "logicalTests"
         [ ( "Should parse AND", "x&&y", Just (LogicExpression And (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
         , ( "Should parse OR", "x||y", Just (LogicExpression Or (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )

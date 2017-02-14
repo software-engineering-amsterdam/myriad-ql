@@ -1,7 +1,7 @@
 module Parser.TokenTests exposing (all)
 
 import Parser.Token as Token
-import ParserTestUtil exposing (testWithParser)
+import ParserTestUtil exposing (testWithParserAndMap, removeLocactionFromId)
 import Test exposing (Test, describe)
 import AST exposing (Location(Location))
 
@@ -15,7 +15,8 @@ all =
 
 identifierTests : Test
 identifierTests =
-    testWithParser Token.identifier
+    testWithParserAndMap Token.identifier
+        removeLocactionFromId
         "identifierTests"
         [ ( "should not parse an empty string", "", Nothing )
         , ( "should not parse a number", "1", Nothing )

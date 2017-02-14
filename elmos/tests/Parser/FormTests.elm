@@ -10,7 +10,7 @@ import AST
         )
 import Expect
 import Parser.Form as Form
-import ParserTestUtil exposing (parseToMaybe, testWithParser)
+import ParserTestUtil exposing (parseToMaybe, testWithParser, testWithParserAndMap, removeLocationFromBlock, removeLocationFromFormItem)
 import Samples.Form as Samples
 import Test exposing (Test, describe, test)
 
@@ -41,7 +41,8 @@ sampleTests =
 
 formItemsTests : Test
 formItemsTests =
-    testWithParser Form.formItems
+    testWithParserAndMap Form.formItems
+        removeLocationFromBlock
         "formItems"
         [ ( "should parse multiple form items"
           , "\"label\" id: integer\nif (bar) { \"label\" id: integer } else { \"label\" id: integer }"
@@ -66,7 +67,8 @@ formItemsTests =
 
 formItemTests : Test
 formItemTests =
-    testWithParser Form.formItem
+    testWithParserAndMap Form.formItem
+        removeLocationFromFormItem
         "formItem"
         [ ( "should parse a simple field", "\"label\" id: integer", Just <| Field "label" ( "id", (Location 0 0) ) IntegerType )
         , ( "should parse an if block"
@@ -82,7 +84,8 @@ formItemTests =
 
 fieldTests : Test
 fieldTests =
-    testWithParser Form.formItem
+    testWithParserAndMap Form.formItem
+        removeLocationFromFormItem
         "field and computed fields"
         [ ( "should parse a simple field", "\"label\" id: integer", Just (Field "label" ( "id", (Location 0 0) ) IntegerType) )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
@@ -107,7 +110,8 @@ ifBlockTests =
             [ Field "label" ( "id", (Location 0 0) ) IntegerType
             ]
     in
-        testWithParser Form.formItem
+        testWithParserAndMap Form.formItem
+            removeLocationFromFormItem
             "ifThen and ifThenElse"
             [ ( "should parse a simple if block"
               , "if (x) { \"label\" id: integer }"
