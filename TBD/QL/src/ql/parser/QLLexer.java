@@ -3,6 +3,7 @@ package ql.parser;
 /**
  * Created by Erik on 6-2-2017.
  */
+import ql.ast.literals.QLFloat;
 import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLInt;
 import ql.ast.literals.QLString;
@@ -55,8 +56,24 @@ public class QLLexer implements QLTokens {
     public int nextToken() {
         StringBuilder stringBuilder;
         String name;
+        boolean inComment = false;
 
         for (;;) {
+            // Skip comments
+            if (inComment) {
+                while (c != '*' && c != -1) {
+                    nextChar();
+                }
+                if (c == '*') {
+                    nextChar();
+                    if (c == '/') {
+                        nextChar();
+                        inComment = false;
+                    }
+                    continue;
+                }
+            }
+            // Skip whitespaces
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
                 nextChar();
             }
@@ -66,13 +83,40 @@ public class QLLexer implements QLTokens {
             }
 
             switch (c) {
-                case '(': nextChar(); return token = '(';
-                case ')': nextChar(); return token = ')';
-                case '=': nextChar(); return token = '=';
-                case '-': nextChar(); return token = '-';
-                case '{': nextChar(); return token = '{';
-                case '}': nextChar(); return token = '}';
-                case ':': nextChar(); return token = ':';
+                case '*':
+                    nextChar();
+                    if(inComment && c == '/') {
+                        inComment = false;
+                        nextChar();
+                        continue;
+                    }
+                    return token = '*';
+                case '/':
+                    nextChar();
+                    if(c == '*') {
+                        inComment = true;
+                        nextChar();
+                        continue;
+                    }
+                    else if (c == '/') {
+                        while (c != '\n') {
+                            nextChar();
+                        }
+                        continue;
+                    }
+                    return token = '/';
+                case '&':
+                    nextChar();
+                    if(c == '&') {
+                        return token = AND;
+                    }
+                    throw new RuntimeException("Unexpected character: " + (char)c);
+                case '|':
+                    nextChar();
+                    if(c == '|') {
+                        return token = OR;
+                    }
+                    throw new RuntimeException("Unexpected character: " + (char)c);
                 case '"':
                     stringBuilder = new StringBuilder();
                     nextChar();
@@ -85,6 +129,37 @@ public class QLLexer implements QLTokens {
                     name = stringBuilder.toString();
                     this.yylval = new QLString(name);
                     return token = STRING;
+                case '!':
+                    nextChar();
+                    if(c == '=') {
+                        return token = NEQ;
+                    }
+                    return token = '!';
+                case '<':
+                    nextChar();
+                    if(c == '=') {
+                        return token = LEQ;
+                    }
+                    return token = '<';
+                case '=':
+                    nextChar();
+                    if(c == '=') {
+                        return token = EQ;
+                    }
+                    return token = '=';
+                case '>':
+                    nextChar();
+                    if(c == '=') {
+                        return token = GEQ;
+                    }
+                    return token = '>';
+                case '+': nextChar(); return token = '+';
+                case '-': nextChar(); return token = '-';
+                case '(': nextChar(); return token = '(';
+                case ')': nextChar(); return token = ')';
+                case '{': nextChar(); return token = '{';
+                case '}': nextChar(); return token = '}';
+                case ':': nextChar(); return token = ':';
                 default:
                     if (Character.isDigit(c)) {
                         int n = 0;
@@ -93,9 +168,21 @@ public class QLLexer implements QLTokens {
                             nextChar();
                         } while (Character.isDigit(c));
 
+                        nextChar();
+                        if(c == '.') {
+                            nextChar();
+                            int counter = 1;
+                            do {
+                                n = n + (c - '0')/(counter*10);
+                                nextChar();
+                                counter *= 10;
+                            } while (Character.isDigit(c));
+                            this.yylval = new QLFloat(n);
+                            return token = FLOAT;
+                        }
+
                         this.yylval = new QLInt(n);
                         return token = INT;
-
                     }
 
                     if (Character.isLetter(c)) {
