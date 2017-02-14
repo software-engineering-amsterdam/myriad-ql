@@ -74,10 +74,14 @@ class GUIQuestion
       variable variable
       value false
       pack
-      # command proc {answer['textvariable'].value = answer.value}
+      # command proc { answer['textvariable'].value = answer.value }
     end
 
     # frame.pack_forget
+  end
+
+  def aap(event)
+    p event
   end
 
   def toggle
@@ -101,7 +105,10 @@ class GUIIf
   end
 end
 
-v = TkVariable.new(true)
+v = TkVariable.new(true) do
+  callback
+end
+
 v2 = TkVariable.new(true)
 q1 = GUIQuestion.new('hola', v)
 # q2 = GUIQuestion.new('hola2', v)
