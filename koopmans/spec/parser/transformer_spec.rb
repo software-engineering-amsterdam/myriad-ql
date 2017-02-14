@@ -42,26 +42,17 @@ describe Transformer do
     end
   end
 
-  describe 'expressions' do
-    context 'arithmetic' do
-      it 'transforms' do
-        expect(transformer.apply({left: {}, arithmetic: '/', right: {}})).to be_a(Divide)
-      end
+  describe 'operators' do
+    it 'transforms arithmetic' do
+      expect(transformer.apply({left: {}, operator: '/', right: {}})).to be_a(Divide)
     end
-
-    context 'boolean' do
-      it 'transforms' do
-        expect(transformer.apply({left: {}, boolean: '&&', right: {}})).to be_a(And)
-      end
+    it 'transforms boolean' do
+      expect(transformer.apply({left: {}, operator: '&&', right: {}})).to be_a(And)
     end
-
-    context 'comparison' do
-      it 'transforms' do
-        expect(transformer.apply({left: {}, comparison: '<', right: {}})).to be_a(Less)
-      end
+    it 'transforms comparison' do
+      expect(transformer.apply({left: {}, operator: '<', right: {}})).to be_a(Less)
     end
   end
-
 
   describe 'statements' do
     context 'questions' do
