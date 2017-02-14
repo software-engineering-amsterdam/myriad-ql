@@ -1,8 +1,9 @@
 package ast.expression;
 
+import ast.Visitor;
 import ast.atom.Atom;
 
-public abstract class UnaryExpression extends Expression {
+public class UnaryExpression extends Expression {
     private Atom lhs; // TODO rename?
     // protected boolean eval;
     
@@ -18,5 +19,11 @@ public abstract class UnaryExpression extends Expression {
 
 	public Atom getLhs() {
 		return lhs;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 }
