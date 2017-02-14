@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.tree.*;
 
 import ast.Form;
 import ast.Visitor;
+import ast.atom.Atom;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -45,7 +46,7 @@ public class Main {
 		 
 		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
 		 QVisitor.visit(form);
-		 Map<String, String> answers = QVisitor.getEnvironment().getAnswers();
+		 Map<String, Atom> answers = QVisitor.getEnvironment().getAnswers();
 		 
 		 for (String answer : answers.keySet()) {
 			 System.out.println("Answer: " + answer);

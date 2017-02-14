@@ -12,6 +12,6 @@ public class SubExpression extends BinaryExpression {
 	@Override
 	public Atom evaluate() {
 		// TODO Auto-generated method stub
-		return null;
+		return getLhs().sub(getRhs());
 	}
 }

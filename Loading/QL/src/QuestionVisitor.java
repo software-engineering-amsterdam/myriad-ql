@@ -1,5 +1,6 @@
 import ast.Question;
 import ast.Visitor;
+import ast.type.Type;
 
 // TODO remove comments
 // Checks for double questions
@@ -20,7 +21,7 @@ public class QuestionVisitor extends Visitor {
 	public void visit(Question question) {	
 		question.getType().accept(this);
 		
-		environment.addAnswer(question.getLabel(), "answer"); // TODO implement answer
+		environment.addVariableType(question.getLabel(), question.getType());
 	}
 	
 }

@@ -27,6 +27,11 @@ public class EvalVisitor extends Visitor {
 	@Override
 	public void visit(UnaryExpression unaryExpression) {
 		
-		System.out.println("Eval: " + unaryExpression.evaluate());
+		Expression result = unaryExpression.evaluate();
+		if (result == null) {
+			// TODO throw
+		}
+		
+		System.out.println("Eval: " + result);
 	}	
 }

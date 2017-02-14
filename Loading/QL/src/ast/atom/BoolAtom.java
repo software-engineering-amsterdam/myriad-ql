@@ -17,7 +17,7 @@ public class BoolAtom extends Atom {
 	}
 
 	@Override
-    public Atom and(Atom other) {
+    public BoolAtom and(Atom other) {
     	return new BoolAtom(value && other.getValue());
     }
 	
@@ -38,7 +38,7 @@ public class BoolAtom extends Atom {
 	}
 
 	@Override
-    public Number getNumber() {
+    public Integer getNumber() {
     	return null;
     }
     
@@ -58,7 +58,52 @@ public class BoolAtom extends Atom {
 	}
 
 	@Override
-	public Atom not() {
+	public BoolAtom not() {
 		return new BoolAtom(!value);
+	}
+
+	@Override
+	public BoolAtom eq(Atom other) {
+		return new BoolAtom(value == other.getValue());
+	}
+
+	@Override
+	public BoolAtom greaterEq(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom greater(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom lessEq(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom less(Atom other) {
+		return null;
+	}
+
+	@Override
+	public Atom mul(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom notEq(Atom other) {
+		return new BoolAtom(value != other.getValue());
+	}
+
+	@Override
+	public BoolAtom or(Atom other) {
+		return new BoolAtom(value || other.getValue());
+	}
+
+	@Override
+	public Atom sub(Atom other) {
+		return null;
 	}
 }

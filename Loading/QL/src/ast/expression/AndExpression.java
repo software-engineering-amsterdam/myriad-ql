@@ -8,11 +8,6 @@ public class AndExpression extends BinaryExpression {
 	
 	@Override
 	public Atom evaluate() {
-		if (getLhs() == null || getRhs() == null) {
-			// throw exception!
-			System.out.println("EXCEPTION");
-		}
-
 		return getLhs().and(getRhs());
 	}
 	
