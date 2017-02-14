@@ -3,73 +3,54 @@ grammar QL;
 @header {package sc.ql.antlr;}
 
 form
-	: 'form' question+ 'endform' EOF
+	: 'form' form_element+ 'endform' EOF
 	;
 
-questions
-	: question
-	| questions question
+form_element
+	: STR ID TYPE ('=' expression)?
+	| 'if' conditional_block ('else if' conditional_block)* ('else' form_element+)? 'endif'
 	;
 
-question
-	: STR NAME TYPE
+conditional_block
+	: '(' expression ')' form_element+
 	;
-
-primary
-	: INT
- 	| STR
- 	| BOOL
- 	;
 
 expression
-	: primary calcExpr primary
-	| primary relExpr primary
-	| primary boolExpr primary
+	: '(' expression ')' 
+	| '!' expression
+	| expression op=('*'|'/') expression
+	| expression op=('+'|'-') expression
+	| expression op=('<'|'<='|'>'|'>='|'=='|'!=') expression
+	| expression op=('&&'|'||') expression
+	| BOOL
+	| INT
+	| ID
+	| STR
 	;
 
-calcExpr
-    : '+'
-    | '-'
-    | '*'
-    | '/'
-    ;
-
-relExpr
-    : '<'
-    | '<='
-    | '>'
-    | '>='
-    | '=='
-    | '!='
-    ;
-
-boolExpr
-    : '&&'
-    | '||'
-    ;
-
-
-// Tokens
 BOOL
 	: ('true'|'false')
 	;
 	
 TYPE
 	: 'boolean'
+	| 'date'
+	| 'float'
+	| 'integer'
+	| 'money'
 	| 'text'
-	| 'number'
 	;
 
 INT
 	: ('0'..'9')+
 	;
 
-NAME
-	: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')+
+ID
+	: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
 	;
 
 STR
-	: '"' .*? '"'
+	: '"' ('\\"'|.)*? '"'
 	;
 
 WS
@@ -77,5 +58,9 @@ WS
     ;
 
 COMMENT
-    : '/*' .*? '*/' -> channel(HIDDEN)
+    : '/*' .*? '*/' -> skip
+    ;
+
+LINE_COMMENT
+    : '//' .*?[\r\n] -> skip
     ;
