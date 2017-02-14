@@ -23,10 +23,10 @@ expression
 	| left=expression op=('+'|'-') right=expression						#opExpr
 	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr
 	| left=expression op=('&&'|'||') right=expression					#boolExpr
-	| atom=BOOL															#atomExpr
-	| atom=INT															#atomExpr
-	| atom=ID															#atomExpr
-	| atom=STR															#atomExpr
+	| atom=BOOL															#boolAtom
+	| atom=INT															#intAtom
+	| atom=ID															#idAtom
+	| atom=STR															#strAtom
 	;
 
 BOOL
