@@ -2,7 +2,7 @@ grammar QL;
 
 form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: question      #in
+formItem: question      #ques
         | computed      #comp
         | condition     #cond
         ;
