@@ -3,6 +3,7 @@ require_relative 'form'
 require_relative 'expression'
 require_relative 'type'
 require_relative 'literal'
+require 'parslet'
 
 # replaces the words node
 class Ast < Parslet::Transform
