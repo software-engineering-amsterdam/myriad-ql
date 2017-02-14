@@ -3,14 +3,14 @@ module UI.Widget.Base exposing (WidgetContext, container)
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
 import AST exposing (Id)
-import Environment (FormData)
+import Environment exposing (Environment)
 import Values exposing (Value)
 
 
 type alias WidgetContext msg =
     { identifier : Id
     , label : String
-    , formData : FormData
+    , env : Environment
     , onChange : Value -> msg
     }
 

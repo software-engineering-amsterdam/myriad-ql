@@ -9,10 +9,10 @@ import Values exposing (Value(Boolean))
 
 
 view : WidgetContext msg -> Html msg
-view { identifier, formData, onChange } =
+view { identifier, env, onChange } =
     let
         isChecked =
-            FormData.getBoolean identifier formData
+            Environment.getBoolean identifier env
                 |> Maybe.withDefault False
     in
         div [ class "checkbox" ]

@@ -9,10 +9,10 @@ import Values exposing (Value(Str))
 
 
 view : WidgetContext msg -> Html msg
-view { identifier, formData, onChange } =
+view { identifier, env, onChange } =
     let
         textValue =
-            FormData.getString identifier formData
+            Environment.getString identifier env
                 |> Maybe.withDefault ""
     in
         input

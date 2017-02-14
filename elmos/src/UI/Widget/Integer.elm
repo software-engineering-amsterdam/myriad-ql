@@ -9,10 +9,10 @@ import Values exposing (Value(Integer, Undefined))
 
 
 view : WidgetContext msg -> Html msg
-view { identifier, formData, onChange } =
+view { identifier, env, onChange } =
     let
         textValue =
-            FormData.getInteger identifier formData
+            Environment.getInteger identifier env
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in
