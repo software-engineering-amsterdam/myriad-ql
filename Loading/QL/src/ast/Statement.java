@@ -13,9 +13,9 @@ public class Statement implements Node {
 		this.expression = expression;
 		this.block = block;
 	}
-
-	public EqExpression getExpression() {
-		return (EqExpression) expression;
+	
+	public Expression getExpression() {
+		return expression;
 	}
 
 	public Block getBlock() {
