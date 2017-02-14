@@ -66,14 +66,15 @@ def parse(input_string):
             assignment_expr
         )
 
-    if_stmt = \
+    if_stmt = Forward()
+    if_stmt << \
         Group(
             if_lit +
             l_paren +
             arithmetic_statement +
             r_paren +
             l_curly +
-            OneOrMore(field_expr) +
+            (OneOrMore(field_expr) | ZeroOrMore(if_stmt)) +
             r_curly
         )
 
