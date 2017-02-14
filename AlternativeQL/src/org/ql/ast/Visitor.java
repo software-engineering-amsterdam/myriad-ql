@@ -2,14 +2,15 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.BooleanLiteral;
-import org.ql.ast.expression.FloatLiteral;
-import org.ql.ast.expression.IntegerLiteral;
+import org.ql.ast.expression.literals.BooleanLiteral;
+import org.ql.ast.expression.literals.FloatLiteral;
+import org.ql.ast.expression.literals.IntegerLiteral;
 import org.ql.ast.expression.arithmetic.*;
+import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
-import org.ql.ast.expression.StringLiteral;
+import org.ql.ast.expression.literals.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
@@ -88,22 +89,22 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitNotEqual(QLParserParser.NotEqualContext ctx) {
-        return null;
+        return new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
     public Node visitLogicalAnd(QLParserParser.LogicalAndContext ctx) {
-        return null;
+        return new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
     public Node visitLowerThan(QLParserParser.LowerThanContext ctx) {
-        return null;
+        return new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
     public Node visitGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx) {
-        return null;
+        return new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -138,7 +139,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitGreaterThan(QLParserParser.GreaterThanContext ctx) {
-        return null;
+        return new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -153,12 +154,12 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitEquals(QLParserParser.EqualsContext ctx) {
-        return null;
+        return new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
     public Node visitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) {
-        return null;
+        return new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -173,7 +174,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitLogicalOr(QLParserParser.LogicalOrContext ctx) {
-        return null;
+        return new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
