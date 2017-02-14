@@ -1,88 +1,88 @@
-// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/mcsaQL/grammars\Exp.g4 by ANTLR 4.6
-package com.mcsa.gen;
+// Generated from /Users/matt/Repos/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/grammars/QL.g4 by ANTLR 4.6
+package com.mcsa.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link ExpListener},
+ * This class provides an empty implementation of {@link QLListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class ExpBaseListener implements ExpListener {
+public class QLBaseListener implements QLListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart(ExpParser.StartContext ctx) { }
+	@Override public void enterStart(QLParser.StartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStart(ExpParser.StartContext ctx) { }
+	@Override public void exitStart(QLParser.StartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterContent(ExpParser.ContentContext ctx) { }
+	@Override public void enterContent(QLParser.ContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitContent(ExpParser.ContentContext ctx) { }
+	@Override public void exitContent(QLParser.ContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCategorise(ExpParser.CategoriseContext ctx) { }
+	@Override public void enterCategorise(QLParser.CategoriseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCategorise(ExpParser.CategoriseContext ctx) { }
+	@Override public void exitCategorise(QLParser.CategoriseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCaseNewInput(ExpParser.CaseNewInputContext ctx) { }
+	@Override public void enterCaseNewInput(QLParser.CaseNewInputContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCaseNewInput(ExpParser.CaseNewInputContext ctx) { }
+	@Override public void exitCaseNewInput(QLParser.CaseNewInputContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(ExpParser.TypeContext ctx) { }
+	@Override public void enterType(QLParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType(ExpParser.TypeContext ctx) { }
+	@Override public void exitType(QLParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMathaction(ExpParser.MathactionContext ctx) { }
+	@Override public void enterMathaction(QLParser.MathactionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMathaction(ExpParser.MathactionContext ctx) { }
+	@Override public void exitMathaction(QLParser.MathactionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,5 +1,5 @@
-// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/mcsaQL/grammars\Exp.g4 by ANTLR 4.6
-package com.mcsa.gen;
+// Generated from /Users/matt/Repos/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/grammars/QL.g4 by ANTLR 4.6
+package com.mcsa.antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ExpLexer extends Lexer {
+public class QLLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -74,13 +74,13 @@ public class ExpLexer extends Lexer {
 	}
 
 
-	public ExpLexer(CharStream input) {
+	public QLLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Exp.g4"; }
+	public String getGrammarFileName() { return "QL.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

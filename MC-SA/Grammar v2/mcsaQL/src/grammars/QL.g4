@@ -1,82 +1,57 @@
 grammar QL;
-options {backtrack=true; memoize=true;}
 
+start : 'form' ID '{' content '}';
 
-unExpr returns [Expr result]
-    :  '+' x=unExpr { $result = new Pos($x.result); }
-    |  '-' x=unExpr { $result = new Neg($x.result); }
-    |  '!' x=unExpr { $result = new Not($x.result); }
-    |  ' ' x= unExpr   { $result = $x.result; }
+content
+    : categorise*
     ;
 
-mulExpr returns [Expr result]
-    :   lhs=unExpr { $result=$lhs.result; } ( op=( '*' | '/' ) rhs=unExpr
-    {
-      if ($op.text.equals("*")) {
-        $result = new Mul($result, rhs);
-      }
-      if ($op.text.equals("<=")) {
-        $result = new Div($result, rhs);
-      }
-    })*
+categorise
+    : STRING caseNewInput
+    | NUMBER
+    | WHITESPACE
+    | COMMENT
+    | 'if' '(' ID ')' '{' content '}'
     ;
 
-
-addExpr returns [Expr result]
-    :   lhs=mulExpr { $result=$lhs.result; } ( op=('+' | '-') rhs=mulExpr
-    {
-      if ($op.text.equals("+")) {
-        $result = new Add($result, rhs);
-      }
-      if ($op.text.equals("-")) {
-        $result = new Sub($result, rhs);
-      }
-    })*
+caseNewInput
+    : ID ':' type
     ;
 
-relExpr returns [Expr result]
-    :   lhs=addExpr { $result=$lhs.result; } ( op=('<'|'<='|'>'|'>='|'=='|'!=') rhs=addExpr
-    {
-      if ($op.text.equals("<")) {
-        $result = new LT($result, rhs);
-      }
-      if ($op.text.equals("<=")) {
-        $result = new LEq($result, rhs);
-      }
-      if ($op.text.equals(">")) {
-        $result = new GT($result, rhs);
-      }
-      if ($op.text.equals(">=")) {
-        $result = new GEq($result, rhs);
-      }
-      if ($op.text.equals("==")) {
-        $result = new Eq($result, rhs);
-      }
-      if ($op.text.equals("!=")) {
-        $result = new NEq($result, rhs);
-      }
-    })*
+type
+    : 'boolean'
+    | 'integer'
+    | 'double'
+    | 'float'
+    | 'string'
+    | 'money' ('=' mathaction)*
     ;
 
-andExpr returns [Expr result]
-    :   lhs=relExpr { $result=$lhs.result; } ( '&&' rhs=relExpr { $result = new And($result, rhs); } )*
+mathaction
+    :   mathaction op=('*'|'/') mathaction  // MulDiv
+    |   mathaction op=('+'|'-') mathaction  // AddSub
+    |   NUMBER                              // int
+    |   ID                                  // id
+    |   '(' mathaction ')'                  // parens
     ;
 
+/*boolean
+    : 'True'
+    | 'False'
+    | 'true'
+    | 'false'
+    ;
+*/
+ID:   [a-zA-Z$_]+ ;
 
-orExpr returns [Expr result]
-    :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
+STRING: '"' .*? '"';
+
+NUMBER
+    :    ('0'..'9')+ ('.' ('0'..'9')+)?
     ;
 
+WHITESPACE
+    :   (' ' | '\t' | '\r'| '\n') -> channel(HIDDEN)
+    ;
 
-// Tokens
-WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN);
-
-
-COMMENT : '/*' .* '*/' -> channel(HIDDEN);
-
-
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
-
-Int: ('0'..'9')+;
-
-Str: '"' .* '"';
+COMMENT : '/*' .*? '*/' -> channel(HIDDEN);

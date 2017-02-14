@@ -1,5 +1,5 @@
-// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/mcsaQL/grammars\Exp.g4 by ANTLR 4.6
-package com.mcsa.gen;
+// Generated from /Users/matt/Repos/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/grammars/QL.g4 by ANTLR 4.6
+package com.mcsa.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ExpParser extends Parser {
+public class QLParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -71,7 +71,7 @@ public class ExpParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Exp.g4"; }
+	public String getGrammarFileName() { return "QL.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -82,12 +82,12 @@ public class ExpParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ExpParser(TokenStream input) {
+	public QLParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class StartContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(ExpParser.ID, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public ContentContext content() {
 			return getRuleContext(ContentContext.class,0);
 		}
@@ -97,11 +97,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_start; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterStart(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterStart(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitStart(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitStart(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitStart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -147,11 +152,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_content; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterContent(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterContent(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitContent(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitContent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitContent(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -190,14 +200,14 @@ public class ExpParser extends Parser {
 	}
 
 	public static class CategoriseContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(ExpParser.STRING, 0); }
+		public TerminalNode STRING() { return getToken(QLParser.STRING, 0); }
 		public CaseNewInputContext caseNewInput() {
 			return getRuleContext(CaseNewInputContext.class,0);
 		}
-		public TerminalNode NUMBER() { return getToken(ExpParser.NUMBER, 0); }
-		public TerminalNode WHITESPACE() { return getToken(ExpParser.WHITESPACE, 0); }
-		public TerminalNode COMMENT() { return getToken(ExpParser.COMMENT, 0); }
-		public TerminalNode ID() { return getToken(ExpParser.ID, 0); }
+		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
+		public TerminalNode WHITESPACE() { return getToken(QLParser.WHITESPACE, 0); }
+		public TerminalNode COMMENT() { return getToken(QLParser.COMMENT, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public ContentContext content() {
 			return getRuleContext(ContentContext.class,0);
 		}
@@ -207,11 +217,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_categorise; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterCategorise(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterCategorise(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitCategorise(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitCategorise(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitCategorise(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -287,7 +302,7 @@ public class ExpParser extends Parser {
 	}
 
 	public static class CaseNewInputContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(ExpParser.ID, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -297,11 +312,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_caseNewInput; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterCaseNewInput(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterCaseNewInput(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitCaseNewInput(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitCaseNewInput(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitCaseNewInput(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -343,11 +363,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterType(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitType(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -434,8 +459,8 @@ public class ExpParser extends Parser {
 
 	public static class MathactionContext extends ParserRuleContext {
 		public Token op;
-		public TerminalNode NUMBER() { return getToken(ExpParser.NUMBER, 0); }
-		public TerminalNode ID() { return getToken(ExpParser.ID, 0); }
+		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public List<MathactionContext> mathaction() {
 			return getRuleContexts(MathactionContext.class);
 		}
@@ -448,11 +473,16 @@ public class ExpParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mathaction; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).enterMathaction(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).enterMathaction(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpListener ) ((ExpListener)listener).exitMathaction(this);
+			if ( listener instanceof QLListener ) ((QLListener)listener).exitMathaction(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitMathaction(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

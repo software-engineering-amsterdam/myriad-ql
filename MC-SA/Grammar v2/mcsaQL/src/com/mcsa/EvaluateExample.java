@@ -1,6 +1,7 @@
 package com.mcsa;
 
-import com.mcsa.gen.*;
+import com.mcsa.gen.ExpLexer;
+import com.mcsa.gen.ExpParser;
 import org.antlr.v4.runtime.*;
 
 import java.io.IOException;
