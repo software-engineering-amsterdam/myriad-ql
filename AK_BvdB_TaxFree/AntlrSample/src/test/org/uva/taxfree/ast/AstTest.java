@@ -7,7 +7,7 @@ public class AstTest {
     @Test
     public void testEmptyForm() {
         Ast ast = Ast.generateAst("form {}");
-        assert "FORM".equals(ast.getRootNode().getName());
+        assert "FORM".equals(ast.getRootNode().getId());
     }
 
     @Test
@@ -16,7 +16,7 @@ public class AstTest {
                 "form {" +
                 "   \"Have you sold an house last year?\" -> hasSoldHouse : bool" +
                 "}");
-        assert "FORM".equals(ast.getRootNode().getName());
+        assert "FORM".equals(ast.getRootNode().getId());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class AstTest {
                 "   \"Have you sold an house last year?\" -> hasSoldHouse : bool" +
                 "   \"Have you bought an house last year?\" -> hasBoughtHouse : bool" +
                 "}");
-        assert "FORM".equals(ast.getRootNode().getName());
+        assert "FORM".equals(ast.getRootNode().getId());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class AstTest {
                         "   if (hasSoldHouse) {" +
                         "   }" +
                         "}");
-        assert "FORM".equals(ast.getRootNode().getName());
+        assert "FORM".equals(ast.getRootNode().getId());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class AstTest {
                 "       \"Have you bought an house last year?\" -> hasBoughtHouse : bool" +
                 "   }" +
                 "}");
-        assert "FORM".equals(ast.getRootNode().getName());
+        assert "FORM".equals(ast.getRootNode().getId());
     }
 }

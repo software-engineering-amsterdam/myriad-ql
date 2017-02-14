@@ -17,12 +17,12 @@ public class Main {
 
         try {
             Ast ast = Ast.generateAst(new File("input"));
-            System.out.println("Rootnode name: " + ast.getRootNode().getName());
+            System.out.println("Rootnode name: " + ast.getRootNode().getId());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         Ast ast2 = Ast.generateAst("form {}");
-        System.out.println("Rootnode name: " + ast2.getRootNode().getName());
+        System.out.println("Rootnode name: " + ast2.getRootNode().getId());
 
         System.out.println("- Visualizing the input");
         try {

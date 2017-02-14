@@ -7,7 +7,6 @@ import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.FormNode;
 import org.uva.taxfree.model.Node;
-import org.uva.taxfree.model.QuestionNode;
 
 public class OurQLGrammarListener extends QLGrammarBaseListener {
 
@@ -25,7 +24,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
-        new QuestionNode(ctx.VARNAME().toString(), ctx.VARTYPE().toString(), mCurrentParent);
+
     }
 
     public Ast getAst() {
