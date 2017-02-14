@@ -16,7 +16,7 @@ public class AdditionTest {
     }
 
     @Test
-    public void shouldParseAdditionWithThreeValues() {
+    public void shouldParseAdditionWithThreeValuesAndAssocRight() {
         String inputCode = "4 + 27 + 3";
 
         String actual = new Parser().parseExpression(inputCode).toString();
