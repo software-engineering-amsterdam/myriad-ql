@@ -7,6 +7,7 @@ if cur_version >= req_version:
     from tkinter import *
     from wickeddsl import WickedDSL
     import argparse
+    from pprint import pprint
 else:
     exit("Did you forget to run it using python >= 3.0 ??")
 
@@ -63,40 +64,66 @@ class WickedQLS(Frame):
             # current_content = self.__ql_content[3*x+2]
             parsed_content = WickedDSL.content_type.parseString(current_content)
             # store the parsed content
-            content_holder = self.get_new_content_holder(current_page['id'])
-            __skip_next = False
-            for x in range(0, len(parsed_content)):
-                if(__skip_next):
-                    __skip_next = False
-                    continue
-                if(parsed_content[x] is "section"): # create new section
-                    # current_page['content'].append(content_holder)
-                    content_holder['name'] = parsed_content[x+1]
-                    __skip_next = True
-                    if content_holder is not None:
-                        current_page['content'].append(content_holder)
-                        content_holder = self.get_new_content_holder(current_page['id'])
-                # print(parsed_content[x])
-                content_holder['content'] += parsed_content[x] + " "
-                # print(content_holder)
-            current_page['content'].append(content_holder)
+            # content_holder = self.get_new_content_holder(current_page['id'])
+            (current_page, parsed_content) = self._refine(current_page, parsed_content)
 
             # continue
-
-            # see if we need to further refine the parsed content
-            # parsed_content = self.parse_refine(parsed_content)
-
             self.__pages.append(current_page)
+
+
 
         # DEBUG
         if(self._verbose):
-            for page in self.__pages:
-                print(page)
-                for content in page['content']:
-                    print(content)
-                print("\n")
+            pprint(self.__pages)
+            # for page in self.__pages:
+            #     print(page)
+            #     for content in page['content']:
+            #         print(content)
+            #     print("\n")
 
         # print(self.__ql_content)
+    def _refine(self, container, parsed_content):
+        if(parsed_content is None):
+            return (container, parsed_content)
+        content_holder = self.get_new_content_holder(container['id'])
+        __skip_next = 0
+        for x in range(0, len(parsed_content)):
+            if(__skip_next > 0):
+                __skip_next -= 1
+                continue
+            if(parsed_content[x] is "section"): # create new section
+                if(content_holder['content'] != ""):
+                    container['content'].append(content_holder)
+                content_holder = self.get_new_content_holder(container['id'])
+                # content_holder['name'] = parsed_content[x+1]
+                # content_holder['type'] = parsed_content[x]
+                __skip_next += 1
+            else:
+                if(content_holder['type'] == None):
+                    content_holder['type'] = parsed_content[x]
+                    content_holder['name'] = parsed_content[x+1]
+                    __skip_next += 1
+                else:
+                    content_holder['content'] += parsed_content[x] + " "
+
+        # if "{" in content_holder['content']:
+        #     _tmp = None
+        #     try:
+        #         content_holder['content'] = WickedDSL.codeblock_unquoted.parseString(content_holder['content'])
+        #         content_holder['content'] = WickedDSL.escape_curlies(content_holder['content'])
+        #         _tmp = content_holder['content']
+        #         # _tmp = WickedDSL.codeblocknocodeblock.parseString(content_holder['content'])
+        #     except Exception:
+        #         print("COULD NOT PARSE:")
+        #         print(content_holder['content'])
+        #         pass
+        #     print(_tmp)
+        #     # exit()
+        #     (content_holder,_tmp) = self._refine(content_holder, _tmp)
+
+        container['content'].append(content_holder)
+
+        return (container, parsed_content)
 
     def get_new_content_holder(self, parent_id):
         return {'id': self.get_id(),'parent': parent_id,
@@ -107,15 +134,19 @@ class WickedQLS(Frame):
         self.__id_counter += 1
         return tmp
 
-    def parse_refine(self,content):
-        for x in range(0, len(content)):
-            if '{' in content[x]:
-                # parse the codeblock
-                parsed_content = WickedDSL.codeblock_unquoted.parseString(content[x])
-                if(len(parsed_content) > 1): # more than 1 codeblock
-                    pass
-                else: # 1 codeblock
-                    print(parsed_content)
+    def parse_refine(self,content_holder):
+        # for x in range(0, len(content)):
+        if '{' in content_holder['content']:
+            # parse the codeblock
+            parsed_content = WickedDSL.codeblock_unquoted.parseString(content_holder['content'])
+            _tmp_holder = self.get_new_content_holder(content_holder['id'])
+            _tmp_holder['content'] = parsed_content
+            content_holder['content'] = _tmp_holder
+            del _tmp_holder
+
+            return self.parse_refine(content_holder)
+        else:
+            return content_holder
 
     def load_ql(self, ql_file):
         self.__ql_content = WickedDSL.load_file(ql_file)
