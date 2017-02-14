@@ -10,20 +10,25 @@ import org.uva.taxfree.model.Node;
 import org.uva.taxfree.model.QuestionNode;
 
 public class OurQLGrammarListener implements QLGrammarListener {
+    private AST mAST;
     private Node mCurrentParent;
 
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
         Node newFormNode = new FormNode("FORM", mCurrentParent);
-        if (mCurrentParent == null) {
-            new AST(newFormNode);
+        if (mAST == null) {
+            mAST = new AST(newFormNode);
         }
         mCurrentParent = newFormNode;
     }
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
-        new QuestionNode(ctx.VARNAME().toString(), mCurrentParent);
+        new QuestionNode(ctx.VARNAME().toString(), ctx.VARTYPE().toString(), mCurrentParent);
+    }
+
+    public AST getAST() {
+        return mAST;
     }
 
     // Intentionally left blank

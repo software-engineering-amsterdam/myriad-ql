@@ -19,13 +19,14 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("** Starting our parser **");
         System.out.println("- Parsing the input");
+        AST ast;
         try {
-            parse(new File("input"));
+            ast = parse(new File("input"));
+            System.out.println("Rootnode name: " + ast.getRootNode().getName());
         } catch (IOException e) {
             System.out.println("Oops! An error while parsing the input");
             e.printStackTrace();
         }
-        System.out.println("Rootnode name: " + AST.getInstance().getRootNode().getName());
 
         System.out.println("- Visualizing the input");
         try {
@@ -36,15 +37,15 @@ public class Main {
             e.printStackTrace();
         }
     }
-    private static void parse(String string) throws IOException {
-        visitAntlrTree(new StringReader(string));
+    private static AST parse(String string) throws IOException {
+        return visitAntlrTree(new StringReader(string));
     }
 
-    private static void parse(File absoluteFilePath) throws IOException {
-        visitAntlrTree(new FileReader(absoluteFilePath));
+    private static AST parse(File absoluteFilePath) throws IOException {
+        return visitAntlrTree(new FileReader(absoluteFilePath));
     }
 
-    private static void visitAntlrTree(Reader reader) throws IOException {
+    private static AST visitAntlrTree(Reader reader) throws IOException {
         ANTLRInputStream inputStream = new ANTLRInputStream(reader);
         QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
@@ -56,6 +57,7 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         OurQLGrammarListener listener = new OurQLGrammarListener();
         walker.walk(listener, formContext);
+        return listener.getAST();
     }
 }
 
