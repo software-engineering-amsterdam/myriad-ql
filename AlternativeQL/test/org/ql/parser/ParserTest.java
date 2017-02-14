@@ -2,6 +2,7 @@ package org.ql.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.literal.Boolean;
 import org.ql.ast.expression.literal.Decimal;
 import org.ql.ast.form.Form;
@@ -63,7 +64,7 @@ public class ParserTest extends Assert {
         String inputCode = "form ExampleForm {\n" +
                 "    boolean hasSoldHouse: \"Did you sell a house in 2010?\";\n" +
                 "    boolean hasBoughtHouse: \"Did you buy a house in 2010?\";\n" +
-                "    boolean hasMaintLoan:  \"Did you enter a loan?\";\n" +
+                "    boolean hasMainLoan:  \"Did you enter a loan?\";\n" +
                 "\n" +
                 "    if (hasSoldHouse) {\n" +
                 "        money sellingPrice: \"What was the selling price?\";\n" +
@@ -76,8 +77,7 @@ public class ParserTest extends Assert {
         Form ast = parser.parse(inputCode);
         If ifStatement = (If) ast.getStatement(expectedIfStatementLocation);
         assertSame(expectedAmountOfQuestionsInsideIfStatement, ifStatement.getStatements().size());
-
-        // TODO: More asserts.
+        assertEquals("hasSoldHouse", ifStatement.getCondition().toString());
     }
 
     @Test
