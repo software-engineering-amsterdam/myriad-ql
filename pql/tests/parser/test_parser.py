@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
+from parser.parser import parse
+from pyparsing import ParseException
 
-from pql.Amain import *
 
-
-class TestParser(unittest.TestCase):
+class TestParser(TestCase):
     def test_parse_simple_empty_form(self):
         self.input_string = "form taxOfficeExample {}"
         self.expected_result = ['form', 'taxOfficeExample', []]
@@ -125,8 +125,8 @@ class TestParser(unittest.TestCase):
         }
         """
         self.expected_result = \
-            ['form', 'taxOfficeExample',
-             [['if', 'hasSoldHouse', ['What was the selling price?', 'sellingPrice', 'money']]]]
+            ['taxOfficeExample',
+             [['hasSoldHouse', ['What was the selling price?', 'sellingPrice', 'money']]]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
