@@ -1,6 +1,6 @@
 import sys
 import io
-from lexer.lexer import lex_using_default_tokens
+from pql.parser.parser import PQLParser
 
 
 def open_file(path):
@@ -17,10 +17,11 @@ def main(sys_args):
         sys.exit(2)
     ql_char = ql_file.read()
     ql_file.close()
+    parser = PQLParser()
+    input = "form taxOfficeExample {}"
+    # print(parser.start_parse_form_block(ql_char))
+    print(parser.start_parse_form_block(input))
 
-    tokens = lex_using_default_tokens(ql_char)
-#    for token in tokens:
-#        print(token)
 
 if __name__ == '__main__':
     main(sys.argv)

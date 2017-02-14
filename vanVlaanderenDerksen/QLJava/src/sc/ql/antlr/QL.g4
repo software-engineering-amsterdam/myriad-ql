@@ -2,65 +2,66 @@ grammar QL;
 
 @header {package sc.ql.antlr;}
 
-parse
-	: unExpr EOF
+form
+	: 'form' form_element+ 'endform' EOF
 	;
 
-primary
-	: Int
- 	| Str
- 	| Bool
- 	;
-
-unExpr
-	: primary calcExpr primary
-	| primary relExpr primary
-	| primary boolExpr primary
+form_element
+	: STR ID TYPE 																			#Question
+	| STR ID TYPE '=' expression 															#calcQuestion
+	| 'if' conditional_block ('else if' conditional_block)* ('else' form_element+)? 'endif' #if_statement
 	;
 
-calcExpr
-    : '+'
-    | '-'
-    | '*'
-    | '/'
-    ;
+conditional_block
+	: '(' expression ')' form_element+
+	;
+	
+expression
+	: '(' expression ')' 												#parenExpr
+	| '!' expression													#boolExpr
+	| left=expression op=('*'|'/') right=expression						#opExpr
+	| left=expression op=('+'|'-') right=expression						#opExpr
+	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr
+	| left=expression op=('&&'|'||') right=expression					#boolExpr
+	| atom=BOOL															#boolAtom
+	| atom=INT															#intAtom
+	| atom=ID															#idAtom
+	| atom=STR															#strAtom
+	;
 
-relExpr
-    : '<'
-    | '<='
-    | '>'
-    | '>='
-    | '=='
-    | '!='
-    ;
+BOOL
+	: ('true'|'false')
+	;
+	
+TYPE
+	: 'boolean'
+	| 'date'
+	| 'float'
+	| 'integer'
+	| 'money'
+	| 'text'
+	;
 
-boolExpr
-    : '&&'
-    | '||'
-    ;
+INT
+	: ('0'..'9')+
+	;
 
+ID
+	: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+	;
 
-// Tokens
+STR
+	: '"' ('\\"'|.)*? '"'
+	;
+
 WS
-	:	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
+	: [ \t\n\r]+ -> skip
     ;
 
 COMMENT
-    :	'/*' .* '*/' -> channel(HIDDEN)
+    : '/*' .*? '*/' -> skip
     ;
 
-Ident
-	:	('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-	;
-
-Int
-	: 	('0'..'9')+
-	;
-
-Str
-	: '"' .* '"'
-	;
-
-Bool
-	: ('true'|'false'|'TRUE'|'FALSE')
-	;
+LINE_COMMENT
+    : '//' .*?[\r\n] -> skip
+    ;

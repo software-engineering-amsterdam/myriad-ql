@@ -1,18 +1,35 @@
 package ast;
 
-public class Question {
+import ast.type.Type;
+
+
+public class Question implements Node {
+
+	final private String variable;
+	final private String label;
+	final private Type type;
 	
-	private String content;
+	public Question(String variable, String label, Type type) {
+		this.variable = variable;
+		this.label = label;
+		this.type = type;
+	}
 	
-	public Question(String content) {
-		this.setContent(content);
+	public String getVariable() {
+		return variable;
 	}
 
-	public String getContent() {
-		return content;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public Type getType() {
+		return type;
 	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
+
 }

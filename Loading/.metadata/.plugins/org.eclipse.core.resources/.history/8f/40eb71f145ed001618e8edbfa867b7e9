@@ -2,7 +2,7 @@ grammar QL;
 
 @parser::header
 {
-    import ast.IntegerAtom;
+    import ast.atom.IntegerAtom;
     import ast.*;
 }
 

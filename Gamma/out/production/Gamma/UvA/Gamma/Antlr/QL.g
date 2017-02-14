@@ -82,8 +82,7 @@ orExpr returns [Expr result]
 
     
 // Tokens
-WS  :	(' ' | '\t' | '\n' | '\r') { $channel=HIDDEN; }
-    ;
+WS  :	(' ' | '\t' | '\n' | '\r' | '\u000C')* { $channel=HIDDEN; } ;
 
 COMMENT 
      : '/*' .* '*/' {$channel=HIDDEN;}
