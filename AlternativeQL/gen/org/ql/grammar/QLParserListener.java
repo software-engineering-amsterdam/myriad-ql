@@ -62,25 +62,257 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitDefaultValue(QLParserParser.DefaultValueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParserParser#expression}.
+	 * Enter a parse tree produced by the {@code negation}
+	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(QLParserParser.ExpressionContext ctx);
+	void enterNegation(QLParserParser.NegationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParserParser#expression}.
+	 * Exit a parse tree produced by the {@code negation}
+	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(QLParserParser.ExpressionContext ctx);
+	void exitNegation(QLParserParser.NegationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParserParser#parameter}.
+	 * Enter a parse tree produced by the {@code product}
+	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterParameter(QLParserParser.ParameterContext ctx);
+	void enterProduct(QLParserParser.ProductContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParserParser#parameter}.
+	 * Exit a parse tree produced by the {@code product}
+	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitParameter(QLParserParser.ParameterContext ctx);
+	void exitProduct(QLParserParser.ProductContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code grouped}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGrouped(QLParserParser.GroupedContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code grouped}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGrouped(QLParserParser.GroupedContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code increment}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIncrement(QLParserParser.IncrementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code increment}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIncrement(QLParserParser.IncrementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code subtraction}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubtraction(QLParserParser.SubtractionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code subtraction}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubtraction(QLParserParser.SubtractionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code notEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotEqual(QLParserParser.NotEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code notEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotEqual(QLParserParser.NotEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalAnd}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalAnd(QLParserParser.LogicalAndContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalAnd}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalAnd(QLParserParser.LogicalAndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lowerThan}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLowerThan(QLParserParser.LowerThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lowerThan}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLowerThan(QLParserParser.LowerThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterThanOrEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterThanOrEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code division}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivision(QLParserParser.DivisionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code division}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivision(QLParserParser.DivisionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stringLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(QLParserParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stringLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(QLParserParser.StringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code param}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParam(QLParserParser.ParamContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code param}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParam(QLParserParser.ParamContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code decrement}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecrement(QLParserParser.DecrementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code decrement}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecrement(QLParserParser.DecrementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equals}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEquals(QLParserParser.EqualsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equals}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEquals(QLParserParser.EqualsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lowerThanOrEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lowerThanOrEqual}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code floatLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloatLiteral(QLParserParser.FloatLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code floatLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloatLiteral(QLParserParser.FloatLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code integerLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerLiteral(QLParserParser.IntegerLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code integerLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalOr}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalOr(QLParserParser.LogicalOrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalOr}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalOr(QLParserParser.LogicalOrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code booleanLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code booleanLiteral}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code addition}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddition(QLParserParser.AdditionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code addition}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddition(QLParserParser.AdditionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterThan}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThan(QLParserParser.GreaterThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterThan}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThan(QLParserParser.GreaterThanContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParserParser#identifier}.
 	 * @param ctx the parse tree
@@ -91,54 +323,6 @@ public interface QLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdentifier(QLParserParser.IdentifierContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code booleanLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code booleanLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code stringLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterStringLiteral(QLParserParser.StringLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code stringLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitStringLiteral(QLParserParser.StringLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code floatLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterFloatLiteral(QLParserParser.FloatLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code floatLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitFloatLiteral(QLParserParser.FloatLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code integerLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntegerLiteral(QLParserParser.IntegerLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code integerLiteral}
-	 * labeled alternative in {@link QLParserParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code typeBoolean}
 	 * labeled alternative in {@link QLParserParser#type}.

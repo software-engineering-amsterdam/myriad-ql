@@ -20,37 +20,31 @@ defaultValue
     ;
 
 expression
-    :   literal
-    |   parameter
-    |   '(' expression ')'
-    |   '!' expression
-    |   <assoc=left> expression '/' expression
-    |   <assoc=left> expression '*' expression
-    |   expression '-' expression
-    |   expression '+' expression
-    |   expression '>' expression
-    |   expression '<' expression
-    |   expression '==' expression
-    |   expression '!=' expression
-    |   expression '<=' expression
-    |   expression '>=' expression
-    |   expression '&&' expression
-    |   expression '||' expression
-    ;
-
-parameter
-    :   ID
+    :   BOOLEAN_LITERAL                             #booleanLiteral
+    |   STRING_LITERAL                              #stringLiteral
+    |   FLOAT_LITERAL                               #floatLiteral
+    |   INTEGER_LITERAL                             #integerLiteral
+    |   ID                                          #param
+    |   '(' expression ')'                          #grouped
+    |   '!' expression                              #negation
+    |   '++' expression                             #decrement
+    |   '--' expression                             #increment
+    |   <assoc=left> expression '/' expression      #division
+    |   <assoc=left> expression '*' expression      #product
+    |   expression '-' expression                   #subtraction
+    |   expression '+' expression                   #addition
+    |   expression '>' expression                   #greaterThan
+    |   expression '<' expression                   #lowerThan
+    |   expression '==' expression                  #equals
+    |   expression '!=' expression                  #notEqual
+    |   expression '<=' expression                  #lowerThanOrEqual
+    |   expression '>=' expression                  #greaterThanOrEqual
+    |   expression '&&' expression                  #logicalAnd
+    |   expression '||' expression                  #logicalOr
     ;
 
 identifier
     :   ID
-    ;
-
-literal
-    :   BOOLEAN_LITERAL     #booleanLiteral
-    |   STRING_LITERAL      #stringLiteral
-    |   FLOAT_LITERAL       #floatLiteral
-    |   INTEGER_LITERAL     #integerLiteral
     ;
 
 type
