@@ -1,30 +1,29 @@
 module AST exposing (..)
 
 
+type alias Label =
+    String
+
+
+type alias Id =
+    String
+
+
 type alias Form =
-    { name : String
-    , items : List FormItem
+    { id : Id
+    , items : Block
     }
 
 
 type FormItem
-    = FieldItem Field
-    | IfItem IfBlock
+    = Field Label Id ValueType
+    | ComputedField Label Id ValueType Expression
+    | IfThen Expression Block
+    | IfThenElse Expression Block Block
 
 
-type alias Field =
-    { label : String
-    , id : String
-    , valueType : ValueType
-    , valueExpression : Maybe Expression
-    }
-
-
-type alias IfBlock =
-    { expression : Expression
-    , thenBranch : List FormItem
-    , elseBranch : List FormItem
-    }
+type alias Block =
+    List FormItem
 
 
 type Expression
