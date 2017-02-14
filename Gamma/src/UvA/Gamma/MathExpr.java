@@ -15,7 +15,6 @@ public class MathExpr {
     public Number evaluate () throws Exception{
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
-        System.out.println(engine.eval(expr));
         return new Number(engine.eval(expr).toString());
     }
 }
