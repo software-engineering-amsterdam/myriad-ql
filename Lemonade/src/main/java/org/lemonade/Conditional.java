@@ -12,7 +12,7 @@ public class Conditional extends ASTNode{
 
     //How are we going to validate expressions referring to questions declared above?
     public Conditional (Expression expr, int lineNo) {
-        super(lineNo);
+        super(lineNo, null);//FIXME temp
         this.condition = expr;
         this.questions = new ArrayList<Question>();
     }

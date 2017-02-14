@@ -6,7 +6,7 @@ public class Question extends ASTNode {
     private QLType typeSpecifier;
 
     public Question (String identifier, String label, QLType typeSpecifier, int lineNo) {
-        super(lineNo);
+        super(lineNo, null); //FIXME temp
         this.identifier = identifier;
         this.label = label;
         this.typeSpecifier = typeSpecifier;

@@ -30,7 +30,7 @@ public class ParseTest {
     @Test
     public void testExploratoryString() throws IOException {
 
-        String simpleForm = "form name {bla : \"oke?\" currency}";
+        String simpleForm = "form name {testquest : \"questionfield?\" currency}";
 
         CharStream inputCharStream = new ANTLRInputStream(new StringReader(simpleForm));
         TokenSource tokenSource = new QLLexer(inputCharStream);

@@ -6,10 +6,14 @@ public class Form extends ASTNode{
     private String identifier;
 
     public Form(String identifier, int lineNo){
-        super(lineNo);
+        super(lineNo, null);
         this.identifier = identifier;
     }
 
+    @Override
+    public String toString(){
+        return this.identifier;
+    }
 }
 
 //Huh? Waarom maak je nog een losse form body class

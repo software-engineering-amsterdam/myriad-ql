@@ -1,15 +1,15 @@
 grammar QL;
 
 form
-    : 'form' identifier '{' statements '}' EOF
+    : 'form' identifier '{' blocks '}' EOF
     ;
 
-statements
-    : statements statement
-    | statement
+blocks
+    : blocks block
+    | block
     ;
 
-statement
+block
     : questions
     | conditionals
     ;
@@ -96,6 +96,6 @@ COMMENT
     : '/*' .*? '*/'  -> channel(HIDDEN)
     ;
 
-WS
+WHITESPACE
     : [ \t\r\n]+ -> channel(HIDDEN)
     ;
