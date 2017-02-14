@@ -54,7 +54,7 @@ class Grammar:
     sub_op = Literal("-").setParseAction(lambda _: SubOp)
 
     lt_op = Literal("<").setParseAction(lambda _: LtOp)
-    le_op = Literal("<=").setParseAction(lambda _: LebOp)
+    le_op = Literal("<=").setParseAction(lambda _: LeOp)
     gt_op = Literal(">").setParseAction(lambda _: GtOp)
     ge_op = Literal(">=").setParseAction(lambda _: GeOp)
 
