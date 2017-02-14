@@ -1,5 +1,5 @@
 from unittest import TestCase
-from parser.parser import parse
+from pql.parser.parser import parse
 from pyparsing import ParseException
 
 
@@ -125,7 +125,7 @@ class TestParser(TestCase):
         }
         """
         self.expected_result = ['taxOfficeExample',
-                                [['hasSoldHouse', ['hat was the selling price', 'sellingPrice', 'money']]]]
+                                [['hasSoldHouse', ['What was the selling price?', 'sellingPrice', 'money']]]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
@@ -165,7 +165,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt
         }
         """
-        self.expected_result = ['form', 'taxOfficeExample',
+        self.expected_result = ['taxOfficeExample',
                                 [['Value residue:', 'valueResidue', 'money', ['sellingPrice', '-', 'privateDebt']]]]
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )

@@ -9,7 +9,7 @@ class TestMain(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
             main.main(("", ""))
         the_exception = cm.exception
-        self.assertEqual(the_exception.code, 2)
+        self.assertEqual(the_exception.code, 1)
 
     def test_main_test_file(self):
         my_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -17,8 +17,8 @@ class TestMain(unittest.TestCase):
         main.main(("", path))
 
     def test_open_file_invalid_path(self):
-        result = main.open_file("pql/examples/taxOfficeExample.ql")
-        self.assertIsNone(result)
+        with self.assertRaises(SystemExit):
+            main.open_file("pql/examples/taxOfficeExample.ql")
 
     def test_open_file(self):
         my_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))

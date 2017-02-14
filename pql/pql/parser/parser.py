@@ -62,7 +62,7 @@ def parse(input_string):
 
     field_expr = \
         Group(
-            quotedString.addParseAction(removeQuotes) +
+            QuotedString('"', unquoteResults=True) +
             assignment_expr
         )
 

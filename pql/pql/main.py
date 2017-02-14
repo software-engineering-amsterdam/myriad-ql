@@ -1,7 +1,7 @@
 import sys
 import io
 import os
-from parser.parser import parse
+from pql.parser.parser import parse
 
 PATH_EXAMPLE = str(os.path.join("path", "to", "your", "file"))
 
