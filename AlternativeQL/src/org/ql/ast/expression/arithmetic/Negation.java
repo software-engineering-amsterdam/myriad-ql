@@ -1,7 +1,15 @@
 package org.ql.ast.expression.arithmetic;
 
-/**
- * Created by yoan-alexander on 14/02/17.
- */
-public class Negation {
+import org.ql.ast.Expression;
+
+public class Negation implements Expression {
+    private final Expression expression;
+
+    public Negation(Expression expression) {
+        this.expression = expression;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
 }

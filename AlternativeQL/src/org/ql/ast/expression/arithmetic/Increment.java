@@ -1,7 +1,15 @@
 package org.ql.ast.expression.arithmetic;
 
-/**
- * Created by yoan-alexander on 14/02/17.
- */
-public class Increment {
+import org.ql.ast.Expression;
+
+public class Increment implements Expression {
+    private final Expression expression;
+
+    public Increment(Expression expression) {
+        this.expression = expression;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
 }

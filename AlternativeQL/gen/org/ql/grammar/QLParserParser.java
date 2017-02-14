@@ -465,6 +465,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class ProductContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -506,6 +508,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class SubtractionContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -528,6 +532,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class NotEqualContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -550,6 +556,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class LogicalAndContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -572,6 +580,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class LowerThanContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -594,6 +604,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class GreaterThanOrEqualContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -616,6 +628,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class DivisionContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -691,6 +705,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class EqualsContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -713,6 +729,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class LowerThanOrEqualContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -769,6 +787,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class LogicalOrContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -827,6 +847,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class AdditionContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -849,6 +871,8 @@ public class QLParserParser extends Parser {
 		}
 	}
 	public static class GreaterThanContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -999,145 +1023,157 @@ public class QLParserParser extends Parser {
 					case 1:
 						{
 						_localctx = new DivisionContext(new ExpressionContext(_parentctx, _parentState));
+						((DivisionContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(82);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
 						setState(83);
 						match(T__13);
 						setState(84);
-						expression(13);
+						((DivisionContext)_localctx).right = expression(13);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new ProductContext(new ExpressionContext(_parentctx, _parentState));
+						((ProductContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(85);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
 						setState(86);
 						match(T__14);
 						setState(87);
-						expression(12);
+						((ProductContext)_localctx).right = expression(12);
 						}
 						break;
 					case 3:
 						{
 						_localctx = new SubtractionContext(new ExpressionContext(_parentctx, _parentState));
+						((SubtractionContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(88);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(89);
 						match(T__15);
 						setState(90);
-						expression(11);
+						((SubtractionContext)_localctx).right = expression(11);
 						}
 						break;
 					case 4:
 						{
 						_localctx = new AdditionContext(new ExpressionContext(_parentctx, _parentState));
+						((AdditionContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(91);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(92);
 						match(T__16);
 						setState(93);
-						expression(10);
+						((AdditionContext)_localctx).right = expression(10);
 						}
 						break;
 					case 5:
 						{
 						_localctx = new GreaterThanContext(new ExpressionContext(_parentctx, _parentState));
+						((GreaterThanContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(94);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(95);
 						match(T__17);
 						setState(96);
-						expression(9);
+						((GreaterThanContext)_localctx).right = expression(9);
 						}
 						break;
 					case 6:
 						{
 						_localctx = new LowerThanContext(new ExpressionContext(_parentctx, _parentState));
+						((LowerThanContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(97);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(98);
 						match(T__18);
 						setState(99);
-						expression(8);
+						((LowerThanContext)_localctx).right = expression(8);
 						}
 						break;
 					case 7:
 						{
 						_localctx = new EqualsContext(new ExpressionContext(_parentctx, _parentState));
+						((EqualsContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(100);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(101);
 						match(T__19);
 						setState(102);
-						expression(7);
+						((EqualsContext)_localctx).right = expression(7);
 						}
 						break;
 					case 8:
 						{
 						_localctx = new NotEqualContext(new ExpressionContext(_parentctx, _parentState));
+						((NotEqualContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(103);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(104);
 						match(T__20);
 						setState(105);
-						expression(6);
+						((NotEqualContext)_localctx).right = expression(6);
 						}
 						break;
 					case 9:
 						{
 						_localctx = new LowerThanOrEqualContext(new ExpressionContext(_parentctx, _parentState));
+						((LowerThanOrEqualContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(106);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(107);
 						match(T__21);
 						setState(108);
-						expression(5);
+						((LowerThanOrEqualContext)_localctx).right = expression(5);
 						}
 						break;
 					case 10:
 						{
 						_localctx = new GreaterThanOrEqualContext(new ExpressionContext(_parentctx, _parentState));
+						((GreaterThanOrEqualContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(109);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(110);
 						match(T__22);
 						setState(111);
-						expression(4);
+						((GreaterThanOrEqualContext)_localctx).right = expression(4);
 						}
 						break;
 					case 11:
 						{
 						_localctx = new LogicalAndContext(new ExpressionContext(_parentctx, _parentState));
+						((LogicalAndContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(112);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(113);
 						match(T__23);
 						setState(114);
-						expression(3);
+						((LogicalAndContext)_localctx).right = expression(3);
 						}
 						break;
 					case 12:
 						{
 						_localctx = new LogicalOrContext(new ExpressionContext(_parentctx, _parentState));
+						((LogicalOrContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(115);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(116);
 						match(T__24);
 						setState(117);
-						expression(2);
+						((LogicalOrContext)_localctx).right = expression(2);
 						}
 						break;
 					}

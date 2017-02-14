@@ -5,6 +5,7 @@ import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.BooleanLiteral;
 import org.ql.ast.expression.FloatLiteral;
 import org.ql.ast.expression.IntegerLiteral;
+import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
@@ -67,22 +68,22 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitNegation(QLParserParser.NegationContext ctx) {
-        return null;
+        return new Negation((Expression) visit(ctx.expression()));
     }
 
     @Override
     public Node visitProduct(QLParserParser.ProductContext ctx) {
-        return null;
+        return new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
     public Node visitIncrement(QLParserParser.IncrementContext ctx) {
-        return null;
+        return new Increment((Expression) visit(ctx.expression()));
     }
 
     @Override
     public Node visitSubtraction(QLParserParser.SubtractionContext ctx) {
-        return null;
+        return new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -107,7 +108,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitDivision(QLParserParser.DivisionContext ctx) {
-        return null;
+        return new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -127,12 +128,12 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitGroup(QLParserParser.GroupContext ctx) {
-        return null;
+        return new Group((Expression) visit(ctx.expression()));
     }
 
     @Override
     public Node visitAddition(QLParserParser.AdditionContext ctx) {
-        return null;
+        return new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
@@ -147,7 +148,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitDecrement(QLParserParser.DecrementContext ctx) {
-        return null;
+        return new Decrement((Expression) visit(ctx.expression()));
     }
 
     @Override
