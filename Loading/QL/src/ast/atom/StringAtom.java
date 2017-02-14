@@ -1,5 +1,7 @@
 package ast.atom;
 
+import ast.Visitor;
+
 public class StringAtom extends Atom {
     private String value;
 
@@ -10,4 +12,9 @@ public class StringAtom extends Atom {
     public String getValue() {
         return this.value;
     }
+    
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
 }

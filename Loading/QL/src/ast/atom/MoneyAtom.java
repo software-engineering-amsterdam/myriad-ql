@@ -1,5 +1,7 @@
 package ast.atom;
 
+import ast.Visitor;
+
 public class MoneyAtom extends Atom {
     private Float value;
 
@@ -10,4 +12,9 @@ public class MoneyAtom extends Atom {
     public Float getValue() {
         return this.value;
     }
+    
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
 }

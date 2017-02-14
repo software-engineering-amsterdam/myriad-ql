@@ -1,7 +1,11 @@
 package ast.atom;
 
-public class IntegerAtom extends Atom {
+import ast.Visitor;
 
+public class IntegerAtom extends Atom {
+		
+	private final Integer value;
+	
     public IntegerAtom(Integer value) {
         this.value = value;
     }
@@ -9,6 +13,9 @@ public class IntegerAtom extends Atom {
     public Integer getValue() {
         return this.value;
     }
-    
-	private final Integer value;
+	
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
 }

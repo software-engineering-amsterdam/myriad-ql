@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ast.Visitor;
+
 public class DateAtom extends Atom {
     private Date value;
 
@@ -21,4 +23,9 @@ public class DateAtom extends Atom {
     public Date getValue() {
         return this.value;
     }
+    
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
 }
