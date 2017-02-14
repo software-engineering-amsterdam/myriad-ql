@@ -37,7 +37,8 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
         return new Question(
             (Identifier) visit(ctx.id),
             (QuestionText) visit(ctx.text),
-            (Type) visit(ctx.type())
+            (Type) visit(ctx.type()),
+            ctx.defaultValue() == null ? null : (Expression) visit(ctx.defaultValue())
         );
     }
 
@@ -63,7 +64,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitDefaultValue(QLParserParser.DefaultValueContext ctx) {
-        return null;
+        return visit(ctx.expression());
     }
 
     @Override
