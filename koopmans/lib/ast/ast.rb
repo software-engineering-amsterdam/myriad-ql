@@ -1,19 +1,33 @@
-# require_relative 'question'
+require_relative 'question'
 require_relative 'form'
-# require_relative 'if_statement'
+require_relative 'if_statement'
 # require_relative 'binary_expression'
 require_relative 'variable'
 
 # replaces the words node
 class Ast < Parslet::Transform
-  # rule(form: {variable: simple(:variable), block: subtree(:block)}) do
-  #   Variable.new(variable)
-  #   Form.new(variable, block)
-  # end
+  # create form
+  rule(form: {variable: simple(:variable), block: subtree(:block)}) do
+    Form.new(Variable.new(variable), block)
+  end
 
+  # create variable
   rule(variable: simple(:variable)) do
     Variable.new(variable)
   end
+
+  # create Question
+  rule(question: {label: simple(:label), variable: simple(:variable), type: simple(:type)}) do
+    Question.new(label, Variable.new(variable), type)
+  end
+
+  # create if statement
+  rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
+    IfStatement.new(expression, block)
+  end
+
+
+
 
 
 
