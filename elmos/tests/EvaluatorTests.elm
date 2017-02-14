@@ -28,7 +28,7 @@ sampleData =
 
 all : Test
 all =
-    describe "EvaluatorTests"
+    describe "Evaluator"
         [ test "string" <|
             \() ->
                 asExpression "\"hello\""

@@ -1,4 +1,4 @@
-module Evaluator exposing (..)
+module Evaluator exposing (evaluate)
 
 import AST
     exposing

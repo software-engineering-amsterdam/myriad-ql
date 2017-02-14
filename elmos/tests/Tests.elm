@@ -7,6 +7,7 @@ import Parser.TokenTests as TokenTests
 import TypeChecker.TypeCheckerTests as TypeCheckerTests
 import EvaluatorTests
 import EnvironmentTests
+import FormUtilTests
 import Test exposing (Test, describe)
 
 
@@ -20,4 +21,5 @@ all =
         , EnvironmentTests.all
         , TypeCheckerTests.all
         , EvaluatorTests.all
+        , FormUtilTests.all
         ]
