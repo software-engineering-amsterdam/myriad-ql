@@ -13,4 +13,13 @@ public class GreaterThanOrEqualTest {
 
         assertEquals("(5>=7)", actual);
     }
+
+    @Test
+    public void shouldParseMultipleGreaterThanOrEquals() {
+        String inputCode = "5>=7>=1";
+
+        String actual = new Parser().parseExpression(inputCode).toString();
+
+        assertEquals("((5>=7)>=1)", actual);
+    }
 }

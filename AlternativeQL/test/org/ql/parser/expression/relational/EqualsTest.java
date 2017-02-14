@@ -14,4 +14,13 @@ public class EqualsTest {
 
         assertEquals("(5==7)", actual);
     }
+
+    @Test
+    public void shouldParseMultipleEquals() {
+        String inputCode = "5==7==9";
+
+        String actual = new Parser().parseExpression(inputCode).toString();
+
+        assertEquals("((5==7)==9)", actual);
+    }
 }

@@ -14,4 +14,13 @@ public class LogicalAndTest {
 
         assertEquals("(true&&false)", actual);
     }
+
+    @Test
+    public void shouldParseMultipleLogicalAnd() {
+        String inputCode = "true&&false&&exampleVariable";
+
+        String actual = new Parser().parseExpression(inputCode).toString();
+
+        assertEquals("((true&&false)&&exampleVariable)", actual);
+    }
 }

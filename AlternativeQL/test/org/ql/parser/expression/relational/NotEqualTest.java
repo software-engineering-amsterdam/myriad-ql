@@ -14,4 +14,13 @@ public class NotEqualTest {
 
         assertEquals("(true!=false)", actual);
     }
+
+    @Test
+    public void shouldParseMultipleNotEqual() {
+        String inputCode = "true!=false!=exampleVariable";
+
+        String actual = new Parser().parseExpression(inputCode).toString();
+
+        assertEquals("((true!=false)!=exampleVariable)", actual);
+    }
 }
