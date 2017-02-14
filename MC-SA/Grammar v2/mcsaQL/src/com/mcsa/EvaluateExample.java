@@ -4,15 +4,19 @@ import com.mcsa.gen.ExpLexer;
 import com.mcsa.gen.ExpParser;
 import org.antlr.v4.runtime.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class EvaluateExample {
 
-    public static int i;
-
     public static void main(String[] args) throws IOException {
-
-        System.out.println(evalExampleExpression("form hijack {}"));
+        String filecontent = new OpenAndReadTheQl().QlRead();
+        //OpenAndReadTheQl.QlRead();
+        System.out.println(evalExampleExpression(filecontent));
 
     }
 

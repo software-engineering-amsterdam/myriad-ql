@@ -1,8 +1,8 @@
 grammar QL;
 
-start : 'form' ID '{' content '}';
+start : 'form' ID '{' statementContent '}';
 
-content
+statementContent
     : categorise*
     ;
 
@@ -11,7 +11,19 @@ categorise
     | NUMBER
     | WHITESPACE
     | COMMENT
-    | 'if' '(' ID ')' '{' content '}'
+    | 'if' OPEN_PARENTH ifCase CLOSE_PARENTH OPEN_BRACKET statementContent CLOSE_BRACKET
+    ;
+
+ifCase
+    : ID
+    | NUMBER
+    | ifCase '>' ifCase
+    | ifCase '<' ifCase
+    | ifCase '<=' ifCase
+    | ifCase '>=' ifCase
+    | ifCase '==' ifCase
+    | ifCase 'AND' ifCase
+    | ifCase 'OR' ifCase
     ;
 
 caseNewInput
@@ -28,20 +40,15 @@ type
     ;
 
 mathaction
-    :   mathaction op=('*'|'/') mathaction  // MulDiv
-    |   mathaction op=('+'|'-') mathaction  // AddSub
+    :   mathaction op = ( '*' | '/' ) mathaction  // MulDiv
+    |   mathaction op = ( '+' | '-' ) mathaction  // AddSub
     |   NUMBER                              // int
     |   ID                                  // id
     |   '(' mathaction ')'                  // parens
     ;
 
-/*boolean
-    : 'True'
-    | 'False'
-    | 'true'
-    | 'false'
-    ;
-*/
+//lexer
+
 ID:   [a-zA-Z$_]+ ;
 
 STRING: '"' .*? '"';
@@ -55,3 +62,8 @@ WHITESPACE
     ;
 
 COMMENT : '/*' .*? '*/' -> channel(HIDDEN);
+
+OPEN_BRACKET :  '{' ;
+CLOSE_BRACKET : '}' ;
+OPEN_PARENTH :  '(' ;
+CLOSE_PARENTH : ')' ;
