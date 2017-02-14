@@ -1,36 +1,27 @@
 package parser
 
-import java.io.{Reader, StringReader}
+import java.io.{ Reader, StringReader }
 
 import parser.ast._
 
 import scala.util.parsing.combinator.JavaTokenParsers
 
-/**
-  * Created by jasper on 07/02/17.
-  */
 class FormParser extends JavaTokenParsers with ExpressionParser {
-  def typeName: Parser[String] = (
+  def typeName: Parser[Type] = (
     "boolean"
-      | "string"
-      | "integer"
-      | "date"
-      | "decimal"
-      | "money"
-    )
+    | "string"
+    | "integer"
+    | "date"
+    | "decimal"
+    | "money"
+  ) ^^ (s => Type(s))
 
-  def label: Parser[String] = stringLiteral
-
-  def typeDeclaration: Parser[TypeDeclaration] =
-    typeName ~ opt("(" ~> expr <~ ")") ^^ {
-      case name ~ None => BareType(name)
-      case name ~ Some(value) => ValueType(name, value)
-    }
+  def label: Parser[String] = stringLiteral ^^ (x => x.stripPrefix("\"").stripSuffix("\""))
 
   def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeDeclaration ^^ {
-      case identifier ~ ":" ~ label ~ typeDeclaration =>
-        Question(identifier, label, typeDeclaration)
+    ident ~ ":" ~ label ~ typeName ~ opt("(" ~> expr <~ ")") ^^ {
+      case identifier ~ ":" ~ label ~ typeName ~ expr =>
+        Question(identifier, label, typeName, expr)
     }
 
   def conditional: Parser[Conditional] =

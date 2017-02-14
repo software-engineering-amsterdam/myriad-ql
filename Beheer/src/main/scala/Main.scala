@@ -1,11 +1,20 @@
 import java.io.FileReader
 
-import parser.FormParser
+import parser._
 
-/**
-  * Created by jasper on 07/02/17.
-  */
 object Main extends App {
   val filename = "src/main/resources/example.ql"
-  println(FormParser(new FileReader(filename)))
+  val parsedForm = FormParser(new FileReader(filename))
+
+  private def printIssues(issues: Iterable[Issue]) = issues.foreach {
+    case Warning(message) => println(s"${Console.YELLOW}[WARNING] ${Console.RESET}$message")
+    case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
+  }
+
+  FormChecker(parsedForm) match {
+    case Left(issues) => printIssues(issues)
+    case Right((form, warnings)) =>
+      println(form.questions.mkString("\n"))
+      printIssues(warnings)
+  }
 }
