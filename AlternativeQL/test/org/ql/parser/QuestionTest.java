@@ -19,7 +19,7 @@ public class QuestionTest {
                 "    boolean hasBoughtHouse: \"Did you buy a house in 2010?\";" +
                 "}";
 
-        Form ast = parser.parse(inputCode);
+        Form ast = parser.parseForm(inputCode);
 
         assertSame(2, ast.getStatements().size());
         assertTrue(ast.getStatement(0) instanceof Question);
@@ -37,7 +37,7 @@ public class QuestionTest {
                 "    money hasBoughtHouse: \"Did you buy a house in 2010?\" = 145.23;" +
                 "}";
 
-        Form ast = parser.parse(inputCode);
+        Form ast = parser.parseForm(inputCode);
 
         assertEquals(true, ((Boolean) ((Question) ast.getStatement(0)).getDefaultValue()).getBooleanLiteral());
         assertEquals(false, ((Boolean) ((Question) ast.getStatement(1)).getDefaultValue()).getBooleanLiteral());

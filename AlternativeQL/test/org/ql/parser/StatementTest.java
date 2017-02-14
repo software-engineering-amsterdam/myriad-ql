@@ -23,7 +23,7 @@ public class StatementTest {
         int expectedIfStatementLocation = 3;
         int expectedAmountOfQuestionsInsideIfStatement = 2;
 
-        Form ast = parser.parse(inputCode);
+        Form ast = parser.parseForm(inputCode);
         If ifStatement = (If) ast.getStatement(expectedIfStatementLocation);
         assertSame(expectedAmountOfQuestionsInsideIfStatement, ifStatement.getStatements().size());
         assertEquals("hasSoldHouse", ifStatement.getCondition().toString());

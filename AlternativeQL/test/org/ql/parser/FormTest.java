@@ -11,7 +11,7 @@ public class FormTest {
         String inputCode = "form MyForm {}";
         String expectedName = "MyForm";
 
-        Form form = parser.parse(inputCode);
+        Form form = parser.parseForm(inputCode);
 
         assertTrue(form != null);
         assertEquals(expectedName, form.getName().toString());

@@ -22,7 +22,7 @@ public class ExpressionTest {
                 "}";
         int expectedIfStatementLocation = 0;
 
-        Form ast = parser.parse(inputCode);
+        Form ast = parser.parseForm(inputCode);
         If ifStatement = (If) ast.getStatement(expectedIfStatementLocation);
 
         assertTrue(ifStatement.getCondition() instanceof Equals);
