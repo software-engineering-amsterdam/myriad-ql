@@ -1,5 +1,6 @@
 import ast.Question;
 import ast.Visitor;
+import ast.atom.BoolAtom;
 import ast.type.Type;
 
 // TODO remove comments
@@ -19,9 +20,10 @@ public class QuestionVisitor extends Visitor {
 	
 	@Override
 	public void visit(Question question) {	
-		question.getType().accept(this);
 		
-		environment.addVariableType(question.getLabel(), question.getType());
+		question.getType().accept(this);	
+		environment.addVariableType(question.getVariable(), question.getType());		
+		environment.addAnswer(question.getLabel(), new BoolAtom(false)); // TODO implement answers
 	}
 	
 }

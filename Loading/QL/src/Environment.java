@@ -17,6 +17,8 @@ public class Environment {
 	public void addAnswer(String question, Atom answer) {
 		
 		if (answers.containsKey(question)) {
+			throw new RuntimeException("The question \" "  + question 
+					+ " \"on line ... exists twice in the questionnaire.");
 			// TODO THROW you have a double question
 		}		
 		answers.put(question, answer);

@@ -13,16 +13,16 @@ public class Main {
 // 		 String tmp = "form Testing { Name1: \"Question\" boolean\n"
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
-		 		+ "Name1: \"Question\" boolean\n"
+		 		+ "Name1: \"Question1\" boolean\n"
 		 		+ "if (\"text1\" == \"text2\") {"
-		 		+ "Name2: \"Question\" boolean\n"
+		 		+ "Name2: \"Question2\" boolean\n"
 		 		+ " }"
-				+ "Name3: \"Question\" boolean\n"
-				+ "if (11/22) {"
-				+ "Name4: \"Question\" boolean\n"
+				+ "Name3: \"Question3\" boolean\n"
+				+ "if (11 == 3) {"
+				+ "Name4: \"Question4\" boolean\n"
 				+ "} "
-				+ "if (tru && true) {"
-				+ "Name5: \"Question\" boolean\n"
+				+ "if (true && true) {"
+				+ "Name5: \"Question5\" boolean\n"
 				+ "}"
 		 		+ " }";
 		
@@ -49,7 +49,7 @@ public class Main {
 		 Map<String, Atom> answers = QVisitor.getEnvironment().getAnswers();
 		 
 		 for (String answer : answers.keySet()) {
-			 System.out.println("Answer: " + answer);
+			 System.out.println("Question: " + answer);
 		 }
 		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
