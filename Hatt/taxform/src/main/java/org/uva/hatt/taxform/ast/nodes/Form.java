@@ -10,7 +10,7 @@ public class Form extends ASTNode{
 
     public Form(int lineNumber) {
         super(lineNumber);
-        this.questions = new ArrayList<Question>();
+        this.questions = new ArrayList<>();
     }
 
     public String getFormId() {
