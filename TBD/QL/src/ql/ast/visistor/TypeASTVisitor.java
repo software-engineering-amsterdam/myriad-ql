@@ -90,7 +90,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Add node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
@@ -100,52 +100,62 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Div node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(Eq node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(GEq node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(GT node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(LEq node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(LT node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(Mul node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(Neg node) {
-        return null;
+        Type expr = node.getExpr().accept(this);
+
+        if (expr != Type.TYPEBOOL) {
+            return expr;
+        }
+        throw new RuntimeException("Type error");
     }
 
     @Override
     public Type visit(NEq node) {
-        return null;
+        return checkNumOp(node);
     }
 
     @Override
     public Type visit(Not node) {
-        return null;
+        Type expr = node.getExpr().accept(this);
+
+        if (expr == Type.TYPEBOOL) {
+            return expr;
+        }
+        throw new RuntimeException("Type error");
     }
 
     @Override
@@ -155,19 +165,17 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Pos node) {
-        return null;
+        Type expr = node.getExpr().accept(this);
+
+        if (expr != Type.TYPEBOOL) {
+            return expr;
+        }
+        throw new RuntimeException("Type error");
     }
 
     @Override
     public Type visit(Sub node) {
-        Type left, right;
-        left = node.getLeft().accept(this);
-        right = node.getRight().accept(this);
-        if (left == right){
-            return left;
-        }
-        throw new RuntimeException("Type error");
-
+        return checkNumOp(node);
     }
 
     private Type checkBinOp(BinOp node) {
@@ -180,15 +188,14 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         throw new RuntimeException("Type error");
     }
 
-    private String typeToString(Type type) {
-        switch (type) {
-            case TYPESTRING: return "string";
-            case TYPEBOOL: return "boolean";
-            case TYPEINT: return "int";
-            case TYPEDATE: return "date";
-            case TYPEFLOAT: return "float";
-            case TYPEMONEY: return "money";
+    private Type checkNumOp(NumOp node) {
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+        if (left == right){
+            return left;
         }
-        return "unknown";
+        throw new RuntimeException("Type error");
     }
+
 }
