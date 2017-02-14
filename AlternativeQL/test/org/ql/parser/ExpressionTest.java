@@ -47,8 +47,9 @@ public class ExpressionTest {
         Form ast = parser.parse(inputCode);
         If ifStatement = (If) ast.getStatement(expectedIfStatementLocation);
 
-        assert(ifStatement.getCondition() instanceof Equals);
-        assert((((Equals) ifStatement.getCondition()).getLeft()) instanceof Integer);
+        assertTrue(ifStatement.getCondition() instanceof Equals);
+        assertTrue((((Equals) ifStatement.getCondition()).getLeft()) instanceof Integer);
+
         Integer leftHandValue = (Integer) (((Equals) ifStatement.getCondition()).getLeft());
         Integer rightHandValue = (Integer) (((Equals) ifStatement.getCondition()).getRight());
         assertSame(leftHandValue.getIntegerLiteral(), expectedLeftHandValue);
