@@ -69,6 +69,11 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     }
 
     @Override
+    public Node visitDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) {
+        return new Decimal(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
+    }
+
+    @Override
     public Node visitNegation(QLParserParser.NegationContext ctx) {
         return new Negation((Expression) visit(ctx.expression()));
     }
@@ -161,11 +166,6 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     @Override
     public Node visitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) {
         return new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-    }
-
-    @Override
-    public Node visitFloatLiteral(QLParserParser.FloatLiteralContext ctx) {
-        return new Decimal(new BigDecimal(ctx.FLOAT_LITERAL().getText()));
     }
 
     @Override

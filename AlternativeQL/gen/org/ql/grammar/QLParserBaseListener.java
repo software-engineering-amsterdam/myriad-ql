@@ -76,6 +76,18 @@ public class QLParserBaseListener implements QLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNegation(QLParserParser.NegationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -95,18 +107,6 @@ public class QLParserBaseListener implements QLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProduct(QLParserParser.ProductContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIncrement(QLParserParser.IncrementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIncrement(QLParserParser.IncrementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -143,6 +143,18 @@ public class QLParserBaseListener implements QLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLogicalAnd(QLParserParser.LogicalAndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIncrement(QLParserParser.IncrementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIncrement(QLParserParser.IncrementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -239,18 +251,6 @@ public class QLParserBaseListener implements QLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFloatLiteral(QLParserParser.FloatLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFloatLiteral(QLParserParser.FloatLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -21,7 +21,7 @@ public class QLParserLexer extends Lexer {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		LINE_COMMENT=32, STRING_LITERAL=33, BOOLEAN_LITERAL=34, FLOAT_LITERAL=35, 
+		LINE_COMMENT=32, STRING_LITERAL=33, BOOLEAN_LITERAL=34, DECIMAL_LITERAL=35, 
 		INTEGER_LITERAL=36, ID=37, WS=38;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
@@ -32,7 +32,7 @@ public class QLParserLexer extends Lexer {
 		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 		"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
 		"T__25", "T__26", "T__27", "T__28", "T__29", "T__30", "LINE_COMMENT", 
-		"STRING_LITERAL", "BOOLEAN_LITERAL", "FLOAT_LITERAL", "INTEGER_LITERAL", 
+		"STRING_LITERAL", "BOOLEAN_LITERAL", "DECIMAL_LITERAL", "INTEGER_LITERAL", 
 		"ID", "WS", "ESCAPE_QUOTE", "UNICODE", "HEX"
 	};
 
@@ -46,7 +46,7 @@ public class QLParserLexer extends Lexer {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, "LINE_COMMENT", "STRING_LITERAL", 
-		"BOOLEAN_LITERAL", "FLOAT_LITERAL", "INTEGER_LITERAL", "ID", "WS"
+		"BOOLEAN_LITERAL", "DECIMAL_LITERAL", "INTEGER_LITERAL", "ID", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
