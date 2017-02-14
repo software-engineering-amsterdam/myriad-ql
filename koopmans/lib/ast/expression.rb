@@ -6,7 +6,13 @@ class Variable
   end
 end
 
-class SingletonExpression
+class Expression
+  def self.descendants
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+end
+
+class SingletonExpression < Expression
   attr_reader :expression
 
   def initialize(expression)
@@ -14,7 +20,7 @@ class SingletonExpression
   end
 end
 
-class BinaryExpression
+class BinaryExpression < Expression
   attr_reader :left, :right
 
   def initialize(left, right)

@@ -14,7 +14,7 @@ class Transformer < Parslet::Transform
   end
 
   # questions
-  [BooleanType, IntegerType,DateType, DecimalType, StringType, MoneyType].each do |type|
+  Type.descendants.each do |type|
     rule(question: {string: simple(:string), variable: simple(:variable), type: type.to_type}) do
       Question.new(string, Variable.new(variable), type.new)
     end
@@ -35,13 +35,13 @@ class Transformer < Parslet::Transform
   end
 
   # negative variable
-  [BooleanNegation, IntegerNegation].each do |singleton_expression|
+  SingletonExpression.descendants.each do |singleton_expression|
     rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
       singleton_expression.new(Variable.new(variable))
     end
   end
 
-  [Subtract, Add, Multiply, Divide, Or, And, Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual].each do |binary_expression|
+  BinaryExpression.descendants.each do |binary_expression|
     rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
       binary_expression.new(left, right)
     end
