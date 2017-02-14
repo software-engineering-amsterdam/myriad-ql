@@ -8,10 +8,10 @@ namespace DSL.AST
 {
     class QLConditional : INode
     {
-        public QLConditional(INode condition, INode thenStatement, INode elseStatements)
+        public QLConditional(INode condition, List<INode> thenStatements, List<INode> elseStatements)
         {
             this.Condition = condition;
-            this.ThenStatements = thenStatement;
+            this.ThenStatements = thenStatements;
             this.ElseStatements = elseStatements;
         }
 
@@ -20,30 +20,15 @@ namespace DSL.AST
             get;
         }
 
-        public INode ThenStatements
+        public List<INode> ThenStatements
         {
             get;
-            set;
         }
 
-        public INode ElseStatements
+        public List<INode> ElseStatements
         {
             get;
-            set;
         }
 
-        public string ToString(uint depth)
-        {
-            string toPrint = "";
-
-            for (int i = 0; i < depth; i++)
-                toPrint += "\t";
-
-            toPrint += "Conditional:\n\r" + Condition.ToString(depth + 1) + ThenStatements.ToString(depth + 1);
-            if(ElseStatements != null)
-                toPrint += ElseStatements.ToString(depth + 1);
-
-            return toPrint;
-        }
     }
 }

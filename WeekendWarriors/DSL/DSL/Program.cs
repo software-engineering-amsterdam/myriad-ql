@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
+
 using Newtonsoft.Json;
 
 namespace DSL
@@ -24,31 +23,19 @@ namespace DSL
             hasBoughtHouse: ""Did you by a house in 2010?"" boolean
             hasMaintLoan: ""Did you enter a loan for maintenance / reconstruction ? ""
 boolean
-            if (hasSoldHouse)
+            if (hasSoldHouse == true)
             {
-                sellingPrice: ""Price the house was sold for:"" money
-                privateDebt: ""Private debts for the sold house:"" money
+                sellingPrice: ""Price the house was sold for:"" money(0.00)
+                privateDebt: ""Private debts for the sold house:"" money(1200)
                 
             }
             else{
-                valueResidue: ""Value residue:"" money /*(sellingPrice - privateDebt)*/
+                valueResidue: ""Value residue:"" money (sellingPrice - privateDebt)
             }
         }";
-            
-            AntlrInputStream input = new AntlrInputStream(inputString);
-            GrammarLexer  lexer = new GrammarLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            GrammarParser parser = new GrammarParser(tokens);
-            GrammarParser.FormContext parsetree = parser.form();
-            AST.QLVisitor visitor = new AST.QLVisitor();
-            var form = visitor.Visit(parsetree);
 
+            var form = AST.FormFactory.Create(inputString);
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(form, Formatting.Indented));
-
-            //Console.WriteLine("ToStringtree:\n" + parsetree.ToStringTree(parser));
-            //Console.WriteLine("ToInfoString:\n" + parsetree.ToInfoString ());
-            //Console.WriteLine("ToString:\n" + parsetree.ToString());
-            //Console.WriteLine("Tokenizer:\n" + lexer.NextToken());
                 
         }
     }

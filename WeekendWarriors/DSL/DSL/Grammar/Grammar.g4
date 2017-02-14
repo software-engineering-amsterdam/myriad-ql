@@ -12,7 +12,8 @@ SingleLineComment: '//' ~('\r' | '\n')* -> skip;
 StringLiteral: '"' (~'"')* '"';
 BooleanLiteral: 'true' | 'false';
 NumberLiteral: ('0'..'9')+;
-MoneyLiteral: NumberLiteral '.' NumberLiteral;
+// Money literal is basically a floating point number. We support xx.xxx, .xx and xx. format
+MoneyLiteral: (('0'..'9')+ '.' ('0'..'9')+) | '.' ('0'..'9')+ | ('0'..'9')+ '.';
 
 // Allowed: a-zA-Z_$ as first char followed by a-zA-Z0-9_$ -> unspecified if correct
 Type: 'boolean' | 'int' | 'string' | 'money' ;
@@ -25,10 +26,8 @@ form: 'form' Identifier '{' statement* '}';
 statement: question | computedQuestion | conditionalBlock;
 computedQuestion: question '(' expression ')';
 question: Identifier ':' StringLiteral Type;
-conditionalBlock: 'if' '(' condition ')'  '{' thenBlock '}' ('else'  '{' elseBlock '}')?;
-condition: expression; 
-thenBlock: statement*;
-elseBlock: statement*;
+conditionalBlock: 'if' '(' condition=expression ')'  thenBlock=composite ('else'  elseBlock=composite)?;
+composite: '{' statement* '}';
 
 /* Precedence based on C(++) precedence: http://en.cppreference.com/w/cpp/language/operator_precedence */
 expression: 
@@ -38,11 +37,11 @@ expression:
 	| Identifier #ID	
 	| MoneyLiteral #Money
 	| op='(' expression ')' #Parens
-	| op=('!' | '-' | '+') expression #Unary
-	| expression op=('/' | '*') expression #MulDiv
-	| expression op=('+' | '-') expression #AddSub		
-	| expression op=('<' | '<=' | '>' | '>=') expression #Comparison
-	| expression op=('!=' | '==') expression #Equality
-	| expression op='&&' expression #And
-	| expression op='||' expression #Or	
+	| op=('!' | '-' | '+') expression #UnaryOp
+	| left=expression op=('/' | '*') right=expression #BinaryOp
+	| left=expression op=('+' | '-') right=expression #BinaryOp		
+	| left=expression op=('<' | '<=' | '>' | '>=') right=expression #BinaryOp
+	| left=expression op=('!=' | '==') right=expression #BinaryOp
+	| left=expression op='&&' right=expression #And
+	| left=expression op='||' right=expression #Or	
 ;

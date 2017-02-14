@@ -18,21 +18,6 @@ namespace DSL.AST
             Statements.Add(statement);
         }
 
-        public string ToString(uint depth)
-        {
-            string toPrint = "";
-
-            for (int i = 0; i < depth; i++)
-                toPrint += "\t";
-
-            toPrint += "Statements" + "\n\r";
-
-            foreach (var statement in Statements)
-                toPrint += statement.ToString(depth + 1);
-
-            return toPrint;
-        }
-
         public List<INode> Statements
         {
             get;

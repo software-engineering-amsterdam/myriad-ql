@@ -52,13 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AST\FormFactory.cs" />
     <Compile Include="AST\Node.cs" />
+    <Compile Include="AST\Operators\QLBinaryOperator.cs" />
+    <Compile Include="AST\Types\QLBoolean.cs" />
+    <Compile Include="AST\QLComputedQuestion.cs" />
     <Compile Include="AST\QLConditional.cs" />
+    <Compile Include="AST\QLIdentifier.cs" />
+    <Compile Include="AST\Types\QLNumber.cs" />
+    <Compile Include="AST\Types\QLMoney.cs" />
     <Compile Include="AST\QLStatementBlock.cs" />
-    <Compile Include="AST\QLExpression.cs" />
     <Compile Include="AST\QLForm.cs" />
+    <Compile Include="AST\Types\QLString.cs" />
     <Compile Include="AST\QLVisitor.cs" />
     <Compile Include="AST\QLQuestion.cs" />
+    <Compile Include="AST\Operators\QLUnaryOperator.cs" />
     <Compile Include="Generated\GrammarBaseListener.cs" />
     <Compile Include="Generated\GrammarBaseVisitor.cs" />
     <Compile Include="Generated\GrammarLexer.cs" />

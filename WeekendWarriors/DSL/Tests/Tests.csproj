@@ -50,11 +50,15 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="QL\AST\ExpressionFactory.cs" />
+    <Compile Include="QL\AST\Literals.cs" />
     <Compile Include="QL\DSL\LexerTestHarness.cs" />
     <Compile Include="QL\DSL\LexerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

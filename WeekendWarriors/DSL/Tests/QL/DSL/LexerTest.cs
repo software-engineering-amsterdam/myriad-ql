@@ -14,7 +14,6 @@ namespace Tests.QL.DSL
             LexerTestHarness.TokenTypes("int", new List<string> { "Type" });
             LexerTestHarness.TokenTypes("string", new List<string> { "Type" });
             LexerTestHarness.TokenTypes("money", new List<string> { "Type" });
-            LexerTestHarness.TokenTypes("decimal", new List<string> { "Type" });
         }
 
         [TestMethod]

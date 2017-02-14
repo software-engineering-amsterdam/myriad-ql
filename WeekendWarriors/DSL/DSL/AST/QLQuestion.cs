@@ -15,16 +15,6 @@ namespace DSL.AST
             this.Type = type;
         }
 
-        public string ToString(uint depth)
-        {
-            string toPrint = "";
-
-            for (int i = 0; i < depth; i++)
-                toPrint += "\t";
-
-            return toPrint + "Question " + Identifier + " " + Body + " " + Type + "\n\r";
-        }
-
         public string Identifier
         {
             get;
