@@ -88,5 +88,4 @@ def parse(input_string):
         r_curly
 
     tokens = program.parseString(input_string)
-    print(tokens)
     return tokens
