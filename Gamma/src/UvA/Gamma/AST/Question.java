@@ -1,6 +1,8 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.GUI.MainScreen;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -9,6 +11,11 @@ public class Question implements FormItem {
     private String question;
     private String id;
     private String type;
+    private SimpleStringProperty stringValueProperty;
+
+    public Question(){
+        stringValueProperty = new SimpleStringProperty();
+    }
 
     public String getQuestion() {
         return question;
@@ -31,8 +38,18 @@ public class Question implements FormItem {
     }
 
     @Override
+    public StringProperty getStringValueProperty() {
+        return this.stringValueProperty;
+    }
+
+    @Override
     public void show(MainScreen screen) {
         screen.showQuestion(this);
+    }
+
+    @Override
+    public boolean hasID(String id) {
+        return this.id.equals(id);
     }
 
     @Override

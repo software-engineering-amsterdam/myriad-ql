@@ -1,14 +1,18 @@
 package org.uva.taxfree.model;
 
-public class FormNode extends Node {
-    private String mId;
-    public FormNode(String id, Node parent) {
-        super(parent);
-        mId = id;
+import javax.swing.*;
+
+public class FormNode extends NamedNode {
+    public FormNode(String description) {
+        super(description, "form");
     }
 
-    public String getId(){
-        return mId;
+    public String getType(){
+        return "form";
     }
 
+    @Override
+    protected void fillPanel(JPanel parent) {
+        ; // Intentionally left blank
+    }
 }

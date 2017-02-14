@@ -3,75 +3,58 @@ grammar QLParser;
 import QLLexer;
 
 form
-    :   FORM ID OPEN_BRACKET (declaration)* CLOSE_BRACKET
-    ;
-
-declaration
-    :   question SEMICOLON
-    |   statement
-    ;
-
-question
-    :   type ID COLON STRING defaulvalue?
-    |   type ASSIGN expression COLON STRING defaulvalue?
+    :   'form' id=identifier '{' statement* '}'
     ;
 
 statement
-    :   IF OPEN_PARENT expression CLOSE_PARENT OPEN_BRACKET declaration* CLOSE_BRACKET (ELSE statement)?
+    :   type id=identifier ':' text=questionText defaultValue? ';'      #question
+    |   'if' '(' expression ')' '{'
+            (thenStatements+=statement)* '}'
+        ('else' '{'
+            (elseStatements+=statement)* '}')?                          #if
     ;
 
-defaulvalue
-    :   ASSIGN expression
+questionText
+    : STRING_LITERAL
+    ;
+
+defaultValue
+    :   '=' value=expression
     ;
 
 expression
-    :   boolean_literal
-    |   string_literal
-    |   float_literal
-    |   integer_literal
-    |   parameter
-    |   OPEN_PARENT expression CLOSE_PARENT
-    |   <assoc=right> '!' expression
-    |   <assoc=left> expression '/' expression
-    |   <assoc=left> expression '*' expression
-    |   expression '-' expression
-    |   expression '+' expression
-    |   expression '>' expression
-    |   expression '<' expression
-    |   expression '==' expression
-    |   expression '!=' expression
-    |   expression '<=' expression
-    |   expression '>=' expression
-    |   expression '<=' expression
-    |   expression '>=' expression
-    |   expression ('&&'|'||') expression
+    :   BOOLEAN_LITERAL                                        #booleanLiteral
+    |   STRING_LITERAL                                         #stringLiteral
+    |   DECIMAL_LITERAL                                        #decimalLiteral
+    |   INTEGER_LITERAL                                        #integerLiteral
+    |   ID                                                     #parameter
+    |   '(' expression ')'                                     #group
+    |   '!' expression                                         #negation
+    |   expression '++'                                        #increment
+    |   expression '--'                                        #decrement
+    |   <assoc=left> left=expression '/' right=expression      #division
+    |   <assoc=left> left=expression '*' right=expression      #product
+    |   left=expression '-' right=expression                   #subtraction
+    |   left=expression '+' right=expression                   #addition
+    |   left=expression '>' right=expression                   #greaterThan
+    |   left=expression '<' right=expression                   #lowerThan
+    |   left=expression '==' right=expression                  #equals
+    |   left=expression '!=' right=expression                  #notEqual
+    |   left=expression '<=' right=expression                  #lowerThanOrEqual
+    |   left=expression '>=' right=expression                  #greaterThanOrEqual
+    |   left=expression '&&' right=expression                  #logicalAnd
+    |   left=expression '||' right=expression                  #logicalOr
     ;
 
-parameter
+identifier
     :   ID
     ;
 
-boolean_literal
-    :   BOOLEAN
-    ;
-
-string_literal
-    :   STRING
-    ;
-
-float_literal
-    :   FLOAT
-    ;
-
-integer_literal
-    :   INTEGER
-    ;
-
 type
-    :   'boolean'
-    |   'float'
-    |   'money'
-    |   'ID'
-    |   'integer'
-    |   'date'
+    :   'boolean'   #typeBoolean
+    |   'float'     #typeFloat
+    |   'integer'   #typeInteger
+    |   'string'    #typeString
+    |   'money'     #typeMoney
+    |   'date'      #typeDate
     ;
