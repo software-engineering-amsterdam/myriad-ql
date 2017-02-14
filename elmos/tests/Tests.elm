@@ -8,6 +8,7 @@ import TypeChecker.TypeCheckerTests as TypeCheckerTests
 import EvaluatorTests
 import EnvironmentTests
 import FormUtilTests
+import TypeChecker.ExpressionsTests
 import Test exposing (Test, describe)
 
 
@@ -21,5 +22,6 @@ all =
         , EnvironmentTests.all
         , TypeCheckerTests.all
         , EvaluatorTests.all
+        , TypeChecker.ExpressionsTests.all
         , FormUtilTests.all
         ]
