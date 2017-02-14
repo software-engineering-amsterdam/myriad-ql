@@ -11,7 +11,7 @@ class Question
   attr_reader :label, :variable, :type, :assignment
 
   def initialize(label, variable, type, expression=nil)
-    @label = label
+    @label = label.to_s
     @variable = variable
     @type = type
     @assignment = expression if expression
