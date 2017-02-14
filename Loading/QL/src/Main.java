@@ -11,10 +11,13 @@ public class Main {
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
 		 		+ "Name1: \"Question\" boolean\n"
-		 		+ "if (22.12.16 == \"text\") {"
+		 		+ "if (22.12.2016 == \"text\") {"
 		 		+ "Name2: \"Question\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question\" boolean\n"
+				+ "if (true) {"
+				+ "Name4: \"Question\" boolean\n"
+				+ "}"
 		 		+ " }";
 		
 		 ANTLRInputStream input = new ANTLRInputStream( tmp );

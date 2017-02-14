@@ -1,67 +1,76 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.Values.Boolean;
+import UvA.Gamma.AST.Values.Number;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
-import UvA.Gamma.Models.QLForm;
-import UvA.Gamma.Models.QLInput;
-import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Tjarco on 08-02-17.
  */
 
-public class QLVisitor extends QLBaseVisitor<Object> {
-    Map<String, String> ids;
-    private QLForm form;
+public class QLVisitor extends QLBaseVisitor<ASTNode> {
+    private Form form;
 
     QLVisitor() {
-        ids = new HashMap<>();
-        form = new QLForm("");
+        form = new Form();
     }
 
-    public QLForm getForm(){
+    public Form getForm(){
         return this.form;
     }
 
     @Override
-    public Object visit(ParseTree tree) {
-        return super.visit(tree);
-    }
-
-    @Override
-    public QLForm visitForm(QLParser.FormContext ctx) {
+    public Form visitForm(QLParser.FormContext ctx) {
         for (QLParser.FormItemContext formItemContext: ctx.formItem()){
             visit(formItemContext);
         }
         return form;
     }
 
-    @Override
-    public QLInput visitInput(QLParser.InputContext ctx) {
-        String id = ctx.ID().getText();
-        String question = ctx.QUESTION().getText();
-        String type = (String) visit(ctx.type());
-        QLInput input = new QLInput(id, question, type);
-        form.addInput(input);
-        return input;
-    }
-
-
-
     //Expressions
-
     @Override
-    public Object visitAdd(QLParser.AddContext ctx) {
-        double left = (double)visit(ctx.intExpr(0));
-        double right  = (double)visit(ctx.intExpr(1));
-        return ctx.op.getType() == QLParser.ADD ? left + right : left - right;
+    public Number visitDiv(QLParser.DivContext ctx) {
+        Number left = (Number)visit(ctx.numExpr(0));
+        Number right  = (Number)visit(ctx.numExpr(1));
+        return ctx.op.getText().equals("*") ? left.multiply(right) : left.divide(right);
     }
 
     @Override
-    public Object visitInt(QLParser.IntContext ctx) {
-        return Double.valueOf(ctx.NUMBER().getText());
+    public Number visitAdd(QLParser.AddContext ctx) {
+        Number left = (Number)visit(ctx.numExpr(0));
+        Number right  = (Number)visit(ctx.numExpr(1));
+        return ctx.op.getText().equals("+") ? left.add(right) : left.subtract(right);
+    }
+
+    @Override
+    public Number visitNum(QLParser.NumContext ctx) {
+        return new Number(ctx.getText());
+    }
+
+    @Override
+    public Boolean visitAndor(QLParser.AndorContext ctx) {
+        Boolean left = (Boolean)visit(ctx.boolExpr(0));
+        Boolean right = (Boolean)visit(ctx.boolExpr(1));
+        switch (ctx.op.getText()){
+            case "&&":
+                return new Boolean(left.and(right));
+            case "||":
+                return new Boolean(left.or(right));
+            case "==":
+                return new Boolean(left.equals(right));
+            case  "!=":
+                return new Boolean(!left.equals(right));
+            default:
+                return left;
+        }
+    }
+
+    @Override
+    public Boolean visitBool(QLParser.BoolContext ctx) {
+        return new Boolean(ctx.getText());
     }
 }

@@ -1,7 +1,6 @@
 package ast;
 
 import ast.expression.Expression;
-import ast.expression.EqExpression;
 
 public class Statement implements Node {
 	
@@ -13,7 +12,7 @@ public class Statement implements Node {
 		this.expression = expression;
 		this.block = block;
 	}
-	
+
 	public Expression getExpression() {
 		return expression;
 	}
@@ -22,7 +21,7 @@ public class Statement implements Node {
 		return block;
 	}
 	
-	// TODO end each class with overrides
+	// TODO end each class with overrides?
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

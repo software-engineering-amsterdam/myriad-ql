@@ -12,7 +12,7 @@ public class DateAtom extends Atom {
 
     // TODO consistency with other atoms
     public DateAtom(String value) {
-        DateFormat format = new SimpleDateFormat("dd.MM.YY");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         try {
             this.value = format.parse(value);
         } catch (ParseException e) {
