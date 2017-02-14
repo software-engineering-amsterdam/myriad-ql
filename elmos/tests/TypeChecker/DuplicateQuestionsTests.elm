@@ -20,6 +20,19 @@ duplicateQuestionExample1 =
 duplicateQuestionExample2 : String
 duplicateQuestionExample2 =
     """form taxOfficeExample {
+    "Label"
+    sellingPrice: integer = 3
+
+    if (true) {
+        "Label"
+        sellingPrice: integer = 3
+    }
+    """
+
+
+duplicateQuestionExample3 : String
+duplicateQuestionExample3 =
+    """form taxOfficeExample {
         if (true) {
             "Label"
             sellingPrice: integer = 3
@@ -37,11 +50,6 @@ duplicateQuestionExample2 =
 goodExample1 : String
 goodExample1 =
     """form taxOfficeExample {
-        if (sellingPrice){
-            "Question ?"
-            y: integer
-        }
-
         if (true) {
             "What was the selling price?"
             sellingPrice: integer = 3
@@ -55,12 +63,21 @@ goodExample1 =
 all : Test
 all =
     describe "DuplicateQuestions"
-        [ testExamplesWithoutUnusedVars ]
+        [ testExamplesWithoutDuplicates, testExamplesWithDuplicates ]
 
 
-testExamplesWithoutUnusedVars : Test
-testExamplesWithoutUnusedVars =
-    describe "testExamplesWithoutUnusedVars"
+testExamplesWithDuplicates : Test
+testExamplesWithDuplicates =
+    describe "testExamplesWithDuplicates"
+        [ parseAndExpectDuplicates "Should find duplicates" duplicateQuestionExample1 [ "sellingPrice" ]
+        , parseAndExpectDuplicates "Should find duplicates in nested if" duplicateQuestionExample2 [ "sellingPrice" ]
+        , parseAndExpectDuplicates "Should find duplicates with if else" duplicateQuestionExample3 [ "sellingPrice" ]
+        ]
+
+
+testExamplesWithoutDuplicates : Test
+testExamplesWithoutDuplicates =
+    describe "testExamplesWithoutDuplicates"
         [ parseAndExpectDuplicates "Should find no duplicates" goodExample1 []
         ]
 
