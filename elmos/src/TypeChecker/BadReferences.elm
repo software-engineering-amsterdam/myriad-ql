@@ -8,12 +8,12 @@ import Set
 badReferences : Form -> Set.Set String
 badReferences form =
     Set.diff
-        (usedVarsFromList form.items |> Set.fromList)
+        (usedVarsFromBlock form.items |> Set.fromList)
         (questionTypeRelationsFromBlock form.items |> questionIds |> Set.fromList)
 
 
-usedVarsFromList : List FormItem -> List String
-usedVarsFromList formItems =
+usedVarsFromBlock : Block -> List String
+usedVarsFromBlock formItems =
     List.map usedVarsFromItem formItems
         |> List.concat
 
@@ -59,7 +59,6 @@ usedVars expression =
         ParensExpression expr ->
             usedVars expr
 
-        -- Kunnen deze niet samen? Bijvoorbeeld door middel van "BinaryExpression"
         ArithmeticExpression _ exprLeft exprRight ->
             usedVars exprLeft ++ usedVars exprRight
 

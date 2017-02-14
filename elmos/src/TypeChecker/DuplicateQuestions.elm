@@ -8,6 +8,5 @@ import List.Extra
 duplicateQuestions : Form -> List String
 duplicateQuestions form =
     questionTypeRelationsFromBlock form.items
-        |> Debug.log "test"
         |> questionIds
-        |> (\varList -> removeListFrom varList <| List.Extra.unique varList)
+        |> (\varList -> removeListFrom (List.Extra.unique varList) varList)

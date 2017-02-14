@@ -9,13 +9,13 @@ type alias QuestionTypeRelations =
 
 
 removeListFrom : List a -> List a -> List a
-removeListFrom source target =
-    List.foldl List.Extra.remove target source
+removeListFrom toBeRemoved target =
+    List.foldl List.Extra.remove target toBeRemoved
 
 
 intersectLists : List a -> List a -> List a
 intersectLists a b =
-    removeListFrom a <| removeListFrom a b
+    removeListFrom (removeListFrom b a) a
 
 
 questionIds : QuestionTypeRelations -> List String
