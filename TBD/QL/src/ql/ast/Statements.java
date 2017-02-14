@@ -1,5 +1,7 @@
 package ql.ast;
 
+import ql.ast.visistor.ASTVisitor;
+
 /**
  * Created by Erik on 7-2-2017.
  */
@@ -22,5 +24,17 @@ public class Statements implements ASTNode {
 
     public boolean hasNext() {
         return this.next != null;
+    }
+
+    public Statement getCurrent() {
+        return current;
+    }
+
+    public Statements getNext() {
+        return next;
+    }
+
+    public <T> T visitThis(ASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

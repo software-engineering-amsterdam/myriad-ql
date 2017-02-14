@@ -1,9 +1,11 @@
 package ql.ast;
 
+import ql.ast.visistor.ASTVisitor;
+
 /**
  * Created by Erik on 6-2-2017.
  */
-public class If implements ASTNode, Statement {
+public class If implements Statement{
     private Expr expression;
     private Statements ifBlock;
     private Statements elseBlock;
@@ -16,5 +18,25 @@ public class If implements ASTNode, Statement {
 
     public If(Expr expression, Statements ifBlock) {
         this(expression, ifBlock, null);
+    }
+
+    public Boolean hasElseBlock() {
+        return elseBlock != null;
+    }
+
+    public Expr getExpression() {
+        return expression;
+    }
+
+    public Statements getIfBlock() {
+        return ifBlock;
+    }
+
+    public Statements getElseBlock() {
+        return elseBlock;
+    }
+
+    public <T> T visitThis(ASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }
