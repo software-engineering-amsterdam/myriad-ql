@@ -73,11 +73,11 @@ class Parser < Parslet::Parser
   end
 
   rule(:integer_negation?) do
-    subtract.maybe.as(:integer_negation)
+    subtract.as(:integer_negation).maybe
   end
 
   rule(:boolean_negation?) do
-    negation.maybe.as(:boolean_negation)
+    negation.as(:boolean_negation).maybe
   end
 
   rule(:negation?) do
