@@ -86,18 +86,6 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitProduct(QLParserParser.ProductContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code grouped}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterGrouped(QLParserParser.GroupedContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code grouped}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitGrouped(QLParserParser.GroupedContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code increment}
 	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
@@ -289,6 +277,18 @@ public interface QLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code group}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGroup(QLParserParser.GroupContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code group}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGroup(QLParserParser.GroupContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code addition}
 	 * labeled alternative in {@link QLParserParser#expression}.

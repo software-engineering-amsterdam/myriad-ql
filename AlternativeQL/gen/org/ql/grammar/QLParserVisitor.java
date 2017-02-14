@@ -57,13 +57,6 @@ public interface QLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProduct(QLParserParser.ProductContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code grouped}
-	 * labeled alternative in {@link QLParserParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGrouped(QLParserParser.GroupedContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code increment}
 	 * labeled alternative in {@link QLParserParser#expression}.
 	 * @param ctx the parse tree
@@ -175,6 +168,13 @@ public interface QLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code group}
+	 * labeled alternative in {@link QLParserParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGroup(QLParserParser.GroupContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code addition}
 	 * labeled alternative in {@link QLParserParser#expression}.

@@ -100,18 +100,6 @@ public class QLParserBaseListener implements QLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGrouped(QLParserParser.GroupedContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGrouped(QLParserParser.GroupedContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIncrement(QLParserParser.IncrementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -299,6 +287,18 @@ public class QLParserBaseListener implements QLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGroup(QLParserParser.GroupContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGroup(QLParserParser.GroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

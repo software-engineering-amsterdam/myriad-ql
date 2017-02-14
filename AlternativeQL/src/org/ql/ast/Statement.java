@@ -1,4 +1,4 @@
-package org.ql.ast.statement;
+package org.ql.ast;
 
 import org.ql.ast.Node;
 

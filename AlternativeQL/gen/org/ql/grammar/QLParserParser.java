@@ -486,25 +486,6 @@ public class QLParserParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class GroupedContext extends ExpressionContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public GroupedContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterGrouped(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitGrouped(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLParserVisitor ) return ((QLParserVisitor<? extends T>)visitor).visitGrouped(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class IncrementContext extends ExpressionContext {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -826,6 +807,25 @@ public class QLParserParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class GroupContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public GroupContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).enterGroup(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof QLParserListener ) ((QLParserListener)listener).exitGroup(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLParserVisitor ) return ((QLParserVisitor<? extends T>)visitor).visitGroup(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class AdditionContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -937,7 +937,7 @@ public class QLParserParser extends Parser {
 				break;
 			case T__6:
 				{
-				_localctx = new GroupedContext(_localctx);
+				_localctx = new GroupContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(70);

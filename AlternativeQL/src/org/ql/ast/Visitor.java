@@ -1,7 +1,6 @@
 package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.BooleanLiteral;
 import org.ql.ast.expression.FloatLiteral;
@@ -10,7 +9,6 @@ import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.form.Form;
 import org.ql.ast.expression.StringLiteral;
-import org.ql.ast.statement.Statement;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
@@ -40,11 +38,6 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
             (QuestionText) visit(ctx.text),
             (Type) visit(ctx.type())
         );
-    }
-
-    @Override
-    public Node visitTerminal(TerminalNode node) {
-        return super.visitTerminal(node);
     }
 
     @Override
@@ -79,11 +72,6 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitProduct(QLParserParser.ProductContext ctx) {
-        return null;
-    }
-
-    @Override
-    public Node visitGrouped(QLParserParser.GroupedContext ctx) {
         return null;
     }
 
@@ -135,6 +123,11 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
     @Override
     public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
         return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
+    }
+
+    @Override
+    public Node visitGroup(QLParserParser.GroupContext ctx) {
+        return null;
     }
 
     @Override
