@@ -74,9 +74,22 @@ class TestGrammar(TestCase):
 class TestParser(TestCase):
     cases = [
         (Grammar.expression,
+         "-2", UnOp(Operator["-"],
+                    Constant(2, Datatype.integer))),
+        (Grammar.expression,
+         "+x", UnOp(Operator["+"],
+                    Variable("x"))),
+
+        (Grammar.expression,
          "2 + 3", BinOp(Constant(2, Datatype.integer),
                         Operator["+"],
                         Constant(3, Datatype.integer))),
+        (Grammar.expression,
+         "+2 + -3", BinOp(UnOp(Operator["+"],
+                               Constant(2, Datatype.integer)),
+                          Operator["+"],
+                          UnOp(Operator["-"],
+                               Constant(3, Datatype.integer)))),
         (Grammar.expression,
          "2 + 3 + 4", BinOp(BinOp(Constant(2, Datatype.integer),
                                   Operator["+"],
@@ -186,7 +199,6 @@ class TestParser(TestCase):
 
         #TODO: Test more datatypes (e.g. Money, decimal)
         #TODO: Test parenthesis
-        #TODO: Test unOps
     ]
 
     def testParseExpression(self):
