@@ -48,7 +48,7 @@ class Parser < Parslet::Parser
 
   # variables or literals
   rule(:variable_or_literal) do
-    ((boolean_negation? >> boolean_literal) | (integer_negation? >> integer_literal) | string_literal | (negation? >> variable)) >> spaces?
+    (boolean_negation? >> boolean_literal | integer_negation? >> integer_literal | string_literal | negation? >> variable) >> spaces?
   end
 
   rule(:integer_negation?) do
