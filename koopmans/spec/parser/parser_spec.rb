@@ -64,7 +64,7 @@ describe Parser do
   describe 'expressions' do
     context 'arithmetic' do
       it 'parses' do
-        expect(parser.arithmetic).to parse('+')
+        expect(parser.operator).to parse('+')
       end
 
       it 'parses expression' do
@@ -74,7 +74,7 @@ describe Parser do
 
     context 'boolean' do
       it 'parses' do
-        expect(parser.boolean).to parse('&&')
+        expect(parser.operator).to parse('&&')
       end
 
       it 'parses expression' do
@@ -84,7 +84,7 @@ describe Parser do
 
     context 'comparison' do
       it 'parses' do
-        expect(parser.comparison).to parse('<=')
+        expect(parser.operator).to parse('<=')
       end
 
       it 'parses comparison' do

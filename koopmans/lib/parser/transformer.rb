@@ -56,47 +56,70 @@ class Transformer < Parslet::Transform
   negation_types '!': BooleanNegation,
                  '-': IntegerNegation
 
+  def self.operators(operators)
+    operators.each do |name, class_name|
+      rule({left: subtree(:left), operator: name.to_s, right: subtree(:right)}) do
+        class_name.new(left, right)
+      end
+    end
+  end
+
+  operators '-': Subtract,
+            '+': Add,
+            '*': Multiply,
+            '/': Divide,
+
+            '||': Or,
+            '&&': And,
+
+            '<': Less,
+            '>': Greater,
+            '<=': LessEqual,
+            '>=': GreaterEqual,
+            '==': Equal,
+            '!=': NotEqual
+
   # arithmetic
-  def self.arithmetics(arithmetics)
-    arithmetics.each do |name, class_name|
-      rule({left: subtree(:left), arithmetic: name.to_s, right: subtree(:right)}) do
-        class_name.new(left, right)
-      end
-    end
-  end
-
-  arithmetics '-': Subtract,
-              '+': Add,
-              '*': Multiply,
-              '/': Divide
-
-  # boolean
-  def self.booleans(booleans)
-    booleans.each do |name, class_name|
-      rule({left: subtree(:left), boolean: name.to_s, right: subtree(:right)}) do
-        class_name.new(left, right)
-      end
-    end
-  end
-
-  booleans '||': Or,
-           '&&': And
-
-  # comparison
-  def self.comparisons(comparisons)
-    comparisons.each do |name, class_name|
-      rule({left: subtree(:left), comparison: name.to_s, right: subtree(:right)}) do
-        class_name.new(left, right)
-      end
-    end
-  end
-
-  comparisons '<': Less,
-              '>': Greater,
-              '<=': LessEqual,
-              '>=': GreaterEqual,
-              '==': Equal,
-              '!=': NotEqual
+  # def self.arithmetics(arithmetics)
+  #   arithmetics.each do |name, class_name|
+  #     rule({left: subtree(:left), arithmetic: name.to_s, right: subtree(:right)}) do
+  #       class_name.new(left, right)
+  #     end
+  #   end
+  # end
+  #
+  # arithmetics '-': Subtract,
+  #             '+': Add,
+  #             '*': Multiply,
+  #             '/': Divide
+  #
+  # # boolean
+  # def self.booleans(booleans)
+  #   booleans.each do |name, class_name|
+  #     rule({left: subtree(:left), boolean: name.to_s, right: subtree(:right)}) do
+  #       class_name.new(left, right)
+  #     end
+  #   end
+  # end
+  #
+  # booleans '||': Or,
+  #          '&&': And
+  #
+  # # comparison
+  # def self.comparisons(comparisons)
+  #   comparisons.each do |name, class_name|
+  #     rule({left: subtree(:left), comparison: name.to_s, right: subtree(:right)}) do
+  #       class_name.new(left, right)
+  #     end
+  #   end
+  # end
+  #
+  # comparisons '<': Less,
+  #             '>': Greater,
+  #             '<=': LessEqual,
+  #             '>=': GreaterEqual,
+  #             '==': Equal,
+  #             '!=': NotEqual
 
 
   # boolean literal

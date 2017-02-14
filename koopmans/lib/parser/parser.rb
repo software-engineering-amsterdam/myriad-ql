@@ -41,20 +41,24 @@ class Parser < Parslet::Parser
 
   # expression
   rule(:calculation) do
-    variable_or_literal.as(:left) >> (boolean | comparison | arithmetic) >> expression.as(:right)
+    variable_or_literal.as(:left) >> operator >> expression.as(:right)
   end
 
-  rule(:arithmetic) do
-    (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
+  rule(:operator) do
+    (subtract | add | multiply | divide | less_equal | greater_equal | equal | not_equal | less | greater | logical_and | logical_or | negation).as(:operator) >> spaces?
   end
 
-  rule(:comparison) do
-    ( less_equal | greater_equal | equal | not_equal | less | greater ).as(:comparison) >> spaces?
-  end
-
-  rule(:boolean) do
-    (logical_and | logical_or | negation).as(:boolean) >> spaces?
-  end
+  # rule(:arithmetic) do
+  #   (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
+  # end
+  #
+  # rule(:comparison) do
+  #   (less_equal | greater_equal | equal | not_equal | less | greater).as(:comparison) >> spaces?
+  # end
+  #
+  # rule(:boolean) do
+  #   (logical_and | logical_or | negation).as(:boolean) >> spaces?
+  # end
 
   rule(:expression) do
     left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable_or_literal
