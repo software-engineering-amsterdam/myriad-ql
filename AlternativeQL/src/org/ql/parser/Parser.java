@@ -2,10 +2,7 @@ package org.ql.parser;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.ql.ast.Expression;
-import org.ql.ast.Node;
-import org.ql.ast.Visitor;
-import org.ql.ast.Form;
+import org.ql.ast.*;
 import org.ql.grammar.QLParserLexer;
 import org.ql.grammar.QLParserParser;
 import org.ql.grammar.QLParserParser.*;
@@ -17,6 +14,10 @@ public class Parser {
 
     public Form parseForm(String code) {
         return (Form) visitor.visit(createParser(code).form());
+    }
+
+    public Statement parseStatement(String code) {
+        return (Statement) visitor.visit(createParser(code).statement());
     }
 
     public Expression parseExpression(String code) {
