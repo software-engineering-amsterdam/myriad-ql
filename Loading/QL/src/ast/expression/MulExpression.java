@@ -1,5 +1,10 @@
 package ast.expression;
 
-public class MulExpression extends BinaryExpression {
+import ast.Visitor;
 
+public class MulExpression extends BinaryExpression {
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+	}
 }

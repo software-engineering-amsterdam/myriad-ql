@@ -3,12 +3,9 @@ package ast.expression;
 import ast.Node;
 import ast.Visitor;
 
-public class Expression implements Node {
-
+public abstract class Expression implements Node {
+	
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-	}
-
-
+	public abstract void accept(Visitor v);
+	
 }

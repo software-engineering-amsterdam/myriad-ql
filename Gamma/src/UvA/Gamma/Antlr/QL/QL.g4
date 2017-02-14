@@ -2,9 +2,9 @@ grammar QL;
 
 form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: question      #in
-        | computed      #comp
-        | condition     #cond
+formItem: question
+        | computed
+        | condition
         ;
 
 question: STRING_LITERAL ID':' type;

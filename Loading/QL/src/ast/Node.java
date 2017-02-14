@@ -1,5 +1,5 @@
 package ast;
 
 public interface Node {
-	public void accept ( Visitor v );
+	void accept ( Visitor v );
 }

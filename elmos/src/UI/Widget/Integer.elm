@@ -4,7 +4,8 @@ import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, defaultValue, id)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
-import UI.FormData as FormData exposing (FormValue(Integer, Undefined))
+import UI.FormData as FormData
+import Values exposing (Value(Integer, Undefined))
 
 
 view : WidgetContext msg -> Html msg
@@ -25,9 +26,9 @@ view { field, formData, onChange } =
             []
 
 
-parseIntegerInput : String -> FormValue
-parseIntegerInput input =
-    String.toInt input
-        |> Result.toMaybe
-        |> Maybe.map Integer
-        |> Maybe.withDefault Undefined
+parseIntegerInput : String -> Value
+parseIntegerInput =
+    String.toInt
+        >> Result.toMaybe
+        >> Maybe.map Integer
+        >> Maybe.withDefault Undefined

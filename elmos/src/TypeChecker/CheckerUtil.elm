@@ -15,7 +15,7 @@ emptyIndex =
 
 mergeIndex : List (Index a) -> Index a
 mergeIndex =
-    (List.foldr DictSet.union (emptyIndex))
+    List.foldr DictSet.union emptyIndex
 
 
 declaredVarsFromList : List FormItem -> Index ( String, ValueType )

@@ -8,9 +8,8 @@ grammar QL;
     import ast.expression.*;
 }
 
-root returns [Form result] 
-		: 'form' ID block 
-		{ $result = new Form($ID.text, $block.result); };
+form returns [Form result] 
+		: 'form' ID block { $result = new Form($ID.text, $block.result); };
 
 block returns [Block result]
 		@init {
@@ -35,7 +34,8 @@ type returns [Type result]
 	| 'decimal' { $result = new DecimalType(); } 
 	| 'integer' { $result = new IntegerType(); }
 	| 'money'   { $result = new MoneyType(); }
-	| 'string'  { $result = new StringType(); };
+	| 'string'  { $result = new StringType(); }
+	;
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -48,8 +48,8 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  | atom { $result = $atom.result; }
  ;
 
@@ -71,13 +71,16 @@ binOp returns [BinaryExpression result]
 // TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
+  | '+' { $result = new PlusExpression(); }
+  | '-' { $result = new MinusExpression(); }
   ;
 
 atom returns [Atom result]
- :  DECIMAL { System.out.println($DECIMAL.text);
-                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
-  | MONEY { System.out.println($MONEY.text);
-           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
+:
+// :  DECIMAL { System.out.println($DECIMAL.text);
+//                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
+//  | MONEY { System.out.println($MONEY.text);
+//           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
   | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
@@ -86,8 +89,8 @@ atom returns [Atom result]
             }
  | BOOL { System.out.println($BOOL.text);
            $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
- | DDMMYY { System.out.println($DDMMYY.text);
-            $result = new DateAtom($DDMMYY.text); }
+// | DDMMYY { System.out.println($DDMMYY.text);
+//            $result = new DateAtom($DDMMYY.text); }
  | ID { System.out.println($ID.text);
                  $result = new StringAtom($ID.text); }
  ;
@@ -107,7 +110,7 @@ TWO_DIGIT: ('0'..'9')('0'..'9');
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
-DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT; // TODO check valid date
+DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
 STRING: '"' .*? '"';
 

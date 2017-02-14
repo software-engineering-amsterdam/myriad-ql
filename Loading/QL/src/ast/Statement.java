@@ -17,6 +17,11 @@ public class Statement implements Node {
 		return expression;
 	}
 
+	public Block getBlock() {
+		return block;
+	}
+	
+	// TODO end each class with overrides?
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

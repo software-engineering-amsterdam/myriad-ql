@@ -1,7 +1,9 @@
 package org.uva.taxfree.GUI;
 
+import org.uva.taxfree.model.BoolQuestion;
 import org.uva.taxfree.model.Node;
 import org.uva.taxfree.model.QuestionNode;
+import org.uva.taxfree.model.StringQuestion;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -11,9 +13,8 @@ public class QuestionForm {
     List<QuestionNode> questions;
 
     void generateForm(Node formNode) {
-        JFrame frame = new JFrame(formNode.getName());
+        JFrame frame = new JFrame(formNode.getId());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.add(createComponents(formNode));
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -31,8 +32,8 @@ public class QuestionForm {
 
     private List extractQuestions(Node formNode) {
         List widgets = new ArrayList<QuestionNode>();
-        widgets.add(new QuestionNode("I am string", "string", formNode));
-        widgets.add(new QuestionNode("I am boolean", "boolean", formNode));
+        widgets.add(new BoolQuestion("I am string", "theString", formNode));
+        widgets.add(new StringQuestion("I am boolean", "theBoolean", formNode));
         return widgets;
     }
 
