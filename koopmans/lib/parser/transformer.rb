@@ -79,49 +79,6 @@ class Transformer < Parslet::Transform
             '==': Equal,
             '!=': NotEqual
 
-  # arithmetic
-  # def self.arithmetics(arithmetics)
-  #   arithmetics.each do |name, class_name|
-  #     rule({left: subtree(:left), arithmetic: name.to_s, right: subtree(:right)}) do
-  #       class_name.new(left, right)
-  #     end
-  #   end
-  # end
-  #
-  # arithmetics '-': Subtract,
-  #             '+': Add,
-  #             '*': Multiply,
-  #             '/': Divide
-  #
-  # # boolean
-  # def self.booleans(booleans)
-  #   booleans.each do |name, class_name|
-  #     rule({left: subtree(:left), boolean: name.to_s, right: subtree(:right)}) do
-  #       class_name.new(left, right)
-  #     end
-  #   end
-  # end
-  #
-  # booleans '||': Or,
-  #          '&&': And
-  #
-  # # comparison
-  # def self.comparisons(comparisons)
-  #   comparisons.each do |name, class_name|
-  #     rule({left: subtree(:left), comparison: name.to_s, right: subtree(:right)}) do
-  #       class_name.new(left, right)
-  #     end
-  #   end
-  # end
-  #
-  # comparisons '<': Less,
-  #             '>': Greater,
-  #             '<=': LessEqual,
-  #             '>=': GreaterEqual,
-  #             '==': Equal,
-  #             '!=': NotEqual
-
-
   # boolean literal
   rule(boolean: simple(:boolean)) do
     BooleanLiteral.new(boolean)
@@ -146,5 +103,4 @@ class Transformer < Parslet::Transform
   rule(string: simple(:string)) do
     StringLiteral.new(string)
   end
-
 end
