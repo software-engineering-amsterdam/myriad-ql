@@ -27,8 +27,8 @@ expression
     |   ID                                                     #parameter
     |   '(' expression ')'                                     #group
     |   '!' expression                                         #negation
-    |   expression '++'                                        #decrement
-    |   expression '--'                                        #increment
+    |   expression '++'                                        #increment
+    |   expression '--'                                        #decrement
     |   <assoc=left> left=expression '/' right=expression      #division
     |   <assoc=left> left=expression '*' right=expression      #product
     |   left=expression '-' right=expression                   #subtraction
