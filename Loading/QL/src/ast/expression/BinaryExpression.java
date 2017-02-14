@@ -1,8 +1,9 @@
 package ast.expression;
 
+import ast.Visitor;
 import ast.atom.Atom;
 
-public abstract class BinaryExpression extends Expression {
+public class BinaryExpression extends Expression {
 
 	private Atom lhs;
 	private Atom rhs;
@@ -14,9 +15,24 @@ public abstract class BinaryExpression extends Expression {
 //		this.rhs = rhs;
 	}
 	
-	public void setElements(Atom lhs, Atom rhs) {
+	public BinaryExpression setElements(Atom lhs, Atom rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
+		return this;
+	}
+	
+	public Atom getLhs() {
+		return lhs;
+	}
+	
+	public Atom getRhs() {
+		return rhs;
+	}
+	
+	@Override // TODO or should this be an abstract class without accept here?
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 	
 //	public boolean isEval() {

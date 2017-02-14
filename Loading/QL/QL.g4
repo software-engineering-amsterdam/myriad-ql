@@ -8,7 +8,7 @@ grammar QL;
     import ast.expression.*;
 }
 
-root returns [Form result] 
+form returns [Form result] 
 		: 'form' ID block 
 		{ $result = new Form($ID.text, $block.result); };
 
@@ -24,9 +24,9 @@ block returns [Block result]
 // TODO decide on maximum characters on one line
 question returns [Question result]
 		: ID ':' STRING type
-		{ $result = new Question($ID.text, $STRING.text, $type.text); }
+		{ $result = new Question($ID.text, $STRING.text, $type.result); }
 		| ID ':' STRING type computed_question
-		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, Integer.parseInt($computed_question.text));}
 		;
 
 type returns [Type result]
@@ -48,8 +48,8 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  | atom { $result = $atom.result; }
  ;
 
@@ -71,6 +71,8 @@ binOp returns [BinaryExpression result]
 // TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
+  | '+' { $result = new PlusExpression(); }
+  | '-' { $result = new MinusExpression(); }
   ;
 
 atom returns [Atom result]

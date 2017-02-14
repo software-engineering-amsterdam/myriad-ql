@@ -72,7 +72,7 @@ subSection =
 
 field : Parser s SectionChild
 field =
-    (Field <$> question)
+    Field <$> question
 
 
 question : Parser s Question

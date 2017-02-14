@@ -1,12 +1,15 @@
 package ast;
 
-public class Question extends Node {
-	
+import ast.type.Type;
+
+
+public class Question implements Node {
+
 	final private String variable;
 	final private String label;
-	final private String type;
+	final private Type type;
 	
-	public Question(String variable, String label, String type) {
+	public Question(String variable, String label, Type type) {
 		this.variable = variable;
 		this.label = label;
 		this.type = type;
@@ -20,8 +23,14 @@ public class Question extends Node {
 		return label;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return type;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 
 }

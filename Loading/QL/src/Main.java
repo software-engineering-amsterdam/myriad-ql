@@ -1,6 +1,9 @@
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import ast.Form;
+import ast.Visitor;
+
 public class Main {
 	public static void main(String[] args) throws Exception {
 
@@ -21,8 +24,10 @@ public class Main {
 		 CommonTokenStream tokens = new CommonTokenStream(lexer);
 		
 		 QLParser parser = new QLParser(tokens);
-		 // ParseTree tree = parser.root(); // begin parsing at rule 'root'
-		 System.out.println(parser.root().result.getBlock().getQuestions().get(0).getType());
+		 // System.out.println(parser.form().result.getBlock().getStatements().get(0).getExpression().print());
+		 Form form = parser.form().result;
+		 Visitor ASTVisitor = new Visitor();
+		 ASTVisitor.visit(form);
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree

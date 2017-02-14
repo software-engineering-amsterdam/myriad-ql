@@ -1,4 +1,8 @@
 package ast.expression;
 
-public abstract class Expression {
+import ast.Node;
+import ast.Visitor;
+
+public abstract class Expression implements Node {
+	
 }

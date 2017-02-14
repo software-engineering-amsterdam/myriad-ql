@@ -7,4 +7,9 @@ public class IntegerType extends Type {
 		super("integer");
 	}
 	
+	@Override
+	public void accept(ast.Visitor v) {
+		v.visit(this);		
+	}
+	
 }

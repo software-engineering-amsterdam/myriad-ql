@@ -1,42 +1,28 @@
 package org.uva.taxfree.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.uva.taxfree.util.LogWindow;
+import javax.swing.*;
 
-public class QuestionNode extends Node {
+public abstract class QuestionNode extends Node {
 
     private String mDescription;
-    private Value mValue;
+    private String mId;
 
-    public QuestionNode(String name, String type, Node parent) {
-        super(name, parent);
-        mValue = createValue(type);
-
-
-        //addChild(new DescriptionNode());
+    public QuestionNode(String description, String id, Node parent) {
+        super(parent);
+        mDescription = description;
+        mId = id;
     }
 
-    public boolean isValid(){
-        return (null != mValue);
+    public JPanel getWidget() {
+        JPanel widgetPanel = new JPanel();
+        widgetPanel.add(new JLabel(mId));
+        fillPanel(widgetPanel);
+        return widgetPanel;
     }
 
-    // look at dynamic dispatch
-    private Value createValue(String type){
-        switch(type)
-        {
-            case "string":
-            {
-                return new StringValue();
-            }
-            case "boolean":
-            {
-                return new BooleanValue();
-            }
-            default:
-            {
-                LogWindow.error(type + " does not represent a valid type!");
-            }
-        }
-        return null;
+    protected abstract void fillPanel(JPanel parent);
+
+    public String getId(){
+        return mId;
     }
 }
