@@ -18,4 +18,9 @@ public class LogicalAnd implements Expression {
     public Expression getRight() {
         return right;
     }
+
+    @Override
+    public String toString() {
+        return "(" + left + "&&" + right + ")";
+    }
 }
