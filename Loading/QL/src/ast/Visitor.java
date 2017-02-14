@@ -13,7 +13,7 @@ public class Visitor {
 		// TODO or getBlock().accept()  // TODO violates the law of Demeter
 		// Is it correct do you have an accept
 		// method in getBlock if you don't use it?
-		form.getBlock().accept(this);	
+		form.getBlock().accept(this);
 	}
 	
 	public void visit(Block block) {
@@ -41,7 +41,7 @@ public class Visitor {
 	public void visit(Statement statement) {
 		
 		statement.getExpression().accept(this);
-		statement.getBlock().accept(this);
+		statement.getBlock().accept(this); // TODO circulair dependencies?
 	}
 	
 	// TODO for types, atoms, expression can we only visit the general classes
@@ -51,33 +51,33 @@ public class Visitor {
 	
 	public void visit(BinaryExpression binaryExpression) {
 		binaryExpression.getLhs().accept(this);
-		binaryExpression.getRhs().accept(this);	
+		binaryExpression.getRhs().accept(this);
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
-		unaryExpression.getLhs().accept(this);		
+		unaryExpression.getLhs().accept(this);
 	}
 
 	public void visit(BoolAtom boolAtom) {
 		System.out.println(boolAtom.getValue());
 	}
-	
+
 	public void visit(DateAtom dateAtom) {
 		System.out.println(dateAtom.getValue());
 	}
-	
+
 	public void visit(DecimalAtom decimalAtom) {
 		System.out.println(decimalAtom.getValue());
 	}
-	
+
 	public void visit(IntegerAtom integerAtom) {
 		System.out.println(integerAtom.getValue());
 	}
-	
+
 	public void visit(MoneyAtom moneyAtom) {
 		System.out.println(moneyAtom.getValue());
 	}
-	
+
 	public void visit(StringAtom stringAtom) {
 		System.out.println(stringAtom.getValue());
 	}
@@ -85,71 +85,71 @@ public class Visitor {
 // TODO really not needed
 //	public void visit(AddExpression addExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(AndExpression andExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(DivExpression divExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(GEqExpression gEqExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(GExpression gExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(LEqExpression lEqExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(LExpression lExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(MinusExpression minusExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(MulExpression mulExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(NEqExpression nEqExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(NotExpression notExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(OrExpression orExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(PlusExpression plusExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 //
 //	public void visit(SubExpression subExpression) {
 //		// TODO Auto-generated method stub
-//		
+//
 //	}
 }
