@@ -1,4 +1,4 @@
-grammar Exp;
+grammar QL;
 
 start : 'form' ID '{' statementContent '}';
 

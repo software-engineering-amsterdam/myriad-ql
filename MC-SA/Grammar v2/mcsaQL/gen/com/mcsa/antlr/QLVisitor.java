@@ -17,17 +17,29 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStart(QLParser.StartContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#content}.
+	 * Visit a parse tree produced by {@link QLParser#statementContent}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitContent(QLParser.ContentContext ctx);
+	T visitStatementContent(QLParser.StatementContentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#categorise}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCategorise(QLParser.CategoriseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QLParser#ifCase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfCase(QLParser.IfCaseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QLParser#ifCaseArgs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfCaseArgs(QLParser.IfCaseArgsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#caseNewInput}.
 	 * @param ctx the parse tree

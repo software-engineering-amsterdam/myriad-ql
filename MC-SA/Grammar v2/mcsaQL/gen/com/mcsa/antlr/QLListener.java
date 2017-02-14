@@ -18,15 +18,15 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitStart(QLParser.StartContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link QLParser#content}.
+	 * Enter a parse tree produced by {@link QLParser#statementContent}.
 	 * @param ctx the parse tree
 	 */
-	void enterContent(QLParser.ContentContext ctx);
+	void enterStatementContent(QLParser.StatementContentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QLParser#content}.
+	 * Exit a parse tree produced by {@link QLParser#statementContent}.
 	 * @param ctx the parse tree
 	 */
-	void exitContent(QLParser.ContentContext ctx);
+	void exitStatementContent(QLParser.StatementContentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#categorise}.
 	 * @param ctx the parse tree
@@ -37,6 +37,26 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCategorise(QLParser.CategoriseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#ifCase}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfCase(QLParser.IfCaseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#ifCase}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfCase(QLParser.IfCaseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLParser#ifCaseArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfCaseArgs(QLParser.IfCaseArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#ifCaseArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfCaseArgs(QLParser.IfCaseArgsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParser#caseNewInput}.
 	 * @param ctx the parse tree

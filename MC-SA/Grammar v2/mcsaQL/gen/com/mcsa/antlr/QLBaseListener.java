@@ -28,13 +28,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterContent(QLParser.ContentContext ctx) { }
+	@Override public void enterStatementContent(QLParser.StatementContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitContent(QLParser.ContentContext ctx) { }
+	@Override public void exitStatementContent(QLParser.StatementContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -47,6 +47,30 @@ public class QLBaseListener implements QLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCategorise(QLParser.CategoriseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfCase(QLParser.IfCaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfCase(QLParser.IfCaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfCaseArgs(QLParser.IfCaseArgsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfCaseArgs(QLParser.IfCaseArgsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
