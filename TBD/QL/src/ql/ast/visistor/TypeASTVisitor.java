@@ -27,9 +27,13 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(If node) {
-        node.getExpression().accept(this);
-        node.getIfBlock().accept(this);
+        Type expr = node.getExpression().accept(this);
 
+        if (expr != Type.TYPEBOOL) {
+            throw new RuntimeException("Type error");
+        }
+
+        node.getIfBlock().accept(this);
         if (node.hasElseBlock()) {
             node.getElseBlock().accept(this);
         }
@@ -41,7 +45,11 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         identTable.put(node.getId().getQlIdent(), node.getType());
 
         if (node.hasExpr()) {
-            node.getExpr().accept(this);
+            Type expr = node.getExpr().accept(this);
+            if (expr == node.getType()) {
+                return null;
+            }
+            throw new RuntimeException("Type error");
         }
         return null;
     }
