@@ -6,5 +6,8 @@ form BoxHouseOwning {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money = 2 + 3 * 4
+        valueResidue: "Value residue:" money = true
+        valueResidue: "Value residue:" money = 2 < 3 * +3 && 7 == y
+        valueResidue: "Value residue:" money = x && y || z
     }
 }
