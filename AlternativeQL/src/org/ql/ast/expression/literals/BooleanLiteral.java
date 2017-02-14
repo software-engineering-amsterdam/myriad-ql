@@ -1,4 +1,4 @@
-package org.ql.ast.expression;
+package org.ql.ast.expression.literals;
 
 import org.ql.ast.Expression;
 
