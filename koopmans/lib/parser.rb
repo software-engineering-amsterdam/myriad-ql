@@ -38,15 +38,7 @@ class Parser < Parslet::Parser
           add: '+',
           multiply: '*',
           divide: '/',
-          assign: '=',
-
-          boolean_type: 'boolean',
-          integer_type: 'integer',
-          string_type: 'string',
-          money_type: 'money',
-
-          if_: 'if',
-          form_: 'form'
+          assign: '='
 
 
   # question(s) with optional expression
@@ -55,7 +47,7 @@ class Parser < Parslet::Parser
   end
 
   rule(:type) do
-    (boolean_type | integer_type | string_type | money_type).as(:type) >> spaces?
+    (str('boolean') | str('integer') | str('date') | str('decimal') | str('string') | str('money')).as(:type) >> spaces?
   end
 
   rule(:variable) do
@@ -89,13 +81,13 @@ class Parser < Parslet::Parser
   end
 
   rule(:if_statement) do
-    (if_ >> condition >> block).as(:if_statement)
+    (str('if') >> condition >> block).as(:if_statement)
   end
 
 
   # form
   rule(:form) do
-    (spaces? >> form_ >> spaces? >> variable >> spaces? >> block)
+    spaces? >> str('form') >> spaces? >> variable >> spaces? >> block
   end
 
   root :form
