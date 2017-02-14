@@ -21,6 +21,11 @@ class Ast < Parslet::Transform
 
   # create Question with expression
   # TODO parse expression
+  #
+  # rule(
+  #     :left => simple(:left),
+  #     :right => simple(:right),
+  #     :operator => '+')                     { Addition.new(left, right) }
 
   # rule(:label => simple(:label), :variable => simple(:variable), :type => simple(:type), :expression => subtree(:expression)) do
   #   # TODO parse expression
