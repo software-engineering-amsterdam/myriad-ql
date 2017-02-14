@@ -6,43 +6,37 @@ import UvA.Gamma.AST.Values.Number;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-
-//Created by Tjarco, 14-02-17.
-
-
-public class NumberExpression implements Expression {
+/**
+ * Created by casboot on 14-02-17.
+ */
+public class BooleanExpression implements Expression {
 
     private String expr;
 
-    public NumberExpression(String expr) {
+    public BooleanExpression(String expr) {
         this.expr = expr;
     }
 
     @Override
     public Number evaluateNumber() throws Exception {
+        return null;
+    }
+
+    @Override
+    public Boolean evaluateBool() throws Exception {
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
-        return new Number(engine.eval(expr).toString());
+        return new Boolean(engine.eval(expr).toString());
     }
 
     @Override
     public String toString() {
         try {
-            Number n = evaluateNumber();
-
-            if (n.isInteger()) {
-                return "" + n.intValue();
-            } else {
-                return "" + n.doubleValue();
-            }
+            Boolean n = evaluateBool();
+            return "" + n.getValue();
         } catch (Exception e) {
             return e.toString();
         }
-    }
-
-    @Override
-    public Boolean evaluateBool() throws Exception {
-        return null;
     }
 }
 
