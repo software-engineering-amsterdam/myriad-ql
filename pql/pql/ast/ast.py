@@ -2,13 +2,7 @@
 class RootNode(object):
     def __init__(self, parser_output):
         self.root = Node("root_node")
-        # TODO: Make sure there are no empty lists in the input string
-        filtered_from_emtpies = filter(None, parser_output)
-        self.build_ast(filtered_from_emtpies)
-
-    def build_ast(self, parser_output):
-        for form in parser_output:
-            self.root.add_child(Form(form))
+        self.root.add_child(Form(parser_output))
 
     def __str__(self):
         return self.root.__str__()
@@ -34,6 +28,7 @@ class Node(object):
 
 class Form(Node):
     def __init__(self, content):
+        print(content)
         assert content[0] == 'form', 'First encountered type should be a form'
         super(Form, self).__init__('form')
         self.name = content[1]

@@ -1,5 +1,5 @@
 import pyparsing as pp
-from ParserToken import ParserToken
+import AST
 
 
 class QuestionnaireParser(object):
@@ -24,18 +24,6 @@ class QuestionnaireParser(object):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
         pp.quotedString.setParseAction(pp.removeQuotes)
-        pp.quotedString.setParseAction(self.create_token)
-
-        # Set to parse action obtain token location
-        self.TYPE_NAME.setParseAction(self.create_token)
-        self.TYPE_VAR.setParseAction(
-            lambda s, l, t: self.create_token(s, l, t, var_type="var"))
-        self.TYPE_DECIMAL.setParseAction(
-            lambda s, l, t: self.create_token(s, l, t, var_type="dec"))
-        self.TYPE_INT.setParseAction(
-            lambda s, l, t: self.create_token(s, l, t, var_type="int"))
-        self.TYPE_BOOL.setParseAction(
-            lambda s, l, t: self.create_token(s, l, t, var_type="bool"))
 
         self.grammar = self.define_grammar()
 
@@ -51,56 +39,66 @@ class QuestionnaireParser(object):
         question = pp.Group(
             pp.quotedString + self.TYPE_VAR + self.LIT_COLON +
             self.TYPE_NAME + pp.Optional(self.LIT_IS + self.embrace(expression))
-        )
+        ).addParseAction(AST.QuestionNode)
 
         block = pp.Forward()
         if_cond = self.KW_IF + self.embrace(expression) +\
             self.embrace(block, "curly")
 
         conditional = pp.Group(if_cond + pp.Optional(
-            self.KW_ELSE + self.embrace(block, "curly")))
+            self.KW_ELSE + self.embrace(block, "curly"))).addParseAction(AST.ConditionalNode)
 
-        block << pp.Group(pp.OneOrMore(question | conditional))
+        block << pp.Group(pp.OneOrMore(question | conditional)).addParseAction(AST.BlockNode)
 
         form = self.KW_FORM + self.TYPE_VAR + self.embrace(block, "curly")
-        form_block = pp.Group(form)
-        return pp.OneOrMore(form_block)
+        form_block = pp.Group(form).addParseAction(AST.FormNode)
+        return pp.OneOrMore(form_block).addParseAction(AST.QuestionnaireAST)
 
     def define_expression(self):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
-        expression_types = pp.Combine(
-            self.TYPE_BOOL | self.TYPE_VAR | self.TYPE_DECIMAL | self.TYPE_INT
-        )
 
-        return pp.infixNotation(expression_types, [
-            (pp.oneOf('- + !'), 1, pp.opAssoc.RIGHT),
-            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.convert_expr),
-            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.convert_expr),
-            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.convert_expr),
-            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT, self.convert_expr),
-            (pp.Literal('&&'), 2, pp.opAssoc.LEFT, self.convert_expr),
-            (pp.Literal('||'), 2, pp.opAssoc.LEFT, self.convert_expr),
+        var_types = (
+            self.TYPE_BOOL.addParseAction(AST.BoolNode) |
+            self.TYPE_VAR.addParseAction(AST.VarNode) |
+            self.TYPE_DECIMAL.addParseAction(AST.DecimalNode) |
+            self.TYPE_INT.addParseAction(AST.IntNode))
+
+        return pp.infixNotation(var_types, [
+            (pp.oneOf('- + !'), 1, pp.opAssoc.RIGHT, AST.MonOpNode),
+            (pp.oneOf('* /'), 2, pp.opAssoc.LEFT, self.create_binops),
+            (pp.oneOf('+ -'), 2, pp.opAssoc.LEFT, self.create_binops),
+            (pp.oneOf('< <= > >='), 2, pp.opAssoc.LEFT, self.create_binops),
+            (pp.oneOf('== !='), 2, pp.opAssoc.LEFT, self.create_binops),
+            (pp.Literal('&&'), 2, pp.opAssoc.LEFT, self.create_binops),
+            (pp.Literal('||'), 2, pp.opAssoc.LEFT, self.create_binops),
         ])
 
-    def convert_expr(self, s, l, t):
-        # Converting ParseResult to List for easier manipulation.
-        expr = t[0].asList()
-        binary_expr = self.to_binary_expr(expr)
-
-        return pp.ParseResults(binary_expr)
-
-    def to_binary_expr(self, expr):
-        # Group together every pair of sub-expressions.
-        if len(expr) <= 2:
-            return expr
-        return [expr[:2] + self.to_binary_expr(expr[2:])]
-
     @staticmethod
-    def create_token(s, l, t, var_type="str"):
-        line = pp.lineno(l, s)
-        col = pp.col(l, s)
-        return ParserToken(t[0], line, col, var_type).to_json()
+    def create_binops(src, loc, token):
+        token = token[0]
+        while len(token) > 1:
+            token = [AST.BinOpNode(src, loc, token[:3])] + token[3:]
+        return token
 
     def parse(self, input_str):
-        return self.grammar.parseString(input_str)
+        return self.grammar.parseString(input_str)[0]
+
+if __name__ == '__main__':
+    form1 = """
+    form taxOfficeExample {
+        "Did you sell a house in 2010?" hasSoldHouse: boolean
+        "Did you buy a house in 2010?" hasBoughtHouse: boolean
+        "Did you enter a loan?" hasMaintLoan: boolean
+
+        if (true == false * 100 * 5 * ! 8.0) {
+            "What was the selling price?" sellingPrice: money
+            "Private debts for the sold house:" privateDebt: money
+            "Value residue:" valueResidue: money = (sellingPrice -
+            privateDebt)
+        }
+    }
+    """
+    parser = QuestionnaireParser()
+    parseAST = parser.parse(form1)
+    print parseAST.print_ast()
