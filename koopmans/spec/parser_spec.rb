@@ -49,9 +49,9 @@ describe Parser do
     end
   end
 
-  context 'booleans' do
+  context 'boolean' do
     it 'parses' do
-      expect(parser.booleans).to parse('&&')
+      expect(parser.boolean).to parse('&&')
     end
   end
 
@@ -61,9 +61,9 @@ describe Parser do
     end
   end
 
-  context 'comparisons' do
+  context 'comparison' do
     it 'parses' do
-      expect(parser.comparisons).to parse('<')
+      expect(parser.comparison).to parse('<')
     end
   end
 
@@ -78,12 +78,6 @@ describe Parser do
     it 'parses' do
       expect(parser.question).to parse('"How much is?" hasSoldHouse: boolean')
       expect(parser.question).to parse('"Value residue:" valueResidue: money = (sellingPrice - privateDebt)')
-    end
-  end
-
-  context 'condition' do
-    it 'parses' do
-      expect(parser.condition).to parse('(hasSoldHouse)')
     end
   end
 

@@ -45,19 +45,19 @@ class Parser < Parslet::Parser
 
   # expression
   rule(:calculation) do
-    variable.as(:left) >> (booleans | comparisons | arithmetic) >> expression.as(:right)
+    variable.as(:left) >> (boolean | comparison | arithmetic) >> expression.as(:right)
   end
 
   rule(:arithmetic) do
     (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
   end
 
-  rule(:comparisons) do
-    (less | less_equal | greater_equal | equal | not_equal).as(:comparisons) >> spaces?
+  rule(:comparison) do
+    (less | less_equal | greater_equal | equal | not_equal).as(:comparison) >> spaces?
   end
 
-  rule(:booleans) do
-    (logical_and | logical_or | negate).as(:booleans) >> spaces?
+  rule(:boolean) do
+    (logical_and | logical_or | negate).as(:boolean) >> spaces?
   end
 
   rule(:expression) do
@@ -92,22 +92,18 @@ class Parser < Parslet::Parser
 
 
   # if block
-  rule(:condition) do
-    spaces? >> left_parenthesis >> spaces? >> variable.as(:condition) >> right_parenthesis >> spaces?
-  end
-
   rule(:block) do
     left_brace >> spaces? >> (question | if_statement).repeat.as(:block) >> right_brace >> spaces?
   end
 
   rule(:if_statement) do
-    (str('if') >> condition >> block).as(:if_statement)
+    (str('if') >> spaces? >> expression >> block).as(:if_statement)
   end
 
 
   # form
   rule(:form) do
-    spaces? >> str('form') >> spaces? >> variable >> spaces? >> block
+    spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form)
   end
 
   root :form

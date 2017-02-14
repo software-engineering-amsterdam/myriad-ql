@@ -18,6 +18,7 @@ parsed = parser.parse(contents)
 ast = Ast.new
 form = ast.apply(parsed)
 
+pp parsed
 pp form
 
 # gui = Gui.new
