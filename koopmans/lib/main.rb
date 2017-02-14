@@ -1,12 +1,12 @@
-require_relative 'parser/reader'
+require_relative 'parser/file_reader'
 require_relative 'parser/parser'
 require_relative 'parser/transformer'
 
 require 'pp'
 
 # read file
-reader = Reader.new
-contents = reader.read_file('../examples/simple_questionnaire.ql')
+file_reader = FileReader.new
+contents = file_reader.read_file('../examples/simple_questionnaire.ql')
 
 # parse content
 parser = Parser.new
