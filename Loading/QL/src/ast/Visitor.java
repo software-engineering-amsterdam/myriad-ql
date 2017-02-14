@@ -30,16 +30,11 @@ public class Visitor {
 		}
 	}
 	
-	public void visit(Question question) {
-		
-		System.out.println(question.getVariable());
-		
-		question.getType().accept(this);
-		
+	public void visit(Question question) {	
+		question.getType().accept(this);		
 	}
 	
-	public void visit(Statement statement) {
-		
+	public void visit(Statement statement) {		
 		statement.getExpression().accept(this);
 		statement.getBlock().accept(this);
 	}
