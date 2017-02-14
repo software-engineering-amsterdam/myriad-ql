@@ -4,7 +4,8 @@ import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, value, id)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
-import UI.FormData as FormData exposing (FormValue(Str))
+import UI.FormData as FormData
+import Values exposing (Value(Str))
 
 
 view : WidgetContext msg -> Html msg
