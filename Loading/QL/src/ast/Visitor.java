@@ -58,21 +58,21 @@ public class Visitor {
 		System.out.println(boolAtom.getValue());
 	}
 
-	public void visit(DateAtom dateAtom) {
-		System.out.println(dateAtom.getValue());
-	}
-
-	public void visit(DecimalAtom decimalAtom) {
-		System.out.println(decimalAtom.getValue());
-	}
+//	public void visit(DateAtom dateAtom) {
+//		System.out.println(dateAtom.getValue());
+//	}
+//
+//	public void visit(DecimalAtom decimalAtom) {
+//		//System.out.println(decimalAtom.getValue());
+//	}
 
 	public void visit(IntegerAtom integerAtom) {
 //		System.out.println(integerAtom.getValue());
 	}
 
-	public void visit(MoneyAtom moneyAtom) {
-		System.out.println(moneyAtom.getValue());
-	}
+//	public void visit(MoneyAtom moneyAtom) {
+//		//System.out.println(moneyAtom.getValue());
+//	}
 
 	public void visit(StringAtom stringAtom) {
 		System.out.println(stringAtom.getValue());

@@ -37,6 +37,13 @@ public class Main extends Application{
         visitor.visit(parseTree);
 
         Form form = visitor.getForm();
+        System.out.println(new MathExpr("3/2").evaluate());
+//        for(QLInput i : form.getInputs()){
+//            if (i.getType() == QLValue.Type.BOOLEAN){
+//                i.setValue(false);
+//            }
+//            System.out.println(i);
+//        }
         for (FormItem item : form.getFormItems()){
             mainScreen.addFormItem(item);
             System.out.println(item);

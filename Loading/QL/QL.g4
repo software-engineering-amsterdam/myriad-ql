@@ -76,10 +76,11 @@ unaryOp returns [UnaryExpression result]
   ;
 
 atom returns [Atom result]
- :  DECIMAL { System.out.println($DECIMAL.text);
-                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
-  | MONEY { System.out.println($MONEY.text);
-           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
+:
+// :  DECIMAL { System.out.println($DECIMAL.text);
+//                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
+//  | MONEY { System.out.println($MONEY.text);
+//           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
   | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
@@ -88,8 +89,8 @@ atom returns [Atom result]
             }
  | BOOL { System.out.println($BOOL.text);
            $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
- | DDMMYY { System.out.println($DDMMYY.text);
-            $result = new DateAtom($DDMMYY.text); }
+// | DDMMYY { System.out.println($DDMMYY.text);
+//            $result = new DateAtom($DDMMYY.text); }
  | ID { System.out.println($ID.text);
                  $result = new StringAtom($ID.text); }
  ;

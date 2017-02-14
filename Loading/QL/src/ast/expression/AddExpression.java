@@ -10,7 +10,13 @@ public class AddExpression extends BinaryExpression {
 			// throw exception!
 		} 
 		
-		return getLhs().getNumber().doubleValue() + getRhs().getNumber().doubleValue();
+		return getLhs().add(getRhs());
+		
+
+		
+		// TODO add round function or return int
+//		return Math.round((getLhs().getNumber().doubleValue() +
+//				getRhs().getNumber().doubleValue()) * 100.0 ) / 100.0;
 	}
 	
 	@Override
@@ -18,3 +24,5 @@ public class AddExpression extends BinaryExpression {
 		v.visit(this);
 	}
 }
+
+
