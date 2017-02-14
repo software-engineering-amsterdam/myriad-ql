@@ -21,23 +21,8 @@ class Parser < Parslet::Parser
           right_parenthesis: ')',
           quote: '"',
           colon: ':',
-          assign: '=',
+          assign: '='
 
-          subtract: '-',
-          add: '+',
-          multiply: '*',
-          divide: '/',
-
-          less: '<',
-          less_equal: '<=',
-          greater: '>',
-          greater_equal: '>=',
-          equal: '==',
-          not_equal: '!=',
-
-          logical_and: '&&',
-          logical_or: '||',
-          negation: '!'
 
   # expression
   rule(:calculation) do
@@ -45,20 +30,8 @@ class Parser < Parslet::Parser
   end
 
   rule(:operator) do
-    (subtract | add | multiply | divide | less_equal | greater_equal | equal | not_equal | less | greater | logical_and | logical_or | negation).as(:operator) >> spaces?
+    (str('-') | str('+') | str('*') | str('/') | str('<=') | str('>=') | str('==') | str('!=') | str('<') | str('>') | str('&&') | str('||') | str('!')).as(:operator) >> spaces?
   end
-
-  # rule(:arithmetic) do
-  #   (subtract | add | multiply | divide).as(:arithmetic) >> spaces?
-  # end
-  #
-  # rule(:comparison) do
-  #   (less_equal | greater_equal | equal | not_equal | less | greater).as(:comparison) >> spaces?
-  # end
-  #
-  # rule(:boolean) do
-  #   (logical_and | logical_or | negation).as(:boolean) >> spaces?
-  # end
 
   rule(:expression) do
     left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable_or_literal
@@ -77,15 +50,15 @@ class Parser < Parslet::Parser
   end
 
   rule(:integer_negation?) do
-    subtract.as(:integer_negation).maybe
+    str('-').as(:integer_negation).maybe
   end
 
   rule(:boolean_negation?) do
-    negation.as(:boolean_negation).maybe
+    str('!').as(:boolean_negation).maybe
   end
 
   rule(:negation?) do
-    (negation | subtract).as(:negation).maybe
+    (str('!') | str('-')).as(:negation).maybe
   end
 
   rule(:variable) do
