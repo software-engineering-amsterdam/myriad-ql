@@ -4,11 +4,16 @@
 
     public class DecimalLiteral : Literal
     {
-        public DecimalLiteral(decimal value)
+        public DecimalLiteral(double value)
         {
             this.Value = value;
         }
 
-        public decimal Value { get; private set; }
+        public DecimalLiteral(string value)
+            : this(double.Parse(value))
+        {
+        }
+
+        public double Value { get; private set; }
     }
 }

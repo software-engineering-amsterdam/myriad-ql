@@ -36,6 +36,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +66,7 @@
     <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
+    <Compile Include="Ast\Literals\HexLiteral.cs" />
     <Compile Include="Ast\Literals\IntegerLiteral.cs" />
     <Compile Include="Ast\Literals\MoneyLiteral.cs" />
     <Compile Include="Ast\Literals\StringLiteral.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
     <Compile Include="Ast\ValueTypes\DateValueType.cs" />
+    <Compile Include="Ast\ValueTypes\FloatValueType.cs" />
     <Compile Include="Ast\ValueTypes\IntegerValueType.cs" />
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />

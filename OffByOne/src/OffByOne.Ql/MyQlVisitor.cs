@@ -145,17 +145,17 @@
 
         public override AstNode VisitDecimalLiteral([NotNull] QlParser.DecimalLiteralContext context)
         {
-            return new DecimalLiteral(decimal.Parse(context.GetText()));
+            return new DecimalLiteral(context.GetText());
         }
 
         public override AstNode VisitIntegerLiteral([NotNull] QlParser.IntegerLiteralContext context)
         {
-            return new IntegerLiteral(int.Parse(context.GetText()));
+            return new IntegerLiteral(context.GetText());
         }
 
         public override AstNode VisitMoneyLiteral([NotNull] QlParser.MoneyLiteralContext context)
         {
-            return new MoneyLiteral(decimal.Parse(context.GetText()));
+            return new MoneyLiteral(context.GetText());
         }
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)

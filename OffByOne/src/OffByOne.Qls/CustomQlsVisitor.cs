@@ -5,12 +5,14 @@
 
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.Literals.Base;
     using OffByOne.LanguageCore.Ast.Style;
     using OffByOne.LanguageCore.Ast.Style.Properties;
     using OffByOne.LanguageCore.Ast.Style.Properties.Base;
     using OffByOne.LanguageCore.Ast.Style.Rules;
     using OffByOne.LanguageCore.Ast.Style.Widgets;
     using OffByOne.LanguageCore.Ast.Style.Widgets.Base;
+    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
 
     public class CustomQlsVisitor : QlsGrammarBaseVisitor<AstNode>
@@ -92,7 +94,7 @@
 
         public override AstNode VisitDefaultBlock(QlsGrammarParser.DefaultBlockContext context)
         {
-            var type = (ValueType)this.VisitType(context.type());
+            var type = (ValueType)this.Visit(context.type());
             var widget = (Widget)this.VisitWidget(context.widget());
             var styleRules = context
                 .styleRule()
@@ -102,10 +104,34 @@
             return new ValueTypeRule(type, widget, styleRules);
         }
 
-        public override AstNode VisitStyleRule(QlsGrammarParser.StyleRuleContext context)
+        public override AstNode VisitHeightStyleRule(QlsGrammarParser.HeightStyleRuleContext context)
         {
-            // TODO: Add a factory for properties
-            return new ColorProperty("FAKE");
+            return new HeightProperty(new IntegerLiteral(context.IntegerLiteral().GetText()));
+        }
+
+        public override AstNode VisitWidthStyleRule(QlsGrammarParser.WidthStyleRuleContext context)
+        {
+            return new WidthProperty(new IntegerLiteral(context.IntegerLiteral().GetText()));
+        }
+
+        public override AstNode VisitColorStyleRule(QlsGrammarParser.ColorStyleRuleContext context)
+        {
+            return new ColorProperty(new HexLiteral(context.HexColorLiteral().GetText()));
+        }
+
+        public override AstNode VisitFontNameStyleRule(QlsGrammarParser.FontNameStyleRuleContext context)
+        {
+            return new FontNameProperty(new StringLiteral(context.StringLiteral().GetText()));
+        }
+
+        public override AstNode VisitFontSizeStyleRule(QlsGrammarParser.FontSizeStyleRuleContext context)
+        {
+            return new FontSizeProperty(new IntegerLiteral(context.IntegerLiteral().GetText()));
+        }
+
+        public override AstNode VisitFontStyleStyleRule(QlsGrammarParser.FontStyleStyleRuleContext context)
+        {
+            return new FontStyleProperty(new StringLiteral(context.StringLiteral().GetText()));
         }
 
         public override AstNode VisitCheckboxWidgetType(QlsGrammarParser.CheckboxWidgetTypeContext context)
@@ -132,12 +158,12 @@
 
         public override AstNode VisitBooleanLiteralType(QlsGrammarParser.BooleanLiteralTypeContext context)
         {
-            return new BooleanLiteral(bool.Parse(context.GetText()));
+            return new BooleanLiteral(context.GetText());
         }
 
         public override AstNode VisitIntegerLiteralType(QlsGrammarParser.IntegerLiteralTypeContext context)
         {
-            return new IntegerLiteral(int.Parse(context.GetText()));
+            return new IntegerLiteral(context.GetText());
         }
 
         public override AstNode VisitStringLiteralType(QlsGrammarParser.StringLiteralTypeContext context)
@@ -147,7 +173,22 @@
 
         public override AstNode VisitHexLiteralType(QlsGrammarParser.HexLiteralTypeContext context)
         {
-            return base.VisitHexLiteralType(context);
+            return new HexLiteral(context.GetText());
+        }
+
+        public override AstNode VisitDateLiteralType(QlsGrammarParser.DateLiteralTypeContext context)
+        {
+            return new DateLiteral(context.GetText());
+        }
+
+        public override AstNode VisitDecimalLiteralType(QlsGrammarParser.DecimalLiteralTypeContext context)
+        {
+            return new DecimalLiteral(context.GetText());
+        }
+
+        public override AstNode VisitMoneyLiteralType(QlsGrammarParser.MoneyLiteralTypeContext context)
+        {
+            return new MoneyLiteral(context.GetText());
         }
 
         public override AstNode VisitOptionsList(QlsGrammarParser.OptionsListContext context)
@@ -170,6 +211,36 @@
             outputList.AddRange((OptionsList<StringLiteral>)this.VisitOption(context.option()));
 
             return outputList;
+        }
+
+        public override AstNode VisitBooleanType(QlsGrammarParser.BooleanTypeContext context)
+        {
+            return new BooleanValueType();
+        }
+
+        public override AstNode VisitIntegerType(QlsGrammarParser.IntegerTypeContext context)
+        {
+            return new IntegerValueType();
+        }
+
+        public override AstNode VisitFloatType(QlsGrammarParser.FloatTypeContext context)
+        {
+            return new FloatValueType();
+        }
+
+        public override AstNode VisitMoneyType(QlsGrammarParser.MoneyTypeContext context)
+        {
+            return new MoneyValueType();
+        }
+
+        public override AstNode VisitStringType(QlsGrammarParser.StringTypeContext context)
+        {
+            return new StringValueType();
+        }
+
+        public override AstNode VisitDateType(QlsGrammarParser.DateTypeContext context)
+        {
+            return new DateValueType();
         }
     }
 }

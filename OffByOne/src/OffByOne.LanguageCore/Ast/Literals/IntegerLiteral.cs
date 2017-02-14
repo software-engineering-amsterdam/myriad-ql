@@ -9,6 +9,11 @@
             this.Value = value;
         }
 
+        public IntegerLiteral(string value)
+            : this(int.Parse(value))
+        {
+        }
+
         public int Value { get; private set; }
     }
 }

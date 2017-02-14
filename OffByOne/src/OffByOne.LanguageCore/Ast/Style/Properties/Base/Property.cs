@@ -1,12 +1,8 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Style.Properties.Base
 {
+    using OffByOne.LanguageCore.Ast.Literals.Base;
+
     public abstract class Property : AstNode
     {
-        protected Property(string value)
-        {
-            this.Value = value;
-        }
-
-        public string Value { get; private set; }
     }
 }
