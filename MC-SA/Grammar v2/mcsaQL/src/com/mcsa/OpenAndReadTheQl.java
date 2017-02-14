@@ -21,40 +21,37 @@ public class OpenAndReadTheQl {
 
     public String QlRead() throws InvocationTargetException, InterruptedException {
 
-        EventQueue.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
+        EventQueue.invokeAndWait(() -> {
 
-                String fileInString = "";
+            String fileInString = "";
 
-                JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser();
 
-                chooser.setDialogTitle("Select QL Input File");
-                chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            chooser.setDialogTitle("Select QL Input File");
+            chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-                chooser.setFileFilter(filter);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+            chooser.setFileFilter(filter);
 
-                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-                    try (BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()))) {
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            fileInString = fileInString.concat(line);
-                            // process the line.
-                        }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                try (BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        fileInString = fileInString.concat(line);
+                        // process the line.
                     }
-
-                } else {
-                    System.out.println("No Selection ");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                resultString = fileInString;
+            } else {
+                System.out.println("No Selection ");
             }
+
+            resultString = fileInString;
         });
 
         return resultString;
