@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from form_parser import *
+from grammar import Grammar
 
 
 class TestGrammar(TestCase):
