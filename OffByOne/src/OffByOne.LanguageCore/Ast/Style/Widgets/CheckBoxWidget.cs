@@ -4,13 +4,7 @@
 
     using OffByOne.LanguageCore.Ast.Style.Widgets.Base;
 
-    public class CheckBoxWidget : ListWidget
+    public class CheckBoxWidget : Widget
     {
-        public CheckBoxWidget(
-            string defaultValue,
-            ICollection<string> values)
-            : base(defaultValue, values)
-        {
-        }
     }
 }

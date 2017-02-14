@@ -80,15 +80,14 @@
         public override AstNode VisitQuestion(QlsGrammarParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var widget = (Widget)this.VisitWidget(context.widget());
+            if (context.widget() == null)
+            {
+                return new QuestionRule(id, null, null);
+            }
+
+            var widget = (Widget)this.Visit(context.widget());
 
             return new QuestionRule(id, widget, null);
-        }
-
-        public override AstNode VisitWidget(QlsGrammarParser.WidgetContext context)
-        {
-            // TODO: Fix for different types
-            return new TextFieldWidget();
         }
 
         public override AstNode VisitDefaultBlock(QlsGrammarParser.DefaultBlockContext context)
@@ -107,6 +106,70 @@
         {
             // TODO: Add a factory for properties
             return new ColorProperty("FAKE");
+        }
+
+        public override AstNode VisitCheckboxWidgetType(QlsGrammarParser.CheckboxWidgetTypeContext context)
+        {
+            return new CheckBoxWidget();
+        }
+
+        public override AstNode VisitSpinboxWidgetType(QlsGrammarParser.SpinboxWidgetTypeContext context)
+        {
+            return new SpinboxWidget();
+        }
+
+        public override AstNode VisitRadioWidgetType(QlsGrammarParser.RadioWidgetTypeContext context)
+        {
+            var options = (OptionsList<StringLiteral>)this.Visit(context.optionsList());
+            return new RadioButtonWidget(options);
+        }
+
+        public override AstNode VisitDropdownWidgetType(QlsGrammarParser.DropdownWidgetTypeContext context)
+        {
+            var options = (OptionsList<StringLiteral>)this.Visit(context.optionsList());
+            return new DropDownWidget(options);
+        }
+
+        public override AstNode VisitBooleanLiteralType(QlsGrammarParser.BooleanLiteralTypeContext context)
+        {
+            return new BooleanLiteral(bool.Parse(context.GetText()));
+        }
+
+        public override AstNode VisitIntegerLiteralType(QlsGrammarParser.IntegerLiteralTypeContext context)
+        {
+            return new IntegerLiteral(int.Parse(context.GetText()));
+        }
+
+        public override AstNode VisitStringLiteralType(QlsGrammarParser.StringLiteralTypeContext context)
+        {
+            return new StringLiteral(context.GetText());
+        }
+
+        public override AstNode VisitHexLiteralType(QlsGrammarParser.HexLiteralTypeContext context)
+        {
+            return base.VisitHexLiteralType(context);
+        }
+
+        public override AstNode VisitOptionsList(QlsGrammarParser.OptionsListContext context)
+        {
+            return (OptionsList<StringLiteral>)this.VisitOption(context.option());
+        }
+
+        public override AstNode VisitOption(QlsGrammarParser.OptionContext context)
+        {
+            var outputList = new OptionsList<StringLiteral>
+            {
+                new StringLiteral(context.StringLiteral().GetText())
+            };
+
+            if (context.option() == null)
+            {
+                return outputList;
+            }
+
+            outputList.AddRange((OptionsList<StringLiteral>)this.VisitOption(context.option()));
+
+            return outputList;
         }
     }
 }

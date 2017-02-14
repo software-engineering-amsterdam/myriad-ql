@@ -2,14 +2,14 @@
 {
     using System.Collections.Generic;
 
+    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.Style.Widgets.Base;
 
     public class DropDownWidget : ListWidget
     {
         public DropDownWidget(
-            string defaultValue,
-            ICollection<string> values)
-            : base(defaultValue, values)
+            OptionsList<StringLiteral> values)
+            : base(values)
         {
         }
     }

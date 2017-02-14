@@ -9,7 +9,7 @@ page
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)* CLOSE_BRACKET
+    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)+ CLOSE_BRACKET
     ;
 
 question	
@@ -30,11 +30,10 @@ styleRule
 	;
 
 widgetType
-    : 'checkbox'
-    | 'spinbox'
-    | 'radio' optionsList
-    | 'dropdown' optionsList
-    | 'checkbox' optionsList
+    : 'spinbox' # spinboxWidgetType
+    | 'radio' optionsList # radioWidgetType
+    | 'dropdown' optionsList # dropdownWidgetType
+    | 'checkbox' # checkboxWidgetType
     ;
 
 optionsList
@@ -42,8 +41,8 @@ optionsList
 	;
 
 option
-	: literal ',' option
-	| literal
+	: StringLiteral ',' option
+	| StringLiteral
 	;
 
 type
@@ -56,10 +55,10 @@ type
 	;
 
 literal
-	: BooleanLieral
-	| IntegerLiteral
-	| StringLiteral
-    | HexColorLiteral
+	: BooleanLieral # booleanLiteralType
+	| IntegerLiteral # integerLiteralType
+	| StringLiteral # stringLiteralType
+    | HexColorLiteral # hexLiteralType
 	;
 
 // Lexer tokens. Move to separate file?

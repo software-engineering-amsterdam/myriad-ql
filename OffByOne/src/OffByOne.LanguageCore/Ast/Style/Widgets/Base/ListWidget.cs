@@ -1,19 +1,16 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Style.Widgets.Base
 {
-    using System.Collections.Generic;
+    using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.Literals.Base;
 
     public abstract class ListWidget : Widget
     {
         protected ListWidget(
-            string defaultValue,
-            ICollection<string> values)
+            OptionsList<StringLiteral> values)
         {
-            this.DefaultValue = defaultValue;
             this.Values = values;
         }
 
-        public string DefaultValue { get; private set; }
-
-        public ICollection<string> Values { get; private set; }
+        public OptionsList<StringLiteral> Values { get; private set; }
     }
 }

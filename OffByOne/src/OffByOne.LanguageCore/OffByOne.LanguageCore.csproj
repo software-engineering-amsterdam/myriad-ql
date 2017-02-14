@@ -96,6 +96,7 @@
     <Compile Include="Ast\Style\Section.cs" />
     <Compile Include="Ast\Style\StyleSheet.cs" />
     <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\OptionsList.cs" />
     <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
     <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
     <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
