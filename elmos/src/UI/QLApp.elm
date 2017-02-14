@@ -1,8 +1,8 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem(Field, ComputedField, IfThen, IfThenElse))
-import Html exposing (Html, div, text, h3, form, textarea, pre, hr, ul, li, p)
-import Html.Attributes exposing (class, style, defaultValue, rows, cols)
+import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
+import Html exposing (Html, div, text, h3, form, pre)
+import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -60,8 +60,7 @@ viewForm model formDsl =
         visibleFields =
             FormUtil.activeFields model.env formDsl
     in
-        form []
-            (List.map (viewField model) visibleFields)
+        form [] (List.map (viewField model) visibleFields)
 
 
 viewField : Model -> ( Label, Id, ValueType ) -> Html Msg
@@ -82,26 +81,3 @@ viewField model ( label, identifier, valueType ) =
 
             IntegerType ->
                 IntegerWidget.view
-
-
-getExpressions : FormItem -> List Expression
-getExpressions item =
-    case item of
-        Field _ _ _ ->
-            []
-
-        ComputedField _ _ _ valueExpression ->
-            [ valueExpression ]
-
-        IfThen expression thenBranch ->
-            List.concat
-                [ [ expression ]
-                , List.concatMap getExpressions thenBranch
-                ]
-
-        IfThenElse expression thenBranch elseBranch ->
-            List.concat
-                [ [ expression ]
-                , List.concatMap getExpressions thenBranch
-                , List.concatMap getExpressions elseBranch
-                ]

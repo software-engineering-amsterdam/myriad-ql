@@ -17,13 +17,13 @@ getType variableTypes expression =
                 [ Messages.undefinedExpressionVariable x () ]
                 (Dict.get x variableTypes)
 
-        AST.Str str ->
+        AST.Str _ ->
             Ok StringType
 
-        AST.Integer integer ->
+        AST.Integer _ ->
             Ok IntegerType
 
-        AST.Boolean boolean ->
+        AST.Boolean _ ->
             Ok BooleanType
 
         ParensExpression inner ->
