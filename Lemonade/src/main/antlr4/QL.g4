@@ -1,7 +1,7 @@
 grammar QL;
 
 form
-    : FORMKEY identifier '{' statements '}' EOF
+    : 'form' identifier '{' statements '}' EOF
     ;
 
 statements
@@ -29,14 +29,14 @@ conditionals
     ;
 
 conditional
-    : IFKEY '(' expr ')' '{' questions '}'
+    : 'if' '(' expr ')' '{' questions '}'
     ;
 
 expr
-    : 'true' | 'false'
-    | INTEGER
-    | unaryoperator expr
+    : unaryoperator expr
     | expr binaryoperator expr
+    | BOOLEAN
+    | INTEGER
     ;
 
 label
@@ -76,16 +76,13 @@ binaryoperator
     | '||'
     ;
 
-FORMKEY
-    : 'form'
-    ;
-
-IFKEY
-    : 'if'
-    ;
 
 INTEGER
     : ('0'..'9')+
+    ;
+
+BOOLEAN
+    : 'true' | 'false'
     ;
 
 IDENTIFIER

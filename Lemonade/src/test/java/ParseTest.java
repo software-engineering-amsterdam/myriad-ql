@@ -17,8 +17,10 @@
  *  under the License.
  */
 
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -27,16 +29,8 @@ import java.io.StringReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.BitSet;
+import java.util.List;
 
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.junit.Before;
@@ -56,7 +50,7 @@ public class ParseTest {
     @Test
     public void testExploratoryString() throws IOException {
 
-        String simpleForm = "1+1";
+        String simpleForm = "form name {test : \"test string\" boolean}";
 
         CharStream inputCharStream = new ANTLRInputStream(new StringReader(simpleForm));
         TokenSource tokenSource = new QLLexer(inputCharStream);
@@ -64,6 +58,12 @@ public class ParseTest {
         QLParser parser = new QLParser(inputTokenStream);
 
         QLParser.ExprContext context = parser.expr();
+        CommonTokenStream tokens = new CommonTokenStream(tokenSource);
+        for(Object o : tokens.getTokens()) {
+            Token t = (Token)o;
+            System.out.println(t);
+        }
+
     }
 
     @Test
