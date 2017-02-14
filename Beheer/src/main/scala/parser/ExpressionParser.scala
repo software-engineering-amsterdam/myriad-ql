@@ -1,11 +1,16 @@
 package parser
 
+import java.text.SimpleDateFormat
+
 import parser.ast._
 
 import scala.util.matching.Regex
 import scala.util.parsing.combinator.JavaTokenParsers
 
 trait ExpressionParser extends JavaTokenParsers {
+  //We do one date: yyyy-mm-dd.
+  private val dateFormat = new SimpleDateFormat("yyyy-mm-dd")
+
   def expr: Parser[ExpressionNode] = infixOperationParser(comp, """\&\&|\|\|""".r)
 
   def comp: Parser[ExpressionNode] = infixOperationParser(subAdd, """>|<|>=|<=|!=|==""".r)
@@ -16,7 +21,7 @@ trait ExpressionParser extends JavaTokenParsers {
 
   def factor: Parser[ExpressionNode] = (
     prefix
-    | integer
+    | (bool | integer | decimal | money | date)
     | identifier
     | "(" ~> expr <~ ")"
   )
@@ -29,7 +34,15 @@ trait ExpressionParser extends JavaTokenParsers {
   //Ident taken from JavaTokenParsers, equals Java Identifier.
   def identifier: Parser[Identifier] = ident ^^ (s => Identifier(s))
 
-  def integer: Parser[Value] = """\d+""".r ^^ (x => Value(x.toInt))
+  def bool: Parser[BooleanValue] = ("True" | "False") ^^ (x => BooleanValue(x.toBoolean))
+
+  def money: Parser[MoneyValue] = "$" ~> decimal ^^ (x => MoneyValue(x.value))
+
+  def decimal: Parser[DecimalValue] = """\d*.\d+""".r ^^ (x => DecimalValue(BigDecimal.valueOf(x.toDouble)))
+
+  def integer: Parser[IntValue] = """\d+""".r ^^ (x => IntValue(x.toInt))
+
+  def date: Parser[DateValue] = """\d\d\d\d-\d\d-\d\d""".r ^^ (x => DateValue(dateFormat.parse(x)))
 
   private def infixOperationParser(child: Parser[ExpressionNode], ops: Regex) = {
     child ~ rep(ops ~ child) ^^ {

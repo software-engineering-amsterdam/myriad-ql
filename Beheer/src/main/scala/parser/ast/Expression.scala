@@ -1,11 +1,21 @@
 package parser.ast
 
-sealed trait ExpressionNode
+import java.util.Date
 
-case class Value(value: Int) extends ExpressionNode
+sealed trait ExpressionNode
 
 case class Identifier(value: String) extends ExpressionNode
 
 case class InfixOperation(lhs: ExpressionNode, operator: String, rhs: ExpressionNode) extends ExpressionNode
 
 case class PrefixOperation(operator: String, rhs: ExpressionNode) extends ExpressionNode
+
+case class DecimalValue(value: BigDecimal) extends ExpressionNode
+
+case class MoneyValue(value: BigDecimal) extends ExpressionNode
+
+case class IntValue(value: Int) extends ExpressionNode
+
+case class BooleanValue(value: Boolean) extends ExpressionNode
+
+case class DateValue(value: Date) extends ExpressionNode

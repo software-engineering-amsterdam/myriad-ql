@@ -43,10 +43,10 @@ class TypeChecker {
   }
 
   private def extractIdentifiers(expressionNode: ExpressionNode): Seq[String] = expressionNode match {
-    case Value(_) => Nil
     case Identifier(value) => Seq(value)
     case PrefixOperation(_, rhs) => extractIdentifiers(rhs)
     case InfixOperation(lhs, _, rhs) => extractIdentifiers(lhs) ++ extractIdentifiers(rhs)
+    case _ => Nil
   }
 
 }
