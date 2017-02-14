@@ -11,8 +11,8 @@ public class BoolAtom extends Atom {
         this.value = value;
     }
 
-    public Boolean getValue() {
-        return this.value;
+    public Number getValue() {
+        return null;
     }
     
 	@Override

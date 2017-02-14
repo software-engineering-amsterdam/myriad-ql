@@ -20,8 +20,8 @@ public class DateAtom extends Atom {
         }
     }
 
-    public Date getValue() {
-        return this.value;
+    public Number  getValue() {
+        return null;
     }
     
 	@Override
