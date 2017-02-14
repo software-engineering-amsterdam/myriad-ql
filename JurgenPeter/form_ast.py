@@ -12,7 +12,8 @@ class Form:
 
     def __str__(self):
         return "form {} [\n{}\n]".format(
-            self.identifier, "\n".join([s.__str__(4) for s in self.statements]))
+            self.identifier,
+            "\n".join([s.__str__(4) for s in self.statements]))
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

@@ -1,8 +1,9 @@
 from unittest import TestCase, main
-from grammar import Grammar
+from grammar import *
 
 
 class TestGrammar(TestCase):
+
     correctSentences = [
         (Grammar.expression, "3"),
         (Grammar.expression, "+3"),
@@ -42,6 +43,10 @@ class TestGrammar(TestCase):
         (Grammar.form, "form FormName { }")
     ]
 
+    def testCorrectSentences(self):
+        for grammar, sentence in self.correctSentences:
+            self.assertTrue(grammar.parseString(sentence, parseAll=True))
+
     incorrectSentences = [
         (Grammar.expression, "x * * 3"),
         (Grammar.expression, "x * 3 *"),
@@ -60,19 +65,13 @@ class TestGrammar(TestCase):
         (Grammar.form, "form { }"),
     ]
 
-    def testCorrectSentences(self):
-        for grammar, sentence in self.correctSentences:
-            self.assertTrue(grammar.parseString(sentence, parseAll=True))
-
     def testIncorrectSentences(self):
         for grammar, sentence in self.incorrectSentences:
             self.assertRaises(ParseException,
                               lambda grammar, sentence: grammar.parseString(
                                   sentence, parseAll=True), grammar, sentence)
 
-
-class TestParser(TestCase):
-    cases = [
+    expectedParseResults = [
         (Grammar.expression,
          "-2", UnOp(Operator["-"],
                     Constant(2, Datatype.integer))),
@@ -175,7 +174,9 @@ class TestParser(TestCase):
         (Grammar.conditional,
          "if true { }", Conditional(Constant(True, Datatype.boolean), [])),
         (Grammar.conditional,
-         "if true { } else { }", Conditional(Constant(True, Datatype.boolean), [], [])),
+         "if true { } else { }", Conditional(Constant(True, Datatype.boolean),
+                                             [],
+                                             [])),
 
         (Grammar.form, "form FormName { }", Form("FormName", [])),
 
@@ -208,15 +209,12 @@ class TestParser(TestCase):
                                      "yLabel",
                                      Datatype.boolean,
                                      Constant(False, Datatype.boolean))])])),
-
-        #TODO: Test more datatypes (e.g. Money, decimal)
     ]
 
-    def testParseExpression(self):
-        for grammar, sentence, tree in self.cases:
-            #print(sentence)
-            result = grammar.parseString(sentence, parseAll=True)[0]
-            self.assertEqual(result, tree)
+    def testParsing(self):
+        for grammar, sentence, expected in self.expectedParseResults:
+            parse_result = grammar.parseString(sentence, parseAll=True)[0]
+            self.assertEqual(parse_result, expected)
 
 if __name__ == "__main__":
     main()
