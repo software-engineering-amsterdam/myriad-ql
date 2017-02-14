@@ -13,7 +13,7 @@ class UnOp:
 class PlusOp(UnOp):
 
     def evaluate(self, environment):
-        return None
+        return self.right.evaluate(environment)
 
     def __str__(self):
         return "+{}".format(self.right)
@@ -22,6 +22,9 @@ class PlusOp(UnOp):
 class MinOp(UnOp):
 
     def evaluate(self, environment):
+        right_value = self.right.evaluate(environment)
+        if right_value is not None:
+            return -right_value
         return None
 
     def __str__(self):
@@ -31,6 +34,9 @@ class MinOp(UnOp):
 class NotOp(UnOp):
 
     def evaluate(self, environment):
+        right_value = self.right.evaluate(environment)
+        if right_value is not None:
+            return not right_value
         return None
 
     def __str__(self):
@@ -53,6 +59,10 @@ class BinOp:
 class MulOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value * right_value
         return None
 
     def __str__(self):
@@ -62,6 +72,10 @@ class MulOp(BinOp):
 class DivOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value / right_value
         return None
 
     def __str__(self):
@@ -71,6 +85,10 @@ class DivOp(BinOp):
 class AddOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value + right_value
         return None
 
     def __str__(self):
@@ -80,6 +98,10 @@ class AddOp(BinOp):
 class SubOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value - right_value
         return None
 
     def __str__(self):
@@ -89,6 +111,10 @@ class SubOp(BinOp):
 class LtOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value < right_value
         return None
 
     def __str__(self):
@@ -98,6 +124,10 @@ class LtOp(BinOp):
 class LeOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value <= right_value
         return None
 
     def __str__(self):
@@ -107,6 +137,10 @@ class LeOp(BinOp):
 class GtOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value > right_value
         return None
 
     def __str__(self):
@@ -116,6 +150,10 @@ class GtOp(BinOp):
 class GeOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value >= right_value
         return None
 
     def __str__(self):
@@ -125,6 +163,10 @@ class GeOp(BinOp):
 class EqOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value == right_value
         return None
 
     def __str__(self):
@@ -134,6 +176,10 @@ class EqOp(BinOp):
 class NeOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value != right_value
         return None
 
     def __str__(self):
@@ -143,6 +189,10 @@ class NeOp(BinOp):
 class AndOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value and right_value
         return None
 
     def __str__(self):
@@ -152,6 +202,10 @@ class AndOp(BinOp):
 class OrOp(BinOp):
 
     def evaluate(self, environment):
+        left_value = self.left.evaluate(environment)
+        right_value = self.right.evaluate(environment)
+        if left_value is not None and right_value is not None:
+            return left_value or right_value
         return None
 
     def __str__(self):
