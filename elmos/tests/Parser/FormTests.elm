@@ -2,7 +2,7 @@ module Parser.FormTests exposing (all)
 
 import AST
     exposing
-        ( FormItem(FieldItem, IfItem)
+        ( FormItem(Field, ComputedField, IfThen, IfThenElse)
         , ValueType(IntegerType, BooleanType, StringType)
         , Expression(Var, Integer, ArithmeticExpression)
         , Operator(Plus)
@@ -18,7 +18,6 @@ all : Test
 all =
     describe "ParserTests"
         [ sampleTests
-        , formTokenTests
         , fieldTests
         , ifBlockTests
         , formItemTests
@@ -39,27 +38,15 @@ sampleTests =
         )
 
 
-formTokenTests : Test
-formTokenTests =
-    testWithParser Form.formToken
-        "formToken"
-        [ ( "should parse a form token", "form", Just "form" )
-        ]
-
-
 formItemsTests : Test
 formItemsTests =
     testWithParser Form.formItems
-        "formItemTests"
+        "formItems"
         [ ( "should parse multiple form items"
           , "\"label\" id: integer\nif (bar) { \"label\" id: integer } else { \"label\" id: integer }"
           , Just
-                [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
-                , IfItem
-                    { expression = Var "bar"
-                    , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    }
+                [ Field "label" "id" IntegerType
+                , IfThenElse (Var "bar") [ Field "label" "id" IntegerType ] [ Field "label" "id" IntegerType ]
                 ]
           )
         , ( "should parse multiple form items"
@@ -69,8 +56,8 @@ formItemsTests =
           "label"
           id: integer"""
           , Just
-                [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "bar") }
-                , FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
+                [ ComputedField "label" "id" IntegerType (Var "bar")
+                , Field "label" "id" IntegerType
                 ]
           )
         ]
@@ -79,16 +66,15 @@ formItemsTests =
 formItemTests : Test
 formItemTests =
     testWithParser Form.formItem
-        "formItemTests"
-        [ ( "should parse a simple field", "\"label\" id: integer", Just <| FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
+        "formItem"
+        [ ( "should parse a simple field", "\"label\" id: integer", Just <| Field "label" "id" IntegerType )
         , ( "should parse an if block"
           , "if (bar) { \"label\" id: integer } else { \"label\" id: integer }"
           , Just <|
-                IfItem
-                    { expression = Var "bar"
-                    , thenBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    , elseBranch = [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } ]
-                    }
+                IfThenElse
+                    (Var "bar")
+                    [ Field "label" "id" IntegerType ]
+                    [ Field "label" "id" IntegerType ]
           )
         ]
 
@@ -97,18 +83,18 @@ fieldTests : Test
 fieldTests =
     testWithParser Form.field
         "field"
-        [ ( "should parse a simple field", "\"label\" id: integer", Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
+        [ ( "should parse a simple field", "\"label\" id: integer", Just (Field "label" "id" IntegerType) )
         , ( "expects whitespace after the label", "\"label\"id: integer", Nothing )
-        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing } )
+        , ( "allows no whitespace after the colon", "\"label\" id:integer", Just (Field "label" "id" IntegerType) )
         , ( "id should be a varName", "\"label\" Other: integer", Nothing )
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         , ( "should parse field with expression"
           , "\"label\" id: integer = 1 +3"
-          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (ArithmeticExpression Plus (Integer 1) (Integer 3)) }
+          , Just (ComputedField "label" "id" IntegerType (ArithmeticExpression Plus (Integer 1) (Integer 3)))
           )
         , ( "should parse field with expression that is only a var name"
           , "\"label\" id: integer = someVarName"
-          , Just { label = "label", id = "id", valueType = IntegerType, valueExpression = Just (Var "someVarName") }
+          , Just (ComputedField "label" "id" IntegerType (Var "someVarName"))
           )
         ]
 
@@ -117,34 +103,22 @@ ifBlockTests : Test
 ifBlockTests =
     let
         basicBlockContent =
-            [ FieldItem { label = "label", id = "id", valueType = IntegerType, valueExpression = Nothing }
+            [ Field "label" "id" IntegerType
             ]
     in
-        testWithParser Form.ifBlock
-            "ifBlock"
+        testWithParser Form.field
+            "ifThen and ifThenElse"
             [ ( "should parser an simple if block"
               , "if (x) { \"label\" id: integer }"
-              , Just
-                    { expression = Var "x"
-                    , thenBranch = basicBlockContent
-                    , elseBranch = []
-                    }
+              , Just (IfThen (Var "x") basicBlockContent)
               )
             , ( "should allow no whitespace"
               , "if(x){\"label\" id:integer}"
-              , Just
-                    { expression = Var "x"
-                    , thenBranch = basicBlockContent
-                    , elseBranch = []
-                    }
+              , Just (IfThen (Var "x") basicBlockContent)
               )
             , ( "should parse if with else block"
               , "if (x) {\"label\" id: integer} else {\"label\" id: integer}"
-              , Just
-                    { expression = Var "x"
-                    , thenBranch = basicBlockContent
-                    , elseBranch = basicBlockContent
-                    }
+              , Just (IfThenElse (Var "x") basicBlockContent basicBlockContent)
               )
             ]
 

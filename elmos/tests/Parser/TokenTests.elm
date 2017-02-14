@@ -8,13 +8,14 @@ import Test exposing (Test, describe)
 all : Test
 all =
     describe "ParserTests"
-        [ variableNameTests ]
+        [ identifierTests
+        ]
 
 
-variableNameTests : Test
-variableNameTests =
-    testWithParser Token.variableName
-        "variableName"
+identifierTests : Test
+identifierTests =
+    testWithParser Token.identifier
+        "identifierTests"
         [ ( "should not parse an empty string", "", Nothing )
         , ( "should not parse a number", "1", Nothing )
         , ( "should parse a single lower case character", "a", Just "a" )
