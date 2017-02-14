@@ -1,7 +1,7 @@
-package org.ql.ast.statement;
+package org.ql.ast.statement.question;
 
 import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.statement.question.Text;
 import org.ql.ast.type.Type;
 

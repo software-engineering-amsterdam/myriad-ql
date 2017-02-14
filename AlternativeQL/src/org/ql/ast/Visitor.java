@@ -2,9 +2,14 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.ql.ast.statement.Question;
+import org.ql.ast.literal.BooleanLiteral;
+import org.ql.ast.literal.FloatLiteral;
+import org.ql.ast.literal.IntegerLiteral;
+import org.ql.ast.statement.If;
+import org.ql.ast.statement.question.Question;
 import org.ql.ast.form.Form;
 import org.ql.ast.literal.StringLiteral;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.statement.question.Text;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
@@ -43,7 +48,13 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitIf(QLParserParser.IfContext ctx) {
-        return null;
+        List<Statement> statements = new ArrayList<>();
+
+        for (QLParserParser.StatementContext statementContext : ctx.statement()) {
+            statements.add((Statement) visit(statementContext));
+        }
+
+        return new If((Expression) visit(ctx.expression()), statements);
     }
 
     @Override
@@ -67,7 +78,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitParameter(QLParserParser.ParameterContext ctx) {
-        return null;
+        return new Parameter(ctx.ID().getText());
     }
 
     @Override
@@ -77,7 +88,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
-        return null;
+        return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
     }
 
     @Override
@@ -87,12 +98,12 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitFloatLiteral(QLParserParser.FloatLiteralContext ctx) {
-        return null;
+        return new FloatLiteral(Float.parseFloat(ctx.FLOAT_LITERAL().getText()));
     }
 
     @Override
     public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
-        return null;
+        return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
     }
 
     @Override

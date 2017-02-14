@@ -1,6 +1,8 @@
 package org.ql.ast.literal;
 
-public class IntegerLiteral {
+import org.ql.ast.Node;
+
+public class IntegerLiteral implements Node {
     private int integerLiteral;
 
     public IntegerLiteral(int integerLiteral) {

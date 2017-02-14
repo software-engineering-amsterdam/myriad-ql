@@ -1,6 +1,8 @@
 package org.ql.ast.literal;
 
-public class BooleanLiteral {
+import org.ql.ast.Node;
+
+public class BooleanLiteral implements Node {
     private boolean booleanLiteral;
 
     public BooleanLiteral(boolean booleanLiteral) {

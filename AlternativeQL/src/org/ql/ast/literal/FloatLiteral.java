@@ -1,6 +1,8 @@
 package org.ql.ast.literal;
 
-public class FloatLiteral {
+import org.ql.ast.Node;
+
+public class FloatLiteral implements Node {
     private float floatLiteral;
 
     public FloatLiteral(float floatLiteral) {

@@ -2,7 +2,7 @@ package org.ql.ast.form;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
-import org.ql.ast.Statement;
+import org.ql.ast.statement.Statement;
 
 import java.util.List;
 
