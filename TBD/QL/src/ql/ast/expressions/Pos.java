@@ -14,7 +14,12 @@ public class Pos implements ASTNode, Expr {
         this.expr = expr;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public Expr getExpr() {
+        return expr;
+    }
+
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

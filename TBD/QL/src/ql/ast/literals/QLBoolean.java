@@ -14,7 +14,11 @@ public class QLBoolean implements ASTNode, QLLiteral {
         this.qlBoolean = qlBoolean;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public boolean getQlBoolean() {
+        return qlBoolean;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

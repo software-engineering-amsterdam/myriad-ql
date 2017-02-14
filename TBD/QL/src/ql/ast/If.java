@@ -36,7 +36,7 @@ public class If implements Statement{
         return elseBlock;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

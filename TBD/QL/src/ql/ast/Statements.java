@@ -34,7 +34,7 @@ public class Statements implements ASTNode {
         return next;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

@@ -14,7 +14,16 @@ public class And implements ASTNode, Expr {
         this.left = left;
         this.right = right;
     }
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+
+    public Expr getLeft() {
+        return left;
+    }
+
+    public Expr getRight() {
+        return right;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

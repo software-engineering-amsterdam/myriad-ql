@@ -14,7 +14,11 @@ public class QLInt  implements ASTNode, QLLiteral {
         this.qlInteger = qlInteger;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public int getQlInteger() {
+        return qlInteger;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

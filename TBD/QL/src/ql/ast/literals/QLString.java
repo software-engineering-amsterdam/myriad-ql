@@ -14,12 +14,11 @@ public class QLString implements ASTNode, QLLiteral {
         this.qlString = qlString;
     }
 
-    @Override
-    public String toString() {
+    public String getQlString() {
         return qlString;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

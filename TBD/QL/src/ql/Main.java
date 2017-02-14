@@ -1,5 +1,7 @@
 package ql;
 
+import ql.ast.visistor.ASTVisitor;
+import ql.ast.visistor.PrintASTVisitor;
 import ql.parser.QLLexer;
 import ql.parser.QLParser;
 
@@ -24,6 +26,9 @@ public class Main {
             parser.parse();
 
             System.out.println("Parser done");
+
+            ASTVisitor<Void> printVisitor = new PrintASTVisitor();
+            printVisitor.visit(parser.getResult());
 
 
         } catch (FileNotFoundException e) {

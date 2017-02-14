@@ -14,7 +14,11 @@ public class QLIdent implements ASTNode, QLLiteral {
         this.qlIdent = qlIdent;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public String getQlIdent() {
+        return qlIdent;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

@@ -14,7 +14,11 @@ public class QLFloat implements ASTNode, QLLiteral {
         this.qlFloat = qlFloat;
     }
 
-    public <T> T visitThis(ASTVisitor<T> visitor) {
+    public float getQlFloat() {
+        return qlFloat;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }
