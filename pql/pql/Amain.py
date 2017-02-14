@@ -88,10 +88,8 @@ def parse(input_string):
 
     # Program
     program = \
-        Group(
-            form +
-            identifier.setResultsName("form_identifier")
-        ) + \
+        form + \
+        identifier.setResultsName("form_identifier") + \
         l_curly + \
         Group(
             ZeroOrMore(field_expr | if_stmt)
@@ -99,7 +97,7 @@ def parse(input_string):
         r_curly
 
     tokens = program.parseString(input_string)
-    # print(tokens)
+    print(tokens)
     return tokens
 
 
