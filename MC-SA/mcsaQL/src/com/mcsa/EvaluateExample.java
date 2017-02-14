@@ -1,21 +1,26 @@
 package com.mcsa;
 
-import com.mcsa.gen.Exp.*;
+import com.mcsa.gen.ExpLexer;
+import com.mcsa.gen.ExpParser;
 import org.antlr.v4.runtime.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class EvaluateExample {
 
-    public static int i;
-
     public static void main(String[] args) throws IOException {
-
-        System.out.println(evalExampleExpression("12*(6-5)"));
+        String filecontent = new OpenAndReadTheQl().QlRead();
+        //OpenAndReadTheQl.QlRead();
+        System.out.println(evalExampleExpression(filecontent));
 
     }
 
-    public static double evalExampleExpression(String in)
+    public static String evalExampleExpression(String in)
     {
         if(!in.isEmpty()) {
             String input = in;
@@ -23,11 +28,11 @@ public class EvaluateExample {
             ExpLexer lexer = new ExpLexer(inputStream);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             ExpParser parser = new ExpParser(tokens);
-            return parser.eval().value;
+            return parser.start().getText();
         }
         else
         {
-            return 0;
+            return "aaaaaa";
         }
 
     }
