@@ -2,6 +2,7 @@ package ql.ast.visistor;
 
 import ql.ast.*;
 import ql.ast.expressions.BinOp;
+import ql.ast.expressions.NumOp;
 import ql.ast.expressions.binop.And;
 import ql.ast.expressions.binop.Or;
 import ql.ast.expressions.numop.*;
@@ -84,8 +85,6 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     @Override
     public Type visit(QLIdent node) {
         if (identTable.containsKey(node.getQlIdent())) {
-            System.out.println(node.getQlIdent());
-            System.out.println(typeToString(identTable.get(node.getQlIdent())));
             return identTable.get(node.getQlIdent());
         }
         throw new RuntimeException("Unexpected variable");
