@@ -3,12 +3,12 @@ package ast.expression;
 import ast.Visitor;
 import ast.atom.Atom;
 
-public class AndExpression extends BoolExpression {
+public class AndExpression extends BinaryExpression {
 	
 	
 	@Override
-	public boolean evaluate() {
-		return getLhs().evaluate() && getRhs().evaluate();
+	public Atom evaluate() {
+		return getLhs().and(getRhs());
 	}
 	
 	@Override

@@ -9,4 +9,9 @@ public class NotExpression extends UnaryExpression {
 	public void accept(Visitor v) {
 		v.visit(this);
 	}
+
+	@Override
+	public Atom evaluate() {
+		return getLhs().not(); 
+	}
 }

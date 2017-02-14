@@ -2,6 +2,8 @@
 
 import ast.Visitor;
 import ast.expression.BinaryExpression;
+import ast.expression.Expression;
+import ast.expression.UnaryExpression;
 
 public class EvalVisitor extends Visitor {
 	
@@ -14,8 +16,22 @@ public class EvalVisitor extends Visitor {
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
-		System.out.println(binaryExpression.evaluate());
-
+		Expression result = binaryExpression.evaluate() ;	
+		if (result == null) {
+			// throw
+		}
+		
+		System.out.println("Eval: " + result);
 	}
 	
+	@Override
+	public void visit(UnaryExpression unaryExpression) {
+		
+		Expression result = unaryExpression.evaluate();
+		if (result == null) {
+			// TODO throw
+		}
+		
+		System.out.println("Eval: " + result);
+	}	
 }

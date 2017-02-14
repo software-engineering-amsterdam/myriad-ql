@@ -1,5 +1,5 @@
 package org.ql.ast;
 
-public class Expression {
+public interface Expression extends Node {
 
 }
