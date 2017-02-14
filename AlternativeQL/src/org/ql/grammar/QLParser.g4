@@ -20,27 +20,27 @@ defaultValue
     ;
 
 expression
-    :   BOOLEAN_LITERAL                             #booleanLiteral
-    |   STRING_LITERAL                              #stringLiteral
-    |   FLOAT_LITERAL                               #floatLiteral
-    |   INTEGER_LITERAL                             #integerLiteral
-    |   ID                                          #parameter
-    |   '(' expression ')'                          #group
-    |   '!' expression                              #negation
-    |   '++' expression                             #decrement
-    |   '--' expression                             #increment
-    |   <assoc=left> expression '/' expression      #division
-    |   <assoc=left> expression '*' expression      #product
-    |   expression '-' expression                   #subtraction
-    |   expression '+' expression                   #addition
-    |   expression '>' expression                   #greaterThan
-    |   expression '<' expression                   #lowerThan
-    |   expression '==' expression                  #equals
-    |   expression '!=' expression                  #notEqual
-    |   expression '<=' expression                  #lowerThanOrEqual
-    |   expression '>=' expression                  #greaterThanOrEqual
-    |   expression '&&' expression                  #logicalAnd
-    |   expression '||' expression                  #logicalOr
+    :   BOOLEAN_LITERAL                                        #booleanLiteral
+    |   STRING_LITERAL                                         #stringLiteral
+    |   FLOAT_LITERAL                                          #floatLiteral
+    |   INTEGER_LITERAL                                        #integerLiteral
+    |   ID                                                     #parameter
+    |   '(' expression ')'                                     #group
+    |   '!' expression                                         #negation
+    |   '++' expression                                        #decrement
+    |   '--' expression                                        #increment
+    |   <assoc=left> left=expression '/' right=expression      #division
+    |   <assoc=left> left=expression '*' right=expression      #product
+    |   left=expression '-' right=expression                   #subtraction
+    |   left=expression '+' right=expression                   #addition
+    |   left=expression '>' right=expression                   #greaterThan
+    |   left=expression '<' right=expression                   #lowerThan
+    |   left=expression '==' right=expression                  #equals
+    |   left=expression '!=' right=expression                  #notEqual
+    |   left=expression '<=' right=expression                  #lowerThanOrEqual
+    |   left=expression '>=' right=expression                  #greaterThanOrEqual
+    |   left=expression '&&' right=expression                  #logicalAnd
+    |   left=expression '||' right=expression                  #logicalOr
     ;
 
 identifier
