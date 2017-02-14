@@ -115,6 +115,18 @@ class TestParser(TestCase):
                               Operator["*"],
                               Constant(4, Datatype.integer))),
         (Grammar.expression,
+         "1 / (2 / 4)", BinOp(Constant(1, Datatype.integer),
+                              Operator["/"],
+                              BinOp(Constant(2, Datatype.integer),
+                                    Operator["/"],
+                                    Constant(4, Datatype.integer)))),
+        (Grammar.expression,
+         "(1 / 2) / 4", BinOp(BinOp(Constant(1, Datatype.integer),
+                                    Operator["/"],
+                                    Constant(2, Datatype.integer)),
+                              Operator["/"],
+                              Constant(4, Datatype.integer))),
+        (Grammar.expression,
          "x <= 3", BinOp(Variable("x"),
                          Operator["<="],
                          Constant(3, Datatype.integer))),
@@ -198,7 +210,6 @@ class TestParser(TestCase):
                                      Constant(False, Datatype.boolean))])])),
 
         #TODO: Test more datatypes (e.g. Money, decimal)
-        #TODO: Test parenthesis
     ]
 
     def testParseExpression(self):
