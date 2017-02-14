@@ -1,8 +1,6 @@
 package org.ql.parser.expression.arithmetic;
 
 import org.junit.Test;
-import org.ql.ast.expression.arithmetic.Addition;
-import org.ql.ast.expression.literal.Integer;
 import org.ql.parser.Parser;
 
 import static org.junit.Assert.*;
@@ -10,19 +8,19 @@ import static org.junit.Assert.*;
 public class AdditionTest {
     @Test
     public void shouldParseAddition() {
-        Parser parser = new Parser();
-        int expectedLeftHandValue = 5;
-        int expectedRightHandValue = 7;
-        String inputCode = expectedLeftHandValue + "+" + expectedRightHandValue;
+        String inputCode = "5+7";
 
-        Addition ast = (Addition) parser.parseExpression(inputCode);
+        String actual = new Parser().parseExpression(inputCode).toString();
 
-        assertTrue(ast.getLeft() instanceof Integer);
-        assertTrue(ast.getRight() instanceof Integer);
+        assertEquals("(5+7)", actual);
+    }
 
-        Integer leftHandValue = (Integer) ast.getLeft();
-        Integer rightHandValue = (Integer) ast.getRight();
-        assertSame(leftHandValue.getIntegerLiteral(), expectedLeftHandValue);
-        assertSame(rightHandValue.getIntegerLiteral(), expectedRightHandValue);
+    @Test
+    public void shouldParseAdditionWithThreeValues() {
+        String inputCode = "4+27+3";
+
+        String actual = new Parser().parseExpression(inputCode).toString();
+
+        assertEquals("((4+27)+3)", actual);
     }
 }

@@ -2,6 +2,9 @@ package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
 
+import java.lang.*;
+import java.lang.String;
+
 public class Integer implements Expression {
     private int integerLiteral;
 
@@ -11,5 +14,10 @@ public class Integer implements Expression {
 
     public int getIntegerLiteral() {
         return integerLiteral;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(integerLiteral);
     }
 }
