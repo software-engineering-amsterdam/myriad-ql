@@ -209,3 +209,16 @@ class TestParser(TestCase):
         }
         """
         parse(self.input_string)
+
+    def test_parse_form_if_inside_if_no_field(self):
+        self.input_string = """
+        form taxOfficeExample {
+        "What was the selling price?"        sellingPrice: money
+            if (hasSoldHouse) {
+                if (blaat) {
+                    "What was the buying price?"        buyingPrice: money
+                }
+            }
+        }
+        """
+        parse(self.input_string)
