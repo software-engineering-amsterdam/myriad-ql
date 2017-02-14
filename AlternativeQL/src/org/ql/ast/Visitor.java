@@ -2,14 +2,14 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.literal.Boolean;
-import org.ql.ast.expression.literal.Decimal;
-import org.ql.ast.expression.literal.Integer;
+import org.ql.ast.expression.literal.BooleanLiteral;
+import org.ql.ast.expression.literal.DecimalLiteral;
+import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
-import org.ql.ast.expression.literal.String;
+import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
@@ -70,7 +70,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) {
-        return new Decimal(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
+        return new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
-        return new Boolean(java.lang.Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
+        return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
     }
 
     @Override
@@ -150,7 +150,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
-        return new String(removeQuotes(ctx.STRING_LITERAL().getText()));
+        return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
     }
 
     @Override
@@ -170,7 +170,7 @@ public class Visitor extends AbstractParseTreeVisitor<Node> implements QLParserV
 
     @Override
     public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
-        return new Integer(java.lang.Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
+        return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
     }
 
     @Override

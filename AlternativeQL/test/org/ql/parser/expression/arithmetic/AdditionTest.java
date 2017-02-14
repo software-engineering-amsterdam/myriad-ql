@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class AdditionTest {
     @Test
     public void shouldParseAddition() {
-        String inputCode = "5+7";
+        String inputCode = "5 + 7";
 
         String actual = new Parser().parseExpression(inputCode).toString();
 
@@ -17,7 +17,7 @@ public class AdditionTest {
 
     @Test
     public void shouldParseAdditionWithThreeValues() {
-        String inputCode = "4+27+3";
+        String inputCode = "4 + 27 + 3";
 
         String actual = new Parser().parseExpression(inputCode).toString();
 

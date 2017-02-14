@@ -2,8 +2,8 @@ package org.ql.parser;
 
 import org.junit.Test;
 import org.ql.ast.Form;
-import org.ql.ast.expression.literal.Boolean;
-import org.ql.ast.expression.literal.Decimal;
+import org.ql.ast.expression.literal.BooleanLiteral;
+import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
 
@@ -39,8 +39,8 @@ public class QuestionTest {
 
         Form ast = parser.parseForm(inputCode);
 
-        assertEquals(true, ((Boolean) ((Question) ast.getStatement(0)).getDefaultValue()).getBooleanLiteral());
-        assertEquals(false, ((Boolean) ((Question) ast.getStatement(1)).getDefaultValue()).getBooleanLiteral());
-        assertEquals("145.23", ((Decimal) ((Question) ast.getStatement(2)).getDefaultValue()).getDecimalLiteral().toPlainString());
+        assertEquals(true, ((BooleanLiteral) ((Question) ast.getStatement(0)).getDefaultValue()).getValue());
+        assertEquals(false, ((BooleanLiteral) ((Question) ast.getStatement(1)).getDefaultValue()).getValue());
+        assertEquals("145.23", ((DecimalLiteral) ((Question) ast.getStatement(2)).getDefaultValue()).getValue().toPlainString());
     }
 }
