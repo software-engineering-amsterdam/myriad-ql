@@ -1,10 +1,9 @@
 package ast;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Block extends Node { // TODO rename block
+public class Block implements Node { // TODO rename block
 	
 	private List<Question> questions;
 	private List<Statement> statements;
@@ -30,5 +29,11 @@ public class Block extends Node { // TODO rename block
 	
 	public void addStatement(Statement statement) {
 		this.statements.add(statement);
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
 	}
 }

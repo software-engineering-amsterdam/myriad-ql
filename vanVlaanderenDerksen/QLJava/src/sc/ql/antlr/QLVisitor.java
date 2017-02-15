@@ -1,4 +1,4 @@
-// Generated from D:/Software Engineering/Software Construction/Lab assignment/myriad-ql/vanVlaanderenDerksen/QLJava/src/sc/ql/antlr/QL.g4 by ANTLR 4.5.3
+// Generated from QL.g4 by ANTLR 4.5.3
 package sc.ql.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -11,39 +11,92 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link QLParser#parse}.
+	 * Visit a parse tree produced by {@link QLParser#form}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParse(QLParser.ParseContext ctx);
+	T visitForm(QLParser.FormContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#primary}.
+	 * Visit a parse tree produced by the {@code Question}
+	 * labeled alternative in {@link QLParser#form_element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrimary(QLParser.PrimaryContext ctx);
+	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#unExpr}.
+	 * Visit a parse tree produced by the {@code calcQuestion}
+	 * labeled alternative in {@link QLParser#form_element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnExpr(QLParser.UnExprContext ctx);
+	T visitCalcQuestion(QLParser.CalcQuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#calcExpr}.
+	 * Visit a parse tree produced by the {@code if_statement}
+	 * labeled alternative in {@link QLParser#form_element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCalcExpr(QLParser.CalcExprContext ctx);
+	T visitIf_statement(QLParser.If_statementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#relExpr}.
+	 * Visit a parse tree produced by {@link QLParser#conditional_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditional_block(QLParser.Conditional_blockContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code idAtom}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdAtom(QLParser.IdAtomContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code opExpr}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOpExpr(QLParser.OpExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code intAtom}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntAtom(QLParser.IntAtomContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code strAtom}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrAtom(QLParser.StrAtomContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolAtom}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolAtom(QLParser.BoolAtomContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolExpr}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolExpr(QLParser.BoolExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relExpr}
+	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitRelExpr(QLParser.RelExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by the {@code parenExpr}
+	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolExpr(QLParser.BoolExprContext ctx);
+	T visitParenExpr(QLParser.ParenExprContext ctx);
 }

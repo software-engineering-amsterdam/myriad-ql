@@ -1,6 +1,6 @@
-module Combine.Extra exposing (whitespace1, trimmed)
+module Combine.Extra exposing (whitespace1, trimmed, stringAs)
 
-import Combine exposing (Parser, fail, succeed, whitespace, (>>=), (<*), (*>))
+import Combine exposing (Parser, fail, succeed, string, whitespace, (>>=), (<*), (*>), ($>))
 
 
 whitespace1 : Parser s String
@@ -16,6 +16,11 @@ nonEmpty s =
         succeed s
 
 
-trimmed : Parser s p -> Parser s p
+trimmed : Parser s res -> Parser s res
 trimmed parser =
     whitespace *> parser <* whitespace
+
+
+stringAs : String -> res -> Parser s res
+stringAs input constant =
+    string input $> constant

@@ -2,13 +2,14 @@ grammar QL;
 
 @parser::header
 {
-    import ast.IntegerAtom;
+    import ast.atom.*;
     import ast.*;
+    import ast.type.*;
+    import ast.expression.*;
 }
 
-root returns [Form result] 
-		: 'form' ID block 
-		{ $result = new Form($ID.text, $block.result); };
+form returns [Form result] 
+		: 'form' ID block { $result = new Form($ID.text, $block.result); };
 
 block returns [Block result]
 		@init {
@@ -18,26 +19,23 @@ block returns [Block result]
 			| statement { $result.addStatement($statement.result); })*  
 		  '}'
 		; 
-		
-// TODO replace by other definition		
-// question returns [Question result]
-	// : STRING { $result = new Question($STRING.text); };
 
 // TODO decide on maximum characters on one line
 question returns [Question result]
 		: ID ':' STRING type
-		{ $result = new Question($ID.text, $STRING.text, $type.text); }
+		{ $result = new Question($ID.text, $STRING.text, $type.result); }
 		| ID ':' STRING type computed_question
-		{ $result = new Question($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, Integer.parseInt($computed_question.text));}
 		;
 
 type returns [Type result]
-	: t = ('boolean' 
-	| 'date' 
-	| 'decimal' 
-	| 'integer' 
-	| 'money' 
-	| 'string') { $result = new Type($t.text) };
+	: 'boolean' { $result = new BooleanType(); }
+	| 'date' 	{ $result = new DateType(); }
+	| 'decimal' { $result = new DecimalType(); } 
+	| 'integer' { $result = new IntegerType(); }
+	| 'money'   { $result = new MoneyType(); }
+	| 'string'  { $result = new StringType(); }
+	;
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -50,41 +48,55 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- : lhs=atom '==' rhs=atom { $result = new Expression($lhs.result, $rhs.result); };
-// | atom relOp atom
-// | atom boolOp atom
-// | atom arithOp atom
-// | '!' atom
-// | '+' atom
-// | '-' atom
-// | atom
-// ;
+ :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
+ | atom { $result = $atom.result; }
+ ;
 
-relOp
- : '==' | '!=' | '<=' | '>=' | '>' | '<';
+binOp returns [BinaryExpression result]
+ : '==' { $result = new EqExpression(); }
+ | '!=' { $result = new NEqExpression(); }
+ | '<=' { $result = new LEqExpression(); }
+ | '>=' { $result = new GEqExpression(); }
+ | '>'  { $result = new GExpression(); }
+ | '<'  { $result = new LExpression(); }
+ | '+'  { $result = new AddExpression(); }
+ | '-'  { $result = new SubExpression(); }
+ | '/'  { $result = new DivExpression(); }
+ | '*'  { $result = new MulExpression(); }
+ | '&&' { $result = new AndExpression(); }
+ | '||' { $result = new OrExpression(); }
+ ;
 
-boolOp
- : '&&' | '||';
-
-arithOp
- : '+' | '-' | '/' | '*';
+// TODO plus and minus
+unaryOp returns [UnaryExpression result]
+  : '!' { $result = new NotExpression(); }
+  | '+' { $result = new PlusExpression(); }
+  | '-' { $result = new MinusExpression(); }
+  ;
 
 atom returns [Atom result]
- : // DECIMAL
- // | MONEY
-   INT 
+:
+// :  DECIMAL { System.out.println($DECIMAL.text);
+//                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
+//  | MONEY { System.out.println($MONEY.text);
+//           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
+  | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
  | STRING { System.out.println($STRING.text);
     $result = new StringAtom($STRING.text);
             }
- // | BOOL
- // | DDMMYY
- // | ID
+ | BOOL { System.out.println($BOOL.text);
+           $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
+// | DDMMYY { System.out.println($DDMMYY.text);
+//            $result = new DateAtom($DDMMYY.text); }
+ | ID { System.out.println($ID.text);
+                 $result = new StringAtom($ID.text); }
  ;
 
 // TODO look up conventions tokens/names capital letters
-BOOL: ('true' | 'false');
+BOOL: 'true' | 'false';
 IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
@@ -98,9 +110,9 @@ TWO_DIGIT: ('0'..'9')('0'..'9');
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
-DDMMYY : TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ('.' | '-' | '/') TWO_DIGIT ; // TODO check valid date
+DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
-STRING: ('"' .*? '"');
+STRING: '"' .*? '"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 

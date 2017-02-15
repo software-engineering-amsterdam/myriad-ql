@@ -1,24 +1,18 @@
 package ast;
 
-public class Question extends Node {
-	
+import ast.type.Type;
+
+
+public class Question implements Node {
+
 	final private String variable;
 	final private String label;
-	final private String type;
-	private int computedQuestion;
+	final private Type type;
 	
-	public Question(String variable, String label, String type) {
+	public Question(String variable, String label, Type type) {
 		this.variable = variable;
 		this.label = label;
 		this.type = type;
-	}
-	
-	// TODO Could be a computed question with inheritance of Question
-	public Question(String variable, String label, String type, int computedQuestion) {
-		this.variable = variable;
-		this.label = label;
-		this.type = type;
-		this.computedQuestion = computedQuestion;
 	}
 	
 	public String getVariable() {
@@ -29,11 +23,13 @@ public class Question extends Node {
 		return label;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
-	
-	public int getComputedQuestion() {
-		return computedQuestion;
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
 	}
+
 }
