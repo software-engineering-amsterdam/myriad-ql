@@ -31,4 +31,6 @@ class Parser < Parslet::Parser
   rule(:item) { question >> spaces? >> answer }
 
   rule(:form) { str('form') >> space >> identifier >> space >> block >> space >> str('end') }
+
+  root :form
 end
