@@ -49,7 +49,7 @@ class QLLexer(object):
         'DIV',       # /
         'ASSIGN',    # =
         'ID',        # anyString
-        'QUESTION',  # "A question?"
+        'LABEL',  # "A question?"
         'COMMENT',   # // This is a comment
         'WHITESPACE'
     ) + tuple(reserved.values())  # Added also the reserved words.
@@ -73,7 +73,7 @@ class QLLexer(object):
     t_MULT = r'\*'
     t_DIV = r'/'
     t_ASSIGN = r'='
-    t_QUESTION = r'\".+\"'
+    t_LABEL = r'\".+\"'
 
     # Regular expressions for tokens that require special interactions.
     ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
