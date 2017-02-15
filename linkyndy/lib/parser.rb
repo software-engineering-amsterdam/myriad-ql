@@ -26,9 +26,9 @@ class Parser < Parslet::Parser
   rule(:if_statement) { str('if') >> space >> expression >> space >> block >> space >> (str('else') >> space >> block >> space).maybe >> str('end') }
 
   rule(:question) { quote >> string >> qmark >> quote }
-  rule(:answer) { type >> spaces? >> identifier >> (spaces? >> str('=>') >> spaces? >> expression).maybe }
+  rule(:answer) { type >> space >> identifier >> (space? >> str('=>') >> space? >> expression).maybe }
 
-  rule(:item) { question >> spaces? >> answer }
+  rule(:item) { question >> space >> answer }
 
   rule(:form) { str('form') >> space >> identifier >> space >> block >> space >> str('end') }
 
