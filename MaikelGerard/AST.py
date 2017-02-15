@@ -11,7 +11,10 @@ class QuestionnaireAST(object):
         for form in tokens:
             self.root.add_child(form)
 
-    def print_ast(self):
+    def __eq__(self, other):
+        return other.root == self.root
+
+    def __str__(self):
         return self.root.__str__(0)
 
 
@@ -28,6 +31,15 @@ class Node(object):
     def add_loc_info(self, loc, src):
         self.col = pp.col(loc, src)
         self.line = pp.line(loc, src)
+
+    def __eq__(self, other):
+        if other.node_type != self.node_type:
+            return False
+
+        for (child_self, child_other) in zip(self.children, other.children):
+            if child_self != child_other:
+                return False
+        return True
 
     def __str__(self, indent=0):
         output = "{}:\n".format(self.node_type)
@@ -47,13 +59,14 @@ class FormNode(Node):
             "Form is of invalid type: " + form_data[0]
 
         self.name = form_data[1]
-        self.add_child(form_data[2])
+        self.form_data = form_data[2]
+
+    def __eq__(self, other):
+        return self.node_type == other.node_type and self.form_data == other.form_data
 
     def __str__(self, indent=0):
         output = indent * "  " + "{}:\n".format(self.node_type)
-
-        for child in self.children:
-            output += child.__str__(indent + 1)
+        output += self.form_data.__str__(indent + 1)
         return output
 
 
@@ -81,8 +94,8 @@ class QuestionNode(Node):
         self.add_loc_info(loc, src)
         question = token[0]
 
-        self.name = question[0]
-        self.question = question[1]
+        self.question = question[0]
+        self.name = question[1].val
         self.type = question[2]
 
         self.computed = len(question) > 3
@@ -92,6 +105,12 @@ class QuestionNode(Node):
 
     def eval_type(self):
         return self.type
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and \
+               other.question == self.question and other.name == self.name and \
+               other.type == self.type and other.computed == self.computed and \
+               other.expression == self.expression
 
     def __str__(self, indent=0):
         output = indent * "  " + "{}: {} {}".format(
@@ -121,6 +140,10 @@ class ConditionalNode(Node):
                 "Invalid else condition {}".format(conditional[3])
             self.else_block = conditional[4]
 
+    def __eq__(self, other):
+        return super(ConditionalNode, self).__eq__(other) and \
+               other.expression == self.expression and self.else_block == other.else_block
+
     def __str__(self, indent=0):
         output = indent * "  " + "if ({}): \n".format(self.expression)
 
@@ -142,7 +165,11 @@ class BinOpNode(Node):
         self.op_function = Tokens.BINOPS[binop[1]]
         self.right = binop[2]
 
-    def __str__(self, ident=0):
+    def __eq__(self, other):
+        return other.node_type == self.node_type and \
+               other.left == self.left and other.op == self.op and other.right == self.right
+
+    def __str__(self, indent=0):
         return "({} {} {})".format(str(self.left), str(self.op), str(self.right))
 
 
@@ -155,7 +182,11 @@ class MonOpNode(Node):
         self.op_function = Tokens.MONOPS[monop[0]]
         self.right = monop[1]
 
-    def __str__(self, ident=0):
+    def __eq__(self, other):
+        return other.node_type == self.node_type and \
+               other.op == self.op and other.right == self.right
+
+    def __str__(self, indent=0):
         return "{}{}".format(self.op, str(self.right))
 
 
@@ -164,6 +195,9 @@ class IntNode(Node):
         super(IntNode, self).__init__("Int")
         self.val = decimal.Decimal(token[0])
         self.add_loc_info(loc, src)
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)
@@ -175,6 +209,9 @@ class BoolNode(Node):
         self.val = True if token[0] == "true" else False
         self.add_loc_info(loc, src)
 
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
+
     def __str__(self, indent=0):
         return str(self.val)
 
@@ -185,6 +222,9 @@ class VarNode(Node):
         self.val = token[0]
         self.add_loc_info(loc, src)
 
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
+
     def __str__(self, indent=0):
         return str(self.val)
 
@@ -194,6 +234,9 @@ class DecimalNode(Node):
         super(DecimalNode, self).__init__("Dec")
         self.val = decimal.Decimal(token[0])
         self.add_loc_info(loc, src)
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)
