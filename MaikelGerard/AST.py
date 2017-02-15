@@ -1,3 +1,4 @@
+from ParserTokens import ParserTokens as Tokens
 import pyparsing as pp
 import decimal
 
@@ -138,6 +139,7 @@ class BinOpNode(Node):
         self.add_loc_info(loc, src)
         self.left = binop[0]
         self.op = binop[1]
+        self.op_function = Tokens.BINOPS[binop[1]]
         self.right = binop[2]
 
     def __str__(self, ident=0):
@@ -150,6 +152,7 @@ class MonOpNode(Node):
         monop = token[0]
         self.add_loc_info(loc, src)
         self.op = monop[0]
+        self.op_function = Tokens.MONOPS[monop[0]]
         self.right = monop[1]
 
     def __str__(self, ident=0):
