@@ -5,7 +5,7 @@
 package ASTnodes.expressions.literals;
 
 import ASTnodes.CodeLocation;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class Identifier extends Literal {
 
@@ -21,7 +21,7 @@ public class Identifier extends Literal {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

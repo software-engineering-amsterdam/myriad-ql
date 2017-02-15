@@ -5,7 +5,10 @@
 package ASTnodes.statements;
 
 import ASTnodes.CodeLocation;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.types.BooleanType;
+import ASTnodes.types.Type;
+import ASTnodes.types.UndefinedType;
+import ASTnodes.visitors.FormAndStatementVisitor;
 import ASTnodes.expressions.Expression;
 
 import java.util.List;
@@ -40,8 +43,18 @@ public class IfStatement extends Statement {
 //        return myString;
 //    }
 
+    public Type getType(Type type) {
+
+        BooleanType booleanTest = new BooleanType();
+
+        if (type.equals(new BooleanType()))
+            return type;
+        else
+            return new UndefinedType();
+    }
+
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(FormAndStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

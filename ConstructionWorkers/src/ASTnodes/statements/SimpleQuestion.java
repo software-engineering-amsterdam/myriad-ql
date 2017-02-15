@@ -6,7 +6,7 @@ package ASTnodes.statements;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.literals.Identifier;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.FormAndStatementVisitor;
 
 import ASTnodes.types.Type;
 
@@ -36,7 +36,7 @@ public class SimpleQuestion extends Statement {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(FormAndStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

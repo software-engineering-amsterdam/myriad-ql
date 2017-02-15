@@ -4,18 +4,18 @@
 
 package ASTnodes.types;
 
-import ASTnodes.visitors.AllVisitors;
-import ASTnodes.CodeLocation;
+import ASTnodes.visitors.FormAndStatementVisitor;
+import ASTnodes.visitors.TypeVisitor;
 
 public class UndefinedType extends Type {
 
-    public UndefinedType(CodeLocation location) {
-        super(location);
+    public UndefinedType() {
+        super();
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
-        new AssertionError("Undefined type with no accept was accessed.");
+    public <T> T accept(TypeVisitor<T> visitor) {
+        new AssertionError("Undefined type found!");
         return null;
     }
 }

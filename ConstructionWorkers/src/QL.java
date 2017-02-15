@@ -60,7 +60,7 @@ public class QL {
     // Test...
 
     public static void main(String[] arguments) throws Exception {
-        run("C:\\Users\\vince\\Desktop\\test.ql");
+        run("C:\\Users\\LGGX\\Desktop\\test.ql");
     }
 
     private static QL run(String qlFileName) throws IOException, IllegalArgumentException {

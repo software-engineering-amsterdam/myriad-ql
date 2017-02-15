@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import ASTnodes.CodeLocation;
 import ASTnodes.types.MoneyType;
 import ASTnodes.types.Type;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class Money extends Literal {
 
@@ -35,7 +35,7 @@ public class Money extends Literal {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

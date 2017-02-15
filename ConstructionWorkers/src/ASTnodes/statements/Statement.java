@@ -6,7 +6,7 @@ package ASTnodes.statements;
 
 import ASTnodes.Node;
 import ASTnodes.CodeLocation;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.FormAndStatementVisitor;
 
 public abstract class Statement extends Node {
 
@@ -14,5 +14,5 @@ public abstract class Statement extends Node {
         super(location);
     }
 
-    public abstract <T> T accept(AllVisitors<T> visitor);
+    public abstract <T> T accept(FormAndStatementVisitor<T> visitor);
 }

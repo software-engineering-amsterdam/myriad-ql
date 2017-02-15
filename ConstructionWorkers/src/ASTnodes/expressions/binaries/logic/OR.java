@@ -6,7 +6,7 @@ package ASTnodes.expressions.binaries.logic;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class OR extends Logic {
 
@@ -15,7 +15,7 @@ public class OR extends Logic {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

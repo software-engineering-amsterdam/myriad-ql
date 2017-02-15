@@ -7,7 +7,7 @@ package ASTnodes.expressions.literals;
 import ASTnodes.types.Type;
 import ASTnodes.CodeLocation;
 import ASTnodes.types.StringType;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class MyString extends Literal {
 
@@ -29,7 +29,7 @@ public class MyString extends Literal {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

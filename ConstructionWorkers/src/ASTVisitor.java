@@ -167,10 +167,10 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Parentheses visitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx) {
+    public Parenthesis visitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx) {
         Expression expression = (Expression) ctx.expression().accept(this);
 
-        return new Parentheses(expression, getCodeLocation(ctx));
+        return new Parenthesis(expression, getCodeLocation(ctx));
     }
 
     @Override

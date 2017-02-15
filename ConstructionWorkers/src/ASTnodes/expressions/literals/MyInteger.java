@@ -7,7 +7,7 @@ package ASTnodes.expressions.literals;
 import ASTnodes.types.Type;
 import ASTnodes.CodeLocation;
 import ASTnodes.types.IntegerType;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class MyInteger extends Literal {
 
@@ -34,7 +34,7 @@ public class MyInteger extends Literal {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

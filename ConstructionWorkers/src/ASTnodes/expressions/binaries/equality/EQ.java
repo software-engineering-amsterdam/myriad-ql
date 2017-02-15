@@ -6,7 +6,7 @@ package ASTnodes.expressions.binaries.equality;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class EQ extends Equality {
 
@@ -15,7 +15,7 @@ public class EQ extends Equality {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

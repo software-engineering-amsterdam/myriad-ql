@@ -6,13 +6,17 @@ package ASTnodes.types;
 
 import ASTnodes.Node;
 import ASTnodes.CodeLocation;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.FormAndStatementVisitor;
+import ASTnodes.visitors.TypeVisitor;
 
 public abstract class Type extends Node {
 
+    public Type() {
+        super();
+    }
     public Type(CodeLocation location) {
         super(location);
     }
 
-    public abstract <T> T accept(AllVisitors<T> visitor);
+    public abstract <T> T accept(TypeVisitor<T> visitor);
 }

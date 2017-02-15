@@ -6,7 +6,7 @@ package ASTnodes;
 
 import ASTnodes.expressions.literals.Identifier;
 import ASTnodes.statements.Statement;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.FormAndStatementVisitor;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class Form extends Node {
         return statements;
     }
 
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(FormAndStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

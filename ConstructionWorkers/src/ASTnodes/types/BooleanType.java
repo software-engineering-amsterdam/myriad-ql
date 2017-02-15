@@ -4,17 +4,22 @@
 
 package ASTnodes.types;
 
-import ASTnodes.visitors.AllVisitors;
+
 import ASTnodes.CodeLocation;
+import ASTnodes.visitors.TypeVisitor;
 
 public class BooleanType extends Type {
+
+    public BooleanType() {
+        super();
+    }
 
     public BooleanType(CodeLocation location) {
         super(location);
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

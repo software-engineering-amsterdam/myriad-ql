@@ -6,7 +6,7 @@ package ASTnodes.expressions.binaries.numerical;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.ExpressionVisitor;
 
 public class Addition extends Numerical {
 
@@ -15,7 +15,7 @@ public class Addition extends Numerical {
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

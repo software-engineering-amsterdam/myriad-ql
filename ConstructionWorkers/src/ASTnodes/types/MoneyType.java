@@ -5,16 +5,20 @@
 package ASTnodes.types;
 
 import ASTnodes.CodeLocation;
-import ASTnodes.visitors.AllVisitors;
+import ASTnodes.visitors.FormAndStatementVisitor;
+import ASTnodes.visitors.TypeVisitor;
 
 public class MoneyType extends Type {
 
+    public MoneyType() {
+        super();
+    }
     public MoneyType(CodeLocation location) {
         super(location);
     }
 
     @Override
-    public <T> T accept(AllVisitors<T> visitor) {
+    public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }
