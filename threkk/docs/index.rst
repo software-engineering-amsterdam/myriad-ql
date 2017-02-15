@@ -10,11 +10,19 @@ Welcome to QL Workbench's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
-
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+QL Lexer
+--------
+.. automodule:: qlworkbench.ql.lexer
+    :members:
+
+QL Parser
+---------
+.. automodule:: qlworkbench.ql.parser
+    :members:
