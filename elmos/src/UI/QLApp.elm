@@ -63,13 +63,13 @@ viewForm model formDsl =
         form [] (List.map (viewField model) visibleFields)
 
 
-viewField : Model -> ( Label, Id, ValueType ) -> Html Msg
+viewField : Model -> ( Label, String, ValueType ) -> Html Msg
 viewField model ( label, identifier, valueType ) =
     BaseWidget.container
         { identifier = identifier
         , label = label
         , env = model.env
-        , onChange = OnFieldChange identifier
+        , onChange = OnFieldChange (identifier)
         }
     <|
         case valueType of
