@@ -12,16 +12,24 @@ class Parser < Parslet::Parser
   rule(:integer) { match['0-9'].repeat(1) }
   rule(:boolean) { str('true') | str('false') }
   rule(:literal) { string | integer | boolean }
-  rule(:operator) { str('+') | str('-') | str('*') | str('/') }
+  rule(:operator) { match['*/+-'] }
 
   rule(:comment) { str('#') >> string.maybe }
 
   rule(:type) { str('text') | str('bool') | str('number') | str('money') }
 
   rule(:identifier) { match['a-zA-Z'] >> match['a-zA-z0-9'].repeat(1) }
-  rule(:expression) { lparen >> space? >> (operation | identifier | literal) >> space? >> rparen }
-  rule(:operation) { expression >> space? >> operator >> space? >> expression }
   rule(:block) { ((if_statement | item) >> space).repeat(1) }
+  rule(:expression) do
+    lparen >> space? >> expression >> space? >> rparen |
+    # infix_expression(literal,
+    #   [match['*/'], 2, :left],
+    #   [match['+-'], 1, :left]
+    # ) |
+    literal >> space? >> operator >> space? >> expression |
+    identifier |
+    literal
+  end
 
   rule(:if_statement) { str('if') >> space >> expression >> space >> block >> space >> (str('else') >> space >> block >> space).maybe >> str('end') }
 
