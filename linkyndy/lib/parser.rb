@@ -19,7 +19,6 @@ class Parser < Parslet::Parser
   rule(:type) { str('text') | str('bool') | str('number') | str('money') }
 
   rule(:identifier) { match['a-zA-Z'] >> match['a-zA-z0-9'].repeat(1) }
-  rule(:block) { ((if_statement | item) >> space).repeat(1) }
   rule(:expression) do
     lparen >> space? >> expression >> space? >> rparen |
     # infix_expression(literal,
@@ -30,6 +29,7 @@ class Parser < Parslet::Parser
     identifier |
     literal
   end
+  rule(:block) { (if_statement | item).repeat(1) }
 
   rule(:if_statement) { str('if') >> space >> expression >> space >> block >> space >> (str('else') >> space >> block >> space).maybe >> str('end') }
 
