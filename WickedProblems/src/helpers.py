@@ -15,19 +15,19 @@ class Helpers:
 
             return __ql_content
 
-    def escape_curlies(__ql_content):
-            lcurly = 0
-            rcurly = 0
-            replacements = []
-            for x in range(0,len(__ql_content)):
-                if(__ql_content[x] == "{"):
-                    lcurly += 1
-                elif(__ql_content[x] == "}"):
-                    if(lcurly > 1):
-                        replacements.append(x)
-                    lcurly -= 1
-
-            for x in range(0, len(replacements)):
-                __ql_content = __ql_content[:replacements[x]+x]+"\\"+__ql_content[replacements[x]+x:]
-
-            return __ql_content
+    # def escape_curlies(__ql_content):
+    #         lcurly = 0
+    #         rcurly = 0
+    #         replacements = []
+    #         for x in range(0,len(__ql_content)):
+    #             if(__ql_content[x] == "{"):
+    #                 lcurly += 1
+    #             elif(__ql_content[x] == "}"):
+    #                 if(lcurly > 1):
+    #                     replacements.append(x)
+    #                 lcurly -= 1
+    #
+    #         for x in range(0, len(replacements)):
+    #             __ql_content = __ql_content[:replacements[x]+x]+"\\"+__ql_content[replacements[x]+x:]
+    #
+    #         return __ql_content

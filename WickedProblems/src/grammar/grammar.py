@@ -27,6 +27,5 @@ class Grammar:
 		# Parse the form
 		form = QL.form.parseString(self.__ql_content)
 
-		# form_content = Helpers.escape_curlies(form[2])
 		if(self._verbose):
 			pprint(form)
