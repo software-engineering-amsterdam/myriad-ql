@@ -35,7 +35,9 @@ boolean
         }";
 
             var form = AST.FormFactory.Create(inputString);
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(form, Formatting.Indented));
+            //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(form, Formatting.Indented));
+            SemanticAnalysis.Analyzer semanticAnalyzer = new SemanticAnalysis.Analyzer();
+            semanticAnalyzer.Analyze(form);
                 
         }
     }

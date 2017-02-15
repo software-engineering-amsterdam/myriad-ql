@@ -6,21 +6,37 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
+    public enum QLOperator
+    {
+        And,
+        Or,
+        Addition,
+        Subtraction,
+        Division,
+        Multiplication,
+        GreaterThan,
+        GreaterThanOrEqual,
+        LessThan,
+        LessThanOrEqual,
+        Equal,
+        Inequal
+    };
+
     class QLBinaryOperator : INode
     {
-        public QLBinaryOperator(INode lhs, string op, INode rhs)
+        protected QLBinaryOperator(INode lhs, QLOperator operation, INode rhs)
         {
             this.Lhs = lhs;
-            this.Operator = op;
+            this.Operator = operation;
             this.Rhs = rhs;
         }
 
-        public string Operator
+        public INode Lhs
         {
             get;
         }
 
-        public INode Lhs
+        public QLOperator Operator
         {
             get;
         }

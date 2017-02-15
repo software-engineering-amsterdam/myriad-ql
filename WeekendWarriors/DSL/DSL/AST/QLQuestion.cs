@@ -8,7 +8,7 @@ namespace DSL.AST
 {
     class QLQuestion : INode
     {
-        public QLQuestion(string identifier, string body, string type)
+        public QLQuestion(string identifier, string body, QLType type)
         {
             this.Identifier = identifier;
             this.Body = body;
@@ -25,7 +25,7 @@ namespace DSL.AST
             get;
         }
 
-        public string Type
+        public QLType Type
         {
             get;
         }

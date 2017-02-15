@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Antlr4.Runtime.Misc;
+using DSL.AST.Operators;
+using System.ComponentModel;
 
 namespace DSL.AST
 {
@@ -34,7 +32,20 @@ namespace DSL.AST
             string identifier = context.Identifier().GetText();
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
-            return new QLQuestion(identifier, body, type);
+            // TODO: We should be able to do better than this, but I could not make it work.
+            switch (type)
+            {
+                case "boolean":
+                    return new QLQuestion(identifier, body, QLType.Bool);
+                case "money":
+                    return new QLQuestion(identifier, body, QLType.Money);
+                case "int":
+                    return new QLQuestion(identifier, body, QLType.Number);
+                case "string":
+                    return new QLQuestion(identifier, body, QLType.String);
+            }
+
+            throw new InvalidEnumArgumentException();
         }
 
         public override INode VisitConditionalBlock([NotNull] GrammarParser.ConditionalBlockContext context)
@@ -62,8 +73,39 @@ namespace DSL.AST
         {
             INode lhs = Visit(context.left);
             INode rhs = Visit(context.right);
-            string op = context.op.Text;
-            return new QLBinaryOperator(lhs, op, rhs);
+
+            switch (context.op.Type)
+            {
+                case GrammarLexer.OP_ADD:
+                   return new QLArithmaticOperation(lhs, QLOperator.Addition, rhs);                   
+                case GrammarLexer.OP_SUB: 
+                    return new QLArithmaticOperation(lhs, QLOperator.Subtraction, rhs);
+                case GrammarLexer.OP_MUL: 
+                    return new QLArithmaticOperation(lhs, QLOperator.Multiplication, rhs);
+                case GrammarLexer.OP_DIV: 
+                    return new QLArithmaticOperation(lhs, QLOperator.Division, rhs);
+
+                case GrammarLexer.OP_GT: 
+                    return new QLComparisonOperator(lhs, QLOperator.GreaterThan, rhs);
+                case GrammarLexer.OP_GE: 
+                    return new QLComparisonOperator(lhs, QLOperator.GreaterThanOrEqual, rhs);
+                case GrammarLexer.OP_LT: 
+                    return new QLComparisonOperator(lhs, QLOperator.LessThan, rhs);
+                case GrammarLexer.OP_LE: 
+                    return new QLComparisonOperator(lhs, QLOperator.LessThanOrEqual, rhs);
+
+                case GrammarLexer.OP_EQ: 
+                    return new QLEqualityOperator(lhs, QLOperator.Equal, rhs);
+                case GrammarLexer.OP_NE: 
+                    return new QLEqualityOperator(lhs, QLOperator.Inequal, rhs);
+
+                case GrammarLexer.OP_OR: 
+                    return new QLLogicalOperator(lhs, QLOperator.Or, rhs);
+                case GrammarLexer.OP_AND: 
+                    return new QLLogicalOperator(lhs, QLOperator.And, rhs);
+            }
+
+            throw new InvalidEnumArgumentException();
         }
 
         public override INode VisitUnaryOp([NotNull] GrammarParser.UnaryOpContext context)

@@ -45,3 +45,24 @@ expression:
 	| left=expression op='&&' right=expression #And
 	| left=expression op='||' right=expression #Or	
 ;
+
+/* Operators */
+OP_BANG: '!';
+OP_ADD: '+';
+OP_SUB: '-';
+OP_MUL: '*';
+OP_DIV: '/';
+OP_LT: '<';
+OP_LE: '<=';
+OP_GT: '>';
+OP_GE: '>=';
+OP_EQ: '==';
+OP_NE: '!=';
+OP_AND: '&&';
+OP_OR: '||';
+
+/* Types */
+TYPE_BOOL: 'boolean'; 
+TYPE_NUM: 'int';
+TYPE_STRING: 'string';
+TYPE_MONEY: 'money';
