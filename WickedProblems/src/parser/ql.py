@@ -42,13 +42,16 @@ class QL:
                                       escChar='\\')
 
     # form content
-    conditional = IF + evaluation + codeblock
-    question = string + identifier + colon + field_type
-    statement = string + identifier + colon + field_type + EQ + evaluation
+    question = string + identifier + Suppress(colon) + field_type
+    statement = string + identifier + Suppress(colon) + field_type + EQ + \
+                evaluation
+    conditional = IF + evaluation + Suppress(lcurly) + \
+                OneOrMore(Group(Or([statement,question]))) + Suppress(rcurly)
 
     # form items
     form_content = Or([conditional,statement,question])
     form_item = OneOrMore(Group(form_content))
 
     # outer form
-    form = form_type + identifier + lcurly + form_item + rcurly
+    form = form_type + identifier + Suppress(lcurly) + form_item + \
+                Suppress(rcurly)
