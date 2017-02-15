@@ -9,6 +9,11 @@ class QuestionnaireParser(object):
         pp.ParserElement.enablePackrat()
         pp.quotedString.setParseAction(pp.removeQuotes)
 
+        self.expression = self.define_expression()
+        self.question = self.define_question()
+        self.block = pp.Forward()
+        self.conditional = self.define_conditional()
+
         self.grammar = self.define_grammar()
 
     @staticmethod
@@ -18,29 +23,28 @@ class QuestionnaireParser(object):
         elif brace_type == "curly":
             return Tokens.LIT["L_CURLY"] + arg + Tokens.LIT["R_CURLY"]
 
-    def define_grammar(self):
-        expression = self.define_expression()
-
-        question = pp.Group(
+    def define_question(self):
+        return pp.Group(
             pp.quotedString + Tokens.TYPE["VAR"] + Tokens.LIT["COLON"] +
             Tokens.TYPE_NAME +
-            pp.Optional(Tokens.LIT["IS"] + self.embrace(expression))
+            pp.Optional(Tokens.LIT["IS"] + self.embrace(self.expression))
         ).addParseAction(AST.QuestionNode)
 
-        block = pp.Forward()
-        if_cond = Tokens.KW["IF"] + self.embrace(expression) + \
-            self.embrace(block, "curly")
+    def define_conditional(self):
+        if_cond = Tokens.KW["IF"] + self.embrace(self.expression) + \
+                  self.embrace(self.block, "curly")
 
-        conditional = pp.Group(if_cond + pp.Optional(
-            Tokens.KW["ELSE"] + self.embrace(block, "curly"))
+        return pp.Group(if_cond + pp.Optional(
+            Tokens.KW["ELSE"] + self.embrace(self.block, "curly"))
         ).addParseAction(AST.ConditionalNode)
 
-        block << pp.Group(
-            pp.OneOrMore(question | conditional)
+    def define_grammar(self):
+        self.block << pp.Group(
+            pp.OneOrMore(self.question | self.conditional)
         ).addParseAction(AST.BlockNode)
 
         form = Tokens.KW["FORM"] + Tokens.TYPE["VAR"] + self.embrace(
-            block, "curly"
+            self.block, "curly"
         )
         form_block = pp.Group(form).addParseAction(AST.FormNode)
 
