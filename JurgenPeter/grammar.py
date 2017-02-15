@@ -74,25 +74,23 @@ class Grammar:
          (and_op, 2, opAssoc.LEFT, create_binop),
          (or_op ^ sub_op, 2, opAssoc.LEFT, create_binop)])
 
+    block = Forward()
+
     datatype = oneOf("boolean string integer decimal money")
     datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
-
-    block = Forward()
 
     question = identifier + Suppress(":") + QuotedString("\"") + datatype +\
         Optional(Suppress("=") + expression)
     question.setParseAction(lambda tokens: Question(*tokens))
 
-    conditional = Suppress("if") + expression + Suppress("{") + block +\
-        Suppress("}") + Optional(Suppress("else") + Suppress("{") + block +
-                                 Suppress("}"))
+    conditional = Suppress("if") + expression + block +\
+        Optional(Suppress("else") + block)
     conditional.setParseAction(lambda tokens: Conditional(*tokens))
 
     statement = question ^ conditional
 
-    block <<= Group(ZeroOrMore(statement))
-    block.addParseAction(lambda tokens: tokens.asList())
+    block <<= Suppress("{") + ZeroOrMore(statement) + Suppress("}")
+    block.addParseAction(lambda tokens: [tokens.asList()])
 
-    form = Suppress("form") + identifier + Suppress("{") + block +\
-        Suppress("}")
+    form = Suppress("form") + identifier + block
     form.setParseAction(lambda tokens: Form(*tokens))
