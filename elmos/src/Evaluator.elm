@@ -16,22 +16,22 @@ import Values exposing (Value)
 evaluate : Environment -> Expression -> Value
 evaluate env expression =
     case expression of
-        Var x ->
+        Var ( x, _ ) ->
             Dict.get x env |> Maybe.withDefault Values.undefined
 
-        AST.Str str ->
+        AST.Str _ str ->
             Values.string str
 
-        AST.Integer integer ->
+        AST.Integer _ integer ->
             Values.int integer
 
-        AST.Boolean boolean ->
+        AST.Boolean _ boolean ->
             Values.bool boolean
 
-        ParensExpression inner ->
+        ParensExpression _ inner ->
             evaluate env inner
 
-        ArithmeticExpression op left right ->
+        ArithmeticExpression op _ left right ->
             let
                 leftValue =
                     evaluate env left
@@ -46,7 +46,7 @@ evaluate env expression =
                     _ ->
                         Values.undefined
 
-        RelationExpression op left right ->
+        RelationExpression op _ left right ->
             let
                 leftValue =
                     evaluate env left
@@ -61,7 +61,7 @@ evaluate env expression =
                     _ ->
                         Values.undefined
 
-        LogicExpression op left right ->
+        LogicExpression op _ left right ->
             let
                 leftValue =
                     evaluate env left
@@ -76,7 +76,7 @@ evaluate env expression =
                     _ ->
                         Values.undefined
 
-        ComparisonExpression op left right ->
+        ComparisonExpression op _ left right ->
             let
                 leftValue =
                     evaluate env left

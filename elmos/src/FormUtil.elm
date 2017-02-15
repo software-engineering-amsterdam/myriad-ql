@@ -1,28 +1,28 @@
 module FormUtil exposing (activeFields)
 
-import AST exposing (Form, Label, Id, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
+import AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import Environment exposing (Environment)
 import Values
 import Evaluator
 
 
-activeFields : Environment -> Form -> List ( Label, Id, ValueType )
+activeFields : Environment -> Form -> List ( Label, String, ValueType )
 activeFields env { items } =
     activeFieldsForItems env items
 
 
-activeFieldsForItems : Environment -> List FormItem -> List ( Label, Id, ValueType )
+activeFieldsForItems : Environment -> List FormItem -> List ( Label, String, ValueType )
 activeFieldsForItems env =
     List.concatMap (activeFieldsForItem env)
 
 
-activeFieldsForItem : Environment -> FormItem -> List ( Label, Id, ValueType )
+activeFieldsForItem : Environment -> FormItem -> List ( Label, String, ValueType )
 activeFieldsForItem env item =
     case item of
-        Field label identifier valueType ->
+        Field label ( identifier, _ ) valueType ->
             [ ( label, identifier, valueType ) ]
 
-        ComputedField label identifier valueType _ ->
+        ComputedField label ( identifier, _ ) valueType _ ->
             [ ( label, identifier, valueType ) ]
 
         IfThen expression thenBranch ->

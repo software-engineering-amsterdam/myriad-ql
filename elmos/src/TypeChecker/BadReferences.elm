@@ -82,29 +82,29 @@ expressionFromItem item =
 usedIdentifiers : Expression -> Set String
 usedIdentifiers expression =
     case expression of
-        Var s ->
+        Var ( s, _ ) ->
             Set.singleton s
 
-        Integer _ ->
+        Integer _ _ ->
             Set.empty
 
-        Boolean _ ->
+        Boolean _ _ ->
             Set.empty
 
-        AST.Str _ ->
+        AST.Str _ _ ->
             Set.empty
 
-        ParensExpression expr ->
+        ParensExpression _ expr ->
             usedIdentifiers expr
 
-        ArithmeticExpression _ exprLeft exprRight ->
+        ArithmeticExpression _ _ exprLeft exprRight ->
             Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
-        RelationExpression _ exprLeft exprRight ->
+        RelationExpression _ _ exprLeft exprRight ->
             Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
-        LogicExpression _ exprLeft exprRight ->
+        LogicExpression _ _ exprLeft exprRight ->
             Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
-        ComparisonExpression _ exprLeft exprRight ->
+        ComparisonExpression _ _ exprLeft exprRight ->
             Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
