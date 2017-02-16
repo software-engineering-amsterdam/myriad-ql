@@ -13,7 +13,7 @@ class Grammar:
 	def __init__(self, ql_file=None):
 		self._ql_file = ql_file
 
-	def main(self):
+	def parse(self):
 		if(self._verbose):
 			from pprint import pprint
 

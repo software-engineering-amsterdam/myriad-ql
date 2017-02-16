@@ -35,4 +35,4 @@ if __name__ == '__main__':
 		print("No QL File Specified... Exiting")
 		exit(-1)
 
-	grammar.main()
+	form_parsed = grammar.parse()
