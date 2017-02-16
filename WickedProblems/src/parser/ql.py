@@ -45,8 +45,8 @@ class QL:
     question = string + identifier + Suppress(colon) + field_type
     statement = string + identifier + Suppress(colon) + field_type + EQ + \
                 evaluation
-    conditional = IF + evaluation + Suppress(lcurly) + \
-                OneOrMore(Group(Or([statement,question]))) + Suppress(rcurly)
+    conditional = IF + Group(evaluation + Suppress(lcurly) + \
+                Group(OneOrMore(Group(Or([statement,question])))) + Suppress(rcurly))
 
     # form items
     form_content = Or([conditional,statement,question])
