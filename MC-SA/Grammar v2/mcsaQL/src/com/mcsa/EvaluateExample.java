@@ -16,6 +16,9 @@ public class EvaluateExample {
         }
         MattExperiment.parsingTheString(fileContent);
 
+        new TreeTest();
+
     }
+
 
 }
