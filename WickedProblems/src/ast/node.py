@@ -32,6 +32,33 @@ class LeafNode(AbstractNode):
     def __init__(self, identifier, parent):
         AbstractNode.__init__(self, identifier, parent)
 
+class ConditionalNode(LeafNode):
+    _eval_type = None
+    _evaluation = None
+    def __init__(self, parent, eval_type, evaluation):
+        LeafNode.__init__(self, "ConditionalNode", parent)
+        self._eval_type = eval_type
+        self._evaluation = evaluation
+
+class QuestionNode(LeafNode):
+    _field_type = None
+    _text = None
+
+    def __init__(self, identifier, parent, field_type, text):
+        LeafNode.__init__(self, identifier, parent)
+        self._field_type = field_type
+        self._text = text
+
+class StatementNode(LeafNode):
+    _field_type = None
+    _text = None
+    _evaluation = None
+
+    def __init__(self, identifier, parent, field_type, text, evaluation):
+        LeafNode.__init__(self, identifier, parent)
+        self._field_type = field_type
+        self._evaluation = evaluation
+
 # Test Code
 if __name__ == '__main__':
     root = BaseNode("TestRootNode")
