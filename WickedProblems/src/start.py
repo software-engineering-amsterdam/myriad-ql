@@ -5,6 +5,7 @@ cur_version = sys.version_info
 if cur_version >= req_version:
 	from grammar.grammar import Grammar
 	from ast.tree import Tree
+	from gui.interface import Interface
 	import argparse
 else:
    exit("Did you forget to run it using python >= 3.0 ??")
@@ -48,3 +49,6 @@ if __name__ == '__main__':
 		print("====================================")
 		print(ast.get_tree_representation())
 		print("====================================")
+
+	gui = Interface(ast)
+	gui.build_interface()

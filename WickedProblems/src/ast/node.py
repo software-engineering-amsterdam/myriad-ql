@@ -36,6 +36,7 @@ class BaseNode(AbstractNode):
         AbstractNode.__init__(self, identifier, None)
 
 class LeafNode(AbstractNode):
+    _variable = None
     # Node that can have both a parent and children
     def __init__(self, identifier, parent):
         AbstractNode.__init__(self, identifier, parent)
