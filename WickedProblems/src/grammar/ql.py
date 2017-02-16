@@ -58,7 +58,6 @@ class QL(Grammar):
         true_key = Keyword("true")
         false_key = Keyword("false")
 
-        
         identifier = Word(alphanums)
         variable = identifier("variable")
         formType = identifier("type")
@@ -70,18 +69,26 @@ class QL(Grammar):
         comparisonOperators = (Literal('==') | Literal('!=') | Literal(
             '>=') | Literal('<=')) | Literal('<') | Literal('>')
 
-        exp = Group(variable + (mathOperator |
-                                comparisonOperators) + variable)("expression")
+        exp = Group(variable("variable1") + (mathOperator |
+                                comparisonOperators) + variable("var2"))
+        bin_op = Group(variable("lhs") + FollowedBy((mathOperator |
+                                comparisonOperators))  + variable("rhs"))
         assignment = Group(data_type + equals + lpar +
                            exp + rpar)("assignment")
-        question_value = Group((assignment | data_type))("question_value")
-        question = Group(label + variable + colon + question_value)("question")
+        question_value = data_type("data_type")
+
+        value = (lpar + Group(exp)("computed_value") +
+                 rpar) | identifier("value")
+        question = Group(label + variable + colon + data_type +
+                         Optional(equals + value))("question")
         block_body = Forward()
         conditional = Group(if_key("conditional_statement") + lpar + (exp | variable) + rpar +
                             lbrace + block_body + rbrace)("conditional")
-        block_body << ZeroOrMore(question| conditional)('form_elements')
-        form = Group(formType + identifier("identifier") + lbrace + block_body + rbrace)("form")
-        grammar << (form | block_body | question_value | assignment | exp)
+
+        block_body << ZeroOrMore(question | conditional)('form_elements')
+        form = Group(formType + identifier("identifier") +
+                     lbrace + block_body + rbrace)("form")
+        grammar << (form | question)
         return grammar
 
     def parse(self, input_string):

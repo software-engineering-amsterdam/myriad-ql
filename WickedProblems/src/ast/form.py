@@ -1,4 +1,6 @@
-class Form:
-    
+import ast.node as node
+
+class Form(node.Node):
+
     def __init__(self, form_elements=None):
-        pass
+        self.form_elements = form_elements
