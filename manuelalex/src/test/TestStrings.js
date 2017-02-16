@@ -3,7 +3,8 @@
  */
 
 
-export let test1 = 'form taxOfficeExample{\n' +
+export let test1 =
+    'form taxOfficeExample{\n' +
     'question `Did you sell a house in 2010?`\n' +
     'hasSoldHouse: boolean\n' +
     'question `Did you buy a house in 2010?`\n' +
@@ -21,3 +22,20 @@ export let test1 = 'form taxOfficeExample{\n' +
     '\n}';
 
 export let test2 = 'form y{\n \n}}';
+
+
+export let test3 = 'form taxOfficeExample{\n' +
+    'question `Q1`\n' +
+    'sellingPrice: money\n' +
+    '\n}';
+
+
+export let test4 =
+    'form taxOfficeExample{\n' +
+    'question `Q1`\n' +
+    'sellingPrice: money\n' +
+    'question `Q2`\n' +
+    'privateDebt: money\n' +
+    'answer `A2`\n' +
+    'A2: money = (Q1 - Q2)\n' +
+    '\n}';

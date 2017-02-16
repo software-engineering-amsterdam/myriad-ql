@@ -10,5 +10,6 @@ module.exports = class Answer extends Statement {
         this.name = options.name;
         this.propertyName = options.propertyName;
         this.type = options.type;
+        this.expression = options.expression;
     }
 };
