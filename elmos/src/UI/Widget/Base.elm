@@ -2,13 +2,12 @@ module UI.Widget.Base exposing (WidgetContext, container)
 
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
-import AST exposing (Id)
 import Environment exposing (Environment)
 import Values exposing (Value)
 
 
 type alias WidgetContext msg =
-    { identifier : Id
+    { identifier : String
     , label : String
     , env : Environment
     , onChange : Value -> msg
