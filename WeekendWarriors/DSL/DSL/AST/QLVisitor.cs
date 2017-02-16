@@ -52,7 +52,9 @@ namespace DSL.AST
         {         
             INode expression = Visit(context.condition);
             List<INode> thenStatements = GetStatements(context.thenBlock.statement());
-            List<INode> elseStatements = GetStatements(context.elseBlock.statement());
+            List<INode> elseStatements = new List<INode>();
+            if(context.elseBlock != null)
+                GetStatements(context.elseBlock.statement());
 
             return new QLConditional(expression, thenStatements, elseStatements);
         }
@@ -77,32 +79,35 @@ namespace DSL.AST
             switch (context.op.Type)
             {
                 case GrammarLexer.OP_ADD:
-                   return new QLArithmaticOperation(lhs, QLOperator.Addition, rhs);                   
+                   return new QLArithmeticOperation(lhs, QLBinaryOperator.Addition, rhs);                   
                 case GrammarLexer.OP_SUB: 
-                    return new QLArithmaticOperation(lhs, QLOperator.Subtraction, rhs);
+                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Subtraction, rhs);
                 case GrammarLexer.OP_MUL: 
-                    return new QLArithmaticOperation(lhs, QLOperator.Multiplication, rhs);
+                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Multiplication, rhs);
                 case GrammarLexer.OP_DIV: 
-                    return new QLArithmaticOperation(lhs, QLOperator.Division, rhs);
+                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Division, rhs);
 
                 case GrammarLexer.OP_GT: 
-                    return new QLComparisonOperator(lhs, QLOperator.GreaterThan, rhs);
+                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThan, rhs);
                 case GrammarLexer.OP_GE: 
-                    return new QLComparisonOperator(lhs, QLOperator.GreaterThanOrEqual, rhs);
+                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThanOrEqual, rhs);
                 case GrammarLexer.OP_LT: 
-                    return new QLComparisonOperator(lhs, QLOperator.LessThan, rhs);
+                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThan, rhs);
                 case GrammarLexer.OP_LE: 
-                    return new QLComparisonOperator(lhs, QLOperator.LessThanOrEqual, rhs);
+                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThanOrEqual, rhs);
 
                 case GrammarLexer.OP_EQ: 
-                    return new QLEqualityOperator(lhs, QLOperator.Equal, rhs);
+                    return new QLEqualityOperation(lhs, QLBinaryOperator.Equal, rhs);
                 case GrammarLexer.OP_NE: 
-                    return new QLEqualityOperator(lhs, QLOperator.Inequal, rhs);
+                    return new QLEqualityOperation(lhs, QLBinaryOperator.Inequal, rhs);
 
                 case GrammarLexer.OP_OR: 
-                    return new QLLogicalOperator(lhs, QLOperator.Or, rhs);
+                    return new QLLogicalOperation(lhs, QLBinaryOperator.Or, rhs);
                 case GrammarLexer.OP_AND: 
-                    return new QLLogicalOperator(lhs, QLOperator.And, rhs);
+                    return new QLLogicalOperation(lhs, QLBinaryOperator.And, rhs);
+
+                default:
+                    throw new InvalidEnumArgumentException();
             }
 
             throw new InvalidEnumArgumentException();
@@ -110,9 +115,19 @@ namespace DSL.AST
 
         public override INode VisitUnaryOp([NotNull] GrammarParser.UnaryOpContext context)
         {
-            string op = context.op.Text;
             INode operand = Visit(context.expression());
-            return new QLUnaryOperator(operand, op);
+
+            switch (context.op.Type)
+            {
+                case GrammarLexer.OP_BANG:
+                    return new QLUnaryOperation(operand, QLUnaryOperator.Bang);
+                case GrammarLexer.OP_ADD:
+                    return new QLUnaryOperation(operand, QLUnaryOperator.Plus);
+                case GrammarLexer.OP_SUB:
+                    return new QLUnaryOperation(operand, QLUnaryOperator.Minus);
+                default:
+                    throw new InvalidEnumArgumentException();
+            }          
         }
 
         public override INode VisitMoney([NotNull] GrammarParser.MoneyContext context)
@@ -134,6 +149,11 @@ namespace DSL.AST
         public override INode VisitNumber([NotNull] GrammarParser.NumberContext context)
         {
             return new QLNumber(int.Parse(context.GetText()));
+        }
+
+        public override INode VisitParens([NotNull] GrammarParser.ParensContext context)
+        {
+            return Visit(context.expression());
         }
     }
 }

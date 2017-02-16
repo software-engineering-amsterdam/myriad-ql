@@ -10,11 +10,23 @@ namespace DSL.SemanticAnalysis
 {
     class Analyzer
     {
-        private Dictionary<string, QLType> IdentifiertoType;
+        private Dictionary<string, QLType> IdentifiertoType = new Dictionary<string, QLType>();
+        // TODO: injection
+        private ExpressionValidator validator = new ExpressionValidator();
 
         public Analyzer()
         {
-            IdentifiertoType = new Dictionary<string, QLType>();
+            validator.InvalidExpression += Validator_InvalidExpression;
+        }
+
+        /* TODO: The way this is now does not make much sense. The original idea was to have the 
+         * ExpressionValidator throw errors solely based on the expression. This object would then 
+         * be able to link the error message to the source code location (which we would have to
+         * include in the node objects). 
+         */
+        private void Validator_InvalidExpression(object sender, InvalidExpressionEventArgs e)
+        {
+            OnSemanticError(new SemanticErrorArgs(e.Message));
         }
 
         public void Analyze(AST.INode node)
@@ -24,8 +36,6 @@ namespace DSL.SemanticAnalysis
         
         protected QLType Visit(QLForm node)
         {
-            Console.WriteLine("Form " + node.Identifier);
-
             foreach (var statement in node.Statements)
                 Visit((dynamic)statement);
 
@@ -34,110 +44,85 @@ namespace DSL.SemanticAnalysis
 
         protected QLType Visit(QLQuestion node)
         {
-            Console.WriteLine("Question " + node.Body);
             // Store the type of this identifier
             IdentifiertoType[node.Identifier] = node.Type;
 
-            return QLType.None;
+            return validator.Evaluate(node);
         }
 
         protected QLType Visit(QLComputedQuestion node)
         {
-            Console.WriteLine("Computed question");
-
             QLType assigneeType = Visit((dynamic)node.Question);
             QLType assignorType = Visit((dynamic)node.Expression);
 
-            // TODO: improve
-            if(assigneeType != assignorType)
-                OnSemanticError(new SemanticErrorArgs("Assigning value of type <X> to variable of type <y> is not allowed"));
-
-            return QLType.None;
+            return validator.Evaluate(node, assigneeType, assignorType);               
         }
 
         protected QLType Visit(QLConditional node)
         {
-            Console.WriteLine("Conditional");
-            Visit((dynamic)node.Condition);
+            QLType conditionType = Visit((dynamic)node.Condition);
+
             foreach (var statement in node.ThenStatements)
                 Visit((dynamic)statement);
             foreach (var statement in node.ElseStatements)
                 Visit((dynamic)statement);
 
-            return QLType.None;
+            return validator.Evaluate(node, conditionType);            
         }
 
-        protected QLType Visit(QLArithmaticOperation node)
+        protected QLType Visit(QLArithmeticOperation node)
         {          
-            Console.WriteLine("Arithmatic operation");
             QLType lhsType = Visit((dynamic)node.Lhs);
             QLType rhsType = Visit((dynamic)node.Rhs);
 
-            // TODO: Do this for real using a proper object
-            if (lhsType == rhsType)
-                return lhsType;
-            else
-                return QLType.None;
+            return validator.Evaluate(node, lhsType, rhsType);
         }
 
-        protected QLType Visit(QLComparisonOperator node)
+        protected QLType Visit(QLComparisonOperation node)
         {
-            Console.WriteLine("Comparison operation");
-            Visit((dynamic)node.Lhs);
-            Visit((dynamic)node.Rhs);
+            QLType lhsType = Visit((dynamic)node.Lhs);
+            QLType rhsType = Visit((dynamic)node.Rhs);
 
-            return QLType.Bool;
+            return validator.Evaluate(node, lhsType, rhsType);
         }
 
-        protected QLType Visit(QLEqualityOperator node)
+        protected QLType Visit(QLEqualityOperation node)
         {
-            Console.WriteLine("Equality operation");
-            Visit((dynamic)node.Lhs);
-            Visit((dynamic)node.Rhs);
+            QLType lhsType = Visit((dynamic)node.Lhs);
+            QLType rhsType = Visit((dynamic)node.Rhs);
 
-            return QLType.Bool;
+            return validator.Evaluate(node, lhsType, rhsType);
         }
 
-        protected QLType Visit(QLUnaryOperator node)
+        protected QLType Visit(QLUnaryOperation node)
         {
-            Console.WriteLine("Unary operation");
             QLType operandType = Visit((dynamic)node.Operand);
 
-            return operandType;
+            return validator.Evaluate(node, operandType);
         }
 
         protected QLType Visit(QLBoolean node)
         {
-            Console.WriteLine("Boolean");
-
             return QLType.Bool;
         }
             
         protected QLType Visit(QLMoney node)
         {
-            Console.WriteLine("Money");
-
             return QLType.Money;
         }   
 
         protected QLType Visit(QLNumber node)
         {
-            Console.WriteLine("Number");
-
             return QLType.Number;
         }
 
         protected QLType Visit(QLString node)
         {
-            Console.WriteLine("String");
-
             return QLType.String;
         }
 
         protected QLType Visit(QLIdentifier node)
         {
-            Console.WriteLine("Identifier");
-
             if (IdentifiertoType.ContainsKey(node.Name))
             {
                 return IdentifiertoType[node.Name];
@@ -151,8 +136,7 @@ namespace DSL.SemanticAnalysis
 
                 OnSemanticError(new SemanticErrorArgs("Encountered undefined Identifier \"" + node.Name));
             }
-
-            // TODO Does this make sense? Do we want to go on parsing after an error?
+            
             return QLType.None;
         }
 

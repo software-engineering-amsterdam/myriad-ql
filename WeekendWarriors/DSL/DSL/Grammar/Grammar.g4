@@ -42,8 +42,8 @@ expression:
 	| left=expression op=('+' | '-') right=expression #BinaryOp		
 	| left=expression op=('<' | '<=' | '>' | '>=') right=expression #BinaryOp
 	| left=expression op=('!=' | '==') right=expression #BinaryOp
-	| left=expression op='&&' right=expression #And
-	| left=expression op='||' right=expression #Or	
+	| left=expression op='&&' right=expression #BinaryOp
+	| left=expression op='||' right=expression #BinaryOp	
 ;
 
 /* Operators */

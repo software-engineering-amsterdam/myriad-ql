@@ -54,11 +54,11 @@
   <ItemGroup>
     <Compile Include="AST\FormFactory.cs" />
     <Compile Include="AST\Node.cs" />
-    <Compile Include="AST\Operators\QLArithmaticOperation.cs" />
-    <Compile Include="AST\Operators\QLBinaryOperator.cs" />
-    <Compile Include="AST\Operators\QLComparisonOperator.cs" />
-    <Compile Include="AST\Operators\QLEqualityOperator.cs" />
-    <Compile Include="AST\Operators\QLLogicalOperator.cs" />
+    <Compile Include="AST\Operators\QLArithmeticOperation.cs" />
+    <Compile Include="AST\Operators\QLBinaryOperation.cs" />
+    <Compile Include="AST\Operators\QLComparisonOperation.cs" />
+    <Compile Include="AST\Operators\QLEqualityOperation.cs" />
+    <Compile Include="AST\Operators\QLLogicalOperation.cs" />
     <Compile Include="AST\Types\QLBoolean.cs" />
     <Compile Include="AST\QLComputedQuestion.cs" />
     <Compile Include="AST\QLConditional.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="AST\Types\QLString.cs" />
     <Compile Include="AST\QLVisitor.cs" />
     <Compile Include="AST\QLQuestion.cs" />
-    <Compile Include="AST\Operators\QLUnaryOperator.cs" />
+    <Compile Include="AST\Operators\QLUnaryOperation.cs" />
     <Compile Include="Generated\GrammarBaseListener.cs" />
     <Compile Include="Generated\GrammarBaseVisitor.cs" />
     <Compile Include="Generated\GrammarLexer.cs" />
@@ -79,6 +79,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemanticAnalysis\Analyzer.cs" />
+    <Compile Include="SemanticAnalysis\ExpressionValidator.cs" />
+    <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
     <Compile Include="SemanticAnalysis\SemanticErrorArgs.cs" />
   </ItemGroup>
   <ItemGroup>

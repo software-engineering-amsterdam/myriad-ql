@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    public enum QLOperator
+    public enum QLBinaryOperator
     {
         And,
         Or,
@@ -22,9 +22,9 @@ namespace DSL.AST
         Inequal
     };
 
-    class QLBinaryOperator : INode
+    class QLBinaryOperation : INode
     {
-        protected QLBinaryOperator(INode lhs, QLOperator operation, INode rhs)
+        protected QLBinaryOperation(INode lhs, QLBinaryOperator operation, INode rhs)
         {
             this.Lhs = lhs;
             this.Operator = operation;
@@ -36,7 +36,7 @@ namespace DSL.AST
             get;
         }
 
-        public QLOperator Operator
+        public QLBinaryOperator Operator
         {
             get;
         }

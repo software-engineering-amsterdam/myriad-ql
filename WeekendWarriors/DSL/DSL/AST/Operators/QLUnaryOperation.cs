@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    class QLUnaryOperator : INode
+    enum QLUnaryOperator
     {
-        public QLUnaryOperator(INode operand, string op)
+        Bang,
+        Plus,
+        Minus
+    }
+
+    class QLUnaryOperation : INode
+    {
+        public QLUnaryOperation(INode operand, QLUnaryOperator op)
         {
             this.Operand = operand;
             this.Operator = op;
         }
 
-        public string Operator
+        public QLUnaryOperator Operator
         {
             get;
         }
