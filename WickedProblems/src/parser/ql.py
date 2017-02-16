@@ -7,7 +7,6 @@ class QL:
     NOT = '!'
 
     # Comparisons
-    IF = 'if'
     GT = '>'
     LT = '<'
     GTE = '>='
@@ -22,6 +21,7 @@ class QL:
     DIV = '/'
 
     # Defines
+    IF = 'if'
     colon = ':'
     lcurly = '{'
     rcurly = '}'
