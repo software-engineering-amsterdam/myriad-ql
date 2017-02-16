@@ -13,7 +13,7 @@ class Grammar:
 	def __init__(self, ql_file=None):
 		self._ql_file = ql_file
 
-	def main(self):
+	def parse(self):
 		if(self._verbose):
 			from pprint import pprint
 
@@ -22,11 +22,13 @@ class Grammar:
 		except Exception:
 			exit("Could not load QL File")
 
-		ql_content = self.__ql_content
-
 		# Parse the form
-		form = QL.form.parseString(self.__ql_content)
+		try:
+			form = QL.form.parseString(self.__ql_content)
+		except ParseException:
+			form = None
+		finally:
+			if(self._verbose):
+				pprint(form)
 
-		# form_content = Helpers.escape_curlies(form[2])
-		if(self._verbose):
-			pprint(form)
+			return form
