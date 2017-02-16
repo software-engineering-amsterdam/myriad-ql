@@ -22,6 +22,14 @@ class AbstractNode(object):
     def get_identifier(self):
         return self.__identifier
 
+    def get_tree_representation(self):
+        __ret = self.__class__.__name__ + "\n"
+        for child in self.__children:
+            __ret += "\t" + child.__class__.__name__ + "\n"
+            for __sub in child.get_children():
+                __ret += "\t\t" + __sub.get_tree_representation()
+        return __ret
+
 class BaseNode(AbstractNode):
     # Node that only has children
     def __init__(self, identifier):
