@@ -6,6 +6,10 @@ class DuplicateVariableChecker < BaseChecker
     variables.select { |e| variables.count(e) > 1 }.uniq
   end
 
+  def visit_if_statement(subject)
+    subject.block.map { |statement| visit_statement(statement) }
+  end
+
   def visit_question(subject)
     subject.variable.name
   end

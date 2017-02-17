@@ -9,10 +9,6 @@ class BaseChecker
     end
   end
 
-  def visit_if_statement(subject)
-    subject.block.map { |statement| visit_statement(statement) }
-  end
-
   def visit_calculation(subject)
     if subject.kind_of?(Literal)
       visit_literal(subject)
