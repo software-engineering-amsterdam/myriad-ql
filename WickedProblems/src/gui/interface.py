@@ -13,6 +13,7 @@ class Interface(Frame):
     # private
     __root = None
     __tree = None
+    __variables = {}
 
     def __init__(self, ast):
         self.__root = Tk()
@@ -42,25 +43,34 @@ class Interface(Frame):
         # Get possible displayables
         if(node.__class__ == QuestionNode):
             if(node._field_type == "boolean"):
-                node._variable = IntVar()
-                Checkbutton(self.__root, text=node._text, variable=node._variable).pack()
+                self.__variables[node.get_identifier()] = IntVar()
+                item = Checkbutton(self.__root,
+                                   text=node._text,
+                                   variable=self.__variables[node.get_identifier()],
+                                   command=self.refresh)
             elif(node._field_type == "string"):
-                node._variable = StringVar()
-                Entry(self.__root, textvariable=node._variable).pack()
+                self.__variables[node.get_identifier()] = StringVar()
+                item = Entry(self.__root,
+                             textvariable=self.__variables[node.get_identifier()],
+                             command=self.refresh)
             elif(node._field_type == "integer"):
-                pass
+                return
             elif(node._field_type == "data"):
-                pass
+                return
             elif(node._field_type == "decimal"):
-                pass
+                return
             elif(node._field_type == "money"):
-                pass
+                return
             elif(node._field_type == "currency"):
-                pass
+                return
             else:
-                pass
-
+                return
+            # Add item to node
+            node.set_interface_item(item)
+            node.get_interface_item().pack()
         elif(node.__class__ == ConditionalNode):
+            # evaluate condition
+            print(node._evaluation)
             # recursive
             for child in node.get_children():
                 self.construct_from_node(child)
