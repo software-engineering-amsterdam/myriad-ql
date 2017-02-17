@@ -1,5 +1,6 @@
 class AbstractNode(object):
     # Base class of all nodes
+
     def __init__(self, identifier, parent):
         self.__identifier = identifier
         self.__parent = parent
@@ -7,6 +8,12 @@ class AbstractNode(object):
 
         if parent is not None:
             parent.add_child(self)
+
+    def __str__(self):
+        return "{name}".format(name=self.__class__.__name__)
+
+    def print_children(self, level):
+        return "".join([x.get_tree_representation(level + 1) for x in self.__children])
 
     def add_child(self, child):
         if child and not isinstance(child, AbstractNode):
@@ -22,7 +29,7 @@ class AbstractNode(object):
     def get_identifier(self):
         return self.__identifier
 
-    def get_tree_representation(self):
+    def get_tree_representation1(self):
         __ret = self.__class__.__name__ + "\n"
         for child in self.__children:
             __ret += "\t" + child.__class__.__name__ + "\n"
@@ -30,24 +37,34 @@ class AbstractNode(object):
                 __ret += "\t\t" + __sub.get_tree_representation()
         return __ret
 
+    def get_tree_representation(self, level=0):
+        return "".center(level, '\t') + str(self) + "\n" + self.print_children(level)
+
+
 class BaseNode(AbstractNode):
     # Node that only has children
+
     def __init__(self, identifier):
         AbstractNode.__init__(self, identifier, None)
+
 
 class LeafNode(AbstractNode):
     _variable = None
     # Node that can have both a parent and children
+
     def __init__(self, identifier, parent):
         AbstractNode.__init__(self, identifier, parent)
+
 
 class ConditionalNode(LeafNode):
     _eval_type = None
     _evaluation = None
+
     def __init__(self, parent, eval_type, evaluation):
         LeafNode.__init__(self, "ConditionalNode", parent)
         self._eval_type = eval_type
         self._evaluation = evaluation
+
 
 class QuestionNode(LeafNode):
     _field_type = None
@@ -57,6 +74,7 @@ class QuestionNode(LeafNode):
         LeafNode.__init__(self, identifier, parent)
         self._field_type = field_type
         self._text = text
+
 
 class StatementNode(LeafNode):
     _field_type = None
