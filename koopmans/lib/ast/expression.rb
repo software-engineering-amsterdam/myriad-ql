@@ -1,8 +1,27 @@
 require_relative '../helper'
-require 'parslet'
 
 class Expression
   extend Helper
+end
+
+class Negation < Expression
+  attr_reader :expression
+
+  def initialize(expression)
+    @expression = expression
+  end
+end
+
+class BooleanNegation < Negation
+  def self.to_operator
+    '!'
+  end
+end
+
+class IntegerNegation < Negation
+  def self.to_operator
+    '-'
+  end
 end
 
 class BinaryExpression < Expression
@@ -89,16 +108,15 @@ class NotEqual < BinaryExpression
     '!='
   end
 end
-#
 
 class Parslet::Parser
-  # rule(:integer_negation?) do
-  #   str('-').as(:integer_negation).maybe
-  # end
+  rule(:integer_negation?) do
+    str('-').as(:integer_negation).maybe
+  end
 
-  # rule(:boolean_negation?) do
-  #   str('!').as(:boolean_negation).maybe
-  # end
+  rule(:boolean_negation?) do
+    str('!').as(:boolean_negation).maybe
+  end
 
   rule(:negation?) do
     (str('!') | str('-')).as(:negation).maybe
@@ -122,9 +140,24 @@ class Parslet::Parser
 end
 
 class Parslet::Transform
+  rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
+    BooleanNegation.new(BooleanLiteral.new(boolean))
+  end
+
+  rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
+    IntegerNegation.new(IntegerLiteral.new(integer))
+  end
+
+  Negation.descendants.each do |singleton_expression|
+    rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
+      singleton_expression.new(Variable.new(variable))
+    end
+  end
+
   BinaryExpression.descendants.each do |binary_expression|
     rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
       binary_expression.new(left, right)
     end
   end
 end
+
