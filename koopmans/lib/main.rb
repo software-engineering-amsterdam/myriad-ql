@@ -1,7 +1,6 @@
 require_relative 'parser/file_reader'
 require_relative 'parser/parser'
 require_relative 'visitor/form_visitor'
-require_relative 'visitor/statement_visitor'
 
 require_relative 'ast/expression'
 require_relative 'ast/type'
@@ -14,6 +13,9 @@ require_relative 'ast/expressions/singleton_expressions/boolean_negation'
 require_relative 'ast/expressions/singleton_expressions/integer_negation'
 
 require_relative 'visitor/duplicate_label_checker'
+require_relative 'visitor/duplicate_variable_checker'
+require_relative 'visitor/variable_visitor'
+require_relative 'visitor/undefined_variable_checker'
 
 require 'parslet'
 require 'pp'
@@ -29,10 +31,23 @@ parsed = parser.parse(contents)
 transformer = Parslet::Transform.new
 ast = transformer.apply(parsed)
 
-# ast.accept(FormVisitor.new)
 duplicate_labels = ast.accept(DuplicateLabelChecker.new)
-p '[WARNING] Duplicate labels found:'
-p duplicate_labels if duplicate_labels
+if duplicate_labels
+  p '[WARNING] Duplicate labels found:'
+  p duplicate_labels
+end
+
+duplicate_question_variables = ast.accept(DuplicateVariableChecker.new)
+if duplicate_question_variables
+  p '[ERROR] Duplicate variables found:'
+  p duplicate_question_variables
+end
+
+undefinedVariables = ast.accept(UndefinedVariableChecker.new)
+if undefinedVariables
+  p '[ERROR] Undefined variables found:'
+  p undefinedVariables
+end
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
