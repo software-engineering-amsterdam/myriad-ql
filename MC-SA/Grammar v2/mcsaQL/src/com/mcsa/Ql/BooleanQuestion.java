@@ -5,4 +5,6 @@ package com.mcsa.Ql;
  */
 public class BooleanQuestion extends Question{
     //TODO implement boolean question type
+
+
 }

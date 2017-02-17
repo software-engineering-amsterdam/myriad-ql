@@ -2,22 +2,42 @@ package com.mcsa;
 
 import com.mcsa.antlr.QLListener;
 import com.mcsa.antlr.QLParser;
+import com.mcsa.Ql.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.ArrayList;
 
 /**
  * Created by matt on 14/02/2017.
  */
 public class McsaListener implements QLListener {
+
+    ArrayList<Question> questionList;
+    ArrayList<Form> formList;
+
+    public McsaListener()
+    {
+        questionList = new ArrayList<>();
+    }
+
     @Override
     public void enterStart(QLParser.StartContext ctx) {
 
+        //gets the name of the form
+        System.out.println("Form found. ID: " + ctx.ID().getText());
+
+        //adds all the questions that are children to this form to an ArrayList
+        ctx.statementContent().categorise().forEach(categorise -> questionList.add(new Question(categorise.STRING().getText())));
+
+        //just prints all of the question names
+        questionList.forEach(item -> System.out.println(item.name));
     }
 
     @Override
     public void exitStart(QLParser.StartContext ctx) {
-
+        //categoriseList.forEach(entry -> System.out.println(entry.getText()));
     }
 
     @Override
@@ -92,7 +112,7 @@ public class McsaListener implements QLListener {
 
     @Override
     public void visitTerminal(TerminalNode terminalNode) {
-        System.out.println(terminalNode);
+//        System.out.println(terminalNode);
     }
 
     @Override

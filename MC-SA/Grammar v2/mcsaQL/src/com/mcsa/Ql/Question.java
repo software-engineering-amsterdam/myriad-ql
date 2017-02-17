@@ -5,4 +5,16 @@ package com.mcsa.Ql;
  */
 public class Question {
     //TODO implement base question class
+
+    public String name;
+
+    public Question()
+    {
+
+    }
+
+    public Question(String name)
+    {
+        this.name = name;
+    }
 }

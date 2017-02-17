@@ -12,6 +12,15 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  */
 class MattExperiment {
 
+    public static void main(String[] args)
+    {
+        evalExampleExpression("form test {\n" +
+                "  \"Did you sell a house in 2010?\"\n" +
+                "    hasSoldHouse: boolean\n" +
+                "  \"Was it a cool house?\"\n" +
+                "    wasCoolHouse: boolean\n" +
+                "}");
+    }
 
      static void parsingTheString(String stringToParse) {
 
