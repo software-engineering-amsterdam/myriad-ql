@@ -30,8 +30,8 @@ class StringLiteral < Literal
   end
 end
 
-module LiteralParser
-  include Parslet
+class Parslet::Parser
+  # include Parslet
   rule(:boolean_literal) do
     str('true') | str('false').as(:boolean) >> spaces?
   end
@@ -42,5 +42,13 @@ module LiteralParser
 
   rule(:string_literal) do
     str('"') >> match('[^"]').repeat.as(:string) >> str('"') >> spaces?
+  end
+end
+
+class Parslet::Transform
+  Literal.descendants.each do |literal|
+    rule("#{literal.type}": simple(:value)) do
+      literal.new(value)
+    end
   end
 end

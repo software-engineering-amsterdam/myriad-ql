@@ -32,8 +32,8 @@ class Question
   end
 end
 
-module StatementParser
-  include Parslet
+class Parslet::Parser
+  # include Parslet
 
   rule(:assignment?) do
     (str('=') >> spaces? >> expression).maybe >> spaces?
@@ -49,5 +49,20 @@ module StatementParser
 
   rule(:if_statement) do
     (str('if') >> spaces? >> expression >> block).as(:if_statement)
+  end
+end
+
+class Parslet::Transform
+  Type.descendants.each do |type|
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.type}) do
+      Question.new(string, Variable.new(variable), type.new)
+    end
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.type, expression: subtree(:expression)}) do
+      Question.new(string, Variable.new(variable), type.new, expression)
+    end
+  end
+
+  rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) do
+    IfStatement.new(expression, block)
   end
 end

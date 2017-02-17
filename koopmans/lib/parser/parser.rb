@@ -7,8 +7,8 @@ require_relative '../ast/variable'
 require 'parslet'
 
 # parser for forms
-class Parser < Parslet::Parser
-  include ExpressionParser, TypeParser, LiteralParser, VariableParser, StatementParser, FormParser
+class Parslet::Parser
+  # include TypeParser, LiteralParser, VariableParser, StatementParser
 
   rule(:spaces) do
     match('\s').repeat(1)
