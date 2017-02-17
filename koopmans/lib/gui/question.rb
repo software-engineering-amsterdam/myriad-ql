@@ -14,7 +14,7 @@ class Question
     @hidden = false
     @gui = args[:gui]
     @gui.questions << self
-    @variable = TkVariable.new(true)
+    @variable = TkVariable.new()
     @frame = TkFrame.new.grid(row: @gui.questions.size)
     @label = args[:label]
 

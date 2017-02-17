@@ -6,6 +6,7 @@ class TextQuestion < Question
   def initialize(args)
     super
     @previous_value = value
+    @variable.value = ("")
     create_entry
   end
 

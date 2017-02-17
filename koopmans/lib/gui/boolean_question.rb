@@ -3,7 +3,7 @@ require 'tk'
 class BooleanQuestion < Question
   def initialize(args)
     super
-
+    @variable.value = (true)
     create_radio_button('Yes', true)
     create_radio_button('No', false)
   end

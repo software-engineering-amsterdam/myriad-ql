@@ -26,7 +26,7 @@ class GUI
   end
 
   def submit
-    @questions.select{ |q| !q.hidden}.map(&:to_json)
+    p @questions.select{ |q| !q.hidden}.map(&:to_json)
   end
 
   def create_submit_button
