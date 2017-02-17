@@ -43,9 +43,7 @@ class MoneyType < Type
 end
 
 
-module TypeParser
-  include Parslet
-
+class Parslet::Parser
   rule(:type) do
     Type.descendants.map { |type| str(type.type) }.reduce(&:|).as(:type) >> spaces?
   end

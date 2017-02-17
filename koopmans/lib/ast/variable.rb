@@ -10,20 +10,20 @@ class Variable
   def accept(visitor)
     visitor.visit(self)
   end
-
-  # def rule
-  #   match('\w+').repeat(1).as(:variable)
-  # end
 end
 
-module VariableParser
-  include Parslet
-
+class Parslet::Parser
   rule(:variable) do
     match('\w+').repeat(1).as(:variable)
   end
 
   rule(:variable_assignment) do
     variable >> str(':') >> spaces?
+  end
+end
+
+class Parslet::Transform
+  rule(variable: simple(:variable)) do
+    Variable.new(variable)
   end
 end

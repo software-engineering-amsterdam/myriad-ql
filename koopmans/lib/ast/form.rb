@@ -16,10 +16,15 @@ class Form
     end
   end
 end
-module FormParser
-  include Parslet
 
+class Parslet::Parser
   rule(:form) do
     spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form)
+  end
+end
+
+class Parslet::Transform
+  rule(form: {variable: simple(:variable), block: subtree(:block)}) do
+    Form.new(Variable.new(variable), block)
   end
 end

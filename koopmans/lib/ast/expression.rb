@@ -111,9 +111,7 @@ class NotEqual < BinaryExpression
   end
 end
 
-module ExpressionParser
-  include Parslet
-
+class Parslet::Parser
   rule(:integer_negation?) do
     str('-').as(:integer_negation).maybe
   end
@@ -140,6 +138,29 @@ module ExpressionParser
 
   rule(:expression) do
     str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal
+  end
+end
+
+class Parslet::Transform
+  rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
+    BooleanNegation.new(BooleanLiteral.new(boolean))
+  end
+
+  # negative integer literal
+  rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
+    IntegerNegation.new(IntegerLiteral.new(integer))
+  end
+
+  SingletonExpression.descendants.each do |singleton_expression|
+    rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
+      singleton_expression.new(Variable.new(variable))
+    end
+  end
+
+  BinaryExpression.descendants.each do |binary_expression|
+    rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
+      binary_expression.new(left, right)
+    end
   end
 end
 
