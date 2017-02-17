@@ -6,8 +6,8 @@
     using Antlr4.Runtime;
 
     using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Style;
-    using OffByOne.LanguageCore.Ast.Style.Rules;
+    using OffByOne.Qls.Ast.Style;
+    using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Tests.ParserTests.Base;
 
     using Xunit;

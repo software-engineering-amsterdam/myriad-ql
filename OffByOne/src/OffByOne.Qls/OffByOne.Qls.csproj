@@ -59,7 +59,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Style\Page.cs" />
+    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
+    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
+    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
+    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
+    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
+    <Compile Include="Ast\Style\Section.cs" />
+    <Compile Include="Ast\Style\StyleSheet.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\OptionsList.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
+    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
     <Compile Include="CustomQlsVisitor.cs" />
+    <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
     <Compile Include="obj\Debug\QlsGrammarLexer.cs" />
     <Compile Include="obj\Debug\QlsGrammarParser.cs" />
     <Compile Include="obj\Debug\QlsGrammarVisitor.cs" />

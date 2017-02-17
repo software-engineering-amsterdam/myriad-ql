@@ -5,15 +5,14 @@
 
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.Literals.Base;
-    using OffByOne.LanguageCore.Ast.Style;
-    using OffByOne.LanguageCore.Ast.Style.Properties;
-    using OffByOne.LanguageCore.Ast.Style.Properties.Base;
-    using OffByOne.LanguageCore.Ast.Style.Rules;
-    using OffByOne.LanguageCore.Ast.Style.Widgets;
-    using OffByOne.LanguageCore.Ast.Style.Widgets.Base;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Qls.Ast.Style;
+    using OffByOne.Qls.Ast.Style.Properties;
+    using OffByOne.Qls.Ast.Style.Properties.Base;
+    using OffByOne.Qls.Ast.Style.Rules;
+    using OffByOne.Qls.Ast.Style.Widgets;
+    using OffByOne.Qls.Ast.Style.Widgets.Base;
 
     public class CustomQlsVisitor : QlsGrammarBaseVisitor<AstNode>
     {

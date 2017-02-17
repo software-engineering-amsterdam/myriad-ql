@@ -59,68 +59,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ast\AstNode.cs" />
-    <Compile Include="Ast\Expressions\Binary\AddExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\AndExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\Base\BinaryExpression.cs" />
-    <Compile Include="Ast\Expressions\BracketExpression.cs" />
     <Compile Include="Ast\Literals\Base\Literal.cs" />
     <Compile Include="Ast\Literals\BooleanLiteral.cs" />
     <Compile Include="Ast\Literals\DateLiteral.cs" />
     <Compile Include="Ast\Literals\DecimalLiteral.cs" />
-    <Compile Include="Ast\Expressions\Expression.cs" />
-    <Compile Include="Ast\Expressions\Binary\DivideExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\EqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\GreaterThanExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\GreaterThanOrEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\LessThanExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\LessThanOrEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\MultiplyExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
     <Compile Include="Ast\Literals\HexLiteral.cs" />
     <Compile Include="Ast\Literals\IntegerLiteral.cs" />
     <Compile Include="Ast\Literals\MoneyLiteral.cs" />
     <Compile Include="Ast\Literals\StringLiteral.cs" />
-    <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\PositiveExpression.cs" />
-    <Compile Include="Ast\Expressions\VariableExpression.cs" />
     <Compile Include="Ast\SourceCode.cs" />
-    <Compile Include="Ast\Statements\Branch\ElseStatement.cs" />
-    <Compile Include="Ast\Statements\FormStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\Base\QuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\BooleanQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DateQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DecimalQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\IntegerQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Statement.cs" />
-    <Compile Include="Ast\Style\Page.cs" />
-    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
-    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
-    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
-    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
-    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
-    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
-    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
-    <Compile Include="Ast\Style\Section.cs" />
-    <Compile Include="Ast\Style\StyleSheet.cs" />
-    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\Base\OptionsList.cs" />
-    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
-    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
     <Compile Include="Ast\ValueTypes\DateValueType.cs" />
@@ -134,7 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
     <None Include="OffByOne.LanguageCore.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

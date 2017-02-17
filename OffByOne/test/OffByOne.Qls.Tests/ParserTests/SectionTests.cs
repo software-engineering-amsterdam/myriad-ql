@@ -8,7 +8,7 @@
 
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.Style;
+    using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Tests.ParserTests.Base;
 
     using Xunit;

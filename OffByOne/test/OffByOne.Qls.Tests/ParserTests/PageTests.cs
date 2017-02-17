@@ -2,7 +2,7 @@
 {
     using System.Linq;
 
-    using OffByOne.LanguageCore.Ast.Style;
+    using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Tests.ParserTests.Base;
 
     using Xunit;

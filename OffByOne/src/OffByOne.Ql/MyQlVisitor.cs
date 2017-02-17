@@ -1,20 +1,17 @@
 ﻿namespace OffByOne.Ql
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
     using Antlr4.Runtime.Misc;
-    using Antlr4.Runtime.Tree;
 
     using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Expressions;
-    using OffByOne.LanguageCore.Ast.Expressions.Binary;
-    using OffByOne.LanguageCore.Ast.Expressions.Unary;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.Statements;
-    using OffByOne.LanguageCore.Ast.Statements.Branch;
-    using OffByOne.LanguageCore.Ast.Statements.Questions;
+    using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Expressions.Unary;
+    using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Ast.Statements.Questions;
     using OffByOne.Ql.Generated;
 
     // TODO: Extract creation of OperatorExpressions to factory method
