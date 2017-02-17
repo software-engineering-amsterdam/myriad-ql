@@ -13,6 +13,8 @@ require_relative 'ast/expressions/singleton_expression'
 require_relative 'ast/expressions/singleton_expressions/boolean_negation'
 require_relative 'ast/expressions/singleton_expressions/integer_negation'
 
+require_relative 'visitor/duplicate_label_checker'
+
 require 'parslet'
 require 'pp'
 
@@ -27,7 +29,10 @@ parsed = parser.parse(contents)
 transformer = Parslet::Transform.new
 ast = transformer.apply(parsed)
 
-ast.accept(FormVisitor.new)
+# ast.accept(FormVisitor.new)
+duplicate_labels = ast.accept(DuplicateLabelChecker.new)
+p '[WARNING] Duplicate labels found:'
+p duplicate_labels if duplicate_labels
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
