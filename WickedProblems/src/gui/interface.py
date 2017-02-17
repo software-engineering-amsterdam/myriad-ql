@@ -33,6 +33,11 @@ class Interface(Frame):
     def callback(self):
         print("callback!")
 
+    def refresh(self):
+        self.__root.update()
+        print(self.__variables)
+        print("refresh!")
+
     def construct_from_node(self,node):
         # Get possible displayables
         if(node.__class__ == QuestionNode):
