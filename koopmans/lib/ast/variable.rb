@@ -7,6 +7,10 @@ class Variable
     @name = name.to_s
   end
 
+  def accept(visitor)
+    visitor.visit(self)
+  end
+
   # def rule
   #   match('\w+').repeat(1).as(:variable)
   # end

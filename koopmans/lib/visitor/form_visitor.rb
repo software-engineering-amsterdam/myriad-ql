@@ -5,6 +5,10 @@ class FormVisitor < BaseVisitor
     puts 'Visiting Question: %s' % subject.label
   end
 
+  def visit_Variable(subject)
+    puts 'Visiting Variable: %s' % subject.name
+  end
+
   def visit_IfStatement(subject)
     puts 'Visiting If Statement: %s' % subject.expression
   end

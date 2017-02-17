@@ -27,8 +27,11 @@ class Question
   end
 
   def accept(visitor)
-    # @variable.accept(visitor)
     visitor.visit(self)
+    p "Label: #{@label}"
+    @variable.accept(visitor)
+    p "Label: #{@type}"
+    p "Label: #{@assignment}" if @assignment
   end
 end
 
