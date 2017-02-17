@@ -43,7 +43,7 @@ class MoneyType < Type
 end
 
 
-module TypeRules
+module TypeParser
   include Parslet
 
   rule(:type) do

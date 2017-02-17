@@ -30,7 +30,7 @@ class StringLiteral < Literal
   end
 end
 
-module LiteralRules
+module LiteralParser
   include Parslet
   rule(:boolean_literal) do
     str('true') | str('false').as(:boolean) >> spaces?

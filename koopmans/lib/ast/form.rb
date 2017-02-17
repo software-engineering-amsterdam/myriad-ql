@@ -10,7 +10,7 @@ class Form
   end
 end
 
-module FormRules
+module FormParser
   include Parslet
 
   rule(:form) do

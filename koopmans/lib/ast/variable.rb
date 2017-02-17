@@ -12,7 +12,7 @@ class Variable
   # end
 end
 
-module VariableRules
+module VariableParser
   include Parslet
 
   rule(:variable) do

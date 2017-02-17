@@ -24,7 +24,7 @@ class Question
 end
 
 
-module StatementRules
+module StatementParser
   include Parslet
 
   rule(:assignment?) do

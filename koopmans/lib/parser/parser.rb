@@ -8,12 +8,7 @@ require 'parslet'
 
 # parser for forms
 class Parser < Parslet::Parser
-  include ExpressionRules
-  include TypeRules
-  include LiteralRules
-  include VariableRules
-  include StatementRules
-  include FormRules
+  include ExpressionParser, TypeParser, LiteralParser, VariableParser, StatementParser, FormParser
 
   rule(:spaces) do
     match('\s').repeat(1)
