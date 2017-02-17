@@ -8,6 +8,10 @@ class IfStatement
     @expression = expression
     @block = block
   end
+
+  def accept(visitor)
+    visitor.visit(self)
+  end
 end
 
 class Question
@@ -21,8 +25,12 @@ class Question
     @type = type
     @assignment = expression if expression
   end
-end
 
+  def accept(visitor)
+    # @variable.accept(visitor)
+    visitor.visit(self)
+  end
+end
 
 module StatementParser
   include Parslet

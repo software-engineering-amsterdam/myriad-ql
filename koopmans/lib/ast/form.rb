@@ -8,8 +8,14 @@ class Form
     @variable = variable
     @statements = statements
   end
-end
 
+  # go through each element and 'visit' it
+  def accept(visitor)
+    @statements.each do |element|
+      element.accept(visitor)
+    end
+  end
+end
 module FormParser
   include Parslet
 
