@@ -1,8 +1,8 @@
-require_relative '../visitor/base_visitor'
+require_relative 'base_visitor'
 
 class DuplicateLabelChecker < BaseVisitor
   def visit_form(subject)
-    labels = subject.statements.map{|statement| visit_statement(statement)}.flatten
+    labels = subject.statements.map { |statement| visit_statement(statement) }.flatten
     labels.select{ |e| labels.count(e) > 1 }.uniq
   end
 

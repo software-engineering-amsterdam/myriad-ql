@@ -10,6 +10,6 @@ class BaseVisitor
   end
 
   def visit_if_statement(subject)
-    subject.block.map{|statement| visit_statement(statement)}
+    subject.block.map { |statement| visit_statement(statement) }
   end
 end

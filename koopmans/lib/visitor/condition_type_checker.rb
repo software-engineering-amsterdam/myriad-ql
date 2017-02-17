@@ -1,14 +1,13 @@
 require_relative 'base_visitor'
-require_relative 'variable_visitor'
+require_relative 'type_visitor'
 
-class UndefinedVariableChecker < BaseVisitor
+class ConditionTypeChecker < BaseVisitor
   def visit_form(subject)
-    @question_variables = subject.accept(VariableVisitor.new)
+    @types = subject.accept(TypeVisitor.new)
     subject.statements.map { |statement| visit_statement(statement) }.flatten.compact
   end
 
-  def visit_question(subject)
-    visit_expression(subject.assignment) if subject.assignment
+  def visit_question(_)
   end
 
   def visit_if_statement(subject)
@@ -33,7 +32,7 @@ class UndefinedVariableChecker < BaseVisitor
   end
 
   def visit_variable(subject)
-    unless @question_variables.include?(subject.name)
+    unless @types[subject.name].kind_of?(BooleanType)
       subject.name
     end
   end
