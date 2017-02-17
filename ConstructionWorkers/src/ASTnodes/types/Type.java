@@ -18,5 +18,8 @@ public abstract class Type extends Node {
         super(location);
     }
 
+    public String toString() {
+        return "Type";
+    }
     public abstract <T> T accept(TypeVisitor<T> visitor);
 }

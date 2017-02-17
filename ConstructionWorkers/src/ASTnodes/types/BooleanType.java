@@ -19,6 +19,11 @@ public class BooleanType extends Type {
     }
 
     @Override
+    public String toString() {
+        return "Boolean";
+    }
+
+    @Override
     public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);
     }

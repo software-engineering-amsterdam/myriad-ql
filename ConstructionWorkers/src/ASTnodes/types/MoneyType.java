@@ -17,6 +17,12 @@ public class MoneyType extends Type {
         super(location);
     }
 
+
+    @Override
+    public String toString() {
+        return "Money";
+    }
+
     @Override
     public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);

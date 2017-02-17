@@ -19,6 +19,11 @@ public class IntegerType extends Type {
     }
 
     @Override
+    public String toString() {
+        return "Integer";
+    }
+
+    @Override
     public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);
     }

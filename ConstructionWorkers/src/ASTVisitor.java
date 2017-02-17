@@ -64,7 +64,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     public SimpleQuestion visitSimpleQuestion(QLParser.SimpleQuestionContext ctx) {
         Type type = (Type) ctx.type().accept(this);
         Identifier identifier = new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
-        String label = removeStringQuotes(ctx.STRING().getText());
+        String label = ctx.STRING().getText().substring(1, ctx.STRING().getText().length() - 1);
 
         return new SimpleQuestion(identifier, label, type, getCodeLocation(ctx));
     }
@@ -73,7 +73,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     public ComputedQuestion visitComputedQuestion(QLParser.ComputedQuestionContext ctx) {
         Type type = (Type) ctx.type().accept(this);
         Identifier identifier = new Identifier(ctx.IDENTIFIER().getText(), getCodeLocation(ctx));
-        String label = removeStringQuotes(ctx.STRING().getText());
+        String label = ctx.STRING().getText().substring(1, ctx.STRING().getText().length() - 1);
         Expression expression = (Expression) ctx.expression().accept(this);
 
         return new ComputedQuestion(identifier, label, type, expression, getCodeLocation(ctx));
@@ -228,14 +228,11 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
     @Override
     public MyString visitStringExpression(QLParser.StringExpressionContext ctx) {
-        return new MyString(removeStringQuotes(ctx.getText()), getCodeLocation(ctx));
+        return new MyString(ctx.getText().substring(1, ctx.getText().length() - 1), getCodeLocation(ctx));
     }
 
     private CodeLocation getCodeLocation(ParserRuleContext ctx) {
         return new CodeLocation(ctx.getStart().getLine());
     }
 
-    private String removeStringQuotes(String targetString) {
-        return targetString.substring(1, targetString.length() - 1);
-    }
 }

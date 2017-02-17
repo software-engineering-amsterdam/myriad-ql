@@ -7,6 +7,7 @@
 import ASTnodes.Form;
 import ASTnodes.statements.IfStatement;
 import ASTnodes.statements.Statement;
+import checkSemantics.CheckSemantics;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,7 +33,9 @@ public class QL {
         InputStream qlInputStream = new FileInputStream(fileName);
         Form qlAST = this.getAST(qlInputStream);
 
+        CheckSemantics semantics = new CheckSemantics(qlAST);
         // Test...
+
 
         Statement statement = qlAST.getStatements().get(3);
         if (statement instanceof IfStatement)

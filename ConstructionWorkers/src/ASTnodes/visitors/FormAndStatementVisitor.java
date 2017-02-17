@@ -9,7 +9,7 @@ import ASTnodes.statements.*;
 
 public interface FormAndStatementVisitor<T> {
 
-    T visit(Form structure);
+    T visit(Form form);
 
     T visit(SimpleQuestion statement);
     T visit(ComputedQuestion statement);

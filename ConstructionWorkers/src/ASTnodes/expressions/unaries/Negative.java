@@ -26,10 +26,12 @@ public class Negative extends Unary {
     @Override
     public Type getType(Type type) {
 
-        IntegerType integerTest = new IntegerType();
-        MoneyType moneyTest = new MoneyType();
+        String intTest = new IntegerType().getClass().getName();
+        String moneyTest = new MoneyType().getClass().getName();
 
-        if (type.equals(integerTest) || type.equals(moneyTest))
+        String typeString = type.getClass().getName();
+
+        if (typeString == intTest || typeString == moneyTest)
             return type;
         else
             return new UndefinedType();

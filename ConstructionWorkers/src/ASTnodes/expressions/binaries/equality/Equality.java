@@ -15,15 +15,4 @@ public abstract class Equality extends Binary {
         super(left, right, location);
     }
 
-    @Override
-    public Type getType(Type left, Type right) {
-
-        IntegerType intTest = new IntegerType();
-        MoneyType moneyTest = new MoneyType();
-
-        if (left.equals(right) && (right.equals(intTest) || right.equals(moneyTest)))
-            return right;
-        else
-            return new UndefinedType();
-    }
 }

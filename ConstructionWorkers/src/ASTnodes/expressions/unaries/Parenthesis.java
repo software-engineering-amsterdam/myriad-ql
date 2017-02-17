@@ -19,12 +19,13 @@ public class Parenthesis extends Unary {
     @Override
     public Type getType(Type type) {
 
-        IntegerType intTest = new IntegerType();
-        MoneyType moneyTest = new MoneyType();
-        BooleanType booleanTest = new BooleanType();
-        StringType stringTest = new StringType();
+        String intTest = new IntegerType().getClass().getName();
+        String moneyTest = new MoneyType().getClass().getName();
+        String booleanTest = new BooleanType().getClass().getName();
+        String stringTest = new StringType().getClass().getName();
 
-        if (type.equals(intTest) || type.equals(moneyTest) || type.equals(booleanTest) || type.equals(stringTest))
+        String typeString = type.getClass().getName();
+        if (typeString == intTest || typeString == moneyTest || typeString == booleanTest || typeString == stringTest)
             return type;
         else
             return new UndefinedType();

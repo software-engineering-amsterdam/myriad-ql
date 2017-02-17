@@ -25,8 +25,11 @@ public class Negation extends Unary {
     @Override
     public Type getType(Type type) {
 
-        BooleanType booleanTest = new BooleanType();
-        if (type.equals(booleanTest))
+        String booleanTest = new BooleanType().getClass().getName();
+
+        String typeString = type.getClass().getName();
+
+        if (typeString == booleanTest)
             return type;
         else
             return new UndefinedType();

@@ -19,6 +19,11 @@ public class StringType extends Type {
     }
 
     @Override
+    public String toString() {
+        return "String";
+    }
+
+    @Override
     public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);
     }

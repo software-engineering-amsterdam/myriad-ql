@@ -1,4 +1,4 @@
-package typechecker;
+package checkSemantics;
 
 import ASTnodes.Form;
 import ASTnodes.expressions.binaries.equality.*;
@@ -10,14 +10,23 @@ import ASTnodes.statements.*;
 import ASTnodes.types.*;
 import ASTnodes.visitors.ExpressionVisitor;
 import ASTnodes.visitors.FormAndStatementVisitor;
+import checkSemantics.messageHandling.MessageData;
+import checkSemantics.messageHandling.errors.InvalidType;
+
+import java.util.HashMap;
 
 /**
  * Created by LGGX on 15-Feb-17.
  */
 public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVisitor<Type> {
 
-    public TypeChecker(Form ast) {
+    private HashMap<String, Type> identifierMap;
+    private MessageData messageLists;
 
+    public TypeChecker(Form ast, HashMap identifierMap, MessageData messageLists) {
+
+        this.messageLists = messageLists;
+        this.identifierMap = identifierMap;
         ast.accept(this);
 
     }
@@ -131,8 +140,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     @Override
-    public Void visit(Form structure) {
-        for (Statement statement : structure.getStatements()) {
+    public Void visit(Form form) {
+        for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
         return null;
@@ -147,8 +156,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public Void visit(ComputedQuestion statement) {
         Type type = statement.getExpression().accept(this);
 
-        if (!type.equals(statement.getType())) {
-            System.out.println("Incompatible types for computed question!");
+        if (!type.getClass().equals(statement.getType().getClass())) {
+            messageLists.addError(new InvalidType(statement.getLocation(), statement.getType()));
+            //System.out.println("Incompatible types for computed question!");
         }
 
         return null;
@@ -160,8 +170,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
 
         Type type = statement.getType(expression);
 
-        if (type.equals(new UndefinedType())) {
-            System.out.println("Incompatible types for IF statement expression!");
+        if (type.getClass().equals(new UndefinedType().getClass())) {
+            messageLists.addError(new InvalidType(statement.getLocation(), new BooleanType()));
+            //System.out.println("Incompatible types for IF statement expression!");
         }
 
         for (Statement subStatement : statement.getStatements()) {
@@ -181,11 +192,13 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public Type visit(Identifier identifier) {
         String context = identifier.getName();
 
-        if (context != null) {
+        Type type = identifierMap.get(identifier.getName());
+
+        if (context == null) {
             System.out.println("Undefined identifier name!");
         }
 
-        return new StringType();
+        return type;
     }
 
     @Override
@@ -204,4 +217,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
 
+    public HashMap getMap() {
+        return this.identifierMap;
+    }
 }

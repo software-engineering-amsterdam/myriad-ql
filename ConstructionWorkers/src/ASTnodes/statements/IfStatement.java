@@ -45,9 +45,11 @@ public class IfStatement extends Statement {
 
     public Type getType(Type type) {
 
-        BooleanType booleanTest = new BooleanType();
+        String booleanTest = new BooleanType().getClass().getName();
 
-        if (type.equals(new BooleanType()))
+        String typeString = type.getClass().getName();
+
+        if (typeString == booleanTest)
             return type;
         else
             return new UndefinedType();
