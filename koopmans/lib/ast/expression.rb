@@ -49,7 +49,7 @@ module ExpressionRules
   end
 
   rule(:expression) do
-    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable_or_literal
+    str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal
   end
 
 end

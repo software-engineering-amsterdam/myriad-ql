@@ -20,6 +20,6 @@ module VariableRules
   end
 
   rule(:variable_assignment) do
-    variable >> colon >> spaces?
+    variable >> str(':') >> spaces?
   end
 end

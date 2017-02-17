@@ -28,7 +28,7 @@ module StatementRules
   include Parslet
 
   rule(:assignment?) do
-    (assign >> spaces? >> expression).maybe >> spaces?
+    (str('=') >> spaces? >> expression).maybe >> spaces?
   end
 
   rule(:question) do
@@ -36,7 +36,7 @@ module StatementRules
   end
 
   rule(:block) do
-    left_brace >> spaces? >> (question | if_statement).repeat.as(:block) >> right_brace >> spaces?
+    str('{') >> spaces? >> (question | if_statement).repeat.as(:block) >> str('}') >> spaces?
   end
 
   rule(:if_statement) do

@@ -16,20 +16,20 @@ class Parser < Parslet::Parser
   rule(:spaces?) do
     spaces.maybe
   end
+  #
+  # def self.symbols(symbols)
+  #   symbols.each do |name, symbol|
+  #     rule(name) { str(symbol) }
+  #   end
+  # end
 
-  def self.symbols(symbols)
-    symbols.each do |name, symbol|
-      rule(name) { str(symbol) }
-    end
-  end
-
-  symbols left_brace: '{',
-          right_brace: '}',
-          left_parenthesis: '(',
-          right_parenthesis: ')',
-          quote: '"',
-          colon: ':',
-          assign: '='
+  # symbols left_brace: '{',
+          # right_brace: '}'
+          # left_parenthesis: '(',
+          # right_parenthesis: ')'
+          # quote: '"'
+          # colon: ':'
+          # assign: '='
 
 
   # expression
