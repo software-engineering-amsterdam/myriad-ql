@@ -6,19 +6,19 @@ class TextQuestion < Question
   def initialize(args)
     super
     @previous_value = value
-    entry
+    @variable.value = ("")
+    create_entry
   end
 
-  def entry
+  def create_entry
     entry = TkEntry.new(frame).pack
     entry.textvariable = self.variable
     # every time enter is pressed
     entry.bind('Return') do
       # only if value changes
-      unless @previous_value == value
-        gui.value_changed(self)
-        @previous_value = value
-      end
+      return if @previous_value == value
+      gui.value_changed(self)
+      @previous_value = value
     end
   end
 end
