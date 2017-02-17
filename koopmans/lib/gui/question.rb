@@ -16,7 +16,7 @@ class Question
     @variable = TkVariable.new(true)
     @frame = TkFrame.new.grid(row: @gui.questions.size)
 
-    label(args[:label])
+    create_label(args[:label])
   end
 
   def value
@@ -37,7 +37,7 @@ class Question
     hidden ? show : hide
   end
 
-  def label(text)
+  def create_label(text)
     label = TkLabel.new(frame).pack
     label.text = text
   end
