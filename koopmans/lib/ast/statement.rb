@@ -1,4 +1,7 @@
+require 'parslet'
+
 class IfStatement
+  # extend Parslet
   attr_reader :expression, :block
 
   def initialize(expression, block)
@@ -8,6 +11,8 @@ class IfStatement
 end
 
 class Question
+  extend Parslet
+
   attr_reader :label, :variable, :type, :assignment
 
   def initialize(label, variable, type, expression=nil)
@@ -15,5 +20,26 @@ class Question
     @variable = variable
     @type = type
     @assignment = expression if expression
+  end
+end
+
+
+module StatementRules
+  include Parslet
+
+  rule(:assignment?) do
+    (assign >> spaces? >> expression).maybe >> spaces?
+  end
+
+  rule(:question) do
+    (string_literal >> variable_assignment >> type >> assignment?).as(:question) >> spaces?
+  end
+
+  rule(:block) do
+    left_brace >> spaces? >> (question | if_statement).repeat.as(:block) >> right_brace >> spaces?
+  end
+
+  rule(:if_statement) do
+    (str('if') >> spaces? >> expression >> block).as(:if_statement)
   end
 end

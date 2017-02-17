@@ -3,6 +3,7 @@ require_relative '../ast/form'
 require_relative '../ast/expression'
 require_relative '../ast/type'
 require_relative '../ast/literal'
+require_relative '../ast/variable'
 require 'parslet'
 
 # defines rules to match parts of a captured tree and transform them into abstract syntax tree
@@ -15,10 +16,10 @@ class Transformer < Parslet::Transform
 
   # questions
   Type.descendants.each do |type|
-    rule(question: {string: simple(:string), variable: simple(:variable), type: type.to_type}) do
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.type}) do
       Question.new(string, Variable.new(variable), type.new)
     end
-    rule(question: {string: simple(:string), variable: simple(:variable), type: type.to_type, expression: subtree(:expression)}) do
+    rule(question: {string: simple(:string), variable: simple(:variable), type: type.type, expression: subtree(:expression)}) do
       Question.new(string, Variable.new(variable), type.new, expression)
     end
   end
@@ -48,7 +49,7 @@ class Transformer < Parslet::Transform
   end
 
   Literal.descendants.each do |literal|
-    rule("#{literal.to_type}": simple(:value)) do
+    rule("#{literal.type}": simple(:value)) do
       literal.new(value)
     end
   end

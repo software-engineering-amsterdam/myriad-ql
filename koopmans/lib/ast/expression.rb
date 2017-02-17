@@ -1,11 +1,3 @@
-class Variable
-  attr_reader :name
-
-  def initialize(name)
-    @name = name.to_s
-  end
-end
-
 class Expression
   def self.descendants
     ObjectSpace.each_object(Class).select { |klass| klass < self }
@@ -27,6 +19,39 @@ class BinaryExpression < Expression
     @left = left
     @right = right
   end
+end
+
+module ExpressionRules
+  include Parslet
+
+  rule(:integer_negation?) do
+    str('-').as(:integer_negation).maybe
+  end
+
+  rule(:boolean_negation?) do
+    str('!').as(:boolean_negation).maybe
+  end
+
+  rule(:negation?) do
+    (str('!') | str('-')).as(:negation).maybe
+  end
+
+  rule(:variable_or_literal) do
+    (boolean_negation? >> boolean_literal | integer_negation? >> integer_literal | string_literal | negation? >> variable) >> spaces?
+  end
+
+  rule(:calculation) do
+    variable_or_literal.as(:left) >> operator >> expression.as(:right)
+  end
+
+  rule(:operator) do
+    BinaryExpression.descendants.map { |binary_expression| str(binary_expression.to_operator) }.reduce(&:|).as(:operator) >> spaces?
+  end
+
+  rule(:expression) do
+    left_parenthesis >> spaces? >> expression.as(:expression) >> spaces? >> right_parenthesis >> spaces? | calculation | variable_or_literal
+  end
+
 end
 
 
@@ -120,3 +145,4 @@ class NotEqual < BinaryExpression
     '!='
   end
 end
+
