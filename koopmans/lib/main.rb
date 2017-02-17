@@ -1,6 +1,5 @@
 require_relative 'parser/file_reader'
 require_relative 'parser/parser'
-require_relative 'type_checker/form_visitor'
 
 require_relative 'ast/expression'
 require_relative 'ast/type'
