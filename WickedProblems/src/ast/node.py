@@ -29,14 +29,6 @@ class AbstractNode(object):
     def get_identifier(self):
         return self.__identifier
 
-    def get_tree_representation1(self):
-        __ret = self.__class__.__name__ + "\n"
-        for child in self.__children:
-            __ret += "\t" + child.__class__.__name__ + "\n"
-            for __sub in child.get_children():
-                __ret += "\t\t" + __sub.get_tree_representation()
-        return __ret
-
     def get_tree_representation(self, level=0):
         return "".center(level, '\t') + str(self) + "\n" + self.print_children(level)
 
