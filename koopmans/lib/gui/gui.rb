@@ -1,4 +1,7 @@
 require_relative 'question'
+require_relative 'boolean_question'
+require_relative 'text_question'
+
 require 'tk'
 
 class GUI
@@ -6,20 +9,19 @@ class GUI
 
   def initialize
     @questions = []
-    add_question('How is the weather')
-    add_question('How are you')
-
+    q1 = BooleanQuestion.new(gui: self, label: 'hoe')
+    q2 = BooleanQuestion.new(gui: self, label: 'wat')
+    q1.questions = [q2]
+    q3 = TextQuestion.new(gui: self, label: 'hoeveel')
     Tk.mainloop
   end
 
-  def add_question(label)
-    @questions << Question.new(self, label)
-  end
-
   def value_changed(question)
-    p question.variable.value
-
-    p @questions[1].toggle
+    p 'value changed'
+    p question.value
+    if question.questions
+      question.questions.each(&:toggle)
+    end
   end
 end
 
