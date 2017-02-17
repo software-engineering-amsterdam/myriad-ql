@@ -7,9 +7,9 @@ class Variable
     @name = name.to_s
   end
 
-  def accept(visitor)
-    visitor.visit_variable(self)
-  end
+  # def accept(visitor)
+  #   visitor.visit_variable(self)
+  # end
 end
 
 class Parslet::Parser

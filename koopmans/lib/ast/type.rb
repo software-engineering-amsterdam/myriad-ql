@@ -4,9 +4,9 @@ require 'parslet'
 class Type
   extend Helper
 
-  def accept(visitor)
-    visitor.visit_type(self)
-  end
+  # def accept(visitor)
+  #   visitor.visit_type(self)
+  # end
 end
 
 class BooleanType < Type
