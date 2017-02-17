@@ -31,7 +31,7 @@ end
 
 class Parslet::Parser
   rule(:boolean_literal) do
-    str('true') | str('false').as(:boolean) >> spaces?
+    (str('true') | str('false')).as(:boolean) >> spaces?
   end
 
   rule(:integer_literal) do
