@@ -4,10 +4,7 @@ require_relative 'type_visitor'
 class OperandsTypeChecker < BaseChecker
   def visit_form(subject)
     @types = subject.accept(TypeVisitor.new)
-    # TODO fix errors array
-    @errors = []
-    subject.statements.map { |statement| visit_statement(statement) }
-    @errors.flatten.compact
+    subject.statements.map { |statement| visit_statement(statement) }.flatten.compact
   end
 
   def visit_question(subject)
@@ -15,8 +12,9 @@ class OperandsTypeChecker < BaseChecker
   end
 
   def visit_if_statement(subject)
-    @errors.push(visit_calculation(subject.expression))
-    subject.block.map { |statement| visit_statement(statement) }
+    test = []
+    test.push(visit_calculation(subject.expression))
+    test.push(subject.block.map { |statement| visit_statement(statement) })
   end
 
   def visit_variable(_)
@@ -37,18 +35,19 @@ class OperandsTypeChecker < BaseChecker
       right_type = subject.right.class.real_type
     end
 
+    test = []
     if subject_type != left_type
-      @errors.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.class.to_operator} operator")
+      test.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.class.to_operator} operator")
     end
 
     if subject_type != right_type
-      @errors.push("[ERROR]: #{subject.right.name} of type #{right_type} can not be used with #{subject.class.to_operator} operator")
+      test.push("[ERROR]: #{subject.right.name} of type #{right_type} can not be used with #{subject.class.to_operator} operator")
     end
 
     if left_type != right_type
-      @errors.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.right.name} of type #{right_type}")
+      test.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.right.name} of type #{right_type}")
     end
 
-    [visit_calculation(subject.left), visit_calculation(subject.right)]
+    test.push([visit_calculation(subject.left), visit_calculation(subject.right)])
   end
 end
