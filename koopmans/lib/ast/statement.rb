@@ -10,7 +10,7 @@ class IfStatement
   end
 
   def accept(visitor)
-    visitor.visit(self)
+    visitor.visit_if_statement(self)
   end
 end
 
@@ -27,11 +27,7 @@ class Question
   end
 
   def accept(visitor)
-    visitor.visit(self)
-    p "Label: #{@label}"
-    @variable.accept(visitor)
-    p "Label: #{@type}"
-    p "Label: #{@assignment}" if @assignment
+    visitor.visit_question(self)
   end
 end
 

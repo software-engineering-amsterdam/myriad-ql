@@ -8,7 +8,7 @@ class Variable
   end
 
   def accept(visitor)
-    visitor.visit(self)
+    visitor.visit_variable(self)
   end
 end
 

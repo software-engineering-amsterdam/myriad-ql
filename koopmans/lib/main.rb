@@ -20,8 +20,8 @@ ast = transformer.apply(parsed)
 
 ast.accept(FormVisitor.new)
 # DuplicateLabelChecker.new.visit_ast(ast)
-pp parsed
-pp ast
+# pp parsed
+# pp ast
 
 # gui = Gui.new
 # gui.question('joe?')
