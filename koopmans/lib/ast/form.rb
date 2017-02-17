@@ -11,9 +11,10 @@ class Form
 
   # go through each element and 'visit' it
   def accept(visitor)
-    @statements.each do |element|
-      element.accept(visitor)
-    end
+    visitor.visit_form(self)
+    # @statements.each do |element|
+    #   element.accept(visitor)
+    # end
   end
 end
 
