@@ -15,17 +15,29 @@ class BooleanLiteral < Literal
   def self.type
     'boolean'
   end
+
+  def self.real_type
+    BooleanType
+  end
 end
 
 class IntegerLiteral < Literal
   def self.type
     'integer'
   end
+
+  def self.real_type
+    IntegerType
+  end
 end
 
 class StringLiteral < Literal
   def self.type
     'string'
+  end
+
+  def self.real_type
+    StringType
   end
 end
 

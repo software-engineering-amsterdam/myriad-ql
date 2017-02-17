@@ -38,11 +38,19 @@ class And < BinaryExpression
   def self.to_operator
     '&&'
   end
+
+  def self.real_type
+    BooleanType
+  end
 end
 
 class Or < BinaryExpression
   def self.to_operator
     '||'
+  end
+
+  def self.real_type
+    BooleanType
   end
 end
 
@@ -52,11 +60,19 @@ class Subtract < BinaryExpression
   def self.to_operator
     '-'
   end
+
+  def self.real_type
+    IntegerType
+  end
 end
 
 class Add < BinaryExpression
   def self.to_operator
     '+'
+  end
+
+  def self.real_type
+    IntegerType
   end
 end
 

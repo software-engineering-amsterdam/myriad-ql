@@ -1,3 +1,0 @@
-class BaseVisitor
-
-end
