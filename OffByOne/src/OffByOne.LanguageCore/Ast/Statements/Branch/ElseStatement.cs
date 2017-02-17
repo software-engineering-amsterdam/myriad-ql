@@ -5,11 +5,11 @@
 
     public class ElseStatement : Statement
     {
-        public ElseStatement(IList<Statement> statements)
+        public ElseStatement(IEnumerable<Statement> statements)
         {
             this.Statements = statements;
         }
 
-        public IList<Statement> Statements { get; private set; }
+        public IEnumerable<Statement> Statements { get; private set; }
     }
 }

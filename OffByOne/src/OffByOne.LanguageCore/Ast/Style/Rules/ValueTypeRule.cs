@@ -13,7 +13,7 @@
         public ValueTypeRule(
             ValueType valueType,
             Widget widget,
-            ICollection<Property> properties)
+            IEnumerable<Property> properties)
             : base(widget, properties)
         {
             this.ValueType = valueType;

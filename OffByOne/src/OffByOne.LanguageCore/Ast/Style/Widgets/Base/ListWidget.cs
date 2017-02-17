@@ -11,6 +11,7 @@
             this.Values = values;
         }
 
+        // TODO: Make readonly
         public OptionsList<StringLiteral> Values { get; private set; }
     }
 }

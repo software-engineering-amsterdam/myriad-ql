@@ -19,7 +19,7 @@
 
         public Expression Condition { get; private set; }
 
-        public IList<Statement> Statements { get; private set; }
+        public IEnumerable<Statement> Statements { get; private set; }
 
         public Statement ElseStatement { get; private set; }
     }

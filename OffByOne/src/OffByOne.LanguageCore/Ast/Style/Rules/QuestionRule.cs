@@ -12,7 +12,7 @@
         public QuestionRule(
             string name,
             Widget widget,
-            ICollection<Property> properties)
+            IEnumerable<Property> properties)
             : base(widget, properties)
         {
             this.Name = name;
