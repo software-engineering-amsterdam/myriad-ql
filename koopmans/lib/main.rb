@@ -3,8 +3,17 @@ require_relative 'parser/parser'
 require_relative 'visitor/form_visitor'
 require_relative 'visitor/statement_visitor'
 
-require 'parslet'
+require_relative 'ast/expression'
+require_relative 'ast/type'
+require_relative 'ast/literal'
+require_relative 'ast/statement'
+require_relative 'ast/form'
+require_relative 'ast/variable'
+require_relative 'ast/expressions/singleton_expression'
+require_relative 'ast/expressions/singleton_expressions/boolean_negation'
+require_relative 'ast/expressions/singleton_expressions/integer_negation'
 
+require 'parslet'
 require 'pp'
 
 # read file
