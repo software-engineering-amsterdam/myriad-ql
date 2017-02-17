@@ -4,11 +4,23 @@ class Expression
   extend Helper
 end
 
-class SingletonExpression < Expression
+class Negation < Expression
   attr_reader :expression
 
   def initialize(expression)
     @expression = expression
+  end
+end
+
+class BooleanNegation < Negation
+  def self.to_operator
+    '!'
+  end
+end
+
+class IntegerNegation < Negation
+  def self.to_operator
+    '-'
   end
 end
 
@@ -20,20 +32,6 @@ class BinaryExpression < Expression
     @right = right
   end
 end
-
-# negations: ! -
-class BooleanNegation < SingletonExpression
-  def self.to_operator
-    '!'
-  end
-end
-
-class IntegerNegation < SingletonExpression
-  def self.to_operator
-    '-'
-  end
-end
-
 
 # booleans: && ||
 class And < BinaryExpression
@@ -146,12 +144,11 @@ class Parslet::Transform
     BooleanNegation.new(BooleanLiteral.new(boolean))
   end
 
-  # negative integer literal
   rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
     IntegerNegation.new(IntegerLiteral.new(integer))
   end
 
-  SingletonExpression.descendants.each do |singleton_expression|
+  Negation.descendants.each do |singleton_expression|
     rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
       singleton_expression.new(Variable.new(variable))
     end
