@@ -1,6 +1,12 @@
-require_relative 'base_visitor'
+class FormVisitor
+  def visit_statement(subject)
+    if subject.kind_of?(Question)
+      visit_question(subject)
+    elsif subject.kind_of?(IfStatement)
+      visit_if_statement(subject)
+    end
+  end
 
-class FormVisitor < BaseVisitor
   def visit_question(subject)
     puts 'Visiting Question: %s' % subject
 
@@ -19,7 +25,16 @@ class FormVisitor < BaseVisitor
     puts 'Visiting Type: %s' % subject.class.type
   end
 
+  def visit_assignment(subject)
+    # TODO
+    puts 'Visiting Assignment'
+  end
+
   def visit_if_statement(subject)
     puts 'Visiting If Statement: %s' % subject.expression
+    p ''
+    subject.block.each do |statement|
+      visit_statement(statement)
+    end
   end
 end
