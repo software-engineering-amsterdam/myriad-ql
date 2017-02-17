@@ -9,9 +9,6 @@ require_relative 'ast/literal'
 require_relative 'ast/statement'
 require_relative 'ast/form'
 require_relative 'ast/variable'
-require_relative 'ast/expressions/singleton_expression'
-require_relative 'ast/expressions/singleton_expressions/boolean_negation'
-require_relative 'ast/expressions/singleton_expressions/integer_negation'
 
 require_relative 'visitor/duplicate_label_checker'
 
@@ -34,8 +31,8 @@ duplicate_labels = ast.accept(DuplicateLabelChecker.new)
 p '[WARNING] Duplicate labels found:'
 p duplicate_labels if duplicate_labels
 # DuplicateLabelChecker.new.visit_ast(ast)
-# pp parsed
-# pp ast
+pp parsed
+pp ast
 
 # gui = Gui.new
 # gui.question('joe?')
