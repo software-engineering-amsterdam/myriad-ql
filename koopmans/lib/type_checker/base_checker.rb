@@ -27,8 +27,4 @@ class BaseChecker
 
   def visit_literal(_)
   end
-
-  def visit_expression(subject)
-    [visit_calculation(subject.left), visit_calculation(subject.right)]
-  end
 end

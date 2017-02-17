@@ -13,17 +13,17 @@ form taxOfficeExample {
         hasSoldHouse: boolean
 
 
-  if (hasSoldHouse) {
+  if (hasSoldHouse + hasMaintLoan) {
     "What was the selling price?"
       sellingPrice: money
-    if (hasMaintLoan2 && privateDebt) {
+    if (privateDebt) {
 
     }
     "Private debts for the sold house:"
       privateDebt: money
     "Value residue:"
       valueResidue: money =
-        (8 - 2 + 9 - aap + joep)
+        (8 - 2 + 9 - privateDebt + joep)
   }
 
 }

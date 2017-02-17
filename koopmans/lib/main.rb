@@ -13,6 +13,7 @@ require_relative 'type_checker/duplicate_variable_checker'
 require_relative 'type_checker/variable_visitor'
 require_relative 'type_checker/undefined_variable_checker'
 require_relative 'type_checker/condition_type_checker'
+require_relative 'type_checker/operands_type_checker'
 
 require 'parslet'
 require 'pp'
@@ -53,6 +54,15 @@ conditions = ast.accept(ConditionTypeChecker.new)
 if conditions
   p '[ERROR] conditions that are not of the type boolean:'
   p conditions
+  p ""
+end
+
+operands = ast.accept(OperandsTypeChecker.new)
+if operands
+  p 'operands of invalid type to operators:'
+  operands.each do |o|
+    p o
+  end
   p ""
 end
 # DuplicateLabelChecker.new.visit_ast(ast)

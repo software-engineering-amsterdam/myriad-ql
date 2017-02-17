@@ -21,4 +21,8 @@ class ConditionTypeChecker < BaseChecker
       subject.name
     end
   end
+
+  def visit_expression(subject)
+    [visit_calculation(subject.left), visit_calculation(subject.right)]
+  end
 end
