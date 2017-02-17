@@ -12,8 +12,9 @@ class AbstractNode(object):
     def __str__(self):
         return "{name}".format(name=self.__class__.__name__)
 
-    def print_children(self, level):
-        return "".join([x.get_tree_representation(level + 1) for x in self.__children])
+    def _get_children_string(self, level):
+        ''' String representation of children nodes '''
+        return "".join([node.get_tree_representation(level + 1) for node in self.__children])
 
     def add_child(self, child):
         if child and not isinstance(child, AbstractNode):
@@ -30,8 +31,8 @@ class AbstractNode(object):
         return self.__identifier
 
     def get_tree_representation(self, level=0):
-        return "".center(level, '\t') + str(self) + "\n" + self.print_children(level)
-
+        ''' Pretty print tree structure '''
+        return "".center(level, "\t") + str(self) + "\n" + self._get_children_string(level)
 
 class BaseNode(AbstractNode):
     # Node that only has children
