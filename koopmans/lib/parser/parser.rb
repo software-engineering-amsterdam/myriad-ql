@@ -38,7 +38,7 @@ class Parser < Parslet::Parser
   # end
 
   rule(:operator) do
-    BinaryExpression.descendants.map { |type| str(type.to_operator) }.reduce(&:|).as(:operator) >> spaces?
+    BinaryExpression.descendants.map { |binary_expression| str(binary_expression.to_operator) }.reduce(&:|).as(:operator) >> spaces?
   end
 
   rule(:expression) do
