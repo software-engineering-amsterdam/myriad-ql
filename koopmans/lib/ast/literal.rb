@@ -31,7 +31,6 @@ class StringLiteral < Literal
 end
 
 class Parslet::Parser
-  # include Parslet
   rule(:boolean_literal) do
     str('true') | str('false').as(:boolean) >> spaces?
   end

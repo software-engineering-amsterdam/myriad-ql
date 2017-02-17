@@ -6,15 +6,9 @@ class Variable
   def initialize(name)
     @name = name.to_s
   end
-
-  # def rule
-  #   match('\w+').repeat(1).as(:variable)
-  # end
 end
 
 class Parslet::Parser
-  # include Parslet
-
   rule(:variable) do
     match('\w+').repeat(1).as(:variable)
   end
@@ -29,24 +23,3 @@ class Parslet::Transform
     Variable.new(variable)
   end
 end
-#
-# require 'parslet'
-# module Variable
-#   class Variable
-#     attr_reader :name
-#
-#     def initialize(name)
-#       @name = name.to_s
-#     end
-#   end
-#
-#   class Parslet::Parser
-#     rule(:variable) do
-#       match('\w+').repeat(1).as(:variable)
-#     end
-#
-#     rule(:variable_assignment) do
-#       variable >> str(':') >> spaces?
-#     end
-#   end
-# end

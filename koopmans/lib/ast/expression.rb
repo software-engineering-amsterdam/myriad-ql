@@ -111,8 +111,6 @@ class NotEqual < BinaryExpression
   end
 end
 
-# module ExpressionParser
-#   include Parslet
 class Parslet::Parser
   rule(:integer_negation?) do
     str('-').as(:integer_negation).maybe

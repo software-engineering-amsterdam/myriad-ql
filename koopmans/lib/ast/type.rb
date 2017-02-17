@@ -44,8 +44,6 @@ end
 
 
 class Parslet::Parser
-  # include Parslet
-
   rule(:type) do
     Type.descendants.map { |type| str(type.type) }.reduce(&:|).as(:type) >> spaces?
   end
