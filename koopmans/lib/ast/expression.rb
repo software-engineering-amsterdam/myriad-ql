@@ -1,7 +1,7 @@
+require_relative '../helper'
+
 class Expression
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
-  end
+  extend Helper
 end
 
 class SingletonExpression < Expression

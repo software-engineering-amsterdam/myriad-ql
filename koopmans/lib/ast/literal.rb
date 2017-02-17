@@ -1,14 +1,13 @@
+require_relative '../helper'
 require 'parslet'
 
 class Literal
+  extend Helper
+
   attr_reader :value
 
   def initialize(value)
     @value = value.to_s
-  end
-
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
   end
 end
 

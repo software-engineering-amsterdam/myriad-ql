@@ -1,9 +1,8 @@
+require_relative '../helper'
 require 'parslet'
 
 class Type
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
-  end
+  extend Helper
 end
 
 class BooleanType < Type
