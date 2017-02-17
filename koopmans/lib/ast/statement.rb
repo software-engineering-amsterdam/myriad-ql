@@ -28,7 +28,7 @@ class Question
 
   def accept(visitor)
     visitor.visit_question(self)
-    # @variable.accept(visitor)
+    # @variable.accept(type_checker)
   end
 end
 

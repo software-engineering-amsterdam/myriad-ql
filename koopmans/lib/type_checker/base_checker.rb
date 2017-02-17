@@ -1,4 +1,4 @@
-class BaseVisitor
+class BaseChecker
   def visit_statement(subject)
     if subject.kind_of?(Question)
       visit_question(subject)

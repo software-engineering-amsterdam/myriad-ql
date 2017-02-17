@@ -1,7 +1,7 @@
-require_relative 'base_visitor'
+require_relative 'base_checker'
 require_relative 'type_visitor'
 
-class ConditionTypeChecker < BaseVisitor
+class ConditionTypeChecker < BaseChecker
   def visit_form(subject)
     @types = subject.accept(TypeVisitor.new)
     subject.statements.map { |statement| visit_statement(statement) }.flatten.compact

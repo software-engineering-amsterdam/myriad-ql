@@ -13,7 +13,7 @@ class Form
   def accept(visitor)
     visitor.visit_form(self)
     # @statements.each do |element|
-    #   element.accept(visitor)
+    #   element.accept(type_checker)
     # end
   end
 end

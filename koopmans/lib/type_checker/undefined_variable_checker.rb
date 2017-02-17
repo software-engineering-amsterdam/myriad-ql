@@ -1,7 +1,7 @@
-require_relative 'base_visitor'
+require_relative 'base_checker'
 require_relative 'variable_visitor'
 
-class UndefinedVariableChecker < BaseVisitor
+class UndefinedVariableChecker < BaseChecker
   def visit_form(subject)
     @question_variables = subject.accept(VariableVisitor.new)
     subject.statements.map { |statement| visit_statement(statement) }.flatten.compact
