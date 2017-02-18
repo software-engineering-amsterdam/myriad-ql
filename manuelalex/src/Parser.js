@@ -39,6 +39,9 @@ module.exports = class Parser {
             console.log("Shit van Alex:")
             console.log(result);
 
+            result =
+            parse()
+
 
             console.log("Eind van de shit van Alex")
         } catch (parseError){
@@ -56,8 +59,9 @@ module.exports = class Parser {
             q1.name = "Q1";
             q1.propertyName = "sellingPrice";
             q1.type = "money";
-            let f = new Form([q1]);
+            let f = new Form();
             f.name="taxOfficeExample";
+            f.statements = [q1];
             return f;
 
         } else if (test==4){
@@ -71,11 +75,13 @@ module.exports = class Parser {
             q2.type = "money";
 
             let a2 = new Answer();
+            a2.name= "not defined";
             a2.type= "money";
             a2.propertyName = "A2";
             a2.expression = "(Q1 - Q2)";
 
-            let f = new Form([q1,q2,a2]);
+            let f = new Form();
+            f.statements = [q1,q2,a2];
             f.name="taxOfficeExample";
             return f;
 

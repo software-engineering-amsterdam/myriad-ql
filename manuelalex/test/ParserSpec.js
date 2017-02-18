@@ -47,8 +47,9 @@ describe('DataSource', () => {
             q1.name = "Q1";
             q1.propertyName = "sellingPrice";
             q1.type = "money";
-            let f = new Form([q1]);
+            let f = new Form();
             f.name="taxOfficeExample";
+            f.statements = [q1];
             expect(parser.parse(test3,3)).to.deep.equal(f);
         });
     });
@@ -74,7 +75,8 @@ describe('DataSource', () => {
             a2.propertyName = "A2";
             a2.expression = "(Q1 - Q2)";
 
-            let f = new Form([q1,q2,a2]);
+            let f = new Form();
+            f.statements = [q1,q2,a2];
             f.name="taxOfficeExample";
             expect(parser.parse(test4,4)).to.deep.equal(f);
         });
