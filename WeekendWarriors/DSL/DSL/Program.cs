@@ -20,16 +20,13 @@ namespace DSL
             var parser = formFactory.CreateParser(inputString);
             var form = formFactory.CreateForm(parser);
 
-            //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(form, Formatting.Indented));
-            SemanticAnalysis.Analyzer semanticAnalyzer = new SemanticAnalysis.Analyzer();
+            var semanticAnalyzer = new SemanticAnalysis.Analyzer();
 
-            semanticAnalyzer.SemanticError += SemanticAnalyzer_SemanticError;
-
+            semanticAnalyzer.SemanticError += ReportSemanticError;
             semanticAnalyzer.Analyze(form);
-                
         }
 
-        private static void SemanticAnalyzer_SemanticError(object sender, SemanticAnalysis.SemanticErrorArgs e)
+        private static void ReportSemanticError(object sender, SemanticAnalysis.SemanticErrorArgs e)
         {
             Console.WriteLine("Semantic error: " + e.Message);
         }
