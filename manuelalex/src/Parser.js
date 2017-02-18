@@ -11,7 +11,7 @@ let nearley;
 let test1, test2;
 
 /**
- * To build the grammer: nearleyc grammar.ne -o qrammar.js
+ * To build the grammer: nearleyc grammar.ne -o grammar.js
  * (Building the grammar is not yet supported due to us requiring the PostProcessor inside the grammar, need to find a solution)
  * @type {Parser}
  */
