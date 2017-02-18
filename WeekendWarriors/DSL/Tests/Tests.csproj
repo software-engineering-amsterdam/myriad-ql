@@ -58,6 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="QL\AST\Literals.cs" />
+    <Compile Include="QL\AST\Types.cs" />
     <Compile Include="QL\DSL\LexerTestHarness.cs" />
     <Compile Include="QL\DSL\LexerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

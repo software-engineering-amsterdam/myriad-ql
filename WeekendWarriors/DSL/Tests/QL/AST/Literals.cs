@@ -10,12 +10,18 @@ namespace Tests.QL.AST
     {
         public FormFactory formFactory;
 
+        public T ExpressionFromTestCase<T>(string testCase) where T : INode
+        {
+            var parser = formFactory.CreateParser(testCase);
+            return (T)formFactory.CreateExpression(parser);
+        }
+
         [TestInitialize]
         public void SetupTestFactory()
         {
             formFactory = new FormFactory();
         }
-
+        
         [TestMethod]
         public void StringLiteral()
         {
@@ -29,11 +35,8 @@ namespace Tests.QL.AST
             
             foreach (var testCase in testCases)
             {
-                var parser = formFactory.CreateParser(testCase.Key);
-                var expression = (QLString)formFactory.CreateExpression(parser);
-
                 Assert.AreEqual(
-                    expression.Value,
+                    ExpressionFromTestCase<QLString>(testCase.Key).Value,
                     testCase.Key, testCase.Value
                 );
             }
@@ -50,11 +53,8 @@ namespace Tests.QL.AST
 
             foreach (var testCase in testCases)
             {
-                var parser = formFactory.CreateParser(testCase.Key);
-                var expression = (QLBoolean)formFactory.CreateExpression(parser);
-
                 Assert.AreEqual(
-                    expression.Value,
+                    ExpressionFromTestCase<QLBoolean>(testCase.Key).Value,
                     Boolean.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -72,11 +72,8 @@ namespace Tests.QL.AST
 
             foreach (var testCase in testCases)
             {
-                var parser = formFactory.CreateParser(testCase.Key);
-                var expression = (QLNumber)formFactory.CreateExpression(parser);
-
                 Assert.AreEqual(
-                    expression.Value,
+                    ExpressionFromTestCase<QLNumber>(testCase.Key).Value,
                     Int32.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -94,11 +91,8 @@ namespace Tests.QL.AST
 
             foreach (var testCase in testCases)
             {
-                var parser = formFactory.CreateParser(testCase.Key);
-                var expression = (QLMoney)formFactory.CreateExpression(parser);
-
                 Assert.AreEqual(
-                    expression.Value,
+                    ExpressionFromTestCase<QLMoney>(testCase.Key).Value,
                     Decimal.Parse(testCase.Key), testCase.Value
                 );
             }

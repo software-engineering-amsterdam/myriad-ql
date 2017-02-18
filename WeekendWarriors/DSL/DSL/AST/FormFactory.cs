@@ -10,8 +10,6 @@ namespace DSL.AST
 {
     public class FormFactory
     {
-        // TODO: Tijs is not a fan of static functions. Let's do some research to see if we
-        // can defend the choice or need to cave and use non-static
         public GrammarParser CreateParser(string input)
         {
             AntlrInputStream inputStream = new AntlrInputStream(input);
