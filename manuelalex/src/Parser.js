@@ -5,7 +5,7 @@ const Form = require('./Form.js');
 const grammar = require('./grammar.js');
 const Question = require('./statements/Question.js');
 const Answer = require('./statements/Answer.js');
-
+const CodeGenerator = require('./CodeGenerator.js');
 
 let nearley;
 let test1, test2;
@@ -17,7 +17,9 @@ let test1, test2;
  */
 module.exports = class Parser {
 
+
     constructor() {
+        this.parser;
         Promise.all([
             jspmImport('nearley'),
             jspmImport('./src/test/TestStrings.js')
@@ -30,20 +32,13 @@ module.exports = class Parser {
     }
 
     _run() {
-
+        // Create a Parser object from our grammar.
         const parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
         let result;
-        // Create a Parser object from our grammar.
         try{
-            result = parser.feed(test1).results;
-            console.log("Shit van Alex:")
-            console.log(result);
 
-            result =
-            parse()
-
-
-            console.log("Eind van de shit van Alex")
+           let result = parser.feed(test1).results;
+           return result;
         } catch (parseError){
             console.log(`Error at character ${parseError.offset}`);
         } finally{
@@ -51,19 +46,16 @@ module.exports = class Parser {
         }
     }
 
+    //TODO: parse function should be implemented using the result of-> "parser.feed(input).results"; Now it's test data
     parse(input, test=2){
-        //TODO: parse function should be implemented using the result of-> "parser.feed(test1).results";
-
+        let f = new Form();
         if(test==3){
             let q1 = new Question();
             q1.name = "Q1";
             q1.propertyName = "sellingPrice";
             q1.type = "money";
-            let f = new Form();
             f.name="taxOfficeExample";
             f.statements = [q1];
-            return f;
-
         } else if (test==4){
             let q1 = new Question();
             q1.name = "Q1";
@@ -73,26 +65,17 @@ module.exports = class Parser {
             q2.name = "Q2";
             q2.propertyName = "privateDebt";
             q2.type = "money";
-
             let a2 = new Answer();
             a2.name= "not defined";
             a2.type= "money";
             a2.propertyName = "A2";
             a2.expression = "(Q1 - Q2)";
-
-            let f = new Form();
             f.statements = [q1,q2,a2];
             f.name="taxOfficeExample";
-            return f;
-
         } else {
-            let f = new Form();
             f.name="y";
-            return f;
         }
-
-
-
+        return f;
     }
 };
 

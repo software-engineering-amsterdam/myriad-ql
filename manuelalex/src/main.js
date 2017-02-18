@@ -3,4 +3,23 @@
  */
 
 let Parser = require('./Parser.js');
-new Parser();
+let Form = require('./Form.js');
+let CodeGenerator = require('./CodeGenerator.js');
+
+
+let form = new Parser().parse("something",4);
+console.log(form);
+let html = new CodeGenerator().generate(form);
+
+console.log(html);
+//saveFile("./test.html", html);
+
+
+fs = require('fs');
+fs.writeFile('qs.html', html, function (err) {
+    if (err) return console.log(err);
+    console.log(html +' > qs.html');
+});
+
+
+
