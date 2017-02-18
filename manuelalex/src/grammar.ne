@@ -19,13 +19,11 @@ if_statement -> "if " parOpen propertyName parClose space openBrace newLine stat
 answer       -> "answer " prime sentence prime newLine allocation                                           {% FormPostProcessor.answer %}
 allocation   -> propertyName ": " propertyType space assignOp space expression newLine
 #expression   -> "(" propertyName space operator space propertyName ")"
-
-expression  -> term | expression space (min_op|plus_op) space term                                         {% FormPostProcessor.expression %}
-term        -> factor | term space (divide_op | multiply_op) space factor
+#operator     -> "-" | "+" | "/" | "*"
+expression  -> term | expression (min_op|plus_op) term                                         {% FormPostProcessor.expression %}
+term        -> factor | term (divide_op | multiply_op) factor
 factor      -> digits | propertyName | "(" expression ")"
 digits      -> [0-9]:+
-
-
 
 min_op      -> "-"
 plus_op     -> "+"

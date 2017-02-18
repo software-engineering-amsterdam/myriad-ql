@@ -17,7 +17,7 @@ export let test1 =
     'question `What was the private debts for the sold house?`\n' +
     'privateDebt: money\n' +
     'answer `Value residue:`\n' +
-    'valueResidue: money = (sellingPrice - privateDebt)\n' +
+    'valueResidue: money = (sellingPrice-privateDebt)\n' +
     '\n}' +
     '\n}';
 
@@ -37,5 +37,5 @@ export let test4 =
     'question `Q2`\n' +
     'privateDebt: money\n' +
     'answer `A2`\n' +
-    'A2: money = (Q1 - Q2)\n' +
+    'A2: money = (Q1-Q2)\n' +
     '\n}';
