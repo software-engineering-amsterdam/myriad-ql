@@ -8,7 +8,7 @@ namespace Tests.QL.AST
     [TestClass]
     public class Literals
     {
-        public FormFactory formFactory;
+        public ASTFactory formFactory;
 
         public T ExpressionFromTestCase<T>(string testCase) where T : INode
         {
@@ -19,7 +19,7 @@ namespace Tests.QL.AST
         [TestInitialize]
         public void SetupTestFactory()
         {
-            formFactory = new FormFactory();
+            formFactory = new ASTFactory();
         }
         
         [TestMethod]

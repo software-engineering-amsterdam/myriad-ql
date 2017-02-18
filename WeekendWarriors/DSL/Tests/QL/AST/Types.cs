@@ -9,7 +9,7 @@ namespace Tests.QL.AST
     [TestClass]
     public class Types
     {
-        public FormFactory formFactory;
+        public ASTFactory formFactory;
 
         public INode TypeFromTestCase(string testCase)
         {
@@ -20,7 +20,7 @@ namespace Tests.QL.AST
         [TestInitialize]
         public void SetupTestFactory()
         {
-            formFactory = new FormFactory();
+            formFactory = new ASTFactory();
         }
 
         [TestMethod]

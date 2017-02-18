@@ -8,7 +8,7 @@ using Antlr4.Runtime.Tree;
 
 namespace DSL.AST
 {
-    public class FormFactory
+    public class ASTFactory
     {
         public GrammarParser CreateParser(string input)
         {

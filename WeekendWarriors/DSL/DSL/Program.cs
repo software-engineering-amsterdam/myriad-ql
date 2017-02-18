@@ -16,7 +16,7 @@ namespace DSL
         {
             string inputString = "form Box1HouseOwning { hasSoldHouse: \"Did you sell a house in 2010?\" boolean }";
 
-            var formFactory = new AST.FormFactory();
+            var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(inputString);
             var form = formFactory.CreateForm(parser);
 
