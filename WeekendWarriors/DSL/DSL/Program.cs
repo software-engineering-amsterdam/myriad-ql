@@ -18,7 +18,7 @@ namespace DSL
 
             var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(inputString);
-            var form = formFactory.CreateForm(parser);
+            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
 
             var semanticAnalyzer = new SemanticAnalysis.Analyzer();
 

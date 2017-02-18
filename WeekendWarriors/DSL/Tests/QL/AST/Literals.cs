@@ -13,7 +13,7 @@ namespace Tests.QL.AST
         public T ExpressionFromTestCase<T>(string testCase) where T : INode
         {
             var parser = formFactory.CreateParser(testCase);
-            return (T)formFactory.CreateExpression(parser);
+            return (T)formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
         }
 
         [TestInitialize]

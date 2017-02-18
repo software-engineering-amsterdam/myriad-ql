@@ -14,7 +14,7 @@ namespace Tests.QL.AST
         public INode TypeFromTestCase(string testCase)
         {
             var parser = formFactory.CreateParser(testCase);
-            return formFactory.CreateForm(parser);
+            return formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
         }
 
         [TestInitialize]
