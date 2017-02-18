@@ -5,8 +5,8 @@ form
     ;
 
 block
-    : question+
-    | conditional+
+    : question
+    | conditional
     ;
 
 question
@@ -14,7 +14,7 @@ question
     ;
 
 conditional
-    : 'if' '(' expr ')' '{' question+ '}'
+    : 'if' '(' expr ')' '{' block+ '}'
     ;
 
 type_specifier

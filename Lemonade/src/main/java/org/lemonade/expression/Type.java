@@ -4,7 +4,7 @@ import org.lemonade.ASTNode;
 import org.lemonade.QLType;
 
 /**
- *
+ * A wrapper for QLType, couldn't use it in the Visitor otherwise..
  */
 public class Type extends ASTNode{
     private QLType type;

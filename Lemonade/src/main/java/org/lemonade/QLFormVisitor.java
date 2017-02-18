@@ -1,7 +1,11 @@
 package org.lemonade;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.lemonade.expression.Expression;
 import org.lemonade.expression.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,19 +15,14 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
         System.err.println("Entering form");
-        System.err.println("FORMLIDENT:" + ctx.identifier().getText());
-        String label = ctx.identifier().getText();
+        String identifier = ctx.identifier().getText();
+        List<Block> blocks = new ArrayList<Block>();
+
         for (QLParser.BlockContext block : ctx.block()) {
-            block.accept(this);
+            blocks.add((Block) block.accept(this));
         }
-        return new Form(ctx.identifier().getText());
 
-    }
-
-    @Override
-    public ASTNode visitBlock(QLParser.BlockContext ctx) {
-        System.err.println("Entering block");
-        return super.visitChildren(ctx);
+        return new Form(identifier, blocks);
     }
 
     @Override
@@ -32,13 +31,20 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         String identifier = ctx.identifier().getText();
         String label = ctx.label().getText();
         Type type = (Type) ctx.type_specifier().accept(this);
+
         return new Question(identifier, label, type);
     }
 
     @Override
     public ASTNode visitConditional(QLParser.ConditionalContext ctx) {
         System.err.println("entering conditional");
-        return super.visitConditional(ctx);
+        Expression expression = (Expression) ctx.expr().accept(this);
+        List<Block> blocks = new ArrayList<Block>();
+        for (QLParser.BlockContext block : ctx.block()){
+            blocks.add((Block) block.accept(this));
+        }
+
+        return new Conditional(expression, blocks);
     }
 
     @Override

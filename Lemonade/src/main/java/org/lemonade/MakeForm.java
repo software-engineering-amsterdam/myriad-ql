@@ -18,7 +18,7 @@ public class MakeForm extends QLBaseListener {
     @Override public void enterForm(final QLParser.FormContext ctx) {
         System.err.println("Entering form");
         System.err.println("FORMLABEL:" + ctx.identifier().getText());
-        Form form = new Form(ctx.identifier().getText());//FIXME lineno Hardcoded
+        Form form = new Form(ctx.identifier().getText(), null);//FIXME lineno Hardcoded
         stack.add(form);
     }
 
