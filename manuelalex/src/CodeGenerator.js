@@ -34,7 +34,32 @@ module.exports = class Parser {
 
     generate(form){
         let name = form.name;
-        return "<html><div id='Form_"+name+"'>"+name+"</html>";
+
+
+        // for (let statement of form.statements) {
+        //     console.log(statement);
+        // }
+        var html = "<html><div id='Form_"+name+"'>"+name+"</div>";
+
+        if(form.statements != null){
+            for(let statement of form.statements){
+                var type = "unknown";
+                if(statement.type == "money"){
+                    type = "number";
+                }
+
+                if(statement instanceof Answer){
+                     //html += "<div>"+statement.name+"<input type='"+type+"' id='"+statement.propertyName+"'></div>";
+                    html+= statement.getGeneratedCode(type);
+                } else {
+                     html += "<div>"+statement.name+"<input type='"+type+"' onchange='click"+statement.propertyName+"()' id='"+statement.propertyName+"'></div>";
+                }
+
+            }
+        }
+
+        html += "</html>";
+        return html;
 
 
     }

@@ -12,4 +12,8 @@ module.exports = class Answer extends Statement {
         this.type = options.type;
         this.expression = options.expression;
     }
+
+    getGeneratedCode(type){
+        return "<div>"+this.name+"<input type='"+type+"' id='"+this.propertyName+"'></div>";
+    }
 };
