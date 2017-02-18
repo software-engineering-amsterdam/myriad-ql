@@ -7,16 +7,15 @@
 @{% let FormPostProcessor = require('./processors/FormPostProcessor.js'); %}
 
 
-form         -> "form " formName openBrace newLine statements newLine closedBrace                           {% FormPostProcessor.form %}
+form         -> "form " formName openBrace newLine statement:* newLine closedBrace                           {% FormPostProcessor.form %}
 formName     -> letters
-statements   -> statement:*                                                                                 {% FormPostProcessor.statements %}
 
 statement    -> question
               | if_statement
               | answer                                                                                      {% FormPostProcessor.statement %}
 
 question     -> "question " prime sentence prime newLine propertyName ":" space propertyType newLine        {% FormPostProcessor.question %}
-if_statement -> "if " parOpen propertyName parClose space openBrace newLine statements newLine closedBrace  {% FormPostProcessor.ifStatement %}
+if_statement -> "if " parOpen propertyName parClose space openBrace newLine statement:*  newLine closedBrace  {% FormPostProcessor.ifStatement %}
 answer       -> "answer " prime sentence prime newLine allocation                                           {% FormPostProcessor.answer %}
 allocation   -> propertyName ": " propertyType space assignOp space expression newLine
 expression   -> "(" propertyName space operator space propertyName ")"                                      {% FormPostProcessor.expression %}
