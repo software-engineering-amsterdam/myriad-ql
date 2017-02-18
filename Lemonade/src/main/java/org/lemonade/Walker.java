@@ -12,7 +12,9 @@ import java.io.StringReader;
  */
 public class Walker {
     public static void main(String[] args) throws Exception{
-        String simpleForm = "form naam {tmp : \"echt?\" boolean}";
+        String simpleForm = "form naam {tmp : \"echt?\" boolean" +
+                " if(true) { tmp2: \"ja?\"boolean}" +
+                "}";
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
 
         QLLexer lexer = new QLLexer(input);
@@ -21,7 +23,7 @@ public class Walker {
         QLParser parser = new QLParser(tokens);
         ParseTree tree = parser.form();
         ParseTreeWalker walker = new ParseTreeWalker();
-        QLListener listener = new MakeForm();
-        walker.walk(listener, tree);
+        QLBaseVisitor visitor = new QLFormVisitor();
+        visitor.visit(tree);
     }
 }

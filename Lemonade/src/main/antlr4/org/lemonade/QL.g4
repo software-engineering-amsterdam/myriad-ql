@@ -1,50 +1,20 @@
 grammar QL;
 
 form
-    : 'form' identifier '{' blocks '}' EOF
-    ;
-
-blocks
-    : blocks block
-    | block
+    : 'form' identifier '{' block+ '}' EOF
     ;
 
 block
-    : questions
-    | conditionals
-    ;
-
-questions
-    : question questions
-    | question
+    : question+
+    | conditional+
     ;
 
 question
     : identifier ':' label type_specifier
     ;
 
-conditionals
-    : conditional conditionals
-    | conditional
-    ;
-
 conditional
-    : 'if' '(' expr ')' '{' questions '}'
-    ;
-
-expr
-    : BOOLEAN
-    | INT
-    | unaryoperator expr
-    | expr binaryoperator expr
-    ;
-
-label
-    : STR
-    ;
-
-identifier
-    : IDENT
+    : 'if' '(' expr ')' '{' question+ '}'
     ;
 
 type_specifier
@@ -54,6 +24,22 @@ type_specifier
     | 'date'
     | 'decimal'
     | 'currency'
+    ;
+
+expr
+    : unaryoperator expr
+    | expr binaryoperator expr
+    | BOOLEAN
+    | INT
+    | IDENT
+    ;
+
+label
+    : STR
+    ;
+
+identifier
+    : IDENT
     ;
 
 unaryoperator
