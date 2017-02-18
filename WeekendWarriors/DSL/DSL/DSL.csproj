@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AST\FormFactory.cs" />
+    <Compile Include="AST\ASTFactory.cs" />
     <Compile Include="AST\Node.cs" />
     <Compile Include="AST\Operators\QLArithmeticOperation.cs" />
     <Compile Include="AST\Operators\QLBinaryOperation.cs" />
