@@ -8,7 +8,7 @@
 
 
 form         -> "form " formName openBrace newLine statement:* newLine closedBrace                           {% FormPostProcessor.form %}
-formName     -> letters
+formName     -> word
 
 statement    -> question
               | if_statement
@@ -34,7 +34,7 @@ multiply_op -> "*"
 assignOp     -> "="
 
 
-propertyName -> letters
+propertyName -> word
 propertyType -> "boolean"
               | "string"
               | "integer"
@@ -44,7 +44,7 @@ propertyType -> "boolean"
 
 newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
 sentence     -> [\w|\s|?|:]:+                                                                               {% FormPostProcessor.toString %}
-letters      -> [a-zA-Z]:+                                                                                  {% FormPostProcessor.toString %}
+word         -> [a-zA-Z]:+                                                                                  {% FormPostProcessor.toString %}
 prime        -> "`"
 openBrace    -> "{"
 closedBrace  -> "}"
