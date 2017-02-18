@@ -12,9 +12,8 @@ console.log(form);
 let html = new CodeGenerator().generate(form);
 
 console.log(html);
-//saveFile("./test.html", html);
 
-
+//TODO: Make function of this.
 fs = require('fs');
 fs.writeFile('qs.html', html, function (err) {
     if (err) return console.log(err);
