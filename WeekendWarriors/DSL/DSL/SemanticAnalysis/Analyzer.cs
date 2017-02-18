@@ -16,7 +16,7 @@ namespace DSL.SemanticAnalysis
 
         public Analyzer()
         {
-            validator.InvalidExpression += Validator_InvalidExpression;
+            validator.InvalidExpression += ValidatorInvalidExpression;
         }
 
         /* TODO: The way this is now does not make much sense. The original idea was to have the 
@@ -24,7 +24,7 @@ namespace DSL.SemanticAnalysis
          * be able to link the error message to the source code location (which we would have to
          * include in the node objects). 
          */
-        private void Validator_InvalidExpression(object sender, InvalidExpressionEventArgs e)
+        private void ValidatorInvalidExpression(object sender, InvalidExpressionEventArgs e)
         {
             OnSemanticError(new SemanticErrorArgs(e.Message));
         }

@@ -58,7 +58,7 @@ namespace Tests.QL.AST
                         TypeFromTestCase(testCase.Key),
                         typeof(QLForm), testCase.Value
                     );
-                    Assert.Fail();
+                    Assert.Fail(testCase.Value);
                 }
                 catch (Exception e)
                 {
