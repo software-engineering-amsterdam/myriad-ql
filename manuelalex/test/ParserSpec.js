@@ -2,7 +2,7 @@
  * Created by alexvanmanen on 06-02-17.
  */
 import chai                         from 'chai';
-import {test4, test3,test2}                      from '../src/test/TestStrings.js';
+import {test4, test3,test2}         from '../src/test/TestStrings.js';
 import {
     loadDependencies,
     mockDependency
