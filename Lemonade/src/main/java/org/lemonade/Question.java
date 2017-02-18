@@ -1,15 +1,16 @@
 package org.lemonade;
 
-public class Question extends ASTNode {
+import org.lemonade.expression.Type;
+
+public class Question extends Block {
     private String identifier;
     private String label;
-    private QLType typeSpecifier;
+    private Type type;
 
-    public Question(String identifier, String label, QLType typeSpecifier, int lineNo) {
-        super(lineNo, null); //FIXME temp
+    public Question(String identifier, String label, Type type) {
+        super();
         this.identifier = identifier;
         this.label = label;
-        this.typeSpecifier = typeSpecifier;
+        this.type = type;
     }
-
 }

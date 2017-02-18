@@ -18,7 +18,7 @@ public class MakeForm extends QLBaseListener {
     @Override public void enterForm(final QLParser.FormContext ctx) {
         System.err.println("Entering form");
         System.err.println("FORMLABEL:" + ctx.identifier().getText());
-        Form form = new Form(ctx.identifier().getText(), 42);//FIXME lineno Hardcoded
+        Form form = new Form(ctx.identifier().getText());//FIXME lineno Hardcoded
         stack.add(form);
     }
 
@@ -47,7 +47,7 @@ public class MakeForm extends QLBaseListener {
         System.err.println("IDENTIFIER:"+ ctx.identifier().getText());
         System.err.println("LABEL:"+ ctx.label().getText());
         System.err.println("TYPE:"+ ctx.type_specifier().getText());
-        Question question = new Question(ctx.identifier().getText(), ctx.label().getText(), null,42);
+        Question question = new Question(ctx.identifier().getText(), ctx.label().getText(), null);
         questions.peek().add(question);
     }
 

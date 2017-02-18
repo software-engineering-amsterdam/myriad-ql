@@ -1,5 +1,8 @@
 package org.lemonade;
 
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.lemonade.expression.Type;
+
 /**
  *
  */
@@ -13,7 +16,7 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         for (QLParser.BlockContext block : ctx.block()) {
             block.accept(this);
         }
-        return new Form(ctx.identifier().getText(), 42);
+        return new Form(ctx.identifier().getText());
 
     }
 
@@ -26,7 +29,10 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
         System.err.println("entering question");
-        return super.visitQuestion(ctx);
+        String identifier = ctx.identifier().getText();
+        String label = ctx.label().getText();
+        Type type = (Type) ctx.type_specifier().accept(this);
+        return new Question(identifier, label, type);
     }
 
     @Override
@@ -48,5 +54,25 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitBinaryoperator(QLParser.BinaryoperatorContext ctx) {
         return super.visitBinaryoperator(ctx);
+    }
+
+    @Override
+    public ASTNode visitType_specifier(QLParser.Type_specifierContext ctx) {
+        switch (ctx.getText()) {
+            case "boolean":
+                return new Type(QLType.BOOLEAN);
+            case "string":
+                return new Type(QLType.STRING);
+            case "integer":
+                return new Type(QLType.INTEGER);
+            case "date":
+                return new Type(QLType.DATE);
+            case "decimal":
+                return new Type(QLType.DECIMAL);
+            case "currency":
+                return new Type(QLType.CURRENCY);
+            default:
+                return null;//TODO find better way to handle this?
+        }
     }
 }

@@ -5,8 +5,8 @@ package org.lemonade;
 public class Form extends ASTNode {
     private String identifier;
 
-    public Form(String identifier, int lineNo){
-        super(lineNo, null);
+    public Form(String identifier){
+        super();
         this.identifier = identifier;
     }
 

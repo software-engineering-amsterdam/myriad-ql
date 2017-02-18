@@ -11,8 +11,8 @@ public class Conditional extends ASTNode{
     private List<Question> questions;
 
     //How are we going to validate expressions referring to questions declared above?
-    public Conditional (Expression expr, int lineNo) {
-        super(lineNo, null);//FIXME temp
+    public Conditional (Expression expr) {
+        super();
         this.condition = expr;
         this.questions = new ArrayList<Question>();
     }
