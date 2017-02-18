@@ -5,6 +5,7 @@ const Form = require('./Form.js');
 const grammar = require('./grammar.js');
 const Question = require('./statements/Question.js');
 const Answer = require('./statements/Answer.js');
+const TypeConverter = require('./utils/TypeConverter.js');
 
 
 let nearley;
@@ -35,26 +36,12 @@ module.exports = class Parser {
     generate(form){
         let name = form.name;
 
-
-        // for (let statement of form.statements) {
-        //     console.log(statement);
-        // }
         var html = "<html><div id='Form_"+name+"'>"+name+"</div>";
 
         if(form.statements != null){
             for(let statement of form.statements){
-                var type = "unknown";
-                if(statement.type == "money"){
-                    type = "number";
-                }
-
-                if(statement instanceof Answer){
-                     //html += "<div>"+statement.name+"<input type='"+type+"' id='"+statement.propertyName+"'></div>";
-                    html+= statement.getGeneratedCode(type);
-                } else {
-                     html += "<div>"+statement.name+"<input type='"+type+"' onchange='click"+statement.propertyName+"()' id='"+statement.propertyName+"'></div>";
-                }
-
+                let type = new TypeConverter().convertQLtoHTML(statement.type); //this line can be coded better
+                html+= statement.getGeneratedCode(type);
             }
         }
 

@@ -12,7 +12,7 @@ module.exports = class Question extends Statement {
         this.type = options.type;
     }
 
-    getGeneratedCode(){
-        return "<div>"+this.name+"<input type='"+this.type+"' id='"+this.propertyName+"'></div>";
+    getGeneratedCode(type){
+        return "<div>"+this.name+"<input type='"+type+"' onchange='click"+this.propertyName+"()' id='"+this.propertyName+"'></div>";
     }
 };

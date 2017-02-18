@@ -49,6 +49,8 @@ module.exports = class Parser {
     }
 
     parse(input, test=2){
+        //TODO: parse function should be implemented using the result of-> "parser.feed(test1).results";
+
         if(test==3){
             let q1 = new Question();
             q1.name = "Q1";
