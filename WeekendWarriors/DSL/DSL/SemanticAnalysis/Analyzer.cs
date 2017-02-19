@@ -12,18 +12,17 @@ namespace DSL.SemanticAnalysis
     {
         private Dictionary<string, QLType> IdentifiertoType = new Dictionary<string, QLType>();
         // TODO: injection
-        private ExpressionValidator validator = new ExpressionValidator();
+        private ExpressionValidator expressionValidator = new ExpressionValidator();
+        private LiteralValidator literalValidator = new LiteralValidator();
+        private StatementValidator statementValidator = new StatementValidator();
 
         public Analyzer()
         {
-            validator.InvalidExpression += ValidatorInvalidExpression;
+            expressionValidator.InvalidExpression += ValidatorInvalidExpression;
+            literalValidator.InvalidExpression += ValidatorInvalidExpression;
+            statementValidator.InvalidExpression += ValidatorInvalidExpression;
         }
-
-        /* TODO: The way this is now does not make much sense. The original idea was to have the 
-         * ExpressionValidator throw errors solely based on the expression. This object would then 
-         * be able to link the error message to the source code location (which we would have to
-         * include in the node objects). 
-         */
+        
         private void ValidatorInvalidExpression(object sender, InvalidExpressionEventArgs e)
         {
             OnSemanticError(new SemanticErrorArgs(e.Message));
@@ -47,7 +46,7 @@ namespace DSL.SemanticAnalysis
             // Store the type of this identifier
             IdentifiertoType[node.Identifier] = node.Type;
 
-            return validator.Evaluate(node);
+            return statementValidator.Evaluate(node);
         }
 
         protected QLType Visit(QLComputedQuestion node)
@@ -55,7 +54,7 @@ namespace DSL.SemanticAnalysis
             QLType assigneeType = Visit((dynamic)node.Question);
             QLType assignorType = Visit((dynamic)node.Expression);
 
-            return validator.Evaluate(node, assigneeType, assignorType);               
+            return statementValidator.Evaluate(node, assigneeType, assignorType);               
         }
 
         protected QLType Visit(QLConditional node)
@@ -67,7 +66,7 @@ namespace DSL.SemanticAnalysis
             foreach (var statement in node.ElseStatements)
                 Visit((dynamic)statement);
 
-            return validator.Evaluate(node, conditionType);            
+            return statementValidator.Evaluate(node, conditionType);            
         }
 
         protected QLType Visit(QLArithmeticOperation node)
@@ -75,7 +74,7 @@ namespace DSL.SemanticAnalysis
             QLType lhsType = Visit((dynamic)node.Lhs);
             QLType rhsType = Visit((dynamic)node.Rhs);
 
-            return validator.Evaluate(node, lhsType, rhsType);
+            return expressionValidator.Evaluate(node, lhsType, rhsType);
         }
 
         protected QLType Visit(QLComparisonOperation node)
@@ -83,7 +82,7 @@ namespace DSL.SemanticAnalysis
             QLType lhsType = Visit((dynamic)node.Lhs);
             QLType rhsType = Visit((dynamic)node.Rhs);
 
-            return validator.Evaluate(node, lhsType, rhsType);
+            return expressionValidator.Evaluate(node, lhsType, rhsType);
         }
 
         protected QLType Visit(QLEqualityOperation node)
@@ -91,14 +90,14 @@ namespace DSL.SemanticAnalysis
             QLType lhsType = Visit((dynamic)node.Lhs);
             QLType rhsType = Visit((dynamic)node.Rhs);
 
-            return validator.Evaluate(node, lhsType, rhsType);
+            return expressionValidator.Evaluate(node, lhsType, rhsType);
         }
 
         protected QLType Visit(QLUnaryOperation node)
         {
             QLType operandType = Visit((dynamic)node.Operand);
 
-            return validator.Evaluate(node, operandType);
+            return expressionValidator.Evaluate(node, operandType);
         }
 
         protected QLType Visit(QLBoolean node)
@@ -108,12 +107,12 @@ namespace DSL.SemanticAnalysis
             
         protected QLType Visit(QLMoney node)
         {
-            return QLType.Money;
+            return literalValidator.Evaluate(node);
         }   
 
         protected QLType Visit(QLNumber node)
         {
-            return QLType.Number;
+            return literalValidator.Evaluate(node);
         }
 
         protected QLType Visit(QLString node)

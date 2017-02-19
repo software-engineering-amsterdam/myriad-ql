@@ -8,14 +8,12 @@ namespace DSL.AST
 {
     public class QLNumber : INode
     {
-        public QLNumber(int value)
+        public QLNumber(string value)
         {
-            this.Value = value;
+            this.StringValue = value;
         }
 
-        public int Value
-        {
-            get;
-        }
+        public string StringValue { get; }
+        public int Value { get { return int.Parse(StringValue); } }
     }
 }

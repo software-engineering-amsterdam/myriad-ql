@@ -14,8 +14,6 @@ namespace DSL.SemanticAnalysis
 
     class ExpressionValidator
     {
-        /* Only bool. This is not C.. */
-        private readonly QLType[] ConditionTypes = new QLType[] { QLType.Bool };
         /* +, -, *, / */
         private readonly QLType[] ArithmaticTypes = new QLType[] { QLType.Number, QLType.Money };
         /* <, <=, >, >= */
@@ -24,34 +22,6 @@ namespace DSL.SemanticAnalysis
         private readonly QLType[] bangTypes = new QLType[] { QLType.Bool };
         /* +, - */
         private readonly QLType[] signTypes = new QLType[] { QLType.Number, QLType.Money };
-
-        public QLType Evaluate(QLQuestion expression)
-        {
-            // Nothing to validate 
-            return expression.Type;
-        }
-
-        public QLType Evaluate(QLComputedQuestion expression, QLType lhsType, QLType rhsType)
-        {
-            if (lhsType != rhsType)
-            {
-                OnInvalidExpression(new InvalidExpressionEventArgs("cannot assign " + rhsType.ToString() + " to question with type " + lhsType.ToString()));
-            }
-            return QLType.None;
-        }
-
-        public QLType Evaluate(QLConditional expression, QLType conditionType)
-        {
-            if (!ConditionTypes.Contains(conditionType))
-            {
-                string errorString = string.Format("cannot apply the conditional operator on type <{0}>",
-                    conditionType);
-
-                OnInvalidExpression(new InvalidExpressionEventArgs(errorString));
-            }
-
-            return QLType.None;
-        }
         
         public QLType Evaluate(QLArithmeticOperation expression, QLType lhsType, QLType rhsType)
         {

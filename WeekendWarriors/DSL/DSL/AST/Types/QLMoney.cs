@@ -8,14 +8,12 @@ namespace DSL.AST
 {
     public class QLMoney : INode
     {
-        public QLMoney(decimal value)
+        public QLMoney(string value)
         {
-            this.Value = value;
+            this.StringValue = value;
         }
 
-        public decimal Value
-        {
-            get;
-        }
+        public string StringValue { get; }
+        public decimal Value { get { return decimal.Parse(StringValue); } }
     }
 }

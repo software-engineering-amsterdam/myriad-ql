@@ -132,7 +132,7 @@ namespace DSL.AST
 
         public override INode VisitMoney([NotNull] QLParser.MoneyContext context)
         {
-            return new QLMoney(decimal.Parse(context.GetText()));
+            return new QLMoney(context.GetText());
         }
 
         public override INode VisitBool([NotNull] QLParser.BoolContext context)
@@ -148,7 +148,7 @@ namespace DSL.AST
 
         public override INode VisitNumber([NotNull] QLParser.NumberContext context)
         {
-            return new QLNumber(int.Parse(context.GetText()));
+            return new QLNumber(context.GetText());
         }
 
         public override INode VisitParens([NotNull] QLParser.ParensContext context)
