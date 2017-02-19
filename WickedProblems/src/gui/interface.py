@@ -68,8 +68,10 @@ class Interface(Frame):
                     self.__variables[node.get_identifier()] = IntVar()
                 labeledcb = LabeledCheckbutton(self.__root)
                 labeledcb.label.configure(text=node._text)
-                labeledcb.checkbutton.configure(variable=self.__variables[node.get_identifier()],
-                                                command=self.refresh)
+                labeledcb.checkbutton.configure(variable=self.__variables[
+                    node.get_identifier()
+                    ],
+                    command=self.refresh)
                 labeledcb.grid(row=self.get_new_row(), columnspan=2, sticky=W)
             elif(node._field_type == "string"):
                 if not self.variable_is_defined(node.get_identifier()):
@@ -95,7 +97,8 @@ class Interface(Frame):
                 _row = self.get_new_row()
                 label = Label(self.__root, textvariable=label_text)
                 item = Entry(self.__root,
-                             textvariable=self.__variables[node.get_identifier()],
+                             textvariable=self.__variables[
+                                 node.get_identifier()],
                              width=20)
                 label.grid(row=_row, column=0, sticky=W)
                 item.grid(row=_row, column=1, sticky=W)
