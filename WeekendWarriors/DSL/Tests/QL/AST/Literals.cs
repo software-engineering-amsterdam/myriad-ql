@@ -25,7 +25,7 @@ namespace Tests.QL.AST
         [TestMethod]
         public void StringLiteral()
         {
-            Dictionary<string, string> testCases = new Dictionary<string, string>
+            var testCases = new Dictionary<string, string>
             {
                 { "\"\"", "Test failure: Empty string" },
                 { "\"PieceOfText\"", "Test failure: Single word string" },
@@ -45,7 +45,7 @@ namespace Tests.QL.AST
         [TestMethod]
         public void BooleanLiteral()
         {
-            Dictionary<string, string> testCases = new Dictionary<string, string>
+            var testCases = new Dictionary<string, string>
             {
                 { "true", "Test failure: True literal" },
                 { "false", "Test failure: False literal" }
@@ -63,7 +63,7 @@ namespace Tests.QL.AST
         [TestMethod]
         public void NumberLiteral()
         {
-            Dictionary<string, string> testCases = new Dictionary<string, string>
+            var testCases = new Dictionary<string, string>
             {
                 { "123456", "Test failure: 123456 literal" },
                 { "0", "Test failure: 0 literal" },
@@ -83,7 +83,7 @@ namespace Tests.QL.AST
         [TestMethod]
         public void MoneyLiteral()
         {
-            Dictionary<string, string> testCases = new Dictionary<string, string>
+            var testCases = new Dictionary<string, string>
             {
                 { "123.456", "Test failure: 123.456 literal" },
                 { "0.", "Test failure: 0. literal" },
