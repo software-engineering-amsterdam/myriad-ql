@@ -5,9 +5,10 @@ import org.lemonade.expression.BinaryExpression;
 /**
  *
  */
-public class ProductBinary extends BinaryExpression{
+public class LTBinary extends BinaryExpression{
 
-    public ProductBinary() {
+    public LTBinary() {
         super();
     }
+
 }

@@ -3,36 +3,20 @@ package org.lemonade.expression;
 import org.lemonade.QLOperatorType;
 import org.lemonade.QLType;
 
-//public class BinaryExpression extends Expression {
-//    private int right;
-//    private QLOperatorType.BinaryOperator operator;
-//
-//    public BinaryExpression(QLType type, QLOperatorType.BinaryOperator operator, int left, int right) {
-//        super(type, left);
-//        this.right = right;
-//        this.operator = operator;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return Integer.toString(super.getLeft()) + " " + operator.toString() + " " + Integer.toString(this.right);
-//    }
-//}
-
 public abstract class BinaryExpression extends Expression {
-    private QLOperatorType operator;
     private Expression left;
     private Expression right;
 
-    public BinaryExpression(QLOperatorType operator, Expression left, Expression right) {
+    public BinaryExpression() {
         super();
-        this.operator = operator;
-        this.left = left;
-        this.right = right;
     }
 
-    public QLOperatorType getOperator() {
-        return this.operator;
+    public void setLeft(Expression left) {
+        this.left = left;
+    }
+
+    public void setRight(Expression right) {
+        this.right = right;
     }
 
     public Expression getLeft() {

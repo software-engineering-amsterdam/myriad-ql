@@ -6,7 +6,7 @@ public abstract class UnaryExpression extends Expression {
     private Expression expression;
 
     public UnaryExpression() {
-
+        super();
     }
 
     public void setExpression(Expression expression) {

@@ -16,7 +16,7 @@ public class Walker {
                 " if(true) { tmp2: \"ja?\"boolean}" +
                 "}";
 
-        String formExpression = "form name {if(!true) {tmp: \"yu\" boolean}}";
+        String formExpression = "form name {if(1+1) {tmp: \"yu\" boolean}}";
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
 
         QLLexer lexer = new QLLexer(input);

@@ -7,9 +7,9 @@ import org.lemonade.expression.UnaryExpression;
 /**
  *
  */
-public class NegateUnary extends UnaryExpression {
+public class NegUnary extends UnaryExpression {
 
-    public NegateUnary() {
+    public NegUnary() {
         super();
     }
 }

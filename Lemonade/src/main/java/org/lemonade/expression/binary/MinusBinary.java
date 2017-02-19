@@ -1,7 +1,13 @@
 package org.lemonade.expression.binary;
 
+import org.lemonade.expression.BinaryExpression;
+
 /**
  *
  */
-public class MinusBinary {
+public class MinusBinary extends BinaryExpression {
+
+    public MinusBinary() {
+        super();
+    }
 }
