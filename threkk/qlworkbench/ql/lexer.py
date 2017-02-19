@@ -5,8 +5,9 @@ take a string and return instead a stream of tokens. PLY is often used as a
 single script but in this case we use a class for better encapsulation and code
 organisation.
 """
-import logging
-import ply.lex as lex
+from logging import basicConfig
+from logging import getLogger
+from ply import lex
 from ply.lex import TOKEN
 
 
@@ -49,7 +50,7 @@ class QLLexer(object):
         'DIV',       # /
         'ASSIGN',    # =
         'ID',        # anyString
-        'LABEL',  # "A question?"
+        'LABEL',     # "A question?"
         'COMMENT',   # // This is a comment
         'WHITESPACE'
     ) + tuple(reserved.values())  # Added also the reserved words.
@@ -113,15 +114,10 @@ class QLLexer(object):
 
     def __init__(self, **kwargs):
         """Initialises the lexer. It complies with PLY requirements."""
-        logging.basicConfig(
-            format='%(asctime)s %(levelname)-s %(message)s',
-            datefmt='%m/%d/%Y %I:%M:%S %p')
-        self.log = logging.getLogger()
+        basicConfig(format='%(asctime)s %(levelname)-s %(message)s',
+                    datefmt='%m/%d/%Y %I:%M:%S %p')
+        self.log = getLogger()
         self.lexer = lex.lex(module=self, debug=0, **kwargs)
-
-    def getLexer(self):
-        """Returns the initialised lexer"""
-        return self.lexer
 
 
 if __name__ == '__main__':
@@ -146,9 +142,9 @@ if __name__ == '__main__':
             }"""
 
     lexer = QLLexer()
-    lexer.getLexer().input(data)
+    lexer.lexer.input(data)
     while True:
-            tok = lexer.getLexer().token()
+            tok = lexer.lexer.token()
             if not tok:
                 break
             print(tok)
