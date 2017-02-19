@@ -2,7 +2,7 @@ module TypeChecker.BadReferences exposing (badReferences)
 
 import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
-import Set exposing (..)
+import Set exposing (Set)
 
 
 badReferences : Form -> Set String
@@ -23,14 +23,6 @@ badReferencesInBlock parentIdentifiers block =
             Set.diff usedIdentifiers availableIdentifiers
     in
         List.foldl (\item -> badReferencesInFormItem availableIdentifiers item |> Set.union) badReferences block
-
-
-availableIdentifiersOnScope : Set String -> Block -> Set String
-availableIdentifiersOnScope parentIdentifiers block =
-    questionTypeRelationsFromBlock block
-        |> questionIds
-        |> Set.fromList
-        |> Set.union parentIdentifiers
 
 
 badReferencesInFormItem : Set String -> FormItem -> Set String

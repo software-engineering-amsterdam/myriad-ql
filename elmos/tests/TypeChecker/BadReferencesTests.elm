@@ -38,6 +38,26 @@ badReferencesExample3 =
       }"""
 
 
+badReferencesExample4 : String
+badReferencesExample4 =
+    """form taxOfficeExample {
+        if(true){
+            "Question ?"
+            y: integer = sellingPrice
+        }else{
+            "QuestionB ?"
+            y: integer = sellingPrice
+        }
+
+        if(true){
+          if(true){
+            "Question C>"
+            y: integer = sellingPrice
+          }
+        }
+      }"""
+
+
 goodExample1 : String
 goodExample1 =
     """form taxOfficeExample {
@@ -173,7 +193,7 @@ parseAndFindExpectedBadReferences message input expectedBadReferences =
     test message <|
         \() ->
             parseAndGetBadReferences input
-                |> Expect.equal (Just expectedBadReferences)
+                |> Expect.equal (Just (expectedBadReferences))
 
 
 parseAndGetBadReferences : String -> Maybe (Set.Set String)

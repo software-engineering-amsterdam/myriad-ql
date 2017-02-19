@@ -13,6 +13,7 @@ type ErrorMessage
     | LogicExpressionTypeMismatch Logic Location ValueType ValueType
     | ComparisonExpressionTypeMismatch Comparison Location ValueType ValueType
     | RelationExpressionTypeMismatch Relation Location ValueType ValueType
+    | DuplicateQuestionDefinition String (List Location)
 
 
 undefinedExpressionVariable : String -> Location -> Message
@@ -38,3 +39,8 @@ comparisonExpressionTypeMismatch comparison loc lhs rhs =
 relationExpressionTypeMismatch : Relation -> Location -> ValueType -> ValueType -> Message
 relationExpressionTypeMismatch relation loc lhs rhs =
     Error (RelationExpressionTypeMismatch relation loc lhs rhs)
+
+
+duplicateQuestionDefinition : String -> List Location -> Message
+duplicateQuestionDefinition questionId locations =
+    Error (DuplicateQuestionDefinition questionId locations)
