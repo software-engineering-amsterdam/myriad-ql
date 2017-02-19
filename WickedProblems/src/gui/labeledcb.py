@@ -1,9 +1,9 @@
-from tkinter import Frame, Checkbutton, Label
+from tkinter import Frame, Checkbutton, Label, W
 
 class LabeledCheckbutton(Frame):
-    def __init__(self, root):
+    def __init__(self, root, row = 0):
         Frame.__init__(self, root)
-        self.checkbutton = Checkbutton(self)
-        self.label = Label(self)
-        self.label.grid(row=0, column=0)
-        self.checkbutton.grid(row=0, column=1)
+        self.checkbutton = Checkbutton(self, width=25)
+        self.label = Label(self, width=25,anchor=W)
+        self.label.grid(row=row, column=0)
+        self.checkbutton.grid(row=row, column=1)

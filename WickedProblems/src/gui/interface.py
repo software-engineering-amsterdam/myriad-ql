@@ -70,12 +70,16 @@ class Interface(Frame):
                 labeledcb.label.configure(text=node._text)
                 labeledcb.checkbutton.configure(variable=self.__variables[node.get_identifier()],
                                                 command=self.refresh)
-                labeledcb.grid(row=self.get_new_row(), column=0)
+                labeledcb.grid(row=self.get_new_row(), columnspan=2, sticky=W)
             elif(node._field_type == "string"):
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = StringVar()
                 item = Entry(self.__root,
-                             textvariable=self.__variables[node.get_identifier()]).grid(row=self.get_new_row(), columnspan=2)
+                             textvariable=self.__variables[
+                                 node.get_identifier()
+                                 ]).grid(row=self.get_new_row(),
+                                         columnspan=2,
+                                         sticky=W)
             elif(node._field_type == "integer"):
                 return
             elif(node._field_type == "data"):
@@ -93,8 +97,8 @@ class Interface(Frame):
                 item = Entry(self.__root,
                              textvariable=self.__variables[node.get_identifier()],
                              width=20)
-                label.grid(row=_row, column=0)
-                item.grid(row=_row, column=1)
+                label.grid(row=_row, column=0, sticky=W)
+                item.grid(row=_row, column=1, sticky=W)
             elif(node._field_type == "currency"):
                 return
             else:
@@ -115,13 +119,16 @@ class Interface(Frame):
                     self.construct_from_node(child)
         elif(node.__class__ == StatementNode):
             # statement node
-            Label(self.__root, text=node._text)
+            Label(self.__root, text=node._text).grid(row=self.get_new_row(),
+                                                     columnspan=2,
+                                                     sticky=W)
         else:
             pass
 
     def construct_interface(self):
         # Add Menu
         self.construct_menu()
+        _row = self.get_new_row()
 
         # walk through the nodes
         for content_node in self.__tree.get_children():
