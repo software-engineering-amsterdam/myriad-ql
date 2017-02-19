@@ -3,6 +3,9 @@
  */
 
 
+export let testOperator = `form taxOfficeExample{\n\n}`;
+
+
 export let test1 = 'form taxOfficeExample{\n' +
     'question `Did you sell a house in 2010?`\n' +
     'hasSoldHouse: boolean\n' +

@@ -4,4 +4,10 @@
 
 module.exports = class Statement {
 
+    /**
+     * Abstract
+     */
+    evaluate(){
+
+    }
 };

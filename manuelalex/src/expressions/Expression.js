@@ -4,4 +4,10 @@
 
 module.exports = class Expression {
 
-}
+    /**
+     * Abstract
+     */
+    evaluate(){
+
+    }
+};

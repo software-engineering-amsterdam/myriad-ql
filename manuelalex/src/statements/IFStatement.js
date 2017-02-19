@@ -4,6 +4,6 @@
 
 let Statement = require('./Statement.js');
 
-module.exports = class IFStatement extends Statement {
+module.exports = class IfStatement extends Statement {
 
 }
