@@ -49,9 +49,9 @@ class QL:
                 Group(OneOrMore(Group(Or([statement,question])))) + Suppress(rcurly))
 
     # form items
-    form_content = Or([conditional,statement,question])
+    form_content = Or([conditional("conditional"),statement("statement"),question("question")])
     form_item = OneOrMore(Group(form_content))
 
     # outer form
-    form = form_type + identifier + Suppress(lcurly) + form_item + \
+    form = form_type + identifier + Suppress(lcurly) + form_item('declarations') + \
                 Suppress(rcurly)
