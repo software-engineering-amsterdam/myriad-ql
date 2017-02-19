@@ -19,12 +19,15 @@ class QL:
     SUB = '-'
     MUL = '*'
     DIV = '/'
+    arithmic = oneOf([ADD,SUB,MUL,DIV])
 
     # Defines
     IF = 'if'
     colon = ':'
     lcurly = '{'
     rcurly = '}'
+    lparens = '('
+    rparens = ')'
     form_type = oneOf('form')
     field_type = oneOf('boolean string integer data decimal money currency')
     word = Word(alphas)
@@ -40,6 +43,11 @@ class QL:
                              unquoteResults=False)
     codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}",
                                       escChar='\\')
+
+    # Evaluation Parsing
+    match_evaluation = Forward()
+    nested_parens = nestedExpr('(', ')', content=match_evaluation)
+    match_evaluation << (Word(alphas) | nested_parens)
 
     # form content
     question = string + identifier + Suppress(colon) + field_type

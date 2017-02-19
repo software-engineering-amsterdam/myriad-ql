@@ -5,6 +5,7 @@ class AbstractNode(object):
         self.__identifier = identifier
         self.__parent = parent
         self.__children = []
+        self.__interface_item = None
 
         if parent is not None:
             parent.add_child(self)
@@ -20,6 +21,12 @@ class AbstractNode(object):
         if child and not isinstance(child, AbstractNode):
             raise TypeError("Child is not an instance of AbstractNode")
         self.__children.append(child)
+
+    def set_interface_item(self, item):
+        self.__interface_item = item
+
+    def get_interface_item(self):
+        return self.__interface_item
 
     def get_children(self):
         return self.__children
