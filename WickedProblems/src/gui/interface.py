@@ -89,7 +89,7 @@ class Interface(Frame):
                 label_text=StringVar()
                 label_text.set(node.get_text())
                 _row = self.get_new_row()
-                label = Label(self.__root, textvariable=label_text, height=4)
+                label = Label(self.__root, textvariable=label_text)
                 item = Entry(self.__root,
                              textvariable=self.__variables[node.get_identifier()],
                              width=20)
