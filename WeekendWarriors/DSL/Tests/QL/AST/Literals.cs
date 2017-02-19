@@ -8,18 +8,18 @@ namespace Tests.QL.AST
     [TestClass]
     public class Literals
     {
-        public ASTFactory formFactory;
+        public ASTFactory astFactory;
 
-        public T ExpressionFromTestCase<T>(string testCase) where T : INode
+        public T CreateASTNode<T>(string input) where T : INode
         {
-            var parser = formFactory.CreateParser(testCase);
-            return (T)formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
+            var parser = astFactory.CreateParser(input);
+            return (T)astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
         }
 
         [TestInitialize]
         public void SetupTestFactory()
         {
-            formFactory = new ASTFactory();
+            astFactory = new ASTFactory();
         }
         
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    ExpressionFromTestCase<QLString>(testCase.Key).Value,
+                    CreateASTNode<QLString>(testCase.Key).Value,
                     testCase.Key, testCase.Value
                 );
             }
@@ -54,7 +54,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    ExpressionFromTestCase<QLBoolean>(testCase.Key).Value,
+                    CreateASTNode<QLBoolean>(testCase.Key).Value,
                     Boolean.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -74,7 +74,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    ExpressionFromTestCase<QLNumber>(testCase.Key).Value.ToString(),
+                    CreateASTNode<QLNumber>(testCase.Key).Value.ToString(),
                     testCase.Key, testCase.Value
                 );
             }
@@ -93,7 +93,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    ExpressionFromTestCase<QLMoney>(testCase.Key).Value,
+                    CreateASTNode<QLMoney>(testCase.Key).Value,
                     Decimal.Parse(testCase.Key), testCase.Value
                 );
             }

@@ -9,18 +9,18 @@ namespace Tests.QL.AST
     [TestClass]
     public class Types
     {
-        public ASTFactory formFactory;
+        public ASTFactory astFactory;
 
-        public INode TypeFromTestCase(string testCase, ASTFactory.QLObjectType qlType)
+        public INode CreateASTNode(string input, ASTFactory.QLObjectType qlType)
         {
-            var parser = formFactory.CreateParser(testCase);
-            return formFactory.CreateQLObject(parser, qlType);
+            var parser = astFactory.CreateParser(input);
+            return astFactory.CreateQLObject(parser, qlType);
         }
 
         [TestInitialize]
         public void SetupTestFactory()
         {
-            formFactory = new ASTFactory();
+            astFactory = new ASTFactory();
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace Tests.QL.AST
             foreach (var testCase in positiveTestCases)
             {
                 Assert.IsInstanceOfType(
-                    TypeFromTestCase(testCase.Key, ASTFactory.QLObjectType.Form),
+                    CreateASTNode(testCase.Key, ASTFactory.QLObjectType.Form),
                     typeof(QLForm), testCase.Value
                 );
             }
@@ -55,7 +55,7 @@ namespace Tests.QL.AST
                 try
                 {
                     Assert.IsNotInstanceOfType(
-                        TypeFromTestCase(testCase.Key, ASTFactory.QLObjectType.Form),
+                        CreateASTNode(testCase.Key, ASTFactory.QLObjectType.Form),
                         typeof(QLForm), testCase.Value
                     );
                     Assert.Fail(testCase.Value);

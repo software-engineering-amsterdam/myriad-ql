@@ -84,6 +84,7 @@
     <Compile Include="SemanticAnalysis\LiteralValidator.cs" />
     <Compile Include="SemanticAnalysis\SemanticErrorArgs.cs" />
     <Compile Include="SemanticAnalysis\StatementValidator.cs" />
+    <Compile Include="SemanticAnalysis\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

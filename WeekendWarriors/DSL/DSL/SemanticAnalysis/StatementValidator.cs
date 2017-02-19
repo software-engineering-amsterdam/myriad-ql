@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DSL.SemanticAnalysis
 {
-    class StatementValidator
+    class StatementValidator: Validator
     {
         private readonly QLType[] ConditionTypes = new QLType[] { QLType.Bool };
 

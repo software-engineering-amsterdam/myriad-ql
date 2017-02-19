@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DSL.SemanticAnalysis
 {
-    class LiteralValidator
+    class LiteralValidator: Validator
     {
         public QLType Evaluate(QLMoney literal)
         {
@@ -58,15 +58,6 @@ namespace DSL.SemanticAnalysis
 
             OnInvalidExpression(new InvalidExpressionEventArgs(errorString));
             return QLType.None;
-        }
-
-        public delegate void InvalidExpressionEventHandler(object sender, InvalidExpressionEventArgs e);
-        public event InvalidExpressionEventHandler InvalidExpression;
-
-        protected virtual void OnInvalidExpression(InvalidExpressionEventArgs e)
-        {
-            if (InvalidExpression != null)
-                InvalidExpression(this, e);
         }
     }
 }

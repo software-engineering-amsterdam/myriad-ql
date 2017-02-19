@@ -12,7 +12,7 @@ namespace DSL.SemanticAnalysis
     /* TODO: I don't like the fact that we are passing in objects only to make overloading work, but I'm not sure how to fix this without
      * Either adding an enumeration of QLNodes or having a method for each QLNode type. Both of those seem worse than this... */
 
-    class ExpressionValidator
+    class ExpressionValidator: Validator
     {
         /* +, -, *, / */
         private readonly QLType[] ArithmaticTypes = new QLType[] { QLType.Number, QLType.Money };
@@ -124,15 +124,6 @@ namespace DSL.SemanticAnalysis
             }
 
             return operandType;
-        }
-
-        public delegate void InvalidExpressionEventHandler(object sender, InvalidExpressionEventArgs e);
-        public event InvalidExpressionEventHandler InvalidExpression;
-
-        protected virtual void OnInvalidExpression(InvalidExpressionEventArgs e)
-        {
-            if (InvalidExpression != null)
-                InvalidExpression(this, e);
         }
     }
 }
