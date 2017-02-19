@@ -16,7 +16,7 @@ public class Walker {
                 " if(true) { tmp2: \"ja?\"boolean}" +
                 "}";
 
-        String formExpression = "form name {if(1.000) {tmp: \"yu\" boolean}}";
+        String formExpression = "form name {if(!true) {tmp: \"yu\" boolean}}";
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
 
         QLLexer lexer = new QLLexer(input);
@@ -24,8 +24,8 @@ public class Walker {
 
         QLParser parser = new QLParser(tokens);
         ParseTree tree = parser.form();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        QLBaseVisitor visitor = new QLFormVisitor();
-        visitor.visit(tree);
+        QLFormVisitor visitor = new QLFormVisitor();
+        ASTNode root = tree.accept(visitor);
+
     }
 }

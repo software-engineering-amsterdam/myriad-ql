@@ -1,26 +1,20 @@
 package org.lemonade.expression;
 
 import org.lemonade.QLOperatorType;
-import org.lemonade.QLType;
 
-//public class UnaryExpression extends Expression {
-//    private QLOperatorType.UnaryOperator operator;
-//
-//    public UnaryExpression(QLType type, QLOperatorType.UnaryOperator operator, int value) {
-//        super(type, value);
-//        this.operator = operator;
-//    }
-//}
 public abstract class UnaryExpression extends Expression {
-    private QLOperatorType operator;
     private Expression expression;
 
-    public Expression getExpression() {
-        return this.expression;
+    public UnaryExpression() {
+
     }
-    
-    public QLOperatorType getOperator() {
-        return null;
+
+    public void setExpression(Expression expression) {
+        this.expression = expression;
+    }
+
+    public Expression getExpression() {
+        return expression;
     }
 
 }

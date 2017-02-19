@@ -5,10 +5,11 @@ import org.lemonade.expression.Literal;
 /**
  *
  */
-public class Decimal extends Literal {
+public class DecimalLit extends Literal {
     private double value;
 
-    public Decimal(double value) {
-        this.value = value;
+    public DecimalLit(String value) {
+        this.value = Double.parseDouble(value);
     }
+
 }

@@ -51,20 +51,5 @@ public class MakeForm extends QLBaseListener {
         questions.peek().add(question);
     }
 
-    @Override public void enterExpr(final QLParser.ExprContext ctx) {
-//        System.err.println("Entering expr");
-    }
-
-    @Override public void exitExpr(final QLParser.ExprContext ctx) {
-//        System.err.println("Exiting expr");
-    }
-
-    @Override public void enterConditional(final QLParser.ConditionalContext ctx) {
-        System.err.println("Entering conditional");
-    }
-
-    @Override public void exitConditional(final QLParser.ConditionalContext ctx) {
-//        System.err.println("Exiting conditional");
-    }
 
 }

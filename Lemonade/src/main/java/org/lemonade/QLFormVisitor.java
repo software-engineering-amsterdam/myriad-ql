@@ -1,8 +1,12 @@
 package org.lemonade;
 
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.lemonade.expression.Expression;
+import org.lemonade.expression.Literal;
 import org.lemonade.expression.Type;
+import org.lemonade.expression.literal.*;
+import org.lemonade.expression.unary.BangUnary;
+import org.lemonade.expression.unary.NegateUnary;
+import org.lemonade.expression.UnaryExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,53 +53,60 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitBinaryExpression(QLParser.BinaryExpressionContext ctx) {
+
         return super.visitBinaryExpression(ctx);
     }
 
     @Override
     public ASTNode visitUnaryExpression(QLParser.UnaryExpressionContext ctx) {
-        return super.visitUnaryExpression(ctx);
+        UnaryExpression parent = (UnaryExpression) ctx.unaryoperator().accept(this);
+        Expression child = (Expression) ctx.expr().accept(this);
+        parent.setExpression(child);
+
+        return parent;
     }
 
     @Override
     public ASTNode visitLiteralExpression(QLParser.LiteralExpressionContext ctx) {
-        Literal literal = ctx.literal().accept();
-        return super.visitLiteralExpression(ctx);
+        Literal literal = (Literal) ctx.literal().accept(this);
+        return literal;
     }
 
     @Override
     public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        return super.visitBooleanLiteral(ctx);
+        return new BooleanLit(ctx.BOOLEAN().getText());
     }
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return super.visitStringLiteral(ctx);
+        return new StringLit(ctx.STR().getText());
     }
 
     @Override
     public ASTNode visitIdentifierLiteral(QLParser.IdentifierLiteralContext ctx) {
-        return super.visitIdentifierLiteral(ctx);
+        return new IdentifierLit(ctx.IDENT().getText());
     }
 
     @Override
     public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
-        return super.visitIntegerLiteral(ctx);
+        System.err.println("integer");
+        return new IntegerLit(ctx.INT().getText());
     }
 
     @Override
     public ASTNode visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
-        return super.visitDecimalLiteral(ctx);
+        System.err.println("decimal");
+        return new DecimalLit(ctx.DECIMAL().getText());
     }
 
     @Override
     public ASTNode visitNegateUnary(QLParser.NegateUnaryContext ctx) {
-        return super.visitNegateUnary(ctx);
+        return new NegateUnary();
     }
 
     @Override
     public ASTNode visitBangUnary(QLParser.BangUnaryContext ctx) {
-        return super.visitBangUnary(ctx);
+        return new BangUnary();
     }
 
     @Override

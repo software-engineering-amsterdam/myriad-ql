@@ -5,10 +5,10 @@ import org.lemonade.expression.Literal;
 /**
  *
  */
-public class Identifier extends Literal{
+public class IdentifierLit extends Literal{
     private String value;
 
-    public Identifier(String value) {
+    public IdentifierLit(String value) {
         this.value = value;
     }
 }

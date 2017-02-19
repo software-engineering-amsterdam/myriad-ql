@@ -5,10 +5,10 @@ import org.lemonade.expression.Literal;
 /**
  *
  */
-public class String extends Literal {
-    private String value;
+public class StringLit extends Literal {
+    String value;
 
-    public String(String value) {
+    public StringLit(String value) {
         this.value = value;
     }
 }
