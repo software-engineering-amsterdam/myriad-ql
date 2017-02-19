@@ -7,6 +7,7 @@ if cur_version >= req_version:
     from tkinter import *
     from ast.node import *
     from parser.ql import QL
+    from .labeledcb import LabeledCheckbutton
 else:
     exit("Did you forget to run it using python >= 3.0 ??")
 
@@ -15,12 +16,12 @@ class Interface(Frame):
     __root = None
     __tree = None
     __variables = {}
+    __row_counter = 0
 
     def __init__(self, ast):
         self.__root = Tk()
         self.__root.minsize(width=400, height=300)
         super().__init__(self.__root)
-        self.pack()
         self.__tree = ast
 
     def main(self):
@@ -43,9 +44,14 @@ class Interface(Frame):
     def refresh(self):
         for widget in self.__root.winfo_children():
             widget.destroy()
+        self.__row_counter = 0
         self.construct_interface()
         self.print_current_variables()
         # print("refresh!")
+
+    def get_new_row(self):
+        self.__row_counter += 1
+        return self.__row_counter-1
 
     def variable_is_defined(self, variable):
         try:
@@ -60,15 +66,16 @@ class Interface(Frame):
             if(node._field_type == "boolean"):
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = IntVar()
-                item = Checkbutton(self.__root,
-                                   text=node._text,
-                                   variable=self.__variables[node.get_identifier()],
-                                   command=self.refresh)
+                labeledcb = LabeledCheckbutton(self.__root)
+                labeledcb.label.configure(text=node._text)
+                labeledcb.checkbutton.configure(variable=self.__variables[node.get_identifier()],
+                                                command=self.refresh)
+                labeledcb.grid(row=self.get_new_row(), column=0)
             elif(node._field_type == "string"):
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = StringVar()
                 item = Entry(self.__root,
-                             textvariable=self.__variables[node.get_identifier()])
+                             textvariable=self.__variables[node.get_identifier()]).grid(row=self.get_new_row(), columnspan=2)
             elif(node._field_type == "integer"):
                 return
             elif(node._field_type == "data"):
@@ -79,15 +86,19 @@ class Interface(Frame):
                 # TODO: Improve Money Input Check
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = StringVar()
+                label_text=StringVar()
+                label_text.set(node.get_text())
+                _row = self.get_new_row()
+                label = Label(self.__root, textvariable=label_text, height=4)
                 item = Entry(self.__root,
-                             textvariable=self.__variables[node.get_identifier()])
+                             textvariable=self.__variables[node.get_identifier()],
+                             width=20)
+                label.grid(row=_row, column=0)
+                item.grid(row=_row, column=1)
             elif(node._field_type == "currency"):
                 return
             else:
                 return
-            # Add item to node
-            node.set_interface_item(item)
-            node.get_interface_item().pack()
         elif(node.__class__ == ConditionalNode):
             # evaluate condition
             # print(QL.match_evaluation.parseString(node._evaluation))
@@ -104,22 +115,19 @@ class Interface(Frame):
                     self.construct_from_node(child)
         elif(node.__class__ == StatementNode):
             # statement node
-            Label(self.__root, text=node._text).pack()
+            Label(self.__root, text=node._text)
         else:
             pass
 
     def construct_interface(self):
+        # Add Menu
+        self.construct_menu()
+
         # walk through the nodes
         for content_node in self.__tree.get_children():
             self.construct_from_node(content_node)
 
-    def build_interface(self):
-        # Title (based on identifier of root node)
-        self.__root.title(self.__tree.get_identifier())
-
-        # construct widgets (frame content)
-        self.construct_interface()
-
+    def construct_menu(self):
         self.menu = Menu(self.__root)
         self.__root.config(menu=self.menu)
 
@@ -133,5 +141,12 @@ class Interface(Frame):
         self.helpmenu = Menu(self.menu)
         self.menu.add_cascade(label="Help", menu=self.helpmenu)
         self.helpmenu.add_command(label="About...", command=self.callback)
+
+    def build_interface(self):
+        # Title (based on identifier of root node)
+        self.__root.title(self.__tree.get_identifier())
+
+        # construct widgets (frame content)
+        self.construct_interface()
 
         self.__root.mainloop()
