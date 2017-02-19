@@ -14,7 +14,7 @@ namespace Tests.QL.DSL
         public static void TokenTypes(string inputString, List<string> expectdeTokenTypes)
         {
             AntlrInputStream input = new AntlrInputStream(inputString);
-            GrammarLexer lexer = new GrammarLexer(input);
+            QLLexer lexer = new QLLexer(input);
 
             string tokenType;
             List<string> tokenTypes = new List<string>();

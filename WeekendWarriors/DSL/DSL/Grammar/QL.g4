@@ -1,5 +1,5 @@
 // Define a grammar called Grammar
-grammar Grammar;
+grammar QL;
 
 /**
  *	Lexer rules

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using System.ComponentModel;
 
 namespace DSL.AST
 {
@@ -21,15 +22,15 @@ namespace DSL.AST
             Expression
         }
 
-        public GrammarParser CreateParser(string input)
+        public QLParser CreateParser(string input)
         {
             AntlrInputStream inputStream = new AntlrInputStream(input);
-            GrammarLexer lexer = new GrammarLexer(inputStream);
+            QLLexer lexer = new QLLexer(inputStream);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
-            return new GrammarParser(tokens);
+            return new QLParser(tokens);
         }
 
-        public INode CreateQLObject(GrammarParser parser, QLObjectType qlObjectType)
+        public INode CreateQLObject(QLParser parser, QLObjectType qlObjectType)
         {
             QLVisitor visitor = new QLVisitor();
 
@@ -47,9 +48,10 @@ namespace DSL.AST
                     return visitor.Visit(parser.conditionalBlock());
                 case QLObjectType.Composite:
                     return visitor.Visit(parser.composite());
-                case QLObjectType.Expression:
-                default:
+                case QLObjectType.Expression:                
                     return visitor.Visit(parser.expression());
+                default:
+                    throw new InvalidEnumArgumentException();
             }
         }
     }
