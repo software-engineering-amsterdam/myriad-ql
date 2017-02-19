@@ -1,18 +1,21 @@
 package org.uva.taxfree.model;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StringQuestion extends NamedNode {
     private String mValue;
 
     public StringQuestion(String description, String id) {
         super(description, id);
-        mValue = new String("Enter your text here!");
+        mValue = new String("");
     }
 
     @Override
     public void fillPanel(JPanel parentPanel) {
-        parentPanel.add(new JTextField(mValue));
+        JTextField f = new JTextField(mValue);
+        f.setPreferredSize(new Dimension(100,25));
+        parentPanel.add(f);
     }
 
     @Override
