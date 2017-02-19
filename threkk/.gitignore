@@ -102,3 +102,7 @@ docs/_templates/*
 
 # PyBuilder
 target/
+
+# PLY
+parser.out
+parsetab.py
