@@ -100,6 +100,7 @@ class Interface(Frame):
                              textvariable=self.__variables[
                                  node.get_identifier()],
                              width=20)
+                item.bind('<Leave>', (lambda _: self.refresh()))
                 label.grid(row=_row, column=0, sticky=W)
                 item.grid(row=_row, column=1, sticky=W)
             elif(node._field_type == "currency"):
