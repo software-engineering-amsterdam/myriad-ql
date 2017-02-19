@@ -8,7 +8,7 @@ using DSL.AST.Operators;
 
 namespace DSL.SemanticAnalysis
 {
-    class Analyzer
+    public class Analyzer
     {
         private Dictionary<string, QLType> IdentifiertoType = new Dictionary<string, QLType>();
         // TODO: injection
@@ -86,6 +86,14 @@ namespace DSL.SemanticAnalysis
         }
 
         protected QLType Visit(QLEqualityOperation node)
+        {
+            QLType lhsType = Visit((dynamic)node.Lhs);
+            QLType rhsType = Visit((dynamic)node.Rhs);
+
+            return expressionValidator.Evaluate(node, lhsType, rhsType);
+        }
+
+        protected QLType Visit(QLLogicalOperation node)
         {
             QLType lhsType = Visit((dynamic)node.Lhs);
             QLType rhsType = Visit((dynamic)node.Rhs);

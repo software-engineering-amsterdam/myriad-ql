@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST.Operators
 {
-    class QLEqualityOperation : QLBinaryOperation
+    public class QLEqualityOperation : QLBinaryOperation
     {
         public QLEqualityOperation(INode lhs, QLBinaryOperator operation, INode rhs) : base(lhs, operation, rhs)
         {

@@ -95,6 +95,23 @@ namespace DSL.SemanticAnalysis
             return lhsType;
         }
 
+        public QLType Evaluate(QLLogicalOperation expression, QLType lhsType, QLType rhsType)
+        {
+            if(lhsType != QLType.Bool || rhsType != QLType.Bool)
+            {
+                string errorString = string.Format("cannot apply logical operator {0} to types other than boolean ({1} and {2})",
+                    expression.Operator,
+                    lhsType,
+                    rhsType);
+
+                OnInvalidExpression(new InvalidExpressionEventArgs(errorString));
+
+                return QLType.None;
+            }
+
+            return QLType.Bool;
+        }
+
         public QLType Evaluate(QLUnaryOperation expression, QLType operandType)
         {
             QLType[] allowedTypes = null;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    class QLConditional : INode
+    public class QLConditional : INode
     {
         public QLConditional(INode condition, List<INode> thenStatements, List<INode> elseStatements)
         {

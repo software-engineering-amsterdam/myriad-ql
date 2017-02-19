@@ -41,7 +41,7 @@ namespace DSL.SemanticAnalysis
             try
             {
                 int.Parse(literal.StringValue);
-                return QLType.Money;
+                return QLType.Number;
             }
             catch (FormatException)
             {

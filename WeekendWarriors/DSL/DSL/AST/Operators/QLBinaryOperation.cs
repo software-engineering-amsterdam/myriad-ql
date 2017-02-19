@@ -22,7 +22,7 @@ namespace DSL.AST
         Inequal
     };
 
-    class QLBinaryOperation : INode
+    public class QLBinaryOperation : INode
     {
         protected QLBinaryOperation(INode lhs, QLBinaryOperator operation, INode rhs)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    class QLQuestion : INode
+    public class QLQuestion : INode
     {
         public QLQuestion(string identifier, string body, QLType type)
         {

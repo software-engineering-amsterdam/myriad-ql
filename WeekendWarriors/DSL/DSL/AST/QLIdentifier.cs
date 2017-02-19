@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    class QLIdentifier : INode
+    public class QLIdentifier : INode
     {
         public QLIdentifier(string name)
         {

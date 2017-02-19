@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.SemanticAnalysis
 {
-    class SemanticErrorArgs : EventArgs
+    public class SemanticErrorArgs : EventArgs
     {
         public readonly string Message;
 

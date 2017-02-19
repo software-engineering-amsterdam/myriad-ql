@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    enum QLType
+    public enum QLType
     {
         Number,
         Money,
