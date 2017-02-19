@@ -8,28 +8,29 @@ import org.uva.taxfree.model.Node;
 import org.uva.taxfree.model.StringQuestion;
 
 public class QuestionFormTest {
-    private Node root;
+    private Node mRoot;
     @BeforeMethod
     public void setUp() throws Exception {
-        root = new FormNode("TaxForm");
+        mRoot = new FormNode("TaxForm");
     }
-    @Test
+
     public static void main(String[] args) {
         QuestionFormTest test = new QuestionFormTest();
+        try {
+            test.setUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         test.testSimpleQuestions();
     }
 
     public void testSimpleQuestions() {
 
-        root.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
-        root.addChild(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
-        root.addChild(new StringQuestion("What is your name?", "userName"));
-        QuestionForm a = new QuestionForm(root);
+        mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
+        mRoot.addChild(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
+        mRoot.addChild(new StringQuestion("What is your name?", "userName"));
+        QuestionForm a = new QuestionForm(mRoot);
         a.show();
 
     }
-
-    public void testOperators(){
-    }
-
 }

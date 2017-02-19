@@ -1,10 +1,11 @@
 package org.uva.taxfree.GUI;
 
-import org.uva.taxfree.model.Node;
 import org.uva.taxfree.model.NamedNode;
+import org.uva.taxfree.model.Node;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class QuestionForm {
     private Node mFormNode;
@@ -13,7 +14,7 @@ public class QuestionForm {
         mFormNode = formNode;
     }
 
-    public void show(){
+    public void show() {
         generateForm();
     }
 
@@ -34,15 +35,14 @@ public class QuestionForm {
         return widgetPanel;
     }
 
-    private void fillWidgetPanel(JPanel parentPanel){
-       for (NamedNode q : extractQuestions()){
+    private void fillWidgetPanel(JPanel parentPanel) {
+        for (NamedNode q : extractQuestions()) {
             parentPanel.add(q.getWidget());
         }
     }
 
-    private ArrayList<NamedNode> extractQuestions() {
-        ArrayList<NamedNode> questions = new ArrayList<NamedNode>();
-
+    private Set<NamedNode> extractQuestions() {
+        Set<NamedNode> questions = new LinkedHashSet<NamedNode>();
         mFormNode.retrieveQuestions(questions);
         return questions;
     }
