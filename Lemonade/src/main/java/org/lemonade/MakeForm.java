@@ -1,10 +1,11 @@
 package org.lemonade;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Question;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class MakeForm extends QLBaseListener {
 
@@ -15,38 +16,44 @@ public class MakeForm extends QLBaseListener {
         return stack.get(0);
     }
 
-    @Override public void enterForm(final QLParser.FormContext ctx) {
+    @Override
+    public void enterForm(final QLParser.FormContext ctx) {
         System.err.println("Entering form");
         System.err.println("FORMLABEL:" + ctx.identifier().getText());
         Form form = new Form(ctx.identifier().getText(), null);//FIXME lineno Hardcoded
         stack.add(form);
     }
 
-    @Override public void exitForm(final QLParser.FormContext ctx) {
+    @Override
+    public void exitForm(final QLParser.FormContext ctx) {
         System.err.println("Exiting form");
     }
 
-    @Override public void enterBlock(final QLParser.BlockContext ctx) {
+    @Override
+    public void enterBlock(final QLParser.BlockContext ctx) {
         System.err.println("Entering Block");
         ArrayList<Question> newList = new ArrayList<Question>();
         questions.add(newList);
     }
 
-    @Override public void exitBlock (final QLParser.BlockContext ctx) {
+    @Override
+    public void exitBlock(final QLParser.BlockContext ctx) {
         System.err.println();
         ArrayList<Question> child = questions.pop();
         //getForm().addChild(child);
     }
 
-    @Override public void enterQuestion(final QLParser.QuestionContext ctx) {
+    @Override
+    public void enterQuestion(final QLParser.QuestionContext ctx) {
 //        System.err.println("Entering question");
     }
 
-    @Override public void exitQuestion(final QLParser.QuestionContext ctx) {
+    @Override
+    public void exitQuestion(final QLParser.QuestionContext ctx) {
         System.err.println("Exiting question");
-        System.err.println("IDENTIFIER:"+ ctx.identifier().getText());
-        System.err.println("LABEL:"+ ctx.label().getText());
-        System.err.println("TYPE:"+ ctx.type_specifier().getText());
+        System.err.println("IDENTIFIER:" + ctx.identifier().getText());
+        System.err.println("LABEL:" + ctx.label().getText());
+        System.err.println("TYPE:" + ctx.type_specifier().getText());
         Question question = new Question(ctx.identifier().getText(), ctx.label().getText(), null);
         questions.peek().add(question);
     }

@@ -3,7 +3,7 @@ package org.lemonade;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.lemonade.nodes.ASTNode;
 
 import java.io.StringReader;
 
@@ -11,7 +11,7 @@ import java.io.StringReader;
  *
  */
 public class Walker {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         String simpleForm = "form naam {tmp : \"echt?\" boolean" +
                 " if(true) { tmp2: \"ja?\"boolean}" +
                 "}";

@@ -1,20 +1,23 @@
 package org.lemonade;
 
 public class QLOperatorType {
-    public enum UnaryOperator{
+    public enum UnaryOperator {
         BANG, MINUS, LIT;
+
         public String toString() {
-            switch(this) {
+            switch (this) {
                 case BANG:
                     return "!";
                 case MINUS:
                     return "-";
                 case LIT:
                     return "";
-                default: return "";
+                default:
+                    return "";
             }
         }
     }
+
     public enum BinaryOperator {
         AND, OR, GT, LT, LE, GE, NOT_EQUAL, EQUAL_EQUAL, PLUS,
         MINUS, PRODUCT, DIVIDE;

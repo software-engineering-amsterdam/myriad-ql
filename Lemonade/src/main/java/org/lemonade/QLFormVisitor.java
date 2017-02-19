@@ -1,10 +1,11 @@
 package org.lemonade;
 
-import org.lemonade.expression.*;
-import org.lemonade.expression.binary.*;
-import org.lemonade.expression.literal.*;
-import org.lemonade.expression.unary.BangUnary;
-import org.lemonade.expression.unary.NegUnary;
+import org.lemonade.nodes.expressions.*;
+import org.lemonade.nodes.expressions.binary.*;
+import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.unary.BangUnary;
+import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         Expression expression = (Expression) ctx.expr().accept(this);
 
         List<Block> blocks = new ArrayList<Block>();
-        for (QLParser.BlockContext block : ctx.block()){
+        for (QLParser.BlockContext block : ctx.block()) {
             blocks.add((Block) block.accept(this));
         }
 

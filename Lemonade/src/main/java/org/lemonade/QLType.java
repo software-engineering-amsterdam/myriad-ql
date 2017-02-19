@@ -6,6 +6,6 @@ public enum QLType {
     INTEGER,
     DATE,
     DECIMAL,
-    CURRENCY;
+    CURRENCY
 }
 

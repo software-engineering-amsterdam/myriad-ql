@@ -1,12 +1,10 @@
 package org.lemonade.visitors;
 
-import org.lemonade.Conditional;
-import org.lemonade.Question;
+import org.lemonade.nodes.Block;
 
 /**
  *
  */
-public interface BlockVisitor<T>{
-    T visitQuestionNode(Question question);
-    T visitConditionalNode(Conditional conditional);
+public interface BlockVisitor<T> {
+    T visit(Block block);
 }
