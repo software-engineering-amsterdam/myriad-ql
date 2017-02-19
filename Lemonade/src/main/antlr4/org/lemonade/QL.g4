@@ -27,11 +27,17 @@ type_specifier
     ;
 
 expr
-    : unaryoperator expr
-    | expr binaryoperator expr
-    | BOOLEAN
-    | INT
-    | IDENT
+    : unaryoperator expr            #unaryExpression
+    | expr binaryoperator expr      #binaryExpression
+    | literal                       #literalExpression
+    ;
+
+literal
+    : BOOLEAN                       #booleanLiteral
+    | STR                           #stringLiteral
+    | IDENT                         #identifierLiteral
+    | INT                           #integerLiteral
+    | DECIMAL                       #decimalLiteral
     ;
 
 label
@@ -43,23 +49,23 @@ identifier
     ;
 
 unaryoperator
-    : '-'
-    | '!'
+    : '-'                           #negateUnary
+    | '!'                           #bangUnary
     ;
 
 binaryoperator
-    : '*'
-    | '/'
-    | '+'
-    | '-'
-    | '<'
-    | '<='
-    | '>'
-    | '>='
-    | '=='
-    | '!='
-    | '&&'
-    | '||'
+    : '*'                           #productBinary
+    | '/'                           #divideBinary
+    | '+'                           #plusBinary
+    | '-'                           #minusBinary
+    | '<'                           #lessThanBinary
+    | '<='                          #lessThanEqualBinary
+    | '>'                           #greaterThanBinary
+    | '>='                          #greaterThanEqualBinary
+    | '=='                          #equalBinary
+    | '!='                          #notEqualBinary
+    | '&&'                          #andBinary
+    | '||'                          #orBinary
     ;
 
 IDENT
@@ -68,6 +74,10 @@ IDENT
 
 INT
     : ('0'..'9')+
+    ;
+
+DECIMAL
+    : ('0'..'9')+ '.' ('0'..'9')+
     ;
 
 BOOLEAN

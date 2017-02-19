@@ -19,18 +19,18 @@ import org.lemonade.QLType;
 //    }
 //}
 
-public class BinaryExpression implements Expression {
+public abstract class BinaryExpression extends Expression {
     private QLOperatorType operator;
     private Expression left;
     private Expression right;
 
     public BinaryExpression(QLOperatorType operator, Expression left, Expression right) {
+        super();
         this.operator = operator;
         this.left = left;
         this.right = right;
     }
 
-    @Override
     public QLOperatorType getOperator() {
         return this.operator;
     }

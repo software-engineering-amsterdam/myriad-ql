@@ -48,18 +48,114 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitExpr(QLParser.ExprContext ctx) {
-        return super.visitExpr(ctx);
+    public ASTNode visitBinaryExpression(QLParser.BinaryExpressionContext ctx) {
+        return super.visitBinaryExpression(ctx);
     }
 
     @Override
-    public ASTNode visitUnaryoperator(QLParser.UnaryoperatorContext ctx) {
-        return super.visitUnaryoperator(ctx);
+    public ASTNode visitUnaryExpression(QLParser.UnaryExpressionContext ctx) {
+        return super.visitUnaryExpression(ctx);
     }
 
     @Override
-    public ASTNode visitBinaryoperator(QLParser.BinaryoperatorContext ctx) {
-        return super.visitBinaryoperator(ctx);
+    public ASTNode visitLiteralExpression(QLParser.LiteralExpressionContext ctx) {
+        Literal literal = ctx.literal().accept();
+        return super.visitLiteralExpression(ctx);
+    }
+
+    @Override
+    public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
+        return super.visitBooleanLiteral(ctx);
+    }
+
+    @Override
+    public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
+        return super.visitStringLiteral(ctx);
+    }
+
+    @Override
+    public ASTNode visitIdentifierLiteral(QLParser.IdentifierLiteralContext ctx) {
+        return super.visitIdentifierLiteral(ctx);
+    }
+
+    @Override
+    public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
+        return super.visitIntegerLiteral(ctx);
+    }
+
+    @Override
+    public ASTNode visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
+        return super.visitDecimalLiteral(ctx);
+    }
+
+    @Override
+    public ASTNode visitNegateUnary(QLParser.NegateUnaryContext ctx) {
+        return super.visitNegateUnary(ctx);
+    }
+
+    @Override
+    public ASTNode visitBangUnary(QLParser.BangUnaryContext ctx) {
+        return super.visitBangUnary(ctx);
+    }
+
+    @Override
+    public ASTNode visitProductBinary(QLParser.ProductBinaryContext ctx) {
+        return super.visitProductBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitDivideBinary(QLParser.DivideBinaryContext ctx) {
+        return super.visitDivideBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitPlusBinary(QLParser.PlusBinaryContext ctx) {
+        return super.visitPlusBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitMinusBinary(QLParser.MinusBinaryContext ctx) {
+        return super.visitMinusBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitLessThanBinary(QLParser.LessThanBinaryContext ctx) {
+        return super.visitLessThanBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitLessThanEqualBinary(QLParser.LessThanEqualBinaryContext ctx) {
+        return super.visitLessThanEqualBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitGreaterThanBinary(QLParser.GreaterThanBinaryContext ctx) {
+        return super.visitGreaterThanBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitGreaterThanEqualBinary(QLParser.GreaterThanEqualBinaryContext ctx) {
+        return super.visitGreaterThanEqualBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitEqualBinary(QLParser.EqualBinaryContext ctx) {
+        return super.visitEqualBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitNotEqualBinary(QLParser.NotEqualBinaryContext ctx) {
+        return super.visitNotEqualBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitAndBinary(QLParser.AndBinaryContext ctx) {
+        return super.visitAndBinary(ctx);
+    }
+
+    @Override
+    public ASTNode visitOrBinary(QLParser.OrBinaryContext ctx) {
+        return super.visitOrBinary(ctx);
     }
 
     @Override

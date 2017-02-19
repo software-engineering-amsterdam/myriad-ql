@@ -28,6 +28,9 @@ import org.lemonade.QLOperatorType;
 //}
 
 //public interface Expression extends ASTNode {
-public interface Expression {
-    QLOperatorType getOperator();
+public abstract class Expression extends ASTNode{
+
+    public Expression () {
+
+    }
 }

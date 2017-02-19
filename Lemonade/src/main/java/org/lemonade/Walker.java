@@ -15,7 +15,9 @@ public class Walker {
         String simpleForm = "form naam {tmp : \"echt?\" boolean" +
                 " if(true) { tmp2: \"ja?\"boolean}" +
                 "}";
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
+
+        String formExpression = "form name {if(1.000) {tmp: \"yu\" boolean}}";
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
 
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

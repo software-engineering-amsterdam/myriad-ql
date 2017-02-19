@@ -11,15 +11,14 @@ import org.lemonade.QLType;
 //        this.operator = operator;
 //    }
 //}
-public class UnaryExpression implements Expression {
+public abstract class UnaryExpression extends Expression {
     private QLOperatorType operator;
     private Expression expression;
 
     public Expression getExpression() {
         return this.expression;
     }
-
-    @Override
+    
     public QLOperatorType getOperator() {
         return null;
     }
