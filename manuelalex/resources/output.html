@@ -1,0 +1,42 @@
+<html>
+<body onload="start();">
+<script>
+function start(){
+	var div = document.getElementById("ifHasSoldHouse");
+	div.style.display = 'none';
+}
+
+
+function calcValueResidue(){
+	
+	var sellingPrice = document.getElementById("sellingPrice").value;
+ 	var privateDebt = document.getElementById("privateDebt").value;
+ 	var valueResidue = sellingPrice - privateDebt;
+ 	
+ 	document.getElementById("valueResidue").setAttribute("value",valueResidue);
+		
+}
+
+function clickHasSoldHouse(){
+	var div = document.getElementById("ifHasSoldHouse");
+	if (div.style.display == 'none') {
+		div.style.display = 'block';
+	} else {
+		div.style.display = 'none';	
+	}
+}
+
+</script>
+
+	<div>Did you sell a house in 2010? <input type="checkbox" onclick="clickHasSoldHouse()" id="hasSoldHouse"></div>
+	<div>Did you by a house in 2010? <input type="checkbox" id="hasBoughtHouse"></div>
+	<div>Did you enter a loan for maintenance/reconstruction?<input type="checkbox" id="hasMaintLoan"></div>
+	
+	<div id="ifHasSoldHouse" style="{visibility:'hidden'}">
+		<div>Price the house was sold for: <input type="number" onchange="calcValueResidue()" id="sellingPrice"></div>
+		<div>Private debts for the sold house: <input type="number" onchange="calcValueResidue()" id="privateDebt"></div>
+		<div>valueResidue: <input type="text" id="valueResidue"></div> 
+	</div>
+</body>
+
+</html>

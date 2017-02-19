@@ -4,10 +4,9 @@
 
 module.exports = class Statement {
 
-    /**
-     * Abstract
-     */
-    evaluate(){
-
+    constructor() {
+        if (this.getGeneratedCode === undefined) {
+            throw new TypeError("Must override method");
+        }
     }
 };

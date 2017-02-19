@@ -8,26 +8,33 @@
 
 
 form         -> "form " formName openBrace newLine statement:* newLine closedBrace                           {% FormPostProcessor.form %}
-formName     -> letters
+formName     -> word
 
 statement    -> question
               | if_statement
               | answer                                                                                      {% FormPostProcessor.statement %}
 
 question     -> "question " prime sentence prime newLine propertyName ":" space propertyType newLine        {% FormPostProcessor.question %}
-if_statement -> "if " parOpen propertyName parClose space openBrace newLine statement:* newLine closedBrace  {% FormPostProcessor.ifStatement %}
+if_statement -> "if " parOpen propertyName parClose space openBrace newLine statement:*  newLine closedBrace  {% FormPostProcessor.ifStatement %}
 answer       -> "answer " prime sentence prime newLine allocation                                           {% FormPostProcessor.answer %}
 allocation   -> propertyName ": " propertyType space assignOp space expression newLine
-expression   -> "(" propertyName space operator space propertyName ")"                                      {% FormPostProcessor.expression %}
-operator     -> "+"
-              | "-"
-              | "*"
-              | "/"                                                                                         {% FormPostProcessor.operator %}
+#expression   -> "(" propertyName space operator space propertyName ")"
+#operator     -> "-" | "+" | "/" | "*"
+expression  -> term | expression (min_op|plus_op) term                                         {% FormPostProcessor.expression %}
+term        -> factor | term (divide_op | multiply_op) factor
+factor      -> digits | propertyName | "(" expression ")"
+digits      -> [0-9]:+
+
+min_op      -> "-"
+plus_op     -> "+"
+divide_op   -> "/"
+multiply_op -> "*"
+
 
 assignOp     -> "="
 
 
-propertyName -> letters
+propertyName -> word
 propertyType -> "boolean"
               | "string"
               | "integer"
@@ -37,10 +44,12 @@ propertyType -> "boolean"
 
 newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
 sentence     -> [\w|\s|?|:]:+                                                                               {% FormPostProcessor.toString %}
-letters      -> [a-zA-Z]:+                                                                                  {% FormPostProcessor.toString %}
+word         -> [a-zA-Z]:+                                                                                  {% FormPostProcessor.toString %}
 prime        -> "`"
 openBrace    -> "{"
 closedBrace  -> "}"
 parOpen      -> "("
 parClose     -> ")"
 space        -> _
+
+
