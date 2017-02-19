@@ -26,7 +26,7 @@ namespace Tests.QL.AST
         [TestMethod]
         public void Form()
         {
-            Dictionary<string, string> positiveTestCases = new Dictionary<string, string>
+            var positiveTestCases = new Dictionary<string, string>
             {
                 { "form taxOffice {}", "Test failure: TaxOffice" },
                 { "form form1 {}", "Test failure: Identifier form1" }
@@ -40,7 +40,7 @@ namespace Tests.QL.AST
                 );
             }
 
-            Dictionary<string, string> negativeTestCases = new Dictionary<string, string>
+            var negativeTestCases = new Dictionary<string, string>
             {
                 { "form \"taxOffice\" {}", "Test failure: TaxOffice quoted" },
                 { "form form {}", "Test failure: Double form" },
