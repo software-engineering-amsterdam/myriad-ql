@@ -6,11 +6,11 @@ import ASTnodes.types.Type;
 /**
  * Created by LGGX on 17-Feb-17.
  */
-public class InvalidType extends ErrorHandler {
+public class InvalidTypeError extends ErrorHandler {
 
     private Type correctType;
 
-    public InvalidType(CodeLocation location, Type correctType) {
+    public InvalidTypeError(CodeLocation location, Type correctType) {
         super(location);
         this.correctType = correctType;
     }

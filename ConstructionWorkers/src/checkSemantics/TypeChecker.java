@@ -10,23 +10,30 @@ import ASTnodes.statements.*;
 import ASTnodes.types.*;
 import ASTnodes.visitors.ExpressionVisitor;
 import ASTnodes.visitors.FormAndStatementVisitor;
+import checkSemantics.dependency.DependencyData;
 import checkSemantics.messageHandling.MessageData;
-import checkSemantics.messageHandling.errors.InvalidType;
+import checkSemantics.messageHandling.errors.CyclicDependencyError;
+import checkSemantics.messageHandling.errors.InvalidTypeError;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by LGGX on 15-Feb-17.
  */
 public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVisitor<Type> {
 
+    private final DependencyData dependencyList;
     private HashMap<String, Type> identifierMap;
     private MessageData messageLists;
+    private Identifier tempIdentifierLiteral;
 
     public TypeChecker(Form ast, HashMap identifierMap, MessageData messageLists) {
 
         this.messageLists = messageLists;
         this.identifierMap = identifierMap;
+        this.dependencyList = new DependencyData();
+
         ast.accept(this);
 
     }
@@ -154,10 +161,14 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
 
     @Override
     public Void visit(ComputedQuestion statement) {
+        this.tempIdentifierLiteral = statement.getIdentifier();
+
         Type type = statement.getExpression().accept(this);
 
+        this.tempIdentifierLiteral = null;
+
         if (!type.getClass().equals(statement.getType().getClass())) {
-            messageLists.addError(new InvalidType(statement.getLocation(), statement.getType()));
+            messageLists.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
             //System.out.println("Incompatible types for computed question!");
         }
 
@@ -171,7 +182,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type type = statement.getType(expression);
 
         if (type.getClass().equals(new UndefinedType().getClass())) {
-            messageLists.addError(new InvalidType(statement.getLocation(), new BooleanType()));
+            messageLists.addError(new InvalidTypeError(statement.getLocation(), new BooleanType()));
             //System.out.println("Incompatible types for IF statement expression!");
         }
 
@@ -190,12 +201,11 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
 
     @Override
     public Type visit(Identifier identifier) {
-        String context = identifier.getName();
 
         Type type = identifierMap.get(identifier.getName());
 
-        if (context == null) {
-            System.out.println("Undefined identifier name!");
+        if (this.tempIdentifierLiteral != null) {
+            this.checkCyclicDependency(this.tempIdentifierLiteral, identifier);
         }
 
         return type;
@@ -216,8 +226,27 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         return new MoneyType();
     }
 
+    private void checkCyclicDependency(Identifier end, Identifier start) {
+        boolean revertedDependencyExists = this.checkRevertedDependency(start, end);
+        if (revertedDependencyExists) {
+            messageLists.addError(new CyclicDependencyError(end.getLocation(), end, start));
+        }
+        this.updateDependencyData(end, start);
+    }
 
-    public HashMap getMap() {
-        return this.identifierMap;
+    private boolean checkRevertedDependency(Identifier end, Identifier start) {
+        List<String> toDependencies =
+                this.dependencyList.getIdDependencyNames(end);
+
+        if ((toDependencies != null)
+                && toDependencies.contains(start.getName()))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void updateDependencyData(Identifier end, Identifier start) {
+
     }
 }
