@@ -12,7 +12,7 @@ def parse(input_string):
     number = Word(nums + ".")
 
     arith_operand = number | identifier
-    bool_operand = Literal("true") | Literal("false") | identifier | number
+    bool_operand = Literal("true") | Literal("false") | number | identifier
     bool_operand.setParseAction(BoolOperand)
 
     # Reserved keywords
@@ -49,7 +49,10 @@ def parse(input_string):
     ]
 
     # Arithmetic precedence
-    arith_expr = infixNotation(arith_operand, arith_prec)
+    arith_expr = infixNotation(
+        arith_operand,
+        arith_prec
+    )
 
     bool_expr = infixNotation(
         bool_operand,
@@ -62,8 +65,7 @@ def parse(input_string):
     boolean_expr = bool_expr
 
     arithmetic_statement = \
-        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))\
-            .setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
+        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
 
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
@@ -81,7 +83,7 @@ def parse(input_string):
         Group(
             QuotedString('"', unquoteResults=True).setResultsName("title") +
             assignment_expr
-        ).setParseAction(ast.Field)
+        )
 
     if_stmt = Forward()
     if_stmt << \
@@ -93,7 +95,7 @@ def parse(input_string):
             l_curly +
             (OneOrMore(field_expr) | ZeroOrMore(if_stmt)) +
             r_curly
-        ).setParseAction(ast.Conditional)
+        )
 
     # Program
     form = \
@@ -104,6 +106,6 @@ def parse(input_string):
             ZeroOrMore(field_expr.setResultsName("field_expression*") | if_stmt.setResultsName("if_statement*"))
         ).setResultsName("form_statement_list") + \
         r_curly
-    form_group = Group(form).addParseAction(ast.Form)
-    tokens = form_group.parseString(input_string)
+    # form_group = Group(form).addParseAction(ast.Form)
+    tokens = form.parseString(input_string)
     return tokens

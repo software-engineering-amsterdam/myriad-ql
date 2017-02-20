@@ -1,7 +1,8 @@
 class BoolOperand(object):
     def __init__(self, t):
         self.label = t[0]
-        self.value = eval(t[0])
+        # self.value = eval(t[0])
+        self.value = t[0]
 
     def __bool__(self):
         return self.value
@@ -13,6 +14,9 @@ class BoolOperand(object):
 
 
 class BoolBinOp(object):
+    reprsymbol = None
+    evalop = None
+
     def __init__(self, t):
         self.args = t[0][0::2]
 
@@ -27,7 +31,7 @@ class BoolBinOp(object):
 
 
 class BoolAnd(BoolBinOp):
-    reprsymbol = '&'
+    reprsymbol = '&&'
     evalop = all
 
 
