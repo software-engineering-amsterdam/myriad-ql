@@ -1,4 +1,4 @@
-
+package semantic;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +9,7 @@ public class Environment {
 	private Map<String, Type> variableType; // Should these two be combined to label - variable/type
 	private Map<String, String> labelVariable;
 	
-	Environment() {
+	public Environment() {
 		variableType = new HashMap<>(); 
 		labelVariable = new HashMap<>();
 	}
@@ -20,6 +20,13 @@ public class Environment {
 	
 	public void addVariableType(String variable, Type type) {
 		variableType.put(variable, type);
+	}
+	
+	public Type hasType(String variable) {
+		if (!variableExists(variable)) {
+			return null;
+		}
+		return variableType.get(variable);
 	}
 	
 	public boolean variableExists(String variable) {

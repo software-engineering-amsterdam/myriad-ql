@@ -2,9 +2,9 @@ package org.uva.taxfree.model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Set;
 
 public class StringQuestion extends NamedNode {
+
     private JTextField mTextField;
     public StringQuestion(String description, String id) {
         super(description, id);

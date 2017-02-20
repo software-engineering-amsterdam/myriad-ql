@@ -5,17 +5,17 @@ import java.util.Set;
 
 public abstract class NamedNode extends Node {
 
-    private String mDescription;
+    private String mLabel;
     private String mId;
 
-    public NamedNode(String description, String id) {
-        mDescription = description;
+    public NamedNode(String label, String id) {
+        mLabel = label;
         mId = id;
     }
 
     public JPanel getWidget() {
         JPanel widgetPanel = new JPanel();
-        widgetPanel.add(new JLabel(mDescription));
+        widgetPanel.add(new JLabel(mLabel));
         fillPanel(widgetPanel);
         widgetPanel.setVisible(isVisible());
         return widgetPanel;
@@ -31,4 +31,7 @@ public abstract class NamedNode extends Node {
         set.add(this);
     }
 
+    public String getLabel() {
+        return mLabel;
+    }
 }

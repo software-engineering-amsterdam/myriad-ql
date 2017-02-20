@@ -6,15 +6,24 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
+import org.uva.taxfree.model.NamedNode;
 import org.uva.taxfree.model.Node;
 
 import java.io.*;
 import java.util.BitSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Ast {
 
     private Ast() {
 
+    }
+
+    private Node mRootNode;
+
+    public Ast(Node rootNode) {
+        mRootNode = rootNode;
     }
 
     public static Ast generateAst(File input) throws IOException {
@@ -23,6 +32,17 @@ public class Ast {
 
     public static Ast generateAst(String input) throws IOException {
         return generateAst(new StringReader(input));
+    }
+
+    public Set<NamedNode> getQuestions() {
+        Set<NamedNode> questions = new LinkedHashSet<>();
+        mRootNode.retrieveQuestions(questions);
+//        Set<Node> questions = mRootNode.retrieveQuestions();
+        return questions;
+    }
+
+    public String getFormName() {
+        return mRootNode.getId();
     }
 
     private static Ast generateAst(Reader reader) throws IOException {
@@ -63,16 +83,6 @@ public class Ast {
         OurQLGrammarListener listener = new OurQLGrammarListener();
         walker.walk(listener, formContext);
         return listener.getAst();
-    }
-
-    private Node mRootNode;
-
-    public Ast(Node rootNode) {
-        mRootNode = rootNode;
-    }
-
-    public Node getRootNode() {
-        return mRootNode;
     }
 }
 
