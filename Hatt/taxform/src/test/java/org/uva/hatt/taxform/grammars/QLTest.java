@@ -19,7 +19,7 @@ public class QLTest {
     @Test
     public void emptyForm() throws IOException {
         String form = "form taxOfficeExample { }";
-        String expected = "(form form (formId taxOfficeExample) { })";
+        String expected = "(form form taxOfficeExample { })";
         String tree = getParseTree(form);
 
         assertEquals(expected, tree);
@@ -28,7 +28,7 @@ public class QLTest {
     @Test
     public void oneQuestion() throws IOException {
         String form = "form taxOfficeExample { \"Did you sell a house in 2010?\" hasSoldHouse: boolean }";
-        String expected = "(form form (formId taxOfficeExample) { (questions (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) })";
+        String expected = "(form form taxOfficeExample { (items (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) })";
         String tree = getParseTree(form);
 
         assertEquals(expected, tree);
@@ -37,7 +37,16 @@ public class QLTest {
     @Test
     public void multipleQuestions() throws IOException {
         String form = "form taxOfficeExample { \"Did you sell a house in 2010?\" hasSoldHouse: boolean \"Did you buy a house in 2010?\" hasBoughtHouse: boolean }";
-        String expected = "(form form (formId taxOfficeExample) { (questions (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) (questions (question \"Did you buy a house in 2010?\" hasBoughtHouse : (valueType boolean))) })";
+        String expected = "(form form taxOfficeExample { (items (question \"Did you sell a house in 2010?\" hasSoldHouse : (valueType boolean))) (items (question \"Did you buy a house in 2010?\" hasBoughtHouse : (valueType boolean))) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
+    @Test
+    public void singleIfBlock() throws IOException {
+        String form = "form fA {if (hasSoldHouse) {\"qA?\" hasA: boolean}}";
+        String expected = "(form form fA { (items (ifBlock if ( (expression hasSoldHouse) ) { (items (question \"qA?\" hasA : (valueType boolean))) })) })";
         String tree = getParseTree(form);
 
         assertEquals(expected, tree);
