@@ -64,13 +64,16 @@
   <ItemGroup>
     <None Include="OffByOne.Ql.ruleset" />
     <None Include="packages.config" />
+    <Antlr4 Include="Syntax\QlLexer.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
+    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Compile Include="MyQlVisitor.cs" />
-    <Compile Include="obj\Debug\QlBaseVisitor.cs" />
     <Compile Include="obj\Debug\QlLexer.cs" />
     <Compile Include="obj\Debug\QlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,7 +83,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Antlr4 Include="Syntax\Ql.g4">
+    <Antlr4 Include="Syntax\QlParser.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
     </Antlr4>

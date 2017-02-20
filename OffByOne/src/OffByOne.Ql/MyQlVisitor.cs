@@ -1,16 +1,12 @@
 ﻿namespace OffByOne.Ql
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
+
     using Antlr4.Runtime.Misc;
-    using Antlr4.Runtime.Tree;
 
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Expressions;
-    using OffByOne.LanguageCore.Ast.Expressions.Binary;
-    using OffByOne.LanguageCore.Ast.Expressions.Unary;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.Statements;
     using OffByOne.LanguageCore.Ast.Statements.Branch;
@@ -18,7 +14,7 @@
     using OffByOne.Ql.Generated;
 
     // TODO: Extract creation of OperatorExpressions to factory method
-    public class MyQlVisitor : QlBaseVisitor<AstNode>
+    public class MyQlVisitor : QlParserBaseVisitor<AstNode>
     {
         public override AstNode VisitForm([NotNull] QlParser.FormContext context)
         {
@@ -73,45 +69,10 @@
             return new ElseStatement(stats);
         }
 
-        #region:expression
+#region:expression
         public override AstNode VisitExpressionBracket([NotNull] QlParser.ExpressionBracketContext context)
         {
             return new BracketExpression((Expression)this.Visit(context.expression()));
-        }
-
-        public override AstNode VisitExpressionBinary([NotNull] QlParser.ExpressionBinaryContext context)
-        {
-            var exps = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            var op = context.BinaryOperator().GetText();
-            switch (op)
-            {
-                case "and":
-                    return new AndExpression(exps[0], exps[1]);
-                case "or":
-                    return new OrExpression(exps[0], exps[1]);
-                case "+":
-                    return new AddExpression(exps[0], exps[1]);
-                case "-":
-                    return new SubtractExpression(exps[0], exps[1]);
-                case "*":
-                    return new MultiplyExpression(exps[0], exps[1]);
-                case "/":
-                    return new DivideExpression(exps[0], exps[1]);
-                case "==":
-                    return new EqualExpression(exps[0], exps[1]);
-                case ">=":
-                    return new GreaterThanOrEqualExpression(exps[0], exps[1]);
-                case ">":
-                    return new GreaterThanExpression(exps[0], exps[1]);
-                case "<=":
-                    return new LessThanOrEqualExpression(exps[0], exps[1]);
-                case "<":
-                    return new LessThanExpression(exps[0], exps[1]);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(op), "Unsupported operator for binary expression.");
-            }
         }
 
         public override AstNode VisitExpressionIdentifier([NotNull] QlParser.ExpressionIdentifierContext context)
@@ -119,20 +80,83 @@
             return new VariableExpression(context.Identifier().GetText());
         }
 
-        public override AstNode VisitExpressionUnary([NotNull] QlParser.ExpressionUnaryContext context)
+        public override AstNode VisitExpressionAdd([NotNull] QlParser.ExpressionAddContext context)
         {
-            var exp = (Expression)this.Visit(context.expression());
-            var op = context.UnaryOperator().GetText();
-            switch (op)
-            {
-                case "not":
-                    return new NotExpression(exp);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(op), "Unsupported operator for unary expression.");
-            }
+            return base.VisitExpressionAdd(context);
+        }
+
+        public override AstNode VisitExpressionAnd([NotNull] QlParser.ExpressionAndContext context)
+        {
+            return base.VisitExpressionAnd(context);
+        }
+
+        public override AstNode VisitExpressionDivide([NotNull] QlParser.ExpressionDivideContext context)
+        {
+            return base.VisitExpressionDivide(context);
+        }
+
+        public override AstNode VisitExpressionEqual([NotNull] QlParser.ExpressionEqualContext context)
+        {
+            return base.VisitExpressionEqual(context);
+        }
+
+        public override AstNode VisitExpressionGreaterThan([NotNull] QlParser.ExpressionGreaterThanContext context)
+        {
+            return base.VisitExpressionGreaterThan(context);
+        }
+
+        public override AstNode VisitExpressionGreaterThanOrEqual([NotNull] QlParser.ExpressionGreaterThanOrEqualContext context)
+        {
+            return base.VisitExpressionGreaterThanOrEqual(context);
+        }
+
+        public override AstNode VisitExpressionLesserThan([NotNull] QlParser.ExpressionLesserThanContext context)
+        {
+            return base.VisitExpressionLesserThan(context);
+        }
+
+        public override AstNode VisitExpressionLesserThanOrEqual([NotNull] QlParser.ExpressionLesserThanOrEqualContext context)
+        {
+            return base.VisitExpressionLesserThanOrEqual(context);
+        }
+
+        public override AstNode VisitExpressionLiteral([NotNull] QlParser.ExpressionLiteralContext context)
+        {
+            return base.VisitExpressionLiteral(context);
+        }
+
+        public override AstNode VisitExpressionMultiply([NotNull] QlParser.ExpressionMultiplyContext context)
+        {
+            return base.VisitExpressionMultiply(context);
+        }
+
+        public override AstNode VisitExpressionNegate([NotNull] QlParser.ExpressionNegateContext context)
+        {
+            return base.VisitExpressionNegate(context);
+        }
+
+        public override AstNode VisitExpressionNot([NotNull] QlParser.ExpressionNotContext context)
+        {
+            return base.VisitExpressionNot(context);
+        }
+
+        public override AstNode VisitExpressionNotEqual([NotNull] QlParser.ExpressionNotEqualContext context)
+        {
+            return base.VisitExpressionNotEqual(context);
+        }
+
+        public override AstNode VisitExpressionOr([NotNull] QlParser.ExpressionOrContext context)
+        {
+            return base.VisitExpressionOr(context);
+        }
+
+        public override AstNode VisitExpressionSubtract([NotNull] QlParser.ExpressionSubtractContext context)
+        {
+            return base.VisitExpressionSubtract(context);
         }
         #endregion
 
+        #region:Literals
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
             return new DateLiteral(DateLiteral.Parse(context.DateLiteral().GetText()));
@@ -162,5 +186,6 @@
         {
             return new StringLiteral(context.GetText());
         }
+#endregion
     }
 }
