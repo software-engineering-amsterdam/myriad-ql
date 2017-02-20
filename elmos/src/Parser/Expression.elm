@@ -25,11 +25,6 @@ expression =
     lazy <| \() -> foldr chainl atom precedenceOrderedOperators
 
 
-apply : Expression -> Parser s (Expression -> a) -> Parser s a
-apply e p =
-    p |> Combine.map (\x -> x e)
-
-
 precedenceOrderedOperators : List (Parser s BinaryOperator)
 precedenceOrderedOperators =
     List.map trimmed <|
