@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class McsaVisitor implements QLVisitor {
     @Override
     public Object visitStart(QLParser.StartContext ctx) {
-        System.out.println(ctx);
+        //System.out.println(ctx.start.getLine());
         return null;
     }
 

@@ -1,6 +1,6 @@
 grammar QL;
 
-start : 'form' ID '{' statementContent '}';
+start : 'form' ID OPEN_BRACKET statementContent CLOSE_BRACKET;
 
 statementContent
     : categorise*
@@ -11,18 +11,18 @@ categorise
     | NUMBER
     | WHITESPACE
     | COMMENT
-    | 'if' OPEN_PARENTH ifCase CLOSE_PARENTH OPEN_BRACKET statementContent CLOSE_BRACKET
+    | 'if' ifCase OPEN_BRACKET statementContent CLOSE_BRACKET
     ;
 
 ifCase
     : ifCaseArgs
-    | ifCaseArgs '>' ifCaseArgs
-    | ifCaseArgs '<' ifCaseArgs
-    | ifCaseArgs '<=' ifCaseArgs
-    | ifCaseArgs '>=' ifCaseArgs
-    | ifCaseArgs '==' ifCaseArgs
-    | ifCase 'AND' ifCase
-    | ifCase 'OR' ifCase
+    | OPEN_PARENTH ifCaseArgs '>' ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs '<' ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs '<=' ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs '>=' ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs '==' ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCase 'AND' ifCase CLOSE_PARENTH
+    | OPEN_PARENTH ifCase 'OR' ifCase CLOSE_PARENTH
     ;
 
 ifCaseArgs
