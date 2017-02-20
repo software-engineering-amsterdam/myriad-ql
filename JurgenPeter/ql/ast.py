@@ -1,6 +1,6 @@
 from enum import Enum
 
-Datatype = Enum("Datatype", "boolean string integer decimal money")
+Datatype = Enum("Datatype", "boolean string integer decimal")
 
 
 class Form:

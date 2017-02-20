@@ -4,7 +4,7 @@ from ql.ast import *
 identifier = Word(alphas)
 identifier.addCondition(
     lambda tokens: tokens[0] not in
-    "form if else true false boolean string integer decimal money".split())
+    "form if else true false boolean string integer decimal".split())
 
 variable = identifier.copy()
 variable.addParseAction(lambda tokens: Variable(tokens[0]))
@@ -77,7 +77,7 @@ expression = infixNotation(
 
 block = Forward()
 
-datatype = oneOf("boolean string integer decimal money")
+datatype = oneOf("boolean string integer decimal")
 datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
 question = identifier + Suppress(":") + QuotedString("\"") + datatype +\

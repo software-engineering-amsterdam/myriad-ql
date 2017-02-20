@@ -2,6 +2,7 @@ class SymbolChecker:
 
     def __init__(self):
         self.symboltable = {}
+        self.labels = []
         self.success = True
 
     def execute(self, node):
@@ -13,6 +14,11 @@ class SymbolChecker:
             statement.accept(self)
 
     def visit_question(self, node):
+        if node.label in self.labels:
+            print("Warning: label \"{}\" is already used".format(node.label))
+        else:
+            self.labels.append(node.label)
+
         if node.identifier not in self.symboltable:
             self.symboltable[node.identifier] = node.datatype
         else:

@@ -3,7 +3,7 @@ from ql.ast import Datatype
 
 class TypeChecker:
 
-    arithmic_datatypes = [Datatype.money, Datatype.integer, Datatype.decimal]
+    arithmic_datatypes = [Datatype.integer, Datatype.decimal]
 
     def __init__(self, symboltable):
         self.symboltable = symboltable
@@ -16,8 +16,6 @@ class TypeChecker:
     def dominant_datatype(self, lefttype, righttype):
         if lefttype == Datatype.decimal or righttype == Datatype.decimal:
             return Datatype.decimal
-        if lefttype == Datatype.money or righttype == Datatype.money:
-            return Datatype.money
         return Datatype.integer
 
     def visit_form(self, node):

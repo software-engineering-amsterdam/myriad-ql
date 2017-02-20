@@ -37,7 +37,6 @@ class Testgrammar(TestCase):
         (grammar.question, "x : \"y\" integer"),
         (grammar.question, "x : \"y\" decimal"),
         (grammar.question, "x : \"y\" boolean"),
-        (grammar.question, "x : \"y\" money"),
         (grammar.question, "x : \"y\" string"),
         (grammar.question, "x : \"y\" integer = 2 + 3"),
         (grammar.question, "x : \"y\" string = \"hello world\""),
