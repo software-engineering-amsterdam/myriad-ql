@@ -10,40 +10,47 @@ package org.uva.hatt.taxform.grammars;
 package org.uva.hatt.taxform.grammars;
 }
 
-form        : 'form' Identifier '{' formBody* '}';
+form            : 'form' Identifier '{' items* '}';
 
-formBody    : question
-            | 'if ('expression') {' question* '}';
+items           : question
+                | ifBlock elseBlock?;
 
-question    : StringLiteral Identifier ':' valueType;
+question        : StringLiteral Identifier ':' valueType computedValue?;
 
-valueType   : 'boolean'
-            | 'integer'
-            | 'string'
-            | 'money';
+ifBlock         : 'if (' expression ') {' items* '}';
+elseBlock       : 'else {' items* '}';
 
-expression  : (StringLiteral | BooleanLiteral | IntegerLiteral | Identifier)
-            | (Unary expression)
-            | expression (operator) expression
-            ;
+computedValue   : '=' expression;
+
+valueType       : 'boolean'
+                | 'integer'
+                | 'string'
+                | 'money';
+
+expression      : StringLiteral
+                | BooleanLiteral
+                | IntegerLiteral
+                | Identifier
+                | '(' expression ')'
+                | Unary expression
+                | expression operator expression;
 
 //operators in order of precedence from highest to lowest
-operator    : Unary
-            | Multiplicative
-            | Additive
-            | Relational
-            | Equality
-            | ConditionalAND
-            | ConditionalOR
-            ;
+operator        : Unary
+                | Multiplicative
+                | Additive
+                | Relational
+                | Equality
+                | ConditionalAND
+                | ConditionalOR;
 
 // Tokens
-WS            :	(' ' | '\t' | '\n' | '\r')-> channel(HIDDEN);
+WS              : (' ' | '\t' | '\n' | '\r')-> channel(HIDDEN);
 Comment         : ('/*' .* '*/') -> channel(HIDDEN);
 Identifier      : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 StringLiteral   : '"' (~'"')* '"';
 BooleanLiteral  : 'true' | 'false';
-IntegerLiteral  : ('0'..'9')*;
+IntegerLiteral  : ('0'..'9')+;
 
 //operators in order of precedence from highest to lowest
 Unary           : '!';
