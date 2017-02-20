@@ -26,7 +26,7 @@ class Node(object):
         return ret
 
     def __repr__(self):
-        return '<%s>', self.var_type
+        return self.var_type
 
 
 class Form(Node):
@@ -45,24 +45,18 @@ class Form(Node):
 class Field(Node):
     def __init__(self, parsed_output):
         super(Field, self).__init__('field')
-        self.name = parsed_output.field_expression[0].identifier
-        self.title = parsed_output.field_expression[0].title
-
-
-class Assignment(Node):
-    def __init__(self, parsed_output):
-        super(Assignment, self).__init__('assignment')
-        self.identifier = parsed_output.assignment_expr.identifier
-        self.title = parsed_output.assignment_expr.title
-        self.add_child(parsed_output.assignment_expr)
+        field_expression = parsed_output.field_expression[0]
+        self.name = field_expression.identifier
+        self.title = field_expression.title
+        self.data_type = field_expression.data_type
+        if field_expression.arithmetic_statement:
+            self.add_child(field_expression.arithmetic_statement)
 
 
 class Arithmetic(Node):
     def __init__(self, parsed_output):
         super(Arithmetic, self).__init__('arithmetic_statement')
-        self.identifier = parsed_output.arithmetic_statement.identifier
-        self.title = parsed_output.arithmetic_statement.title
-        self.add_child(parsed_output.arithmetic_statement)
+        self.lhs, self.operator, self.rhs = parsed_output.arithmetic_statement[0]
 
 
 class Expression(Node):

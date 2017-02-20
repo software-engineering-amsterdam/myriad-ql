@@ -1,6 +1,7 @@
 # At a stable state of lexing and parsing this import needs to be changed to a more concrete version which only imports
 # the needed methods from the pyparsing package
 from pyparsing import *
+from pql.ast import ast
 from parser.BoolOperand import BoolOperand
 from parser.BoolOperand import BoolAnd
 from parser.BoolOperand import BoolOr
@@ -68,16 +69,16 @@ def parse(input_string):
         identifier.setResultsName("identifier") + \
         colon + \
         data_types.setResultsName("data_type") + \
-        Optional(
+         Optional(
             assign_op +
-            arithmetic_statement.setResultsName("arithmetic_statement")
+            arithmetic_statement.setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
         )
 
     field_expr = \
         Group(
             QuotedString('"', unquoteResults=True).setResultsName("title") +
             assignment_expr
-        )
+        ).setParseAction(ast.Field)
 
     if_stmt = Forward()
     if_stmt << \
@@ -92,7 +93,7 @@ def parse(input_string):
         )
 
     # Program
-    program = \
+    form = \
         form + \
         identifier.setResultsName("form_identifier") + \
         l_curly + \
@@ -100,6 +101,6 @@ def parse(input_string):
             ZeroOrMore(field_expr.setResultsName("field_expression*") | if_stmt.setResultsName("if_statement*"))
         ).setResultsName("form_statement_list") + \
         r_curly
-
-    tokens = program.parseString(input_string)
+    form_group = Group(form).addParseAction(ast.Form)
+    tokens = form_group.parseString(input_string)
     return tokens
