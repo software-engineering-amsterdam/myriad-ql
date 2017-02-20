@@ -30,9 +30,9 @@ factor      -> digits | propertyName | parOpen expression parClose
 digits      -> [0-9]:+                                                                                          {% (d)=> Number(d[0]) %}
 
 min_op      -> "-"                                                                                              {% FormPostProcessor.minOp %}
-plus_op     -> "+"
-divide_op   -> "/"
-multiply_op -> "*"
+plus_op     -> "+"                                                                                              {% FormPostProcessor.plusOP %}
+divide_op   -> "/"                                                                                              {% FormPostProcessor.divideOp %}
+multiply_op -> "*"                                                                                              {% FormPostProcessor.multiplyOp %}
 
 assignOp     -> "="
 
