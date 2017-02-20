@@ -8,12 +8,24 @@ const Form = require('../Form.js');
 const Question = require('../statements/Question.js');
 const Answer = require('../statements/Answer.js');
 const IfStatement = require('../statements/IfStatement.js');
+const Expression = require('../expressions/Expression.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
 
+    constructor(){
+        super();
+
+        this.ast = {
+            name: '',
+            statements: []
+        };
+
+    }
+
     // todo
-    static form(data, location, reject) {
+    form(data, location, reject) {
         console.log(`Form: ${JSON.stringify(data)}`);
+        return data;
         return new Form({
             name: data[1][0],
             statements: data[2]
@@ -21,39 +33,48 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     // todo
-    static statements(data, location, reject) {
+    statements(data, location, reject) {
         console.log(`Statements: ${JSON.stringify(data)}`);
         return data;
     }
 
     // todo should not been called
-    static statement(data, location, reject) {
+    statement(data, location, reject) {
         console.log(`Statement: ${JSON.stringify(data)}`);
         return data[0];
     }
 
-    static question(data, location, reject) {
+    question(data, location, reject) {
         console.log(`Question: ${JSON.stringify(data)}`);
-        return new Question({ name: data[0], propertyName: data[3][0], type: data[6][0] });
+
+        return new Question({name: data[2].trim(), propertyName: data[6][0], type: data[9][0].trim()});
     }
 
-    static ifStatement(data, location, reject) {
+    ifStatement(data, location, reject) {
         console.log(`ifStatement: ${JSON.stringify(data)}`);
         return new IfStatement({ name: data[0], propertName: [] });
     }
 
     // todo
-    static answer(data, location, reject) {
+    answer(data, location, reject) {
         console.log(`Answer: ${JSON.stringify(data)}`);
-        return new Answer({});
+        return new Answer({name: data[2].trim(), allocation: data});
     }
 
-    static expression(data, location, reject) {
-        console.log(`Expression: ${JSON.stringify(data)}`);
+    factor(data, location, reject){
+        console.log(`Factor: ${JSON.stringify(data)}`);
         return data;
     }
 
-    static operator(data, location, reject) {
+    expression(data, location, reject) {
+        console.log(`Expression: ${JSON.stringify(data)}`);
+        return data;
+        return new Expression({
+
+        });
+    }
+
+    operator(data, location, reject) {
         console.log(`Operator: ${JSON.stringify(data)}`);
         return data;
     }

@@ -6,12 +6,26 @@
 
 module.exports = class PostProcessor {
 
-    static toString(data, location, reject){
+    toString(data, location, reject){
         return data.join().split(",").join("");
     }
 
-    static toNull(){
+    toNull(){
         return null;
+    }
+
+    updateObject(obj, children) {
+        if (typeof obj == "object") {
+            var result = obj.constructor();
+            for (var key in obj) {
+                result[key] = this.updateObject(obj[key], children);
+            }
+            return result;
+        } else if (typeof obj == "number") {
+            return children[obj];
+        } else {
+            return obj;
+        }
     }
 
 };

@@ -6,7 +6,6 @@
 
 module.exports = class TypeConverter {
 
-
     convertQLtoHTML(type){
         var result = type;
         if(type == "money"){
