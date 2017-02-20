@@ -10,6 +10,7 @@
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
+    using OffByOne.Ql.Ast.Statements.Branch;
 
     using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
 
@@ -49,6 +50,10 @@
                     return this.CheckUnaryMatematicalExpression(expression);
                 case NegativeExpression expression:
                     return this.CheckUnaryMatematicalExpression(expression);
+                case IfStatement statement:
+                    return null;
+                case ElseStatement statement:
+                    return null;
             }
 
             return base.CheckTypes(node);
