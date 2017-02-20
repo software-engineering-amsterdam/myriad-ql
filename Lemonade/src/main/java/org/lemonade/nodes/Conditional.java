@@ -25,7 +25,6 @@ public class Conditional extends Block {
         return condition;
     }
 
-    @Override
     public <T> T accept(BlockVisitor<T> visitor) {
         return visitor.visit(this);
     }

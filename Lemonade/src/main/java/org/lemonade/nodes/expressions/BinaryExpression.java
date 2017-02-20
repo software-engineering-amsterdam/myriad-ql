@@ -26,8 +26,4 @@ public abstract class BinaryExpression extends Expression {
         return this.right;
     }
 
-    @Override
-    public <T> T accept(ExpressionVisitor<T> visitor){
-        return visitor.visit(this);
-    }
 }

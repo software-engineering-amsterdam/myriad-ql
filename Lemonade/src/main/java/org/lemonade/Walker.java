@@ -4,6 +4,11 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Form;
+import org.lemonade.visitors.FormChecker;
+import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.TypeCheckVisitor;
+
 
 import java.io.StringReader;
 
@@ -25,7 +30,10 @@ public class Walker {
         QLParser parser = new QLParser(tokens);
         ParseTree tree = parser.form();
         QLFormVisitor visitor = new QLFormVisitor();
-        ASTNode root = tree.accept(visitor);
+        Form root = (Form) tree.accept(visitor);
+
+        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
+        root.accept(typeCheckVisitor);
 
     }
 }

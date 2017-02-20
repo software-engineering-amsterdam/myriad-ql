@@ -1,5 +1,6 @@
 package org.lemonade.nodes.expressions.literal;
 
+import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.visitors.ExpressionVisitor;
 
@@ -13,8 +14,12 @@ public class IdentifierLit extends Literal {
         this.value = value;
     }
 
-    @Override
     public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

@@ -9,7 +9,7 @@ public abstract class Expression extends ASTNode {
 
     }
 
-    public <T> T accept(ExpressionVisitor<T> visitor){
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

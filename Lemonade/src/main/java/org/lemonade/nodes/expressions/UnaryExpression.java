@@ -17,7 +17,6 @@ public abstract class UnaryExpression extends Expression {
         return expression;
     }
 
-    @Override
     public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }

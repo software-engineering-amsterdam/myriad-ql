@@ -1,5 +1,8 @@
 package org.lemonade.nodes;
 
+
+import org.lemonade.visitors.FormVisitor;
+
 import java.util.List;
 
 //Maybe everything inherits from the org.lemonade.nodes.ASTNode class so we can easily walk through
@@ -14,10 +17,20 @@ public class Form extends ASTNode {
         this.blocks = blocks;
     }
 
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
     @Override
     public String toString() {
         return this.identifier;
     }
 
-    //TODO Visitor??
+    public <T> T accept(FormVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
 }
