@@ -20,11 +20,6 @@ expression
     | OP_NOT expression             # ExpressionNot
     | OP_SUB expression             # ExpressionNegate
 
-    | expression OP_MUL expression  # ExpressionMultiply
-    | expression OP_DIV expression  # ExpressionDivide
-    | expression OP_SUB expression  # ExpressionSubtract
-    | expression OP_ADD expression  # ExpressionAdd
-
     | expression OP_GTE expression  # ExpressionGreaterThanOrEqual
     | expression OP_LTE expression  # ExpressionLesserThanOrEqual
     | expression OP_GT expression   # ExpressionGreaterThan
@@ -34,6 +29,11 @@ expression
 
     | expression OP_AND expression  # ExpressionAnd
     | expression OP_OR expression   # ExpressionOr
+
+    | expression OP_MUL expression  # ExpressionMultiply
+    | expression OP_DIV<assoc=left> expression  # ExpressionDivide
+    | expression OP_SUB<assoc=left> expression  # ExpressionSubtract
+    | expression OP_ADD expression  # ExpressionAdd
 	;
 
 literal
