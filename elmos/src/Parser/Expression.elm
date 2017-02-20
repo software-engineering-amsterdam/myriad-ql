@@ -3,14 +3,14 @@ module Parser.Expression exposing (expression)
 import AST
     exposing
         ( Location
-        , Expression(Integer, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
+        , Expression(Integer, Decimal, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
         , Logic(And, Or)
         , Comparison(Equal, NotEqual)
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
         , Operator(Plus, Minus, Multiply, Divide)
         )
 import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$), (<$>), (*>), (<*), (<*>), (<|>))
-import Combine.Num exposing (int)
+import Combine.Num exposing (int, float)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
 import Parser.Token exposing (identifier, quotedString, withLoc, parseLoc)
@@ -97,6 +97,7 @@ anyAtom =
         \() ->
             choice <|
                 [ integerAtom
+                , decimalAtom
                 , stringAtom
                 , booleanAtom
                 , parensAtom
@@ -109,6 +110,13 @@ integerAtom =
     succeed Integer
         <*> parseLoc
         <*> int
+
+
+decimalAtom : Parser s Expression
+decimalAtom =
+    succeed Decimal
+        <*> parseLoc
+        <*> float
 
 
 stringAtom : Parser s Expression

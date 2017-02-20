@@ -33,6 +33,7 @@ type FormItem
 type Expression
     = Var Id
     | Str Location String
+    | Decimal Location Float
     | Integer Location Int
     | Boolean Location Bool
     | ParensExpression Location Expression
@@ -70,3 +71,4 @@ type ValueType
     = StringType
     | BooleanType
     | IntegerType
+    | MoneyType

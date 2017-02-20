@@ -2,7 +2,7 @@ module FormUtilTests exposing (all)
 
 import Test exposing (Test, describe, test)
 import AST exposing (..)
-import FormUtil
+import FormUtil exposing (VisibleField(Editable, Computed))
 import Environment as Env
 import Expect
 
@@ -34,10 +34,10 @@ all =
                 in
                     FormUtil.activeFields env exampleForm
                         |> Expect.equal
-                            [ (,,) "Name" "name" StringType
-                            , (,,) "Name with prefix" "nameWithPrefix" StringType
-                            , (,,) "Has house" "hasHouse" BooleanType
-                            , (,,) "Are you sure your name is not john?" "sure" BooleanType
+                            [ Editable "Name" "name" StringType
+                            , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))
+                            , Editable "Has house" "hasHouse" BooleanType
+                            , Editable "Are you sure your name is not john?" "sure" BooleanType
                             ]
         , test "should not return the else branch when the expression branch evaluates to true" <|
             \() ->
@@ -48,10 +48,10 @@ all =
                 in
                     FormUtil.activeFields env exampleForm
                         |> Expect.equal
-                            [ (,,) "Name" "name" StringType
-                            , (,,) "Name with prefix" "nameWithPrefix" StringType
-                            , (,,) "Has house" "hasHouse" BooleanType
-                            , (,,) "Is your name john?" "isJohn" BooleanType
+                            [ Editable "Name" "name" StringType
+                            , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))
+                            , Editable "Has house" "hasHouse" BooleanType
+                            , Editable "Is your name john?" "isJohn" BooleanType
                             ]
         , test "should give all the if branch values if all expressions evaluate to true" <|
             \() ->
@@ -63,10 +63,10 @@ all =
                 in
                     FormUtil.activeFields env exampleForm
                         |> Expect.equal
-                            [ (,,) "Name" "name" StringType
-                            , (,,) "Name with prefix" "nameWithPrefix" StringType
-                            , (,,) "Has house" "hasHouse" BooleanType
-                            , (,,) "Price" "price" IntegerType
-                            , (,,) "Is your name john?" "isJohn" BooleanType
+                            [ Editable "Name" "name" StringType
+                            , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))
+                            , Editable "Has house" "hasHouse" BooleanType
+                            , Editable "Price" "price" IntegerType
+                            , Editable "Is your name john?" "isJohn" BooleanType
                             ]
         ]

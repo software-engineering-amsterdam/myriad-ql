@@ -25,6 +25,9 @@ evaluate env expression =
         AST.Integer _ integer ->
             Values.int integer
 
+        AST.Decimal _ float ->
+            Values.float float
+
         AST.Boolean _ boolean ->
             Values.bool boolean
 
@@ -38,10 +41,22 @@ evaluate env expression =
 
                 rightValue =
                     evaluate env right
+
+                maybeIntegerPair =
+                    Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
+
+                maybeFloatPair =
+                    Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
+
+                ( intOperator, floatOperator ) =
+                    applicativeForOperator op
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
-                        Values.int (applicativeForOperator op l r)
+                case ( maybeIntegerPair, maybeFloatPair ) of
+                    ( Just ( l, r ), _ ) ->
+                        Values.int (intOperator l r)
+
+                    ( _, Just ( l, r ) ) ->
+                        Values.float (floatOperator l r)
 
                     _ ->
                         Values.undefined
@@ -54,8 +69,8 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
+                case Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue) of
+                    Just ( l, r ) ->
                         Values.bool (applicativeForRelation op l r)
 
                     _ ->
@@ -95,23 +110,23 @@ evaluate env expression =
                         Values.bool (applicativeForComparison op a b)
 
 
-applicativeForOperator : Operator -> Int -> Int -> Int
+applicativeForOperator : Operator -> ( Int -> Int -> Int, Float -> Float -> Float )
 applicativeForOperator op =
     case op of
         Plus ->
-            (+)
+            ( (+), (+) )
 
         Minus ->
-            (-)
+            ( (-), (-) )
 
         Divide ->
-            (//)
+            ( (//), (/) )
 
         Multiply ->
-            (*)
+            ( (*), (*) )
 
 
-applicativeForRelation : Relation -> Int -> Int -> Bool
+applicativeForRelation : Relation -> comparable -> comparable -> Bool
 applicativeForRelation relation =
     case relation of
         LessThan ->

@@ -54,3 +54,9 @@ getInteger : String -> Environment -> Maybe Int
 getInteger key data =
     Dict.get key data
         |> Maybe.andThen Values.asInt
+
+
+getFloat : String -> Environment -> Maybe Float
+getFloat key data =
+    Dict.get key data
+        |> Maybe.andThen Values.asFloat

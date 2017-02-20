@@ -80,6 +80,9 @@ usedIdentifiers expression =
         Integer _ _ ->
             Set.empty
 
+        Decimal _ _ ->
+            Set.empty
+
         Boolean _ _ ->
             Set.empty
 
