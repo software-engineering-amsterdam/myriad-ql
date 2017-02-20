@@ -1,12 +1,9 @@
 import java.util.Map;
 
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
 
 import ast.Form;
-import ast.Visitor;
 import ast.atom.Atom;
-import ui.UIFactory;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -50,8 +47,8 @@ public class Main {
 		 
 		 System.out.println("----");
 
-		 EvalVisitor evalVisitor = new EvalVisitor(environment);
-		 evalVisitor.visit(form);
+		 ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
+		 expressionVisitor.visit(form);
 
 
 		 

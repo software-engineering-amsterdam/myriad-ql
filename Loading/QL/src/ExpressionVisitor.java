@@ -10,11 +10,11 @@ import ast.expression.UnaryExpression;
 // Checks unreferenced variables
 // Checks whether condition returns a boolean
 // operands of invalid type to operators
-public class EvalVisitor extends Visitor {
+public class ExpressionVisitor extends Visitor {
 	
 	private Environment environment;
 	
-	public EvalVisitor(Environment environment) {
+	public ExpressionVisitor(Environment environment) {
 		this.environment = environment;
 	}
 	

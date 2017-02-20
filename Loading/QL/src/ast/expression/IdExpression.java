@@ -16,7 +16,7 @@ public class IdExpression extends Expression {
 	public String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public void accept(Visitor v) {
 		// TODO Auto-generated method stub
