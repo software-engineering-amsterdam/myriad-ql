@@ -2,8 +2,7 @@ from unittest import TestCase, main
 from pyparsing import ParseException
 
 import ql.grammar as grammar
-from ql.expression_ast import *
-from ql.form_ast import *
+from ql.ast import *
 
 
 class Testgrammar(TestCase):

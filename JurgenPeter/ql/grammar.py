@@ -1,5 +1,5 @@
 from pyparsing import *
-from ql.form_ast import *
+from ql.ast import *
 
 identifier = Word(alphas)
 identifier.addCondition(
