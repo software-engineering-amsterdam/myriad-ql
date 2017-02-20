@@ -3,4 +3,10 @@
  */
 module.exports = class Operator {
 
+
+
+    toString(){
+        return 'Operator';
+    }
+
 };

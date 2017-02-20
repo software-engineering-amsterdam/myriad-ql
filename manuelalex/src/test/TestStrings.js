@@ -18,8 +18,11 @@ export let test1 =
         privateDebt: money
         answer 'Value residue:'
         valueResidue: money = (sellingPrice-privateDebt)
-    } 
-}`;
+    } else {
+        question 'What is your privateDebt'
+        privateDebt: money
+    }
+     }`;
 
 export let test2 =
 'form y{'

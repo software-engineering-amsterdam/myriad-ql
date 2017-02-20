@@ -34,12 +34,13 @@ module.exports = class Parser {
         // Create a Parser object from our grammar.
         const parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
         let result = [];
+        let testString;
         try {
-            let testString = test1.replace(/(\r\n|\n|\r)/gm,"");
+            testString = test1.replace(/(\r\n|\n|\r)/gm,"");
             console.log(`Testing: ${test1}`);
             result = parser.feed(testString).results;
         } catch (parseError) {
-            console.log(`Error at character ${parseError.offset}, ${test1.charAt(parseError.offset)}`);
+            console.log(`Error at character ${parseError.offset}`);
             console.log(`${parseError}`);
         }
         if (result.length > 1) {

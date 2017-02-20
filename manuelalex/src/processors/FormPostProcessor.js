@@ -10,10 +10,16 @@ const Form = require('../Form.js');
 const Question = require('../statements/Question.js');
 const Answer = require('../statements/Answer.js');
 const IfStatement = require('../statements/IfStatement.js');
+const IfElseStatement = require('../statements/IfElseStatement.js');
+
 const Expression = require('../expressions/Expression.js');
 const Allocation = require('../allocation/Allocation.js');
 const Factor = require('../expressions/Factor.js');
+
 const MinOperator = require('../operator/MinOperator.js');
+const PlusOperator = require('../operator/PlusOperator.js');
+const DivideOperator = require('../operator/DivideOperator.js');
+const MultiplyOperator = require('../operator/MultiplyOperator.js');
 const Money = require('../properties/Money.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
@@ -45,7 +51,12 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     ifStatement(data, location, reject) {
-        return new IfStatement({ condition: data[3], body: data[8] });
+        // ifBody statements are one level too deep
+        return new IfStatement({ condition: data[3], ifBody: data[8] });
+    }
+
+    ifElseStatement(data, location, reject){
+        return new IfElseStatement(_.merge(data[0].getOptions(),{elseBody: _.flattenDeep(data[5])}));
     }
 
     // todo
@@ -101,6 +112,18 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     minOp(data, location, reject) {
         return new MinOperator();
+    }
+
+    plusOp(data, location, reject) {
+        return new PlusOperator();
+    }
+
+    divideOp(data, location, reject){
+        return new DivideOperator();
+    }
+
+    multiplyOp(data, location, reject){
+        return new MultiplyOperator();
     }
 
     money(data, location, reject){
