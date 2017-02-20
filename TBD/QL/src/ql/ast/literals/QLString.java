@@ -22,16 +22,6 @@ public class QLString extends QLLiteral {
 
 
     @Override
-    public QLLiteral eq(QLLiteral other) {
-        return new QLBoolean(other.equals(this));
-    }
-
-    @Override
-    public QLLiteral nEq(QLLiteral other) {
-        return new QLBoolean(!other.equals(this));
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
