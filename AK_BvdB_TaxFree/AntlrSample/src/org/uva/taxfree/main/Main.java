@@ -1,6 +1,7 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.gui.QuestionForm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,18 +30,19 @@ public class Main {
         try {
             Ast ast = Ast.generateAst(new File("input"));
             System.out.println("Rootnode name: " + ast.getRootNode().getId());
+            new QuestionForm(ast.getRootNode()).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Ast ast2 = null;
-        try {
-            ast2 = Ast.generateAst("form {}");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Rootnode name: " + ast2.getRootNode().getId());
+//        Ast ast2 = null;
+//        try {
+//            ast2 = Ast.generateAst("form {}");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Rootnode name: " + ast2.getRootNode().getId());
     }
 }
 

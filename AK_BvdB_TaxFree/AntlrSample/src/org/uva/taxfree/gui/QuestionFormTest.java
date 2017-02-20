@@ -1,7 +1,6 @@
 package org.uva.taxfree.gui;
 
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 import org.uva.taxfree.model.BooleanQuestion;
 import org.uva.taxfree.model.FormNode;
 import org.uva.taxfree.model.Node;
