@@ -7,7 +7,7 @@ import Parser.Form exposing (form)
 import ParserTestUtil exposing (parseToMaybe)
 import Test exposing (..)
 import TypeChecker.DuplicateQuestions exposing (QuestionIndex, duplicateQuestionIdentifiers, questionIndexFromBlock)
-import TypeChecker.Messages exposing (..)
+import TypeChecker.Messages as Messages exposing (..)
 
 
 loc : Int -> Int -> Location
