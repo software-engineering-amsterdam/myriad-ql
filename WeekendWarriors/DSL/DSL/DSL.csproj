@@ -78,6 +78,7 @@
     <Compile Include="Generated\QLVisitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="SemanticAnalysis\Analyzer.cs" />
     <Compile Include="SemanticAnalysis\ExpressionValidator.cs" />
     <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
@@ -85,6 +86,13 @@
     <Compile Include="SemanticAnalysis\SemanticErrorArgs.cs" />
     <Compile Include="SemanticAnalysis\StatementValidator.cs" />
     <Compile Include="SemanticAnalysis\Validator.cs" />
+    <Compile Include="Value\DecimalValue.cs" />
+    <Compile Include="Value\IntValue.cs" />
+    <Compile Include="Value\Value.cs" />
+    <Compile Include="Value\IValue.cs" />
+    <Compile Include="Value\BoolValue.cs" />
+    <Compile Include="VariableStore\IVariableStore.cs" />
+    <Compile Include="VariableStore\VariableStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
