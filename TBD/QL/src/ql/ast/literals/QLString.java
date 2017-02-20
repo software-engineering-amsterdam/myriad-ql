@@ -13,7 +13,7 @@ public class QLString extends QLLiteral {
         this.qlString = qlString;
     }
 
-    public String getQlString() {
+    public String getValue() {
         return qlString;
     }
 

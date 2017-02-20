@@ -68,31 +68,31 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
 
     @Override
     public Void visit(QLBoolean node) {
-        System.out.print(node.getQlBoolean());
+        System.out.print(node.getValue());
         return null;
     }
 
     @Override
     public Void visit(QLInt node) {
-        System.out.print(node.getQlInteger());
+        System.out.print(node.getValue());
         return null;
     }
 
     @Override
     public Void visit(QLString node) {
-        System.out.print(node.getQlString());
+        System.out.print(node.getValue());
         return null;
     }
 
     @Override
     public Void visit(QLIdent node) {
-        System.out.print(node.getQlIdent());
+        System.out.print(node.getValue());
         return null;
     }
 
     @Override
     public Void visit(QLFloat node) {
-        System.out.print(node.getQlFloat());
+        System.out.print(node.getValue());
         return null;
     }
 

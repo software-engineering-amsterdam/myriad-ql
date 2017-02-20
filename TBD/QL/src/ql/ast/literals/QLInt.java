@@ -1,9 +1,6 @@
 package ql.ast.literals;
 
-import ql.ast.ASTNode;
-import ql.ast.Expr;
 import ql.ast.QLLiteral;
-import ql.ast.expressions.numop.Add;
 import ql.ast.visistor.ASTVisitor;
 
 /**
@@ -16,7 +13,7 @@ public class QLInt extends QLLiteral {
         this.qlInteger = qlInteger;
     }
 
-    public int getQlInteger() {
+    public int getValue() {
         return qlInteger;
     }
 
@@ -35,11 +32,11 @@ public class QLInt extends QLLiteral {
     }
 
     public QLLiteral addEval(QLInt other) {
-        return new QLInt(this.getQlInteger() + other.getQlInteger());
+        return new QLInt(this.getValue() + other.getValue());
     }
 
     public QLLiteral addEval(QLFloat other) {
-        return new QLFloat(this.getQlInteger() + other.getQlFloat());
+        return new QLFloat(this.getValue() + other.getValue());
     }
 
     @Override
@@ -49,7 +46,7 @@ public class QLInt extends QLLiteral {
 
     @Override
     public QLLiteral divEval(QLInt other) {
-        return new QLInt(other.getQlInteger() / this.getQlInteger());
+        return new QLInt(other.getValue() / this.getValue());
     }
 
     @Override
@@ -69,7 +66,7 @@ public class QLInt extends QLLiteral {
 
     @Override
     public QLLiteral gTEval(QLInt other) {
-        return  new QLBoolean(this.getQlInteger() > other.getQlInteger());
+        return  new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override
@@ -89,7 +86,7 @@ public class QLInt extends QLLiteral {
 
     @Override
     public QLLiteral mulEval(QLInt other) {
-        return new QLInt(this.getQlInteger() * other.getQlInteger());
+        return new QLInt(this.getValue() * other.getValue());
     }
 
     @Override
@@ -104,12 +101,12 @@ public class QLInt extends QLLiteral {
 
     @Override
     public QLLiteral neg() {
-        return new QLInt(-getQlInteger());
+        return new QLInt(-getValue());
     }
 
     @Override
     public QLLiteral pos() {
-        return new QLInt(-getQlInteger());
+        return new QLInt(-getValue());
     }
 
     @Override

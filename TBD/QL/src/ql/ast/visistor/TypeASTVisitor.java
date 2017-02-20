@@ -43,11 +43,11 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Question node) {
-        if (identTable.containsKey(node.getId().getQlIdent())) {
+        if (identTable.containsKey(node.getId().getValue())) {
             throw new RuntimeException("Id already exist");
         }
 
-        identTable.put(node.getId().getQlIdent(), node.getType());
+        identTable.put(node.getId().getValue(), node.getType());
 
         if (node.hasExpr()) {
             Type expr = node.getExpr().accept(this);
@@ -88,8 +88,8 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(QLIdent node) {
-        if (identTable.containsKey(node.getQlIdent())) {
-            return identTable.get(node.getQlIdent());
+        if (identTable.containsKey(node.getValue())) {
+            return identTable.get(node.getValue());
         }
         throw new RuntimeException("Unexpected variable");
     }
@@ -203,7 +203,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
-        if (left == right){
+        if (left == right || (left == Type.TYPEINT && right == Type.TYPEFLOAT) || (left == Type.TYPEFLOAT && right == Type.TYPEINT)){
             return left;
         }
         throw new RuntimeException("Type error");

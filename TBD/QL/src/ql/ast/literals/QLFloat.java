@@ -14,10 +14,6 @@ public class QLFloat extends QLLiteral {
         this.qlFloat = qlFloat;
     }
 
-    public float getQlFloat() {
-        return qlFloat;
-    }
-
     public float getValue() {
         return qlFloat;
     }

@@ -14,7 +14,7 @@ public class QLIdent extends QLLiteral {
         this.qlIdent = qlIdent;
     }
 
-    public String getQlIdent() {
+    public String getValue() {
         return qlIdent;
     }
 
