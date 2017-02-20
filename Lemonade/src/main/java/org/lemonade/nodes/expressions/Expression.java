@@ -1,7 +1,7 @@
 package org.lemonade.nodes.expressions;
 
 import org.lemonade.nodes.ASTNode;
-import org.lemonade.visitors.ExpressionVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 public abstract class Expression extends ASTNode {
 
@@ -9,7 +9,7 @@ public abstract class Expression extends ASTNode {
 
     }
 
-    public <T> T accept(ExpressionVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

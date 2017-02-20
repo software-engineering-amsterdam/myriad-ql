@@ -1,8 +1,7 @@
 package org.lemonade.nodes;
 
 import org.lemonade.nodes.expressions.Type;
-import org.lemonade.visitors.BlockVisitor;
-import org.lemonade.visitors.ExpressionVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 public class Question extends Block {
     private String identifier;
@@ -16,7 +15,15 @@ public class Question extends Block {
         this.type = type;
     }
 
-    public <T> T accept(BlockVisitor<T> visitor) {
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

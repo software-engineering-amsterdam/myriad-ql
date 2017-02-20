@@ -176,7 +176,7 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         return new OrBinary();
     }
 
-    @Override
+    @Override //FIXME switch met enums.. nein
     public ASTNode visitType_specifier(QLParser.Type_specifierContext ctx) {
         switch (ctx.getText()) {
             case "boolean":

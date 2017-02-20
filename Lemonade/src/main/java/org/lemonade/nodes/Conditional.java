@@ -1,7 +1,7 @@
 package org.lemonade.nodes;
 
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.visitors.BlockVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Conditional extends Block {
         return condition;
     }
 
-    public <T> T accept(BlockVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

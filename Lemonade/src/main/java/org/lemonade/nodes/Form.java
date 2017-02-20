@@ -1,7 +1,7 @@
 package org.lemonade.nodes;
 
 
-import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class Form extends ASTNode {
         return this.identifier;
     }
 
-    public <T> T accept(FormVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

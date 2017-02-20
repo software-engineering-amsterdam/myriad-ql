@@ -1,6 +1,6 @@
 package org.lemonade.nodes;
 
-import org.lemonade.visitors.BlockVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 /**
  *
@@ -10,7 +10,7 @@ public abstract class Block extends ASTNode {
         super();
     }
 
-    public <T> T accept(BlockVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

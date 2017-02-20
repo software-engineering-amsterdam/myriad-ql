@@ -1,7 +1,5 @@
 package org.lemonade.nodes.expressions;
 
-import org.lemonade.visitors.ExpressionVisitor;
-
 public abstract class BinaryExpression extends Expression {
     private Expression left;
     private Expression right;

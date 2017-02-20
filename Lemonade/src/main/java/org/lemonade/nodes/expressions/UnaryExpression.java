@@ -1,6 +1,6 @@
 package org.lemonade.nodes.expressions;
 
-import org.lemonade.visitors.ExpressionVisitor;
+import org.lemonade.visitors.ASTVisitor;
 
 public abstract class UnaryExpression extends Expression {
     private Expression expression;
@@ -17,7 +17,8 @@ public abstract class UnaryExpression extends Expression {
         return expression;
     }
 
-    public <T> T accept(ExpressionVisitor<T> visitor) {
+    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
+
 }

@@ -3,10 +3,7 @@ package org.lemonade;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.lemonade.nodes.ASTNode;
 import org.lemonade.nodes.Form;
-import org.lemonade.visitors.FormChecker;
-import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 

@@ -1,6 +1,11 @@
 package org.lemonade.visitors;
 
+import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Conditional;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
+import org.lemonade.nodes.expressions.Type;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
@@ -9,7 +14,12 @@ import org.lemonade.nodes.expressions.unary.NegUnary;
 /**
  *
  */
-public interface ExpressionVisitor<T> {
+public interface ASTVisitor<T> {
+
+    T visit(Form form);
+
+    T visit(Question question);
+    T visit(Conditional conditional);
 
     T visit(Expression expression);
 
@@ -33,8 +43,12 @@ public interface ExpressionVisitor<T> {
 
     T visit(BooleanLit booleanLit);
     T visit(DecimalLit decimalLit);
-    T visit(IdentifierLit identifierLit);
+    //T visit(CurrencyLit currencyLit);
     T visit(IntegerLit integerLit);
     T visit(StringLit stringLit);
+    T visit(IdentifierLit identifierLit);
+
+    T visit(Type type);
+
 
 }
