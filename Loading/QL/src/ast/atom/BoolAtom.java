@@ -12,11 +12,6 @@ public class BoolAtom extends Atom {
     }
 
 	@Override
-	public Atom add(Atom other) {
-		return null;
-	}
-
-	@Override
     public BoolAtom and(Atom other) {
     	return new BoolAtom(value && other.getValue());
     }

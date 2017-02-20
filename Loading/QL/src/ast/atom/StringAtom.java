@@ -10,11 +10,6 @@ public class StringAtom extends Atom {
     }
 
 	@Override
-	public Atom add(Atom other) {
-		return null;
-	}
-
-	@Override
 	public BoolAtom and(Atom other) {
 		return null;
 	}

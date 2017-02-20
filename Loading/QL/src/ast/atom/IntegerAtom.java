@@ -19,10 +19,25 @@ public class IntegerAtom extends Atom {
 		
 		return new IntegerAtom(number + other.getNumber());
 	}
-
+	
 	@Override
-	public BoolAtom and(Atom other) {
-		return null;
+	public Atom sub(Atom other) {
+		
+		if (other.getNumber() == null) {
+			return null;
+		}
+		
+		return new IntegerAtom(number - other.getNumber());
+	}
+	
+	@Override
+	public Atom mul(Atom other) {
+		
+		if (other.getNumber() == null) {
+			return null;
+		}
+		
+		return new IntegerAtom(number * other.getNumber());
 	}
 
 	@Override
@@ -35,26 +50,15 @@ public class IntegerAtom extends Atom {
 	}
 
 	@Override
-	public Atom plus() {
-		
-		return new IntegerAtom(+ number);
-	}
-
-	@Override
-	public Atom min() {
-		return new IntegerAtom(- number);
-	}
-
-	@Override
-	public BoolAtom not() {
-		return null;
-	}
-
-	@Override
 	public BoolAtom eq(Atom other) {
 		return new BoolAtom(number == other.getNumber());
 	}
 
+	@Override
+	public BoolAtom notEq(Atom other) {
+		return new BoolAtom(number != other.getNumber());
+	}
+	
 	@Override
 	public BoolAtom greaterEq(Atom other) {
 		return new BoolAtom(number >= other.getNumber());
@@ -74,40 +78,16 @@ public class IntegerAtom extends Atom {
 	public BoolAtom less(Atom other) {
 		return new BoolAtom(number < other.getNumber());
 	}
-
-	@Override
-	public Atom mul(Atom other) {
-		return new IntegerAtom(number * other.getNumber());
-	}
-
-	@Override
-	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(number != other.getNumber());
-	}
-
-	@Override
-	public BoolAtom or(Atom other) {
-		return null;
-	}
-
-	@Override
-	public Atom sub(Atom other) {
-		
-		if (other.getNumber() == null) {
-			return null;
-		}
-		
-		return new IntegerAtom(number - other.getNumber());
-	}
 	
 	@Override
-	public Boolean getValue() {
-		return null;
+	public Atom plus() {
+		
+		return new IntegerAtom(+ number);
 	}
 
 	@Override
-	public String getString() {
-		return null;
+	public Atom min() {
+		return new IntegerAtom(- number);
 	}
 
 	@Override
