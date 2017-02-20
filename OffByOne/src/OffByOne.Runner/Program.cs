@@ -12,8 +12,8 @@
     {
         public static void Main(string[] args)
         {
-            ////TestQlGrammar();
-            TestQlsGrammar();
+            TestQlGrammar();
+            ////TestQlsGrammar();
         }
 
         private static void TestQlGrammar()
@@ -37,7 +37,7 @@
             ICharStream input2 = new AntlrInputStream("true or false");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
-            var v = new MyQlVisitor();
+            var v = new CustomQlVisitor();
             var tree = v.Visit(parser.form());
             Console.WriteLine("Done!");
         }

@@ -13,7 +13,7 @@
         }
 
         public DateLiteral(string dateString)
-            : this(DateTime.Parse(dateString, CultureInfo.InvariantCulture))
+            : this(DateTime.Parse(dateString.Trim('\''), CultureInfo.InvariantCulture))
         {
         }
 

@@ -13,7 +13,9 @@ ifStat : IF LPAREN expression RPAREN LBRACE stat+ RBRACE elseStat? ;
 elseStat : ELSE LBRACE elseStats=stat+ RBRACE;
 
 expression
-    : LPAREN expression RPAREN      # ExpressionBracket
+    : literal                       # ExpressionLiteral
+    | Identifier                    # ExpressionIdentifier
+    | LPAREN expression RPAREN      # ExpressionBracket
 
     | OP_NOT expression             # ExpressionNot
     | OP_SUB expression             # ExpressionNegate
@@ -32,8 +34,6 @@ expression
 
     | expression OP_AND expression  # ExpressionAnd
     | expression OP_OR expression   # ExpressionOr
-    | literal                       # ExpressionLiteral
-    | Identifier                    # ExpressionIdentifier
 	;
 
 literal
