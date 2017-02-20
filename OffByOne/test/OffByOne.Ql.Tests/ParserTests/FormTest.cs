@@ -25,7 +25,7 @@
                     ""Do you want to continue?""
                         continue: boolean
 
-                    if (birthDate < '31-12-1999' and continue) { 
+                    if (birthDate < '31-12-1999' || continue) {
                         ""How much money do you spend on alcoholic beverages?""
                             alcoholicBeverages: money
                     } else {
@@ -52,8 +52,8 @@
             Assert.True(questions.Any(x => x.Identifier == "continue" && x.Question.Value == "Do you want to continue?"));
 
             var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
-            Assert.True(ifStatement.Condition is AndExpression);
-            var condition = (AndExpression)ifStatement.Condition;
+            Assert.True(ifStatement.Condition is OrExpression);
+            var condition = (OrExpression)ifStatement.Condition;
 
             Assert.IsType<LessThanExpression>(condition.LeftExpression);
             Assert.IsType<VariableExpression>(condition.RightExpression);
@@ -80,7 +80,7 @@
         {
             var astTree = this.GetAstNodesFromInput(@"
                 form questionnaire { 
-                    if (2 + 3 * 4 < someVar) { 
+                    if (2 + 3 * 4 < someVar && 3 / 1 * 2 != 6) {
                         ""Is this a question?""
                             existentialism: boolean
                     }
@@ -92,13 +92,26 @@
 
             var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
 
-            Assert.IsType<LessThanExpression>(ifStatement.Condition);
-            var condition = (LessThanExpression)ifStatement.Condition;
+            Assert.IsType<AndExpression>(ifStatement.Condition);
+            var condition = (AndExpression)ifStatement.Condition;
 
-            Assert.IsType<AddExpression>(condition.LeftExpression);
-            var lhs = (AddExpression)condition.LeftExpression;
+            Assert.IsType<LessThanExpression>(condition.LeftExpression);
+            Assert.IsType<NotEqualExpression>(condition.RightExpression);
+            {
+                var leftCondition = (LessThanExpression)condition.LeftExpression;
+                Assert.IsType<AddExpression>(leftCondition.LeftExpression);
+                var leftLhs = (AddExpression)leftCondition.LeftExpression;
 
-            Assert.IsType<MultiplyExpression>(lhs.RightExpression);
+                Assert.IsType<MultiplyExpression>(leftLhs.RightExpression);
+            }
+
+            {
+                var rightCondition = (NotEqualExpression)condition.RightExpression;
+                Assert.IsType<DivideExpression>(rightCondition.LeftExpression);
+                var rightLhs = (DivideExpression)rightCondition.LeftExpression;
+
+                Assert.IsType<MultiplyExpression>(rightLhs.RightExpression);
+            }
         }
     }
 }

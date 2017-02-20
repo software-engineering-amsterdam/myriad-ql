@@ -20,8 +20,8 @@ OP_GT : '>' ;
 OP_LT : '<' ;
 OP_NEQ : '!=' ;
 OP_EQ : '==' ;
-OP_AND : 'and' ;
-OP_OR : 'or' ;
+OP_AND : '&&' ;
+OP_OR : '||' ;
 OP_NOT : 'not' ;
 
 Type 
