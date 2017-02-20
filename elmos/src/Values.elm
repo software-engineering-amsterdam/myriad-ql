@@ -1,10 +1,11 @@
-module Values exposing (Value(Str, Boolean, Undefined), string, bool, int, undefined, asString, asBool, asInt)
+module Values exposing (Value(Str, Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat)
 
 
 type Value
     = Str String
     | Boolean Bool
     | Integer Int
+    | Decimal Float
     | Undefined
 
 
@@ -18,14 +19,25 @@ bool =
     Boolean
 
 
+isNanOrInfinite : Float -> Bool
+isNanOrInfinite x =
+    isNaN x || isInfinite x
+
+
 int : Int -> Value
 int x =
-    if isNaN (toFloat x) then
-        Undefined
-    else if isInfinite (toFloat x) then
+    if isNanOrInfinite (toFloat x) then
         Undefined
     else
         Integer x
+
+
+float : Float -> Value
+float f =
+    if isNanOrInfinite f then
+        Undefined
+    else
+        Decimal f
 
 
 undefined : Value
@@ -38,6 +50,19 @@ asInt value =
     case value of
         Integer b ->
             Just b
+
+        _ ->
+            Nothing
+
+
+asFloat : Value -> Maybe Float
+asFloat value =
+    case value of
+        Integer b ->
+            Just (toFloat b)
+
+        Decimal f ->
+            Just f
 
         _ ->
             Nothing

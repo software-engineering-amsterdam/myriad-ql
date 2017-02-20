@@ -79,5 +79,5 @@ valueType =
         [ stringAs "string" StringType
         , stringAs "boolean" BooleanType
         , stringAs "integer" IntegerType
-        , stringAs "money" IntegerType
+        , stringAs "money" MoneyType
         ]

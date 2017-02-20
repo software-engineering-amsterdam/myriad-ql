@@ -1,11 +1,12 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
+import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
 import Html exposing (Html, div, text, h3, form, pre)
 import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
+import UI.Widget.Float as FloatWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import UI.FormDslInput as FormDslInput
 import Environment as Env exposing (Environment)
@@ -71,7 +72,7 @@ viewForm model formDsl =
 viewField : Model -> VisibleField -> Html Msg
 viewField model field =
     BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
-        case (FormUtil.fieldValueType field) of
+        case FormUtil.fieldValueType field of
             StringType ->
                 StringWidget.view
 
@@ -80,6 +81,9 @@ viewField model field =
 
             IntegerType ->
                 IntegerWidget.view
+
+            MoneyType ->
+                FloatWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
