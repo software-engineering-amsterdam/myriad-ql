@@ -4,7 +4,7 @@
 
     public class FormStatement : Statement
     {
-        public FormStatement(string identifier, IList<Statement> statements)
+        public FormStatement(string identifier, IEnumerable<Statement> statements)
         {
             this.Identifier = identifier;
             this.Statements = statements;
@@ -12,6 +12,6 @@
 
         public string Identifier { get; private set; }
 
-        public IList<Statement> Statements { get; private set; }
+        public IEnumerable<Statement> Statements { get; private set; }
     }
 }

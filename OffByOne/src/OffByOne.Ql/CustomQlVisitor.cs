@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Ql
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Antlr4.Runtime.Misc;
@@ -9,6 +10,7 @@
     using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.Statements.Questions;
@@ -88,7 +90,10 @@
 
         public override AstNode VisitExpressionAnd([NotNull] QlParser.ExpressionAndContext context)
         {
-            return base.VisitExpressionAnd(context);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new AndExpression(expressions[0], expressions[1]);
         }
 
         public override AstNode VisitExpressionDivide([NotNull] QlParser.ExpressionDivideContext context)
@@ -113,7 +118,10 @@
 
         public override AstNode VisitExpressionLesserThan([NotNull] QlParser.ExpressionLesserThanContext context)
         {
-            return base.VisitExpressionLesserThan(context);
+            var exp = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new LessThanExpression(exp[0], exp[1]);
         }
 
         public override AstNode VisitExpressionLesserThanOrEqual([NotNull] QlParser.ExpressionLesserThanOrEqualContext context)

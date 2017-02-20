@@ -7,13 +7,18 @@
 
     public class DateLiteral : Literal
     {
+        public const string FORMAT = "dd-MM-yyyy";
+
         public DateLiteral(DateTime value)
         {
             this.Value = value;
         }
 
         public DateLiteral(string dateString)
-            : this(DateTime.Parse(dateString.Trim('\''), CultureInfo.InvariantCulture))
+            : this(DateTime.ParseExact(
+                dateString.Trim('\''),
+                DateLiteral.FORMAT,
+                CultureInfo.InvariantCulture))
         {
         }
 
