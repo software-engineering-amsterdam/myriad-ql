@@ -1,7 +1,7 @@
 package org.uva.taxfree.model;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.Set;
 
 public abstract class NamedNode extends Node {
 
@@ -15,8 +15,9 @@ public abstract class NamedNode extends Node {
 
     public JPanel getWidget() {
         JPanel widgetPanel = new JPanel();
-        widgetPanel.add(new JLabel(mId));
+        widgetPanel.add(new JLabel(mDescription));
         fillPanel(widgetPanel);
+        widgetPanel.setVisible(isVisible());
         return widgetPanel;
     }
 
@@ -26,8 +27,8 @@ public abstract class NamedNode extends Node {
         return mId;
     }
 
-    protected void addQuestion(ArrayList<NamedNode> list) {
-        list.add(this);
+    protected void addQuestion(Set<NamedNode> set) {
+        set.add(this);
     }
 
 }

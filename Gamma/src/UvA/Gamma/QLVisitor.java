@@ -2,7 +2,6 @@ package UvA.Gamma;
 
 import UvA.Gamma.AST.*;
 import UvA.Gamma.AST.Values.Boolean;
-import UvA.Gamma.AST.Values.Number;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 
@@ -11,21 +10,21 @@ import UvA.Gamma.Antlr.QL.QLParser;
  * Created by Tjarco on 08-02-17.
  */
 
-public class QLVisitor extends QLBaseVisitor<ASTNode>{
+public class QLVisitor extends QLBaseVisitor<ASTNode> {
     private Form form;
 
     QLVisitor() {
         form = new Form();
     }
 
-    public Form getForm(){
+    public Form getForm() {
         return this.form;
     }
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
-        for (QLParser.FormItemContext formItemContext: ctx.formItem()){
-            form.addFormItem((FormItem)visit(formItemContext));
+        for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
+            form.addFormItem((FormItem) visit(formItemContext));
         }
         return form;
     }
@@ -45,7 +44,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
         computed.setType(ctx.type().getText());
-        computed.setExpression(visit(ctx.expression()).toString());
+        computed.setExpression((Expression) visit(ctx.expression()));
         return computed;
     }
 
@@ -56,44 +55,51 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
         return condition;
     }
 
-    //Expressions
-    @Override
-    public Number visitDiv(QLParser.DivContext ctx) {
-        Number left = (Number)visit(ctx.numExpr(0));
-        Number right  = (Number)visit(ctx.numExpr(1));
-        return ctx.op.getText().equals("*") ? left.multiply(right) : left.divide(right);
-    }
+
+//    @Override
+//    public Expression visitExpression(QLParser.ExpressionContext ctx) {
+//        super.visitExpression(ctx);
+//        return new NumberExpression(ctx.getText());
+//    }
 
     @Override
-    public ASTNode visitExpression(QLParser.ExpressionContext ctx) {
-        super.visitExpression(ctx);
-        return super.visitExpression(ctx);
+    public NumberExpression visitNumExpr(QLParser.NumExprContext ctx) {
+        return new NumberExpression(ctx.getText());
     }
 
-    @Override
-    public Number visitAdd(QLParser.AddContext ctx) {
-        Number left = (Number)visit(ctx.numExpr(0));
-        Number right  = (Number)visit(ctx.numExpr(1));
-        return ctx.op.getText().equals("+") ? left.add(right) : left.subtract(right);
-    }
-
-    @Override
-    public Number visitNum(QLParser.NumContext ctx) {
-        return new Number(ctx.getText());
-    }
+    //
+//    @Override
+//    public Number visitAdd(QLParser.AddContext ctx) {
+//        Number left = (Number) visit(ctx.numExpr(0));
+//        Number right = (Number) visit(ctx.numExpr(1));
+//        return ctx.op.getText().equals("+") ? left.add(right) : left.subtract(right);
+//    }
+//
+//    //Expressions
+//    @Override
+//    public Number visitDiv(QLParser.DivContext ctx) {
+//        Number left = (Number) visit(ctx.numExpr(0));
+//        Number right = (Number) visit(ctx.numExpr(1));
+//        return ctx.op.getText().equals("*") ? left.multiply(right) : left.divide(right);
+//    }
+//
+//    @Override
+//    public Number visitNum(QLParser.NumContext ctx) {
+//        return new Number(ctx.getText());
+//    }
 
     @Override
     public Boolean visitAndor(QLParser.AndorContext ctx) {
-        Boolean left = (Boolean)visit(ctx.boolExpr(0));
-        Boolean right = (Boolean)visit(ctx.boolExpr(1));
-        switch (ctx.op.getText()){
+        Boolean left = (Boolean) visit(ctx.boolExpr(0));
+        Boolean right = (Boolean) visit(ctx.boolExpr(1));
+        switch (ctx.op.getText()) {
             case "&&":
                 return new Boolean(left.and(right));
             case "||":
                 return new Boolean(left.or(right));
             case "==":
                 return new Boolean(left.equals(right));
-            case  "!=":
+            case "!=":
                 return new Boolean(!left.equals(right));
             default:
                 return left;

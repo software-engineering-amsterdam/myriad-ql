@@ -51,6 +51,8 @@ expr returns [Expression result]
  :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
  | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  | atom { $result = $atom.result; }
+ | ID { System.out.println($ID.text);
+        $result = new IdExpression($ID.text); }
  ;
 
 binOp returns [BinaryExpression result]
@@ -81,7 +83,7 @@ atom returns [Atom result]
 //                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
 //  | MONEY { System.out.println($MONEY.text);
 //           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
-  | INT
+ | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
  | STRING { System.out.println($STRING.text);
@@ -91,8 +93,7 @@ atom returns [Atom result]
            $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
 // | DDMMYY { System.out.println($DDMMYY.text);
 //            $result = new DateAtom($DDMMYY.text); }
- | ID { System.out.println($ID.text);
-                 $result = new StringAtom($ID.text); }
+
  ;
 
 // TODO look up conventions tokens/names capital letters
@@ -101,7 +102,7 @@ IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
 
-ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 INT: ('0'..'9')+;
 
