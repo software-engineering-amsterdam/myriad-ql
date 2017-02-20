@@ -1,7 +1,5 @@
 package org.uva.taxfree.model;
 
-import javax.swing.*;
-
 public abstract class IntOperator extends OperatorNode {
     private NumberNode mLeft;
     private NumberNode mRight;
