@@ -4,7 +4,7 @@ from io import open
 from os.path import join
 from pql.parser.parser import parse
 from PyQt5.QtWidgets import QApplication
-from ui.QuestionairWindows import QuestionairWindows
+from pql.ui.QuestionairWindows import QuestionairWindows
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 

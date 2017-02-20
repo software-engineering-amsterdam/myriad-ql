@@ -1,16 +1,4 @@
 # coding=utf-8
-import collections
-
-
-# class RootNode(object):
-#     def __init__(self, parser_output):
-#         self.root = Node("root_node")
-#         self.root.add_child(Form(parser_output))
-#
-#     def __str__(self):
-#         return self.root.__str__()
-
-
 class Node(object):
     def __init__(self, var_type):
         self.var_type = var_type
@@ -67,13 +55,17 @@ class Expression(Node):
         self.add_child(parsed_output.arthmentic_expression)
 
 
-class Operand(Node):
+class Conditional(Node):
     def __init__(self, parsed_output):
-        super(Operand, self).__init__('arithmetic_operand')
-        self.identifier = parsed_output.arthmentic_expression.identifier
-        self.title = parsed_output.arthmentic_expression.title
-        self.add_child(parsed_output.arthmentic_expression)
+        super(Conditional, self).__init__('conditional')
+        a = parsed_output[0]
+        self.else_ = None
 
+
+class BinaryOperator(Node):
+    def __init__(self, var_type, parsed_tokens):
+        super(BinaryOperator, self).__init__(var_type)
+        self.lhs, self.operator, self.rhs = parsed_tokens[0]
 
 # class BoolOperand(Node):
 #     def __init__(self, t, parsed_output):

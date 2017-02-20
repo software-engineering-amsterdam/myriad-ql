@@ -2,14 +2,14 @@
 # the needed methods from the pyparsing package
 from pyparsing import *
 from pql.ast import ast
-from parser.BoolOperand import BoolOperand
-from parser.BoolOperand import BoolAnd
-from parser.BoolOperand import BoolOr
+from pql.parser.BoolOperand import BoolOperand
+from pql.parser.BoolOperand import BoolAnd
+from pql.parser.BoolOperand import BoolOr
 
 
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
-    number = Word(nums + ".")
+    number = Word(nums + ".").setParseAction((lambda t: int(t[0])))
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | identifier | number
@@ -30,11 +30,13 @@ def parse(input_string):
     # Reserved operators
     mult_op = oneOf(["*", "/"])
     additive_op = oneOf(["+", "-"])
+
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
     con_and_op = Literal("&&")
     con_or_op = Literal("||")
     assign_op = Suppress("=")
+
     arith_prec = [
         (mult_op, 2, opAssoc.LEFT),
         (additive_op, 2, opAssoc.LEFT),
@@ -60,7 +62,8 @@ def parse(input_string):
     boolean_expr = bool_expr
 
     arithmetic_statement = \
-        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))
+        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))\
+            .setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
 
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
@@ -69,10 +72,10 @@ def parse(input_string):
         identifier.setResultsName("identifier") + \
         colon + \
         data_types.setResultsName("data_type") + \
-         Optional(
-            assign_op +
-            arithmetic_statement.setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
-        )
+             Optional(
+                assign_op +
+                arithmetic_statement
+            )
 
     field_expr = \
         Group(
@@ -90,7 +93,7 @@ def parse(input_string):
             l_curly +
             (OneOrMore(field_expr) | ZeroOrMore(if_stmt)) +
             r_curly
-        )
+        ).setParseAction(ast.Conditional)
 
     # Program
     form = \

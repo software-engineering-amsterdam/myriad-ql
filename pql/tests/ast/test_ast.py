@@ -66,7 +66,7 @@ class TestAst(unittest.TestCase):
 
         field_node_1 = form_node.children[0]
 
-        self.assertEqual(1, len(field_node_1.children), 'Field node shoudl have 1 node of arithmetic statement')
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -89,11 +89,16 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         field_node_1 = form_node.children[0]
-
-        self.assertEqual(0, len(field_node_1.children))
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
         self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('hasSoldHouse', field_node_1.name)
-        self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
+        self.assertEqual('valueResidue', field_node_1.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        arithmetic_statement_node = field_node_1.children[0]
+        self.assertEqual(0, len(arithmetic_statement_node.children), 'Arithmetic statement node should have no children' )
+        self.assertEqual('sellingPrice', arithmetic_statement_node.lhs)
+        self.assertEqual('-', arithmetic_statement_node.operator)
+        self.assertEqual('privateDebt', arithmetic_statement_node.rhs)
 
     def test_ast_single_combi_assignment_(self):
         input_string = """
