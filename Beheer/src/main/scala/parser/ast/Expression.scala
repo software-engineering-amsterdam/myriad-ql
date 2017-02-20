@@ -10,10 +10,14 @@ case class InfixOperation(lhs: ExpressionNode, operator: String, rhs: Expression
 
 case class PrefixOperation(operator: String, rhs: ExpressionNode) extends ExpressionNode
 
-case class DecimalValue(value: BigDecimal) extends ExpressionNode
+case class IntegerLiteral(value: BigDecimal) extends ExpressionNode
 
-case class MoneyValue(value: BigDecimal) extends ExpressionNode
+case class DecimalLiteral(value: BigDecimal) extends ExpressionNode
 
-case class BooleanValue(value: Boolean) extends ExpressionNode
+case class MoneyLiteral(value: BigDecimal) extends ExpressionNode
 
-case class DateValue(value: Date) extends ExpressionNode
+case class BooleanLiteral(value: Boolean) extends ExpressionNode
+
+case class StringLiteral(value: String) extends ExpressionNode
+
+case class DateLiteral(value: Date) extends ExpressionNode

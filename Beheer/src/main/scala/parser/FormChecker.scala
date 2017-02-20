@@ -1,30 +1,27 @@
 package parser
 
-import javax.xml.crypto.dsig.keyinfo.X509IssuerSerial
-
-import model.{ ComputedQuestion, OpenQuestion }
 import parser.ast._
 
 import scala.annotation.tailrec
 
-class AstChecker(db: AstFacts) extends Checker {
-  private lazy val errors = List(duplicateIdentifiers, undefinedReferences, dependencyCycles)
+class FormChecker(db: AstFacts) extends Checker {
+  private lazy val errors = List(duplicateIdentifiers, undefinedReferences, dependencyCycles, checkExpressions)
   private lazy val warnings = List(duplicateLabels)
 
-  def check: Issues = {
+  lazy val check: Issues = {
     errors.flatten ++ warnings.flatten
   }
 
-  private def undefinedReferences: Errors =
+  private lazy val undefinedReferences: Errors =
     (db.referencedIdentifiers -- db.definedIdentifiers.toSet).map(i => Error(s"Undefined reference: $i")).toSeq
 
-  private def duplicateIdentifiers: Errors =
+  private lazy val duplicateIdentifiers: Errors =
     db.definedIdentifiers.diff(db.definedIdentifiers.distinct).distinct.map(i => Error(s"Duplicate identifier: $i"))
 
-  private def duplicateLabels: Warnings =
+  private lazy val duplicateLabels: Warnings =
     db.questionLabels.diff(db.questionLabels.distinct).distinct.map(l => Warning(s"Duplicate label: $l"))
 
-  private def dependencyCycles: Errors =
+  private lazy val dependencyCycles: Errors =
     db.definedIdentifiers.filter(findCycle).map(q => Error(s"Dependency cycle in question: $q"))
 
   private def findCycle(rootIdentifier: String): Boolean = {
@@ -38,11 +35,16 @@ class AstChecker(db: AstFacts) extends Checker {
 
     findCycleInLayer(db.questionsWithReferences.getOrElse(rootIdentifier, Set.empty), Set.empty)
   }
+
+  lazy val checkExpressions: Issues =
+    db.expressions.flatMap { case (expression, expectedType) => ExpressionChecker(db, expression, expectedType) }
+
 }
 
-object AstChecker {
-  def apply(form: Form): Seq[Issue] = new AstChecker(new AstFacts(form)).check
+object FormChecker {
+  def apply(form: Form): Seq[Issue] = new FormChecker(new AstFacts(form)).check
 }
+
 /* private def buildFormModel: model.Form = {
     val questions = db.questionsWithShowConditions.map {
       case (Question(identifier, label, typeName, None), conditionals) => model.OpenQuestion(identifier, label, Nil, getTypeModel(typeName.typeName))

@@ -8,13 +8,13 @@ import scala.util.parsing.combinator.JavaTokenParsers
 
 class FormParser extends JavaTokenParsers with ExpressionParser {
   def typeName: Parser[Type] = (
-    "boolean"
-    | "string"
-    | "integer"
-    | "date"
-    | "decimal"
-    | "money"
-  ) ^^ (s => Type(s))
+    "boolean" ^^^ Boolean
+    | "string" ^^^ String
+    | "integer" ^^^ Integer
+    | "date" ^^^ Date
+    | "decimal" ^^^ Decimal
+    | "money" ^^^ Money
+  )
 
   def label: Parser[String] = stringLiteral ^^ (x => x.stripPrefix("\"").stripSuffix("\""))
 

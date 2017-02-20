@@ -21,7 +21,7 @@ trait ExpressionParser extends JavaTokenParsers {
 
   def factor: Parser[ExpressionNode] = (
     prefix
-    | (bool | integer | decimal | money | date)
+    | (bool | integer | decimal | money | date | string)
     | identifier
     | "(" ~> expr <~ ")"
   )
@@ -34,15 +34,17 @@ trait ExpressionParser extends JavaTokenParsers {
   //Ident taken from JavaTokenParsers, equals Java Identifier.
   def identifier: Parser[Identifier] = ident ^^ (s => Identifier(s))
 
-  def bool: Parser[BooleanValue] = ("True" | "False") ^^ (x => BooleanValue(x.toBoolean))
+  def string: Parser[StringLiteral] = stringLiteral ^^ (s => StringLiteral(s))
 
-  def money: Parser[MoneyValue] = "$" ~> decimal ^^ (x => MoneyValue(x.value))
+  def bool: Parser[BooleanLiteral] = ("True" | "False") ^^ (x => BooleanLiteral(x.toBoolean))
 
-  def decimal: Parser[DecimalValue] = """\d*.\d+""".r ^^ (x => DecimalValue(BigDecimal(x)))
+  def money: Parser[MoneyLiteral] = "$" ~> decimal ^^ (x => MoneyLiteral(x.value))
 
-  def integer: Parser[DecimalValue] = """\d+""".r ^^ (x => DecimalValue(BigDecimal(x).setScale(0)))
+  def decimal: Parser[DecimalLiteral] = """\d*.\d+""".r ^^ (x => DecimalLiteral(BigDecimal(x)))
 
-  def date: Parser[DateValue] = """\d\d\d\d-\d\d-\d\d""".r ^^ (x => DateValue(dateFormat.parse(x)))
+  def integer: Parser[IntegerLiteral] = """\d+""".r ^^ (x => IntegerLiteral(BigDecimal(x).setScale(0)))
+
+  def date: Parser[DateLiteral] = """\d\d\d\d-\d\d-\d\d""".r ^^ (x => DateLiteral(dateFormat.parse(x)))
 
   private def infixOperationParser(child: Parser[ExpressionNode], ops: Regex) = {
     child ~ rep(ops ~ child) ^^ {

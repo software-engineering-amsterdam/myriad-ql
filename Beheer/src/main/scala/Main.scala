@@ -1,5 +1,6 @@
 import java.io.FileReader
 
+import model.FormModel
 import parser._
 
 object Main extends App {
@@ -11,9 +12,12 @@ object Main extends App {
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
 
-  AstChecker(parsedForm) match {
-    case issues => printIssues(issues)
-    case Nil => //carry on?
+  val formModel = FormChecker(parsedForm) match {
+    case Nil => FormModel(parsedForm)
+    case issues => {
+      printIssues(issues)
+      sys.exit(0)
+    }
   }
   /*  AstChecker(parsedForm) match {
     case Left(issues) => printIssues(issues)
