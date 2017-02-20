@@ -12,6 +12,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  */
 class MattExperiment {
 
+    public TreeNode<String> ast;
+
     public static void main(String[] args)
     {
         evalExampleExpression("form test {\n" +
