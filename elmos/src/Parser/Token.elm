@@ -19,11 +19,6 @@ asLocation { line, column } =
     Location line column
 
 
-x : Combine.ParseLocation -> (Location -> a) -> a
-x start =
-    (|>) (Location start.line start.column)
-
-
 identifier : Parser s Id
 identifier =
     withLoc ((,) <$> regex "[a-z][a-zA-Z0-9_]*")

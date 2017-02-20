@@ -69,7 +69,7 @@ viewField model ( label, identifier, valueType ) =
         { identifier = identifier
         , label = label
         , env = model.env
-        , onChange = OnFieldChange (identifier)
+        , onChange = OnFieldChange identifier
         }
     <|
         case valueType of
