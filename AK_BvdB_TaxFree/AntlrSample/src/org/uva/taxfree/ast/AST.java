@@ -1,13 +1,15 @@
 package org.uva.taxfree.ast;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.Node;
 
 import java.io.*;
+import java.util.BitSet;
 
 public class Ast {
 
@@ -15,26 +17,44 @@ public class Ast {
 
     }
 
-    public static Ast generateAst(File input) throws FileNotFoundException {
+    public static Ast generateAst(File input) throws IOException {
         return generateAst(new FileReader(input));
     }
 
-    public static Ast generateAst(String input) {
+    public static Ast generateAst(String input) throws IOException {
         return generateAst(new StringReader(input));
     }
 
-    private static Ast generateAst(Reader reader) {
-        ANTLRInputStream inputStream;
-        try {
-            inputStream = new ANTLRInputStream(reader);
-        } catch (IOException e) {
-            // TODO: Parse error? Catch this and notify user
-            e.printStackTrace();
-            return null;
-        }
+    private static Ast generateAst(Reader reader) throws IOException {
+        ANTLRInputStream inputStream = new ANTLRInputStream(reader);
         QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
         QLGrammarParser qlGrammarParser = new QLGrammarParser(commonTokenStream);
+
+        ANTLRErrorListener errorListener = new ANTLRErrorListener() {
+            @Override
+            public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
+                throw new UnsupportedOperationException(e);
+            }
+
+            @Override
+            public void reportAmbiguity(Parser parser, DFA dfa, int line, int column, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
+
+            }
+
+            @Override
+            public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitSet, ATNConfigSet atnConfigSet) {
+
+            }
+
+            @Override
+            public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atnConfigSet) {
+
+            }
+        };
+
+        qlGrammarParser.addErrorListener(errorListener);
+        qlGrammarLexer.addErrorListener(errorListener);
 
         QLGrammarParser.FormContext formContext= qlGrammarParser.form();
 
@@ -44,8 +64,6 @@ public class Ast {
         walker.walk(listener, formContext);
         return listener.getAst();
     }
-
-
 
     private Node mRootNode;
 
