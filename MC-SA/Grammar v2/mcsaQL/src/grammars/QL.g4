@@ -1,17 +1,25 @@
 grammar QL;
 
-start : 'form' ID OPEN_BRACKET statementContent CLOSE_BRACKET;
+formDeclaration : 'form' ID OPEN_BRACKET content CLOSE_BRACKET;
 
-statementContent
-    : categorise*
+content
+    : categories+
     ;
 
-categorise
-    : STRING caseNewInput
+categories
+    : question
     | NUMBER
     | WHITESPACE
     | COMMENT
-    | 'if' ifCase OPEN_BRACKET statementContent CLOSE_BRACKET
+    | ifStatement
+    ;
+
+ifStatement
+    : 'if' ifCase OPEN_BRACKET content CLOSE_BRACKET
+    ;
+
+question
+    : STRING questionParameters
     ;
 
 ifCase
@@ -30,7 +38,7 @@ ifCaseArgs
     | NUMBER
     ;
 
-caseNewInput
+questionParameters
     : ID ':' type
     ;
 
