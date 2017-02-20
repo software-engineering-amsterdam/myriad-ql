@@ -17,6 +17,10 @@
                 case StringLiteral _: return new StringValueType();
                 case BooleanLiteral _: return new BooleanValueType();
                 case DateLiteral _: return new DateValueType();
+                case DecimalLiteral _: return new FloatValueType();
+                case IntegerLiteral _: return new IntegerValueType();
+                case MoneyLiteral _: return new MoneyValueType();
+                case HexLiteral _: return new StringValueType();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(node), "Unknow AST node!");

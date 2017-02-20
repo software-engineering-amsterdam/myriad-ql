@@ -4,7 +4,10 @@
 
     using Antlr4.Runtime;
 
+    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql;
+    using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
 
@@ -13,7 +16,10 @@
         public static void Main(string[] args)
         {
             ////TestQlGrammar();
-            TestQlsGrammar();
+            ////TestQlsGrammar();
+
+            var typeChcker = new QlTypeChecker();
+            typeChcker.CheckTypes(new AddExpression(new IntegerLiteral(1), new IntegerLiteral(2)));
         }
 
         private static void TestQlGrammar()
