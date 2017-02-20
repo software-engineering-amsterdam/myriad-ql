@@ -1,26 +1,32 @@
+# TODO use double dispatch?
+
 class BaseChecker
-  def visit_statement(subject)
-    if subject.kind_of?(Question)
-      visit_question(subject)
-    elsif subject.kind_of?(IfStatement)
-      visit_if_statement(subject)
+  # is it a question or an if statement?
+  def visit_statement(statement)
+    if statement.kind_of?(Question)
+      visit_question(statement)
+    elsif statement.kind_of?(IfStatement)
+      visit_if_statement(statement)
     else
       raise NotImplementedError
     end
   end
 
-  def visit_calculation(subject)
-    if subject.kind_of?(Literal)
-      visit_literal(subject)
-    elsif subject.kind_of?(Variable)
-      visit_variable(subject)
-    elsif subject.kind_of?(Expression)
-      visit_expression(subject)
+  # is the calculation a literal, a variable or an expression?
+  def visit_calculation(calculation)
+    if calculation.kind_of?(Literal)
+      visit_literal(calculation)
+    elsif calculation.kind_of?(Variable)
+      visit_variable(calculation)
+    elsif calculation.kind_of?(Expression)
+      visit_expression(calculation)
     else
       raise NotImplementedError
     end
   end
 
+  # literal should return nil
   def visit_literal(_)
+    []
   end
 end
