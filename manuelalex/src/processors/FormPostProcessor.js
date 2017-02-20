@@ -45,7 +45,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     ifStatement(data, location, reject) {
-        return new IfStatement({ name: data[0], propertName: [] });
+        return new IfStatement({ condition: data[3], body: data[8] });
     }
 
     // todo
