@@ -3,9 +3,21 @@ package ql.ast.expressions;
 import ql.ast.Expr;
 
 /**
- * Created by Erik on 14-2-2017.
+ * Created by rico on 14-2-17.
  */
-public interface BinOp extends Expr {
-    Expr getLeft();
-    Expr getRight();
+public abstract class BinOp implements Expr {
+    private Expr left, right;
+
+    public BinOp(Expr left, Expr right){
+        this.left = left;
+        this.right = right;
+    }
+
+    public Expr getLeft() {
+        return left;
+    }
+
+    public Expr getRight() {
+        return right;
+    }
 }

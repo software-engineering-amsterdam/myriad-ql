@@ -2,8 +2,8 @@ package ql;
 
 import ql.ast.QLLiteral;
 import ql.ast.Type;
-import ql.ast.expressions.numop.Sub;
-import ql.ast.expressions.unop.Neg;
+import ql.ast.expressions.binop.Sub;
+import ql.ast.expressions.monop.Neg;
 import ql.ast.literals.QLInt;
 import ql.ast.visistor.ASTVisitor;
 import ql.ast.visistor.EvalASTVisitor;

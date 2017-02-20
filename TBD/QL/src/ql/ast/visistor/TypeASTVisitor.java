@@ -2,13 +2,10 @@ package ql.ast.visistor;
 
 import ql.ast.*;
 import ql.ast.expressions.BinOp;
-import ql.ast.expressions.NumOp;
-import ql.ast.expressions.binop.And;
-import ql.ast.expressions.binop.Or;
-import ql.ast.expressions.numop.*;
-import ql.ast.expressions.unop.Neg;
-import ql.ast.expressions.unop.Not;
-import ql.ast.expressions.unop.Pos;
+import ql.ast.expressions.binop.*;
+import ql.ast.expressions.monop.Neg;
+import ql.ast.expressions.monop.Not;
+import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 
 import java.util.HashMap;
@@ -23,6 +20,18 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     @Override
     public Type visit(Form node) {
         node.getStatements().accept(this);
+        return null;
+    }
+
+    @Override
+    public Type visit(Statements node) {
+        if (node.hasCurrent()) {
+            node.getCurrent().accept(this);
+        }
+
+        if (node.hasNext()) {
+            node.getNext().accept(this);
+        }
         return null;
     }
 
@@ -60,15 +69,11 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     }
 
     @Override
-    public Type visit(Statements node) {
-        if (node.hasCurrent()) {
-            node.getCurrent().accept(this);
+    public Type visit(QLIdent node) {
+        if (identTable.containsKey(node.getValue())) {
+            return identTable.get(node.getValue());
         }
-
-        if (node.hasNext()) {
-            node.getNext().accept(this);
-        }
-        return null;
+        throw new RuntimeException("Unexpected variable");
     }
 
     @Override
@@ -87,91 +92,64 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     }
 
     @Override
-    public Type visit(QLIdent node) {
-        if (identTable.containsKey(node.getValue())) {
-            return identTable.get(node.getValue());
-        }
-        throw new RuntimeException("Unexpected variable");
-    }
-
-    @Override
     public Type visit(QLFloat node) {
         return Type.TYPEFLOAT;
     }
 
     @Override
     public Type visit(Add node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(And node) {
-        return checkBinOp(node);
+        return checkBinOpLogic(node);
     }
 
     @Override
     public Type visit(Div node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(Eq node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(GEq node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(GT node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(LEq node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(LT node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(Mul node) {
-        return checkNumOp(node);
+        return checkBinOp(node);
     }
 
-    @Override
-    public Type visit(Neg node) {
-        Type expr = node.getExpr().accept(this);
-
-        if (expr != Type.TYPEBOOL) {
-            return expr;
-        }
-        throw new RuntimeException("Type error");
-    }
 
     @Override
     public Type visit(NEq node) {
-        return checkNumOp(node);
-    }
-
-    @Override
-    public Type visit(Not node) {
-        Type expr = node.getExpr().accept(this);
-
-        if (expr == Type.TYPEBOOL) {
-            return expr;
-        }
-        throw new RuntimeException("Type error");
+        return checkBinOp(node);
     }
 
     @Override
     public Type visit(Or node) {
-        return checkBinOp(node);
+        return checkBinOpLogic(node);
     }
 
     @Override
@@ -185,11 +163,31 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     }
 
     @Override
-    public Type visit(Sub node) {
-        return checkNumOp(node);
+    public Type visit(Neg node) {
+        Type expr = node.getExpr().accept(this);
+
+        if (expr != Type.TYPEBOOL) {
+            return expr;
+        }
+        throw new RuntimeException("Type error");
     }
 
-    private Type checkBinOp(BinOp node) {
+    @Override
+    public Type visit(Not node) {
+        Type expr = node.getExpr().accept(this);
+
+        if (expr == Type.TYPEBOOL) {
+            return expr;
+        }
+        throw new RuntimeException("Type error");
+    }
+
+    @Override
+    public Type visit(Sub node) {
+        return checkBinOp(node);
+    }
+
+    private Type checkBinOpLogic(BinOp node) {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
@@ -199,7 +197,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         throw new RuntimeException("Type error");
     }
 
-    private Type checkNumOp(NumOp node) {
+    private Type checkBinOp(BinOp node) {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);

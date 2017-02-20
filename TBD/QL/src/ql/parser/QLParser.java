@@ -4,10 +4,8 @@ package ql.parser;
 
 import ql.ast.*;
 import ql.ast.literals.*;
-import ql.ast.expressions.*;
 import ql.ast.expressions.binop.*;
-import ql.ast.expressions.numop.*;
-import ql.ast.expressions.unop.*;
+import ql.ast.expressions.monop.*;
 
 class QLParser implements QLTokens {
     private int yyss = 100;

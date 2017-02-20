@@ -7,20 +7,9 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Or implements BinOp {
-    private Expr left, right;
-
+public class Or extends BinOp {
     public Or(Expr left, Expr right){
-        this.left = left;
-        this.right = right;
-    }
-
-    public Expr getLeft() {
-        return left;
-    }
-
-    public Expr getRight() {
-        return right;
+        super(left, right);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
