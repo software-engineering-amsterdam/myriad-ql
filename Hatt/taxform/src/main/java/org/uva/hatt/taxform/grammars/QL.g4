@@ -10,30 +10,46 @@ package org.uva.hatt.taxform.grammars;
 package org.uva.hatt.taxform.grammars;
 }
 
-form : 'form' formId '{' questions* '}';
+form        : 'form' Identifier '{' formBody* '}';
 
-formId : Ident;
+formBody    : question
+            | 'if ('expression') {' question* '}';
 
-questions: question
-         | 'if (' Ident') {' questions* '}';
+question    : StringLiteral Identifier ':' valueType;
 
-question: Str Ident ':' valueType;
+valueType   : 'boolean'
+            | 'integer'
+            | 'string'
+            | 'money';
 
-valueType: 'boolean'
-         | 'integer'
-         | 'string'
-         | 'money';
+expression  : (StringLiteral | BooleanLiteral | IntegerLiteral | Identifier)
+            | (Unary expression)
+            | expression (operator) expression
+            ;
+
+//operators in order of precedence from highest to lowest
+operator    : Unary
+            | Multiplicative
+            | Additive
+            | Relational
+            | Equality
+            | ConditionalAND
+            | ConditionalOR
+            ;
 
 // Tokens
-WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
-    ;
+WS            :	(' ' | '\t' | '\n' | '\r')-> channel(HIDDEN);
+Comment         : ('/*' .* '*/') -> channel(HIDDEN);
+Identifier      : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+StringLiteral   : '"' (~'"')* '"';
+BooleanLiteral  : 'true' | 'false';
+IntegerLiteral  : ('0'..'9')*;
 
-COMMENT
-     : ('/*' .* '*/') -> channel(HIDDEN)
-    ;
-
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
-
-Int: ('0'..'9')+;
-
-Str : '"' (~'"'|'\\"')* '"'  ;
+//operators in order of precedence from highest to lowest
+Unary           : '!';
+Multiplicative  : ' * ' | ' / ' | ' % ';
+Additive        : ' + ' | ' - ';
+Relational      : ' < ' | ' > ' | ' <= ' | ' >= ';
+Equality        : ' == ' | ' != ';
+ConditionalAND  : ' && ';
+ConditionalOR   : ' || ';
