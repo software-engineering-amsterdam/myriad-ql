@@ -16,8 +16,28 @@ public class QLString extends QLLiteral {
         return qlString;
     }
 
-
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
+    }
+
+
+    @Override
+    public QLLiteral eq(QLLiteral other) {
+        return new QLBoolean(other.equals(this));
+    }
+
+    @Override
+    public QLLiteral nEq(QLLiteral other) {
+        return new QLBoolean(!other.equals(this));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        QLString qlString1 = (QLString) o;
+
+        return qlString != null ? qlString.equals(qlString1.qlString) : qlString1.qlString == null;
     }
 }
