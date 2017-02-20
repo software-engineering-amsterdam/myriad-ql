@@ -10,7 +10,7 @@ import org.uva.taxfree.model.Node;
 
 import java.util.Stack;
 
-//public class OurQLGrammarListener implements ParseTreeListener { // Now we do not need to overide everything while developing
+//public class OurQLGrammarListener implements ParseTreeListener { // Now we do not need to override everything while developing
 public class OurQLGrammarListener implements QLGrammarListener { // To enforce us to override every method. We can also extend the base one to not override everything
 
     private Ast mAst;
