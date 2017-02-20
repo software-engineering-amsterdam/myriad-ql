@@ -6,8 +6,8 @@ import java.awt.*;
 public class StringQuestion extends NamedNode {
     private String mValue;
 
-    public StringQuestion(String description, String id) {
-        super(description, id);
+    public StringQuestion(String label, String id) {
+        super(label, id);
         mValue = new String("");
     }
 
