@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLFloat.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLFloat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLLexer.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLLexer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,19 +39,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="And.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/expressions/binop/And.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-              <folding>
-                <element signature="e#234#235#0" expanded="true" />
-                <element signature="e#268#269#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BinOp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/expressions/BinOp.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -75,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QLLiteral.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QLLiteral.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="47" column="40" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+            <state relative-caret-position="108">
+              <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,11 +100,21 @@
       <file leaf-file-name="EvalASTVisitor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2076">
+            <state relative-caret-position="2077">
               <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding>
                 <element signature="method#visit#4;class#EvalASTVisitor#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QLLexer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -183,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/ql/ast/expressions/unop/Not.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/expressions/unop/Pos.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLDate.java" />
-        <option value="$PROJECT_DIR$/src/ql/parser/QLLexer.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/Question.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/Parser.java" />
@@ -220,7 +216,6 @@
         <option value="$PROJECT_DIR$/src/ql/ast/If.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLBoolean.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLInt.java" />
-        <option value="$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLString.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/expressions/MonOp.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/expressions/monop/Neg.java" />
@@ -228,6 +223,8 @@
         <option value="$PROJECT_DIR$/src/ql/ast/expressions/monop/Pos.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLFloat.java" />
+        <option value="$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java" />
+        <option value="$PROJECT_DIR$/src/ql/parser/QLLexer.java" />
       </list>
     </option>
   </component>
@@ -324,6 +321,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="ast" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -350,7 +369,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="literals" />
+              <option name="myItemId" value="visistor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -891,7 +910,7 @@
       <workItem from="1487073598071" duration="2088000" />
       <workItem from="1487075802500" duration="140000" />
       <workItem from="1487075994959" duration="10882000" />
-      <workItem from="1487586386988" duration="4858000" />
+      <workItem from="1487586386988" duration="5071000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1061,11 +1080,18 @@
       <option name="project" value="LOCAL" />
       <updated>1487590936966</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="to protected">
+      <created>1487591260403</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1487591260403</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51306000" />
+    <option name="totallyTimeSpent" value="51519000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1132,7 +1158,8 @@
     <MESSAGE value="sorted literals" />
     <MESSAGE value="added to string method" />
     <MESSAGE value="refactor monop" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor monop" />
+    <MESSAGE value="to protected" />
+    <option name="LAST_COMMIT_MESSAGE" value="to protected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1149,14 +1176,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3026">
-          <caret line="183" column="35" lean-forward="false" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1545,16 +1564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2076">
-          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-          <folding>
-            <element signature="method#visit#4;class#EvalASTVisitor#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1595,11 +1604,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="47" column="40" lean-forward="false" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+        <state relative-caret-position="108">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2077">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+          <folding>
+            <element signature="method#visit#4;class#EvalASTVisitor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>

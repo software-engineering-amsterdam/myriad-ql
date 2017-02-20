@@ -1,6 +1,6 @@
 package ql.parser;
 
-/**
+/*
  * Created by Erik on 6-2-2017.
  */
 import ql.ast.literals.*;
