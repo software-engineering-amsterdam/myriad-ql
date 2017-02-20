@@ -5,9 +5,10 @@ package org.uva.taxfree.gen;
 }
 
 form : 'form ' formId=STRING_LITERAL '{' statement* '}';
-statement : question #exitStatement
-          | calculation #exitStatement
-          | (ifStatement | ifElseStatement) #exitStatement
+statement : question
+          | calculation
+          | ifStatement
+          | ifElseStatement
           ;
 
 question : QUESTION '->' STRING_LITERAL ':' varType;
