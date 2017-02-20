@@ -9,19 +9,19 @@
  %}
 
 
-form         -> "form" _ formName _ openBrace _ statement:* closedBrace                        # {% FormPostProcessor.form.bind(FormPostProcessor) %}
+form         -> "form" _ formName _ openBrace _ statement:* closedBrace                         {% FormPostProcessor.form.bind(FormPostProcessor) %}
 formName     -> word
 
 statement    -> question
               | if_statement
               | answer                                                                                        {% FormPostProcessor.statement.bind(FormPostProcessor) %}
 
-question     -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _         #  {% FormPostProcessor.question %}
+question     -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _          {% FormPostProcessor.question %}
 
 
-if_statement -> "if" _ parOpen propertyName parClose _ openBrace _ statement:* closedBrace _ # {% FormPostProcessor.ifStatement %}
-answer       -> "answer" _ prime sentence prime _ allocation _                                           # {% FormPostProcessor.answer %}
-allocation   -> propertyName ":" _ propertyType _ assignOp _ expression                         # {% FormPostProcessor.allocation %}
+if_statement -> "if" _ parOpen propertyName parClose _ openBrace _ statement:* closedBrace _  {% FormPostProcessor.ifStatement %}
+answer       -> "answer" _ prime sentence prime _ allocation _                                            {% FormPostProcessor.answer %}
+allocation   -> propertyName ":" _ propertyType _ assignOp _ expression                          {% FormPostProcessor.allocation %}
 #expression   -> "(" propertyName _ operator _ propertyName ")"
 #operator     -> "-" | "+" | "/" | "*"
 expression  -> term | expression (min_op|plus_op) term                                                        {% FormPostProcessor.expression %}

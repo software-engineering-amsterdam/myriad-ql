@@ -25,8 +25,8 @@ module.exports = class FormPostProcessor extends PostProcessor {
     // todo
     form(data, location, reject) {
         return new Form({
-            name: data[1][0],
-            statements: _.flattenDeep(data[7])
+            name: data[2][0],
+            statements: _.flattenDeep(data[6])
         });
     }
 
@@ -41,7 +41,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     question(data, location, reject) {
-        return new Question({name: data[2].trim(), propertyName: data[6], propertyType: data[9]});
+        return new Question({name: data[3].trim(), propertyName: data[6], propertyType: data[9]});
     }
 
     ifStatement(data, location, reject) {
@@ -51,7 +51,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
     // todo
     answer(data, location, reject) {
         // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
-        return new Answer({name: data[2].trim(), allocation: data[6]});
+        return new Answer({name: data[3].trim(), allocation: data[6]});
     }
 
     // todo probably obsolete
