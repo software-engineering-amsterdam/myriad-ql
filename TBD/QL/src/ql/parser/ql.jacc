@@ -1,15 +1,15 @@
-%package ql.parser
-%class QLParser
-%interface QLTokens
-%start form
+%package    ql.parser
+%class      QLParser
+%interface  QLTokens
+%start      form
+
+%token <QLString>   STRING
+%token <QLInt>      INT
+%token <QLFloat>    FLOAT
+%token <QLIdent>    IDENT
+%token <QLBoolean>  BOOLEAN
 
 %token ':' '"' TYPEBOOL TYPEINT TYPESTRING TYPEMONEY TYPEFLOAT TYPEDATE TRUE FALSE FORM
-%token <QLString> STRING
-%token <QLInt> INT
-%token <QLFloat> FLOAT
-%token <QLIdent> IDENT
-%token <QLBoolean> BOOLEAN
-%token <QLDate> DATE
 %token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!' '='
 %token '(' ')'
 %token IF ELSE '{' '}'
@@ -21,13 +21,13 @@
 %left '*' '/'
 %left UMIN UPLUS UNOT
 
-%type <Form> form
-%type <Statements> statements
-%type <Statement> statement
-%type <Question> question
-%type <Type> type
-%type <If> if
-%type <Expr> expr
+%type <Form>        form
+%type <Statements>  statements
+%type <Statement>   statement
+%type <Question>    question
+%type <Type>        type
+%type <If>          if
+%type <Expr>        expr
 
 
 
@@ -42,77 +42,85 @@ import ql.ast.expressions.unop.*;
 
 %%
 
- form : FORM IDENT '{' statements '}'  { result = new Form($2, $4); }
-      | FORM IDENT '{' '}'             { result = new Form($2, null); }
-      ;
+form
+            : FORM IDENT '{' statements '}'                     { result = new Form($2, $4);    }
+            | FORM IDENT '{' '}'                                { result = new Form($2, null);  }
+            ;
 
- statements : statement statements      {$$ = new Statements($1, $2);}
-            | statement                 {$$ = new Statements($1);}
+statements
+            : statement statements                              { $$ = new Statements($1, $2);  }
+            | statement                                         { $$ = new Statements($1);      }
             ;
 
 
- statement : question                   {$$ = $1;}
-           | if                         {$$ = $1;}
-           ;
+statement
+            : question                                          { $$ = $1; }
+            | if                                                { $$ = $1; }
+            ;
 
- question : STRING IDENT ':' type '=' expr      {$$ = new Question($2, $1, $4, $6);}
-          | STRING IDENT ':' type               {$$ = new Question($2, $1, $4);}
-          ;
+question
+            : STRING IDENT ':' type '=' expr                    { $$ = new Question($2, $1, $4, $6);    }
+            | STRING IDENT ':' type                             { $$ = new Question($2, $1, $4);        }
+            ;
 
- type : TYPEBOOL        {$$ = Type.TYPEBOOL;}
-       | TYPEINT        {$$ = Type.TYPEINT;}
-       | TYPESTRING     {$$ = Type.TYPESTRING;}
-       | TYPEMONEY     {$$ = Type.TYPEMONEY;}
-       | TYPEFLOAT     {$$ = Type.TYPEFLOAT;}
-       | TYPEDATE     {$$ = Type.TYPEDATE;}
-       ;
+type
+            : TYPEBOOL                                          { $$ = Type.TYPEBOOL;   }
+            | TYPEINT                                           { $$ = Type.TYPEINT;    }
+            | TYPESTRING                                        { $$ = Type.TYPESTRING; }
+            | TYPEMONEY                                         { $$ = Type.TYPEMONEY;  }
+            | TYPEFLOAT                                         { $$ = Type.TYPEFLOAT;  }
+            | TYPEDATE                                          { $$ = Type.TYPEDATE;   }
+            ;
 
- if :  IF '(' expr ')' '{' statements '}' {$$ = new If($3, $6);}
-     | IF '(' expr ')' '{' statements '}' ELSE '{' statements '}' {$$ = new If($3, $6, $10);}
-     ;
+if
+            : IF '(' expr ')' '{' statements '}'                { $$ = new If($3, $6);      }
+            | IF '(' expr ')' '{' statements '}'
+              ELSE '{' statements '}'                           { $$ = new If($3, $6, $10); }
+            ;
 
 
 
 
- expr	 : '+' expr	%prec UPLUS { $$ = new Pos($2); }
-		 | '-' expr	%prec UMIN  { $$ = new Neg($2); }
-		 | '!' expr %prec UNOT  { $$ = new Not($2); }
-		 | expr '*' expr		{ $$ = new Mul($1, $3); }
-		 | expr '/' expr 		{ $$ = new Div($1, $3); }
-		 | expr '+' expr		{ $$ = new Add($1, $3); }
-		 | expr '-' expr		{ $$ = new Sub($1, $3); }
-		 | expr EQ expr		    { $$ = new Eq($1, $3); }
-		 | expr NEQ expr		{ $$ = new NEq($1, $3); }
-		 | expr '>' expr		{ $$ = new GT($1, $3); }
-		 | expr '<' expr		{ $$ = new LT($1, $3); }
-		 | expr GEQ expr		{ $$ = new GEq($1, $3); }
-		 | expr LEQ expr		{ $$ = new LEq($1, $3); }
-		 | expr AND expr	    { $$ = new And($1, $3); }
-	     | expr OR expr  		{ $$ = new Or($1, $3); }
-		 | INT					{ $$ = $1; }
-		 | IDENT         		{ $$ = $1; }
-		 | FLOAT                { $$ = $1; }
-		 | boolean              { $$ = $1; }
-		 | '(' expr ')'			{ $$ = $2; }
-		 ;
+expr
+            : '+' expr	%prec UPLUS                             { $$ = new Pos($2);     }
+		    | '-' expr	%prec UMIN                              { $$ = new Neg($2);     }
+		    | '!' expr %prec UNOT                               { $$ = new Not($2);     }
+		    | expr '*' expr		                                { $$ = new Mul($1, $3); }
+		    | expr '/' expr 		                            { $$ = new Div($1, $3); }
+		    | expr '+' expr		                                { $$ = new Add($1, $3); }
+		    | expr '-' expr		                                { $$ = new Sub($1, $3); }
+		    | expr EQ expr		                                { $$ = new Eq($1, $3);  }
+		    | expr NEQ expr		                                { $$ = new NEq($1, $3); }
+		    | expr '>' expr		                                { $$ = new GT($1, $3);  }
+		    | expr '<' expr		                                { $$ = new LT($1, $3);  }
+		    | expr GEQ expr		                                { $$ = new GEq($1, $3); }
+		    | expr LEQ expr		                                { $$ = new LEq($1, $3); }
+		    | expr AND expr	                                    { $$ = new And($1, $3); }
+	        | expr OR expr  		                            { $$ = new Or($1, $3);  }
+		    | INT					                            { $$ = $1;              }
+		    | IDENT         		                            { $$ = $1;              }
+		    | FLOAT                                             { $$ = $1;              }
+		    | boolean                                           { $$ = $1;              }
+		    | '(' expr ')'			                            { $$ = $2;              }
+		    ;
 
-boolean     : TRUE              { $$ = new QLBoolean(true);}
-            | FALSE              { $$ = new QLBoolean(false);}
+boolean
+            : TRUE                                              { $$ = new QLBoolean(true);     }
+            | FALSE                                             { $$ = new QLBoolean(false);    }
             ;
 
 %%
 private QLLexer lexer;
-
 private Form result;
 
-public Form getResult() {
+public Form getResult () {
   return result;
 }
 
-public QLParser(QLLexer lexer) {
+public QLParser (QLLexer lexer) {
   this.lexer = lexer;
 }
 
-private void yyerror(String msg) {
+private void yyerror (String msg) {
   System.err.println(msg);
 }
