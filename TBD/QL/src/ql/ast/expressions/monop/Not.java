@@ -7,16 +7,9 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Not implements MonOp {
-    private final Expr expr;
-
+public class Not extends MonOp {
     public Not(Expr expr){
-        this.expr = expr;
-    }
-
-
-    public Expr getExpr() {
-        return expr;
+        super(expr);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
