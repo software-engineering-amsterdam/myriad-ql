@@ -1,5 +1,6 @@
 import java.util.Map;
 
+import ast.type.Type;
 import org.antlr.v4.runtime.*;
 
 import ast.Form;
@@ -23,7 +24,7 @@ public class Main {
 				+ "Name5: \"Question5\" boolean\n"
 				+ "}"
 		 		+ " }";
-		
+
 		 ANTLRInputStream input = new ANTLRInputStream( tmp );
 		
 		 QLLexer lexer = new QLLexer(input);
@@ -35,20 +36,10 @@ public class Main {
 		 Form form = parser.form().result;
 	 
 		 System.out.println("----");
-		 
-		 Environment environment = new Environment();
-		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
-		 QVisitor.visit(form);
-		 Map<String, Atom> answers = QVisitor.getEnvironment().getAnswers();
-		 
-		 for (String answer : answers.keySet()) {
-			 System.out.println("Question: " + answer);
-		 }
-		 
-		 System.out.println("----");
 
-		 ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
-		 expressionVisitor.visit(form);
+		 TypeChecker.main(form);
+
+
 
 
 		 

@@ -17,7 +17,11 @@ public class ExpressionVisitor extends Visitor {
 	public ExpressionVisitor(Environment environment) {
 		this.environment = environment;
 	}
-	
+
+	public Environment getEnvironment() {
+		return environment;
+	}
+
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
@@ -48,7 +52,9 @@ public class ExpressionVisitor extends Visitor {
 		if (!environment.variableExists(result.getString())) {
 			throw new RuntimeException("The variable with name " + result.getString() +
 					" on line ... is not defined");
-		}		
+		}
+
+		System.out.println("Eval: " + result);
 	}
 	
 	// TODO do we want to add the throw after this function
