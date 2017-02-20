@@ -29,10 +29,17 @@ class ConditionTypeChecker < BaseChecker
     [visit_calculation(subject.left), visit_calculation(subject.right)]
   end
 
-  # only return the variable name if it is of a boolean type
+  # only return the variable name if it is not of a boolean type
   def visit_variable(subject)
     unless @types[subject.name].kind_of?(BooleanType)
       "[ERROR]: variable '#{subject.name}' is supposed to by a Boolean"
+    end
+  end
+
+  # only return the literal value if it is not of a boolean type
+  def visit_literal(subject)
+    unless subject.class.real_type == BooleanType
+      "[ERROR]: '#{subject.value}' is supposed to by a Boolean"
     end
   end
 end
