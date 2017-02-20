@@ -1,3 +1,4 @@
+require 'parslet'
 require_relative '../helper'
 
 class Expression
@@ -42,6 +43,10 @@ class And < BinaryExpression
   def self.real_type
     BooleanType
   end
+
+  def eval
+    left.eval && right.eval
+  end
 end
 
 class Or < BinaryExpression
@@ -73,6 +78,10 @@ class Add < BinaryExpression
 
   def self.real_type
     IntegerType
+  end
+
+  def eval
+    left.eval.to_i + right.eval.to_i
   end
 end
 

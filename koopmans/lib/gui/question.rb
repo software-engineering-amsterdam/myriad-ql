@@ -17,8 +17,10 @@ class Question
     @variable = TkVariable.new()
     @frame = TkFrame.new.grid(row: @gui.questions.size)
     @label = args[:label]
+    @condition = args[:condition]
 
     create_label
+    refresh
   end
 
   def value
@@ -39,8 +41,11 @@ class Question
     @hidden = false
   end
 
-  def toggle
-    hidden ? show : hide
+  def refresh
+    if @condition
+      p @condition.eval
+      @condition.eval ? show : hide
+    end
   end
 
   def create_label

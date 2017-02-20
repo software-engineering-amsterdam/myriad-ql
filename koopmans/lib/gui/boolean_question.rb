@@ -1,9 +1,11 @@
+require_relative '../ast/type'
 require 'tk'
 
 class BooleanQuestion < Question
   def initialize(args)
     super
     @variable.value = (true)
+    @variable.type = BooleanType
     create_radio_button('Yes', true)
     create_radio_button('No', false)
   end

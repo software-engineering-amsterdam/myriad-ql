@@ -19,6 +19,11 @@ class BooleanLiteral < Literal
   def self.real_type
     BooleanType
   end
+
+  def eval
+    return true if value == 'true'
+    return false if value == 'false'
+  end
 end
 
 class IntegerLiteral < Literal
@@ -28,6 +33,10 @@ class IntegerLiteral < Literal
 
   def self.real_type
     IntegerType
+  end
+
+  def eval
+    value.to_i
   end
 end
 
