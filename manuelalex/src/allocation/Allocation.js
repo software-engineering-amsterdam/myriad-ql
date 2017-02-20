@@ -3,4 +3,9 @@
  */
 module.exports = class Allocation {
 
+    constructor(options = {}){
+        this.propertyName = options.propertyName;
+        this.type = options.type;
+        this.expression = options.expression;
+    }
 };
