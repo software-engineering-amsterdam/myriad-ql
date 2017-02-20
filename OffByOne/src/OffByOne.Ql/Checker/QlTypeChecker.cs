@@ -3,6 +3,7 @@
     using System;
 
     using OffByOne.LanguageCore.Ast;
+    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
@@ -51,9 +52,7 @@
                 case NegativeExpression expression:
                     return this.CheckUnaryMatematicalExpression(expression);
                 case IfStatement statement:
-                    return null;
-                case ElseStatement statement:
-                    return null;
+                    return this.CheckIfStatement(statement);
             }
 
             return base.CheckTypes(node);
@@ -129,6 +128,17 @@
             }
 
             throw new Exception("Only boolean arguments are allowed.");
+        }
+
+        private ValueType CheckIfStatement(IfStatement statement)
+        {
+            var conditionType = this.CheckTypes(statement.Condition);
+            if (!(conditionType is BooleanValueType))
+            {
+                throw new Exception("Only boolean conditions are allowed");
+            }
+
+            return new VoidValueType();
         }
     }
 }
