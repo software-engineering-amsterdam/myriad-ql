@@ -18,36 +18,14 @@ public class Environment {
 	}
 	
 	public void addLabel(String label, String variableName) {
-		
-		if (labelVariable.containsKey(label)) {
-			// TODO WARNING not throw
-			System.out.println("The question \" "  + label 
-					+ " \"on line ... exists twice in the questionnaire.");
-		}		
 		labelVariable.put(label, variableName);
 	}
 	
 	public void addAnswer(String variable, Atom answer) {
-		
-		// TODO check whether the answer has the correct type
-		Type expectedType = variableType.get(variable);
-		if (answer.getType() != expectedType.getType()) {
-			
-			System.out.println("The answer on the question: " + variable
-					+ " should be of type " + expectedType.getType() + 
-					" but is of type: " + answer.getType());
-			// TODO print to the screen for the user
-		}
-		
 		variableAnswer.put(variable, answer);
 	}
 	
 	public void addVariableType(String variable, Type type) {
-		
-		if (variableType.containsKey(variable)) {
-			throw new RuntimeException("The variable: " + variable + " on line ... " + 
-		" cannot be added, because it is already defined");
-		}
 		variableType.put(variable, type);
 	}
 	
