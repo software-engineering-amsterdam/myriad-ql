@@ -1,4 +1,4 @@
-class Question
+class GUIQuestion
   attr_accessor :gui
   attr_accessor :label
   attr_accessor :frame
