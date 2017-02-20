@@ -11,19 +11,13 @@ export let test1 =
     hasBoughtHouse: boolean
     question 'Did you enter a loan?'
     hasMaintLoan: boolean
-    if (hasSoldHouse) {
+    if (hasSoldHouse-hasBoughtHouse) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'
         privateDebt: money
         answer 'Value residue:'
         valueResidue: money = (sellingPrice-privateDebt)
-    } else if (hasSoldHouse) {
-        question 'What is your privateDebt'
-        privateDebt: money
-    } else {
-        question 'What is your privateDebt'
-        privateDebt: money
     }
      }`;
 

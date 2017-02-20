@@ -11,12 +11,17 @@ module.exports = class Question extends Statement {
         this.name = options.name;
         this.propertyName = options.propertyName;
         this.propertyType = options.propertyType;
+
+        this._location = options.location;
     }
 
     validate() {
-
+        if(!this.name.length){
+            this._throwError(`Name should be defined`);
+        }
     }
 
+    // todo probably remove this
     getGeneratedCode(type) {
         return "<div>" + this.name + "<input type='" + type + "' onchange='click" + this.propertyName + "()' id='" + this.propertyName + "'></div>";
     }

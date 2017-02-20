@@ -43,25 +43,30 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     question(data, location, reject) {
-        return new Question({ name: data[3].trim(), propertyName: data[6], propertyType: data[9] });
+        return new Question({ name: data[3].trim(), propertyName: data[6], propertyType: data[9], location });
     }
 
     // ifBody statements are one level too deep
     ifStatement(data, location, reject) {
-        return new IfStatement({ condition: data[2][1], ifBody: data[3][3] });
+        return new IfStatement({ condition: data[2][1], ifBody: data[3][3], location });
     }
 
     ifElseStatement(data, location, reject) {
-        return new IfElseStatement(_.merge(data[0].getOptions(), {elseBody: _.flattenDeep(data[1][4]) }));
+        return new IfElseStatement(_.merge(data[0].getOptions(), { location, elseBody: _.flattenDeep(data[1][4]) }));
     }
 
     ifElseIfElseStatement(data, location, reject) {
-        return new IfElseIfElseStatement(_.merge(data[0].getOptions(),{elseIfConditional: data[3][1], elseIfBody: _.flattenDeep(data[4][3]), elseBody: _.flattenDeep(data[5][4]) }));
+        return new IfElseIfElseStatement(_.merge(data[0].getOptions(), {
+            location,
+            elseIfConditional: data[3][1],
+            elseIfBody: _.flattenDeep(data[4][3]),
+            elseBody: _.flattenDeep(data[5][4])
+        }));
     }
 
     // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
     answer(data, location, reject) {
-        return new Answer({ name: data[3].trim(), allocation: data[6] });
+        return new Answer({ name: data[3].trim(), allocation: data[6, location] });
     }
 
     // todo probably obsolete
@@ -83,7 +88,8 @@ module.exports = class FormPostProcessor extends PostProcessor {
         return new Allocation({
             propertyName: data[0].trim(),
             type: data[3],
-            expression: _.flattenDeep(data[7])[1]
+            expression: _.flattenDeep(data[7])[1],
+            location
         });
     }
 
@@ -93,7 +99,8 @@ module.exports = class FormPostProcessor extends PostProcessor {
             return new Expression({
                 term: _.flattenDeep(data[0])[0],
                 operator: _.flattenDeep(data[1])[0],
-                expression: _.flattenDeep(data[2])[0]
+                expression: _.flattenDeep(data[2])[0],
+                location
             });
         } else {
             console.error(`Retrieved different expression: ${JSON.stringify(data)} at location ${location}`);
@@ -101,25 +108,25 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     }
 
+    // todo probably obsolete
     operator(data, location, reject) {
-        console.log(`Operator: ${JSON.stringify(data)}`);
         return data;
     }
 
     minOp(data, location, reject) {
-        return new MinOperator();
+        return new MinOperator({ location });
     }
 
     plusOp(data, location, reject) {
-        return new PlusOperator();
+        return new PlusOperator({ location });
     }
 
     divideOp(data, location, reject) {
-        return new DivideOperator();
+        return new DivideOperator({ location });
     }
 
     multiplyOp(data, location, reject) {
-        return new MultiplyOperator();
+        return new MultiplyOperator({ location });
     }
 
     money(data, location, reject) {
