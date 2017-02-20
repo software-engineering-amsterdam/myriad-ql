@@ -20,23 +20,26 @@ namespace Questionnaires
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }
 
-            string inputString = "form Box1HouseOwning { hasSoldHouse: \"Did you sell a house in 2010?\" boolean(a) }";
+        private void ReportSemanticError(object sender, SemanticAnalysis.SemanticErrorArgs e)
+        {
+            textBlock.Text = textBlock.Text + "\n Semantic error: " + e.Message;
+        }
+
+        private void Interpret_Click(object sender, RoutedEventArgs e)
+        {
+            textBlock.Text = "";
 
             var formFactory = new AST.ASTFactory();
-            var parser = formFactory.CreateParser(inputString);
+            var parser = formFactory.CreateParser(Input.Text);
             var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
 
             var semanticAnalyzer = new SemanticAnalysis.Analyzer();
 
             semanticAnalyzer.SemanticError += ReportSemanticError;
             semanticAnalyzer.Analyze(form);
-        }
-
-        private void ReportSemanticError(object sender, SemanticAnalysis.SemanticErrorArgs e)
-        {
-            textBlock.Text = textBlock.Text + "\n Semantic error: " + e.Message;
         }
     }
 }
