@@ -11,28 +11,20 @@ import java.util.List;
  */
 public class MessageData {
 
-    private List<ErrorHandler> errorList;
-    private List<WarningHandler> warningList;
+    private List<MessageHandler> messageList;
 
     public MessageData() {
-        errorList = new ArrayList<ErrorHandler>();
-        warningList = new ArrayList<WarningHandler>();
+        messageList = new ArrayList<>();
+
     }
 
-    public void addError(ErrorHandler error) {
-        errorList.add(error);
+    public void addMessage(MessageHandler error) {
+        messageList.add(error);
     }
 
-    public void addWarning(WarningHandler warning) {
-        warningList.add(warning);
+    public List<MessageHandler> getMessages() {
+        return messageList;
     }
 
-    public List<ErrorHandler> getErrors() {
-        return errorList;
-    }
-
-    public List<WarningHandler> getWarnings() {
-        return warningList;
-    }
 
 }

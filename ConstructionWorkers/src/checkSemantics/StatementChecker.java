@@ -21,17 +21,17 @@ import java.util.Set;
 /**
  * Created by LGGX on 16-Feb-17.
  */
-public class StatementCheck implements FormAndStatementVisitor<Identifier> {
+public class StatementChecker implements FormAndStatementVisitor<Identifier> {
 
     public HashMap<String, Type> identifierMap;
     private Set<String> questionLabels;
     private MessageData messageLists;
 
-    public StatementCheck(Form ast, HashMap identifierMap, MessageData messageLists) {
+    public StatementChecker(Form ast, HashMap identifierMap, MessageData messageLists) {
 
         this.messageLists = messageLists;
         this.identifierMap = identifierMap;
-        this.questionLabels = new HashSet<String>();
+        this.questionLabels = new HashSet<>();
 
         ast.accept(this);
 
@@ -83,11 +83,11 @@ public class StatementCheck implements FormAndStatementVisitor<Identifier> {
             if ((identifierMap.get(question.getIdentifier().getName())).getClass()
                     .equals(question.getType().getClass())) {
 
-                messageLists.addError(new DuplicateIdentifierError(question.getIdentifier()));
+                messageLists.addMessage(new DuplicateIdentifierError(question.getIdentifier()));
                 //System.out.println("Duplicate question identifier with the same Type!");
                 return true;
             } else {
-                messageLists.addWarning(new DuplicateIdentifierWarning(question.getIdentifier()));
+                messageLists.addMessage(new DuplicateIdentifierWarning(question.getIdentifier()));
                 return true;
             }
         } else {
@@ -104,7 +104,7 @@ public class StatementCheck implements FormAndStatementVisitor<Identifier> {
     private boolean duplicateQuestionLabels(SimpleQuestion question) {
         for (String label : questionLabels) {
             if (label.equals(question.getText())) {
-                messageLists.addWarning(new DuplicateLabelWarning(question.getIdentifier(), question.getText()));
+                messageLists.addMessage(new DuplicateLabelWarning(question.getIdentifier(), question.getText()));
                 //System.out.println("Duplicate question labels found!");
                 return true;
             }

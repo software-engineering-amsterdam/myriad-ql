@@ -3,6 +3,7 @@ package checkSemantics;
 import ASTnodes.Form;
 import ASTnodes.types.Type;
 import checkSemantics.messageHandling.MessageData;
+import checkSemantics.messageHandling.MessageHandler;
 import checkSemantics.messageHandling.errors.ErrorHandler;
 import checkSemantics.messageHandling.warnings.WarningHandler;
 
@@ -22,23 +23,17 @@ public class CheckSemantics {
         identifierMap = new HashMap<String, Type>();
         messageLists = new MessageData();
 
-        new StatementCheck(ast, identifierMap, messageLists);
+        new StatementChecker(ast, identifierMap, messageLists);
 
         new TypeChecker(ast, identifierMap, messageLists);
 
-        if (messageLists.getErrors().size() > 0) {
-            List<ErrorHandler> errors = messageLists.getErrors();
+        if (messageLists.getMessages().size() > 0) {
+            List<MessageHandler> messages = messageLists.getMessages();
 
-            for( ErrorHandler error : errors) {
-                System.out.println(error.getMessage());
-            }
-        }
-
-        if (messageLists.getWarnings().size() > 0) {
-            List<WarningHandler> warnings = messageLists.getWarnings();
-
-            for( WarningHandler warning : warnings) {
-                System.out.println(warning.getMessage());
+            for( MessageHandler message : messages) {
+                if (message instanceof ErrorHandler)
+                    System.out.println("Error found!");
+                System.out.println(message.getMessage());
             }
         }
 

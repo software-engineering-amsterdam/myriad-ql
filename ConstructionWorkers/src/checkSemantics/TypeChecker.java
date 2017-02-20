@@ -168,7 +168,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         this.tempIdentifierLiteral = null;
 
         if (!type.getClass().equals(statement.getType().getClass())) {
-            messageLists.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
+            messageLists.addMessage(new InvalidTypeError(statement.getLocation(), statement.getType()));
             //System.out.println("Incompatible types for computed question!");
         }
 
@@ -182,7 +182,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type type = statement.getType(expression);
 
         if (type.getClass().equals(new UndefinedType().getClass())) {
-            messageLists.addError(new InvalidTypeError(statement.getLocation(), new BooleanType()));
+            messageLists.addMessage(new InvalidTypeError(statement.getLocation(), new BooleanType()));
             //System.out.println("Incompatible types for IF statement expression!");
         }
 
@@ -229,7 +229,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     private void checkCyclicDependency(Identifier end, Identifier start) {
         boolean revertedDependencyExists = this.checkRevertedDependency(start, end);
         if (revertedDependencyExists) {
-            messageLists.addError(new CyclicDependencyError(end.getLocation(), end, start));
+            messageLists.addMessage(new CyclicDependencyError(end.getLocation(), end, start));
         }
         this.updateDependencyData(end, start);
     }
