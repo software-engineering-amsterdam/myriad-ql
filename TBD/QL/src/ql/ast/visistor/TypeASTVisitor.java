@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class TypeASTVisitor implements ASTVisitor<Type> {
 
-    private HashMap<String, Type> identTable = new HashMap<>();
+    private final HashMap<String, Type> identTable = new HashMap<>();
 
     @Override
     public Type visit(Form node) {

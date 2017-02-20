@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 7-2-2017.
  */
 public class Pos implements MonOp {
-    private Expr expr;
+    private final Expr expr;
 
     public Pos(Expr expr){
         this.expr = expr;

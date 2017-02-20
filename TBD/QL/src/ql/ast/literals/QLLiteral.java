@@ -1,8 +1,6 @@
-package ql.ast;
+package ql.ast.literals;
 
-import ql.ast.literals.QLBoolean;
-import ql.ast.literals.QLFloat;
-import ql.ast.literals.QLInt;
+import ql.ast.Expr;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -14,7 +12,7 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral andEval(QLBoolean other) {
+    protected QLLiteral andEval(QLBoolean other) {
         throw new NotImplementedException();
     }
 
@@ -22,7 +20,7 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral orEval(QLBoolean other) {
+    protected QLLiteral orEval(QLBoolean other) {
         throw new NotImplementedException();
     }
 
@@ -30,11 +28,11 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral addEval(QLInt other) {
+    protected QLLiteral addEval(QLInt other) {
         throw new NotImplementedException();
     }
 
-    public QLLiteral addEval(QLFloat other) {
+    protected QLLiteral addEval(QLFloat other) {
         throw new NotImplementedException();
     }
 
@@ -42,11 +40,11 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral divEval(QLInt other) {
+    protected QLLiteral divEval(QLInt other) {
         throw new NotImplementedException();
     }
 
-    public QLLiteral divEval(QLFloat other) {
+    protected QLLiteral divEval(QLFloat other) {
         throw new NotImplementedException();
     }
 
@@ -62,11 +60,11 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral gTEval(QLInt other) {
+    protected QLLiteral gTEval(QLInt other) {
         throw new NotImplementedException();
     }
 
-    public QLLiteral gTEval(QLFloat other) {
+    protected QLLiteral gTEval(QLFloat other) {
         throw new NotImplementedException();
     }
 
@@ -82,11 +80,11 @@ public abstract class QLLiteral implements Expr {
         throw new NotImplementedException();
     }
 
-    public QLLiteral mulEval(QLInt other) {
+    protected QLLiteral mulEval(QLInt other) {
         throw new NotImplementedException();
     }
 
-    public QLLiteral mulEval(QLFloat other) {
+    protected QLLiteral mulEval(QLFloat other) {
         throw new NotImplementedException();
     }
 

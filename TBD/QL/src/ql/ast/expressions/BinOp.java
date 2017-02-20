@@ -6,9 +6,9 @@ import ql.ast.Expr;
  * Created by rico on 14-2-17.
  */
 public abstract class BinOp implements Expr {
-    private Expr left, right;
+    private final Expr left, right;
 
-    public BinOp(Expr left, Expr right){
+    protected BinOp(Expr left, Expr right){
         this.left = left;
         this.right = right;
     }

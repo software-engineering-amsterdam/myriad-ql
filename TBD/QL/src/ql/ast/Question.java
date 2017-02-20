@@ -8,10 +8,10 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 6-2-2017.
  */
 public class Question implements Statement {
-    private QLIdent id;
-    private QLString question;
-    private Type type;
-    private Expr expr;
+    private final QLIdent id;
+    private final QLString question;
+    private final Type type;
+    private final Expr expr;
 
     public Question(QLIdent id, QLString question, Type type, Expr expr) {
         this.id = id;

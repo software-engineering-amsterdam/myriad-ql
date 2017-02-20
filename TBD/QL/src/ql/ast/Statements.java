@@ -6,8 +6,8 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 7-2-2017.
  */
 public class Statements implements ASTNode {
-    private Statement current;
-    private Statements next;
+    private final Statement current;
+    private final Statements next;
 
     public Statements(Statement current, Statements next) {
         this.current = current;

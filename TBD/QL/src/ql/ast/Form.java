@@ -7,8 +7,8 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 6-2-2017.
  */
 public class Form implements ASTNode {
-    private QLIdent name;
-    private Statements statements;
+    private final QLIdent name;
+    private final Statements statements;
 
     public Form(QLIdent name, Statements statements){
         this.name = name;

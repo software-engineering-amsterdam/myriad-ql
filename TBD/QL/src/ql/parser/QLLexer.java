@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class QLLexer implements QLTokens {
-    private static final Map<String, Integer> KEYWORDS = new HashMap<String, Integer>();
+    private static final Map<String, Integer> KEYWORDS = new HashMap<>();
 
     private int token;
     private Object yylval;

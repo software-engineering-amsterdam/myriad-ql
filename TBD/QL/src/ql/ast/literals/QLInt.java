@@ -1,13 +1,12 @@
 package ql.ast.literals;
 
-import ql.ast.QLLiteral;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
 public class QLInt extends QLLiteral {
-    private int qlInteger;
+    private final int qlInteger;
 
     public QLInt(int qlInteger){
         this.qlInteger = qlInteger;
@@ -31,11 +30,13 @@ public class QLInt extends QLLiteral {
         return other.addEval(this);
     }
 
-    public QLLiteral addEval(QLInt other) {
+    @Override
+    protected QLLiteral addEval(QLInt other) {
         return new QLInt(this.getValue() + other.getValue());
     }
 
-    public QLLiteral addEval(QLFloat other) {
+    @Override
+    protected QLLiteral addEval(QLFloat other) {
         return new QLFloat(this.getValue() + other.getValue());
     }
 

@@ -1,6 +1,6 @@
 package ql;
 
-import ql.ast.QLLiteral;
+import ql.ast.literals.QLLiteral;
 import ql.ast.Type;
 import ql.ast.expressions.binop.Sub;
 import ql.ast.expressions.monop.Neg;

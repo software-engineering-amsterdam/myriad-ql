@@ -1,13 +1,12 @@
 package ql.ast.literals;
 
-import ql.ast.QLLiteral;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
 public class QLBoolean extends QLLiteral {
-    private boolean qlBoolean;
+    private final boolean qlBoolean;
 
     public QLBoolean(boolean qlBoolean) {
         this.qlBoolean = qlBoolean;
@@ -32,7 +31,7 @@ public class QLBoolean extends QLLiteral {
     }
 
     @Override
-    public QLLiteral andEval(QLBoolean other) {
+    protected QLLiteral andEval(QLBoolean other) {
         return new QLBoolean(other.getValue() && this.getValue());
     }
 
@@ -42,7 +41,7 @@ public class QLBoolean extends QLLiteral {
     }
 
     @Override
-    public QLLiteral orEval(QLBoolean other) {
+    protected QLLiteral orEval(QLBoolean other) {
         return new QLBoolean(other.getValue() || this.getValue());
     }
 

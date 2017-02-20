@@ -1,13 +1,12 @@
 package ql.ast.literals;
 
-import ql.ast.QLLiteral;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
 public class QLString extends QLLiteral {
-    private String qlString;
+    private final String qlString;
 
     public QLString(String qlString){
         this.qlString = qlString;

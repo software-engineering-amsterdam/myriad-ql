@@ -6,9 +6,9 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 6-2-2017.
  */
 public class If implements Statement{
-    private Expr expression;
-    private Statements ifBlock;
-    private Statements elseBlock;
+    private final Expr expression;
+    private final Statements ifBlock;
+    private final Statements elseBlock;
 
     public If(Expr expression, Statements ifBlock, Statements elseBlock) {
         this.expression = expression;
