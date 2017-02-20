@@ -44,15 +44,14 @@ public class Main {
 		 TypeChecker typeChecker = new TypeChecker();
 		 
 		 semantic.Environment semanticEv = typeChecker.analyze(form);
+		 
+		 //UITest.main(semanticEnv);
 
-		 Evaluator evaluator = new Evaluator();
-
+		 // Evaluator evaluator = new Evaluator();
 
 		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
-
-		UITest.main();
 	}
 }

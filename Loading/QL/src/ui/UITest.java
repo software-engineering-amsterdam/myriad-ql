@@ -26,7 +26,7 @@ public class UITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("JavaFX Welcome");
+        primaryStage.setTitle("Questionnaire");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);

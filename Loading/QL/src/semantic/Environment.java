@@ -9,7 +9,7 @@ public class Environment {
 	private Map<String, Type> variableType; // Should these two be combined to label - variable/type
 	private Map<String, String> labelVariable;
 	
-	Environment() {
+	public Environment() {
 		variableType = new HashMap<>(); 
 		labelVariable = new HashMap<>();
 	}
