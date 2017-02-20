@@ -2,11 +2,11 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class MoneyLiteral : Literal<decimal>
+    public class MoneyLiteral : Literal
     {
         public MoneyLiteral(decimal value)
-            : base(value)
         {
+            this.Value = value;
         }
 
         public MoneyLiteral(string value)

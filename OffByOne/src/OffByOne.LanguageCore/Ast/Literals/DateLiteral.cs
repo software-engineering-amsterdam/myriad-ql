@@ -5,16 +5,18 @@
 
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class DateLiteral : Literal<DateTime>
+    public class DateLiteral : Literal
     {
         public DateLiteral(DateTime value)
-            : base(value)
         {
+            this.Value = value;
         }
 
         public DateLiteral(string dateString)
             : this(DateTime.Parse(dateString, CultureInfo.InvariantCulture))
         {
         }
+
+        public DateTime Value { get; private set; }
     }
 }

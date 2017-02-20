@@ -8,8 +8,6 @@
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql.Ast.Expressions;
-    using OffByOne.Ql.Ast.Expressions.Binary;
-    using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.Statements.Questions;
@@ -161,7 +159,7 @@
         #region:Literals
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
-            return new DateLiteral(DateLiteral.Parse(context.DateLiteral().GetText()));
+            return new DateLiteral(context.DateLiteral().GetText());
         }
 
         public override AstNode VisitBooleanLiteral([NotNull] QlParser.BooleanLiteralContext context)

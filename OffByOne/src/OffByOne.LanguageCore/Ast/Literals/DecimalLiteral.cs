@@ -2,17 +2,18 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class DecimalLiteral : Literal<decimal>
+    public class DecimalLiteral : Literal
     {
-        public DecimalLiteral(double value)
+        public DecimalLiteral(decimal value)
         {
+            this.Value = value;
         }
 
         public DecimalLiteral(string value)
-            : this(double.Parse(value))
+            : this(decimal.Parse(value))
         {
         }
 
-        public double Value { get; private set; }
+        public decimal Value { get; private set; }
     }
 }

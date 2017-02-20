@@ -2,11 +2,11 @@
 {
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
-    public class IntegerLiteral : Literal<int>
+    public class IntegerLiteral : Literal
     {
         public IntegerLiteral(int value)
-            : base(value)
         {
+            this.Value = value;
         }
 
         public IntegerLiteral(string value)
