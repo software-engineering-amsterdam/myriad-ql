@@ -9,27 +9,27 @@
  %}
 
 
-form         -> "form " formName _ openBrace _ newLine:* _ statement:* _ newLine:* _ closedBrace                         {% FormPostProcessor.form.bind(FormPostProcessor) %}
+form         -> "form" _ formName _ openBrace newLine _ statement:* _ closedBrace                        # {% FormPostProcessor.form.bind(FormPostProcessor) %}
 formName     -> word
 
 statement    -> question
               | if_statement
-              | answer                                                                                        {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+              | answer                                                                                      #  {% FormPostProcessor.statement.bind(FormPostProcessor) %}
 
-question     -> "question " prime sentence prime _ newLine:* propertyName ":" _ propertyType newLine:*           {% FormPostProcessor.question %}
+question     -> "question" _ prime sentence prime newLine _ propertyName ":" _ propertyType newLine _         #  {% FormPostProcessor.question %}
 
 
-if_statement -> "if " parOpen propertyName parClose space openBrace newLine:* statement:*  newLine closedBrace  {% FormPostProcessor.ifStatement %}
-answer       -> "answer " prime sentence prime _ newLine:* allocation                                             {% FormPostProcessor.answer %}
-allocation   -> propertyName ": " _ propertyType space assignOp space expression newLine:*                          {% FormPostProcessor.allocation %}
+if_statement -> "if" _ parOpen propertyName parClose _ openBrace newLine _ statement:* _ closedBrace _ newLine _ # {% FormPostProcessor.ifStatement %}
+answer       -> "answer" _ prime sentence prime _ newLine _ allocation newLine _                                           # {% FormPostProcessor.answer %}
+allocation   -> propertyName ":" _ propertyType _ assignOp _ expression                         # {% FormPostProcessor.allocation %}
 #expression   -> "(" propertyName space operator space propertyName ")"
 #operator     -> "-" | "+" | "/" | "*"
-expression  -> term | expression (min_op|plus_op) term                                                        {% FormPostProcessor.expression %}
+expression  -> term | expression (min_op|plus_op) term                                                      #  {% FormPostProcessor.expression %}
 term        -> factor | term (divide_op | multiply_op) factor
-factor      -> digits | propertyName | "(" expression ")"                                                       {% FormPostProcessor.factor %}
+factor      -> digits | propertyName | "(" expression ")"                                                   #    {% FormPostProcessor.factor %}
 digits      -> [0-9]:+
 
-min_op      -> "-"                                                                                              {% FormPostProcessor.minOp %}
+min_op      -> "-"                                                                                           #   {% FormPostProcessor.minOp %}
 plus_op     -> "+"
 divide_op   -> "/"
 multiply_op -> "*"
@@ -37,7 +37,7 @@ multiply_op -> "*"
 assignOp     -> "="
 
 
-propertyName -> [A-Za-z0-9]:+                                                                               {% FormPostProcessor.toString %}
+propertyName -> [A-Za-z0-9]:+                                                                             #  {% FormPostProcessor.toString %}
 propertyType -> "boolean"
               | "string"
               | "integer"

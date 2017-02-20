@@ -4,30 +4,36 @@
 
 
 export let test1 =
-    'form taxOfficeExample{\n' +
-    'question `Did you sell a house in 2010?`\n' +
-    'hasSoldHouse: boolean\n' +
-    'question `Did you buy a house in 2010?`\n' +
-    'hasBoughtHouse: boolean\n' +
-    'question `Did you enter a loan?`\n' +
-    'hasMaintLoan: boolean\n' +
-    'if (hasSoldHouse) {\n' +
-    'question `What was the selling price?`\n' +
-    'sellingPrice: money\n' +
-    'question `What was the private debts for the sold house?`\n' +
-    'privateDebt: money\n' +
-    'answer `Value residue:`\n' +
-    'valueResidue: money = (sellingPrice-privateDebt)\n' +
-    '\n}' +
-    '\n}';
+`form taxOfficeExample{
+    question 'Did you sell a house in 2010?'
+    hasSoldHouse: boolean
+    question 'Did you buy a house in 2010?'
+    hasBoughtHouse: boolean
+    question 'Did you enter a loan?'
+    hasMaintLoan: boolean
+    if (hasSoldHouse) {
+        question 'What was the selling price?'
+        sellingPrice: money
+        question 'What was the private debts for the sold house?'
+        privateDebt: money
+        answer 'Value residue:'
+        valueResidue: money = (sellingPrice-privateDebt)
+    } 
+}`;
 
-export let test2 = 'form y{\n \n}}';
+export let test2 =
+'form y{'
+'}';
 
-export let test3 = `form taxOfficeExample {question 'Q1' sellingPrice: money\n
-question 'Q2'\n soldPrice: money
-answer 'A2'\n
-valueResidue: money = (sellingPrice-soldPrice)\n
-    }`;
+export let test3 =
+`form taxOfficeExample {
+    question 'Q1'
+    sellingPrice: money
+    question 'Q2'
+    soldPrice: money
+    answer 'A2'
+    A2: money = (Q1-Q2)
+}`;
 
 // TODO sentences should be alphanumeric
 
