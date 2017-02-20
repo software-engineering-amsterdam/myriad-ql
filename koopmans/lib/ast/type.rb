@@ -39,6 +39,7 @@ class StringType < Type
   end
 end
 
+# TODO make money type allow +-/* operations
 class MoneyType < Type
   def self.type
     'money'

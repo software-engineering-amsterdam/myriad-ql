@@ -31,7 +31,7 @@ class UndefinedVariableChecker < BaseChecker
   # only return the variable name if it is not existing
   def visit_variable(subject)
     unless @question_variables.include?(subject.name)
-      "[WARNING]: variable '#{subject.name}' is undefined"
+      "[ERROR]: variable '#{subject.name}' is undefined"
     end
   end
 end

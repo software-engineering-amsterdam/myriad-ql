@@ -9,9 +9,9 @@ class IfStatement
     @block = block
   end
 
-  def accept(visitor)
-    visitor.visit_if_statement(self)
-  end
+  # def accept(visitor)
+  #   visitor.visit_if_statement(self)
+  # end
 end
 
 class Question
@@ -26,10 +26,10 @@ class Question
     @assignment = expression if expression
   end
 
-  def accept(visitor)
-    visitor.visit_question(self)
-    # @variable.accept(type_checker)
-  end
+  # def accept(visitor)
+  #   visitor.visit_question(self)
+  #   # @variable.accept(type_checker)
+  # end
 end
 
 class Parser < Parslet::Parser
