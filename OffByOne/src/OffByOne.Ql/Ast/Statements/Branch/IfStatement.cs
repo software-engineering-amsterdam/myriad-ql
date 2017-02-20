@@ -9,7 +9,7 @@
     {
         public IfStatement(
             Expression condition,
-            IList<Statement> statements,
+            IEnumerable<Statement> statements,
             ElseStatement elseStatement = null)
         {
             this.Condition = condition;
@@ -21,6 +21,6 @@
 
         public IEnumerable<Statement> Statements { get; private set; }
 
-        public Statement ElseStatement { get; private set; }
+        public ElseStatement ElseStatement { get; private set; }
     }
 }
