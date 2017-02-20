@@ -56,9 +56,9 @@ def parse(input_string):
         identifier.setResultsName("identifier") + \
         colon + \
         data_types.setResultsName("data_type") + \
-        Optional(
+         Optional(
             assign_op +
-            arithmetic_statement.setResultsName("arithmetic_statement")
+            arithmetic_statement.setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
         )
 
     field_expr = \
