@@ -18,9 +18,9 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     @Override
     public ASTNode visitForm(QLParser.FormContext ctx) {
         form = new Form(ctx.start.getLine());
-        form.setFormId(ctx.formId().getText());
+        form.setFormId(ctx.Identifier().getText());
 
-        ctx.questions().forEach(this::visit);
+        ctx.items().forEach(this::visit);
 
         return form;
     }
@@ -28,8 +28,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
         Question question = new Question(ctx.start.getLine());
-        question.setQuestion(ctx.Str().getText());
-        question.setValue(ctx.Ident().getText());
+        question.setQuestion(ctx.StringLiteral().getText());
+        question.setValue(ctx.Identifier().getText());
         question.setType((ValueType) visit(ctx.valueType()));
 
         form.getQuestions().add(question);
