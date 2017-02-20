@@ -9,22 +9,26 @@ import java.util.Set;
 
 public class QuestionForm {
     private Node mFormNode;
-
+    private JFrame mFrame;
     public QuestionForm(Node formNode) {
         mFormNode = formNode;
     }
 
     public void show() {
-        generateForm();
+        mFormNode.setVisibility(true);
+    }
+
+    public void printData(){
+        mFormNode.printData();
     }
 
     private void generateForm() {
-        JFrame frame = new JFrame(mFormNode.getId());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(createComponents());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        mFrame = new JFrame(mFormNode.getId());
+        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mFrame.add(createComponents());
+        mFrame.pack();
+        mFrame.setLocationRelativeTo(null);
+        mFrame.setVisible(true);
     }
 
     private JPanel createComponents() {

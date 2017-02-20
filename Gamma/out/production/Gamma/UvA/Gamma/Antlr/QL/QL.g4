@@ -25,10 +25,10 @@ boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr            # andor
         | ('true' | 'false')                                          # bool
         ;
 
-numExpr: numExpr op=('*' | '/') numExpr    # div
-       | numExpr op=('+' | '-') numExpr    # add
-       | NUMBER                            # num
-       | ID                                # numId
+numExpr: numExpr op=('*' | '/') numExpr
+       | numExpr op=('+' | '-') numExpr
+       | NUMBER
+       | ID
        ;
 
 //datatypes
@@ -42,7 +42,7 @@ MONEY:  'money';
 NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
 STRING_LITERAL: '"'(~'"')+'"' ;
-ID: [a-zA-Z][a-zA-Z0-9]+;
+ID: [a-zA-Z][a-zA-Z0-9]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;

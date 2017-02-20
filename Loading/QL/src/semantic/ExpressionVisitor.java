@@ -1,3 +1,4 @@
+package semantic;
 
 
 import ast.Visitor;
@@ -10,21 +11,25 @@ import ast.expression.UnaryExpression;
 // Checks unreferenced variables
 // Checks whether condition returns a boolean
 // operands of invalid type to operators
-public class EvalVisitor extends Visitor {
+public class ExpressionVisitor extends Visitor {
 	
 	private Environment environment;
 	
-	public EvalVisitor(Environment environment) {
+	public ExpressionVisitor(Environment environment) {
 		this.environment = environment;
 	}
-	
+
+	public Environment getEnvironment() {
+		return environment;
+	}
+
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
 		Atom result = binaryExpression.evaluate() ;	
 		check(result);
 		
-		System.out.println("Eval: " + result);
+		System.out.println("Eval: " + result.getValue());
 	}
 	
 	@Override
@@ -41,14 +46,16 @@ public class EvalVisitor extends Visitor {
 		
 		Atom result = id.evaluate();
 		if (result.getType() != "string") { 
-			throw new RuntimeException("Exptected a id with a variablename, but got type " +
+			throw new RuntimeException("Expected a id with a variablename, but got type " +
 						result.getType());
 		}
 		
 		if (!environment.variableExists(result.getString())) {
 			throw new RuntimeException("The variable with name " + result.getString() +
 					" on line ... is not defined");
-		}		
+		}
+
+		System.out.println("Eval: " + result);
 	}
 	
 	// TODO do we want to add the throw after this function

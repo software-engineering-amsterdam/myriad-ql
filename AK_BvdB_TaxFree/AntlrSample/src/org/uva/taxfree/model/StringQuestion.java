@@ -4,22 +4,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StringQuestion extends NamedNode {
-    private String mValue;
 
-    public StringQuestion(String label, String id) {
-        super(label, id);
-        mValue = new String("");
+    private JTextField mTextField;
+    public StringQuestion(String description, String id) {
+        super(description, id);
+        mTextField = new JTextField("");
     }
 
     @Override
     public void fillPanel(JPanel parentPanel) {
-        JTextField f = new JTextField(mValue);
-        f.setPreferredSize(new Dimension(100,25));
-        parentPanel.add(f);
+        mTextField.setPreferredSize(new Dimension(100,25));
+        setVisible(true);
+        parentPanel.add(mTextField);
+    }
+
+    public void setVisible(boolean isVisible){
+        mTextField.setVisible(isVisible);
     }
 
     @Override
     public String getType() {
         return "string";
+    }
+
+    @Override
+    public void printValue(){
+        System.out.println("Value of string: " + mTextField.getText());
     }
 }

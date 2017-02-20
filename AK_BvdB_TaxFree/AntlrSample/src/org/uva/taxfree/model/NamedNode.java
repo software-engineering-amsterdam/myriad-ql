@@ -17,6 +17,7 @@ public abstract class NamedNode extends Node {
         JPanel widgetPanel = new JPanel();
         widgetPanel.add(new JLabel(mLabel));
         fillPanel(widgetPanel);
+        widgetPanel.setVisible(isVisible());
         return widgetPanel;
     }
 

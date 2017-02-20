@@ -1,14 +1,17 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.AST.Values.Boolean;
-import UvA.Gamma.AST.Values.Number;
+import javafx.beans.property.StringProperty;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
-public interface Expression {
+public interface Expression extends ASTNode {
     String toString();
-    Number evaluateNumber() throws Exception;
-    Boolean evaluateBool() throws Exception;
+
+    void evaluate();
+
+    StringProperty getStringValueProperty();
+
+    void idChanged(String id, String value);
 }
 

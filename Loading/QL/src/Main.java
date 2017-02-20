@@ -1,12 +1,14 @@
 import java.util.Map;
 
+import ast.type.Type;
+import evaluation.Evaluator;
+import semantic.TypeChecker;
+
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
 
 import ast.Form;
-import ast.Visitor;
 import ast.atom.Atom;
-import ui.UIFactory;
+import ui.UITest;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -26,7 +28,7 @@ public class Main {
 				+ "Name5: \"Question5\" boolean\n"
 				+ "}"
 		 		+ " }";
-		
+
 		 ANTLRInputStream input = new ANTLRInputStream( tmp );
 		
 		 QLLexer lexer = new QLLexer(input);
@@ -39,19 +41,11 @@ public class Main {
 	 
 		 System.out.println("----");
 		 
-		 Environment environment = new Environment();
-		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
-		 QVisitor.visit(form);
-		 Map<String, Atom> answers = QVisitor.getEnvironment().getAnswers();
+		 TypeChecker typeChecker = new TypeChecker();
 		 
-		 for (String answer : answers.keySet()) {
-			 System.out.println("Question: " + answer);
-		 }
-		 
-		 System.out.println("----");
+		 semantic.Environment semanticEv = typeChecker.analyze(form);
 
-		 EvalVisitor evalVisitor = new EvalVisitor(environment);
-		 evalVisitor.visit(form);
+		 Evaluator evaluator = new Evaluator();
 
 
 		 
@@ -59,6 +53,6 @@ public class Main {
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
 
-		// UIFactory.main();
+		UITest.main();
 	}
 }
