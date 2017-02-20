@@ -30,33 +30,40 @@ class GUI
   attr_accessor :questions
 
   def initialize
-    @questions = []
-    q1 = BooleanQuestion.new(gui: self, label: 'hoe')
-    q2 = BooleanQuestion.new(gui: self, label: 'wat')
+    @questions = Hash.new
+    BooleanQuestion.new(gui: self, label: 'hoe', id: 'hoe')
+    BooleanQuestion.new(gui: self, label: 'wat', id: 'wat')
 
     # condition = BooleanLiteral.new(true)
-    condition1 = And.new(q2.variable, BooleanLiteral.new(true))
-    condition = And.new(condition1, q1.variable)
+    condition1 = And.new(@questions['hoe'].variable, BooleanLiteral.new(true))
+    condition = And.new(condition1, @questions['wat'].variable)
 
-    q3 = TextQuestion.new(gui: self, label: 'hoeveel', condition: condition)
-    q4 = TextQuestion.new(gui: self, label: 'hoeveel', condition: condition)
+    TextQuestion.new(gui: self, label: 'hoeveel', condition: condition, id: 'hoeveel1')
+    TextQuestion.new(gui: self, label: 'hoeveel2', condition: condition, id: 'hoeveel2')
 
 
-    calculation1 = Add.new(q3.variable, IntegerLiteral.new(5))
-    calculation = Add.new(calculation1, q4.variable)
+    calculation1 = Add.new(@questions['hoeveel1'].variable, IntegerLiteral.new(5))
+    calculation = Add.new(calculation1, @questions['hoeveel2'].variable)
 
-    ComputedQuestion.new(gui: self, label: 'hoeveel2', calculation: calculation, condition: condition)
+    ComputedQuestion.new(gui: self, label: 'hoeveel3', id: 'hoeveel3', calculation: calculation, condition: condition)
+    # p @questions[0].each do |q|
+    #   p q
+    # end
+
+    # @questions.each {|key, value| puts "#{key} is #{value}" }
 
     create_submit_button
     Tk.mainloop
   end
 
   def value_changed(question)
-    @questions.each(&:refresh)
+    # @questions.each {|key, value| value.refresh }
+    @questions.each_value(&:refresh)
   end
 
   def submit
-    p @questions.select{ |q| !q.hidden}.map(&:to_json)
+    # p @questions.each_value.
+    p @questions.each_value.select{ |q| !q.hidden}.map(&:to_json)
   end
 
   def create_submit_button

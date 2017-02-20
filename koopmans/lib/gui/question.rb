@@ -13,7 +13,7 @@ class Question
 
     @hidden = false
     @variable = TkVariable.new()
-    @gui.questions << self
+    @gui.questions[args[:id]] = self
 
     create_frame
     create_label
