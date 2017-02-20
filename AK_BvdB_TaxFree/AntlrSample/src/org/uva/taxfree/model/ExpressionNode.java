@@ -1,25 +1,22 @@
 package org.uva.taxfree.model;
 
-import javax.swing.*;
+public class ExpressionNode extends Node {
+    private Node mLeft;
+    private Node mRight;
 
-public class ExpressionNode extends NamedNode {
-    public ExpressionNode(String description, String id) {
-        super(description, id);
+    public ExpressionNode(String label) {
+
     }
 
-    private String evaluate() {
-        return "1 + 1 equals 2";
+    public boolean evaluate() {
+        return true;
     }
 
-    @Override
-    protected void fillPanel(JPanel parent) {
-        JTextField field = new JTextField(evaluate());
-        field.setEditable(false);
-        parent.add(field);
-    }
-
-    @Override
     public String getType() {
-        return null;
+        return mLeft.getType();
+    }
+
+    public boolean isValid() {
+        return mLeft.getType().equals(mRight.getType());
     }
 }
