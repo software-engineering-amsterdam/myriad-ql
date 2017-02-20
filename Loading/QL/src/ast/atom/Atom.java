@@ -5,32 +5,37 @@ import ast.expression.Expression;
 
 public abstract class Atom extends Expression {
 	
-	// TODO can we not implement the default behaviour here?
-	// TODO can BoolAtom also be Boolean?
-	public abstract Atom add(Atom other);
-	public abstract BoolAtom and(Atom other);
-	public abstract Atom div(Atom other);
-	public abstract BoolAtom eq(Atom other);
-	public abstract BoolAtom greaterEq(Atom other);
-	public abstract BoolAtom greater(Atom other);
-	public abstract BoolAtom lessEq(Atom other);
-	public abstract BoolAtom less(Atom other);
-	public abstract Atom mul(Atom other);
-	public abstract BoolAtom notEq(Atom other);
-	public abstract BoolAtom or(Atom other);
-	public abstract Atom sub(Atom other);
+	// Binary Operators
+	public Atom add(Atom other) { return null; }
+	public Atom sub(Atom other) { return null; }
+	public Atom mul(Atom other) { return null; }
+	public Atom div(Atom other) { return null; }
 	
-	public abstract Atom plus();
-	public abstract Atom min();
-	public abstract BoolAtom not();
+	public BoolAtom and(Atom other) { return null; }
+	public BoolAtom or(Atom other) { return null; }
+	public BoolAtom eq(Atom other) { return null; }
+	public BoolAtom notEq(Atom other) { return null; }
+	public BoolAtom greaterEq(Atom other) { return null; }
+	public BoolAtom greater(Atom other) { return null; }
+	public BoolAtom lessEq(Atom other) { return null; }
+	public BoolAtom less(Atom other) { return null; }
 	
-	public abstract Integer getNumber();
-	public abstract Boolean getValue();
-	public abstract String getString();
+	// Unary Operators
+	public Atom plus() { return null; }
+	public Atom min() { return null; }
+	public BoolAtom not() { return null; }
+	
+	public Integer getNumber() { return null; }
+	public Boolean getValue() { return null; }
+	public String getString() { return null; }
+	
 	public abstract String getType();
-
-	// TODO do we want to add this?
-	@Override
-	public abstract void accept(Visitor v);
 	
+	@Override
+	public Atom evaluate() {
+		return this;
+	}
+	
+	@Override
+	public abstract void accept(Visitor v);	
 }
