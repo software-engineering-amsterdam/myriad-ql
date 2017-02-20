@@ -32,22 +32,30 @@
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var question = context.StringLiteral().GetText();
+            var question = this.Visit(context.literal()) as StringLiteral;
             var type = context.Type().GetText();
+
+            var computedValue = context.expression();
+            Expression value = null;
+            if (computedValue != null)
+            {
+                value = this.Visit(context.expression()) as Expression;
+            }
+
             switch (type)
             {
                 case "boolean":
-                    return new QuestionStatement(id, new BooleanValueType(), question);
+                    return new QuestionStatement(id, new BooleanValueType(), question, value);
                 case "integer":
-                    return new QuestionStatement(id, new IntegerValueType(), question);
+                    return new QuestionStatement(id, new IntegerValueType(), question, value);
                 case "decimal":
-                    return new QuestionStatement(id, new FloatValueType(), question);
+                    return new QuestionStatement(id, new FloatValueType(), question, value);
                 case "money":
-                    return new QuestionStatement(id, new MoneyValueType(), question);
+                    return new QuestionStatement(id, new MoneyValueType(), question, value);
                 case "string":
-                    return new QuestionStatement(id, new StringValueType(), question);
+                    return new QuestionStatement(id, new StringValueType(), question, value);
                 case "date":
-                    return new QuestionStatement(id, new DateValueType(), question);
+                    return new QuestionStatement(id, new DateValueType(), question, value);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }

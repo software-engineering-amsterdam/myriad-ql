@@ -2,7 +2,7 @@
 options { tokenVocab=QlLexer; }
 
 form : FORM Identifier LBRACE stat+ RBRACE ;
-question : StringLiteral Identifier COLON Type ; // TODO: default value / precomputed value
+question : literal Identifier COLON Type (LPAREN expression RPAREN)? ;
 stat
 	: question
 	| ifStat

@@ -30,7 +30,7 @@
                             alcoholicBeverages: money
                     } else {
                         ""Okay. Goodbye?""
-                            exit: boolean
+                            exit: boolean(continue || false)
                     }
                 }
             ");
@@ -73,6 +73,15 @@
 
             var elseStatement = ifStatement.ElseStatement;
             Assert.Equal(1, elseStatement.Statements.Count());
+
+            Assert.IsType<QuestionStatement>(elseStatement.Statements.First());
+            var computedQuestion = (QuestionStatement)elseStatement.Statements.First();
+
+            Assert.IsType<OrExpression>(computedQuestion.ComputedValue);
+
+            var computedValue = (OrExpression)computedQuestion.ComputedValue;
+            Assert.IsType<VariableExpression>(computedValue.LeftExpression);
+            Assert.IsType<BooleanLiteral>(computedValue.RightExpression);
         }
 
         [Fact]
