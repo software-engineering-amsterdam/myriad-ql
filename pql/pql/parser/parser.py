@@ -12,7 +12,7 @@ def parse(input_string):
     number = Word(nums + ".")
 
     arith_operand = number | identifier
-    bool_operand = Literal("true") | Literal("false") | identifier | number
+    bool_operand = Literal("true") | Literal("false") | number | identifier
     bool_operand.setParseAction(BoolOperand)
 
     # Reserved keywords
@@ -50,7 +50,10 @@ def parse(input_string):
     ]
 
     # Arithmetic precedence
-    arith_expr = infixNotation(arith_operand, arith_prec)
+    arith_expr = infixNotation(
+        arith_operand,
+        arith_prec
+    )
 
     bool_expr = infixNotation(
         bool_operand,
