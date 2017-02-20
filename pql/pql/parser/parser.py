@@ -9,7 +9,7 @@ from pql.parser.BoolOperand import BoolOr
 
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_')
-    number = Word(nums + ".").setParseAction((lambda t: int(t[0])))
+    number = Word(nums + ".")
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | identifier | number
