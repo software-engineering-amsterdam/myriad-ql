@@ -43,7 +43,14 @@ in qlworkbench.ql.parser, the grammar formaly expressed is the following:
     factor -> ID
             | LPAREN expresion RPAREN
 
+The output of the parser is an AST tree. The AST tree has been processed to
+simplify the raw output of the grammar and some reduntant or innecesary nodes
+and tokens haven been merged. The resultant AST tree is sucession of nested
+tuples which each one represents one node of the three. The first element of
+the tuple is the type of the tuple, and the upcoming elements are properties,
+which can be also other tuples or arrays of tuples.
 """
+# TODO: Add more information about the different types of nodes.
 from lexer import QLLexer
 from ply import yacc
 
@@ -62,8 +69,7 @@ class QLParser(object):
         """
         start : FORM ID LBRACK statements RBRACK
         """
-        p[0] = ('start', p[2], p[4])
-        print(p[0])
+        p[0] = (p[2], [] + p[4])
 
     def p_statements(self, p):
         """
@@ -72,9 +78,9 @@ class QLParser(object):
                    | empty
         """
         if (len(p) == 3):
-            p[0] = (p[1], p[2])
+            p[0] = [p[1]] + p[2]
         else:
-            p[0] = p[1]
+            p[0] = [p[1]]
 
     def p_statement(self, p):
         """
@@ -82,7 +88,7 @@ class QLParser(object):
                   | assignation
                   | condition
         """
-        p[0] = ('statement', p[1])
+        p[0] = p[1]
 
     def p_declaration(self, p):
         """
@@ -94,7 +100,7 @@ class QLParser(object):
         """
         assignation : LABEL ID COLON type ASSIGN expresion
         """
-        p[0] = ('assignation', p[1], p[2], p[3], p[5])
+        p[0] = ('assignation', p[1], p[2], p[4], p[6])
 
     def p_condition(self, p):
         """
@@ -111,7 +117,7 @@ class QLParser(object):
              | MONEY
              | STRING
         """
-        p[0] = ('type', p[1])
+        p[0] = p[1]
 
     def p_cond(self, p):
         """
@@ -120,9 +126,9 @@ class QLParser(object):
              | comparison
         """
         if len(p) == 4:
-            p[0] = ('cond', p[2], p[1], p[3])
+            p[0] = (p[2], p[1], p[3])
         else:
-            p[0] = ('comparison', p[1])
+            p[0] = p[1]
 
     def p_comparison(self, p):
         """
@@ -135,7 +141,7 @@ class QLParser(object):
                    | ID
         """
         if len(p) == 4:
-            p[0] = ('comparison', p[2], p[3], p[1])
+            p[0] = (p[2], p[3], p[1])
         else:
             p[0] = ('id', p[1])
 
@@ -146,9 +152,9 @@ class QLParser(object):
                   | term
         """
         if len(p) == 4:
-            p[0] = ('expression', p[2], p[1], p[3])
+            p[0] = (p[2], p[1], p[3])
         else:
-            p[0] = ('term', p[1])
+            p[0] = p[1]
 
     def p_term(self, p):
         """
@@ -157,9 +163,9 @@ class QLParser(object):
              | factor
         """
         if len(p) == 4:
-            p[0] = ('term', p[2], p[1], p[2])
+            p[0] = (p[2], p[1], p[2])
         else:
-            p[0] = ('factor', p[1])
+            p[0] = p[1]
 
     def p_factor(self, p):
         """
@@ -167,13 +173,14 @@ class QLParser(object):
                | ID
         """
         if len(p) == 4:
-            p[0] = ('factor', p[2])
+            p[0] = p[2]
         else:
             p[0] = p[1]
 
     def p_empty(self, p):
         'empty :'
-        p[0] = 'empty'
+        # p[0] = 'empty'
+        p[0] = []
 
     def p_error(self, p):
         print('Error?')
@@ -202,4 +209,4 @@ if __name__ == '__main__':
     lex = QLLexer()
     par = QLParser(lex.tokens)
     result = par.parser.parse(data, lexer=lex.lexer)
-    # print(result)
+    print(result)

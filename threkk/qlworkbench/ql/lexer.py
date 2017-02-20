@@ -74,12 +74,12 @@ class QLLexer(object):
     t_MULT = r'\*'
     t_DIV = r'/'
     t_ASSIGN = r'='
-    t_LABEL = r'\".+\"'
 
     # Regular expressions for tokens that require special interactions.
     ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
     COMMENT = r'\/\/.*'
     WHITESPACE = r'\s+'
+    LABEL = r'\".+\"'
 
     @TOKEN(ID)
     def t_ID(self, t):
@@ -100,6 +100,12 @@ class QLLexer(object):
     def t_WHITESPACE(self, t):
         """White spaces are ignored"""
         pass
+
+    @TOKEN(LABEL)
+    def t_LABEL(self, t):
+        """We extract the label without the quotes."""
+        t.value = t.value[1:-1]
+        return t
 
     def t_error(self, t):
         """
