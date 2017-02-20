@@ -1,18 +1,7 @@
 package model
 
-sealed trait Type
+import parser.ast.Type
 
-case object Date extends Type
-
-case object String extends Type
-
-case object Money extends Type
-
-case object Decimal extends Type
-
-case object Integer extends Type
-
-case object Boolean extends Type
 
 case class Form(questions: Seq[Question])
 
@@ -23,6 +12,6 @@ sealed trait Question {
   val `type`: Type
 }
 
-case class OpenQuestion(identifier: String, label: String, show: Iterable[BooleanValue], `type`: Type) extends Question
+case class OpenQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue]) extends Question
 
-case class ComputedQuestion(identifier: String, label: String, show: Iterable[BooleanValue], `type`: Type, value: Expression) extends Question
+case class ComputedQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue], value: Expression) extends Question
