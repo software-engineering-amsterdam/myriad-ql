@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.tree.*;
 import ast.Form;
 import ast.Visitor;
 import ast.atom.Atom;
+import ui.UIFactory;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -55,5 +56,7 @@ public class Main {
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
+
+		UIFactory.main();
 	}
 }

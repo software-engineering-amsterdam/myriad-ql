@@ -1,39 +1,35 @@
 package org.uva.taxfree.model;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public abstract class Node {
 
     private Node mParent;
-    private ArrayList<Node> mChildren;
+    private Set<Node> mChildren;
 
     public Node() {
-        mChildren = new ArrayList<>();
+        mChildren = new LinkedHashSet<Node>(); ///< preserves the order in which the items were inserted
     }
 
-    public boolean addChild(Node child) {
-        if (mChildren.contains(child)) {
-            return false;
-            //throw new ASTException("duplicate registration of child");
-        }
+    public void addChild(Node child) {
         mChildren.add(child);
-        return true;
     }
 
     public abstract String getId();
 
-    public void retrieveQuestions(ArrayList<NamedNode> list) {
+    public void retrieveQuestions(Set<NamedNode> set) {
+        addQuestion(set);
         for (Node child : mChildren) {
-            child.addQuestion(list);
+            child.addQuestion(set);
         }
-        addQuestion(list);
     }
 
-    protected void addQuestion(ArrayList<NamedNode> list) {
+    protected void addQuestion(Set<NamedNode> set) {
         // Intentionally left blank
     }
 
-    public boolean isVisible(){
+    public boolean isVisible() {
         return false;
     }
 

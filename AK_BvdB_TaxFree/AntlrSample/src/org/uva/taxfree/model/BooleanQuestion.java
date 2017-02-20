@@ -7,11 +7,12 @@ public class BooleanQuestion extends NamedNode {
 
     public BooleanQuestion(String description, String id) {
         super(description, id);
+        mValue = new Boolean(false);
     }
 
     @Override
     protected void fillPanel(JPanel parentPanel) {
-        parentPanel.add(new JCheckBox("", mValue));
+        parentPanel.add(new JCheckBox("", mValue.booleanValue()));
     }
 
     public boolean isVisible() {
