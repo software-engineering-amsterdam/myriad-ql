@@ -25,12 +25,27 @@ public abstract class Node {
         }
     }
 
+    public void printData() {
+        printValue();
+        for (Node child : mChildren) {
+            child.printValue();
+        }
+    }
+
+    public void setVisibility(boolean isVisible) {
+        for (Node child : mChildren) {
+            child.setVisibility(isVisible);
+        }
+    }
+
+
     protected void addQuestion(Set<NamedNode> set) {
         // Intentionally left blank
     }
 
-    public boolean isVisible() {
-        return false;
+
+    public void printValue() {
+        // Intentionally left blank
     }
 
     public abstract String getType();
