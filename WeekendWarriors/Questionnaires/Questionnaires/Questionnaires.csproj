@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
+    <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="SemanticAnalysis\Analyzer.cs" />
     <Compile Include="SemanticAnalysis\ExpressionValidator.cs" />
     <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />

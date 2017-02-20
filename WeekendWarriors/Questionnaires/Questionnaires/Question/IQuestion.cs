@@ -15,8 +15,10 @@ namespace Questionnaires.Question
 
     public enum QuestionType
     {
-        Question,
-        ComputedQuestion
+        Number,
+        Money,
+        Bool,
+        String
     }
 
     interface IQuestion
