@@ -1,7 +1,6 @@
 package org.ql.ast.expression;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
 public class Parameter extends Expression {

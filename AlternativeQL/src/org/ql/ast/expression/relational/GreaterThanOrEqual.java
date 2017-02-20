@@ -1,7 +1,6 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
 public class GreaterThanOrEqual extends Expression {

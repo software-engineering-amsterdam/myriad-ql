@@ -1,6 +1,5 @@
 package org.ql.ast.expression.literal;
 
-import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
 import java.lang.*;

@@ -1,8 +1,6 @@
 package org.ql.ast.statement.question;
 
 import org.ql.ast.AbstractNode;
-import org.ql.ast.Metadata;
-import org.ql.ast.Node;
 import org.ql.ast.Visitor;
 
 public class QuestionText extends AbstractNode {
