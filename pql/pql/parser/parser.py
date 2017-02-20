@@ -12,7 +12,7 @@ def parse(input_string):
     number = Word(nums + ".")
 
     arith_operand = number | identifier
-    bool_operand = Literal("true") | Literal("false") | arith_operand
+    bool_operand = Literal("true") | Literal("false") | number | identifier
     bool_operand.setParseAction(BoolOperand)
 
     # Reserved keywords
