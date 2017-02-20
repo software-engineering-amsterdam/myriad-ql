@@ -8,11 +8,6 @@ public class StringAtom extends Atom {
     public StringAtom(String str) {
         this.str = str;
     }
-    
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
-	}
 
 	@Override
 	public Atom add(Atom other) {
@@ -27,21 +22,6 @@ public class StringAtom extends Atom {
 	@Override
 	public Atom div(Atom other) {
 		return null;
-	}
-
-	@Override
-	public Integer getNumber() {
-		return null;
-	}
-	
-	@Override
-    public Boolean getValue() {        
-    	return null;
-    }
-
-	@Override
-	public String getString() {
-		return str;
 	}
 
 	@Override
@@ -103,4 +83,31 @@ public class StringAtom extends Atom {
 	public Atom sub(Atom other) {
 		return null;
 	}
+	
+
+	@Override
+	public Integer getNumber() {
+		return null;
+	}
+	
+	@Override
+    public Boolean getValue() {        
+    	return null;
+    }
+
+	@Override
+	public String getString() {
+		return str;
+	}
+	
+	@Override
+	public String getType() {
+		return "string";
+	}
+	
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
+	}
+
 }

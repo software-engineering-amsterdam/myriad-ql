@@ -26,26 +26,6 @@ public class BoolAtom extends Atom {
 		// TODO Auto-generated method stub
 		return null;
 	}
-    
-	@Override
-    public Boolean getValue() {
-        return this.value;
-    }
-
-	@Override
-	public String getString() {
-		return null;
-	}
-
-	@Override
-    public Integer getNumber() {
-    	return null;
-    }
-    
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
-	}
 
 	@Override
 	public Atom plus() {
@@ -105,5 +85,30 @@ public class BoolAtom extends Atom {
 	@Override
 	public Atom sub(Atom other) {
 		return null;
+	}
+	
+	@Override
+    public Boolean getValue() {
+        return this.value;
+    }
+
+	@Override
+	public String getString() {
+		return null;
+	}
+
+	@Override
+    public Integer getNumber() {
+    	return null;
+    }
+	
+	@Override
+	public String getType() {
+		return "boolean";
+	}
+    
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
 	}
 }

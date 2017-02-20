@@ -23,7 +23,11 @@ public class QuestionVisitor extends Visitor {
 		
 		question.getType().accept(this);	
 		environment.addVariableType(question.getVariable(), question.getType());		
-		environment.addAnswer(question.getLabel(), new BoolAtom(false)); // TODO implement answers
+		environment.addLabel(question.getLabel(), question.getVariable());
+		
+		// TODO implement answers should this not be part of evaluation?
+		environment.addAnswer(question.getVariable(), new BoolAtom(false)); 
+		
 	}
 	
 }

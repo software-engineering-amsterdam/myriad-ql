@@ -27,6 +27,7 @@ public abstract class Atom extends Expression {
 	public abstract Integer getNumber();
 	public abstract Boolean getValue();
 	public abstract String getString();
+	public abstract String getType();
 
 	// TODO do we want to add this?
 	@Override

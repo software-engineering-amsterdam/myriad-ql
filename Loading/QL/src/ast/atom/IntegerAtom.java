@@ -9,11 +9,6 @@ public class IntegerAtom extends Atom {
     public IntegerAtom(Integer number) {
         this.number = number;
     }
-    
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
-	}
 
 	@Override
 	public Atom add(Atom other) {
@@ -27,36 +22,21 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public BoolAtom and(Atom other) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Atom div(Atom other) {
-		if (other.getNumber() == 0) {
-			// TODO throw : or is this already done automatically?
+		if (other.getNumber() == 0 || other.getNumber() == null) {
+			return null;
 		}
 		
 		return new IntegerAtom(number / other.getNumber());
 	}
 
 	@Override
-	public Boolean getValue() {
-		return null;
-	}
-
-	@Override
-	public String getString() {
-		return null;
-	}
-
-	@Override
-    public Integer getNumber() {
-        return this.number;
-    }
-
-	@Override
 	public Atom plus() {
+		
 		return new IntegerAtom(+ number);
 	}
 
@@ -112,6 +92,36 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public Atom sub(Atom other) {
+		
+		if (other.getNumber() == null) {
+			return null;
+		}
+		
 		return new IntegerAtom(number - other.getNumber());
+	}
+	
+	@Override
+	public Boolean getValue() {
+		return null;
+	}
+
+	@Override
+	public String getString() {
+		return null;
+	}
+
+	@Override
+    public Integer getNumber() {
+        return this.number;
+    }
+	
+    @Override
+    public String getType() {
+    	return "integer";
+    }
+	
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
 	}
 }
