@@ -7,17 +7,11 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Pos implements MonOp {
-    private final Expr expr;
+public class Pos extends MonOp {
 
     public Pos(Expr expr){
-        this.expr = expr;
+        super(expr);
     }
-
-    public Expr getExpr() {
-        return expr;
-    }
-
 
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
