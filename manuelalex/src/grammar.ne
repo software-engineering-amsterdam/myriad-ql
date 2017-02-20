@@ -9,24 +9,24 @@
  %}
 
 
-form         -> "form " formName _ openBrace _ newLine:* _ statement:* _ newLine:* _ closedBrace                         {% FormPostProcessor.form.bind(FormPostProcessor) %}
+form         -> "form" _ formName _ openBrace _ statement:* closedBrace                        # {% FormPostProcessor.form.bind(FormPostProcessor) %}
 formName     -> word
 
 statement    -> question
               | if_statement
               | answer                                                                                        {% FormPostProcessor.statement.bind(FormPostProcessor) %}
 
-question     -> "question " prime sentence prime _ newLine:* propertyName ":" _ propertyType newLine:*           {% FormPostProcessor.question %}
+question     -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _         #  {% FormPostProcessor.question %}
 
 
-if_statement -> "if " parOpen propertyName parClose space openBrace newLine:* statement:*  newLine closedBrace  {% FormPostProcessor.ifStatement %}
-answer       -> "answer " prime sentence prime _ newLine:* allocation                                             {% FormPostProcessor.answer %}
-allocation   -> propertyName ": " _ propertyType space assignOp space expression newLine:*                          {% FormPostProcessor.allocation %}
-#expression   -> "(" propertyName space operator space propertyName ")"
+if_statement -> "if" _ parOpen propertyName parClose _ openBrace _ statement:* closedBrace _ # {% FormPostProcessor.ifStatement %}
+answer       -> "answer" _ prime sentence prime _ allocation _                                           # {% FormPostProcessor.answer %}
+allocation   -> propertyName ":" _ propertyType _ assignOp _ expression                         # {% FormPostProcessor.allocation %}
+#expression   -> "(" propertyName _ operator _ propertyName ")"
 #operator     -> "-" | "+" | "/" | "*"
 expression  -> term | expression (min_op|plus_op) term                                                        {% FormPostProcessor.expression %}
 term        -> factor | term (divide_op | multiply_op) factor
-factor      -> digits | propertyName | "(" expression ")"
+factor      -> digits | propertyName | parOpen expression parClose
 digits      -> [0-9]:+                                                                                          {% (d)=> Number(d[0]) %}
 
 min_op      -> "-"                                                                                              {% FormPostProcessor.minOp %}
@@ -45,9 +45,8 @@ propertyType -> "boolean"        {% ()=> Boolean %}
               | "decimal"        {% ()=> Number %}
               | "money"          {% FormPostProcessor.money %}
 
-newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
+sentence -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+                                                 {% function(d) { return d[0].join("") } %}
 
-sentence -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]"':;?/>.<,i]:+                                                 {% function(d) { return d[0].join("") } %}
 
 word         -> [A-Za-z0-9]:+                                                                               {% FormPostProcessor.toString %}
 prime        -> "'"
@@ -55,6 +54,5 @@ openBrace    -> "{"
 closedBrace  -> "}"
 parOpen      -> "("
 parClose     -> ")"
-space        -> _
 
 
