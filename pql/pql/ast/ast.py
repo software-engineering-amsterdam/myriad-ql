@@ -26,7 +26,7 @@ class Node(object):
         return ret
 
     def __repr__(self):
-        return '<%s>', self.var_type
+        return self.var_type
 
 
 class Form(Node):
