@@ -12,6 +12,10 @@ public class IdExpression extends Expression {
 	public IdExpression(String name) {
 		this.name = name;
 	}
+
+	public String getName() {
+		return name;
+	}
 	
 	@Override
 	public void accept(Visitor v) {
