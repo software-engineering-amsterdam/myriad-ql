@@ -2,15 +2,17 @@
  * Created by Manuel on 13/02/2017.
  */
 
-let _               = require('lodash');
+let _ = require('lodash');
 
 const PostProcessor = require('./PostProcessor.js');
 
 const Form = require('../Form.js');
 const Question = require('../statements/Question.js');
 const Answer = require('../statements/Answer.js');
+
 const IfStatement = require('../statements/IfStatement.js');
 const IfElseStatement = require('../statements/IfElseStatement.js');
+const IfElseIfElseStatement = require('../statements/IfElseIfElseStatement.js');
 
 const Expression = require('../expressions/Expression.js');
 const Allocation = require('../allocation/Allocation.js');
@@ -24,7 +26,7 @@ const Money = require('../properties/Money.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -47,42 +49,44 @@ module.exports = class FormPostProcessor extends PostProcessor {
     }
 
     question(data, location, reject) {
-        return new Question({name: data[3].trim(), propertyName: data[6], propertyType: data[9]});
+        return new Question({ name: data[3].trim(), propertyName: data[6], propertyType: data[9] });
     }
 
     ifStatement(data, location, reject) {
         // ifBody statements are one level too deep
-        return new IfStatement({ condition: data[3], ifBody: data[8] });
+        return new IfStatement({ condition: data[2][1], ifBody: data[3][3] });
     }
 
-    ifElseStatement(data, location, reject){
-        return new IfElseStatement(_.merge(data[0].getOptions(),{elseBody: _.flattenDeep(data[5])}));
+    ifElseStatement(data, location, reject) {
+        return new IfElseStatement(_.merge(data[0].getOptions(), {elseBody: _.flattenDeep(data[1][4]) }));
+    }
+
+    ifElseIfElseStatement(data, location, reject) {
+        return new IfElseIfElseStatement(_.merge(data[0].getOptions(),{elseIfConditional: data[3][1], elseIfBody: _.flattenDeep(data[4][3]), elseBody: _.flattenDeep(data[5][4]) }));
     }
 
     // todo
     answer(data, location, reject) {
         // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
-        return new Answer({name: data[3].trim(), allocation: data[6]});
+        return new Answer({ name: data[3].trim(), allocation: data[6] });
     }
 
     // todo probably obsolete
-    factor(data, location, reject){
+    factor(data, location, reject) {
 
-        if(data[1] instanceof Expression){
+        if (data[1] instanceof Expression) {
             return
         }
         /* Factor is an Expression */
-        if(data.length === 3){
+        if (data.length === 3) {
             return data[1];
         } else {
-            return new Factor({
-
-            });
+            return new Factor({});
         }
     }
 
     // todo
-    allocation(data, location, reject){
+    allocation(data, location, reject) {
         return new Allocation({
             propertyName: data[0].trim(),
             type: data[3],
@@ -92,8 +96,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     // todo
     expression(data, location, reject) {
-        if(data.length === 3){
-            // let term =
+        if (data.length === 3) {
             return new Expression({
                 term: _.flattenDeep(data[0])[0],
                 operator: _.flattenDeep(data[1])[0],
@@ -118,15 +121,15 @@ module.exports = class FormPostProcessor extends PostProcessor {
         return new PlusOperator();
     }
 
-    divideOp(data, location, reject){
+    divideOp(data, location, reject) {
         return new DivideOperator();
     }
 
-    multiplyOp(data, location, reject){
+    multiplyOp(data, location, reject) {
         return new MultiplyOperator();
     }
 
-    money(data, location, reject){
+    money(data, location, reject) {
         return Money
     }
 

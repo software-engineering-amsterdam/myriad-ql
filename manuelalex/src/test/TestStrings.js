@@ -18,6 +18,9 @@ export let test1 =
         privateDebt: money
         answer 'Value residue:'
         valueResidue: money = (sellingPrice-privateDebt)
+    } else if (hasSoldHouse) {
+        question 'What is your privateDebt'
+        privateDebt: money
     } else {
         question 'What is your privateDebt'
         privateDebt: money

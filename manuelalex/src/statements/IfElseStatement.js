@@ -10,4 +10,8 @@ module.exports = class IfElseStatement extends IfStatement {
         super(options);
         this.elseBody = options.elseBody;
     }
+
+    getOptions(){
+        return this.options;
+    }
 };

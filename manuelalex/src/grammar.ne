@@ -12,15 +12,21 @@
 form                -> "form" _ formName _ openBrace _ statement:* closedBrace                            {% FormPostProcessor.form.bind(FormPostProcessor) %}
 formName            -> word
 
-statement           -> question
-                    | if_statement
-                    | answer
-                    | ifelse_statement                                                                    {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+statement           -> question  {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+                    | answer {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+                    | if_statement {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+                    | ifelse_statement {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+                    | ifelseifelse_statement {% FormPostProcessor.statement.bind(FormPostProcessor) %}
 
 question            -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _              {% FormPostProcessor.question %}
 
-ifelse_statement   -> if_statement "else" _ openBrace _ statement:* closedBrace _                        {% FormPostProcessor.ifElseStatement %}
-if_statement       -> "if" _ parOpen propertyName parClose _ openBrace _ statement:* closedBrace _         {% FormPostProcessor.ifStatement %}
+ifelseifelse_statement   -> if_statement "else if" _ conditional if_body else_clause                        {% FormPostProcessor.ifElseIfElseStatement %}
+ifelse_statement   -> if_statement else_clause                                                            {% FormPostProcessor.ifElseStatement %}
+if_statement       -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
+if_body             -> _ openBrace _ statement:* closedBrace _
+conditional        -> parOpen propertyName parClose
+else_clause         -> "else" _ openBrace _ statement:* closedBrace _
+
 answer             -> "answer" _ prime sentence prime _ allocation _                                       {% FormPostProcessor.answer %}
 allocation         -> propertyName ":" _ propertyType _ assignOp _ expression                              {% FormPostProcessor.allocation %}
 #expression        -> "(" propertyName _ operator _ propertyName ")"
