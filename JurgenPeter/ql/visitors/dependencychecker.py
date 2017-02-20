@@ -2,7 +2,6 @@ class DependencyChecker:
 
     def __init__(self):
         self.stack = []
-        self.depends_on = {}
         self.success = True
 
     def visit(self, node):
@@ -16,16 +15,16 @@ class DependencyChecker:
     def visit_question(self, node):
         pass
 
-    def visit_computedquestion(self, node):
+    def visit_computed_question(self, node):
         pass
 
-    def visit_ifconditional(self, node):
-        # TODO: check hierarchy scoping
+    def visit_if_conditional(self, node):
+        # TODO: check if condition uses variable from question inside scope
         for statement in node.ifstatements:
             statement.accept(self)
 
-    def visit_ifelseconditional(self, node):
-        # TODO: check hierarchy scoping
+    def visit_ifelse_conditional(self, node):
+        # TODO: check if condition uses variable from question inside scope
         for statement in node.ifstatements:
             statement.accept(self)
         for statement in node.ifelsestatements:

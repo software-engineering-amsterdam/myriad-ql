@@ -39,7 +39,7 @@ class ComputedQuestion:
         self.computation = computation
 
     def accept(self, visitor):
-        return visitor.visit_computedquestion(self)
+        return visitor.visit_computed_question(self)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -52,7 +52,7 @@ class IfConditional:
         self.ifstatements = ifstatements
 
     def accept(self, visitor):
-        return visitor.visit_ifconditional(self)
+        return visitor.visit_if_conditional(self)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -66,7 +66,7 @@ class IfElseConditional:
         self.elsestatements = elsestatements
 
     def accept(self, visitor):
-        return visitor.visit_ifelseconditional(self)
+        return visitor.visit_ifelse_conditional(self)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

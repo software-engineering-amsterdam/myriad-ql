@@ -185,7 +185,8 @@ class Testgrammar(TestCase):
                                                    "yLabel",
                                                    Datatype.boolean,
                                                    Constant(True,
-                                                            Datatype.boolean))],
+                                                            Datatype.boolean)
+                                                   )],
                                  [Question("y",
                                            "yLabel",
                                            Datatype.boolean)])])),

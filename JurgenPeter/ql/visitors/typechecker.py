@@ -25,22 +25,24 @@ class TypeChecker:
     def visit_question(self, node):
         pass
 
-    def visit_computedquestion(self, node):
+    def visit_computed_question(self, node):
         node.computation.accept(self)
 
-    def visit_ifconditional(self, node):
+    def visit_if_conditional(self, node):
         conditiontype = node.condition.accept(self)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             print("Error: condition does not evaluate to boolean value")
             self.success = False
+
         for statement in node.ifstatements:
             statement.accept(self)
 
-    def visit_ifelseconditional(self, node):
+    def visit_ifelse_conditional(self, node):
         conditiontype = node.condition.accept(self)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             print("Error: condition does not evaluate to boolean value")
             self.success = False
+
         for statement in node.ifstatements:
             statement.accept(self)
         for statement in node.elsestatements:
@@ -161,7 +163,7 @@ class TypeChecker:
     def visit_variable(self, node):
         if node.identifier in self.symboltable:
             return self.symboltable[node.identifier]
-        print("Error: varable identifier \"{}\" does not correspond with a"
+        print("Error: varable identifier \"{}\" does not correspond with a "
               "question".format(node.identifier))
         self.success = False
         return None

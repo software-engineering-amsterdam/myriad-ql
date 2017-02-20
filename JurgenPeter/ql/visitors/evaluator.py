@@ -3,6 +3,9 @@ class Evaluator:
     def __init__(self, environment):
         self.environment = environment
 
+    def visit(self, node):
+        return node.accept(self)
+
     def visit_plusop(self, node):
         return + node.right.accept(self)
 

@@ -22,13 +22,13 @@ class SymbolChecker:
         if node.identifier not in self.symboltable:
             self.symboltable[node.identifier] = node.datatype
         else:
-            print("Error: question indentifier \"{}\""
+            print("Error: question indentifier \"{}\" "
                   "is already used".format(node.identifier))
             self.success = False
 
-    def visit_computedquestion(self, node):
+    def visit_computed_question(self, node):
         if node.label in self.labels:
-            print("Warning: label \"{}\""
+            print("Warning: label \"{}\" "
                   "is already used".format(node.label))
         else:
             self.labels.append(node.label)
@@ -36,15 +36,15 @@ class SymbolChecker:
         if node.identifier not in self.symboltable:
             self.symboltable[node.identifier] = node.datatype
         else:
-            print("Error: question indentifier \"{}\""
+            print("Error: question indentifier \"{}\" "
                   "is already used".format(node.identifier))
             self.success = False
 
-    def visit_ifconditional(self, node):
+    def visit_if_conditional(self, node):
         for statement in node.ifstatements:
             statement.accept(self)
 
-    def visit_ifelseconditional(self, node):
+    def visit_ifelse_conditional(self, node):
         for statement in node.ifstatements:
             statement.accept(self)
         for statement in node.elsestatements:

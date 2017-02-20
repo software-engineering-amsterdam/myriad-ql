@@ -2,20 +2,17 @@ from pyparsing import *
 from ql.ast import *
 
 identifier = Word(alphas)
-identifier.addCondition(
-    lambda tokens: tokens[0] not in
-    "form if else true false boolean string integer decimal".split())
+identifier.addCondition(lambda tokens: tokens[0] not in "form if else true "
+                        "false boolean string integer decimal".split())
 
 variable = identifier.copy()
 variable.addParseAction(lambda tokens: Variable(tokens[0]))
 
 integer = pyparsing_common.integer
-integer.addParseAction(lambda tokens: Constant(tokens[0],
-                                               Datatype.integer))
+integer.addParseAction(lambda tokens: Constant(tokens[0], Datatype.integer))
 
 decimal = pyparsing_common.real
-decimal.addParseAction(lambda tokens: Constant(tokens[0],
-                                               Datatype.decimal))
+decimal.addParseAction(lambda tokens: Constant(tokens[0], Datatype.decimal))
 
 true = Literal("true")
 true.setParseAction(lambda _: Constant(True, Datatype.boolean))
@@ -49,51 +46,52 @@ and_op = Literal("&&").setParseAction(lambda _: AndOp)
 or_op = Literal("||").setParseAction(lambda _: OrOp)
 
 
-def create_unop(wrapped_tokens):
-    tokens = wrapped_tokens[0]
+def unop_action(tokens):
+    tokens = tokens[0]
     nodetype = tokens[0]
     right = tokens[1]
     return nodetype(right)
 
 
-def create_binop(wrapped_tokens):
-    tokens = wrapped_tokens[0]
+def binop_action(tokens):
+    tokens = tokens[0]
     while len(tokens) >= 3:
-        left = tokens[0]
-        nodetype = tokens[1]
-        right = tokens[2]
-        tokens = [nodetype(left, right)] + tokens[3:]
+        left = tokens.pop(0)
+        nodetype = tokens.pop(0)
+        right = tokens.pop(0)
+        tokens.insert(0, nodetype(left, right))
     return tokens[0]
 
 expression = infixNotation(
     literal ^ variable,
-    [(plus_op ^ min_op ^ not_op, 1, opAssoc.RIGHT, create_unop),
-     (mul_op ^ div_op, 2, opAssoc.LEFT, create_binop),
-     (add_op ^ sub_op, 2, opAssoc.LEFT, create_binop),
-     (lt_op ^ le_op ^ gt_op ^ ge_op, 2, opAssoc.LEFT, create_binop),
-     (eq_op ^ ne_op, 2, opAssoc.LEFT, create_binop),
-     (and_op, 2, opAssoc.LEFT, create_binop),
-     (or_op ^ sub_op, 2, opAssoc.LEFT, create_binop)])
+    [(plus_op ^ min_op ^ not_op, 1, opAssoc.RIGHT, unop_action),
+     (mul_op ^ div_op, 2, opAssoc.LEFT, binop_action),
+     (add_op ^ sub_op, 2, opAssoc.LEFT, binop_action),
+     (lt_op ^ le_op ^ gt_op ^ ge_op, 2, opAssoc.LEFT, binop_action),
+     (eq_op ^ ne_op, 2, opAssoc.LEFT, binop_action),
+     (and_op, 2, opAssoc.LEFT, binop_action),
+     (or_op, 2, opAssoc.LEFT, binop_action)])
 
 block = Forward()
 
 datatype = oneOf("boolean string integer decimal")
 datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
+question = identifier + Suppress(":") + QuotedString("\"") + datatype
+question.setParseAction(lambda tokens: Question(*tokens))
+
 computed_question = identifier + Suppress(":") + QuotedString("\"") +\
     datatype + Suppress("=") + expression
 computed_question.setParseAction(lambda tokens: ComputedQuestion(*tokens))
 
-question = identifier + Suppress(":") + QuotedString("\"") + datatype
-question.setParseAction(lambda tokens: Question(*tokens))
+if_conditional = Suppress("if") + expression + block
+if_conditional.setParseAction(lambda tokens: IfConditional(*tokens))
 
-ifelsestatement = Suppress("if") + expression + block + Suppress("else") + block
-ifelsestatement.setParseAction(lambda tokens: IfElseConditional(*tokens))
+ifelse_conditional = Suppress("if") + expression + block + Suppress("else") +\
+    block
+ifelse_conditional.setParseAction(lambda tokens: IfElseConditional(*tokens))
 
-ifstatement = Suppress("if") + expression + block
-ifstatement.setParseAction(lambda tokens: IfConditional(*tokens))
-
-conditional = ifelsestatement ^ ifstatement
+conditional = ifelse_conditional ^ if_conditional
 
 statement = computed_question ^ question ^ conditional
 

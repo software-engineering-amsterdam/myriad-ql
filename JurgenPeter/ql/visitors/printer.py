@@ -12,17 +12,17 @@ class Printer:
         return "{}: \"{}\" {}".format(
             node.identifier, node.label, node.datatype.name)
 
-    def visit_computedquestion(self, node):
+    def visit_computed_question(self, node):
         return "{}: \"{}\" {} = {}".format(
             node.identifier, node.label, node.datatype.name,
             node.computation.accept(self))
 
-    def visit_ifconditional(self, node):
+    def visit_if_conditional(self, node):
         return "if {} [\n{}\n]".format(
             node.condition.accept(self),
             "\n".join([s.accept(self) for s in node.ifstatements]))
 
-    def visit_ifelseconditional(self, node):
+    def visit_ifelse_conditional(self, node):
         return "if {} [\n{}\n]\nelse [\n{}\n]".format(
             node.condition.accept(self),
             "\n".join([s.accept(self) for s in node.ifstatements]),
