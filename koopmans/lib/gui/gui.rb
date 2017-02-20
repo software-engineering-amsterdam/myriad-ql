@@ -1,12 +1,12 @@
-require_relative 'question'
-require_relative 'boolean_question'
-require_relative 'text_question'
-require_relative 'computed_question'
-
 require_relative '../ast/expression'
 require_relative '../ast/literal'
 require_relative '../ast/variable'
 require_relative '../ast/type'
+
+require_relative 'question'
+require_relative 'boolean_question'
+require_relative 'text_question'
+require_relative 'computed_question'
 
 require 'tk'
 

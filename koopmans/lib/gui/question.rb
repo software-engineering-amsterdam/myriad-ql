@@ -1,11 +1,8 @@
-require 'tk'
-
 class Question
   attr_accessor :gui
   attr_accessor :label
   attr_accessor :frame
   attr_accessor :hidden
-  # attr_accessor :questions
   attr_accessor :variable
   attr_accessor :condition
 

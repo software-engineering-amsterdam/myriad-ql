@@ -1,5 +1,3 @@
-require 'tk'
-
 class TextQuestion < Question
   attr_accessor :previous_value
 

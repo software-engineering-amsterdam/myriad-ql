@@ -1,6 +1,3 @@
-require_relative '../ast/type'
-require 'tk'
-
 class BooleanQuestion < Question
   def initialize(args)
     super
