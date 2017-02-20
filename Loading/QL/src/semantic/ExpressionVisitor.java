@@ -29,7 +29,7 @@ public class ExpressionVisitor extends Visitor {
 		Atom result = binaryExpression.evaluate() ;	
 		check(result);
 		
-		System.out.println("Eval: " + result);
+		System.out.println("Eval: " + result.getValue());
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class ExpressionVisitor extends Visitor {
 		
 		Atom result = id.evaluate();
 		if (result.getType() != "string") { 
-			throw new RuntimeException("Exptected a id with a variablename, but got type " +
+			throw new RuntimeException("Expected a id with a variablename, but got type " +
 						result.getType());
 		}
 		

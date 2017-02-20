@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.*;
 
 import ast.Form;
 import ast.atom.Atom;
+import ui.UITest;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -52,6 +53,6 @@ public class Main {
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
 
-		// UIFactory.main();
+		UITest.main();
 	}
 }
