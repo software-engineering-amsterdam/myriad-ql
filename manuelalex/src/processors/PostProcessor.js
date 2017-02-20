@@ -28,4 +28,8 @@ module.exports = class PostProcessor {
         }
     }
 
+    throwReadableError(location){
+
+    }
+
 };

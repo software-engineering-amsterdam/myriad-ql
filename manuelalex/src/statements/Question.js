@@ -9,7 +9,7 @@ module.exports = class Question extends Statement {
         super(); // todo
         this.name = options.name;
         this.propertyName = options.propertyName;
-        this.type = options.type;
+        this.propertyType = options.propertyType;
     }
 
     getGeneratedCode(type){

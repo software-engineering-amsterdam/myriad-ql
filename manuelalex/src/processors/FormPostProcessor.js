@@ -14,6 +14,7 @@ const Expression = require('../expressions/Expression.js');
 const Allocation = require('../allocation/Allocation.js');
 const Factor = require('../expressions/Factor.js');
 const MinOperator = require('../operator/MinOperator.js');
+const Money = require('../properties/Money.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
 
@@ -23,46 +24,42 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     // todo
     form(data, location, reject) {
-        console.log(`Form: ${JSON.stringify(data)}`);
         return new Form({
             name: data[1][0],
-            statements: data
+            statements: _.flattenDeep(data[7])
         });
     }
 
     // todo
     statements(data, location, reject) {
-        console.log(`Statements: ${JSON.stringify(data)}`);
         return data;
     }
 
     // todo should not been called
     statement(data, location, reject) {
-        console.log(`Statement: ${JSON.stringify(data)}`);
         return data[0];
     }
 
     question(data, location, reject) {
-        console.log(`Question: ${JSON.stringify(data)}`);
-        return new Question({name: data[2].trim(), propertyName: data[6][0], type: data[9][0].trim()});
+        return new Question({name: data[2].trim(), propertyName: data[6], propertyType: data[9]});
     }
 
     ifStatement(data, location, reject) {
-        console.log(`ifStatement: ${JSON.stringify(data)}`);
         return new IfStatement({ name: data[0], propertName: [] });
     }
 
     // todo
     answer(data, location, reject) {
-        console.log(`Answer: ${JSON.stringify(data)}`);
-
         // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
         return new Answer({name: data[2].trim(), allocation: data[6]});
     }
 
+    // todo probably obsolete
     factor(data, location, reject){
-        console.log(`Factor: ${JSON.stringify(data)}`);
 
+        if(data[1] instanceof Expression){
+            return
+        }
         /* Factor is an Expression */
         if(data.length === 3){
             return data[1];
@@ -75,23 +72,24 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     // todo
     allocation(data, location, reject){
-        console.log(`Allocation: ${JSON.stringify(data)}`);
         return new Allocation({
-            propertyName: data[0][0].trim(),
-            type: data[3][0].trim(),
-            expression: []
+            propertyName: data[0].trim(),
+            type: data[3],
+            expression: _.flattenDeep(data[7])[1]
         });
     }
 
     // todo
     expression(data, location, reject) {
-        console.log(`Expression: ${JSON.stringify(data)}`);
-
         if(data.length === 3){
             // let term =
             return new Expression({
-                term: _.flattenDeep(data[0])[0]
+                term: _.flattenDeep(data[0])[0],
+                operator: _.flattenDeep(data[1])[0],
+                expression: _.flattenDeep(data[2])[0]
             });
+        } else {
+            console.error(`Retrieved different expression: ${JSON.stringify(data)} at location ${location}`);
         }
 
     }
@@ -103,6 +101,10 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     minOp(data, location, reject) {
         return new MinOperator();
+    }
+
+    money(data, location, reject){
+        return Money
     }
 
 };

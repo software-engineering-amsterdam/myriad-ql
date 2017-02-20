@@ -7,10 +7,7 @@ let Statement = require('./Statement.js');
 module.exports = class Answer extends Statement {
     constructor(options = {}) {
         super();
-
         this.name = options.name;
-        this.propertyName = options.propertyName;
-        this.type = options.type;
         this.allocation = options.allocation;
     }
 

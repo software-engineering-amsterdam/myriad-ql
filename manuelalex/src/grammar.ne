@@ -26,8 +26,8 @@ allocation   -> propertyName ": " _ propertyType space assignOp space expression
 #operator     -> "-" | "+" | "/" | "*"
 expression  -> term | expression (min_op|plus_op) term                                                        {% FormPostProcessor.expression %}
 term        -> factor | term (divide_op | multiply_op) factor
-factor      -> digits | propertyName | "(" expression ")"                                                       {% FormPostProcessor.factor %}
-digits      -> [0-9]:+
+factor      -> digits | propertyName | "(" expression ")"
+digits      -> [0-9]:+                                                                                          {% (d)=> Number(d[0]) %}
 
 min_op      -> "-"                                                                                              {% FormPostProcessor.minOp %}
 plus_op     -> "+"
@@ -38,12 +38,12 @@ assignOp     -> "="
 
 
 propertyName -> [A-Za-z0-9]:+                                                                               {% FormPostProcessor.toString %}
-propertyType -> "boolean"
-              | "string"
-              | "integer"
-              | "date"
-              | "decimal"
-              | "money"
+propertyType -> "boolean"        {% ()=> Boolean %}
+              | "string"         {% ()=> String %}
+              | "integer"        {% ()=> Number %}
+              | "date"           {% ()=> Date %}
+              | "decimal"        {% ()=> Number %}
+              | "money"          {% FormPostProcessor.money %}
 
 newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
 
