@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
 public class QLIdent extends QLLiteral {
     private final String qlIdent;
 
-    public QLIdent(String qlIdent){
+    public QLIdent(String qlIdent) {
         this.qlIdent = qlIdent;
     }
 

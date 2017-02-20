@@ -9,7 +9,7 @@ import ql.ast.visistor.ASTVisitor;
  */
 public class Pos extends MonOp {
 
-    public Pos(Expr expr){
+    public Pos(Expr expr) {
         super(expr);
     }
 

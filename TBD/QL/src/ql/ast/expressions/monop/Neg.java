@@ -9,7 +9,7 @@ import ql.ast.visistor.ASTVisitor;
  */
 public class Neg extends MonOp {
 
-    public Neg(Expr expr){
+    public Neg(Expr expr) {
         super(expr);
     }
 

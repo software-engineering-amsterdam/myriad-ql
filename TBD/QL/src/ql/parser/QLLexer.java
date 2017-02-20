@@ -3,6 +3,7 @@ package ql.parser;
 /*
  * Created by Erik on 6-2-2017.
  */
+
 import ql.ast.literals.*;
 
 import java.io.IOException;
@@ -43,8 +44,7 @@ public class QLLexer implements QLTokens {
         if (c >= 0) {
             try {
                 c = input.read();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 c = -1;
             }
         }
@@ -55,7 +55,7 @@ public class QLLexer implements QLTokens {
         String name;
         boolean inComment = false;
 
-        for (;;) {
+        for (; ; ) {
             // Skip comments
             if (inComment) {
                 while (c != '*' && c != -1) {
@@ -82,7 +82,7 @@ public class QLLexer implements QLTokens {
             switch (c) {
                 case '*':
                     nextChar();
-                    if(inComment && c == '/') {
+                    if (inComment && c == '/') {
                         inComment = false;
                         nextChar();
                         continue;
@@ -90,12 +90,11 @@ public class QLLexer implements QLTokens {
                     return token = '*';
                 case '/':
                     nextChar();
-                    if(c == '*') {
+                    if (c == '*') {
                         inComment = true;
                         nextChar();
                         continue;
-                    }
-                    else if (c == '/') {
+                    } else if (c == '/') {
                         while (c != '\n') {
                             nextChar();
                         }
@@ -104,23 +103,23 @@ public class QLLexer implements QLTokens {
                     return token = '/';
                 case '&':
                     nextChar();
-                    if(c == '&') {
+                    if (c == '&') {
                         nextChar();
                         return token = AND;
                     }
-                    throw new RuntimeException("Unexpected character: " + (char)c);
+                    throw new RuntimeException("Unexpected character: " + (char) c);
                 case '|':
                     nextChar();
-                    if(c == '|') {
+                    if (c == '|') {
                         nextChar();
                         return token = OR;
                     }
-                    throw new RuntimeException("Unexpected character: " + (char)c);
+                    throw new RuntimeException("Unexpected character: " + (char) c);
                 case '"':
                     stringBuilder = new StringBuilder();
                     nextChar();
-                    while (c != (int)'"'){
-                        stringBuilder.append((char)c);
+                    while (c != (int) '"') {
+                        stringBuilder.append((char) c);
                         nextChar();
                     }
                     nextChar();
@@ -130,39 +129,53 @@ public class QLLexer implements QLTokens {
                     return token = STRING;
                 case '!':
                     nextChar();
-                    if(c == '=') {
+                    if (c == '=') {
                         nextChar();
                         return token = NEQ;
                     }
                     return token = '!';
                 case '<':
                     nextChar();
-                    if(c == '=') {
+                    if (c == '=') {
                         nextChar();
                         return token = LEQ;
                     }
                     return token = '<';
                 case '=':
                     nextChar();
-                    if(c == '=') {
+                    if (c == '=') {
                         nextChar();
                         return token = EQ;
                     }
                     return token = '=';
                 case '>':
                     nextChar();
-                    if(c == '=') {
+                    if (c == '=') {
                         nextChar();
                         return token = GEQ;
                     }
                     return token = '>';
-                case '+': nextChar(); return token = '+';
-                case '-': nextChar(); return token = '-';
-                case '(': nextChar(); return token = '(';
-                case ')': nextChar(); return token = ')';
-                case '{': nextChar(); return token = '{';
-                case '}': nextChar(); return token = '}';
-                case ':': nextChar(); return token = ':';
+                case '+':
+                    nextChar();
+                    return token = '+';
+                case '-':
+                    nextChar();
+                    return token = '-';
+                case '(':
+                    nextChar();
+                    return token = '(';
+                case ')':
+                    nextChar();
+                    return token = ')';
+                case '{':
+                    nextChar();
+                    return token = '{';
+                case '}':
+                    nextChar();
+                    return token = '}';
+                case ':':
+                    nextChar();
+                    return token = ':';
                 default:
                     if (Character.isDigit(c)) {
                         int n = 0;
@@ -170,16 +183,16 @@ public class QLLexer implements QLTokens {
                             n = 10 * n + (c - '0');
                             nextChar();
                         } while (Character.isDigit(c));
-                        if(c == '.') {
+                        if (c == '.') {
                             nextChar();
                             // Parse floats without digits after the comma
-                            if(!Character.isDigit(c)) {
+                            if (!Character.isDigit(c)) {
                                 this.yylval = new QLFloat(n);
                                 return token = FLOAT;
                             }
                             int counter = 1;
                             do {
-                                n = n + (c - '0')/(counter*10);
+                                n = n + (c - '0') / (counter * 10);
                                 nextChar();
                                 counter *= 10;
                             } while (Character.isDigit(c));
@@ -194,7 +207,7 @@ public class QLLexer implements QLTokens {
                     if (Character.isLetter(c)) {
                         stringBuilder = new StringBuilder();
                         do {
-                            stringBuilder.append((char)c);
+                            stringBuilder.append((char) c);
                             nextChar();
                         }
                         while (Character.isLetterOrDigit(c));

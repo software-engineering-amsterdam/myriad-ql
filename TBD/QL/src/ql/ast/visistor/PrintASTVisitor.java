@@ -243,12 +243,18 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
 
     private String typeToString(Type type) {
         switch (type) {
-            case TYPESTRING: return "string";
-            case TYPEBOOL: return "boolean";
-            case TYPEINT: return "int";
-            case TYPEDATE: return "date";
-            case TYPEFLOAT: return "float";
-            case TYPEMONEY: return "money";
+            case TYPESTRING:
+                return "string";
+            case TYPEBOOL:
+                return "boolean";
+            case TYPEINT:
+                return "int";
+            case TYPEDATE:
+                return "date";
+            case TYPEFLOAT:
+                return "float";
+            case TYPEMONEY:
+                return "money";
         }
         return "unknown";
     }

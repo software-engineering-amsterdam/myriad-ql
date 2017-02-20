@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
 public class QLString extends QLLiteral {
     private final String qlString;
 
-    public QLString(String qlString){
+    public QLString(String qlString) {
         this.qlString = qlString;
     }
 

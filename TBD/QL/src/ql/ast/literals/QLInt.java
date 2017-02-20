@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
 public class QLInt extends QLLiteral {
     private final int qlInteger;
 
-    public QLInt(int qlInteger){
+    public QLInt(int qlInteger) {
         this.qlInteger = qlInteger;
     }
 
@@ -67,12 +67,12 @@ public class QLInt extends QLLiteral {
 
     @Override
     protected QLLiteral gTEval(QLInt other) {
-        return  new QLBoolean(this.getValue() > other.getValue());
+        return new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override
     protected QLLiteral gTEval(QLFloat other) {
-        return  new QLBoolean(this.getValue() > other.getValue());
+        return new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override

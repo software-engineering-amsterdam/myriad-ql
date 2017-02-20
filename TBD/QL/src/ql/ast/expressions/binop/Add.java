@@ -9,7 +9,7 @@ import ql.ast.visistor.ASTVisitor;
  */
 public class Add extends BinOp {
 
-    public Add(Expr left, Expr right){
+    public Add(Expr left, Expr right) {
         super(left, right);
     }
 

@@ -10,12 +10,12 @@ public class Form implements ASTNode {
     private final QLIdent name;
     private final Statements statements;
 
-    public Form(QLIdent name, Statements statements){
+    public Form(QLIdent name, Statements statements) {
         this.name = name;
         this.statements = statements;
     }
 
-    public QLIdent getName(){
+    public QLIdent getName() {
         return name;
     }
 

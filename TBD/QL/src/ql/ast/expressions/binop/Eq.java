@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 7-2-2017.
  */
 public class Eq extends BinOp {
-    public Eq(Expr left, Expr right){
+    public Eq(Expr left, Expr right) {
         super(left, right);
     }
 

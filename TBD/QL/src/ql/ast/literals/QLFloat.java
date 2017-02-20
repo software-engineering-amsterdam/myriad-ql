@@ -82,12 +82,12 @@ public class QLFloat extends QLLiteral {
 
     @Override
     protected QLLiteral gTEval(QLFloat other) {
-        return  new QLBoolean(this.getValue() > other.getValue());
+        return new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override
     protected QLLiteral gTEval(QLInt other) {
-        return  new QLBoolean(this.getValue() > other.getValue());
+        return new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override

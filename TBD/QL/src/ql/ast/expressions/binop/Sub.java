@@ -8,7 +8,7 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 7-2-2017.
  */
 public class Sub extends BinOp {
-    public Sub(Expr left, Expr right){
+    public Sub(Expr left, Expr right) {
         super(left, right);
     }
 

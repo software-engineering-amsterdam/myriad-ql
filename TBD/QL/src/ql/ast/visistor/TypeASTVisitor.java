@@ -192,7 +192,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
-        if (left == Type.TYPEBOOL && left == right){
+        if (left == Type.TYPEBOOL && left == right) {
             return left;
         }
         throw new RuntimeException("Type error");
@@ -202,7 +202,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
-        if (left == right || (left == Type.TYPEINT && right == Type.TYPEFLOAT) || (left == Type.TYPEFLOAT && right == Type.TYPEINT)){
+        if (left == right || (left == Type.TYPEINT && right == Type.TYPEFLOAT) || (left == Type.TYPEFLOAT && right == Type.TYPEINT)) {
             return left;
         }
         throw new RuntimeException("Type error");

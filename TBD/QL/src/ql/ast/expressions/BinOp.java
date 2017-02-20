@@ -8,7 +8,7 @@ import ql.ast.Expr;
 public abstract class BinOp implements Expr {
     private final Expr left, right;
 
-    protected BinOp(Expr left, Expr right){
+    protected BinOp(Expr left, Expr right) {
         this.left = left;
         this.right = right;
     }
