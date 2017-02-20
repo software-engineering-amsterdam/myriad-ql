@@ -9,11 +9,11 @@
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
-    using OffByOne.Ql.Ast.Statements.Questions;
     using OffByOne.Ql.Generated;
 
     // TODO: Extract creation of OperatorExpressions to factory method
@@ -37,17 +37,17 @@
             switch (type)
             {
                 case "boolean":
-                    return new BooleanQuestionStatement(id, question);
+                    return new QuestionStatement(id, new BooleanValueType(), question);
                 case "integer":
-                    return new IntegerQuestionStatement(id, question);
+                    return new QuestionStatement(id, new IntegerValueType(), question);
                 case "decimal":
-                    return new DecimalQuestionStatement(id, question);
+                    return new QuestionStatement(id, new FloatValueType(), question);
                 case "money":
-                    return new MoneyQuestionStatement(id, question);
+                    return new QuestionStatement(id, new MoneyValueType(), question);
                 case "string":
-                    return new StringQuestionStatement(id, question);
+                    return new QuestionStatement(id, new StringValueType(), question);
                 case "date":
-                    return new DateQuestionStatement(id, question);
+                    return new QuestionStatement(id, new DateValueType(), question);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }

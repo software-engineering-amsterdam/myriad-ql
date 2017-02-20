@@ -1,17 +1,23 @@
-﻿namespace OffByOne.Ql.Ast.Statements.Questions.Base
+﻿namespace OffByOne.Ql.Ast.Statements
 {
     using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
 
     public class QuestionStatement : Statement
     {
-        // TODO: Debate whether we really need subclasses or if a Type field would be sufficient.
-        protected QuestionStatement(string identifier, string question)
+        public QuestionStatement(
+            string identifier,
+            ValueType type,
+            string question)
         {
             this.Identifier = identifier;
+            this.Type = type;
             this.Question = new StringLiteral(question);
         }
 
         public string Identifier { get; private set; }
+
+        public ValueType Type { get; private set; }
 
         public StringLiteral Question { get; private set; }
     }
