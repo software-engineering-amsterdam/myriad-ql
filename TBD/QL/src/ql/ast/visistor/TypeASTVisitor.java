@@ -43,6 +43,10 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Question node) {
+        if (identTable.containsKey(node.getId().getQlIdent())) {
+            throw new RuntimeException("Id already exist");
+        }
+
         identTable.put(node.getId().getQlIdent(), node.getType());
 
         if (node.hasExpr()) {

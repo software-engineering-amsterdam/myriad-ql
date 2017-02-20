@@ -10,7 +10,7 @@ form taxOfficeExample {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"
-      privateDebt: money
+      sellingPrice: money
     "Value residue:"
       valueResidue: money=
         (sellingPrice - privateDebt)
