@@ -1,11 +1,12 @@
 from sys import argv, exit
 from os.path import isfile
-from json import dump
 
-import ql.grammar
-from ql.visitor.printer import Printer
-from ql.visitor.symbolchecker import SymbolChecker
-from ql.visitor.typechecker import TypeChecker
+from ql.grammar import parse_file
+from ql.visitors.printer import Printer
+from ql.visitors.symbolchecker import SymbolChecker
+from ql.visitors.typechecker import TypeChecker
+from ql.visitors.dependencychecker import DependencyChecker
+
 
 def main():
 
@@ -21,23 +22,19 @@ def main():
     #     print("Error: file {} does not exist".format(filename_inp))
     #     return
 
-    filename_inp = "exampleForm.txt" # temp override for testing
+    filename_inp = "exampleForm.txt"
 
-    form = ql.grammar.parse_file(filename_inp)
+    form = parse_file(filename_inp)
 
-    Printer().execute(form)
+    Printer().visit(form)
 
-    symboltable, symbol_check_success = SymbolChecker().execute(form)
-    type_check_success = TypeChecker(symboltable).execute(form)
+    symbol_check_success, symboltable = SymbolChecker().visit(form)
+    type_check_success = TypeChecker(symboltable).visit(form)
+    dependency_check_success = DependencyChecker().visit(form)
 
-    if not (symbol_check_success and type_check_success):
+    if not (symbol_check_success and type_check_success and
+            dependency_check_success):
         return
-
-    # GUI:
-    # create appjar window from form and symboltable
-    # when a value is entered/changed, also update internal dictionary and
-    # update conditional entry fields and update expression fields
-    # when finished, dump results to JSON file
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 class Printer:
 
-    def execute(self, node):
+    def visit(self, node):
         print(node.accept(self))
 
     def visit_form(self, node):
@@ -9,22 +9,24 @@ class Printer:
             "\n".join([s.accept(self) for s in node.statements]))
 
     def visit_question(self, node):
-        if node.expression is not None:
-            return "{}: \"{}\" {} = {}".format(
-                node.identifier, node.label, node.datatype.name,
-                node.expression.accept(self))
         return "{}: \"{}\" {}".format(
             node.identifier, node.label, node.datatype.name)
 
-    def visit_conditional(self, node):
-        if node.alternatives is not None:
-            return "if {} [\n{}\n]\nelse [\n{}\n]".format(
-                node.condition.accept(self),
-                "\n".join([s.accept(self) for s in node.statements]),
-                "\n".join([s.accept(self) for s in node.alternatives]))
+    def visit_computedquestion(self, node):
+        return "{}: \"{}\" {} = {}".format(
+            node.identifier, node.label, node.datatype.name,
+            node.computation.accept(self))
+
+    def visit_ifconditional(self, node):
         return "if {} [\n{}\n]".format(
             node.condition.accept(self),
-            "\n".join([s.accept(self) for s in node.statements]))
+            "\n".join([s.accept(self) for s in node.ifstatements]))
+
+    def visit_ifelseconditional(self, node):
+        return "if {} [\n{}\n]\nelse [\n{}\n]".format(
+            node.condition.accept(self),
+            "\n".join([s.accept(self) for s in node.ifstatements]),
+            "\n".join([s.accept(self) for s in node.elsestatements]))
 
     def visit_plusop(self, node):
         return "+{}".format(node.right.accept(self))

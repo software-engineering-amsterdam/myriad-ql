@@ -80,15 +80,22 @@ block = Forward()
 datatype = oneOf("boolean string integer decimal")
 datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
-question = identifier + Suppress(":") + QuotedString("\"") + datatype +\
-    Optional(Suppress("=") + expression)
+computed_question = identifier + Suppress(":") + QuotedString("\"") +\
+    datatype + Suppress("=") + expression
+computed_question.setParseAction(lambda tokens: ComputedQuestion(*tokens))
+
+question = identifier + Suppress(":") + QuotedString("\"") + datatype
 question.setParseAction(lambda tokens: Question(*tokens))
 
-conditional = Suppress("if") + expression + block +\
-    Optional(Suppress("else") + block)
-conditional.setParseAction(lambda tokens: Conditional(*tokens))
+ifelsestatement = Suppress("if") + expression + block + Suppress("else") + block
+ifelsestatement.setParseAction(lambda tokens: IfElseConditional(*tokens))
 
-statement = question ^ conditional
+ifstatement = Suppress("if") + expression + block
+ifstatement.setParseAction(lambda tokens: IfConditional(*tokens))
+
+conditional = ifelsestatement ^ ifstatement
+
+statement = computed_question ^ question ^ conditional
 
 block <<= Suppress("{") + ZeroOrMore(statement) + Suppress("}")
 block.addParseAction(lambda tokens: [tokens.asList()])

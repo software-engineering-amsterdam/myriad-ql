@@ -18,11 +18,10 @@ class Form:
 
 class Question:
 
-    def __init__(self, identifier, label, datatype, expression=None):
+    def __init__(self, identifier, label, datatype):
         self.identifier = identifier
         self.label = label
         self.datatype = datatype
-        self.expression = expression
 
     def accept(self, visitor):
         return visitor.visit_question(self)
@@ -31,15 +30,43 @@ class Question:
         return self.__dict__ == other.__dict__
 
 
-class Conditional:
+class ComputedQuestion:
 
-    def __init__(self, condition, statements, alternatives=None):
-        self.condition = condition
-        self.statements = statements
-        self.alternatives = alternatives
+    def __init__(self, identifier, label, datatype, computation):
+        self.identifier = identifier
+        self.label = label
+        self.datatype = datatype
+        self.computation = computation
 
     def accept(self, visitor):
-        return visitor.visit_conditional(self)
+        return visitor.visit_computedquestion(self)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+
+class IfConditional:
+
+    def __init__(self, condition, ifstatements):
+        self.condition = condition
+        self.ifstatements = ifstatements
+
+    def accept(self, visitor):
+        return visitor.visit_ifconditional(self)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+
+class IfElseConditional:
+
+    def __init__(self, condition, ifstatements, elsestatements):
+        self.condition = condition
+        self.ifstatements = ifstatements
+        self.elsestatements = elsestatements
+
+    def accept(self, visitor):
+        return visitor.visit_ifelseconditional(self)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

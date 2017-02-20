@@ -9,33 +9,42 @@ class TypeChecker:
         self.symboltable = symboltable
         self.success = True
 
-    def execute(self, node):
-        node.accept(self)
-        return self.success
-
     def dominant_datatype(self, lefttype, righttype):
         if lefttype == Datatype.decimal or righttype == Datatype.decimal:
             return Datatype.decimal
         return Datatype.integer
+
+    def visit(self, node):
+        node.accept(self)
+        return self.success
 
     def visit_form(self, node):
         for statement in node.statements:
             statement.accept(self)
 
     def visit_question(self, node):
-        if node.expression is not None:
-            node.expression.accept(self)
+        pass
 
-    def visit_conditional(self, node):
+    def visit_computedquestion(self, node):
+        node.computation.accept(self)
+
+    def visit_ifconditional(self, node):
         conditiontype = node.condition.accept(self)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             print("Error: condition does not evaluate to boolean value")
             self.success = False
-        for statement in node.statements:
+        for statement in node.ifstatements:
             statement.accept(self)
-        if node.alternatives is not None:
-            for statement in node.alternatives(self):
-                statement.accept(self)
+
+    def visit_ifelseconditional(self, node):
+        conditiontype = node.condition.accept(self)
+        if conditiontype is not None and conditiontype != Datatype.boolean:
+            print("Error: condition does not evaluate to boolean value")
+            self.success = False
+        for statement in node.ifstatements:
+            statement.accept(self)
+        for statement in node.elsestatements:
+            statement.accept(self)
 
     def visit_plusop(self, node):
         righttype = node.right.accept(self)
