@@ -9,9 +9,11 @@ form
 statement
     :   type id=identifier ':' text=questionText defaultValue? ';'      #question
     |   'if' '(' expression ')' '{'
+                (thenStatements+=statement)* '}'                        #ifThen
+    |   'if' '(' expression ')' '{'
             (thenStatements+=statement)* '}'
         ('else' '{'
-            (elseStatements+=statement)* '}')?                          #if
+            (elseStatements+=statement)* '}')?                          #ifElseThen
     ;
 
 questionText

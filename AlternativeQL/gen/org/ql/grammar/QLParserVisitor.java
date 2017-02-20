@@ -1,4 +1,4 @@
-// Generated from /Users/yoan-alexander/Sites/myriad-ql/AlternativeQL/src/org/ql/grammar/QLParser.g4 by ANTLR 4.6
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/grammar/QLParser.g4 by ANTLR 4.6
 package org.ql.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -24,12 +24,19 @@ public interface QLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuestion(QLParserParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code if}
+	 * Visit a parse tree produced by the {@code ifThen}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIf(QLParserParser.IfContext ctx);
+	T visitIfThen(QLParserParser.IfThenContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ifElseThen}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseThen(QLParserParser.IfElseThenContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParserParser#questionText}.
 	 * @param ctx the parse tree

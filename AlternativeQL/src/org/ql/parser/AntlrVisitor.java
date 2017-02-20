@@ -9,7 +9,8 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.relational.*;
-import org.ql.ast.statement.If;
+import org.ql.ast.statement.IfThen;
+import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
@@ -52,15 +53,26 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     }
 
     @Override
-    public Node visitIf(QLParserParser.IfContext ctx) {
-        AbstractNode ifNode = new If(
-            (Expression) visit(ctx.expression()),
-            createStatements(ctx.thenStatements),
-            createStatements(ctx.elseStatements)
+    public Node visitIfThen(QLParserParser.IfThenContext ctx) {
+        AbstractNode ifThen = new IfThen(
+                (Expression) visit(ctx.expression()),
+                createStatements(ctx.thenStatements)
         );
-        ifNode.setMetadata(extractMetadataFromToken(ctx.start));
+        ifThen.setMetadata(extractMetadataFromToken(ctx.start));
 
-        return ifNode;
+        return ifThen;
+    }
+
+    @Override
+    public Node visitIfElseThen(QLParserParser.IfElseThenContext ctx) {
+        AbstractNode ifThenElse = new IfThenElse(
+                (Expression) visit(ctx.expression()),
+                createStatements(ctx.thenStatements),
+                createStatements(ctx.elseStatements)
+        );
+        ifThenElse.setMetadata(extractMetadataFromToken(ctx.start));
+
+        return ifThenElse;
     }
 
     private List<Statement> createStatements(List<QLParserParser.StatementContext> statementsContext) {

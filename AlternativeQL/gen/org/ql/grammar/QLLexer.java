@@ -1,4 +1,4 @@
-// Generated from /Users/yoan-alexander/Sites/myriad-ql/AlternativeQL/src/org/ql/grammar/QLLexer.g4 by ANTLR 4.6
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/grammar/QLLexer.g4 by ANTLR 4.6
 package org.ql.grammar;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
