@@ -80,31 +80,9 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolId(QLParser.BoolIdContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code div}
-	 * labeled alternative in {@link QLParser#numExpr}.
+	 * Visit a parse tree produced by {@link QLParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDiv(QLParser.DivContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code add}
-	 * labeled alternative in {@link QLParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdd(QLParser.AddContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numId}
-	 * labeled alternative in {@link QLParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumId(QLParser.NumIdContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code num}
-	 * labeled alternative in {@link QLParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNum(QLParser.NumContext ctx);
+	T visitNumExpr(QLParser.NumExprContext ctx);
 }

@@ -5,12 +5,11 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Condition implements  FormItem {
+public class Condition implements FormItem {
     private List<FormItem> formItems;
     private String expression;
 
@@ -23,7 +22,7 @@ public class Condition implements  FormItem {
         return formItems;
     }
 
-    public void addFormItem(FormItem item){
+    public void addFormItem(FormItem item) {
         this.formItems.add(item);
     }
 
@@ -41,9 +40,8 @@ public class Condition implements  FormItem {
     }
 
     @Override
-    public boolean hasID(String id) {
-        Predicate<FormItem> predicate = e -> e.hasID(id);
-        return formItems.stream().anyMatch(predicate);
+    public void idChanged(String id, String value) {
+        formItems.forEach(item -> item.idChanged(id, value));
     }
 
     @Override
