@@ -20,6 +20,10 @@ public class QLString extends QLLiteral {
         return visitor.visit(this);
     }
 
+    @Override
+    public String toString() {
+        return qlString;
+    }
 
     @Override
     public boolean equals(Object o) {
