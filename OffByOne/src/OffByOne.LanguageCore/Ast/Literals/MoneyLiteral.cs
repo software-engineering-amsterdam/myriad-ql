@@ -8,5 +8,12 @@
             : base(value)
         {
         }
+
+        public MoneyLiteral(string value)
+            : this(decimal.Parse(value))
+        {
+        }
+
+        public decimal Value { get; private set; }
     }
 }

@@ -4,7 +4,6 @@
 
     using Antlr4.Runtime;
 
-    using OffByOne.LanguageCore.Ast;
     using OffByOne.Ql;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
@@ -45,7 +44,7 @@
 
         private static void TestQlsGrammar()
         {
-            ICharStream input = new AntlrInputStream(@"
+            var input = new AntlrInputStream(@"
                 stylesheet taxOfficeExample
                   page Housing {
                     section ""Buying"" {

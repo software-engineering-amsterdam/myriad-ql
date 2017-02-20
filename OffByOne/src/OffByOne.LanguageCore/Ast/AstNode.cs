@@ -2,5 +2,6 @@
 {
     public abstract class AstNode
     {
+        public SourceCode SourceCode { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace OffByOne.LanguageCore.Ast.ValueTypes
 {
-    public class IntegerValueType
+    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+
+    public class IntegerValueType : ValueType
     {
     }
 }

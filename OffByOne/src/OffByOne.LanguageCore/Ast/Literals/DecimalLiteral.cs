@@ -4,9 +4,15 @@
 
     public class DecimalLiteral : Literal<decimal>
     {
-        public DecimalLiteral(decimal value)
-            : base(value)
+        public DecimalLiteral(double value)
         {
         }
+
+        public DecimalLiteral(string value)
+            : this(double.Parse(value))
+        {
+        }
+
+        public double Value { get; private set; }
     }
 }

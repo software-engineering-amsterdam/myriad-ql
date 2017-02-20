@@ -6,11 +6,13 @@
     using Antlr4.Runtime.Misc;
 
     using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Expressions;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.Statements;
-    using OffByOne.LanguageCore.Ast.Statements.Branch;
-    using OffByOne.LanguageCore.Ast.Statements.Questions;
+    using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Expressions.Unary;
+    using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Ast.Statements.Questions;
     using OffByOne.Ql.Generated;
 
     // TODO: Extract creation of OperatorExpressions to factory method
@@ -169,17 +171,17 @@
 
         public override AstNode VisitDecimalLiteral([NotNull] QlParser.DecimalLiteralContext context)
         {
-            return new DecimalLiteral(decimal.Parse(context.GetText()));
+            return new DecimalLiteral(context.GetText());
         }
 
         public override AstNode VisitIntegerLiteral([NotNull] QlParser.IntegerLiteralContext context)
         {
-            return new IntegerLiteral(int.Parse(context.GetText()));
+            return new IntegerLiteral(context.GetText());
         }
 
         public override AstNode VisitMoneyLiteral([NotNull] QlParser.MoneyLiteralContext context)
         {
-            return new MoneyLiteral(decimal.Parse(context.GetText()));
+            return new MoneyLiteral(context.GetText());
         }
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)

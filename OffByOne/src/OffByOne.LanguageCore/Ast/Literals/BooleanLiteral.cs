@@ -8,5 +8,12 @@
             : base(value)
         {
         }
+
+        public BooleanLiteral(string value)
+            : this(bool.Parse(value))
+        {
+        }
+
+        public bool Value { get; private set; }
     }
 }

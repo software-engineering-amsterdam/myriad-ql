@@ -73,6 +73,37 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Compile Include="Ast\Expressions\Binary\AddExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\AndExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\Base\BinaryExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\DivideExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\EqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\GreaterThanExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\GreaterThanOrEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\LessThanExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\LessThanOrEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\MultiplyExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
+    <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
+    <Compile Include="Ast\Expressions\BracketExpression.cs" />
+    <Compile Include="Ast\Expressions\Expression.cs" />
+    <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\PositiveExpression.cs" />
+    <Compile Include="Ast\Expressions\VariableExpression.cs" />
+    <Compile Include="Ast\Statements\Branch\ElseStatement.cs" />
+    <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
+    <Compile Include="Ast\Statements\FormStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\Base\QuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\BooleanQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\DateQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\DecimalQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\IntegerQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\Statement.cs" />
     <Compile Include="MyQlVisitor.cs" />
     <Compile Include="obj\Debug\QlLexer.cs" />
     <Compile Include="obj\Debug\QlParser.cs" />
@@ -83,7 +114,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Antlr4 Include="Syntax\QlParser.g4">
+    <Antlr4 Include="Parser\Ql.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
     </Antlr4>

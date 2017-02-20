@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
     using System;
+    using System.Globalization;
 
     using OffByOne.LanguageCore.Ast.Literals.Base;
 
@@ -11,13 +12,9 @@
         {
         }
 
-        // TODO: DONT DO THIS HERE OR IN THIS WAY...
-        public static DateTime Parse(string dateString)
+        public DateLiteral(string dateString)
+            : this(DateTime.Parse(dateString, CultureInfo.InvariantCulture))
         {
-            int day = int.Parse(dateString.Substring(1, 2));
-            int month = int.Parse(dateString.Substring(4, 2));
-            int year = int.Parse(dateString.Substring(7, 4));
-            return new DateTime(year, month, day);
         }
     }
 }
