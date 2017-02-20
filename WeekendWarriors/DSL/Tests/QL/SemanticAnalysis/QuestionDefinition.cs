@@ -16,10 +16,7 @@ namespace Tests.QL.SemanticAnalysis
             string input = @"
                 form myForm{
                     q1: ""This is q1"" boolean
-                    if(q1)
-                    {
-                        q1: ""This is q2"" boolean
-                    }
+                    q1: ""This is the new q1"" boolean                    
                 }
                 ";
             TestHarness.TestExpression(input, 1, "Defining a question with a name that already exists in the current context");
@@ -31,8 +28,7 @@ namespace Tests.QL.SemanticAnalysis
             string input = @"
                 form myForm{
                     q1: ""This is q1"" boolean
-                    q1: ""This is the new q1"" money
-                    
+                    q1: ""This is the new q1"" money                    
                 }
                 ";
             TestHarness.TestExpression(input, 1, "Defining a question with a name that already exists in the current context but with a different type");
