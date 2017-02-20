@@ -5,8 +5,6 @@
 module.exports = class Statement {
 
     constructor() {
-        if (this.getGeneratedCode === undefined) {
-            throw new TypeError("Must override method");
-        }
+
     }
 };
