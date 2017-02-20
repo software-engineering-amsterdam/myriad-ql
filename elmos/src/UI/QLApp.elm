@@ -6,12 +6,12 @@ import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
-import UI.Widget.Base as BaseWidget
+import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import UI.FormDslInput as FormDslInput
 import Environment as Env exposing (Environment)
 import Values exposing (Value)
 import Dict
-import FormUtil
+import FormUtil exposing (VisibleField(Editable, Computed))
 
 
 type alias Model =
@@ -39,7 +39,12 @@ update msg model =
             { model | formDslInput = FormDslInput.update subMsg model.formDslInput }
 
         OnFieldChange fieldId newValue ->
-            { model | env = Env.withFormValue fieldId newValue model.env }
+            { model
+                | env =
+                    FormDslInput.asForm model.formDslInput
+                        |> Maybe.map (FormUtil.updateValue fieldId newValue model.env)
+                        |> Maybe.withDefault model.env
+            }
 
 
 view : Model -> Html Msg
@@ -63,16 +68,10 @@ viewForm model formDsl =
         form [] (List.map (viewField model) visibleFields)
 
 
-viewField : Model -> ( Label, String, ValueType ) -> Html Msg
-viewField model ( label, identifier, valueType ) =
-    BaseWidget.container
-        { identifier = identifier
-        , label = label
-        , env = model.env
-        , onChange = OnFieldChange identifier
-        }
-    <|
-        case valueType of
+viewField : Model -> VisibleField -> Html Msg
+viewField model field =
+    BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
+        case (FormUtil.fieldValueType field) of
             StringType ->
                 StringWidget.view
 
@@ -81,3 +80,23 @@ viewField model ( label, identifier, valueType ) =
 
             IntegerType ->
                 IntegerWidget.view
+
+
+visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
+visibleFieldWidgetConfig env field =
+    case field of
+        Editable label identifier valueType ->
+            { identifier = identifier
+            , label = label
+            , env = env
+            , onChange = OnFieldChange identifier
+            , editable = True
+            }
+
+        Computed label identifier valuedType _ ->
+            { identifier = identifier
+            , label = label
+            , env = env
+            , onChange = OnFieldChange identifier
+            , editable = False
+            }

@@ -1,29 +1,94 @@
-module FormUtil exposing (activeFields)
+module FormUtil exposing (VisibleField(Editable, Computed), updateValue, activeFields, fieldValueType)
 
 import AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
-import Environment exposing (Environment)
-import Values
+import Environment as Env exposing (Environment)
+import Values exposing (Value)
 import Evaluator
+import Tuple3
 
 
-activeFields : Environment -> Form -> List ( Label, String, ValueType )
+type VisibleField
+    = Editable Label String ValueType
+    | Computed Label String ValueType Expression
+
+
+type alias IsComputed =
+    Bool
+
+
+fieldValueType : VisibleField -> ValueType
+fieldValueType field =
+    case field of
+        Editable _ _ valueType ->
+            valueType
+
+        Computed _ _ valueType _ ->
+            valueType
+
+
+isEditable : VisibleField -> Bool
+isEditable field =
+    case field of
+        Editable _ _ _ ->
+            True
+
+        Computed _ _ _ _ ->
+            False
+
+
+updateValue : String -> Value -> Environment -> Form -> Environment
+updateValue fieldId value env form =
+    Env.withFormValue fieldId value env
+        |> updateComputedFields form
+
+
+updateComputedFields : Form -> Environment -> Environment
+updateComputedFields form env =
+    let
+        newEnv =
+            activeComputedFields env form
+                |> List.map (Tuple3.tail >> Tuple.mapSecond (Evaluator.evaluate env))
+                |> List.foldr (\( identifier, value ) -> Env.withFormValue identifier value) env
+                |> Debug.log "New env"
+    in
+        if newEnv == env then
+            env
+        else
+            updateComputedFields form newEnv
+
+
+activeComputedFields : Environment -> Form -> List ( Label, String, Expression )
+activeComputedFields env form =
+    activeFields env form
+        |> List.filterMap
+            (\field ->
+                case field of
+                    Computed label identifier _ expression ->
+                        Just ( label, identifier, expression )
+
+                    _ ->
+                        Nothing
+            )
+
+
+activeFields : Environment -> Form -> List VisibleField
 activeFields env { items } =
     activeFieldsForItems env items
 
 
-activeFieldsForItems : Environment -> List FormItem -> List ( Label, String, ValueType )
+activeFieldsForItems : Environment -> List FormItem -> List VisibleField
 activeFieldsForItems env =
     List.concatMap (activeFieldsForItem env)
 
 
-activeFieldsForItem : Environment -> FormItem -> List ( Label, String, ValueType )
+activeFieldsForItem : Environment -> FormItem -> List VisibleField
 activeFieldsForItem env item =
     case item of
         Field label ( identifier, _ ) valueType ->
-            [ ( label, identifier, valueType ) ]
+            [ Editable label identifier valueType ]
 
-        ComputedField label ( identifier, _ ) valueType _ ->
-            [ ( label, identifier, valueType ) ]
+        ComputedField label ( identifier, _ ) valueType e ->
+            [ Computed label identifier valueType e ]
 
         IfThen expression thenBranch ->
             if isTrueValue env expression then

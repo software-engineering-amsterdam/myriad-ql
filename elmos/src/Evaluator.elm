@@ -39,8 +39,8 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
+                case Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue) of
+                    Just ( l, r ) ->
                         Values.int (applicativeForOperator op l r)
 
                     _ ->
@@ -54,8 +54,8 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
+                case Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue) of
+                    Just ( l, r ) ->
                         Values.bool (applicativeForRelation op l r)
 
                     _ ->

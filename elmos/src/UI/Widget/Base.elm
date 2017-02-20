@@ -11,6 +11,7 @@ type alias WidgetContext msg =
     , label : String
     , env : Environment
     , onChange : Value -> msg
+    , editable : Bool
     }
 
 

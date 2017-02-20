@@ -18,7 +18,22 @@ type Msg
 init : Model
 init =
     Model "" Nothing
-        |> update (OnDslInput exampleDsl)
+        |> update (OnDslInput exmpleDsl2)
+
+
+exmpleDsl2 : String
+exmpleDsl2 =
+    """form taxOfficeExample {
+  "Age?"
+  age : integer
+
+  "Age 2"
+  age2 : integer = age + 1
+
+  "Age 3"
+  age3 : integer = age2 + 2
+
+}"""
 
 
 exampleDsl : String
@@ -73,7 +88,7 @@ view (Model rawText parsedForm) =
         [ form [ class "form" ]
             [ textarea
                 [ defaultValue rawText
-                , rows 24
+                , rows 20
                 , cols 80
                 , class "form-control"
                 , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
