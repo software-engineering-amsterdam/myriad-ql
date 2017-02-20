@@ -31,7 +31,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
             statements.add((Statement) visit(statementContext));
         }
 
-        return new Form((Identifier) visit(ctx.id), statements);
+        return new Form((Identifier) visit(ctx.id), statements, new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
@@ -40,7 +40,8 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
             (Identifier) visit(ctx.id),
             (QuestionText) visit(ctx.text),
             (Type) visit(ctx.type()),
-            ctx.defaultValue() == null ? null : (Expression) visit(ctx.defaultValue())
+            ctx.defaultValue() == null ? null : (Expression) visit(ctx.defaultValue()),
+                new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName())
         );
     }
 
@@ -49,8 +50,9 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
         return new If(
             (Expression) visit(ctx.expression()),
             createStatements(ctx.thenStatements),
-            createStatements(ctx.elseStatements)
-        );
+            createStatements(ctx.elseStatements),
+            new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()
+        ));
     }
 
     private List<Statement> createStatements(List<QLParserParser.StatementContext> statementsContext) {
@@ -64,7 +66,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
 
     @Override
     public Node visitQuestionText(QLParserParser.QuestionTextContext ctx) {
-        return new QuestionText(removeQuotes(ctx.getText()));
+        return new QuestionText(removeQuotes(ctx.getText()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     private java.lang.String removeQuotes(java.lang.String text) {
@@ -78,141 +80,141 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
 
     @Override
     public Node visitDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) {
-        return new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
+        return new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitNegation(QLParserParser.NegationContext ctx) {
-        return new Negation((Expression) visit(ctx.expression()));
+        return new Negation((Expression) visit(ctx.expression()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitProduct(QLParserParser.ProductContext ctx) {
-        return new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitIncrement(QLParserParser.IncrementContext ctx) {
-        return new Increment((Expression) visit(ctx.expression()));
+        return new Increment((Expression) visit(ctx.expression()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitSubtraction(QLParserParser.SubtractionContext ctx) {
-        return new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitNotEqual(QLParserParser.NotEqualContext ctx) {
-        return new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitLogicalAnd(QLParserParser.LogicalAndContext ctx) {
-        return new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitLowerThan(QLParserParser.LowerThanContext ctx) {
-        return new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx) {
-        return new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitDivision(QLParserParser.DivisionContext ctx) {
-        return new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitParameter(QLParserParser.ParameterContext ctx) {
-        return new Parameter(ctx.ID().getText());
+        return new Parameter(ctx.ID().getText(), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitIdentifier(QLParserParser.IdentifierContext ctx) {
-        return new Identifier(ctx.ID().getText());
+        return new Identifier(ctx.ID().getText(), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
-        return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
+        return new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitGroup(QLParserParser.GroupContext ctx) {
-        return new Group((Expression) visit(ctx.expression()));
+        return new Group((Expression) visit(ctx.expression()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitAddition(QLParserParser.AdditionContext ctx) {
-        return new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitGreaterThan(QLParserParser.GreaterThanContext ctx) {
-        return new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
-        return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
+        return new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitDecrement(QLParserParser.DecrementContext ctx) {
-        return new Decrement((Expression) visit(ctx.expression()));
+        return new Decrement((Expression) visit(ctx.expression()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitEquals(QLParserParser.EqualsContext ctx) {
-        return new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) {
-        return new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
-        return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
+        return new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitLogicalOr(QLParserParser.LogicalOrContext ctx) {
-        return new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+        return new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right), new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeBoolean(QLParserParser.TypeBooleanContext ctx) {
-        return new BooleanType();
+        return new BooleanType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeFloat(QLParserParser.TypeFloatContext ctx) {
-        return new FloatType();
+        return new FloatType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeInteger(QLParserParser.TypeIntegerContext ctx) {
-        return new IntegerType();
+        return new IntegerType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeString(QLParserParser.TypeStringContext ctx) {
-        return new StringType();
+        return new StringType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeMoney(QLParserParser.TypeMoneyContext ctx) {
-        return new MoneyType();
+        return new MoneyType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 
     @Override
     public Node visitTypeDate(QLParserParser.TypeDateContext ctx) {
-        return new DateType();
+        return new DateType(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine(), ctx.start.getTokenSource().getSourceName()));
     }
 }

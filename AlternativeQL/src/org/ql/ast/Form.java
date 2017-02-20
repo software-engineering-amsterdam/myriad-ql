@@ -2,13 +2,14 @@ package org.ql.ast;
 
 import java.util.List;
 
-public class Form implements Node {
+public class Form extends AbstractNode {
     private final Identifier name;
     private final List<Statement> statements;
 
-    public Form(Identifier name, List<Statement> statements) {
+    public Form(Identifier name, List<Statement> statements, Metadata metadata) {
         this.name = name;
         this.statements = statements;
+        this.metadata = metadata;
     }
 
     public Identifier getName() {

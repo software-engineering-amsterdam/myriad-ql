@@ -1,13 +1,15 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
-public class Decrement implements Expression {
+public class Decrement extends Expression {
     private final Expression expression;
 
-    public Decrement(Expression expression) {
+    public Decrement(Expression expression, Metadata metadata) {
         this.expression = expression;
+        this.metadata = metadata;
     }
 
     public Expression getExpression() {

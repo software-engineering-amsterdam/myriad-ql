@@ -1,15 +1,17 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
-public class Equals implements Expression {
+public class Equals extends Expression {
     private Expression left;
     private Expression right;
 
-    public Equals(Expression left, Expression right) {
+    public Equals(Expression left, Expression right, Metadata metadata) {
         this.left = left;
         this.right = right;
+        this.metadata = metadata;
     }
 
     public Expression getLeft() {

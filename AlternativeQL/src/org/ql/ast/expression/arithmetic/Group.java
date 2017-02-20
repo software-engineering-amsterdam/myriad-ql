@@ -1,13 +1,15 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
-public class Group implements Expression {
+public class Group extends Expression {
     private final Expression expression;
 
-    public Group(Expression expression) {
+    public Group(Expression expression, Metadata metadata) {
         this.expression = expression;
+        this.metadata = metadata;
     }
 
     public Expression getExpression() {

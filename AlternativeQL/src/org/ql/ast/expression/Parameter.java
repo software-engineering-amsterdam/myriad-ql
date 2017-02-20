@@ -1,13 +1,15 @@
 package org.ql.ast.expression;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
-public class Parameter implements Expression {
+public class Parameter extends Expression {
     private final String id;
 
-    public Parameter(String id) {
+    public Parameter(String id, Metadata metadata) {
         this.id = id;
+        this.metadata = metadata;
     }
 
     @Override

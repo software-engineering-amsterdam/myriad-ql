@@ -1,15 +1,17 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
-public class NotEqual implements Expression {
+public class NotEqual extends Expression {
     private Expression left;
     private Expression right;
 
-    public NotEqual(Expression left, Expression right) {
+    public NotEqual(Expression left, Expression right, Metadata metadata) {
         this.left = left;
         this.right = right;
+        this.metadata = metadata;
     }
 
     public Expression getLeft() {

@@ -1,24 +1,22 @@
 package org.ql.ast.statement;
 
 import com.sun.istack.internal.Nullable;
-import org.ql.ast.Expression;
-import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
-import org.ql.ast.Visitor;
+import org.ql.ast.*;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 
-public class Question implements Statement {
+public class Question extends Statement {
     private final Identifier id;
     private final QuestionText questionText;
     private final Type type;
     private final Expression defaultValue;
 
-    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue) {
+    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue, Metadata metadata) {
         this.id = id;
         this.questionText = questionText;
         this.type = type;
         this.defaultValue = defaultValue;
+        this.metadata = metadata;
     }
 
     public Identifier getId() {
