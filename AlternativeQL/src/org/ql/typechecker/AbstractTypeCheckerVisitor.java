@@ -1,0 +1,51 @@
+package org.ql.typechecker;
+
+import org.ql.ast.*;
+import org.ql.ast.expression.Parameter;
+import org.ql.ast.expression.arithmetic.*;
+import org.ql.ast.expression.literal.BooleanLiteral;
+import org.ql.ast.expression.literal.DecimalLiteral;
+import org.ql.ast.expression.literal.IntegerLiteral;
+import org.ql.ast.expression.literal.StringLiteral;
+import org.ql.ast.expression.relational.*;
+import org.ql.ast.statement.If;
+import org.ql.ast.statement.Question;
+import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.type.Type;
+import org.ql.grammar.QLParserParser;
+
+public interface AbstractTypeCheckerVisitor {
+    void visitForm(Form ctx);
+    void visitQuestion(Question ctx);
+    void visitIf(If ctx);
+    void visitStatement(Statement ctx);
+    void visitQuestionText(QuestionText nctx);
+    // void visitDefaultValue();
+    void visitDecimalLiteral(DecimalLiteral ctx);
+    void visitNegation(Negation ctx);
+    void visitProduct(Product ctx);
+    void visitIncrement(Increment ctx);
+    void visitSubtraction(QLParserParser.SubtractionContext ctx);
+    void visitNotEqual(NotEqual ctx);
+    void visitLogicalAnd(LogicalAnd ctx);
+    void visitLowerThan(LowerThan ctx);
+    void visitGreaterThanOrEqual(GreaterThanOrEqual ctx);
+    void visitDivision(Division ctx);
+    void visitParameter(Parameter ctx);
+    void visitIdentifier(Identifier ctx);
+    void visitBooleanLiteral(BooleanLiteral ctx);
+    void visitGroup(Group ctx);
+    void visitAddition(QLParserParser.AdditionContext ctx);
+    void visitGreaterThan(GreaterThan ctx);
+    void visitStringLiteral(StringLiteral ctx);
+    void visitDecrement(Decrement ctx);
+    void visitEquals(Equals ctx);
+    void visitLowerThanOrEqual(LowerThanOrEqual ctx);
+    void visitIntegerLiteral(IntegerLiteral ctx);
+    void visitLogicalOr(LogicalOr ctx);
+    void visitTypeBooleanLiteral(BooleanLiteral ctx);
+    void visitTypeDecimalLiteral(DecimalLiteral ctx);
+    void visitTypeIntegerLiteral(IntegerLiteral ctx);
+    void visitTypeString(StringLiteral ctx);
+    void visitType(Type ctx);
+}
