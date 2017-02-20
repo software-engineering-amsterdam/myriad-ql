@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSL.AST
 {
-    public class QLBoolean : INode
+    public class QLBoolean : IQLExpression
     {
         public QLBoolean(bool value)
         {
@@ -16,6 +16,16 @@ namespace DSL.AST
         public bool Value
         {
             get;
+        }
+
+        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        {
+            return true;
+        }
+
+        QLType? IQLExpression.GetQLType()
+        {
+            return QLType.Bool;
         }
     }
 }

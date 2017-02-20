@@ -22,16 +22,16 @@ namespace DSL.AST
         Inequal
     };
 
-    public class QLBinaryOperation : INode
+    public abstract class QLBinaryOperation : IQLExpression
     {
-        protected QLBinaryOperation(INode lhs, QLBinaryOperator operation, INode rhs)
+        protected QLBinaryOperation(IQLExpression lhs, QLBinaryOperator operation, IQLExpression rhs)
         {
             this.Lhs = lhs;
             this.Operator = operation;
             this.Rhs = rhs;
         }
 
-        public INode Lhs
+        public IQLExpression Lhs
         {
             get;
         }
@@ -41,9 +41,11 @@ namespace DSL.AST
             get;
         }
 
-        public INode Rhs
+        public IQLExpression Rhs
         {
             get;
         }
+
+        public abstract QLType? GetQLType();
     }
 }

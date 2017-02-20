@@ -12,7 +12,7 @@ namespace DSL.AST
         Money,
         Bool,
         String,
-        None
+        None        // TODO: remove
     };
 
     /* For now this is basically a useless interface that has no other purpose
@@ -20,6 +20,6 @@ namespace DSL.AST
      * All AST nodes inherit from this interface */
     public interface INode
     {
-       
+        bool Validate(ref List<string> warnings, ref List<string> errors);
     }
 }

@@ -8,7 +8,7 @@ namespace DSL.AST
 {
     public class QLConditional : INode
     {
-        public QLConditional(INode condition, List<INode> thenStatements, List<INode> elseStatements)
+        public QLConditional(IQLExpression condition, List<INode> thenStatements, List<INode> elseStatements)
         {
             this.Condition = condition;
             this.ThenStatements = thenStatements;

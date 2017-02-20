@@ -53,12 +53,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AST\ASTFactory.cs" />
+    <Compile Include="AST\Operators\IQLExpression.cs" />
     <Compile Include="AST\Node.cs" />
     <Compile Include="AST\Operators\QLArithmeticOperation.cs" />
+    <Compile Include="AST\Operators\QLBangOperation.cs" />
     <Compile Include="AST\Operators\QLBinaryOperation.cs" />
     <Compile Include="AST\Operators\QLComparisonOperation.cs" />
     <Compile Include="AST\Operators\QLEqualityOperation.cs" />
     <Compile Include="AST\Operators\QLLogicalOperation.cs" />
+    <Compile Include="AST\Operators\QLNegativeOperation.cs" />
+    <Compile Include="AST\Operators\QLPositiveOperation.cs" />
     <Compile Include="AST\Types\QLBoolean.cs" />
     <Compile Include="AST\QLComputedQuestion.cs" />
     <Compile Include="AST\QLConditional.cs" />

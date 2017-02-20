@@ -13,22 +13,25 @@ namespace DSL.AST
         Minus
     }
 
-    public class QLUnaryOperation : INode
+    public abstract class QLUnaryOperation : IQLExpression
     {
-        public QLUnaryOperation(INode operand, QLUnaryOperator op)
+        public QLUnaryOperation(IQLExpression operand)
         {
             this.Operand = operand;
-            this.Operator = op;
         }
 
-        public QLUnaryOperator Operator
+        public IQLExpression Operand
         {
             get;
         }
 
-        public INode Operand
+        public abstract bool Validate(ref List<string> warnings, ref List<string> errors);
+
+        QLType? IQLExpression.GetQLType()
         {
-            get;
-        }
+            // The unary operation alwyas has the same type as its operand.
+            // Even if the operand is null
+            return Operand.GetQLType();
+        }        
     }
 }

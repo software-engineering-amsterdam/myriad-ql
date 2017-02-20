@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Misc;
 using DSL.AST.Operators;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace DSL.AST
 {
@@ -56,7 +57,9 @@ namespace DSL.AST
             if(context.elseBlock != null)
                 GetStatements(context.elseBlock.statement());
 
-            return new QLConditional(expression, thenStatements, elseStatements);
+            Debug.Assert(expression is IQLExpression);
+
+            return new QLConditional((dynamic)expression, thenStatements, elseStatements);
         }
 
         public override INode VisitComputedQuestion([NotNull] QLParser.ComputedQuestionContext context)
@@ -79,32 +82,32 @@ namespace DSL.AST
             switch (context.op.Type)
             {
                 case QLLexer.OP_ADD:
-                   return new QLArithmeticOperation(lhs, QLBinaryOperator.Addition, rhs);                   
+                   return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Addition, (dynamic)rhs);                   
                 case QLLexer.OP_SUB: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Subtraction, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Subtraction, (dynamic)rhs);
                 case QLLexer.OP_MUL: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Multiplication, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Multiplication, (dynamic)rhs);
                 case QLLexer.OP_DIV: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Division, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Division, (dynamic)rhs);
 
                 case QLLexer.OP_GT: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThan, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThan, (dynamic)rhs);
                 case QLLexer.OP_GE: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThanOrEqual, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThanOrEqual, (dynamic)rhs);
                 case QLLexer.OP_LT: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThan, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThan, (dynamic)rhs);
                 case QLLexer.OP_LE: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThanOrEqual, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThanOrEqual, (dynamic)rhs);
 
                 case QLLexer.OP_EQ: 
-                    return new QLEqualityOperation(lhs, QLBinaryOperator.Equal, rhs);
+                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Equal, (dynamic)rhs);
                 case QLLexer.OP_NE: 
-                    return new QLEqualityOperation(lhs, QLBinaryOperator.Inequal, rhs);
+                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Inequal, (dynamic)rhs);
 
                 case QLLexer.OP_OR: 
-                    return new QLLogicalOperation(lhs, QLBinaryOperator.Or, rhs);
+                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.Or, (dynamic)rhs);
                 case QLLexer.OP_AND: 
-                    return new QLLogicalOperation(lhs, QLBinaryOperator.And, rhs);
+                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.And, (dynamic)rhs);
 
                 default:
                     throw new InvalidEnumArgumentException();
@@ -120,11 +123,11 @@ namespace DSL.AST
             switch (context.op.Type)
             {
                 case QLLexer.OP_BANG:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Bang);
+                    return new QLBangOperation((dynamic)operand);
                 case QLLexer.OP_ADD:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Plus);
+                    return new QLPositiveOperation((dynamic)operand);
                 case QLLexer.OP_SUB:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Minus);
+                    return new QLNegativeOperation((dynamic)operand);
                 default:
                     throw new InvalidEnumArgumentException();
             }          
