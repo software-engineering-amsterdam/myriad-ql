@@ -40,13 +40,13 @@ public class QuestionForm {
     }
 
     private void fillWidgetPanel(JPanel parentPanel) {
-        for (NamedNode q : extractQuestions()) {
-            parentPanel.add(q.getWidget());
+        for (Node q : extractQuestions()) {
+            parentPanel.add(((NamedNode) q).getWidget());
         }
     }
 
     private Set<NamedNode> extractQuestions() {
-        Set<NamedNode> questions = new LinkedHashSet<NamedNode>();
+        Set<NamedNode> questions = new LinkedHashSet<>();
         mFormNode.retrieveQuestions(questions);
         return questions;
     }

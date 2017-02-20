@@ -9,7 +9,7 @@ public abstract class Node {
     private Set<Node> mChildren;
 
     public Node() {
-        mChildren = new LinkedHashSet<Node>(); ///< preserves the order in which the items were inserted
+        mChildren = new LinkedHashSet<>(); ///< preserves the order in which the items were inserted
     }
 
     public void addChild(Node child) {
