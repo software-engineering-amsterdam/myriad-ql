@@ -16,24 +16,38 @@ import java.util.List;
 public class McsaListener implements QLListener {
 
     private ArrayList<TreeNode<String>> forms = new ArrayList<>();
-    private ArrayList<TreeNode> questions = new ArrayList<>();
+    public ArrayList<String> questions = new ArrayList<>();
+
 
     @Override
     public void enterStart(QLParser.StartContext ctx) {
 
-        forms.add(new TreeNode<>(ctx.ID().getText()));
+        ArrayList<TreeNode<String>> questions = new ArrayList<>();
+
+        System.out.println("ID: " + ctx.ID().getText());
+
+        //ctx.statementContent().categorise().forEach(item -> System.out.println("Question: " + item.STRING().getText()));
 
     }
 
     @Override
     public void exitStart(QLParser.StartContext ctx) {
-        //categoriseList.forEach(entry -> System.out.println(entry.getText()));
+        questions.forEach(item -> System.out.println(item));
     }
 
     @Override
     public void enterStatementContent(QLParser.StatementContentContext ctx) {
 
+
+//        ctx.categorise().forEach(item -> {
+//
+//            if(item.getRuleIndex() == 2) questions.add(item.STRING().getText());
+//        });
+
+        ctx.categorise().forEach(item -> System.out.println(item.getRuleIndex()));
     }
+
+
 
     @Override
     public void exitStatementContent(QLParser.StatementContentContext ctx) {
@@ -42,7 +56,8 @@ public class McsaListener implements QLListener {
 
     @Override
     public void enterCategorise(QLParser.CategoriseContext ctx) {
-        ParserRuleContext startContext = ctx.getParent();
+        //System.out.println(ctx.getParent().getParent().getChild(0).getText());
+
     }
 
     @Override
@@ -107,7 +122,6 @@ public class McsaListener implements QLListener {
 
     @Override
     public void visitErrorNode(ErrorNode errorNode) {
-        System.out.println(errorNode.getText());
     }
 
     @Override

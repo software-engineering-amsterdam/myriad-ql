@@ -5,6 +5,7 @@ import com.mcsa.antlr.QLListener;
 import com.mcsa.antlr.QLParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
@@ -16,11 +17,24 @@ class MattExperiment {
 
     public static void main(String[] args)
     {
-        evalExampleExpression("form test {\n" +
+        evalExampleExpression("form taxOfficeExample { \n" +
                 "  \"Did you sell a house in 2010?\"\n" +
                 "    hasSoldHouse: boolean\n" +
-                "  \"Was it a cool house?\"\n" +
-                "    wasCoolHouse: boolean\n" +
+                "  \"Did you buy a house in 2010?\"\n" +
+                "    hasBoughtHouse: boolean\n" +
+                "  \"Did you enter a loan?\"\n" +
+                "    hasMaintLoan: boolean\n" +
+                "\n" +
+                "  if (hasSoldHouse) {\n" +
+                "    \"What was the selling price?\"\n" +
+                "      sellingPrice: money\n" +
+                "    \"Private debts for the sold house:\"\n" +
+                "      privateDebt: money\n" +
+                "    \"Value residue:\"\n" +
+                "      valueResidue: money = \n" +
+                "        (sellingPrice - privateDebt)\n" +
+                "  }\n" +
+                "\n" +
                 "}");
     }
 
