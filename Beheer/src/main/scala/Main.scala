@@ -11,10 +11,14 @@ object Main extends App {
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
 
-  FormChecker(parsedForm) match {
+  AstChecker(parsedForm) match {
+    case issues => printIssues(issues)
+    case Nil => //carry on?
+  }
+  /*  AstChecker(parsedForm) match {
     case Left(issues) => printIssues(issues)
     case Right((form, warnings)) =>
       println(form.questions.mkString("\n"))
       printIssues(warnings)
-  }
+  } */
 }
