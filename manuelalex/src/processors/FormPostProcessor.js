@@ -9,15 +9,18 @@ const Question = require('../statements/Question.js');
 const Answer = require('../statements/Answer.js');
 const IfStatement = require('../statements/IfStatement.js');
 const Expression = require('../expressions/Expression.js');
+const Allocation = require('../allocation/Allocation.js');
 
 module.exports = class FormPostProcessor extends PostProcessor {
 
     constructor(){
         super();
 
+        this._statements = [];
+
         this.ast = {
             name: '',
-            statements: []
+            statements: this._statements,
         };
 
     }
@@ -25,10 +28,9 @@ module.exports = class FormPostProcessor extends PostProcessor {
     // todo
     form(data, location, reject) {
         console.log(`Form: ${JSON.stringify(data)}`);
-        return data;
         return new Form({
             name: data[1][0],
-            statements: data[2]
+            data: data
         });
     }
 
@@ -41,6 +43,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
     // todo should not been called
     statement(data, location, reject) {
         console.log(`Statement: ${JSON.stringify(data)}`);
+        this._statements.push(data);
         return data[0];
     }
 
@@ -66,12 +69,23 @@ module.exports = class FormPostProcessor extends PostProcessor {
         return data;
     }
 
+    // todo
     expression(data, location, reject) {
         console.log(`Expression: ${JSON.stringify(data)}`);
         return data;
         return new Expression({
 
         });
+    }
+
+    // todo
+    allocation(data, location, reject){
+        console.log(`Allocation: ${JSON.stringify(data)}`);
+        return new Allocation({
+            propertyName: data[0][0],
+
+        });
+        return data;
     }
 
     operator(data, location, reject) {

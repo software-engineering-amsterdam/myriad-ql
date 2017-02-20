@@ -9,19 +9,19 @@
  %}
 
 
-form         -> "form " formName _ openBrace _ newLine:* _ statement:* _ newLine:* _ closedBrace                         {% FormPostProcessor.form %}
+form         -> "form " formName _ openBrace _ newLine:* _ statement:* _ newLine:* _ closedBrace                         {% FormPostProcessor.form.bind(FormPostProcessor) %}
 formName     -> word
 
 statement    -> question
               | if_statement
-              | answer                                                                                        {% FormPostProcessor.statement %}
+              | answer                                                                                        {% FormPostProcessor.statement.bind(FormPostProcessor) %}
 
 question     -> "question " prime sentence prime _ newLine:* propertyName ":" _ propertyType newLine:*           {% FormPostProcessor.question %}
 
 
 if_statement -> "if " parOpen propertyName parClose space openBrace newLine:* statement:*  newLine closedBrace  {% FormPostProcessor.ifStatement %}
 answer       -> "answer " prime sentence prime _ newLine:* allocation                                             {% FormPostProcessor.answer %}
-allocation   -> propertyName ": " _ propertyType space assignOp space expression newLine:*
+allocation   -> propertyName ": " _ propertyType space assignOp space expression newLine:*                        {% FormPostProcessor.allocation %}
 #expression   -> "(" propertyName space operator space propertyName ")"
 #operator     -> "-" | "+" | "/" | "*"
 expression  -> term | expression (min_op|plus_op) term                                                        {% FormPostProcessor.expression %}
@@ -46,8 +46,8 @@ propertyType -> "boolean"
               | "money"
 
 newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
-sentence     -> [\w|\s|?|:]:+                                                                               {% FormPostProcessor.toString %}
-word         -> [A-Za-z0-9-]:+                                                                                  {% FormPostProcessor.toString %}
+sentence     -> [word|space|"?"|":"]:+                                                                      {% FormPostProcessor.toString %}
+word         -> [A-Za-z0-9-]:+                                                                              {% FormPostProcessor.toString %}
 prime        -> "'"
 openBrace    -> "{"
 closedBrace  -> "}"
