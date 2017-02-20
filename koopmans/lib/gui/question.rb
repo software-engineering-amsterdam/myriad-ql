@@ -12,8 +12,8 @@ class Question
     @condition = args[:condition]
 
     @hidden = false
-    @gui.questions << self
     @variable = TkVariable.new()
+    @gui.questions << self
 
     create_frame
     create_label

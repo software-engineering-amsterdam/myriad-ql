@@ -39,9 +39,11 @@ class GUI
     condition = And.new(condition1, q1.variable)
 
     q3 = TextQuestion.new(gui: self, label: 'hoeveel', condition: condition)
+    q4 = TextQuestion.new(gui: self, label: 'hoeveel', condition: condition)
 
-    # expr = Add.new(IntegerLiteral.new(5), IntegerLiteral.new(5))
-    calculation = Add.new(q3.variable, IntegerLiteral.new(5))
+
+    calculation1 = Add.new(q3.variable, IntegerLiteral.new(5))
+    calculation = Add.new(calculation1, q4.variable)
 
     ComputedQuestion.new(gui: self, label: 'hoeveel2', calculation: calculation, condition: condition)
 
@@ -50,17 +52,7 @@ class GUI
   end
 
   def value_changed(question)
-    # p 'value changed'
-    # p question.value
     @questions.each(&:refresh)
-    # @q4.refresh
-    # p @q4
-    # p 'value changed'
-    # p question.value
-    # if question.questions
-    #   question.questions.each(&:refresh)
-    # end
-    # q4
   end
 
   def submit
@@ -72,8 +64,6 @@ class GUI
     button.text = 'Submit'
     button.command = proc { submit }
   end
-
-
 end
 
 GUI.new
