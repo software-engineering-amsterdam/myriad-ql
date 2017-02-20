@@ -3,9 +3,20 @@
  */
 module.exports = class Allocation {
 
-    constructor(options = {}){
+    constructor(options = {}) {
+
+        this.options = options;
+
         this.propertyName = options.propertyName;
         this.type = options.type;
         this.expression = options.expression;
+    }
+
+    getOptions() {
+        return this.options;
+    }
+
+    validate() {
+
     }
 };

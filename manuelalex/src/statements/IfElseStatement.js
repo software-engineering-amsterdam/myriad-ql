@@ -11,7 +11,7 @@ module.exports = class IfElseStatement extends IfStatement {
         this.elseBody = options.elseBody;
     }
 
-    getOptions(){
-        return this.options;
+    validate() {
+
     }
 };

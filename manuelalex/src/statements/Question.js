@@ -5,14 +5,19 @@
 let Statement = require('./Statement.js');
 
 module.exports = class Question extends Statement {
-    constructor(options = {}){
-        super(); // todo
+    constructor(options = {}) {
+        super(options);
+
         this.name = options.name;
         this.propertyName = options.propertyName;
         this.propertyType = options.propertyType;
     }
 
-    getGeneratedCode(type){
-        return "<div>"+this.name+"<input type='"+type+"' onchange='click"+this.propertyName+"()' id='"+this.propertyName+"'></div>";
+    validate() {
+
+    }
+
+    getGeneratedCode(type) {
+        return "<div>" + this.name + "<input type='" + type + "' onchange='click" + this.propertyName + "()' id='" + this.propertyName + "'></div>";
     }
 };

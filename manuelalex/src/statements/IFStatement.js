@@ -12,7 +12,7 @@ module.exports = class IfStatement extends Statement {
         this.ifBody = options.ifBody;
     }
 
-    getOptions() {
-        return this.options;
+    validate() {
+
     }
 };

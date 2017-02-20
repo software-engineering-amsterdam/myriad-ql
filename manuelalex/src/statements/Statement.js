@@ -4,7 +4,15 @@
 
 module.exports = class Statement {
 
-    constructor() {
+    constructor(options = {}) {
+        this.options = options;
+    }
 
+    getOptions() {
+        return this.options;
+    }
+
+    validate() {
+        throw new Error('Validate method should have been overwritten');
     }
 };

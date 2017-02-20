@@ -6,9 +6,14 @@ let Statement = require('./Statement.js');
 
 module.exports = class Answer extends Statement {
     constructor(options = {}) {
-        super();
+        super(options);
+
         this.name = options.name;
         this.allocation = options.allocation;
+    }
+
+    validate() {
+
     }
 
     getGeneratedCode(type) {

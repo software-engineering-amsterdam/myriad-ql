@@ -38,12 +38,6 @@ module.exports = class FormPostProcessor extends PostProcessor {
         });
     }
 
-    // todo
-    statements(data, location, reject) {
-        return data;
-    }
-
-    // todo should not been called
     statement(data, location, reject) {
         return data[0];
     }
@@ -52,8 +46,8 @@ module.exports = class FormPostProcessor extends PostProcessor {
         return new Question({ name: data[3].trim(), propertyName: data[6], propertyType: data[9] });
     }
 
+    // ifBody statements are one level too deep
     ifStatement(data, location, reject) {
-        // ifBody statements are one level too deep
         return new IfStatement({ condition: data[2][1], ifBody: data[3][3] });
     }
 
@@ -65,9 +59,8 @@ module.exports = class FormPostProcessor extends PostProcessor {
         return new IfElseIfElseStatement(_.merge(data[0].getOptions(),{elseIfConditional: data[3][1], elseIfBody: _.flattenDeep(data[4][3]), elseBody: _.flattenDeep(data[5][4]) }));
     }
 
-    // todo
+    // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
     answer(data, location, reject) {
-        // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
         return new Answer({ name: data[3].trim(), allocation: data[6] });
     }
 

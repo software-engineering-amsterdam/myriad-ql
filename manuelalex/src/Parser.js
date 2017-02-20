@@ -7,6 +7,8 @@ const Question = require('./statements/Question.js');
 const Answer = require('./statements/Answer.js');
 const CodeGenerator = require('./CodeGenerator.js');
 
+const AST = require('./ast/AST.js');
+
 let nearley;
 let test1, test2, test3, test4, test5;
 
@@ -45,13 +47,18 @@ module.exports = class Parser {
         }
         if (result.length > 1) {
             console.error('Ambigious parsing '+ result.length +' options, chosing the first parsing');
-            for (var i = 0; i < result.length; i++) {
+            for (let i = 0; i < result.length; i++) {
                 console.log(JSON.stringify(result[i]));
             }
             result = result[0];
         }
         console.log(`Result: ${JSON.stringify(result)}`);
+        let AST = this.makeAST(result[0]);
         return result;
+    }
+
+    makeAST(result = {}){
+        return new AST(result);
     }
 
     //TODO: parse function should be implemented using the result of-> "parser.feed(input).results"; Now it's test data
