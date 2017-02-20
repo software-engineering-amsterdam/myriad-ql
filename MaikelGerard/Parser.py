@@ -8,7 +8,6 @@ class QuestionnaireParser(object):
     def __init__(self):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
-        pp.quotedString.setParseAction(pp.removeQuotes)
 
         self.expression = self.define_expression()
         self.question = self.define_question()
@@ -25,19 +24,19 @@ class QuestionnaireParser(object):
             return Tokens.LIT["L_CURLY"] + arg + Tokens.LIT["R_CURLY"]
 
     def define_question(self):
-        return pp.Group(
-            pp.quotedString + Tokens.TYPE["VAR"] + Tokens.LIT["COLON"] +
-            Tokens.TYPE_NAME +
-            pp.Optional(Tokens.LIT["IS"] + self.embrace(self.expression))
-        ).addParseAction(AST.QuestionNode)
+        question = Tokens.TYPE["STRING"] + Tokens.TYPE["VAR"] + Tokens.LIT["COLON"] + \
+                   Tokens.TYPE_NAME
+        computed_question = question + Tokens.LIT["IS"] + self.embrace(self.expression)
+        return (pp.Group(computed_question).addParseAction(AST.ComputedQuestionNode) |
+                pp.Group(question).addParseAction(AST.QuestionNode) )
 
     def define_conditional(self):
         if_cond = Tokens.KW["IF"] + self.embrace(self.expression) + \
                   self.embrace(self.block, "curly")
+        if_else_cond = if_cond + Tokens.KW["ELSE"] + self.embrace(self.block, "curly")
 
-        return pp.Group(if_cond + pp.Optional(
-            Tokens.KW["ELSE"] + self.embrace(self.block, "curly"))
-        ).addParseAction(AST.ConditionalNode)
+        return ((pp.Group(if_else_cond)).addParseAction(AST.IfElseConditional) |
+                (pp.Group(if_cond)).addParseAction(AST.IfConditionalNode))
 
     def define_grammar(self):
         self.block << pp.Group(
@@ -49,7 +48,7 @@ class QuestionnaireParser(object):
         )
         form_block = pp.Group(form).addParseAction(AST.FormNode)
 
-        return pp.OneOrMore(form_block).addParseAction(AST.QuestionnaireAST)
+        return form_block.addParseAction(AST.QuestionnaireAST)
 
     def define_expression(self):
         # Define expressions including operator precedence. Based on:
@@ -58,7 +57,9 @@ class QuestionnaireParser(object):
             Tokens.TYPE["BOOL"].addParseAction(AST.BoolNode) |
             Tokens.TYPE["VAR"].addParseAction(AST.VarNode) |
             Tokens.TYPE["DECIMAL"].addParseAction(AST.DecimalNode) |
-            Tokens.TYPE["INT"].addParseAction(AST.IntNode)
+            Tokens.TYPE["INT"].addParseAction(AST.IntNode) |
+            Tokens.TYPE["DATE"].addParseAction(AST.DateNode) |
+            Tokens.TYPE["STRING"].addParseAction(AST.StringNode)
         )
 
         return pp.infixNotation(var_types, [

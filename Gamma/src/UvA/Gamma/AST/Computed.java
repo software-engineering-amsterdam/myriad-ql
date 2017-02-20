@@ -1,23 +1,16 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.GUI.MainScreen;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Computed implements FormItem{
+public class Computed implements FormItem {
     private String label;
     private String id;
     private String type;
-    private String expression;
-
-    private SimpleStringProperty stringValueProperty;
-
-    public Computed(){
-        stringValueProperty = new SimpleStringProperty();
-    }
+    private Expression expression;
 
     public String getLabel() {
         return label;
@@ -43,35 +36,24 @@ public class Computed implements FormItem{
         this.type = type;
     }
 
-    public String getExpression() {
-        return expression;
-    }
-
-    public void setExpression(String expression) {
+    public void setExpression(Expression expression) {
         this.expression = expression;
     }
 
-
-    public void evaluateExpression(){
-        //evaluate the expression to come to a new result
-
-        //change the value to update the ui
-        stringValueProperty.set("new result");
+    @Override
+    public void idChanged(String id, String value) {
+        expression.idChanged(id, value);
     }
+
 
     @Override
     public StringProperty getStringValueProperty() {
-        return stringValueProperty;
+        return expression.getStringValueProperty();
     }
 
     @Override
     public void show(MainScreen screen) {
         screen.showComputed(this);
-    }
-
-    @Override
-    public boolean hasID(String id) {
-        return this.id.equals(id);
     }
 
     @Override

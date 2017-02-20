@@ -1,14 +1,13 @@
 from ParserTokens import ParserTokens as Tokens
 import pyparsing as pp
 import decimal
+import datetime
 
 
 class QuestionnaireAST(object):
     def __init__(self, src, loc, tokens):
         self.root = Node("root", src, loc)
-
-        for form in tokens:
-            self.root.add_child(form)
+        self.root = tokens[0]
 
     def __eq__(self, other):
         return other.root == self.root
@@ -98,17 +97,31 @@ class QuestionNode(Node):
         super(QuestionNode, self).__init__("question", src, loc)
         question = token[0]
 
-        self.question = question[0]
+        self.question = question[0].val
         self.name = question[1].val
         self.type = question[2]
 
-        self.computed = len(question) > 3
-        self.expression = None
-        if self.computed:
-            self.expression = question[3]
+    def __eq__(self, other):
+        return other.node_type == self.node_type and \
+               other.question == self.question and other.name == self.name and \
+               other.type == self.type
 
-    def eval_type(self):
-        return self.type
+    def __str__(self, indent=0):
+        return indent * "  " + "{}: {} {}\n".format(
+            self.node_type, self.question, self.type
+        )
+
+
+class ComputedQuestionNode(Node):
+    def __init__(self, src, loc, token):
+        super(ComputedQuestionNode, self).__init__("computedQuestion", src, loc)
+        question = token[0]
+
+        self.question = question[0].val
+        self.name = question[1].val
+        self.type = question[2]
+
+        self.expression = question[3]
 
     def accept(self, visitor):
         super(QuestionNode, self).accept(visitor)
@@ -117,22 +130,18 @@ class QuestionNode(Node):
     def __eq__(self, other):
         return other.node_type == self.node_type and \
                other.question == self.question and other.name == self.name and \
-               other.type == self.type and other.computed == self.computed and \
-               other.expression == self.expression
+               other.type == self.type and other.expression == self.expression
 
     def __str__(self, indent=0):
         output = indent * "  " + "{}: \"{}\" {}: {}".format(
             self.node_type, self.question, self.name, self.type
         )
-        if self.computed:
-            output += " = ({})".format(self.expression.__str__(0))
-        output += "\n"
-        return output
+        return output + " = ({})\n".format(self.expression.__str__(0))
 
 
-class ConditionalNode(Node):
+class IfConditionalNode(Node):
     def __init__(self, src, loc, conditional):
-        super(ConditionalNode, self).__init__("conditional", src, loc)
+        super(IfConditionalNode, self).__init__("IfConditional", src, loc)
         conditional = conditional[0]
 
         assert conditional[0] == "@if", self.assert_message(
@@ -140,14 +149,28 @@ class ConditionalNode(Node):
         )
         self.expression = conditional[1]
         self.if_block = conditional[2]
-        self.else_block = None
 
-        # Else block is optional.
-        if len(conditional) == 5:
-            assert conditional[3] == "@else", self.assert_message(
-                "invalid keyword '{}'".format(conditional[3])
-            )
-            self.else_block = conditional[4]
+    def __eq__(self, other):
+        return other.expression == self.expression
+
+    def __str__(self, indent=0):
+        output = indent * "  " + "if ({}): \n".format(self.expression)
+        return output + self.if_block.__str__(indent + 1)
+
+
+class IfElseConditional(Node):
+    def __init__(self, src, loc, conditional):
+        super(IfElseConditional, self).__init__("IfElseConditional", src, loc)
+        conditional = conditional[0]
+
+        assert conditional[0] == "@if", self.assert_message(
+            "invalid keyword '{}'".format(conditional[0]))
+        self.expression = conditional[1]
+        self.if_block = conditional[2]
+
+        assert conditional[3] == "@else", self.assert_message(
+            "invalid keyword '{}'".format(conditional[3]))
+        self.else_block = conditional[4]
 
     def accept(self, visitor):
         super(ConditionalNode, self).accept(visitor)
@@ -160,11 +183,8 @@ class ConditionalNode(Node):
     def __str__(self, indent=0):
         output = indent * "  " + "if ({}): \n".format(self.expression)
         output += self.if_block.__str__(indent + 1)
-
-        if self.else_block is not None:
-            output += indent * "  " + "else: \n"
-            output += self.else_block.__str__(indent + 1)
-        return output
+        output += indent * "  " + "else: \n"
+        return output + self.else_block.__str__(indent + 1)
 
 
 class BinOpNode(Node):
@@ -211,6 +231,18 @@ class MonOpNode(Node):
 
     def __str__(self, indent=0):
         return "{}{}".format(self.op, str(self.right))
+
+
+class StringNode(Node):
+    def __init__(self, src, loc, token):
+        super(StringNode, self).__init__("string", src, loc)
+        self.val = token[0]
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
+
+    def __str__(self, indent=0):
+        return self.val
 
 
 class IntNode(Node):
@@ -269,6 +301,21 @@ class DecimalNode(Node):
     def accept(self, visitor):
         super(DecimalNode, self).accept(visitor)
         visitor.decimal_node(self)
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
+
+    def __str__(self, indent=0):
+        return str(self.val)
+
+
+class DateNode(Node):
+    def __init__(self, src, loc, token):
+        super(DateNode, self).__init__("date", src, loc)
+        date = token[0].split("-")
+        assert len(date) == 3, "Date is of invalid length {}".format(date)
+
+        self.val = datetime.date(day=date[0], month=date[1], year=date[2])
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val

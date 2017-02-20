@@ -13,7 +13,7 @@ public class Question implements FormItem {
     private String type;
     private SimpleStringProperty stringValueProperty;
 
-    public Question(){
+    public Question() {
         stringValueProperty = new SimpleStringProperty();
     }
 
@@ -38,6 +38,11 @@ public class Question implements FormItem {
     }
 
     @Override
+    public void idChanged(String id, String value) {
+        // I don't care about that, I am an independent formitem and don't need your help
+    }
+
+    @Override
     public StringProperty getStringValueProperty() {
         return this.stringValueProperty;
     }
@@ -47,10 +52,6 @@ public class Question implements FormItem {
         screen.showQuestion(this);
     }
 
-    @Override
-    public boolean hasID(String id) {
-        return this.id.equals(id);
-    }
 
     @Override
     public String toString() {

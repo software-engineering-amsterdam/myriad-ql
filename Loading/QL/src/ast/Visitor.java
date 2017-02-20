@@ -78,6 +78,11 @@ public class Visitor {
 		System.out.println(stringAtom.getValue());
 	}
 
+	public void visit(IdExpression id) {
+		System.out.println(id.getName());
+		
+	}
+
 // TODO really not needed
 //	public void visit(AddExpression addExpression) {
 //		// TODO Auto-generated method stub

@@ -17,8 +17,6 @@ public abstract class UnaryExpression extends Expression {
 		return lhs;
 	}
 	
-	public abstract Atom evaluate();
-	
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

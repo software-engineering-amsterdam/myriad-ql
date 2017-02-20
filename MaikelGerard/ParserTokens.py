@@ -23,6 +23,8 @@ class ParserTokens(object):
         "VAR": pp.Word(pp.alphas, pp.alphanums + "_"),
         "DECIMAL": pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)"),
         "MONEY": pp.Regex("([0-9]+\.[0-9]{0,2})|([0-9]*\.[0-9]{1,2})"),
+        "DATE": pp.Regex("[0-9]{2}-[0-9]{2}-[0-9]{4}"),
+        "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
     }
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
 
