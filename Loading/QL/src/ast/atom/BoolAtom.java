@@ -17,7 +17,7 @@ public class BoolAtom extends Atom {
 	}
 
 	@Override
-    public Atom and(Atom other) {
+    public BoolAtom and(Atom other) {
     	return new BoolAtom(value && other.getValue());
     }
 	
@@ -25,26 +25,6 @@ public class BoolAtom extends Atom {
 	public Atom div(Atom other) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-    
-	@Override
-    public Boolean getValue() {
-        return this.value;
-    }
-
-	@Override
-	public String getString() {
-		return null;
-	}
-
-	@Override
-    public Number getNumber() {
-    	return null;
-    }
-    
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
 	}
 
 	@Override
@@ -58,7 +38,77 @@ public class BoolAtom extends Atom {
 	}
 
 	@Override
-	public Atom not() {
+	public BoolAtom not() {
 		return new BoolAtom(!value);
+	}
+
+	@Override
+	public BoolAtom eq(Atom other) {
+		return new BoolAtom(value == other.getValue());
+	}
+
+	@Override
+	public BoolAtom greaterEq(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom greater(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom lessEq(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom less(Atom other) {
+		return null;
+	}
+
+	@Override
+	public Atom mul(Atom other) {
+		return null;
+	}
+
+	@Override
+	public BoolAtom notEq(Atom other) {
+		return new BoolAtom(value != other.getValue());
+	}
+
+	@Override
+	public BoolAtom or(Atom other) {
+		return new BoolAtom(value || other.getValue());
+	}
+
+	@Override
+	public Atom sub(Atom other) {
+		return null;
+	}
+	
+	@Override
+    public Boolean getValue() {
+        return this.value;
+    }
+
+	@Override
+	public String getString() {
+		return null;
+	}
+
+	@Override
+    public Integer getNumber() {
+    	return null;
+    }
+	
+	@Override
+	public String getType() {
+		return "boolean";
+	}
+    
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);		
 	}
 }

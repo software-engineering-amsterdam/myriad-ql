@@ -66,7 +66,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
 
     @Override
     public ASTNode visitExpression(QLParser.ExpressionContext ctx) {
-        System.out.println(ctx.getText());
+        super.visitExpression(ctx);
         return super.visitExpression(ctx);
     }
 

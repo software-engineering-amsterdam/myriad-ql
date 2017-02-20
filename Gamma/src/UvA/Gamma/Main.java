@@ -1,7 +1,9 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.BooleanExpression;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
+import UvA.Gamma.AST.NumberExpression;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
@@ -35,6 +37,9 @@ public class Main extends Application{
         ParseTree parseTree = parser.form();
         QLVisitor visitor = new QLVisitor();
         visitor.visit(parseTree);
+
+        System.out.println(new NumberExpression("2.2+2.0").toString());
+        System.out.println(new BooleanExpression("true && true").toString());
 
         Form form = visitor.getForm();
         System.out.println(new MathExpr("3/2").evaluate());

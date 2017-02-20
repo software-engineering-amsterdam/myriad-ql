@@ -7,10 +7,6 @@ public class DivExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		if (getLhs() == null || getRhs() == null) {
-			// throw exception!
-		}
-
 		return getLhs().div(getRhs());
 	}
 

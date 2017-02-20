@@ -1,5 +1,7 @@
 import ast.Question;
 import ast.Visitor;
+import ast.atom.BoolAtom;
+import ast.type.Type;
 
 // TODO remove comments
 // Checks for double questions
@@ -18,9 +20,14 @@ public class QuestionVisitor extends Visitor {
 	
 	@Override
 	public void visit(Question question) {	
-		question.getType().accept(this);
 		
-		environment.addAnswer(question.getLabel(), "answer"); // TODO implement answer	
+		question.getType().accept(this);	
+		environment.addVariableType(question.getVariable(), question.getType());		
+		environment.addLabel(question.getLabel(), question.getVariable());
+		
+		// TODO implement answers should this not be part of evaluation?
+		environment.addAnswer(question.getVariable(), new BoolAtom(false)); 
+		
 	}
 	
 }

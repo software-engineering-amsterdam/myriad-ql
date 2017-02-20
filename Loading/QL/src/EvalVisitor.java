@@ -18,7 +18,7 @@ public class EvalVisitor extends Visitor {
 		
 		Expression result = binaryExpression.evaluate() ;	
 		if (result == null) {
-			// throw
+			throw new RuntimeException("The expression on line ... cannot be evaluated");
 		}
 		
 		System.out.println("Eval: " + result);
@@ -27,6 +27,11 @@ public class EvalVisitor extends Visitor {
 	@Override
 	public void visit(UnaryExpression unaryExpression) {
 		
-		System.out.println("Eval: " + unaryExpression.evaluate());
+		Expression result = unaryExpression.evaluate();
+		if (result == null) {
+			throw new RuntimeException("The expression on line .. cannot be evaluated");
+		}
+		
+		System.out.println("Eval: " + result);
 	}	
 }

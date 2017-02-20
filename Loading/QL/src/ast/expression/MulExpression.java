@@ -12,6 +12,6 @@ public class MulExpression extends BinaryExpression {
 	@Override
 	public Atom evaluate() {
 		// TODO Auto-generated method stub
-		return null;
+		return getLhs().mul(getRhs());
 	}
 }
