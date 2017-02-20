@@ -1,10 +1,14 @@
 import java.util.Map;
 
 import ast.type.Type;
+import evaluation.Evaluator;
+import semantic.TypeChecker;
+
 import org.antlr.v4.runtime.*;
 
 import ast.Form;
 import ast.atom.Atom;
+import ui.UITest;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -36,17 +40,18 @@ public class Main {
 		 Form form = parser.form().result;
 	 
 		 System.out.println("----");
+		 
+		 TypeChecker typeChecker = new TypeChecker();
+		 
+		 semantic.Environment semanticEv = typeChecker.analyze(form);
+		 
+		 //UITest.main(semanticEnv);
 
-		 TypeChecker.main(form);
-
-
-
+		 // Evaluator evaluator = new Evaluator();
 
 		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
-
-		// UIFactory.main();
 	}
 }

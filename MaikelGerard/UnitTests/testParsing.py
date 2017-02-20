@@ -212,7 +212,7 @@ class TestParser(unittest.TestCase):
                                              create_node(AST.StringNode, "q?"),
                                              create_node(AST.VarNode, "var"), "boolean"])
         if_block = create_node(AST.BlockNode, [if_block_question])
-        if_cond = create_node(AST.IfConditionalNode, ["@if", if_expr, if_block])
+        if_cond = create_node(AST.IfNode, ["@if", if_expr, if_block])
 
         self.validate_node(self.cond_parser, 'if (var) { "q?" var : boolean }', if_cond)
 
@@ -224,7 +224,7 @@ class TestParser(unittest.TestCase):
                                              create_node(AST.StringNode, "q?"),
                                              create_node(AST.VarNode, "var"), "boolean"])
         if_block = create_node(AST.BlockNode, [if_block_question])
-        if_else_cond = create_node(AST.IfElseConditional,
+        if_else_cond = create_node(AST.IfElseNode,
                                         ["@if", if_expr, if_block, "@else", if_block])
 
         parse_str = 'if (var) { "q?" var : boolean } else { "q?" var : boolean}'
@@ -243,8 +243,8 @@ class TestParser(unittest.TestCase):
                 """
         ast_var = AST.VarNode
         ast_q = AST.QuestionNode
-        ast_if = AST.IfConditionalNode
-        ast_if_else = AST.IfElseConditional
+        ast_if = AST.IfNode
+        ast_if_else = AST.IfElseNode
         ast_str = AST.StringNode
         ast_int = AST.IntNode
         ast_root = AST.QuestionnaireAST
@@ -280,7 +280,7 @@ class TestParser(unittest.TestCase):
             "@else", create_node(AST.BlockNode, [q1])])
         form_block2 = create_node(AST.BlockNode, [q1, if_else_block, q2])
         form_node = create_node(AST.FormNode, ["@form", create_node(ast_var, "TestForm"),
-                                                    form_block2])
+                                               form_block2])
         form_node = create_node(ast_root, form_node)
         self.validate_node(self.parser.grammar, form2, form_node)
 

@@ -1,7 +1,6 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.gui.QuestionForm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,21 +15,12 @@ public class Main {
         System.out.println("** Starting our parser **");
         System.out.println("- Parsing the input");
 
-        if (1==1) {
-
-        }
-        if (true && true || false || true && true) {
-
-        }
-
-        if ('r' >= 's') {
-
-        }
-        int i = 0;
         try {
             Ast ast = Ast.generateAst(new File("input"));
-            System.out.println("Rootnode name: " + ast.getRootNode().getId());
-            new QuestionForm(ast.getRootNode()).show();
+            System.out.println("Rootnode name: " + ast.getFormName());
+            SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
+            semanticsAnalyzer.check();
+//            new QuestionForm(ast.getRootNode()).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -43,6 +33,9 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().getId());
+
+//        List<String> stringList = new ArrayList<>();
+//        stringList.get
     }
 }
 

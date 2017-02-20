@@ -64,7 +64,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        Node questionNode = new StringQuestion(ctx.getText(), ctx.QUESTION().toString());
+        Node questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.STRING_LITERAL().toString());
         addNodeToAst(questionNode);
     }
 

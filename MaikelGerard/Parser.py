@@ -1,4 +1,5 @@
 from ParserTokens import ParserTokens as Tokens
+from TypeChecking import TypeChecking
 import pyparsing as pp
 import AST
 
@@ -27,15 +28,15 @@ class QuestionnaireParser(object):
                    Tokens.TYPE_NAME
         computed_question = question + Tokens.LIT["IS"] + self.embrace(self.expression)
         return (pp.Group(computed_question).addParseAction(AST.ComputedQuestionNode) |
-                pp.Group(question).addParseAction(AST.QuestionNode) )
+                pp.Group(question).addParseAction(AST.QuestionNode))
 
     def define_conditional(self):
         if_cond = Tokens.KW["IF"] + self.embrace(self.expression) + \
                   self.embrace(self.block, "curly")
         if_else_cond = if_cond + Tokens.KW["ELSE"] + self.embrace(self.block, "curly")
 
-        return (pp.Group(if_else_cond).addParseAction(AST.IfElseConditional) |
-                pp.Group(if_cond).addParseAction(AST.IfConditionalNode))
+        return (pp.Group(if_else_cond).addParseAction(AST.IfElseNode) |
+                pp.Group(if_cond).addParseAction(AST.IfNode))
 
     def define_grammar(self):
         self.block << pp.Group(
@@ -99,3 +100,5 @@ if __name__ == '__main__':
     parser = QuestionnaireParser()
     parsedAST = parser.parse(form1)
     print parsedAST
+
+    TypeChecking(parsedAST)
