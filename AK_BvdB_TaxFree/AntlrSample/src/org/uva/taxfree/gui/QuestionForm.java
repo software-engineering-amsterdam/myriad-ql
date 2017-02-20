@@ -1,4 +1,4 @@
-package org.uva.taxfree.GUI;
+package org.uva.taxfree.gui;
 
 import org.uva.taxfree.model.NamedNode;
 import org.uva.taxfree.model.Node;
