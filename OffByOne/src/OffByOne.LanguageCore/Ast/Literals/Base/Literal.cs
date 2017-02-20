@@ -1,6 +1,8 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Literals.Base
 {
-    public abstract class Literal : AstNode
+    using OffByOne.LanguageCore.Ast.Expressions.Base;
+
+    public abstract class Literal : Expression
     {
     }
 }

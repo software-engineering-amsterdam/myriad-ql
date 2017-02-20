@@ -107,7 +107,7 @@
     <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
     <Compile Include="Checker\QlTypeChecker.cs" />
-    <Compile Include="MyQlVisitor.cs" />
+    <Compile Include="CustomQlVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
