@@ -26,7 +26,7 @@ export let test2 = 'form y{\n \n}}';
 export let test3 = `form taxOfficeExample {question 'Q1' sellingPrice: money\n
 question 'Q2'\n soldPrice: money
 answer 'A2'\n
-A2: money = (Q1-Q2)\n
+valueResidue: money = (sellingPrice-soldPrice)\n
     }`;
 
 // TODO sentences should be alphanumeric
