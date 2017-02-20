@@ -5,8 +5,7 @@ import ast.expression.Expression;
 
 public abstract class Atom extends Expression {
 	
-	// TODO can we not implement the default behaviour here?
-	// TODO can BoolAtom also be Boolean?
+	// TODO can we not implement the default behaviour here? YES WE CAN
 	public abstract Atom add(Atom other);
 	public abstract BoolAtom and(Atom other);
 	public abstract Atom div(Atom other);
@@ -28,9 +27,16 @@ public abstract class Atom extends Expression {
 	public abstract Boolean getValue();
 	public abstract String getString();
 	public abstract String getType();
-
+	
+	
+	@Override
+	public Atom evaluate() {
+		return this;
+	}
+	
 	// TODO do we want to add this?
 	@Override
 	public abstract void accept(Visitor v);
+
 	
 }

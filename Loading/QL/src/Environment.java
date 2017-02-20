@@ -20,9 +20,9 @@ public class Environment {
 	public void addLabel(String label, String variableName) {
 		
 		if (labelVariable.containsKey(label)) {
+			// TODO WARNING not throw
 			System.out.println("The question \" "  + label 
 					+ " \"on line ... exists twice in the questionnaire.");
-			// TODO print to the screen for the user
 		}		
 		labelVariable.put(label, variableName);
 	}
@@ -38,16 +38,21 @@ public class Environment {
 					" but is of type: " + answer.getType());
 			// TODO print to the screen for the user
 		}
+		
 		variableAnswer.put(variable, answer);
 	}
 	
 	public void addVariableType(String variable, Type type) {
 		
 		if (variableType.containsKey(variable)) {
-			// TODO THROW if we do not allow two times the same variable name
-			// Also change the type of map in that case
+			throw new RuntimeException("The variable: " + variable + " on line ... " + 
+		" cannot be added, because it is already defined");
 		}
 		variableType.put(variable, type);
+	}
+	
+	public boolean variableExists(String variable) {
+		return variableType.containsKey(variable);
 	}
 	
 	public Map<String, Atom> getAnswers() {

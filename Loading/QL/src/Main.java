@@ -15,7 +15,7 @@ public class Main {
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
 		 		+ "Name1: \"Question1\" boolean\n"
-		 		+ "if (\"text1\" == \"text2\") {"
+		 		+ "if (Name0) {"
 		 		+ "Name2: \"Question2\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question3\" boolean\n"
@@ -36,15 +36,10 @@ public class Main {
 		 QLParser parser = new QLParser(tokens);
 		 // System.out.println(parser.form().result.getBlock().getStatements().get(0).getExpression().print());
 		 Form form = parser.form().result;
-
-		 System.out.println("----");
-
-		 Environment environment = new Environment();
-		 EvalVisitor ASTVisitor = new EvalVisitor(environment);
-		 ASTVisitor.visit(form);
-
+	 
 		 System.out.println("----");
 		 
+		 Environment environment = new Environment();
 		 QuestionVisitor QVisitor = new QuestionVisitor(environment);
 		 QVisitor.visit(form);
 		 Map<String, Atom> answers = QVisitor.getEnvironment().getAnswers();
@@ -53,10 +48,17 @@ public class Main {
 			 System.out.println("Question: " + answer);
 		 }
 		 
+		 System.out.println("----");
+
+		 EvalVisitor evalVisitor = new EvalVisitor(environment);
+		 evalVisitor.visit(form);
+
+
+		 
 //		 System.out.println(parser.root().result.getBlock().getQuestions());
 		// System.out.println(parser.root().result.getBlock().getStatements().get(0).getExpression().isEval());
 		 // System.out.println(tree.toStringTree(parser)); // print LISP-style tree
 
-		UIFactory.main();
+		// UIFactory.main();
 	}
 }

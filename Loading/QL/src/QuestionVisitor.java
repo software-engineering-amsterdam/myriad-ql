@@ -3,9 +3,9 @@ import ast.Visitor;
 import ast.atom.BoolAtom;
 import ast.type.Type;
 
-// TODO remove comments
-// Checks for double questions
-// Saves answers in Environment
+
+// Checks for duplicated questions
+// Duplicate Labels (warning)
 public class QuestionVisitor extends Visitor {
 	
 	private Environment environment;
