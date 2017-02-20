@@ -88,7 +88,7 @@ questionIndexFromItem item =
         Field _ ( id, loc ) _ ->
             DictList.singleton id [ loc ]
 
-        ComputedField _ ( id, loc ) valueType _ ->
+        .ComputedField _ (id, loc) _ _->
             DictList.singleton id [ loc ]
 
         IfThen _ _ ->
