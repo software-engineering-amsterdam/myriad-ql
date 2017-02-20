@@ -10,6 +10,11 @@ class TestParser(TestCase):
         self.actual_result = parse(self.input_string)
         self.assertListEqual(self.expected_result, self.actual_result.asList(), )
 
+    def test_parse_simple_form_no_name(self):
+        self.input_string = "form {}"
+        with self.assertRaises(ParseException):
+            parse(self.input_string)
+
     def test_parse_simple_form_invalid_name(self):
         self.input_string = "form $$$$$ {}"
         with self.assertRaises(ParseException):
