@@ -24,7 +24,7 @@ ifelseifelse_statement  -> if_statement "else if" _ conditional if_body else_cla
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
 if_body                 -> _ openBrace _ statement:* closedBrace _
-conditional             -> parOpen propertyName parClose
+conditional             -> parOpen expression parClose
 else_clause             -> "else" _ openBrace _ statement:* closedBrace _
 
 answer                  -> "answer" _ prime sentence prime _ allocation _                                      {% FormPostProcessor.answer %}
