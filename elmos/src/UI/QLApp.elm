@@ -89,7 +89,7 @@ viewField model field =
 visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
 visibleFieldWidgetConfig env field =
     case field of
-        Editable label identifier valueType ->
+        .Editable label identifier _->
             { identifier = identifier
             , label = label
             , env = env

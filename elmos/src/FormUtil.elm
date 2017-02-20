@@ -12,10 +12,6 @@ type VisibleField
     | Computed Label String ValueType Expression
 
 
-type alias IsComputed =
-    Bool
-
-
 fieldValueType : VisibleField -> ValueType
 fieldValueType field =
     case field of
@@ -24,16 +20,6 @@ fieldValueType field =
 
         Computed _ _ valueType _ ->
             valueType
-
-
-isEditable : VisibleField -> Bool
-isEditable field =
-    case field of
-        Editable _ _ _ ->
-            True
-
-        Computed _ _ _ _ ->
-            False
 
 
 updateValue : String -> Value -> Environment -> Form -> Environment
@@ -49,7 +35,6 @@ updateComputedFields form env =
             activeComputedFields env form
                 |> List.map (Tuple3.tail >> Tuple.mapSecond (Evaluator.evaluate env))
                 |> List.foldr (\( identifier, value ) -> Env.withFormValue identifier value) env
-                |> Debug.log "New env"
     in
         if newEnv == env then
             env
