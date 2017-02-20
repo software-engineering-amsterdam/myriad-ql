@@ -46,12 +46,12 @@ public class QLFloat extends QLLiteral {
     }
 
     @Override
-    public QLLiteral divEval(QLFloat other) {
+    protected QLLiteral divEval(QLFloat other) {
         return new QLFloat(other.getValue() / this.getValue());
     }
 
     @Override
-    public QLLiteral divEval(QLInt other) {
+    protected QLLiteral divEval(QLInt other) {
         return new QLFloat(other.getValue() / this.getValue());
     }
 
@@ -61,12 +61,12 @@ public class QLFloat extends QLLiteral {
     }
 
     @Override
-    public QLLiteral mulEval(QLFloat other) {
+    protected QLLiteral mulEval(QLFloat other) {
         return new QLFloat(this.getValue() * other.getValue());
     }
 
     @Override
-    public QLLiteral mulEval(QLInt other) {
+    protected QLLiteral mulEval(QLInt other) {
         return new QLFloat(this.getValue() * other.getValue());
     }
 
@@ -81,12 +81,12 @@ public class QLFloat extends QLLiteral {
     }
 
     @Override
-    public QLLiteral gTEval(QLFloat other) {
+    protected QLLiteral gTEval(QLFloat other) {
         return  new QLBoolean(this.getValue() > other.getValue());
     }
 
     @Override
-    public QLLiteral gTEval(QLInt other) {
+    protected QLLiteral gTEval(QLInt other) {
         return  new QLBoolean(this.getValue() > other.getValue());
     }
 
