@@ -33,7 +33,6 @@ class GUI
     @questions = []
     q1 = BooleanQuestion.new(gui: self, label: 'hoe')
     q2 = BooleanQuestion.new(gui: self, label: 'wat')
-    q1.questions = [q2]
 
     # condition = BooleanLiteral.new(true)
     condition1 = And.new(q2.variable, BooleanLiteral.new(true))
@@ -44,14 +43,13 @@ class GUI
     # expr = Add.new(IntegerLiteral.new(5), IntegerLiteral.new(5))
     calculation = Add.new(q3.variable, IntegerLiteral.new(5))
 
-    @q4 = ComputedQuestion.new(gui: self, label: 'hoeveel2', calculation: calculation, condition: condition)
+    ComputedQuestion.new(gui: self, label: 'hoeveel2', calculation: calculation, condition: condition)
 
     create_submit_button
     Tk.mainloop
   end
 
   def value_changed(question)
-    p '--------------'
     # p 'value changed'
     # p question.value
     @questions.each(&:refresh)

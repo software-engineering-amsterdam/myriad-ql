@@ -2,19 +2,10 @@ require 'parslet'
 
 class Variable
   attr_reader :name
-  attr_accessor :tk_variable
 
   def initialize(name)
     @name = name.to_s
   end
-
-  def eval
-    tk_variable.value
-  end
-
-  # def accept(type_checker)
-  #   type_checker.visit_variable(self)
-  # end
 end
 
 class Parser < Parslet::Parser
