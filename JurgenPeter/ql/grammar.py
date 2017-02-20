@@ -48,6 +48,7 @@ ne_op = Literal("!=").setParseAction(lambda _: NeOp)
 and_op = Literal("&&").setParseAction(lambda _: AndOp)
 or_op = Literal("||").setParseAction(lambda _: OrOp)
 
+
 def create_unop(wrapped_tokens):
     tokens = wrapped_tokens[0]
     nodetype = tokens[0]
@@ -95,8 +96,10 @@ block.addParseAction(lambda tokens: [tokens.asList()])
 form = Suppress("form") + identifier + block
 form.setParseAction(lambda tokens: Form(*tokens))
 
+
 def parse_file(filename):
     return form.parseFile(filename)[0]
+
 
 def parse_string(string):
     return form.parseString(string)[0]

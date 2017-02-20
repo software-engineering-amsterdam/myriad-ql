@@ -124,7 +124,7 @@ class Variable:
         self.identifier = identifier
 
     def evaluate(self, environment):
-        if self.indentifier in environment:
+        if self.identifier in environment:
             return environment[self.identifier]
         return None
 

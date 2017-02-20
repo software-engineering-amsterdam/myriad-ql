@@ -8,7 +8,8 @@ import ql.grammar
 def main():
 
     if len(argv) < 3:
-        print("Error: insufficient arguments given, requires input and output filenames")
+        print("Error: insufficient arguments given, requires input and"
+              "output file names")
         return
 
     filename_inp = argv[1]
@@ -19,9 +20,9 @@ def main():
         return
 
     form = ql.grammar.parse_file(filename_inp)
-    #symboltable = form.symbols()
-
-    #if not form.typecheck():
+    # symboltable = form.symbols()
+    #
+    # if not form.typecheck():
     #    print("Error: form is not correct")
     #    return
 
