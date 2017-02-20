@@ -98,13 +98,7 @@
     <Compile Include="Ast\Statements\Branch\ElseStatement.cs" />
     <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
     <Compile Include="Ast\Statements\FormStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\Base\QuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\BooleanQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DateQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DecimalQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\IntegerQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
+    <Compile Include="Ast\Statements\QuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
     <Compile Include="Checker\QlTypeChecker.cs" />
     <Compile Include="CustomQlVisitor.cs" />

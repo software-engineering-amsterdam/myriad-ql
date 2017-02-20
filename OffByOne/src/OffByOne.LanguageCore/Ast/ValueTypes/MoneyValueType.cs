@@ -2,7 +2,7 @@
 {
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
 
-    public class MoneyValueType : ValueType
+    public class MoneyValueType : NumericalValueType
     {
     }
 }

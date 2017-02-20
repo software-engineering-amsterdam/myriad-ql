@@ -2,7 +2,7 @@
 {
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
 
-    public class FloatValueType : ValueType
+    public class FloatValueType : NumericalValueType
     {
     }
 }

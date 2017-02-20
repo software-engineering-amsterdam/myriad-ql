@@ -19,7 +19,7 @@
             ////TestQlsGrammar();
 
             var typeChcker = new QlTypeChecker();
-            typeChcker.CheckTypes(new AddExpression(new IntegerLiteral(1), new IntegerLiteral(2)));
+            typeChcker.CheckTypes(new AddExpression(new BooleanLiteral(true), new IntegerLiteral(2)));
         }
 
         private static void TestQlGrammar()
