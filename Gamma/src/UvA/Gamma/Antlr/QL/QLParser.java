@@ -656,61 +656,22 @@ public class QLParser extends Parser {
 	}
 
 	public static class NumExprContext extends ParserRuleContext {
+		public Token op;
+		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
+		public List<NumExprContext> numExpr() {
+			return getRuleContexts(NumExprContext.class);
+		}
+		public NumExprContext numExpr(int i) {
+			return getRuleContext(NumExprContext.class,i);
+		}
 		public NumExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_numExpr; }
-	 
-		public NumExprContext() { }
-		public void copyFrom(NumExprContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class DivContext extends NumExprContext {
-		public Token op;
-		public List<NumExprContext> numExpr() {
-			return getRuleContexts(NumExprContext.class);
-		}
-		public NumExprContext numExpr(int i) {
-			return getRuleContext(NumExprContext.class,i);
-		}
-		public DivContext(NumExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitDiv(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class AddContext extends NumExprContext {
-		public Token op;
-		public List<NumExprContext> numExpr() {
-			return getRuleContexts(NumExprContext.class);
-		}
-		public NumExprContext numExpr(int i) {
-			return getRuleContext(NumExprContext.class,i);
-		}
-		public AddContext(NumExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitAdd(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class NumIdContext extends NumExprContext {
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
-		public NumIdContext(NumExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitNumId(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class NumContext extends NumExprContext {
-		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
-		public NumContext(NumExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitNum(this);
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitNumExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -736,19 +697,12 @@ public class QLParser extends Parser {
 			switch (_input.LA(1)) {
 			case NUMBER:
 				{
-				_localctx = new NumContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-
 				setState(85);
 				match(NUMBER);
 				}
 				break;
 			case ID:
 				{
-				_localctx = new NumIdContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(86);
 				match(ID);
 				}
@@ -770,15 +724,15 @@ public class QLParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
-						_localctx = new DivContext(new NumExprContext(_parentctx, _parentState));
+						_localctx = new NumExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_numExpr);
 						setState(89);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(90);
-						((DivContext)_localctx).op = _input.LT(1);
+						((NumExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__18 || _la==T__19) ) {
-							((DivContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((NumExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -791,15 +745,15 @@ public class QLParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new AddContext(new NumExprContext(_parentctx, _parentState));
+						_localctx = new NumExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_numExpr);
 						setState(92);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(93);
-						((AddContext)_localctx).op = _input.LT(1);
+						((NumExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__20 || _la==T__21) ) {
-							((AddContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((NumExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
