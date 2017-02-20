@@ -101,6 +101,10 @@ class QuestionNode(Node):
         self.name = question[1].val
         self.type = question[2]
 
+    def accept(self, visitor):
+        super(QuestionNode, self).accept(visitor)
+        visitor.question_node(self)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and \
                other.question == self.question and other.name == self.name and \
@@ -124,8 +128,8 @@ class ComputedQuestionNode(Node):
         self.expression = question[3]
 
     def accept(self, visitor):
-        super(QuestionNode, self).accept(visitor)
-        visitor.question_node(self)
+        super(ComputedQuestionNode, self).accept(visitor)
+        visitor.computed_question_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -139,9 +143,9 @@ class ComputedQuestionNode(Node):
         return output + " = ({})\n".format(self.expression.__str__(0))
 
 
-class IfConditionalNode(Node):
+class IfNode(Node):
     def __init__(self, src, loc, conditional):
-        super(IfConditionalNode, self).__init__("IfConditional", src, loc)
+        super(IfNode, self).__init__("if", src, loc)
         conditional = conditional[0]
 
         assert conditional[0] == "@if", self.assert_message(
@@ -149,6 +153,10 @@ class IfConditionalNode(Node):
         )
         self.expression = conditional[1]
         self.if_block = conditional[2]
+
+    def accept(self, visitor):
+        super(IfNode, self).accept(visitor)
+        visitor.if_node(self)
 
     def __eq__(self, other):
         return other.expression == self.expression
@@ -158,9 +166,9 @@ class IfConditionalNode(Node):
         return output + self.if_block.__str__(indent + 1)
 
 
-class IfElseConditional(Node):
+class IfElseNode(Node):
     def __init__(self, src, loc, conditional):
-        super(IfElseConditional, self).__init__("IfElseConditional", src, loc)
+        super(IfElseNode, self).__init__("ifElse", src, loc)
         conditional = conditional[0]
 
         assert conditional[0] == "@if", self.assert_message(
@@ -173,8 +181,8 @@ class IfElseConditional(Node):
         self.else_block = conditional[4]
 
     def accept(self, visitor):
-        super(ConditionalNode, self).accept(visitor)
-        visitor.conditional_node(self)
+        super(IfElseNode, self).accept(visitor)
+        visitor.if_else_node(self)
 
     def __eq__(self, other):
         return other.expression == self.expression and \
@@ -198,8 +206,7 @@ class BinOpNode(Node):
 
     def accept(self, visitor):
         super(BinOpNode, self).accept(visitor)
-        self.left.accept(visitor)
-        self.right.accept(visitor)
+        visitor.binop_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -223,7 +230,7 @@ class MonOpNode(Node):
 
     def accept(self, visitor):
         super(MonOpNode, self).accept(visitor)
-        self.right.accept(visitor)
+        visitor.monop_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -237,6 +244,10 @@ class StringNode(Node):
     def __init__(self, src, loc, token):
         super(StringNode, self).__init__("string", src, loc)
         self.val = token[0]
+
+    def accept(self, visitor):
+        super(StringNode, self).accept(visitor)
+        return visitor.string_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -252,7 +263,7 @@ class IntNode(Node):
 
     def accept(self, visitor):
         super(IntNode, self).accept(visitor)
-        visitor.int_node(self)
+        return visitor.int_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -268,7 +279,7 @@ class BoolNode(Node):
 
     def accept(self, visitor):
         super(BoolNode, self).accept(visitor)
-        visitor.bool_node(self)
+        return visitor.bool_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -284,7 +295,7 @@ class VarNode(Node):
 
     def accept(self, visitor):
         super(VarNode, self).accept(visitor)
-        visitor.var_node(self)
+        return visitor.var_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -300,7 +311,7 @@ class DecimalNode(Node):
 
     def accept(self, visitor):
         super(DecimalNode, self).accept(visitor)
-        visitor.decimal_node(self)
+        return visitor.decimal_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -316,6 +327,10 @@ class DateNode(Node):
         assert len(date) == 3, "Date is of invalid length {}".format(date)
 
         self.val = datetime.date(day=date[0], month=date[1], year=date[2])
+
+    def accept(self, visitor):
+        super(DateNode, self).accept(visitor)
+        return visitor.date_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
