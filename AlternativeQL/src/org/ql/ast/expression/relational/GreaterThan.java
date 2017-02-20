@@ -2,6 +2,7 @@ package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
 import org.ql.ast.Node;
+import org.ql.ast.Visitor;
 
 public class GreaterThan implements Expression {
     private Expression left;
@@ -23,5 +24,10 @@ public class GreaterThan implements Expression {
     @Override
     public String toString() {
         return "(" + left + ">" + right + ")";
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

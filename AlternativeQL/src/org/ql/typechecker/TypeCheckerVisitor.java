@@ -1,8 +1,6 @@
 package org.ql.typechecker;
 
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
+import org.ql.ast.*;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
@@ -16,165 +14,145 @@ import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.grammar.QLParserParser;
 
-public class TypeCheckerVisitor implements AbstractTypeCheckerVisitor {
+public class TypeCheckerVisitor implements Visitor {
 
     @Override
-    public void visitForm(Form ctx) {
+    public void visit(Form astNode) {
 
     }
 
     @Override
-    public void visitQuestion(Question ctx) {
+    public void visit(Identifier identifier) {
 
     }
 
     @Override
-    public void visitIf(If ctx) {
+    public void visit(Question node) {
 
     }
 
     @Override
-    public void visitStatement(Statement ctx) {
+    public void visit(If node) {
 
     }
 
     @Override
-    public void visitQuestionText(QuestionText nctx) {
+    public void visit(Statement node) {
 
     }
 
     @Override
-    public void visitDecimalLiteral(DecimalLiteral ctx) {
+    public void visit(QuestionText node) {
 
     }
 
     @Override
-    public void visitNegation(Negation ctx) {
+    public void visit(Negation node) {
 
     }
 
     @Override
-    public void visitProduct(Product ctx) {
+    public void visit(Product node) {
 
     }
 
     @Override
-    public void visitIncrement(Increment ctx) {
+    public void visit(Increment node) {
 
     }
 
     @Override
-    public void visitSubtraction(QLParserParser.SubtractionContext ctx) {
+    public void visit(Subtraction node) {
 
     }
 
     @Override
-    public void visitNotEqual(NotEqual ctx) {
+    public void visit(NotEqual node) {
 
     }
 
     @Override
-    public void visitLogicalAnd(LogicalAnd ctx) {
+    public void visit(LogicalAnd node) {
 
     }
 
     @Override
-    public void visitLowerThan(LowerThan ctx) {
+    public void visit(LowerThan node) {
 
     }
 
     @Override
-    public void visitGreaterThanOrEqual(GreaterThanOrEqual ctx) {
+    public void visit(GreaterThanOrEqual node) {
 
     }
 
     @Override
-    public void visitDivision(Division ctx) {
+    public void visit(Division node) {
 
     }
 
     @Override
-    public void visitParameter(Parameter ctx) {
+    public void visit(Parameter node) {
 
     }
 
     @Override
-    public void visitIdentifier(Identifier ctx) {
+    public void visit(Group node) {
 
     }
 
     @Override
-    public void visitBooleanLiteral(BooleanLiteral ctx) {
+    public void visit(Addition node) {
 
     }
 
     @Override
-    public void visitGroup(Group ctx) {
+    public void visit(GreaterThan node) {
 
     }
 
     @Override
-    public void visitAddition(QLParserParser.AdditionContext ctx) {
+    public void visit(Decrement node) {
 
     }
 
     @Override
-    public void visitGreaterThan(GreaterThan ctx) {
+    public void visit(Equals node) {
 
     }
 
     @Override
-    public void visitStringLiteral(StringLiteral ctx) {
+    public void visit(LowerThanOrEqual node) {
 
     }
 
     @Override
-    public void visitDecrement(Decrement ctx) {
+    public void visit(LogicalOr node) {
 
     }
 
     @Override
-    public void visitEquals(Equals ctx) {
+    public void visit(BooleanLiteral node) {
 
     }
 
     @Override
-    public void visitLowerThanOrEqual(LowerThanOrEqual ctx) {
+    public void visit(DecimalLiteral node) {
 
     }
 
     @Override
-    public void visitIntegerLiteral(IntegerLiteral ctx) {
+    public void visit(IntegerLiteral node) {
 
     }
 
     @Override
-    public void visitLogicalOr(LogicalOr ctx) {
+    public void visit(StringLiteral node) {
 
     }
 
     @Override
-    public void visitTypeBooleanLiteral(BooleanLiteral ctx) {
-
-    }
-
-    @Override
-    public void visitTypeDecimalLiteral(DecimalLiteral ctx) {
-
-    }
-
-    @Override
-    public void visitTypeIntegerLiteral(IntegerLiteral ctx) {
-
-    }
-
-    @Override
-    public void visitTypeString(StringLiteral ctx) {
-
-    }
-
-    @Override
-    public void visitType(Type ctx) {
+    public void visit(Type node) {
 
     }
 }

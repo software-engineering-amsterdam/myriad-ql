@@ -11,4 +11,9 @@ public class Identifier implements Node {
     public String toString() {
         return id;
     }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

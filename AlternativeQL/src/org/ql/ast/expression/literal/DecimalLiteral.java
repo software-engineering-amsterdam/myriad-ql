@@ -1,6 +1,7 @@
 package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Visitor;
 
 import java.lang.*;
 import java.lang.String;
@@ -14,5 +15,10 @@ public class DecimalLiteral extends AbstractLiteral<BigDecimal> implements Expre
     @Override
     public String toString() {
         return value.toPlainString();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

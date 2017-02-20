@@ -1,6 +1,7 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Visitor;
 
 public class Division implements Expression {
     private final Expression left;
@@ -22,5 +23,10 @@ public class Division implements Expression {
     @Override
     public String toString() {
         return "(" + left + "/" + right + ")";
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

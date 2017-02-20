@@ -1,6 +1,7 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
+import org.ql.ast.Visitor;
 
 public class LogicalAnd implements Expression {
     private Expression left;
@@ -22,5 +23,10 @@ public class LogicalAnd implements Expression {
     @Override
     public String toString() {
         return "(" + left + "&&" + right + ")";
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

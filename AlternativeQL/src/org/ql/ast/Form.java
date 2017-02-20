@@ -1,9 +1,5 @@
 package org.ql.ast;
 
-import org.ql.ast.Identifier;
-import org.ql.ast.Node;
-import org.ql.ast.Statement;
-
 import java.util.List;
 
 public class Form implements Node {
@@ -25,5 +21,10 @@ public class Form implements Node {
 
     public Statement getStatement(int index) {
         return statements.get(index);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
