@@ -37,7 +37,7 @@ multiply_op -> "*"
 assignOp     -> "="
 
 
-propertyName -> [A-Za-z0-9]:+                                                                       {% FormPostProcessor.toString %}
+propertyName -> [A-Za-z0-9]:+                                                                               {% FormPostProcessor.toString %}
 propertyType -> "boolean"
               | "string"
               | "integer"
@@ -46,8 +46,10 @@ propertyType -> "boolean"
               | "money"
 
 newLine      -> "\n"                                                                                        {% FormPostProcessor.toNull %}
-sentence     -> [\w|\s|?|:]:+                                                                               {% FormPostProcessor.toString %}
-word         -> [A-Za-z0-9-]:+                                                                                  {% FormPostProcessor.toString %}
+
+sentence -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]"':;?/>.<,i]:+                                                 {% function(d) { return d[0].join("") } %}
+
+word         -> [A-Za-z0-9]:+                                                                               {% FormPostProcessor.toString %}
 prime        -> "'"
 openBrace    -> "{"
 closedBrace  -> "}"
