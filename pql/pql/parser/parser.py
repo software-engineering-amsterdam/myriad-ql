@@ -51,7 +51,7 @@ def parse(input_string):
 
     # Arithmetic precedence
     arith_expr = infixNotation(
-        arith_operand,
+        arith_operand.setResultsName('arithmetic_operand'),
         arith_prec
     )
 
@@ -61,7 +61,8 @@ def parse(input_string):
     )
 
     # Expressions
-    arithmetic_expr = arith_expr
+    arithmetic_expr = arith_expr.setResultsName('arithmetic_expr').\
+        setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
     boolean_expr = bool_expr
 

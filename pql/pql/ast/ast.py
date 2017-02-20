@@ -39,19 +39,17 @@ class Field(Node):
         if arithmetic_statement:
             self.add_child(arithmetic_statement)
 
-
+#TODO: If you check debug there is an unneccessary extra level caused by Expression/Arithmetic, might need fixing in parser
 class Arithmetic(Node):
-    def __init__(self, parsed_output):
+    def __init__(self, expression):
         super(Arithmetic, self).__init__('arithmetic_statement')
-        self.lhs, self.operator, self.rhs = parsed_output.arithmetic_statement[0]
+        self.add_child(expression)
+        # self.lhs, self.operator, self.rhs = parsed_output.arithmetic_statement[0]
 
 
 class Expression(Node):
     def __init__(self, parsed_output):
         super(Expression, self).__init__('arithmetic_expression')
-        self.identifier = parsed_output.arthmentic_expression.identifier
-        self.title = parsed_output.arthmentic_expression.title
-        self.add_child(parsed_output.arthmentic_expression)
 
 
 class Conditional(Node):
