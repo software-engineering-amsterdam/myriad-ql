@@ -28,8 +28,11 @@ class OperandsTypeChecker < BaseChecker
 
   # an expression is checked for correctness
   def visit_expression(subject)
+    p subject
     subject_type = subject.class.real_type
+    # p possible_types
 
+    #
     if subject.left.kind_of?(Variable)
       left_type = @types[subject.left.name].class
     else
@@ -42,22 +45,22 @@ class OperandsTypeChecker < BaseChecker
       right_type = subject.right.class.real_type
     end
 
-    test = []
+    errors = []
     # the left side does not match the operator
-    if subject_type != left_type
-      test.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.class.to_operator} operator")
+    unless subject.class.includes_type?(left_type)
+      errors.push("[ERROR]: #{left_type} can not be used with #{subject.class.to_operator} operator")
     end
 
     # the right side does not match the operator
-    if subject_type != right_type
-      test.push("[ERROR]: #{subject.right.name} of type #{right_type} can not be used with #{subject.class.to_operator} operator")
+    unless subject.class.includes_type?(right_type)
+      errors.push("[ERROR]: #{right_type} can not be used with #{subject.class.to_operator} operator")
     end
 
     # the left and right side do not match
-    if left_type != right_type
-      test.push("[ERROR]: #{subject.left.name} of type #{left_type} can not be used with #{subject.right.name} of type #{right_type}")
+    if ([left_type].flatten & [right_type].flatten).empty?
+      errors.push("[ERROR]: #{left_type} can not be used with #{right_type} in an expression")
     end
 
-    test.push([visit_calculation(subject.left), visit_calculation(subject.right)])
+    errors.push([visit_calculation(subject.left), visit_calculation(subject.right)])
   end
 end

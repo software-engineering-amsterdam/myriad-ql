@@ -3,6 +3,10 @@ require_relative '../helper'
 
 class Expression
   extend Helper
+
+  def self.includes_type?(type)
+    !([type].flatten & real_type).empty?
+  end
 end
 
 class Negation < Expression
@@ -35,13 +39,15 @@ class BinaryExpression < Expression
 end
 
 # booleans: && ||
-class And < BinaryExpression
+class BooleanExpression < BinaryExpression
+  def self.real_type
+    [BooleanType]
+  end
+end
+
+class And < BooleanExpression
   def self.to_operator
     '&&'
-  end
-
-  def self.real_type
-    BooleanType
   end
 
   def eval
@@ -49,35 +55,28 @@ class And < BinaryExpression
   end
 end
 
-class Or < BinaryExpression
+class Or < BooleanExpression
   def self.to_operator
     '||'
   end
+end
 
+# arithmetic: - + * /
+class ArithmeticExpression < BinaryExpression
   def self.real_type
-    BooleanType
+    [IntegerType]
   end
 end
 
-
-# arithmetic: - + * /
-class Subtract < BinaryExpression
+class Subtract < ArithmeticExpression
   def self.to_operator
     '-'
   end
-
-  def self.real_type
-    IntegerType
-  end
 end
 
-class Add < BinaryExpression
+class Add < ArithmeticExpression
   def self.to_operator
     '+'
-  end
-
-  def self.real_type
-    IntegerType
   end
 
   def eval
@@ -85,54 +84,69 @@ class Add < BinaryExpression
   end
 end
 
-class Multiply < BinaryExpression
+class Multiply < ArithmeticExpression
   def self.to_operator
     '*'
   end
 end
 
-class Divide < BinaryExpression
+class Divide < ArithmeticExpression
   def self.to_operator
     '/'
   end
 end
 
-# comparisons: < > <= >= == !=
-class Less < BinaryExpression
-  def self.to_operator
-    '<'
+# comparisons == !=
+class ComparisonEqual < BinaryExpression
+  def self.real_type
+    [BooleanType, IntegerType, StringType]
   end
 end
 
-class Greater < BinaryExpression
-  def self.to_operator
-    '>'
-  end
-end
-
-class LessEqual < BinaryExpression
-  def self.to_operator
-    '<='
-  end
-end
-
-class GreaterEqual < BinaryExpression
-  def self.to_operator
-    '>='
-  end
-end
-
-class Equal< BinaryExpression
+class Equal< ComparisonEqual
   def self.to_operator
     '=='
   end
 end
 
-class NotEqual < BinaryExpression
+class NotEqual < ComparisonEqual
   def self.to_operator
     '!='
   end
 end
+
+# comparisons: < > <= >=
+class ComparisonOrdering < BinaryExpression
+  def self.real_type
+    [IntegerType]
+  end
+end
+
+class Less < ComparisonOrdering
+  def self.to_operator
+    '<'
+  end
+end
+
+class Greater < ComparisonOrdering
+  def self.to_operator
+    '>'
+  end
+end
+
+class LessEqual < ComparisonOrdering
+  def self.to_operator
+    '<='
+  end
+end
+
+class GreaterEqual < ComparisonOrdering
+  def self.to_operator
+    '>='
+  end
+end
+
+
 
 class Parser < Parslet::Parser
   rule(:integer_negation?) do
@@ -155,9 +169,12 @@ class Parser < Parslet::Parser
     variable_or_literal.as(:left) >> operator >> expression.as(:right)
   end
 
+  # TODO fix this
   rule(:operator) do
-    BinaryExpression.descendants.map { |binary_expression| str(binary_expression.to_operator) }.reduce(&:|).as(:operator) >> spaces?
+    descendants = BooleanExpression.descendants +  ArithmeticExpression.descendants + ComparisonEqual.descendants + ComparisonOrdering.descendants
+    descendants.map { |binary_expression| str(binary_expression.to_operator) }.reduce(&:|).as(:operator) >> spaces?
   end
+
 
   rule(:expression) do
     str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal
@@ -179,10 +196,13 @@ class Transformer < Parslet::Transform
     end
   end
 
-  BinaryExpression.descendants.each do |binary_expression|
+  # TODO fix this
+  descendants = BooleanExpression.descendants +  ArithmeticExpression.descendants + ComparisonEqual.descendants + ComparisonOrdering.descendants
+  descendants.each do |binary_expression|
     rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
       binary_expression.new(left, right)
     end
   end
+
 end
 

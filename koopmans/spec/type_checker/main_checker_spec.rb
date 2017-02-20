@@ -1,6 +1,4 @@
 require 'rspec'
-require_relative '../../lib/parser/file_reader'
-require_relative '../../lib/parser/parser'
 
 require_relative '../../lib/ast/expression'
 require_relative '../../lib/ast/type'
@@ -11,7 +9,6 @@ require_relative '../../lib/ast/variable'
 
 require_relative '../../lib/type_checker/main_checker'
 
-require 'parslet'
 require 'pp'
 
 describe MainChecker do
@@ -64,19 +61,11 @@ describe MainChecker do
     end
   end
 
-  describe ConditionTypeChecker do
-    it 'detects error' do
-      expect(ast.accept(ConditionTypeChecker.new)).to match(
-        ["[ERROR]: variable 'hasBoughtHouse' is supposed to by a Boolean"]
-      )
-    end
-  end
-
   describe OperandsTypeChecker do
     it 'detects error' do
       expect(ast.accept(OperandsTypeChecker.new)).to match(
-       ["[ERROR]: hasSoldHouse of type BooleanType can not be used with + operator",
-        "[ERROR]: hasBoughtHouse of type IntegerType can not be used with hasSoldHouse of type BooleanType"]
+       ["[ERROR]: BooleanType can not be used with + operator",
+        "[ERROR]: IntegerType can not be used with BooleanType in an expression"]
       )
     end
   end

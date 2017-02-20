@@ -3,8 +3,9 @@ require_relative 'base_checker'
 class DuplicateVariableChecker < BaseChecker
   # gather all variables from all questions and check for duplicates
   def visit_form(subject)
-    variables = subject.statements.map { |statement| visit_statement(statement) }.flatten
-    variables.select { |e| variables.count(e) > 1 }.uniq
+    variables = subject.statements.map { |statement| visit_statement(statement) }.flatten.map(&:variable)
+    variables = variables.select { |e| variables.count(e) > 1 }.uniq
+    variables.map{|variable| "[ERROR]: variable '#{variable.name}' is defined multiple times"}
   end
 
   # visit all statements of the if block
@@ -12,8 +13,8 @@ class DuplicateVariableChecker < BaseChecker
     subject.block.map { |statement| visit_statement(statement) }
   end
 
-  # only return the label of the given question
+  # return question
   def visit_question(subject)
-    "[ERROR]: variable '#{subject.variable.name}' is defined multiple times"
+    subject
   end
 end
