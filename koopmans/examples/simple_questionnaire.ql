@@ -28,6 +28,9 @@ form taxOfficeExample {
     "Value residue:"
       valueResidue: money =
         (8 - 2 + 9 - hasSchaap + var3)
+        "Value residue:"
+              not: money =
+                (notnot)
     "Value residue:"
           hasSchaap: money =
             (8 - 2 + 9 - valueResidue + var3)
