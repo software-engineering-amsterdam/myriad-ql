@@ -11,12 +11,11 @@ public class Question extends Statement {
     private final Type type;
     private final Expression defaultValue;
 
-    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue, Metadata metadata) {
+    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue) {
         this.id = id;
         this.questionText = questionText;
         this.type = type;
         this.defaultValue = defaultValue;
-        this.metadata = metadata;
     }
 
     public Identifier getId() {

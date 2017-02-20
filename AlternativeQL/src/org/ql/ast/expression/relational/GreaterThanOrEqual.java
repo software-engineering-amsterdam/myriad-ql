@@ -8,10 +8,9 @@ public class GreaterThanOrEqual extends Expression {
     private Expression left;
     private Expression right;
 
-    public GreaterThanOrEqual(Expression left, Expression right, Metadata metadata) {
+    public GreaterThanOrEqual(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

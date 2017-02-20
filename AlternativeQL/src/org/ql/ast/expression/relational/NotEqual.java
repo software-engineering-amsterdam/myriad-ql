@@ -8,10 +8,9 @@ public class NotEqual extends Expression {
     private Expression left;
     private Expression right;
 
-    public NotEqual(Expression left, Expression right, Metadata metadata) {
+    public NotEqual(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

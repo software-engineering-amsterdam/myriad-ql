@@ -8,10 +8,9 @@ public class Equals extends Expression {
     private Expression left;
     private Expression right;
 
-    public Equals(Expression left, Expression right, Metadata metadata) {
+    public Equals(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

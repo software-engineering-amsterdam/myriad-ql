@@ -8,9 +8,8 @@ import org.ql.ast.Visitor;
 public class QuestionText extends AbstractNode {
     private final String questionText;
 
-    public QuestionText(String questionText, Metadata metadata) {
+    public QuestionText(String questionText) {
         this.questionText = questionText;
-        this.metadata = metadata;
     }
 
     public String toString() {

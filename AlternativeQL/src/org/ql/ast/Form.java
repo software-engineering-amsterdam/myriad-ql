@@ -6,10 +6,9 @@ public class Form extends AbstractNode {
     private final Identifier name;
     private final List<Statement> statements;
 
-    public Form(Identifier name, List<Statement> statements, Metadata metadata) {
+    public Form(Identifier name, List<Statement> statements) {
         this.name = name;
         this.statements = statements;
-        this.metadata = metadata;
     }
 
     public Identifier getName() {

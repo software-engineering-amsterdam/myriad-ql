@@ -8,10 +8,9 @@ public class LogicalAnd extends Expression {
     private Expression left;
     private Expression right;
 
-    public LogicalAnd(Expression left, Expression right, Metadata metadata) {
+    public LogicalAnd(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

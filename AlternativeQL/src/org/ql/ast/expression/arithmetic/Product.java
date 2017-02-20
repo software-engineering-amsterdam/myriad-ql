@@ -8,10 +8,9 @@ public class Product extends Expression {
     private final Expression left;
     private final Expression right;
 
-    public Product(Expression left, Expression right, Metadata metadata) {
+    public Product(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

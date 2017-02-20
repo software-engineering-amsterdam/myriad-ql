@@ -7,9 +7,8 @@ import org.ql.ast.Visitor;
 public class Group extends Expression {
     private final Expression expression;
 
-    public Group(Expression expression, Metadata metadata) {
+    public Group(Expression expression) {
         this.expression = expression;
-        this.metadata = metadata;
     }
 
     public Expression getExpression() {

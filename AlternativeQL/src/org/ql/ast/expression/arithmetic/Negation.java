@@ -7,9 +7,8 @@ import org.ql.ast.Visitor;
 public class Negation extends Expression {
     private final Expression expression;
 
-    public Negation(Expression expression, Metadata metadata) {
+    public Negation(Expression expression) {
         this.expression = expression;
-        this.metadata = metadata;
     }
 
     public Expression getExpression() {

@@ -8,9 +8,8 @@ import java.lang.String;
 import java.math.BigDecimal;
 
 public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
-    public DecimalLiteral(BigDecimal value, Metadata metadata) {
+    public DecimalLiteral(BigDecimal value) {
         super(value);
-        this.metadata = metadata;
     }
 
     @Override

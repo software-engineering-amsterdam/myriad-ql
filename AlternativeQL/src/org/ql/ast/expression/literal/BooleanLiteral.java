@@ -5,9 +5,8 @@ import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
 public class BooleanLiteral extends AbstractLiteral<Boolean> {
-    public BooleanLiteral(Boolean value, Metadata metadata) {
+    public BooleanLiteral(Boolean value) {
         super(value);
-        this.metadata = metadata;
     }
 
     @Override

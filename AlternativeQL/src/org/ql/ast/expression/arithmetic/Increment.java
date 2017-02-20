@@ -7,9 +7,8 @@ import org.ql.ast.Visitor;
 public class Increment extends Expression {
     private final Expression expression;
 
-    public Increment(Expression expression, Metadata metadata) {
+    public Increment(Expression expression) {
         this.expression = expression;
-        this.metadata = metadata;
     }
 
     public Expression getExpression() {

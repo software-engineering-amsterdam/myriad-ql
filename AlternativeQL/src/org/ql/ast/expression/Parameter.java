@@ -7,9 +7,8 @@ import org.ql.ast.Visitor;
 public class Parameter extends Expression {
     private final String id;
 
-    public Parameter(String id, Metadata metadata) {
+    public Parameter(String id) {
         this.id = id;
-        this.metadata = metadata;
     }
 
     @Override

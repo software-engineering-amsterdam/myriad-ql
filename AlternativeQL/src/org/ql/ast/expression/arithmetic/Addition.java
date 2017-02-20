@@ -8,10 +8,9 @@ public class Addition extends Expression {
     private final Expression left;
     private final Expression right;
 
-    public Addition(Expression left, Expression right, Metadata metadata) {
+    public Addition(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

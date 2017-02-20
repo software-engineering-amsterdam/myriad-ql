@@ -5,9 +5,8 @@ import org.ql.ast.Metadata;
 import org.ql.ast.Visitor;
 
 public class IntegerLiteral extends AbstractLiteral<Integer> {
-    public IntegerLiteral(Integer value, Metadata metadata) {
+    public IntegerLiteral(Integer value) {
         super(value);
-        this.metadata = metadata;
     }
 
     @Override

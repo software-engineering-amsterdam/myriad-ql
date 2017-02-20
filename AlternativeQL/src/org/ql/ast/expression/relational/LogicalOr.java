@@ -8,10 +8,9 @@ public class LogicalOr extends Expression {
     private Expression left;
     private Expression right;
 
-    public LogicalOr(Expression left, Expression right, Metadata metadata) {
+    public LogicalOr(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

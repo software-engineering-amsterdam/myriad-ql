@@ -8,10 +8,9 @@ public class Division extends Expression {
     private final Expression left;
     private final Expression right;
 
-    public Division(Expression left, Expression right, Metadata metadata) {
+    public Division(Expression left, Expression right) {
         this.left = left;
         this.right = right;
-        this.metadata = metadata;
     }
 
     public Expression getLeft() {

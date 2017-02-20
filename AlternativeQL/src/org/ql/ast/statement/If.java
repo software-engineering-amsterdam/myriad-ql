@@ -9,11 +9,10 @@ public class If extends Statement {
     private final List<Statement> thenStatements;
     private final List<Statement> elseStatements;
 
-    public If(Expression condition, List<Statement> thenStatements, List<Statement> elseStatements, Metadata metadata) {
+    public If(Expression condition, List<Statement> thenStatements, List<Statement> elseStatements) {
         this.condition = condition;
         this.thenStatements = thenStatements;
         this.elseStatements = elseStatements;
-        this.metadata = metadata;
     }
 
     public Expression getCondition() {
