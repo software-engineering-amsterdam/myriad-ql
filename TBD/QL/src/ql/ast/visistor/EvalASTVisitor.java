@@ -17,6 +17,11 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
+    public QLLiteral visit(Statements node) {
+        return null;
+    }
+
+    @Override
     public QLLiteral visit(If node) {
         return null;
     }
@@ -27,8 +32,9 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
-    public QLLiteral visit(Statements node) {
-        return null;
+    public QLLiteral visit(QLIdent node) {
+        //TODO fix this
+        return node;
     }
 
     @Override
@@ -47,12 +53,6 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
-    public QLLiteral visit(QLIdent node) {
-        //TODO fix this
-        return node;
-    }
-
-    @Override
     public QLLiteral visit(QLFloat node) {
         return node;
     }
@@ -64,15 +64,6 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
         right = node.getRight().accept(this);
 
         return left.add(right);
-    }
-
-    @Override
-    public QLLiteral visit(And node) {
-        QLLiteral left, right;
-        left = node.getLeft().accept(this);
-        right = node.getRight().accept(this);
-
-        return left.and(right);
     }
 
     @Override
@@ -139,12 +130,6 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
-    public QLLiteral visit(Neg node) {
-        QLLiteral expr = node.getExpr().accept(this);
-        return expr.neg();
-    }
-
-    @Override
     public QLLiteral visit(NEq node) {
         QLLiteral left, right;
         left = node.getLeft().accept(this);
@@ -154,9 +139,21 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
-    public QLLiteral visit(Not node) {
-        QLLiteral expr = node.getExpr().accept(this);
-        return expr.not();
+    public QLLiteral visit(Sub node) {
+        QLLiteral left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.sub(right);
+    }
+
+    @Override
+    public QLLiteral visit(And node) {
+        QLLiteral left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.and(right);
     }
 
     @Override
@@ -175,11 +172,15 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
-    public QLLiteral visit(Sub node) {
-        QLLiteral left, right;
-        left = node.getLeft().accept(this);
-        right = node.getRight().accept(this);
-
-        return left.sub(right);
+    public QLLiteral visit(Not node) {
+        QLLiteral expr = node.getExpr().accept(this);
+        return expr.not();
     }
+
+    @Override
+    public QLLiteral visit(Neg node) {
+        QLLiteral expr = node.getExpr().accept(this);
+        return expr.neg();
+    }
+
 }

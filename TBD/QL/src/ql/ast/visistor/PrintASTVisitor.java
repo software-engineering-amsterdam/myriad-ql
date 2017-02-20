@@ -22,6 +22,18 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
+    public Void visit(Statements node) {
+        if (node.hasCurrent()) {
+            node.getCurrent().accept(this);
+        }
+        System.out.print("\n");
+        if (node.hasNext()) {
+            node.getNext().accept(this);
+        }
+        return null;
+    }
+
+    @Override
     public Void visit(If node) {
         System.out.print("if (");
         node.getExpression().accept(this);
@@ -53,14 +65,8 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
-    public Void visit(Statements node) {
-        if (node.hasCurrent()) {
-            node.getCurrent().accept(this);
-        }
-        System.out.print("\n");
-        if (node.hasNext()) {
-            node.getNext().accept(this);
-        }
+    public Void visit(QLIdent node) {
+        System.out.print(node.getValue());
         return null;
     }
 
@@ -83,12 +89,6 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
-    public Void visit(QLIdent node) {
-        System.out.print(node.getValue());
-        return null;
-    }
-
-    @Override
     public Void visit(QLFloat node) {
         System.out.print(node.getValue());
         return null;
@@ -99,16 +99,6 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
         System.out.print("(");
         node.getLeft().accept(this);
         System.out.print(" + ");
-        node.getRight().accept(this);
-        System.out.print(")");
-        return null;
-    }
-
-    @Override
-    public Void visit(And node) {
-        System.out.print("(");
-        node.getLeft().accept(this);
-        System.out.print(" && ");
         node.getRight().accept(this);
         System.out.print(")");
         return null;
@@ -185,15 +175,6 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
-    public Void visit(Neg node) {
-        System.out.print("(");
-        System.out.print("-");
-        node.getExpr().accept(this);
-        System.out.print(")");
-        return null;
-    }
-
-    @Override
     public Void visit(NEq node) {
         System.out.print("(");
         node.getLeft().accept(this);
@@ -204,10 +185,21 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
-    public Void visit(Not node) {
+    public Void visit(Sub node) {
         System.out.print("(");
-        System.out.print("!");
-        node.getExpr().accept(this);
+        node.getLeft().accept(this);
+        System.out.print(" - ");
+        node.getRight().accept(this);
+        System.out.print(")");
+        return null;
+    }
+
+    @Override
+    public Void visit(And node) {
+        System.out.print("(");
+        node.getLeft().accept(this);
+        System.out.print(" && ");
+        node.getRight().accept(this);
         System.out.print(")");
         return null;
     }
@@ -232,15 +224,22 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     @Override
-    public Void visit(Sub node) {
+    public Void visit(Neg node) {
         System.out.print("(");
-        node.getLeft().accept(this);
-        System.out.print(" - ");
-        node.getRight().accept(this);
+        System.out.print("-");
+        node.getExpr().accept(this);
         System.out.print(")");
         return null;
     }
 
+    @Override
+    public Void visit(Not node) {
+        System.out.print("(");
+        System.out.print("!");
+        node.getExpr().accept(this);
+        System.out.print(")");
+        return null;
+    }
 
     private String typeToString(Type type) {
         switch (type) {

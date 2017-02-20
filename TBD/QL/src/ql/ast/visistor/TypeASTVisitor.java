@@ -102,11 +102,6 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     }
 
     @Override
-    public Type visit(And node) {
-        return checkBinOpLogic(node);
-    }
-
-    @Override
     public Type visit(Div node) {
         return checkBinOp(node);
     }
@@ -148,6 +143,16 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     }
 
     @Override
+    public Type visit(Sub node) {
+        return checkBinOp(node);
+    }
+
+    @Override
+    public Type visit(And node) {
+        return checkBinOpLogic(node);
+    }
+
+    @Override
     public Type visit(Or node) {
         return checkBinOpLogic(node);
     }
@@ -182,10 +187,6 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         throw new RuntimeException("Type error");
     }
 
-    @Override
-    public Type visit(Sub node) {
-        return checkBinOp(node);
-    }
 
     private Type checkBinOpLogic(BinOp node) {
         Type left, right;
