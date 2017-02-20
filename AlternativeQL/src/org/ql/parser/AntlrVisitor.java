@@ -12,7 +12,7 @@ import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
-import org.ql.ast.type.Type;
+import org.ql.ast.type.*;
 import org.ql.grammar.QLParserParser;
 import org.ql.grammar.QLParserVisitor;
 
@@ -188,31 +188,31 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
 
     @Override
     public Node visitTypeBoolean(QLParserParser.TypeBooleanContext ctx) {
-        return Type.BOOLEAN;
+        return new BooleanType();
     }
 
     @Override
     public Node visitTypeFloat(QLParserParser.TypeFloatContext ctx) {
-        return Type.FLOAT;
+        return new FloatType();
     }
 
     @Override
     public Node visitTypeInteger(QLParserParser.TypeIntegerContext ctx) {
-        return Type.INTEGER;
+        return new IntegerType();
     }
 
     @Override
     public Node visitTypeString(QLParserParser.TypeStringContext ctx) {
-        return Type.STRING;
+        return new StringType();
     }
 
     @Override
     public Node visitTypeMoney(QLParserParser.TypeMoneyContext ctx) {
-        return Type.MONEY;
+        return new MoneyType();
     }
 
     @Override
     public Node visitTypeDate(QLParserParser.TypeDateContext ctx) {
-        return Type.DATE;
+        return new DateType();
     }
 }

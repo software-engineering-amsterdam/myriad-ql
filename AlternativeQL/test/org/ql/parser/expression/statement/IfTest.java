@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.statement.If;
 import org.ql.ast.statement.Question;
+import org.ql.ast.type.MoneyType;
 import org.ql.ast.type.Type;
 import org.ql.parser.Parser;
 
@@ -30,7 +31,6 @@ public class IfTest {
                 "}";
         boolean expectedCondition = false;
         int expectedBodySize = 1;
-        Type expectedQuestionType = Type.MONEY;
         String expectedId = "price";
         String expectedQuestionText = "Give a price, please";
 
@@ -40,7 +40,7 @@ public class IfTest {
 
         assertEquals(expectedCondition, actualCondition.getValue());
         assertSame(expectedBodySize, actualIf.getThenStatements().size());
-        assertSame(expectedQuestionType, actualQuestion.getType());
+        assertTrue(actualQuestion.getType() instanceof MoneyType);
         assertEquals(expectedId, actualQuestion.getId().toString());
         assertEquals(expectedQuestionText, actualQuestion.getQuestionText().toString());
     }

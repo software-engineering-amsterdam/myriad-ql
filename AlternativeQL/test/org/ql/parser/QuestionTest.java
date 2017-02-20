@@ -3,6 +3,7 @@ package org.ql.parser;
 import org.junit.Test;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.statement.Question;
+import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
 
 import static org.junit.Assert.*;
@@ -14,13 +15,12 @@ public class QuestionTest {
         String inputCode = "boolean hasSoldHouse: \"Did you sell a house in 2010?\";";
         String expectedId = "hasSoldHouse";
         String expectedQuestion = "Did you sell a house in 2010?";
-        Type expectedType = Type.BOOLEAN;
 
         Question actualQuestion = (Question) new Parser().parseStatement(inputCode);
 
         assertEquals(expectedId, actualQuestion.getId().toString());
         assertEquals(expectedQuestion, actualQuestion.getQuestionText().toString());
-        assertEquals(expectedType, actualQuestion.getType());
+        assertTrue(actualQuestion.getType() instanceof BooleanType);
     }
 
     @Test
