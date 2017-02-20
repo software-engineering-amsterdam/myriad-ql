@@ -1,4 +1,5 @@
 from ParserTokens import ParserTokens as Tokens
+from TypeChecking import TypeChecking
 import pyparsing as pp
 import AST
 
@@ -98,3 +99,5 @@ if __name__ == '__main__':
     parser = QuestionnaireParser()
     parsedAST = parser.parse(form1)
     print parsedAST
+
+    TypeChecking(parsedAST)

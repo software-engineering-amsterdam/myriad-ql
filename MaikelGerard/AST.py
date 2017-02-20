@@ -37,6 +37,11 @@ class Node(object):
             self.node_type, self.line, self.col, message
         )
 
+    def accept(self, visitor):
+        print self.node_type
+        for child in self.children:
+            child.accept(visitor)
+
     def __eq__(self, other):
         if other.node_type != self.node_type:
             return False
@@ -64,6 +69,10 @@ class FormNode(Node):
         )
         self.name = form_data[1].val
         self.form_block = form_data[2]
+
+    def accept(self, visitor):
+        super(FormNode, self).accept(visitor)
+        self.form_block.accept(visitor)
 
     def __eq__(self, other):
         return self.node_type == other.node_type and \
@@ -101,6 +110,10 @@ class QuestionNode(Node):
     def eval_type(self):
         return self.type
 
+    def accept(self, visitor):
+        super(QuestionNode, self).accept(visitor)
+        visitor.question_node(self)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and \
                other.question == self.question and other.name == self.name and \
@@ -108,8 +121,8 @@ class QuestionNode(Node):
                other.expression == self.expression
 
     def __str__(self, indent=0):
-        output = indent * "  " + "{}: {} {}".format(
-            self.node_type, self.question, self.type
+        output = indent * "  " + "{}: \"{}\" {}: {}".format(
+            self.node_type, self.question, self.name, self.type
         )
         if self.computed:
             output += " = ({})".format(self.expression.__str__(0))
@@ -136,6 +149,10 @@ class ConditionalNode(Node):
             )
             self.else_block = conditional[4]
 
+    def accept(self, visitor):
+        super(ConditionalNode, self).accept(visitor)
+        visitor.conditional_node(self)
+
     def __eq__(self, other):
         return other.expression == self.expression and \
                self.else_block == other.else_block
@@ -159,6 +176,11 @@ class BinOpNode(Node):
         self.op_function = Tokens.BINOPS[binop[1]]
         self.right = binop[2]
 
+    def accept(self, visitor):
+        super(BinOpNode, self).accept(visitor)
+        self.left.accept(visitor)
+        self.right.accept(visitor)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and \
                other.left == self.left and other.op == self.op and \
@@ -179,6 +201,10 @@ class MonOpNode(Node):
         self.op_function = Tokens.MONOPS[monop[0]]
         self.right = monop[1]
 
+    def accept(self, visitor):
+        super(MonOpNode, self).accept(visitor)
+        self.right.accept(visitor)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and \
                other.op == self.op and other.right == self.right
@@ -192,6 +218,10 @@ class IntNode(Node):
         super(IntNode, self).__init__("int", src, loc)
         self.val = decimal.Decimal(token[0])
 
+    def accept(self, visitor):
+        super(IntNode, self).accept(visitor)
+        visitor.int_node(self)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
 
@@ -203,6 +233,10 @@ class BoolNode(Node):
     def __init__(self, src, loc, token):
         super(BoolNode, self).__init__("boolean", src, loc)
         self.val = True if token[0] == "true" else False
+
+    def accept(self, visitor):
+        super(BoolNode, self).accept(visitor)
+        visitor.bool_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
@@ -216,6 +250,10 @@ class VarNode(Node):
         super(VarNode, self).__init__("var", src, loc)
         self.val = token[0]
 
+    def accept(self, visitor):
+        super(VarNode, self).accept(visitor)
+        visitor.var_node(self)
+
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
 
@@ -227,6 +265,10 @@ class DecimalNode(Node):
     def __init__(self, src, loc, token):
         super(DecimalNode, self).__init__("dec", src, loc)
         self.val = decimal.Decimal(token[0])
+
+    def accept(self, visitor):
+        super(DecimalNode, self).accept(visitor)
+        visitor.decimal_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and other.val == self.val
