@@ -6,7 +6,7 @@
     {
         public StringLiteral(string value)
         {
-            this.Value = value;
+            this.Value = value.Trim('"');
         }
 
         public string Value { get; private set; }

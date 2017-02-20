@@ -5,11 +5,11 @@ stylesheet
     ;
 
 page
-    : PAGE Identifier OPEN_BRACKET (section|defaultBlock)* CLOSE_BRACKET
+    : PAGE Identifier OPEN_BRACE (section|defaultBlock)* CLOSE_BRACE
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACKET (question|section|defaultBlock)* CLOSE_BRACKET
+    : SECTION StringLiteral OPEN_BRACE (question|section|defaultBlock)* CLOSE_BRACE
     ;
 
 question	
@@ -22,7 +22,7 @@ widget
 
 defaultBlock
 	: DEFAULT type widget
-	| DEFAULT type OPEN_BRACKET (styleRule)* widget CLOSE_BRACKET
+	| DEFAULT type OPEN_BRACE (styleRule)* widget CLOSE_BRACE
 	;
 
 styleRule
@@ -81,8 +81,8 @@ DEFAULT: 'default';
 
 
 // Syntax
-OPEN_BRACKET : '{';
-CLOSE_BRACKET : '}';
+OPEN_BRACE : '{';
+CLOSE_BRACE : '}';
 OPEN_PARENTHESIS : '(';
 CLOSE_PARENTHESIS : ')';
 SEMICOLON : ';';

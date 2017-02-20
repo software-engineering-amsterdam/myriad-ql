@@ -16,7 +16,7 @@
 
         public IEnumerable<CheckerMessage> InformationMessages => this.messageCategories[LogLevel.Information];
 
-        public IEnumerable<CheckerMessage> Warnings => this.messageCategories[LogLevel.Warrning];
+        public IEnumerable<CheckerMessage> Warnings => this.messageCategories[LogLevel.Warning];
 
         public IEnumerable<CheckerMessage> Errors => this.messageCategories[LogLevel.Error];
 

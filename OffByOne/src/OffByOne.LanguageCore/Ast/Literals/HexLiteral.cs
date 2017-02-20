@@ -16,6 +16,6 @@
         {
         }
 
-        public Color Value { get; set; }
+        public Color Value { get; private set; }
     }
 }
