@@ -11,6 +11,12 @@ form taxOfficeExample {
       sellingPrice: money
     "Private debts for the sold house:"
       privateDebt: money
+     if (true || true) {
+          "What was the selling price?"
+            sellingPrice: money
+          "Private debts for the sold house:"
+            privateDebt: money
+        }
   }
 
 }

@@ -18,12 +18,14 @@ class Question
   extend Parslet
 
   attr_reader :label, :variable, :type, :assignment
+  attr_accessor :condition
 
-  def initialize(label, variable, type, expression=nil)
+  def initialize(label, variable, type, expression=nil, condition=nil)
     @label = label.to_s
     @variable = variable
     @type = type
     @assignment = expression if expression
+    @condition = condition if condition
   end
 
   # def accept(visitor)

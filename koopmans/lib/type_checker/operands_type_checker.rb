@@ -28,7 +28,7 @@ class OperandsTypeChecker < BaseChecker
 
   # an expression is checked for correctness
   def visit_expression(subject)
-    p subject
+    # p subject
     subject_type = subject.class.real_type
     # p possible_types
 
