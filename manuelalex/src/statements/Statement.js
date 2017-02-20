@@ -7,7 +7,7 @@ module.exports = class Statement {
     constructor(options = {}) {
         this.options = options;
 
-        this._location = location;
+        this._location = options.location;
     }
 
     getOptions() {
@@ -18,7 +18,7 @@ module.exports = class Statement {
         throw new Error('Validate method should have been overwritten');
     }
 
-    _throwError(errorText = ''){
+    _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }
 };

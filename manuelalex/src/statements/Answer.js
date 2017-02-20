@@ -5,6 +5,7 @@
 let Statement = require('./Statement.js');
 
 module.exports = class Answer extends Statement {
+
     constructor(options = {}) {
         super(options);
 

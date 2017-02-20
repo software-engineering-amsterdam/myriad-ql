@@ -8,6 +8,7 @@ module.exports = class IfStatement extends Statement {
 
     constructor(options = {}) {
         super(options);
+
         this.condition = options.condition;
         this.ifBody = options.ifBody;
     }

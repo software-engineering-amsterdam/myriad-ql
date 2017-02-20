@@ -10,6 +10,9 @@ module.exports = class Allocation {
         this.propertyName = options.propertyName;
         this.type = options.type;
         this.expression = options.expression;
+
+        this._location = options.location;
+
     }
 
     getOptions() {

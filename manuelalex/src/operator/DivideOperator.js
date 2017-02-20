@@ -4,11 +4,12 @@
 const Operator = require('./Operator.js');
 
 module.exports = class DivideOperator extends Operator {
-    constructor(){
-        super()
+
+    constructor(options = {}) {
+        super(options)
     }
 
-    toString(){
+    toString() {
         return '/';
     }
 };

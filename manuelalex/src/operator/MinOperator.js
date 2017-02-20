@@ -4,8 +4,9 @@
 const Operator = require('./Operator.js');
 
 module.exports = class MinOperator extends Operator {
-    constructor() {
-        super();
+
+    constructor(options = {}) {
+        super(options);
     }
 
     toString() {

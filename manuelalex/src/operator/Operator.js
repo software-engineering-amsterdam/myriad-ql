@@ -3,9 +3,15 @@
  */
 module.exports = class Operator {
 
+    constructor(options = {}) {
+        this.options = options;
+    }
 
-
-    toString(){
+    /**
+     * Abstract
+     * @returns {string}
+     */
+    toString() {
         return 'Operator';
     }
 
