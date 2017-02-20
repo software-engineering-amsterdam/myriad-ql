@@ -1,4 +1,4 @@
-package org.uva.taxfree.GUI;
+package org.uva.taxfree.gui;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

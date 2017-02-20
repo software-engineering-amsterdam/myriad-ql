@@ -1,0 +1,10 @@
+form houseForm {
+    "Have you sold an house?" -> hasSoldHouse : boolean
+    if (hasSoldHouse) {
+        "What's the price of the sold house?" -> soldHousePrice : integer
+        "What's the price of the second sold house?" -> soldSecondHousePrice : integer
+    } else {
+        "What's the price of the bought house?" -> boughtHousePrice : integer
+        "What's the price of the second bought house?" -> boughtSecondHousePrice : integer
+    }
+}
