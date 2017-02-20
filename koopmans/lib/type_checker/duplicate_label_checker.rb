@@ -12,8 +12,8 @@ class DuplicateLabelChecker < BaseChecker
     subject.block.map { |statement| visit_statement(statement) }
   end
 
-  # only return the label of the given question
+  # return the label of the given question
   def visit_question(subject)
-    subject.label
+    "[WARNING]: question with label '#{subject.label}' is defined multiple times"
   end
 end

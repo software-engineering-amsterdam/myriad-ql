@@ -24,15 +24,15 @@ class ConditionTypeChecker < BaseChecker
     test.push(subject.block.map { |statement| visit_statement(statement) })
   end
 
-  # only return the variable name if it is of a boolean type
-  def visit_variable(subject)
-    unless @types[subject.name].kind_of?(BooleanType)
-      subject.name
-    end
-  end
-
   # visit the calculations of both the left and right sides
   def visit_expression(subject)
     [visit_calculation(subject.left), visit_calculation(subject.right)]
+  end
+
+  # only return the variable name if it is of a boolean type
+  def visit_variable(subject)
+    unless @types[subject.name].kind_of?(BooleanType)
+      "[ERROR]: variable '#{subject.name}' is supposed to by a Boolean"
+    end
   end
 end

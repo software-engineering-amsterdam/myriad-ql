@@ -42,7 +42,7 @@ class CyclicChecker < BaseChecker
           @values[subject.name] = @values[subject.name] | @values[k.name]
           # check for cyclic dependency if there is a dependency on itself, else visit the next variable
           if @values[subject.name].map(&:name).include? subject.name
-            @errors.push('[ERROR] cyclic at %s' % subject.name)
+            @errors.push("[ERROR]: question with variable '#{subject.name}' has a cyclic dependency")
           else
             visit_variable(k)
           end

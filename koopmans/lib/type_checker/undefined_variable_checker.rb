@@ -23,15 +23,15 @@ class UndefinedVariableChecker < BaseChecker
     test.push(subject.block.map { |statement| visit_statement(statement) })
   end
 
-  # only return the variable name if it is not existing
-  def visit_variable(subject)
-    unless @question_variables.include?(subject.name)
-      subject.name
-    end
-  end
-
   # visit the calculations of both the left and right sides
   def visit_expression(subject)
     [visit_calculation(subject.left), visit_calculation(subject.right)]
+  end
+
+  # only return the variable name if it is not existing
+  def visit_variable(subject)
+    unless @question_variables.include?(subject.name)
+      "[WARNING]: variable '#{subject.name}' is undefined"
+    end
   end
 end

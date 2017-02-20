@@ -14,6 +14,6 @@ class DuplicateVariableChecker < BaseChecker
 
   # only return the label of the given question
   def visit_question(subject)
-    subject.variable.name
+    "[ERROR]: variable '#{subject.variable.name}' is defined multiple times"
   end
 end
