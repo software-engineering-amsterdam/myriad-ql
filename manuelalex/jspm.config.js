@@ -123,6 +123,7 @@ SystemJS.config({
         "fs": "npm:jspm-nodelibs-fs@0.2.0",
         "http": "npm:jspm-nodelibs-http@0.2.0",
         "https": "npm:jspm-nodelibs-https@0.2.1",
+        "lodash": "npm:lodash@4.17.4",
         "module": "npm:jspm-nodelibs-module@0.2.0",
         "nearley": "npm:nearley@2.7.12",
         "nearly": "npm:nearly@1.7.1",
