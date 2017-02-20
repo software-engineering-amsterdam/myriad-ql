@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Ast.Expressions
+﻿namespace OffByOne.LanguageCore.Ast.Expressions.Base
 {
     using OffByOne.LanguageCore.Ast;
 

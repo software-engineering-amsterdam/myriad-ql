@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Binary.Base
 {
+    using OffByOne.LanguageCore.Ast.Expressions.Base;
+
     public abstract class BinaryExpression : Expression
     {
         protected BinaryExpression(

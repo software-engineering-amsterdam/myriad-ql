@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ast\AstNode.cs" />
+    <Compile Include="Ast\Expressions\Base\Expression.cs" />
     <Compile Include="Ast\Literals\Base\Literal.cs" />
     <Compile Include="Ast\Literals\BooleanLiteral.cs" />
     <Compile Include="Ast\Literals\DateLiteral.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Ast\ValueTypes\IntegerValueType.cs" />
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
+    <Compile Include="Checker\BaseChecker.cs" />
     <Compile Include="Checker\CheckerMessage.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
     <Compile Include="Checker\LogLevel.cs" />

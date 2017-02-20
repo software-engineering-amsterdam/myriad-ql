@@ -6,6 +6,7 @@
     using Antlr4.Runtime.Misc;
 
     using OffByOne.LanguageCore.Ast;
+    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Statements;
