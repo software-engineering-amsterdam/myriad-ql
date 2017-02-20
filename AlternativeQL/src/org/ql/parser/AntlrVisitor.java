@@ -117,7 +117,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     public Node visitIncrement(QLParserParser.IncrementContext ctx) {
         AbstractNode increment = new Increment((Expression) visit(ctx.expression()));
         increment.setMetadata(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine()));
-        
+
         return increment;
     }
 
@@ -171,10 +171,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
 
     @Override
     public Node visitParameter(QLParserParser.ParameterContext ctx) {
-        AbstractNode parameter = new Parameter(ctx.ID().getText());
-        parameter.setMetadata(extractMetadataFromToken(ctx.start));
-
-        return parameter;
+        return new Parameter(new Identifier(ctx.ID().getText()));
     }
 
     @Override

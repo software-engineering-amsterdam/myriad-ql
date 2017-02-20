@@ -1,7 +1,7 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Visitor;
+import org.ql.ast.expression.Visitor;
 
 public class Equals extends Expression {
     private Expression left;
@@ -22,11 +22,11 @@ public class Equals extends Expression {
 
     @Override
     public String toString() {
-        return "(" + left + "==" + right + ")";
+        return "(" + getLeft() + "==" + getRight() + ")";
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

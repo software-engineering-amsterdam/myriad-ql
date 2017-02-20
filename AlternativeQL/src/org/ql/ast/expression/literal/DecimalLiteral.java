@@ -1,6 +1,7 @@
 package org.ql.ast.expression.literal;
 
-import org.ql.ast.Visitor;
+import org.ql.ast.Expression;
+import org.ql.ast.expression.Visitor;
 
 import java.lang.*;
 import java.lang.String;
@@ -17,7 +18,7 @@ public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

@@ -1,6 +1,7 @@
 package org.ql.ast.expression.literal;
 
-import org.ql.ast.Visitor;
+import org.ql.ast.Expression;
+import org.ql.ast.expression.Visitor;
 
 public class StringLiteral extends AbstractLiteral<String> {
     public StringLiteral(String value) {
@@ -8,7 +9,7 @@ public class StringLiteral extends AbstractLiteral<String> {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

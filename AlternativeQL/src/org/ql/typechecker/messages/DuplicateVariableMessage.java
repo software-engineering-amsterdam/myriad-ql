@@ -1,21 +1,23 @@
 package org.ql.typechecker.messages;
 
-public class DuplicateVariableMessage extends Message {
+import org.ql.ast.Identifier;
+import org.ql.ast.Node;
 
-    private ErrorType errorType = ErrorType.DUPLICATE_VARIABLE;
-    private String erroneousVariable;
+public class DuplicateVariableMessage implements Message {
 
-    public DuplicateVariableMessage(String erroneousVariable) {
+    private final Identifier erroneousVariable;
+
+    public DuplicateVariableMessage(Identifier erroneousVariable) {
         this.erroneousVariable = erroneousVariable;
     }
 
     @Override
-    public String getType() {
-        return errorType.name();
+    public String getMessage() {
+        return "Duplicated parameter '" + erroneousVariable + "'";
     }
 
     @Override
-    public String getErroneousVariable() {
-        return this.erroneousVariable;
+    public Node getNode() {
+        return erroneousVariable;
     }
 }

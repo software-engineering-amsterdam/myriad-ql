@@ -1,14 +1,10 @@
 package org.ql.typechecker.messages;
 
-public abstract class Message {
-    private String message = "An error occured: " + getType()
-            + " involving " + getErroneousVariable();
+import org.ql.ast.Node;
 
-    public abstract String getType();
+public interface Message {
 
-    public abstract String getErroneousVariable();
+    Node getNode();
 
-    public String getMessage() {
-        return message;
-    }
+    String getMessage();
 }

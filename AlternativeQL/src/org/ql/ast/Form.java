@@ -22,9 +22,4 @@ public class Form extends AbstractNode {
     public Statement getStatement(int index) {
         return statements.get(index);
     }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
 }

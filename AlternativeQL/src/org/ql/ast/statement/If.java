@@ -1,6 +1,8 @@
 package org.ql.ast.statement;
 
-import org.ql.ast.*;
+import org.ql.ast.Expression;
+import org.ql.ast.Node;
+import org.ql.ast.Statement;
 
 import java.util.List;
 
@@ -25,10 +27,5 @@ public class If extends Statement {
 
     public List<Statement> getElseStatements() {
         return elseStatements;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
     }
 }
