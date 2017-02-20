@@ -1,16 +1,17 @@
 ﻿namespace OffByOne.Ql.Tests.ParserTests
 {
+    using System;
     using System.Linq;
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
+
     using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.Statements.Questions.Base;
     using OffByOne.Ql.Tests.ParserTests.Base;
+
     using Xunit;
-    using OffByOne.Ql.Ast.Expressions;
-    using System;
 
     public class FormTest : ParserTest
     {
