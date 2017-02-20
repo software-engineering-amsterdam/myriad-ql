@@ -20,8 +20,8 @@ OP_GT : '>' ;
 OP_LT : '<' ;
 OP_NEQ : '!=' ;
 OP_EQ : '==' ;
-OP_AND : 'and' ;
-OP_OR : 'or' ;
+OP_AND : '&&' ;
+OP_OR : '||' ;
 OP_NOT : 'not' ;
 
 Type 
@@ -40,11 +40,10 @@ BooleanLiteral
 
 DateLiteral : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
 
-MoneyLiteral : Int '.' Digit Digit ;
-DecimalLiteral : Int '.' [0-9]+ ;
+MoneyLiteral : IntLiteral '.' Digit Digit ;
+DecimalLiteral : IntLiteral '.' [0-9]+ ;
 
-fragment
-Int: Digit | ([1-9] Digit*) ;
+IntLiteral: Digit | ([1-9] Digit*) ;
 
 fragment
 Digit: [0-9] ;

@@ -2,7 +2,7 @@
 options { tokenVocab=QlLexer; }
 
 form : FORM Identifier LBRACE stat+ RBRACE ;
-question : StringLiteral Identifier COLON Type ; // TODO: default value / precomputed value
+question : literal Identifier COLON Type (LPAREN expression RPAREN)? ;
 stat
 	: question
 	| ifStat
@@ -20,6 +20,11 @@ expression
     | OP_NOT expression             # ExpressionNot
     | OP_SUB expression             # ExpressionNegate
 
+    | expression OP_MUL expression  # ExpressionMultiply
+    | expression OP_DIV<assoc=left> expression  # ExpressionDivide
+    | expression OP_SUB<assoc=left> expression  # ExpressionSubtract
+    | expression OP_ADD expression  # ExpressionAdd
+
     | expression OP_GTE expression  # ExpressionGreaterThanOrEqual
     | expression OP_LTE expression  # ExpressionLesserThanOrEqual
     | expression OP_GT expression   # ExpressionGreaterThan
@@ -29,18 +34,13 @@ expression
 
     | expression OP_AND expression  # ExpressionAnd
     | expression OP_OR expression   # ExpressionOr
-
-    | expression OP_MUL expression  # ExpressionMultiply
-    | expression OP_DIV<assoc=left> expression  # ExpressionDivide
-    | expression OP_SUB<assoc=left> expression  # ExpressionSubtract
-    | expression OP_ADD expression  # ExpressionAdd
 	;
 
 literal
 	: DateLiteral	 # DateLiteral
 	| BooleanLiteral # BooleanLiteral
-	| Money			 # MoneyLiteral
-	| Decimal		 # DecimalLiteral
-	| SignedInt		 # IntegerLiteral
+	| MoneyLiteral	 # MoneyLiteral
+	| DecimalLiteral # DecimalLiteral
+	| IntLiteral	 # IntegerLiteral
 	| StringLiteral  # StringLiteral
 	;
