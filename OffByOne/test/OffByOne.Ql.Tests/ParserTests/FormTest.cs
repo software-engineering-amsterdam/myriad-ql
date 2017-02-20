@@ -15,7 +15,7 @@
     public class FormTest : ParserTest
     {
         [Fact]
-        public void AstCreation_ShouldReturnFormNodeIfGivenSytaxIsCorrect()
+        public void AstCreation_ShouldReturnFormNodeIfGivenSyntaxIsCorrect()
         {
             var astTree = this.GetAstNodesFromInput(@"
                 form questionnaire { 
@@ -73,7 +73,32 @@
 
             var elseStatement = ifStatement.ElseStatement;
             Assert.Equal(1, elseStatement.Statements.Count());
+        }
 
+        [Fact]
+        public void AstCreation_ShouldReturnExpressionInRightOrder()
+        {
+            var astTree = this.GetAstNodesFromInput(@"
+                form questionnaire { 
+                    if (2 + 3 * 4 < someVar) { 
+                        ""Is this a question?""
+                            existentialism: boolean
+                    }
+                }
+            ");
+
+            Assert.IsType<FormStatement>(astTree);
+            var castAstTree = (FormStatement)astTree;
+
+            var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
+
+            Assert.IsType<LessThanExpression>(ifStatement.Condition);
+            var condition = (LessThanExpression)ifStatement.Condition;
+
+            Assert.IsType<AddExpression>(condition.LeftExpression);
+            var lhs = (AddExpression)condition.LeftExpression;
+
+            Assert.IsType<MultiplyExpression>(lhs.RightExpression);
         }
     }
 }
