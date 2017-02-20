@@ -3,7 +3,7 @@ module Parser.FormTests exposing (all)
 import AST
     exposing
         ( FormItem(Field, ComputedField, IfThen, IfThenElse)
-        , ValueType(IntegerType, BooleanType, StringType)
+        , ValueType(IntegerType, BooleanType, StringType, MoneyType)
         , Expression(Var, Integer, ArithmeticExpression)
         , Operator(Plus)
         , Location(Location)
@@ -135,5 +135,5 @@ valueTypeTests =
         [ ( "should parse string", "string", Just StringType )
         , ( "should parse boolean", "boolean", Just BooleanType )
         , ( "should parse integer", "integer", Just IntegerType )
-        , ( "should parse money as integer", "money", Just IntegerType )
+        , ( "should parse money as integer", "money", Just MoneyType )
         ]

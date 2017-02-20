@@ -90,6 +90,9 @@ removeLocactionFromExpression expr =
         Integer _ x ->
             Integer emptyLoc x
 
+        Decimal _ x ->
+            Decimal emptyLoc x
+
         Boolean _ b ->
             Boolean emptyLoc b
 

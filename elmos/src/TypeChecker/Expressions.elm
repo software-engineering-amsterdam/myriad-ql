@@ -1,6 +1,6 @@
 module TypeChecker.Expressions exposing (..)
 
-import AST exposing (Expression(..), ValueType(IntegerType, BooleanType, StringType))
+import AST exposing (Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
 import Dict exposing (Dict)
 import TypeChecker.Messages as Messages exposing (Message)
 
@@ -22,6 +22,9 @@ getType variableTypes expression =
 
         AST.Integer _ _ ->
             Ok IntegerType
+
+        AST.Decimal _ _ ->
+            Ok MoneyType
 
         AST.Boolean _ _ ->
             Ok BooleanType
