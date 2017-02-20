@@ -35,14 +35,18 @@ module.exports = class Parser {
         const parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
         let result = [];
         try {
-            console.log(`Testing: ${test3}`);
-            result = parser.feed(test3).results;
+            let testString = test1.replace(/(\r\n|\n|\r)/gm,"");
+            console.log(`Testing: ${test1}`);
+            result = parser.feed(testString).results;
         } catch (parseError) {
             console.log(`Error at character ${parseError.offset}, ${test5.charAt(parseError.offset)}`);
             console.log(`${parseError}`);
         }
         if (result.length > 1) {
-            console.error('Ambigious parsing, chosing the first parsing');
+            console.error('Ambigious parsing '+ result.length +' options, chosing the first parsing');
+            for (var i = 0; i < result.length; i++) {
+                console.log(JSON.stringify(result[i]));
+            }
             result = result[0];
         }
         console.log(`Result: ${JSON.stringify(result)}`);
