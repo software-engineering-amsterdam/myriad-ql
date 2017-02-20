@@ -4,7 +4,6 @@ import com.sun.istack.internal.Nullable;
 import org.ql.ast.Expression;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
-import org.ql.ast.Visitor;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 
@@ -35,10 +34,5 @@ public class Question implements Statement {
 
     public Expression getDefaultValue() {
         return defaultValue;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
     }
 }

@@ -1,18 +1,18 @@
 package org.ql.ast.expression;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Visitor;
+import org.ql.ast.Identifier;
 
 public class Parameter implements Expression {
-    private final String id;
+    private final Identifier id;
 
-    public Parameter(String id) {
+    public Parameter(Identifier id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return id;
+        return id.toString();
     }
 
     @Override

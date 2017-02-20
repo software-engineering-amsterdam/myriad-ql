@@ -1,5 +1,7 @@
 package org.ql.ast;
 
-public interface Expression extends Node {
+import org.ql.ast.expression.Visitor;
 
+public interface Expression extends Node {
+    void accept(Visitor visitor);
 }

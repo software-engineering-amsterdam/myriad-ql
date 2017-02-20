@@ -128,7 +128,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
 
     @Override
     public Node visitParameter(QLParserParser.ParameterContext ctx) {
-        return new Parameter(ctx.ID().getText());
+        return new Parameter(new Identifier(ctx.ID().getText()));
     }
 
     @Override

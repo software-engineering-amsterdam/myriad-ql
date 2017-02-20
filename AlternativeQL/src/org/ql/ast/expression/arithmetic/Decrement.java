@@ -1,7 +1,7 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Visitor;
+import org.ql.ast.expression.Visitor;
 
 public class Decrement implements Expression {
     private final Expression expression;

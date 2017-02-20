@@ -1,8 +1,7 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Node;
-import org.ql.ast.Visitor;
+import org.ql.ast.expression.Visitor;
 
 public class GreaterThan implements Expression {
     private Expression left;

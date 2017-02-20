@@ -1,10 +1,4 @@
 package org.ql.ast.type;
 
-import org.ql.ast.Visitor;
-
-public class MoneyType implements Type {
-    @Override
-    public void accept(Visitor visitor) {
-
-    }
+public class MoneyType extends FloatType {
 }

@@ -1,7 +1,7 @@
-package org.ql.ast.expression.arithmetic;
+package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Visitor;
+import org.ql.ast.expression.Visitor;
 
 public class Negation implements Expression {
     private final Expression expression;
