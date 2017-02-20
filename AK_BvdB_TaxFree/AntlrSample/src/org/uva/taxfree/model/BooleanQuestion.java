@@ -15,11 +15,6 @@ public class BooleanQuestion extends NamedNode {
     }
 
     @Override
-    public String getType() {
-        return "boolean";
-    }
-
-    @Override
     public void printValue() {
         System.out.println("Value of bool: " + mCheckbox.isSelected());
     }
