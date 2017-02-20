@@ -8,8 +8,15 @@
 
     using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
 
-    public class BaseChecker
+    public abstract class BaseChecker
     {
+        protected BaseChecker()
+        {
+            this.Report = new CheckerReport();
+        }
+
+        protected CheckerReport Report { get; set; }
+
         public virtual ValueType CheckTypes(AstNode node)
         {
             switch (node)

@@ -3,7 +3,6 @@
     using System;
 
     using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
