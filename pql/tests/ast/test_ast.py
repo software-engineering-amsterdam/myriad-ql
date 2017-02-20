@@ -135,6 +135,28 @@ class TestAst(unittest.TestCase):
         field_node_1 = form_node.children[0]
         field_node_1 = form_node.children[1]
 
+    def test_ast_if_else_single_question(self):
+        input_string = """
+            form taxOfficeExample {
+                if (hasSoldHouse) {
+                    "What was the selling price?"        sellingPrice: money
+                }
+                else {
+                    "What was the buying price?"        sellingPrice: money
+                }
+            }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(2, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.children[1]
+
     def test_ast_question_with_if_single_question(self):
         input_string = """
             form taxOfficeExample {

@@ -18,6 +18,7 @@ def parse(input_string):
     # Reserved keywords
     form = Suppress("form")
     if_lit = Suppress("if")
+    else_lit = Suppress("else")
 
     # Reserved symbols
     l_curly = Suppress("{")
@@ -63,26 +64,24 @@ def parse(input_string):
 
     arithmetic_statement = \
         OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))\
-            .setResultsName("arithmetic_statement").setParseAction(ast.Arithmetic)
+            .setResultsName("arithmetic_statement")
 
+    arithmetic_statement.addParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
-    assignment_expr = \
-        identifier.setResultsName("identifier") + \
-        colon + \
-        data_types.setResultsName("data_type") + \
-             Optional(
+    field_expr = \
+            QuotedString('"', unquoteResults=True).setResultsName("title") + \
+            identifier.setResultsName("identifier") + \
+            colon + \
+            data_types.setResultsName("data_type") + \
+            Optional(
                 assign_op +
                 arithmetic_statement
             )
+    field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
-    field_expr = \
-        Group(
-            QuotedString('"', unquoteResults=True).setResultsName("title") +
-            assignment_expr
-        ).setParseAction(ast.Field)
-
+    statement_list = Forward()
     if_stmt = Forward()
     if_stmt << \
         Group(
@@ -91,19 +90,20 @@ def parse(input_string):
             boolean_statement +
             r_paren +
             l_curly +
-            (OneOrMore(field_expr) | ZeroOrMore(if_stmt)) +
-            r_curly
+            statement_list +
+            r_curly +
+            Optional(else_lit + l_curly + statement_list + r_curly)
         ).setParseAction(ast.Conditional)
+
+    statement = field_expr ^ if_stmt
+    statement_list <<= l_curly + ZeroOrMore(statement) + r_curly
+    statement_list.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
 
     # Program
     form = \
         form + \
         identifier.setResultsName("form_identifier") + \
-        l_curly + \
-        Group(
-            ZeroOrMore(field_expr.setResultsName("field_expression*") | if_stmt.setResultsName("if_statement*"))
-        ).setResultsName("form_statement_list") + \
-        r_curly
-    form_group = Group(form).addParseAction(ast.Form)
-    tokens = form_group.parseString(input_string)
+        statement_list.setResultsName("form_statement_list")
+    form.addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
+    tokens = form.parseString(input_string)
     return tokens

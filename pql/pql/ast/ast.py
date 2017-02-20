@@ -18,10 +18,10 @@ class Node(object):
 
 
 class Form(Node):
-    def __init__(self, parsed_output):
+    def __init__(self, form_identifier, form_statement_list):
         super(Form, self).__init__('form')
-        self.name = parsed_output[0].form_identifier
-        self.children = parsed_output[0].form_statement_list
+        self.name = form_identifier
+        self.children = form_statement_list
 
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"
@@ -31,14 +31,13 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, parsed_output):
+    def __init__(self, title, identifier, data_type, arithmetic_statement=None):
         super(Field, self).__init__('field')
-        field_expression = parsed_output.field_expression[0]
-        self.name = field_expression.identifier
-        self.title = field_expression.title
-        self.data_type = field_expression.data_type
-        if field_expression.arithmetic_statement:
-            self.add_child(field_expression.arithmetic_statement)
+        self.name = identifier
+        self.title = title
+        self.data_type = data_type
+        if arithmetic_statement:
+            self.add_child(arithmetic_statement)
 
 
 class Arithmetic(Node):
