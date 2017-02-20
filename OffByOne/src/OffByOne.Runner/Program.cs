@@ -15,31 +15,23 @@
     {
         public static void Main(string[] args)
         {
-            ////TestQlGrammar();
+            TestQlGrammar();
             ////TestQlsGrammar();
 
-            var typeChcker = new QlTypeChecker();
-            typeChcker.CheckTypes(new AddExpression(new BooleanLiteral(true), new IntegerLiteral(2)));
+            ////var typeChcker = new QlTypeChecker();
+            ////typeChcker.CheckTypes(new AddExpression(new BooleanLiteral(true), new IntegerLiteral(2)));
         }
 
         private static void TestQlGrammar()
         {
             ICharStream input = new AntlrInputStream(@"
-                form questionaire { 
-                    ""What is your birth date?"" 
-                        birthDate: date
-
-                    ""Do you want to continue?""
-                        continue: boolean
-
-                    if (birthDate < '01-01-2000' and continue) { 
-                        ""How much money do you spend on alcoholic beverages?""
-                            alcoholicBeverages: money
-                    } else {
-                        ""Okay. Goodbye?""
-                            exit: boolean
+                form questionnaire { 
+                    if (2 + 3 * 4 < someVar) { 
+                        ""Is this a question?""
+                            existentialism: boolean
                     }
-                }");
+                }
+            ");
             ICharStream input2 = new AntlrInputStream("true or false");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
