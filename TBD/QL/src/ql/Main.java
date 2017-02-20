@@ -1,11 +1,16 @@
 package ql;
 
+import ql.ast.QLLiteral;
 import ql.ast.Type;
+import ql.ast.expressions.numop.Sub;
+import ql.ast.expressions.unop.Neg;
+import ql.ast.literals.QLInt;
 import ql.ast.visistor.ASTVisitor;
+import ql.ast.visistor.EvalASTVisitor;
 import ql.ast.visistor.PrintASTVisitor;
 import ql.ast.visistor.TypeASTVisitor;
+import ql.parser.Parser;
 import ql.parser.QLLexer;
-import ql.parser.QLParser;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,7 +29,7 @@ public class Main {
 
             System.out.println("Lexer done");
 
-            QLParser parser = new QLParser(lexer);
+            Parser parser = new Parser(lexer);
             parser.parse();
 
             System.out.println("Parser done");
@@ -39,6 +44,12 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
+        Neg exprtest = new Neg(new Sub(new QLInt(12), new QLInt(4)));
+
+        ASTVisitor<QLLiteral> evalASTVisitor = new EvalASTVisitor();
+        System.out.println(evalASTVisitor.visit(exprtest));
 
     }
 }

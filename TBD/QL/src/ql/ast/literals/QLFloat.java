@@ -7,7 +7,7 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLFloat implements QLLiteral {
+public class QLFloat extends QLLiteral {
     private float qlFloat;
 
     public QLFloat(float qlFloat) {
@@ -15,6 +15,10 @@ public class QLFloat implements QLLiteral {
     }
 
     public float getQlFloat() {
+        return qlFloat;
+    }
+
+    public float getValue() {
         return qlFloat;
     }
 

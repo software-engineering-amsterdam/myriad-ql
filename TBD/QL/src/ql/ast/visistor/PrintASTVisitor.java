@@ -19,7 +19,7 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
         node.getName().accept(this);
         System.out.print(" {\n");
         node.getStatements().accept(this);
-        System.out.print("}");
+        System.out.print("}\n\n");
         return null;
     }
 

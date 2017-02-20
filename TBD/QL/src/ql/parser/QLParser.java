@@ -1,4 +1,4 @@
-// Output created by jacc on Tue Feb 14 13:49:29 CET 2017
+// Output created by jacc on Tue Feb 14 14:17:33 CET 2017
 
 package ql.parser;
 
@@ -9,7 +9,7 @@ import ql.ast.expressions.binop.*;
 import ql.ast.expressions.numop.*;
 import ql.ast.expressions.unop.*;
 
-public class QLParser implements QLTokens {
+class QLParser implements QLTokens {
     private int yyss = 100;
     private int yytok;
     private int yysp = 0;
