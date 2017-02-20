@@ -9,7 +9,7 @@ public class IntegerLiteral extends AbstractLiteral<Integer> implements Expressi
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

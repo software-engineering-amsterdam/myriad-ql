@@ -4,8 +4,8 @@ import org.ql.ast.Expression;
 import org.ql.ast.expression.Visitor;
 
 public class Equals implements Expression {
-    private Expression left;
-    private Expression right;
+    private final Expression left;
+    private final Expression right;
 
     public Equals(Expression left, Expression right) {
         this.left = left;
@@ -22,11 +22,11 @@ public class Equals implements Expression {
 
     @Override
     public String toString() {
-        return "(" + left + "==" + right + ")";
+        return "(" + getLeft() + "==" + getRight() + ")";
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

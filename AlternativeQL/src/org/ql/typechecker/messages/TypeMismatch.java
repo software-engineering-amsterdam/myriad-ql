@@ -1,22 +1,24 @@
 package org.ql.typechecker.messages;
 
 import org.ql.ast.Node;
-import org.ql.ast.statement.Question;
 
 public class TypeMismatch implements Message {
-    private final Question question;
 
-    public TypeMismatch(Question question) {
-        this.question = question;
+    private final Node compare;
+    private final Node against;
+
+    public TypeMismatch(Node compare, Node against) {
+        this.compare = compare;
+        this.against = against;
     }
 
     @Override
     public Node getNode() {
-        return question;
+        return compare;
     }
 
     @Override
     public String getMessage() {
-        return "";
+        return "'" + compare + "' is not the same type as '" + against + "'";
     }
 }
