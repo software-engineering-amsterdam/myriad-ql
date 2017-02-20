@@ -7,15 +7,6 @@ require_relative '../ast/statement'
 require_relative '../ast/form'
 require_relative '../ast/variable'
 
-# parser for forms
-class Parser < Parslet::Parser
-  rule(:spaces) do
-    match('\s').repeat(1)
-  end
-
-  rule(:spaces?) do
-    spaces.maybe
-  end
-
-  root :form
+# tranformer for forms
+class Transformer < Parslet::Transform
 end

@@ -32,7 +32,7 @@ class Question
   end
 end
 
-class Parslet::Parser
+class Parser < Parslet::Parser
   # include Parslet
 
   rule(:assignment?) do
@@ -52,7 +52,7 @@ class Parslet::Parser
   end
 end
 
-class Parslet::Transform
+class Transformer < Parslet::Transform
   Type.descendants.each do |type|
     rule(question: {string: simple(:string), variable: simple(:variable), type: type.type}) do
       Question.new(string, Variable.new(variable), type.new)

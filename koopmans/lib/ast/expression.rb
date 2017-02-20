@@ -134,7 +134,7 @@ class NotEqual < BinaryExpression
   end
 end
 
-class Parslet::Parser
+class Parser < Parslet::Parser
   rule(:integer_negation?) do
     str('-').as(:integer_negation).maybe
   end
@@ -164,7 +164,7 @@ class Parslet::Parser
   end
 end
 
-class Parslet::Transform
+class Transformer < Parslet::Transform
   rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
     BooleanNegation.new(BooleanLiteral.new(boolean))
   end

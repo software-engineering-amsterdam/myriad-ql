@@ -17,7 +17,7 @@ class Variable
   # end
 end
 
-class Parslet::Parser
+class Parser < Parslet::Parser
   rule(:variable) do
     match('\w+').repeat(1).as(:variable)
   end
@@ -27,7 +27,7 @@ class Parslet::Parser
   end
 end
 
-class Parslet::Transform
+class Transformer < Parslet::Transform
   rule(variable: simple(:variable)) do
     Variable.new(variable)
   end

@@ -50,7 +50,7 @@ class StringLiteral < Literal
   end
 end
 
-class Parslet::Parser
+class Parser < Parslet::Parser
   rule(:boolean_literal) do
     (str('true') | str('false')).as(:boolean) >> spaces?
   end
@@ -64,7 +64,7 @@ class Parslet::Parser
   end
 end
 
-class Parslet::Transform
+class Transformer < Parslet::Transform
   Literal.descendants.each do |literal|
     rule("#{literal.type}": simple(:value)) do
       literal.new(value)
