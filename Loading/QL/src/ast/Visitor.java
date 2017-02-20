@@ -53,6 +53,11 @@ public class Visitor {
 	public void visit(UnaryExpression unaryExpression) {
 		unaryExpression.getLhs().accept(this);
 	}
+	
+	public void visit(IdExpression id) {
+		System.out.println(id.getName());
+		
+	}
 
 	public void visit(BoolAtom boolAtom) {
 		System.out.println(boolAtom.getValue());
@@ -76,11 +81,6 @@ public class Visitor {
 
 	public void visit(StringAtom stringAtom) {
 		System.out.println(stringAtom.getValue());
-	}
-
-	public void visit(IdExpression id) {
-		System.out.println(id.getName());
-		
 	}
 
 // TODO really not needed

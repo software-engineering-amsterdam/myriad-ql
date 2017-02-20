@@ -1,6 +1,9 @@
 import java.util.Map;
 
 import ast.type.Type;
+import evaluation.Evaluator;
+import semantic.TypeChecker;
+
 import org.antlr.v4.runtime.*;
 
 import ast.Form;
@@ -36,10 +39,12 @@ public class Main {
 		 Form form = parser.form().result;
 	 
 		 System.out.println("----");
+		 
+		 TypeChecker typeChecker = new TypeChecker();
+		 
+		 semantic.Environment semanticEv = typeChecker.analyze(form);
 
-		 TypeChecker.main(form);
-
-
+		 Evaluator evaluator = new Evaluator();
 
 
 		 
