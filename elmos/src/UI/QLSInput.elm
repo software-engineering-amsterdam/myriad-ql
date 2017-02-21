@@ -3,12 +3,12 @@ module UI.QLSInput exposing (Model, Msg, init, asStylesheet, update, view)
 import Html exposing (Html, form, textarea, div, hr, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
-import QLS.AST exposing (Stylesheet)
+import QLS.AST exposing (StyleSheet)
 import QLS.Parser as Parser
 
 
 type Model
-    = Model String (Maybe Stylesheet)
+    = Model String (Maybe StyleSheet)
 
 
 type Msg
@@ -56,7 +56,7 @@ exampleDsl =
 """
 
 
-asStylesheet : Model -> Maybe Stylesheet
+asStylesheet : Model -> Maybe StyleSheet
 asStylesheet (Model _ maybeStylesheet) =
     maybeStylesheet
 
