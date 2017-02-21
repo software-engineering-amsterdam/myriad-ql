@@ -268,18 +268,18 @@ class SubNode(ArithmeticExprNode):
         return "({} - {})".format(self.left, self.right)
 
 
-class LogicalExprNode(Node):
+class ComparisonExprNode(Node):
     def __init__(self, left, right, line=0, col=0):
-        super(LogicalExprNode, self).__init__(line, col)
+        super(ComparisonExprNode, self).__init__(line, col)
         self.left = left
         self.right = right
 
     def accept(self, visitor):
-        super(LogicalExprNode, self).accept(visitor)
-        return visitor.arithmetic_node(self)
+        super(ComparisonExprNode, self).accept(visitor)
+        return visitor.comparison_node(self)
 
 
-class LTNode(LogicalExprNode):
+class LTNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(LTNode, self).__init__(left, right, line, col)
 
@@ -291,7 +291,7 @@ class LTNode(LogicalExprNode):
         return "({} < {})".format(self.left, self.right)
 
 
-class LTENode(LogicalExprNode):
+class LTENode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(LTENode, self).__init__(left, right, line, col)
 
@@ -303,7 +303,7 @@ class LTENode(LogicalExprNode):
         return "({} <= {})".format(self.left, self.right)
 
 
-class GTNode(LogicalExprNode):
+class GTNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(GTNode, self).__init__(left, right, line, col)
 
@@ -315,7 +315,7 @@ class GTNode(LogicalExprNode):
         return "({} > {})".format(self.left, self.right)
 
 
-class GTENode(LogicalExprNode):
+class GTENode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(GTENode, self).__init__(left, right, line, col)
 
@@ -327,7 +327,7 @@ class GTENode(LogicalExprNode):
         return "({} >= {})".format(self.left, self.right)
 
 
-class EqNode(LogicalExprNode):
+class EqNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(EqNode, self).__init__(left, right, line, col)
 
@@ -339,7 +339,7 @@ class EqNode(LogicalExprNode):
         return "({} == {})".format(self.left, self.right)
 
 
-class NeqNode(LogicalExprNode):
+class NeqNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(NeqNode, self).__init__(left, right, line, col)
 
@@ -349,6 +349,17 @@ class NeqNode(LogicalExprNode):
 
     def __str__(self, indent=0):
         return "({} != {})".format(self.left, self.right)
+
+
+class LogicalExprNode(Node):
+    def __init__(self, left, right, line=0, col=0):
+        super(LogicalExprNode, self).__init__(line, col)
+        self.left = left
+        self.right = right
+
+    def accept(self, visitor):
+        super(LogicalExprNode, self).accept(visitor)
+        return visitor.logical_node(self)
 
 
 class AndNode(LogicalExprNode):
