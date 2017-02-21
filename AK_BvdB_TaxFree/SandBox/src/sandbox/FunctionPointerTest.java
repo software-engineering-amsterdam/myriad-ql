@@ -15,8 +15,15 @@ public class FunctionPointerTest {
         Assert.assertEquals(second.size(), 3, "Expected three strings");
     }
 
+    public void testFunctionWithLambda() throws Exception {
+
+    }
+
     public List<String> doSomeAst(ListFunction lf) {
+        ///
         return lf.function("Goodbye");
+
+        ///
     }
 }
 
