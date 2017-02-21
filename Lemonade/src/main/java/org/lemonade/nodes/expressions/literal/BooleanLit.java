@@ -17,6 +17,12 @@ public class BooleanLit extends Literal {
         this.value = Boolean.parseBoolean(value);
     }
 
+
+    public BooleanLit(QLType type, boolean value) {
+        super(type);
+        this.value = value;
+    }
+
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
@@ -24,5 +30,21 @@ public class BooleanLit extends Literal {
     @Override
     public String toString() {
         return Boolean.toString(value);
+    }
+
+    public boolean getValue() {
+        return value;
+    }
+
+    public BooleanLit and(BooleanLit that) {
+        return new BooleanLit(new QLBooleanType(), this.value && that.value);
+    }
+
+    public BooleanLit or(BooleanLit that) {
+        return new BooleanLit(new QLBooleanType(), this.value || that.value);
+    }
+
+    public BooleanLit neg(){
+        return new BooleanLit(new QLBooleanType(), !this.value);
     }
 }

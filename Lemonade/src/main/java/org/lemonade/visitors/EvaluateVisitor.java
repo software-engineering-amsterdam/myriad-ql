@@ -1,8 +1,10 @@
 package org.lemonade.visitors;
 
+import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
+import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.expressions.binary.*;
@@ -14,129 +16,140 @@ import org.lemonade.nodes.types.QLType;
 /**
  *
  */
-public class EvaluateVisitor implements ASTVisitor<Literal> {
+public class EvaluateVisitor implements ASTVisitor<Expression> {
+
     @Override
-    public Literal visit(Form form) {
+    public Expression visit(Form form) {
+
+        for (Body body : form.getBodies()) {
+            body.accept(this);
+        }
         return null;
     }
 
     @Override
-    public Literal visit(Question question) {
+    public Expression visit(Question question) {
         return null;
     }
 
     @Override
-    public Literal visit(Conditional conditional) {
+    public Expression visit(Conditional conditional) {
+        conditional.getCondition().accept(this);
         return null;
     }
 
     @Override
-    public Literal visit(Expression expression) {
+    public Expression visit(Expression expression) {
         return null;
     }
 
     @Override
-    public Literal visit(AndBinary andBinary) {
+    public Expression visit(AndBinary andBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(OrBinary orBinary) {
+    public Expression visit(OrBinary orBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(PlusBinary plusBinary) {
+    public Expression visit(PlusBinary plusBinary) {
+        IntegerLit left = (IntegerLit) plusBinary.getLeft().accept(this);
+        IntegerLit right = (IntegerLit) plusBinary.getLeft().accept(this);
+        System.err.println(left.plus(right));
+        return left.plus(right);
+    }
+
+    @Override
+    public Expression visit(ProductBinary productBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(ProductBinary productBinary) {
+    public Expression visit(MinusBinary minusBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(MinusBinary minusBinary) {
+    public Expression visit(DivideBinary divideBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(DivideBinary divideBinary) {
+    public Expression visit(EqBinary eqBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(EqBinary eqBinary) {
+    public Expression visit(NEqBinary nEqBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(NEqBinary nEqBinary) {
+    public Expression visit(GTBinary gtBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(GTBinary gtBinary) {
+    public Expression visit(GTEBinary gteBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(GTEBinary gteBinary) {
+    public Expression visit(LTBinary ltBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(LTBinary ltBinary) {
+    public Expression visit(LTEBinary lteBinary) {
         return null;
     }
 
     @Override
-    public Literal visit(LTEBinary lteBinary) {
+    public Expression visit(BangUnary bangUnary) {
+        BooleanLit expression = (BooleanLit) bangUnary.getExpression().accept(this);
+        return expression.neg();
+    }
+
+    @Override
+    public Expression visit(NegUnary negUnary) {
         return null;
     }
 
     @Override
-    public Literal visit(BangUnary bangUnary) {
-        return null;
+    public Expression visit(BooleanLit booleanLit) {
+        return booleanLit;
     }
 
     @Override
-    public Literal visit(NegUnary negUnary) {
-        return null;
+    public Expression visit(DecimalLit decimalLit) {
+        return decimalLit;
     }
 
     @Override
-    public Literal visit(BooleanLit booleanLit) {
-        return null;
+    public Expression visit(MoneyLit moneyLit) {
+        return moneyLit;
     }
 
     @Override
-    public Literal visit(DecimalLit decimalLit) {
-        return null;
+    public Expression visit(IntegerLit integerLit) {
+        return integerLit;
     }
 
     @Override
-    public Literal visit(MoneyLit moneyLit) {
-        return null;
+    public Expression visit(StringLit stringLit) {
+        return stringLit;
     }
 
     @Override
-    public Literal visit(IntegerLit integerLit) {
-        return null;
+    public Expression visit(IdentifierLit identifierLit) {
+        return identifierLit;
     }
 
     @Override
-    public Literal visit(StringLit stringLit) {
+    public Expression visit(QLType qlType) {
         return null;
     }
 
-    @Override
-    public Literal visit(IdentifierLit identifierLit) {
-        return null;
-    }
-
-    @Override
-    public Literal visit(QLType qlType) {
-        return null;
-    }
 }
