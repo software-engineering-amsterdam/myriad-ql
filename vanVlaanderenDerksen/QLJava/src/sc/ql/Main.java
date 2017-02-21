@@ -2,7 +2,6 @@ package sc.ql;
 
 import sc.ql.antlr.*;
 import sc.ql.ast.*;
-import sc.ql.model.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.*;
@@ -16,9 +15,7 @@ public class Main {
         ParseTree tree = parser.form();
         
         AstVisitor visitor = new AstVisitor();
-        Node form = visitor.visit(tree);
-        
-        //System.out.println();
+        visitor.visit(tree);
     }
 	
 }
