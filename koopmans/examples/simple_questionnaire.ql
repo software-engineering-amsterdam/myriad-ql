@@ -13,13 +13,13 @@ form taxOfficeExample {
   if (hasSoldHouse ) {
     "What was the selling price?"
       sellingPrice: money
-      if (hasBoughtHouse && hasMaintLoan){
+      if (hasBoughtHouse || hasMaintLoan){
         "Private debts for the sold house:"
         privateDebt: money
         }
     "Value residue:"
       valueResidue: money =
-        (privateDebt + sellingPrice)
+        (10 + privateDebt)
   }
 
 }
