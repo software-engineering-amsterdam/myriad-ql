@@ -50,14 +50,14 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
         super.enterIfStatement(ctx);
-        Node ifStatementNode = new IfStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
+        Node ifStatementNode = new IfStatementNode(ctx.getText());
         addParentNodeToAst(ifStatementNode);
     }
 
     @Override
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
-        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
+        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText());
         addParentNodeToAst(ifElseStatementNode);
     }
 
@@ -71,7 +71,8 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterExpression(QLGrammarParser.ExpressionContext ctx) {
         super.enterExpression(ctx);
-        Node expressionNode = new ExpressionNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
+        Node expressionNode = new ExpressionNode(ctx.getText());
+//        mParentStack.peek().setCondition(expressionNode); // TODO
         addParentNodeToAst(expressionNode);
     }
 
@@ -98,19 +99,10 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
         popParent(); // Clear stack
+        if (!mParentStack.isEmpty()) {
+            throw new AssertionError("After parsing the form, the stack should be empty");
+        }
     }
-
-    ////////////////
-    @Override
-    public void enterStatement(QLGrammarParser.StatementContext ctx) {
-        super.enterStatement(ctx);
-    }
-
-    @Override
-    public void exitStatement(QLGrammarParser.StatementContext ctx) {
-        super.exitStatement(ctx);
-    }
-
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);

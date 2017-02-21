@@ -106,7 +106,7 @@ class ComputedQuestionNode(QuestionNode):
 
     def accept(self, visitor):
         super(ComputedQuestionNode, self).accept(visitor)
-        visitor.computed_question_node(self)
+        visitor.comp_question_node(self)
 
     def __eq__(self, other):
         return super(ComputedQuestionNode, self).__eq__(other) and \
@@ -169,9 +169,6 @@ class MonOpNode(Node):
     def __eq__(self, other):
         return super(MonOpNode, self).__eq__(other) and other.expression == self.expression
 
-    def __str__(self, indent=0):
-        return "{}".format(self.expression)
-
 
 class NegNode(MonOpNode):
     def __init__(self, expression, line=0, col=0):
@@ -179,10 +176,10 @@ class NegNode(MonOpNode):
 
     def accept(self, visitor):
         super(NegNode, self).accept(visitor)
-        return visitor.unary_neg_node(self)
+        return visitor.neg_node(self)
 
     def __str__(self, indent=0):
-        return "!{}".format(super(NegNode, self).__str__(indent))
+        return "!{}".format(self.expression)
 
 
 class MinNode(MonOpNode):
@@ -396,7 +393,7 @@ class StringNode(Node):
         return visitor.string_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(StringNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return self.val
@@ -412,7 +409,7 @@ class IntNode(Node):
         return visitor.int_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(IntNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)
@@ -428,7 +425,7 @@ class BoolNode(Node):
         return visitor.bool_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(BoolNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)
@@ -444,7 +441,23 @@ class VarNode(Node):
         return visitor.var_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(VarNode, self).__eq__(other) and other.val == self.val
+
+    def __str__(self, indent=0):
+        return str(self.val)
+
+
+class MoneyNode(Node):
+    def __init__(self, money, line=0, col=0):
+        super(MoneyNode, self).__init__(line, col)
+        self.val = money
+
+    def accept(self, visitor):
+        super(MoneyNode, self).accept(visitor)
+        return visitor.decimal_node(self)
+
+    def __eq__(self, other):
+        return super(MoneyNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)
@@ -469,7 +482,6 @@ class DecimalNode(Node):
 class DateNode(Node):
     def __init__(self, date, line=0, col=0):
         super(DateNode, self).__init__(line, col)
-
         self.val = date
 
     def accept(self, visitor):
@@ -477,7 +489,7 @@ class DateNode(Node):
         return visitor.date_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(DateNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)

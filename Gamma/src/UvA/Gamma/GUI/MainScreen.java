@@ -1,9 +1,6 @@
 package UvA.Gamma.GUI;
 
-import UvA.Gamma.AST.Computed;
-import UvA.Gamma.AST.Condition;
-import UvA.Gamma.AST.FormItem;
-import UvA.Gamma.AST.Question;
+import UvA.Gamma.AST.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -19,6 +16,11 @@ public class MainScreen {
     private GridPane root;
     private Stage stage;
     private int rowCount;
+    private Form form;
+
+    public MainScreen(Form form) {
+        this.form = form;
+    }
 
     public void initUI(Stage stage) {
         root = new GridPane();
@@ -44,8 +46,9 @@ public class MainScreen {
         TextField input = new TextField();
         input.textProperty().bindBidirectional(question.getStringValueProperty());
 
-        //TODO: Bind listener to update UI based on new value
-
+        input.textProperty().addListener((observable, oldValue, newValue) ->
+                form.getFormItems().forEach(item -> item.idChanged(question.getId(), newValue))
+        );
 
         root.addRow(++rowCount, questionLabel, input);
         stage.sizeToScene();
