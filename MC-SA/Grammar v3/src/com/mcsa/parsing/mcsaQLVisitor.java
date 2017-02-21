@@ -2,7 +2,6 @@ package com.mcsa.parsing;
 
 import com.mcsa.QL.*;
 import com.mcsa.antlr.*;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
@@ -22,23 +21,19 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
         ArrayList<Question> questions = new ArrayList<>();
         ArrayList<IfStatement> ifStatements = new ArrayList<>();
         Form form = new Form(formName);
-        
-        for (QLParser.StatementContext statementContext : ctx.statement())
-        {
-            if(statementContext.question() != null)
-            {
+
+        for (QLParser.StatementContext statementContext : ctx.statement()) {
+            if (statementContext.question() != null) {
                 Question result = (Question) visit(statementContext);
                 questions.add(result);
-            }
-            else if (statementContext.ifStatement() != null)
-            {
+            } else if (statementContext.ifStatement() != null) {
                 IfStatement result = (IfStatement) visit(statementContext);
                 ifStatements.add(result);
             }
         }
 
-        form.formAddQuestion(questions);
-        form.formAddIfStatement(ifStatements);
+        form.replaceQuestions(questions);
+        form.replaceIfStatements(ifStatements);
 
         return form;
     }
@@ -46,17 +41,16 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
     @Override
     public Node visitStatement(QLParser.StatementContext ctx) {
 
-        if(ctx.question() != null) {
+        if (ctx.question() != null) {
             return (Question) visit(ctx.question());
-        }
-        else
-        {
+        } else {
             return (IfStatement) visit(ctx.ifStatement());
         }
     }
 
     @Override
     public Node visitIfStatement(QLParser.IfStatementContext ctx) {
+
         visit(ctx.ifCase());
         return null;
     }
@@ -99,10 +93,12 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
     @Override
     public Object visitIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
+
         if (ctx.ID() != null)
             return ctx.ID().getText();
         else
             return ctx.NUMBER().getText();
+
     }
 
     @Override

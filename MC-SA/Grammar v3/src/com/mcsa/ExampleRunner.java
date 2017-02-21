@@ -29,8 +29,8 @@ public class ExampleRunner {
             e.printStackTrace();
         }
 
-        runner.printIDs(fileContent);
-        /*runner.printIDs("form taxOfficeExample { \n" +
+        runner.buildQLAST(fileContent);
+        /*runner.buildQLAST("form taxOfficeExample { \n" +
             "  \"Did you sell a house in 2010?\"\n" +
             "    hasSoldHouse: boolean;\n" +
             "  \"Did you buy a house in 2010?\"\n" +
@@ -52,7 +52,7 @@ public class ExampleRunner {
 
     }
 
-    private void printIDs(String input) {
+    public Form buildQLAST(String input) {
         // Get our lexer
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
 
@@ -67,6 +67,8 @@ public class ExampleRunner {
 
         mcsaQLVisitor visitor = new mcsaQLVisitor();
         Form traverseResult = (Form) visitor.visit(formDeclarationContext);
+
+        return traverseResult;
 
     }
 

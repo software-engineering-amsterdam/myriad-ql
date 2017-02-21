@@ -17,18 +17,24 @@ public class Form implements Node{
         this.ifStatementList = new ArrayList<>();
     }
 
-    public void formAddQuestion( ArrayList<Question> questionList)
+    public void replaceQuestions(ArrayList<Question> questionList)
     {
         this.questionList = questionList;
     }
 
-    public void formAddIfStatement( ArrayList<IfStatement> IfList)
+    public void replaceIfStatements(ArrayList<IfStatement> IfList)
     {
         this.ifStatementList = IfList;
     }
 
-    public ArrayList<Question> getFormQuestionList() { return questionList; }
+    public void addQuestion(Question question){this.questionList.add(question);}
 
-    public ArrayList<IfStatement> getFormIfStatementList() { return ifStatementList; }
+    public void addIfStatement(IfStatement statement){this.ifStatementList.add(statement);}
+
+    public ArrayList<Question> getQuestionList() { return questionList; }
+
+    public ArrayList<IfStatement> getIfStatementList() { return ifStatementList; }
+
+    public String getName(){return formName;}
 
 }
