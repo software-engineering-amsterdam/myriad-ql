@@ -11,7 +11,7 @@ public class BooleanType extends Type {
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
+		// TODO empty accept
 		
 	}
 

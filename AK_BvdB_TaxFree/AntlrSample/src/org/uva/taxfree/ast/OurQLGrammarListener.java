@@ -47,6 +47,19 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         }
     }
 
+    @Override
+    public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
+        super.enterIfStatement(ctx);
+        Node ifStatementNode = new IfStatementNode(ctx.getText());
+        addParentNodeToAst(ifStatementNode);
+    }
+
+    @Override
+    public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
+        super.enterIfElseStatement(ctx);
+        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText());
+        addParentNodeToAst(ifElseStatementNode);
+    }
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
@@ -55,6 +68,54 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         addNodeToAst(questionNode);
     }
 
+    @Override
+    public void enterBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
+        super.enterBooleanExpression(ctx);
+        Node booleanExpressionNode = new BooleanExpressionNode(ctx.getText());
+        addParentNodeToAst(booleanExpressionNode);
+    }
+
+    @Override
+    public void enterCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
+        super.enterCalculationExpression(ctx);
+        Node calculationExpressionNode = new CalculationExpressionNode(ctx.getText());
+        addParentNodeToAst(calculationExpressionNode);
+    }
+
+    @Override
+    public void enterUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
+        super.enterUniformExpression(ctx);
+        Node uniformExpressionNode = new UniformExpressionNode(ctx.getText());
+        addParentNodeToAst(uniformExpressionNode);
+    }
+
+    @Override
+    public void enterParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
+        super.enterParenthesizedExpression(ctx);
+        Node parenthesizedExpression = new ParenthesizedExpression(ctx.getText());
+        addParentNodeToAst(parenthesizedExpression);
+    }
+
+    @Override
+    public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
+        super.enterBooleanLiteral(ctx);
+        Node booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
+        addNodeToAst(booleanLiteralNode);
+    }
+
+    @Override
+    public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
+        super.enterIntegerLiteral(ctx);
+        Node integerLiteralNode = new IntegerLiteralNode(ctx.getText());
+        addNodeToAst(integerLiteralNode);
+    }
+
+    @Override
+    public void enterStringLiteral(QLGrammarParser.StringLiteralContext ctx) {
+        super.enterStringLiteral(ctx);
+        Node stringLiteralNode = new StringLiteralNode(ctx.getText());
+        addNodeToAst(stringLiteralNode);
+    }
 
     // Exits
     @Override
@@ -70,8 +131,26 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     }
 
     @Override
-    public void exitExpression(QLGrammarParser.ExpressionContext ctx) {
-        super.exitExpression(ctx);
+    public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
+        super.exitCalculationExpression(ctx);
+        popParent();
+    }
+
+    @Override
+    public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
+        super.exitBooleanExpression(ctx);
+        popParent();
+    }
+
+    @Override
+    public void exitUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
+        super.exitUniformExpression(ctx);
+        popParent();
+    }
+
+    @Override
+    public void exitParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
+        super.exitParenthesizedExpression(ctx);
         popParent();
     }
 
@@ -79,6 +158,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
         popParent(); // Clear stack
+        if (!mParentStack.isEmpty()) {
+            throw new AssertionError("After parsing the form, the stack should be empty");
+        }
     }
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {

@@ -1,17 +1,18 @@
 package ast;
 
+import ast.atom.Atom;
 import ast.type.Type;
 
 public class ComputedQuestion extends Question {
 
-	private int computedQuestion;
+	private Atom computedQuestion;
 
-	public ComputedQuestion(String variable, String label, Type type, int computedQuestion) {
+	public ComputedQuestion(String variable, String label, Type type, Atom computedQuestion) {
 		super(variable, label, type);
 		this.computedQuestion = computedQuestion;
 	}
 
-	public int getComputedQuestion() {
+	public Atom getComputedQuestion() {
 		return computedQuestion;
 	}
 }

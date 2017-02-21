@@ -9,72 +9,70 @@ grammar QL;
 }
 
 form returns [Form result] 
-		: 'form' ID block { $result = new Form($ID.text, $block.result); };
+ : 'form' ID block { $result = new Form($ID.text, $block.result, $block.start.getLine()); };
 
 block returns [Block result]
-		@init {
-			$result = new Block();
-		}
-		: '{' (question { $result.addQuestion($question.result); } 
-			| statement { $result.addStatement($statement.result); })*  
-		  '}'
-		; 
+ @init {
+     $result = new Block();
+ }
+ : '{' (question { $result.addQuestion($question.result); }
+            | statement { $result.addStatement($statement.result); })*
+   '}'
+ ;
 
 // TODO decide on maximum characters on one line
 question returns [Question result]
-		: ID ':' STRING type
-		{ $result = new Question($ID.text, $STRING.text, $type.result); }
-		| ID ':' STRING type computed_question
-		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, Integer.parseInt($computed_question.text));}
-		;
+ : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result); }
+ | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate());}
+ ;
 
 type returns [Type result]
-	: 'boolean' { $result = new BooleanType(); }
-	| 'date' 	{ $result = new DateType(); }
-	| 'decimal' { $result = new DecimalType(); } 
-	| 'integer' { $result = new IntegerType(); }
-	| 'money'   { $result = new MoneyType(); }
-	| 'string'  { $result = new StringType(); }
-	;
+ : 'boolean' { $result = new BooleanType(); }
+ | 'date' 	{ $result = new DateType(); }
+ | 'decimal' { $result = new DecimalType(); }
+ | 'integer' { $result = new IntegerType(); }
+ | 'money'   { $result = new MoneyType(); }
+ | 'string'  { $result = new StringType(); }
+ ;
 
-computed_question: '(' type '-' type | type '+' type ')' ;
+computed_question returns [Expression result]
+ : parenthesisExpr { $result = $parenthesisExpr.result; }
+ ;
 
 statement returns [Statement result]
  : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);}
- | WHILE parenthesisExpr block { $result = new Statement($parenthesisExpr.result, $block.result);}
+ | WHILE parenthesisExpr block { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO do we need while?
  ;
 
 parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
- | '(' atom ')' { $result = $atom.result;}
- | atom { $result = $atom.result;}
+ | ('(' atom ')' | atom) { $result = $atom.result;}
+ | ('(' ID ')' | ID ) { System.out.println($ID.text);
+        $result = new IdExpression($ID.text); }
  ;
 
 expr returns [Expression result]
  : lhs = parenthesisExpr (binOp rhs = parenthesisExpr)+ { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
-  | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
+ | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
  // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  // | atom { $result = $atom.result; }
- | ID { System.out.println($ID.text);
-        $result = new IdExpression($ID.text); }
  ;
 
 binOp returns [BinaryExpression result]
- : '==' { $result = new EqExpression(); }
+ : '/'  { $result = new DivExpression(); }
+ | '*'  { $result = new MulExpression(); }
+ | '+'  { $result = new AddExpression(); }
+ | '-'  { $result = new SubExpression(); }
+ | '==' { $result = new EqExpression(); }
  | '!=' { $result = new NEqExpression(); }
  | '<=' { $result = new LEqExpression(); }
  | '>=' { $result = new GEqExpression(); }
  | '>'  { $result = new GExpression(); }
  | '<'  { $result = new LExpression(); }
- | '+'  { $result = new AddExpression(); }
- | '-'  { $result = new SubExpression(); }
- | '/'  { $result = new DivExpression(); }
- | '*'  { $result = new MulExpression(); }
  | '&&' { $result = new AndExpression(); }
  | '||' { $result = new OrExpression(); }
  ;
 
-// TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
   | '+' { $result = new PlusExpression(); }
@@ -106,24 +104,20 @@ IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
 
-ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+ID : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
-INT: ('0'..'9')+;
+INT : ('0'..'9')+;
 
-TWO_DIGIT: ('0'..'9')('0'..'9');
+TWO_DIGIT : ('0'..'9')('0'..'9');
 
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
 DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
-STRING: '"' .*? '"';
+STRING : '"' .*? '"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
 // http://stackoverflow.com/questions/14778570/antlr-4-channel-hidden-and-options
-COMMENT 
-    :   ( '//' ~[\r\n]* '\r'? '\n'
-        | '/*' .*? '*/'
-        ) -> skip
-    ;
+COMMENT : ( '//' ~[\r\n]* '\r'? '\n' | '/*' .*? '*/') -> skip;

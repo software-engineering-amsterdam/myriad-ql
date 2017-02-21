@@ -27,8 +27,8 @@ public abstract class BinaryExpression extends Expression {
 		return rhs;
 	}
 	
-@Override 
-public void accept(Visitor v) {
+	@Override
+	public void accept(Visitor v) {
 		v.visit(this);
 	}
 }

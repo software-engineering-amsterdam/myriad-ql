@@ -13,8 +13,6 @@ public class PlusExpression extends UnaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		
-		// TODO Auto-generated method stub
 		return getLhs().plus();
 	}
 
