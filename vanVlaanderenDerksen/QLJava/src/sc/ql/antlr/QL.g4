@@ -17,11 +17,11 @@ conditional_block
 	
 expression
 	: '(' expression ')' 												#parenExpr
-	| '!' expression													#boolExpr
+	| '!' expression													#notExpr
 	| left=expression op=('*'|'/') right=expression						#opExpr
 	| left=expression op=('+'|'-') right=expression						#opExpr
-	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr
-	| left=expression op=('&&'|'||') right=expression					#boolExpr
+	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #opExpr
+	| left=expression op=('&&'|'||') right=expression					#opExpr
 	| atom=BOOL															#boolAtom
 	| atom=INT															#intAtom
 	| atom=ID															#idAtom
