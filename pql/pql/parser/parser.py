@@ -97,7 +97,7 @@ def parse(input_string):
             boolean_statement +
             r_paren +
             statement_list +
-            Optional(else_lit + l_curly + statement_list + r_curly)
+            Optional(else_lit + l_curly + statement_list + r_curly).setResultsName('else_statement')
         ).setParseAction(ast.Conditional)
 
     statement = field_expr ^ if_stmt
