@@ -9,6 +9,7 @@ require_relative 'string_question'
 require_relative 'integer_question'
 require_relative 'computed_question'
 require_relative 'gui_question_visitor'
+require_relative '../visitor/base_visitor'
 
 require 'tk'
 require 'pp'
@@ -77,22 +78,29 @@ class GUIQuestionVisitor
     end
   end
 
-  #is the calculation a literal, a variable or an expression?
+  # #is the calculation a literal, a variable or an expression?
   def visit_calculation(calculation)
     return unless calculation
     if calculation.kind_of?(Variable)
       visit_variable(calculation)
-    elsif calculation.kind_of?(Expression)
-      visit_expression(calculation)
+    elsif calculation.kind_of?(BinaryExpression)
+      visit_binary_expression(calculation)
+    elsif calculation.kind_of?(Negation)
+      visit_negation(calculation)
     else
       calculation
     end
   end
 
   # visit the calculations of both the left and right sides
-  def visit_expression(subject)
+  def visit_binary_expression(subject)
     subject.left = visit_calculation(subject.left)
     subject.right = visit_calculation(subject.right)
+    subject
+  end
+
+  def visit_negation(subject)
+    subject.expression = visit_calculation(subject.expression)
     subject
   end
 

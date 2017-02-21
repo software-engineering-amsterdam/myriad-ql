@@ -10,7 +10,7 @@ form taxOfficeExample {
     "Dij oiasjd asd "
         aap: string
 
-  if (hasSoldHouse) {
+  if (!hasSoldHouse) {
     "What was the selling price?"
       sellingPrice: money
       if (sellingPrice > 10){
@@ -19,7 +19,7 @@ form taxOfficeExample {
         }
     "Value residue:"
       valueResidue: money =
-        (10 + true + -sellingPrice * -sellingPrice + 2 )
+        (-sellingPrice)
   }
 
 }

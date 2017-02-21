@@ -14,7 +14,7 @@ class Expression
 end
 
 class Negation < Expression
-  attr_reader :expression
+  attr_accessor :expression
 
   def initialize(expression)
     @expression = expression
@@ -31,7 +31,7 @@ class BooleanNegation < Negation
   end
 
   def eval
-    !expression
+    !expression.eval
   end
 
   def self.accept_types
@@ -45,7 +45,7 @@ class IntegerNegation < Negation
   end
 
   def eval
-    -expression
+    0 - expression.eval
   end
 
   def self.accept_types
