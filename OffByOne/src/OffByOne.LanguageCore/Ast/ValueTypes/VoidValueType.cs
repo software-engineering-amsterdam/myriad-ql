@@ -10,6 +10,11 @@
             return obj is VoidValueType;
         }
 
+        public override bool Equals(ValueType obj)
+        {
+            return obj is VoidValueType;
+        }
+
         public override int GetHashCode()
         {
             return int.MaxValue;

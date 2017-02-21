@@ -7,17 +7,22 @@
     {
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            return obj is FloatValueType;
+        }
+
+        public override bool Equals(ValueType obj)
+        {
+            return obj is FloatValueType;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return int.MaxValue;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return "float";
         }
 
         public override TResult Accept<TResult>(IValueTypeVisitor<TResult> visitor)

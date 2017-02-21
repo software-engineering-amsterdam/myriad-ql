@@ -10,6 +10,11 @@
             return obj is StringValueType;
         }
 
+        public override bool Equals(ValueType obj)
+        {
+            return obj is StringValueType;
+        }
+
         public override int GetHashCode()
         {
             return int.MaxValue;

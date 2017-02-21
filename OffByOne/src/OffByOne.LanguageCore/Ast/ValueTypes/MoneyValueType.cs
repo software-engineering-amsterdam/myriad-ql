@@ -10,6 +10,11 @@
             return obj is MoneyValueType;
         }
 
+        public override bool Equals(ValueType obj)
+        {
+            return obj is MoneyValueType;
+        }
+
         public override int GetHashCode()
         {
             return int.MaxValue;

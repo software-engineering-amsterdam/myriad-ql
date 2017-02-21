@@ -20,12 +20,12 @@
         public static void Main(string[] args)
         {
             TestQlGrammar();
-            ////TestQlsGrammar();
+            TestQlsGrammar();
 
             var typeChcker = new TypeChecker();
             var testCondition = new IfStatement(
-                new AddExpression(
-                    new LiteralExpression(new BooleanLiteral(true)),
+                new EqualExpression(
+                    new LiteralExpression(new IntegerLiteral(2)),
                     new LiteralExpression(new IntegerLiteral(2))),
                 new List<Statement>(),
                 new List<Statement>());
@@ -33,6 +33,8 @@
             typeChcker.Check(new FormStatement(
                 "test",
                 new List<Statement> { testCondition }));
+
+            Console.WriteLine("Type check done!");
         }
 
         private static void TestQlGrammar()

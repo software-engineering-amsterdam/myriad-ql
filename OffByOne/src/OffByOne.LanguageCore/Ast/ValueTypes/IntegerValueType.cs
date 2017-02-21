@@ -10,6 +10,11 @@
             return obj is IntegerValueType;
         }
 
+        public override bool Equals(ValueType other)
+        {
+            return other is IntegerValueType;
+        }
+
         public override int GetHashCode()
         {
             return int.MaxValue;

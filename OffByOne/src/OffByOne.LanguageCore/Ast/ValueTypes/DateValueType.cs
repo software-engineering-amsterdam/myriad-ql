@@ -24,5 +24,10 @@
         {
             return visitor.Visit(this);
         }
+
+        public override bool Equals(ValueType obj)
+        {
+            return obj is DateValueType;
+        }
     }
 }
