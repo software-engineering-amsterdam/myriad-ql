@@ -30,8 +30,8 @@ def parse(input_string):
 
     # Reserved operators
     multiplication_op = Suppress("*")
-    divide_op = Suppress("/")
-    add_op = Literal("+")
+    divide_op = Literal("/")
+    add_op = Literal("+").setResultsName("addition_operator")
     subtract_op = Literal("-")
 
     rat_op = oneOf(["<", "<=", ">", ">="])
@@ -41,8 +41,7 @@ def parse(input_string):
     assign_op = Suppress("=")
 
     arith_prec = [
-        # (add_op, 2, opAssoc.LEFT, ast.Addition),
-        (add_op, 2, opAssoc.LEFT, (lambda x: print("%s" % x))),
+        (add_op, 2, opAssoc.LEFT, ast.Addition),
         (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
         (divide_op, 2, opAssoc.LEFT, ast.Division),
         (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
