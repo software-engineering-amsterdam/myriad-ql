@@ -25,4 +25,9 @@ public class IfStatementNode extends Node {
         set.add(this);
     }
 
+    @Override
+    public String getId() {
+        return mCondition;
+    }
+
 }
