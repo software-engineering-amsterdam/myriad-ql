@@ -95,6 +95,26 @@ class BoolOperand(Node):
         self.label = parsed_output[0]
 
 
+class UnaryOperation:
+    def __init__(self, right):
+        self.right = right
+
+
+class Positive(UnaryOperation):
+    def __init__(self, right):
+        super(Positive, self).__init__(right)
+
+
+class Negative(UnaryOperation):
+    def __init__(self, right):
+        super(Negative, self).__init__(right)
+
+
+class Negation(UnaryOperation):
+    def __init__(self, right):
+        super(Negation, self).__init__(right)
+
+
 class BoolBinOp(Node):
     symbol = None
     eval_function = None
@@ -107,20 +127,20 @@ class BoolBinOp(Node):
         del arguments
 
 
-class BoolAnd(BoolBinOp):
+class And(BoolBinOp):
     symbol = '&&'
     eval_function = all
 
     def __init__(self, parsed_output):
-        super(BoolAnd, self).__init__(parsed_output, 'boolean_and')
+        super(And, self).__init__(parsed_output, 'boolean_and')
 
 
-class BoolOr(BoolBinOp):
+class Or(BoolBinOp):
     symbol = '||'
     eval_function = any
 
     def __init__(self, parsed_output):
-        super(BoolOr, self).__init__(parsed_output, 'boolean_or')
+        super(Or, self).__init__(parsed_output, 'boolean_or')
 
 
 class Condition(Node):

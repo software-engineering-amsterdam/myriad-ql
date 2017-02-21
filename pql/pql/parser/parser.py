@@ -4,9 +4,6 @@ from pyparsing import *
 from pql.ast import ast
 
 
-
-
-
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
     number = Word(nums + ".")
@@ -30,18 +27,22 @@ def parse(input_string):
     op_division = Literal("/").setParseAction(lambda _: ast.Division)
     op_subtract = Literal("-").setParseAction(lambda _: ast.Subtraction)
     op_addition = Literal("+").setParseAction(lambda _: ast.Addition)
+    op_positive = Literal("+").setParseAction(lambda _: ast.Positive)
+    op_negative = Literal("-").setParseAction(lambda _: ast.Negative)
+
+    op_not = Literal("!").setParseAction(lambda _: ast.Negation)
+    op_lower_exclusive = Literal("<").setParseAction(lambda _: ast.LowerExclusive)
+    op_lower_inclusive = Literal("<=").setParseAction(lambda _: ast.LowerInlusive)
+    op_greater_inclusive = Literal(">=").setParseAction(lambda _: ast.GreaterInclusive)
+    op_greater_exclusive = Literal(">").setParseAction(lambda _: ast.GreaterExclusive)
+    op_equality = Literal("==").setParseAction(lambda _: ast.Equality)
+    op_inequality = Literal("!=").setParseAction(lambda _: ast.Inequality)
+    op_and = Literal("&&").setParseAction(lambda _: ast.And)
+    op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     colon = Suppress(":")
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
-    # Reserved operators
-    multiplication_division_ops = oneOf(["*", "/"])
-    addition_subtraction_ops = oneOf(["+", "-"])
-
-    rat_op = oneOf(["<", "<=", ">", ">="])
-    eqal_op = oneOf(["==", "!="])
-    con_and_op = Literal("&&")
-    con_or_op = Literal("||")
     assign_op = Suppress("=")
 
     def flatten_binary_operators(unflatted_tokens):
@@ -51,18 +52,25 @@ def parse(input_string):
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
         return flattened_tokens[0]
 
-    #TODO: Signop toevoegen
+    def flatten_unary_operators(unflattened_tokens):
+        flattened_tokens = unflattened_tokens[0]
+        type_call = flattened_tokens[0]
+        return type_call(flattened_tokens[1])
+
+    # TODO: Signop toevoegen
     arith_prec = [
+        (op_positive | op_negative | op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
         (op_multiplication | op_division, 2, opAssoc.LEFT, flatten_binary_operators),
         (op_addition | op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
-    #TODO: Not toevoegen
+    # TODO: Not toevoegen
     bool_prec = [
-        (rat_op, 2, opAssoc.LEFT),
-        (eqal_op, 2, opAssoc.LEFT),
-        (con_and_op, 2, opAssoc.LEFT, ast.BoolAnd),
-        (con_or_op, 2, opAssoc.LEFT, ast.BoolOr),
+        (op_lower_exclusive | op_lower_inclusive | op_greater_inclusive | op_greater_exclusive, 2, opAssoc.LEFT,
+         flatten_binary_operators),
+        (op_equality | op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
+        (op_and, 2, opAssoc.LEFT, ast.And),
+        (op_or, 2, opAssoc.LEFT, ast.Or)
     ]
 
     # Arithmetic precedence
@@ -104,8 +112,8 @@ def parse(input_string):
     statement_list = Forward()
     if_stmt = Forward()
     if_stmt << if_lit + l_paren + boolean_statement + r_paren + \
-            statement_list + \
-            Optional(else_lit + statement_list).setResultsName('else_statement')
+               statement_list + \
+               Optional(else_lit + statement_list).setResultsName('else_statement')
     if_stmt.setParseAction(ast.Conditional)
 
     statement = field_expr | if_stmt
