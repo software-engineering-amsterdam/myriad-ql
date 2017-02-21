@@ -1,8 +1,9 @@
 module TypeChecker.BadReferences exposing (badReferences)
 
-import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
+import DictList
 import Set exposing (Set)
+import TypeChecker.CheckerUtil exposing (..)
 
 
 badReferences : Form -> Set String
@@ -11,16 +12,16 @@ badReferences form =
 
 
 badReferencesInBlock : Set String -> Block -> Set String
-badReferencesInBlock parentIdentifiers block =
+badReferencesInBlock questionIdsFromParent block =
     let
         availableIdentifiers =
-            availableIdentifiersOnScope parentIdentifiers block
+            questionIdsInBlock block |> Set.union questionIdsFromParent
 
-        usedIdentifiers =
-            usedIdentifiersFromBlock block
+        questionReferences =
+            questionReferencesFromBlock block
 
         badReferences =
-            Set.diff usedIdentifiers availableIdentifiers
+            Set.diff availableIdentifiers availableIdentifiers
     in
         List.foldl (\item -> badReferencesInFormItem availableIdentifiers item |> Set.union) badReferences block
 
@@ -43,15 +44,20 @@ badReferencesInFormItem availableIdentifiers formItem =
                 (badReferencesInBlock availableIdentifiers elseBranch)
 
 
-usedIdentifiersFromBlock : Block -> Set String
-usedIdentifiersFromBlock block =
-    List.foldl (\item -> usedIdentifiersFromItem item |> Set.union) Set.empty block
+questionIdsInBlock : Block -> Set String
+questionIdsInBlock =
+    questionIndexFromBlock >> DictList.keys >> Set.fromList
 
 
-usedIdentifiersFromItem : FormItem -> Set String
-usedIdentifiersFromItem item =
+questionReferencesFromBlock : Block -> Set String
+questionReferencesFromBlock block =
+    List.foldl (\item -> questionReferencesFromItem item |> Set.union) Set.empty block
+
+
+questionReferencesFromItem : FormItem -> Set String
+questionReferencesFromItem item =
     expressionFromItem item
-        |> Maybe.map usedIdentifiers
+        |> Maybe.map questionReferences
         |> Maybe.withDefault Set.empty
 
 
@@ -71,8 +77,8 @@ expressionFromItem item =
             Just expression
 
 
-usedIdentifiers : Expression -> Set String
-usedIdentifiers expression =
+questionReferences : Expression -> Set String
+questionReferences expression =
     case expression of
         Var ( s, _ ) ->
             Set.singleton s
@@ -90,16 +96,16 @@ usedIdentifiers expression =
             Set.empty
 
         ParensExpression _ expr ->
-            usedIdentifiers expr
+            questionReferences expr
 
         ArithmeticExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            Set.union (questionReferences exprLeft) (questionReferences exprRight)
 
         RelationExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            Set.union (questionReferences exprLeft) (questionReferences exprRight)
 
         LogicExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            Set.union (questionReferences exprLeft) (questionReferences exprRight)
 
         ComparisonExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            Set.union (questionReferences exprLeft) (questionReferences exprRight)
