@@ -62,6 +62,7 @@ class Conditional(Node):
         if boolean_statement.else_statement is not None and len(boolean_statement.else_statement) > 0:
             self.else_statement_list = boolean_statement.else_statement[0]
 
+
 class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
         Node.__init__(self, var_type)
@@ -92,7 +93,6 @@ class Division(BinaryOperation):
 
 class AddSub(Addition, Subtraction):
     def __init__(self, parsed_tokens):
-        print(parsed_tokens)
         Addition.__init__(self, parsed_tokens)
         Subtraction.__init__(self, parsed_tokens)
 

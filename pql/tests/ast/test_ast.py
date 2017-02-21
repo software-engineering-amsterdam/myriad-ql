@@ -83,15 +83,15 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic statement should have 1 node as child')
 
-        substraction_node = arithmetic_statement_node.children[0]
-        self.assertEqual(0, len(substraction_node.children),
+        subtraction_node = arithmetic_statement_node.children[0]
+        self.assertEqual(0, len(subtraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', subtraction_node.var_type,
+                         'Subtraction node should have type subtraction')
 
-        self.assertEqual('sellingPrice', substraction_node.arguments[0])
-        self.assertEqual('privateDebt', substraction_node.arguments[1])
-        self.assertEqual('-', substraction_node.operator)
+        self.assertEqual('sellingPrice', subtraction_node.arguments[0])
+        self.assertEqual('privateDebt', subtraction_node.arguments[1])
+        self.assertEqual('-', subtraction_node.operator)
 
     def test_ast_single_simple_assignment_(self):
         input_string = """
@@ -101,6 +101,7 @@ class TestAst(unittest.TestCase):
         """
         # raise NotImplementedError('Test needs assertions')
         parse_result = parse(input_string).asList()
+        print(parse_result[0])
 
 
     def test_ast_single_simple_assignment_reversed(self):
@@ -190,14 +191,14 @@ class TestAst(unittest.TestCase):
 
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic statement should have 1 node as child')
-        substraction_node = arithmetic_statement_node.children[0]
-        self.assertEqual(0, len(substraction_node.children),
+        subtraction_node = arithmetic_statement_node.children[0]
+        self.assertEqual(0, len(subtraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('subtraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
-        self.assertEqual('sellingPrice', substraction_node.arguments[0])
+        self.assertEqual('subtraction', subtraction_node.var_type,
+                         'Subtraction node should have type subtraction')
+        self.assertEqual('sellingPrice', subtraction_node.arguments[0])
 
-        addition_node = substraction_node.arguments[1]
+        addition_node = subtraction_node.arguments[1]
         self.assertEqual(0, len(addition_node.children),
                          'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
