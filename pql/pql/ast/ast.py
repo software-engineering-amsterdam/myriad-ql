@@ -56,13 +56,11 @@ class Arithmetic(Node):
 class Conditional(Node):
     def __init__(self,  boolean_statement):
         super(Conditional, self).__init__('conditional')
-        block = boolean_statement[0]
-        self.condition = block[0]
-        self.statements = block[1]
-        #TODO Do something with potential else block
+        self.condition = boolean_statement[0]
+        self.statements = boolean_statement[1]
         self.else_statement_list = None
-        del block
-
+        if boolean_statement.else_statement is not None and len(boolean_statement.else_statement) > 0:
+            self.else_statement_list = boolean_statement.else_statement[0]
 
 
 class BinaryOperation(Node):
