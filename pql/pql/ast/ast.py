@@ -64,6 +64,7 @@ class Conditional(Node):
         del block
 
 
+
 class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
         super(BinaryOperation, self).__init__(var_type)
@@ -82,14 +83,20 @@ class Addition(BinaryOperation):
         super(Addition, self).__init__('addition', parsed_tokens)
 
 
-class Substraction(BinaryOperation):
+class Subtraction(BinaryOperation):
     def __init__(self, parsed_tokens):
-        super(Substraction, self).__init__('substraction', parsed_tokens)
+        super(Subtraction, self).__init__('substraction', parsed_tokens)
 
 
 class Division(BinaryOperation):
     def __init__(self, parsed_tokens):
         super(Division, self).__init__('division', parsed_tokens)
+
+
+class AddSub(Addition, Subtraction):
+    def __init__(self, parsed_tokens):
+        Addition.__init__(self, parsed_tokens)
+        Subtraction.__init__(self, parsed_tokens)
 
 
 class BoolOperand(Node):
