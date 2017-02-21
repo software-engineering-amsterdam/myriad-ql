@@ -9,17 +9,12 @@ import TypeChecker.Messages as Message exposing (Message, referenceToUndefinedQu
 
 badReferences : Form -> List Message
 badReferences form =
-    badReferencesInBlock Set.empty form.items
+    badReferencesInBlock (questionIdsInBlock form.items) form.items
 
 
 badReferencesInBlock : Set String -> Block -> List Message
-badReferencesInBlock questionIdsFromParent block =
-    let
-        availableQuestionIds =
-            questionIdsInBlock block
-                |> Set.union questionIdsFromParent
-    in
-        List.concatMap (badReferencesInFormItem availableQuestionIds) block
+badReferencesInBlock questionIds block =
+    List.concatMap (badReferencesInFormItem questionIds) block
 
 
 questionIdsInBlock : Block -> Set String
