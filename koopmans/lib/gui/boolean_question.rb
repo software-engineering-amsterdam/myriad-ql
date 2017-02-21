@@ -10,7 +10,7 @@ class BooleanQuestion < GUIQuestion
   def create_radio_button(text, value)
     radio_button = TkRadioButton.new(@frame).pack
     radio_button.variable = @variable
-    radio_button.command = proc { @gui.value_changed(self) }
+    radio_button.command = proc { @gui.value_changed }
     radio_button.text = text
     radio_button.value = value
   end

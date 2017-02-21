@@ -4,7 +4,7 @@ class ComputedQuestion < GUIQuestion
   def initialize(args)
     super
     @calculation = args[:calculation]
-
+    @variable.type = args[:type]
     create_computed_entry
     calculate
   end
@@ -19,8 +19,8 @@ class ComputedQuestion < GUIQuestion
   end
 
   def create_computed_entry
-    entry = TkEntry.new(frame).pack
-    entry.textvariable = self.variable
+    entry = TkEntry.new(@frame).pack
+    entry.textvariable = @variable
     entry.state = 'disabled'
   end
 end

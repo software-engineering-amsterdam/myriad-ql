@@ -45,6 +45,7 @@ class GUIQuestionVisitor
       ComputedQuestion.new(gui: self,
                            label: question.label,
                            id: question.variable.name,
+                           type: question.type.class,
                            calculation: visit_calculation(question.assignment),
                            condition: visit_calculation(question.condition))
     elsif question.type.is_a?(BooleanType)

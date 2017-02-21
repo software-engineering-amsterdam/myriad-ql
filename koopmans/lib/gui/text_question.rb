@@ -13,7 +13,7 @@ class TextQuestion < GUIQuestion
     entry.bind('Return') do
       # only if value changes
       unless @previous_value == value
-        @gui.value_changed(self)
+        @gui.value_changed
         @previous_value = value
       end
     end
