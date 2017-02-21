@@ -63,9 +63,9 @@ class Conditional(Node):
 class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
         super(BinaryOperation, self).__init__(var_type)
-        self.lhs, self.rhs = parsed_tokens[0]
+        self.arguments = parsed_tokens[0]
 
-
+#TODO: Cases where there is one long * statement,  a * b * c can't be parsed atm
 class Multiplication(BinaryOperation):
     def __init__(self, parsed_tokens):
         super(Multiplication, self).__init__('multiplication', parsed_tokens)
