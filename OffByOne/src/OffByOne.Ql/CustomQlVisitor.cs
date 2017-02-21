@@ -41,7 +41,7 @@
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var question = this.Visit(context.literal()) as StringLiteral;
+            var question = this.Visit(context.literal()) as LiteralExpression;
             var type = context.Type().GetText();
 
             var computedValue = context.expression();
@@ -224,33 +224,39 @@
         #region:Literals
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
-            return new DateLiteral(context.DateLiteral().GetText());
+            var literal = new DateLiteral(context.DateLiteral().GetText());
+            return new LiteralExpression(literal);
         }
 
         public override AstNode VisitBooleanLiteral([NotNull] QlParser.BooleanLiteralContext context)
         {
-            return new BooleanLiteral(context.GetText());
+            var literal = new BooleanLiteral(context.GetText());
+            return new LiteralExpression(literal);
         }
 
         public override AstNode VisitDecimalLiteral([NotNull] QlParser.DecimalLiteralContext context)
         {
-            return new DecimalLiteral(context.GetText());
+            var literal = new DecimalLiteral(context.GetText());
+            return new LiteralExpression(literal);
         }
 
         public override AstNode VisitIntegerLiteral([NotNull] QlParser.IntegerLiteralContext context)
         {
-            return new IntegerLiteral(context.GetText());
+            var literal = new IntegerLiteral(context.GetText());
+            return new LiteralExpression(literal);
         }
 
         public override AstNode VisitMoneyLiteral([NotNull] QlParser.MoneyLiteralContext context)
         {
-            return new MoneyLiteral(context.GetText());
+            var literal = new MoneyLiteral(context.GetText());
+            return new LiteralExpression(literal);
         }
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
         {
-            return new StringLiteral(context.GetText());
+            var literal = new StringLiteral(context.GetText());
+            return new LiteralExpression(literal);
         }
-#endregion
+        #endregion
     }
 }

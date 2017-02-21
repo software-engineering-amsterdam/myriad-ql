@@ -10,7 +10,7 @@
         public QuestionStatement(
             string identifier,
             ValueType type,
-            StringLiteral question,
+            LiteralExpression question,
             Expression value = null)
         {
             this.Identifier = identifier;
@@ -23,7 +23,7 @@
 
         public ValueType Type { get; private set; }
 
-        public StringLiteral Question { get; private set; }
+        public LiteralExpression Question { get; private set; }
 
         public Expression ComputedValue { get; private set; }
 
