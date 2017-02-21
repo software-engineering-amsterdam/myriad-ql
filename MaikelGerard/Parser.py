@@ -2,7 +2,7 @@ from TypeChecker import TypeChecker
 import pyparsing as pp
 import AST
 import decimal
-import datetime
+#import datetime
 
 
 class QuestionnaireParser(object):
@@ -22,22 +22,13 @@ class QuestionnaireParser(object):
         "ELSE": pp.Keyword("else").suppress()
     }
 
-    TYPE = {
-        "BOOL": (pp.Keyword("true").addParseAction(lambda _: True) |
-                 pp.Keyword("false").addParseAction(lambda _: False)),
-        "INT": pp.Word(pp.nums).addParseAction(lambda s, l, t: decimal.Decimal(t[0])),
-        "VAR": pp.Word(pp.alphas, pp.alphanums + "_"),
-        "DECIMAL": pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)"),
-        "MONEY": pp.Regex("([0-9]+\.[0-9]{0,2})|([0-9]*\.[0-9]{1,2})"),
-        "DATE": pp.Regex("^[0-9]{2}-[0-9]{2}-[0-9]{4}$"),
-        "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
-    }
-
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
 
     def __init__(self):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
+
+        self.TYPE = self.get_types()
 
         self.expression = self.define_expression()
         self.question = self.define_question()
@@ -45,6 +36,28 @@ class QuestionnaireParser(object):
         self.conditional = self.define_conditional()
 
         self.grammar = self.define_grammar()
+
+    @staticmethod
+    def get_types():
+        def create_decimal(src, loc, tokens):
+            del src, loc
+            return decimal.Decimal(tokens[0])
+
+        types = {
+            "BOOL": (pp.Keyword("true").addParseAction(lambda _: True) |
+                     pp.Keyword("false").addParseAction(lambda _: False)),
+            "INT": pp.Word(pp.nums),
+            "VAR": pp.Word(pp.alphas, pp.alphanums + "_"),
+            "DECIMAL": pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)"),
+            "MONEY": pp.Regex("([0-9]+\.[0-9]{0,2})|([0-9]*\.[0-9]{1,2})"),
+            "DATE": pp.Regex("^[0-9]{2}-[0-9]{2}-[0-9]{4}$"),
+            "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
+        }
+        types["INT"].addParseAction(create_decimal)
+        types["DECIMAL"].addParseAction(create_decimal)
+        types["MONEY"].addParseAction(create_decimal)
+
+        return types
 
     def round_embrace(self, arg):
         return self.LIT["L_BRACE"] + arg + self.LIT["R_BRACE"]
@@ -59,36 +72,47 @@ class QuestionnaireParser(object):
         return col, line
 
     def define_question(self):
-        question = self.TYPE["STRING"] + self.TYPE["VAR"] + self.LIT["COLON"] + \
+        def create_question_grammar():
+            return self.TYPE["STRING"] + self.TYPE["VAR"] + self.LIT["COLON"] + \
                    self.TYPE_NAME
-        question = pp.Group(question).addParseAction(AST.QuestionNode)
 
-        computed_question = question + self.LIT["IS"] + self.round_embrace(self.expression)
-        computed_question = pp.Group(computed_question).addParseAction(AST.ComputedQuestionNode)
+        question = create_question_grammar()
+        computed_question = create_question_grammar() + self.LIT["IS"] + \
+            self.round_embrace(self.expression)
+
+        question.addParseAction(self.create_node(AST.QuestionNode))
+        computed_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
         return computed_question | question
 
     def define_conditional(self):
-        if_cond = self.KW["IF"] + self.round_embrace(self.expression) + \
-                  self.curly_embrace(self.block)
-        if_else_cond = if_cond + self.KW["ELSE"] + self.curly_embrace(self.block)
+        def create_if_grammar():
+            return self.KW["IF"] + self.round_embrace(self.expression) + \
+                   self.curly_embrace(self.block)
+        # Make use of an create if grammar function as to prevent double parse actions due to
+        # creation of the if_else_cond with the same if_cond object reference.
+        if_cond = create_if_grammar()
+        if_else_cond = create_if_grammar() + self.KW["ELSE"] + self.curly_embrace(self.block)
 
-        return (pp.Group(if_else_cond).addParseAction(AST.IfElseNode) |
-                pp.Group(if_cond).addParseAction(AST.IfNode))
+        if_cond.addParseAction(self.create_node(AST.IfNode))
+        if_else_cond.addParseAction(self.create_node(AST.IfElseNode))
+        return if_else_cond | if_cond
 
     def define_grammar(self):
         self.block << pp.Group(
             pp.OneOrMore(self.question | self.conditional)
-        ).addParseAction(AST.BlockNode)
+        ).addParseAction(self.create_node(AST.BlockNode))
 
         form = self.KW["FORM"] + self.TYPE["VAR"] + self.curly_embrace(self.block)
-        form_block = pp.Group(form).addParseAction(AST.FormNode)
+        form.addParseAction(self.create_node(AST.FormNode))
 
-        return form_block.addParseAction(AST.QuestionnaireAST)
+        return form.addParseAction(self.create_node(AST.QuestionnaireAST))
 
-    def create_args(self, src, loc, token):
-        line, col = self.get_line_loc_info(src, loc)
-        args = token.asList() + [line, col]
-        return args
+    def create_node(self, ast_class):
+        def create_args(src, loc, token):
+            line, col = self.get_line_loc_info(src, loc)
+            args = token.asList() + [line, col]
+            return ast_class(*args)
+        return create_args
 
     def create_monop_node(self, src, loc, token):
         monop = token[0]
@@ -101,13 +125,12 @@ class QuestionnaireParser(object):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
         var_types = (
-            self.TYPE["BOOL"].addParseAction(
-                lambda s, l, t: AST.BoolNode(*self.create_args(s, l, t))) |
-            self.TYPE["VAR"].addParseAction(AST.VarNode) |
-            self.TYPE["DECIMAL"].addParseAction(AST.DecimalNode) |
-            self.TYPE["INT"].addParseAction(AST.IntNode) |
-            self.TYPE["DATE"].addParseAction(AST.DateNode) |
-            self.TYPE["STRING"].addParseAction(AST.StringNode)
+            self.TYPE["BOOL"].addParseAction(self.create_node(AST.BoolNode)) |
+            self.TYPE["VAR"].addParseAction(self.create_node(AST.VarNode)) |
+            self.TYPE["DECIMAL"].addParseAction(self.create_node(AST.DecimalNode)) |
+            self.TYPE["INT"].addParseAction(self.create_node(AST.IntNode)) |
+            self.TYPE["DATE"].addParseAction(self.create_node(AST.DateNode)) |
+            self.TYPE["STRING"].addParseAction(self.create_node(AST.StringNode))
         )
 
         unary_neg = pp.Literal('!').addParseAction(lambda _: AST.NegNode)
@@ -172,6 +195,9 @@ if __name__ == '__main__':
             "Private debts for the sold house:" privateDebt: money
             "Value residue:" valueResidue: money = (sellingPrice -
             privateDebt)
+        }
+        else {
+            "question?" test:             boolean
         }
     }
     """

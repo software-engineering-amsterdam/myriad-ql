@@ -7,7 +7,7 @@ class QuestionnaireAST(object):
         return other.root == self.root
 
     def __str__(self):
-        return str(self.root)
+        return str(self.root.__str__(0))
 
 
 class Node(object):
@@ -47,11 +47,11 @@ class Node(object):
 
 
 class FormNode(Node):
-    def __init__(self, name, body, line=0, col=0):
+    def __init__(self, name, form_body, line=0, col=0):
         super(FormNode, self).__init__(line, col)
 
         self.name = name
-        self.form_block = body
+        self.form_block = form_body
 
     def accept(self, visitor):
         super(FormNode, self).accept(visitor)
@@ -70,16 +70,14 @@ class FormNode(Node):
 class BlockNode(Node):
     def __init__(self, block_body, line=0, col=0):
         super(BlockNode, self).__init__(line, col)
-        block_data = block_body
 
-        for statement in block_data:
+        for statement in block_body:
             self.add_child(statement)
 
 
 class QuestionNode(Node):
     def __init__(self, question, name, var_type, line=0, col=0):
         super(QuestionNode, self).__init__(line, col)
-
         self.question = question
         self.name = name
         self.type = var_type
@@ -100,9 +98,9 @@ class QuestionNode(Node):
 
 
 class ComputedQuestionNode(QuestionNode):
-    def __init__(self, question, name, var_type, line=0, col=0):
+    def __init__(self, question, name, var_type, expression, line=0, col=0):
         super(ComputedQuestionNode, self).__init__(question, name, var_type, line, col)
-        self.expression = var_type
+        self.expression = expression
 
     def accept(self, visitor):
         super(ComputedQuestionNode, self).accept(visitor)
@@ -116,13 +114,12 @@ class ComputedQuestionNode(QuestionNode):
         output = indent * "  " + "question: \"{}\" {}: {}".format(
             self.question, self.name, self.type
         )
-        return output + " = ({})\n".format(self.expression.__str__(0))
+        return output + " = ({})\n".format(str(self.expression))
 
 
 class IfNode(Node):
     def __init__(self, condition, if_block, line=0, col=0):
         super(IfNode, self).__init__(line, col)
-
         self.expression = condition
         self.if_block = if_block
 
