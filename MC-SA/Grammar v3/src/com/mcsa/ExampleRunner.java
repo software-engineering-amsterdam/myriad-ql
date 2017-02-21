@@ -68,7 +68,6 @@ public class ExampleRunner {
         mcsaQLVisitor visitor = new mcsaQLVisitor();
         Form traverseResult = (Form) visitor.visit(formDeclarationContext);
 
-        traverseResult.questionList.forEach(x -> System.out.println(x.name));
     }
 
 }

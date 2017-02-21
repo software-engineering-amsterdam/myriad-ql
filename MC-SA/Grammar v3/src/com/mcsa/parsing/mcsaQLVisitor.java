@@ -1,9 +1,8 @@
 package com.mcsa.parsing;
 
-import com.mcsa.QL.Form;
-import com.mcsa.QL.Node;
-import com.mcsa.QL.Question;
+import com.mcsa.QL.*;
 import com.mcsa.antlr.*;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
@@ -19,37 +18,50 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
     public Node visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
 
         String formName = ctx.ID().getText();
-        ArrayList<Question> statementList = new ArrayList<>();
+
+        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<IfStatement> ifStatements = new ArrayList<>();
         
         for (QLParser.StatementContext statementContext : ctx.statement())
         {
-            Object visitResult = visit(statementContext);
-            statementList.add((Question) visitResult);
+            if(statementContext.question() != null)
+            {
+                Question result = (Question) visit(statementContext);
+                questions.add(result);
+            }
+            else if (statementContext.ifStatement() != null)
+            {
+                IfStatement result = (IfStatement) visit(statementContext);
+                ifStatements.add(result);
+            }
         }
 
-        return new Form(formName, statementList);
+        return new Form(formName, null);
     }
 
     @Override
     public Node visitStatement(QLParser.StatementContext ctx) {
 
         if(ctx.question() != null) {
-            return new Question(ctx.question().STRING().getText());
+            return (Question) visit(ctx.question());
         }
         else
         {
-            return new Question("This is an if question placeholder");
+            return (IfStatement) visit(ctx.ifStatement());
         }
     }
 
     @Override
     public Node visitIfStatement(QLParser.IfStatementContext ctx) {
-        return new Question("This is an if question placeholder");
+        return new IfStatement("if statement placeholder");
     }
 
     @Override
-    public Object visitQuestion(QLParser.QuestionContext ctx) {
-        return null;
+    public Node visitQuestion(QLParser.QuestionContext ctx) {
+        String name = ctx.questionParameters().ID().getText();
+        String type = ctx.questionParameters().type().getText();
+        String text = ctx.STRING().getText();
+        return new Question(name, text, new Type(type));
     }
 
     @Override
