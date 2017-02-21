@@ -20,7 +20,7 @@ public class Increment extends Expression {
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) throws Throwable {
         return visitor.visit(this);
     }
 }

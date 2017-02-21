@@ -12,6 +12,7 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
 import org.ql.typechecker.exception.TypeMismatchException;
+import org.ql.typechecker.exception.UnexpectedTypeException;
 
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Negation node) {
+    public Type visit(Negation node) throws Throwable {
         Type innerExpressionType = node.getExpression().accept(this);
 
         if (!(innerExpressionType instanceof BooleanType)) {
@@ -36,43 +37,43 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Product node) {
-        return checkBinaryExpression(node);
+    public Type visit(Product node) throws Throwable {
+        return checkTypeMismatch(node);
     }
 
     @Override
-    public Type visit(Increment node) {
+    public Type visit(Increment node) throws Throwable {
         return node.getExpression().accept(this);
     }
 
     @Override
     public Type visit(Subtraction node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(NotEqual node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(LogicalAnd node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(LowerThan node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(GreaterThanOrEqual node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(Division node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
@@ -81,38 +82,50 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Group node) {
+    public Type visit(Group node) throws Throwable {
         return node.getExpression().accept(this);
     }
 
     @Override
     public Type visit(Addition node) {
-        return checkBinaryExpression(node);
+        return null;
     }
 
     @Override
     public Type visit(GreaterThan node) {
-        return checkBinaryExpression(node);
-    }
-
-    @Override
-    public Type visit(Decrement node) {
         return null;
     }
 
     @Override
-    public Type visit(Equals node) {
-        return checkBinaryExpression(node);
+    public Type visit(Decrement node) throws Throwable {
+        Type innerExpressionType = node.getExpression().accept(this);
+
+        if (!(innerExpressionType instanceof NumberType)) {
+            throw new UnexpectedTypeException(innerExpressionType);
+        }
+
+        return innerExpressionType;
     }
 
     @Override
-    public Type visit(LowerThanOrEqual node) {
-        return null;
+    public Type visit(Equals node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
-    public Type visit(LogicalOr node) {
-        return null;
+    public Type visit(LowerThanOrEqual node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
+    }
+
+    @Override
+    public Type visit(LogicalOr node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
@@ -135,14 +148,14 @@ public class TypeCheckVisitor implements Visitor<Type> {
         return (Type) new StringType().setMetadata(node.getMetadata());
     }
 
-    private Type checkBinaryExpression(BinaryExpression node) {
-        Type leftMultiplierType = node.getLeft().accept(this);
-        Type rightMultiplierType = node.getRight().accept(this);
+    private Type checkTypeMismatch(BinaryExpression node) throws Throwable {
+        Type leftType = node.getLeft().accept(this);
+        Type rightType = node.getRight().accept(this);
 
-        if (!leftMultiplierType.getClass().equals(rightMultiplierType.getClass())) {
-            throw new TypeMismatchException(leftMultiplierType, rightMultiplierType);
+        if (!leftType.getClass().equals(rightType.getClass())) {
+            throw new TypeMismatchException(leftType, rightType);
         }
 
-        return leftMultiplierType;
+        return leftType;
     }
 }

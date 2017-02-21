@@ -9,7 +9,7 @@ public class StringLiteral extends AbstractLiteral<String> {
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) throws Throwable {
         return visitor.visit(this);
     }
 }

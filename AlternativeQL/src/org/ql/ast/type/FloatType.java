@@ -1,4 +1,4 @@
 package org.ql.ast.type;
 
-public class FloatType extends Type {
+public class FloatType extends NumberType {
 }

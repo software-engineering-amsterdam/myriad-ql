@@ -2,7 +2,7 @@ package org.ql.typechecker.exception;
 
 import org.ql.ast.type.Type;
 
-public class TypeMismatchException extends RuntimeException implements TypeError {
+public class TypeMismatchException extends Throwable implements TypeError {
     private final Type expected;
     private final Type actual;
 

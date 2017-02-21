@@ -16,7 +16,7 @@ public class Equals extends BinaryExpression {
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) throws Throwable {
         return visitor.visit(this);
     }
 }
