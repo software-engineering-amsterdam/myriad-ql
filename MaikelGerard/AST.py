@@ -1,4 +1,3 @@
-from ParserTokens import ParserTokens as Tokens
 import pyparsing as pp
 import decimal
 import datetime
@@ -116,9 +115,9 @@ class QuestionNode(Node):
         )
 
 
-class ComputedQuestionNode(Node):
+class CompQuestionNode(Node):
     def __init__(self, src, loc, token):
-        super(ComputedQuestionNode, self).__init__("computedQuestion", src, loc)
+        super(CompQuestionNode, self).__init__("computedQuestion", src, loc)
         question = token[0]
 
         self.question = question[0].val
@@ -128,8 +127,8 @@ class ComputedQuestionNode(Node):
         self.expression = question[3]
 
     def accept(self, visitor):
-        super(ComputedQuestionNode, self).accept(visitor)
-        visitor.computed_question_node(self)
+        super(CompQuestionNode, self).accept(visitor)
+        visitor.comp_question_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -201,12 +200,12 @@ class BinOpNode(Node):
 
         self.left = binop[0]
         self.op = binop[1]
-        self.op_function = Tokens.BINOPS[binop[1]]
+        self.op_function = ""
         self.right = binop[2]
 
     def accept(self, visitor):
         super(BinOpNode, self).accept(visitor)
-        visitor.binop_node(self)
+        return visitor.binop_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -225,12 +224,12 @@ class MonOpNode(Node):
         monop = token[0]
 
         self.op = monop[0]
-        self.op_function = Tokens.MONOPS[monop[0]]
+        self.op_function = ""
         self.right = monop[1]
 
     def accept(self, visitor):
         super(MonOpNode, self).accept(visitor)
-        visitor.monop_node(self)
+        return visitor.monop_node(self)
 
     def __eq__(self, other):
         return other.node_type == self.node_type and \
@@ -304,9 +303,25 @@ class VarNode(Node):
         return str(self.val)
 
 
+class MoneyNode(Node):
+    def __init__(self, src, loc, token):
+        super(MoneyNode, self).__init__("money", src, loc)
+        self.val = decimal.Decimal(token[0])
+
+    def accept(self, visitor):
+        super(MoneyNode, self).accept(visitor)
+        return visitor.decimal_node(self)
+
+    def __eq__(self, other):
+        return other.node_type == self.node_type and other.val == self.val
+
+    def __str__(self, indent=0):
+        return str(self.val)
+
+
 class DecimalNode(Node):
     def __init__(self, src, loc, token):
-        super(DecimalNode, self).__init__("dec", src, loc)
+        super(DecimalNode, self).__init__("decimal", src, loc)
         self.val = decimal.Decimal(token[0])
 
     def accept(self, visitor):

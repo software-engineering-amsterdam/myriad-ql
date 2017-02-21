@@ -1,152 +1,78 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (Expression, ValueType(StringType, IntegerType, BooleanType), Form, FormItem)
-import Html exposing (Html, div, text, h3, form, textarea, pre, hr, ul, li, p)
-import Html.Attributes exposing (class, style, defaultValue, rows, cols)
-import Html.Events exposing (onInput)
-import Parser.Parser as Parser
+import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
+import Html exposing (Html, div, text, h3, form, pre)
+import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
-import UI.Widget.Base as BaseWidget
-import UI.FormData as FormData exposing (FormData)
+import UI.Widget.Float as FloatWidget
+import UI.Widget.Base as BaseWidget exposing (WidgetContext)
+import UI.FormDslInput as FormDslInput
+import Environment as Env exposing (Environment)
 import Values exposing (Value)
-import Evaluator
 import Dict
+import FormUtil exposing (VisibleField(Editable, Computed))
 
 
 type alias Model =
-    { dslInput : String
-    , parsedForm : Maybe Form
-    , formData : FormData
+    { formDslInput : FormDslInput.Model
+    , env : Environment
     }
 
 
 type Msg
-    = OnDslInput String
+    = FormDslInputMsg FormDslInput.Msg
     | OnFieldChange String Value
 
 
 init : Model
 init =
-    { dslInput = ""
-    , parsedForm = Nothing
-    , formData = FormData.empty
+    { formDslInput = FormDslInput.init
+    , env = Env.empty
     }
-        |> update (OnDslInput """form taxOfficeExample {
-  "Name?"
-    name : string
-
-  "Name 2?"
-    name : string
-
-  "Age?"
-    age : integer
-  "Age2?"
-    age : integer
-
-  "Wallet"
-    wallet : money
-
-  "Did you sell a house in 2010?"
-    hasSoldHouse: boolean
-  "Did you buy a house in 2010?"
-    hasBoughtHouse: boolean
-  "Did you enter a loan?"
-    hasMaintLoan: boolean
-
-  if (hasSoldHouse) {
-    "What was the selling price?"
-      sellingPrice: money
-    "Private debts for the sold house:"
-      privateDebt: money
-    "Value residue:"
-      valueResidue: money =
-        (sellingPrice - privateDebt)
-  }
-
-}""")
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        OnDslInput newDslInput ->
-            let
-                parsedForm =
-                    Parser.parse newDslInput
-            in
-                { model
-                    | dslInput = newDslInput
-                    , parsedForm = parsedForm
-                }
+        FormDslInputMsg subMsg ->
+            { model | formDslInput = FormDslInput.update subMsg model.formDslInput }
 
         OnFieldChange fieldId newValue ->
-            { model | formData = FormData.withFormValue fieldId newValue model.formData }
+            { model
+                | env =
+                    FormDslInput.asForm model.formDslInput
+                        |> Maybe.map (FormUtil.updateValue fieldId newValue model.env)
+                        |> Maybe.withDefault model.env
+            }
 
 
 view : Model -> Html Msg
 view model =
     div [ class "container" ]
         [ h3 [] [ text "DSL Input" ]
-        , Html.form [ class "form" ]
-            [ textarea
-                [ defaultValue model.dslInput
-                , rows 24
-                , cols 80
-                , class "form-control"
-                , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
-                , onInput OnDslInput
-                ]
-                []
-            ]
-        , hr [] []
-        , pre [] [ text <| toString model.parsedForm ]
-        , pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.formData ]
-        , model.parsedForm
+        , FormDslInput.view model.formDslInput |> Html.map FormDslInputMsg
+        , pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.env ]
+        , FormDslInput.asForm model.formDslInput
             |> Maybe.map (viewForm model)
             |> Maybe.withDefault (div [] [])
-        , viewExpressions model
         ]
-
-
-viewExpressions : Model -> Html msg
-viewExpressions model =
-    let
-        exprs =
-            model.parsedForm
-                |> Maybe.map (.items >> List.concatMap getExpressions)
-                |> Maybe.withDefault []
-    in
-        div []
-            [ ul []
-                (List.map
-                    (\item ->
-                        li []
-                            [ p [] [ text <| toString item ]
-                            , p [] [ text <| toString <| Evaluator.evaluate model.formData item ]
-                            ]
-                    )
-                    exprs
-                )
-            ]
 
 
 viewForm : Model -> Form -> Html Msg
 viewForm model formDsl =
-    form []
-        (List.map (viewField model) (getFields formDsl))
+    let
+        visibleFields =
+            FormUtil.activeFields model.env formDsl
+    in
+        form [] (List.map (viewField model) visibleFields)
 
 
-viewField : Model -> AST.Field -> Html Msg
+viewField : Model -> VisibleField -> Html Msg
 viewField model field =
-    BaseWidget.container
-        { field = field
-        , formData = model.formData
-        , onChange = OnFieldChange field.id
-        }
-    <|
-        case field.valueType of
+    BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
+        case FormUtil.fieldValueType field of
             StringType ->
                 StringWidget.view
 
@@ -156,41 +82,25 @@ viewField model field =
             IntegerType ->
                 IntegerWidget.view
 
-
-getFields : Form -> List AST.Field
-getFields =
-    .items >> getFieldsForItems
+            MoneyType ->
+                FloatWidget.view
 
 
-getFieldsForItem : FormItem -> List AST.Field
-getFieldsForItem item =
-    case item of
-        AST.FieldItem field ->
-            [ field ]
+visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
+visibleFieldWidgetConfig env field =
+    case field of
+        Editable label identifier _ ->
+            { identifier = identifier
+            , label = label
+            , env = env
+            , onChange = OnFieldChange identifier
+            , editable = True
+            }
 
-        AST.IfItem { thenBranch, elseBranch } ->
-            List.concat
-                [ getFieldsForItems thenBranch
-                , getFieldsForItems elseBranch
-                ]
-
-
-getExpressions : FormItem -> List Expression
-getExpressions item =
-    case item of
-        AST.FieldItem field ->
-            field.valueExpression
-                |> Maybe.map List.singleton
-                |> Maybe.withDefault []
-
-        AST.IfItem { expression, thenBranch, elseBranch } ->
-            List.concat
-                [ [ expression ]
-                , List.concatMap getExpressions thenBranch
-                , List.concatMap getExpressions elseBranch
-                ]
-
-
-getFieldsForItems : List FormItem -> List AST.Field
-getFieldsForItems =
-    List.concatMap getFieldsForItem
+        Computed label identifier valuedType _ ->
+            { identifier = identifier
+            , label = label
+            , env = env
+            , onChange = OnFieldChange identifier
+            , editable = False
+            }

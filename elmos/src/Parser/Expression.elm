@@ -2,17 +2,18 @@ module Parser.Expression exposing (expression)
 
 import AST
     exposing
-        ( Expression(Integer, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
+        ( Location
+        , Expression(Integer, Decimal, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
         , Logic(And, Or)
         , Comparison(Equal, NotEqual)
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
         , Operator(Plus, Minus, Multiply, Divide)
         )
-import Combine exposing (Parser, chainl, choice, lazy, parens, (<$), (<$>), (*>), (<*), (<|>))
-import Combine.Num exposing (int)
+import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$), (<$>), (*>), (<*), (<*>), (<|>))
+import Combine.Num exposing (int, float)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
-import Parser.Token exposing (variableName, quotedString)
+import Parser.Token exposing (identifier, quotedString, withLoc, parseLoc)
 
 
 type alias BinaryOperator =
@@ -21,11 +22,11 @@ type alias BinaryOperator =
 
 expression : Parser s Expression
 expression =
-    lazy <| \() -> foldr chainl atom precedenceOrderedExpressions
+    lazy <| \() -> foldr chainl atom precedenceOrderedOperators
 
 
-precedenceOrderedExpressions : List (Parser s BinaryOperator)
-precedenceOrderedExpressions =
+precedenceOrderedOperators : List (Parser s BinaryOperator)
+precedenceOrderedOperators =
     List.map trimmed <|
         [ orOp
         , andOp
@@ -38,45 +39,50 @@ precedenceOrderedExpressions =
 
 orOp : Parser s BinaryOperator
 orOp =
-    stringAs "||" (LogicExpression Or)
+    defineBinary "||" LogicExpression Or
 
 
 andOp : Parser s BinaryOperator
 andOp =
-    stringAs "&&" (LogicExpression And)
+    defineBinary "&&" LogicExpression And
+
+
+defineBinary : String -> (a -> Location -> BinaryOperator) -> a -> Parser s BinaryOperator
+defineBinary token expr operand =
+    trimmed (withLoc (stringAs token (expr operand)))
 
 
 comparisonOp : Parser s BinaryOperator
 comparisonOp =
     choice
-        [ stringAs "==" (ComparisonExpression Equal)
-        , stringAs "!=" (ComparisonExpression NotEqual)
+        [ defineBinary "==" ComparisonExpression Equal
+        , defineBinary "!=" ComparisonExpression NotEqual
         ]
 
 
 relationalOp : Parser s BinaryOperator
 relationalOp =
     choice
-        [ stringAs ">=" (RelationExpression GreaterThanOrEqual)
-        , stringAs "<=" (RelationExpression LessThanOrEqual)
-        , stringAs ">" (RelationExpression GreaterThan)
-        , stringAs "<" (RelationExpression LessThan)
+        [ defineBinary ">=" RelationExpression GreaterThanOrEqual
+        , defineBinary "<=" RelationExpression LessThanOrEqual
+        , defineBinary ">" RelationExpression GreaterThan
+        , defineBinary "<" RelationExpression LessThan
         ]
 
 
 addOp : Parser s BinaryOperator
 addOp =
     choice
-        [ stringAs "+" (ArithmeticExpression Plus)
-        , stringAs "-" (ArithmeticExpression Minus)
+        [ defineBinary "+" ArithmeticExpression Plus
+        , defineBinary "-" ArithmeticExpression Minus
         ]
 
 
 multiplyOp : Parser s BinaryOperator
 multiplyOp =
     choice
-        [ stringAs "*" (ArithmeticExpression Multiply)
-        , stringAs "/" (ArithmeticExpression Divide)
+        [ defineBinary "*" ArithmeticExpression Multiply
+        , defineBinary "/" ArithmeticExpression Divide
         ]
 
 
@@ -89,8 +95,9 @@ anyAtom : Parser s Expression
 anyAtom =
     lazy <|
         \() ->
-            choice
+            choice <|
                 [ integerAtom
+                , decimalAtom
                 , stringAtom
                 , booleanAtom
                 , parensAtom
@@ -100,24 +107,39 @@ anyAtom =
 
 integerAtom : Parser s Expression
 integerAtom =
-    Integer <$> int
+    succeed Integer
+        <*> parseLoc
+        <*> int
+
+
+decimalAtom : Parser s Expression
+decimalAtom =
+    succeed Decimal
+        <*> parseLoc
+        <*> float
 
 
 stringAtom : Parser s Expression
 stringAtom =
-    Str <$> quotedString
+    succeed Str
+        <*> parseLoc
+        <*> quotedString
 
 
 varAtom : Parser s Expression
 varAtom =
-    Var <$> variableName
+    Var <$> identifier
 
 
 booleanAtom : Parser s Expression
 booleanAtom =
-    Boolean <$> (stringAs "true" True <|> stringAs "false" False)
+    succeed Boolean
+        <*> parseLoc
+        <*> (stringAs "true" True <|> stringAs "false" False)
 
 
 parensAtom : Parser s Expression
 parensAtom =
-    ParensExpression <$> parens (trimmed expression)
+    succeed ParensExpression
+        <*> parseLoc
+        <*> parens (trimmed expression)

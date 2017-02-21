@@ -16,7 +16,6 @@ public class SemanticsAnalyzerTest {
         Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionForm.txt"));
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
         Assert.assertFalse(semanticsAnalyzer.check(), "Duplicate question, so test should fail");
-
     }
 
 }
