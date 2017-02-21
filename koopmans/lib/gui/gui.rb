@@ -7,12 +7,12 @@ require_relative 'gui_question'
 require_relative 'boolean_question'
 require_relative 'string_question'
 require_relative 'computed_question'
-require_relative 'question_visitor'
+require_relative 'gui_question_visitor'
 
 require 'tk'
 require 'pp'
 
-class GUI < QuestionVisitor
+class GUI < GUIQuestionVisitor
   def initialize(ast)
     super
 
