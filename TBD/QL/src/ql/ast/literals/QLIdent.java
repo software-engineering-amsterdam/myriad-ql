@@ -5,7 +5,7 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLIdent extends QLLiteral {
+public class QLIdent implements QLLiteral {
     private final String qlIdent;
 
     public QLIdent(String qlIdent) {
@@ -16,7 +16,13 @@ public class QLIdent extends QLLiteral {
         return qlIdent;
     }
 
+    @Override
+    public Object toValue() {
+        return null;
+    }
+
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
+
 }

@@ -1,11 +1,12 @@
 package ql.ast.literals;
 
+import ql.ast.values.StringValue;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLString extends QLLiteral {
+public class QLString implements QLLiteral {
     private final String qlString;
 
     public QLString(String qlString) {
@@ -16,8 +17,9 @@ public class QLString extends QLLiteral {
         return qlString;
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
-        return visitor.visit(this);
+
+    public StringValue toValue() {
+        return new StringValue(qlString);
     }
 
     @Override
@@ -25,13 +27,7 @@ public class QLString extends QLLiteral {
         return qlString;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        QLString qlString1 = (QLString) o;
-
-        return qlString != null ? qlString.equals(qlString1.qlString) : qlString1.qlString == null;
+    public <T> T accept(ASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

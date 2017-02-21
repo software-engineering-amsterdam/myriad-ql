@@ -5,6 +5,7 @@ import ql.ast.Type;
 import ql.ast.expressions.binop.Sub;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.literals.QLInt;
+import ql.ast.values.Value;
 import ql.ast.visistor.ASTVisitor;
 import ql.ast.visistor.EvalASTVisitor;
 import ql.ast.visistor.PrintASTVisitor;
@@ -48,7 +49,7 @@ public class Main {
 
         Neg exprtest = new Neg(new Sub(new QLInt(12), new QLInt(4)));
 
-        ASTVisitor<QLLiteral> evalASTVisitor = new EvalASTVisitor();
+        ASTVisitor<Value> evalASTVisitor = new EvalASTVisitor();
         System.out.println(evalASTVisitor.visit(exprtest));
 
     }

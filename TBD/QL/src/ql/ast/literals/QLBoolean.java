@@ -1,11 +1,12 @@
 package ql.ast.literals;
 
+import ql.ast.values.BooleanValue;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLBoolean extends QLLiteral {
+public class QLBoolean implements QLLiteral {
     private final boolean qlBoolean;
 
     public QLBoolean(boolean qlBoolean) {
@@ -21,32 +22,11 @@ public class QLBoolean extends QLLiteral {
         return String.valueOf(qlBoolean);
     }
 
+    public BooleanValue toValue() {
+        return new BooleanValue(qlBoolean);
+    }
+
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public QLLiteral and(QLLiteral other) {
-        return other.andEval(this);
-    }
-
-    @Override
-    protected QLLiteral andEval(QLBoolean other) {
-        return new QLBoolean(other.getValue() && this.getValue());
-    }
-
-    @Override
-    public QLLiteral or(QLLiteral other) {
-        return other.orEval(this);
-    }
-
-    @Override
-    protected QLLiteral orEval(QLBoolean other) {
-        return new QLBoolean(other.getValue() || this.getValue());
-    }
-
-    @Override
-    public QLLiteral not() {
-        return new QLBoolean(!getValue());
     }
 }
