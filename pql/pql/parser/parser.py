@@ -31,8 +31,11 @@ def parse(input_string):
     # Reserved operators
     multiplication_op = Literal("*").setResultsName("multiplication_operator")
     divide_op = Literal("/").setResultsName("division_operator")
-    add_op = Literal("+").setResultsName("addition_operator")
-    subtract_op = Literal("-").setResultsName("subtraction_operator")
+    multiplication_division_ops = oneOf([multiplication_op, divide_op])
+
+    addition_op = Literal("+").setResultsName("addition_operator")
+    subtraction_op = Literal("-").setResultsName("subtraction_operator")
+    addition_subtraction_ops = oneOf([addition_op, subtraction_op])
 
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
@@ -41,11 +44,16 @@ def parse(input_string):
     assign_op = Suppress("=")
 
     arith_prec = [
-        (add_op, 2, opAssoc.LEFT, ast.Addition),
-        (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
-        (divide_op, 2, opAssoc.LEFT, ast.Division),
-        (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
+        (),
+        (),
     ]
+
+    # arith_prec = [
+    #     (add_op, 2, opAssoc.LEFT, ast.Addition),
+    #     (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
+    #     (divide_op, 2, opAssoc.LEFT, ast.Division),
+    #     (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
+    # ]
 
     bool_prec = [
         (rat_op, 2, opAssoc.LEFT),
