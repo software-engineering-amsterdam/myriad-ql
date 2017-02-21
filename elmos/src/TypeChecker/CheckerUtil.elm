@@ -1,60 +1,43 @@
 module TypeChecker.CheckerUtil exposing (..)
 
 import AST exposing (..)
-import List.Extra
-import Set exposing (Set)
+import DictList exposing (DictList)
 
 
-type alias QuestionTypeRelations =
-    List ( String, ValueType )
+type alias QuestionIndex =
+    DictList String (List Location)
 
 
-removeListFrom : List a -> List a -> List a
-removeListFrom toBeRemoved target =
-    List.foldl List.Extra.remove target toBeRemoved
+questionIndexFromBlock : Block -> QuestionIndex
+questionIndexFromBlock =
+    -- We want the first occurence of a question in the index, concat gives preference to the second which is why the list is reversed
+    List.map questionIndexFromItem >> List.reverse >> DictList.concat
 
 
-intersectLists : List a -> List a -> List a
-intersectLists a b =
-    removeListFrom (removeListFrom b a) a
-
-
-duplicates : List comparable -> List comparable
-duplicates list =
-    removeListFrom (List.Extra.unique list) list
-
-
-questionIds : QuestionTypeRelations -> List String
-questionIds =
-    List.map Tuple.first
-
-
-availableIdentifiersOnScope : Set String -> Block -> Set String
-availableIdentifiersOnScope parentIdentifiers block =
-    questionTypeRelationsFromBlock block
-        |> questionIds
-        |> Set.fromList
-        |> Set.union parentIdentifiers
-
-
-questionTypeRelationsFromBlock : Block -> QuestionTypeRelations
-questionTypeRelationsFromBlock =
-    List.map questionTypeRelationsFromItem >> List.concat
-
-
-questionTypeRelationsFromItem : FormItem -> QuestionTypeRelations
-questionTypeRelationsFromItem item =
+questionIndexFromItem : FormItem -> QuestionIndex
+questionIndexFromItem item =
     case item of
-        .Field _ (id, _) valueType->
-            [ ( id, valueType ) ]
+        Field _ ( id, loc ) _ ->
+            DictList.singleton id [ loc ]
 
-        ComputedField _ ( id, loc ) valueType _ ->
-            [ ( id, valueType ) ]
+        ComputedField _ ( id, loc ) _ _ ->
+            DictList.singleton id [ loc ]
 
-        IfThen _ _ ->
-            []
+        IfThen _ thenBranch ->
+            questionIndexFromBlock thenBranch
 
         IfThenElse _ thenBranch elseBranch ->
-            intersectLists
-                (questionTypeRelationsFromBlock thenBranch)
-                (questionTypeRelationsFromBlock elseBranch)
+            mergeSharedQuestionDefinitions
+                (questionIndexFromBlock thenBranch)
+                (questionIndexFromBlock elseBranch)
+
+
+mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
+mergeSharedQuestionDefinitions indexA indexB =
+    DictList.merge
+        DictList.insert
+        (\questionId locationsInA locationsInB result -> DictList.insert questionId (locationsInA ++ locationsInB) result)
+        DictList.insert
+        indexA
+        indexB
+        DictList.empty

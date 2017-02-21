@@ -1,9 +1,10 @@
 module Parser.TokenTests exposing (all)
 
-import Parser.Token as Token
-import ParserTestUtil exposing (testWithParserAndMap, removeLocactionFromId)
-import Test exposing (Test, describe)
 import AST exposing (Location(Location))
+import ASTTestUtil exposing (removeLocactionFromId)
+import Parser.Token as Token
+import ParserTestUtil exposing (testWithParserAndMap)
+import Test exposing (Test, describe)
 
 
 all : Test

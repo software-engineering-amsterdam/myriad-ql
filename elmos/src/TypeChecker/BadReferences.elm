@@ -1,105 +1,96 @@
 module TypeChecker.BadReferences exposing (badReferences)
 
-import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
+import DictList
 import Set exposing (Set)
+import TypeChecker.CheckerUtil exposing (..)
+import TypeChecker.Messages as Message exposing (Message, referenceToUndefinedQuestion)
 
 
-badReferences : Form -> Set String
+badReferences : Form -> List Message
 badReferences form =
     badReferencesInBlock Set.empty form.items
 
 
-badReferencesInBlock : Set String -> Block -> Set String
-badReferencesInBlock parentIdentifiers block =
+badReferencesInBlock : Set String -> Block -> List Message
+badReferencesInBlock questionIdsFromParent block =
     let
-        availableIdentifiers =
-            availableIdentifiersOnScope parentIdentifiers block
-
-        usedIdentifiers =
-            usedIdentifiersFromBlock block
-
-        badReferences =
-            Set.diff usedIdentifiers availableIdentifiers
+        availableQuestionIds =
+            questionIdsInBlock block
+                |> Set.union questionIdsFromParent
     in
-        List.foldl (\item -> badReferencesInFormItem availableIdentifiers item |> Set.union) badReferences block
+        List.concatMap (badReferencesInFormItem availableQuestionIds) block
 
 
-badReferencesInFormItem : Set String -> FormItem -> Set String
+questionIdsInBlock : Block -> Set String
+questionIdsInBlock =
+    questionIndexFromBlock >> DictList.keys >> Set.fromList
+
+
+badReferencesInFormItem : Set String -> FormItem -> List Message
 badReferencesInFormItem availableIdentifiers formItem =
     case formItem of
         Field _ _ _ ->
-            Set.empty
+            []
 
-        ComputedField _ _ _ _ ->
-            Set.empty
+        ComputedField _ _ _ computation ->
+            badReferencesInExpression availableIdentifiers computation
 
-        IfThen _ thenBranch ->
-            badReferencesInBlock availableIdentifiers thenBranch
+        IfThen condition thenBranch ->
+            List.concat
+                [ badReferencesInExpression availableIdentifiers condition
+                , badReferencesInBlock availableIdentifiers thenBranch
+                ]
 
-        IfThenElse _ thenBranch elseBranch ->
-            Set.union
-                (badReferencesInBlock availableIdentifiers thenBranch)
-                (badReferencesInBlock availableIdentifiers elseBranch)
-
-
-usedIdentifiersFromBlock : Block -> Set String
-usedIdentifiersFromBlock block =
-    List.foldl (\item -> usedIdentifiersFromItem item |> Set.union) Set.empty block
-
-
-usedIdentifiersFromItem : FormItem -> Set String
-usedIdentifiersFromItem item =
-    expressionFromItem item
-        |> Maybe.map usedIdentifiers
-        |> Maybe.withDefault Set.empty
+        IfThenElse condition thenBranch elseBranch ->
+            List.concat
+                [ badReferencesInExpression availableIdentifiers condition
+                , badReferencesInBlock availableIdentifiers thenBranch
+                , badReferencesInBlock availableIdentifiers elseBranch
+                ]
 
 
-expressionFromItem : FormItem -> Maybe Expression
-expressionFromItem item =
-    case item of
-        Field _ _ _ ->
-            Nothing
-
-        ComputedField _ _ _ expression ->
-            Just expression
-
-        IfThen expression _ ->
-            Just expression
-
-        IfThenElse expression _ _ ->
-            Just expression
+badReferencesInExpression : Set String -> Expression -> List Message
+badReferencesInExpression availableIdentifiers expression =
+    questionReferences expression
+        |> List.filter (flip isBadReference availableIdentifiers)
+        |> List.map referenceToUndefinedQuestion
 
 
-usedIdentifiers : Expression -> Set String
-usedIdentifiers expression =
+isBadReference : Id -> Set String -> Bool
+isBadReference ( id, _ ) =
+    Set.member id >> not
+
+
+questionReferences : Expression -> List Id
+questionReferences expression =
     case expression of
-        Var ( s, _ ) ->
-            Set.singleton s
+        Var id ->
+            [ id ]
 
         Integer _ _ ->
-            Set.empty
+            []
 
         Decimal _ _ ->
-            Set.empty
+            []
 
         Boolean _ _ ->
-            Set.empty
+            []
 
         AST.Str _ _ ->
-            Set.empty
+            []
 
         ParensExpression _ expr ->
-            usedIdentifiers expr
+            questionReferences expr
 
         ArithmeticExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            (questionReferences exprLeft) ++ (questionReferences exprRight)
 
         RelationExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            (questionReferences exprLeft) ++ (questionReferences exprRight)
 
         LogicExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            (questionReferences exprLeft) ++ (questionReferences exprRight)
 
         ComparisonExpression _ _ exprLeft exprRight ->
-            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+            (questionReferences exprLeft) ++ (questionReferences exprRight)

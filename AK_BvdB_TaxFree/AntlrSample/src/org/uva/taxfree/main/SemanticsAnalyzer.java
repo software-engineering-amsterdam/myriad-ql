@@ -15,7 +15,7 @@ public class SemanticsAnalyzer {
     /*
      * UNDEFINES - reference to undefined questions // TODO
      *   if (nonExists) etc.
-     * DUPLICATE-QUESTIONS - duplicate question declarations with different types
+     * // DUPLICATE-QUESTIONS - duplicate question declarations with different types
      *  "Question?" -> varName : boolean
      *  "Question2?" -> varName : string
      * WRONGCONDITIONS - conditions that are not of the type boolean // TODO

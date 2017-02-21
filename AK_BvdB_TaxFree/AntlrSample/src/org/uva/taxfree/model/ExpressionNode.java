@@ -1,5 +1,7 @@
 package org.uva.taxfree.model;
 
+import org.uva.taxfree.util.Evaluator;
+
 public class ExpressionNode extends Node {
     private Node mLeft;
     private String mOperator;
@@ -7,6 +9,10 @@ public class ExpressionNode extends Node {
 
     public ExpressionNode(String label) {
 
+    }
+
+    public String evaluate() throws Exception{
+        return Evaluator.calculate(toString());
     }
 
     public String getType() {
