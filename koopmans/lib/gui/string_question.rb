@@ -4,6 +4,7 @@ class StringQuestion < GUIQuestion
   def initialize(args)
     super
     @variable.value = ("")
+    @variable.type = StringType
     @previous_value = value
     create_entry
   end

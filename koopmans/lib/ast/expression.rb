@@ -21,11 +21,19 @@ class BooleanNegation < Negation
   def self.to_operator
     '!'
   end
+
+  def eval
+    !expression
+  end
 end
 
 class IntegerNegation < Negation
   def self.to_operator
     '-'
+  end
+
+  def eval
+    -expression
   end
 end
 
@@ -76,6 +84,10 @@ class Subtract < ArithmeticExpression
   def self.to_operator
     '-'
   end
+
+  def eval
+    left.eval - right.eval
+  end
 end
 
 class Add < ArithmeticExpression
@@ -84,7 +96,7 @@ class Add < ArithmeticExpression
   end
 
   def eval
-    left.eval.to_i + right.eval.to_i
+    left.eval + right.eval
   end
 end
 
@@ -92,11 +104,19 @@ class Multiply < ArithmeticExpression
   def self.to_operator
     '*'
   end
+
+  def eval
+    left.eval * right.eval
+  end
 end
 
 class Divide < ArithmeticExpression
   def self.to_operator
     '/'
+  end
+
+  def eval
+    left.eval / right.eval
   end
 end
 
@@ -111,11 +131,19 @@ class Equal< ComparisonEqual
   def self.to_operator
     '=='
   end
+
+  def eval
+    left.eval == right.eval
+  end
 end
 
 class NotEqual < ComparisonEqual
   def self.to_operator
     '!='
+  end
+
+  def eval
+    left.eval != right.eval
   end
 end
 
@@ -130,11 +158,19 @@ class Less < ComparisonOrdering
   def self.to_operator
     '<'
   end
+
+  def eval
+    left.eval < right.eval
+  end
 end
 
 class Greater < ComparisonOrdering
   def self.to_operator
     '>'
+  end
+
+  def eval
+    left.eval > right.eval
   end
 end
 
@@ -142,11 +178,19 @@ class LessEqual < ComparisonOrdering
   def self.to_operator
     '<='
   end
+
+  def eval
+    left.eval <= right.eval
+  end
 end
 
 class GreaterEqual < ComparisonOrdering
   def self.to_operator
     '>='
+  end
+
+  def eval
+    left.eval >= right.eval
   end
 end
 

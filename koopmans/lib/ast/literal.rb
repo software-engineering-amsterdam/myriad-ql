@@ -48,6 +48,10 @@ class StringLiteral < Literal
   def self.real_type
     StringType
   end
+
+  def eval
+    value.to_s
+  end
 end
 
 class Parser < Parslet::Parser

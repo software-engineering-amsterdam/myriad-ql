@@ -27,7 +27,7 @@ class GUIQuestion
   end
 
   def value
-    @variable.value
+    @variable.eval
   end
 
   def to_json

@@ -4,6 +4,7 @@ class IntegerQuestion < GUIQuestion
   def initialize(args)
     super
     @variable.value = (0)
+    @variable.type = IntegerType
     @previous_value = value
     create_entry
   end

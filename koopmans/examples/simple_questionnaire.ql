@@ -10,16 +10,16 @@ form taxOfficeExample {
     "Dij oiasjd asd "
         aap: string
 
-  if (hasSoldHouse ) {
+  if (hasSoldHouse) {
     "What was the selling price?"
       sellingPrice: money
-      if (hasBoughtHouse || hasMaintLoan){
+      if (sellingPrice > 10){
         "Private debts for the sold house:"
         privateDebt: money
         }
     "Value residue:"
       valueResidue: money =
-        (10 + privateDebt)
+        (10 + privateDebt + 99 + sellingPrice * 2 )
   }
 
 }

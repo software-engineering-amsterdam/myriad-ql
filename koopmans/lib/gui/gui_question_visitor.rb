@@ -79,19 +79,13 @@ class GUIQuestionVisitor
   #is the calculation a literal, a variable or an expression?
   def visit_calculation(calculation)
     return unless calculation
-    if calculation.kind_of?(Literal)
-      visit_literal(calculation)
-    elsif calculation.kind_of?(Variable)
+    if calculation.kind_of?(Variable)
       visit_variable(calculation)
     elsif calculation.kind_of?(Expression)
       visit_expression(calculation)
     else
-      raise NotImplementedError
+      calculation
     end
-  end
-
-  # literal should return nil
-  def visit_literal(_)
   end
 
   # visit the calculations of both the left and right sides
