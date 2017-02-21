@@ -24,13 +24,13 @@ question
 
 ifCase
     : ifCaseArgs
-    | OPEN_PARENTH ifCaseArgs '>' ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs '<' ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs '<=' ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs '>=' ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs '==' ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCase 'AND' ifCase CLOSE_PARENTH
-    | OPEN_PARENTH ifCase 'OR' ifCase CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
+    | OPEN_PARENTH ifCase TOKEN ifCase CLOSE_PARENTH
+    | OPEN_PARENTH ifCase TOKEN ifCase CLOSE_PARENTH
     ;
 
 ifCaseArgs
@@ -60,6 +60,16 @@ mathaction
     ;
 
 //lexer
+
+TOKEN
+    : '>'
+    | '<'
+    | '>='
+    | '<='
+    | '=='
+    | 'AND'
+    | 'OR'
+    ;
 
 ID:   [a-zA-Z$_]+ ;
 

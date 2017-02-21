@@ -1,4 +1,4 @@
-// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/grammars\QL.g4 by ANTLR 4.6
+// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/sa parsing/mcsaQL/src/grammars\QL.g4 by ANTLR 4.6
 package com.mcsa.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

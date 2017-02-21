@@ -1,4 +1,4 @@
-// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/Grammar v2/mcsaQL/src/grammars\QL.g4 by ANTLR 4.6
+// Generated from C:/Users/sotos/Documents/GitHub/myriad-ql/MC-SA/sa parsing/mcsaQL/src/grammars\QL.g4 by ANTLR 4.6
 package com.mcsa.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -18,9 +18,9 @@ public class QLParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, T__18=19, T__19=20, T__20=21, ID=22, STRING=23, NUMBER=24, WHITESPACE=25, 
-		COMMENT=26, OPEN_BRACKET=27, CLOSE_BRACKET=28, OPEN_PARENTH=29, CLOSE_PARENTH=30;
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, TOKEN=15, ID=16, STRING=17, 
+		NUMBER=18, WHITESPACE=19, COMMENT=20, OPEN_BRACKET=21, CLOSE_BRACKET=22, 
+		OPEN_PARENTH=23, CLOSE_PARENTH=24;
 	public static final int
 		RULE_formDeclaration = 0, RULE_content = 1, RULE_categories = 2, RULE_ifStatement = 3, 
 		RULE_question = 4, RULE_ifCase = 5, RULE_ifCaseArgs = 6, RULE_questionParameters = 7, 
@@ -31,16 +31,14 @@ public class QLParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'form'", "'if'", "'>'", "'<'", "'<='", "'>='", "'=='", "'AND'", 
-		"'OR'", "':'", "'boolean'", "'integer'", "'double'", "'float'", "'string'", 
-		"'money'", "'='", "'*'", "'/'", "'+'", "'-'", null, null, null, null, 
-		null, "'{'", "'}'", "'('", "')'"
+		null, "'form'", "'if'", "':'", "'boolean'", "'integer'", "'double'", "'float'", 
+		"'string'", "'money'", "'='", "'*'", "'/'", "'+'", "'-'", null, null, 
+		null, null, null, null, "'{'", "'}'", "'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, "ID", "STRING", 
-		"NUMBER", "WHITESPACE", "COMMENT", "OPEN_BRACKET", "CLOSE_BRACKET", "OPEN_PARENTH", 
-		"CLOSE_PARENTH"
+		null, null, null, "TOKEN", "ID", "STRING", "NUMBER", "WHITESPACE", "COMMENT", 
+		"OPEN_BRACKET", "CLOSE_BRACKET", "OPEN_PARENTH", "CLOSE_PARENTH"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -379,6 +377,7 @@ public class QLParser extends Parser {
 			return getRuleContext(IfCaseArgsContext.class,i);
 		}
 		public TerminalNode OPEN_PARENTH() { return getToken(QLParser.OPEN_PARENTH, 0); }
+		public TerminalNode TOKEN() { return getToken(QLParser.TOKEN, 0); }
 		public TerminalNode CLOSE_PARENTH() { return getToken(QLParser.CLOSE_PARENTH, 0); }
 		public List<IfCaseContext> ifCase() {
 			return getRuleContexts(IfCaseContext.class);
@@ -422,7 +421,7 @@ public class QLParser extends Parser {
 				setState(49);
 				ifCaseArgs();
 				setState(50);
-				match(T__2);
+				match(TOKEN);
 				setState(51);
 				ifCaseArgs();
 				setState(52);
@@ -437,7 +436,7 @@ public class QLParser extends Parser {
 				setState(55);
 				ifCaseArgs();
 				setState(56);
-				match(T__3);
+				match(TOKEN);
 				setState(57);
 				ifCaseArgs();
 				setState(58);
@@ -452,7 +451,7 @@ public class QLParser extends Parser {
 				setState(61);
 				ifCaseArgs();
 				setState(62);
-				match(T__4);
+				match(TOKEN);
 				setState(63);
 				ifCaseArgs();
 				setState(64);
@@ -467,7 +466,7 @@ public class QLParser extends Parser {
 				setState(67);
 				ifCaseArgs();
 				setState(68);
-				match(T__5);
+				match(TOKEN);
 				setState(69);
 				ifCaseArgs();
 				setState(70);
@@ -482,7 +481,7 @@ public class QLParser extends Parser {
 				setState(73);
 				ifCaseArgs();
 				setState(74);
-				match(T__6);
+				match(TOKEN);
 				setState(75);
 				ifCaseArgs();
 				setState(76);
@@ -497,7 +496,7 @@ public class QLParser extends Parser {
 				setState(79);
 				ifCase();
 				setState(80);
-				match(T__7);
+				match(TOKEN);
 				setState(81);
 				ifCase();
 				setState(82);
@@ -512,7 +511,7 @@ public class QLParser extends Parser {
 				setState(85);
 				ifCase();
 				setState(86);
-				match(T__8);
+				match(TOKEN);
 				setState(87);
 				ifCase();
 				setState(88);
@@ -607,7 +606,7 @@ public class QLParser extends Parser {
 			setState(94);
 			match(ID);
 			setState(95);
-			match(T__9);
+			match(T__2);
 			setState(96);
 			type();
 			}
@@ -652,54 +651,54 @@ public class QLParser extends Parser {
 			setState(111);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__10:
+			case T__3:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(98);
-				match(T__10);
+				match(T__3);
 				}
 				break;
-			case T__11:
+			case T__4:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(99);
-				match(T__11);
+				match(T__4);
 				}
 				break;
-			case T__12:
+			case T__5:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(100);
-				match(T__12);
+				match(T__5);
 				}
 				break;
-			case T__13:
+			case T__6:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(101);
-				match(T__13);
+				match(T__6);
 				}
 				break;
-			case T__14:
+			case T__7:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(102);
-				match(T__14);
+				match(T__7);
 				}
 				break;
-			case T__15:
+			case T__8:
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(103);
-				match(T__15);
+				match(T__8);
 				setState(108);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__16) {
+				while (_la==T__9) {
 					{
 					{
 					setState(104);
-					match(T__16);
+					match(T__9);
 					setState(105);
 					mathaction(0);
 					}
@@ -814,7 +813,7 @@ public class QLParser extends Parser {
 						setState(123);
 						((MathactionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__17 || _la==T__18) ) {
+						if ( !(_la==T__10 || _la==T__11) ) {
 							((MathactionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -835,7 +834,7 @@ public class QLParser extends Parser {
 						setState(126);
 						((MathactionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__19 || _la==T__20) ) {
+						if ( !(_la==T__12 || _la==T__13) ) {
 							((MathactionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -885,42 +884,42 @@ public class QLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3 \u0088\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6\3\36\n\3\r\3\16\3\37\3\4\3\4\3\4\3\4"+
-		"\3\4\5\4\'\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\32\u0088\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6\3\36\n\3\r\3\16\3\37\3\4\3\4\3\4\3"+
+		"\4\3\4\5\4\'\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3"+
 		"\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\5\7]\n\7\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n"+
-		"\3\n\3\n\7\nm\n\n\f\n\16\np\13\n\5\nr\n\n\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\3\13\5\13{\n\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u0083\n\13\f\13\16"+
-		"\13\u0086\13\13\3\13\2\3\24\f\2\4\6\b\n\f\16\20\22\24\2\5\4\2\30\30\32"+
-		"\32\3\2\24\25\3\2\26\27\u0093\2\26\3\2\2\2\4\35\3\2\2\2\6&\3\2\2\2\b("+
-		"\3\2\2\2\n.\3\2\2\2\f\\\3\2\2\2\16^\3\2\2\2\20`\3\2\2\2\22q\3\2\2\2\24"+
-		"z\3\2\2\2\26\27\7\3\2\2\27\30\7\30\2\2\30\31\7\35\2\2\31\32\5\4\3\2\32"+
-		"\33\7\36\2\2\33\3\3\2\2\2\34\36\5\6\4\2\35\34\3\2\2\2\36\37\3\2\2\2\37"+
-		"\35\3\2\2\2\37 \3\2\2\2 \5\3\2\2\2!\'\5\n\6\2\"\'\7\32\2\2#\'\7\33\2\2"+
-		"$\'\7\34\2\2%\'\5\b\5\2&!\3\2\2\2&\"\3\2\2\2&#\3\2\2\2&$\3\2\2\2&%\3\2"+
-		"\2\2\'\7\3\2\2\2()\7\4\2\2)*\5\f\7\2*+\7\35\2\2+,\5\4\3\2,-\7\36\2\2-"+
-		"\t\3\2\2\2./\7\31\2\2/\60\5\20\t\2\60\13\3\2\2\2\61]\5\16\b\2\62\63\7"+
-		"\37\2\2\63\64\5\16\b\2\64\65\7\5\2\2\65\66\5\16\b\2\66\67\7 \2\2\67]\3"+
-		"\2\2\289\7\37\2\29:\5\16\b\2:;\7\6\2\2;<\5\16\b\2<=\7 \2\2=]\3\2\2\2>"+
-		"?\7\37\2\2?@\5\16\b\2@A\7\7\2\2AB\5\16\b\2BC\7 \2\2C]\3\2\2\2DE\7\37\2"+
-		"\2EF\5\16\b\2FG\7\b\2\2GH\5\16\b\2HI\7 \2\2I]\3\2\2\2JK\7\37\2\2KL\5\16"+
-		"\b\2LM\7\t\2\2MN\5\16\b\2NO\7 \2\2O]\3\2\2\2PQ\7\37\2\2QR\5\f\7\2RS\7"+
-		"\n\2\2ST\5\f\7\2TU\7 \2\2U]\3\2\2\2VW\7\37\2\2WX\5\f\7\2XY\7\13\2\2YZ"+
-		"\5\f\7\2Z[\7 \2\2[]\3\2\2\2\\\61\3\2\2\2\\\62\3\2\2\2\\8\3\2\2\2\\>\3"+
-		"\2\2\2\\D\3\2\2\2\\J\3\2\2\2\\P\3\2\2\2\\V\3\2\2\2]\r\3\2\2\2^_\t\2\2"+
-		"\2_\17\3\2\2\2`a\7\30\2\2ab\7\f\2\2bc\5\22\n\2c\21\3\2\2\2dr\7\r\2\2e"+
-		"r\7\16\2\2fr\7\17\2\2gr\7\20\2\2hr\7\21\2\2in\7\22\2\2jk\7\23\2\2km\5"+
-		"\24\13\2lj\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3\2\2\2or\3\2\2\2pn\3\2\2\2q"+
-		"d\3\2\2\2qe\3\2\2\2qf\3\2\2\2qg\3\2\2\2qh\3\2\2\2qi\3\2\2\2r\23\3\2\2"+
-		"\2st\b\13\1\2t{\7\32\2\2u{\7\30\2\2vw\7\37\2\2wx\5\24\13\2xy\7 \2\2y{"+
-		"\3\2\2\2zs\3\2\2\2zu\3\2\2\2zv\3\2\2\2{\u0084\3\2\2\2|}\f\7\2\2}~\t\3"+
-		"\2\2~\u0083\5\24\13\b\177\u0080\f\6\2\2\u0080\u0081\t\4\2\2\u0081\u0083"+
-		"\5\24\13\7\u0082|\3\2\2\2\u0082\177\3\2\2\2\u0083\u0086\3\2\2\2\u0084"+
-		"\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085\25\3\2\2\2\u0086\u0084\3\2\2"+
-		"\2\n\37&\\nqz\u0082\u0084";
+		"\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
+		"\7\3\7\3\7\3\7\5\7]\n\7\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3"+
+		"\n\3\n\3\n\7\nm\n\n\f\n\16\np\13\n\5\nr\n\n\3\13\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\5\13{\n\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u0083\n\13\f\13"+
+		"\16\13\u0086\13\13\3\13\2\3\24\f\2\4\6\b\n\f\16\20\22\24\2\5\4\2\22\22"+
+		"\24\24\3\2\r\16\3\2\17\20\u0093\2\26\3\2\2\2\4\35\3\2\2\2\6&\3\2\2\2\b"+
+		"(\3\2\2\2\n.\3\2\2\2\f\\\3\2\2\2\16^\3\2\2\2\20`\3\2\2\2\22q\3\2\2\2\24"+
+		"z\3\2\2\2\26\27\7\3\2\2\27\30\7\22\2\2\30\31\7\27\2\2\31\32\5\4\3\2\32"+
+		"\33\7\30\2\2\33\3\3\2\2\2\34\36\5\6\4\2\35\34\3\2\2\2\36\37\3\2\2\2\37"+
+		"\35\3\2\2\2\37 \3\2\2\2 \5\3\2\2\2!\'\5\n\6\2\"\'\7\24\2\2#\'\7\25\2\2"+
+		"$\'\7\26\2\2%\'\5\b\5\2&!\3\2\2\2&\"\3\2\2\2&#\3\2\2\2&$\3\2\2\2&%\3\2"+
+		"\2\2\'\7\3\2\2\2()\7\4\2\2)*\5\f\7\2*+\7\27\2\2+,\5\4\3\2,-\7\30\2\2-"+
+		"\t\3\2\2\2./\7\23\2\2/\60\5\20\t\2\60\13\3\2\2\2\61]\5\16\b\2\62\63\7"+
+		"\31\2\2\63\64\5\16\b\2\64\65\7\21\2\2\65\66\5\16\b\2\66\67\7\32\2\2\67"+
+		"]\3\2\2\289\7\31\2\29:\5\16\b\2:;\7\21\2\2;<\5\16\b\2<=\7\32\2\2=]\3\2"+
+		"\2\2>?\7\31\2\2?@\5\16\b\2@A\7\21\2\2AB\5\16\b\2BC\7\32\2\2C]\3\2\2\2"+
+		"DE\7\31\2\2EF\5\16\b\2FG\7\21\2\2GH\5\16\b\2HI\7\32\2\2I]\3\2\2\2JK\7"+
+		"\31\2\2KL\5\16\b\2LM\7\21\2\2MN\5\16\b\2NO\7\32\2\2O]\3\2\2\2PQ\7\31\2"+
+		"\2QR\5\f\7\2RS\7\21\2\2ST\5\f\7\2TU\7\32\2\2U]\3\2\2\2VW\7\31\2\2WX\5"+
+		"\f\7\2XY\7\21\2\2YZ\5\f\7\2Z[\7\32\2\2[]\3\2\2\2\\\61\3\2\2\2\\\62\3\2"+
+		"\2\2\\8\3\2\2\2\\>\3\2\2\2\\D\3\2\2\2\\J\3\2\2\2\\P\3\2\2\2\\V\3\2\2\2"+
+		"]\r\3\2\2\2^_\t\2\2\2_\17\3\2\2\2`a\7\22\2\2ab\7\5\2\2bc\5\22\n\2c\21"+
+		"\3\2\2\2dr\7\6\2\2er\7\7\2\2fr\7\b\2\2gr\7\t\2\2hr\7\n\2\2in\7\13\2\2"+
+		"jk\7\f\2\2km\5\24\13\2lj\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3\2\2\2or\3\2\2"+
+		"\2pn\3\2\2\2qd\3\2\2\2qe\3\2\2\2qf\3\2\2\2qg\3\2\2\2qh\3\2\2\2qi\3\2\2"+
+		"\2r\23\3\2\2\2st\b\13\1\2t{\7\24\2\2u{\7\22\2\2vw\7\31\2\2wx\5\24\13\2"+
+		"xy\7\32\2\2y{\3\2\2\2zs\3\2\2\2zu\3\2\2\2zv\3\2\2\2{\u0084\3\2\2\2|}\f"+
+		"\7\2\2}~\t\3\2\2~\u0083\5\24\13\b\177\u0080\f\6\2\2\u0080\u0081\t\4\2"+
+		"\2\u0081\u0083\5\24\13\7\u0082|\3\2\2\2\u0082\177\3\2\2\2\u0083\u0086"+
+		"\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085\25\3\2\2\2\u0086"+
+		"\u0084\3\2\2\2\n\37&\\nqz\u0082\u0084";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

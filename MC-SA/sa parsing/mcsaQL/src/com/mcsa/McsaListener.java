@@ -102,7 +102,10 @@ public class McsaListener implements QLListener {
 
     @Override
     public void enterIfCase(QLParser.IfCaseContext ctx) {
-
+        if (ctx.children.contains(ctx.TOKEN())) {
+            TreeNode<String> questionArgsID = new TreeNode<>(ctx.TOKEN().getText());
+            currentNode.addChild(questionArgsID);
+        }
     }
 
     @Override
@@ -112,7 +115,7 @@ public class McsaListener implements QLListener {
 
     @Override
     public void enterIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
-
+        
     }
 
     @Override
