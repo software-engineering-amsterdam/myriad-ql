@@ -47,8 +47,8 @@
                 .OfType<QuestionStatement>()
                 .ToList();
 
-            Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Question.Value == "What is your birth date?"));
-            Assert.True(questions.Any(x => x.Identifier == "continue" && x.Question.Value == "Do you want to continue?"));
+            Assert.True(questions.Any(x => x.Identifier == "birthDate" && ((StringLiteral)x.Question.Literal).Value == "What is your birth date?"));
+            Assert.True(questions.Any(x => x.Identifier == "continue" && ((StringLiteral)x.Question.Literal).Value == "Do you want to continue?"));
 
             var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
             Assert.True(ifStatement.Condition is OrExpression);
@@ -61,11 +61,12 @@
             var variableExp = (VariableExpression)condition.RightExpression;
 
             Assert.IsType<VariableExpression>(lessThanExp.LeftExpression);
-            Assert.IsType<DateLiteral>(lessThanExp.RightExpression);
+            Assert.IsType<LiteralExpression>(lessThanExp.RightExpression);
             Assert.Equal(variableExp.Identifier, "continue");
 
             var lhs = (VariableExpression)lessThanExp.LeftExpression;
             var rhs = (LiteralExpression)lessThanExp.RightExpression;
+            Assert.IsType<DateLiteral>(rhs.Literal);
 
             Assert.Equal(lhs.Identifier, "birthDate");
             Assert.Equal(((DateLiteral)rhs.Literal).Value, new DateTime(1999, 12, 31));
@@ -80,7 +81,10 @@
 
             var computedValue = (OrExpression)computedQuestion.ComputedValue;
             Assert.IsType<VariableExpression>(computedValue.LeftExpression);
-            Assert.IsType<BooleanLiteral>(computedValue.RightExpression);
+            Assert.IsType<LiteralExpression>(computedValue.RightExpression);
+
+            var computedRhs = (LiteralExpression)computedValue.RightExpression;
+            Assert.IsType<BooleanLiteral>(computedRhs.Literal);
         }
 
         [Fact]
