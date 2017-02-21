@@ -100,68 +100,80 @@
             return new VariableExpression(context.Identifier().GetText());
         }
 
+        public override AstNode VisitExpressionNegate([NotNull] QlParser.ExpressionNegateContext context)
+        {
+            var exp = (Expression)this.Visit(context.expression());
+            return new NegativeExpression(exp);
+        }
+
+        public override AstNode VisitExpressionNot([NotNull] QlParser.ExpressionNotContext context)
+        {
+            var exp = (Expression)this.Visit(context.expression());
+            return new NotExpression(exp);
+        }
+
         public override AstNode VisitExpressionAdd([NotNull] QlParser.ExpressionAddContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new AddExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new AddExpression(expressions);
         }
 
         public override AstNode VisitExpressionAnd([NotNull] QlParser.ExpressionAndContext context)
         {
-            var exp = context.expression()
+            var expressions = context.expression()
                 .Select(x => (Expression)this.Visit(x))
                 .ToList();
-            return new AndExpression(exp[0], exp[1]);
+            return new AndExpression(expressions);
         }
 
         public override AstNode VisitExpressionDivide([NotNull] QlParser.ExpressionDivideContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new DivideExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new DivideExpression(expressions);
         }
 
         public override AstNode VisitExpressionEqual([NotNull] QlParser.ExpressionEqualContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new EqualExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new EqualExpression(expressions);
         }
 
         public override AstNode VisitExpressionGreaterThan([NotNull] QlParser.ExpressionGreaterThanContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new GreaterThanExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new GreaterThanExpression(expressions);
         }
 
         public override AstNode VisitExpressionGreaterThanOrEqual([NotNull] QlParser.ExpressionGreaterThanOrEqualContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new GreaterThanOrEqualExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new GreaterThanOrEqualExpression(expressions);
         }
 
         public override AstNode VisitExpressionLesserThan([NotNull] QlParser.ExpressionLesserThanContext context)
         {
-            var exp = context.expression()
+            var expressions = context.expression()
                 .Select(x => (Expression)this.Visit(x))
                 .ToList();
-            return new LessThanExpression(exp[0], exp[1]);
+            return new LessThanExpression(expressions);
         }
 
         public override AstNode VisitExpressionLesserThanOrEqual([NotNull] QlParser.ExpressionLesserThanOrEqualContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new LessThanExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new LessThanExpression(expressions);
         }
 
         public override AstNode VisitExpressionLiteral([NotNull] QlParser.ExpressionLiteralContext context)
@@ -171,50 +183,38 @@
 
         public override AstNode VisitExpressionMultiply([NotNull] QlParser.ExpressionMultiplyContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new MultiplyExpression(exp[0], exp[1]);
-        }
-
-        public override AstNode VisitExpressionNegate([NotNull] QlParser.ExpressionNegateContext context)
-        {
-            var exp = (Expression)context.expression().GetChild(0);
-            return new NotExpression(exp);
-        }
-
-        public override AstNode VisitExpressionNot([NotNull] QlParser.ExpressionNotContext context)
-        {
-            var exp = (Expression)context.expression().GetChild(0);
-            return new NotExpression(exp);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new MultiplyExpression(expressions);
         }
 
         public override AstNode VisitExpressionNotEqual([NotNull] QlParser.ExpressionNotEqualContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new NotEqualExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new NotEqualExpression(expressions);
         }
 
         public override AstNode VisitExpressionOr([NotNull] QlParser.ExpressionOrContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new OrExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new OrExpression(expressions);
         }
 
         public override AstNode VisitExpressionSubtract([NotNull] QlParser.ExpressionSubtractContext context)
         {
-            var exp = context.expression()
-                   .Select(x => (Expression)this.Visit(x))
-                   .ToList();
-            return new SubtractExpression(exp[0], exp[1]);
+            var expressions = context.expression()
+                .Select(x => (Expression)this.Visit(x))
+                .ToList();
+            return new SubtractExpression(expressions);
         }
         #endregion
 
-#region:Literals
+        #region:Literals
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
             return new DateLiteral(context.DateLiteral().GetText());
