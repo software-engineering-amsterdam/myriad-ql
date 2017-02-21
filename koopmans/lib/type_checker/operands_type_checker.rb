@@ -43,19 +43,11 @@ class OperandsTypeChecker
 
     errors = []
     # the left side does not match the operator
-    unless subject_class.includes_type?(left_type.accept_types)
-      errors.push(error(left_type.accept_types.first, subject_class))
-    end
-
+    errors.push(error(left_type.accept_types.first, subject_class)) unless subject_class.includes_type?(left_type.accept_types)
     # the right side does not match the operator
-    unless subject_class.includes_type?(right_type.accept_types)
-      errors.push(error(right_type.accept_types.first, subject_class))
-    end
-
+    errors.push(error(right_type.accept_types.first, subject_class)) unless subject_class.includes_type?(right_type.accept_types)
     # the left and right side do not match
-    if ([left_type.accept_types].flatten & [right_type.accept_types].flatten).empty?
-      errors.push(error(left_type.accept_types.first, right_type))
-    end
+    errors.push(error(left_type.accept_types.first, right_type)) if ([left_type.accept_types].flatten & [right_type.accept_types].flatten).empty?
 
     errors.push([expression.left.accept(self), expression.right.accept(self)])
   end

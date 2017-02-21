@@ -2,8 +2,7 @@ require_relative '../visitor/question_visitor'
 
 class UndefinedVariableChecker
   def visit_form(form)
-    # get all question variables
-    # e.g. ["hasSoldHouse", "hasBoughtHouse", "hasMaintLoan"]
+    # get all question variables e.g. ["hasSoldHouse", "hasBoughtHouse", "hasMaintLoan"]
     @question_variables = form.accept(QuestionVisitor.new).map(&:variable).map(&:name)
 
     # do the actual undefined variable checking
@@ -38,8 +37,6 @@ class UndefinedVariableChecker
 
   # only return the variable name if it is not existing
   def visit_variable(variable)
-    unless @question_variables.include?(variable.name)
-      "[ERROR]: variable '#{variable.name}' is undefined"
-    end
+    "[ERROR]: variable '#{variable.name}' is undefined" unless @question_variables.include?(variable.name)
   end
 end
