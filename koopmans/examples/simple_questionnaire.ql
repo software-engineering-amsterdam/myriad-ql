@@ -3,6 +3,8 @@ form taxOfficeExample {
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
     hasBoughtHouse: boolean
+    "Did you buy a house in 2010?"
+        hasBoughtHouse: boolean
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
@@ -13,7 +15,7 @@ form taxOfficeExample {
       privateDebt: money
     "Value residue:"
       valueResidue: money =
-        (sellingPrice + privateDebt)
+        (sellingPrice + aap)
   }
 
 }

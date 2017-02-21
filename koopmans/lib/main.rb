@@ -10,8 +10,8 @@ require_relative 'parser/transformer'
 # require_relative 'ast/variable'
 
 require_relative 'type_checker/main_checker'
-require_relative 'gui/gui'
-require_relative 'gui/expression_visitor'
+# require_relative 'gui/gui'
+# require_relative 'gui/expression_visitor'
 
 
 require 'parslet'
@@ -30,12 +30,12 @@ ast = transformer.apply(parsed)
 
 checker = MainChecker.new
 errors = checker.check(ast)
-# pp errors
+pp errors
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
 # pp ast.accept(QuestionVisitor.new)
-GUI.new(ast)
+# GUI.new(ast)
 # gui.question('joe?')
 # gui.launch
 

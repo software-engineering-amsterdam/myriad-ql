@@ -1,6 +1,4 @@
-# TODO use double dispatch?
-
-class BaseChecker
+class BaseVisitor
   # is it a question or an if statement?
   def visit_statement(statement)
     if statement.kind_of?(Question)
@@ -23,10 +21,5 @@ class BaseChecker
     else
       raise NotImplementedError
     end
-  end
-
-  # literal should return nil
-  def visit_literal(_)
-    []
   end
 end

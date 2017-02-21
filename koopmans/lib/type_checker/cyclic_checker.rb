@@ -1,14 +1,11 @@
-require_relative 'base_checker'
-require_relative 'cyclic_visitor'
-require 'pp'
+require_relative '../visitor/cyclic_visitor'
 
-class CyclicChecker < BaseChecker
+class CyclicChecker < BaseVisitor
   def visit_form(subject)
     # get question variables with dependency variables as hash
     # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
     #       "privateDebt"=>[#<Variable:0x007ff31e17eaf8 @name="sellingPrice">, #<Variable:0x007ff31e1868e8 @name="var2">]}
-
-    @values = subject.accept(CyclicVisitor.new)
+    @values = subject.accept(CyclicVisitor.new).compact.inject(:merge)
     @errors = []
 
     # do the actual cyclic checking
@@ -31,16 +28,16 @@ class CyclicChecker < BaseChecker
     [visit_calculation(subject.left), visit_calculation(subject.right)]
   end
 
+  # check if the visited variable is in the dependency hash
+  # for each of the dependencies, check their dependencies
+  # check if the variable from the dependency is in the dependency hash
+  # add new dependency to original dependency hash, don't add duplicates
+  # check for cyclic dependency if there is a dependency on itself, else visit the next variable
   def visit_variable(subject)
-    # check if the visited variable is in the dependency hash
     if @values.key? subject.name
-      # for each of the dependencies, check their dependencies
       @values[subject.name].each do |k|
-        # check if the variable from the dependency is in the dependency hash
         if @values.key? k.name
-          # add new dependency to original dependency hash, don't add duplicates
           @values[subject.name] = @values[subject.name] | @values[k.name]
-          # check for cyclic dependency if there is a dependency on itself, else visit the next variable
           if @values[subject.name].map(&:name).include? subject.name
             @errors.push("[ERROR]: question with variable '#{subject.name}' has a cyclic dependency")
           else

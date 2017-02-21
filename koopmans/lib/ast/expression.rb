@@ -64,7 +64,7 @@ end
 # arithmetic: - + * /
 class ArithmeticExpression < BinaryExpression
   def self.real_type
-    [IntegerType]
+    [IntegerType, MoneyType]
   end
 end
 
@@ -99,7 +99,7 @@ end
 # comparisons == !=
 class ComparisonEqual < BinaryExpression
   def self.real_type
-    [BooleanType, IntegerType, StringType]
+    [BooleanType, IntegerType, StringType, MoneyType]
   end
 end
 
@@ -118,7 +118,7 @@ end
 # comparisons: < > <= >=
 class ComparisonOrdering < BinaryExpression
   def self.real_type
-    [IntegerType]
+    [IntegerType, MoneyType]
   end
 end
 

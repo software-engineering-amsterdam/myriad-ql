@@ -1,19 +1,19 @@
-require_relative 'base_checker'
+require_relative 'base_visitor'
 
-class CyclicVisitor < BaseChecker
-  # visit all statements in the form
+class QuestionVisitor < BaseVisitor
+  # gather all labels from all questions and check for duplicates
   def visit_form(subject)
-    subject.statements.map { |u| visit_statement(u) }.flatten.compact.inject(:merge)
+    @questions = subject.statements.map { |statement| visit_statement(statement) }.flatten
   end
 
-  # visit all statements in if block
+  # visit all statements of the if block
   def visit_if_statement(subject)
     subject.block.map { |statement| visit_statement(statement) }
   end
 
-  # visit question, and visit calculation for the assignment of the question
+  # return question
   def visit_question(subject)
-    {subject.variable.name => visit_calculation(subject.assignment).flatten.compact} if subject.assignment
+    subject
   end
 
   # visit the calculations of both the left and right sides
