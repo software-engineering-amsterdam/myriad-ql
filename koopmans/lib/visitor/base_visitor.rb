@@ -16,8 +16,10 @@ class BaseVisitor
       visit_literal(calculation)
     elsif calculation.kind_of?(Variable)
       visit_variable(calculation)
-    elsif calculation.kind_of?(Expression)
+    elsif calculation.kind_of?(BinaryExpression)
       visit_expression(calculation)
+    elsif calculation.kind_of?(Negation)
+      visit_negation(calculation)
     else
       raise NotImplementedError
     end

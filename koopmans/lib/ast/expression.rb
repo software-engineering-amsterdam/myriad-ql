@@ -25,6 +25,10 @@ class BooleanNegation < Negation
   def eval
     !expression
   end
+
+  def self.real_type
+    BooleanType
+  end
 end
 
 class IntegerNegation < Negation
@@ -34,6 +38,10 @@ class IntegerNegation < Negation
 
   def eval
     -expression
+  end
+
+  def self.real_type
+    IntegerType
   end
 end
 

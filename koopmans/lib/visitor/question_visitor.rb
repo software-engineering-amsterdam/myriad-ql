@@ -25,4 +25,9 @@ class QuestionVisitor < BaseVisitor
   def visit_variable(variable)
     [variable]
   end
+
+  # visit the calculation of the negation expression
+  def visit_negation(negation)
+    visit_calculation(negation.expression)
+  end
 end

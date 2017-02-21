@@ -22,6 +22,11 @@ class UndefinedVariableChecker < BaseVisitor
     test.push(if_statement.block.map { |statement| visit_statement(statement) })
   end
 
+  # visit the calculation of the negation expression
+  def visit_negation(negation)
+    visit_calculation(negation.expression)
+  end
+
   # visit the calculations of both the left and right sides
   def visit_expression(expression)
     [visit_calculation(expression.left), visit_calculation(expression.right)]
