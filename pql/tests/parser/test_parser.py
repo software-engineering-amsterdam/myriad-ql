@@ -77,6 +77,28 @@ class TestParser(TestCase):
         with self.assertRaises(ParseException):
             parse(input_string)
 
+    def test_parse_form_if_missing_left_curly(self):
+        input_string = """
+        form taxOfficeExample {
+            if (abc)
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+            }
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+
+    def test_parse_form_if_missing_right_curly(self):
+        input_string = """
+        form taxOfficeExample {
+            if (abc) {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+
     def test_parse_form_single_assignment_incorrect_equals(self):
         input_string = """
         form taxOfficeExample {
