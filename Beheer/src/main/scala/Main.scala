@@ -1,7 +1,7 @@
 import java.io.FileReader
 
 import parser._
-import parser.checker.{ Error, FormChecker, Issue, Warning }
+import checker.{ Error, FormChecker, Issue, Warning }
 
 object Main extends App {
   val filename = "src/main/resources/example.ql"

@@ -1,4 +1,4 @@
-package parser.checker
+package checker
 
 import model.FormModel
 

@@ -1,4 +1,4 @@
-package model.values
+package values
 
 trait Value {
   def EQ(other: Value): Value = BooleanValue(this == other)

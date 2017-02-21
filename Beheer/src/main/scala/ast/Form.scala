@@ -1,4 +1,4 @@
-package parser.ast
+package ast
 
 sealed trait FormNode
 

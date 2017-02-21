@@ -1,4 +1,4 @@
-package model.values
+package values
 
 case class BooleanValue(value: Boolean) extends Value {
   override def AND(other: Value) = other match {

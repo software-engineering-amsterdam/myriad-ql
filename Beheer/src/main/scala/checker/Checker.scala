@@ -1,4 +1,4 @@
-package parser.checker
+package checker
 
 sealed trait Issue
 

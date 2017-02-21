@@ -1,4 +1,4 @@
-package model.values
+package values
 
 sealed trait NumericValue extends Value {
   val value: BigDecimal

@@ -1,7 +1,7 @@
-package parser.checker
+package checker
 
+import ast._
 import model.FormModel
-import parser.ast._
 
 class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType: Type) extends Checker {
 

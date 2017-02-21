@@ -1,4 +1,4 @@
-package model.values
+package values
 
 import java.util.Date
 

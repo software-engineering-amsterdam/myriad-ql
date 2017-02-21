@@ -1,6 +1,6 @@
 package model
 
-import parser.ast._
+import ast._
 
 class FormModel(form: Form) {
   lazy val questionsWithShowConditions: Seq[(Question, Seq[ExpressionNode])] = form.block.statements.flatMap(flattenForm(_, Nil))
