@@ -27,14 +27,13 @@ parsed = parser.parse(contents)
 transformer = Transformer.new
 ast = transformer.apply(parsed)
 
-checker = TypeChecker.new
-errors = checker.check(ast)
+typechecker = TypeChecker.check(ast)
 # pp errors
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
 # pp ast.accept(QuestionVisitor.new)
-GUI.new(ast)
+GUI.new(ast, typechecker)
 # gui.question('joe?')
 # gui.launch
 

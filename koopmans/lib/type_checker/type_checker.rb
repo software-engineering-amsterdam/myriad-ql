@@ -5,8 +5,9 @@ class TypeChecker
   require_relative 'operands_type_checker'
   require_relative 'cyclic_checker'
 
-  def check(ast)
-    pp [DuplicateLabelChecker, DuplicateVariableChecker, UndefinedVariableChecker,
-        OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new) }.flatten
+  def self.check(ast)
+    {errors: [DuplicateVariableChecker, UndefinedVariableChecker,
+              OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new) }.flatten,
+     warnings: ast.accept(DuplicateLabelChecker.new)}
   end
 end

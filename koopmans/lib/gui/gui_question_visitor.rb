@@ -9,7 +9,6 @@ require_relative 'string_question'
 require_relative 'integer_question'
 require_relative 'computed_question'
 require_relative 'gui_question_visitor'
-require_relative '../visitor/base_visitor'
 
 require 'tk'
 require 'pp'
@@ -17,7 +16,7 @@ require 'pp'
 class GUIQuestionVisitor
   attr_accessor :questions
 
-  def initialize(ast)
+  def initialize(ast, typechecker)
     @questions = Hash.new
     visit_form(ast)
   end

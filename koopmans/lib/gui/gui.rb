@@ -15,7 +15,28 @@ require 'tk'
 require 'pp'
 
 class GUI < GUIQuestionVisitor
-  def initialize(ast)
+  def check(typechecker)
+    if !typechecker[:errors].empty?
+      Tk.messageBox(
+        type: 'ok',
+        icon: 'error',
+        title: 'Errors found!',
+        message: typechecker[:errors].join('\n')
+      )
+      return 'quit'
+    elsif !typechecker[:warnings].empty?
+      Tk.messageBox(
+          type: 'ok',
+          icon: 'warning',
+          title: 'Warnings found!',
+          message: typechecker[:warnings].join('\n')
+      )
+      return 'continue'
+    end
+  end
+
+  def initialize(ast, typechecker)
+    return if check(typechecker) == 'quit'
     super
 
     create_submit_button
@@ -27,7 +48,7 @@ class GUI < GUIQuestionVisitor
   end
 
   def submit
-    p @questions.each_value.select{ |question| question.enabled }.map(&:to_json)
+    p @questions.each_value.select { |question| question.enabled }.map(&:to_json)
   end
 
   def create_submit_button
