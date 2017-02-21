@@ -1,53 +1,58 @@
 module QLS.AST exposing (..)
 
-import AST exposing (ValueType)
+import AST as QL exposing (ValueType, Id)
 
 
 type alias Stylesheet =
-    { name : String
+    { name : Id
     , pages : List Page
     }
 
 
 type alias Page =
     { name : String
-    , sections : List Section
-    , defaults : List Default
+    , pageChildren : List PageChild
     }
 
 
-type alias Section =
-    { name : String
-    , childen : List SectionChild
-    }
+type PageChild
+    = PageSection Section
+    | PageConfig Configuration
+
+
+type Section
+    = SingleChildSection String SectionChild
+    | MultiChildSection String (List SectionChild)
 
 
 type SectionChild
     = SubSection Section
     | Field Question
+    | Config Configuration
 
 
-type alias Question =
-    { id : String
-    , config : List Configuration
-    }
-
-
-type alias Default =
-    { valueType : ValueType
-    , config : List Configuration
-    }
+type Question
+    = Question Id Configuration
 
 
 type Configuration
+    = SingleConfig ConfigItem
+    | MultiConfig (List ConfigItem)
+
+
+type ConfigItem
+    = StyleConfig Style
+    | WidgetConfig Widget
+
+
+type Style
     = Width Int
     | Font String
     | FontSize Int
     | Color String
-    | Widget WidgetConfig
 
 
-type WidgetConfig
+type Widget
     = Radio (List String)
-    | SpinBox
+    | Spinbox
     | Checkbox

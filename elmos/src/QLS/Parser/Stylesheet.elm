@@ -2,14 +2,14 @@ module QLS.Parser.Stylesheet exposing (..)
 
 import Combine exposing (..)
 import Combine.Extra exposing (trimmed, whitespace1)
-import Parser.Token exposing (quotedString, variableName)
+import Parser.Token exposing (quotedString, identifier)
 import QLS.AST exposing (..)
 
 
 stylesheet : Parser s Stylesheet
 stylesheet =
     succeed Stylesheet
-        <*> (string "stylesheet" *> whitespace1 *> variableName)
+        <*> (string "stylesheet" *> whitespace1 *> identifier)
         <*> (whitespace1 *> pages)
 
 
@@ -22,8 +22,12 @@ page : Parser s Page
 page =
     succeed Page
         <*> (string "page" *> regex "[A-Z][a-zA-Z0-9]*")
-        <*> sections
-        <*> defaults
+        <*> braces (sepBy whitespace1 pageChild)
+
+
+pageChild : Parser s PageChild
+pageChild =
+    PageSection <$> section
 
 
 sections : Parser s (List Section)
@@ -35,7 +39,7 @@ section : Parser s Section
 section =
     lazy <|
         \() ->
-            succeed Section
+            succeed MultiChildSection
                 <*> (string "section" *> whitespace1 *> quotedString)
                 <*> (whitespace *> sectionChildren)
 
@@ -78,7 +82,7 @@ field =
 question : Parser s Question
 question =
     succeed Question
-        <*> (string "question" *> whitespace1 *> variableName)
+        <*> (string "question" *> whitespace1 *> identifier)
         <*> (whitespace1 *> configurations)
 
 
