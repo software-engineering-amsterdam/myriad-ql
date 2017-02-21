@@ -11,6 +11,7 @@ require_relative 'parser/transformer'
 
 require_relative 'type_checker/main_checker'
 require_relative 'gui/gui'
+require_relative 'gui/expression_visitor'
 
 
 require 'parslet'
@@ -33,7 +34,7 @@ errors = checker.check(ast)
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
-
+ast.accept(ExpressionVisitor.new)
 GUI.new(ast)
 # gui.question('joe?')
 # gui.launch
