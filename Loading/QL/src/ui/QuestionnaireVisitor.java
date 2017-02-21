@@ -27,14 +27,16 @@ public class QuestionnaireVisitor extends Visitor {
 	@Override
 	public void visit(Statement statement) {	
 		
-		// TODO many functions - functions : can you assume
-		// the ATOM is a boolean?
-		// System.out.println(statement.getExpression().evaluate());
+		// TODO many functions - functions : can you assume the ATOM is a boolean?
+		 System.out.println(statement.getExpression().evaluate().getValue());
 		// Call the evaluator with answers
 		if (answers.size() != 0) {
 			System.out.println("answer: ");
 			List<Value> valuesList = new ArrayList<Value>(answers.values());
-			System.out.println(valuesList.get(0));
+			List<String> keysList = new ArrayList<String>(answers.keySet());
+			System.out.println(valuesList.get(0).getValue());
+			System.out.println(keysList.get(0));
+			System.out.println(statement.getExpression().evaluate().getValue());
 		}
 		if (statement.getExpression().evaluate().getValue()) {
 			statement.getBlock().accept(this);

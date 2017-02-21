@@ -14,5 +14,6 @@ public class FormRenderer extends TimerTask {
     @Override
     public void run() {
         mForm.printData();
+        mForm.updateVisibility();
     }
 }

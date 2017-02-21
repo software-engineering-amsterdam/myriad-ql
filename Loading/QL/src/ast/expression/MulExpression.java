@@ -11,7 +11,10 @@ public class MulExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		// TODO Auto-generated method stub
+
+		System.out.println("getLhs: " + getLhs().getNumber());
+		System.out.println("getRhs: " + getRhs().getNumber());
+		System.out.println("getLhs().mul(getRhs()): " + getLhs().mul(getRhs()).getNumber());
 		return getLhs().mul(getRhs());
 	}
 }

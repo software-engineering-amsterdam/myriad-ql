@@ -1,4 +1,4 @@
-package sandbox;
+package types;
 
 public class Real {
     private double mValue;

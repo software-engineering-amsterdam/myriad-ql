@@ -1,4 +1,4 @@
-package sandbox;
+package types;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -6,11 +6,11 @@ import org.testng.annotations.Test;
 public class SampleOperationTest {
     @Test
     public void testSomeAddition() throws Exception {
-        Number b = new Integer(8);
+        Num b = new Int(5);
 
         SampleOperation s = new SampleOperation();
-        s.add((Integer) b);
-        Assert.assertEquals(b.intValue(), 18, "Java should automatically grab the proper overload");
+        s.add((Int) b);
+        Assert.assertEquals(((Int) b).getValue(), 10, "Java should automatically grab the proper overload");
     }
 
 }
