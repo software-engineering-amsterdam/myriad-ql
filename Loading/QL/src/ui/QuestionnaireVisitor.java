@@ -1,27 +1,29 @@
 package ui;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ast.Question;
 import ast.Statement;
 import ast.Visitor;
+import ast.type.Type;
 import value.Value;
 
 // Or Statement Visitor
 public class QuestionnaireVisitor extends Visitor {
 	
-	private List<String> activeQuestions;
+	private Map<String, Type> activeQuestions; // TODO QQuestion String and type?
 	private Map<String, Value> answers;
 	
 	public QuestionnaireVisitor(Map<String, Value> answers) {
-		this.activeQuestions = new ArrayList<String>();
+		this.activeQuestions = new HashMap<String, Type>();
 		this.answers = answers;
 	}
 	
 	@Override 
 	public void visit(Question question) {
-        activeQuestions.add(question.getLabel());
+        activeQuestions.put(question.getLabel(), question.getType());
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ public class QuestionnaireVisitor extends Visitor {
 		} 
 	}
 
-	public List<String> getActiveQuestions() {
+	public Map<String, Type> getActiveQuestions() {
 		return activeQuestions;
 	}	
 }

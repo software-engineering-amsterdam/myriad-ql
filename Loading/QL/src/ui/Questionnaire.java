@@ -7,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import ast.Form;
 import ast.Question;
 import ast.Visitor;
+import ast.type.Type;
 
 public class Questionnaire extends Application {
 	
@@ -69,9 +72,9 @@ public class Questionnaire extends Application {
     
     private void renderQuestionnaire(Stage primaryStage, GridPane grid) {
         
-    	Map<String, TextField> activeQuestions = renderQuestions(grid);
+    	Map<String, Control> solutionFields = renderQuestions(grid);
         
-        Button btn = renderButton(grid, activeQuestions.size() + 1);
+        Button btn = renderButton(grid, solutionFields.size() + 1);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
@@ -81,9 +84,10 @@ public class Questionnaire extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (Map.Entry<String, TextField> activeQuestion : activeQuestions.entrySet()) {
-            		Value answer = new StringValue(activeQuestion.getValue().getText());
-            		answers.put(activeQuestion.getKey(), answer);
+            	for (Map.Entry<String, Control> activeQuestion : solutionFields.entrySet()) {
+            		//if (activeQuestion.getKey().getType())
+            		//Value answer = new StringValue(activeQuestion.getValue().getText());
+            		//answers.put(activeQuestion.getKey(), answer);
             	}          
             	renderQuestionnaire(primaryStage, grid);
             }
@@ -100,23 +104,30 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private Map<String, TextField> renderQuestions(GridPane grid) {
+    private Map<String, Control> renderQuestions(GridPane grid) {
         
     	QuestionnaireVisitor qVisitor =  new QuestionnaireVisitor(answers);
     	qVisitor.visit(form);
 
     	int rowIndex = 0;
-        Map<String, TextField> answers = new HashMap<>();
-        for (String question : qVisitor.getActiveQuestions()) {
-            Label questionLabel = new Label(question);
+        Map<String, Control> answerFields = new HashMap<>();
+        for (Map.Entry<String, Type> question : qVisitor.getActiveQuestions().entrySet()) {
+            Label questionLabel = new Label(question.getKey());
             grid.add(questionLabel, 0, 1 + rowIndex);
-                 
-            TextField userTextField = new TextField();
-            grid.add(userTextField, 1, 1 + rowIndex);
-            answers.put(question, userTextField);
+            
+            Control userField;
+            if ("string" == question.getValue().getType()) {
+                userField = new TextField();
+                grid.add(userField, 1, 1 + rowIndex);
+                answerFields.put(question.getKey(), userField);
+            } else if ("boolean" == question.getValue().getType()) {
+            	userField = new CheckBox();
+                grid.add(userField, 1, 1 + rowIndex);
+                answerFields.put(question.getKey(), userField);
+            }
             ++rowIndex;
         }
-        return answers;
+        return answerFields;
     }
     
     private Button renderButton(GridPane grid, int rowIndex) {
