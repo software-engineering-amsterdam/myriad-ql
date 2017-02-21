@@ -72,6 +72,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void enterExpression(QLGrammarParser.ExpressionContext ctx) {
         super.enterExpression(ctx);
         Node expressionNode = new ExpressionNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
+        mParentStack.peek().setCondition(expressionNode);
         addParentNodeToAst(expressionNode);
     }
 
