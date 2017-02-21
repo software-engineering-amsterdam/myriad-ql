@@ -1,8 +1,9 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
 import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
-import Html exposing (Html, div, text, h3, form, pre)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, text, h3, form, pre, ul, li, a)
+import Html.Events exposing (onClick)
+import Html.Attributes exposing (class, attribute)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -15,27 +16,38 @@ import Dict
 import FormUtil exposing (VisibleField(Editable, Computed))
 
 
+type Tab
+    = DslInput
+    | Preview
+
+
 type alias Model =
     { formDslInput : FormDslInput.Model
     , env : Environment
+    , activeTab : Tab
     }
 
 
 type Msg
     = FormDslInputMsg FormDslInput.Msg
     | OnFieldChange String Value
+    | ChangeTab Tab
 
 
 init : Model
 init =
     { formDslInput = FormDslInput.init
     , env = Env.empty
+    , activeTab = DslInput
     }
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
+        ChangeTab newTab ->
+            { model | activeTab = newTab }
+
         FormDslInputMsg subMsg ->
             { model | formDslInput = FormDslInput.update subMsg model.formDslInput }
 
@@ -51,12 +63,56 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div [ class "container" ]
-        [ h3 [] [ text "DSL Input" ]
-        , FormDslInput.view model.formDslInput |> Html.map FormDslInputMsg
-        , pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.env ]
-        , FormDslInput.asForm model.formDslInput
-            |> Maybe.map (viewForm model)
-            |> Maybe.withDefault (div [] [])
+        [ tabMenu model.activeTab
+        , case model.activeTab of
+            DslInput ->
+                div []
+                    [ h3 [] [ text "DSL Input" ]
+                    , FormDslInput.view model.formDslInput |> Html.map FormDslInputMsg
+                    ]
+
+            Preview ->
+                div []
+                    [ pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.env ]
+                    , FormDslInput.asForm model.formDslInput
+                        |> Maybe.map (viewForm model)
+                        |> Maybe.withDefault (div [] [])
+                    ]
+        ]
+
+
+tabMenu : Tab -> Html Msg
+tabMenu currentlyActive =
+    ul
+        [ class "nav nav-tabs" ]
+        (List.map
+            (\( tab, name ) ->
+                tabItem (currentlyActive == tab) tab name
+            )
+            availableTabItems
+        )
+
+
+availableTabItems =
+    [ ( DslInput, "Dsl Input" )
+    , ( Preview, "Preview" )
+    ]
+
+
+tabItem : Bool -> Tab -> String -> Html Msg
+tabItem isActive goTo name =
+    li
+        [ attribute "role" "presentation"
+        , class
+            (if isActive then
+                "active"
+             else
+                ""
+            )
+        ]
+        [ a
+            [ onClick (ChangeTab goTo) ]
+            [ text name ]
         ]
 
 
