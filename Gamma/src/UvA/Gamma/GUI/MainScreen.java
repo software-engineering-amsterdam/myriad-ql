@@ -20,6 +20,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 
 /**
@@ -55,7 +59,13 @@ public class MainScreen{
         input.textProperty().bindBidirectional(question.getStringValueProperty());
         root.addRow(++rowCount, questionLabel, input);
         stage.sizeToScene();
+
+        question.getQuestion().addListener(
+                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+
     }
+
+
 
     public void showComputed(Computed computed){
         Text label = new Text(computed.getLabel());
