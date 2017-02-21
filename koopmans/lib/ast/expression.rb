@@ -26,10 +26,6 @@ class Negation < Expression
 end
 
 class BooleanNegation < Negation
-  def self.to_operator
-    '!'
-  end
-
   def eval
     !expression.eval
   end
@@ -40,10 +36,6 @@ class BooleanNegation < Negation
 end
 
 class IntegerNegation < Negation
-  def self.to_operator
-    '-'
-  end
-
   def eval
     0 - expression.eval
   end
@@ -70,20 +62,12 @@ class BooleanExpression < BinaryExpression
 end
 
 class And < BooleanExpression
-  def self.to_operator
-    '&&'
-  end
-
   def eval
     left.eval && right.eval
   end
 end
 
 class Or < BooleanExpression
-  def self.to_operator
-    '||'
-  end
-
   def eval
     left.eval || right.eval
   end
@@ -97,40 +81,24 @@ class ArithmeticExpression < BinaryExpression
 end
 
 class Subtract < ArithmeticExpression
-  def self.to_operator
-    '-'
-  end
-
   def eval
     left.eval - right.eval
   end
 end
 
 class Add < ArithmeticExpression
-  def self.to_operator
-    '+'
-  end
-
   def eval
     left.eval + right.eval
   end
 end
 
 class Multiply < ArithmeticExpression
-  def self.to_operator
-    '*'
-  end
-
   def eval
     left.eval * right.eval
   end
 end
 
 class Divide < ArithmeticExpression
-  def self.to_operator
-    '/'
-  end
-
   def eval
     left.eval / right.eval
   end
@@ -144,20 +112,12 @@ class ComparisonEqual < BinaryExpression
 end
 
 class Equal< ComparisonEqual
-  def self.to_operator
-    '=='
-  end
-
   def eval
     left.eval == right.eval
   end
 end
 
 class NotEqual < ComparisonEqual
-  def self.to_operator
-    '!='
-  end
-
   def eval
     left.eval != right.eval
   end
@@ -171,40 +131,24 @@ class ComparisonOrdering < BinaryExpression
 end
 
 class Less < ComparisonOrdering
-  def self.to_operator
-    '<'
-  end
-
   def eval
     left.eval < right.eval
   end
 end
 
 class Greater < ComparisonOrdering
-  def self.to_operator
-    '>'
-  end
-
   def eval
     left.eval > right.eval
   end
 end
 
 class LessEqual < ComparisonOrdering
-  def self.to_operator
-    '<='
-  end
-
   def eval
     left.eval <= right.eval
   end
 end
 
 class GreaterEqual < ComparisonOrdering
-  def self.to_operator
-    '>='
-  end
-
   def eval
     left.eval >= right.eval
   end
