@@ -61,9 +61,10 @@ def parse(input_string):
     ).setResultsName('arithmetic_expr')
 
     bool_expr = infixNotation(
-        bool_operand,
+        bool_operand.setResultsName('boolean_operand'),
         (arith_prec + bool_prec)
-    )
+    ).setResultsName('boolean_expr')
+
     arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
 
     boolean_expr = bool_expr

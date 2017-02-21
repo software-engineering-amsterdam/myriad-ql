@@ -54,15 +54,14 @@ class Arithmetic(Node):
 
 
 class Conditional(Node):
-    def __init__(self, parsed_output):
+    def __init__(self,  boolean_statement):
         super(Conditional, self).__init__('conditional')
-        a = parsed_output[0]
         self.else_statement_list = None
-
 
 class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
         super(BinaryOperation, self).__init__(var_type)
+        self.operator = parsed_tokens[0][1]
         self.arguments = parsed_tokens[0][::2]
 
 
@@ -86,50 +85,41 @@ class Division(BinaryOperation):
     def __init__(self, parsed_tokens):
         super(Division, self).__init__('division', parsed_tokens)
 
-# class BoolOperand(Node):
-#     def __init__(self, t, parsed_output):
-#         super(BoolOperand).__init__('bool_operand')
-#         self.label = t[0]
-#         self.value = eval(t[0])
-#
-#     def __bool__(self):
-#         return self.value
-#
-#     def __str__(self):
-#         return self.label
-#     __repr__ = __str__
-#     __nonzero__ = __bool__
-#
-#
-# class BoolBinOp(object):
-#     def __init__(self,t):
-#         self.args = t[0][0::2]
-#
-#     def __str__(self):
-#         sep = " %s " % self.identifier
-#         return "(" + sep.join(map(str,self.args)) + ")"
-#
-#     def __bool__(self):
-#         return self.evalop(bool(a) for a in self.args)
-#     __nonzero__ = __bool__
-#     __repr__ = __str__
-#
-#
-# class BoolAnd(BoolBinOp):
-#     reprsymbol = '&'
-#     evalop = all
-#
-# class BoolOr(BoolBinOp):
-#     reprsymbol = '|'
-#     evalop = any
-#
-#
-# class BoolNot(Node):
-#     def __init__(self, t, var_type):
-#         super(BoolNot).__init__(var_type)
-#         self.arg = t[0][1]
-#
-#     def __bool__(self):
-#         v = bool(self.arg)
-#         return not v
 
+class BoolOperand(Node):
+    def __init__(self, parsed_output):
+        super(BoolOperand, self).__init__('bool_operand')
+        self.label = parsed_output[0]
+
+
+class BoolBinOp(Node):
+    symbol = None
+    eval_function = None
+
+    def __init__(self, parsed_output, var_type):
+        super(BoolBinOp, self).__init__(var_type)
+        arguments = parsed_output[0][0::2]
+        for arg in arguments:
+            self.add_child(arg)
+
+
+class BoolAnd(BoolBinOp):
+    symbol = '&&'
+    eval_function = all
+
+    def __init__(self, parsed_output):
+        super(BoolAnd, self).__init__(parsed_output, 'boolean_and')
+
+
+class BoolOr(BoolBinOp):
+    symbol = '||'
+    eval_function = any
+
+    def __init__(self, parsed_output):
+        super(BoolOr, self).__init__(parsed_output, 'boolean_or')
+
+
+class Condition(Node):
+    def __init__(self, parsed_output):
+        super(Condition, self).__init__('condition')
+        self.add_child(parsed_output)
