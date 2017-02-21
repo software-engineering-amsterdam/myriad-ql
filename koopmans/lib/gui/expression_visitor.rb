@@ -4,9 +4,10 @@ class ExpressionVisitor
   # gather all labels from all questions and check for duplicates
   def visit_form(subject)
     @questions = subject.accept(QuestionVisitor.new)
-    p @questions
+    pp @questions
 
     aap = subject.statements.map { |statement| visit_statement(statement) }.flatten
+    pp aap
   end
 
   # visit all statements of the if block
@@ -54,7 +55,8 @@ class ExpressionVisitor
   end
 
   def visit_variable(subject)
-    p subject.name
-    @questions[subject.name]
+    # p subject.name
+    # p @questions[subject.name].variable
+    @questions[subject.name].variable
   end
 end

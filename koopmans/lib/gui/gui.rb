@@ -32,19 +32,22 @@ class GUI
   attr_accessor :questions
 
   def initialize(ast)
-    @questions = Hash.new
-    # pp ast
-    ast_questions = ast.accept(QuestionVisitor.new)
+    # @questions = Hash.new
+    @questions  = ast.accept(QuestionVisitor.new(self))
 
-    ast_questions.each do |q|
-      if q.type.kind_of? BooleanType
-        BooleanQuestion.new(gui: self, label: q.label, id: q.variable.name)
-      end
-      if q.type.kind_of? MoneyType
-        p q.condition
-        TextQuestion.new(gui: self, label: q.label, id: q.variable.name)
-      end
-    end
+    pp @questions
+    # pp ast
+    # ast_questions = ast.accept(QuestionVisitor.new)
+    #
+    # ast_questions.each do |q|
+    #   if q.type.kind_of? BooleanType
+    #     BooleanQuestion.new(gui: self, label: q.label, id: q.variable.name)
+    #   end
+    #   if q.type.kind_of? MoneyType
+    #     p q.condition
+    #     TextQuestion.new(gui: self, label: q.label, id: q.variable.name)
+    #   end
+    # end
 
 
 

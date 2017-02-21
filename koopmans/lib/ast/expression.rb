@@ -30,7 +30,7 @@ class IntegerNegation < Negation
 end
 
 class BinaryExpression < Expression
-  attr_reader :left, :right
+  attr_accessor :left, :right
 
   def initialize(left, right)
     @left = left

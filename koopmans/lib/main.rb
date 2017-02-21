@@ -34,7 +34,7 @@ errors = checker.check(ast)
 # DuplicateLabelChecker.new.visit_ast(ast)
 # pp parsed
 # pp ast
-ast.accept(ExpressionVisitor.new)
+# pp ast.accept(QuestionVisitor.new)
 GUI.new(ast)
 # gui.question('joe?')
 # gui.launch

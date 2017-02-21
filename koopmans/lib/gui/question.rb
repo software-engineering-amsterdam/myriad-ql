@@ -17,11 +17,12 @@ class GUIQuestion
 
     create_frame
     create_label
-    refresh
+    # refresh
   end
 
   def create_frame
-    @frame = TkFrame.new.grid(row: @gui.questions.size)
+    @frame = TkFrame.new.grid(row: Random.new.rand(20))
+    # @frame = TkFrame.new.pack()
   end
 
   def value
