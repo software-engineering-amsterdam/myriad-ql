@@ -1,6 +1,6 @@
 package model
 
-import parser.ast.{ExpressionNode, Type}
+import parser.ast.{ ExpressionNode, Type }
 
 sealed trait DisplayQuestion {
   val identifier: String

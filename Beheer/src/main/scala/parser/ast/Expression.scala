@@ -20,8 +20,11 @@ sealed trait PrefixNode extends ExpressionNode {
 }
 
 sealed trait Comparison extends InfixNode
+
 sealed trait Relation extends InfixNode
+
 sealed trait Logic extends InfixNode
+
 sealed trait Arithmetic extends InfixNode
 
 case class Identifier(value: String) extends ExpressionNode {

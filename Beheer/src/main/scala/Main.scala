@@ -1,21 +1,19 @@
 import java.io.FileReader
 
-import model.FormModel
 import parser._
-import parser.checker.{FormChecker, Issue}
+import parser.checker.{ Error, FormChecker, Issue, Warning }
 
 object Main extends App {
   val filename = "src/main/resources/example.ql"
   val parsedForm = FormParser(new FileReader(filename))
+  val formModel = FormChecker(parsedForm)
+
+  println(parsedForm.questions.mkString("\n"))
 
   private def printIssues(issues: Iterable[Issue]) = issues.foreach {
     case Warning(message) => println(s"${Console.YELLOW}[WARNING] ${Console.RESET}$message")
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
-
-  println(parsedForm.block.statements.mkString("\n"))
-
-  val formModel = FormChecker(parsedForm)
   printIssues(formModel)
   /*  AstChecker(parsedForm) match {
     case Left(issues) => printIssues(issues)

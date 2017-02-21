@@ -1,7 +1,6 @@
 package model
 
-import parser.ast.{ExpressionNode, Form, Question, Type}
-
+import parser.ast._
 
 class FormModel(form: Form) {
   lazy val questionsWithShowConditions: Seq[(Question, Seq[ExpressionNode])] = form.block.statements.flatMap(flattenForm(_, Nil))
@@ -25,7 +24,7 @@ class FormModel(form: Form) {
 
   private def extractExpressions(parentNode: FormNode): Seq[(ExpressionNode, Type)] = parentNode match {
     case Question(_, _, questionType, Some(expr)) => Seq((expr, questionType))
-    case Conditional(expr, block) => (expr, Boolean) +: extractExpressions(block)
+    case Conditional(expr, block) => (expr, BooleanType) +: extractExpressions(block)
     case Block(statements) => statements.flatMap(e => extractExpressions(e))
     case Form(_, block) => extractExpressions(block)
     case _ => Nil
@@ -43,8 +42,8 @@ class FormModel(form: Form) {
     case _ => Set.empty
   }
 
-  private def flattenForm(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[(ast.Question, Seq[ExpressionNode])] = statement match {
+  private def flattenForm(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[(Question, Seq[ExpressionNode])] = statement match {
     case Conditional(condition, Block(statements)) => statements.flatMap(flattenForm(_, condition +: conditionals))
-    case q: ast.Question => Seq((q, conditionals))
+    case q: Question => Seq((q, conditionals))
   }
 }
