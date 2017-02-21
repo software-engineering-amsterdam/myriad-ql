@@ -16,7 +16,7 @@ public class Main {
 // 		 String tmp = "form Testing { Name1: \"Question\" boolean\n"
 // 		 		+ "Name2: \"Question\" boolean"
 		 String tmp = "form Testing { Name0: \"Question\" boolean\n"
-		 		+ "Name1: \"Question1\" boolean\n"
+		 		+ "Name1: \"Question1\" integer\n"
 		 		+ "if (2 == 1) {"
 		 		+ "Name2: \"Question2\" boolean\n"
 		 		+ " }"
