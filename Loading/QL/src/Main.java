@@ -21,10 +21,10 @@ public class Main {
 		 		+ "Name2: \"Question2\" boolean\n"
 		 		+ " }"
 				+ "Name3: \"Question3\" boolean\n"
-				+ "if (11 == 3) {"
+				+ "if ((22 - 1) == ((9+1) + (11))) {"
 				+ "Name4: \"Question4\" boolean\n"
 				+ "} "
-				+ "if (true && true) {"
+				+ "if ((true && true) || false && (true)) {"
 				+ "Name5: \"Question5\" boolean\n"
 				+ "}"
 		 		+ " }";
