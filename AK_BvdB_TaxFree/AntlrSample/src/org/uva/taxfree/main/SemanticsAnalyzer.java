@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class SemanticsAnalyzer {
     private Ast mAst;
-    private List<String> mUndefinedQuestions;
 
     /*
      * UNDEFINES - reference to undefined questions // TODO
