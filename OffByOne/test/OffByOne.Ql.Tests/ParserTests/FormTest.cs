@@ -71,11 +71,11 @@
             Assert.Equal(lhs.Identifier, "birthDate");
             Assert.Equal(rhs.Value, new DateTime(1999, 12, 31));
 
-            var elseStatement = ifStatement.ElseStatement;
-            Assert.Equal(1, elseStatement.Statements.Count());
+            var elseStatements = ifStatement.ElseStatements;
+            Assert.Equal(1, elseStatements.Count());
 
-            Assert.IsType<QuestionStatement>(elseStatement.Statements.First());
-            var computedQuestion = (QuestionStatement)elseStatement.Statements.First();
+            Assert.IsType<QuestionStatement>(elseStatements.First());
+            var computedQuestion = (QuestionStatement)elseStatements.First();
 
             Assert.IsType<OrExpression>(computedQuestion.ComputedValue);
 
@@ -121,6 +121,24 @@
 
                 Assert.IsType<MultiplyExpression>(rightLhs.RightExpression);
             }
+        }
+
+        [Fact]
+        public void AstCreation_ShouldContainSourceCode()
+        {
+            var astTree = this.GetAstNodesFromInput(@"
+                form questionnaire { 
+                    if (2 + 3 * 4 < someVar && 3 / 1 * 2 != 6) {
+                        ""Is this a question?""
+                            existentialism: boolean
+                    }
+                }
+            ");
+
+            Assert.IsType<FormStatement>(astTree);
+            var castAstTree = (FormStatement)astTree;
+
+            Assert.True(castAstTree.Statements.All(x => x.SourceCode != null));
         }
     }
 }

@@ -3,24 +3,23 @@
     using System.Collections.Generic;
 
     using OffByOne.LanguageCore.Ast.Expressions.Base;
-    using OffByOne.Ql.Ast.Expressions;
 
     public class IfStatement : Statement
     {
         public IfStatement(
             Expression condition,
             IEnumerable<Statement> statements,
-            ElseStatement elseStatement = null)
+            IEnumerable<Statement> elseStatements)
         {
             this.Condition = condition;
             this.Statements = statements;
-            this.ElseStatement = elseStatement;
+            this.ElseStatements = elseStatements;
         }
 
         public Expression Condition { get; private set; }
 
         public IEnumerable<Statement> Statements { get; private set; }
 
-        public ElseStatement ElseStatement { get; private set; }
+        public IEnumerable<Statement> ElseStatements { get; private set; }
     }
 }
