@@ -1,11 +1,14 @@
 package com.mcsa;
 
 import com.mcsa.QL.Form;
+import com.mcsa.QL.OpenAndReadTheQl;
 import com.mcsa.antlr.QLLexer;
 import com.mcsa.antlr.QLParser;
 import com.mcsa.parsing.mcsaQLVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -17,7 +20,17 @@ public class ExampleRunner {
 
         ExampleRunner runner = new ExampleRunner();
 
-        runner.printIDs("form taxOfficeExample { \n" +
+        String fileContent = null;
+        try {
+            fileContent = new OpenAndReadTheQl().QlRead();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        runner.printIDs(fileContent);
+        /*runner.printIDs("form taxOfficeExample { \n" +
             "  \"Did you sell a house in 2010?\"\n" +
             "    hasSoldHouse: boolean;\n" +
             "  \"Did you buy a house in 2010?\"\n" +
@@ -35,7 +48,7 @@ public class ExampleRunner {
             "        (sellingPrice - privateDebt);\n" +
             "  }\n" +
             "\n" +
-            "}");
+            "}");*/
 
     }
 
