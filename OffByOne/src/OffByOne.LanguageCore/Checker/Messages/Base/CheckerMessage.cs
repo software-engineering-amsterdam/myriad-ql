@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.LanguageCore.Checker.Messages.Base
 {
+    using OffByOne.LanguageCore.Checker.Messages.Models;
+
     public abstract class CheckerMessage
     {
         protected CheckerMessage(string message, LogLevel level, string description = "")

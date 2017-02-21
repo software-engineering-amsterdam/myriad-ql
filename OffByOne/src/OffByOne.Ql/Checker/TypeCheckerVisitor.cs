@@ -1,12 +1,16 @@
 ﻿namespace OffByOne.Ql.Checker
 {
     using System;
+    using System.Collections.Generic;
 
     using MoreDotNet.Extensions.Collections;
+    using MoreDotNet.Extensions.Common;
 
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
+    using OffByOne.LanguageCore.Checker.Messages;
+    using OffByOne.LanguageCore.Checker.Messages.Models;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -133,11 +137,11 @@
 
         public ValueType Visit(IfStatement expression)
         {
-            this.CheckIfStatement(expression);
+            var result = this.CheckIfStatement(expression);
             expression.Statements.ForEach(x => x.Accept(this));
             expression.ElseStatements.ForEach(x => x.Accept(this));
 
-            return new VoidValueType();
+            return result;
         }
 
         public ValueType Visit(FormStatement expression)
@@ -173,12 +177,16 @@
         private ValueType CheckUnaryMatematicalExpression(UnaryExpression expression)
         {
             var subExpressionType = expression.Expression.Accept(this);
-            if (subExpressionType is NumericalValueType)
+            if (subExpressionType.IsNot<NumericalValueType>())
             {
-                return subExpressionType;
+                this.Report.Add(new InvaildTypeMessage(
+                    expression,
+                    new List<ValueType> { new IntegerValueType(), new FloatValueType(), new MoneyValueType() },
+                    subExpressionType,
+                    LogLevel.Error));
             }
 
-            throw new Exception("Only numerical arguments allowed");
+            return subExpressionType;
         }
 
         private ValueType CheckBinaryComparisonExpression(BinaryExpression expression)
@@ -186,12 +194,12 @@
             var leftExpressionType = expression.LeftExpression.Accept(this);
             var rightEpressionType = expression.RightExpression.Accept(this);
 
-            if (leftExpressionType == rightEpressionType)
+            if (leftExpressionType != rightEpressionType)
             {
-                return new BooleanValueType();
+                this.Report.Add(new InvaildTypeMessage(expression, leftExpressionType, rightEpressionType, LogLevel.Error));
             }
 
-            throw new Exception("Only same type boolean expression are allowed.");
+            return new BooleanValueType();
         }
 
         private ValueType CheckBinaryBooleanLogicExpression(BinaryExpression expression)
@@ -223,7 +231,7 @@
             var conditionType = statement.Condition.Accept(this);
             if (!(conditionType is BooleanValueType))
             {
-                throw new Exception("Only boolean conditions are allowed");
+                this.Report.Add(new InvaildTypeMessage(statement, new BooleanValueType(), conditionType, LogLevel.Error));
             }
 
             return new VoidValueType();

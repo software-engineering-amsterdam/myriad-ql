@@ -5,6 +5,8 @@
 
     using Antlr4.Runtime;
 
+    using MoreDotNet.Extensions.Collections;
+
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.Ql;
@@ -23,19 +25,24 @@
             TestQlGrammar();
             TestQlsGrammar();
 
-            var typeChcker = new TypeChecker();
-            var testCondition = new IfStatement(
-                new EqualExpression(
-                    new LiteralExpression(new IntegerLiteral(2)),
-                    new LiteralExpression(new IntegerLiteral(2))),
-                new List<Statement>(),
-                new List<Statement>());
+            ////var typeChcker = new TypeChecker();
+            ////var testCondition = new IfStatement(
+            ////    new EqualExpression(
+            ////        new LiteralExpression(new BooleanLiteral(true)),
+            ////        new LiteralExpression(new IntegerLiteral(2))),
+            ////    new List<Statement>(),
+            ////    new List<Statement>());
 
-            var report = typeChcker.Check(new FormStatement(
-                "test",
-                new List<Statement> { testCondition }));
+            ////var report = typeChcker.Check(new FormStatement(
+            ////    "test",
+            ////    new List<Statement> { testCondition }));
 
-            Console.WriteLine("Type check done!");
+            ////foreach (var message in report.AllMessages)
+            ////{
+            ////    Console.WriteLine(message);
+            ////}
+
+            ////Console.WriteLine("Type check done!");
         }
 
         private static void TestQlGrammar()
@@ -53,6 +60,7 @@
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
             var v = new CustomQlVisitor();
             var tree = v.Visit(parser.form());
+            CheckQlTypes((FormStatement)tree);
             Console.WriteLine("Done!");
         }
 
@@ -96,6 +104,19 @@
             var visitor = new CustomQlsVisitor();
             var astTree = visitor.Visit(parser.stylesheet());
             Console.WriteLine("QLS AST conversion done.");
+        }
+
+        private static void CheckQlTypes(FormStatement ast)
+        {
+            var typeChcker = new TypeChecker();
+            var report = typeChcker.Check(ast);
+
+            foreach (var message in report.AllMessages)
+            {
+                Console.WriteLine(message);
+            }
+
+            Console.WriteLine("Type check done!");
         }
     }
 }
