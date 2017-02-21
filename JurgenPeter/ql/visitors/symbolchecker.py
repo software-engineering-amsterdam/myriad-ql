@@ -3,49 +3,54 @@ class SymbolChecker:
     def __init__(self):
         self.symboltable = {}
         self.labels = []
-        self.success = True
+        self.errors = []
+        self.warnings = []
+
+    def error(self, message):
+        self.errors.append(message)
+
+    def warn(self, message):
+        self.warnings.append(message)
 
     def visit(self, node):
         node.accept(self)
-        return self.success, self.symboltable
+        return self.errors, self.warnings, self.symboltable
 
     def visit_form(self, node):
-        for statement in node.statements:
+        for statement in node.body:
             statement.accept(self)
 
     def visit_question(self, node):
         if node.label in self.labels:
-            print("Warning: label \"{}\" is already used".format(node.label))
+            self.warn("label \"{}\" is already used".format(node.label))
         else:
             self.labels.append(node.label)
 
-        if node.identifier not in self.symboltable:
-            self.symboltable[node.identifier] = node.datatype
+        if node.name not in self.symboltable:
+            self.symboltable[node.name] = node.datatype
         else:
-            print("Error: question indentifier \"{}\" "
-                  "is already used".format(node.identifier))
-            self.success = False
+            self.error("question indentifier \"{}\" "
+                       "is already used".format(node.name))
 
     def visit_computed_question(self, node):
         if node.label in self.labels:
-            print("Warning: label \"{}\" "
-                  "is already used".format(node.label))
+            self.warn("label \"{}\" "
+                      "is already used".format(node.label))
         else:
             self.labels.append(node.label)
 
-        if node.identifier not in self.symboltable:
-            self.symboltable[node.identifier] = node.datatype
+        if node.name not in self.symboltable:
+            self.symboltable[node.name] = node.datatype
         else:
-            print("Error: question indentifier \"{}\" "
-                  "is already used".format(node.identifier))
-            self.success = False
-
+            self.error("question indentifier \"{}\" "
+                       "is already used".format(node.name))
+            
     def visit_if_conditional(self, node):
-        for statement in node.ifstatements:
+        for statement in node.ifbody:
             statement.accept(self)
 
     def visit_ifelse_conditional(self, node):
-        for statement in node.ifstatements:
+        for statement in node.ifbody:
             statement.accept(self)
-        for statement in node.elsestatements:
+        for statement in node.elsebody:
             statement.accept(self)

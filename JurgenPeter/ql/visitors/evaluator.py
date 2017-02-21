@@ -52,7 +52,7 @@ class Evaluator:
         return node.left.accept(self) or node.right.accept(self)
 
     def visit_variable(self, node):
-        return self.environment[node.identifier]
+        return self.environment[node.name]
 
     def visit_constant(self, node):
         return node.value

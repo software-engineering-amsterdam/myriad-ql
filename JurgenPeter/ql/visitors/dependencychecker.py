@@ -2,14 +2,21 @@ class DependencyChecker:
 
     def __init__(self):
         self.stack = []
-        self.success = True
+        self.errors = []
+        self.warnings = []
+
+    def error(self, message):
+        self.errors.append(message)
+
+    def warn(self, message):
+        self.warnings.append(message)
 
     def visit(self, node):
         node.accept(self)
-        return self.success
+        return self.errors, self.warnings
 
     def visit_form(self, node):
-        for statement in node.statements:
+        for statement in node.body:
             statement.accept(self)
 
     def visit_question(self, node):
@@ -20,14 +27,14 @@ class DependencyChecker:
 
     def visit_if_conditional(self, node):
         # TODO: check if condition uses variable from question inside scope
-        for statement in node.ifstatements:
+        for statement in node.ifbody:
             statement.accept(self)
 
     def visit_ifelse_conditional(self, node):
         # TODO: check if condition uses variable from question inside scope
-        for statement in node.ifstatements:
+        for statement in node.ifbody:
             statement.accept(self)
-        for statement in node.ifelsestatements:
+        for statement in node.ifelsebody:
             statement.accept(self)
 
     def visit_plusop(self, node):
@@ -76,7 +83,7 @@ class DependencyChecker:
         return node.left.accept(self) + node.right.accept(self)
 
     def visit_variable(self, node):
-        return [node.identifier]
+        return [node.name]
 
     def visit_constant(self, node):
         return []

@@ -5,9 +5,9 @@ Datatype = Enum("Datatype", "boolean string integer decimal")
 
 class Form:
 
-    def __init__(self, identifier, statements):
-        self.identifier = identifier
-        self.statements = statements
+    def __init__(self, name, body):
+        self.name = name
+        self.body = body
 
     def accept(self, visitor):
         return visitor.visit_form(self)
@@ -18,8 +18,8 @@ class Form:
 
 class Question:
 
-    def __init__(self, identifier, label, datatype):
-        self.identifier = identifier
+    def __init__(self, name, label, datatype):
+        self.name = name
         self.label = label
         self.datatype = datatype
 
@@ -30,26 +30,21 @@ class Question:
         return self.__dict__ == other.__dict__
 
 
-class ComputedQuestion:
+class ComputedQuestion(Question):
 
-    def __init__(self, identifier, label, datatype, computation):
-        self.identifier = identifier
-        self.label = label
-        self.datatype = datatype
+    def __init__(self, name, label, datatype, computation):
+        super().__init__(name, label, datatype)
         self.computation = computation
 
     def accept(self, visitor):
         return visitor.visit_computed_question(self)
 
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
 
 class IfConditional:
 
-    def __init__(self, condition, ifstatements):
+    def __init__(self, condition, ifbody):
         self.condition = condition
-        self.ifstatements = ifstatements
+        self.ifbody = ifbody
 
     def accept(self, visitor):
         return visitor.visit_if_conditional(self)
@@ -58,18 +53,14 @@ class IfConditional:
         return self.__dict__ == other.__dict__
 
 
-class IfElseConditional:
+class IfElseConditional(IfConditional):
 
-    def __init__(self, condition, ifstatements, elsestatements):
-        self.condition = condition
-        self.ifstatements = ifstatements
-        self.elsestatements = elsestatements
+    def __init__(self, condition, ifbody, elsebody):
+        super().__init__(condition, ifbody)
+        self.elsebody = elsebody
 
     def accept(self, visitor):
         return visitor.visit_ifelse_conditional(self)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
 
 
 class UnOp:
@@ -166,8 +157,8 @@ class OrOp(BinOp):
 
 class Variable:
 
-    def __init__(self, identifier):
-        self.identifier = identifier
+    def __init__(self, name):
+        self.name = name
 
     def accept(self, visitor):
         return visitor.visit_variable(self)

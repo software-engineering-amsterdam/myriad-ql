@@ -8,6 +8,14 @@ from ql.visitors.typechecker import TypeChecker
 from ql.visitors.dependencychecker import DependencyChecker
 
 
+def report_error(message):
+    print("\33[31mError: {}\33[39m".format(message))
+
+
+def report_warning(message):
+    print("\33[33mWarning: {}\33[38m".format(message))
+
+
 def main():
 
     # if len(argv) < 3:
@@ -28,12 +36,20 @@ def main():
 
     Printer().visit(form)
 
-    symbol_check_success, symboltable = SymbolChecker().visit(form)
-    type_check_success = TypeChecker(symboltable).visit(form)
-    dependency_check_success = DependencyChecker().visit(form)
+    symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(form)
+    type_errors, type_warnings = TypeChecker(symboltable).visit(form)
+    dependency_errors, dependency_warnings = DependencyChecker().visit(form)
 
-    if not (symbol_check_success and type_check_success and
-            dependency_check_success):
+    errors = symbol_errors + type_errors + dependency_errors
+    warnings = symbol_warnings + type_warnings + dependency_warnings
+
+    for e in errors:
+        report_error(e)
+
+    for w in warnings:
+        report_warning(w)
+
+    if errors:
         return
 
 if __name__ == "__main__":

@@ -1,6 +1,9 @@
 from pyparsing import *
 from ql.ast import *
 
+
+ParserElement.enablePackrat()
+
 identifier = Word(alphas)
 identifier.addCondition(lambda tokens: tokens[0] not in "form if else true "
                         "false boolean string integer decimal".split())
@@ -53,6 +56,7 @@ def unop_action(tokens):
     return nodetype(right)
 
 
+# TODO: Nice comments or better code
 def binop_action(tokens):
     tokens = tokens[0]
     while len(tokens) >= 3:

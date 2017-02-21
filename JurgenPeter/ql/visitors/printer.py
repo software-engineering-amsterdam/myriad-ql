@@ -5,28 +5,28 @@ class Printer:
 
     def visit_form(self, node):
         return "form {} [\n{}\n]".format(
-            node.identifier,
-            "\n".join([s.accept(self) for s in node.statements]))
+            node.name,
+            "\n".join([s.accept(self) for s in node.body]))
 
     def visit_question(self, node):
         return "{}: \"{}\" {}".format(
-            node.identifier, node.label, node.datatype.name)
+            node.name, node.label, node.datatype.name)
 
     def visit_computed_question(self, node):
         return "{}: \"{}\" {} = {}".format(
-            node.identifier, node.label, node.datatype.name,
+            node.name, node.label, node.datatype.name,
             node.computation.accept(self))
 
     def visit_if_conditional(self, node):
         return "if {} [\n{}\n]".format(
             node.condition.accept(self),
-            "\n".join([s.accept(self) for s in node.ifstatements]))
+            "\n".join([s.accept(self) for s in node.ifbody]))
 
     def visit_ifelse_conditional(self, node):
         return "if {} [\n{}\n]\nelse [\n{}\n]".format(
             node.condition.accept(self),
-            "\n".join([s.accept(self) for s in node.ifstatements]),
-            "\n".join([s.accept(self) for s in node.elsestatements]))
+            "\n".join([s.accept(self) for s in node.ifbody]),
+            "\n".join([s.accept(self) for s in node.elsebody]))
 
     def visit_plusop(self, node):
         return "+{}".format(node.right.accept(self))
@@ -86,7 +86,7 @@ class Printer:
                                    node.right.accept(self))
 
     def visit_variable(self, node):
-        return node.identifier
+        return node.name
 
     def visit_constant(self, node):
         return str(node.value)
