@@ -1,6 +1,6 @@
 require_relative '../visitor/question_visitor'
 
-class DuplicateLabelChecker < BaseVisitor
+class DuplicateLabelChecker
   # gather all labels from all questions and check for duplicates
   def visit_form(form)
     labels = form.accept(QuestionVisitor.new).map(&:label)

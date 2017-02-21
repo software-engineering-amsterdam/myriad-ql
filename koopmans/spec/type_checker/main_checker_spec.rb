@@ -64,7 +64,7 @@ describe TypeChecker do
   describe OperandsTypeChecker do
     it 'detects error' do
       expect(ast.accept(OperandsTypeChecker.new)).to match(
-       ["[ERROR]: BooleanType can not be used with +",
+       ["[ERROR]: BooleanType can not be used with Add",
         "[ERROR]: IntegerType can not be used with BooleanType"]
       )
     end

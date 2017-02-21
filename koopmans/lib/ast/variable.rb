@@ -6,6 +6,10 @@ class Variable
   def initialize(name)
     @name = name.to_s
   end
+
+  def accept(visitor)
+    visitor.visit_variable(self)
+  end
 end
 
 class Parser < Parslet::Parser

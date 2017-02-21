@@ -9,6 +9,10 @@ class Literal
   def initialize(value)
     @value = value.to_s
   end
+
+  def accept(visitor)
+    visitor.visit_literal(self)
+  end
 end
 
 class BooleanLiteral < Literal

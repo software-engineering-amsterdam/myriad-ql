@@ -1,29 +1,33 @@
 require_relative '../visitor/question_visitor'
 
-class OperandsTypeChecker < BaseVisitor
+class OperandsTypeChecker
   def visit_form(form)
     # get all variables and their types as defined by the questions
     # e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>, "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
     @types = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
 
     # do the actual operands type checking
-    form.statements.map { |statement| visit_statement(statement) }.flatten.compact
+    form.statements.map { |statement| statement.accept(self) }.flatten.compact
   end
 
   # visit calculation of the question
   def visit_question(question)
-    visit_calculation(question.assignment) if question.assignment
+    question.assignment.accept(self) if question.assignment
   end
 
   # visit calculation of if condition and visit all statements in if block
   def visit_if_statement(if_statement)
     test = []
-    test.push(visit_calculation(if_statement.expression))
-    test.push(if_statement.block.map { |statement| visit_statement(statement) })
+    test.push(if_statement.expression.accept(self))
+    test.push(if_statement.block.map { |statement| statement.accept(self) })
   end
 
   # variable is useless here
   def visit_variable(_)
+  end
+
+  # nothing has to be done with a literal
+  def visit_literal(_)
   end
 
   def visit_negation(negation)
@@ -53,7 +57,7 @@ class OperandsTypeChecker < BaseVisitor
       errors.push(error(left_type.accept_types.first, right_type))
     end
 
-    errors.push([visit_calculation(expression.left), visit_calculation(expression.right)])
+    errors.push([expression.left.accept(self), expression.right.accept(self)])
   end
 
   # get the type of a variable or other

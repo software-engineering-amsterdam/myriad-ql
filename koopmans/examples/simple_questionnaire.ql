@@ -19,7 +19,7 @@ form taxOfficeExample {
         }
     "Value residue:"
       valueResidue: money =
-        (10 + 99 + -sellingPrice * -sellingPrice + 2 )
+        (10 + true + -sellingPrice * -sellingPrice + 2 )
   }
 
 }

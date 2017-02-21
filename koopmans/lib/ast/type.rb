@@ -3,10 +3,6 @@ require 'parslet'
 
 class Type
   extend Helper
-
-  # def accept(type_checker)
-  #   type_checker.visit_type(self)
-  # end
 end
 
 class BooleanType < Type

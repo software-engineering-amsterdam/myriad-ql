@@ -7,6 +7,10 @@ class Expression
   def self.includes_type?(type)
     !([type].flatten & accept_types).empty?
   end
+
+  def accept(visitor)
+    visitor.visit_expression(self)
+  end
 end
 
 class Negation < Expression
@@ -14,6 +18,10 @@ class Negation < Expression
 
   def initialize(expression)
     @expression = expression
+  end
+
+  def accept(visitor)
+    visitor.visit_negation(self)
   end
 end
 

@@ -1,6 +1,6 @@
 require_relative '../visitor/cyclic_visitor'
 
-class CyclicChecker < BaseVisitor
+class CyclicChecker
   def visit_form(form)
     # get question variables with dependency variables as hash
     # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
@@ -9,28 +9,32 @@ class CyclicChecker < BaseVisitor
     @errors = []
 
     # do the actual cyclic checking
-    form.statements.map { |u| visit_statement(u) }
+    form.statements.map { |statement| statement.accept(self) }
     @errors.uniq
   end
 
   # visit all statements of the if block
   def visit_if_statement(if_statement)
-    if_statement.block.map { |statement| visit_statement(statement) }
+    if_statement.block.map { |statement| statement.accept(self) }
   end
 
   # visit question, and visit calculation for the assignment of the question
   def visit_question(question)
-    {question.variable.name => visit_calculation(question.assignment).flatten.compact} if question.assignment
+    {question.variable.name => question.assignment.accept(self).flatten.compact} if question.assignment
   end
 
   # visit the calculation of the negation expression
   def visit_negation(negation)
-    visit_calculation(negation.expression)
+    negation.expression.accept(self)
   end
 
   # visit the calculations of both the left and right sides
   def visit_expression(expression)
-    [visit_calculation(expression.left), visit_calculation(expression.right)]
+    [expression.left.accept(self), expression.right.accept(self)]
+  end
+
+  # nothing has to be done with a literal
+  def visit_literal(_)
   end
 
   # check if the visited variable is in the dependency hash
