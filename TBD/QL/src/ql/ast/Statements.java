@@ -2,6 +2,9 @@ package ql.ast;
 
 import ql.ast.visistor.ASTVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Erik on 7-2-2017.
  */
@@ -18,20 +21,33 @@ public class Statements implements ASTNode {
         this(current, null);
     }
 
-    public boolean hasCurrent() {
-        return this.current != null;
+    public List<Statement> getStatements(){
+        List<Statement> statements = new ArrayList<>();
+        if(current == null){
+            return statements;
+        }
+
+        Statements currentEntry = this;
+        statements.add(currentEntry.getCurrentStatement());
+
+        while (currentEntry.hasNext()){
+            currentEntry = currentEntry.next();
+            statements.add(currentEntry.getCurrentStatement());
+        }
+
+        return statements;
     }
 
-    public boolean hasNext() {
-        return this.next != null;
+    private boolean hasNext(){
+        return next != null;
     }
 
-    public Statement getCurrent() {
-        return current;
-    }
-
-    public Statements getNext() {
+    private Statements next(){
         return next;
+    }
+
+    private Statement getCurrentStatement(){
+        return current;
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

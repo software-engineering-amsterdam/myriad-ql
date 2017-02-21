@@ -3,15 +3,17 @@ package ql.ast;
 import ql.ast.visistor.ASTVisitor;
 
 /**
- * Created by Erik on 6-2-2017.
+ * Created by Erik on 20-2-2017.
  */
-public class If implements Statement {
+public class IfElse implements Statement{
     private final Expr condition;
     private final Statements ifBlock;
+    private final Statements elseBlock;
 
-    public If(Expr condition, Statements ifBlock) {
+    public IfElse(Expr condition, Statements ifBlock, Statements elseBlock) {
         this.condition = condition;
         this.ifBlock = ifBlock;
+        this.elseBlock = elseBlock;
     }
 
     public Expr getCondition() {
@@ -20,6 +22,10 @@ public class If implements Statement {
 
     public Statements getIfBlock() {
         return ifBlock;
+    }
+
+    public Statements getElseBlock() {
+        return elseBlock;
     }
 
 

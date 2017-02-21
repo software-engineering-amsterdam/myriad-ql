@@ -9,13 +9,15 @@ import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Erik on 14-2-2017.
  */
 public class TypeASTVisitor implements ASTVisitor<Type> {
 
-    private final HashMap<String, Type> identTable = new HashMap<>();
+    private final Map<String, Type> identTable = new HashMap<>();
 
     @Override
     public Type visit(Form node) {
@@ -25,28 +27,33 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Statements node) {
-        if (node.hasCurrent()) {
-            node.getCurrent().accept(this);
-        }
-
-        if (node.hasNext()) {
-            node.getNext().accept(this);
+        List<Statement> statements = node.getStatements();
+        for (Statement statement: statements) {
+            statement.accept(this);
         }
         return null;
     }
 
     @Override
     public Type visit(If node) {
-        Type expr = node.getExpression().accept(this);
+        Type expr = node.getCondition().accept(this);
+
+        if (expr != Type.TYPEBOOL) {
+            throw new RuntimeException("Type error");
+        }
+        return null;
+    }
+
+    @Override
+    public Type visit(IfElse node) {
+        Type expr = node.getCondition().accept(this);
 
         if (expr != Type.TYPEBOOL) {
             throw new RuntimeException("Type error");
         }
 
         node.getIfBlock().accept(this);
-        if (node.hasElseBlock()) {
-            node.getElseBlock().accept(this);
-        }
+        node.getElseBlock().accept(this);
         return null;
     }
 

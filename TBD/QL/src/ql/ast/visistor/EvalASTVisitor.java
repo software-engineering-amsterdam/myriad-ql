@@ -27,6 +27,11 @@ public class EvalASTVisitor implements ASTVisitor<QLLiteral> {
     }
 
     @Override
+    public QLLiteral visit(IfElse node) {
+        return null;
+    }
+
+    @Override
     public QLLiteral visit(Question node) {
         return null;
     }

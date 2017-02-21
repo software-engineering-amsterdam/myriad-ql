@@ -24,9 +24,9 @@
 %type <Form>        form
 %type <Statements>  statements
 %type <Statement>   statement
-%type <Question>    question
+%type <Statement>    question
 %type <Type>        type
-%type <If>          if
+%type <Statement>   if
 %type <Expr>        expr
 
 
@@ -36,7 +36,6 @@ import ql.ast.*;
 import ql.ast.literals.*;
 import ql.ast.expressions.*;
 import ql.ast.expressions.binop.*;
-import ql.ast.expressions.numop.*;
 import ql.ast.expressions.monop.*;
 %}
 
@@ -44,7 +43,6 @@ import ql.ast.expressions.monop.*;
 
 form
             : FORM IDENT '{' statements '}'                     { result = new Form($2, $4);    }
-            | FORM IDENT '{' '}'                                { result = new Form($2, null);  }
             ;
 
 statements
@@ -75,7 +73,7 @@ type
 if
             : IF '(' expr ')' '{' statements '}'                { $$ = new If($3, $6);      }
             | IF '(' expr ')' '{' statements '}'
-              ELSE '{' statements '}'                           { $$ = new If($3, $6, $10); }
+              ELSE '{' statements '}'                           { $$ = new IfElse($3, $6, $10); }
             ;
 
 

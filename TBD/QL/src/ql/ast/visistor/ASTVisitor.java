@@ -17,6 +17,8 @@ public interface ASTVisitor<T> {
 
     T visit(If node);
 
+    T visit(IfElse node);
+
     T visit(Question node);
 
     T visit(QLIdent node);

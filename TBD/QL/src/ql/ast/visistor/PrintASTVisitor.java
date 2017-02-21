@@ -7,6 +7,8 @@ import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 
+import java.util.List;
+
 /**
  * Created by Erik on 14-2-2017.
  */
@@ -23,12 +25,10 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
 
     @Override
     public Void visit(Statements node) {
-        if (node.hasCurrent()) {
-            node.getCurrent().accept(this);
-        }
-        System.out.print("\n");
-        if (node.hasNext()) {
-            node.getNext().accept(this);
+        List<Statement> statements = node.getStatements();
+        for (Statement statement: statements) {
+            statement.accept(this);
+            System.out.print("\n");
         }
         return null;
     }
@@ -36,15 +36,23 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     @Override
     public Void visit(If node) {
         System.out.print("if (");
-        node.getExpression().accept(this);
+        node.getCondition().accept(this);
         System.out.print("){\n");
         node.getIfBlock().accept(this);
         System.out.print("}");
-        if (node.hasElseBlock()) {
-            System.out.print("else {\n");
-            node.getElseBlock().accept(this);
-            System.out.print("}");
-        }
+        return null;
+    }
+
+    @Override
+    public Void visit(IfElse node) {
+        System.out.print("if (");
+        node.getCondition().accept(this);
+        System.out.print("){\n");
+        node.getIfBlock().accept(this);
+        System.out.print("}");
+        System.out.print("else {\n");
+        node.getElseBlock().accept(this);
+        System.out.print("}");
         return null;
     }
 
