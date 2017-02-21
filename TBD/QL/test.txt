@@ -6,13 +6,13 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
-  if (hasSoldHouse == hasMaintLoan) {
+  if (hasMaintLoan + hasSoldHouse) {
     "What was the selling price?"
       sellingPrice: float
     "Private debts for the sold house:"
       privateDebt: int
     "Value residue:"
-      valueResidue: float =
-        (sellingPrice - privateDebt)
+      valueResidue: int =
+        (sellingPrice - hasMaintLoan)
   }
 }

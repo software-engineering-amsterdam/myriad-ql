@@ -2,12 +2,13 @@ package ql.ast.visistor;
 
 import ql.ast.*;
 import ql.ast.types.*;
-import ql.ast.expressions.BinOp;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.logger.Error;
+import ql.logger.ErrorHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,14 @@ import java.util.Map;
 public class TypeASTVisitor implements ASTVisitor<Type> {
 
     private final Map<String, Type> identTable = new HashMap<>();
+    private final ErrorHandler errorHandler = new ErrorHandler();
+
+
+    public Type startVisitor(ASTNode node) {
+        node.accept(this);
+        errorHandler.showErrors();
+        return null;
+    }
 
     @Override
     public Type visit(Form node) {
@@ -39,8 +48,12 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(If node) {
         Type expr = node.getCondition().accept(this);
 
+        if (!expr.equals(new ErrorType())) {
+            errorHandler.addError(new Error("Error in the expression", node.getCondition().getRowNumber()));
+        }
+
         if (!expr.equals(new BooleanType())) {
-            throw new RuntimeException("Type error");
+            errorHandler.addError(new Error("Condition Should be a boolean", node.getCondition().getRowNumber()));
         }
 
         node.getIfBlock().accept(this);
@@ -51,8 +64,13 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(IfElse node) {
         Type expr = node.getCondition().accept(this);
 
+
+        if (!expr.equals(new ErrorType())) {
+            errorHandler.addError(new Error("Error in the expression", node.getCondition().getRowNumber()));
+        }
+
         if (!expr.equals(new BooleanType())) {
-            throw new RuntimeException("Type error");
+            errorHandler.addError(new Error("Condition Should be a boolean",  node.getCondition().getRowNumber()));
         }
 
         node.getIfBlock().accept(this);
@@ -63,7 +81,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     @Override
     public Type visit(Question node) {
         if (identTable.containsKey(node.getId().getValue())) {
-            throw new RuntimeException("Id already exist");
+            errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
         }
 
         identTable.put(node.getId().getValue(), node.getType());
@@ -73,17 +91,22 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     @Override
     public Type visit(QuestionExpr node) {
         if (identTable.containsKey(node.getId().getValue())) {
-            throw new RuntimeException("Id already exist");
+            errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
         }
 
         identTable.put(node.getId().getValue(), node.getType());
 
         Type expr = node.getExpr().accept(this);
-        if (expr.equals(node.getType())) {
-            return null;
+        if (!expr.equals(node.getType())) {
+            errorHandler.addError(new Error("Wrong type for assignment!", node.getId().getRowNumber()));
         }
-        throw new RuntimeException("Type error");
 
+        if (expr.equals(new ErrorType())) {
+            errorHandler.addError(new Error("Error in expression!", node.getId().getRowNumber()));
+        }
+
+
+        return null;
     }
 
     @Override
@@ -91,7 +114,8 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         if (identTable.containsKey(node.getValue())) {
             return identTable.get(node.getValue());
         }
-        throw new RuntimeException("Unexpected variable");
+        errorHandler.addError(new Error("Identifier doesn't exist!", node.getRowNumber()));
+        return null;
     }
 
     @Override
@@ -246,6 +270,5 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
         return expr.checkTypes(node);
     }
-
 
 }

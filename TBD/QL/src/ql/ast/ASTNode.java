@@ -12,4 +12,8 @@ public abstract class ASTNode {
     public ASTNode (int rowNumber) {
         this.rowNumber = rowNumber;
     }
+
+    public int getRowNumber() {
+        return rowNumber;
+    }
 }

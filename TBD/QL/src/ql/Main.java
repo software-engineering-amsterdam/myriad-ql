@@ -45,8 +45,8 @@ public class Main {
             ASTVisitor<Void> printVisitor = new PrintASTVisitor();
             printVisitor.visit(parser.getResult());
 
-            ASTVisitor<Type> typeVisitor = new TypeASTVisitor();
-            typeVisitor.visit(parser.getResult());
+            TypeASTVisitor typeVisitor = new TypeASTVisitor();
+            typeVisitor.startVisitor(parser.getResult());
 
 
         } catch (FileNotFoundException e) {
