@@ -231,8 +231,18 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
+        self.assertIsNone(conditional_node.else_statement_list,
+                          'This test has no else block, else block should be none')
+        self.assertEqual('conditional', conditional_node.var_type,
+                         'Conditional node should have type conditional')
+        self.assertEqual(1, len(conditional_node.statements),
+                         'This else block has one question inside, length should be 1')
+        self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
+
+        condition_node = conditional_node.condition
+
         self.assertEqual('conditional', conditional_node.var_type)
-        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_if_with_expression_single_question(self):
         input_string = """
@@ -250,6 +260,7 @@ class TestAst(unittest.TestCase):
         conditional_node = form_node.children[0]
         self.assertEqual('conditional', conditional_node.var_type)
         self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_if_with_complex_expression_single_question(self):
         input_string = """
@@ -267,6 +278,7 @@ class TestAst(unittest.TestCase):
         conditional_node = form_node.children[0]
         self.assertEqual('conditional', conditional_node.var_type)
         self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_if_with_complex_expression_2_single_question(self):
         input_string = """
@@ -284,6 +296,7 @@ class TestAst(unittest.TestCase):
         conditional_node = form_node.children[0]
         self.assertEqual('conditional', conditional_node.var_type)
         self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_if_else_single_question(self):
         input_string = """
@@ -298,14 +311,7 @@ class TestAst(unittest.TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
-        self.assertEqual('taxOfficeExample', form_node.name)
-        self.assertEqual(1, len(form_node.children))
-
-        self.assertEqual('taxOfficeExample', form_node.name)
-        self.assertEqual(2, len(form_node.children))
-
-        field_node_1 = form_node.children[0]
-        field_node_1 = form_node.children[1]
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_question_with_if_single_question(self):
         input_string = """
@@ -318,7 +324,4 @@ class TestAst(unittest.TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
-        self.assertEqual('taxOfficeExample', form_node.name)
-        self.assertEqual(2, len(form_node.children))
-        field_node_1 = form_node.children[0]
-        field_node_1 = form_node.children[1]
+        raise NotImplementedError('Test needs assertions')
