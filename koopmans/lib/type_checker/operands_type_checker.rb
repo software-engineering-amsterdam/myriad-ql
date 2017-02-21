@@ -1,11 +1,11 @@
-require_relative 'base_checker'
-require_relative 'type_visitor'
+require_relative '../visitor/question_visitor'
 
-class OperandsTypeChecker < BaseChecker
+class OperandsTypeChecker < BaseVisitor
   def visit_form(subject)
     # get all variables and their types as defined by the questions
     # e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>, "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
-    @types = subject.accept(TypeVisitor.new)
+    @types = subject.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type]}.to_h
+
     # do the actual operands type checking
     subject.statements.map { |statement| visit_statement(statement) }.flatten.compact
   end
@@ -26,6 +26,7 @@ class OperandsTypeChecker < BaseChecker
   def visit_variable(_)
   end
 
+  # TODO beautify
   # an expression is checked for correctness
   def visit_expression(subject)
     # p subject

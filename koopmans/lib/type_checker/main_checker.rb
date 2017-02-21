@@ -1,7 +1,6 @@
 class MainChecker
   require_relative 'duplicate_label_checker'
   require_relative 'duplicate_variable_checker'
-  require_relative 'variable_visitor'
   require_relative 'undefined_variable_checker'
   require_relative 'operands_type_checker'
   require_relative 'cyclic_checker'

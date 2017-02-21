@@ -1,11 +1,10 @@
-require_relative 'base_checker'
-require_relative 'variable_visitor'
+require_relative '../visitor/question_visitor'
 
-class UndefinedVariableChecker < BaseChecker
+class UndefinedVariableChecker < BaseVisitor
   def visit_form(subject)
     # get all question variables
     # e.g. ["hasSoldHouse", "hasBoughtHouse", "hasMaintLoan"]
-    @question_variables = subject.accept(VariableVisitor.new)
+    @question_variables = subject.accept(QuestionVisitor.new).map(&:variable).map(&:name)
 
     # do the actual undefined variable checking
     subject.statements.map { |statement| visit_statement(statement) }.flatten.compact
