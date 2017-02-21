@@ -1,13 +1,8 @@
-﻿namespace OffByOne.LanguageCore.Checker
+﻿namespace OffByOne.LanguageCore.Checker.Messages.Base
 {
     public abstract class CheckerMessage
     {
-        protected CheckerMessage(string message, LogLevel level)
-            : this(message, null, level)
-        {
-        }
-
-        protected CheckerMessage(string message, string description, LogLevel level)
+        protected CheckerMessage(string message, LogLevel level, string description = "")
         {
             this.Message = message;
             this.Description = description;

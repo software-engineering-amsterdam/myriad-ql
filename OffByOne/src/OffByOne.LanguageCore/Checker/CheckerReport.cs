@@ -5,6 +5,8 @@
 
     using MoreDotNet.Extensions.Collections;
 
+    using OffByOne.LanguageCore.Checker.Messages.Base;
+
     public class CheckerReport
     {
         private readonly IDictionary<LogLevel, IList<CheckerMessage>> messageCategories;

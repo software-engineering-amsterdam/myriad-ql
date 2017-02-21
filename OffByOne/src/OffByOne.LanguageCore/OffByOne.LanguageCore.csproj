@@ -79,9 +79,10 @@
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
     <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
     <Compile Include="Checker\BaseChecker.cs" />
-    <Compile Include="Checker\CheckerMessage.cs" />
+    <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
     <Compile Include="Checker\LogLevel.cs" />
+    <Compile Include="Checker\Messages\InvaildTypeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
