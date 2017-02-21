@@ -7,9 +7,9 @@ import sc.ql.model.FormElement;
 public class Question implements FormElement {
 	private final String question; 
 	private final ID id;
-	private final Atom type;
+	private final Atom.Type type;
 	
-	public Question(String question, ID id, Atom type) {
+	public Question(String question, ID id, Atom.Type type) {
 		this.question = question;
 		this.id = id;
 		this.type = type;
@@ -23,7 +23,7 @@ public class Question implements FormElement {
 		return this.id;
 	}
 	
-	public Atom getType() {
+	public Atom.Type getType() {
 		return this.type;
 	}
 }
