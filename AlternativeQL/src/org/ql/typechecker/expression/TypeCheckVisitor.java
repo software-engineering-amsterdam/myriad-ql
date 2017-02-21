@@ -10,10 +10,7 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
-import org.ql.ast.type.BooleanType;
-import org.ql.ast.type.IntegerType;
-import org.ql.ast.type.StringType;
-import org.ql.ast.type.Type;
+import org.ql.ast.type.*;
 import org.ql.typechecker.exception.TypeMismatchException;
 
 import java.util.Map;
@@ -125,7 +122,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(DecimalLiteral node) {
-        return null;
+        return (Type) new FloatType().setMetadata(node.getMetadata());
     }
 
     @Override
