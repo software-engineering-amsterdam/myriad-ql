@@ -59,6 +59,10 @@ class Or < BooleanExpression
   def self.to_operator
     '||'
   end
+
+  def eval
+    left.eval || right.eval
+  end
 end
 
 # arithmetic: - + * /
