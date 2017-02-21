@@ -4,16 +4,18 @@ class ComputedQuestion < GUIQuestion
   def initialize(args)
     super
     @calculation = args[:calculation]
-    @variable.value = @calculation.eval
 
     create_computed_entry
+    calculate
   end
 
-  def refresh
+  def reload
     super
-    if @calculation
-      @variable.value = @calculation.eval
-    end
+    calculate
+  end
+
+  def calculate
+    @variable.value = @calculation.eval if @calculation
   end
 
   def create_computed_entry
