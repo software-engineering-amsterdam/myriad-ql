@@ -2,6 +2,7 @@ import java.io.FileReader
 
 import model.FormModel
 import parser._
+import parser.checker.{FormChecker, Issue}
 
 object Main extends App {
   val filename = "src/main/resources/example.ql"

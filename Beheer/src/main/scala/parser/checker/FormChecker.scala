@@ -1,10 +1,12 @@
-package parser
+package parser.checker
 
+import model.FormModel
+import parser._
 import parser.ast._
 
 import scala.annotation.tailrec
 
-class FormChecker(db: AstFacts) extends Checker {
+class FormChecker(db: FormModel) extends Checker {
   private lazy val errors = List(duplicateIdentifiers, undefinedReferences, dependencyCycles, checkExpressions)
   private lazy val warnings = List(duplicateLabels)
 
@@ -42,24 +44,6 @@ class FormChecker(db: AstFacts) extends Checker {
 }
 
 object FormChecker {
-  def apply(form: Form): Seq[Issue] = new FormChecker(new AstFacts(form)).check
+  def apply(formModel: FormModel): Seq[Issue] = new FormChecker(formModel).check
 }
-
-/* private def buildFormModel: model.Form = {
-    val questions = db.questionsWithShowConditions.map {
-      case (Question(identifier, label, typeName, None), conditionals) => model.OpenQuestion(identifier, label, Nil, getTypeModel(typeName.typeName))
-      case (Question(identifier, label, typeName, Some(expr)), conditionals) => model.ComputedQuestion(identifier, label, Nil, getTypeModel(typeName.typeName), model.BooleanLiteral(true))
-    }
-    model.Form(questions)
-  }
-
-  private def getTypeModel(typeName: String) = typeName match {
-    case "boolean" => model.Boolean
-    case "string" => model.String
-    case "integer" => model.Integer
-    case "date" => model.Date
-    case "decimal" => model.Decimal
-    case "money" => model.Money
-    case _ => sys.error(s"Type parser should not recognise encountered $typeName.")
-  }*/
 

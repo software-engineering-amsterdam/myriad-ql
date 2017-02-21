@@ -1,8 +1,9 @@
-package parser
+package parser.checker
 
+import model.FormModel
 import parser.ast._
 
-class ExpressionChecker(db: AstFacts, expression: ExpressionNode, expectedType: Type) extends Checker {
+class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType: Type) extends Checker {
 
   def check: Issues = checkExpression(expression) match {
     case (Some(expressionType), Nil) => (expressionType, expectedType) match {
@@ -74,6 +75,6 @@ class ExpressionChecker(db: AstFacts, expression: ExpressionNode, expectedType: 
 }
 
 object ExpressionChecker {
-  def apply(db: AstFacts, expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
+  def apply(db: FormModel, expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
     new ExpressionChecker(db, expressionNode, expectedType).check
 }

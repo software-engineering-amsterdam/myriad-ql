@@ -1,7 +1,8 @@
 package parser
 
-import java.io.{ Reader, StringReader }
+import java.io.{Reader, StringReader}
 
+import model.FormModel
 import parser.ast._
 
 import scala.util.parsing.combinator.JavaTokenParsers
@@ -47,7 +48,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
 }
 
 object FormParser {
-  def apply(input: String): Form = apply(new StringReader(input))
+  def apply(input: String): FormModel = apply(new StringReader(input))
 
-  def apply(input: Reader): Form = new FormParser().parseForm(input)
+  def apply(input: Reader): FormModel = new FormModel(new FormParser().parseForm(input))
 }

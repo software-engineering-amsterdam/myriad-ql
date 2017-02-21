@@ -2,15 +2,16 @@ package model
 
 import parser.ast.{ ExpressionNode, Type }
 
-case class Form(questions: Seq[Question])
 
-sealed trait Question {
+sealed trait DisplayQuestion {
   val identifier: String
   val label: String
-  val show: Iterable[BooleanValue]
+  val displayCondition: Iterable[ExpressionNode]
   val `type`: Type
+
+  def show(env: Map[String, Value]): Boolean = displayCondition.map(_.value(env) match { case BooleanValue(b) => b}).reduce(_ && _)
 }
 
-case class OpenQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue]) extends Question
+case class OpenQuestion(identifier: String, label: String, `type`: Type, displayCondition: Iterable[ExpressionNode]) extends DisplayQuestion
 
-case class ComputedQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue], value: ExpressionNode) extends Question
+case class ComputedQuestion(identifier: String, label: String, `type`: Type, displayCondition: Iterable[ExpressionNode], value: ExpressionNode) extends DisplayQuestion

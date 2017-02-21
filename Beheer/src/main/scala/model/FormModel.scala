@@ -1,29 +1,50 @@
 package model
 
-import parser.AstFacts
-import parser.ast.ExpressionNode
+import parser.ast.{ExpressionNode, Form, Question, Type}
 
-class FormModel(db: AstFacts) {
-  lazy val environment: Map[String, Any] = Map()
-  lazy val form: Form = Form(db.questionsWithShowConditions.map { case (q, conditions) => createModelQuestion(q, conditions) })
 
-  private def createModelQuestion(question: parser.ast.Question, showCondition: Seq[parser.ast.ExpressionNode]): Question = question match {
-    case parser.ast.Question(identifier, label, questionType, None) =>
-      OpenQuestion(identifier, label, questionType, createShowConditions(showCondition))
+class FormModel(form: Form) {
+  lazy val questionsWithShowConditions: Seq[(Question, Seq[ExpressionNode])] = form.block.statements.flatMap(flattenForm(_, Nil))
 
-    case parser.ast.Question(identifier, label, questionType, Some(expression)) =>
-      ComputedQuestion(identifier, label, questionType, createShowConditions(showCondition), createModelExpression(expression))
+  lazy val expressions: Seq[(ExpressionNode, Type)] = extractExpressions(form)
+
+  lazy val questions: Seq[Question] = questionsWithShowConditions.map { case (q, _) => q }
+
+  lazy val questionLabels: Seq[String] = questions.map(_.label)
+
+  lazy val definedIdentifiers: Seq[String] = questions.map(_.identifier)
+
+  lazy val identifiersWithType: Seq[(String, Type)] = questions.map(q => (q.identifier, q.`type`))
+
+  lazy val referencedIdentifiers: Set[String] = expressions.map { case (e, _) => extractIdentifiers(e) }.reduce(_ ++ _)
+
+  lazy val questionsWithReferences: Map[String, Set[String]] = questionsWithShowConditions.map {
+    case (Question(identifier, _, _, None), conditionals) => (identifier, extractIdentifiers(conditionals))
+    case (Question(identifier, _, _, Some(expr)), conditionals) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditionals))
+  }.toMap
+
+  private def extractExpressions(parentNode: FormNode): Seq[(ExpressionNode, Type)] = parentNode match {
+    case Question(_, _, questionType, Some(expr)) => Seq((expr, questionType))
+    case Conditional(expr, block) => (expr, Boolean) +: extractExpressions(block)
+    case Block(statements) => statements.flatMap(e => extractExpressions(e))
+    case Form(_, block) => extractExpressions(block)
+    case _ => Nil
   }
 
-  private def createShowConditions(expressions: Seq[parser.ast.ExpressionNode]): Seq[BooleanValue] =
-    expressions.map(e => createModelExpression(e) match {
-      case e: BooleanValue => e
-      case _ => sys.error("Non boolean expression in show condition.")
-    })
+  private def extractIdentifiers(expressionNodes: Seq[ExpressionNode]): Set[String] = expressionNodes match {
+    case Nil => Set.empty
+    case e :: es => extractIdentifiers(e) ++ extractIdentifiers(es)
+  }
 
-  private def createModelExpression(expression: parser.ast.ExpressionNode): ExpressionNode = ???
-}
+  private def extractIdentifiers(expressionNode: ExpressionNode): Set[String] = expressionNode match {
+    case Identifier(value) => Set(value)
+    case i: InfixNode => extractIdentifiers(i.lhs) ++ extractIdentifiers(i.rhs)
+    case p: PrefixNode => extractIdentifiers(p.rhs)
+    case _ => Set.empty
+  }
 
-object FormModel {
-  def apply(db: AstFacts) = new FormModel(db)
+  private def flattenForm(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[(ast.Question, Seq[ExpressionNode])] = statement match {
+    case Conditional(condition, Block(statements)) => statements.flatMap(flattenForm(_, condition +: conditionals))
+    case q: ast.Question => Seq((q, conditionals))
+  }
 }
