@@ -16,7 +16,7 @@ class BooleanLiteral < Literal
     'boolean'
   end
 
-  def self.real_type
+  def self.accept_types
     BooleanType
   end
 
@@ -31,8 +31,8 @@ class IntegerLiteral < Literal
     'integer'
   end
 
-  def self.real_type
-    IntegerType
+  def self.accept_types
+    [IntegerType]
   end
 
   def eval
@@ -45,8 +45,8 @@ class StringLiteral < Literal
     'string'
   end
 
-  def self.real_type
-    StringType
+  def self.accept_types
+    [StringType]
   end
 
   def eval

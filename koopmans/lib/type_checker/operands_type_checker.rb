@@ -28,7 +28,7 @@ class OperandsTypeChecker < BaseVisitor
 
   def visit_negation(negation)
     expression_type = type(negation.expression)
-    error(negation.class, type(negation.expression)) if type(negation) != expression_type
+    error(negation.class, expression_type) if ([type(negation).accept_types].flatten & [expression_type.accept_types].flatten).empty?
   end
 
   # an expression is checked for correctness
@@ -39,18 +39,18 @@ class OperandsTypeChecker < BaseVisitor
 
     errors = []
     # the left side does not match the operator
-    unless subject_class.includes_type?(left_type)
-      errors.push(error(left_type, subject_class.to_operator))
+    unless subject_class.includes_type?(left_type.accept_types)
+      errors.push(error(left_type.accept_types.first, subject_class))
     end
 
     # the right side does not match the operator
-    unless subject_class.includes_type?(right_type)
-      errors.push(error(right_type, subject_class.to_operator))
+    unless subject_class.includes_type?(right_type.accept_types)
+      errors.push(error(right_type.accept_types.first, subject_class))
     end
 
     # the left and right side do not match
-    if ([left_type].flatten & [right_type].flatten).empty?
-      errors.push(error(left_type, right_type))
+    if ([left_type.accept_types].flatten & [right_type.accept_types].flatten).empty?
+      errors.push(error(left_type.accept_types.first, right_type))
     end
 
     errors.push([visit_calculation(expression.left), visit_calculation(expression.right)])
@@ -61,7 +61,7 @@ class OperandsTypeChecker < BaseVisitor
     if left_or_right.kind_of?(Variable)
       @types[left_or_right.name].class
     else
-      left_or_right.class.real_type
+      left_or_right.class
     end
   end
 

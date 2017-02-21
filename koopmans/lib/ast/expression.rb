@@ -5,7 +5,7 @@ class Expression
   extend Helper
 
   def self.includes_type?(type)
-    !([type].flatten & real_type).empty?
+    !([type].flatten & accept_types).empty?
   end
 end
 
@@ -26,8 +26,8 @@ class BooleanNegation < Negation
     !expression
   end
 
-  def self.real_type
-    BooleanType
+  def self.accept_types
+    [BooleanType]
   end
 end
 
@@ -40,8 +40,8 @@ class IntegerNegation < Negation
     -expression
   end
 
-  def self.real_type
-    IntegerType
+  def self.accept_types
+    [IntegerType, MoneyType]
   end
 end
 
@@ -56,7 +56,7 @@ end
 
 # booleans: && ||
 class BooleanExpression < BinaryExpression
-  def self.real_type
+  def self.accept_types
     [BooleanType]
   end
 end
@@ -83,7 +83,7 @@ end
 
 # arithmetic: - + * /
 class ArithmeticExpression < BinaryExpression
-  def self.real_type
+  def self.accept_types
     [IntegerType, MoneyType]
   end
 end
@@ -130,7 +130,7 @@ end
 
 # comparisons == !=
 class ComparisonEqual < BinaryExpression
-  def self.real_type
+  def self.accept_types
     [BooleanType, IntegerType, StringType, MoneyType]
   end
 end
@@ -157,7 +157,7 @@ end
 
 # comparisons: < > <= >=
 class ComparisonOrdering < BinaryExpression
-  def self.real_type
+  def self.accept_types
     [IntegerType, MoneyType]
   end
 end
