@@ -1,5 +1,6 @@
 package org.ql.typechecker.exception;
 
+import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 
 public class UnexpectedTypeException extends Throwable implements TypeError {
@@ -7,5 +8,15 @@ public class UnexpectedTypeException extends Throwable implements TypeError {
 
     public UnexpectedTypeException(Type innerExpressionType) {
         this.innerExpressionType = innerExpressionType;
+    }
+
+    @Override
+    public Node getNode() {
+        return null;
+    }
+
+    @Override
+    public String getMessage() {
+        return super.getMessage();
     }
 }

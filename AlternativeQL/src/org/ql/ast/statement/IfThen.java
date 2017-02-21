@@ -23,7 +23,7 @@ public class IfThen extends Statement {
     }
 
     @Override
-    public <T> T accept(StatementVisitor<T> visitor) throws Throwable {
+    public <T> T accept(StatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

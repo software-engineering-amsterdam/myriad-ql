@@ -1,5 +1,6 @@
 package org.ql.typechecker.expression;
 
+import org.ql.ast.Expression;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.ExpressionVisitor;
@@ -14,11 +15,11 @@ import org.ql.typechecker.exception.TypeMismatchException;
 import org.ql.typechecker.exception.UnexpectedTypeException;
 import org.ql.typechecker.exception.UndefinedIdentifierException;
 
-public class TypeCheckVisitor implements ExpressionVisitor<Type> {
+public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
 
     private final SymbolTable symbolTable;
 
-    public TypeCheckVisitor(SymbolTable symbolTable) {
+    public ExpressionTypeChecker(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
     }
 
