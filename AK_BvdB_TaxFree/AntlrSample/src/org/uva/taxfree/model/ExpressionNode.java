@@ -9,10 +9,6 @@ public class ExpressionNode extends Node {
 
     }
 
-    public boolean evaluate() {
-        return true;
-    }
-
     public String getType() {
         return mLeft.getType();
     }
