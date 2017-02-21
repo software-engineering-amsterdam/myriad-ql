@@ -13,7 +13,9 @@ public class QuestionFormTest {
     @BeforeMethod
     public void setUp() throws Exception {
         mRoot = new FormNode("TaxForm");
+        mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
         mForm = new QuestionForm(mRoot);
+
     }
 
 
@@ -29,7 +31,7 @@ public class QuestionFormTest {
             e.printStackTrace();
         }
         try {
-            testSimpleIfStatement();
+            testBooleanIf();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +55,6 @@ public class QuestionFormTest {
     @Test
     public void testSimpleQuestions() throws Exception {
 
-        mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
         mRoot.addChild(new StringQuestion("What is your name?", "userName"));
         mRoot.addChild(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
     }
@@ -62,10 +63,28 @@ public class QuestionFormTest {
     public void testSimpleIfStatement() throws Exception {
         BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse");
         mRoot.addChild(boolQuestion);
-        IfStatementNode ifStatement = new IfStatementNode("hasSoldHouse");
-        BooleanExpressionNode boolExpression = new BooleanExpressionNode("hasSoldHouse");
-        ifStatement.addExpression(boolExpression);
+        IfStatementNode ifStatement = new IfStatementNode("");
+        ifStatement.addChild(new VariableLiteralNode("hasSoldHouse"));
+        ifStatement.addChild(new StringQuestion("Toggle me on and off by selling your house", "sellYourHouse"));
+        ifStatement = new IfStatementNode("hasSoldHouse");
+        ConditionNode condition = new VariableLiteralNode("hasSoldHouse");
+        ifStatement.setCondition(condition);
         mRoot.addChild(ifStatement);
         ifStatement.addChild(new BooleanQuestion("Am I inside the If statement?", "isInsideIfStatement"));
+
+
+    }
+
+    @Test
+    public void testBooleanIf() throws Exception{
+        IfStatementNode ifStatementNode = new IfStatementNode("");
+        mRoot.addChild(ifStatementNode);
+        ConditionNode condition = new BooleanLiteralNode("true");
+        ifStatementNode.addChild(condition);
+        ifStatementNode.addChild(new BooleanQuestion("Hello, do you have a name?", "hasName"));
+        ifStatementNode = new IfStatementNode("");
+        ifStatementNode.addChild(new BooleanLiteralNode("false"));
+        ifStatementNode.addChild(new BooleanQuestion("If you see me, something's wrong", "noName"));
+
     }
 }

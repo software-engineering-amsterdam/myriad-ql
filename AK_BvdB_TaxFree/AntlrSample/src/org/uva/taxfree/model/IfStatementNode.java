@@ -3,30 +3,31 @@ package org.uva.taxfree.model;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
-    String mCondition;
-    ExpressionNode mExpression;
+    String mExpression;
+    ConditionNode mCondition;
 
-    public IfStatementNode(String condition) {
+
+    public IfStatementNode(String expression) {
         super();
-        mCondition = new String(condition);
+        mExpression = expression;
     }
 
     @Override
     public void addChild(Node node) {
-        if (mExpression == null) {
-            setCondition((ExpressionNode)node);
+        if (mCondition == null) {
+            setCondition((ConditionNode) node);
         } else {
             super.addChild(node);
         }
     }
 
-    public void setCondition(ExpressionNode condition) {
-        mExpression = condition;
+    public void setCondition(ConditionNode condition) {
+        mCondition = condition;
     }
 
     protected boolean isTrue() {
-        assert mExpression != null;
-        return ("true" == mExpression.evaluate());
+        assert mCondition != null;
+        return ("true" == mCondition.evaluate());
     }
 
     @Override
@@ -42,7 +43,7 @@ public class IfStatementNode extends Node {
 
     @Override
     public String toString() {
-        return mCondition;
+        return mExpression;
     }
 
 }
