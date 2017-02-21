@@ -3,8 +3,8 @@ module UI.QLApp exposing (Model, Msg, init, update, view)
 import Html exposing (Html, div, text, h3, form, pre, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
-import UI.FormDslInput as FormDslInput
 import UI.FormRenderer as FormRenderer
+import UI.QLInput as QLInput
 import UI.QLSInput as QLSInput
 
 
@@ -15,7 +15,7 @@ type Tab
 
 
 type alias Model =
-    { formDslInput : FormDslInput.Model
+    { qlInput : QLInput.Model
     , qlsInput : QLSInput.Model
     , formRenderer : Maybe FormRenderer.Model
     , activeTab : Tab
@@ -23,7 +23,7 @@ type alias Model =
 
 
 type Msg
-    = FormDslInputMsg FormDslInput.Msg
+    = FormDslInputMsg QLInput.Msg
     | QLSInputMsg QLSInput.Msg
     | FormRendererMsg FormRenderer.Msg
     | ChangeTab Tab
@@ -33,11 +33,11 @@ init : Model
 init =
     let
         formDslInput =
-            FormDslInput.init
+            QLInput.init
     in
-        { formDslInput = formDslInput
+        { qlInput = formDslInput
         , qlsInput = QLSInput.init
-        , formRenderer = Maybe.map FormRenderer.init (FormDslInput.asForm formDslInput)
+        , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
         , activeTab = QLTab
         }
 
@@ -51,11 +51,11 @@ update msg model =
         FormDslInputMsg subMsg ->
             let
                 newQLInput =
-                    FormDslInput.update subMsg model.formDslInput
+                    QLInput.update subMsg model.qlInput
             in
                 { model
-                    | formDslInput = newQLInput
-                    , formRenderer = Maybe.map FormRenderer.init (FormDslInput.asForm newQLInput)
+                    | qlInput = newQLInput
+                    , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm newQLInput)
                 }
 
         QLSInputMsg subMsg ->
@@ -73,7 +73,7 @@ view model =
             QLTab ->
                 div []
                     [ h3 [] [ text "DSL Input" ]
-                    , FormDslInput.view model.formDslInput |> Html.map FormDslInputMsg
+                    , QLInput.view model.qlInput |> Html.map FormDslInputMsg
                     ]
 
             QLSTab ->
