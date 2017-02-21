@@ -16,7 +16,7 @@ def parse(input_string):
     bool_operand.setParseAction(BoolOperand)
 
     # Reserved keywords
-    form = Suppress("form")
+    form_lit = Suppress("form")
     if_lit = Suppress("if")
     else_lit = Suppress("else")
 
@@ -102,7 +102,7 @@ def parse(input_string):
 
     # Program
     form = \
-        form + \
+        form_lit + \
         identifier.setResultsName("form_identifier") + \
         statement_list.setResultsName("form_statement_list")
     form.addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
