@@ -1,6 +1,3 @@
-require 'tk'
-require 'pp'
-
 class GUIQuestionVisitor
   attr_accessor :questions
 

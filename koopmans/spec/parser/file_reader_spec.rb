@@ -1,5 +1,7 @@
 require 'rspec'
-require 'parser/file_reader'
+require 'require_all'
+
+require_all 'lib'
 
 describe FileReader do
   let(:reader) { FileReader.new }
