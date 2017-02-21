@@ -16,7 +16,7 @@ public class Parameter extends Expression {
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) throws Throwable {
+    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
         return visitor.visit(this);
     }
 

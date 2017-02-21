@@ -1,7 +1,7 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
-import org.ql.ast.expression.Visitor;
+import org.ql.ast.expression.ExpressionVisitor;
 
 public class Decrement extends Expression {
     private final Expression expression;
@@ -20,7 +20,7 @@ public class Decrement extends Expression {
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) throws Throwable {
+    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
         return visitor.visit(this);
     }
 }

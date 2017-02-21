@@ -21,4 +21,9 @@ public class IfThen extends Statement {
     public List<Statement> getThenStatements() {
         return thenStatements;
     }
+
+    @Override
+    public <T> T accept(StatementVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
+    }
 }

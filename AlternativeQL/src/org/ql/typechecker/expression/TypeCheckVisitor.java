@@ -2,7 +2,7 @@ package org.ql.typechecker.expression;
 
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.Visitor;
+import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
@@ -14,7 +14,7 @@ import org.ql.typechecker.exception.TypeMismatchException;
 import org.ql.typechecker.exception.UnexpectedTypeException;
 import org.ql.typechecker.exception.UndefinedIdentifierException;
 
-public class TypeCheckVisitor implements Visitor<Type> {
+public class TypeCheckVisitor implements ExpressionVisitor<Type> {
 
     private final SymbolTable symbolTable;
 

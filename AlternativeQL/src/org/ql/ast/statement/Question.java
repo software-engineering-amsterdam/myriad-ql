@@ -35,4 +35,9 @@ public class Question extends Statement {
     public Expression getDefaultValue() {
         return defaultValue;
     }
+
+    @Override
+    public <T> T accept(StatementVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
+    }
 }

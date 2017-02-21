@@ -1,5 +1,7 @@
 package org.ql.ast;
 
+import org.ql.ast.form.FormVisitor;
+
 import java.util.List;
 
 public class Form extends AbstractNode {
@@ -21,5 +23,9 @@ public class Form extends AbstractNode {
 
     public Statement getStatement(int index) {
         return statements.get(index);
+    }
+
+    public <T> T accept(FormVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
     }
 }

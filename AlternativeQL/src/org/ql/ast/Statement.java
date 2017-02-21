@@ -1,5 +1,7 @@
 package org.ql.ast;
 
-public abstract class Statement extends AbstractNode {
+import org.ql.ast.statement.StatementVisitor;
 
+public abstract class Statement extends AbstractNode {
+    public abstract <T> T accept(StatementVisitor<T> visitor) throws Throwable;
 }

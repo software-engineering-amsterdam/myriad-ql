@@ -4,7 +4,7 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.*;
 
-public interface Visitor<T> {
+public interface ExpressionVisitor<T> {
     T visit(Negation node) throws Throwable;
     T visit(Product node) throws Throwable;
     T visit(Increment node) throws Throwable;

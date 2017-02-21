@@ -27,4 +27,9 @@ public class IfThenElse extends Statement {
     public List<Statement> getElseStatements() {
         return elseStatements;
     }
+
+    @Override
+    public <T> T accept(StatementVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
+    }
 }
