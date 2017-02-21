@@ -1,19 +1,10 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
 import Html exposing (Html, div, text, h3, form, pre, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
-import UI.Widget.Boolean as BooleanWidget
-import UI.Widget.Integer as IntegerWidget
-import UI.Widget.String as StringWidget
-import UI.Widget.Float as FloatWidget
-import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import UI.FormDslInput as FormDslInput
-import Environment as Env exposing (Environment)
-import Values exposing (Value)
-import Dict
-import FormUtil exposing (VisibleField(Editable, Computed))
+import UI.FormRenderer as FormRenderer
 
 
 type Tab
@@ -23,23 +14,27 @@ type Tab
 
 type alias Model =
     { formDslInput : FormDslInput.Model
-    , env : Environment
+    , formRenderer : Maybe FormRenderer.Model
     , activeTab : Tab
     }
 
 
 type Msg
     = FormDslInputMsg FormDslInput.Msg
-    | OnFieldChange String Value
+    | FormRendererMsg FormRenderer.Msg
     | ChangeTab Tab
 
 
 init : Model
 init =
-    { formDslInput = FormDslInput.init
-    , env = Env.empty
-    , activeTab = DslInput
-    }
+    let
+        formDslInput =
+            FormDslInput.init
+    in
+        { formDslInput = formDslInput
+        , formRenderer = Maybe.map FormRenderer.init (FormDslInput.asForm formDslInput)
+        , activeTab = DslInput
+        }
 
 
 update : Msg -> Model -> Model
@@ -51,13 +46,8 @@ update msg model =
         FormDslInputMsg subMsg ->
             { model | formDslInput = FormDslInput.update subMsg model.formDslInput }
 
-        OnFieldChange fieldId newValue ->
-            { model
-                | env =
-                    FormDslInput.asForm model.formDslInput
-                        |> Maybe.map (FormUtil.updateValue fieldId newValue model.env)
-                        |> Maybe.withDefault model.env
-            }
+        FormRendererMsg subMsg ->
+            { model | formRenderer = Maybe.map (FormRenderer.update subMsg) model.formRenderer }
 
 
 view : Model -> Html Msg
@@ -72,12 +62,9 @@ view model =
                     ]
 
             Preview ->
-                div []
-                    [ pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.env ]
-                    , FormDslInput.asForm model.formDslInput
-                        |> Maybe.map (viewForm model)
-                        |> Maybe.withDefault (div [] [])
-                    ]
+                model.formRenderer
+                    |> Maybe.map (FormRenderer.view >> Html.map FormRendererMsg)
+                    |> Maybe.withDefault (div [] [])
         ]
 
 
@@ -93,6 +80,7 @@ tabMenu currentlyActive =
         )
 
 
+availableTabItems : List ( Tab, String )
 availableTabItems =
     [ ( DslInput, "Dsl Input" )
     , ( Preview, "Preview" )
@@ -114,49 +102,3 @@ tabItem isActive goTo name =
             [ onClick (ChangeTab goTo) ]
             [ text name ]
         ]
-
-
-viewForm : Model -> Form -> Html Msg
-viewForm model formDsl =
-    let
-        visibleFields =
-            FormUtil.activeFields model.env formDsl
-    in
-        form [] (List.map (viewField model) visibleFields)
-
-
-viewField : Model -> VisibleField -> Html Msg
-viewField model field =
-    BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
-        case FormUtil.fieldValueType field of
-            StringType ->
-                StringWidget.view
-
-            BooleanType ->
-                BooleanWidget.view
-
-            IntegerType ->
-                IntegerWidget.view
-
-            MoneyType ->
-                FloatWidget.view
-
-
-visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
-visibleFieldWidgetConfig env field =
-    case field of
-        Editable label identifier _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = True
-            }
-
-        Computed label identifier valuedType _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = False
-            }
