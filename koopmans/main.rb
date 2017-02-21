@@ -7,7 +7,7 @@ require_rel 'lib'
 
 # read file
 file_reader = FileReader.new
-contents = file_reader.read_file('../examples/simple_questionnaire.ql')
+contents = file_reader.read_file('examples/simple_questionnaire.ql')
 
 # parse content
 parser = Parser.new
