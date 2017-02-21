@@ -18,8 +18,8 @@ public class ExpressionNode extends Node {
             return tryEvaluate();
         } catch (ScriptException e) {
             e.printStackTrace();
+            throw new RuntimeException("An error occurred whilst evaluating " + toString());
         }
-        return "!! Error !!";
     }
 
     // Allows the typeChecker to perform a testrun on all expressions.

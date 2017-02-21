@@ -1,6 +1,5 @@
 package org.uva.taxfree.model;
 
-import javax.script.ScriptException;
 import java.util.Set;
 
 public class IfStatementNode extends Node {

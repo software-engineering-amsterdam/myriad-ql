@@ -80,7 +80,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.enterBooleanExpression(ctx);
-        Node booleanExpressionNode = new BooleanExpressionNode(ctx.getText());
+        Node booleanExpressionNode = new BooleanExpressionNode(ctx.getText(), ctx.operator.toString());
         addParentNodeToAst(booleanExpressionNode);
     }
 
@@ -101,7 +101,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
         super.enterParenthesizedExpression(ctx);
-        Node parenthesizedExpression = new ParenthesizedExpression(ctx.getText());
+        Node parenthesizedExpression = new ParenthesizedExpressionNode(ctx.getText());
         addParentNodeToAst(parenthesizedExpression);
     }
 
