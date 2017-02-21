@@ -19,7 +19,7 @@ public class ExampleRunner {
 
         runner.printIDs("form taxOfficeExample { \n" +
             "  \"Did you sell a house in 2010?\"\n" +
-            "    hasSoldHouse: boolean\n" +
+            "    hasSoldHouse: boolean;\n" +
             "  \"Did you buy a house in 2010?\"\n" +
             "    hasBoughtHouse: boolean;\n" +
             "  \"Did you enter a loan?\"\n" +
