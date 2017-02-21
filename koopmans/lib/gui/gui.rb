@@ -6,8 +6,8 @@ require 'tk'
 # require_rel '/'
 
 class GUI < GUIQuestionVisitor
-  def initialize(ast, typechecker)
-    return if check(typechecker) == 'quit'
+  def initialize(ast, type_checker)
+    return if check(type_checker) == 'quit'
     super
 
     create_submit_button
@@ -28,21 +28,21 @@ class GUI < GUIQuestionVisitor
     button.command = proc { submit }
   end
 
-  def check(typechecker)
-    if !typechecker[:errors].empty?
+  def check(type_checker)
+    if !type_checker[:errors].empty?
       Tk.messageBox(
           type: 'ok',
           icon: 'error',
           title: 'Errors found!',
-          message: typechecker[:errors].join('\n')
+          message: type_checker[:errors].join('\n')
       )
       return 'quit'
-    elsif !typechecker[:warnings].empty?
+    elsif !type_checker[:warnings].empty?
       Tk.messageBox(
           type: 'ok',
           icon: 'warning',
           title: 'Warnings found!',
-          message: typechecker[:warnings].join('\n')
+          message: type_checker[:warnings].join('\n')
       )
       return 'continue'
     end
