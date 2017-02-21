@@ -341,4 +341,11 @@ public class TypeCheckVisitorTest {
 
         assertTrue(actualSubtractionType instanceof IntegerType);
     }
+
+    @Test(expected = TypeMismatchException.class)
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesUsedForSubtraction() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+
+        visitor.visit(new Subtraction(new IntegerLiteral(12), new StringLiteral("example")));
+    }
 }
