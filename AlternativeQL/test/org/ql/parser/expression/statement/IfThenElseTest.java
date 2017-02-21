@@ -1,10 +1,7 @@
 package org.ql.parser.expression.statement;
 
 import org.junit.Test;
-import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.type.MoneyType;
 import org.ql.parser.Parser;
 
 import static org.junit.Assert.*;

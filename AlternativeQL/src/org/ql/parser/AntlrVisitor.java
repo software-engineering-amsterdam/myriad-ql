@@ -1,7 +1,6 @@
 package org.ql.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.*;
 import org.ql.ast.expression.Parameter;

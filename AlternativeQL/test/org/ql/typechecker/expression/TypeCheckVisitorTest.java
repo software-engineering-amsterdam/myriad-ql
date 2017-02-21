@@ -16,8 +16,6 @@ import org.ql.typechecker.exception.UndefinedIdentifierException;
 import org.ql.typechecker.exception.UnexpectedTypeException;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 

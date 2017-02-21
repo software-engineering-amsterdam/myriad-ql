@@ -1,10 +1,8 @@
 package org.ql.ast.expression.literal;
 
-import org.ql.ast.Expression;
 import org.ql.ast.expression.Visitor;
 
 import java.lang.*;
-import java.lang.String;
 import java.math.BigDecimal;
 
 public class DecimalLiteral extends AbstractLiteral<BigDecimal> {

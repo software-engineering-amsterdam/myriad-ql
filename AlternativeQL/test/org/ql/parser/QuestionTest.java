@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.BooleanType;
-import org.ql.ast.type.Type;
 
 import static org.junit.Assert.*;
 
