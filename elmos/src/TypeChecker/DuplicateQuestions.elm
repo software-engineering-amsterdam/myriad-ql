@@ -86,8 +86,8 @@ questionIndexFromItem item =
         ComputedField _ ( id, loc ) _ _ ->
             DictList.singleton id [ loc ]
 
-        IfThen _ _ ->
-            DictList.empty
+        IfThen _ thenBranch ->
+            questionIndexFromBlock thenBranch
 
         IfThenElse _ thenBranch elseBranch ->
             mergeSharedQuestionDefinitions
@@ -98,16 +98,12 @@ questionIndexFromItem item =
 mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
 mergeSharedQuestionDefinitions indexA indexB =
     DictList.merge
-        (\_ _ result -> result)
+        DictList.insert
         (\questionId locationsInA locationsInB result -> DictList.insert questionId (locationsInA ++ locationsInB) result)
-        (\_ _ result -> result)
+        DictList.insert
         indexA
         indexB
         DictList.empty
-
-
-
--- TODO: These names are shit, they both check if it is a duplicate but they do it on a different level and only one of them creates the actuale duplciate
 
 
 duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate

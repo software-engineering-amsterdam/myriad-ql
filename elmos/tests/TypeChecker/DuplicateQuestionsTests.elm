@@ -31,7 +31,7 @@ all =
 questionIndexFromBlockTest : Test
 questionIndexFromBlockTest =
     describe "testFindQuestionDefinitions"
-        [ test "definition for question shared by if and else branch" <|
+        [ test "shared definition for question defined by if and else branch" <|
             \() ->
                 questionIndexFromBlock
                     [ IfThenElse (Boolean emptyLoc True)
@@ -39,21 +39,21 @@ questionIndexFromBlockTest =
                         [ Field "label" ( "x", loc 4 4 ) StringType ]
                     ]
                     |> Expect.equal (DictList.singleton "x" [ loc 3 3, loc 4 4 ])
-        , test "no definition on rootscope for ifthenelse block with no shared definitions " <|
+        , test "definitions on rootscope for ifthenelse block with no shared definitions " <|
             \() ->
                 questionIndexFromBlock
                     [ IfThenElse (Boolean emptyLoc True)
                         [ Field "label" ( "x", loc 3 3 ) StringType ]
                         [ Field "label" ( "y", loc 4 4 ) StringType ]
                     ]
-                    |> Expect.equal DictList.empty
-        , test "no definition on rootscope for single ifThen block" <|
+                    |> Expect.equal (DictList.fromList [ ( "x", [ loc 3 3 ] ), ( "y", [ loc 4 4 ] ) ])
+        , test "definition on rootscope for single ifThen block" <|
             \() ->
                 questionIndexFromBlock
                     [ IfThen (Boolean emptyLoc True)
                         [ Field "label" ( "x", loc 3 3 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.empty)
+                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
         , test "no duplicate definitions in questionIndex for double ifthenelse blocks" <|
             \() ->
                 questionIndexFromBlock
