@@ -1,6 +1,8 @@
 package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -9,7 +11,9 @@ import org.lemonade.visitors.ASTVisitor;
 public class BooleanLit extends Literal {
     private boolean value;
 
-    public BooleanLit(String value) {
+    public BooleanLit(QLType type, String value) {
+        super(type);
+        assert type instanceof QLBooleanType;
         this.value = Boolean.parseBoolean(value);
     }
 

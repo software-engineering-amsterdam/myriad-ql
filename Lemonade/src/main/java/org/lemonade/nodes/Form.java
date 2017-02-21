@@ -7,7 +7,7 @@ import java.util.List;
 
 //Maybe everything inherits from the org.lemonade.nodes.ASTNode class so we can easily walk through
 //the constructed tree?
-public class Form extends ASTNode {
+public class Form implements ASTNode {
     private String identifier;
     private List<Block> blocks;
 

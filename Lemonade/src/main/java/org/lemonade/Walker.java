@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.nodes.Form;
+import org.lemonade.visitors.PrettyPrint;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 
@@ -19,7 +20,7 @@ public class Walker {
                 "}";
 
         String formExpression = "form name {if(1+1) {tmp: \"yu\" boolean}}";
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
 
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -29,8 +30,9 @@ public class Walker {
         QLFormVisitor visitor = new QLFormVisitor();
         Form root = (Form) tree.accept(visitor);
 
-        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
-        root.accept(typeCheckVisitor);
+//        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
+        PrettyPrint prettyPrint = new PrettyPrint();
+        root.accept(prettyPrint);
 
     }
 }

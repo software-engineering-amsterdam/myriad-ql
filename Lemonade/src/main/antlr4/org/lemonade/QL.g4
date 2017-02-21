@@ -18,12 +18,12 @@ conditional
     ;
 
 type_specifier
-    : 'boolean'
-    | 'string'
-    | 'integer'
-    | 'date'
-    | 'decimal'
-    | 'currency'
+    : 'boolean'                     #booleanType
+    | 'string'                      #stringType
+    | 'integer'                     #integerType
+    | 'date'                        #dateType
+    | 'decimal'                     #decimalType
+    | 'money'                       #moneyType
     ;
 
 expr

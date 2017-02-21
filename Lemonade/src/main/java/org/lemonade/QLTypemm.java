@@ -1,6 +1,6 @@
 package org.lemonade;
 
-public enum QLType {
+public enum QLTypemm {
     BOOLEAN,
     STRING,
     INTEGER,

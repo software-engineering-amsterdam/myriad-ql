@@ -1,25 +1,29 @@
 package org.lemonade.nodes;
 
-import org.lemonade.nodes.expressions.Type;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 public class Question extends Block {
     private String identifier;
     private String label;
-    private Type type;
+    private QLType type;
 
-    public Question(String identifier, String label, Type type) {
+    public Question(String identifier, String label, QLType type) {
         super();
         this.identifier = identifier;
         this.label = label;
         this.type = type;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     public String getIdentifier() {
         return identifier;
     }
 
-    public Type getType() {
+    public QLType getType() {
         return type;
     }
 

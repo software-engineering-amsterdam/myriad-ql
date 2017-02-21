@@ -1,6 +1,7 @@
 package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -9,7 +10,8 @@ import org.lemonade.visitors.ASTVisitor;
 public class IntegerLit extends Literal {
     private int value;
 
-    public IntegerLit(String value) {
+    public IntegerLit(QLType type, String value) {
+        super(type);
         this.value = Integer.parseInt(value);
     }
 

@@ -1,6 +1,8 @@
 package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.types.QLStringType;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -9,7 +11,9 @@ import org.lemonade.visitors.ASTVisitor;
 public class IdentifierLit extends Literal {
     private String value;
 
-    public IdentifierLit(String value) {
+    public IdentifierLit(QLType type, String value) {
+        super(type);
+        assert type instanceof QLStringType;//TODO can we do this?
         this.value = value;
     }
 

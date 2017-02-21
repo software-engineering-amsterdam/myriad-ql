@@ -6,6 +6,7 @@ import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.*;
+import org.lemonade.nodes.types.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         System.err.println("entering question");
         String identifier = ctx.identifier().getText();
         String label = ctx.label().getText();
-        Type type = (Type) ctx.type_specifier().accept(this);
+        QLType type = (QLType) ctx.type_specifier().accept(this);
 
         return new Question(identifier, label, type);
     }
@@ -81,29 +82,29 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        return new BooleanLit(ctx.BOOLEAN().getText());
+        return new BooleanLit(new QLBooleanType(), ctx.BOOLEAN().getText());
     }
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringLit(ctx.STR().getText());
+        return new StringLit(new QLStringType(), ctx.STR().getText());
     }
 
     @Override
     public ASTNode visitIdentifierLiteral(QLParser.IdentifierLiteralContext ctx) {
-        return new IdentifierLit(ctx.IDENT().getText());
+        return new IdentifierLit(new QLStringType(), ctx.IDENT().getText());
     }
 
     @Override
     public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
         System.err.println("integer");
-        return new IntegerLit(ctx.INT().getText());
+        return new IntegerLit(new QLIntegerType(), ctx.INT().getText());
     }
 
     @Override
     public ASTNode visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
         System.err.println("decimal");
-        return new DecimalLit(ctx.DECIMAL().getText());
+        return new DecimalLit(new QLDecimalType(), ctx.DECIMAL().getText());
     }
 
     @Override
@@ -176,23 +177,33 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         return new OrBinary();
     }
 
-    @Override //FIXME switch met enums.. nein
-    public ASTNode visitType_specifier(QLParser.Type_specifierContext ctx) {
-        switch (ctx.getText()) {
-            case "boolean":
-                return new Type(QLType.BOOLEAN);
-            case "string":
-                return new Type(QLType.STRING);
-            case "integer":
-                return new Type(QLType.INTEGER);
-            case "date":
-                return new Type(QLType.DATE);
-            case "decimal":
-                return new Type(QLType.DECIMAL);
-            case "currency":
-                return new Type(QLType.CURRENCY);
-            default:
-                return null;//TODO find better way to handle this?
-        }
+    @Override
+    public ASTNode visitBooleanType(QLParser.BooleanTypeContext ctx) {
+        return new QLBooleanType();
+    }
+
+    @Override
+    public ASTNode visitStringType(QLParser.StringTypeContext ctx) {
+        return new QLStringType();
+    }
+
+    @Override
+    public ASTNode visitIntegerType(QLParser.IntegerTypeContext ctx) {
+        return new QLIntegerType();
+    }
+
+    @Override
+    public ASTNode visitDateType(QLParser.DateTypeContext ctx) {
+        return new QLDateType();
+    }
+
+    @Override
+    public ASTNode visitDecimalType(QLParser.DecimalTypeContext ctx) {
+        return new QLDecimalType();
+    }
+
+    @Override
+    public ASTNode visitMoneyType(QLParser.MoneyTypeContext ctx) {
+        return new QLMoneyType();
     }
 }
