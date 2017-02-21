@@ -13,19 +13,21 @@ package org.uva.hatt.taxform.grammars;
 form            : 'form' Identifier '{' items* '}';
 
 items           : question
-                | ifBlock elseBlock?;
+                | conditional;
 
 question        : StringLiteral Identifier ':' valueType computedValue?;
+conditional     : ifBlock elseBlock?;
 
 ifBlock         : 'if (' expression ') {' items* '}';
 elseBlock       : 'else {' items* '}';
 
 computedValue   : '=' expression;
 
-valueType       : 'boolean'
-                | 'integer'
-                | 'string'
-                | 'money';
+valueType       : 'boolean'                                                 # boolean
+                | 'integer'                                                 # integer
+                | 'string'                                                  # string
+                | 'money'                                                   # money
+                ;
 
 expression      : StringLiteral
                 | BooleanLiteral
@@ -33,7 +35,8 @@ expression      : StringLiteral
                 | Identifier
                 | '(' expression ')'
                 | Unary expression
-                | expression operator expression;
+                | expression operator expression
+                ;
 
 //operators in order of precedence from highest to lowest
 operator        : Unary
@@ -42,7 +45,8 @@ operator        : Unary
                 | Relational
                 | Equality
                 | ConditionalAND
-                | ConditionalOR;
+                | ConditionalOR
+                ;
 
 // Tokens
 WS              : (' ' | '\t' | '\n' | '\r')-> channel(HIDDEN);
