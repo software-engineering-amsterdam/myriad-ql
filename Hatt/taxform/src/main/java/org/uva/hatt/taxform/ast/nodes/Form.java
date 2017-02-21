@@ -1,12 +1,14 @@
 package org.uva.hatt.taxform.ast.nodes;
 
+import org.uva.hatt.taxform.ast.nodes.items.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Form extends ASTNode{
+public class Form extends ASTNode {
 
     private String formId;
-    private List<Question> questions;
+    private List<Item> questions;
 
     public Form(int lineNumber) {
         super(lineNumber);
@@ -21,11 +23,11 @@ public class Form extends ASTNode{
         this.formId = formId;
     }
 
-    public List<Question> getQuestions() {
+    public List<Item> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(List<Item> questions) {
         this.questions = questions;
     }
 

@@ -1,6 +1,9 @@
-package org.uva.hatt.taxform.ast.nodes;
+package org.uva.hatt.taxform.ast.nodes.items;
 
-public class Question extends ASTNode{
+import org.uva.hatt.taxform.ast.nodes.ASTNode;
+import org.uva.hatt.taxform.ast.nodes.types.ValueType;
+
+public class Question extends ASTNode implements Item{
 
     private String question;
     private String value;
