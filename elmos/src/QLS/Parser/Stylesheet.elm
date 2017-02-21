@@ -58,31 +58,6 @@ defaultValueConfig =
         <*> (whitespace1 *> configuration)
 
 
-
---
---
--- multiSectionChildBlock : Parser s (List SectionChild)
--- multiSectionChildBlock =
---     lazy <|
---         \() -> braces (trimmed (many sectionChild))
---
---
--- sectionChild : Parser s SectionChild
--- sectionChild =
---     lazy <|
---         \() -> subSection <|> field
---
---
--- subSection : Parser s SectionChild
--- subSection =
---     SubSection <$> section
---
---
--- field : Parser s SectionChild
--- field =
---     Field <$> question
-
-
 question : Parser s Question
 question =
     choice
@@ -92,16 +67,3 @@ question =
         , Question
             <$> (string "question" *> whitespace1 *> identifier)
         ]
-
-
-
---
---
--- configurations : Parser s a
--- configurations =
---     fail "To be implemented"
---
---
--- defaults : Parser s a
--- defaults =
---     fail "To be implemented"
