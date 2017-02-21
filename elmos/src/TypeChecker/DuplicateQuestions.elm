@@ -1,25 +1,22 @@
-module TypeChecker.DuplicateQuestions exposing (..)
+module TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 
 import AST exposing (..)
 import DictList exposing (DictList)
-import Maybe.Extra
 import List.Extra
+import Maybe.Extra
+import TypeChecker.CheckerUtil exposing (QuestionIndex, questionIndexFromBlock)
 import TypeChecker.Messages as Messages exposing (Message)
 
 
 -- TODO: Use DictSet instead of DictList?
 
 
-type alias QuestionIndex =
-    DictList String (List Location)
-
-
 type alias Duplicate =
     ( String, List Location )
 
 
-duplicateQuestionIdentifiers : Form -> List Message
-duplicateQuestionIdentifiers form =
+duplicateQuestions : Form -> List Message
+duplicateQuestions form =
     duplicateQuestionsInBlock (questionIndexFromBlock form.items) form.items
         |> mergeOverlappingDuplicates
         |> DictList.map Messages.duplicateQuestionDefinition
@@ -69,41 +66,6 @@ duplicateQuestionsInItem declaredQuestions formItem =
             (++)
                 (duplicateQuestionsInBlock declaredQuestions thenBranch)
                 (duplicateQuestionsInBlock declaredQuestions elseBranch)
-
-
-questionIndexFromBlock : Block -> QuestionIndex
-questionIndexFromBlock =
-    -- We want the first occurence of a question in the index, concat gives preference to the second which is why the list is reversed
-    List.map questionIndexFromItem >> List.reverse >> DictList.concat
-
-
-questionIndexFromItem : FormItem -> QuestionIndex
-questionIndexFromItem item =
-    case item of
-        Field _ ( id, loc ) _ ->
-            DictList.singleton id [ loc ]
-
-        ComputedField _ ( id, loc ) _ _ ->
-            DictList.singleton id [ loc ]
-
-        IfThen _ thenBranch ->
-            questionIndexFromBlock thenBranch
-
-        IfThenElse _ thenBranch elseBranch ->
-            mergeSharedQuestionDefinitions
-                (questionIndexFromBlock thenBranch)
-                (questionIndexFromBlock elseBranch)
-
-
-mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
-mergeSharedQuestionDefinitions indexA indexB =
-    DictList.merge
-        DictList.insert
-        (\questionId locationsInA locationsInB result -> DictList.insert questionId (locationsInA ++ locationsInB) result)
-        DictList.insert
-        indexA
-        indexB
-        DictList.empty
 
 
 duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate
