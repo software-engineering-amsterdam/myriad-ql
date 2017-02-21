@@ -1,7 +1,7 @@
 class GUIQuestionVisitor
   attr_accessor :questions
 
-  def initialize(ast, typechecker)
+  def initialize(ast, type_checker)
     @questions = Hash.new
     visit_form(ast)
   end
