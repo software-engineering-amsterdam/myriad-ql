@@ -27,13 +27,8 @@ def parse(input_string):
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
     # Reserved operators
-    multiplication_op = Literal("*").setResultsName("multiplication_operator")
-    divide_op = Literal("/").setResultsName("division_operator")
-    multiplication_division_ops = oneOf([multiplication_op, divide_op])
-
-    addition_op = Literal("+").setResultsName("addition_operator")
-    subtraction_op = Literal("-").setResultsName("subtraction_operator")
-    addition_subtraction_ops = oneOf([addition_op, subtraction_op])
+    multiplication_division_ops = oneOf(["*", "/"])
+    addition_subtraction_ops = oneOf(["+", "-"])
 
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
@@ -43,8 +38,8 @@ def parse(input_string):
 
     #TODO: Signop toevoegen
     arith_prec = [
-        (),
-        (),
+        (multiplication_division_ops, 2, opAssoc.LEFT, ),
+        (addition_subtraction_ops, 2, opAssoc.LEFT, ast.AddSub),
     ]
 
     #TODO: Not toevoegen
