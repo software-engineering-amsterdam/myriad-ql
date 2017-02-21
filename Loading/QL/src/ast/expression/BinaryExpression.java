@@ -27,11 +27,8 @@ public abstract class BinaryExpression extends Expression {
 		return rhs;
 	}
 	
-	public abstract Atom evaluate();
-	
 @Override 
 public void accept(Visitor v) {
 		v.visit(this);
-	
 	}
 }

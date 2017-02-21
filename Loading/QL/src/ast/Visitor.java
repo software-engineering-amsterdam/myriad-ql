@@ -53,6 +53,11 @@ public class Visitor {
 	public void visit(UnaryExpression unaryExpression) {
 		unaryExpression.getLhs().accept(this);
 	}
+	
+	public void visit(IdExpression id) {
+		System.out.println(id.getName());
+		
+	}
 
 	public void visit(BoolAtom boolAtom) {
 		System.out.println(boolAtom.getValue());
