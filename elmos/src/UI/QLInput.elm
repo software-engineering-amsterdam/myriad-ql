@@ -1,4 +1,4 @@
-module UI.FormDslInput exposing (Model, Msg, init, asForm, update, view)
+module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
 import Html exposing (Html, form, textarea, div, hr, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
