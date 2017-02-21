@@ -3,20 +3,17 @@ require 'require_all'
 
 require_rel '../ast'
 
-# variable
 class Transformer < Parslet::Transform
+  # variable
   rule(variable: simple(:variable)) { Variable.new(variable) }
-end
 
-# statement
-class Transformer < Parslet::Transform
+  # question
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'boolean'}) { Question.new(string, Variable.new(variable), BooleanType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'integer'}) { Question.new(string, Variable.new(variable), IntegerType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'money'}) { Question.new(string, Variable.new(variable), MoneyType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'string'}) { Question.new(string, Variable.new(variable), StringType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'decimal'}) { Question.new(string, Variable.new(variable), DecimalType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'date'}) { Question.new(string, Variable.new(variable), DateType.new) }
-
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'boolean', expression: subtree(:expression)}) { Question.new(string, Variable.new(variable), BooleanType.new, expression) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'integer', expression: subtree(:expression)}) { Question.new(string, Variable.new(variable), IntegerType.new, expression) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'money', expression: subtree(:expression)}) { Question.new(string, Variable.new(variable), MoneyType.new, expression) }
@@ -24,23 +21,16 @@ class Transformer < Parslet::Transform
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'decimal', expression: subtree(:expression)}) { Question.new(string, Variable.new(variable), DecimalType.new, expression) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'date', expression: subtree(:expression)}) { Question.new(string, Variable.new(variable), DateType.new, expression) }
 
+  # if statement
   rule(if_statement: {expression: subtree(:expression), block: subtree(:block)}) { IfStatement.new(expression, block) }
-end
 
-# literal
-class Transformer < Parslet::Transform
+  # literal
   rule(boolean: simple(:value)) { BooleanLiteral.new(value) }
   rule(integer: simple(:value)) { IntegerLiteral.new(value) }
   rule(string: simple(:value)) { StringLiteral.new(value) }
-end
 
-# form
-class Transformer < Parslet::Transform
+  # form
   rule(form: {variable: simple(:variable), block: subtree(:block)}) { Form.new(Variable.new(variable), block) }
-end
-
-# expression
-class Transformer < Parslet::Transform
 
   # negation: ! -
   rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(Variable.new(variable)) }
