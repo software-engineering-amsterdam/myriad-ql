@@ -1,6 +1,7 @@
 module UI.FormRenderer exposing (..)
 
-import Html exposing (Html, form, div, text, pre, hr)
+import Html exposing (Html, form, div, text, pre, hr, h3)
+import Html.Attributes exposing (class)
 import Dict
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
@@ -47,12 +48,24 @@ view model =
             FormUtil.activeFields model.env model.form
     in
         div
-            []
-            [ pre [] [ text <| String.join "\n" <| List.map toString <| Dict.toList model.env ]
-            , hr [] []
-            , form []
-                (List.map (viewField model) visibleFields)
+            [ class "row" ]
+            [ div [ class "col-md-6" ]
+                [ h3 [] [ text "Form: ", text (Tuple.first model.form.id) ]
+                , form []
+                    (List.map (viewField model) visibleFields)
+                ]
+            , div [ class "col-md-6" ]
+                [ h3 [] [ text "Result" ]
+                , environmentPreview model.env
+                ]
             ]
+
+
+environmentPreview : Environment -> Html msg
+environmentPreview env =
+    pre []
+        [ text <| String.join "\n" <| List.map toString <| Dict.toList env
+        ]
 
 
 viewField : Model -> VisibleField -> Html Msg
