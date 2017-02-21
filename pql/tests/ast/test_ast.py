@@ -100,6 +100,9 @@ class TestAst(unittest.TestCase):
         }
         """
         raise NotImplementedError('Test needs assertions')
+        # parse_result = parse(input_string).asList()
+        # print(parse_result[0])
+
 
     def test_ast_single_simple_assignment_reversed(self):
         input_string = """
@@ -108,6 +111,7 @@ class TestAst(unittest.TestCase):
         }
         """
         raise NotImplementedError('Test needs assertions')
+
 
     def test_ast_single_combi_assignment(self):
         input_string = """
