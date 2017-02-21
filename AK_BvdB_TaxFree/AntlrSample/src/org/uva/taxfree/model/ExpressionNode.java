@@ -27,17 +27,9 @@ public class ExpressionNode extends Node {
         return Evaluator.calculate(toString());
     }
 
-    public String getType() {
-        return mLeft.getType();
-    }
-
     @Override
     public String toString() {
         return "(" + mLeft.toString() + mOperator + mRight.toString() + ")";
-    }
-
-    public boolean isValid() {
-        return mLeft.getType().equals(mRight.getType());
     }
 
 }
