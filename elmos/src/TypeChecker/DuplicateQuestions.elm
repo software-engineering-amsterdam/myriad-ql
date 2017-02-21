@@ -7,7 +7,7 @@ import List.Extra
 import TypeChecker.Messages as Messages exposing (Message)
 
 
--- TODO: Use DictList instead of DictList?
+-- TODO: Use DictSet instead of DictList?
 
 
 type alias QuestionIndex =
@@ -55,11 +55,11 @@ duplicateQuestionsInItem : QuestionIndex -> FormItem -> List Duplicate
 duplicateQuestionsInItem declaredQuestions formItem =
     case formItem of
         Field _ questionId _ ->
-            duplicateQuestion declaredQuestions questionId
+            duplicateQuestionDeclarations declaredQuestions questionId
                 |> Maybe.Extra.maybeToList
 
         ComputedField _ questionId _ _ ->
-            duplicateQuestion declaredQuestions questionId
+            duplicateQuestionDeclarations declaredQuestions questionId
                 |> Maybe.Extra.maybeToList
 
         IfThen _ thenBranch ->
@@ -71,15 +71,10 @@ duplicateQuestionsInItem declaredQuestions formItem =
                 (duplicateQuestionsInBlock declaredQuestions elseBranch)
 
 
-{-| TODO only take the first definition .... Uses DictList.concat, if a block contains a duplicate, one of them is ignored
--}
 questionIndexFromBlock : Block -> QuestionIndex
 questionIndexFromBlock =
-    List.map questionIndexFromItem >> DictList.concat
-
-
-
--- List.foldl (\item -> questionIndexFromItem item |> DictList.union) DictList.empty
+    -- We want the first occurence of a question in the index, concat gives preference to the second which is why the list is reversed
+    List.map questionIndexFromItem >> List.reverse >> DictList.concat
 
 
 questionIndexFromItem : FormItem -> QuestionIndex
@@ -104,7 +99,7 @@ mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
 mergeSharedQuestionDefinitions indexA indexB =
     DictList.merge
         (\_ _ result -> result)
-        (\key itemA itemB result -> DictList.insert key (itemA ++ itemB) result)
+        (\questionId locationsInA locationsInB result -> DictList.insert questionId (locationsInA ++ locationsInB) result)
         (\_ _ result -> result)
         indexA
         indexB
@@ -115,15 +110,15 @@ mergeSharedQuestionDefinitions indexA indexB =
 -- TODO: These names are shit, they both check if it is a duplicate but they do it on a different level and only one of them creates the actuale duplciate
 
 
-duplicateQuestion : QuestionIndex -> Id -> Maybe Duplicate
-duplicateQuestion declaredQuestions question =
+duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate
+duplicateQuestionDeclarations declaredQuestions question =
     DictList.get (Tuple.first question) declaredQuestions
-        |> Maybe.andThen (duplicateQuestionDefinitions question)
+        |> Maybe.andThen (duplicateQuestion question)
 
 
-duplicateQuestionDefinitions : Id -> List Location -> Maybe Duplicate
-duplicateQuestionDefinitions ( id, location ) declaredQuestionLocations =
+duplicateQuestion : Id -> List Location -> Maybe Duplicate
+duplicateQuestion ( id, location ) declaredQuestionLocations =
     if List.member location declaredQuestionLocations then
         Nothing
     else
-        Just ( id, (location :: declaredQuestionLocations) )
+        Just ( id, declaredQuestionLocations ++ [ location ] )

@@ -60,7 +60,7 @@ questionIndexFromBlockTest =
                     [ Field "label" ( "x", loc 3 3 ) StringType
                     , Field "label" ( "x", loc 4 4 ) StringType
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 4 4 ])
+                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
         , test "no duplicate definitions in questionIndex for double ifthenelse blocks" <|
             \() ->
                 questionIndexFromBlock
@@ -71,7 +71,14 @@ questionIndexFromBlockTest =
                         [ Field "label" ( "x", loc 5 5 ) StringType ]
                         [ Field "label" ( "x", loc 7 7 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 5 5, loc 7 7 ])
+                    |> Expect.equal (DictList.singleton "x" [ loc 3 3, loc 4 4 ])
+        , test "put the first occurrence of a declaration in the questionIndex" <|
+            \() ->
+                questionIndexFromBlock
+                    [ Field "QuestionA" ( "x", loc 3 3 ) StringType
+                    , IfThen (Boolean emptyLoc True) [ Field "QuestionB" ( "x", loc 4 4 ) StringType ]
+                    ]
+                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
         ]
 
 
@@ -105,16 +112,6 @@ duplicateQuestionsTest =
                         ]
                     )
                     |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4 ]) ]
-        , test "find duplicate ignoring type" <|
-            \() ->
-                duplicateQuestionIdentifiers
-                    (Form
-                        ( "", emptyLoc )
-                        [ Field "StringQuestion" ( "x", loc 3 3 ) StringType
-                        , Field "MoneyQuestion" ( "x", loc 4 4 ) IntegerType
-                        ]
-                    )
-                    |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4 ]) ]
         , test "find duplicate in if block" <|
             \() ->
                 duplicateQuestionIdentifiers
@@ -125,7 +122,7 @@ duplicateQuestionsTest =
                         ]
                     )
                     |> Expect.equal [ Error (DuplicateQuestionDefinition "x" ([ loc 3 3, loc 4 4 ])) ]
-        , test "find duplicate in ifThenElse block" <|
+        , test "find duplicate in ifThenElse block and merge into a single message" <|
             \() ->
                 duplicateQuestionIdentifiers
                     (Form
