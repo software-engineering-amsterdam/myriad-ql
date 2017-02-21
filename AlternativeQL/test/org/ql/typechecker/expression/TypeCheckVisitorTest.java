@@ -299,6 +299,7 @@ public class TypeCheckVisitorTest {
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInNotEqual() throws Throwable {
         Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualNotEqual);
@@ -330,5 +331,14 @@ public class TypeCheckVisitorTest {
         Product actualProduct = new Product(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualProduct);
+    }
+
+    @Test
+    public void shouldReturnWhenIntegerTypeForSubtraction() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+
+        Type actualSubtractionType = visitor.visit(new Subtraction(new IntegerLiteral(12), new IntegerLiteral(4)));
+
+        assertTrue(actualSubtractionType instanceof IntegerType);
     }
 }
