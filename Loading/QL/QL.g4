@@ -45,12 +45,16 @@ statement returns [Statement result]
  ;
 
 parenthesisExpr returns [Expression result]
- : '(' expr ')' { $result = $expr.result; };
+ : '(' expr ')' { $result = $expr.result; }
+ | '(' atom ')' { $result = $atom.result;}
+ | atom { $result = $atom.result;}
+ ;
 
 expr returns [Expression result]
- :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
- | atom { $result = $atom.result; }
+ : lhs = parenthesisExpr (binOp rhs = parenthesisExpr)+ { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
+  | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
+ // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
+ // | atom { $result = $atom.result; }
  | ID { System.out.println($ID.text);
         $result = new IdExpression($ID.text); }
  ;

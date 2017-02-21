@@ -1,5 +1,7 @@
 package org.uva.taxfree.model;
 
+import java.util.Set;
+
 public class IfStatementNode extends Node {
     String mCondition;
     ExpressionNode mExpression;
@@ -16,6 +18,16 @@ public class IfStatementNode extends Node {
     protected boolean evaluateCondition() {
         assert mExpression != null;
         return mExpression.evaluate();
+    }
+
+    @Override
+    protected void addCondition(Set<Node> set) {
+        set.add(this);
+    }
+
+    @Override
+    public String getId() {
+        return mCondition;
     }
 
 }

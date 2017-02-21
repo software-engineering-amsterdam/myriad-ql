@@ -15,6 +15,7 @@ public class QuestionForm {
     }
 
     public void show() {
+        generateForm();
         mFormNode.setVisibility(true);
     }
 

@@ -1,15 +1,15 @@
-module UI.FormDataTests exposing (all)
+module EnvironmentTests exposing (all)
 
 import Dict
 import Expect
 import Test exposing (Test, describe, test, fuzz2)
-import UI.FormData as FormData exposing (..)
+import Environment as Env exposing (Environment)
 import Values
 import Fuzz exposing (string, bool, int)
 
 
-startingFormData : FormData
-startingFormData =
+startingEnvironment : Environment
+startingEnvironment =
     Dict.fromList
         [ ( "foo", Values.int 1 )
         , ( "bar", Values.string "Hello" )
@@ -19,54 +19,54 @@ startingFormData =
 
 all : Test
 all =
-    describe "UI.FormData"
+    describe "Environment"
         [ test "removeFields" <|
             \() ->
-                FormData.removeKeys [ "foo", "baz" ] startingFormData
+                Env.removeKeys [ "foo", "baz" ] startingEnvironment
                     |> Expect.equal (Dict.fromList [ ( "bar", Values.string "Hello" ) ])
         , test "getBoolean for existing value" <|
             \() ->
-                FormData.getBoolean "baz" startingFormData |> Expect.equal (Just True)
+                Env.getBoolean "baz" startingEnvironment |> Expect.equal (Just True)
         , test "getBoolean for missing value" <|
             \() ->
-                FormData.getBoolean "missing" startingFormData |> Expect.equal Nothing
+                Env.getBoolean "missing" startingEnvironment |> Expect.equal Nothing
         , test "getBoolean for wrong type" <|
             \() ->
-                FormData.getBoolean "foo" startingFormData |> Expect.equal Nothing
+                Env.getBoolean "foo" startingEnvironment |> Expect.equal Nothing
         , fuzz2 string bool "withString should always allow to lookup the value with a getString" <|
             \k v ->
-                startingFormData
-                    |> FormData.withBoolean k v
-                    |> FormData.getBoolean k
+                startingEnvironment
+                    |> Env.withBoolean k v
+                    |> Env.getBoolean k
                     |> Expect.equal (Just v)
         , test "getString for existing value" <|
             \() ->
-                FormData.getString "bar" startingFormData |> Expect.equal (Just "Hello")
+                Env.getString "bar" startingEnvironment |> Expect.equal (Just "Hello")
         , test "getString for missing value" <|
             \() ->
-                FormData.getString "missing" startingFormData |> Expect.equal Nothing
+                Env.getString "missing" startingEnvironment |> Expect.equal Nothing
         , test "getString for wrong type" <|
             \() ->
-                FormData.getString "foo" startingFormData |> Expect.equal Nothing
+                Env.getString "foo" startingEnvironment |> Expect.equal Nothing
         , fuzz2 string string "withString should always allow to lookup the value with a getString" <|
             \k v ->
-                startingFormData
-                    |> FormData.withString k v
-                    |> FormData.getString k
+                startingEnvironment
+                    |> Env.withString k v
+                    |> Env.getString k
                     |> Expect.equal (Just v)
         , test "getInteger for existing value" <|
             \() ->
-                FormData.getInteger "foo" startingFormData |> Expect.equal (Just 1)
+                Env.getInteger "foo" startingEnvironment |> Expect.equal (Just 1)
         , test "getInteger for missing value" <|
             \() ->
-                FormData.getInteger "missing" startingFormData |> Expect.equal Nothing
+                Env.getInteger "missing" startingEnvironment |> Expect.equal Nothing
         , test "getInteger for wrong type" <|
             \() ->
-                FormData.getInteger "baz" startingFormData |> Expect.equal Nothing
+                Env.getInteger "baz" startingEnvironment |> Expect.equal Nothing
         , fuzz2 string int "withInteger should always allow to lookup the value with a getInteger" <|
             \k v ->
-                startingFormData
-                    |> FormData.withInteger k v
-                    |> FormData.getInteger k
+                startingEnvironment
+                    |> Env.withInteger k v
+                    |> Env.getInteger k
                     |> Expect.equal (Just v)
         ]

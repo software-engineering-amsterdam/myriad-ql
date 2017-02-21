@@ -19,8 +19,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MainScreen mainScreen = new MainScreen();
-        mainScreen.initUI(primaryStage);
 
 
         String test = "form test {\"how old are you?\" first: integer\n " +
@@ -35,7 +33,10 @@ public class Main extends Application {
         QLVisitor visitor = new QLVisitor();
         visitor.visit(parseTree);
         Form form = visitor.getForm();
-        
+
+        MainScreen mainScreen = new MainScreen(form);
+        mainScreen.initUI(primaryStage);
+
         for (FormItem item : form.getFormItems()) {
             mainScreen.addFormItem(item);
             System.out.println(item);
@@ -47,4 +48,5 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException {
         launch(args);
     }
+
 }

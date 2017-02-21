@@ -18,7 +18,7 @@ class ParserTokens(object):
         "ELSE": pp.Keyword("else").setParseAction(lambda s, l, t: "@" + t[0])
     }
     TYPE = {
-        "BOOL": pp.Regex("true|false"),
+        "BOOLEAN": pp.Regex("true|false"),
         "INT": pp.Word(pp.nums),
         "VAR": pp.Word(pp.alphas, pp.alphanums + "_"),
         "DECIMAL": pp.Regex("([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)"),
@@ -28,6 +28,10 @@ class ParserTokens(object):
     }
     TYPE_NAME = pp.oneOf("boolean int string date decimal money")
 
+
+class ASTTokens(object):
+    TYPE = {name: name.lower() for name in ParserTokens.TYPE.keys()}
+
     # Relate operator strings to built-in functions for evaluation.
     MONOPS = {"-": operator.neg, "+": operator.pos, "!": operator.not_}
     BINOPS = {
@@ -35,4 +39,12 @@ class ParserTokens(object):
         "-": operator.sub, "<": operator.lt, "<=": operator.le,
         ">": operator.gt, ">=": operator.ge, "==": operator.eq,
         "!=": operator.ne, "&&": operator.and_, "||": operator.or_
+    }
+
+    # Specify types that can be combined in binops.
+    BINOP_COMBINED = {TYPE["INT"], TYPE["MONEY"], TYPE["DECIMAL"]}
+    MONOP_ALLOWED = {
+        "-": [TYPE["INT"], TYPE["MONEY"], TYPE["DECIMAL"]],
+        "+": [TYPE["INT"], TYPE["MONEY"], TYPE["DECIMAL"]],
+        "!": [TYPE["BOOLEAN"]]
     }

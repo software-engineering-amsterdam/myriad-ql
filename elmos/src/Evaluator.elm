@@ -1,4 +1,4 @@
-module Evaluator exposing (..)
+module Evaluator exposing (evaluate)
 
 import AST
     exposing
@@ -9,64 +9,80 @@ import AST
         , Comparison(Equal, NotEqual)
         )
 import Dict exposing (Dict)
-import Values exposing (Value(Undefined))
+import Environment exposing (Environment)
+import Values exposing (Value)
 
 
-evaluate : Dict String Value -> Expression -> Value
-evaluate data expression =
+evaluate : Environment -> Expression -> Value
+evaluate env expression =
     case expression of
-        Var x ->
-            Dict.get x data |> Maybe.withDefault Values.undefined
+        Var ( x, _ ) ->
+            Dict.get x env |> Maybe.withDefault Values.undefined
 
-        AST.Str str ->
+        AST.Str _ str ->
             Values.string str
 
-        AST.Integer integer ->
+        AST.Integer _ integer ->
             Values.int integer
 
-        AST.Boolean boolean ->
+        AST.Decimal _ float ->
+            Values.float float
+
+        AST.Boolean _ boolean ->
             Values.bool boolean
 
-        ParensExpression inner ->
-            evaluate data inner
+        ParensExpression _ inner ->
+            evaluate env inner
 
-        ArithmeticExpression op left right ->
+        ArithmeticExpression op _ left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
+
+                maybeIntegerPair =
+                    Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
+
+                maybeFloatPair =
+                    Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
+
+                ( intOperator, floatOperator ) =
+                    applicativeForOperator op
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
-                        Values.int (applicativeForOperator op l r)
+                case ( maybeIntegerPair, maybeFloatPair ) of
+                    ( Just ( l, r ), _ ) ->
+                        Values.int (intOperator l r)
+
+                    ( _, Just ( l, r ) ) ->
+                        Values.float (floatOperator l r)
 
                     _ ->
-                        Undefined
+                        Values.undefined
 
-        RelationExpression op left right ->
+        RelationExpression op _ left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Integer l, Values.Integer r ) ->
+                case Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue) of
+                    Just ( l, r ) ->
                         Values.bool (applicativeForRelation op l r)
 
                     _ ->
                         Values.undefined
 
-        LogicExpression op left right ->
+        LogicExpression op _ left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Boolean l, Values.Boolean r ) ->
@@ -75,13 +91,13 @@ evaluate data expression =
                     _ ->
                         Values.undefined
 
-        ComparisonExpression op left right ->
+        ComparisonExpression op _ left right ->
             let
                 leftValue =
-                    evaluate data left
+                    evaluate env left
 
                 rightValue =
-                    evaluate data right
+                    evaluate env right
             in
                 case ( leftValue, rightValue ) of
                     ( Values.Undefined, _ ) ->
@@ -94,23 +110,23 @@ evaluate data expression =
                         Values.bool (applicativeForComparison op a b)
 
 
-applicativeForOperator : Operator -> Int -> Int -> Int
+applicativeForOperator : Operator -> ( Int -> Int -> Int, Float -> Float -> Float )
 applicativeForOperator op =
     case op of
         Plus ->
-            (+)
+            ( (+), (+) )
 
         Minus ->
-            (-)
+            ( (-), (-) )
 
         Divide ->
-            (//)
+            ( (//), (/) )
 
         Multiply ->
-            (*)
+            ( (*), (*) )
 
 
-applicativeForRelation : Relation -> Int -> Int -> Bool
+applicativeForRelation : Relation -> comparable -> comparable -> Bool
 applicativeForRelation relation =
     case relation of
         LessThan ->
