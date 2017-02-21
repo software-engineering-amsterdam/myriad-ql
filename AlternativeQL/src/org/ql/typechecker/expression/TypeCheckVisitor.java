@@ -59,32 +59,40 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(NotEqual node) {
-        return null;
+    public Type visit(NotEqual node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
-    public Type visit(LogicalAnd node) {
-        return null;
+    public Type visit(LogicalAnd node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
-    public Type visit(LowerThan node) {
-        return null;
+    public Type visit(LowerThan node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
-    public Type visit(GreaterThanOrEqual node) {
-        return null;
+    public Type visit(GreaterThanOrEqual node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
-    public Type visit(Division node) {
-        return null;
+    public Type visit(Division node) throws Throwable {
+        return checkTypeMismatch(node);
     }
 
     @Override
-    public Type visit(Parameter node) {
+    public Type visit(Parameter node) throws Throwable {
         if (!definitions.containsKey(node.getId())) {
             throw new UndefinedIdentifierException(node.getId());
         }
@@ -98,13 +106,15 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Addition node) {
-        return null;
+    public Type visit(Addition node) throws Throwable {
+        return checkTypeMismatch(node);
     }
 
     @Override
-    public Type visit(GreaterThan node) {
-        return null;
+    public Type visit(GreaterThan node) throws Throwable {
+        checkTypeMismatch(node);
+
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
