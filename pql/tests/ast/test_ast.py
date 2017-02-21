@@ -161,6 +161,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('privateDebt', substraction_node.arguments[1])
         self.assertEqual('-', substraction_node.operator)
 
+#TODO: Aanpassen nadat precendence is opgelost
     def test_ast_single_combi_assignment_(self):
         input_string = """
         form taxOfficeExample {
@@ -229,11 +230,60 @@ class TestAst(unittest.TestCase):
         self.assertEqual('taxOfficeExample', form_node.name)
         self.assertEqual(1, len(form_node.children))
 
-        self.assertEqual('taxOfficeExample', form_node.name)
-        self.assertEqual(2, len(form_node.children))
+        conditional_node = form_node.children[0]
+        self.assertEqual('conditional', conditional_node.var_type)
+        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
 
-        field_node_1 = form_node.children[0]
-        field_node_1 = form_node.children[1]
+    def test_ast_if_with_expression_single_question(self):
+        input_string = """
+            form taxOfficeExample {
+                if (hasSoldHouse && hasBoughtHouse) {
+                    "What was the selling price?"        sellingPrice: money
+                }
+            }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        conditional_node = form_node.children[0]
+        self.assertEqual('conditional', conditional_node.var_type)
+        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+
+    def test_ast_if_with_complex_expression_single_question(self):
+        input_string = """
+            form taxOfficeExample {
+                if (hasSoldHouse && hasBoughtHouse || wantsToBuyHouse) {
+                    "What was the selling price?"        sellingPrice: money
+                }
+            }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        conditional_node = form_node.children[0]
+        self.assertEqual('conditional', conditional_node.var_type)
+        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
+
+    def test_ast_if_with_complex_expression_2_single_question(self):
+        input_string = """
+            form taxOfficeExample {
+                if (hasSoldHouse && hasBoughtHouse && wantsToBuyHouse) {
+                    "What was the selling price?"        sellingPrice: money
+                }
+            }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        conditional_node = form_node.children[0]
+        self.assertEqual('conditional', conditional_node.var_type)
+        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
 
     def test_ast_if_else_single_question(self):
         input_string = """

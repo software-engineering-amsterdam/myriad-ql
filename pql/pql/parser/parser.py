@@ -2,9 +2,7 @@
 # the needed methods from the pyparsing package
 from pyparsing import *
 from pql.ast import ast
-from pql.parser.BoolOperand import BoolOperand
-from pql.parser.BoolOperand import BoolAnd
-from pql.parser.BoolOperand import BoolOr
+
 
 
 def parse(input_string):
@@ -13,7 +11,7 @@ def parse(input_string):
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | number | identifier
-    bool_operand.setParseAction(BoolOperand)
+    bool_operand.setParseAction(ast.BoolOperand)
 
     # Reserved keywords
     form_lit = Suppress("form")
@@ -43,23 +41,18 @@ def parse(input_string):
     con_or_op = Literal("||")
     assign_op = Suppress("=")
 
+    #TODO: Signop toevoegen
     arith_prec = [
         (),
         (),
     ]
 
-    # arith_prec = [
-    #     (add_op, 2, opAssoc.LEFT, ast.Addition),
-    #     (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
-    #     (divide_op, 2, opAssoc.LEFT, ast.Division),
-    #     (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
-    # ]
-
+    #TODO: Not toevoegen
     bool_prec = [
         (rat_op, 2, opAssoc.LEFT),
         (eqal_op, 2, opAssoc.LEFT),
-        (con_and_op, 2, opAssoc.LEFT, BoolAnd),
-        (con_or_op, 2, opAssoc.LEFT, BoolOr),
+        (con_and_op, 2, opAssoc.LEFT, ast.BoolAnd),
+        (con_or_op, 2, opAssoc.LEFT, ast.BoolOr),
     ]
 
     # Arithmetic precedence
@@ -69,9 +62,10 @@ def parse(input_string):
     ).setResultsName('arithmetic_expr')
 
     bool_expr = infixNotation(
-        bool_operand,
+        bool_operand.setResultsName('boolean_operand'),
         (arith_prec + bool_prec)
-    )
+    ).setResultsName('boolean_expr')
+
     arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
 
     boolean_expr = bool_expr
@@ -84,6 +78,7 @@ def parse(input_string):
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
+    boolean_statement.setParseAction(lambda parsed_tokens: ast.Condition(*parsed_tokens))
 
     field_expr = \
         QuotedString('"', unquoteResults=True).setResultsName("title") + \
@@ -104,10 +99,8 @@ def parse(input_string):
             l_paren +
             boolean_statement +
             r_paren +
-            l_curly +
             statement_list +
-            r_curly +
-            Optional(else_lit + l_curly + statement_list + r_curly)
+            Optional(else_lit + l_curly + statement_list + r_curly).setResultsName('else_statement')
         ).setParseAction(ast.Conditional)
 
     statement = field_expr ^ if_stmt
