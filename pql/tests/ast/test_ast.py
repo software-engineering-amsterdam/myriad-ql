@@ -241,8 +241,13 @@ class TestAst(unittest.TestCase):
 
         condition_node = conditional_node.condition
 
-        self.assertEqual('conditional', conditional_node.var_type)
-        raise NotImplementedError('Test needs assertions')
+        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
+        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+
+        operand_node = condition_node.children[0]
+        self.assertEqual(0, len(operand_node.children))
+        self.assertEqual('hasSoldHouse', operand_node.label)
+
 
     def test_ast_if_with_expression_single_question(self):
         input_string = """
