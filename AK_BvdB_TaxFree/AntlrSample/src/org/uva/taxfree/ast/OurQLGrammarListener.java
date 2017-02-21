@@ -49,14 +49,14 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
         super.enterIfStatement(ctx);
-        Node ifStatementNode = new IfStatementNode(ctx.getText());
+        Node ifStatementNode = new IfStatementNode();
         addParentNodeToAst(ifStatementNode);
     }
 
     @Override
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
-        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText());
+        Node ifElseStatementNode = new IfElseStatementNode();
         addParentNodeToAst(ifElseStatementNode);
     }
 
@@ -80,28 +80,28 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.enterBooleanExpression(ctx);
-        Node booleanExpressionNode = new BooleanExpressionNode(ctx.getText(), ctx.operator.toString());
+        Node booleanExpressionNode = new BooleanExpressionNode(ctx.operator.toString());
         addParentNodeToAst(booleanExpressionNode);
     }
 
     @Override
     public void enterCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.enterCalculationExpression(ctx);
-        Node calculationExpressionNode = new CalculationExpressionNode(ctx.getText(), ctx.operator.toString());
+        Node calculationExpressionNode = new CalculationExpressionNode(ctx.operator.toString());
         addParentNodeToAst(calculationExpressionNode);
     }
 
     @Override
     public void enterUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
         super.enterUniformExpression(ctx);
-        Node uniformExpressionNode = new UniformExpressionNode(ctx.getText(), ctx.operator.toString());
+        Node uniformExpressionNode = new UniformExpressionNode(ctx.operator.toString());
         addParentNodeToAst(uniformExpressionNode);
     }
 
     @Override
     public void enterParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
         super.enterParenthesizedExpression(ctx);
-        Node parenthesizedExpression = new ParenthesizedExpressionNode(ctx.getText());
+        Node parenthesizedExpression = new ParenthesizedExpressionNode();
         addParentNodeToAst(parenthesizedExpression);
     }
 

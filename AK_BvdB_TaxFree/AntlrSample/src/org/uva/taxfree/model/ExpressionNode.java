@@ -1,13 +1,11 @@
 package org.uva.taxfree.model;
 
 public class ExpressionNode extends ConditionNode {
-    private final String mLabel;
     private Node mLeft;
     private String mOperator;
     private Node mRight;
 
-    public ExpressionNode(String label, String operator) {
-        mLabel = label;
+    public ExpressionNode(String operator) {
         mOperator = operator;
     }
 
