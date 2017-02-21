@@ -49,10 +49,12 @@ public class SemanticsAnalyzer {
     public List<String> getUndefinedQuestions() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedConditionIds = new LinkedHashSet<>();
-//        for (NamedNode conditionNode : getConditionIds()) {
-//            conditionNode.getId();
-//        }
-        return processedConditionIds;
+        for (String Id : getConditionIds()) {
+            if(!getQuestionIds().contains(Id)){
+                errorMessages.add("Unresolved condition in questions: " + Id);
+            }
+        }
+        return errorMessages;
     }
 
     private List<String> getQuestionIds() {
