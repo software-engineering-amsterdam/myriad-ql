@@ -8,9 +8,10 @@ import AST
         , Operator(Plus)
         , Location(Location)
         )
+import ASTTestUtil exposing (removeLocationFromBlock, removeLocationFromFormItem)
 import Expect
 import Parser.Form as Form
-import ParserTestUtil exposing (parseToMaybe, testWithParser, testWithParserAndMap, removeLocationFromBlock, removeLocationFromFormItem)
+import ParserTestUtil exposing (parseToMaybe, testWithParser, testWithParserAndMap)
 import Samples.Form as Samples
 import Test exposing (Test, describe, test)
 
