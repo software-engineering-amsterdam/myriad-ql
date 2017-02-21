@@ -6,12 +6,12 @@ from pql.ast import ast
 
 
 def parse(input_string):
-    identifier = Word(alphas, alphanums + '_')
+    identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
     number = Word(nums + ".")
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | number | identifier
-    bool_operand.setParseAction(ast.BoolOperand)
+    bool_operand.setParseAction(ast.BoolOperand).setResultsName('bool_operand')
 
     # Reserved keywords
     form_lit = Suppress("form")
@@ -88,25 +88,18 @@ def parse(input_string):
 
     statement_list = Forward()
     if_stmt = Forward()
-    if_stmt << \
-        Group(
-            if_lit +
-            l_paren +
-            boolean_statement +
-            r_paren +
-            statement_list +
-            Optional(else_lit + l_curly + statement_list + r_curly).setResultsName('else_statement')
-        ).setParseAction(ast.Conditional)
+    if_stmt << if_lit + l_paren + boolean_statement + r_paren + \
+            statement_list + \
+            Optional(else_lit + statement_list).setResultsName('else_statement')
+    if_stmt.setParseAction(ast.Conditional)
 
-    statement = field_expr ^ if_stmt
+    statement = field_expr | if_stmt
     statement_list <<= l_curly + ZeroOrMore(statement) + r_curly
     statement_list.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
+    statement_list.setResultsName('statement_list')
 
-    # Program
-    form = \
-        form_lit + \
-        identifier.setResultsName("form_identifier") + \
-        statement_list.setResultsName("form_statement_list")
+    # Form
+    form = form_lit + identifier + statement_list
     form.addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
     tokens = form.parseString(input_string)
     return tokens
