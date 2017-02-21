@@ -8,6 +8,15 @@ import QLS.Parser.Configuration exposing (configuration)
 import Parser.Form exposing (valueType)
 
 
+stylesheet : Parser s Stylesheet
+stylesheet =
+    trimmed
+        (Stylesheet
+            <$> (string "stylesheet" *> whitespace1 *> identifier)
+            <*> (whitespace1 *> (sepBy1 whitespace1 page))
+        )
+
+
 page : Parser s Page
 page =
     Page

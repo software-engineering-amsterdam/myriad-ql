@@ -34,6 +34,10 @@ all =
           , "color: #999"
           , Just (Color "#999")
           )
+        , ( "color with six hex digit"
+          , "color: #999999"
+          , Just (Color "#999999")
+          )
         , ( "color defaults"
           , "color: green"
           , Just (Color "green")

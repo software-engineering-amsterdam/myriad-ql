@@ -1,18 +1,94 @@
 module QLS.Parser.StylesheetTests exposing (all)
 
 import Test exposing (..)
-import QLS.Parser.Stylesheet exposing (page, section, question)
+import QLS.Parser.Stylesheet exposing (stylesheet, page, section, question)
 import ParserTestUtil exposing (testWithParser)
 import QLS.AST exposing (..)
-import AST exposing (Location(Location), ValueType(BooleanType))
+import AST exposing (Location(Location), ValueType(BooleanType, MoneyType))
 
 
 all : Test
 all =
     describe "Stylesheet"
-        [ pageTests
+        [ stylesheetTests
+        , pageTests
         , sectionTests
         , questionTests
+        ]
+
+
+stylesheetTests : Test
+stylesheetTests =
+    testWithParser stylesheet
+        "example stylesheet"
+        [ ( "stylesheet"
+          , """stylesheet taxOfficeExample
+  page Housing {
+    section "Buying"
+      question hasBoughtHouse
+        widget checkbox
+    section "Loaning"
+      question hasMaintLoan
+  }
+
+  page Selling {
+    section "Selling" {
+      question hasSoldHouse
+        widget radio("Yes", "No")
+      section "You sold a house" {
+        question sellingPrice
+          widget spinbox
+        question privateDebt
+          widget spinbox
+        question valueResidue
+        default money {
+          width: 400
+          font: "Arial"
+          fontsize: 14
+          color: #999999
+          widget spinbox
+        }
+      }
+    }
+    default boolean widget radio("Yes", "No")
+  }"""
+          , Just
+                { id = ( "taxOfficeExample", Location 1 11 )
+                , pages =
+                    [ { name = "Housing"
+                      , sections =
+                            [ SingleChildSection "Buying"
+                                (Field
+                                    (ConfiguredQuestion
+                                        ( "hasBoughtHouse", Location 3 14 )
+                                        (SingleConfig (WidgetConfig Checkbox))
+                                    )
+                                )
+                            , SingleChildSection "Loaning" (Field (Question ( "hasMaintLoan", Location 6 14 )))
+                            ]
+                      , defaults = []
+                      }
+                    , { name = "Selling"
+                      , sections =
+                            [ MultiChildSection "Selling"
+                                ([ Field (ConfiguredQuestion ( "hasSoldHouse", Location 11 14 ) (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))))
+                                 , SubSection
+                                    (MultiChildSection "You sold a house"
+                                        ([ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig (WidgetConfig Spinbox)))
+                                         , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig (WidgetConfig Spinbox)))
+                                         , Field (Question ( "valueResidue", Location 18 16 ))
+                                         , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999"), WidgetConfig Spinbox ])))
+                                         ]
+                                        )
+                                    )
+                                 ]
+                                )
+                            ]
+                      , defaults = [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
+                      }
+                    ]
+                }
+          )
         ]
 
 

@@ -4,7 +4,7 @@ import AST as QL exposing (ValueType, Id)
 
 
 type alias Stylesheet =
-    { name : Id
+    { id : Id
     , pages : List Page
     }
 

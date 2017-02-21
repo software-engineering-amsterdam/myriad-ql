@@ -25,7 +25,7 @@ stylePair f name valueParser =
 colorValueParser : Parser s String
 colorValueParser =
     choice
-        [ regex "#(\\d{3}|\\d{6})"
+        [ regex "#(\\d{6}|\\d{3})"
         , choice (List.map string defaultColors)
         ]
 
