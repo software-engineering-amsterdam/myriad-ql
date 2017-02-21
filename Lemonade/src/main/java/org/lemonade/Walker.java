@@ -19,8 +19,8 @@ public class Walker {
                 " if(true) { tmp2: \"ja?\"boolean}" +
                 "}";
 
-        String formExpression = "form name {if(1+1) {tmp: \"yu\" boolean}}";
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
+        String formExpression = "form name {if(\"bla\"<\"bla\") {tmp: \"yu\" boolean}}";
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
 
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -30,9 +30,9 @@ public class Walker {
         QLFormVisitor visitor = new QLFormVisitor();
         Form root = (Form) tree.accept(visitor);
 
-//        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
+        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         PrettyPrint prettyPrint = new PrettyPrint();
-        root.accept(prettyPrint);
+        root.accept(typeCheckVisitor);
 
     }
 }

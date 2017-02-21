@@ -3,7 +3,7 @@ package org.lemonade.nodes.types;
 /**
  *
  */
-public class QLDateType extends QLType {
+public class QLDateType extends QLType implements QLComparableType {
     public QLDateType() {
     }
 
