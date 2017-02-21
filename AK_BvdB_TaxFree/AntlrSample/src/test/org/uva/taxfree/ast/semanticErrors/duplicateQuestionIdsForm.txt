@@ -1,0 +1,10 @@
+form houseForm {
+    "Did you sell a house?" ->
+        hasSoldHouse  : boolean
+    "Did you buy a house?" ->
+        hasSoldHouse  : boolean
+    "Where you home?" ->
+        wasHome  : boolean
+    "Where you at school?" ->
+        wasHome  : boolean
+}
