@@ -59,5 +59,5 @@ public abstract class Node {
         return this.getClass().toString();
     }
 
-    public abstract String getId();
+    public abstract String toString();
 }

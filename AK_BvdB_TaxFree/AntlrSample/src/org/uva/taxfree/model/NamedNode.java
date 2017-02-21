@@ -37,7 +37,7 @@ public abstract class NamedNode extends Node {
 
     protected abstract void fillPanel(JPanel parent);
 
-    public String getId() {
+    public String toString() {
         return mId;
     }
 

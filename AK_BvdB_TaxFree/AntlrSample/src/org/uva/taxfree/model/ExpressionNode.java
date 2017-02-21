@@ -2,8 +2,8 @@ package org.uva.taxfree.model;
 
 public class ExpressionNode extends Node {
     private Node mLeft;
-    private Node mRight;
     private String mOperator;
+    private Node mRight;
 
     public ExpressionNode(String label) {
 
@@ -14,11 +14,12 @@ public class ExpressionNode extends Node {
     }
 
     @Override
-    public String getId() {
-        return mLeft.getId() + mOperator + mRight.getId();
+    public String toString() {
+        return "(" + mLeft.toString() + mOperator + mRight.toString() + ")";
     }
 
     public boolean isValid() {
         return mLeft.getType().equals(mRight.getType());
     }
+
 }

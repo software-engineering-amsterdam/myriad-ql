@@ -61,7 +61,7 @@ public class SemanticsAnalyzer {
     private List<String> getQuestionIds() {
         List<String> ids = new ArrayList<>();
         for (NamedNode namedNode : mAst.getQuestions()) {
-            ids.add(namedNode.getId());
+            ids.add(namedNode.toString());
         }
         return ids;
     }
@@ -69,7 +69,7 @@ public class SemanticsAnalyzer {
     private List<String> getConditionIds() {
         List<String> ids = new ArrayList<>();
         for (Node node : mAst.getConditions()) {
-            ids.add(node.getId());
+            ids.add(node.toString());
         }
         return ids;
     }
