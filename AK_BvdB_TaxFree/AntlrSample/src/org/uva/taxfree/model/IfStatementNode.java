@@ -18,4 +18,8 @@ public class IfStatementNode extends Node {
         return mExpression.evaluate();
     }
 
+    @Override
+    public String getId() {
+        return mCondition;
+    }
 }

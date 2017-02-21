@@ -1,15 +1,7 @@
 package org.uva.taxfree.model;
 
-public class IfElseStatementNode extends Node {
-    IfStatementNode mIfNode;
-
+public class IfElseStatementNode extends IfStatementNode {
     public IfElseStatementNode(String label) {
-        super();
+        super(label);
     }
-
-    public void registerCondition(IfStatementNode condition) {
-        mIfNode = condition;
-    }
-
-    // setVisibility =>
 }
