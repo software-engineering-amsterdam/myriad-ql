@@ -11,13 +11,28 @@ public class IfStatementNode extends Node {
         mCondition = new String(condition);
     }
 
-    public void addExpression(ExpressionNode child) {
-        mExpression = child;
+    @Override
+    public void addChild(Node node) {
+        if (mExpression == null) {
+            setCondition((ExpressionNode)node);
+        } else {
+            super.addChild(node);
+        }
     }
 
-    protected boolean evaluateCondition() {
+    public void setCondition(ExpressionNode condition) {
+        mExpression = condition;
+    }
+
+    protected boolean isTrue() {
         assert mExpression != null;
-        return mExpression.evaluate();
+        return ("true" == mExpression.evaluate());
+    }
+
+    @Override
+    public void setVisibility(boolean isVisible) {
+        System.out.println("I evaluate to " + isTrue());
+        super.setVisibility(isTrue());
     }
 
     @Override
@@ -26,7 +41,7 @@ public class IfStatementNode extends Node {
     }
 
     @Override
-    public String getId() {
+    public String toString() {
         return mCondition;
     }
 

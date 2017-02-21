@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.StringProperty;
 
@@ -11,41 +12,62 @@ import java.util.List;
  */
 public class Condition implements FormItem {
     private List<FormItem> formItems;
-    private String expression;
-
+    /* can be empty if no elseBlock is specified */
+    private List<FormItem> elseBlockItems;
+    private BooleanExpression expression;
+    private MainScreen screen;
 
     public Condition() {
         this.formItems = new ArrayList<>();
+        this.elseBlockItems = new ArrayList<>();
     }
 
     public List<FormItem> getFormItems() {
         return formItems;
     }
 
+    public List<FormItem> getElseBlockItems() {
+        return elseBlockItems;
+    }
+
     public void addFormItem(FormItem item) {
         this.formItems.add(item);
     }
 
-    public String getExpression() {
-        return expression;
+    public void addElseBlockItem(FormItem item) {
+        this.elseBlockItems.add(item);
     }
 
-    public void setExpression(String expression) {
+    public void setExpression(BooleanExpression expression) {
         this.expression = expression;
+    }
+
+    public boolean evaluateExpression() {
+        expression.evaluate();
+        return expression.getValue() != null && expression.getValue().getValue();
     }
 
     @Override
     public StringProperty getStringValueProperty() {
-        return null;
+        return null; //This item is not intended to be shown by itself
     }
 
     @Override
-    public void idChanged(String id, String value) {
-        formItems.forEach(item -> item.idChanged(id, value));
+    public void idChanged(Form root, String id, String value) {
+        expression.idChanged(id, value);
+        screen.showCondition(this);
+        formItems.forEach(item -> item.idChanged(root, id, value));
+        elseBlockItems.forEach(item -> item.idChanged(root, id, value));
     }
 
     @Override
     public void show(MainScreen screen) {
-        screen.showCondtion(this);
+        this.screen = screen;
+        screen.showCondition(this);
+    }
+
+    @Override
+    public String toString() {
+        return "<Condition>: " + expression;
     }
 }

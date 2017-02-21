@@ -25,21 +25,12 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitQuestion(QLParser.QuestionContext ctx) {
-		String question = ctx.STR().toString();
-		ID id 			= new ID(ctx.ID().toString());
-		Atom.Type type 	= Atom.Type.valueOf(ctx.TYPE().toString());
-
-		return new Question(question, id, type);
-	}
-
-	@Override 
-	public Node visitCalcQuestion(QLParser.CalcQuestionContext ctx) {
 		String question 		= ctx.STR().toString();
-		ID id 					= new ID(ctx.ID().toString());
+		Atom<String> id 		= new Atom<String>(Atom.Type.ID, ctx.ID().toString());
 		Atom.Type type 			= Atom.Type.valueOf(ctx.TYPE().toString());
-		Expression expression	= (Expression) visit(ctx.expression());
+		Expression expression	= ctx.expression() != null ? (Expression) visit(ctx.expression()) : null;
 		
-		return new CalcQuestion(question, id, type, expression);
+		return new Question(question, id, type, expression);
 	}
 
 	@Override 
@@ -68,41 +59,38 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		
 		return new ConditionalBlock(expression, form_elements);
 	}
-	
-	@Override 
-	public Node visitRelExpr(QLParser.RelExprContext ctx) {
-		//System.out.println(visit(ctx.equals());
-		return new BoolExpression();
-	}
-
-	@Override 
-	public Node visitBoolExpr(QLParser.BoolExprContext ctx) {
-		return new BoolExpression();
-	}
 
 	@Override 
 	public Node visitParenExpr(QLParser.ParenExprContext ctx) {
-		return new Expression();
+		return visit(ctx.expression());
+	}	
+	
+	@Override 
+	public Node visitNotExpr(QLParser.NotExprContext ctx) {
+		Expression expression = (Expression) visit(ctx.expression());
+		
+		return new NotExpression(expression);
 	}	
 	
 	@Override 
 	public Node visitOpExpr(QLParser.OpExprContext ctx) {
-		System.out.println(visit(ctx.left));
-		System.out.println(ctx.op.getText());
-		System.out.println(visit(ctx.right));
+		Expression left  = (Expression) visit(ctx.left);
+		Expression right = (Expression) visit(ctx.right);
+		String operator  = ctx.op.getText();
 		
-		return new OpExpression();
+		return new OpExpression(left, right, operator);
 	}
 
 	@Override 
 	public Node visitIdAtom(QLParser.IdAtomContext ctx) {
+		Atom.Type type = Atom.Type.ID;
+		String value = ctx.atom.getText();
 		
-		return new ID("test");
+		return new Atom<String>(type, value);
 	}
 
 	@Override 
 	public Node visitIntAtom(QLParser.IntAtomContext ctx) {
-		//System.out.println(ctx.getText());
 		Atom.Type type = Atom.Type.INTEGER;
 		Integer value = Integer.parseInt(ctx.atom.getText());	
 		
@@ -112,7 +100,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitStrAtom(QLParser.StrAtomContext ctx) {
 		Atom.Type type = Atom.Type.STRING;
-		String value = "teststring";
+		String value = ctx.atom.getText();
 		
 		return new Atom<String>(type, value);
 	}
@@ -120,7 +108,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitBoolAtom(QLParser.BoolAtomContext ctx) {
 		Atom.Type type = Atom.Type.BOOLEAN;
-		Boolean value = true;
+		Boolean value = Boolean.valueOf(ctx.atom.getText());
 		
 		return new Atom<Boolean>(type, value);
 	}

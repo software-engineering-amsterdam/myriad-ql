@@ -1,11 +1,13 @@
 package sc.ql.model;
 
-public class Atom<T> implements Node {
+import sc.ql.model.Expressions.Expression;
+
+public class Atom<T> extends Expression {
 	private final Type type;
 	private final T value;
 	
 	public enum Type {
-		BOOLEAN, DATE, FLOAT, INTEGER, MONEY, STRING;
+		ID, BOOLEAN, DATE, FLOAT, INTEGER, MONEY, STRING;
 	}
 	
 	public Atom(Type type, T value) {

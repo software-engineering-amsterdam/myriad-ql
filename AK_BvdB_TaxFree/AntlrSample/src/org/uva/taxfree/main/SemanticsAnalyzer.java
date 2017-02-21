@@ -15,13 +15,17 @@ public class SemanticsAnalyzer {
     /*
      * UNDEFINES - reference to undefined questions // TODO
      *   if (nonExists) etc.
-     * DUPLICATE-QUESTIONS - duplicate question declarations with different types
+     * // DUPLICATE-QUESTIONS - duplicate question declarations with different types
      *  "Question?" -> varName : boolean
      *  "Question2?" -> varName : string
      * WRONGCONDITIONS - conditions that are not of the type boolean // TODO
      * WRONGCONDITIONS - operands of invalid type to operators // TODO
      * IFELSERECURSION - cyclic dependencies between questions // TODO
      * // DUPLICATE-LABELS - duplicate labels (warning)
+     *
+     * TODO:
+     * - Check | if ("")
+     * - Check | if (1)
      */
 
     public SemanticsAnalyzer(Ast ast) {
@@ -55,7 +59,7 @@ public class SemanticsAnalyzer {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionIds = new LinkedHashSet<>();
         for (NamedNode questionNode : mAst.getQuestions()) {
-            String questionId = questionNode.getId();
+            String questionId = questionNode.toString();
             if (!processedQuestionIds.add(questionId)) {
                 errorMessages.add("Duplicate question declaration found: " + questionId);
             }
@@ -78,7 +82,7 @@ public class SemanticsAnalyzer {
     private List<String> getQuestionIds() {
         List<String> ids = new ArrayList<>();
         for (NamedNode namedNode : mAst.getQuestions()) {
-            ids.add(namedNode.getId());
+            ids.add(namedNode.toString());
         }
         return ids;
     }
@@ -86,7 +90,7 @@ public class SemanticsAnalyzer {
     private List<String> getConditionIds() {
         List<String> ids = new ArrayList<>();
         for (Node node : mAst.getConditions()) {
-            ids.add(node.getId());
+            ids.add(node.toString());
         }
         return ids;
     }

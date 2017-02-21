@@ -1,28 +1,46 @@
 package org.uva.taxfree.model;
 
-public class ExpressionNode extends Node {
+import org.uva.taxfree.util.Evaluator;
+
+import javax.script.ScriptException;
+
+public class ExpressionNode extends ConditionNode {
     private Node mLeft;
-    private Node mRight;
     private String mOperator;
+    private Node mRight;
 
-    public ExpressionNode(String label) {
-
-    }
-
-    public boolean evaluate() {
-        return true;
-    }
-
-    public String getType() {
-        return mLeft.getType();
+    public ExpressionNode(String operator) {
+        mOperator = operator;
     }
 
     @Override
-    public String getId() {
-        return mLeft.getId() + mOperator + mRight.getId();
+    public void addChild(Node node) {
+        if (mLeft == null) {
+            mLeft = node;
+        } else if (mRight == null) {
+            mRight = node;
+        } else {
+            // Error handling!
+        }
     }
 
-    public boolean isValid() {
-        return mLeft.getType().equals(mRight.getType());
+    public String evaluate() {
+        try {
+            return tryEvaluate();
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            throw new RuntimeException("An error occurred whilst evaluating " + toString());
+        }
     }
+
+    // Allows the typeChecker to perform a testrun on all expressions.
+    public String tryEvaluate() throws ScriptException {
+        return Evaluator.calculate(toString());
+    }
+
+    @Override
+    public String toString() {
+        return "(" + mLeft.toString() + mOperator + mRight.toString() + ")";
+    }
+
 }

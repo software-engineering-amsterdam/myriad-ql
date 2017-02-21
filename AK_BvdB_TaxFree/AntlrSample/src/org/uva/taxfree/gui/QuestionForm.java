@@ -24,7 +24,7 @@ public class QuestionForm {
     }
 
     private void generateForm() {
-        mFrame = new JFrame(mFormNode.getId());
+        mFrame = new JFrame(mFormNode.toString());
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mFrame.add(createComponents());
         mFrame.pack();
@@ -41,8 +41,8 @@ public class QuestionForm {
     }
 
     private void fillWidgetPanel(JPanel parentPanel) {
-        for (Node q : extractQuestions()) {
-            parentPanel.add(((NamedNode) q).getWidget());
+        for (NamedNode q : extractQuestions()) {
+            parentPanel.add(q.getWidget());
         }
     }
 
@@ -52,4 +52,7 @@ public class QuestionForm {
         return questions;
     }
 
+    public void updateVisibility() {
+        mFormNode.setVisibility(true);
+    }
 }

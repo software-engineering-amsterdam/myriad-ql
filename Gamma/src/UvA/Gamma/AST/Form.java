@@ -9,15 +9,19 @@ import java.util.List;
 public class Form implements ASTNode {
     private List<FormItem> formItems;
 
-    public Form(){
+    public Form() {
         formItems = new ArrayList<>();
     }
 
-    public void addFormItem(FormItem item){
+    public void addFormItem(FormItem item) {
         formItems.add(item);
     }
 
     public List<FormItem> getFormItems() {
         return formItems;
+    }
+
+    public void idChanged(String id, String newValue) {
+        formItems.forEach(item -> item.idChanged(this, id, newValue));
     }
 }
