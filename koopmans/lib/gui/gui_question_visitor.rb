@@ -1,9 +1,5 @@
 require 'tk'
 require 'pp'
-require 'require_all'
-
-require_rel '../ast'
-require_rel '/'
 
 class GUIQuestionVisitor
   attr_accessor :questions
