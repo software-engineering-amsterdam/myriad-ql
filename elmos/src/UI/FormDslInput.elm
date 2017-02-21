@@ -70,17 +70,22 @@ update msg _ =
 view : Model -> Html Msg
 view (Model rawText parsedForm) =
     div []
-        [ form [ class "form" ]
-            [ textarea
-                [ defaultValue rawText
-                , rows 20
-                , cols 80
-                , class "form-control"
-                , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
-                , onInput OnDslInput
+        [ div [ class "row" ]
+            [ div [ class "col-md-6" ]
+                [ form [ class "form" ]
+                    [ textarea
+                        [ defaultValue rawText
+                        , rows 20
+                        , cols 45
+                        , class "form-control"
+                        , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
+                        , onInput OnDslInput
+                        ]
+                        []
+                    ]
                 ]
-                []
+            , div [ class "col-md-6" ]
+                [ text "TypeChecker" ]
             ]
-        , hr [] []
         , pre [] [ text <| toString parsedForm ]
         ]

@@ -1,61 +1,21 @@
 module TypeChecker.BadReferencesTests exposing (all)
 
+import AST exposing (..)
+import ASTTestUtil exposing (emptyLoc, loc)
 import TypeChecker.BadReferences exposing (badReferences)
+import TypeChecker.Messages exposing (Message, referenceToUndefinedQuestion)
 import Parser.Form exposing (form)
 import Test exposing (..)
 import ParserTestUtil exposing (parseToMaybe)
-import Set
 import Expect
 
 
-badReferencesExample1 : String
-badReferencesExample1 =
-    """form taxOfficeExample {
-        if (hasSoldHouse) {
-            "What was the selling price?"
-            sellingPrice: money
-        }
-      }"""
-
-
-badReferencesExample2 : String
-badReferencesExample2 =
-    """form taxOfficeExample {
-        "What was the selling price?"
-        sellingPrice: money = price * 2
-      }"""
-
-
-badReferencesExample3 : String
-badReferencesExample3 =
-    """form taxOfficeExample {
-        if(true){
-          if(true){
-              "Question ?"
-              y: integer = sellingPrice
-          }
-        }
-      }"""
-
-
-badReferencesExample4 : String
-badReferencesExample4 =
-    """form taxOfficeExample {
-        if(true){
-            "Question ?"
-            y: integer = sellingPrice
-        }else{
-            "QuestionB ?"
-            y: integer = sellingPrice
-        }
-
-        if(true){
-          if(true){
-            "Question C>"
-            y: integer = sellingPrice
-          }
-        }
-      }"""
+all : Test
+all =
+    describe "BadReferences"
+        [ testExamplesWithoutBadRefences
+        , testBadReferences
+        ]
 
 
 goodExample1 : String
@@ -159,36 +119,53 @@ goodExample6 =
     }"""
 
 
-all : Test
-all =
-    describe "BadReferences"
-        [ testExamplesWithoutBadRefences
-        , testFindBadReferences
-        ]
-
-
-testFindBadReferences : Test
-testFindBadReferences =
-    describe "testFindBadReferences"
-        [ parseAndFindExpectedBadReferences "Bad reference in If block" badReferencesExample1 (Set.fromList [ "hasSoldHouse" ])
-        , parseAndFindExpectedBadReferences "Bad reference in question" badReferencesExample2 (Set.fromList [ "price" ])
-        , parseAndFindExpectedBadReferences "Bad reference in nested If block" badReferencesExample3 (Set.fromList [ "sellingPrice" ])
+testBadReferences : Test
+testBadReferences =
+    describe "testBadReferences"
+        [ test "bad reference in If block" <|
+            \() ->
+                badReferences
+                    (Form
+                        ( "", emptyLoc )
+                        [ IfThen (Var ( "x", loc 1 1 )) [] ]
+                    )
+                    |> Expect.equal [ referenceToUndefinedQuestion ( "x", loc 1 1 ) ]
+        , test "bad reference in ComputedField" <|
+            \() ->
+                badReferences
+                    (Form
+                        ( "", emptyLoc )
+                        [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 1 1 )) ]
+                    )
+                    |> Expect.equal [ referenceToUndefinedQuestion ( "x", loc 1 1 ) ]
+        , test "bad reference in ComputedField" <|
+            \() ->
+                badReferences
+                    (Form
+                        ( "", emptyLoc )
+                        [ IfThen (Boolean emptyLoc True)
+                            [ IfThen (Boolean emptyLoc True)
+                                [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 3 3 )) ]
+                            ]
+                        ]
+                    )
+                    |> Expect.equal [ referenceToUndefinedQuestion ( "x", loc 3 3 ) ]
         ]
 
 
 testExamplesWithoutBadRefences : Test
 testExamplesWithoutBadRefences =
     describe "testExamplesWithoutBadRefences"
-        [ parseAndFindExpectedBadReferences "Order of definition/usage should not matter 1" goodExample1 Set.empty
-        , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 2" goodExample2 Set.empty
-        , parseAndFindExpectedBadReferences "Order of definition/usage should not matter 3" goodExample3 Set.empty
-        , parseAndFindExpectedBadReferences "Should not find any undefined used vars" goodExample4 Set.empty
-        , parseAndFindExpectedBadReferences "Should not find any undefined used vars in nested example" goodExample5 Set.empty
-        , parseAndFindExpectedBadReferences "Should not find any undefined used vars in complex nested example" goodExample6 Set.empty
+        [ parseAndFindExpectedBadReferences "order of definition/usage should not matter 1" goodExample1 []
+        , parseAndFindExpectedBadReferences "order of definition/usage should not matter 2" goodExample2 []
+        , parseAndFindExpectedBadReferences "order of definition/usage should not matter 3" goodExample3 []
+        , parseAndFindExpectedBadReferences "should not find any bad references" goodExample4 []
+        , parseAndFindExpectedBadReferences "should not find any bad references in nested example" goodExample5 []
+        , parseAndFindExpectedBadReferences "should not find any bad references in complex nested example" goodExample6 []
         ]
 
 
-parseAndFindExpectedBadReferences : String -> String -> Set.Set String -> Test
+parseAndFindExpectedBadReferences : String -> String -> List Message -> Test
 parseAndFindExpectedBadReferences message input expectedBadReferences =
     test message <|
         \() ->
@@ -196,6 +173,6 @@ parseAndFindExpectedBadReferences message input expectedBadReferences =
                 |> Expect.equal (Just (expectedBadReferences))
 
 
-parseAndGetBadReferences : String -> Maybe (Set.Set String)
+parseAndGetBadReferences : String -> Maybe (List Message)
 parseAndGetBadReferences rawForm =
     Maybe.map badReferences (parseToMaybe form rawForm)
