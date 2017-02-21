@@ -32,6 +32,14 @@ class GUIQuestion
     {@label => value}
   end
 
+  def reload
+    check_condition
+  end
+
+  def check_condition
+    @condition.eval ? enable : disable if @condition
+  end
+
   def disable
     @frame.grid_remove
     @enabled = false
@@ -40,14 +48,6 @@ class GUIQuestion
   def enable
     @frame.grid
     @enabled = true
-  end
-
-  def reload
-    check_condition
-  end
-
-  def check_condition
-    @condition.eval ? enable : disable if @condition
   end
 
   def create_label
