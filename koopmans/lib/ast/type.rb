@@ -1,8 +1,6 @@
-require_relative '../helper'
 require 'parslet'
 
 class Type
-  extend Helper
 end
 
 class BooleanType < Type
