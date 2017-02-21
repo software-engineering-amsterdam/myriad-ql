@@ -1,6 +1,5 @@
 package org.ql.typechecker.expression;
 
-import org.ql.ast.Identifier;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.Visitor;
@@ -15,14 +14,12 @@ import org.ql.typechecker.exception.TypeMismatchException;
 import org.ql.typechecker.exception.UnexpectedTypeException;
 import org.ql.typechecker.exception.UndefinedIdentifierException;
 
-import java.util.Map;
-
 public class TypeCheckVisitor implements Visitor<Type> {
 
-    private final Map<Identifier, Type> definitions;
+    private final SymbolTable symbolTable;
 
-    public TypeCheckVisitor(Map<Identifier, Type> definitions) {
-        this.definitions = definitions;
+    public TypeCheckVisitor(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
     }
 
     @Override
@@ -93,11 +90,11 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Parameter node) throws Throwable {
-        if (!definitions.containsKey(node.getId())) {
+        if (!symbolTable.containsKey(node.getId())) {
             throw new UndefinedIdentifierException(node.getId());
         }
 
-        return node.accept(this);
+        return symbolTable.get(node.getId());
     }
 
     @Override

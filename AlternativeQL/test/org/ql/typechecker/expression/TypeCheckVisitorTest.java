@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 public class TypeCheckVisitorTest {
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowExceptionWhenNegationAppliedOnNonBoolean() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Negation negation = new Negation(new StringLiteral("example string"));
 
         visitor.visit(negation);
@@ -32,7 +32,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeWhenNegationHasABooleanLiteral() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Negation negation = new Negation(new BooleanLiteral(true));
 
         Type actualNegationType = visitor.visit(negation);
@@ -42,7 +42,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnLiteralTypes() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualStringType = visitor.visit(new StringLiteral("example"));
         Type actualFloatType = visitor.visit(new DecimalLiteral(new BigDecimal(4.5)));
@@ -57,7 +57,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnIntegerLiteralWhenIncrementAppliedOnInteger() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualIntegerType = visitor.visit(new Increment(new IntegerLiteral(3)));
 
@@ -66,7 +66,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnFloatWhenIncrementAppliedOnFloat() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualFloatType = visitor.visit(new Increment(new DecimalLiteral(new BigDecimal(10.40))));
 
@@ -75,14 +75,14 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = UnexpectedTypeException.class)
     public void shouldThrowUnexpectedTypeExceptionWhenIncrementAppliedOnNonIntegerOrFloat() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         visitor.visit(new Increment(new StringLiteral("example")));
     }
 
     @Test
     public void shouldReturnIntegerTypeWhenDecrementAppliedOnInteger() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualIntegerType = visitor.visit(new Decrement(new IntegerLiteral(3)));
 
@@ -91,7 +91,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnFloatTypeWhenDecrementAppliedOnFloat() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualFloatType = visitor.visit(new Decrement(new DecimalLiteral(new BigDecimal(10.40))));
 
@@ -100,7 +100,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = UnexpectedTypeException.class)
     public void shouldThrowUnexpectedTypeExceptionWhenDecrementAppliedOnNonIntegerOrFloat() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualType = visitor.visit(new Decrement(new StringLiteral("example")));
 
@@ -109,24 +109,24 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = UndefinedIdentifierException.class)
     public void shouldThrowUndefinedIdentifierExceptionWhenIdentifierDoesNotExist() throws Throwable {
-        TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+        TypeCheckVisitor visitor = new TypeCheckVisitor(new SymbolTable());
 
         visitor.visit(new Parameter(new Identifier("example")));
     }
 
     @Test
     public void shouldReturnParameterWhenIdentifierExists() throws Throwable {
-        Map<Identifier, Type> definitions = new HashMap<>();
-        definitions.put(new Identifier("example"), new StringType());
+        SymbolTable symbolTable = new SymbolTable();
+        symbolTable.put(new Identifier("example"), new StringType());
 
-        TypeCheckVisitor visitor = new TypeCheckVisitor(definitions);
+        TypeCheckVisitor visitor = new TypeCheckVisitor(symbolTable);
 
         visitor.visit(new Parameter(new Identifier("example")));
     }
 
     @Test
     public void shouldReturnBooleanTypeForLogicalOr() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLogicalOrType = visitor.visit(actualLogicalOr);
@@ -136,7 +136,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalOr() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualLogicalOr);
@@ -144,7 +144,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForLowerThanOrEquals() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLowerThanOrEqualType = visitor.visit(actualLowerThanOrEqual);
@@ -154,7 +154,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThanOrEqual() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualLowerThanOrEqual);
@@ -162,7 +162,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForEquals() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Equals actualEqual = new Equals(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualEqualType = visitor.visit(actualEqual);
@@ -172,7 +172,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInEquals() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Equals actualEquals = new Equals(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualEquals);
@@ -180,7 +180,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForGreaterThan() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualGreaterThanType = visitor.visit(actualGreaterThan);
@@ -190,7 +190,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThan() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualGreaterThan);
@@ -198,7 +198,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnIntegerTypeForAddition() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Addition actualAddition = new Addition(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualAdditionType = visitor.visit(actualAddition);
@@ -208,7 +208,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInAddition() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Addition actualAddition = new Addition(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualAddition);
@@ -216,7 +216,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnIntegerTypeForDivision() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Division actualDivision = new Division(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualDivisionType = visitor.visit(actualDivision);
@@ -226,7 +226,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInDivision() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Division actualDivision = new Division(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualDivision);
@@ -234,7 +234,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForGreaterThanOrEqual() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualGreaterThanOrEqualType = visitor.visit(actualGreaterThanOrEqual);
@@ -244,7 +244,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThanOrEqual() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualGreaterThanOrEqual);
@@ -252,7 +252,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForLowerThan() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLowerThanType = visitor.visit(actualLowerThan);
@@ -262,7 +262,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThan() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualLowerThan);
@@ -270,7 +270,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForLogicalAnd() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLogicalAndType = visitor.visit(actualLogicalAnd);
@@ -280,7 +280,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalAnd() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualLogicalAnd);
@@ -288,7 +288,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeForNotEqual() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualNotEqualType = visitor.visit(actualNotEqual);
@@ -298,7 +298,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInNotEqual() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
 
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -307,7 +307,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnBooleanTypeOnGroupedRelationalExpression() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Group actualGroup = new Group(new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true)));
 
         Type actualGroupType = visitor.visit(actualGroup);
@@ -317,7 +317,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnIntegerTypeForProduct() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Product actualProduct = new Product(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualProductType = visitor.visit(actualProduct);
@@ -327,7 +327,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInProduct() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
         Product actualProduct = new Product(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualProduct);
@@ -335,7 +335,7 @@ public class TypeCheckVisitorTest {
 
     @Test
     public void shouldReturnWhenIntegerTypeForSubtraction() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
 
         Type actualSubtractionType = visitor.visit(new Subtraction(new IntegerLiteral(12), new IntegerLiteral(4)));
 
@@ -344,7 +344,7 @@ public class TypeCheckVisitorTest {
 
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesUsedForSubtraction() throws Throwable {
-        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Visitor<Type> visitor = new TypeCheckVisitor(new SymbolTable());
 
         visitor.visit(new Subtraction(new IntegerLiteral(12), new StringLiteral("example")));
     }
