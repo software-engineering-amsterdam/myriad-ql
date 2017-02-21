@@ -26,42 +26,42 @@ class OperandsTypeChecker < BaseVisitor
   def visit_variable(_)
   end
 
-  # TODO beautify
   # an expression is checked for correctness
   def visit_expression(subject)
-    # p subject
-    subject_type = subject.class.real_type
-    # p possible_types
-
-    #
-    if subject.left.kind_of?(Variable)
-      left_type = @types[subject.left.name].class
-    else
-      left_type = subject.left.class.real_type
-    end
-
-    if subject.right.kind_of?(Variable)
-      right_type = @types[subject.right.name].class
-    else
-      right_type = subject.right.class.real_type
-    end
+    subject_class = subject.class
+    left_type = type(subject.left)
+    right_type = type(subject.right)
 
     errors = []
     # the left side does not match the operator
-    unless subject.class.includes_type?(left_type)
-      errors.push("[ERROR]: #{left_type} can not be used with #{subject.class.to_operator} operator")
+    unless subject_class.includes_type?(left_type)
+      errors.push(error(left_type, subject_class.to_operator))
     end
 
     # the right side does not match the operator
-    unless subject.class.includes_type?(right_type)
-      errors.push("[ERROR]: #{right_type} can not be used with #{subject.class.to_operator} operator")
+    unless subject_class.includes_type?(right_type)
+      errors.push(error(right_type, subject_class.to_operator))
     end
 
     # the left and right side do not match
     if ([left_type].flatten & [right_type].flatten).empty?
-      errors.push("[ERROR]: #{left_type} can not be used with #{right_type} in an expression")
+      errors.push(error(left_type, right_type))
     end
 
     errors.push([visit_calculation(subject.left), visit_calculation(subject.right)])
+  end
+
+  # get the type of a variable or other
+  def type(left_or_right)
+    if left_or_right.kind_of?(Variable)
+      @types[left_or_right.name].class
+    else
+      left_or_right.class.real_type
+    end
+  end
+
+  # generate error message
+  def error(left, right)
+    "[ERROR]: #{left} can not be used with #{right}"
   end
 end
