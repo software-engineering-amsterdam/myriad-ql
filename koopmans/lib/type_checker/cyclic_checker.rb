@@ -23,6 +23,11 @@ class CyclicChecker < BaseVisitor
     {question.variable.name => visit_calculation(question.assignment).flatten.compact} if question.assignment
   end
 
+  # visit the calculation of the negation expression
+  def visit_negation(negation)
+    visit_calculation(negation.expression)
+  end
+
   # visit the calculations of both the left and right sides
   def visit_expression(expression)
     [visit_calculation(expression.left), visit_calculation(expression.right)]

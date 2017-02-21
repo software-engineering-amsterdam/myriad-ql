@@ -26,6 +26,11 @@ class OperandsTypeChecker < BaseVisitor
   def visit_variable(_)
   end
 
+  def visit_negation(negation)
+    expression_type = type(negation.expression)
+    error(negation.class, type(negation.expression)) if type(negation) != expression_type
+  end
+
   # an expression is checked for correctness
   def visit_expression(expression)
     subject_class = expression.class
