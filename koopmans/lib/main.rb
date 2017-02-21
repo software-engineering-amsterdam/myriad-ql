@@ -11,7 +11,6 @@ require_relative 'parser/transformer'
 
 require_relative 'type_checker/main_checker'
 require_relative 'gui/gui'
-require_relative 'gui/expression_visitor'
 
 
 require 'parslet'
