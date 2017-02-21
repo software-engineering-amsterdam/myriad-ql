@@ -21,6 +21,7 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
         ArrayList<Question> questions = new ArrayList<>();
         ArrayList<IfStatement> ifStatements = new ArrayList<>();
+        Form form = new Form(formName);
         
         for (QLParser.StatementContext statementContext : ctx.statement())
         {
@@ -36,7 +37,10 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
             }
         }
 
-        return new Form(formName, null);
+        form.formAddQuestion(questions);
+        form.formAddIfStatement(ifStatements);
+
+        return form;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
     @Override
     public Node visitIfStatement(QLParser.IfStatementContext ctx) {
-        return new IfStatement("if statement placeholder");
+        return new IfStatement("This is an IF statement");
     }
 
     @Override

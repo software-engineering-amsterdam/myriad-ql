@@ -12,7 +12,8 @@ public class IfStatement implements Node {
     private ArrayList<IfStatement> ifStatementList;
     public String name;
 
-    public IfStatement() {
+    public IfStatement(String name) {
+        this.name = name;
         this.questionList = new ArrayList<>();
         this.ifStatementList = new ArrayList<>();
     }
