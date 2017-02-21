@@ -2,6 +2,7 @@ package org.uva.taxfree.main;
 
 import org.uva.taxfree.ast.Ast;
 import org.uva.taxfree.model.NamedNode;
+import org.uva.taxfree.model.Node;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -67,8 +68,8 @@ public class SemanticsAnalyzer {
 
     private List<String> getConditionIds() {
         List<String> ids = new ArrayList<>();
-        for (NamedNode namedNode : mAst.getConditions()) {
-            ids.add(namedNode.getId());
+        for (Node node : mAst.getConditions()) {
+            ids.add(node.getId());
         }
         return ids;
     }

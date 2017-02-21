@@ -40,8 +40,8 @@ public class Ast {
         return questions;
     }
 
-    public Set<NamedNode> getConditions() {
-        Set<NamedNode> conditions = new LinkedHashSet<>();
+    public Set<Node> getConditions() {
+        Set<Node> conditions = new LinkedHashSet<>();
         mRootNode.retrieveConditions(conditions);
         return conditions;
     }
