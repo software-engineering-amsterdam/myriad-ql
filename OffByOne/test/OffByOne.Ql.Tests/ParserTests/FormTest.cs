@@ -71,11 +71,11 @@
             Assert.Equal(lhs.Identifier, "birthDate");
             Assert.Equal(rhs.Value, new DateTime(1999, 12, 31));
 
-            var elseStatement = ifStatement.ElseStatement;
-            Assert.Equal(1, elseStatement.Statements.Count());
+            var elseStatements = ifStatement.ElseStatements;
+            Assert.Equal(1, elseStatements.Count());
 
-            Assert.IsType<QuestionStatement>(elseStatement.Statements.First());
-            var computedQuestion = (QuestionStatement)elseStatement.Statements.First();
+            Assert.IsType<QuestionStatement>(elseStatements.First());
+            var computedQuestion = (QuestionStatement)elseStatements.First();
 
             Assert.IsType<OrExpression>(computedQuestion.ComputedValue);
 

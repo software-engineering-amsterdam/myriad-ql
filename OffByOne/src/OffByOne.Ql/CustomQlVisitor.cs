@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Ql
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Antlr4.Runtime;
@@ -76,17 +77,24 @@
             var stats = context.stat()
                     .Select(x => (Statement)this.Visit(x))
                     .ToList();
-            var elseCtx = context.elseStat();
-            var elseStat = elseCtx == null ? null : this.Visit(elseCtx);
-            return new IfStatement(condition, stats, elseStat as ElseStatement);
-        }
 
-        public override AstNode VisitElseStat([NotNull] QlParser.ElseStatContext context)
-        {
-            var stats = context.stat()
+            var elseContext = context.elseStat();
+            var elseStats = new List<Statement>();
+            if (elseContext != null)
+            {
+                elseStats = elseContext.stat()
                     .Select(x => (Statement)this.Visit(x))
                     .ToList();
-            return new ElseStatement(stats);
+            }
+
+            return new IfStatement(condition, stats, elseStats);
+        }
+
+        public IEnumerable<Statement> GetElseStat([NotNull] QlParser.ElseStatContext context)
+        {
+            return context.stat()
+                    .Select(x => (Statement)this.Visit(x))
+                    .ToList();
         }
 
 #region:Expressions
