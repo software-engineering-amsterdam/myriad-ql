@@ -1,13 +1,14 @@
 package ql.ast.expressions.binop;
 
 import ql.ast.Expr;
+import ql.ast.expressions.ArithmeticOp;
 import ql.ast.expressions.BinOp;
 import ql.ast.visistor.ASTVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Add extends BinOp {
+public class Add extends BinOp implements ArithmeticOp{
 
     public Add(Expr left, Expr right) {
         super(left, right);

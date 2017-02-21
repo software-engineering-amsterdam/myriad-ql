@@ -1,6 +1,7 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
+import ql.ast.types.Type;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
@@ -250,7 +251,7 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
     }
 
     private String typeToString(Type type) {
-        switch (type) {
+        /*switch (type) {
             case TYPESTRING:
                 return "string";
             case TYPEBOOL:
@@ -263,7 +264,7 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
                 return "float";
             case TYPEMONEY:
                 return "money";
-        }
+        }*/
         return "unknown";
     }
 }

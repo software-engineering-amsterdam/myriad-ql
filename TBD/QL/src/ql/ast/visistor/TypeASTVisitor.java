@@ -1,6 +1,7 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
+import ql.ast.types.*;
 import ql.ast.expressions.BinOp;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
@@ -28,7 +29,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     @Override
     public Type visit(Statements node) {
         List<Statement> statements = node.getStatements();
-        for (Statement statement: statements) {
+        for (Statement statement : statements) {
             statement.accept(this);
         }
         return null;
@@ -38,7 +39,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(If node) {
         Type expr = node.getCondition().accept(this);
 
-        if (expr != Type.TYPEBOOL) {
+        if (!expr.equals(new BooleanType())) {
             throw new RuntimeException("Type error");
         }
         return null;
@@ -48,7 +49,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(IfElse node) {
         Type expr = node.getCondition().accept(this);
 
-        if (expr != Type.TYPEBOOL) {
+        if (!expr.equals(new BooleanType())) {
             throw new RuntimeException("Type error");
         }
 
@@ -67,7 +68,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
         if (node.hasExpr()) {
             Type expr = node.getExpr().accept(this);
-            if (expr == node.getType()) {
+            if (expr.equals(node.getType())) {
                 return null;
             }
             throw new RuntimeException("Type error");
@@ -85,136 +86,156 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(QLBoolean node) {
-        return Type.TYPEBOOL;
+        return new BooleanType();
     }
 
     @Override
     public Type visit(QLInt node) {
-        return Type.TYPEINT;
+        return new IntType();
     }
 
     @Override
     public Type visit(QLString node) {
-        return Type.TYPESTRING;
+        return new StringType();
     }
 
     @Override
     public Type visit(QLFloat node) {
-        return Type.TYPEFLOAT;
+        return new FloatType();
     }
 
     @Override
     public Type visit(Add node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Div node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Eq node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(GEq node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(GT node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(LEq node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(LT node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Mul node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
 
     @Override
     public Type visit(NEq node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Sub node) {
-        return checkBinOp(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+        System.out.println(left + "          " + right);
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(And node) {
-        return checkBinOpLogic(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Or node) {
-        return checkBinOpLogic(node);
+        Type left, right;
+        left = node.getLeft().accept(this);
+        right = node.getRight().accept(this);
+
+        return left.checkTypes(node, right);
     }
 
     @Override
     public Type visit(Pos node) {
-        Type expr = node.getExpr().accept(this);
+        Type expr;
+        expr = node.getExpr().accept(this);
 
-        if (expr == Type.TYPEINT || expr == Type.TYPEFLOAT) {
-            return expr;
-        }
-        throw new RuntimeException("Type error");
+        return expr.checkTypes(node);
     }
 
     @Override
     public Type visit(Neg node) {
-        Type expr = node.getExpr().accept(this);
+        Type expr;
+        expr = node.getExpr().accept(this);
 
-        if (expr == Type.TYPEINT || expr == Type.TYPEFLOAT) {
-            return expr;
-        }
-        throw new RuntimeException("Type error");
+        return expr.checkTypes(node);
     }
 
     @Override
     public Type visit(Not node) {
-        Type expr = node.getExpr().accept(this);
+        Type expr;
+        expr = node.getExpr().accept(this);
 
-        if (expr == Type.TYPEBOOL) {
-            return expr;
-        }
-        throw new RuntimeException("Type error");
+        return expr.checkTypes(node);
     }
 
-
-    private Type checkBinOpLogic(BinOp node) {
-        Type left, right;
-        left = node.getLeft().accept(this);
-        right = node.getRight().accept(this);
-        if (left == Type.TYPEBOOL && left == right) {
-            return left;
-        }
-        throw new RuntimeException("Type error");
-    }
-
-    private Type checkBinOp(BinOp node) {
-        Type left, right;
-        left = node.getLeft().accept(this);
-        right = node.getRight().accept(this);
-        if (left == right || (left == Type.TYPEFLOAT && right == Type.TYPEINT)) {
-            return left;
-        } else if(left == Type.TYPEINT && right == Type.TYPEFLOAT) {
-            return right;
-        }
-        throw new RuntimeException("Type error");
-    }
 
 }

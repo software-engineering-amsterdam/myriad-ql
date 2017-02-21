@@ -30,7 +30,6 @@ public class QLLexer implements QLTokens {
         KEYWORDS.put("boolean", TYPEBOOL);
         KEYWORDS.put("int", TYPEINT);
         KEYWORDS.put("string", TYPESTRING);
-        KEYWORDS.put("money", TYPEMONEY);
         KEYWORDS.put("float", TYPEFLOAT);
         KEYWORDS.put("date", TYPEDATE);
         KEYWORDS.put("true", TRUE);
