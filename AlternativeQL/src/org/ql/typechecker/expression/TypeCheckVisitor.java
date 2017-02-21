@@ -1,6 +1,7 @@
 package org.ql.typechecker.expression;
 
 import org.ql.ast.Identifier;
+import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.Visitor;
 import org.ql.ast.expression.arithmetic.*;
@@ -9,7 +10,10 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
+import org.ql.ast.type.BooleanType;
+import org.ql.ast.type.StringType;
 import org.ql.ast.type.Type;
+import org.ql.typechecker.messages.BooleanExpected;
 import org.ql.typechecker.messages.Message;
 import org.ql.typechecker.messages.TypeMismatch;
 
@@ -28,23 +32,20 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Negation node) {
-        return node.getExpression().accept(this);
+        Type innerExpressionType = node.getExpression().accept(this);
+
+        if (!(innerExpressionType instanceof BooleanType)) {
+            errors.add(new BooleanExpected(node));
+
+            return null;
+        }
+
+        return innerExpressionType;
     }
 
     @Override
     public Type visit(Product node) {
         return checkBinaryExpression(node);
-    }
-
-    private Type checkBinaryExpression(Product node) {
-        Type leftMultiplierType = node.getLeft().accept(this);
-        Type rightMultiplierType = node.getRight().accept(this);
-
-        if (!leftMultiplierType.getClass().equals(rightMultiplierType.getClass())) {
-            errors.add(new TypeMismatch(node.getLeft(), node.getRight()));
-        }
-
-        return leftMultiplierType;
     }
 
     @Override
@@ -54,32 +55,32 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Subtraction node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(NotEqual node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(LogicalAnd node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(LowerThan node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(GreaterThanOrEqual node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(Division node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
@@ -89,17 +90,17 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Group node) {
-        return null;
+        return node.getExpression().accept(this);
     }
 
     @Override
     public Type visit(Addition node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
     public Type visit(GreaterThan node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Equals node) {
-        return null;
+        return checkBinaryExpression(node);
     }
 
     @Override
@@ -139,6 +140,24 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(StringLiteral node) {
-        return null;
+        StringType stringType = new StringType();
+        stringType.setMetadata(node.getMetadata());
+
+        return stringType;
+    }
+
+    private Type checkBinaryExpression(BinaryExpression node) {
+        Type leftMultiplierType = node.getLeft().accept(this);
+        Type rightMultiplierType = node.getRight().accept(this);
+
+        if (!leftMultiplierType.getClass().equals(rightMultiplierType.getClass())) {
+            errors.add(new TypeMismatch(node.getLeft(), node.getRight()));
+        }
+
+        return leftMultiplierType;
+    }
+
+    public List<Message> getErrors() {
+        return errors;
     }
 }
