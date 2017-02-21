@@ -122,5 +122,23 @@
                 Assert.IsType<MultiplyExpression>(rightLhs.RightExpression);
             }
         }
+
+        [Fact]
+        public void AstCreation_ShouldContainSourceCode()
+        {
+            var astTree = this.GetAstNodesFromInput(@"
+                form questionnaire { 
+                    if (2 + 3 * 4 < someVar && 3 / 1 * 2 != 6) {
+                        ""Is this a question?""
+                            existentialism: boolean
+                    }
+                }
+            ");
+
+            Assert.IsType<FormStatement>(astTree);
+            var castAstTree = (FormStatement)astTree;
+
+            Assert.True(castAstTree.Statements.All(x => x.SourceCode != null));
+        }
     }
 }

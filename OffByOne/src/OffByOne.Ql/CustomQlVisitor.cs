@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
 
+    using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
 
     using OffByOne.LanguageCore.Ast;
@@ -19,6 +20,14 @@
     // TODO: Extract creation of OperatorExpressions to factory method
     public class CustomQlVisitor : QlParserBaseVisitor<AstNode>
     {
+        // TODO: Is this the right place? We probably want to use it in QLS too, right?
+        public AstNode Visit(ParserRuleContext context)
+        {
+            var node = base.Visit(context);
+            node.SourceCode = new SourceCode(context);
+            return node;
+        }
+
         public override AstNode VisitForm([NotNull] QlParser.FormContext context)
         {
             string id = context.Identifier().GetText();
