@@ -38,7 +38,7 @@ def parse(input_string):
 
     #TODO: Signop toevoegen
     arith_prec = [
-        (multiplication_division_ops, 2, opAssoc.LEFT, ),
+        (multiplication_division_ops, 2, opAssoc.LEFT, ast.MultDiv),
         (addition_subtraction_ops, 2, opAssoc.LEFT, ast.AddSub),
     ]
 

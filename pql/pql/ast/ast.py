@@ -64,10 +64,9 @@ class Conditional(Node):
         del block
 
 
-
 class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
-        super(BinaryOperation, self).__init__(var_type)
+        Node.__init__(self, var_type)
         self.operator = parsed_tokens[0][1]
         self.arguments = parsed_tokens[0][::2]
 
@@ -75,7 +74,7 @@ class BinaryOperation(Node):
 #TODO: Cases where there is one long * statement,  a * b * c can't be parsed atm
 class Multiplication(BinaryOperation):
     def __init__(self, parsed_tokens):
-        super(Multiplication, self).__init__('multiplication', parsed_tokens)
+        BinaryOperation.__init__(self, 'multiplication', parsed_tokens)
 
 
 class Addition(BinaryOperation):
@@ -85,18 +84,25 @@ class Addition(BinaryOperation):
 
 class Subtraction(BinaryOperation):
     def __init__(self, parsed_tokens):
-        BinaryOperation.__init__(self, 'substraction', parsed_tokens)
+        BinaryOperation.__init__(self, 'subtraction', parsed_tokens)
 
 
 class Division(BinaryOperation):
     def __init__(self, parsed_tokens):
-        super(Division, self).__init__('division', parsed_tokens)
+        BinaryOperation.__init__(self, 'division', parsed_tokens)
 
 
 class AddSub(Addition, Subtraction):
     def __init__(self, parsed_tokens):
+        print(parsed_tokens)
         Addition.__init__(self, parsed_tokens)
         Subtraction.__init__(self, parsed_tokens)
+
+
+class MultDiv(Multiplication, Division):
+    def __init__(self, parsed_tokens):
+        Multiplication.__init__(self, parsed_tokens)
+        Division.__init__(self, parsed_tokens)
 
 
 class BoolOperand(Node):
