@@ -31,7 +31,7 @@ public class QuestionFormTest {
             e.printStackTrace();
         }
         try {
-            testBooleanIf();
+            testConstantCondition();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,5 +87,22 @@ public class QuestionFormTest {
         ifStatementNode.addChild(new BooleanLiteralNode("false"));
         ifStatementNode.addChild(new BooleanQuestion("If you see me, something's wrong", "noName"));
 
+    }
+
+    @Test
+    public void testConstantCondition() throws Exception {
+        IfStatementNode ifStatement = new IfStatementNode();
+        ConditionNode cond = new BooleanExpressionNode("<");
+        ifStatement.addChild(cond);
+        cond.addChild(new IntegerLiteralNode("0"));
+        ConditionNode parenthesized = new ParenthesizedExpressionNode();
+        cond.addChild(parenthesized);
+        ConditionNode calc = new CalculationExpressionNode("+");
+        parenthesized.addChild(calc);
+        calc.addChild(new IntegerLiteralNode("1"));
+        calc.addChild(new IntegerLiteralNode("5"));
+
+        ifStatement.addChild(new BooleanQuestion("Do you see me?", "amIVisible?"));
+        mRoot.addChild(ifStatement);
     }
 }
