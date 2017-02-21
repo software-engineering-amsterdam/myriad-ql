@@ -19,4 +19,8 @@ public class Parameter extends Expression {
     public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }
+
+    public Identifier getId() {
+        return id;
+    }
 }

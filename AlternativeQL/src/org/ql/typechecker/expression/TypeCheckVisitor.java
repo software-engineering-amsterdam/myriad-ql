@@ -12,6 +12,7 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
 import org.ql.typechecker.exception.TypeMismatchException;
+import org.ql.typechecker.exception.UndefinedIdentifierException;
 
 import java.util.Map;
 
@@ -42,7 +43,15 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Increment node) {
-        return node.getExpression().accept(this);
+        Type innerExpressionType = node.getExpression().accept(this);
+
+        if(!(innerExpressionType instanceof IntegerType)
+                && !(innerExpressionType instanceof FloatType)
+                && !(innerExpressionType instanceof MoneyType)) {
+            throw new TypeMismatchException(new IntegerType(), innerExpressionType);
+        }
+
+        return innerExpressionType;
     }
 
     @Override
@@ -77,7 +86,11 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Parameter node) {
-        return null;
+        if (!definitions.containsKey(node.getId())) {
+            throw new UndefinedIdentifierException(node.getId());
+        }
+
+        return node.accept(this);
     }
 
     @Override
@@ -97,7 +110,14 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Decrement node) {
-        return null;
+        Type innerExpressionType = node.getExpression().accept(this);
+
+        if(!(innerExpressionType instanceof IntegerType)
+                && !(innerExpressionType instanceof FloatType)) {
+            throw new TypeMismatchException(new IntegerType(), innerExpressionType);
+        }
+
+        return innerExpressionType;
     }
 
     @Override
