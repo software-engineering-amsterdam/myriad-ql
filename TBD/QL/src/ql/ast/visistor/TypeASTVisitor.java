@@ -209,8 +209,10 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
-        if (left == right || (left == Type.TYPEINT && right == Type.TYPEFLOAT) || (left == Type.TYPEFLOAT && right == Type.TYPEINT)) {
+        if (left == right || (left == Type.TYPEFLOAT && right == Type.TYPEINT)) {
             return left;
+        } else if(left == Type.TYPEINT && right == Type.TYPEFLOAT) {
+            return right;
         }
         throw new RuntimeException("Type error");
     }
