@@ -1,6 +1,8 @@
 require 'rspec'
-require 'gui/gui'
+require 'require_all'
 require 'pp'
+
+require_all 'lib'
 
 describe GUI do
   let(:gui) { GUI.new }

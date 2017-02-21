@@ -1,9 +1,9 @@
 require 'tk'
-require 'pp'
-require 'require_all'
-
-require_rel '../ast'
-require_rel '/'
+# require 'pp'
+# require 'require_all'
+#
+# require_rel '../ast'
+# require_rel '/'
 
 class GUI < GUIQuestionVisitor
   def initialize(ast, typechecker)

@@ -1,6 +1,8 @@
 require 'rspec'
 require 'parslet/rig/rspec'
-require 'parser/transformer'
+require 'require_all'
+
+require_all 'lib'
 
 describe Transformer do
   let(:transformer) { Transformer.new }
