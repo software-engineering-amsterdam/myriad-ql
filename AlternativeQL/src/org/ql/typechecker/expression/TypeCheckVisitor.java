@@ -13,18 +13,13 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.StringType;
 import org.ql.ast.type.Type;
-import org.ql.typechecker.messages.BooleanExpected;
-import org.ql.typechecker.messages.Message;
-import org.ql.typechecker.messages.TypeMismatch;
+import org.ql.typechecker.exception.TypeMismatchException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class TypeCheckVisitor implements Visitor<Type> {
 
     private final Map<Identifier, Type> definitions;
-    private final List<Message> errors = new ArrayList<>();
 
     public TypeCheckVisitor(Map<Identifier, Type> definitions) {
         this.definitions = definitions;
@@ -35,9 +30,8 @@ public class TypeCheckVisitor implements Visitor<Type> {
         Type innerExpressionType = node.getExpression().accept(this);
 
         if (!(innerExpressionType instanceof BooleanType)) {
-            errors.add(new BooleanExpected(node));
 
-            return null;
+            throw new TypeMismatchException(new BooleanType(), innerExpressionType);
         }
 
         return innerExpressionType;
@@ -151,13 +145,9 @@ public class TypeCheckVisitor implements Visitor<Type> {
         Type rightMultiplierType = node.getRight().accept(this);
 
         if (!leftMultiplierType.getClass().equals(rightMultiplierType.getClass())) {
-            errors.add(new TypeMismatch(node.getLeft(), node.getRight()));
+            throw new TypeMismatchException(leftMultiplierType, rightMultiplierType);
         }
 
         return leftMultiplierType;
-    }
-
-    public List<Message> getErrors() {
-        return errors;
     }
 }
