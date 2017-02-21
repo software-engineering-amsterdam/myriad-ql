@@ -1,12 +1,16 @@
 ﻿namespace OffByOne.Runner
 {
     using System;
+    using System.Collections.Generic;
 
     using Antlr4.Runtime;
 
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql;
+    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
@@ -18,8 +22,17 @@
             TestQlGrammar();
             ////TestQlsGrammar();
 
-            ////var typeChcker = new QlTypeChecker();
-            ////typeChcker.CheckTypes(new AddExpression(new BooleanLiteral(true), new IntegerLiteral(2)));
+            var typeChcker = new TypeChecker();
+            var testCondition = new IfStatement(
+                new AddExpression(
+                    new LiteralExpression(new BooleanLiteral(true)),
+                    new LiteralExpression(new IntegerLiteral(2))),
+                new List<Statement>(),
+                new List<Statement>());
+
+            typeChcker.Check(new FormStatement(
+                "test",
+                new List<Statement> { testCondition }));
         }
 
         private static void TestQlGrammar()
