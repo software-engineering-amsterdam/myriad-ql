@@ -2,9 +2,7 @@
 # the needed methods from the pyparsing package
 from pyparsing import *
 from pql.ast import ast
-from pql.parser.BoolOperand import BoolOperand
-from pql.parser.BoolOperand import BoolAnd
-from pql.parser.BoolOperand import BoolOr
+
 
 
 def parse(input_string):
@@ -13,7 +11,7 @@ def parse(input_string):
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | number | identifier
-    bool_operand.setParseAction(BoolOperand)
+    bool_operand.setParseAction(ast.BoolOperand)
 
     # Reserved keywords
     form_lit = Suppress("form")
@@ -52,8 +50,8 @@ def parse(input_string):
     bool_prec = [
         (rat_op, 2, opAssoc.LEFT),
         (eqal_op, 2, opAssoc.LEFT),
-        (con_and_op, 2, opAssoc.LEFT, BoolAnd),
-        (con_or_op, 2, opAssoc.LEFT, BoolOr),
+        (con_and_op, 2, opAssoc.LEFT, ast.BoolAnd),
+        (con_or_op, 2, opAssoc.LEFT, ast.BoolOr),
     ]
 
     # Arithmetic precedence
