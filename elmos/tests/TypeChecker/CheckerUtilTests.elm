@@ -10,7 +10,8 @@ import DictList
 
 all : Test
 all =
-    describe "TypeChecker.CheckerUtil" [ questionIndexFromBlockTest ]
+    describe "CheckerUtil"
+        [ questionIndexFromBlockTest ]
 
 
 questionIndexFromBlockTest : Test

@@ -17,7 +17,7 @@ all =
 
 duplicateQuestionsTest : Test
 duplicateQuestionsTest =
-    describe "TypeChecker.DuplicateQuestions.duplicateQuestions"
+    describe "duplicateQuestions"
         [ test "no duplicate question defintion for shared definition in ifthenelse block" <|
             \() ->
                 duplicateQuestions
