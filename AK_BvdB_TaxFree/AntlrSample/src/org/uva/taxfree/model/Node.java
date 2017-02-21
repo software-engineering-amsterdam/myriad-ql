@@ -1,37 +1,53 @@
 package org.uva.taxfree.model;
 
-import org.uva.taxfree.util.LogUtil;
-
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public abstract class Node {
 
-    private String mName;
     private Node mParent;
-    private ArrayList<Node> mChildren;
+    private Set<Node> mChildren;
 
-    public Node(String name, Node parent) {
-        mChildren = new ArrayList<>();
-        mName = name;
-        mParent = parent;
-        registerToParent();
+    public Node() {
+        mChildren = new LinkedHashSet<>(); ///< preserves the order in which the items were inserted
     }
 
-    private void registerToParent() {
-        if (mParent != null) {
-            mParent.addChild(this);
+    public void addChild(Node child) {
+        mChildren.add(child);
+    }
+
+    public void retrieveQuestions(Set<NamedNode> set) {
+        addQuestion(set);
+        for (Node child : mChildren) {
+            child.addQuestion(set);
         }
     }
 
-    public boolean addChild(Node child) {
-        if (false == mChildren.contains(child)) {
-            mChildren.add(child);
-        } else {
-            LogUtil.logError(child.mName + " already registered to " + mName);
-            return false;
+    public void printData() {
+        printValue();
+        for (Node child : mChildren) {
+            child.printValue();
         }
-        return true;
+    }
+
+    public void setVisibility(boolean isVisible) {
+        for (Node child : mChildren) {
+            child.setVisibility(isVisible);
+        }
     }
 
 
+    protected void addQuestion(Set<NamedNode> set) {
+        // Intentionally left blank
+    }
+
+    public void printValue() {
+        // Intentionally left blank
+    }
+
+    public String getType() {
+        return this.getClass().toString();
+    }
+
+    ;
 }

@@ -1,31 +1,35 @@
 grammar QL;
 
-form: 'form'  ID  BRACKET_OPEN (formItem)*  BRACKET_CLOSE;
+form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: input # in
-        | condition  #cond
+formItem: question
+        | computed
+        | condition
         ;
 
-input: QUESTION ID':' type;
+question: STRING_LITERAL ID':' type;
 
-baseType: BOOL | STRING | INT | DATE | DEC | MONEY;
-type: baseType                      #basetype
-    | baseType '=' '('intExpr')'    #expression
-    ;
+computed: STRING_LITERAL ID':' type '=' '('expression')';
 
-condition: 'if' '('boolExpr')' BRACKET_OPEN (formItem)* BRACKET_CLOSE;
+type: BOOL | STRING | INT | DATE | DEC | MONEY;
 
-boolExpr: boolExpr op=('&&' | '||') boolExpr                          # andor
-        | intExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') intExpr  # comparison
+condition: 'if' '('boolExpr')' '{' (formItem)* '}';
+
+expression: boolExpr
+          | numExpr
+          ;
+
+boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr            # andor
+        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr  # comparison
         | ID                                                          # boolId
         | ('true' | 'false')                                          # bool
         ;
 
-intExpr: intExpr op=('*' | '/') intExpr # div
-    | intExpr op=('+' | '-') intExpr    # add
-    | NUMBER                            # int
-    | ID                                # intId
-    ;
+numExpr: numExpr op=('*' | '/') numExpr
+       | numExpr op=('+' | '-') numExpr
+       | NUMBER
+       | ID
+       ;
 
 //datatypes
 BOOL:   'boolean';
@@ -35,18 +39,10 @@ DATE:   'date';
 DEC:    'decimal';
 MONEY:  'money';
 
-//Operands
-ADD: '+';
-SUB: '-';
+NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
-NUMBER: ('0'..'9')+;
-
-QUESTION: '"'(~'"')+'"' ;
-ID: [a-zA-Z]+;
-
-//symbols
-BRACKET_OPEN: '{';
-BRACKET_CLOSE: '}';
+STRING_LITERAL: '"'(~'"')+'"' ;
+ID: [a-zA-Z][a-zA-Z0-9]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;

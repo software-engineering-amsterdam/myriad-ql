@@ -8,9 +8,8 @@ grammar QL;
     import ast.expression.*;
 }
 
-root returns [Form result] 
-		: 'form' ID block 
-		{ $result = new Form($ID.text, $block.result); };
+form returns [Form result] 
+		: 'form' ID block { $result = new Form($ID.text, $block.result); };
 
 block returns [Block result]
 		@init {
@@ -24,9 +23,9 @@ block returns [Block result]
 // TODO decide on maximum characters on one line
 question returns [Question result]
 		: ID ':' STRING type
-		{ $result = new Question($ID.text, $STRING.text, $type.text); }
+		{ $result = new Question($ID.text, $STRING.text, $type.result); }
 		| ID ':' STRING type computed_question
-		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.text, Integer.parseInt($computed_question.text));}
+		{ $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, Integer.parseInt($computed_question.text));}
 		;
 
 type returns [Type result]
@@ -35,7 +34,8 @@ type returns [Type result]
 	| 'decimal' { $result = new DecimalType(); } 
 	| 'integer' { $result = new IntegerType(); }
 	| 'money'   { $result = new MoneyType(); }
-	| 'string'  { $result = new StringType(); };
+	| 'string'  { $result = new StringType(); }
+	;
 
 computed_question: '(' type '-' type | type '+' type ')' ;
 
@@ -48,9 +48,11 @@ parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; };
 
 expr returns [Expression result]
- :  lhs = atom binOp rhs = atom { $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp atom { $unaryOp.result.setElements($atom.result); }
+ :  lhs = atom binOp rhs = atom { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  | atom { $result = $atom.result; }
+ | ID { System.out.println($ID.text);
+        $result = new IdExpression($ID.text); }
  ;
 
 binOp returns [BinaryExpression result]
@@ -71,14 +73,17 @@ binOp returns [BinaryExpression result]
 // TODO plus and minus
 unaryOp returns [UnaryExpression result]
   : '!' { $result = new NotExpression(); }
+  | '+' { $result = new PlusExpression(); }
+  | '-' { $result = new MinusExpression(); }
   ;
 
 atom returns [Atom result]
- :  DECIMAL { System.out.println($DECIMAL.text);
-                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
-  | MONEY { System.out.println($MONEY.text);
-           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
-  | INT
+:
+// :  DECIMAL { System.out.println($DECIMAL.text);
+//                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
+//  | MONEY { System.out.println($MONEY.text);
+//           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
+ | INT
  	{ System.out.println($INT.text); 
  	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
  | STRING { System.out.println($STRING.text);
@@ -86,10 +91,9 @@ atom returns [Atom result]
             }
  | BOOL { System.out.println($BOOL.text);
            $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
- | DDMMYY { System.out.println($DDMMYY.text);
-            $result = new DateAtom($DDMMYY.text); }
- | ID { System.out.println($ID.text);
-                 $result = new StringAtom($ID.text); }
+// | DDMMYY { System.out.println($DDMMYY.text);
+//            $result = new DateAtom($DDMMYY.text); }
+
  ;
 
 // TODO look up conventions tokens/names capital letters
@@ -98,7 +102,7 @@ IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
 
-ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 INT: ('0'..'9')+;
 
@@ -107,7 +111,7 @@ TWO_DIGIT: ('0'..'9')('0'..'9');
 DECIMAL : INT '.' INT | '.' INT;
 MONEY : INT '.' TWO_DIGIT;
 
-DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT; // TODO check valid date
+DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
 STRING: '"' .*? '"';
 

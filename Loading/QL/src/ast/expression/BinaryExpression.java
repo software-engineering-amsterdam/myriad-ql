@@ -1,5 +1,6 @@
 package ast.expression;
 
+import ast.Visitor;
 import ast.atom.Atom;
 
 public abstract class BinaryExpression extends Expression {
@@ -10,17 +11,24 @@ public abstract class BinaryExpression extends Expression {
 	
 	// TODO is this preferred over a constructor with lhs and rhs?
 	public BinaryExpression() {
-//		this.lhs = lhs;
-//		this.rhs = rhs;
 	}
 	
-	public void setElements(Atom lhs, Atom rhs) {
+	public BinaryExpression setElements(Atom lhs, Atom rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
+		return this;
 	}
 	
-//	public boolean isEval() {
-//		return eval;
-//	}
-
+	public Atom getLhs() {
+		return lhs;
+	}
+	
+	public Atom getRhs() {
+		return rhs;
+	}
+	
+@Override 
+public void accept(Visitor v) {
+		v.visit(this);
+	}
 }

@@ -1,18 +1,25 @@
 package ast.expression;
 
+import ast.Visitor;
 import ast.atom.Atom;
 
-public class UnaryExpression extends Expression {
-    private Atom lhs;
+public abstract class UnaryExpression extends Expression {
+    private Atom lhs; // TODO rename?
     // protected boolean eval;
-
-    // TODO is this preferred over a constructor with lhs and rhs?
-    public UnaryExpression() {
-//		this.lhs = lhs;
-//		this.rhs = rhs;
-    }
-
-    public void setElements(Atom lhs) {
+    
+    // TODO not pretty to return a unary expression
+    public UnaryExpression setElements(Atom lhs) {
         this.lhs = lhs;
+        return this;
     }
+
+	public Atom getLhs() {
+		return lhs;
+	}
+	
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
+	}
 }

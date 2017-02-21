@@ -1,4 +1,4 @@
-package UvA.Gamma.Antlr.QL;// Generated from Gamma/src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
+package UvA.Gamma.Antlr.QL;// Generated from src/UvA/Gamma/Antlr/QL//QL.g4 by ANTLR 4.6
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -16,25 +16,23 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForm(QLParser.FormContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code in}
-	 * labeled alternative in {@link QLParser#formItem}.
+	 * Visit a parse tree produced by {@link QLParser#formItem}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIn(QLParser.InContext ctx);
+	T visitFormItem(QLParser.FormItemContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code cond}
-	 * labeled alternative in {@link QLParser#formItem}.
+	 * Visit a parse tree produced by {@link QLParser#question}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCond(QLParser.CondContext ctx);
+	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#input}.
+	 * Visit a parse tree produced by {@link QLParser#computed}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInput(QLParser.InputContext ctx);
+	T visitComputed(QLParser.ComputedContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#type}.
 	 * @param ctx the parse tree
@@ -47,6 +45,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCondition(QLParser.ConditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(QLParser.ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code andor}
 	 * labeled alternative in {@link QLParser#boolExpr}.
@@ -76,31 +80,9 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolId(QLParser.BoolIdContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code div}
-	 * labeled alternative in {@link QLParser#intExpr}.
+	 * Visit a parse tree produced by {@link QLParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDiv(QLParser.DivContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code add}
-	 * labeled alternative in {@link QLParser#intExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdd(QLParser.AddContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code intId}
-	 * labeled alternative in {@link QLParser#intExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntId(QLParser.IntIdContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code int}
-	 * labeled alternative in {@link QLParser#intExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInt(QLParser.IntContext ctx);
+	T visitNumExpr(QLParser.NumExprContext ctx);
 }

@@ -4,7 +4,7 @@ import Parser.Expression exposing (expression)
 import Test exposing (Test, describe)
 import AST
     exposing
-        ( Expression(Var, Integer, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
+        ( Expression(Var, Integer, Str, Boolean, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
         , Operator(Plus, Minus, Divide, Multiply)
         , Relation(LessThan, GreaterThan, GreaterThanOrEqual, LessThanOrEqual)
         , Comparison(Equal, NotEqual)
@@ -21,6 +21,19 @@ all =
         , relationalTests
         , comparisonTests
         , logicalTests
+        , whitespaceTests
+        ]
+
+
+whitespaceTests : Test
+whitespaceTests =
+    testWithParser expression
+        "whitespaceTests"
+        [ ( "Should not parse surrounding whitespace", " 1 ", Nothing )
+        , ( "Should not parse whitespace before", " 1", Nothing )
+        , ( "Should not parse whitespace after", "1 ", Nothing )
+        , ( "Should not parse whitespace within parens", "( 1 )", Just (ParensExpression (Integer 1)) )
+        , ( "Should parse whitespace within operators", "1 + 2", Just (ArithmeticExpression Plus (Integer 1) (Integer 2)) )
         ]
 
 
@@ -31,6 +44,8 @@ atomTests =
         [ ( "Should parse varName", "someVarName", Just (Var "someVarName") )
         , ( "Should parse int literal", "2", Just (Integer 2) )
         , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Integer 2)) )
+        , ( "Should parse parens boolean literal", "true", Just (Boolean True) )
+        , ( "Should parse string expression", "\"Hello\"", Just (Str "Hello") )
         ]
 
 

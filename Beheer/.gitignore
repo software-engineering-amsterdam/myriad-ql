@@ -12,3 +12,5 @@ project/project
 *.iws
 .idea
 out
+
+log.txt
