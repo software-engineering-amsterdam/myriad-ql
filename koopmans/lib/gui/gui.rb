@@ -6,26 +6,6 @@ require_rel '../ast'
 require_rel '/'
 
 class GUI < GUIQuestionVisitor
-  def check(typechecker)
-    if !typechecker[:errors].empty?
-      Tk.messageBox(
-        type: 'ok',
-        icon: 'error',
-        title: 'Errors found!',
-        message: typechecker[:errors].join('\n')
-      )
-      return 'quit'
-    elsif !typechecker[:warnings].empty?
-      Tk.messageBox(
-          type: 'ok',
-          icon: 'warning',
-          title: 'Warnings found!',
-          message: typechecker[:warnings].join('\n')
-      )
-      return 'continue'
-    end
-  end
-
   def initialize(ast, typechecker)
     return if check(typechecker) == 'quit'
     super
@@ -46,5 +26,25 @@ class GUI < GUIQuestionVisitor
     button = TkButton.new.grid(row: @questions.size + 1)
     button.text = 'Submit'
     button.command = proc { submit }
+  end
+
+  def check(typechecker)
+    if !typechecker[:errors].empty?
+      Tk.messageBox(
+          type: 'ok',
+          icon: 'error',
+          title: 'Errors found!',
+          message: typechecker[:errors].join('\n')
+      )
+      return 'quit'
+    elsif !typechecker[:warnings].empty?
+      Tk.messageBox(
+          type: 'ok',
+          icon: 'warning',
+          title: 'Warnings found!',
+          message: typechecker[:warnings].join('\n')
+      )
+      return 'continue'
+    end
   end
 end
