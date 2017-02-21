@@ -14,9 +14,3 @@ class Form
     visitor.visit_form(self)
   end
 end
-
-class Parser < Parslet::Parser
-  rule(:form) do
-    spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form)
-  end
-end

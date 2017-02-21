@@ -11,13 +11,3 @@ class Variable
     visitor.visit_variable(self)
   end
 end
-
-class Parser < Parslet::Parser
-  rule(:variable) do
-    match('\w+').repeat(1).as(:variable)
-  end
-
-  rule(:variable_assignment) do
-    variable >> str(':') >> spaces?
-  end
-end
