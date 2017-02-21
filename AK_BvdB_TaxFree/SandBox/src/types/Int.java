@@ -1,7 +1,12 @@
-package sandbox;
+package types;
 
-public class Int implements Num{
+public class Int extends Num {
     private int mValue;
+
+    public Int(int initial) {
+
+        mValue = initial;
+    }
 
     public void setValue(int value) {
         mValue = value;

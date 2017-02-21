@@ -43,19 +43,23 @@ public class ExpressionVisitor extends Visitor {
 	
 	@Override 
 	public void visit(IdExpression id) {
+
+		System.out.println("IdExpression VISIT");
 		
 		Atom result = id.evaluate();
-		if (result.getType() != "string") { 
-			throw new RuntimeException("Expected a id with a variablename, but got type " +
-						result.getType());
-		}
+//		if (result.getType() != "string") {
+//			throw new RuntimeException("Expected a id with a variablename, but got type " +
+//						result.getType());
+//		}
+
+//		environment.
 		
-		if (!environment.variableExists(result.getString())) {
-			throw new RuntimeException("The variable with name " + result.getString() +
+		if (!environment.variableExists(id.getName())) {
+			throw new RuntimeException("The variable with name " + id.getName() +
 					" on line ... is not defined");
 		}
 
-		System.out.println("Eval: " + result);
+		System.out.println("Eval: " + result.getValue());
 	}
 	
 	// TODO do we want to add the throw after this function
