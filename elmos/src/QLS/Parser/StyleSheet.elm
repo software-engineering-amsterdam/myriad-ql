@@ -1,4 +1,4 @@
-module QLS.Parser.Stylesheet exposing (..)
+module QLS.Parser.StyleSheet exposing (..)
 
 import Combine exposing (..)
 import Combine.Extra exposing (trimmed, whitespace1)
@@ -8,10 +8,10 @@ import QLS.Parser.Configuration exposing (configuration)
 import Parser.Form exposing (valueType)
 
 
-stylesheet : Parser s Stylesheet
-stylesheet =
+styleSheet : Parser s StyleSheet
+styleSheet =
     trimmed
-        (Stylesheet
+        (StyleSheet
             <$> (string "stylesheet" *> whitespace1 *> identifier)
             <*> (whitespace1 *> (sepBy1 whitespace1 page))
         )

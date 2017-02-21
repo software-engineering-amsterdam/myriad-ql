@@ -12,7 +12,7 @@ import Test exposing (Test, describe)
 import QLS.Parser.ConfigurationTests
 import QLS.Parser.StyleTests
 import QLS.Parser.WidgetTests
-import QLS.Parser.StylesheetTests
+import QLS.Parser.StyleSheetTests
 
 
 all : Test
@@ -29,5 +29,5 @@ all =
         , QLS.Parser.ConfigurationTests.all
         , QLS.Parser.StyleTests.all
         , QLS.Parser.WidgetTests.all
-        , QLS.Parser.StylesheetTests.all
+        , QLS.Parser.StyleSheetTests.all
         ]

@@ -3,7 +3,7 @@ module QLS.AST exposing (..)
 import AST as QL exposing (ValueType, Id)
 
 
-type alias Stylesheet =
+type alias StyleSheet =
     { id : Id
     , pages : List Page
     }

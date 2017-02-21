@@ -1,7 +1,7 @@
-module QLS.Parser.StylesheetTests exposing (all)
+module QLS.Parser.StyleSheetTests exposing (all)
 
 import Test exposing (..)
-import QLS.Parser.Stylesheet exposing (stylesheet, page, section, question)
+import QLS.Parser.StyleSheet exposing (styleSheet, page, section, question)
 import ParserTestUtil exposing (testWithParser)
 import QLS.AST exposing (..)
 import AST exposing (Location(Location), ValueType(BooleanType, MoneyType))
@@ -9,20 +9,20 @@ import AST exposing (Location(Location), ValueType(BooleanType, MoneyType))
 
 all : Test
 all =
-    describe "Stylesheet"
-        [ stylesheetTests
+    describe "StyleSheet"
+        [ styleSheetTests
         , pageTests
         , sectionTests
         , questionTests
         ]
 
 
-stylesheetTests : Test
-stylesheetTests =
-    testWithParser stylesheet
-        "example stylesheet"
-        [ ( "stylesheet"
-          , """stylesheet taxOfficeExample
+styleSheetTests : Test
+styleSheetTests =
+    testWithParser styleSheet
+        "example styleSheet"
+        [ ( "styleSheet"
+          , """styleSheet taxOfficeExample
   page Housing {
     section "Buying"
       question hasBoughtHouse
