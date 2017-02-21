@@ -13,6 +13,7 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
 import org.ql.typechecker.exception.TypeMismatchException;
 import org.ql.typechecker.exception.UnexpectedTypeException;
+import org.ql.typechecker.exception.UndefinedIdentifierException;
 
 import java.util.Map;
 
@@ -43,7 +44,13 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Increment node) throws Throwable {
-        return node.getExpression().accept(this);
+        Type innerExpressionType = node.getExpression().accept(this);
+
+        if(!(innerExpressionType instanceof NumberType)) {
+            throw new UnexpectedTypeException(innerExpressionType);
+        }
+
+        return innerExpressionType;
     }
 
     @Override
@@ -78,7 +85,11 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(Parameter node) {
-        return null;
+        if (!definitions.containsKey(node.getId())) {
+            throw new UndefinedIdentifierException(node.getId());
+        }
+
+        return node.accept(this);
     }
 
     @Override
