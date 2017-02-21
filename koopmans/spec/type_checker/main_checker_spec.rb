@@ -7,11 +7,11 @@ require_relative '../../lib/ast/statement'
 require_relative '../../lib/ast/form'
 require_relative '../../lib/ast/variable'
 
-require_relative '../../lib/type_checker/main_checker'
+require_relative '../../lib/type_checker/type_checker'
 
 require 'pp'
 
-describe MainChecker do
+describe TypeChecker do
   # create question
   question_variable = Variable.new('hasSoldHouse')
   question = Question.new('Did you sell a house in 2010?', question_variable, BooleanType.new)
