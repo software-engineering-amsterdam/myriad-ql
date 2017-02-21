@@ -89,8 +89,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('substraction', substraction_node.var_type,
                          'Substraction node should have type substraction')
 
-        self.assertEqual('sellingPrice', substraction_node.lhs)
-        self.assertEqual('privateDebt', substraction_node.rhs)
+        self.assertEqual('sellingPrice', substraction_node.arguments[0])
+        self.assertEqual('privateDebt', substraction_node.arguments[1])
         self.assertEqual('-', substraction_node.operator)
 
     def test_ast_single_simple_assignment_(self):
@@ -99,7 +99,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice + privateDebt - interest
         }
         """
-        parse_result = parse(input_string).asList()
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_single_simple_assignment_reversed(self):
         input_string = """
@@ -107,7 +107,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt + interest
         }
         """
-        parse_result = parse(input_string).asList()
+        raise NotImplementedError('Test needs assertions')
 
     def test_ast_single_combi_assignment(self):
         input_string = """
@@ -144,23 +144,23 @@ class TestAst(unittest.TestCase):
                          'Multiplication node should have no nodes as children')
         self.assertEqual('multiplication', multiplication_node.var_type,
                          'Multiplication node should have type multiplication')
-        self.assertEqual('debt', multiplication_node.rhs)
+        self.assertEqual('debt', multiplication_node.arguments[1])
         self.assertEqual('*', multiplication_node.operator)
 
-        substraction_node = multiplication_node.lhs
+        substraction_node = multiplication_node.arguments[0]
         self.assertEqual(0, len(substraction_node.children),
                          'Substraction node should have no nodes as children')
         self.assertEqual('substraction', substraction_node.var_type,
                          'Substraction node should have type substraction')
 
-        self.assertEqual('sellingPrice', substraction_node.lhs)
-        self.assertEqual('privateDebt', substraction_node.rhs)
+        self.assertEqual('sellingPrice', substraction_node.arguments[0])
+        self.assertEqual('privateDebt', substraction_node.arguments[1])
         self.assertEqual('-', substraction_node.operator)
 
     def test_ast_single_combi_assignment_(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: money =  sellingPrice - privateDebt * debt  /  salary + interest
+            "Value residue:" valueResidue: money =  sellingPrice - privateDebt * debt *  salary + interest
         }
         """
         parse_result = parse(input_string).asList()
@@ -186,24 +186,31 @@ class TestAst(unittest.TestCase):
 
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic statement should have 1 node as child')
-
-        multiplication_node = arithmetic_statement_node.children[0]
-        self.assertEqual(0, len(multiplication_node.children),
-                         'Multiplication node should have no nodes as children')
-        self.assertEqual('multiplication', multiplication_node.var_type,
-                         'Multiplication node should have type multiplication')
-        self.assertEqual('debt', multiplication_node.rhs)
-        self.assertEqual('*', multiplication_node.operator)
-
         substraction_node = arithmetic_statement_node.children[0]
         self.assertEqual(0, len(substraction_node.children),
                          'Substraction node should have no nodes as children')
         self.assertEqual('substraction', substraction_node.var_type,
                          'Substraction node should have type substraction')
+        self.assertEqual('sellingPrice', substraction_node.arguments[0])
 
-        self.assertEqual('sellingPrice', substraction_node.lhs)
-        self.assertEqual('privateDebt', substraction_node.rhs)
-        self.assertEqual('-', substraction_node.operator)
+        addition_node = substraction_node.arguments[1]
+        self.assertEqual(0, len(addition_node.children),
+                         'Addition node should have no nodes as children')
+        self.assertEqual('addition', addition_node.var_type,
+                         'Addition node should have type addition')
+        self.assertEqual('interest', addition_node.arguments[1])
+        self.assertEqual('+', addition_node.operator)
+
+        multiplication_node = addition_node.arguments[0]
+        self.assertEqual(0, len(multiplication_node.children),
+                         'Multiplication node should have no nodes as children')
+        self.assertEqual('multiplication', multiplication_node.var_type,
+                         'Multiplication node should have type multiplication')
+
+        self.assertEqual('privateDebt', multiplication_node.arguments[0])
+        self.assertEqual('debt', multiplication_node.arguments[1])
+        self.assertEqual('salary', multiplication_node.arguments[2])
+        self.assertEqual('*', multiplication_node.operator)
 
     def test_ast_if_single_question(self):
         input_string = """
