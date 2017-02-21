@@ -1,6 +1,8 @@
 package org.uva.hatt.taxform.ast.visitors;
 
 import org.uva.hatt.taxform.ast.nodes.*;
+import org.uva.hatt.taxform.ast.nodes.items.Question;
+import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 
 import java.util.*;
 
@@ -12,7 +14,7 @@ public class TypeCheckerVisitor extends AstVisitor<ASTNode>{
 
     @Override
     public ASTNode visit(Form form) {
-        form.getQuestions().forEach(this::visit);
+//        form.getQuestions().forEach(this::visit);
 
         return form;
     }
@@ -30,10 +32,10 @@ public class TypeCheckerVisitor extends AstVisitor<ASTNode>{
         if (questions.containsKey(questionLabel)) {
             warnings.put("duplicate question", questionLabel);
 
-            String valueOfType = questions.get(questionLabel).getValueOfType();
-            if (!valueOfType.equals(question.getType().getValueOfType())) {
-                errors.put("duplicate question declarations with different types", questionLabel);
-            }
+//            String valueOfType = questions.get(questionLabel).getValueOfType();
+//            if (!valueOfType.equals(question.getType().getValueOfType())) {
+//                errors.put("duplicate question declarations with different types", questionLabel);
+//            }
         } else {
             questions.put(questionLabel, question.getType());
         }
