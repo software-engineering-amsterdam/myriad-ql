@@ -1,5 +1,6 @@
 package model
 
+import model.values.{ Value, BooleanValue }
 import parser.ast.{ ExpressionNode, Type }
 
 sealed trait DisplayQuestion {
@@ -8,7 +9,7 @@ sealed trait DisplayQuestion {
   val displayCondition: Iterable[ExpressionNode]
   val `type`: Type
 
-  def show(env: Map[String, Value]): Boolean = displayCondition.map{
+  def show(env: Map[String, Value]): Boolean = displayCondition.map {
     _.value(env) match {
       case BooleanValue(b) => b
       case _ => false

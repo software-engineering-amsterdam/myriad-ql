@@ -3,6 +3,7 @@ package parser.ast
 import java.util.Date
 
 import model._
+import model.values._
 
 sealed trait ExpressionNode {
   type Env = Map[String, Value]
