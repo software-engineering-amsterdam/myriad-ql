@@ -55,8 +55,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
         return conditional;
     }
 
-    private List<Question> getStatements(List<QLParser.ItemsContext> items) {
-        return items.stream().map(item -> (Question) visit(item)).collect(Collectors.toList());
+    private List<Item> getStatements(List<QLParser.ItemsContext> items) {
+        return items.stream().map(item -> (Item) visit(item)).collect(Collectors.toList());
     }
 
     @Override

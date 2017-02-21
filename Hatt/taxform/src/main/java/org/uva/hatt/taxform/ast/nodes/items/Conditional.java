@@ -8,8 +8,8 @@ import java.util.List;
 public class Conditional extends ASTNode implements Item{
 
     private Expression condition;
-    private List<Question> thenStatements;
-    private List<Question> elseStatements;
+    private List<Item> thenStatements;
+    private List<Item> elseStatements;
 
     public Conditional(int lineNumber) {
         super(lineNumber);
@@ -23,19 +23,19 @@ public class Conditional extends ASTNode implements Item{
         this.condition = condition;
     }
 
-    public List<Question> getThenStatements() {
+    public List<Item> getThenStatements() {
         return thenStatements;
     }
 
-    public void setThenStatements(List<Question> thenStatements) {
+    public void setThenStatements(List<Item> thenStatements) {
         this.thenStatements = thenStatements;
     }
 
-    public List<Question> getElseStatements() {
+    public List<Item> getElseStatements() {
         return elseStatements;
     }
 
-    public void setElseStatements(List<Question> elseStatements) {
+    public void setElseStatements(List<Item> elseStatements) {
         this.elseStatements = elseStatements;
     }
 }
