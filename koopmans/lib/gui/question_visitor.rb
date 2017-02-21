@@ -1,7 +1,7 @@
 class QuestionVisitor
   # gather all labels from all questions and check for duplicates
   def visit_form(subject)
-    questions = subject.statements.map { |statement| visit_statement(statement, nil) }.flatten
+    questions = Hash[*subject.statements.map { |statement| visit_statement(statement, nil) }.flatten]
   end
 
   # visit all statements of the if block
@@ -26,6 +26,8 @@ class QuestionVisitor
   def visit_question(subject, condition)
     subject.condition = condition
     subject
+
+    [subject.variable.name, subject]
     # { question: subject }
     #
     # if condition
