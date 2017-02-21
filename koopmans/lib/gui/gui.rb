@@ -9,8 +9,7 @@ require_relative 'boolean_question'
 require_relative 'string_question'
 require_relative 'computed_question'
 require_relative 'gui_question_visitor'
-
-
+require_relative 'tk_variable'
 
 require 'tk'
 require 'pp'
@@ -23,33 +22,18 @@ class GUI < GUIQuestionVisitor
     Tk.mainloop
   end
 
-  def value_changed(question)
+  def value_changed
     @questions.each_value(&:reload)
   end
 
   def submit
-    p @questions.each_value.select{ |q| !q.hidden}.map(&:to_json)
+    p @questions.each_value.select{ |question| question.enabled }.map(&:to_json)
   end
 
   def create_submit_button
-    button = TkButton.new.grid(row: @questions.size + 2)
+    button = TkButton.new.grid(row: @questions.size + 1)
     button.text = 'Submit'
     button.command = proc { submit }
   end
 end
 
-class TkVariable
-  attr_accessor :type
-
-  def eval
-    if type == BooleanType
-      bool
-    elsif type == StringType
-      string
-    elsif type == IntegerType
-      numeric
-    else
-      value
-    end
-  end
-end

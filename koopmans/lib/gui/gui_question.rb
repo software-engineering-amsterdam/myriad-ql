@@ -2,7 +2,7 @@ class GUIQuestion
   attr_accessor :gui
   attr_accessor :label
   attr_accessor :frame
-  attr_accessor :hidden
+  attr_accessor :enabled
   attr_accessor :variable
   attr_accessor :condition
 
@@ -11,8 +11,8 @@ class GUIQuestion
     @label = args[:label]
     @condition = args[:condition]
 
-    @hidden = false
-    @variable = TkVariable.new()
+    @enabled = true
+    @variable = TkVariable.new
     @gui.questions[args[:id]] = self
 
     create_frame
@@ -32,14 +32,14 @@ class GUIQuestion
     {@label => value}
   end
 
-  def hide
+  def disable
     @frame.grid_remove
-    @hidden = true
+    @enabled = false
   end
 
-  def show
+  def enable
     @frame.grid
-    @hidden = false
+    @enabled = true
   end
 
   def reload
@@ -47,11 +47,11 @@ class GUIQuestion
   end
 
   def check_condition
-    @condition.eval ? show : hide if @condition
+    @condition.eval ? enable : disable if @condition
   end
 
   def create_label
-    label = TkLabel.new(frame).pack
+    label = TkLabel.new(@frame).pack
     label.text = @label
   end
 end
