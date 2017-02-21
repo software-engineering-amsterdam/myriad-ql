@@ -189,28 +189,3 @@ class Parser < Parslet::Parser
   end
 end
 
-class Transformer < Parslet::Transform
-  rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
-    BooleanNegation.new(BooleanLiteral.new(boolean))
-  end
-
-  rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
-    IntegerNegation.new(IntegerLiteral.new(integer))
-  end
-
-  Negation.descendants.each do |singleton_expression|
-    rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
-      singleton_expression.new(Variable.new(variable))
-    end
-  end
-
-  # TODO fix this
-  descendants = BooleanExpression.descendants +  ArithmeticExpression.descendants + ComparisonEqual.descendants + ComparisonOrdering.descendants
-  descendants.each do |binary_expression|
-    rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
-      binary_expression.new(left, right)
-    end
-  end
-
-end
-

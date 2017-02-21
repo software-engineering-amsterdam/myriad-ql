@@ -21,9 +21,3 @@ class Parser < Parslet::Parser
     variable >> str(':') >> spaces?
   end
 end
-
-class Transformer < Parslet::Transform
-  rule(variable: simple(:variable)) do
-    Variable.new(variable)
-  end
-end

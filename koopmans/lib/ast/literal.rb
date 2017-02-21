@@ -71,11 +71,3 @@ class Parser < Parslet::Parser
     str('"') >> match('[^"]').repeat.as(:string) >> str('"') >> spaces?
   end
 end
-
-class Transformer < Parslet::Transform
-  Literal.descendants.each do |literal|
-    rule("#{literal.type}": simple(:value)) do
-      literal.new(value)
-    end
-  end
-end
