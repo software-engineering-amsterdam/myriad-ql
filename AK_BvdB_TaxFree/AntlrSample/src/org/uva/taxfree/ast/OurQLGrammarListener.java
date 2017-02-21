@@ -47,6 +47,19 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         }
     }
 
+    @Override
+    public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
+        super.enterIfStatement(ctx);
+        Node ifStatementNode = new IfStatementNode(ctx.getText());
+        addParentNodeToAst(ifStatementNode);
+    }
+
+    @Override
+    public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
+        super.enterIfElseStatement(ctx);
+        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText());
+        addParentNodeToAst(ifElseStatementNode);
+    }
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
@@ -55,6 +68,13 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         addNodeToAst(questionNode);
     }
 
+    @Override
+    public void enterExpression(QLGrammarParser.ExpressionContext ctx) {
+        super.enterExpression(ctx);
+        Node expressionNode = new ExpressionNode(ctx.getText());
+//        mParentStack.peek().setCondition(expressionNode); // TODO
+        addParentNodeToAst(expressionNode);
+    }
 
     // Exits
     @Override
@@ -79,6 +99,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
         popParent(); // Clear stack
+        if (!mParentStack.isEmpty()) {
+            throw new AssertionError("After parsing the form, the stack should be empty");
+        }
     }
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {

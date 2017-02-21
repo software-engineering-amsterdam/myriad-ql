@@ -34,12 +34,12 @@ BOOL
 	;
 	
 TYPE
-	: 'boolean'
-	| 'date'
-	| 'float'
-	| 'integer'
-	| 'money'
-	| 'text'
+	: 'BOOLEAN'
+	| 'DATE'
+	| 'FLOAT'
+	| 'INTEGER'
+	| 'MONEY'
+	| 'STRING'
 	;
 
 INT

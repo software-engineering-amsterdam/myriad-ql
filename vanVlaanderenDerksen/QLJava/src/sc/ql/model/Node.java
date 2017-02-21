@@ -1,5 +1,5 @@
 package sc.ql.model;
 
-public class Question {
+public interface Node {
 	
 }
