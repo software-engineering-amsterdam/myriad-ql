@@ -16,10 +16,9 @@ import java.util.Map;
  *
  */
 public class TypeCheckVisitor implements ASTVisitor<QLType> {
-    Map<String, QLType> table = new HashMap<>();
+    Map<String, QLType> symbolTable = new HashMap<>();
 
     public QLType visit(Block block) {
-        System.err.println("block hit");
         return null;
     }
 
@@ -34,21 +33,21 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         String identifier = question.getIdentifier();
         QLType type = question.getType();
 
-        assert !table.containsKey(identifier);
-        table.put(identifier, type);
-
-        System.err.println("question hit");
+        assert !symbolTable.containsKey(identifier);
+        symbolTable.put(identifier, type);
         return null;
     }
 
     public QLType visit(Conditional conditional) {
-        System.err.println("conditional hit");
 
         for (Block block : conditional.getBlocks()) {
             block.accept(this);
         }
         QLType condition = conditional.getCondition().accept(this);
-        return null;
+        if (condition instanceof QLBooleanType) {
+            return condition;
+        }
+        throw new RuntimeException("Condition cannot be resolved because of type mismatch.");
     }
 
     public QLType visit(Expression expression) {
@@ -56,13 +55,12 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     public QLType visit(AndBinary andBinary) {
-        return null;
+        return checkBoolean(andBinary);
     }
 
     public QLType visit(OrBinary orBinary) {
-        return null;
+        return checkBoolean(orBinary);
     }
-
 
     public QLType visit(PlusBinary plusBinary) {
         return checkBinaryNumeric(plusBinary);
@@ -105,11 +103,19 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     public QLType visit(BangUnary bangUnary) {
-        return null;
+        QLType expressionType = bangUnary.getExpression().accept(this);
+        if (expressionType instanceof QLBooleanType) {
+            return expressionType;
+        }
+        throw new RuntimeException("QLBoolean type mismatch in unary expression.");
     }
 
     public QLType visit(NegUnary negUnary) {
-        return null;
+        QLType expressionType = negUnary.getExpression().accept(this);
+        if (expressionType instanceof QLNumberType) {
+            return expressionType;
+        }
+        throw new RuntimeException("QLNumeric type mismatch in unary expression.");
     }
 
     public QLType visit(BooleanLit booleanLit) {
@@ -121,7 +127,10 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     public QLType visit(IdentifierLit identifierLit) {
-        return identifierLit.getType();
+        if (symbolTable.containsKey(identifierLit.getValue())) {
+            return symbolTable.get(identifierLit.getValue());
+        }
+        throw new RuntimeException("Symbol not found!");
     }
 
     public QLType visit(IntegerLit integerLit) {
@@ -144,7 +153,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         if (leftType.isOf(rightType) && leftType instanceof QLNumberType) {
             return leftType;
         }
-        throw new RuntimeException("Type mismatch");
+        throw new RuntimeException("QLNumeric Type mismatch");
     }
 
     private QLType checkBinaryComparable(BinaryExpression binaryExpression) {
@@ -154,6 +163,16 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         if (leftType.isOf(rightType) && leftType instanceof QLComparableType) {
             return leftType;
         }
-        throw new RuntimeException("Comparable Type mismatch");
+        throw new RuntimeException("QLComparable Type mismatch");
+    }
+
+    private QLType checkBoolean(BinaryExpression binaryExpression) {
+        QLType leftType = binaryExpression.getLeft().accept(this);
+        QLType rightType = binaryExpression.getRight().accept(this);
+
+        if (leftType.isOf(rightType) && leftType instanceof QLBooleanType) {
+            return leftType;
+        }
+        throw new RuntimeException("QLBoolean Type mismatch");
     }
 }

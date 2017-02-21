@@ -17,6 +17,10 @@ public class IdentifierLit extends Literal {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }

@@ -16,11 +16,11 @@ import java.io.StringReader;
 public class Walker {
     public static void main(String[] args) throws Exception {
         String simpleForm = "form naam {tmp : \"echt?\" boolean" +
-                " if(true) { tmp2: \"ja?\"boolean}" +
+                " if(tmp) { tmp2: \"ja?\"boolean}" +
                 "}";
 
-        String formExpression = "form name {if(\"bla\"<\"bla\") {tmp: \"yu\" boolean}}";
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
+        String formExpression = "form name {if(!true) {tmp: \"yu\" boolean}}";
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm));
 
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

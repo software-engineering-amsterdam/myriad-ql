@@ -68,6 +68,11 @@ binaryoperator
     | '||'                          #orBinary
     ;
 
+
+BOOLEAN
+    : 'true' | 'false'
+    ;
+
 IDENT
     : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
@@ -78,10 +83,6 @@ INT
 
 DECIMAL
     : ('0'..'9')+ '.' ('0'..'9')+
-    ;
-
-BOOLEAN
-    : 'true' | 'false'
     ;
 
 STR
