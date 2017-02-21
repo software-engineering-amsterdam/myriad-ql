@@ -7,11 +7,11 @@ require_relative '../../lib/ast/statement'
 require_relative '../../lib/ast/form'
 require_relative '../../lib/ast/variable'
 
-require_relative '../../lib/type_checker/main_checker'
+require_relative '../../lib/type_checker/type_checker'
 
 require 'pp'
 
-describe MainChecker do
+describe TypeChecker do
   # create question
   question_variable = Variable.new('hasSoldHouse')
   question = Question.new('Did you sell a house in 2010?', question_variable, BooleanType.new)
@@ -64,8 +64,8 @@ describe MainChecker do
   describe OperandsTypeChecker do
     it 'detects error' do
       expect(ast.accept(OperandsTypeChecker.new)).to match(
-       ["[ERROR]: BooleanType can not be used with + operator",
-        "[ERROR]: IntegerType can not be used with BooleanType in an expression"]
+       ["[ERROR]: BooleanType can not be used with +",
+        "[ERROR]: IntegerType can not be used with BooleanType"]
       )
     end
   end

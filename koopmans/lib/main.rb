@@ -9,7 +9,7 @@ require_relative 'parser/transformer'
 # require_relative 'ast/form'
 # require_relative 'ast/variable'
 
-require_relative 'type_checker/main_checker'
+require_relative 'type_checker/type_checker'
 require_relative 'gui/gui'
 
 
@@ -27,7 +27,7 @@ parsed = parser.parse(contents)
 transformer = Transformer.new
 ast = transformer.apply(parsed)
 
-checker = MainChecker.new
+checker = TypeChecker.new
 errors = checker.check(ast)
 # pp errors
 # DuplicateLabelChecker.new.visit_ast(ast)

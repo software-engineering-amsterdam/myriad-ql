@@ -1,4 +1,4 @@
-class MainChecker
+class TypeChecker
   require_relative 'duplicate_label_checker'
   require_relative 'duplicate_variable_checker'
   require_relative 'undefined_variable_checker'
@@ -7,6 +7,6 @@ class MainChecker
 
   def check(ast)
     pp [DuplicateLabelChecker, DuplicateVariableChecker, UndefinedVariableChecker,
-     OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new)}.flatten
+        OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new) }.flatten
   end
 end
