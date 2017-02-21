@@ -25,21 +25,12 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitQuestion(QLParser.QuestionContext ctx) {
-		String question = ctx.STR().toString();
-		ID id 			= new ID(ctx.ID().toString());
-		Atom.Type type 	= Atom.Type.valueOf(ctx.TYPE().toString());
-
-		return new Question(question, id, type);
-	}
-
-	@Override 
-	public Node visitCalcQuestion(QLParser.CalcQuestionContext ctx) {
 		String question 		= ctx.STR().toString();
-		ID id 					= new ID(ctx.ID().toString());
+		Atom<String> id 		= new Atom<String>(Atom.Type.ID, ctx.ID().toString());
 		Atom.Type type 			= Atom.Type.valueOf(ctx.TYPE().toString());
-		Expression expression	= (Expression) visit(ctx.expression());
+		Expression expression	= null;//new Expression();
 		
-		return new CalcQuestion(question, id, type, expression);
+		return new Question(question, id, type, expression);
 	}
 
 	@Override 
@@ -96,8 +87,10 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitIdAtom(QLParser.IdAtomContext ctx) {
+		Atom.Type type = Atom.Type.ID;
+		String value = ctx.atom.getText();
 		
-		return new ID("test");
+		return new Atom<String>(type, value);
 	}
 
 	@Override 
@@ -112,7 +105,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitStrAtom(QLParser.StrAtomContext ctx) {
 		Atom.Type type = Atom.Type.STRING;
-		String value = "teststring";
+		String value = ctx.atom.getText();
 		
 		return new Atom<String>(type, value);
 	}
@@ -120,7 +113,10 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitBoolAtom(QLParser.BoolAtomContext ctx) {
 		Atom.Type type = Atom.Type.BOOLEAN;
-		Boolean value = true;
+		Boolean value = Boolean.valueOf(ctx.atom.getText());
+		
+		System.out.println(ctx.atom.getText());
+		System.out.println(value);
 		
 		return new Atom<Boolean>(type, value);
 	}

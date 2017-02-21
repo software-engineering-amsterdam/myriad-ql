@@ -5,7 +5,7 @@ public class Atom<T> implements Node {
 	private final T value;
 	
 	public enum Type {
-		BOOLEAN, DATE, FLOAT, INTEGER, MONEY, STRING;
+		ID, BOOLEAN, DATE, FLOAT, INTEGER, MONEY, STRING;
 	}
 	
 	public Atom(Type type, T value) {
