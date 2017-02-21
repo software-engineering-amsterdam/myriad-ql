@@ -8,7 +8,7 @@ statement
     ;
 
 ifStatement
-    : 'if' ifCase OPEN_BRACKET statement+ CLOSE_BRACKET
+    : 'if' OPEN_PARENTH ifCase CLOSE_PARENTH OPEN_BRACKET statement+ CLOSE_BRACKET
     ;
 
 question
@@ -17,13 +17,7 @@ question
 
 ifCase
     : ifCaseArgs
-    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCaseArgs TOKEN ifCaseArgs CLOSE_PARENTH
-    | OPEN_PARENTH ifCase TOKEN ifCase CLOSE_PARENTH
-    | OPEN_PARENTH ifCase TOKEN ifCase CLOSE_PARENTH
+    |  ifCase TOKEN ifCase
     ;
 
 ifCaseArgs
