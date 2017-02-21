@@ -1,18 +1,9 @@
-require_relative '../ast/expression'
-require_relative '../ast/literal'
-require_relative '../ast/variable'
-require_relative '../ast/type'
-
-require_relative 'gui_question'
-require_relative 'boolean_question'
-require_relative 'string_question'
-require_relative 'integer_question'
-require_relative 'computed_question'
-require_relative 'gui_question_visitor'
-require_relative '../visitor/base_visitor'
-
 require 'tk'
 require 'pp'
+require 'require_all'
+
+require_rel '../ast'
+require_rel '/'
 
 class GUIQuestionVisitor
   attr_accessor :questions
