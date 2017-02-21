@@ -13,6 +13,7 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Visitors.Contracts;
+
     public class BaseQlVisitor<TResult>
         : ILiteralVisitor<TResult>,
         IValueTypeVisitor<TResult>,
