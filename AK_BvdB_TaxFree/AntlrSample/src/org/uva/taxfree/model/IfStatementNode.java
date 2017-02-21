@@ -1,10 +1,11 @@
 package org.uva.taxfree.model;
 
+import javax.script.ScriptException;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
     String mCondition;
-    BooleanExpressionNode mExpression;
+    ExpressionNode mExpression;
 
     public IfStatementNode(String condition) {
         super();
@@ -15,15 +16,15 @@ public class IfStatementNode extends Node {
         mExpression = condition;
     }
 
-    protected boolean evaluateCondition() {
+    protected boolean isTrue() {
         assert mExpression != null;
-        return mExpression.evaluate();
+        return ("true" == mExpression.evaluate());
     }
 
     @Override
     public void setVisibility(boolean isVisible) {
-        System.out.println("I evaluate to " + evaluateCondition());
-        super.setVisibility(evaluateCondition());
+        System.out.println("I evaluate to " + isTrue());
+        super.setVisibility(isTrue());
     }
 
     @Override
