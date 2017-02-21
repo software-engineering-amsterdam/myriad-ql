@@ -37,8 +37,13 @@ public class Ast {
     public Set<NamedNode> getQuestions() {
         Set<NamedNode> questions = new LinkedHashSet<>();
         mRootNode.retrieveQuestions(questions);
-//        Set<Node> questions = mRootNode.retrieveQuestions();
         return questions;
+    }
+
+    public Set<NamedNode> getConditions() {
+        Set<NamedNode> conditions = new LinkedHashSet<>();
+        mRootNode.retrieveConditions(conditions);
+        return conditions;
     }
 
     public String getFormName() {
