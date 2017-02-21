@@ -96,9 +96,7 @@ def parse(input_string):
             l_paren +
             boolean_statement +
             r_paren +
-            l_curly +
             statement_list +
-            r_curly +
             Optional(else_lit + l_curly + statement_list + r_curly)
         ).setParseAction(ast.Conditional)
 
