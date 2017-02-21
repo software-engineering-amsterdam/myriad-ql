@@ -45,6 +45,7 @@ public class QuestionFormTest {
 
     private final int START_DELAY_MS = 1000;
     private final int INTERVAL_MS = 1000;
+
     private void createRenderer(QuestionForm form) {
         FormRenderer renderer = new FormRenderer(form);
         Timer timer = new Timer();
@@ -63,10 +64,10 @@ public class QuestionFormTest {
     public void testSimpleIfStatement() throws Exception {
         BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse");
         mRoot.addChild(boolQuestion);
-        IfStatementNode ifStatement = new IfStatementNode("");
+        IfStatementNode ifStatement = new IfStatementNode();
         ifStatement.addChild(new VariableLiteralNode("hasSoldHouse"));
         ifStatement.addChild(new StringQuestion("Toggle me on and off by selling your house", "sellYourHouse"));
-        ifStatement = new IfStatementNode("hasSoldHouse");
+        ifStatement = new IfStatementNode();
         ConditionNode condition = new VariableLiteralNode("hasSoldHouse");
         ifStatement.setCondition(condition);
         mRoot.addChild(ifStatement);
@@ -76,13 +77,13 @@ public class QuestionFormTest {
     }
 
     @Test
-    public void testBooleanIf() throws Exception{
-        IfStatementNode ifStatementNode = new IfStatementNode("");
+    public void testBooleanIf() throws Exception {
+        IfStatementNode ifStatementNode = new IfStatementNode();
         mRoot.addChild(ifStatementNode);
         ConditionNode condition = new BooleanLiteralNode("true");
         ifStatementNode.addChild(condition);
         ifStatementNode.addChild(new BooleanQuestion("Hello, do you have a name?", "hasName"));
-        ifStatementNode = new IfStatementNode("");
+        ifStatementNode = new IfStatementNode();
         ifStatementNode.addChild(new BooleanLiteralNode("false"));
         ifStatementNode.addChild(new BooleanQuestion("If you see me, something's wrong", "noName"));
 

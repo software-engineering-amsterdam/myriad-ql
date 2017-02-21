@@ -3,13 +3,11 @@ package org.uva.taxfree.model;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
-    String mExpression;
     ConditionNode mCondition;
 
 
-    public IfStatementNode(String expression) {
+    public IfStatementNode() {
         super();
-        mExpression = expression;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class IfStatementNode extends Node {
 
     @Override
     public String toString() {
-        return mExpression;
+        return mCondition.toString();
     }
 
 }
