@@ -5,6 +5,7 @@ class DuplicateVariableChecker < BaseVisitor
   def visit_form(subject)
     variables = subject.accept(QuestionVisitor.new).map(&:variable)
     variables = variables.select { |e| variables.count(e) > 1 }.uniq
+    pp variables
     variables.map{|variable| "[ERROR]: variable '#{variable.name}' is defined multiple times"}
   end
 end

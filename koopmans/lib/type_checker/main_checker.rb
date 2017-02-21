@@ -6,10 +6,7 @@ class MainChecker
   require_relative 'cyclic_checker'
 
   def check(ast)
-    errors = []
-    [DuplicateLabelChecker, DuplicateVariableChecker, UndefinedVariableChecker, OperandsTypeChecker, CyclicChecker].each do |checker|
-      errors.push(ast.accept(checker.new))
-    end
-    errors.flatten
+    pp [DuplicateLabelChecker, DuplicateVariableChecker, UndefinedVariableChecker,
+     OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new)}.flatten
   end
 end

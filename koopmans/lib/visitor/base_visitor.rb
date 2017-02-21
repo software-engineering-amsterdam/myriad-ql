@@ -22,4 +22,8 @@ class BaseVisitor
       raise NotImplementedError
     end
   end
+
+  # nothing has to be done with a literal
+  def visit_literal(_)
+  end
 end
