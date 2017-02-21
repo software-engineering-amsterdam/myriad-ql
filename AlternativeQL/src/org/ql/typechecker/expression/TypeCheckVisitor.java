@@ -54,8 +54,8 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Subtraction node) {
-        return null;
+    public Type visit(Subtraction node) throws Throwable {
+        return checkTypeMismatch(node);
     }
 
     @Override

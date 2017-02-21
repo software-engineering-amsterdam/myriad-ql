@@ -4,10 +4,7 @@ import org.junit.Test;
 import org.ql.ast.expression.Visitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.arithmetic.Addition;
-import org.ql.ast.expression.arithmetic.Decrement;
-import org.ql.ast.expression.arithmetic.Division;
-import org.ql.ast.expression.arithmetic.Increment;
+import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
@@ -302,8 +299,19 @@ public class TypeCheckVisitorTest {
     @Test(expected = TypeMismatchException.class)
     public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInNotEqual() throws Throwable {
         Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualNotEqual);
     }
+
+    @Test
+    public void shouldReturnWhenIntegerTypeForSubtraction() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+
+        Type actualSubtractionType = visitor.visit(new Subtraction(new IntegerLiteral(12), new IntegerLiteral(4)));
+
+        assertTrue(actualSubtractionType instanceof IntegerType);
+    }
+
 }
