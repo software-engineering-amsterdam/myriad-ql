@@ -17,7 +17,6 @@ public class ASTGenerator {
     public static Form getForm(String form) throws IOException {
         QLParser parser = getQlParser(form);
         ParseTree tree = parser.form();
-        System.out.println(tree.toStringTree(parser));
 
         QLVisitor visitor = new QLVisitor();
         visitor.visit(tree);
