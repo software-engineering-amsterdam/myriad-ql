@@ -19,7 +19,7 @@ public abstract class Node {
     public void retrieveConditions(Set<Node> set){
         addCondition(set);
         for(Node child : mChildren){
-            child.addCondition(set);
+            child.retrieveConditions(set);
         }
     }
 
@@ -30,7 +30,7 @@ public abstract class Node {
     public void retrieveQuestions(Set<NamedNode> set) {
         addQuestion(set);
         for (Node child : mChildren) {
-            child.addQuestion(set);
+            child.retrieveQuestions(set);
         }
     }
 
@@ -50,9 +50,6 @@ public abstract class Node {
             child.setVisibility(isVisible);
         }
     }
-
-
-
 
     public void printValue() {
         // Intentionally left blank
