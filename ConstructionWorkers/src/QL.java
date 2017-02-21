@@ -23,13 +23,7 @@ public class QL {
 
     private static final String ALLOWED_EXTENSION = "ql";
 
-    public void main(String[] arguments) throws Exception {
-        run();
-    }
-
-    private void run() throws IOException, IllegalArgumentException {
-        String fileName = "./src/test.ql";
-
+    private QL(String fileName) throws IOException, IllegalArgumentException {
         if (!fileExists(fileName)) {
             throw new IOException();
         }
@@ -40,7 +34,33 @@ public class QL {
 
         InputStream qlInputStream = new FileInputStream(fileName);
         Form qlAST = this.getAST(qlInputStream);
+        LexicalChecker lexicalChecker = new LexicalChecker(qlAST);
 
+        MessageData messages = lexicalChecker.getMessages();
+
+        if (messages.getWarnings().size() > 0) {
+            List<WarningHandler> warnings = messages.getWarnings();
+            for (MessageHandler warning : warnings) {
+                System.out.println(warning.getMessage());
+            }
+        }
+
+        // Print error messages...
+        if (messages.getErrors().size() > 0) {
+            List<ErrorHandler> errors = messages.getErrors();
+
+            for (ErrorHandler error : errors) {
+                System.out.println(error.getMessage());
+            }
+        }
+    }
+
+    public static void main(String[] arguments) throws Exception {
+        run();
+    }
+
+    private static void run() throws IOException, IllegalArgumentException {
+        new QL("./src/test.ql");
     }
 
     private boolean fileExists(String fileName) {
@@ -58,27 +78,27 @@ public class QL {
         return qlAstBuilder.buildAST();
     }
 
-    private boolean checkLexicalIntegrity(Form qlAST) {
-        LexicalChecker lexicalChecker = new LexicalChecker(qlAST);
-        MessageData messages = lexicalChecker.getMessages();
-
-        if (messages.getWarnings().size() > 0) {
-            List<WarningHandler> warnings = messages.getWarnings();
-            for (MessageHandler warning : warnings) {
-                System.out.println(warning.getMessage());
-            }
-        }
-
-        // Print error messages...
-        if (messages.getErrors().size() > 0) {
-            List<ErrorHandler> errors = messages.getErrors();
-
-            for (ErrorHandler error : errors) {
-                System.out.println(error.getMessage());
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
+//    private boolean checkLexicalIntegrity(Form qlAST) {
+//        LexicalChecker lexicalChecker = new LexicalChecker(qlAST);
+//        MessageData messages = lexicalChecker.getMessages();
+//
+//        if (messages.getWarnings().size() > 0) {
+//            List<WarningHandler> warnings = messages.getWarnings();
+//            for (MessageHandler warning : warnings) {
+//                System.out.println(warning.getMessage());
+//            }
+//        }
+//
+//        // Print error messages...
+//        if (messages.getErrors().size() > 0) {
+//            List<ErrorHandler> errors = messages.getErrors();
+//
+//            for (ErrorHandler error : errors) {
+//                System.out.println(error.getMessage());
+//            }
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 }

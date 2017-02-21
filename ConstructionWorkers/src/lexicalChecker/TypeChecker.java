@@ -46,7 +46,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public Type visit(AND expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.getType(left, right);
+        return expression.checkType(left, right);
     }
 
     @Override

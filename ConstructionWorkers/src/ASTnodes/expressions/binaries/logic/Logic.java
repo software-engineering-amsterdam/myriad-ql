@@ -10,6 +10,7 @@ import ASTnodes.CodeLocation;
 import ASTnodes.types.BooleanType;
 import ASTnodes.types.Type;
 import ASTnodes.types.UndefinedType;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public abstract class Logic extends Binary {
 
@@ -17,27 +18,16 @@ public abstract class Logic extends Binary {
         super(left, right, location);
     }
 
-    // TODO: refactor!
-    public Type getType(Type type) {
-        String booleanTest = new BooleanType().getClass().getName();
-        String typeString = type.getClass().getName();
-
-        if (typeString == booleanTest)
-            return type;
-        else
-            return new UndefinedType();
-    }
-
-    // TODO: refactor!
     @Override
-    public Type getType(Type left, Type right) {
-        String booleanTest = new BooleanType().getClass().getName();
-        String leftString = left.getClass().getName();
-        String rightString = right.getClass().getName();
-
-        if (leftString == rightString && rightString == booleanTest)
-            return right;
-        else
+    public Type checkType(Type typeToCheckLeft, Type typeToCheckRight) {
+        if (typeToCheckLeft == null || typeToCheckRight == null) {
             return new UndefinedType();
+        } else {
+            if (typeToCheckLeft.getClass().equals(typeToCheckRight) && typeToCheckLeft.getClass().equals(BooleanType.class)) {
+                return typeToCheckLeft;
+            } else {
+                return new UndefinedType();
+            }
+        }
     }
 }
