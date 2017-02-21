@@ -11,10 +11,6 @@ public class Form implements Node {
 	}
 	
 	public List<FormElement> getFormElements() {
-        return form_elements;
-    }
-
-    public FormElement getFormElement(int index) {
-        return form_elements.get(index);
+        return this.form_elements;
     }
 }

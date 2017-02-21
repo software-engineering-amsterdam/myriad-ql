@@ -1,5 +1,23 @@
 package sc.ql.model;
 
-public enum Atom implements Node {
-	BOOLEAN, DATE, FLOAT, INTEGER, MONEY, TEXT;
+public class Atom<T> implements Node {
+	private final Type type;
+	private final T value;
+	
+	public enum Type {
+		BOOLEAN, DATE, FLOAT, INTEGER, MONEY, STRING;
+	}
+	
+	public Atom(Type type, T value) {
+		this.type = type;
+		this.value = value;
+	}
+	
+	public Type getType() {
+		return this.type;
+	}
+	
+	public T getValue() {
+		return this.value;
+	}
 }
