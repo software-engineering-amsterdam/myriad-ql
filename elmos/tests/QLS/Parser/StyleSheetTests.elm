@@ -20,9 +20,9 @@ all =
 styleSheetTests : Test
 styleSheetTests =
     testWithParser styleSheet
-        "example styleSheet"
-        [ ( "styleSheet"
-          , """styleSheet taxOfficeExample
+        "example stylesheet"
+        [ ( "stylesheet"
+          , """stylesheet taxOfficeExample
   page Housing {
     section "Buying"
       question hasBoughtHouse
@@ -77,7 +77,7 @@ styleSheetTests =
                                         ([ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig (WidgetConfig Spinbox)))
                                          , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig (WidgetConfig Spinbox)))
                                          , Field (Question ( "valueResidue", Location 18 16 ))
-                                         , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999"), WidgetConfig Spinbox ])))
+                                         , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999999"), WidgetConfig Spinbox ])))
                                          ]
                                         )
                                     )
