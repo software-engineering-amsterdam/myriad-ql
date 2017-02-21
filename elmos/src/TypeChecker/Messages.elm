@@ -1,6 +1,6 @@
 module TypeChecker.Messages exposing (..)
 
-import AST exposing (ValueType, Operator, Comparison, Logic, Relation, Location)
+import AST exposing (ValueType, Operator, Comparison, Logic, Relation, Location, Id)
 
 
 type Message
@@ -14,6 +14,7 @@ type ErrorMessage
     | ComparisonExpressionTypeMismatch Comparison Location ValueType ValueType
     | RelationExpressionTypeMismatch Relation Location ValueType ValueType
     | DuplicateQuestionDefinition String (List Location)
+    | ReferenceToUndefinedQuestion Id
 
 
 undefinedExpressionVariable : String -> Location -> Message
@@ -44,3 +45,8 @@ relationExpressionTypeMismatch relation loc lhs rhs =
 duplicateQuestionDefinition : String -> List Location -> Message
 duplicateQuestionDefinition questionId locations =
     Error (DuplicateQuestionDefinition questionId locations)
+
+
+referenceToUndefinedQuestion : Id -> Message
+referenceToUndefinedQuestion var =
+    Error (ReferenceToUndefinedQuestion var)

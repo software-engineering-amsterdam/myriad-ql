@@ -3,6 +3,8 @@ package sc.ql;
 import sc.ql.antlr.*;
 import sc.ql.ast.*;
 import sc.ql.model.*;
+import sc.ql.checkform.*;
+
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.*;
@@ -16,9 +18,8 @@ public class Main {
         ParseTree tree = parser.form();
         
         AstVisitor visitor = new AstVisitor();
-        Node form = visitor.visit(tree);
-        
-        //System.out.println();
+        Form form = (Form) visitor.visit(tree);
+        CheckForm result = new CheckForm(form);
     }
 	
 }

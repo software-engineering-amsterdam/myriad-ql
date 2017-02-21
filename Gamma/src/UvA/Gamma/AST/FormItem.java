@@ -11,5 +11,5 @@ public interface FormItem extends ASTNode {
 
     void show(MainScreen screen);
 
-    void idChanged(String id, String value);
+    void idChanged(Form root, String id, String value);
 }

@@ -9,20 +9,23 @@ formItem: question
 
 question: STRING_LITERAL ID':' type;
 
-computed: STRING_LITERAL ID':' type '=' '('expression')';
+computed: STRING_LITERAL ID':' expression;
 
 type: BOOL | STRING | INT | DATE | DEC | MONEY;
 
-condition: 'if' '('boolExpr')' '{' (formItem)* '}';
+condition: 'if' '('boolExpr')' '{' (formItem)* '}' (elseblock)?;
 
-expression: boolExpr
-          | numExpr
+elseblock: 'else' '{'(formItem)*'}';
+
+expression: BOOL '=' '('boolExpr')'       # booleanExpression
+          | (DEC|INT) '=' '('numExpr')'   # numberExpression
+          | MONEY '=' '('numExpr')'       # moneyExpression
           ;
 
-boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr            # andor
-        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr  # comparison
-        | ID                                                          # boolId
-        | ('true' | 'false')                                          # bool
+boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
+        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
+        | ID
+        | ('true' | 'false')
         ;
 
 numExpr: numExpr op=('*' | '/') numExpr

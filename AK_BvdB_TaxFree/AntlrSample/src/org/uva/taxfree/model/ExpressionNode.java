@@ -1,25 +1,28 @@
 package org.uva.taxfree.model;
 
-public class ExpressionNode extends Node {
+public class ExpressionNode extends ConditionNode {
     private Node mLeft;
     private String mOperator;
     private Node mRight;
 
-    public ExpressionNode(String label) {
-
+    public ExpressionNode(String operator) {
+        mOperator = operator;
     }
 
-    public String getType() {
-        return mLeft.getType();
+    @Override
+    public void addChild(Node node) {
+        if (mLeft == null) {
+            mLeft = node;
+        } else if (mRight == null) {
+            mRight = node;
+        } else {
+            // Error handling!
+        }
     }
 
     @Override
     public String toString() {
         return "(" + mLeft.toString() + mOperator + mRight.toString() + ")";
-    }
-
-    public boolean isValid() {
-        return mLeft.getType().equals(mRight.getType());
     }
 
 }

@@ -1,5 +1,6 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
@@ -21,8 +22,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        String test = "form test {\"how old are you?\" first: integer\n " +
-                "\"Our age difference is: \" dif: integer = (21-first)}";
+        String test = "form test {\"How much do you want to pay? \" pay: money\n " +
+                "if(pay > 20.0){ \"You paid too much: \" paid: money = (pay - 20) } else { " +
+                "\"You paid not enough: \" paid: money = (20 - pay) } }";
 
         InputStream is = new ByteArrayInputStream(test.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(is);
@@ -40,6 +42,9 @@ public class Main extends Application {
         for (FormItem item : form.getFormItems()) {
             mainScreen.addFormItem(item);
             System.out.println(item);
+            if (item instanceof Computed) {
+                System.out.println(((Computed) item).expression);
+            }
         }
 
 

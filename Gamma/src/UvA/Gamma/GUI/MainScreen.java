@@ -47,7 +47,7 @@ public class MainScreen {
         input.textProperty().bindBidirectional(question.getStringValueProperty());
 
         input.textProperty().addListener((observable, oldValue, newValue) ->
-                form.getFormItems().forEach(item -> item.idChanged(question.getId(), newValue))
+                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question.getId(), newValue))
         );
 
         root.addRow(++rowCount, questionLabel, input);
@@ -65,7 +65,11 @@ public class MainScreen {
         stage.sizeToScene();
     }
 
-    public void showCondtion(Condition condition) {
-
+    public void showCondition(Condition condition) {
+        if (condition.evaluateExpression()) {
+            condition.getFormItems().forEach(item -> item.show(this));
+        } else {
+            condition.getElseBlockItems().forEach(item -> item.show(this));
+        }
     }
 }
