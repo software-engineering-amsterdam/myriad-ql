@@ -45,7 +45,7 @@ questionTypeRelationsFromBlock =
 questionTypeRelationsFromItem : FormItem -> QuestionTypeRelations
 questionTypeRelationsFromItem item =
     case item of
-        .Field _ (id, _) valueType->
+        Field _ ( id, _ ) valueType ->
             [ ( id, valueType ) ]
 
         ComputedField _ ( id, loc ) valueType _ ->
