@@ -24,7 +24,7 @@
 %type <Form>        form
 %type <Statements>  statements
 %type <Statement>   statement
-%type <Statement>    question
+%type <Statement>   question
 %type <Type>        type
 %type <Statement>   if
 %type <Expr>        expr
@@ -58,8 +58,8 @@ statement
             ;
 
 question
-            : STRING IDENT ':' type '=' expr                    { $$ = new Question($2, $1, $4, $6, lexer.getRowNumber())   ;    }
-            | STRING IDENT ':' type                             { $$ = new Question($2, $1, $4, lexer.getRowNumber())       ;        }
+            : STRING IDENT ':' type '=' expr                    { $$ = new QuestionExpr($2, $1, $4, $6, lexer.getRowNumber());  }
+            | STRING IDENT ':' type                             { $$ = new Question($2, $1, $4, lexer.getRowNumber());          }
             ;
 
 type

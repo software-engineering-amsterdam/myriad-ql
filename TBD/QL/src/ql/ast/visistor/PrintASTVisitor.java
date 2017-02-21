@@ -66,10 +66,21 @@ public class PrintASTVisitor implements ASTVisitor<Void> {
         System.out.print(" : ");
         System.out.print(typeToString(node.getType()));
 
-        if (node.hasExpr()) {
-            System.out.print(" =\n");
-            node.getExpr().accept(this);
-        }
+        return null;
+    }
+
+
+    @Override
+    public Void visit(QuestionExpr node) {
+        System.out.print("\"");
+        node.getQuestion().accept(this);
+        System.out.print("\" \n ");
+        node.getId().accept(this);
+        System.out.print(" : ");
+        System.out.print(typeToString(node.getType()));
+        System.out.print(" =\n");
+        node.getExpr().accept(this);
+
         return null;
     }
 

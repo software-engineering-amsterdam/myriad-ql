@@ -12,7 +12,7 @@ form taxOfficeExample {
     "Private debts for the sold house:"
       privateDebt: int
     "Value residue:"
-      valueResidue: int =
+      valueResidue: float =
         (sellingPrice - privateDebt)
   }
 }

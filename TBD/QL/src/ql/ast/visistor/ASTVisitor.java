@@ -21,6 +21,8 @@ public interface ASTVisitor<T> {
 
     T visit(Question node);
 
+    T visit(QuestionExpr node);
+
     T visit(QLIdent node);
 
     T visit(QLBoolean node);

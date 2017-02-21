@@ -8,16 +8,18 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 6-2-2017.
  */
-public class Question extends Statement {
+public class QuestionExpr extends Statement {
     private final QLIdent id;
     private final QLString question;
     private final Type type;
+    private final Expr expr;
 
-    public Question(QLIdent id, QLString question, Type type, int rowNumber) {
+    public QuestionExpr(QLIdent id, QLString question, Type type, Expr expr, int rowNumber) {
         super(rowNumber);
         this.id = id;
         this.question = question;
         this.type = type;
+        this.expr = expr;
     }
 
     public QLIdent getId() {
@@ -30,6 +32,10 @@ public class Question extends Statement {
 
     public Type getType() {
         return type;
+    }
+
+    public Expr getExpr() {
+        return expr;
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

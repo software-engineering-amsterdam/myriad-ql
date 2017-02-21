@@ -40,6 +40,11 @@ public class EvalASTVisitor implements ASTVisitor<Value> {
     }
 
     @Override
+    public Value visit(QuestionExpr node) {
+        return null;
+    }
+
+    @Override
     public Value visit(QLIdent node) {
         //TODO fix this
         return new UndefinedValue();

@@ -1,4 +1,4 @@
-// Output created by jacc on Tue Feb 21 15:29:26 CET 2017
+// Output created by jacc on Tue Feb 21 15:44:10 CET 2017
 
 package ql.parser;
 
@@ -2310,13 +2310,13 @@ class QLParser implements QLTokens {
     }
 
     private int yyr6() { // question : STRING IDENT ':' type '=' expr
-        { yyrv = new Question(((QLIdent)yysv[yysp-5]), ((QLString)yysv[yysp-6]), ((Type)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber())   ;    }
+        { yyrv = new QuestionExpr(((QLIdent)yysv[yysp-5]), ((QLString)yysv[yysp-6]), ((Type)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=6] = yyrv;
         return 6;
     }
 
     private int yyr7() { // question : STRING IDENT ':' type
-        { yyrv = new Question(((QLIdent)yysv[yysp-3]), ((QLString)yysv[yysp-4]), ((Type)yysv[yysp-1]), lexer.getRowNumber())       ;        }
+        { yyrv = new Question(((QLIdent)yysv[yysp-3]), ((QLString)yysv[yysp-4]), ((Type)yysv[yysp-1]), lexer.getRowNumber());          }
         yysv[yysp-=4] = yyrv;
         return 6;
     }

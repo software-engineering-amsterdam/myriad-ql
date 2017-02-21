@@ -67,15 +67,23 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         }
 
         identTable.put(node.getId().getValue(), node.getType());
-
-        if (node.hasExpr()) {
-            Type expr = node.getExpr().accept(this);
-            if (expr.equals(node.getType())) {
-                return null;
-            }
-            throw new RuntimeException("Type error");
-        }
         return null;
+    }
+
+    @Override
+    public Type visit(QuestionExpr node) {
+        if (identTable.containsKey(node.getId().getValue())) {
+            throw new RuntimeException("Id already exist");
+        }
+
+        identTable.put(node.getId().getValue(), node.getType());
+
+        Type expr = node.getExpr().accept(this);
+        if (expr.equals(node.getType())) {
+            return null;
+        }
+        throw new RuntimeException("Type error");
+
     }
 
     @Override
@@ -193,7 +201,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         Type left, right;
         left = node.getLeft().accept(this);
         right = node.getRight().accept(this);
-        System.out.println(left + "          " + right);
+
         return left.checkTypes(node, right);
     }
 
