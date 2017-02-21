@@ -15,12 +15,7 @@ import java.io.InputStream;
 public class ASTGenerator {
 
     public static Form getForm(String form) throws IOException {
-        InputStream inputStream = new ByteArrayInputStream(form.getBytes("utf-8"));
-        ANTLRInputStream input = new ANTLRInputStream(inputStream);
-        QLLexer lexer = new QLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        QLParser parser = new QLParser(tokens);
-
+        QLParser parser = getQlParser(form);
         ParseTree tree = parser.form();
         System.out.println(tree.toStringTree(parser));
 
@@ -28,6 +23,22 @@ public class ASTGenerator {
         visitor.visit(tree);
 
         return visitor.getForm();
+    }
+
+    public static String getParseTree(String form) throws IOException {
+        QLParser parser = getQlParser(form);
+        ParseTree tree = parser.form();
+
+        return tree.toStringTree(parser);
+    }
+
+    private static QLParser getQlParser(String form) throws IOException {
+        InputStream inputStream = new ByteArrayInputStream(form.getBytes("utf-8"));
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+        QLLexer lexer = new QLLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        return new QLParser(tokens);
     }
 
 }
