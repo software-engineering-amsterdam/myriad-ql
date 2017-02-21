@@ -5,6 +5,7 @@ import Combine.Extra exposing (trimmed, whitespace1)
 import Parser.Token exposing (quotedString, identifier)
 import QLS.AST exposing (..)
 import QLS.Parser.Configuration exposing (configuration)
+import Parser.Form exposing (valueType)
 
 
 --
@@ -37,26 +38,41 @@ import QLS.Parser.Configuration exposing (configuration)
 --     sepBy whitespace1 section
 --
 --
--- section : Parser s Section
--- section =
---     lazy <|
---         \() ->
---             succeed MultiChildSection
---                 <*> (string "section" *> whitespace1 *> quotedString)
---                 <*> (whitespace *> sectionChildren)
---
---
--- sectionChildren : Parser s (List SectionChild)
--- sectionChildren =
---     lazy <|
---         \() ->
---             or multiSectionChildBlock
---                 (List.singleton <$> singleChildBlock)
---
---
--- singleChildBlock : Parser s SectionChild
--- singleChildBlock =
---     Field <$> question
+
+
+section : Parser s Section
+section =
+    lazy <|
+        \() ->
+            choice
+                [ SingleChildSection
+                    <$> (string "section" *> whitespace1 *> quotedString)
+                    <*> (whitespace1 *> sectionChild)
+                , MultiChildSection
+                    <$> (string "section" *> whitespace1 *> quotedString)
+                    <*> (whitespace1 *> braces (trimmed (sepBy whitespace1 sectionChild)))
+                ]
+
+
+sectionChild : Parser s SectionChild
+sectionChild =
+    lazy <|
+        \() ->
+            choice
+                [ SubSection <$> section
+                , Field <$> question
+                , Config <$> defaultValueConfig
+                ]
+
+
+defaultValueConfig : Parser s DefaultValueConfig
+defaultValueConfig =
+    DefaultValueConfig
+        <$> (string "default" *> whitespace1 *> valueType)
+        <*> (whitespace1 *> configuration)
+
+
+
 --
 --
 -- multiSectionChildBlock : Parser s (List SectionChild)

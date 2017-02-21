@@ -28,12 +28,16 @@ type Section
 type SectionChild
     = SubSection Section
     | Field Question
-    | Config Configuration
+    | Config DefaultValueConfig
 
 
 type Question
     = Question Id
     | ConfiguredQuestion Id Configuration
+
+
+type DefaultValueConfig
+    = DefaultValueConfig ValueType Configuration
 
 
 type Configuration
