@@ -14,17 +14,17 @@ case class Question(identifier: String, label: String, `type`: Type, expressionN
 
 sealed trait Type extends FormNode
 
-case object Boolean extends Type
+case object BooleanType extends Type
 
-case object String extends Type
+case object StringType extends Type
 
-case object Date extends Type
+case object DateType extends Type
 
 sealed trait NumericType extends Type
 
-case object Integer extends NumericType
+case object IntegerType extends NumericType
 
-case object Decimal extends NumericType
+case object DecimalType extends NumericType
 
-case object Money extends NumericType
+case object MoneyType extends NumericType
 

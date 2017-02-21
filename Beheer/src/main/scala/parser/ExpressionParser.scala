@@ -44,12 +44,13 @@ trait ExpressionParser extends JavaTokenParsers {
     | "(" ~> expr <~ ")"
   )
 
-  def prefix: Parser[ExpressionNode] = """-|!""".r ~ factor ^^ {
-    case op ~ rhs => op match {
-      case "-" => NEG(rhs)
-      case "!" => NOT(rhs)
+  def prefix: Parser[ExpressionNode] =
+    """-|!""".r ~ factor ^^ {
+      case op ~ rhs => op match {
+        case "-" => NEG(rhs)
+        case "!" => NOT(rhs)
+      }
     }
-  }
 
   //Ident taken from JavaTokenParsers, equals Java Identifier.
   def identifier: Parser[Identifier] = ident ^^ (s => Identifier(s))
