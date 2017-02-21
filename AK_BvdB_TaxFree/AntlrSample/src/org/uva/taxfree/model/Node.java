@@ -16,8 +16,6 @@ public abstract class Node {
         mChildren.add(child);
     }
 
-    public abstract String getId();
-
     public void retrieveQuestions(Set<NamedNode> set) {
         addQuestion(set);
         for (Node child : mChildren) {
@@ -43,10 +41,13 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-
     public void printValue() {
         // Intentionally left blank
     }
 
-    public abstract String getType();
+    public String getType() {
+        return this.getClass().toString();
+    }
+
+    ;
 }

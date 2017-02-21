@@ -45,7 +45,7 @@ class Node(object):
             return False
 
         for (child_self, child_other) in zip(self.children, other.children):
-            if child_self != child_other:
+            if not child_self == child_other:  # Use == as it is the only node operator implemented.
                 return False
         return True
 
@@ -158,7 +158,7 @@ class IfNode(Node):
         visitor.if_node(self)
 
     def __eq__(self, other):
-        return other.expression == self.expression
+        return other.expression == self.expression and other.if_block == self.if_block
 
     def __str__(self, indent=0):
         output = indent * "  " + "if ({}): \n".format(self.expression)
@@ -184,8 +184,8 @@ class IfElseNode(Node):
         visitor.if_else_node(self)
 
     def __eq__(self, other):
-        return other.expression == self.expression and \
-               self.else_block == other.else_block
+        return other.expression == self.expression and other.if_block == self.if_block and \
+               other.else_block == self.else_block
 
     def __str__(self, indent=0):
         output = indent * "  " + "if ({}): \n".format(self.expression)

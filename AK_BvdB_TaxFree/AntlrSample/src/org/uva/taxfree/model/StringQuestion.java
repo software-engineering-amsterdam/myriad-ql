@@ -23,11 +23,6 @@ public class StringQuestion extends NamedNode {
     }
 
     @Override
-    public String getType() {
-        return "string";
-    }
-
-    @Override
     public void printValue(){
         System.out.println("Value of string: " + mTextField.getText());
     }

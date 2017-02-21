@@ -1,45 +1,60 @@
 module TypeChecker.CheckerUtil exposing (..)
 
 import AST exposing (..)
-import DictSet exposing (..)
+import List.Extra
+import Set exposing (Set)
 
 
-type alias Index a =
-    DictSet String a
+type alias QuestionTypeRelations =
+    List ( String, ValueType )
 
 
-emptyIndex : Index a
-emptyIndex =
-    DictSet.empty toString
+removeListFrom : List a -> List a -> List a
+removeListFrom toBeRemoved target =
+    List.foldl List.Extra.remove target toBeRemoved
 
 
-mergeIndex : List (Index a) -> Index a
-mergeIndex =
-    List.foldr DictSet.union emptyIndex
+intersectLists : List a -> List a -> List a
+intersectLists a b =
+    removeListFrom (removeListFrom b a) a
 
 
-declaredVarsFromList : List FormItem -> Index ( String, ValueType )
-declaredVarsFromList =
-    List.map declaredVars >> mergeIndex
+duplicates : List comparable -> List comparable
+duplicates list =
+    removeListFrom (List.Extra.unique list) list
 
 
-declaredVars : FormItem -> Index ( String, ValueType )
-declaredVars item =
+questionIds : QuestionTypeRelations -> List String
+questionIds =
+    List.map Tuple.first
+
+
+availableIdentifiersOnScope : Set String -> Block -> Set String
+availableIdentifiersOnScope parentIdentifiers block =
+    questionTypeRelationsFromBlock block
+        |> questionIds
+        |> Set.fromList
+        |> Set.union parentIdentifiers
+
+
+questionTypeRelationsFromBlock : Block -> QuestionTypeRelations
+questionTypeRelationsFromBlock =
+    List.map questionTypeRelationsFromItem >> List.concat
+
+
+questionTypeRelationsFromItem : FormItem -> QuestionTypeRelations
+questionTypeRelationsFromItem item =
     case item of
-        FieldItem { id, valueType } ->
-            DictSet.fromList toString [ ( id, valueType ) ]
+        .Field _ (id, _) valueType->
+            [ ( id, valueType ) ]
 
-        IfItem { thenBranch, elseBranch } ->
-            DictSet.intersect
-                (declaredVarsFromList thenBranch)
-                (declaredVarsFromList elseBranch)
+        ComputedField _ ( id, loc ) valueType _ ->
+            [ ( id, valueType ) ]
 
+        IfThen _ _ ->
+            []
 
-expressionFromItem : FormItem -> Maybe Expression
-expressionFromItem item =
-    case item of
-        FieldItem { valueExpression } ->
-            valueExpression
-
-        IfItem { expression } ->
-            Just expression
+        IfThenElse _ thenBranch elseBranch ->
+            intersectLists
+                (questionTypeRelationsFromBlock thenBranch)
+                (questionTypeRelationsFromBlock elseBranch)

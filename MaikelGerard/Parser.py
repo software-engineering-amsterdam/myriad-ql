@@ -35,8 +35,8 @@ class QuestionnaireParser(object):
                   self.embrace(self.block, "curly")
         if_else_cond = if_cond + Tokens.KW["ELSE"] + self.embrace(self.block, "curly")
 
-        return ((pp.Group(if_else_cond)).addParseAction(AST.IfElseNode) |
-                (pp.Group(if_cond)).addParseAction(AST.IfNode))
+        return (pp.Group(if_else_cond).addParseAction(AST.IfElseNode) |
+                pp.Group(if_cond).addParseAction(AST.IfNode))
 
     def define_grammar(self):
         self.block << pp.Group(

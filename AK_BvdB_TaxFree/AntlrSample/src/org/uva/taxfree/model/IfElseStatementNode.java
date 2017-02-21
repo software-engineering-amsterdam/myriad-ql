@@ -1,19 +1,15 @@
 package org.uva.taxfree.model;
 
-import javax.swing.*;
+public class IfElseStatementNode extends Node {
+    IfStatementNode mIfNode;
 
-public class IfElseStatementNode extends NamedNode {
-    public IfElseStatementNode(String description, String id) {
-        super(description, id);
+    public IfElseStatementNode(String label) {
+        super();
     }
 
-    @Override
-    protected void fillPanel(JPanel parent) {
-        
+    public void registerCondition(IfStatementNode condition) {
+        mIfNode = condition;
     }
 
-    @Override
-    public String getType() {
-        return null;
-    }
+    // setVisibility =>
 }
