@@ -60,4 +60,11 @@ public abstract class Node {
     }
 
     public abstract String toString();
+
+    public void printAll() {
+        System.out.println(toString());
+        for(Node child : mChildren){
+            child.printAll();
+        }
+    }
 }
