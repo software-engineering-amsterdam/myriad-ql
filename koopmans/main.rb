@@ -17,13 +17,7 @@ transformer = Transformer.new
 ast = transformer.apply(parsed)
 
 typechecker = TypeChecker.check(ast)
-# pp errors
-# DuplicateLabelChecker.new.visit_ast(ast)
-# pp parsed
-# pp ast
-# pp ast.accept(QuestionVisitor.new)
+
 GUI.new(ast, typechecker)
-# gui.question('joe?')
-# gui.launch
 
 
