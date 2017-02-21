@@ -29,8 +29,8 @@ def parse(input_string):
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
     # Reserved operators
-    mult_op = oneOf(["*", "/"])
-    additive_op = oneOf(["+", "-"])
+    mult_op = oneOf(["*", "/"]).setResultsName('arithmetic_operator')
+    additive_op = oneOf(["+", "-"]).setResultsName('arithmetic_operator')
 
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
@@ -50,27 +50,24 @@ def parse(input_string):
     ]
 
     # Arithmetic precedence
-    arith_expr = infixNotation(
+    arithmetic = infixNotation(
         arith_operand.setResultsName('arithmetic_operand'),
         arith_prec
-    )
+    ).setResultsName('arithmetic_expr')
 
     bool_expr = infixNotation(
         bool_operand,
         (arith_prec + bool_prec)
     )
-
-    # Expressions
-    arithmetic_expr = arith_expr.setResultsName('arithmetic_expr').\
-        setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
+    arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
 
     boolean_expr = bool_expr
 
-    arithmetic_statement = \
-        OneOrMore(arithmetic_expr | (l_paren + arithmetic_expr + r_paren))\
+    arithmetic_expression = \
+        OneOrMore(arithmetic | (l_paren + arithmetic + r_paren))\
             .setResultsName("arithmetic_statement")
 
-    arithmetic_statement.addParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
+    arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
@@ -81,7 +78,7 @@ def parse(input_string):
             data_types.setResultsName("data_type") + \
             Optional(
                 assign_op +
-                arithmetic_statement
+                arithmetic_expression
             )
     field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 

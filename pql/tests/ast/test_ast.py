@@ -95,7 +95,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_statement_node = field_node_1.children[0]
-        self.assertEqual(0, len(arithmetic_statement_node.children), 'Arithmetic statement node should have no children' )
+        self.assertEqual(1, len(arithmetic_statement_node.children), 'Arithmetic statement node should have 1 childr')
         self.assertEqual('sellingPrice', arithmetic_statement_node.lhs)
         self.assertEqual('-', arithmetic_statement_node.operator)
         self.assertEqual('privateDebt', arithmetic_statement_node.rhs)
