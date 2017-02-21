@@ -41,10 +41,10 @@ def parse(input_string):
     assign_op = Suppress("=")
 
     arith_prec = [
-        (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
-        (divide_op, 2, opAssoc.LEFT, ast.Division),
-        (add_op, 2, opAssoc.LEFT, ast.Addition),
         (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
+        (add_op, 2, opAssoc.LEFT, ast.Addition),
+        (divide_op, 2, opAssoc.LEFT, ast.Division),
+        (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
     ]
 
     bool_prec = [
