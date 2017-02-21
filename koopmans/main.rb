@@ -1,20 +1,8 @@
-require_relative 'parser/file_reader'
-require_relative 'parser/parser'
-require_relative 'parser/transformer'
-
-# require_relative 'ast/expression'
-# require_relative 'ast/type'
-# require_relative 'ast/literal'
-# require_relative 'ast/statement'
-# require_relative 'ast/form'
-# require_relative 'ast/variable'
-
-require_relative 'type_checker/type_checker'
-require_relative 'gui/gui'
-
-
+require 'require_all'
 require 'parslet'
 require 'pp'
+
+require_rel 'lib'
 
 # read file
 file_reader = FileReader.new

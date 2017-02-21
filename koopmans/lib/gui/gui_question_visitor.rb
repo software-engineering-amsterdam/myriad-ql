@@ -1,22 +1,10 @@
-require_relative '../ast/expression'
-require_relative '../ast/literal'
-require_relative '../ast/variable'
-require_relative '../ast/type'
-
-require_relative 'gui_question'
-require_relative 'boolean_question'
-require_relative 'string_question'
-require_relative 'integer_question'
-require_relative 'computed_question'
-require_relative 'gui_question_visitor'
-
 require 'tk'
 require 'pp'
 
 class GUIQuestionVisitor
   attr_accessor :questions
 
-  def initialize(ast, typechecker)
+  def initialize(ast)
     @questions = Hash.new
     visit_form(ast)
   end
