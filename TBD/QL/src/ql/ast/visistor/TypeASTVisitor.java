@@ -42,6 +42,8 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
         if (!expr.equals(new BooleanType())) {
             throw new RuntimeException("Type error");
         }
+
+        node.getIfBlock().accept(this);
         return null;
     }
 

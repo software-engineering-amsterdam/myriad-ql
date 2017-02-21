@@ -8,14 +8,11 @@ form taxOfficeExample {
 
   if (hasSoldHouse == hasMaintLoan) {
     "What was the selling price?"
-      sellingPrice: int
+      sellingPrice: float
     "Private debts for the sold house:"
       privateDebt: int
     "Value residue:"
       valueResidue: int =
         (sellingPrice - privateDebt)
-  }else{
-    "Is it working?"
-    working: boolean
   }
 }
