@@ -1,9 +1,9 @@
-package com.matthewchapman;
+package com.mcsa;
 
-import com.matthewchapman.QL.Form;
-import com.matthewchapman.antlr.QLLexer;
-import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.com.matthewchapman.Parsing.MCQLVisitor;
+import com.mcsa.QL.Form;
+import com.mcsa.antlr.QLLexer;
+import com.mcsa.antlr.QLParser;
+import com.mcsa.parsing.mcsaQLVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -52,7 +52,7 @@ public class ExampleRunner {
         // Specify our entry point
         QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
 
-        MCQLVisitor visitor = new MCQLVisitor();
+        mcsaQLVisitor visitor = new mcsaQLVisitor();
         Form traverseResult = (Form) visitor.visit(formDeclarationContext);
 
         traverseResult.questionList.forEach(x -> System.out.println(x.name));

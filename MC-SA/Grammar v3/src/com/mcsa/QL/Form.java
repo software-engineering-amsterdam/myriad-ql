@@ -1,7 +1,6 @@
-package com.matthewchapman.QL;
+package com.mcsa.QL;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by matt on 20/02/2017.

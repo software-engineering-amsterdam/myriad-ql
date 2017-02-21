@@ -1,5 +1,5 @@
-// Generated from /Users/matt/Documents/IntelliJ/Grammar/src/com/matthewchapman/grammars/QL.g4 by ANTLR 4.6
-package com.matthewchapman.antlr;
+// Generated from /Users/matt/Repos/myriad-ql/MC-SA/Grammar v3/src/com/mcsa/grammars/QL.g4 by ANTLR 4.6
+package com.mcsa.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
