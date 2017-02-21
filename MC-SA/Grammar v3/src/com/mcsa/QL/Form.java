@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by matt on 20/02/2017.
  */
-public class Form {
+public class Form implements Node{
 
     private ArrayList<Question> questionList;
     private ArrayList<IfStatement> ifStatementList;
