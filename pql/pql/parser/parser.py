@@ -64,22 +64,23 @@ def parse(input_string):
     boolean_expr = bool_expr
 
     arithmetic_expression = \
-        OneOrMore(arithmetic | (l_paren + arithmetic + r_paren))\
-            .setResultsName("arithmetic_statement")
+        OneOrMore(
+            arithmetic | (l_paren + arithmetic + r_paren)
+        ).setResultsName("arithmetic_statement")
 
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
 
     field_expr = \
-            QuotedString('"', unquoteResults=True).setResultsName("title") + \
-            identifier.setResultsName("identifier") + \
-            colon + \
-            data_types.setResultsName("data_type") + \
-            Optional(
-                assign_op +
-                arithmetic_expression
-            )
+        QuotedString('"', unquoteResults=True).setResultsName("title") + \
+        identifier.setResultsName("identifier") + \
+        colon + \
+        data_types.setResultsName("data_type") + \
+        Optional(
+            assign_op +
+            arithmetic_expression
+        )
     field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
     statement_list = Forward()
