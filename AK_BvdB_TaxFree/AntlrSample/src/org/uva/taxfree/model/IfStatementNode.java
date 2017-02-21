@@ -11,7 +11,16 @@ public class IfStatementNode extends Node {
         mCondition = new String(condition);
     }
 
-    public void addExpression(BooleanExpressionNode condition) {
+    @Override
+    public void addChild(Node node) {
+        if (mExpression == null) {
+            setCondition((ExpressionNode)node);
+        } else {
+            super.addChild(node);
+        }
+    }
+
+    public void setCondition(ExpressionNode condition) {
         mExpression = condition;
     }
 

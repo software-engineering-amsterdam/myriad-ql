@@ -1,9 +1,9 @@
 package org.uva.taxfree.model;
 
-public class LiteralNode extends ExpressionNode{
+public class LiteralNode extends ConditionNode{
     String mId;
     public LiteralNode(String id){
-        super(id);
+        super();
         mId = id;
     }
 
