@@ -13,17 +13,15 @@ class GUIQuestion
 
     @hidden = false
     @variable = TkVariable.new()
-
     @gui.questions[args[:id]] = self
 
     create_frame
     create_label
-    refresh
+    check_condition
   end
 
   def create_frame
     @frame = TkFrame.new.grid(row: @gui.questions.size)
-    # @frame = TkFrame.new.pack()
   end
 
   def value
@@ -44,10 +42,12 @@ class GUIQuestion
     @hidden = false
   end
 
-  def refresh
-    if @condition
-      @condition.eval ? show : hide
-    end
+  def reload
+    check_condition
+  end
+
+  def check_condition
+    @condition.eval ? show : hide if @condition
   end
 
   def create_label

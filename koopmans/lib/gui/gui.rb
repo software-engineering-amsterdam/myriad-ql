@@ -4,10 +4,13 @@ require_relative '../ast/variable'
 require_relative '../ast/type'
 
 require_relative 'gui_question'
+require_relative 'text_question'
 require_relative 'boolean_question'
 require_relative 'string_question'
 require_relative 'computed_question'
 require_relative 'gui_question_visitor'
+
+
 
 require 'tk'
 require 'pp'
@@ -21,7 +24,7 @@ class GUI < GUIQuestionVisitor
   end
 
   def value_changed(question)
-    @questions.each_value(&:refresh)
+    @questions.each_value(&:reload)
   end
 
   def submit
