@@ -40,6 +40,7 @@ def parse(input_string):
     con_or_op = Literal("||")
     assign_op = Suppress("=")
 
+    #TODO: Signop toevoegen
     arith_prec = [
         (add_op, 2, opAssoc.LEFT, ast.Addition),
         (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
@@ -47,6 +48,7 @@ def parse(input_string):
         (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
     ]
 
+    #TODO: Not toevoegen
     bool_prec = [
         (rat_op, 2, opAssoc.LEFT),
         (eqal_op, 2, opAssoc.LEFT),
@@ -76,6 +78,7 @@ def parse(input_string):
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
     boolean_statement = \
         OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
+    boolean_statement.setParseAction(lambda parsed_tokens: ast.Condition(*parsed_tokens))
 
     field_expr = \
         QuotedString('"', unquoteResults=True).setResultsName("title") + \
