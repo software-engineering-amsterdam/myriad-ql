@@ -4,6 +4,7 @@ package org.lemonade.nodes.types;
  *
  */
 public class QLBooleanType extends QLType {
+
     public QLBooleanType() {
     }
 

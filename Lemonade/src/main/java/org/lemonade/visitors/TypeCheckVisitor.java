@@ -1,13 +1,19 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.*;
+import org.lemonade.nodes.Body;
+import org.lemonade.nodes.Conditional;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.types.*;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLComparableType;
+import org.lemonade.nodes.types.QLNumberType;
+import org.lemonade.nodes.types.QLType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,15 +22,16 @@ import java.util.Map;
  *
  */
 public class TypeCheckVisitor implements ASTVisitor<QLType> {
-    Map<String, QLType> symbolTable = new HashMap<>();
+    Map<String, QLType> symbolTable;
 
-    public QLType visit(Block block) {
+    public QLType visit(Body body) {
         return null;
     }
 
     public QLType visit(Form form) {
-        for (Block block : form.getBlocks()) {
-            block.accept(this);
+        symbolTable = new HashMap<>();
+        for (Body body : form.getBodies()) {
+            body.accept(this);
         }
         return null;
     }
@@ -40,9 +47,10 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(Conditional conditional) {
 
-        for (Block block : conditional.getBlocks()) {
-            block.accept(this);
+        for (Body body : conditional.getBodies()) {
+            body.accept(this);
         }
+
         QLType condition = conditional.getCondition().accept(this);
         if (condition instanceof QLBooleanType) {
             return condition;
@@ -126,6 +134,10 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         return decimalLit.getType();
     }
 
+    public QLType visit(MoneyLit moneyLit) {
+        return moneyLit.getType();
+    }
+
     public QLType visit(IdentifierLit identifierLit) {
         if (symbolTable.containsKey(identifierLit.getValue())) {
             return symbolTable.get(identifierLit.getValue());
@@ -143,7 +155,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     @Override
     public QLType visit(QLType type) {
-        return null;
+        return type;
     }
 
     private QLType checkBinaryNumeric(BinaryExpression binaryExpression) {
@@ -160,8 +172,9 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
+        //Doesn't return it's own type because this can evaluate to a new type.
         if (leftType.isOf(rightType) && leftType instanceof QLComparableType) {
-            return leftType;
+            return new QLBooleanType();
         }
         throw new RuntimeException("QLComparable Type mismatch");
     }

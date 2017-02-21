@@ -3,7 +3,7 @@ package org.lemonade.nodes;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
-public class Question extends Block {
+public class Question extends Body {
     private String identifier;
     private String label;
     private QLType type;

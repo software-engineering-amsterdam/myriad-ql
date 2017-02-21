@@ -1,11 +1,16 @@
-package org.lemonade;
+package org.lemonade.visitors;
 
-import org.lemonade.nodes.expressions.*;
+import org.lemonade.QLBaseVisitor;
+import org.lemonade.QLParser;
+import org.lemonade.nodes.*;
+import org.lemonade.nodes.expressions.BinaryExpression;
+import org.lemonade.nodes.expressions.Expression;
+import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.expressions.UnaryExpression;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.*;
 import org.lemonade.nodes.types.*;
 
 import java.util.ArrayList;
@@ -20,13 +25,13 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
     public Form visitForm(QLParser.FormContext ctx) {
         System.err.println("Entering form");
         String identifier = ctx.identifier().getText();
-        List<Block> blocks = new ArrayList<Block>();
+        List<Body> bodies = new ArrayList<Body>();
 
-        for (QLParser.BlockContext block : ctx.block()) {
-            blocks.add((Block) block.accept(this));
+        for (QLParser.BodyContext body : ctx.body()) {
+            bodies.add((Body) body.accept(this));
         }
 
-        return new Form(identifier, blocks);
+        return new Form(identifier, bodies);
     }
 
     @Override
@@ -44,12 +49,12 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
         System.err.println("entering conditional");
         Expression expression = (Expression) ctx.expr().accept(this);
 
-        List<Block> blocks = new ArrayList<Block>();
-        for (QLParser.BlockContext block : ctx.block()) {
-            blocks.add((Block) block.accept(this));
+        List<Body> bodies = new ArrayList<Body>();
+        for (QLParser.BodyContext body: ctx.body()) {
+            bodies.add((Body) body.accept(this));
         }
 
-        return new Conditional(expression, blocks);
+        return new Conditional(expression, bodies);
     }
 
     @Override

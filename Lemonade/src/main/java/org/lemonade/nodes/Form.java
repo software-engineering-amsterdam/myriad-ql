@@ -9,16 +9,16 @@ import java.util.List;
 //the constructed tree?
 public class Form implements ASTNode {
     private String identifier;
-    private List<Block> blocks;
+    private List<Body> bodies;
 
-    public Form(String identifier, List<Block> blocks) {
+    public Form(String identifier, List<Body> bodies) {
         super();
         this.identifier = identifier;
-        this.blocks = blocks;
+        this.bodies = bodies;
     }
 
-    public List<Block> getBlocks() {
-        return blocks;
+    public List<Body> getBodies() {
+        return bodies;
     }
 
     public String getIdentifier() {

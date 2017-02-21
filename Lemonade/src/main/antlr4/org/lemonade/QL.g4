@@ -1,10 +1,10 @@
 grammar QL;
 
 form
-    : 'form' identifier '{' block+ '}' EOF
+    : 'form' identifier '{' body+ '}' EOF
     ;
 
-block
+body
     : question
     | conditional
     ;
@@ -14,7 +14,7 @@ question
     ;
 
 conditional
-    : 'if' '(' expr ')' '{' block+ '}'
+    : 'if' '(' expr ')' '{' body+ '}'
     ;
 
 type_specifier
@@ -73,16 +73,16 @@ BOOLEAN
     : 'true' | 'false'
     ;
 
-IDENT
-    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-    ;
-
 INT
     : ('0'..'9')+
     ;
 
 DECIMAL
     : ('0'..'9')+ '.' ('0'..'9')+
+    ;
+
+IDENT
+    : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
 STR

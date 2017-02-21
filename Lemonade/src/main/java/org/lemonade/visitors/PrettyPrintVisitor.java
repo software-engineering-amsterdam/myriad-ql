@@ -2,25 +2,25 @@ package org.lemonade.visitors;
 
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.types.QLType;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLType;
 
 /**
  *
  */
-public class PrettyPrint implements ASTVisitor<ASTNode> {
+public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     private String tabLevel = "";
 
     public ASTNode visit(Form form) {
         String identifier = form.getIdentifier();
         String formStr = String.format("form %s {\n", identifier);
         System.err.print(formStr);
-        for (Block block : form.getBlocks()) {
-            block.accept(this);
-            System.err.print(tabLevel.length() +"~~~\n");
+        for (Body body : form.getBodies()) {
+            body.accept(this);
+            System.err.print(tabLevel.length() + "~~~\n");
         }
         System.err.print("\n}");
         return form;
@@ -33,7 +33,7 @@ public class PrettyPrint implements ASTVisitor<ASTNode> {
         String identifier = question.getIdentifier();
         String label = question.getLabel();
         QLType type = question.getType();
-        String questionStr = String.format("%s%s: \"%s\" %s",tabLevel, identifier, label, type);
+        String questionStr = String.format("%s%s: \"%s\" %s", tabLevel, identifier, label, type);
         System.err.print(questionStr);
         tabLevel.replaceFirst("\t", "");
         return question;
@@ -43,10 +43,10 @@ public class PrettyPrint implements ASTVisitor<ASTNode> {
     public ASTNode visit(Conditional conditional) {
         tabLevel += "\t";
         System.err.print(tabLevel + "if (");
-        conditional.getCondition().accept(this );
+        conditional.getCondition().accept(this);
         System.err.print(") {\n");
-        for (Block block : conditional.getBlocks()) {
-            block.accept(this);
+        for (Body body : conditional.getBodies()) {
+            body.accept(this);
             System.err.print("\n");
         }
         tabLevel.replaceFirst("\t", "");
@@ -197,7 +197,13 @@ public class PrettyPrint implements ASTVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visit(MoneyLit moneyLit) {
+        System.err.print(moneyLit);
+        return moneyLit;
+    }
+
+    @Override
     public ASTNode visit(QLType type) {
-        return null;
+        return type;
     }
 }

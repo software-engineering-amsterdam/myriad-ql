@@ -1,24 +1,16 @@
 package org.lemonade;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.BitSet;
-
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.BitSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -96,7 +88,8 @@ public class ParseTest {
             this.failed = failed;
         }
 
-        @Override public void syntaxError(
+        @Override
+        public void syntaxError(
                 final Recognizer<?, ?> recognizer,
                 final Object o,
                 final int i,
@@ -106,7 +99,8 @@ public class ParseTest {
             setFailed(true);
         }
 
-        @Override public void reportAmbiguity(
+        @Override
+        public void reportAmbiguity(
                 final Parser parser,
                 final DFA dfa,
                 final int i,
@@ -117,7 +111,8 @@ public class ParseTest {
             setFailed(true);
         }
 
-        @Override public void reportAttemptingFullContext(
+        @Override
+        public void reportAttemptingFullContext(
                 final Parser parser,
                 final DFA dfa,
                 final int i,
@@ -127,7 +122,8 @@ public class ParseTest {
             setFailed(true);
         }
 
-        @Override public void reportContextSensitivity(
+        @Override
+        public void reportContextSensitivity(
                 final Parser parser,
                 final DFA dfa,
                 final int i,
