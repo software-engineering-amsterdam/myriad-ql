@@ -3,6 +3,7 @@
     using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Visitors.Contracts;
 
     public class QuestionStatement : Statement
     {
@@ -25,5 +26,10 @@
         public StringLiteral Question { get; private set; }
 
         public Expression ComputedValue { get; private set; }
+
+        public override TResult Accept<TResult>(IStatementVisitor<TResult> visitor)
+        {
+            return visitor.Visit(this);
+        }
     }
 }

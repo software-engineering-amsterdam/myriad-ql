@@ -3,6 +3,7 @@
     using System.Drawing;
 
     using OffByOne.LanguageCore.Ast.Literals.Base;
+    using OffByOne.LanguageCore.Visitors.Contracts;
 
     public class HexLiteral : Literal
     {
@@ -17,5 +18,10 @@
         }
 
         public Color Value { get; private set; }
+
+        public override TResult Accept<TResult>(ILiteralVisitor<TResult> visitor)
+        {
+            return visitor.Visit(this);
+        }
     }
 }

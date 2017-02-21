@@ -84,6 +84,12 @@
     <Compile Include="Checker\LogLevel.cs" />
     <Compile Include="Checker\Messages\InvaildTypeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visitors\Contracts\ILiteralVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IValueTypeVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IVisitable.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableLiteral.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
+    <Compile Include="Visitors\Contracts\IVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OffByOne.LanguageCore.ruleset" />

@@ -4,10 +4,11 @@
     using System.Globalization;
 
     using OffByOne.LanguageCore.Ast.Literals.Base;
+    using OffByOne.LanguageCore.Visitors.Contracts;
 
     public class DateLiteral : Literal
     {
-        public const string FORMAT = "dd-MM-yyyy";
+        public const string Format = "dd-MM-yyyy";
 
         public DateLiteral(DateTime value)
         {
@@ -17,11 +18,16 @@
         public DateLiteral(string dateString)
             : this(DateTime.ParseExact(
                 dateString.Trim('\''),
-                DateLiteral.FORMAT,
+                DateLiteral.Format,
                 CultureInfo.InvariantCulture))
         {
         }
 
         public DateTime Value { get; private set; }
+
+        public override TResult Accept<TResult>(ILiteralVisitor<TResult> visitor)
+        {
+            return visitor.Visit(this);
+        }
     }
 }

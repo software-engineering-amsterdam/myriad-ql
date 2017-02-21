@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.LanguageCore.Ast.ValueTypes
 {
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.LanguageCore.Visitors.Contracts;
 
     public class DateValueType : ValueType
     {
@@ -17,6 +18,11 @@
         public override string ToString()
         {
             return "date";
+        }
+
+        public override TResult Accept<TResult>(IValueTypeVisitor<TResult> visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }
