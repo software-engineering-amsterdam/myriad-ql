@@ -5,7 +5,4 @@ public class BooleanExpressionNode extends ExpressionNode {
         super(label);
     }
 
-    public boolean evaluate(){
-        return ("true".equals(super.evaluate()));
-    }
 }

@@ -60,8 +60,11 @@ public class QuestionFormTest {
 
     @Test
     public void testSimpleIfStatement() throws Exception {
-        mRoot.addChild(new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse"));
+        BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse");
+        mRoot.addChild(boolQuestion);
         IfStatementNode ifStatement = new IfStatementNode("hasSoldHouse");
+        BooleanExpressionNode boolExpression = new BooleanExpressionNode("hasSoldHouse");
+        ifStatement.addExpression(boolExpression);
         mRoot.addChild(ifStatement);
         ifStatement.addChild(new BooleanQuestion("Am I inside the If statement?", "isInsideIfStatement"));
     }

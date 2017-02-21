@@ -2,6 +2,8 @@ package org.uva.taxfree.model;
 
 import org.uva.taxfree.util.Evaluator;
 
+import javax.script.ScriptException;
+
 public class ExpressionNode extends Node {
     private Node mLeft;
     private String mOperator;
@@ -11,7 +13,17 @@ public class ExpressionNode extends Node {
 
     }
 
-    public String evaluate() throws Exception{
+    public String evaluate() {
+        try {
+            return tryEvaluate();
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+        return "!! Error !!";
+    }
+
+    // Allows the typeChecker to perform a testrun on all expressions.
+    public String tryEvaluate() throws ScriptException {
         return Evaluator.calculate(toString());
     }
 

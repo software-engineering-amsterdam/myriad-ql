@@ -16,14 +16,14 @@ public abstract class Node {
         mChildren.add(child);
     }
 
-    public void retrieveConditions(Set<Node> set){
+    public void retrieveConditions(Set<Node> set) {
         addCondition(set);
-        for(Node child : mChildren){
+        for (Node child : mChildren) {
             child.retrieveConditions(set);
         }
     }
 
-    protected  void addCondition(Set<Node> set){
+    protected void addCondition(Set<Node> set) {
         // Intentionally left blank
     }
 
