@@ -11,17 +11,16 @@ import java.util.Set;
 
 public class SemanticsAnalyzer {
     private Ast mAst;
-    private List<String> mUndefinedQuestions;
 
     /*
-     * UNDEFINES - reference to undefined questions
+     * UNDEFINES - reference to undefined questions // TODO
      *   if (nonExists) etc.
      * DUPLICATE-QUESTIONS - duplicate question declarations with different types
      *  "Question?" -> varName : boolean
      *  "Question2?" -> varName : string
-     * WRONGCONDITIONS - conditions that are not of the type boolean
-     * WRONGCONDITIONS - operands of invalid type to operators
-     * IFELSERECURSION - cyclic dependencies between questions
+     * WRONGCONDITIONS - conditions that are not of the type boolean // TODO
+     * WRONGCONDITIONS - operands of invalid type to operators // TODO
+     * IFELSERECURSION - cyclic dependencies between questions // TODO
      * // DUPLICATE-LABELS - duplicate labels (warning)
      */
 
@@ -29,30 +28,48 @@ public class SemanticsAnalyzer {
         mAst = ast;
     }
 
-    public boolean check() {
-        List<String> errorMessages = getUndefinedQuestions();
-        errorMessages.addAll(getDuplicateLabels());
-        return errorMessages.isEmpty();
+    public boolean validSemantics() {
+        return getSemanticErrors().isEmpty();
     }
 
-    public List<String> getDuplicateLabels() {
+    public List<String> getSemanticErrors() {
+        List<String> errorMessages = getUndefinedQuestionErrors();
+        errorMessages.addAll(getDuplicateQuestionErrors());
+        errorMessages.addAll(getDuplicateLabelErrors());
+        return errorMessages;
+    }
+
+    public List<String> getUndefinedQuestionErrors() {
+        // TODO
+        List<String> errorMessages = new ArrayList<>();
+        Set<String> processedConditionIds = new LinkedHashSet<>();
+        for (String Id : getConditionIds()) {
+            if(!getQuestionIds().contains(Id)){
+                errorMessages.add("Unresolved condition in questions: " + Id);
+            }
+        }
+        return errorMessages;
+    }
+
+    public List<String> getDuplicateQuestionErrors() {
+        List<String> errorMessages = new ArrayList<>();
+        Set<String> processedQuestionIds = new LinkedHashSet<>();
+        for (NamedNode questionNode : mAst.getQuestions()) {
+            String questionId = questionNode.getId();
+            if (!processedQuestionIds.add(questionId)) {
+                errorMessages.add("Duplicate question declaration found: " + questionId);
+            }
+        }
+        return errorMessages;
+    }
+
+    public List<String> getDuplicateLabelErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionLabels = new LinkedHashSet<>();
         for (NamedNode questionNode : mAst.getQuestions()) {
             String questionLabel = questionNode.getLabel();
             if (!processedQuestionLabels.add(questionLabel)) {
                 errorMessages.add("Duplicate question label found: " + questionLabel);
-            }
-        }
-        return errorMessages;
-    }
-
-    public List<String> getUndefinedQuestions() {
-        List<String> errorMessages = new ArrayList<>();
-        Set<String> processedConditionIds = new LinkedHashSet<>();
-        for (String Id : getConditionIds()) {
-            if(!getQuestionIds().contains(Id)){
-                errorMessages.add("Unresolved condition in questions: " + Id);
             }
         }
         return errorMessages;

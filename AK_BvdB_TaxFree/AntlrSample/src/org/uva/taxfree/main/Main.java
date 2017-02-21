@@ -19,7 +19,7 @@ public class Main {
             Ast ast = Ast.generateAst(new File("input"));
             System.out.println("Rootnode name: " + ast.getFormName());
             SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-            semanticsAnalyzer.check();
+            semanticsAnalyzer.validSemantics();
 //            new QuestionForm(ast.getRootNode()).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

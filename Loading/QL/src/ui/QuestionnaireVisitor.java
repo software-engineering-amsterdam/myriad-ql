@@ -1,54 +1,49 @@
 package ui;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ast.Question;
 import ast.Statement;
 import ast.Visitor;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import value.Value;
 
 // Or Statement Visitor
 public class QuestionnaireVisitor extends Visitor {
 	
-	private GridPane grid;
-	private List<TextField> activeQuestions;
-	private int rowIndex; // TODO do you want to set it here to zero?
+	private List<String> activeQuestions;
+	private Map<String, Value> answers;
 	
-	public QuestionnaireVisitor(GridPane grid) {
-		this.grid = grid;
-		this.activeQuestions = new ArrayList<TextField>();
-		this.rowIndex = 0;
+	public QuestionnaireVisitor(Map<String, Value> answers) {
+		this.activeQuestions = new ArrayList<String>();
+		this.answers = answers;
 	}
 	
-	// TODO create a QuestionnaireQuestion class?
-	// call here createQQuestion
 	@Override 
 	public void visit(Question question) {
-        Label questionLabel = new Label(question.getLabel());
-        grid.add(questionLabel, 0, 1 + rowIndex);
-             
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1 + rowIndex); // TODO Maybe moving buttons to the
-        // screen to a user interface class?
-        activeQuestions.add(userTextField);
-        ++rowIndex;
+        activeQuestions.add(question.getLabel());
 	}
 	
 	@Override
 	public void visit(Statement statement) {	
 		
-		// TODO many functions - functions : can you assume
-		// the ATOM is a boolean?
-		System.out.println(statement.getExpression().evaluate());
+		// TODO many functions - functions : can you assume the ATOM is a boolean?
+		 System.out.println(statement.getExpression().evaluate().getValue());
+		// Call the evaluator with answers
+		if (answers.size() != 0) {
+			System.out.println("answer: ");
+			List<Value> valuesList = new ArrayList<Value>(answers.values());
+			List<String> keysList = new ArrayList<String>(answers.keySet());
+			System.out.println(valuesList.get(0).getValue());
+			System.out.println(keysList.get(0));
+			System.out.println(statement.getExpression().evaluate().getValue());
+		}
 		if (statement.getExpression().evaluate().getValue()) {
 			statement.getBlock().accept(this);
 		} 
 	}
 
-	public List<TextField> getActiveQuestions() {
-		// TODO Auto-generated method stub
+	public List<String> getActiveQuestions() {
 		return activeQuestions;
 	}	
 }
