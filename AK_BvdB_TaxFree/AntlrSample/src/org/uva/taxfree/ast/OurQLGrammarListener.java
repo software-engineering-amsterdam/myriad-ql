@@ -87,14 +87,14 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.enterCalculationExpression(ctx);
-        Node calculationExpressionNode = new CalculationExpressionNode(ctx.getText());
+        Node calculationExpressionNode = new CalculationExpressionNode(ctx.getText(), ctx.operator.toString());
         addParentNodeToAst(calculationExpressionNode);
     }
 
     @Override
     public void enterUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
         super.enterUniformExpression(ctx);
-        Node uniformExpressionNode = new UniformExpressionNode(ctx.getText());
+        Node uniformExpressionNode = new UniformExpressionNode(ctx.getText(), ctx.operator.toString());
         addParentNodeToAst(uniformExpressionNode);
     }
 
