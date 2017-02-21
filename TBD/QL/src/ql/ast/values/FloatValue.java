@@ -41,11 +41,17 @@ public class FloatValue extends Value<Float>{
 
     @Override
     protected Value divEval(FloatValue other) {
+        if(this.getValue() == 0f){
+            return new UndefinedValue();
+        }
         return new FloatValue(other.getValue() / this.getValue());
     }
 
     @Override
     protected Value divEval(IntValue other) {
+        if(this.getValue() == 0f){
+            return new UndefinedValue();
+        }
         return new FloatValue(other.getValue() / this.getValue());
     }
 

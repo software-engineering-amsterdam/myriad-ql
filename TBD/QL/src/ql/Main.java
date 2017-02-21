@@ -1,6 +1,8 @@
 package ql;
 
+import ql.ast.Expr;
 import ql.ast.expressions.binop.Add;
+import ql.ast.expressions.binop.Div;
 import ql.ast.literals.QLFloat;
 import ql.ast.literals.QLIdent;
 import ql.ast.expressions.binop.Sub;
@@ -26,7 +28,6 @@ import java.io.Reader;
  */
 public class Main {
     public static void main(String[] args) {
-
         Reader reader = null;
         try {
             reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
@@ -52,8 +53,7 @@ public class Main {
             e.printStackTrace();
         }
 
-
-        Neg exprtest = new Neg(new Sub(new QLIdent("A", 1), new QLInt(4, 2), 3), 4);
+        Div exprtest = new Div(new QLInt(2, 1), new QLFloat(0.1f, 2), 3);
 
         ASTVisitor<Value> evalASTVisitor = new EvalASTVisitor();
         System.out.println(evalASTVisitor.visit(exprtest));
