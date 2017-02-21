@@ -69,7 +69,6 @@ class BinaryOperation(Node):
         self.lhs, self.rhs = left, right
 
 
-#TODO: Cases where there is one long * statement,  a * b * c can't be parsed atm
 class Multiplication(BinaryOperation):
     def __init__(self, lhs, rhs):
         super(Multiplication, self).__init__('multiplication', lhs, rhs)

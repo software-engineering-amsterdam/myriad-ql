@@ -98,9 +98,45 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice + privateDebt - interest
         }
         """
-        raise NotImplementedError('Test needs assertions')
-        # parse_result = parse(input_string).asList()
-        # print(parse_result[0])
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        arithmetic_expression_node = field_node_1.children[0]
+        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
+                         'First child should have type: arithmetic_expression')
+        self.assertEqual(1, len(arithmetic_expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        arithmetic_statement_node = arithmetic_expression_node.children[0]
+        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
+                         'First child should have type: arithmetic_statement')
+
+        self.assertEqual(1, len(arithmetic_expression_node.children),
+                         'Arithmetic statement should have 1 node as child')
+
+        substraction_node = arithmetic_statement_node.children[0]
+        self.assertEqual(0, len(substraction_node.children),
+                         'Subtraction node should have no nodes as children')
+        self.assertEqual('substraction', substraction_node.var_type,
+                         'Subtraction node should have type substraction')
+        self.assertEqual('interest', substraction_node.rhs)
+
+        addition_node = substraction_node.lhs
+        self.assertEqual(0, len(addition_node.children),
+                         'Addition node should have no nodes as children')
+        self.assertEqual('addition', addition_node.var_type,
+                         'Addition node should have type addition')
+
+        self.assertEqual('sellingPrice', addition_node.lhs)
+        self.assertEqual('privateDebt', addition_node.rhs)
 
     def test_ast_single_simple_assignment_reversed(self):
         input_string = """
@@ -108,7 +144,45 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt + interest
         }
         """
-        raise NotImplementedError('Test needs assertions')
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        arithmetic_expression_node = field_node_1.children[0]
+        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
+                         'First child should have type: arithmetic_expression')
+        self.assertEqual(1, len(arithmetic_expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        arithmetic_statement_node = arithmetic_expression_node.children[0]
+        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
+                         'First child should have type: arithmetic_statement')
+
+        self.assertEqual(1, len(arithmetic_expression_node.children),
+                         'Arithmetic statement should have 1 node as child')
+
+        addition_node = arithmetic_statement_node.children[0]
+        self.assertEqual(0, len(addition_node.children),
+                         'Addition node should have no nodes as children')
+        self.assertEqual('addition', addition_node.var_type,
+                         'Addition node should have type addition')
+        self.assertEqual('interest', addition_node.rhs)
+
+        substraction_node = addition_node.lhs
+        self.assertEqual(0, len(substraction_node.children),
+                         'Subtraction node should have no nodes as children')
+        self.assertEqual('substraction', substraction_node.var_type,
+                         'Subtraction node should have type substraction')
+
+        self.assertEqual('sellingPrice', substraction_node.lhs)
+        self.assertEqual('privateDebt', substraction_node.rhs)
 
     def test_ast_single_combi_assignment(self):
         input_string = """
