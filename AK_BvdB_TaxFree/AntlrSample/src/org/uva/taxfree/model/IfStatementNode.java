@@ -1,5 +1,6 @@
 package org.uva.taxfree.model;
 
+import javax.script.ScriptException;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
@@ -11,13 +12,19 @@ public class IfStatementNode extends Node {
         mCondition = new String(condition);
     }
 
-    public void addExpression(ExpressionNode child) {
-        mExpression = child;
+    public void addExpression(BooleanExpressionNode condition) {
+        mExpression = condition;
     }
 
-    protected boolean evaluateCondition() {
+    protected boolean isTrue() {
         assert mExpression != null;
-        return mExpression.evaluate();
+        return ("true" == mExpression.evaluate());
+    }
+
+    @Override
+    public void setVisibility(boolean isVisible) {
+        System.out.println("I evaluate to " + isTrue());
+        super.setVisibility(isTrue());
     }
 
     @Override
@@ -26,7 +33,7 @@ public class IfStatementNode extends Node {
     }
 
     @Override
-    public String getId() {
+    public String toString() {
         return mCondition;
     }
 

@@ -8,8 +8,11 @@ import TypeChecker.TypeCheckerTests as TypeCheckerTests
 import EvaluatorTests
 import EnvironmentTests
 import FormUtilTests
-import TypeChecker.ExpressionsTests
 import Test exposing (Test, describe)
+import QLS.Parser.ConfigurationTests
+import QLS.Parser.StyleTests
+import QLS.Parser.WidgetTests
+import QLS.Parser.StylesheetTests
 
 
 all : Test
@@ -22,6 +25,9 @@ all =
         , EnvironmentTests.all
         , TypeCheckerTests.all
         , EvaluatorTests.all
-        , TypeChecker.ExpressionsTests.all
         , FormUtilTests.all
+        , QLS.Parser.ConfigurationTests.all
+        , QLS.Parser.StyleTests.all
+        , QLS.Parser.WidgetTests.all
+        , QLS.Parser.StylesheetTests.all
         ]

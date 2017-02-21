@@ -3,6 +3,7 @@ module UI.Main exposing (main)
 import CssFrameworks
 import CssFrameworks.Bootstrap exposing (bootstrap)
 import Html exposing (Html, beginnerProgram, div)
+import Html.Attributes exposing (style)
 import UI.QLApp as App exposing (Model, Msg)
 
 
@@ -17,7 +18,7 @@ main =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ style [ ( "padding", "20px" ) ] ]
         [ CssFrameworks.toStyleNode bootstrap
         , App.view model
         ]

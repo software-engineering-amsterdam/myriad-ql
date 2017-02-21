@@ -1,25 +1,22 @@
-module TypeChecker.DuplicateQuestions exposing (..)
+module TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 
 import AST exposing (..)
 import DictList exposing (DictList)
-import Maybe.Extra
 import List.Extra
+import Maybe.Extra
+import TypeChecker.CheckerUtil exposing (QuestionIndex, questionIndexFromBlock)
 import TypeChecker.Messages as Messages exposing (Message)
 
 
--- TODO: Use DictList instead of DictList?
-
-
-type alias QuestionIndex =
-    DictList String (List Location)
+-- TODO: Use DictSet instead of DictList?
 
 
 type alias Duplicate =
     ( String, List Location )
 
 
-duplicateQuestionIdentifiers : Form -> List Message
-duplicateQuestionIdentifiers form =
+duplicateQuestions : Form -> List Message
+duplicateQuestions form =
     duplicateQuestionsInBlock (questionIndexFromBlock form.items) form.items
         |> mergeOverlappingDuplicates
         |> DictList.map Messages.duplicateQuestionDefinition
@@ -55,11 +52,11 @@ duplicateQuestionsInItem : QuestionIndex -> FormItem -> List Duplicate
 duplicateQuestionsInItem declaredQuestions formItem =
     case formItem of
         Field _ questionId _ ->
-            duplicateQuestion declaredQuestions questionId
+            duplicateQuestionDeclarations declaredQuestions questionId
                 |> Maybe.Extra.maybeToList
 
         ComputedField _ questionId _ _ ->
-            duplicateQuestion declaredQuestions questionId
+            duplicateQuestionDeclarations declaredQuestions questionId
                 |> Maybe.Extra.maybeToList
 
         IfThen _ thenBranch ->
@@ -71,59 +68,15 @@ duplicateQuestionsInItem declaredQuestions formItem =
                 (duplicateQuestionsInBlock declaredQuestions elseBranch)
 
 
-{-| TODO only take the first definition .... Uses DictList.concat, if a block contains a duplicate, one of them is ignored
--}
-questionIndexFromBlock : Block -> QuestionIndex
-questionIndexFromBlock =
-    List.map questionIndexFromItem >> DictList.concat
-
-
-
--- List.foldl (\item -> questionIndexFromItem item |> DictList.union) DictList.empty
-
-
-questionIndexFromItem : FormItem -> QuestionIndex
-questionIndexFromItem item =
-    case item of
-        Field _ ( id, loc ) _ ->
-            DictList.singleton id [ loc ]
-
-        .ComputedField _ (id, loc) _ _->
-            DictList.singleton id [ loc ]
-
-        IfThen _ _ ->
-            DictList.empty
-
-        IfThenElse _ thenBranch elseBranch ->
-            mergeSharedQuestionDefinitions
-                (questionIndexFromBlock thenBranch)
-                (questionIndexFromBlock elseBranch)
-
-
-mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
-mergeSharedQuestionDefinitions indexA indexB =
-    DictList.merge
-        (\_ _ result -> result)
-        (\key itemA itemB result -> DictList.insert key (itemA ++ itemB) result)
-        (\_ _ result -> result)
-        indexA
-        indexB
-        DictList.empty
-
-
-
--- TODO: These names are shit, they both check if it is a duplicate but they do it on a different level and only one of them creates the actuale duplciate
-
-
-duplicateQuestion : QuestionIndex -> Id -> Maybe Duplicate
-duplicateQuestion declaredQuestions question =
+duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate
+duplicateQuestionDeclarations declaredQuestions question =
     DictList.get (Tuple.first question) declaredQuestions
-        |> Maybe.andThen (duplicateQuestionDefinitions question)
+        |> Maybe.andThen (duplicateQuestion question)
 
 
-duplicateQuestionDefinitions : Id -> List Location -> Maybe Duplicate
-duplicateQuestionDefinitions ( id, location ) declaredQuestionLocations =
+duplicateQuestion : Id -> List Location -> Maybe Duplicate
+duplicateQuestion ( id, location ) declaredQuestionLocations =
     if List.member location declaredQuestionLocations then
         Nothing
     else
-        Just ( id, (location :: declaredQuestionLocations) )
+        Just ( id, declaredQuestionLocations ++ [ location ] )

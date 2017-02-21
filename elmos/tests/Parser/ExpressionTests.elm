@@ -11,7 +11,8 @@ import AST
         , Logic(And, Or)
         , Location(Location)
         )
-import ParserTestUtil exposing (testWithParserAndMap, removeLocactionFromExpression)
+import ASTTestUtil exposing (removeLocactionFromExpression)
+import ParserTestUtil exposing (testWithParserAndMap)
 
 
 all : Test

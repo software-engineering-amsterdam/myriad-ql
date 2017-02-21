@@ -47,7 +47,7 @@ public class Ast {
     }
 
     public String getFormName() {
-        return mRootNode.getId();
+        return mRootNode.toString();
     }
 
     private static Ast generateAst(Reader reader) throws IOException {
