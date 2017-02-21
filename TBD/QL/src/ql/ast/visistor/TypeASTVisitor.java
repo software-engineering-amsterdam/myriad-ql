@@ -168,7 +168,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(Pos node) {
         Type expr = node.getExpr().accept(this);
 
-        if (expr != Type.TYPEBOOL) {
+        if (expr == Type.TYPEINT || expr == Type.TYPEFLOAT) {
             return expr;
         }
         throw new RuntimeException("Type error");
@@ -178,7 +178,7 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
     public Type visit(Neg node) {
         Type expr = node.getExpr().accept(this);
 
-        if (expr != Type.TYPEBOOL) {
+        if (expr == Type.TYPEINT || expr == Type.TYPEFLOAT) {
             return expr;
         }
         throw new RuntimeException("Type error");
