@@ -22,6 +22,10 @@ public class SemanticsAnalyzer {
      * WRONGCONDITIONS - operands of invalid type to operators // TODO
      * IFELSERECURSION - cyclic dependencies between questions // TODO
      * // DUPLICATE-LABELS - duplicate labels (warning)
+     *
+     * TODO:
+     * - Check | if ("")
+     * - Check | if (1)
      */
 
     public SemanticsAnalyzer(Ast ast) {
@@ -55,7 +59,7 @@ public class SemanticsAnalyzer {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionIds = new LinkedHashSet<>();
         for (NamedNode questionNode : mAst.getQuestions()) {
-            String questionId = questionNode.getId();
+            String questionId = questionNode.toString();
             if (!processedQuestionIds.add(questionId)) {
                 errorMessages.add("Duplicate question declaration found: " + questionId);
             }
