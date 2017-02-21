@@ -1,5 +1,6 @@
 package ql;
 
+import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLLiteral;
 import ql.ast.Type;
 import ql.ast.expressions.binop.Sub;
@@ -47,7 +48,7 @@ public class Main {
         }
 
 
-        Neg exprtest = new Neg(new Sub(new QLInt(12), new QLInt(4)));
+        Neg exprtest = new Neg(new Sub(new QLIdent("A"), new QLInt(4)));
 
         ASTVisitor<Value> evalASTVisitor = new EvalASTVisitor();
         System.out.println(evalASTVisitor.visit(exprtest));

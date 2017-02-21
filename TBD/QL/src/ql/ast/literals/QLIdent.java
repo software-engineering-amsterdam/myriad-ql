@@ -1,5 +1,7 @@
 package ql.ast.literals;
 
+import ql.ast.values.UndefinedValue;
+import ql.ast.values.Value;
 import ql.ast.visistor.ASTVisitor;
 
 /**
@@ -17,8 +19,8 @@ public class QLIdent implements QLLiteral {
     }
 
     @Override
-    public Object toValue() {
-        return null;
+    public Value toValue() {
+        return new UndefinedValue();
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

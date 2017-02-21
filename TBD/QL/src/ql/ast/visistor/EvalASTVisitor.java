@@ -7,6 +7,7 @@ import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.values.IntValue;
+import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
 
 /**
@@ -41,7 +42,7 @@ public class EvalASTVisitor implements ASTVisitor<Value> {
     @Override
     public Value visit(QLIdent node) {
         //TODO fix this
-        return new IntValue(0);
+        return new UndefinedValue();
     }
 
     @Override
