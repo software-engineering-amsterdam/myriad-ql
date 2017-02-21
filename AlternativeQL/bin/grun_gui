@@ -1,0 +1,4 @@
+#!/bin/bash
+cd out 
+grun org.ql.parser.QLParser form ../drafts/ExampleForm.aql -gui
+cd ..

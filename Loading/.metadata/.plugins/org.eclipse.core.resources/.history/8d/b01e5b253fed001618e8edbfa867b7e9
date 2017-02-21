@@ -1,0 +1,13 @@
+package ast;
+
+public class Form {
+	
+	private final String id = null;
+
+	public Form() {
+		this.id = id;
+		this.block = block;
+	}
+	
+	
+}

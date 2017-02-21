@@ -1,0 +1,62 @@
+%package ql.parser
+%class Parser
+%interface Tokens
+%start form
+
+%token ':' '"' TYPEBOOL TYPEINT TYPESTRING
+%token <String> STRING
+%token <int> INT
+
+%type <Form> form
+%type <Statements> statements
+%type <Statement> statement
+%type <Question> question
+%type <Type> type
+
+
+
+
+%{
+import ql.ast.*;
+%}
+
+%%
+
+ form : statements { result = new Form($1); }
+      ;
+
+ statements : statement statements      {$$ = new Statements($1, $2);}
+            | statement                 {$$ = new Statements($1);}
+            ;
+
+
+ statement : question                   {$$ = $1;}
+           ;
+
+ question : '"' STRING '"' STRING ':' type      {$$ = new Question($2, $4, $6);}
+          ;
+
+ type : TYPEBOOL        {$$ = TYPEBOOL;}
+       | TYPEINT        {$$ = TYPEINT;}
+       | TYPESTRING     {$$ = TYPESTRING;}
+       ;
+
+
+
+
+%%
+private Lexer lexer;
+
+private Form result;
+
+public Form getResult() {
+  return result;
+}
+
+public Parser(Lexer lexer) {
+  this.lexer = lexer;
+}
+
+private void yyerror(String msg) {
+  System.err.println(msg);
+}

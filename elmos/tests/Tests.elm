@@ -1,43 +1,33 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Test exposing (..)
-import Combine exposing (..)
-import Expect
-import Parser exposing (..)
+import Combine.ExtraTests
+import Parser.ExpressionTests as ExpressionTests
+import Parser.FormTests as FormTests
+import Parser.TokenTests as TokenTests
+import TypeChecker.TypeCheckerTests as TypeCheckerTests
+import EvaluatorTests
+import EnvironmentTests
+import FormUtilTests
+import Test exposing (Test, describe)
+import QLS.Parser.ConfigurationTests
+import QLS.Parser.StyleTests
+import QLS.Parser.WidgetTests
+import QLS.Parser.StylesheetTests
 
 
 all : Test
 all =
-    describe "QL Parser"
-        [ test "FormToken" <|
-            \() ->
-                Expect.equal (parseToMaybe formToken "form") (Just "form")
-        , test "FormQuestion" <|
-            \() ->
-                Expect.equal (parseToMaybe question "\"label\" id: integer")
-                    (Just
-                        { label = "label"
-                        , id = "id"
-                        , valueType = Integer
-                        }
-                    )
-        , test "FormQuestion" <|
-            \() ->
-                Expect.equal (parseToMaybe question "\"label\" id: integer")
-                    (Just
-                        { label = "label"
-                        , id = "id"
-                        , valueType = Integer
-                        }
-                    )
+    describe "QL"
+        [ TokenTests.all
+        , ExpressionTests.all
+        , FormTests.all
+        , Combine.ExtraTests.all
+        , EnvironmentTests.all
+        , TypeCheckerTests.all
+        , EvaluatorTests.all
+        , FormUtilTests.all
+        , QLS.Parser.ConfigurationTests.all
+        , QLS.Parser.StyleTests.all
+        , QLS.Parser.WidgetTests.all
+        , QLS.Parser.StylesheetTests.all
         ]
-
-
-parseToMaybe : Parser () res -> String -> Maybe res
-parseToMaybe p s =
-    case Combine.parse p s of
-        Err e ->
-            Nothing
-
-        Ok ( _, _, res ) ->
-            Just res

@@ -1,0 +1,20 @@
+AK_BvdB_TaxFree/AntlrSample/log.err
+AK_BvdB_TaxFree/AntlrSample/.idea/dictionaries/Gebruiker.xml
+WeekendWarriors/DSL/DSL/bin/
+WeekendWarriors/DSL/DSL/obj/
+WeekendWarriors/DSL/DSL/Java/
+WeekendWarriors/DSL/Tests/bin/
+WeekendWarriors/DSL/Tests/obj/
+
+# plz
+.vscode/
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
