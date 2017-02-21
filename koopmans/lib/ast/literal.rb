@@ -16,10 +16,6 @@ class Literal
 end
 
 class BooleanLiteral < Literal
-  def self.type
-    'boolean'
-  end
-
   def self.accept_types
     [BooleanType]
   end
@@ -31,10 +27,6 @@ class BooleanLiteral < Literal
 end
 
 class IntegerLiteral < Literal
-  def self.type
-    'integer'
-  end
-
   def self.accept_types
     [IntegerType]
   end
@@ -45,10 +37,6 @@ class IntegerLiteral < Literal
 end
 
 class StringLiteral < Literal
-  def self.type
-    'string'
-  end
-
   def self.accept_types
     [StringType]
   end
