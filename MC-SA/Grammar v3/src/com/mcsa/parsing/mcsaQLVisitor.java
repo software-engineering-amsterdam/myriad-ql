@@ -69,8 +69,11 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
     public Node visitIfStatement(QLParser.IfStatementContext ctx) {
 
         //visit the if case
-        visit(ctx.ifCase());
-
+        IfCase ifc = (IfCase) visit(ctx.ifCase());
+        while( ifc.getLeft() != null) {
+            System.out.println(ifc.getLeft().getToken());
+            ifc = ifc.getLeft();
+        }
         //TODO make visitIfStatement return an IfStatement object
         return null;
     }
@@ -86,28 +89,42 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
     }
 
     @Override
-    public Node visitIfCase(QLParser.IfCaseContext ctx) {
-
+    public IfCase visitIfCase(QLParser.IfCaseContext ctx) {
         //new ifCase to contain the result
         IfCase ifCaseCheck = new IfCase();
 
-        //if there is a token, we grab it and know to check for the elements either side
-        if (ctx.TOKEN() != null) {
-            ifCaseCheck.addToken(ctx.TOKEN().getText());
+        if (ctx.ifCase().size() > 1) {
 
-            //TODO visit the elements either side of the token to get IfCaseArgs
-            if(ctx.ifCase().size() == 2)
-            {
-                //then we know there are two terms to deal with
+            if (ctx.TOKEN() != null) {
+                ifCaseCheck.addToken(ctx.TOKEN().getText());
+                System.out.println("ddd");
             }
+
+            //IfCase ifCaseCheckRight = new IfCase();
+            ifCaseCheck.addRight((IfCase) visit(ctx.ifCase().get(1)));
+            //ifCaseCheckRight.addToken(visit(ctx.ifCase().get(1)));
+            //IfCase ifCaseCheckLeft = new IfCase();
+            ifCaseCheck.addLeft((IfCase) visit(ctx.ifCase().get(0)));
+            //visit(ctx.ifCase().get(0));
+        } else {
+            //IfCase ifCaseChecklast = new IfCase();
+            ifCaseCheck.addToken((String) visit(ctx.ifCaseArgs()));
         }
 
+        System.out.println();
+
+        return ifCaseCheck;
+
+
+
+        //if there is a token, we grab it and know to check for the elements either side
+
         //TODO make visitIfCase return an IfCase object
-        return null;
+
     }
 
     @Override
-    public Object visitIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
+    public String visitIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
 
         //get the ID or number depending on what exists
         if (ctx.ID() != null)
@@ -137,3 +154,4 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
         return null;
     }
 }
+
