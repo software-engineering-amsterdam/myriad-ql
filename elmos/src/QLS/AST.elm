@@ -11,13 +11,9 @@ type alias Stylesheet =
 
 type alias Page =
     { name : String
-    , pageChildren : List PageChild
+    , sections : List Section
+    , defaults : List DefaultValueConfig
     }
-
-
-type PageChild
-    = PageSection Section
-    | PageConfig Configuration
 
 
 type Section

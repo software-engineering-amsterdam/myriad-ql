@@ -1,25 +1,62 @@
 module QLS.Parser.StylesheetTests exposing (all)
 
 import Test exposing (..)
-import QLS.Parser.Stylesheet exposing (section, question)
+import QLS.Parser.Stylesheet exposing (page, section, question)
 import ParserTestUtil exposing (testWithParser)
 import QLS.AST exposing (..)
-import AST exposing (ValueType(BooleanType))
-import AST exposing (Location(Location))
+import AST exposing (Location(Location), ValueType(BooleanType))
 
 
 all : Test
 all =
     describe "Stylesheet"
-        [ sectionTests
+        [ pageTests
+        , sectionTests
         , questionTests
+        ]
+
+
+pageTests : Test
+pageTests =
+    testWithParser page
+        "page"
+        [ ( "page without children"
+          , "page Foo {}"
+          , Nothing
+          )
+        , ( "page with single section"
+          , "page Foo { section \"Selling\" question foo }"
+          , Just
+                { name = "Foo"
+                , sections =
+                    [ SingleChildSection "Selling"
+                        (Field (Question ( "foo", Location 1 38 )))
+                    ]
+                , defaults = []
+                }
+          )
+        , ( "page with default but no section"
+          , "page Foo { default boolean widget radio(\"Yes\", \"No\") }"
+          , Nothing
+          )
+        , ( "page with section and default"
+          , "page Foo { section \"Selling\" question foo default boolean widget radio(\"Yes\", \"No\") }"
+          , Just
+                { name = "Foo"
+                , sections =
+                    [ SingleChildSection "Selling"
+                        (Field (Question ( "foo", Location 1 38 )))
+                    ]
+                , defaults = [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
+                }
+          )
         ]
 
 
 sectionTests : Test
 sectionTests =
     testWithParser section
-        "sectionTests"
+        "section"
         [ ( "section with single field"
           , "section \"Selling\" question foo"
           , Just (SingleChildSection "Selling" (Field (Question ( "foo", Location 1 27 ))))

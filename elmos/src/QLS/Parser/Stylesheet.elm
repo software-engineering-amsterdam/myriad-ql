@@ -8,36 +8,13 @@ import QLS.Parser.Configuration exposing (configuration)
 import Parser.Form exposing (valueType)
 
 
---
--- stylesheet : Parser s Stylesheet
--- stylesheet =
---     succeed Stylesheet
---         <*> (string "stylesheet" *> whitespace1 *> identifier)
---         <*> (whitespace1 *> pages)
---
---
--- pages : Parser s (List Page)
--- pages =
---     sepBy whitespace1 page
---
---
--- page : Parser s Page
--- page =
---     succeed Page
---         <*> (string "page" *> regex "[A-Z][a-zA-Z0-9]*")
---         <*> braces (sepBy whitespace1 pageChild)
---
---
--- pageChild : Parser s PageChild
--- pageChild =
---     PageSection <$> section
---
---
--- sections : Parser s (List Section)
--- sections =
---     sepBy whitespace1 section
---
---
+page : Parser s Page
+page =
+    Page
+        <$> (string "page" *> whitespace1 *> regex "[A-Z][a-zA-Z0-9]*" <* whitespace <* string "{")
+        <*> (whitespace *> (sepBy1 whitespace1 section))
+        <*> (whitespace1 *> sepBy whitespace1 defaultValueConfig <* whitespace)
+        <* string "}"
 
 
 section : Parser s Section
