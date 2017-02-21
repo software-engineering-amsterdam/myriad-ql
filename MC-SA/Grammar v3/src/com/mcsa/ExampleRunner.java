@@ -19,36 +19,46 @@ public class ExampleRunner {
     public static void main(String[] args) {
 
         ExampleRunner runner = new ExampleRunner();
+        String inputContent = null;
 
-        String fileContent = null;
-        try {
-            fileContent = new OpenAndReadTheQl().QlRead();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(args.length > 0)
+        {
+            if(args[0].equals("-debug"))
+            {
+                inputContent = "form taxOfficeExample { \n" +
+                        "  \"Did you sell a house in 2010?\"\n" +
+                        "    hasSoldHouse: boolean\n" +
+                        "  \"Did you buy a house in 2010?\"\n" +
+                        "    hasBoughtHouse: boolean\n" +
+                        "  \"Did you enter a loan?\"\n" +
+                        "    hasMaintLoan: boolean\n" +
+                        "\n" +
+                        "  if (11 OR j AND 12 > W) {\n" +
+                        "    \"What was the selling price?\"\n" +
+                        "      sellingPrice: money\n" +
+                        "    \"Private debts for the sold house:\"\n" +
+                        "      privateDebt: money\n" +
+                        "    \"Value residue:\"\n" +
+                        "      valueResidue: money = \n" +
+                        "        (sellingPrice - privateDebt)\n" +
+                        "  }\n" +
+                        "\n" +
+                        "}";
+            }
+        }
+        else {
+
+            try {
+                inputContent = new OpenAndReadTheQl().QlRead();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        runner.buildQLAST(fileContent);
-        /*runner.buildQLAST("form taxOfficeExample { \n" +
-            "  \"Did you sell a house in 2010?\"\n" +
-            "    hasSoldHouse: boolean;\n" +
-            "  \"Did you buy a house in 2010?\"\n" +
-            "    hasBoughtHouse: boolean;\n" +
-            "  \"Did you enter a loan?\"\n" +
-            "    hasMaintLoan: boolean;\n" +
-            "\n" +
-            "  if hasSoldHouse {\n" +
-            "    \"What was the selling price?\"\n" +
-            "      sellingPrice: money;\n" +
-            "    \"Private debts for the sold house:\"\n" +
-            "      privateDebt: money;\n" +
-            "    \"Value residue:\"\n" +
-            "      valueResidue: money = \n" +
-            "        (sellingPrice - privateDebt);\n" +
-            "  }\n" +
-            "\n" +
-            "}");*/
+        if(inputContent != null)
+            runner.buildQLAST(inputContent);
 
     }
 
