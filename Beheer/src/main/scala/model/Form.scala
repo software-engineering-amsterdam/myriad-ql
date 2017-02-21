@@ -1,7 +1,6 @@
 package model
 
-import parser.ast.{ ExpressionNode, Type }
-
+import parser.ast.{ExpressionNode, Type}
 
 sealed trait DisplayQuestion {
   val identifier: String
@@ -9,7 +8,12 @@ sealed trait DisplayQuestion {
   val displayCondition: Iterable[ExpressionNode]
   val `type`: Type
 
-  def show(env: Map[String, Value]): Boolean = displayCondition.map(_.value(env) match { case BooleanValue(b) => b}).reduce(_ && _)
+  def show(env: Map[String, Value]): Boolean = displayCondition.map{
+    _.value(env) match {
+      case BooleanValue(b) => b
+      case _ => false
+    }
+  }.reduce(_ && _)
 }
 
 case class OpenQuestion(identifier: String, label: String, `type`: Type, displayCondition: Iterable[ExpressionNode]) extends DisplayQuestion
