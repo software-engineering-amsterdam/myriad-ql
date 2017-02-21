@@ -33,25 +33,7 @@ class Question
   end
 end
 
-class Parser < Parslet::Parser
-  # include Parslet
 
-  rule(:assignment?) do
-    (str('=') >> spaces? >> expression).maybe >> spaces?
-  end
-
-  rule(:question) do
-    (string_literal >> variable_assignment >> type >> assignment?).as(:question) >> spaces?
-  end
-
-  rule(:block) do
-    str('{') >> spaces? >> (question | if_statement).repeat.as(:block) >> str('}') >> spaces?
-  end
-
-  rule(:if_statement) do
-    (str('if') >> spaces? >> expression >> block).as(:if_statement)
-  end
-end
 
 class Transformer < Parslet::Transform
   # Type.descendants.each do |type|

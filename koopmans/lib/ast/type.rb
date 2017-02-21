@@ -65,10 +65,3 @@ class MoneyType < Type
     [MoneyType, IntegerType]
   end
 end
-
-
-class Parser < Parslet::Parser
-  rule(:type) do
-    Type.descendants.map { |type| str(type.type) }.reduce(&:|).as(:type) >> spaces?
-  end
-end
