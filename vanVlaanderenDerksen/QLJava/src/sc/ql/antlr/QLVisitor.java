@@ -24,13 +24,6 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code calcQuestion}
-	 * labeled alternative in {@link QLParser#form_element}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCalcQuestion(QLParser.CalcQuestionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code if_statement}
 	 * labeled alternative in {@link QLParser#form_element}.
 	 * @param ctx the parse tree
