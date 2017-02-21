@@ -28,7 +28,7 @@ public class ExampleRunnerTest {
                 "  \"Did you enter a loan?\"\n" +
                 "    hasMaintLoan: boolean\n" +
                 "\n" +
-                "  if hasSoldHouse {\n" +
+                "  if (hasSoldHouse) {\n" +
                 "    \"What was the selling price?\"\n" +
                 "      sellingPrice: money\n" +
                 "    \"Private debts for the sold house:\"\n" +
