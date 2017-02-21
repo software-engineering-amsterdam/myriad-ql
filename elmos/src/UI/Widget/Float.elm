@@ -1,4 +1,4 @@
-module UI.Widget.Integer exposing (view)
+module UI.Widget.Float exposing (view)
 
 import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, defaultValue, id, disabled)
@@ -12,7 +12,7 @@ view : WidgetContext msg -> Html msg
 view { identifier, env, onChange, editable } =
     let
         textValue =
-            Environment.getInteger identifier env
+            Environment.getFloat identifier env
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in
@@ -29,6 +29,6 @@ view { identifier, env, onChange, editable } =
 
 parseIntegerInput : String -> Value
 parseIntegerInput =
-    String.toInt
-        >> Result.map Values.int
+    String.toFloat
+        >> Result.map Values.float
         >> Result.withDefault Undefined
