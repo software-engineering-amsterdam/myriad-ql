@@ -8,9 +8,6 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import java.util.ArrayList;
 
 
-/**
- * Created by matt on 20/02/2017.
- */
 public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor {
 
     @Override
@@ -70,10 +67,12 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
         //visit the if case
         IfCase ifc = (IfCase) visit(ctx.ifCase());
-        while( ifc.getLeft() != null) {
-            System.out.println(ifc.getLeft().getToken());
+        System.out.println(ifc.getToken());
+         do{
+
             ifc = ifc.getLeft();
-        }
+             System.out.println(ifc.getToken());
+        }while(ifc.getLeft()!=null);
         //TODO make visitIfStatement return an IfStatement object
         return null;
     }
@@ -97,7 +96,7 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
             if (ctx.TOKEN() != null) {
                 ifCaseCheck.addToken(ctx.TOKEN().getText());
-                System.out.println("ddd");
+                //System.out.println("ddd");
             }
 
             //IfCase ifCaseCheckRight = new IfCase();
@@ -108,6 +107,7 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
             //visit(ctx.ifCase().get(0));
         } else {
             //IfCase ifCaseChecklast = new IfCase();
+            QLParser.IfCaseArgsContext ifCaseArgsContext = ctx.ifCaseArgs();
             ifCaseCheck.addToken((String) visit(ctx.ifCaseArgs()));
         }
 
@@ -125,7 +125,7 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
     @Override
     public String visitIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
-
+        System.out.println("hiiiiiiiiii");
         //get the ID or number depending on what exists
         if (ctx.ID() != null)
             return ctx.ID().getText();

@@ -32,9 +32,9 @@ public class IfCase {
         return this.right;
     }
     public IfCase getLeft() {
-        return this.right;
+        return this.left;
     }
     public Object getToken() {
-        return this.right;
+        return this.token;
     }
 }
