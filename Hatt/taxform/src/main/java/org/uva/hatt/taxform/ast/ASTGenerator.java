@@ -25,7 +25,12 @@ public class ASTGenerator {
         return visitor.getForm();
     }
 
-    public static String getParseTree(String form) throws IOException {
+    public static ParseTree getParseTree(String form) throws IOException {
+        QLParser parser = getQlParser(form);
+        return parser.form();
+    }
+
+    public static String getParseStringTree(String form) throws IOException {
         QLParser parser = getQlParser(form);
         ParseTree tree = parser.form();
 
