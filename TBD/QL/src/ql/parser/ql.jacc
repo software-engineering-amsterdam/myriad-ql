@@ -37,6 +37,7 @@ import ql.ast.literals.*;
 import ql.ast.expressions.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.*;
+import ql.ast.types.*;
 %}
 
 %%
@@ -62,12 +63,10 @@ question
             ;
 
 type
-            : TYPEBOOL                                          { $$ = Type.TYPEBOOL;   }
-            | TYPEINT                                           { $$ = Type.TYPEINT;    }
-            | TYPESTRING                                        { $$ = Type.TYPESTRING; }
-            | TYPEMONEY                                         { $$ = Type.TYPEMONEY;  }
-            | TYPEFLOAT                                         { $$ = Type.TYPEFLOAT;  }
-            | TYPEDATE                                          { $$ = Type.TYPEDATE;   }
+            : TYPEBOOL                                          { $$ = new BooleanType();   }
+            | TYPEINT                                           { $$ = new IntType();   }
+            | TYPESTRING                                        { $$ = new StringType();   }
+            | TYPEFLOAT                                         { $$ = new FloatType();   }
             ;
 
 if

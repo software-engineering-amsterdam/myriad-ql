@@ -1,11 +1,14 @@
 package ql;
 
+import ql.ast.expressions.binop.Add;
+import ql.ast.literals.QLFloat;
 import ql.ast.literals.QLIdent;
-import ql.ast.literals.QLLiteral;
-import ql.ast.Type;
 import ql.ast.expressions.binop.Sub;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.literals.QLInt;
+import ql.ast.types.FloatType;
+import ql.ast.types.IntType;
+import ql.ast.types.Type;
 import ql.ast.values.Value;
 import ql.ast.visistor.ASTVisitor;
 import ql.ast.visistor.EvalASTVisitor;
@@ -23,6 +26,7 @@ import java.io.Reader;
  */
 public class Main {
     public static void main(String[] args) {
+
         Reader reader = null;
         try {
             //reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");

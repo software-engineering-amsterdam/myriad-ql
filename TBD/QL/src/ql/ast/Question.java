@@ -1,5 +1,6 @@
 package ql.ast;
 
+import ql.ast.types.Type;
 import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLString;
 import ql.ast.visistor.ASTVisitor;
