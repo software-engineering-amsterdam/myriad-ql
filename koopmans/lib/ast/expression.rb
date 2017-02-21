@@ -156,28 +156,36 @@ end
 
 
 
-class Transformer < Parslet::Transform
-  rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) do
-    BooleanNegation.new(BooleanLiteral.new(boolean))
+class Parser < Parslet::Parser
+  rule(:integer_negation?) do
+    str('-').as(:integer_negation).maybe
   end
 
-  rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) do
-    IntegerNegation.new(IntegerLiteral.new(integer))
+  rule(:boolean_negation?) do
+    str('!').as(:boolean_negation).maybe
   end
 
-  Negation.descendants.each do |singleton_expression|
-    rule(negation: singleton_expression.to_operator, variable: simple(:variable)) do
-      singleton_expression.new(Variable.new(variable))
-    end
+  rule(:negation?) do
+    (str('!') | str('-')).as(:negation).maybe
+  end
+
+  rule(:variable_or_literal) do
+    (boolean_negation? >> boolean_literal | integer_negation? >> integer_literal | string_literal | negation? >> variable) >> spaces?
+  end
+
+  rule(:calculation) do
+    variable_or_literal.as(:left) >> operator >> expression.as(:right)
   end
 
   # TODO fix this
-  descendants = BooleanExpression.descendants +  ArithmeticExpression.descendants + ComparisonEqual.descendants + ComparisonOrdering.descendants
-  descendants.each do |binary_expression|
-    rule({left: subtree(:left), operator: binary_expression.to_operator, right: subtree(:right)}) do
-      binary_expression.new(left, right)
-    end
+  rule(:operator) do
+    descendants = BooleanExpression.descendants +  ArithmeticExpression.descendants + ComparisonEqual.descendants + ComparisonOrdering.descendants
+    descendants.map { |binary_expression| str(binary_expression.to_operator) }.reduce(&:|).as(:operator) >> spaces?
   end
 
+
+  rule(:expression) do
+    str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal
+  end
 end
 

@@ -12,10 +12,12 @@ class Variable
   end
 end
 
+class Parser < Parslet::Parser
+  rule(:variable) do
+    match('\w+').repeat(1).as(:variable)
+  end
 
-
-class Transformer < Parslet::Transform
-  rule(variable: simple(:variable)) do
-    Variable.new(variable)
+  rule(:variable_assignment) do
+    variable >> str(':') >> spaces?
   end
 end
