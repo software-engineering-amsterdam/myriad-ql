@@ -1,10 +1,10 @@
 module QLS.Parser.Configuration exposing (..)
 
-import Combine exposing (..)
+import Combine exposing (Parser, braces, choice, or, sepBy, string, (<$>), (*>))
 import QLS.AST exposing (Configuration(SingleConfig, MultiConfig), ConfigItem(StyleConfig, WidgetConfig))
 import QLS.Parser.Style exposing (style)
 import QLS.Parser.Widget exposing (widget)
-import Combine.Extra exposing (whitespace1)
+import Combine.Extra exposing (whitespace1, trimmed)
 
 
 configuration : Parser state Configuration
@@ -16,7 +16,7 @@ configuration =
 
 configItemBlock : Parser state (List ConfigItem)
 configItemBlock =
-    braces (sepBy whitespace1 configItem)
+    braces (trimmed (sepBy whitespace1 configItem))
 
 
 configItem : Parser state ConfigItem

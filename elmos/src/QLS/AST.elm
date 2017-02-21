@@ -32,7 +32,8 @@ type SectionChild
 
 
 type Question
-    = Question Id Configuration
+    = Question Id
+    | ConfiguredQuestion Id Configuration
 
 
 type Configuration
