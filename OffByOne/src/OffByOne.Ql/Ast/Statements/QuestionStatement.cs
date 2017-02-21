@@ -1,8 +1,8 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class QuestionStatement : Statement

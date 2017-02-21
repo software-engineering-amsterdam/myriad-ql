@@ -1,15 +1,16 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions
 {
+    using OffByOne.LanguageCore.Ast.Literals.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class BracketExpression : Expression
+    public class LiteralExpression : Expression
     {
-        public BracketExpression(Expression expression)
+        public LiteralExpression(Literal literal)
         {
-            this.Expression = expression;
+            this.Literal = literal;
         }
 
-        public Expression Expression { get; private set; }
+        public Literal Literal { get; private set; }
 
         public override TResult Accept<TResult>(IExpressionVisitor<TResult> visitor)
         {

@@ -1,6 +1,5 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Unary
 {
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Visitors.Contracts;
 

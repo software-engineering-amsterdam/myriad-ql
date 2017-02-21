@@ -5,7 +5,7 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
 
-    public interface IExpressionVisitor<out TResult> : IVisitor
+    public interface IQlExpressionVisitor<out TResult> : IVisitor
     {
         TResult Visit(AddExpression expression);
 
@@ -40,7 +40,5 @@
         TResult Visit(VariableExpression expression);
 
         TResult Visit(BracketExpression expression);
-
-        TResult Visit(LiteralExpression expression);
     }
 }

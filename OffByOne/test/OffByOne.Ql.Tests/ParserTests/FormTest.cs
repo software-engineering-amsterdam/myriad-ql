@@ -45,7 +45,6 @@
             var questions = castAstTree
                 .Statements
                 .OfType<QuestionStatement>()
-                .Select(x => (QuestionStatement)x)
                 .ToList();
 
             Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Question.Value == "What is your birth date?"));
@@ -66,10 +65,10 @@
             Assert.Equal(variableExp.Identifier, "continue");
 
             var lhs = (VariableExpression)lessThanExp.LeftExpression;
-            var rhs = (DateLiteral)lessThanExp.RightExpression;
+            var rhs = (LiteralExpression)lessThanExp.RightExpression;
 
             Assert.Equal(lhs.Identifier, "birthDate");
-            Assert.Equal(rhs.Value, new DateTime(1999, 12, 31));
+            Assert.Equal(((DateLiteral)rhs.Literal).Value, new DateTime(1999, 12, 31));
 
             var elseStatements = ifStatement.ElseStatements;
             Assert.Equal(1, elseStatements.Count());

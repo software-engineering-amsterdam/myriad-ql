@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Visitors.Contracts;
 

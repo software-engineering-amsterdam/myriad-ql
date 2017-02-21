@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast.Expressions.Base;
+    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class IfStatement : Statement
