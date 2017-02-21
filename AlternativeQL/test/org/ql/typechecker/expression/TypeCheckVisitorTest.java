@@ -1,9 +1,12 @@
 package org.ql.typechecker.expression;
 
 import org.junit.Test;
+import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.Negation;
+import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
+import org.ql.typechecker.exception.TypeMismatchException;
 import org.ql.typechecker.messages.BooleanExpected;
 
 import java.util.HashMap;
@@ -11,24 +14,21 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class TypeCheckVisitorTest {
-    @Test
-    public void shouldAddErrorWhenNegationAppliedOnNonBoolean() {
+    @Test(expected = TypeMismatchException.class)
+    public void shouldThrowExceptionWhenNegationAppliedOnNonBoolean() {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
         Negation negation = new Negation(new StringLiteral("example string"));
 
         visitor.visit(negation);
-
-        assertTrue(visitor.getErrors().get(0) instanceof BooleanExpected);
     }
 
     @Test
-    public void shouldReturnNullWhenNegationAppliedOnNonBoolean() {
+    public void shouldReturnBooleanTypeWhenNegationHasABooleanLiteral() {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
-        Negation negation = new Negation(new StringLiteral("example string"));
-        Type expectedType = null;
+        Negation negation = new Negation(new BooleanLiteral(true));
 
-        Type actualType = visitor.visit(negation);
+        Type actual = visitor.visit(negation);
 
-        assertSame(expectedType, actualType);
+        assertTrue(actual instanceof BooleanType);
     }
 }

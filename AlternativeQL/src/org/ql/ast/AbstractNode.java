@@ -1,10 +1,12 @@
 package org.ql.ast;
 
 public abstract class AbstractNode implements Node {
-    protected Metadata metadata;
+    private Metadata metadata;
 
-    public void setMetadata(Metadata metadata) {
+    public AbstractNode setMetadata(Metadata metadata) {
         this.metadata = metadata;
+
+        return this;
     }
 
     public Metadata getMetadata() {

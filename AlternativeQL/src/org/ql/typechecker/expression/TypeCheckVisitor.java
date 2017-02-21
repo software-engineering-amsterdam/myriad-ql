@@ -11,6 +11,7 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.BooleanType;
+import org.ql.ast.type.IntegerType;
 import org.ql.ast.type.StringType;
 import org.ql.ast.type.Type;
 import org.ql.typechecker.exception.TypeMismatchException;
@@ -119,7 +120,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(BooleanLiteral node) {
-        return null;
+        return (Type) new BooleanType().setMetadata(node.getMetadata());
     }
 
     @Override
@@ -129,15 +130,12 @@ public class TypeCheckVisitor implements Visitor<Type> {
 
     @Override
     public Type visit(IntegerLiteral node) {
-        return null;
+        return (Type) new IntegerType().setMetadata(node.getMetadata());
     }
 
     @Override
     public Type visit(StringLiteral node) {
-        StringType stringType = new StringType();
-        stringType.setMetadata(node.getMetadata());
-
-        return stringType;
+        return (Type) new StringType().setMetadata(node.getMetadata());
     }
 
     private Type checkBinaryExpression(BinaryExpression node) {
