@@ -27,6 +27,7 @@ public class IdExpression extends Expression {
 	public Atom evaluate() {
 
 		System.out.println("name: " + name);
+		// TODO we need all operations here?
 		// TODO get value of name from Environment
 		return new BoolAtom(false); // TODO actually return unknown variable : not a string
 	}

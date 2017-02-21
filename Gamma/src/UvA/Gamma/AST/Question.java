@@ -38,7 +38,7 @@ public class Question implements FormItem {
     }
 
     @Override
-    public void idChanged(String id, String value) {
+    public void idChanged(Form root, String id, String value) {
         // I don't care about that, I am an independent formitem and don't need your help
     }
 

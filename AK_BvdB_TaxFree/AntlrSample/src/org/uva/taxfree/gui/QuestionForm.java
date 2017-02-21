@@ -55,4 +55,9 @@ public class QuestionForm {
     public void updateVisibility() {
         mFormNode.setVisibility(true);
     }
+
+    public void printAll() {
+        mFormNode.printAll();
+
+    }
 }
