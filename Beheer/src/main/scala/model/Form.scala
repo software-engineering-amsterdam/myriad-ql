@@ -1,7 +1,6 @@
 package model
 
-import parser.ast.Type
-
+import parser.ast.{ ExpressionNode, Type }
 
 case class Form(questions: Seq[Question])
 
@@ -14,4 +13,4 @@ sealed trait Question {
 
 case class OpenQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue]) extends Question
 
-case class ComputedQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue], value: Expression) extends Question
+case class ComputedQuestion(identifier: String, label: String, `type`: Type, show: Iterable[BooleanValue], value: ExpressionNode) extends Question

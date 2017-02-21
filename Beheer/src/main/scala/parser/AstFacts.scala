@@ -37,8 +37,8 @@ class AstFacts(form: Form) {
 
   private def extractIdentifiers(expressionNode: ExpressionNode): Set[String] = expressionNode match {
     case Identifier(value) => Set(value)
-    case PrefixOperation(_, rhs) => extractIdentifiers(rhs)
-    case InfixOperation(lhs, _, rhs) => extractIdentifiers(lhs) ++ extractIdentifiers(rhs)
+    case i: InfixNode => extractIdentifiers(i.lhs) ++ extractIdentifiers(i.rhs)
+    case p: PrefixNode => extractIdentifiers(p.rhs)
     case _ => Set.empty
   }
 

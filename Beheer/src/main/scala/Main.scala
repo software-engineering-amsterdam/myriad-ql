@@ -12,13 +12,10 @@ object Main extends App {
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
 
-  val formModel = FormChecker(parsedForm) match {
-    case Nil => FormModel(parsedForm)
-    case issues => {
-      printIssues(issues)
-      sys.exit(0)
-    }
-  }
+  println(parsedForm.block.statements.mkString("\n"))
+
+  val formModel = FormChecker(parsedForm)
+  printIssues(formModel)
   /*  AstChecker(parsedForm) match {
     case Left(issues) => printIssues(issues)
     case Right((form, warnings)) =>

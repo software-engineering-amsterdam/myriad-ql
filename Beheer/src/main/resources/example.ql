@@ -7,7 +7,7 @@ form Box1HouseOwning {
         if (hasBoughtHouse && valueResidue) {
             sellingPrice: "Price the house was sold for:" money(sdkfjgasjkdf)
         }
-        privateDebt: "Private debts for the sold house:" money(ARG)
+        privateDebt: "Private debts for the sold house:" money(ARG + 10)
         valueResidue: "Value residue:" money(sellingPrice - privateDebt+True)
     }
 }
