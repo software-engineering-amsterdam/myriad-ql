@@ -52,6 +52,33 @@ public class QLTest {
         assertEquals(expected, tree);
     }
 
+    @Test
+    public void singleIfElseBlock() throws IOException {
+        String form = "form fA {if (hasSoldHouse) {\"qA?\" hasA: boolean} else { \"qB?\" hasB: boolean}}";
+        String expected = "(form form fA { (items (ifBlock if ( (expression hasSoldHouse) ) { (items (question \"qA?\" hasA : (valueType boolean))) }) (elseBlock else { (items (question \"qB?\" hasB : (valueType boolean))) })) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
+    @Test
+    public void nestedIfBlock() throws IOException {
+        String form = "form fA {if (hasSoldHouseA) {if (hasSoldHouseB) {\"qA?\" hasA: boolean}}}";
+        String expected = "(form form fA { (items (ifBlock if ( (expression hasSoldHouseA) ) { (items (ifBlock if ( (expression hasSoldHouseB) ) { (items (question \"qA?\" hasA : (valueType boolean))) })) })) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
+    @Test
+    public void singleIfEqualityBlock() throws IOException {
+        String form = "form fA { if (1 != 2) { \"qA?\" hasA: boolean } }";
+        String expected = "(form form fA { (items (ifBlock if ( (expression (expression 1) (operator  != ) (expression 2)) ) { (items (question \"qA?\" hasA : (valueType boolean))) })) })";
+        String tree = getParseTree(form);
+
+        assertEquals(expected, tree);
+    }
+
     private String getParseTree(String form) throws IOException {
         InputStream inputStream = new ByteArrayInputStream(form.getBytes());
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
