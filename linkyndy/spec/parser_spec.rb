@@ -217,33 +217,11 @@ describe Parser do
 
   describe '#question' do
     it 'consumes a well formed question' do
-      expect(subject.question).to parse('"foo bar?"')
+      expect(subject.question).to parse('"foo bar?" text baz')
     end
 
-    it 'must end with a question mark' do
-      expect(subject.question).to parse('"foo?"')
-    end
-
-    it 'must be quoted' do
-      expect do
-        subject.question.parse('bar?')
-      end.to raise_error(Parslet::ParseFailed)
-    end
-  end
-
-  describe '#answer' do
-    it 'consumes a well formed answer' do
-      expect(subject.answer).to parse('text foo')
-    end
-
-    it 'consumes a well formed answer with an expression' do
-      expect(subject.answer).to parse('text foo => bar')
-    end
-  end
-
-  describe '#item' do
-    it 'consumes a well formed question - answer pair' do
-      expect(subject.item).to parse('"foo?" text bar')
+    it 'consumes a well formed question with an expression' do
+      expect(subject.question).to parse('"foo bar?" text baz => qux')
     end
   end
 

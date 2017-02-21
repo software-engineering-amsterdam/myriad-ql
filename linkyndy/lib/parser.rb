@@ -31,14 +31,11 @@ class Parser < Parslet::Parser
     identifier |
     literal
   end
-  rule(:block) { (if_statement | item).repeat(1) }
+  rule(:block) { (if_statement | question).repeat }
 
   rule(:if_statement) { str('if') >> space >> expression >> block >> (str('else') >> space >> block).maybe >> str('end') >> space? }
 
-  rule(:question) { quote >> string >> qmark >> quote }
-  rule(:answer) { type >> space >> identifier >> (space? >> str('=>') >> space? >> expression).maybe }
-
-  rule(:item) { question >> space >> answer }
+  rule(:question) { string >> type >> identifier >> (hashrocket >> expression).maybe }
 
   rule(:form) { str('form') >> space >> identifier >> block >> str('end') }
 
