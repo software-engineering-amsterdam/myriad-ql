@@ -1,9 +1,6 @@
 require 'parslet'
-require_relative '../helper'
 
 class Expression
-  extend Helper
-
   def self.includes_type?(type)
     !([type].flatten & accept_types).empty?
   end

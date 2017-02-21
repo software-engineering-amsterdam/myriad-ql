@@ -1,9 +1,6 @@
-require_relative '../helper'
 require 'parslet'
 
 class Literal
-  extend Helper
-
   attr_reader :value
 
   def initialize(value)
