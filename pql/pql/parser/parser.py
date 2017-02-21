@@ -11,7 +11,7 @@ def parse(input_string):
 
     arith_operand = number | identifier
     bool_operand = Literal("true") | Literal("false") | number | identifier
-    bool_operand.setParseAction(ast.BoolOperand)
+    bool_operand.setParseAction(ast.BoolOperand).setResultsName('bool_operand')
 
     # Reserved keywords
     form_lit = Suppress("form")

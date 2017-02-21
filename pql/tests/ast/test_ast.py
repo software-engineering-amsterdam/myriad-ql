@@ -244,9 +244,10 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
         self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
 
-        operand_node = condition_node.children[0]
-        self.assertEqual(0, len(operand_node.children))
-        self.assertEqual('hasSoldHouse', operand_node.label)
+        boolean_operand_node = condition_node.children[0]
+        self.assertEqual(0, len(boolean_operand_node.children))
+        self.assertEqual('hasSoldHouse', boolean_operand_node.label)
+        self.assertEqual('bool_operand', boolean_operand_node.var_type)
 
     def test_ast_if_with_expression_single_question(self):
         input_string = """
@@ -278,20 +279,22 @@ class TestAst(unittest.TestCase):
 
         self.assertEqual('&&', boolean_and_node.symbol)
         self.assertEqual('boolean_and', boolean_and_node.var_type)
-        self.assertEqual(2, len(boolean_and_node.children), 'Boolean and node should have 2 operands as children')
+        self.assertEqual(2, len(boolean_and_node.children), 'Boolean AND node should have 2 operands as children')
 
         boolean_operand_node_1 = boolean_and_node.children[0]
         self.assertEqual(0, len(boolean_operand_node_1.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node_1.label)
+        self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
 
         boolean_operand_node_2 = boolean_and_node.children[1]
         self.assertEqual(0, len(boolean_operand_node_2.children))
         self.assertEqual('hasBoughtHouse', boolean_operand_node_2.label)
+        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
 
     def test_ast_if_with_complex_expression_single_question(self):
         input_string = """
             form taxOfficeExample {
-                if (hasSoldHouse && hasBoughtHouse || wantsToBuyHouse) {
+                if (hasSoldHouse || hasBoughtHouse && wantsToBuyHouse) {
                     "What was the selling price?"        sellingPrice: money
                 }
             }
@@ -302,9 +305,43 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertEqual('conditional', conditional_node.var_type)
-        self.assertIsNone(conditional_node.else_statement_list, 'Conditional should have no else block')
-        raise NotImplementedError('Test needs assertions')
+        self.assertIsNone(conditional_node.else_statement_list,
+                          'This test has no else block, else block should be none')
+        self.assertEqual('conditional', conditional_node.var_type,
+                         'Conditional node should have type conditional')
+        self.assertEqual(1, len(conditional_node.statements),
+                         'This else block has one question inside, length should be 1')
+        self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
+
+        condition_node = conditional_node.condition
+        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
+        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+
+        boolean_or_node = condition_node.children[0]
+        self.assertEqual('||', boolean_or_node.symbol)
+        self.assertEqual('boolean_or', boolean_or_node.var_type)
+        self.assertEqual(2, len(boolean_or_node.children), 'Boolean OR node should have 2 operands as children')
+
+        boolean_operand_node_1 = boolean_or_node.children[0]
+        self.assertEqual(0, len(boolean_operand_node_1.children))
+        self.assertEqual('hasSoldHouse', boolean_operand_node_1.label)
+        self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
+
+        boolean_and_node = boolean_or_node.children[1]
+
+        self.assertEqual('&&', boolean_and_node.symbol)
+        self.assertEqual('boolean_and', boolean_and_node.var_type)
+        self.assertEqual(2, len(boolean_and_node.children), 'Boolean AND node should have 2 operands as children')
+
+        boolean_operand_node_2 = boolean_and_node.children[0]
+        self.assertEqual(0, len(boolean_operand_node_2.children))
+        self.assertEqual('hasBoughtHouse', boolean_operand_node_2.label)
+        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
+
+        boolean_operand_node_3 = boolean_and_node.children[1]
+        self.assertEqual(0, len(boolean_operand_node_3.children))
+        self.assertEqual('wantsToBuyHouse', boolean_operand_node_3.label)
+        self.assertEqual('bool_operand', boolean_operand_node_3.var_type)
 
     def test_ast_if_with_complex_expression_2_single_question(self):
         input_string = """
