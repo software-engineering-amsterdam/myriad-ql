@@ -47,6 +47,7 @@ public class QuestionnaireQuestion {
 	
 	
 	// TODO move to field
+	// TODO default return statement
 	public Value getAnswer() {
 		if ("boolean" == type.getType()) {
 			return new BoolValue(((CheckBox) entryField).isSelected());
@@ -54,7 +55,7 @@ public class QuestionnaireQuestion {
 			String str = ((TextField) entryField).getText();
 			if (str.isEmpty()) {
 				return new EmptyValue();
-			} else if ("integer" == type.getType()) {
+			} else if ("string" == type.getType()) {
 				return new StringValue(str);
 			} else {
 				return new IntegerValue(Integer.valueOf(str));

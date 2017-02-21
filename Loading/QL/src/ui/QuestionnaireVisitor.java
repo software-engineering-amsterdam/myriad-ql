@@ -22,7 +22,7 @@ public class QuestionnaireVisitor extends Visitor {
 	
 	@Override 
 	public void visit(Question question) {
-        activeQuestions.add(new QuestionnaireQuestion(question.getVariable(), 
+        activeQuestions.add(new QuestionnaireQuestion(question.getVariable(),
         		question.getLabel(), question.getType()));
 	}
 	
@@ -30,19 +30,23 @@ public class QuestionnaireVisitor extends Visitor {
 	public void visit(Statement statement) {	
 		
 		// TODO many functions - functions : can you assume the ATOM is a boolean?
-		 System.out.println(statement.getExpression().evaluate().getValue());
+		System.out.println("QUESTIONNAIRE VISITOR, value:");
+		System.out.println(statement.getExpression().evaluate().getValue());
+
 		// Call the evaluator with answers
 		if (answers.size() != 0) {
-//			System.out.println("answer: ");
-//			List<Value> valuesList = new ArrayList<Value>(answers.values());
-//			List<String> keysList = new ArrayList<String>(answers.keySet());
-//			System.out.println(valuesList.get(0).getValue());
-//			System.out.println(keysList.get(0));
-//			System.out.println(statement.getExpression().evaluate().getValue());
+			List<Value> valuesList = new ArrayList<Value>(answers.values());
+			List<String> keysList = new ArrayList<String>(answers.keySet());
+
+			Value answer = valuesList.get(0);
+			String question = keysList.get(0);
+			System.out.println("question: " + question);
+			System.out.println("answer: " + answer);
+			System.out.println("getvalue: " + statement.getExpression().evaluate().getValue());
 		}
 		if (statement.getExpression().evaluate().getValue()) {
 			statement.getBlock().accept(this);
-		} 
+		}
 	}
 
 	public List<QuestionnaireQuestion> getActiveQuestions() {
