@@ -1,24 +1,31 @@
-module UI.QLSInput exposing (Model, Msg, init, asStylesheet, update, view)
+module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
 
 import Html exposing (Html, form, textarea, div, hr, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
+import AST exposing (Form)
 import QLS.Parser as Parser
+import QLS.TypeChecker
 
 
 type Model
-    = Model String (Maybe StyleSheet)
+    = Model String (Maybe StyleSheet) (Maybe Form)
 
 
 type Msg
     = OnInput String
 
 
-init : Model
-init =
-    Model "" Nothing
+init : Maybe Form -> Model
+init form =
+    Model "" Nothing form
         |> update (OnInput exampleDsl)
+
+
+setForm : Maybe Form -> Model -> Model
+setForm form (Model input styleSheet _) =
+    (Model input styleSheet form)
 
 
 exampleDsl : String
@@ -26,7 +33,7 @@ exampleDsl =
     """stylesheet taxOfficeExample
   page Housing {
     section "Buying"
-      question hasBoughtHouse
+      question hasBoughtHouse2
         widget checkbox
     section "Loaning"
       question hasMaintLoan
@@ -57,19 +64,19 @@ exampleDsl =
 
 
 asStylesheet : Model -> Maybe StyleSheet
-asStylesheet (Model _ maybeStylesheet) =
+asStylesheet (Model _ maybeStylesheet _) =
     maybeStylesheet
 
 
 update : Msg -> Model -> Model
-update msg _ =
+update msg (Model _ _ form) =
     case msg of
         OnInput newInput ->
-            Model newInput (Parser.parse newInput)
+            Model newInput (Parser.parse newInput) form
 
 
 view : Model -> Html Msg
-view (Model rawText parsedForm) =
+view (Model rawText parsedStyleSheet parsedForm) =
     div []
         [ div [ class "row" ]
             [ div [ class "col-md-6" ]
@@ -86,7 +93,8 @@ view (Model rawText parsedForm) =
                     ]
                 ]
             , div [ class "col-md-6" ]
-                [ text "TypeChecker" ]
+                [ text <| toString <| Maybe.withDefault [] <| Maybe.map2 QLS.TypeChecker.check parsedForm parsedStyleSheet
+                ]
             ]
-        , pre [] [ text <| toString parsedForm ]
+        , pre [] [ text <| toString parsedStyleSheet ]
         ]

@@ -36,9 +36,9 @@ init =
             QLInput.init
     in
         { qlInput = formDslInput
-        , qlsInput = QLSInput.init
+        , qlsInput = QLSInput.init (QLInput.asForm formDslInput)
         , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
-        , activeTab = QLTab
+        , activeTab = QLSTab
         }
 
 
@@ -52,10 +52,14 @@ update msg model =
             let
                 newQLInput =
                     QLInput.update subMsg model.qlInput
+
+                maybeNewForm =
+                    QLInput.asForm newQLInput
             in
                 { model
                     | qlInput = newQLInput
-                    , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm newQLInput)
+                    , qlsInput = QLSInput.setForm maybeNewForm model.qlsInput
+                    , formRenderer = Maybe.map FormRenderer.init maybeNewForm
                 }
 
         QLSInputMsg subMsg ->
