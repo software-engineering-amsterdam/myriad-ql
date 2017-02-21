@@ -7,21 +7,22 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 6-2-2017.
  */
-public class Question implements Statement {
+public class Question extends Statement {
     private final QLIdent id;
     private final QLString question;
     private final Type type;
     private final Expr expr;
 
-    public Question(QLIdent id, QLString question, Type type, Expr expr) {
+    public Question(QLIdent id, QLString question, Type type, Expr expr, int rowNumber) {
+        super(rowNumber);
         this.id = id;
         this.question = question;
         this.type = type;
         this.expr = expr;
     }
 
-    public Question(QLIdent id, QLString question, Type type) {
-        this(id, question, type, null);
+    public Question(QLIdent id, QLString question, Type type, int rowNumber) {
+        this(id, question, type, null, rowNumber);
     }
 
     public QLIdent getId() {

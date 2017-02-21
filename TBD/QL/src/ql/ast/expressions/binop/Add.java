@@ -9,8 +9,8 @@ import ql.ast.visistor.ASTVisitor;
  */
 public class Add extends BinOp {
 
-    public Add(Expr left, Expr right) {
-        super(left, right);
+    public Add(Expr left, Expr right, int rowNumber) {
+        super(left, right, rowNumber);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

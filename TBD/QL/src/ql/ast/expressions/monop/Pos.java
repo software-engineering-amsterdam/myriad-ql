@@ -9,8 +9,8 @@ import ql.ast.visistor.ASTVisitor;
  */
 public class Pos extends MonOp {
 
-    public Pos(Expr expr) {
-        super(expr);
+    public Pos(Expr expr, int rowNumber) {
+        super(expr, rowNumber);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

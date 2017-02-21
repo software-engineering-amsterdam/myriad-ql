@@ -6,11 +6,12 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 6-2-2017.
  */
-public class Form implements ASTNode {
+public class Form extends ASTNode {
     private final QLIdent name;
     private final Statements statements;
 
-    public Form(QLIdent name, Statements statements) {
+    public Form(QLIdent name, Statements statements, int rowNumber) {
+        super(rowNumber);
         this.name = name;
         this.statements = statements;
     }

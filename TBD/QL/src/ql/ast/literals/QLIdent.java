@@ -7,10 +7,11 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLIdent implements QLLiteral {
+public class QLIdent extends QLLiteral {
     private final String qlIdent;
 
-    public QLIdent(String qlIdent) {
+    public QLIdent(String qlIdent, int rowNumber) {
+        super(rowNumber);
         this.qlIdent = qlIdent;
     }
 

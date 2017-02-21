@@ -25,7 +25,8 @@ public class Main {
     public static void main(String[] args) {
         Reader reader = null;
         try {
-            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
+            //reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
+            reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
 
@@ -48,7 +49,7 @@ public class Main {
         }
 
 
-        Neg exprtest = new Neg(new Sub(new QLIdent("A"), new QLInt(4)));
+        Neg exprtest = new Neg(new Sub(new QLIdent("A", 1), new QLInt(4, 2), 3), 4);
 
         ASTVisitor<Value> evalASTVisitor = new EvalASTVisitor();
         System.out.println(evalASTVisitor.visit(exprtest));

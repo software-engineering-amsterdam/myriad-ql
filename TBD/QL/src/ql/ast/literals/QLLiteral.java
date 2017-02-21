@@ -6,7 +6,10 @@ import ql.ast.values.Value;
 /**
  * Created by Erik on 7-2-2017.
  */
-public interface QLLiteral extends Expr {
+public abstract class QLLiteral extends Expr {
+    public QLLiteral(int rowNumber) {
+        super(rowNumber);
+    }
 
-    Value toValue();
+    abstract Value toValue();
 }

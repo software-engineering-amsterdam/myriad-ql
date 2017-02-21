@@ -5,11 +5,12 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 6-2-2017.
  */
-public class If implements Statement {
+public class If extends Statement {
     private final Expr condition;
     private final Statements ifBlock;
 
-    public If(Expr condition, Statements ifBlock) {
+    public If(Expr condition, Statements ifBlock, int rowNumber) {
+        super(rowNumber);
         this.condition = condition;
         this.ifBlock = ifBlock;
     }

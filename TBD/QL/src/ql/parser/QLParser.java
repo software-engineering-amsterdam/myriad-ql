@@ -1,4 +1,4 @@
-// Output created by jacc on Mon Feb 20 16:05:40 CET 2017
+// Output created by jacc on Tue Feb 21 15:17:10 CET 2017
 
 package ql.parser;
 
@@ -2182,97 +2182,97 @@ class QLParser implements QLTokens {
     }
 
     private int yyr1() { // form : FORM IDENT '{' statements '}'
-        { result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]));    }
+        { result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]), lexer.getRowNumber());    }
         yysv[yysp-=5] = yyrv;
         return 1;
     }
 
     private int yyr16() { // expr : '+' expr
-        { yyrv = new Pos(((Expr)yysv[yysp-1]));     }
+        { yyrv = new Pos(((Expr)yysv[yysp-1]), lexer.getRowNumber());     }
         yysv[yysp-=2] = yyrv;
         return yypexpr();
     }
 
     private int yyr17() { // expr : '-' expr
-        { yyrv = new Neg(((Expr)yysv[yysp-1]));     }
+        { yyrv = new Neg(((Expr)yysv[yysp-1]), lexer.getRowNumber());     }
         yysv[yysp-=2] = yyrv;
         return yypexpr();
     }
 
     private int yyr18() { // expr : '!' expr
-        { yyrv = new Not(((Expr)yysv[yysp-1]));     }
+        { yyrv = new Not(((Expr)yysv[yysp-1]), lexer.getRowNumber());     }
         yysv[yysp-=2] = yyrv;
         return yypexpr();
     }
 
     private int yyr19() { // expr : expr '*' expr
-        { yyrv = new Mul(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new Mul(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr20() { // expr : expr '/' expr
-        { yyrv = new Div(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new Div(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr21() { // expr : expr '+' expr
-        { yyrv = new Add(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new Add(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr22() { // expr : expr '-' expr
-        { yyrv = new Sub(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new Sub(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr23() { // expr : expr EQ expr
-        { yyrv = new Eq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]));  }
+        { yyrv = new Eq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr24() { // expr : expr NEQ expr
-        { yyrv = new NEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new NEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr25() { // expr : expr '>' expr
-        { yyrv = new GT(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]));  }
+        { yyrv = new GT(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr26() { // expr : expr '<' expr
-        { yyrv = new LT(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]));  }
+        { yyrv = new LT(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr27() { // expr : expr GEQ expr
-        { yyrv = new GEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new GEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr28() { // expr : expr LEQ expr
-        { yyrv = new LEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new LEq(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr29() { // expr : expr AND expr
-        { yyrv = new And(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1])); }
+        { yyrv = new And(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber()); }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
 
     private int yyr30() { // expr : expr OR expr
-        { yyrv = new Or(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]));  }
+        { yyrv = new Or(((Expr)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=3] = yyrv;
         return yypexpr();
     }
@@ -2331,37 +2331,37 @@ class QLParser implements QLTokens {
     }
 
     private int yyr36() { // boolean : TRUE
-        { yyrv = new QLBoolean(true);     }
+        { yyrv = new QLBoolean(true, lexer.getRowNumber());     }
         yysv[yysp-=1] = yyrv;
         return 16;
     }
 
     private int yyr37() { // boolean : FALSE
-        { yyrv = new QLBoolean(false);    }
+        { yyrv = new QLBoolean(false, lexer.getRowNumber());    }
         yysv[yysp-=1] = yyrv;
         return 16;
     }
 
     private int yyr14() { // if : IF '(' expr ')' '{' statements '}'
-        { yyrv = new If(((Expr)yysv[yysp-5]), ((Statements)yysv[yysp-2]));      }
+        { yyrv = new If(((Expr)yysv[yysp-5]), ((Statements)yysv[yysp-2]), lexer.getRowNumber());      }
         yysv[yysp-=7] = yyrv;
         return 5;
     }
 
     private int yyr15() { // if : IF '(' expr ')' '{' statements '}' ELSE '{' statements '}'
-        { yyrv = new IfElse(((Expr)yysv[yysp-9]), ((Statements)yysv[yysp-6]), ((Statements)yysv[yysp-2])); }
+        { yyrv = new IfElse(((Expr)yysv[yysp-9]), ((Statements)yysv[yysp-6]), ((Statements)yysv[yysp-2]), lexer.getRowNumber()); }
         yysv[yysp-=11] = yyrv;
         return 5;
     }
 
     private int yyr6() { // question : STRING IDENT ':' type '=' expr
-        { yyrv = new Question(((QLIdent)yysv[yysp-5]), ((QLString)yysv[yysp-6]), ((Type)yysv[yysp-3]), ((Expr)yysv[yysp-1]));    }
+        { yyrv = new Question(((QLIdent)yysv[yysp-5]), ((QLString)yysv[yysp-6]), ((Type)yysv[yysp-3]), ((Expr)yysv[yysp-1]), lexer.getRowNumber())   ;    }
         yysv[yysp-=6] = yyrv;
         return 6;
     }
 
     private int yyr7() { // question : STRING IDENT ':' type
-        { yyrv = new Question(((QLIdent)yysv[yysp-3]), ((QLString)yysv[yysp-4]), ((Type)yysv[yysp-1]));        }
+        { yyrv = new Question(((QLIdent)yysv[yysp-3]), ((QLString)yysv[yysp-4]), ((Type)yysv[yysp-1]), lexer.getRowNumber())       ;        }
         yysv[yysp-=4] = yyrv;
         return 6;
     }
@@ -2379,13 +2379,13 @@ class QLParser implements QLTokens {
     }
 
     private int yyr2() { // statements : statement statements
-        { yyrv = new Statements(((Statement)yysv[yysp-2]), ((Statements)yysv[yysp-1]));  }
+        { yyrv = new Statements(((Statement)yysv[yysp-2]), ((Statements)yysv[yysp-1]), lexer.getRowNumber());  }
         yysv[yysp-=2] = yyrv;
         return yypstatements();
     }
 
     private int yyr3() { // statements : statement
-        { yyrv = new Statements(((Statement)yysv[yysp-1]));      }
+        { yyrv = new Statements(((Statement)yysv[yysp-1]), lexer.getRowNumber());      }
         yysv[yysp-=1] = yyrv;
         return yypstatements();
     }
@@ -2450,7 +2450,7 @@ public QLParser (QLLexer lexer) {
 }
 
 private void yyerror (String msg) {
-  System.err.println(msg);
+  System.err.println(lexer.getRowNumber() + msg);
 }
 
 }

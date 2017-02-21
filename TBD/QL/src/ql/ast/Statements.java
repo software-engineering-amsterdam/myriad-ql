@@ -8,17 +8,18 @@ import java.util.List;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Statements implements ASTNode {
+public class Statements extends ASTNode {
     private final Statement current;
     private final Statements next;
 
-    public Statements(Statement current, Statements next) {
+    public Statements(Statement current, Statements next, int rowNumber) {
+        super(rowNumber);
         this.current = current;
         this.next = next;
     }
 
-    public Statements(Statement current) {
-        this(current, null);
+    public Statements(Statement current, int rowNumber) {
+        this(current, null, rowNumber);
     }
 
     public List<Statement> getStatements(){

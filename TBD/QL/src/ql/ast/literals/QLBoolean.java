@@ -6,10 +6,11 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLBoolean implements QLLiteral {
+public class QLBoolean extends QLLiteral {
     private final boolean qlBoolean;
 
-    public QLBoolean(boolean qlBoolean) {
+    public QLBoolean(boolean qlBoolean, int rowNumber) {
+        super(rowNumber);
         this.qlBoolean = qlBoolean;
     }
 

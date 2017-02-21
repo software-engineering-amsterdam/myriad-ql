@@ -18,6 +18,8 @@ public class QLLexer implements QLTokens {
     private int token;
     private Object yylval;
     private int c = ' ';
+    private int rowNumber = 1;
+    private int columnNumber = 1;
 
 
     private final Reader input;
@@ -44,6 +46,7 @@ public class QLLexer implements QLTokens {
         if (c >= 0) {
             try {
                 c = input.read();
+                columnNumber += 1;
             } catch (IOException e) {
                 c = -1;
             }
@@ -72,6 +75,10 @@ public class QLLexer implements QLTokens {
             }
             // Skip whitespaces
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+                if(c == '\n') {
+                    rowNumber += 1;
+                    columnNumber = 0;
+                }
                 nextChar();
             }
 
@@ -125,7 +132,7 @@ public class QLLexer implements QLTokens {
                     nextChar();
 
                     name = stringBuilder.toString();
-                    this.yylval = new QLString(name);
+                    this.yylval = new QLString(name, rowNumber);
                     return token = STRING;
                 case '!':
                     nextChar();
@@ -187,7 +194,7 @@ public class QLLexer implements QLTokens {
                             nextChar();
                             // Parse floats without digits after the comma
                             if (!Character.isDigit(c)) {
-                                this.yylval = new QLFloat(n);
+                                this.yylval = new QLFloat(n, rowNumber);
                                 return token = FLOAT;
                             }
                             int counter = 1;
@@ -196,11 +203,11 @@ public class QLLexer implements QLTokens {
                                 nextChar();
                                 counter *= 10;
                             } while (Character.isDigit(c));
-                            this.yylval = new QLFloat(n);
+                            this.yylval = new QLFloat(n, rowNumber);
                             return token = FLOAT;
                         }
 
-                        this.yylval = new QLInt(n);
+                        this.yylval = new QLInt(n, rowNumber);
                         return token = INT;
                     }
 
@@ -218,13 +225,19 @@ public class QLLexer implements QLTokens {
                             return token = KEYWORDS.get(name);
                         }
 
-                        this.yylval = new QLIdent(name);
+                        this.yylval = new QLIdent(name, rowNumber);
                         return token = IDENT;
                     }
             }
         }
     }
 
+    public int getRowNumber() {
+        return rowNumber;
+    }
+    public int getColumn() {
+        return columnNumber;
+    }
     public int getToken() {
         return token;
     }

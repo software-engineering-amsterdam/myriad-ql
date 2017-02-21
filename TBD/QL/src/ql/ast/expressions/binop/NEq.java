@@ -8,8 +8,8 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 7-2-2017.
  */
 public class NEq extends BinOp {
-    public NEq(Expr left, Expr right) {
-        super(left, right);
+    public NEq(Expr left, Expr right, int rowNumber) {
+        super(left, right, rowNumber);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

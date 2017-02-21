@@ -5,12 +5,13 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 20-2-2017.
  */
-public class IfElse implements Statement{
+public class IfElse extends Statement {
     private final Expr condition;
     private final Statements ifBlock;
     private final Statements elseBlock;
 
-    public IfElse(Expr condition, Statements ifBlock, Statements elseBlock) {
+    public IfElse(Expr condition, Statements ifBlock, Statements elseBlock, int rowNumber) {
+        super(rowNumber);
         this.condition = condition;
         this.ifBlock = ifBlock;
         this.elseBlock = elseBlock;

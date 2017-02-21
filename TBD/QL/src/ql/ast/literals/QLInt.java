@@ -6,10 +6,11 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLInt implements QLLiteral {
+public class QLInt extends QLLiteral {
     private final int qlInteger;
 
-    public QLInt(int qlInteger) {
+    public QLInt(int qlInteger, int rowNumber) {
+        super(rowNumber);
         this.qlInteger = qlInteger;
     }
 

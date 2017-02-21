@@ -6,10 +6,11 @@ import ql.ast.visistor.ASTVisitor;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class QLString implements QLLiteral {
+public class QLString extends QLLiteral {
     private final String qlString;
 
-    public QLString(String qlString) {
+    public QLString(String qlString, int rowNumber) {
+        super(rowNumber);
         this.qlString = qlString;
     }
 

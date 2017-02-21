@@ -3,6 +3,9 @@ package ql.ast;
 /**
  * Created by Erik on 6-2-2017.
  */
-public interface Expr extends ASTNode {
+public abstract class Expr extends ASTNode {
+    public Expr(int rowNumber) {
+        super(rowNumber);
+    }
 
 }
