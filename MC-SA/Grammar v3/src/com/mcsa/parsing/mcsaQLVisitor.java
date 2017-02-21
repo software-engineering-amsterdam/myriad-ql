@@ -57,7 +57,8 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
 
     @Override
     public Node visitIfStatement(QLParser.IfStatementContext ctx) {
-        return new IfStatement("This is an IF statement");
+        visit(ctx.ifCase());
+        return null;
     }
 
     @Override
@@ -69,13 +70,39 @@ public class mcsaQLVisitor extends AbstractParseTreeVisitor implements QLVisitor
     }
 
     @Override
-    public Object visitIfCase(QLParser.IfCaseContext ctx) {
+    public Node visitIfCase(QLParser.IfCaseContext ctx) {
+
+        IfCase ifCaseCheck = new IfCase();
+        /*if (ctx.ifCaseArgs() != null) {
+            if ( ifCaseCheck.getRight() == null) {
+                ifCaseCheck.addRight(ctx.ifCaseArgs().getText());
+            }else {
+                ifCaseCheck.addLeft(ctx.ifCaseArgs().getText());
+            }
+        }*/
+        if (ctx.TOKEN() != null) {
+            ifCaseCheck.addToken(ctx.TOKEN().getText());
+            System.out.println("ddd");
+        }
+        if (ctx.ifCase() != null){
+            for (QLParser.IfCaseContext caseArg : ctx.ifCase()) {
+                if ( ifCaseCheck.getRight() == null) {
+                    ifCaseCheck.addRight(visit(caseArg));
+                }else {
+                    ifCaseCheck.addLeft(visit(caseArg));
+                }
+            }
+            System.out.println();
+        }
         return null;
     }
 
     @Override
     public Object visitIfCaseArgs(QLParser.IfCaseArgsContext ctx) {
-        return null;
+        if (ctx.ID() != null)
+            return ctx.ID().getText();
+        else
+            return ctx.NUMBER().getText();
     }
 
     @Override
