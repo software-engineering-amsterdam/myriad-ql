@@ -2,57 +2,104 @@ module TypeChecker.BadReferences exposing (badReferences)
 
 import TypeChecker.CheckerUtil exposing (..)
 import AST exposing (..)
-import DictSet exposing (..)
-import Set
+import Set exposing (Set)
 
 
-badReferences : Form -> Set.Set String
+badReferences : Form -> Set String
 badReferences form =
-    Set.diff
-        (usedVarsFromList form.items |> Set.fromList)
-        (declaredVarsFromList form.items |> DictSet.values |> List.map Tuple.first |> Set.fromList)
+    badReferencesInBlock Set.empty form.items
 
 
-usedVarsFromList : List FormItem -> List String
-usedVarsFromList formItems =
-    List.map usedVarsFromItem formItems
-        |> List.concat
+badReferencesInBlock : Set String -> Block -> Set String
+badReferencesInBlock parentIdentifiers block =
+    let
+        availableIdentifiers =
+            availableIdentifiersOnScope parentIdentifiers block
+
+        usedIdentifiers =
+            usedIdentifiersFromBlock block
+
+        badReferences =
+            Set.diff usedIdentifiers availableIdentifiers
+    in
+        List.foldl (\item -> badReferencesInFormItem availableIdentifiers item |> Set.union) badReferences block
 
 
-usedVarsFromItem : FormItem -> List String
-usedVarsFromItem item =
+badReferencesInFormItem : Set String -> FormItem -> Set String
+badReferencesInFormItem availableIdentifiers formItem =
+    case formItem of
+        Field _ _ _ ->
+            Set.empty
+
+        ComputedField _ _ _ _ ->
+            Set.empty
+
+        IfThen _ thenBranch ->
+            badReferencesInBlock availableIdentifiers thenBranch
+
+        IfThenElse _ thenBranch elseBranch ->
+            Set.union
+                (badReferencesInBlock availableIdentifiers thenBranch)
+                (badReferencesInBlock availableIdentifiers elseBranch)
+
+
+usedIdentifiersFromBlock : Block -> Set String
+usedIdentifiersFromBlock block =
+    List.foldl (\item -> usedIdentifiersFromItem item |> Set.union) Set.empty block
+
+
+usedIdentifiersFromItem : FormItem -> Set String
+usedIdentifiersFromItem item =
     expressionFromItem item
-        |> Maybe.map usedVars
-        |> Maybe.withDefault []
+        |> Maybe.map usedIdentifiers
+        |> Maybe.withDefault Set.empty
 
 
-usedVars : Expression -> List String
-usedVars expression =
+expressionFromItem : FormItem -> Maybe Expression
+expressionFromItem item =
+    case item of
+        Field _ _ _ ->
+            Nothing
+
+        ComputedField _ _ _ expression ->
+            Just expression
+
+        IfThen expression _ ->
+            Just expression
+
+        IfThenElse expression _ _ ->
+            Just expression
+
+
+usedIdentifiers : Expression -> Set String
+usedIdentifiers expression =
     case expression of
-        Var s ->
-            [ s ]
+        Var ( s, _ ) ->
+            Set.singleton s
 
-        Integer _ ->
-            []
+        Integer _ _ ->
+            Set.empty
 
-        Boolean _ ->
-            []
+        Decimal _ _ ->
+            Set.empty
 
-        AST.Str _ ->
-            []
+        Boolean _ _ ->
+            Set.empty
 
-        ParensExpression expr ->
-            usedVars expr
+        AST.Str _ _ ->
+            Set.empty
 
-        -- Kunnen deze niet samen? Bijvoorbeeld door middel van "BinaryExpression"
-        ArithmeticExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+        ParensExpression _ expr ->
+            usedIdentifiers expr
 
-        RelationExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+        ArithmeticExpression _ _ exprLeft exprRight ->
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
-        LogicExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+        RelationExpression _ _ exprLeft exprRight ->
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
 
-        ComparisonExpression _ exprLeft exprRight ->
-            usedVars exprLeft ++ usedVars exprRight
+        LogicExpression _ _ exprLeft exprRight ->
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)
+
+        ComparisonExpression _ _ exprLeft exprRight ->
+            Set.union (usedIdentifiers exprLeft) (usedIdentifiers exprRight)

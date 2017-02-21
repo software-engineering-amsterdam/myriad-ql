@@ -47,19 +47,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         }
     }
 
-    @Override
-    public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
-        super.enterIfStatement(ctx);
-        Node ifStatementNode = new IfStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(ifStatementNode);
-    }
-
-    @Override
-    public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
-        super.enterIfElseStatement(ctx);
-        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(ifElseStatementNode);
-    }
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
@@ -68,12 +55,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         addNodeToAst(questionNode);
     }
 
-    @Override
-    public void enterExpression(QLGrammarParser.ExpressionContext ctx) {
-        super.enterExpression(ctx);
-        Node expressionNode = new ExpressionNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(expressionNode);
-    }
 
     // Exits
     @Override
@@ -99,18 +80,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         super.exitForm(ctx);
         popParent(); // Clear stack
     }
-
-    ////////////////
-    @Override
-    public void enterStatement(QLGrammarParser.StatementContext ctx) {
-        super.enterStatement(ctx);
-    }
-
-    @Override
-    public void exitStatement(QLGrammarParser.StatementContext ctx) {
-        super.exitStatement(ctx);
-    }
-
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);

@@ -16,13 +16,26 @@ public abstract class Node {
         mChildren.add(child);
     }
 
-    public abstract String getId();
+    public void retrieveConditions(Set<Node> set){
+        addCondition(set);
+        for(Node child : mChildren){
+            child.addCondition(set);
+        }
+    }
+
+    protected  void addCondition(Set<Node> set){
+        // Intentionally left blank
+    }
 
     public void retrieveQuestions(Set<NamedNode> set) {
         addQuestion(set);
         for (Node child : mChildren) {
             child.addQuestion(set);
         }
+    }
+
+    protected void addQuestion(Set<NamedNode> set) {
+        // Intentionally left blank
     }
 
     public void printData() {
@@ -39,14 +52,15 @@ public abstract class Node {
     }
 
 
-    protected void addQuestion(Set<NamedNode> set) {
-        // Intentionally left blank
-    }
 
 
     public void printValue() {
         // Intentionally left blank
     }
 
-    public abstract String getType();
+    public String getType() {
+        return this.getClass().toString();
+    }
+
+    public abstract String getId();
 }

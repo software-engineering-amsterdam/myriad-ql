@@ -3,30 +3,17 @@ package org.uva.taxfree.model;
 import javax.swing.*;
 
 public class IntegerQuestion extends NumberNode {
-    private Integer mValue;
+    private JFormattedTextField mTextField;
 
     public IntegerQuestion(String description, String id, Integer defaultValue) {
         super(description, id);
-        mValue = defaultValue;
-    }
-
-    public Number getValue() {
-        return mValue.intValue();
+        mTextField = new JFormattedTextField();
+        mTextField.setValue(defaultValue);
     }
 
     @Override
     protected void fillPanel(JPanel parent) {
-        JFormattedTextField field = new JFormattedTextField();
-        field.setValue(mValue);
-        parent.add(field);
+        parent.add(mTextField);
     }
 
-    @Override
-    public String getType() {
-        return "integer";
-    }
-
-    public int getInt() {
-        return mValue.intValue();
-    }
 }

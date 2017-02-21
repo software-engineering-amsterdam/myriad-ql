@@ -1,4 +1,5 @@
-from ParserTokens import ParserTokens as Tokens
+from Tokens import ParserTokens as Tokens
+from TypeChecker import TypeChecker
 import pyparsing as pp
 import AST
 
@@ -26,16 +27,16 @@ class QuestionnaireParser(object):
         question = Tokens.TYPE["STRING"] + Tokens.TYPE["VAR"] + Tokens.LIT["COLON"] + \
                    Tokens.TYPE_NAME
         computed_question = question + Tokens.LIT["IS"] + self.embrace(self.expression)
-        return (pp.Group(computed_question).addParseAction(AST.ComputedQuestionNode) |
-                pp.Group(question).addParseAction(AST.QuestionNode) )
+        return (pp.Group(computed_question).addParseAction(AST.CompQuestionNode) |
+                pp.Group(question).addParseAction(AST.QuestionNode))
 
     def define_conditional(self):
         if_cond = Tokens.KW["IF"] + self.embrace(self.expression) + \
                   self.embrace(self.block, "curly")
         if_else_cond = if_cond + Tokens.KW["ELSE"] + self.embrace(self.block, "curly")
 
-        return ((pp.Group(if_else_cond)).addParseAction(AST.IfElseConditional) |
-                (pp.Group(if_cond)).addParseAction(AST.IfConditionalNode))
+        return (pp.Group(if_else_cond).addParseAction(AST.IfElseNode) |
+                pp.Group(if_cond).addParseAction(AST.IfNode))
 
     def define_grammar(self):
         self.block << pp.Group(
@@ -53,8 +54,9 @@ class QuestionnaireParser(object):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
         var_types = (
-            Tokens.TYPE["BOOL"].addParseAction(AST.BoolNode) |
+            Tokens.TYPE["BOOLEAN"].addParseAction(AST.BoolNode) |
             Tokens.TYPE["VAR"].addParseAction(AST.VarNode) |
+            Tokens.TYPE["MONEY"].addParseAction(AST.MoneyNode) |
             Tokens.TYPE["DECIMAL"].addParseAction(AST.DecimalNode) |
             Tokens.TYPE["INT"].addParseAction(AST.IntNode) |
             Tokens.TYPE["DATE"].addParseAction(AST.DateNode) |
@@ -86,9 +88,9 @@ if __name__ == '__main__':
     form taxOfficeExample {
         "Did you sell a house in 2010?" hasSoldHouse: boolean
         "Did you buy a house in 2010?" hasBoughtHouse: boolean
-        "Did you enter a loan?" hasMaintLoan: boolean
+        "Did you enter a loan?" hasMaintLoan: int
 
-        if (true == false * 100 * 5 * ! 8.0) {
+        if (true == false * 100 * 5 * !hasMaintLoan) {
             "What was the selling price?" sellingPrice: money
             "Private debts for the sold house:" privateDebt: money
             "Value residue:" valueResidue: money = (sellingPrice -
@@ -99,3 +101,5 @@ if __name__ == '__main__':
     parser = QuestionnaireParser()
     parsedAST = parser.parse(form1)
     print parsedAST
+
+    TypeChecker(parsedAST).start_traversal()

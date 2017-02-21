@@ -1,19 +1,33 @@
 package org.uva.taxfree.model;
 
-import javax.swing.*;
+import java.util.Set;
 
-public class IfStatementNode extends NamedNode {
-    public IfStatementNode(String description, String id) {
-        super(description, id);
+public class IfStatementNode extends Node {
+    String mCondition;
+    ExpressionNode mExpression;
+
+    public IfStatementNode(String condition) {
+        super();
+        mCondition = new String(condition);
+    }
+
+    public void addExpression(ExpressionNode child) {
+        mExpression = child;
+    }
+
+    protected boolean evaluateCondition() {
+        assert mExpression != null;
+        return mExpression.evaluate();
     }
 
     @Override
-    protected void fillPanel(JPanel parent) {
-        
+    protected void addCondition(Set<Node> set) {
+        set.add(this);
     }
 
     @Override
-    public String getType() {
-        return null;
+    public String getId() {
+        return mCondition;
     }
+
 }
