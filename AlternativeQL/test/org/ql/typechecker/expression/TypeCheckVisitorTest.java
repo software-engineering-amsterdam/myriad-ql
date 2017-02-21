@@ -59,58 +59,73 @@ public class TypeCheckVisitorTest {
     }
 
     @Test
-    public void shouldNotThrowTypeMismatchErrorWhenIncrementAppliedOnInteger() {
+    public void shouldReturnIntegerLiteralWhenIncrementAppliedOnInteger() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualIntegerType = visitor.visit(new Increment(new IntegerLiteral(3)));
+
         assertTrue(actualIntegerType instanceof IntegerType);
     }
 
     @Test
-    public void shouldNotThrowTypeMismatchErrorWhenIncrementAppliedOnFloat() {
+    public void shouldReturnFloatWhenIncrementAppliedOnFloat() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualFloatType = visitor.visit(new Increment(new DecimalLiteral(new BigDecimal(10.40))));
+
         assertTrue(actualFloatType instanceof FloatType);
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchErrorWhenIncrementAppliedOnNonIntegerOrFloat() {
+    public void shouldThrowTypeMismatchErrorWhenIncrementAppliedOnNonIntegerOrFloat() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualType = visitor.visit(new Increment(new StringLiteral("example")));
+
         assertTrue(actualType instanceof IntegerType);
     }
 
     @Test
-    public void shouldNotThrowTypeMismatchErrorWhenDecrementAppliedOnInteger() {
+    public void shouldReturnIntegerTypeWhenDecrementAppliedOnInteger() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualIntegerType = visitor.visit(new Decrement(new IntegerLiteral(3)));
+
         assertTrue(actualIntegerType instanceof IntegerType);
     }
 
     @Test
-    public void shouldNotThrowTypeMismatchErrorWhenDecrementAppliedOnFloat() {
+    public void shouldReturnFloatTypeWhenDecrementAppliedOnFloat() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualFloatType = visitor.visit(new Decrement(new DecimalLiteral(new BigDecimal(10.40))));
+
         assertTrue(actualFloatType instanceof FloatType);
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchErrorWhenDecrementAppliedOnNonIntegerOrFloat() {
+    public void shouldThrowTypeMismatchErrorWhenDecrementAppliedOnNonIntegerOrFloat() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         Type actualType = visitor.visit(new Decrement(new StringLiteral("example")));
+
         assertTrue(actualType instanceof IntegerType);
     }
 
     @Test(expected = UndefinedIdentifierException.class)
-    public void shouldThrowUndefinedIdentifierExceptionWhenIdentifierDoesNotExist() {
+    public void shouldThrowUndefinedIdentifierExceptionWhenIdentifierDoesNotExist() throws Throwable {
         TypeCheckVisitor visitor = new TypeCheckVisitor(new HashMap<>());
+
         visitor.visit(new Parameter(new Identifier("example")));
     }
 
     @Test
-    public void shouldReturnParameterWhenIdentifierExists() {
+    public void shouldReturnParameterWhenIdentifierExists() throws Throwable {
         Map<Identifier, Type> definitions = new HashMap<>();
         definitions.put(new Identifier("example"), new StringType());
+
         TypeCheckVisitor visitor = new TypeCheckVisitor(definitions);
+
         visitor.visit(new Parameter(new Identifier("example")));
 
     }

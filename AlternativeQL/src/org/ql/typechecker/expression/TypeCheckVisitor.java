@@ -84,7 +84,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     @Override
-    public Type visit(Parameter node) {
+    public Type visit(Parameter node) throws Throwable {
         if (!definitions.containsKey(node.getId())) {
             throw new UndefinedIdentifierException(node.getId());
         }
