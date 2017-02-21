@@ -17,7 +17,7 @@ class BooleanLiteral < Literal
   end
 
   def self.accept_types
-    BooleanType
+    [BooleanType]
   end
 
   def eval
