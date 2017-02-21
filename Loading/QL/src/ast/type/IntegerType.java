@@ -9,7 +9,7 @@ public class IntegerType extends Type {
 	
 	@Override
 	public void accept(ast.Visitor v) {
-		v.visit(this);		
+		// TODO empty accept
 	}
 	
 }

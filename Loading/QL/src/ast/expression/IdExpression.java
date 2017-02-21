@@ -4,6 +4,7 @@ import ast.Visitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
 import ast.atom.StringAtom;
+import semantic.Environment;
 
 public class IdExpression extends Expression {
 
@@ -19,14 +20,15 @@ public class IdExpression extends Expression {
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		v.visit(this);
 	}
 	
 	@Override
 	public Atom evaluate() {
-		return new StringAtom(name); // TODO actually return unknown variable : not a string
-		// String Atom
+
+		System.out.println("name: " + name);
+		// TODO get value of name from Environment
+		return new BoolAtom(false); // TODO actually return unknown variable : not a string
 	}
 	
 }
