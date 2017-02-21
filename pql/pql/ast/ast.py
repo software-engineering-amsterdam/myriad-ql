@@ -101,6 +101,7 @@ class BoolBinOp(Node):
         arguments = parsed_output[0][0::2]
         for arg in arguments:
             self.add_child(arg)
+        del arguments
 
 
 class BoolAnd(BoolBinOp):
