@@ -2,7 +2,7 @@
  * MessageHandler.java.
  */
 
-package lexicalChecker.messageHandling;
+package semanticChecker.messageHandling;
 
 public abstract class MessageHandler {
 

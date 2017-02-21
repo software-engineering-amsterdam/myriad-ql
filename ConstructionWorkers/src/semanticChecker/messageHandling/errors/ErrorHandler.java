@@ -2,10 +2,10 @@
  * ErrorHandler.java.
  */
 
-package lexicalChecker.messageHandling.errors;
+package semanticChecker.messageHandling.errors;
 
 import ASTnodes.CodeLocation;
-import lexicalChecker.messageHandling.MessageHandler;
+import semanticChecker.messageHandling.MessageHandler;
 
 public abstract class ErrorHandler extends MessageHandler {
 

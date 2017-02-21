@@ -2,7 +2,7 @@
  * CyclicDependencyError.java.
  */
 
-package lexicalChecker.messageHandling.errors;
+package semanticChecker.messageHandling.errors;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.literals.Identifier;
@@ -19,7 +19,7 @@ public class CyclicDependencyError extends ErrorHandler {
     }
 
     public String getMessage() {
-        return "ERROR: Cyclomatic dependency between " + end.getName() + " at " + end.getLocation().getStartingLine() +
-                " and " +  start.getName() + " at " +  start.getLocation().getStartingLine() + ".";
+        return "ERROR: Cyclomatic dependency between " + end.getName() + " at line " + end.getLocation().getStartingLine() +
+                " and " +  start.getName() + " at line " +  start.getLocation().getStartingLine() + ".";
     }
 }

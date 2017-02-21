@@ -6,6 +6,8 @@ form taxOfficeExample {
     if (test) {
         int sellingPrice("What was the selling price?");
         int privateDebt("Private debts for the sold house:");
-        int hasMaintLoan("Value residue:") : (sellingPrice - privateDebt);
+        int valueResidue("Value residue:") : (sellingPrice - privateDebt);
+        int aQuestion("A question:") : referenceToAnotherQuestion;
+        int referenceToAnotherQuestion("Another question") : aQuestion;
     }
 }

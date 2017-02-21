@@ -2,7 +2,7 @@
  * DuplicateIdentifierError.java.
  */
 
-package lexicalChecker.messageHandling.errors;
+package semanticChecker.messageHandling.errors;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.literals.Identifier;

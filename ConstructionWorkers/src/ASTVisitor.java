@@ -32,9 +32,9 @@ import java.util.List;
 
 public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
-    private static final String GRAMMAR_ERROR = "Why u no work!";
-
     private final Form abstractSyntaxTree;
+
+    private static final String GRAMMAR_ERROR = "Why u no work!";
 
     public ASTVisitor(ParseTree parseTree) {
         abstractSyntaxTree = (Form) parseTree.accept(this);

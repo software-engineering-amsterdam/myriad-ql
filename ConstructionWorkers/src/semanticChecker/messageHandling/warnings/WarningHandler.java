@@ -2,10 +2,10 @@
  * WarningHandler.java.
  */
 
-package lexicalChecker.messageHandling.warnings;
+package semanticChecker.messageHandling.warnings;
 
 import ASTnodes.CodeLocation;
-import lexicalChecker.messageHandling.MessageHandler;
+import semanticChecker.messageHandling.MessageHandler;
 
 public abstract class WarningHandler extends MessageHandler {
 

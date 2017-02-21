@@ -1,21 +1,19 @@
 /**
- * DuplicateLabelWarning.java.
+ * DuplicateIdentifierWarning.java.
  */
 
-package lexicalChecker.messageHandling.warnings;
+package semanticChecker.messageHandling.warnings;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.expressions.literals.Identifier;
 
-public class DuplicateLabelWarning extends WarningHandler {
+public class DuplicateIdentifierWarning extends WarningHandler {
 
     private final Identifier identifier;
-    private final String label;
 
-    public DuplicateLabelWarning(CodeLocation location, Identifier identifier, String label) {
+    public DuplicateIdentifierWarning(CodeLocation location, Identifier identifier) {
         super(location);
         this.identifier = identifier;
-        this.label = label;
     }
 
     public Identifier getIdentifier() {
@@ -24,6 +22,6 @@ public class DuplicateLabelWarning extends WarningHandler {
 
     public String getMessage() {
         return "WARNING: Question " + identifier.getName() + " at line " + getLocation().getStartingLine() +
-                " has a duplicate label: " + label + ".";
+                " has a duplicate identifier with the same type.";
     }
 }

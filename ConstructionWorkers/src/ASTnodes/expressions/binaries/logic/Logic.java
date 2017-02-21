@@ -23,7 +23,8 @@ public abstract class Logic extends Binary {
         if (typeToCheckLeft == null || typeToCheckRight == null) {
             return new UndefinedType();
         } else {
-            if (typeToCheckLeft.getClass().equals(typeToCheckRight) && typeToCheckLeft.getClass().equals(BooleanType.class)) {
+            if (typeToCheckLeft.getClass().equals(typeToCheckRight.getClass()) &&
+                    typeToCheckLeft.getClass().equals(BooleanType.class)) {
                 return typeToCheckLeft;
             } else {
                 return new UndefinedType();

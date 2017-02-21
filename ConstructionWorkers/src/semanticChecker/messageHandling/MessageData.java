@@ -2,10 +2,10 @@
  * MessageData.java.
  */
 
-package lexicalChecker.messageHandling;
+package semanticChecker.messageHandling;
 
-import lexicalChecker.messageHandling.errors.ErrorHandler;
-import lexicalChecker.messageHandling.warnings.WarningHandler;
+import semanticChecker.messageHandling.errors.ErrorHandler;
+import semanticChecker.messageHandling.warnings.WarningHandler;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,8 +19,7 @@ public abstract class Equality extends Binary {
     public Type checkType(Type typeToCheckLeft, Type typeToCheckRight) {
         if (typeToCheckLeft == null || typeToCheckRight == null) {
             return new UndefinedType();
-        }
-        else {
+        } else {
             Class typeToCheckLeftClass = typeToCheckLeft.getClass();
             if (typeToCheckLeftClass.equals(typeToCheckRight.getClass()) && (typeToCheckLeftClass.equals(MoneyType.class) ||
                     typeToCheckLeftClass == IntegerType.class) || typeToCheckLeftClass.equals(StringType.class)) {
