@@ -1,6 +1,6 @@
 package sc.ql.model;
 
-import sc.ql.model.Expressions.Expression;
+import sc.ql.model.expressions.Expression;
 
 public class Atom<T> extends Expression {
 	private final Type type;

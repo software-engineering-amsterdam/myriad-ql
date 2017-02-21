@@ -2,7 +2,7 @@ package sc.ql.model;
 
 import java.util.List;
 
-import sc.ql.model.Expressions.Expression;
+import sc.ql.model.expressions.Expression;
 
 public class ConditionalBlock implements Node {
 	private final Expression expression;

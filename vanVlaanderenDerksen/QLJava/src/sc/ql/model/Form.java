@@ -13,4 +13,8 @@ public class Form implements Node {
 	public List<FormElement> getFormElements() {
         return this.form_elements;
     }
+	
+	public FormElement getFormElement(Integer index) {
+        return this.form_elements.get(index);
+    }
 }

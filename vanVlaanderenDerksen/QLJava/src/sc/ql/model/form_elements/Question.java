@@ -1,8 +1,8 @@
-package sc.ql.model.FormElements;
+package sc.ql.model.form_elements;
 
 import sc.ql.model.Atom;
 import sc.ql.model.FormElement;
-import sc.ql.model.Expressions.Expression;
+import sc.ql.model.expressions.Expression;
 
 public class Question implements FormElement {
 	private final String question; 
@@ -31,5 +31,9 @@ public class Question implements FormElement {
 	
 	public Expression getExpression() {
 		return this.expression;
+	}
+	
+	public Type getElementType() {
+		return Type.QUESTION;
 	}
 }

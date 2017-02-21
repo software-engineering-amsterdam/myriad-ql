@@ -7,18 +7,13 @@ import sc.ql.antlr.QLBaseVisitor;
 import sc.ql.antlr.QLParser;
 import sc.ql.model.*;
 import sc.ql.model.Atom;
-import sc.ql.model.Expressions.*;
-import sc.ql.model.FormElements.*;
+import sc.ql.model.expressions.*;
+import sc.ql.model.form_elements.*;
 
 public class AstVisitor extends QLBaseVisitor<Node> {
-	
 	@Override 
 	public Node visitForm(QLParser.FormContext ctx) {
-		List<FormElement> form_elements = new ArrayList<FormElement>();
-
-		for(QLParser.Form_elementContext form_element : ctx.form_element()) {
-			form_elements.add((FormElement) visit(form_element));
-		}
+		List<FormElement> form_elements = getFormElements(ctx.form_element());
 		
 		return new Form(form_elements);
 	}
@@ -36,13 +31,10 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitIf_statement(QLParser.If_statementContext ctx) {
 		List<ConditionalBlock> conditional_blocks = new ArrayList<ConditionalBlock>();
+		List<FormElement> form_elements 		  = getFormElements(ctx.form_element());
+		
 		for(QLParser.Conditional_blockContext conditional_block : ctx.conditional_block()) {
 			conditional_blocks.add((ConditionalBlock) visit(conditional_block));
-		}
-		
-		List<FormElement> form_elements = new ArrayList<FormElement>();
-		for(QLParser.Form_elementContext form_element : ctx.form_element()) {
-			form_elements.add((FormElement) visit(form_element));
 		}
 		
 		return new IfStatement(conditional_blocks, form_elements);
@@ -50,16 +42,12 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitConditional_block(QLParser.Conditional_blockContext ctx) {
-		Expression expression = (Expression) visit(ctx.expression());
-		
-		List<FormElement> form_elements = new ArrayList<FormElement>();
-		for(QLParser.Form_elementContext form_element : ctx.form_element()) {
-			form_elements.add((FormElement) visit(form_element));
-		}
+		Expression expression 			= (Expression) visit(ctx.expression());
+		List<FormElement> form_elements = getFormElements(ctx.form_element());
 		
 		return new ConditionalBlock(expression, form_elements);
 	}
-
+	
 	@Override 
 	public Node visitParenExpr(QLParser.ParenExprContext ctx) {
 		return visit(ctx.expression());
@@ -74,7 +62,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	
 	@Override 
 	public Node visitOpExpr(QLParser.OpExprContext ctx) {
-		Expression left  = (Expression) visit(ctx.left);
+		Expression left  = (Expression) visit(ctx.left);	
 		Expression right = (Expression) visit(ctx.right);
 		String operator  = ctx.op.getText();
 		
@@ -111,5 +99,17 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		Boolean value = Boolean.valueOf(ctx.atom.getText());
 		
 		return new Atom<Boolean>(type, value);
+	}
+	
+	/*
+	 * Helper function
+	 */
+	private List<FormElement> getFormElements(List<QLParser.Form_elementContext> elements) {
+		List<FormElement> form_elements = new ArrayList<FormElement>();
+		for(QLParser.Form_elementContext form_element : elements) {
+			form_elements.add((FormElement) visit(form_element));
+		}
+		
+		return form_elements;
 	}
 }

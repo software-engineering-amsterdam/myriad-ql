@@ -1,4 +1,4 @@
-package sc.ql.model.FormElements;
+package sc.ql.model.form_elements;
 
 import java.util.List;
 import sc.ql.model.FormElement;
@@ -19,5 +19,9 @@ public class IfStatement implements FormElement {
 	
 	public List<FormElement> getFormElements() {
 		return this.form_elements;
+	}
+	
+	public Type getElementType() {
+		return Type.IF_STATEMENT;
 	}
 }

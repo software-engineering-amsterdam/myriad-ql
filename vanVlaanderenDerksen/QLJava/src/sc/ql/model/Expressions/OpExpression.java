@@ -1,4 +1,4 @@
-package sc.ql.model.Expressions;
+package sc.ql.model.expressions;
 
 public class OpExpression extends Expression {
 	private final Expression left;
