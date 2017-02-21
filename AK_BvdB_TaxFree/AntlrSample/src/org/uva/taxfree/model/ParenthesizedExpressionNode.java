@@ -3,7 +3,7 @@ package org.uva.taxfree.model;
 public class ParenthesizedExpressionNode extends ConditionNode {
     private Node mChild;
 
-    public ParenthesizedExpressionNode(String label) {
+    public ParenthesizedExpressionNode() {
         super();
     }
 
@@ -18,6 +18,6 @@ public class ParenthesizedExpressionNode extends ConditionNode {
 
     @Override
     public String toString() {
-        return "(" + mChild.toString() + ")" ;
+        return mChild.toString();
     }
 }
