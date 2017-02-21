@@ -1,3 +1,7 @@
+/**
+ * ExpressionVisitor.java.
+ */
+
 package ASTnodes.visitors;
 
 import ASTnodes.expressions.binaries.equality.*;
@@ -6,9 +10,6 @@ import ASTnodes.expressions.binaries.numerical.*;
 import ASTnodes.expressions.literals.*;
 import ASTnodes.expressions.unaries.*;
 
-/**
- * Created by LGGX on 15-Feb-17.
- */
 public interface ExpressionVisitor<T> {
     T visit(MyBoolean literal);
     T visit(MyInteger literal);
@@ -35,5 +36,4 @@ public interface ExpressionVisitor<T> {
     T visit(Subtraction expression);
     T visit(Multiplication expression);
     T visit(Division expression);
-
 }

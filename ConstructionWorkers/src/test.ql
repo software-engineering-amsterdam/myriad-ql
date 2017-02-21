@@ -3,7 +3,7 @@ form taxOfficeExample {
     boolean hasBoughtHouse("Did you buy a house in 2010?");
     boolean hasMaintLoan("Did you enter a loan?");
 
-    if (hasSoldHouse) {
+    if (test) {
         int sellingPrice("What was the selling price?");
         int privateDebt("Private debts for the sold house:");
         int hasMaintLoan("Value residue:") : (sellingPrice - privateDebt);

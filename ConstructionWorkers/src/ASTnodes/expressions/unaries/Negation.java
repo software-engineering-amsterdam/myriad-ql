@@ -18,20 +18,20 @@ public class Negation extends Unary {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) {
-        return visitor.visit(this);
+    public Type checkType(Type typeToCheck) {
+        if (typeToCheck == null) {
+            return new UndefinedType();
+        } else {
+            if (typeToCheck.getClass().equals(BooleanType.class)) {
+                return typeToCheck;
+            } else {
+                return new UndefinedType();
+            }
+        }
     }
 
     @Override
-    public Type getType(Type type) {
-
-        String booleanTest = new BooleanType().getClass().getName();
-
-        String typeString = type.getClass().getName();
-
-        if (typeString == booleanTest)
-            return type;
-        else
-            return new UndefinedType();
+    public <T> T accept(ExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

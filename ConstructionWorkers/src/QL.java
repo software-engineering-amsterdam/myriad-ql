@@ -5,9 +5,11 @@
  */
 
 import ASTnodes.Form;
-import ASTnodes.statements.IfStatement;
-import ASTnodes.statements.Statement;
-import checkSemantics.CheckSemantics;
+import lexicalChecker.LexicalChecker;
+import lexicalChecker.messageHandling.MessageData;
+import lexicalChecker.messageHandling.MessageHandler;
+import lexicalChecker.messageHandling.errors.ErrorHandler;
+import lexicalChecker.messageHandling.warnings.WarningHandler;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,14 +17,20 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class QL {
 
     private static final String ALLOWED_EXTENSION = "ql";
 
-    private QL(String fileName) throws IOException, IllegalArgumentException {
+    public void main(String[] arguments) throws Exception {
+        run();
+    }
 
-        if (!this.fileExists(fileName)) {
+    private void run() throws IOException, IllegalArgumentException {
+        String fileName = "./src/test.ql";
+
+        if (!fileExists(fileName)) {
             throw new IOException();
         }
 
@@ -33,16 +41,6 @@ public class QL {
         InputStream qlInputStream = new FileInputStream(fileName);
         Form qlAST = this.getAST(qlInputStream);
 
-        CheckSemantics semantics = new CheckSemantics(qlAST);
-        // Test...
-
-
-        Statement statement = qlAST.getStatements().get(3);
-        if (statement instanceof IfStatement)
-        {
-            IfStatement s = (IfStatement) statement;
-            System.out.println(s.getStatements());
-        }
     }
 
     private boolean fileExists(String fileName) {
@@ -60,13 +58,27 @@ public class QL {
         return qlAstBuilder.buildAST();
     }
 
-    // Test...
+    private boolean checkLexicalIntegrity(Form qlAST) {
+        LexicalChecker lexicalChecker = new LexicalChecker(qlAST);
+        MessageData messages = lexicalChecker.getMessages();
 
-    public static void main(String[] arguments) throws Exception {
-        run("C:\\Users\\LGGX\\Desktop\\test.ql");
-    }
+        if (messages.getWarnings().size() > 0) {
+            List<WarningHandler> warnings = messages.getWarnings();
+            for (MessageHandler warning : warnings) {
+                System.out.println(warning.getMessage());
+            }
+        }
 
-    private static QL run(String qlFileName) throws IOException, IllegalArgumentException {
-        return new QL(qlFileName);
+        // Print error messages...
+        if (messages.getErrors().size() > 0) {
+            List<ErrorHandler> errors = messages.getErrors();
+
+            for (ErrorHandler error : errors) {
+                System.out.println(error.getMessage());
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 }

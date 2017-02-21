@@ -32,9 +32,9 @@ import java.util.List;
 
 public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
-    private static final String GRAMMAR_ERROR = "Why u no work! \\(-o-)/";
+    private static final String GRAMMAR_ERROR = "Why u no work!";
 
-    private Form abstractSyntaxTree;
+    private final Form abstractSyntaxTree;
 
     public ASTVisitor(ParseTree parseTree) {
         abstractSyntaxTree = (Form) parseTree.accept(this);
@@ -44,7 +44,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
         return abstractSyntaxTree;
     }
 
-    public String getGrammerErrorMessage(String expression) {
+    public String getGrammarErrorMessage(String expression) {
         return MessageFormat.format(ASTVisitor.GRAMMAR_ERROR, expression);
     }
 
@@ -132,7 +132,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "<=":
                 return new LTEQ(left, right, getCodeLocation(ctx));
             default:
-                throw new AssertionError(getGrammerErrorMessage("EqualityExpressions"));
+                throw new AssertionError(getGrammarErrorMessage("EqualityExpressions"));
         }
     }
 
@@ -147,7 +147,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "/":
                 return new Division(left, right, getCodeLocation(ctx));
             default:
-                throw new AssertionError(getGrammerErrorMessage("MultDivExpressions"));
+                throw new AssertionError(getGrammarErrorMessage("MultDivExpressions"));
         }
     }
 
@@ -162,7 +162,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "-":
                 return new Subtraction(left, right, getCodeLocation(ctx));
             default:
-                throw new AssertionError(getGrammerErrorMessage("AddSubExpressions"));
+                throw new AssertionError(getGrammarErrorMessage("AddSubExpressions"));
         }
     }
 
@@ -185,9 +185,8 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "-":
                 return new Negative(expression, getCodeLocation(ctx));
             default:
-                throw new AssertionError(getGrammerErrorMessage("UnaryExpressions"));
+                throw new AssertionError(getGrammarErrorMessage("UnaryExpressions"));
         }
-
     }
 
     @Override
@@ -234,5 +233,4 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     private CodeLocation getCodeLocation(ParserRuleContext ctx) {
         return new CodeLocation(ctx.getStart().getLine());
     }
-
 }

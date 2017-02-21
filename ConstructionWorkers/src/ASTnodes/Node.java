@@ -11,6 +11,7 @@ public abstract class Node {
     public Node() {
         this.location = null;
     }
+
     public Node(CodeLocation location) {
         this.location = location;
     }

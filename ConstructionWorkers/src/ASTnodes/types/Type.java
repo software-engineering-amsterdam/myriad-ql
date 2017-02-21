@@ -14,6 +14,7 @@ public abstract class Type extends Node {
     public Type() {
         super();
     }
+
     public Type(CodeLocation location) {
         super(location);
     }
@@ -21,5 +22,6 @@ public abstract class Type extends Node {
     public String toString() {
         return "Type";
     }
+
     public abstract <T> T accept(TypeVisitor<T> visitor);
 }

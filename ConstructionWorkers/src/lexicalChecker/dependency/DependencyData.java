@@ -1,4 +1,4 @@
-package checkSemantics.dependency;
+package lexicalChecker.dependency;
 
 import ASTnodes.expressions.literals.Identifier;
 

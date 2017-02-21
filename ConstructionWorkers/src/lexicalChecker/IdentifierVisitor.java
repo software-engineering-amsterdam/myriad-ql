@@ -1,4 +1,4 @@
-package checkSemantics;
+package lexicalChecker;
 
 /**
  * Created by LGGX on 20-Feb-17.

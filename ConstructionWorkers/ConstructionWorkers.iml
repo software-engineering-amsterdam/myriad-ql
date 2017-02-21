@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/intellij-plugin-v4/lib/antlr-4.6-complete.jar!/" />
+          <root url="jar://C:/Javalib/antlr-4.6-complete.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

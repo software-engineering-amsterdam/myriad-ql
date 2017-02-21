@@ -17,10 +17,9 @@ public abstract class Logic extends Binary {
         super(left, right, location);
     }
 
+    // TODO: refactor!
     public Type getType(Type type) {
-
         String booleanTest = new BooleanType().getClass().getName();
-
         String typeString = type.getClass().getName();
 
         if (typeString == booleanTest)
@@ -28,11 +27,11 @@ public abstract class Logic extends Binary {
         else
             return new UndefinedType();
     }
+
+    // TODO: refactor!
     @Override
     public Type getType(Type left, Type right) {
-
         String booleanTest = new BooleanType().getClass().getName();
-
         String leftString = left.getClass().getName();
         String rightString = right.getClass().getName();
 

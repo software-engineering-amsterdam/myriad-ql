@@ -4,7 +4,6 @@
 
 package ASTnodes.types;
 
-import ASTnodes.visitors.FormAndStatementVisitor;
 import ASTnodes.CodeLocation;
 import ASTnodes.visitors.TypeVisitor;
 

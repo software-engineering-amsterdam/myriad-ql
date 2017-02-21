@@ -1,12 +1,14 @@
-package checkSemantics.messageHandling.errors;
+/**
+ * ErrorHandler.java.
+ */
+
+package lexicalChecker.messageHandling.errors;
 
 import ASTnodes.CodeLocation;
-import checkSemantics.messageHandling.MessageHandler;
+import lexicalChecker.messageHandling.MessageHandler;
 
-/**
- * Created by LGGX on 17-Feb-17.
- */
-public abstract class ErrorHandler extends MessageHandler{
+public abstract class ErrorHandler extends MessageHandler {
+
     private final CodeLocation location;
 
     public ErrorHandler(CodeLocation location) {

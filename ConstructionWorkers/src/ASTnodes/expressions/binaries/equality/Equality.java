@@ -15,4 +15,19 @@ public abstract class Equality extends Binary {
         super(left, right, location);
     }
 
+    @Override
+    public Type checkType(Type typeToCheckLeft, Type typeToCheckRight) {
+        if (typeToCheckLeft == null || typeToCheckRight == null) {
+            return new UndefinedType();
+        }
+        else {
+            Class typeToCheckLeftClass = typeToCheckLeft.getClass();
+            if (typeToCheckLeftClass.equals(typeToCheckRight.getClass()) && (typeToCheckLeftClass.equals(MoneyType.class) ||
+                    typeToCheckLeftClass == IntegerType.class) || typeToCheckLeftClass.equals(StringType.class)) {
+                return new BooleanType();
+            } else {
+                return new UndefinedType();
+            }
+        }
+    }
 }

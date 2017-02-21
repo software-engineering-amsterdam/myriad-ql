@@ -1,4 +1,10 @@
-package checkSemantics;
+/**
+ * StatementChecker.java.
+ *
+ * TODO: Finish/refactor!
+ */
+
+package lexicalChecker;
 
 import ASTnodes.Form;
 import ASTnodes.expressions.literals.Identifier;
@@ -8,33 +14,28 @@ import ASTnodes.statements.SimpleQuestion;
 import ASTnodes.statements.Statement;
 import ASTnodes.types.Type;
 import ASTnodes.visitors.FormAndStatementVisitor;
-import checkSemantics.messageHandling.MessageData;
-import checkSemantics.messageHandling.errors.DuplicateIdentifierError;
-import checkSemantics.messageHandling.warnings.DuplicateIdentifierWarning;
-import checkSemantics.messageHandling.warnings.DuplicateLabelWarning;
+import lexicalChecker.messageHandling.MessageData;
+import lexicalChecker.messageHandling.errors.DuplicateIdentifierError;
+import lexicalChecker.messageHandling.warnings.DuplicateIdentifierWarning;
+import lexicalChecker.messageHandling.warnings.DuplicateLabelWarning;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
+import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by LGGX on 16-Feb-17.
- */
 public class StatementChecker implements FormAndStatementVisitor<Identifier> {
 
-    public HashMap<String, Type> identifierMap;
+    private Map<String, Type> identifierTypeMap;
+    private MessageData messages;
     private Set<String> questionLabels;
-    private MessageData messageLists;
 
-    public StatementChecker(Form ast, HashMap identifierMap, MessageData messageLists) {
-
-        this.messageLists = messageLists;
-        this.identifierMap = identifierMap;
+    public StatementChecker(Form ast, Map identifierTypeMap, MessageData messages) {
+        this.identifierTypeMap = identifierTypeMap;
+        this.messages = messages;
         this.questionLabels = new HashSet<>();
-
         ast.accept(this);
-
     }
 
     @Override
@@ -48,7 +49,7 @@ public class StatementChecker implements FormAndStatementVisitor<Identifier> {
     @Override
     public Identifier visit(SimpleQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
-            identifierMap.put(statement.getIdentifier().getName(), statement.getType());
+            identifierTypeMap.put(statement.getIdentifier().getName(), statement.getType());
         }
         if (!duplicateQuestionLabels(statement)) {
             questionLabels.add(statement.getText());
@@ -59,7 +60,7 @@ public class StatementChecker implements FormAndStatementVisitor<Identifier> {
     @Override
     public Identifier visit(ComputedQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
-            identifierMap.put(statement.getIdentifier().getName(), statement.getType());
+            identifierTypeMap.put(statement.getIdentifier().getName(), statement.getType());
         }
         if (!duplicateQuestionLabels(statement)) {
             questionLabels.add(statement.getText());
@@ -77,35 +78,30 @@ public class StatementChecker implements FormAndStatementVisitor<Identifier> {
     }
 
     public boolean duplicateQuestionIdentifiers(SimpleQuestion question) {
-
-        if (identifierMap.get(question.getIdentifier().getName()) != null) {
-
-            if ((identifierMap.get(question.getIdentifier().getName())).getClass()
-                    .equals(question.getType().getClass())) {
-
-                messageLists.addMessage(new DuplicateIdentifierError(question.getIdentifier()));
-                //System.out.println("Duplicate question identifier with the same Type!");
+        String identifierName = question.getIdentifier().getName();
+        if (identifierTypeMap.get(identifierName) != null) {
+            if ((identifierTypeMap.get(identifierName)).getClass().equals(question.getType().getClass())) {
+                messages.addWarning(new DuplicateIdentifierWarning(question.getLocation(), question.getIdentifier()));
                 return true;
             } else {
-                messageLists.addMessage(new DuplicateIdentifierWarning(question.getIdentifier()));
+                messages.addError(new DuplicateIdentifierError(question.getLocation(), question.getIdentifier()));
                 return true;
             }
         } else {
-            if (identifierMap.containsKey(question.getIdentifier().getName())) {
+            if (identifierTypeMap.containsKey(identifierName)) {
                 System.out.println("Duplicate question identifier with null type!");
                 return true;
             } else {
                 return false;
             }
         }
-
     }
 
     private boolean duplicateQuestionLabels(SimpleQuestion question) {
         for (String label : questionLabels) {
             if (label.equals(question.getText())) {
-                messageLists.addMessage(new DuplicateLabelWarning(question.getIdentifier(), question.getText()));
-                //System.out.println("Duplicate question labels found!");
+                messages.addWarning(new DuplicateLabelWarning(question.getLocation(), question.getIdentifier(),
+                                    question.getText()));
                 return true;
             }
         }

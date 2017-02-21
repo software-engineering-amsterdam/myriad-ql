@@ -15,20 +15,20 @@ public class Parenthesis extends Unary {
         super(expression, location);
     }
 
-
     @Override
-    public Type getType(Type type) {
-
-        String intTest = new IntegerType().getClass().getName();
-        String moneyTest = new MoneyType().getClass().getName();
-        String booleanTest = new BooleanType().getClass().getName();
-        String stringTest = new StringType().getClass().getName();
-
-        String typeString = type.getClass().getName();
-        if (typeString == intTest || typeString == moneyTest || typeString == booleanTest || typeString == stringTest)
-            return type;
-        else
+    public Type checkType(Type typeToCheck) {
+        if (typeToCheck == null) {
             return new UndefinedType();
+        } else {
+            Class typeToCheckClass = typeToCheck.getClass();
+
+            if (typeToCheckClass.equals(IntegerType.class) || typeToCheckClass.equals(MoneyType.class) ||
+                    typeToCheckClass.equals(BooleanType.class) || typeToCheckClass.equals(StringType.class)) {
+                return typeToCheck;
+            } else {
+                return new UndefinedType();
+            }
+        }
     }
 
     @Override

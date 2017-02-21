@@ -1,9 +1,11 @@
-package checkSemantics.messageHandling;
-
 /**
- * Created by LGGX on 17-Feb-17.
+ * MessageHandler.java.
  */
+
+package lexicalChecker.messageHandling;
+
 public abstract class MessageHandler {
+
     public String type;
 
     public abstract String getMessage();

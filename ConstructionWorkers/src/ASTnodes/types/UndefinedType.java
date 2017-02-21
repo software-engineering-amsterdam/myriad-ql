@@ -4,7 +4,6 @@
 
 package ASTnodes.types;
 
-import ASTnodes.visitors.FormAndStatementVisitor;
 import ASTnodes.visitors.TypeVisitor;
 
 public class UndefinedType extends Type {

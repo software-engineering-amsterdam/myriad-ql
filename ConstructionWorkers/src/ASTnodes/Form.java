@@ -32,5 +32,4 @@ public class Form extends Node {
     public <T> T accept(FormAndStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
-
 }

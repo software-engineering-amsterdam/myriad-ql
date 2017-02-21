@@ -1,12 +1,13 @@
-package checkSemantics.messageHandling.warnings;
+/**
+ * WarningHandler.java.
+ */
+
+package lexicalChecker.messageHandling.warnings;
 
 import ASTnodes.CodeLocation;
-import checkSemantics.messageHandling.MessageHandler;
+import lexicalChecker.messageHandling.MessageHandler;
 
-/**
- * Created by LGGX on 17-Feb-17.
- */
-public abstract class WarningHandler extends MessageHandler{
+public abstract class WarningHandler extends MessageHandler {
 
     private final CodeLocation location;
 

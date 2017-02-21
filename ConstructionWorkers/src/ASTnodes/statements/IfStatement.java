@@ -32,27 +32,15 @@ public class IfStatement extends Statement {
         return statements;
     }
 
-//    @Override
-//    public String toString() {
-//        String myString = "\n if (" + this.expression.toString() + ") {\n";
-//
-//        for (Statement statement : this.statements) {
-//            myString += (statement.toString() + "\n");
-//        }
-//        myString += "\n}";
-//        return myString;
-//    }
-
-    public Type getType(Type type) {
-
-        String booleanTest = new BooleanType().getClass().getName();
-
-        String typeString = type.getClass().getName();
-
-        if (typeString == booleanTest)
-            return type;
-        else
+    public Type checkType(Type typeToCheck) {
+        if (typeToCheck == null) {
             return new UndefinedType();
+        } else {
+            if (typeToCheck.getClass().equals(BooleanType.class))
+                return typeToCheck;
+            else
+                return new UndefinedType();
+        }
     }
 
     @Override

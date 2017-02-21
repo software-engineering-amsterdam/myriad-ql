@@ -13,9 +13,8 @@ import ASTnodes.types.UndefinedType;
 
 public abstract class Binary extends Expression {
 
-    // Final?
-    private Expression left;
-    private Expression right;
+    private final Expression left;
+    private final Expression right;
 
     public Binary(Expression left, Expression right, CodeLocation location) {
         super(location);
@@ -23,18 +22,7 @@ public abstract class Binary extends Expression {
         this.right = right;
     }
 
-    public Type getType(Type left, Type right) {
-
-        String intTest = new IntegerType().getClass().getName();
-        String moneyTest = new MoneyType().getClass().getName();
-        String leftString = left.getClass().getName();
-        String rightString = right.getClass().getName();
-
-        if (leftString == rightString && (rightString == moneyTest || rightString == intTest))
-            return right;
-        else
-            return new UndefinedType();
-    }
+    public abstract Type checkType(Type typeToCheckLeft, Type typeToCheckRight);
 
     public Expression getLeft() {
         return left;
