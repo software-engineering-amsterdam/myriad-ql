@@ -14,13 +14,12 @@ import static org.junit.Assert.*;
  */
 public class ExampleRunnerTest {
 
-    String testInput;
-    Form formToTest;
+    private Form formToTest;
 
     @Before
     public void setUp() throws Exception {
 
-        testInput = "form taxOfficeExample { \n" +
+        String testInput = "form taxOfficeExample { \n" +
                 "  \"Did you sell a house in 2010?\"\n" +
                 "    hasSoldHouse: boolean\n" +
                 "  \"Did you buy a house in 2010?\"\n" +
