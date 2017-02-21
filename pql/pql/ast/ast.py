@@ -80,12 +80,12 @@ class Multiplication(BinaryOperation):
 
 class Addition(BinaryOperation):
     def __init__(self, parsed_tokens):
-        super(Addition, self).__init__('addition', parsed_tokens)
+        BinaryOperation.__init__(self, 'addition', parsed_tokens)
 
 
 class Subtraction(BinaryOperation):
     def __init__(self, parsed_tokens):
-        super(Subtraction, self).__init__('substraction', parsed_tokens)
+        BinaryOperation.__init__(self, 'substraction', parsed_tokens)
 
 
 class Division(BinaryOperation):

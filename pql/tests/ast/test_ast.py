@@ -56,7 +56,7 @@ class TestAst(unittest.TestCase):
     def test_ast_single_simple_assignment(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: money =  sellingPrice - privateDebt + (one + two) + three
+            "Value residue:" valueResidue: money =  sellingPrice - privateDebt
         }
         """
         parse_result = parse(input_string).asList()
