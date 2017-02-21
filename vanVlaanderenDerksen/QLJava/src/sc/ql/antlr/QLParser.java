@@ -99,12 +99,9 @@ public class QLParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_form; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterForm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitForm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitForm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -168,12 +165,9 @@ public class QLParser extends Parser {
 		}
 		public CalcQuestionContext(Form_elementContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterCalcQuestion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitCalcQuestion(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitCalcQuestion(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class If_statementContext extends Form_elementContext {
@@ -191,12 +185,9 @@ public class QLParser extends Parser {
 		}
 		public If_statementContext(Form_elementContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterIf_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitIf_statement(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitIf_statement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class QuestionContext extends Form_elementContext {
@@ -205,12 +196,9 @@ public class QLParser extends Parser {
 		public TerminalNode TYPE() { return getToken(QLParser.TYPE, 0); }
 		public QuestionContext(Form_elementContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterQuestion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitQuestion(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitQuestion(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -329,12 +317,9 @@ public class QLParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_conditional_block; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterConditional_block(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitConditional_block(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitConditional_block(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -394,12 +379,9 @@ public class QLParser extends Parser {
 		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public IdAtomContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterIdAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitIdAtom(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitIdAtom(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class OpExprContext extends ExpressionContext {
@@ -414,12 +396,9 @@ public class QLParser extends Parser {
 		}
 		public OpExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterOpExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitOpExpr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitOpExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class IntAtomContext extends ExpressionContext {
@@ -427,12 +406,9 @@ public class QLParser extends Parser {
 		public TerminalNode INT() { return getToken(QLParser.INT, 0); }
 		public IntAtomContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterIntAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitIntAtom(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitIntAtom(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class StrAtomContext extends ExpressionContext {
@@ -440,12 +416,9 @@ public class QLParser extends Parser {
 		public TerminalNode STR() { return getToken(QLParser.STR, 0); }
 		public StrAtomContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterStrAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitStrAtom(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitStrAtom(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BoolAtomContext extends ExpressionContext {
@@ -453,12 +426,9 @@ public class QLParser extends Parser {
 		public TerminalNode BOOL() { return getToken(QLParser.BOOL, 0); }
 		public BoolAtomContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterBoolAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitBoolAtom(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBoolAtom(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BoolExprContext extends ExpressionContext {
@@ -473,12 +443,9 @@ public class QLParser extends Parser {
 		}
 		public BoolExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterBoolExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitBoolExpr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBoolExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class RelExprContext extends ExpressionContext {
@@ -493,12 +460,9 @@ public class QLParser extends Parser {
 		}
 		public RelExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterRelExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitRelExpr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitRelExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ParenExprContext extends ExpressionContext {
@@ -507,12 +471,9 @@ public class QLParser extends Parser {
 		}
 		public ParenExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).enterParenExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLListener ) ((QLListener)listener).exitParenExpr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitParenExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
