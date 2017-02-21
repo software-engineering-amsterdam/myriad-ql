@@ -369,6 +369,17 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class NotExprContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public NotExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitNotExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class OpExprContext extends ExpressionContext {
 		public ExpressionContext left;
 		public Token op;
@@ -413,40 +424,6 @@ public class QLParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBoolAtom(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class BoolExprContext extends ExpressionContext {
-		public ExpressionContext left;
-		public Token op;
-		public ExpressionContext right;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public BoolExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitBoolExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class RelExprContext extends ExpressionContext {
-		public ExpressionContext left;
-		public Token op;
-		public ExpressionContext right;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public RelExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitRelExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -496,7 +473,7 @@ public class QLParser extends Parser {
 				break;
 			case T__9:
 				{
-				_localctx = new BoolExprContext(_localctx);
+				_localctx = new NotExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(58);
@@ -596,40 +573,40 @@ public class QLParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new RelExprContext(new ExpressionContext(_parentctx, _parentState));
-						((RelExprContext)_localctx).left = _prevctx;
+						_localctx = new OpExprContext(new ExpressionContext(_parentctx, _parentState));
+						((OpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(72);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(73);
-						((RelExprContext)_localctx).op = _input.LT(1);
+						((OpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19))) != 0)) ) {
-							((RelExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((OpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						} else {
 							consume();
 						}
 						setState(74);
-						((RelExprContext)_localctx).right = expression(7);
+						((OpExprContext)_localctx).right = expression(7);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new BoolExprContext(new ExpressionContext(_parentctx, _parentState));
-						((BoolExprContext)_localctx).left = _prevctx;
+						_localctx = new OpExprContext(new ExpressionContext(_parentctx, _parentState));
+						((OpExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(75);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(76);
-						((BoolExprContext)_localctx).op = _input.LT(1);
+						((OpExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__20 || _la==T__21) ) {
-							((BoolExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((OpExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						} else {
 							consume();
 						}
 						setState(77);
-						((BoolExprContext)_localctx).right = expression(6);
+						((OpExprContext)_localctx).right = expression(6);
 						}
 						break;
 					}

@@ -13,7 +13,7 @@ import java.util.Stack;
 public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce us to override every method. We can also extend the base one to not override everything
 
     private Ast mAst;
-    Stack<Node> mParentStack = new Stack<>();
+    private Stack<Node> mParentStack = new Stack<>();
 
     private void popParent() {
         mParentStack.pop();
@@ -31,7 +31,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public Ast getAst() {
         return mAst;
     }
-
 
     // Enters
     @Override
@@ -64,7 +63,17 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        Node questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.STRING_LITERAL().toString());
+        Node questionNode;
+        if ("boolean".equals(ctx.varType().toString())) {
+            questionNode = new BooleanQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else if ("string".equals(ctx.varType().toString())) {
+            questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else if ("integer".equals(ctx.varType().toString())) {
+            questionNode = new IntegerQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString(), 0);
+        } else {
+            // TODO: Bail out!
+            return;
+        }
         addNodeToAst(questionNode);
     }
 
@@ -115,6 +124,13 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         super.enterStringLiteral(ctx);
         Node stringLiteralNode = new StringLiteralNode(ctx.getText());
         addNodeToAst(stringLiteralNode);
+    }
+
+    @Override
+    public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
+        super.enterVarNameLiteral(ctx);
+        Node variableLiteralNode = new VariableLiteralNode(ctx.getText());
+        addNodeToAst(variableLiteralNode);
     }
 
     // Exits
