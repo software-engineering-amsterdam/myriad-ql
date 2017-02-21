@@ -16,22 +16,22 @@ calculation : DESCRIPTION '->' STRING_LITERAL ':' varType '=' expression;
 ifStatement : 'if (' expression ')' '{' question* '}';
 ifElseStatement : ifStatement 'else' '{' question* '}';
 
-expression : BOOLEAN_LITERAL
-           | INTEGER_LITERAL
-           | STRING_LITERAL
-           | '(' expression ')'
-           | left=expression op='==' right=expression
-           | left=expression op='!=' right=expression
-           | left=expression op='||' right=expression
-           | left=expression op='&&' right=expression
-           | left=expression op='>=' right=expression
-           | left=expression op='<=' right=expression
-           | left=expression op='-' right=expression
-           | left=expression op='+' right=expression
-           | left=expression op='<' right=expression
-           | left=expression op='>' right=expression
-           | left=expression op='/' right=expression
-           | left=expression op='*' right=expression
+expression : BOOLEAN_LITERAL                                #booleanLiteral
+           | INTEGER_LITERAL                                #integerLiteral
+           | STRING_LITERAL                                 #stringLiteral
+           | '(' expression ')'                             #parenthesizedExpression
+           | left=expression operator='/' right=expression  #calculationExpression
+           | left=expression operator='*' right=expression  #calculationExpression
+           | left=expression operator='-' right=expression  #calculationExpression
+           | left=expression operator='+' right=expression  #calculationExpression
+           | left=expression operator='<' right=expression  #calculationExpression
+           | left=expression operator='>' right=expression  #calculationExpression
+           | left=expression operator='>=' right=expression #calculationExpression
+           | left=expression operator='<=' right=expression #calculationExpression
+           | left=expression operator='||' right=expression #booleanExpression
+           | left=expression operator='&&' right=expression #booleanExpression
+           | left=expression operator='!=' right=expression #uniformExpression
+           | left=expression operator='==' right=expression #uniformExpression
            ;
 
 varType : 'boolean' # booleanType
