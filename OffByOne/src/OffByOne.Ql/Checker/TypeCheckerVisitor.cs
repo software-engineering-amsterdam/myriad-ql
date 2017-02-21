@@ -4,11 +4,9 @@
 
     using MoreDotNet.Extensions.Collections;
 
-    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
-    using OffByOne.LanguageCore.Visitors.Contracts;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -21,9 +19,9 @@
     using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
 
     public class TypeCheckerVisitor
-        : IExpressionVisitor<ValueType>,
-        IStatementVisitor<ValueType>,
-        ILiteralVisitor<ValueType>
+        : BaseTypeCheckerVisitor,
+        IExpressionVisitor<ValueType>,
+        IStatementVisitor<ValueType>
     {
         public TypeCheckerVisitor()
             : this(new CheckerReport())
@@ -147,41 +145,6 @@
             expression.Statements.ForEach(x => x.Accept(this));
 
             return new VoidValueType();
-        }
-
-        public ValueType Visit(IntegerLiteral literal)
-        {
-            return new IntegerValueType();
-        }
-
-        public ValueType Visit(MoneyLiteral literal)
-        {
-            return new MoneyValueType();
-        }
-
-        public ValueType Visit(DecimalLiteral literal)
-        {
-            return new FloatValueType();
-        }
-
-        public ValueType Visit(BooleanLiteral literal)
-        {
-            return new BooleanValueType();
-        }
-
-        public ValueType Visit(StringLiteral literal)
-        {
-            return new StringValueType();
-        }
-
-        public ValueType Visit(DateLiteral literal)
-        {
-            return new DateValueType();
-        }
-
-        public ValueType Visit(HexLiteral literal)
-        {
-            return new StringValueType();
         }
 
         private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression)

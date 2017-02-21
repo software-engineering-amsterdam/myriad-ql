@@ -77,7 +77,7 @@
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
     <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
-    <Compile Include="Checker\BaseChecker.cs" />
+    <Compile Include="Checker\BaseTypeCheckerVisitor.cs" />
     <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
     <Compile Include="Checker\LogLevel.cs" />

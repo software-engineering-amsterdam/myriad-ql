@@ -6,6 +6,7 @@
     using Antlr4.Runtime;
 
     using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.Ql;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
@@ -30,7 +31,7 @@
                 new List<Statement>(),
                 new List<Statement>());
 
-            typeChcker.Check(new FormStatement(
+            var report = typeChcker.Check(new FormStatement(
                 "test",
                 new List<Statement> { testCondition }));
 
