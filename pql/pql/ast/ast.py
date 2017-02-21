@@ -39,24 +39,18 @@ class Field(Node):
         if arithmetic_statement:
             self.add_child(arithmetic_statement)
 
+
 #TODO: If you check debug there is an unneccessary extra level caused by Expression/Arithmetic, might need fixing in parser
 class Expression(Node):
-    def __init__(self, expression):
-        super(Expression, self).__init__('*arithmetic_expression')
-        self.add_child(expression)
-        # self.lhs, self.operator, self.rhs = parsed_output.arithmetic_statement[0]
+    def __init__(self, arithmetic):
+        super(Expression, self).__init__('arithmetic_expression')
+        self.add_child(arithmetic)
 
 
 class Arithmetic(Node):
     def __init__(self, parsed_output):
         super(Arithmetic, self).__init__('arithmetic_statement')
-        self.arithmetic_operand = parsed_output.arithmetic_operand
-        self.arithmetic_operator = parsed_output.arithmetic_operator
-        if parsed_output.arithmetic_expr is not None:
-            self.add_child(parsed_output.arithmetic_expr)
-        else:
-            self.arithmetic_expr = parsed_output.arithmetic_expr
-        a = 1
+        self.add_child(parsed_output)
 
 
 class Conditional(Node):
@@ -66,10 +60,34 @@ class Conditional(Node):
         self.else_ = None
 
 
-class BinaryOperator(Node):
+class BinaryOperation(Node):
     def __init__(self, var_type, parsed_tokens):
-        super(BinaryOperator, self).__init__(var_type)
-        self.lhs, self.operator, self.rhs = parsed_tokens[0]
+        super(BinaryOperation, self).__init__(var_type)
+        self.lhs, self.rhs = parsed_tokens[0]
+
+
+class Multiplication(BinaryOperation):
+    def __init__(self, parsed_tokens):
+        super(Multiplication, self).__init__('multiplication', parsed_tokens)
+        self.operator = '*'
+
+
+class Addition(BinaryOperation):
+    def __init__(self, parsed_tokens):
+        super(Addition, self).__init__('addition', parsed_tokens)
+        self.operator = '+'
+
+
+class Substraction(BinaryOperation):
+    def __init__(self, parsed_tokens):
+        super(Substraction, self).__init__('substraction', parsed_tokens)
+        self.operator = '-'
+
+
+class Division(BinaryOperation):
+    def __init__(self, parsed_tokens):
+        super(Division, self).__init__('division', parsed_tokens)
+        self.operator = '/'
 
 # class BoolOperand(Node):
 #     def __init__(self, t, parsed_output):

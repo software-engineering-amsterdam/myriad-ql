@@ -29,8 +29,10 @@ def parse(input_string):
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
     # Reserved operators
-    mult_op = oneOf(["*", "/"]).setResultsName('arithmetic_operator')
-    additive_op = oneOf(["+", "-"]).setResultsName('arithmetic_operator')
+    multiplication_op = Suppress("*")
+    divide_op = Suppress("/")
+    add_op = Suppress("+")
+    subtract_op = Suppress("-")
 
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
@@ -39,9 +41,12 @@ def parse(input_string):
     assign_op = Suppress("=")
 
     arith_prec = [
-        (mult_op, 2, opAssoc.LEFT),
-        (additive_op, 2, opAssoc.LEFT),
+        (multiplication_op, 2, opAssoc.LEFT, ast.Multiplication),
+        (divide_op, 2, opAssoc.LEFT, ast.Division),
+        (add_op, 2, opAssoc.LEFT, ast.Addition),
+        (subtract_op, 2, opAssoc.LEFT, ast.Substraction),
     ]
+
     bool_prec = [
         (rat_op, 2, opAssoc.LEFT),
         (eqal_op, 2, opAssoc.LEFT),
@@ -51,7 +56,7 @@ def parse(input_string):
 
     # Arithmetic precedence
     arithmetic = infixNotation(
-        arith_operand.setResultsName('arithmetic_operand'),
+        arith_operand.setResultsName('arithmetic_operand*'),
         arith_prec
     ).setResultsName('arithmetic_expr')
 
