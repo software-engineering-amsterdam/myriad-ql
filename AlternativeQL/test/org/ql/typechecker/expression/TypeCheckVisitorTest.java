@@ -4,10 +4,7 @@ import org.junit.Test;
 import org.ql.ast.expression.Visitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.arithmetic.Addition;
-import org.ql.ast.expression.arithmetic.Decrement;
-import org.ql.ast.expression.arithmetic.Division;
-import org.ql.ast.expression.arithmetic.Increment;
+import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
@@ -305,5 +302,33 @@ public class TypeCheckVisitorTest {
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         visitor.visit(actualNotEqual);
+    }
+
+    @Test
+    public void shouldReturnBooleanTypeOnGroupedRelationalExpression() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Group actualGroup = new Group(new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true)));
+
+        Type actualGroupType = visitor.visit(actualGroup);
+
+        assertTrue(actualGroupType instanceof BooleanType);
+    }
+
+    @Test
+    public void shouldReturnIntegerTypeForProduct() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Product actualProduct = new Product(new IntegerLiteral(123), new IntegerLiteral(321));
+
+        Type actualProductType = visitor.visit(actualProduct);
+
+        assertTrue(actualProductType instanceof IntegerType);
+    }
+
+    @Test(expected = TypeMismatchException.class)
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInProduct() throws Throwable {
+        Visitor<Type> visitor = new TypeCheckVisitor(new HashMap<>());
+        Product actualProduct = new Product(new BooleanLiteral(true), new IntegerLiteral(12));
+
+        visitor.visit(actualProduct);
     }
 }
