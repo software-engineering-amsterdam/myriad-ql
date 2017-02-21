@@ -3,8 +3,6 @@ from sys import argv
 from io import open
 from os.path import join
 from pql.parser.parser import parse
-from PyQt5.QtWidgets import QApplication
-from pql.ui.QuestionairWindows import QuestionairWindows
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
@@ -38,7 +36,3 @@ def main(sys_args):
 
 if __name__ == '__main__':
     main(argv)
-
-    # app = QApplication(argv)
-    # window = QuestionairWindows()
-    # exit(app.exec_())
