@@ -51,29 +51,25 @@ describe Parser do
     end
   end
 
+  describe '#hashrocket' do
+    it 'consumes a hashrocket' do
+      expect(subject.hashrocket).to parse('=>')
+    end
+  end
+
   describe '#string' do
-    it 'consumes lowercase letters' do
-      expect(subject.string).to parse('abc')
+    it 'consumes an arbitrary string' do
+      expect(subject.string).to parse('"aB3# ?"')
     end
 
-    it 'consumes uppercase letters' do
-      expect(subject.string).to parse('ABC')
+    it 'consumes empty strings' do
+      expect(subject.string).to parse('""')
     end
 
-    it 'consumes digits' do
-      expect(subject.string).to parse('123')
-    end
-
-    it 'consumes whitespace' do
-      expect(subject.string).to parse(' ')
-    end
-
-    it 'consumes a combination of letters, digits and whitespace' do
-      expect(subject.string).to parse('aB3 ')
-    end
-
-    it 'consumes single characters' do
-      expect(subject.string).to parse('a')
+    it 'only consumes strings enclosed in quotes' do
+      expect do
+        subject.string.parse('abc')
+      end.to raise_error(Parslet::ParseFailed)
     end
   end
 
@@ -99,7 +95,7 @@ describe Parser do
 
   describe '#literal' do
     it 'consumes a string' do
-      expect(subject.literal).to parse('foo')
+      expect(subject.literal).to parse('"foo"')
     end
 
     it 'consumes an integer' do
