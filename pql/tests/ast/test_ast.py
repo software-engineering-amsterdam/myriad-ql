@@ -530,3 +530,61 @@ class TestAst(unittest.TestCase):
         self.assertEqual(0, len(boolean_operand_node.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node.label)
         self.assertEqual('bool_operand', boolean_operand_node.var_type)
+
+    def test_ast_question_with_if_questions_below_and_above(self):
+        input_string = """
+            form taxOfficeExample {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+                if (hasSoldHouse) {
+                    "What was the selling price?"        sellingPrice: money
+                }
+                "Did you buy a house in 2010?" hasBoughtHouse: boolean
+            }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name)
+        self.assertEqual(3, len(form_node.children), 'Should have two fields and one conditional as children')
+
+        field_node_1 = form_node.children[0]
+
+        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('hasSoldHouse', field_node_1.name)
+        self.assertEqual('boolean', field_node_1.data_type)
+        self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
+
+        conditional_node = form_node.children[1]
+        self.assertIsNone(conditional_node.else_statement_list,
+                          'This test has no else block, else block should be none')
+        self.assertEqual('conditional', conditional_node.var_type,
+                         'Conditional node should have type conditional')
+        self.assertEqual(1, len(conditional_node.statements),
+                         'This else block has one question inside, length should be 1')
+        self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
+
+        self.assertEqual(1, len(conditional_node.statements))
+        field_node_2 = conditional_node.statements[0]
+
+        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
+        self.assertEqual('field', field_node_2.var_type)
+        self.assertEqual('sellingPrice', field_node_2.name)
+        self.assertEqual('money', field_node_2.data_type)
+        self.assertEqual('What was the selling price?', field_node_2.title)
+
+        field_node_3 = form_node.children[2]
+        self.assertEqual(0, len(field_node_3.children), 'Field node should have no child nodes')
+        self.assertEqual('field', field_node_3.var_type)
+        self.assertEqual('hasBoughtHouse', field_node_3.name)
+        self.assertEqual('boolean', field_node_3.data_type)
+        self.assertEqual('Did you buy a house in 2010?', field_node_3.title)
+
+        condition_node = conditional_node.condition
+
+        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
+        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+
+        boolean_operand_node = condition_node.children[0]
+        self.assertEqual(0, len(boolean_operand_node.children))
+        self.assertEqual('hasSoldHouse', boolean_operand_node.label)
+        self.assertEqual('bool_operand', boolean_operand_node.var_type)
