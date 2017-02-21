@@ -1,6 +1,8 @@
 package org.uva.hatt.taxform.ast.visitors;
 
 import org.uva.hatt.taxform.ast.nodes.*;
+import org.uva.hatt.taxform.ast.nodes.items.Question;
+import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 
 public abstract class AstVisitor<T> {
 
