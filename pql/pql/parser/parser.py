@@ -5,6 +5,8 @@ from pql.ast import ast
 
 
 
+
+
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
     number = Word(nums + ".")
@@ -23,6 +25,12 @@ def parse(input_string):
     r_curly = Suppress("}")
     l_paren = Suppress("(")
     r_paren = Suppress(")")
+
+    op_multiplication = Literal("*").setParseAction(lambda _: ast.Multiplication)
+    op_division = Literal("/").setParseAction(lambda _: ast.Division)
+    op_subtract = Literal("-").setParseAction(lambda _: ast.Subtraction)
+    op_addition = Literal("+").setParseAction(lambda _: ast.Addition)
+
     colon = Suppress(":")
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
@@ -36,10 +44,17 @@ def parse(input_string):
     con_or_op = Literal("||")
     assign_op = Suppress("=")
 
+    def flatten_binary_operators(unflatted_tokens):
+        flattened_tokens = unflatted_tokens[0]
+        while len(flattened_tokens) >= 3:
+            lhs, type_call, rhs = flattened_tokens[0], flattened_tokens[1], flattened_tokens[2]
+            flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
+        return flattened_tokens[0]
+
     #TODO: Signop toevoegen
     arith_prec = [
-        (multiplication_division_ops, 2, opAssoc.LEFT, ),
-        (addition_subtraction_ops, 2, opAssoc.LEFT, ast.AddSub),
+        (op_multiplication | op_division, 2, opAssoc.LEFT, flatten_binary_operators),
+        (op_addition | op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
     #TODO: Not toevoegen
