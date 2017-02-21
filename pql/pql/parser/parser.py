@@ -29,10 +29,10 @@ def parse(input_string):
     data_types = oneOf(["boolean", "money", "string", "integer"])
 
     # Reserved operators
-    multiplication_op = Suppress("*")
-    divide_op = Literal("/")
+    multiplication_op = Literal("*").setResultsName("multiplication_operator")
+    divide_op = Literal("/").setResultsName("division_operator")
     add_op = Literal("+").setResultsName("addition_operator")
-    subtract_op = Literal("-")
+    subtract_op = Literal("-").setResultsName("subtraction_operator")
 
     rat_op = oneOf(["<", "<=", ">", ">="])
     eqal_op = oneOf(["==", "!="])
