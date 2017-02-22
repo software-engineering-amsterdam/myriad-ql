@@ -30,7 +30,7 @@ class Node(object):
             child.accept(visitor)
 
     def __eq__(self, other):
-        if type(self) == type(other):
+        if type(self) != type(other):
             return False
 
         for (child_self, child_other) in zip(self.children, other.children):
@@ -470,7 +470,7 @@ class DecimalNode(Node):
         return visitor.decimal_node(self)
 
     def __eq__(self, other):
-        return super(Node, self).__eq__(other) and other.val == self.val
+        return super(DecimalNode, self).__eq__(other) and other.val == self.val
 
     def __str__(self, indent=0):
         return str(self.val)

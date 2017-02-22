@@ -1,4 +1,5 @@
 from TypeChecker import TypeChecker
+from Evaluate import Evaluate
 import pyparsing as pp
 import AST
 import decimal
@@ -145,8 +146,8 @@ class QuestionnaireParser(object):
         unary_ops = create_operators([('!', AST.NegNode), ('-', AST.MinNode), ('+', AST.PlusNode)])
         arithmetic_level1 = create_operators([('*', AST.MulNode), ('/', AST.DivNode)])
         arithmetic_level2 = create_operators([('+', AST.AddNode), ('-', AST.SubNode)])
-        logical_level1 = create_operators([('<', AST.LTNode), ('<=', AST.LTENode),
-                                           ('>', AST.GTNode), ('>=', AST.GTENode)])
+        logical_level1 = create_operators([('<=', AST.LTENode), ('<', AST.LTNode),
+                                           ('>=', AST.GTENode), ('>', AST.GTNode)])
         logical_level2 = create_operators([('==', AST.EqNode), ('!=', AST.NeqNode)])
         infix_and = create_operator('&&', AST.AndNode)
         infix_or = create_operator('||', AST.OrNode)
@@ -182,7 +183,7 @@ if __name__ == '__main__':
         "Did you buy a house in 2010?" hasBoughtHouse: boolean
         "Did you enter a loan?" hasMaintLoan: int
 
-        if (-true == !false * !100 * +5 * !hasMaintLoan) {
+        if (-true >= !false * !100 * +5 * !hasMaintLoan) {
             "What was the selling price?" sellingPrice: money
             "Private debts for the sold house:" privateDebt: money
             "Value residue:" valueResidue: money = (sellingPrice -
@@ -190,6 +191,7 @@ if __name__ == '__main__':
         }
         else {
             "question?" test:           boolean
+            "Did you sell a house in 2010?" hasSoldHouse: boolean = (-var == 600)
         }
     }
     """
@@ -197,4 +199,5 @@ if __name__ == '__main__':
     parsedAST = parser.parse(form1)
     print parsedAST
 
-    TypeChecker(parsedAST).start_traversal()
+    #TypeChecker(parsedAST).start_traversal()
+    Evaluate(parsedAST).start_traversal()
