@@ -115,32 +115,48 @@ class Negation(UnaryOperation):
         super(Negation, self).__init__(right)
 
 
-class BoolBinOp(Node):
-    symbol = None
-    eval_function = None
-
-    def __init__(self, parsed_output, var_type):
-        super(BoolBinOp, self).__init__(var_type)
-        arguments = parsed_output[0][0::2]
-        for arg in arguments:
-            self.add_child(arg)
-        del arguments
-
-
-class And(BoolBinOp):
-    symbol = '&&'
+class And(BinaryOperation):
     eval_function = all
 
-    def __init__(self, parsed_output):
-        super(And, self).__init__(parsed_output, 'boolean_and')
+    def __init__(self,  left, right):
+        super(And, self).__init__('&&', left, right)
 
 
-class Or(BoolBinOp):
-    symbol = '||'
+class Or(BinaryOperation):
     eval_function = any
 
-    def __init__(self, parsed_output):
-        super(Or, self).__init__(parsed_output, 'boolean_or')
+    def __init__(self,  left, right):
+        super(Or, self).__init__('||', left, right)
+
+
+class Equality(BinaryOperation):
+    def __init__(self,  left, right):
+        super(Equality, self).__init__('==', left, right)
+
+
+class GreaterExclusive(BinaryOperation):
+    def __init__(self,  left, right):
+        super(GreaterExclusive, self).__init__('>', left, right)
+
+
+class GreaterInclusive(BinaryOperation):
+    def __init__(self,  left, right):
+        super(GreaterInclusive, self).__init__('>=', left, right)
+
+
+class LowerInlusive(BinaryOperation):
+    def __init__(self,  left, right):
+        super(LowerInlusive, self).__init__('<=', left, right)
+
+
+class LowerExclusive(BinaryOperation):
+    def __init__(self,  left, right):
+        super(LowerExclusive, self).__init__('<', left, right)
+
+
+class Inequality(BinaryOperation):
+    def __init__(self,  left, right):
+        super(Inequality, self).__init__('!=', left, right)
 
 
 class Condition(Node):

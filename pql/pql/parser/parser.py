@@ -57,20 +57,19 @@ def parse(input_string):
         type_call = flattened_tokens[0]
         return type_call(flattened_tokens[1])
 
-    # TODO: Signop toevoegen
     arith_prec = [
         (op_positive | op_negative | op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
         (op_multiplication | op_division, 2, opAssoc.LEFT, flatten_binary_operators),
         (op_addition | op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
-    # TODO: Not toevoegen
     bool_prec = [
-        (op_lower_exclusive | op_lower_inclusive | op_greater_inclusive | op_greater_exclusive, 2, opAssoc.LEFT,
-         flatten_binary_operators),
+        (op_lower_exclusive | op_lower_inclusive |
+         op_greater_inclusive | op_greater_exclusive,
+         2, opAssoc.LEFT, flatten_binary_operators),
         (op_equality | op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
-        (op_and, 2, opAssoc.LEFT, ast.And),
-        (op_or, 2, opAssoc.LEFT, ast.Or)
+        (op_and, 2, opAssoc.LEFT, flatten_binary_operators),
+        (op_or, 2, opAssoc.LEFT, flatten_binary_operators)
     ]
 
     # Arithmetic precedence
