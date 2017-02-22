@@ -74,5 +74,46 @@ class TestTypeChecker(TestCase):
             errors, _ = TypeChecker(symboltable).visit(ast)
             self.assertEqual(len(errors), e)
 
+
+class TestDependencyChecker(TestCase):
+
+    forms = [
+        ("form Name {}", 0),
+        ("form Name {"
+         "  a: \"label 1\" integer = b"
+         "  b: \"label 2\" integer = a }", 1),
+        ("form Name {"
+         "  a: \"label 1\" integer = b"
+         "  b: \"label 1\" integer = c"
+         "  c: \"label 2\" integer = a }", 1),
+        ("form Name {"
+         "  a: \"label 1\" integer = b"
+         "  if true {"
+         "    b: \"label 1\" integer = c"
+         "    c: \"label 1\" integer = d"
+         "    d: \"label 2\" integer = a } }", 1),
+        ("form Name {"
+         "  a: \"label 1\" integer = b"
+         "  b: \"label 2\" integer = a"
+         "  c: \"label 2\" integer = a }", 1),
+        ("form Name {"
+         "  if a > 0 {"
+         "    a: \"label 1\" integer } }", 1),
+        ("form Name {"
+         "  if a > 0 { }"
+         " else {"
+         "    a: \"label 1\" integer } }", 1),
+        ("form Name {"
+         "  if a > 0 {"
+         "    a: \"label 1\" integer }"
+         " else { } }", 1),
+    ]
+
+    def testDependencyErrors(self):
+        for form, e, in self.forms:
+            ast = parse_string(form)
+            errors, _ = DependencyChecker().visit(ast)
+            self.assertEqual(len(errors), e)
+
 if __name__ == "__main__":
     main()

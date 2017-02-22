@@ -1,7 +1,7 @@
 class DependencyChecker:
 
     def __init__(self):
-        self.stack = []
+        self.dependencies = {}
         self.errors = []
         self.warnings = []
 
@@ -20,22 +20,40 @@ class DependencyChecker:
             statement.accept(self)
 
     def visit_question(self, node):
-        pass
+        return [node.name]
 
     def visit_computed_question(self, node):
-        pass
+        dependencies = node.computation.accept(self)
+
+        # Find all dependencies of this questions dependencies using breadth
+        # first search.
+        for dependency in dependencies:
+            dependencies += [d for d in self.dependencies.get(dependency, []) if d not in dependencies]
+
+        for dependency in dependencies:
+            if dependency in self.dependencies and node.name in self.dependencies[dependency]:
+                self.error("circular dependency between \"\" and \"\"".format(node.name, dependency))
+
+        self.dependencies[node.name] = dependencies
+        return [node.name]
 
     def visit_if_conditional(self, node):
-        # TODO: check if condition uses variable from question inside scope
-        for statement in node.ifbody:
-            statement.accept(self)
+        requires = node.condition.accept(self)
+        scope = sum([statement.accept(self) for statement in node.ifbody], [])
+
+        if any(variable in scope for variable in requires):
+            self.error("condition depends on question in scope")
+
+        return scope
 
     def visit_ifelse_conditional(self, node):
-        # TODO: check if condition uses variable from question inside scope
-        for statement in node.ifbody:
-            statement.accept(self)
-        for statement in node.ifelsebody:
-            statement.accept(self)
+        requires = node.condition.accept(self)
+        scope = sum([statement.accept(self) for statement in node.ifbody + node.elsebody], [])
+
+        if any(variable in scope for variable in requires):
+            self.error("condition depends on question in scope")
+
+        return scope
 
     def visit_plusop(self, node):
         return node.right.accept(self)

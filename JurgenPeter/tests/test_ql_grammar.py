@@ -5,7 +5,7 @@ import ql.grammar as grammar
 from ql.ast import *
 
 
-class Testgrammar(TestCase):
+class TestGrammar(TestCase):
 
     correctSentences = [
         (grammar.expression, "3"),
