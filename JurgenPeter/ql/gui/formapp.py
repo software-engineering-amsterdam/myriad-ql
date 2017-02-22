@@ -11,15 +11,22 @@ class FormApp:
         self.app = gui(ast.name)
         questions = QuestionFinder().visit(ast)
 
+        # TODO how to determine the widget type to be created
         for question in questions:
-            self.app.addLabel(self.create_label_id(question.name), question.label)
+            self.app.addLabel(self.create_label_id(question.name),
+                              question.label)
             self.app.addEntry(self.create_entry_id(question.name))
 
+    def start(self):
         self.app.go()
 
+    def stop(self):
+        self.app.stop()
+
+    @staticmethod
     def create_label_id(self, name):
         return self.LABELPREFIX + name
 
+    @staticmethod
     def create_entry_id(self, name):
         return self.ENTRYPREFIX + name
-

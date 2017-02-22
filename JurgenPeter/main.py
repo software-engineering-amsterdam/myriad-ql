@@ -33,13 +33,15 @@ def main():
 
     filename_inp = "exampleForm.txt"
 
-    form = parse_file(filename_inp)
+    ast = parse_file(filename_inp)
 
-    Printer().visit(form)
+    Printer().visit(ast)
 
-    symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(form)
-    type_errors, type_warnings = TypeChecker(symboltable).visit(form)
-    dependency_errors, dependency_warnings = DependencyChecker().visit(form)
+    symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(ast)
+    
+    type_errors, type_warnings = TypeChecker(symboltable).visit(ast)
+
+    dependency_errors, dependency_warnings = DependencyChecker().visit(ast)
 
     errors = symbol_errors + type_errors + dependency_errors
     warnings = symbol_warnings + type_warnings + dependency_warnings
@@ -54,6 +56,7 @@ def main():
         return
 
     app = FormApp(form, symboltable)
+    app.start()
 
 if __name__ == "__main__":
     main()

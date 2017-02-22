@@ -50,14 +50,19 @@ or_op = Literal("||").setParseAction(lambda _: OrOp)
 
 
 def unop_action(tokens):
+    """ ParseAction to create a UnOp node from parsed tokens. The node
+        constructor comes from the respective operator ParseAction. """
     tokens = tokens[0]
     nodetype = tokens[0]
     right = tokens[1]
     return nodetype(right)
 
 
-# TODO: Nice comments or better code
 def binop_action(tokens):
+    """ ParseAction to create a BinOp node from parsed tokens. The node
+        constructor comes from the respective operator ParseAction. Since
+        pyparsing cannot group left associative operators automatically, we do
+        this here ourselves. """
     tokens = tokens[0]
     while len(tokens) >= 3:
         left = tokens.pop(0)
