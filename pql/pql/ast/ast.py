@@ -40,7 +40,6 @@ class Field(Node):
             self.add_child(arithmetic_statement)
 
 
-#TODO: If you check debug there is an unneccessary extra level caused by Expression/Arithmetic, might need fixing in parser
 class Expression(Node):
     def __init__(self, arithmetic):
         super(Expression, self).__init__('arithmetic_expression')

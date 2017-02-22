@@ -230,7 +230,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('sellingPrice', substraction_node.lhs)
         self.assertEqual('privateDebt', substraction_node.rhs)
 
-    #TODO: Aanpassen nadat precendence is opgelost
     def test_ast_single_combi_assignment_(self):
         input_string = """
         form taxOfficeExample {
