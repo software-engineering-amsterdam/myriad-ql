@@ -42,7 +42,7 @@ class TypeChecker:
         conditiontype = node.condition.accept(self)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             self.error("condition does not evaluate to boolean value")
-            
+
         for statement in node.ifbody:
             statement.accept(self)
         for statement in node.elsebody:
@@ -55,7 +55,7 @@ class TypeChecker:
         if right_type in self.arithmetic_datatypes:
             return right_type
         self.error("unary + operator has incompatible datatype")
-        
+
         return None
 
     def visit_minop(self, node):

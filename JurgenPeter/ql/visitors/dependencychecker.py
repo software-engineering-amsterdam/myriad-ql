@@ -2,6 +2,7 @@ class DependencyChecker:
 
     def __init__(self):
         self.dependencies = {}
+        self.computed_symbols = []
         self.errors = []
         self.warnings = []
 
@@ -25,24 +26,28 @@ class DependencyChecker:
     def visit_computed_question(self, node):
         dependencies = node.computation.accept(self)
 
-        # Find all dependencies of this questions dependencies using breadth
-        # first search.
+        # Find all (indirect) dependencies of this questions dependencies using
+        # breadth first search on the dependency table.
         for dependency in dependencies:
             dependencies += [d for d in self.dependencies.get(dependency, []) if d not in dependencies]
 
         for dependency in dependencies:
             if dependency in self.dependencies and node.name in self.dependencies[dependency]:
-                self.error("circular dependency between \"\" and \"\"".format(node.name, dependency))
+                self.error("circular dependency between \"{}\" and \"{}\"".format(node.name, dependency))
 
         self.dependencies[node.name] = dependencies
+        self.computed_symbols.append(node.name)
         return [node.name]
 
     def visit_if_conditional(self, node):
         requires = node.condition.accept(self)
         scope = sum([statement.accept(self) for statement in node.ifbody], [])
 
-        if any(variable in scope for variable in requires):
-            self.error("condition depends on question in scope")
+        for variable in requires:
+            if variable in scope:
+                self.error("condition depends on question \"{}\" in scope".format(variable))
+            if variable in self.computed_symbols:
+                self.warn("condition depends on computed question \"{}\"".format(variable))
 
         return scope
 
@@ -50,8 +55,11 @@ class DependencyChecker:
         requires = node.condition.accept(self)
         scope = sum([statement.accept(self) for statement in node.ifbody + node.elsebody], [])
 
-        if any(variable in scope for variable in requires):
-            self.error("condition depends on question in scope")
+        for variable in requires:
+            if variable in scope:
+                self.error("condition depends on question \"{}\" in scope".format(variable))
+            if variable in self.computed_symbols:
+                self.warn("condition depends on computed question \"{}\"".format(variable))
 
         return scope
 

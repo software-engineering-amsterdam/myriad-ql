@@ -44,7 +44,7 @@ class SymbolChecker:
         else:
             self.error("question indentifier \"{}\" "
                        "is already used".format(node.name))
-            
+
     def visit_if_conditional(self, node):
         for statement in node.ifbody:
             statement.accept(self)

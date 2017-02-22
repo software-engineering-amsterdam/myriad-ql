@@ -23,10 +23,8 @@ class FormApp:
     def stop(self):
         self.app.stop()
 
-    @staticmethod
     def create_label_id(self, name):
         return self.LABELPREFIX + name
 
-    @staticmethod
     def create_entry_id(self, name):
         return self.ENTRYPREFIX + name

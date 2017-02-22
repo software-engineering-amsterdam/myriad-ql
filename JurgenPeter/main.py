@@ -38,7 +38,7 @@ def main():
     Printer().visit(ast)
 
     symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(ast)
-    
+
     type_errors, type_warnings = TypeChecker(symboltable).visit(ast)
 
     dependency_errors, dependency_warnings = DependencyChecker().visit(ast)
@@ -55,7 +55,7 @@ def main():
     if errors:
         return
 
-    app = FormApp(form, symboltable)
+    app = FormApp(ast, symboltable)
     app.start()
 
 if __name__ == "__main__":

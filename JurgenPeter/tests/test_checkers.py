@@ -78,42 +78,46 @@ class TestTypeChecker(TestCase):
 class TestDependencyChecker(TestCase):
 
     forms = [
-        ("form Name {}", 0),
+        ("form Name {}", 0, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
-         "  b: \"label 2\" integer = a }", 1),
+         "  b: \"label 2\" integer = a }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  b: \"label 1\" integer = c"
-         "  c: \"label 2\" integer = a }", 1),
+         "  c: \"label 2\" integer = a }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  if true {"
          "    b: \"label 1\" integer = c"
          "    c: \"label 1\" integer = d"
-         "    d: \"label 2\" integer = a } }", 1),
+         "    d: \"label 2\" integer = a } }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  b: \"label 2\" integer = a"
-         "  c: \"label 2\" integer = a }", 1),
+         "  c: \"label 2\" integer = a }", 1, 0),
         ("form Name {"
          "  if a > 0 {"
-         "    a: \"label 1\" integer } }", 1),
+         "    a: \"label 1\" integer } }", 1, 0),
         ("form Name {"
          "  if a > 0 { }"
          " else {"
-         "    a: \"label 1\" integer } }", 1),
+         "    a: \"label 1\" integer } }", 1, 0),
         ("form Name {"
          "  if a > 0 {"
          "    a: \"label 1\" integer }"
-         " else { } }", 1),
+         " else { } }", 1, 0),
+        ("form Name {"
+         "a: \"label 1\" integer = 0"
+         "  if a > 0 { } }", 0, 1),
     ]
 
     def testDependencyErrors(self):
-        for form, e, in self.forms:
+        for form, e, w, in self.forms:
             ast = parse_string(form)
-            errors, _ = DependencyChecker().visit(ast)
+            errors, warnings = DependencyChecker().visit(ast)
             self.assertEqual(len(errors), e)
+            self.assertEqual(len(warnings), w)
 
 if __name__ == "__main__":
     main()
