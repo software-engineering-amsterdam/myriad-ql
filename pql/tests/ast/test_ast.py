@@ -367,7 +367,7 @@ class TestAst(unittest.TestCase):
 
         boolean_and_node = condition_node.children[0]
 
-        self.assertEqual('&&', boolean_and_node.var_type)
+        self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should have no children')
 
         boolean_operand_node_1 = boolean_and_node.lhs
@@ -416,7 +416,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
 
         boolean_or_node = condition_node.children[0]
-        self.assertEqual('||', boolean_or_node.var_type)
+        self.assertEqual('or', boolean_or_node.var_type)
         self.assertEqual(0, len(boolean_or_node.children), 'Boolean OR node should have no children')
 
         boolean_operand_node_1 = boolean_or_node.lhs
@@ -425,7 +425,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
 
         boolean_and_node = boolean_or_node.rhs
-        self.assertEqual('&&', boolean_and_node.var_type)
+        self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should have no children')
 
         boolean_operand_node_2 = boolean_and_node.lhs
@@ -475,7 +475,7 @@ class TestAst(unittest.TestCase):
 
         boolean_and_node = condition_node.children[0]
 
-        self.assertEqual('&&', boolean_and_node.var_type)
+        self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should no children')
 
         boolean_operand_node_1 = boolean_and_node.rhs
@@ -533,17 +533,17 @@ class TestAst(unittest.TestCase):
 
         boolean_and_node = condition_node.children[0]
 
-        self.assertEqual('&&', boolean_and_node.var_type)
+        self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should no children')
 
         boolean_and_node_2 = boolean_and_node.lhs
 
-        self.assertEqual('&&', boolean_and_node_2.var_type)
+        self.assertEqual('and', boolean_and_node_2.var_type)
         self.assertEqual(0, len(boolean_and_node_2.children), 'Boolean AND node should no children')
 
         boolean_or_node = boolean_and_node.rhs
         self.assertEqual(0, len(boolean_or_node.children))
-        self.assertEqual('||', boolean_or_node.var_type)
+        self.assertEqual('or', boolean_or_node.var_type)
 
         boolean_operand_node_2 = boolean_and_node_2.lhs
         self.assertEqual(0, len(boolean_operand_node_2.children))

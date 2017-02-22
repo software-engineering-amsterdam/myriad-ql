@@ -94,68 +94,69 @@ class BoolOperand(Node):
         self.label = parsed_output[0]
 
 
-class UnaryOperation:
-    def __init__(self, right):
+class UnaryOperation(Node):
+    def __init__(self, var_type, right):
+        super(UnaryOperation, self).__init__(var_type)
         self.right = right
 
 
 class Positive(UnaryOperation):
     def __init__(self, right):
-        super(Positive, self).__init__(right)
+        super(Positive, self).__init__('positive', right)
 
 
 class Negative(UnaryOperation):
     def __init__(self, right):
-        super(Negative, self).__init__(right)
+        super(Negative, self).__init__('negative', right)
 
 
 class Negation(UnaryOperation):
     def __init__(self, right):
-        super(Negation, self).__init__(right)
+        super(Negation, self).__init__('negation', right)
 
 
 class And(BinaryOperation):
     eval_function = all
 
     def __init__(self,  left, right):
-        super(And, self).__init__('&&', left, right)
+        super(And, self).__init__('and', left, right)
 
 
 class Or(BinaryOperation):
     eval_function = any
 
     def __init__(self,  left, right):
-        super(Or, self).__init__('||', left, right)
+        super(Or, self).__init__('or', left, right)
 
 
 class Equality(BinaryOperation):
     def __init__(self,  left, right):
-        super(Equality, self).__init__('==', left, right)
+        super(Equality, self).__init__('equality', left, right)
 
 
 class GreaterExclusive(BinaryOperation):
     def __init__(self,  left, right):
-        super(GreaterExclusive, self).__init__('>', left, right)
+        super(GreaterExclusive, self).__init__('greater_exclusive', left, right)
 
 
 class GreaterInclusive(BinaryOperation):
     def __init__(self,  left, right):
-        super(GreaterInclusive, self).__init__('>=', left, right)
+        super(GreaterInclusive, self).__init__('greater_inclusive', left, right)
 
 
 class LowerInlusive(BinaryOperation):
     def __init__(self,  left, right):
-        super(LowerInlusive, self).__init__('<=', left, right)
+        super(LowerInlusive, self).__init__('lower_inclusive', left, right)
 
 
 class LowerExclusive(BinaryOperation):
     def __init__(self,  left, right):
-        super(LowerExclusive, self).__init__('<', left, right)
+        super(LowerExclusive, self).__init__('lower_exclusive', left, right)
 
 
 class Inequality(BinaryOperation):
     def __init__(self,  left, right):
-        super(Inequality, self).__init__('!=', left, right)
+        super(Inequality, self).__init__('inequality', left, right)
 
 
 class Condition(Node):
