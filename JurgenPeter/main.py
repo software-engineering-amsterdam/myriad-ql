@@ -6,6 +6,7 @@ from ql.visitors.printer import Printer
 from ql.visitors.symbolchecker import SymbolChecker
 from ql.visitors.typechecker import TypeChecker
 from ql.visitors.dependencychecker import DependencyChecker
+from ql.gui.formapp import *
 
 
 def report_error(message):
@@ -51,6 +52,8 @@ def main():
 
     if errors:
         return
+
+    app = FormApp(form, symboltable)
 
 if __name__ == "__main__":
     main()

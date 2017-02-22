@@ -5,11 +5,7 @@ form BoxHouseOwning {
     sellingPrice: "How much did you seel the house for?" integer
 
     if hasMaintLoan {
-        sellingPrice: "Price the house was sold for:" decimal
         privateDebt: "Private debts for the sold house:" decimal
         valueResiduea: "Value residue:" decimal
-        valueResidueb: "Value residue:" decimal = true
-        valueResiduec: "Value residue:" decimal = 2 < 3 * +3 && 7 == y
-        valueResidued: "Value residue:" decimal = x && y || z
     }
 }
