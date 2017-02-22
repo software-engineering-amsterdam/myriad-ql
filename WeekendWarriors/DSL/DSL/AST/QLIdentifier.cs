@@ -23,5 +23,11 @@ namespace DSL.AST
             // TODO: See how to handle this. Pass set of defined variables into type funcion?
             throw new NotImplementedException();
         }
+
+        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        {
+            // TODO check if this identifier exists
+            return true;
+        }
     }
 }

@@ -29,5 +29,11 @@ namespace DSL.AST
         {
             get;
         }
+
+        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        {
+            // TODO: check if the question has been defined already and which type it was
+            return true;
+        }
     }
 }

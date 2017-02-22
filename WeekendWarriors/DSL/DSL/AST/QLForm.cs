@@ -24,5 +24,17 @@ namespace DSL.AST
         {
             get;
         }
+
+        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        {
+            bool childrenValid = true;
+            foreach(var statement in Statements)
+            {
+                if (!statement.Validate(ref warnings, ref errors))
+                    childrenValid = false;
+            }
+
+            return childrenValid;
+        }
     }
 }

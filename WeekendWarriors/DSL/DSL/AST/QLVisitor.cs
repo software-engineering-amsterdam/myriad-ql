@@ -66,7 +66,7 @@ namespace DSL.AST
         {
             INode question = Visit(context.question());
             INode expression = Visit(context.expression());
-            return new QLComputedQuestion(question, expression);
+            return new QLComputedQuestion((dynamic)question, (dynamic)expression);
         }
 
         public override INode VisitID([NotNull] QLParser.IDContext context)

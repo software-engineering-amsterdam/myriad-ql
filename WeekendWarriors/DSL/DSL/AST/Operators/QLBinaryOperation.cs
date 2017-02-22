@@ -47,5 +47,6 @@ namespace DSL.AST
         }
 
         public abstract QLType? GetQLType();
+        public abstract bool Validate(ref List<string> warnings, ref List<string> errors);
     }
 }

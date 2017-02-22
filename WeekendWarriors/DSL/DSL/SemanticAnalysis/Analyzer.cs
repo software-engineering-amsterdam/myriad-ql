@@ -35,8 +35,17 @@ namespace DSL.SemanticAnalysis
         
         protected QLType Visit(QLForm node)
         {
-            foreach (var statement in node.Statements)
-                Visit((dynamic)statement);
+            //foreach (var statement in node.Statements)
+            //    Visit((dynamic)statement);
+
+            List<string> errors = new List<string>();
+            List<string> warnings = new List<string>();
+            node.Validate(ref errors, ref warnings);
+
+            foreach(string error in errors)
+            {
+                OnSemanticError(new SemanticErrorArgs(error));
+            }
 
             return QLType.None;
         }

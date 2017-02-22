@@ -14,7 +14,15 @@ namespace DSL
     {
         static void Main(string[] args)
         {
-            string inputString = "form Box1HouseOwning { hasSoldHouse: \"Did you sell a house in 2010?\" boolean }";
+            string inputString = @"
+                form myForm{
+                    q1: ""This is q1"" boolean
+                    if(q2)
+                    {
+                        q3: ""This is q3"" boolean
+                    }
+                }
+                ";
 
             var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(inputString);

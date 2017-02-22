@@ -114,33 +114,34 @@ namespace DSL.SemanticAnalysis
 
         public QLType Evaluate(QLUnaryOperation expression, QLType operandType)
         {
-            QLType[] allowedTypes = null;
+            //QLType[] allowedTypes = null;
 
-            switch (expression.Operator)
-            {
-                case QLUnaryOperator.Bang:
-                    allowedTypes = bangTypes;
-                    break;
-                case QLUnaryOperator.Plus:                                        
-                case QLUnaryOperator.Minus:
-                    allowedTypes = signTypes;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
+            //switch (expression.Operator)
+            //{
+            //    case QLUnaryOperator.Bang:
+            //        allowedTypes = bangTypes;
+            //        break;
+            //    case QLUnaryOperator.Plus:                                        
+            //    case QLUnaryOperator.Minus:
+            //        allowedTypes = signTypes;
+            //        break;
+            //    default:
+            //        throw new InvalidEnumArgumentException();
+            //}
 
-            if (!allowedTypes.Contains(operandType))
-            {
-                string errorString = string.Format("cannot apply operator <{0}> to type {1}",
-                    expression.Operator,
-                    operandType);
+            //if (!allowedTypes.Contains(operandType))
+            //{
+            //    string errorString = string.Format("cannot apply operator <{0}> to type {1}",
+            //        expression.Operator,
+            //        operandType);
 
-                OnInvalidExpression(new InvalidExpressionEventArgs(errorString));
+            //    OnInvalidExpression(new InvalidExpressionEventArgs(errorString));
 
-                return QLType.None;
-            }
+            //    return QLType.None;
+            //}
 
-            return operandType;
+            //return operandType;
+            return QLType.None;
         }
     }
 }

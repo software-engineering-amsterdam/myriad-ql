@@ -16,7 +16,7 @@ namespace DSL.AST.Operators
         public override bool Validate(ref List<string> warnings, ref List<string> errors)
         {
             // Don't propagate errors up if we already encountered an error in the operand
-            if (!Operand.GetQLType().HasValue)
+            if (!Operand.Validate(ref warnings, ref errors))
                 return false;
 
             // Positive operation can only be applied to numbers and decimals
