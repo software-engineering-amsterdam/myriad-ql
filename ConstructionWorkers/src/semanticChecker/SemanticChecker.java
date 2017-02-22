@@ -8,6 +8,7 @@ package semanticChecker;
 
 import ASTnodes.Form;
 import ASTnodes.types.Type;
+import semanticChecker.dependency.stateData.QuestionStateData;
 import semanticChecker.messageHandling.MessageData;
 
 import java.util.HashMap;
@@ -18,11 +19,11 @@ public class SemanticChecker {
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
 
-    public SemanticChecker(Form ast) {
+    public SemanticChecker(Form ast, QuestionStateData questionStates) {
         identifierToTypeMap = new HashMap<>();
         messages = new MessageData();
         // TODO: refactor?
-        new StatementChecker(ast, identifierToTypeMap, messages);
+        new IdentifierChecker(ast, identifierToTypeMap, messages, questionStates);
         new TypeChecker(ast, identifierToTypeMap, messages);
     }
 

@@ -6,6 +6,9 @@ package ASTnodes.types;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.visitors.TypeVisitor;
+import semanticChecker.dependency.stateData.stateValues.MoneyValue;
+
+import java.math.BigDecimal;
 
 public class MoneyType extends Type {
 
@@ -20,6 +23,11 @@ public class MoneyType extends Type {
     @Override
     public String toString() {
         return "Money";
+    }
+
+    @Override
+    public MoneyValue getDefaultState() {
+        return new MoneyValue(new BigDecimal(0));
     }
 
     @Override

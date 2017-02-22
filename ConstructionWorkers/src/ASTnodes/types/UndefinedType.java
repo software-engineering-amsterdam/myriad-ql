@@ -5,6 +5,7 @@
 package ASTnodes.types;
 
 import ASTnodes.visitors.TypeVisitor;
+import semanticChecker.dependency.stateData.stateValues.UndefinedValue;
 
 public class UndefinedType extends Type {
 
@@ -15,6 +16,11 @@ public class UndefinedType extends Type {
     @Override
     public String toString() {
         return "Undefined";
+    }
+
+    @Override
+    public UndefinedValue getDefaultState() {
+        return new UndefinedValue();
     }
 
     @Override

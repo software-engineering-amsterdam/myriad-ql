@@ -6,6 +6,7 @@ package ASTnodes.types;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.visitors.TypeVisitor;
+import semanticChecker.dependency.stateData.stateValues.IntegerValue;
 
 public class IntegerType extends Type {
 
@@ -20,6 +21,11 @@ public class IntegerType extends Type {
     @Override
     public String toString() {
         return "Integer";
+    }
+
+    @Override
+    public IntegerValue getDefaultState() {
+        return new IntegerValue(0);
     }
 
     @Override

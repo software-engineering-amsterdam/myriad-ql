@@ -22,7 +22,7 @@ public abstract class Equality extends Binary {
         } else {
             Class typeToCheckLeftClass = typeToCheckLeft.getClass();
             if (typeToCheckLeftClass.equals(typeToCheckRight.getClass()) && (typeToCheckLeftClass.equals(MoneyType.class) ||
-                    typeToCheckLeftClass == IntegerType.class) || typeToCheckLeftClass.equals(StringType.class)) {
+                    typeToCheckLeftClass.equals(IntegerType.class) || typeToCheckLeftClass.equals(StringType.class))) {
                 return new BooleanType();
             } else {
                 return new UndefinedType();

@@ -19,7 +19,7 @@ public class CyclicDependencyError extends ErrorHandler {
     }
 
     public String getMessage() {
-        return "ERROR: Cyclomatic dependency between " + end.getName() + " at line " + end.getLocation().getStartingLine() +
-                " and " +  start.getName() + " at line " +  start.getLocation().getStartingLine() + ".";
+        return "ERROR: Cyclomatic dependency between " + end.getName() + " and " +  start.getName() +
+                " at line " +  end.getLocation().getStartingLine() + ".";
     }
 }

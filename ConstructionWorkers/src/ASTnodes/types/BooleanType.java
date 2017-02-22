@@ -7,6 +7,7 @@ package ASTnodes.types;
 
 import ASTnodes.CodeLocation;
 import ASTnodes.visitors.TypeVisitor;
+import semanticChecker.dependency.stateData.stateValues.BooleanValue;
 
 public class BooleanType extends Type {
 
@@ -21,6 +22,11 @@ public class BooleanType extends Type {
     @Override
     public String toString() {
         return "Boolean";
+    }
+
+    @Override
+    public BooleanValue getDefaultState() {
+        return new BooleanValue(false);
     }
 
     @Override

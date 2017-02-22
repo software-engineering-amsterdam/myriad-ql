@@ -4,6 +4,7 @@
 
 import ASTnodes.Form;
 import semanticChecker.SemanticChecker;
+import semanticChecker.dependency.stateData.QuestionStateData;
 import semanticChecker.messageHandling.MessageData;
 import semanticChecker.messageHandling.MessageHandler;
 import semanticChecker.messageHandling.errors.ErrorHandler;
@@ -71,7 +72,8 @@ public class QL {
     }
 
     private boolean checkSemanticCorrectness(Form qlAST) {
-        SemanticChecker semanticChecker = new SemanticChecker(qlAST);
+        QuestionStateData questionStates =  new QuestionStateData();
+        SemanticChecker semanticChecker = new SemanticChecker(qlAST, questionStates);
         MessageData messages = semanticChecker.getMessages();
 
         if (messages.getWarnings().size() > 0) {
