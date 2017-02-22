@@ -2,7 +2,6 @@ from TypeChecker import TypeChecker
 import pyparsing as pp
 import AST
 import decimal
-#import datetime
 
 
 class QuestionnaireParser(object):
@@ -133,31 +132,24 @@ class QuestionnaireParser(object):
             self.TYPE["STRING"].addParseAction(self.create_node(AST.StringNode))
         )
 
-        unary_neg = pp.Literal('!').addParseAction(lambda _: AST.NegNode)
-        unary_min = pp.Literal('-').addParseAction(lambda _: AST.MinNode)
-        unary_plus = pp.Literal('+').addParseAction(lambda _: AST.PlusNode)
-        unary_ops = unary_neg | unary_min | unary_plus
+        def create_operator(opp, ast_class):
+            return pp.Literal(opp).addParseAction(lambda _: ast_class)
 
-        infix_mul = pp.Literal('*').addParseAction(lambda _: AST.MulNode)
-        infix_div = pp.Literal('/').addParseAction(lambda _: AST.DivNode)
-        arithmetic_level1 = infix_mul | infix_div
+        def create_operators(opp_list):
+            opp, ast_class = opp_list[0]
+            operator = create_operator(opp, ast_class)
+            for (opp, ast_class) in opp_list[1:]:
+                operator |= create_operator(opp, ast_class)
+            return operator
 
-        infix_add = pp.Literal('+').addParseAction(lambda _: AST.AddNode)
-        infix_sub = pp.Literal('-').addParseAction(lambda _: AST.SubNode)
-        arithmetic_level2 = infix_add | infix_sub
-
-        infix_lt = pp.Literal('>').addParseAction(lambda _: AST.LTNode)
-        infix_lte = pp.Literal('>=').addParseAction(lambda _: AST.LTENode)
-        infix_gte = pp.Literal('<=').addParseAction(lambda _: AST.GTENode)
-        infix_gt = pp.Literal('>').addParseAction(lambda _: AST.GTNode)
-        logical_level1 = infix_lt | infix_lte | infix_gt | infix_gte
-
-        infix_eq = pp.Literal('==').addParseAction(lambda _: AST.EqNode)
-        infix_neq = pp.Literal('!=').addParseAction(lambda _: AST.NeqNode)
-        logical_level2 = infix_eq | infix_neq
-
-        infix_and = pp.Literal('&&').addParseAction(lambda _: AST.AndNode)
-        infix_or = pp.Literal('||').addParseAction(lambda _: AST.OrNode)
+        unary_ops = create_operators([('!', AST.NegNode), ('-', AST.MinNode), ('+', AST.PlusNode)])
+        arithmetic_level1 = create_operators([('*', AST.MulNode), ('/', AST.DivNode)])
+        arithmetic_level2 = create_operators([('+', AST.AddNode), ('-', AST.SubNode)])
+        logical_level1 = create_operators([('<', AST.LTNode), ('<=', AST.LTENode),
+                                           ('>', AST.GTNode), ('>=', AST.GTENode)])
+        logical_level2 = create_operators([('==', AST.EqNode), ('!=', AST.NeqNode)])
+        infix_and = create_operator('&&', AST.AndNode)
+        infix_or = create_operator('||', AST.OrNode)
 
         return pp.infixNotation(var_types, [
             (unary_ops, 1, pp.opAssoc.RIGHT, self.create_monop_node),
@@ -190,14 +182,14 @@ if __name__ == '__main__':
         "Did you buy a house in 2010?" hasBoughtHouse: boolean
         "Did you enter a loan?" hasMaintLoan: int
 
-        if (true == false * 100 * 5 * !hasMaintLoan) {
+        if (-true == !false * !100 * +5 * !hasMaintLoan) {
             "What was the selling price?" sellingPrice: money
             "Private debts for the sold house:" privateDebt: money
             "Value residue:" valueResidue: money = (sellingPrice -
             privateDebt)
         }
         else {
-            "question?" test:             boolean
+            "question?" test:           boolean
         }
     }
     """
