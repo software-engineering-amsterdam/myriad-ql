@@ -1,4 +1,4 @@
-class AbstractNode(object):
+class Node(object):
     # Base class of all nodes
     def __init__(self, identifier, parent):
         self.__identifier = identifier
@@ -9,8 +9,8 @@ class AbstractNode(object):
             parent.add_child(self)
 
     def add_child(self, child):
-        if child and not isinstance(child, AbstractNode):
-            raise TypeError("Child is not an instance of AbstractNode")
+        if child and not isinstance(child, Node):
+            raise TypeError("Child is not an instance of Node")
         self.__children.append(child)
 
     def get_children(self):
@@ -33,52 +33,52 @@ class AbstractNode(object):
                 __ret += "\t\t" + __sub.get_tree_representation()
         return __ret
 
-class BaseNode(AbstractNode):
+class Root(Node):
     # Node that only has children
     def __init__(self, identifier):
-        AbstractNode.__init__(self, identifier, None)
+        Node.__init__(self, identifier, None)
 
-class LeafNode(AbstractNode):
+class Child(Node):
     _variable = None
     # Node that can have both a parent and children
     def __init__(self, identifier, parent):
-        AbstractNode.__init__(self, identifier, parent)
+        Node.__init__(self, identifier, parent)
 
-class ConditionalNode(LeafNode):
+class ConditionalNode(Child):
     _eval_type = None
     _evaluation = None
     def __init__(self, parent, eval_type, evaluation):
-        LeafNode.__init__(self, "ConditionalNode", parent)
+        Child.__init__(self, "ConditionalNode", parent)
         self._eval_type = eval_type
         self._evaluation = evaluation
 
-class QuestionNode(LeafNode):
+class QuestionNode(Child):
     _field_type = None
     _text = None
 
     def __init__(self, identifier, parent, field_type, text):
-        LeafNode.__init__(self, identifier, parent)
+        Child.__init__(self, identifier, parent)
         self._field_type = field_type
         self._text = text
 
-class StatementNode(LeafNode):
+class StatementNode(Child):
     _field_type = None
     _text = None
     _evaluation = None
 
     def __init__(self, identifier, parent, field_type, text, evaluation):
-        LeafNode.__init__(self, identifier, parent)
+        Child.__init__(self, identifier, parent)
         self._field_type = field_type
         self._evaluation = evaluation
 
 # Test Code
 if __name__ == '__main__':
-    root = BaseNode("TestRootNode")
-    child = LeafNode("Child 1", root)
-    child2 = LeafNode("Child 2", root)
-    grandchild = LeafNode("Grandchild 1", child)
-    grandchild2 = LeafNode("Grandchild 2", child)
-    grandchild3 = LeafNode("Grandchild 3", child2)
+    root = Root("TestRootNode")
+    child = Child("Child 1", root)
+    child2 = Child("Child 2", root)
+    grandchild = Child("Grandchild 1", child)
+    grandchild2 = Child("Grandchild 2", child)
+    grandchild3 = Child("Grandchild 3", child2)
     print("Root Node Parent")
     print(root.get_parent())
     print("Root Node Children: ")

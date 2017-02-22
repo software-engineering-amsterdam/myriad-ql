@@ -14,7 +14,7 @@ class Tree(object):
             raise ValueError("Malformed Form Data")
         # Construct the root node
         #   0 type, 1 identifier, 2 content
-        root = BaseNode(parse_result[1])
+        root = Root(parse_result[1])
         # Recursively parse the children
         for x in range(2,len(parse_result)):
             self.create_node(root, parse_result[x])
