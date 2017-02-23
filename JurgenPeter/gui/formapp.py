@@ -1,9 +1,10 @@
 from appJar import gui
-from ql.visitors.questionfinder import QuestionFinder
-from gui.update_gui import UpdateGUI
-from gui.update_computations import UpdateComputations
+
+from gui.visitors.update_computations import UpdateComputations
+from gui.visitors.update_gui import UpdateGUI
 from gui.widgets import *
 from ql.ast import Datatype
+from ql.visitors.questionfinder import QuestionFinder
 
 default_widgets = {
     Datatype.integer: IntegerEntryWidget,
