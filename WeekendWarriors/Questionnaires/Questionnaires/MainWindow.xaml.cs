@@ -1,4 +1,6 @@
 ﻿using Questionnaires.AST;
+using Questionnaires.Question;
+using Questionnaires.Renderer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Questionnaires.Value;
 
 namespace Questionnaires
 {
+    class QuestionTest : IQuestion
+    {
+        public string Body { get; set; }
+        public string Name { get; set; }
+        public QuestionType Type { get; set; }
+        public IValue Value { get; set; }
+        public Question.Visibility Visibility { get; set; }
+    }
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -40,6 +52,32 @@ namespace Questionnaires
 
             semanticAnalyzer.SemanticError += ReportSemanticError;
             semanticAnalyzer.Analyze(form);
+
+            // Example renderer functionality
+            Renderer.Renderer renderer = new Renderer.Renderer();
+            
+            QuestionTest q1 = new QuestionTest();
+            q1.Body = "Do you like apples?";
+            q1.Name = "Apple question";
+            q1.Type = QuestionType.Bool;
+            q1.Value = new BoolValue(true);
+            q1.Visibility = Question.Visibility.Visible;
+
+            QuestionTest q2 = new QuestionTest();
+            q2.Body = "Favorite number?";
+            q2.Name = "Number question";
+            q2.Type = QuestionType.Number;
+            q2.Value = new IntValue(230);
+            q2.Visibility = Question.Visibility.Visible;
+
+            renderer.AddQuestion(q1);
+            renderer.AddQuestion(q2);
+
+            renderer.SetVisibility("Number question", Question.Visibility.Hidden);
+            renderer.SetValue("Apple question", new BoolValue(false));            
+
+            //renderer.AddQuestion(new Question.IQuestion) ?
+            // we may need a visitor here to visit the form again and provide the renderer with questions.
         }
     }
 }

@@ -64,6 +64,11 @@
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />
+    <Compile Include="Renderer\Widgets\BooleanQuestionWidget.cs" />
+    <Compile Include="Renderer\Widgets\IQuestionWidget.cs" />
+    <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
+    <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
+    <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
     <Compile Include="SemanticAnalysis\Analyzer.cs" />
     <Compile Include="SemanticAnalysis\ExpressionValidator.cs" />
     <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
