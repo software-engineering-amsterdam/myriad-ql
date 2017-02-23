@@ -81,7 +81,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        if re.match("^(-|\+)?[0-9]*.?[0-9]*$", text):
+        if re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text):
             return True
         return False
 
@@ -93,9 +93,9 @@ class DecimalEntryWidget(EntryWidget):
 
     def get_value(self):
         value = self.app.getEntry(self.entry_id)
-        if re.match("^(-|\+)?[0-9]+.?[0-9]*$", value):
+        if re.match("^(-|\+)?[0-9]+\.?[0-9]*$", value):
             return float(value)
-        if re.match("^(-|\+)?[0-9]*.?[0-9]+$", value):
+        if re.match("^(-|\+)?[0-9]*\.?[0-9]+$", value):
             return float(value)
         return None
 
