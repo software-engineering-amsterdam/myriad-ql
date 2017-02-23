@@ -48,7 +48,7 @@ def parse(input_string):
     def flatten_binary_operators(unflatted_tokens):
         flattened_tokens = unflatted_tokens[0]
         while len(flattened_tokens) >= 3:
-            lhs, type_call, rhs = flattened_tokens[0], flattened_tokens[1], flattened_tokens[2]
+            lhs, type_call, rhs = flattened_tokens[:3]
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
         return flattened_tokens[0]
 
@@ -116,7 +116,7 @@ def parse(input_string):
     if_stmt.setParseAction(ast.Conditional)
 
     statement = field_expr | if_stmt
-    statement_list <<= l_curly + ZeroOrMore(statement) + r_curly
+    statement_list <<= l_curly + OneOrMore(statement) + r_curly
     statement_list.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     statement_list.setResultsName('statement_list')
 
