@@ -52,7 +52,7 @@ def main():
     if errors:
         return
 
-    app = FormApp(ast, symboltable)
+    app = FormApp(ast)
     app.start()
 
 if __name__ == "__main__":

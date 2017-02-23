@@ -2,9 +2,13 @@ class Evaluator:
 
     def __init__(self, environment):
         self.environment = environment
+        self.success = True
 
     def visit(self, node):
-        return node.accept(self)
+        value = node.accept(self)
+        if self.success:
+            return value
+        return None
 
     def visit_plusop(self, node):
         return + node.right.accept(self)
@@ -52,7 +56,11 @@ class Evaluator:
         return node.left.accept(self) or node.right.accept(self)
 
     def visit_variable(self, node):
-        return self.environment[node.name]
+        value = self.environment[node.name]
+        if value is not None:
+            return value
+        self.success = False
+        return 0
 
     def visit_constant(self, node):
         return node.value

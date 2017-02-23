@@ -1,11 +1,23 @@
 form BoxHouseOwning {
     hasSoldHouse: "Did you sell a house in 2010?" boolean
-    hasBoughtHouse: "Did you by a house in 2010?" boolean
-    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
-    sellingPrice: "How much did you seel the house for?" integer
+    hasBoughtHouse: "Did you by a house in 2010?" boolean = hasSoldHouse
+    sellingPrice: "How much did you sell the house for?" integer
 
-    if hasMaintLoan {
+    a: "How much did you sell the house for?" decimal
+    b: "How much did you sell the house for?" decimal = 3 * a
+
+    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
+
+    if sellingPriceB >= 10 {
         privateDebt: "Private debts for the sold house:" decimal
-        valueResiduea: "Value residue:" decimal
+        valueResidue: "Value residue:" decimal
     }
+    else {
+        x: "in de else?" boolean
+        if x {
+            y: "geneste if?" string
+        }
+    }
+
+    sellingPriceB: "How much did you sell the house for? (B)" integer = 2 * sellingPrice
 }
