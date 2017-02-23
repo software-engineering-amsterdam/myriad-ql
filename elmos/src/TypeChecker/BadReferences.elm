@@ -79,13 +79,13 @@ questionReferences expression =
             questionReferences expr
 
         ArithmeticExpression _ _ exprLeft exprRight ->
-            (questionReferences exprLeft) ++ (questionReferences exprRight)
+            questionReferences exprLeft ++ questionReferences exprRight
 
         RelationExpression _ _ exprLeft exprRight ->
-            (questionReferences exprLeft) ++ (questionReferences exprRight)
+            questionReferences exprLeft ++ questionReferences exprRight
 
         LogicExpression _ _ exprLeft exprRight ->
-            (questionReferences exprLeft) ++ (questionReferences exprRight)
+            questionReferences exprLeft ++ questionReferences exprRight
 
         ComparisonExpression _ _ exprLeft exprRight ->
-            (questionReferences exprLeft) ++ (questionReferences exprRight)
+            questionReferences exprLeft ++ (questionReferences exprRight)
