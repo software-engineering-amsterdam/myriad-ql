@@ -6,10 +6,10 @@ from pql.parser.parser import *
 class TestAst(unittest.TestCase):
     def test_ast_simple_empty_form(self):
         input_string = "form taxOfficeExample {}"
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
-        self.assertEqual('taxOfficeExample', form_node.name, "Name of node should equal the declared name")
-        self.assertEqual(0, len(form_node.children), "Empty form should have no child nodes")
+
+        with self.assertRaises(ParseException):
+            parse_result = parse(input_string)
+            self.fail('Empty form block should not be possible')
 
     def test_ast_single_question(self):
         input_string = """

@@ -6,8 +6,10 @@ from pyparsing import ParseException
 class TestParser(TestCase):
     def test_parse_simple_empty_form(self):
         input_string = "form taxOfficeExample {}"
-        actual_result = parse(input_string)
-        self.assertIsNotNone(actual_result)
+
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('Empty form block should not be possible')
 
     def test_parse_simple_form_no_name(self):
         input_string = "form {}"
