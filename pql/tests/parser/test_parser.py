@@ -94,6 +94,30 @@ class TestParser(TestCase):
             parse(input_string)
             self.fail('If statement needs to have an expression inside the parenthesis')
 
+    def test_parse_form_if_invalid_expression_and(self):
+        input_string = """
+        form taxOfficeExample {
+            if (a & a) {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+            }
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('A singular & should not be recognized')
+
+    def test_parse_form_if_invalid_expression_or(self):
+        input_string = """
+        form taxOfficeExample {
+            if (a | a) {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+            }
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('a | a is an invalid expression')
+
     def test_parse_form_if_missing_left_curly(self):
         input_string = """
         form taxOfficeExample {
