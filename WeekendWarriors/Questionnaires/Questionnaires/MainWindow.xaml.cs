@@ -19,15 +19,6 @@ using Questionnaires.Value;
 
 namespace Questionnaires
 {
-    class QuestionTest : IQuestion
-    {
-        public string Body { get; set; }
-        public string Name { get; set; }
-        public QuestionType Type { get; set; }
-        public IValue Value { get; set; }
-        public Question.Visibility Visibility { get; set; }
-    }
-
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -56,14 +47,14 @@ namespace Questionnaires
             // Example renderer functionality
             Renderer.Renderer renderer = new Renderer.Renderer();
             
-            QuestionTest q1 = new QuestionTest();
+            QuestionWidgetInfo q1 = new QuestionWidgetInfo();
             q1.Body = "Do you like apples?";
             q1.Name = "Apple question";
             q1.Type = QuestionType.Bool;
             q1.Value = new BoolValue(true);
             q1.Visibility = Question.Visibility.Visible;
 
-            QuestionTest q2 = new QuestionTest();
+            QuestionWidgetInfo q2 = new QuestionWidgetInfo();
             q2.Body = "Favorite number?";
             q2.Name = "Number question";
             q2.Type = QuestionType.Number;
