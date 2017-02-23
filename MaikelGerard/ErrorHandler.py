@@ -22,6 +22,12 @@ class ErrorHandler(object):
             error_type, context, message, node.line, node.col
         ))
 
+    def add_cycle_error(self, context, cycles):
+        for cycle in cycles:
+            error = "ERROR: Found circular dependency cycle between vars: '{}'".format(cycle)
+            self.error_list.append(error)
+            self.error_count += 1
+
     def add_binop_error(self, context, node, left, right):
         error_message = "Invalid types for binop '{}': {}, {}".format(node.operator, left, right)
         self.add_error(context, node, error_message)

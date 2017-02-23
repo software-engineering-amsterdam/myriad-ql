@@ -3,6 +3,7 @@ from TypeChecker import TypeChecker
 from Environment import Environment
 from ErrorHandler import ErrorHandler
 from Evaluate import Evaluate
+from FindCycles import FindCycles
 import sys
 
 
@@ -20,6 +21,7 @@ if __name__ == '__main__':
 
     error_handler = ErrorHandler()
 
+    FindCycles(parsedAST, error_handler).start_traversal()
     environment = Environment(error_handler)
     TypeChecker(parsedAST, environment, error_handler).start_traversal()
     Evaluate(parsedAST, environment).start_traversal()

@@ -25,7 +25,8 @@ class Environment(object):
         return self.type_env[var_node.val]
 
     def get_value(self, var_name):
-        assert var_name in self.value_env, "var_name has to "
+        assert var_name in self.value_env, \
+            "Var name '{}' not in value environment!".format(var_name)
         return self.value_env[var_name]
 
     def set_type(self, question_node):
@@ -39,5 +40,6 @@ class Environment(object):
         return True
 
     def set_value(self, var_name, value):
-        assert var_name in self.value_env, "Var name not in value environment!"
+        assert var_name in self.value_env, \
+            "Var name '{}' not in value environment!".format(var_name)
         self.value_env[var_name] = value
