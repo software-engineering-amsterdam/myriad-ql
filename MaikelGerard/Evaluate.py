@@ -1,23 +1,23 @@
 class Evaluate(object):
-    def __init__(self, ast):
+    def __init__(self, ast, env):
         """ :type ast: AST.QuestionnaireAST """
         self.ast = ast
-
-        self.env = {}
-        self.errors = []
+        self.env = env
 
     def start_traversal(self):
         # Ensure the environment and error log are empty.
-        self.env = {}
-        self.errors = []
-
+        prev_context = self.env.context
+        self.env.context = "Evaluate"
         self.ast.root.accept(self)
+        self.env.context = prev_context
+
+    def question_node(self, question_node):
+        pass
 
     def comp_question_node(self, comp_question_node):
         """ :type comp_question_node: AST.CompQuestionNode """
-        # TODO: Evaluate the computed question expression.
         new_val = comp_question_node.expression.accept(self)
-        # env[comp_question_node.name] = new_val
+        self.env.set_value(comp_question_node.name.val, new_val)
 
     def if_node(self, if_node):
         condition = if_node.expression.accept(self)
@@ -26,6 +26,8 @@ class Evaluate(object):
 
     def if_else_node(self, if_else_node):
         condition = if_else_node.expression.accept(self)
+        assert (type(condition) == bool), \
+            "Invalid type if condition, expected boolean got: {}".format(condition)
         if condition:
             if_else_node.if_block.accept(self)
         else:
@@ -44,7 +46,9 @@ class Evaluate(object):
         return mul_node.left.accept(self) * mul_node.right.accept(self)
 
     def div_node(self, div_node):
-        return div_node.left.accept(self) / div_node.right.accept(self)
+        # TODO: What to do with division through zero?
+        right_value = div_node.right.accept(self)
+        return div_node.left.accept(self) / right_value
 
     def add_node(self, add_node):
         return add_node.left.accept(self) + add_node.right.accept(self)
@@ -91,11 +95,9 @@ class Evaluate(object):
         """ :type bool_node: AST.BoolNode """
         return bool_node.val
 
-    @staticmethod
-    def var_node(var_node):
+    def var_node(self, var_node):
         """ :type var_node: AST.VarNode """
-        # TODO: Use env to look up val!
-        return var_node.val
+        return self.env.get_value(var_node.val)
 
     @staticmethod
     def decimal_node(decimal_node):

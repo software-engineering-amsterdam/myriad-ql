@@ -1,24 +1,27 @@
-from ErrorHandler import ErrorHandler
 from TypeEnums import TypeEnums as Type
 
 
 class TypeChecker(object):
-    def __init__(self, ast):
+    def __init__(self, ast, env, error_handler):
         """ :type ast: AST.QuestionnaireAST """
         self.ast = ast
-
-        self.env = {}
-        self.handler = ErrorHandler()
+        self.env = env
+        self.handler = error_handler
         self.context = "TypeChecker"
+        self.labels = []
 
     def start_traversal(self):
         # Ensure the environment and error log are empty.
-        self.env = {}
+        self.env.clear_env()
+        prev_context = self.env.context
+        self.env.context = self.context
+        self.labels = []
         self.handler.clear_errors()
         self.ast.root.accept(self)
 
         # Print errors afterwards.
         self.handler.print_errors()
+        self.env.context = prev_context
 
     @staticmethod
     def highest_number_type(left, right):
@@ -43,21 +46,16 @@ class TypeChecker(object):
         return node.left.accept(self), node.right.accept(self)
 
     def is_valid_monop(self, node, var_type, valid_types):
-        error = "Invalid type for '{}': {}".format(node.operator, var_type)
-
         if var_type not in valid_types:
-            self.handler.add_error(self.context, node, error)
+            self.handler.add_monop_error(self.context, node, var_type)
             return False
         return True
 
     def is_valid_binop(self, node, left, right, valid_types):
-        op = node.operator
-        error = "Invalid types for '{}': {}, {}".format(op, left, right)
-
         # Equal types is always correct, if in valid_types.
         if left == right:
             if left not in valid_types:
-                self.handler.add_error(self.context, node, error)
+                self.handler.add_binop_error(self.context, node)
                 return False
             return True
         # Only numbers can be used in combination.
@@ -67,26 +65,38 @@ class TypeChecker(object):
             return True
 
         # Incompatible combination of types.
-        self.handler.add_error(self.context, node, error)
+        self.handler.add_binop_error(self.context, node)
         return False
 
     def question_node(self, question_node):
         """ :type question_node: AST.QuestionNode """
-        self.env[question_node.name.val] = question_node.type
+        if question_node.question.val in self.labels:
+            self.handler.add_dup_label_warning(self.context, question_node)
+        self.labels.append(question_node.question.val)
+
+        self.env.set_type(question_node)
 
     def comp_question_node(self, comp_question_node):
         """ :type comp_question_node: AST.CompQuestionNode """
-        self.env[comp_question_node.name.val] = comp_question_node.type
+        if comp_question_node.question.val in self.labels:
+            self.handler.add_dup_label_warning(self.context, comp_question_node)
+        self.labels.append(comp_question_node.question.val)
+
+        self.env.set_type(comp_question_node)
         comp_question_node.expression.accept(self)
 
     def if_node(self, if_node):
         """ :type if_node: AST.IfNode """
-        if_node.expression.accept(self)
+        expr_type = if_node.expression.accept(self)
+        if expr_type != Type.BOOLEAN:
+            self.handler.add_if_cond_error(self.context, if_node)
         if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
         """ :type if_else_node: AST.IfElseNode """
-        if_else_node.expression.accept(self)
+        expr_type = if_else_node.expression.accept(self)
+        if expr_type != Type.BOOLEAN:
+            self.handler.add_if_cond_error(self.context, if_else_node)
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
 
@@ -185,12 +195,7 @@ class TypeChecker(object):
         return Type.BOOLEAN
 
     def var_node(self, var_node):
-        error = "Variable '{}' is not defined!".format(var_node.val)
-
-        if var_node.val not in self.env:
-            self.handler.add_error(self.context, var_node, error)
-            return None
-        return self.env[var_node.val]
+        return self.env.get_type(var_node)
 
     @staticmethod
     def decimal_node(_):

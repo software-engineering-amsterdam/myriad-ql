@@ -184,30 +184,3 @@ class QuestionnaireParser(object):
 
     def parse(self, input_str):
         return self.grammar.parseString(input_str, parseAll=True)[0]
-
-if __name__ == '__main__':
-    form1 = """
-    form taxOfficeExample {
-        "Did you sell a house in 2010?" hasSoldHouse: boolean
-        "Did you buy a house in 2010?" hasBoughtHouse: boolean
-        "Did you enter a loan?" hasMaintLoan: integer
-
-
-        if (-true >= !false * !100 * +5 * !hasMaintLoan) {
-            "What was the selling price?" sellingPrice: money
-            "Private debts for the sold house:" privateDebt: money
-            "Value residue:" valueResidue: money = (sellingPrice -
-            privateDebt)
-        }
-        else {
-            "question?" test:           boolean
-            "Did you sell a house in 2010?" hasSoldHouse: boolean = (-var == 600)
-        }
-    }
-    """
-    parser = QuestionnaireParser()
-    parsedAST = parser.parse(form1)
-    print parsedAST
-
-    TypeChecker(parsedAST).start_traversal()
-    # Evaluate(parsedAST).start_traversal()
