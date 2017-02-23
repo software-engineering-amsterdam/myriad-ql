@@ -4,13 +4,6 @@ from pql.parser.parser import *
 
 
 class TestAst(unittest.TestCase):
-    def test_ast_simple_empty_form(self):
-        input_string = "form taxOfficeExample {}"
-
-        with self.assertRaises(ParseException):
-            parse_result = parse(input_string)
-            self.fail('Empty form block should not be possible')
-
     def test_ast_single_question(self):
         input_string = """
         form taxOfficeExample {
