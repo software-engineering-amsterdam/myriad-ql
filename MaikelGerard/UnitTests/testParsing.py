@@ -146,16 +146,16 @@ class TestParser(unittest.TestCase):
 
     def test_binops(self):
         binop1 = ["1000", ">", "100.0"]
-        binop_node1 = AST.GTNode(AST.IntNode(binop1[0]), AST.DecimalNode(binop1[2]))
+        binop_node1 = AST.GTNode(AST.IntNode(Decimal(binop1[0])), AST.DecimalNode(Decimal(binop1[2])))
         self.validate_node(self.exp_parser, "".join(binop1), binop_node1)
 
         binop2 = binop1 + ["==", "true"]
-        binop_node2 = AST.EqNode(binop_node1, binop2[-2], AST.BoolNode(binop2[-1]))
+        binop_node2 = AST.EqNode(binop_node1, AST.BoolNode(True))
         self.validate_node(self.exp_parser, "".join(binop2), binop_node2)
 
         # (100 + var) * (true) + "String"
-        lit_bool = AST.BoolNode("true")
-        lit_int = AST.IntNode("100")
+        lit_bool = AST.BoolNode(True)
+        lit_int = AST.IntNode(Decimal("100"))
         lit_var = AST.VarNode("var")
         lit_string = AST.StringNode("String")
 
@@ -170,14 +170,14 @@ class TestParser(unittest.TestCase):
 
     def test_expression_combinations(self):
         # !(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false) = invalid eq but is parseable.
-        int1 = AST.IntNode("10")
-        int2 = AST.IntNode("2")
-        dec1 = AST.DecimalNode("5.0")
-        dec2 = AST.DecimalNode("19.")
-        dec3 = AST.DecimalNode(".12")
+        int1 = AST.IntNode(Decimal("10"))
+        int2 = AST.IntNode(Decimal("2"))
+        dec1 = AST.DecimalNode(Decimal("5.0"))
+        dec2 = AST.DecimalNode(Decimal("19."))
+        dec3 = AST.DecimalNode(Decimal(".12"))
         var1 = AST.VarNode("var1")
         var2 = AST.VarNode("var2")
-        bool1 = AST.BoolNode("false")
+        bool1 = AST.BoolNode(False)
 
         # First prefix +, then division
         expr = AST.DivNode(AST.PlusNode(int1), var1)

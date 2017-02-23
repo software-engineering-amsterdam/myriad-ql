@@ -1,5 +1,6 @@
 from TypeChecker import TypeChecker
-from Evaluate import Evaluate
+# from Evaluate import Evaluate
+from TypeEnums import TypeEnums
 import pyparsing as pp
 import AST
 import decimal
@@ -22,14 +23,14 @@ class QuestionnaireParser(object):
         "ELSE": pp.Keyword("else").suppress()
     }
 
-    TYPE_NAME = pp.oneOf("boolean int string date decimal money")
+    TYPE_NAME = pp.MatchFirst(TypeEnums.ALL_TYPES)
 
     def __init__(self):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
+        self.types = self.get_types()
 
-        self.TYPE = self.get_types()
-
+        # Create the grammar incrementally to simplify unit test creation.
         self.expression = self.define_expression()
         self.question = self.define_question()
         self.block = pp.Forward()
@@ -59,42 +60,49 @@ class QuestionnaireParser(object):
 
         return types
 
+    @staticmethod
+    def get_line_loc_info(src, loc):
+        col = pp.col(loc, src)
+        line = pp.lineno(loc, src)
+        return line, col
+
     def round_embrace(self, arg):
         return self.LIT["L_BRACE"] + arg + self.LIT["R_BRACE"]
 
     def curly_embrace(self, arg):
         return self.LIT["L_CURLY"] + arg + self.LIT["R_CURLY"]
 
-    @staticmethod
-    def get_line_loc_info(src, loc):
-        col = pp.col(loc, src)
-        line = pp.lineno(loc, src)
-        return col, line
-
     def define_question(self):
         def create_question_grammar():
-            return self.TYPE["STRING"] + self.TYPE["VAR"] + self.LIT["COLON"] + \
-                   self.TYPE_NAME
+            """
+            Use this function to prevent double parseActions, as the question
+            grammar is re-used in the comp_question grammar definition.
+            """
+            return self.types["STRING"] + self.types["VAR"] + \
+                self.LIT["COLON"] + self.TYPE_NAME
 
         question = create_question_grammar()
-        computed_question = create_question_grammar() + self.LIT["IS"] + \
-            self.round_embrace(self.expression)
-
         question.addParseAction(self.create_node(AST.QuestionNode))
-        computed_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
-        return computed_question | question
+
+        comp_question = create_question_grammar() + self.LIT["IS"] + \
+            self.round_embrace(self.expression)
+        comp_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
+
+        return comp_question | question
 
     def define_conditional(self):
         def create_if_grammar():
+            """ Again used to prevent double parseActions. """
             return self.KW["IF"] + self.round_embrace(self.expression) + \
-                   self.curly_embrace(self.block)
-        # Make use of an create if grammar function as to prevent double parse actions due to
-        # creation of the if_else_cond with the same if_cond object reference.
-        if_cond = create_if_grammar()
-        if_else_cond = create_if_grammar() + self.KW["ELSE"] + self.curly_embrace(self.block)
+                self.curly_embrace(self.block)
 
+        if_cond = create_if_grammar()
         if_cond.addParseAction(self.create_node(AST.IfNode))
+
+        if_else_cond = create_if_grammar() + self.KW["ELSE"] + \
+            self.curly_embrace(self.block)
         if_else_cond.addParseAction(self.create_node(AST.IfElseNode))
+
         return if_else_cond | if_cond
 
     def define_grammar(self):
@@ -102,7 +110,8 @@ class QuestionnaireParser(object):
             pp.OneOrMore(self.question | self.conditional)
         ).addParseAction(self.create_node(AST.BlockNode))
 
-        form = self.KW["FORM"] + self.TYPE["VAR"] + self.curly_embrace(self.block)
+        form = self.KW["FORM"] + self.types["VAR"] + \
+            self.curly_embrace(self.block)
         form.addParseAction(self.create_node(AST.FormNode))
 
         return form.addParseAction(self.create_node(AST.QuestionnaireAST))
@@ -114,23 +123,16 @@ class QuestionnaireParser(object):
             return ast_class(*args)
         return create_args
 
-    def create_monop_node(self, src, loc, token):
-        monop = token[0]
-        ast_class = monop[0]
-        monop_expr = monop[1]
-        line, col = self.get_line_loc_info(src, loc)
-        return ast_class(monop_expr, line, col)
-
     def define_expression(self):
         # Define expressions including operator precedence. Based on:
         # http://pythonhosted.org/pyparsing/pyparsing-module.html#infixNotation
         var_types = (
-            self.TYPE["BOOL"].addParseAction(self.create_node(AST.BoolNode)) |
-            self.TYPE["VAR"].addParseAction(self.create_node(AST.VarNode)) |
-            self.TYPE["DECIMAL"].addParseAction(self.create_node(AST.DecimalNode)) |
-            self.TYPE["INT"].addParseAction(self.create_node(AST.IntNode)) |
-            self.TYPE["DATE"].addParseAction(self.create_node(AST.DateNode)) |
-            self.TYPE["STRING"].addParseAction(self.create_node(AST.StringNode))
+            self.types["BOOL"].addParseAction(self.create_node(AST.BoolNode)) |
+            self.types["VAR"].addParseAction(self.create_node(AST.VarNode)) |
+            self.types["DECIMAL"].addParseAction(self.create_node(AST.DecimalNode)) |
+            self.types["INT"].addParseAction(self.create_node(AST.IntNode)) |
+            self.types["DATE"].addParseAction(self.create_node(AST.DateNode)) |
+            self.types["STRING"].addParseAction(self.create_node(AST.StringNode))
         )
 
         def create_operator(opp, ast_class):
@@ -162,6 +164,13 @@ class QuestionnaireParser(object):
             (infix_or, 2, pp.opAssoc.LEFT, self.create_binops),
         ])
 
+    def create_monop_node(self, src, loc, token):
+        monop = token[0]
+        ast_class = monop[0]
+        monop_expr = monop[1]
+        line, col = self.get_line_loc_info(src, loc)
+        return ast_class(monop_expr, line, col)
+
     def create_binops(self, src, loc, token):
         token = token[0]
         line, col = self.get_line_loc_info(src, loc)
@@ -181,7 +190,8 @@ if __name__ == '__main__':
     form taxOfficeExample {
         "Did you sell a house in 2010?" hasSoldHouse: boolean
         "Did you buy a house in 2010?" hasBoughtHouse: boolean
-        "Did you enter a loan?" hasMaintLoan: int
+        "Did you enter a loan?" hasMaintLoan: integer
+
 
         if (-true >= !false * !100 * +5 * !hasMaintLoan) {
             "What was the selling price?" sellingPrice: money
@@ -199,5 +209,5 @@ if __name__ == '__main__':
     parsedAST = parser.parse(form1)
     print parsedAST
 
-    #TypeChecker(parsedAST).start_traversal()
-    Evaluate(parsedAST).start_traversal()
+    TypeChecker(parsedAST).start_traversal()
+    # Evaluate(parsedAST).start_traversal()
