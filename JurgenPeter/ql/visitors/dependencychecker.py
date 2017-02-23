@@ -2,7 +2,7 @@ class DependencyChecker:
 
     def __init__(self):
         self.dependencies = {}
-        self.computed_symbols = []
+        self.constants = []
         self.errors = []
         self.warnings = []
 
@@ -36,7 +36,10 @@ class DependencyChecker:
                 self.error("circular dependency between \"{}\" and \"{}\"".format(node.name, dependency))
 
         self.dependencies[node.name] = dependencies
-        self.computed_symbols.append(node.name)
+
+        if not dependencies:
+            self.constants.append(node.name)
+
         return [node.name]
 
     def visit_if_conditional(self, node):
@@ -46,7 +49,7 @@ class DependencyChecker:
         for variable in requires:
             if variable in scope:
                 self.error("condition depends on question \"{}\" in scope".format(variable))
-            if variable in self.computed_symbols:
+            if variable in self.constants:
                 self.warn("condition depends on computed question \"{}\"".format(variable))
 
         return scope
@@ -58,7 +61,7 @@ class DependencyChecker:
         for variable in requires:
             if variable in scope:
                 self.error("condition depends on question \"{}\" in scope".format(variable))
-            if variable in self.computed_symbols:
+            if variable in self.constants:
                 self.warn("condition depends on computed question \"{}\"".format(variable))
 
         return scope
