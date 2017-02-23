@@ -22,6 +22,13 @@ class Grammar:
 		except Exception:
 			exit("Could not load QL File")
 
+		if(self._verbose):
+			print("\n====================================")
+			print("========= RAW QL CONTENT ===========")
+			print("====================================")
+			print(self.__ql_content)
+			print("====================================\n")
+
 		# Parse the form
 		try:
 			form = QL.form.parseString(self.__ql_content)
@@ -29,6 +36,10 @@ class Grammar:
 			form = None
 		finally:
 			if(self._verbose):
+				print("\n====================================")
+				print("========= RAW PARSED FORM ==========")
+				print("====================================")
 				pprint(form)
+				print("====================================\n")
 
 			return form
