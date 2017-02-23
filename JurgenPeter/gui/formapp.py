@@ -1,30 +1,59 @@
 from appJar import gui
 from ql.visitors.questionfinder import QuestionFinder
+from gui.update_gui import UpdateGUI
+from gui.update_computations import UpdateComputations
+from gui.widgets import *
+from ql.ast import Datatype
+
+default_widgets = {
+    Datatype.integer: IntegerEntryWidget,
+    Datatype.decimal: DecimalEntryWidget,
+    Datatype.boolean: CheckBoxWidget,
+    Datatype.string:  StringEntryWidget}
 
 
 class FormApp:
-    LABELPREFIX = "label_"
-    ENTRYPREFIX = "entry_"
 
-    def __init__(self, ast, symboltable):
-        self.environment = {name: None for name in symboltable}
+    def __init__(self, ast):
+        self.ast = ast
+        self.environment = {}
+        self.widgets = {}
+
         self.app = gui(ast.name)
-        questions = QuestionFinder().visit(ast)
+        self.app.bindKey("<KeyPress>", self.update_gui)
 
-        # TODO how to determine the widget type to be created
-        for question in questions:
-            self.app.addLabel(self.create_label_id(question.name),
-                              question.label)
-            self.app.addEntry(self.create_entry_id(question.name))
+        self.questions = QuestionFinder().visit(ast)
+        for question in self.questions:
+            widget = default_widgets[question.datatype](self.app, question)
+            widget.set_listener(self.update_gui)
+            self.widgets[question.name] = widget
+            self.environment[question.name] = None
 
     def start(self):
+        self.update_gui(None)
         self.app.go()
 
     def stop(self):
         self.app.stop()
 
-    def create_label_id(self, name):
-        return self.LABELPREFIX + name
+    def update_gui(self, _):
+        for name, widget in self.widgets.items():
+            self.environment[name] = widget.get_value()
 
-    def create_entry_id(self, name):
-        return self.ENTRYPREFIX + name
+        computer = UpdateComputations(self.environment)
+        for question in self.questions:
+            computer.visit(question)
+
+        UpdateGUI(self, self.environment).visit(self.ast)
+
+    def show_widget(self, name):
+        self.widgets[name].show()
+
+    def hide_widget(self, name):
+        self.widgets[name].hide()
+
+    def disable_widget(self, name):
+        self.widgets[name].disable()
+
+    def set_widget(self, name, value):
+        self.widgets[name].set_value(value)
