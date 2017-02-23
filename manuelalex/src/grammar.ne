@@ -24,7 +24,7 @@ ifelseifelse_statement  -> if_statement "else if" _ conditional if_body else_cla
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
 if_body                 -> _ openBrace _ statement:* closedBrace _
-conditional             -> parOpen expression parClose
+conditional             -> parOpen or_test parClose
 else_clause             -> "else" _ openBrace _ statement:* closedBrace _
 
 answer                  -> "answer" _ prime sentence prime _ allocation _                                      {% FormPostProcessor.answer %}
@@ -41,6 +41,14 @@ divide_op               -> "/"                                                  
 multiply_op             -> "*"                                                                                 {% FormPostProcessor.multiplyOp %}
 
 assignOp                -> "="
+
+
+or_test                 -> and_test | or_test _ ("||" | "|") _ and_test
+and_test                -> not_test | and_test _ ("&&" | "&") _ not_test
+not_test                -> comparison | "!" not_test | propertyName
+comparison              -> propertyName _ comp_operator _ propertyName
+comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
+
 
 
 propertyName            -> [A-Za-z0-9]:+                                                                      {% FormPostProcessor.toString %}
