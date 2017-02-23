@@ -24,15 +24,15 @@ ifelseifelse_statement  -> if_statement "else if" _ conditional if_body else_cla
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
 if_body                 -> _ openBrace _ statement:* closedBrace _
-conditional             -> parOpen or_test parClose
+conditional             -> parOpen bool_expression parClose
 else_clause             -> "else" _ openBrace _ statement:* closedBrace _
 
 answer                  -> "answer" _ prime sentence prime _ allocation _                                      {% FormPostProcessor.answer %}
-allocation              -> propertyName ":" _ propertyType _ assignOp _ expression                             {% FormPostProcessor.allocation %}
+allocation              -> propertyName ":" _ propertyType _ assignOp _ (arithmetic_expression|bool_expression)           {% FormPostProcessor.allocation %}
 
-expression              -> term | expression (min_op|plus_op) term                                             {% FormPostProcessor.expression %}
+arithmetic_expression   -> term | arithmetic_expression (min_op|plus_op) term                                             {% FormPostProcessor.expression %}
 term                    -> factor | term (divide_op | multiply_op) factor
-factor                  -> digits | propertyName | parOpen expression parClose
+factor                  -> digits | propertyName | parOpen arithmetic_expression parClose
 digits                  -> [0-9]:+                                                                             {% (data)=> Number(data[0]) %}
 
 min_op                  -> "-"                                                                                 {% FormPostProcessor.minOp %}
@@ -43,7 +43,7 @@ multiply_op             -> "*"                                                  
 assignOp                -> "="
 
 
-or_test                 -> and_test | or_test _ ("||" | "|") _ and_test
+bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test
 and_test                -> not_test | and_test _ ("&&" | "&") _ not_test
 not_test                -> comparison | "!" not_test | propertyName
 comparison              -> propertyName _ comp_operator _ propertyName
