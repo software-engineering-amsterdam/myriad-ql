@@ -57,4 +57,3 @@ class FormApp:
 
     def set_widget(self, name, value):
         self.widgets[name].set_value(value)
-

@@ -1,5 +1,6 @@
 import re
 
+
 class Widget:
     LABELPREFIX = "label_"
     ENTRYPREFIX = "entry_"
@@ -49,7 +50,8 @@ class IntegerEntryWidget(EntryWidget):
     def __init__(self, app, question):
         super().__init__(app, question)
         v = self.app.getEntryWidget(self.entry_id).register(self.validate)
-        self.app.getEntryWidget(self.entry_id).config(validate="key", validatecommand=(v, "%P"))
+        self.app.getEntryWidget(self.entry_id).config(validate="key",
+                                                      validatecommand=(v, "%P"))
 
     @staticmethod
     def validate(text):
@@ -74,7 +76,8 @@ class DecimalEntryWidget(EntryWidget):
     def __init__(self, app, question):
         super().__init__(app, question)
         v = self.app.getEntryWidget(self.entry_id).register(self.validate)
-        self.app.getEntryWidget(self.entry_id).config(validate="key", validatecommand=(v, "%P"))
+        self.app.getEntryWidget(self.entry_id).config(validate="key",
+                                                      validatecommand=(v, "%P"))
 
     @staticmethod
     def validate(text):
