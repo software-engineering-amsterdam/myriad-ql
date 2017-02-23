@@ -45,8 +45,8 @@ assignOp                -> "="
 
 bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test
 and_test                -> not_test | and_test _ ("&&" | "&") _ not_test
-not_test                -> comparison | "!" not_test | arithmetic_expression
-comparison              -> arithmetic_expression _ comp_operator _ arithmetic_expression
+not_test                -> comparison | "!" not_test | propertyName
+comparison              -> propertyName _ comp_operator _ propertyName
 comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
 
 
