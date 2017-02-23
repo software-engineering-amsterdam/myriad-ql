@@ -15,11 +15,6 @@ class UpdateGUI:
     def pop(self):
         self.stack.pop()
 
-    def read(self):
-        if self.stack:
-            return self.stack[-1]
-        return True
-
     def visit(self, node):
         node.accept(self)
 
@@ -28,36 +23,26 @@ class UpdateGUI:
             statement.accept(self)
 
     def visit_if_conditional(self, node):
-
-        if self.read():
-            self.push(self.evaluator.visit(node.condition))
-        else:
-            self.push(False)
-
+        state = self.evaluator.visit(node.condition)
+        self.push(state)
         for statement in node.ifbody:
             statement.accept(self)
-
         self.pop()
 
     def visit_ifelse_conditional(self, node):
-
-        if self.read():
-            state = self.evaluator.visit(node.condition)
-        else:
-            state = False
-
+        state = self.evaluator.visit(node.condition)
         self.push(state)
-
         for statement in node.ifbody:
             statement.accept(self)
         self.pop()
+
         self.push(not state)
         for statement in node.elsebody:
             statement.accept(self)
         self.pop()
 
     def visit_question(self, node):
-        if self.read():
+        if all(self.stack):
             self.form_app.show_widget(node.name)
         else:
             self.form_app.hide_widget(node.name)

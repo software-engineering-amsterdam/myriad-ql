@@ -44,7 +44,6 @@ class FormApp:
         computer = UpdateComputations(self.environment)
         for question in self.questions:
             computer.visit(question)
-
         UpdateGUI(self, self.environment).visit(self.ast)
 
     def show_widget(self, name):
