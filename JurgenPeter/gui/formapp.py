@@ -4,7 +4,7 @@ from gui.visitors.update_computations import UpdateComputations
 from gui.visitors.update_gui import UpdateGUI
 from gui.widgets import *
 from ql.ast import Datatype
-from ql.visitors.questionfinder import QuestionFinder
+from ql.visitors.question_finder import QuestionFinder
 
 default_widgets = {
     Datatype.integer: IntegerEntryWidget,

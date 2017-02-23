@@ -1,9 +1,9 @@
 from gui.formapp import *
 from ql.grammar import parse_file
-from ql.visitors.dependencychecker import DependencyChecker
+from ql.visitors.dependency_checker import DependencyChecker
 from ql.visitors.printer import Printer
-from ql.visitors.symbolchecker import SymbolChecker
-from ql.visitors.typechecker import TypeChecker
+from ql.visitors.symbol_checker import SymbolChecker
+from ql.visitors.type_checker import TypeChecker
 
 
 def report_error(message):
