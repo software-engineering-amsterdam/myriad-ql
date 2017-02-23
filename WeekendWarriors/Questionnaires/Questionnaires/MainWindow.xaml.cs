@@ -46,15 +46,15 @@ namespace Questionnaires
 
             // Example renderer functionality
             Renderer.Renderer renderer = new Renderer.Renderer();
-            
-            QuestionWidgetInfo q1 = new QuestionWidgetInfo();
+
+            var q1 = new Question.Question();
             q1.Body = "Do you like apples?";
             q1.Name = "Apple question";
             q1.Type = QuestionType.Bool;
             q1.Value = new BoolValue(true);
             q1.Visibility = Question.Visibility.Visible;
 
-            QuestionWidgetInfo q2 = new QuestionWidgetInfo();
+            var q2 = new Question.Question();
             q2.Body = "Favorite number?";
             q2.Name = "Number question";
             q2.Type = QuestionType.Number;

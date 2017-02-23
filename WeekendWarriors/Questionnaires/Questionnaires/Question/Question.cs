@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Question
 {
-    class QuestionWidgetInfo : IQuestion
+    class Question : IQuestion
     {
         public string Body { get; set; }
         public string Name { get; set; }
         public QuestionType Type { get; set; }
         public IValue Value { get; set; }
-        public Question.Visibility Visibility { get; set; }
+        public Questionnaires.Question.Visibility Visibility { get; set; }
     }
 }
