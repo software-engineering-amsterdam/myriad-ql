@@ -4,7 +4,6 @@ cur_version = sys.version_info
 
 if cur_version >= req_version:
 	from grammar.grammar import Grammar
-	from ast.tree import Tree
 	from gui.interface import Interface
 	import argparse
 else:
@@ -40,15 +39,7 @@ if __name__ == '__main__':
 	# parse the ql file
 	form_parsed = grammar.parse()
 
-	# pass the parsed ql file and construc the tree
-	tree = Tree()
-	ast = tree.construct(form_parsed)
-	if(grammar._verbose):
-		print("\n====================================")
-		print("======= TREE REPRESENTATION ========")
-		print("====================================")
-		print(ast.get_tree_representation())
-		print("====================================")
+	# print(form_parsed)
 
-	gui = Interface(ast)
+	gui = Interface(form_parsed)
 	gui.build_interface()

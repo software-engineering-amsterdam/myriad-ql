@@ -3,18 +3,18 @@ req_version = (3,0)
 cur_version = sys.version_info
 
 if cur_version >= req_version:
-    from pyparsing import *
     from tkinter import *
-    from ast.node import *
+    from ast.ast import *
     from parser.ql import QL
     from .labeledcb import LabeledCheckbutton
+    from .drawables import *
 else:
     exit("Did you forget to run it using python >= 3.0 ??")
 
 class Interface(Frame):
     # private
     __root = None
-    __tree = None
+    __ast = None
     __variables = {}
     __row_counter = 0
 
@@ -22,13 +22,13 @@ class Interface(Frame):
         self.__root = Tk()
         self.__root.minsize(width=400, height=300)
         super().__init__(self.__root)
-        self.__tree = ast
+        self.__ast = ast
 
     def main(self):
         pass
 
     def start_gui(self):
-        if(self.__tree is None):
+        if(self.__ast is None):
             self.__root.destroy()
             exit("No Data to construct interface... Exiting...")
         self.build_interface()
@@ -62,17 +62,17 @@ class Interface(Frame):
 
     def construct_from_node(self,node):
         # Get possible displayables
-        if(node.__class__ == QuestionNode):
-            if(node._field_type == "boolean"):
-                if not self.variable_is_defined(node.get_identifier()):
-                    self.__variables[node.get_identifier()] = IntVar()
-                labeledcb = LabeledCheckbutton(self.__root)
-                labeledcb.label.configure(text=node._text)
-                labeledcb.checkbutton.configure(variable=self.__variables[
-                    node.get_identifier()
-                    ],
-                    command=self.refresh)
-                labeledcb.grid(row=self.get_new_row(), columnspan=2, sticky=W)
+        if(isinstance(node,Question)):
+            if(node._field_type == Boolean):
+                if not self.variable_is_defined(node._identifier):
+                    self.__variables[node._identifier] = IntVar()
+                drawable = DrawableBoolean()
+                drawable.draw(self.__root,
+                              self.__variables[node._identifier],
+                              node._text,
+                              self.get_new_row(),
+                              self.refresh)
+                print(drawable)
             elif(node._field_type == "string"):
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = StringVar()
@@ -107,21 +107,21 @@ class Interface(Frame):
                 return
             else:
                 return
-        elif(node.__class__ == ConditionalNode):
-            # evaluate condition
-            # print(QL.match_evaluation.parseString(node._evaluation))
-            # print(node._evaluation)
-            # TODO: parse the evaluation [LINE BELOW IS TEMPORARY]
-            _var = QL.evaluation_unquoted.parseString(node._evaluation)[0]
-            # print(_var)
-            # print(self.__variables[_var].get())
-            # when evaluated as TRUE
-            if(self.__variables[_var].get() == 1):
-                # recursive
-                for child in node.get_children():
-                    # print(child.__class__.__name__)
-                    self.construct_from_node(child)
-        elif(node.__class__ == StatementNode):
+        # elif(node.__class__ == Conditional):
+        #     # evaluate condition
+        #     # print(QL.match_evaluation.parseString(node._evaluation))
+        #     # print(node._evaluation)
+        #     # TODO: parse the evaluation [LINE BELOW IS TEMPORARY]
+        #     _var = QL.evaluation_unquoted.parseString(node._evaluation)[0]
+        #     # print(_var)
+        #     # print(self.__variables[_var].get())
+        #     # when evaluated as TRUE
+        #     if(self.__variables[_var].get() == 1):
+        #         # recursive
+        #         for child in node.get_children():
+        #             # print(child.__class__.__name__)
+        #             self.construct_from_node(child[0])
+        elif(node.__class__ == Statement):
             # statement node
             Label(self.__root, text=node._text).grid(row=self.get_new_row(),
                                                      columnspan=2,
@@ -135,8 +135,8 @@ class Interface(Frame):
         _row = self.get_new_row()
 
         # walk through the nodes
-        for content_node in self.__tree.get_children():
-            self.construct_from_node(content_node)
+        for content_node in self.__ast._children:
+            self.construct_from_node(content_node[0])
 
     def construct_menu(self):
         self.menu = Menu(self.__root)
@@ -155,7 +155,7 @@ class Interface(Frame):
 
     def build_interface(self):
         # Title (based on identifier of root node)
-        self.__root.title(self.__tree.get_identifier())
+        self.__root.title(self.__ast._identifier)
 
         # construct widgets (frame content)
         self.construct_interface()
