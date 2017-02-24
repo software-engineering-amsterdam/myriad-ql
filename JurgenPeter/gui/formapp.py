@@ -31,7 +31,6 @@ class FormApp:
             widget = default_widgets[question.datatype](self.app, question)
             widget.set_listener(self.update_gui)
             self.widgets[question.name] = widget
-            self.environment[question.name] = None
 
     def start(self):
         self.update_gui(None)
