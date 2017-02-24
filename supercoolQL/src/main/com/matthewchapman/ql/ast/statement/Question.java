@@ -1,13 +1,16 @@
-package com.matthewchapman.ql.ast;
+package com.matthewchapman.ql.ast.statement;
+
+import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.Type;
 
 /**
  * Created by matt on 20/02/2017.
  */
 public class Question extends Statement {
 
-    public String name;
-    public Type type;
-    public String text;
+    public final String name;
+    public final Type type;
+    public final String text;
 
     public Question(String name, String text, Type type)
     {

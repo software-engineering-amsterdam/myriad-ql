@@ -13,13 +13,14 @@ import java.lang.reflect.InvocationTargetException;
  */
 
 
-public class QlFileReader {
+class QLFileReader {
 
     private String resultString = "";
 
     String QlRead() throws InvocationTargetException, InterruptedException {
 
         //Put the UI rendering on a separate thread for OSX
+        //TODO extract method & remove lambda to allow resultString removal
         EventQueue.invokeAndWait(() -> {
 
             String fileInString = "";

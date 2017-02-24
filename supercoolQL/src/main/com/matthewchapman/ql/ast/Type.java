@@ -3,9 +3,10 @@ package com.matthewchapman.ql.ast;
 /**
  * Created by matt on 21/02/2017.
  */
-public class Type extends Node {
+public class Type extends ASTNode {
 
-    String type;
+    //TODO type should not be a string!
+    final String type;
 
     public Type(String type)
     {

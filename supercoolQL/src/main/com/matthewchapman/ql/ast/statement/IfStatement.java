@@ -1,4 +1,7 @@
-package com.matthewchapman.ql.ast;
+package com.matthewchapman.ql.ast.statement;
+
+import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.expression.Expression;
 
 import java.util.ArrayList;
 
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 
 public class IfStatement extends Statement {
 
-    private ArrayList<Statement> statements;
+    private final ArrayList<Statement> statements;
     private Expression expression;
 
     public IfStatement(Expression e, ArrayList<Statement> s) {
