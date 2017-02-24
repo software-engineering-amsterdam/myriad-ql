@@ -21,29 +21,28 @@ class SymbolChecker:
             statement.accept(self)
 
     def visit_question(self, node):
-        if node.label in self.labels:
-            self.warn("label \"{}\" is already used".format(node.label))
-        else:
+        if node.label not in self.labels:
             self.labels.append(node.label)
+        else:
+            self.warn("label \"{}\" is already used".format(node.label))
 
         if node.name not in self.symboltable:
             self.symboltable[node.name] = node.datatype
         else:
-            self.error("question indentifier \"{}\" "
-                       "is already used".format(node.name))
+            self.error("question name \"{}\" is already "
+                       "used".format(node.name))
 
     def visit_computed_question(self, node):
-        if node.label in self.labels:
-            self.warn("label \"{}\" "
-                      "is already used".format(node.label))
-        else:
+        if node.label not in self.labels:
             self.labels.append(node.label)
+        else:
+            self.warn("label \"{}\" is already used".format(node.label))
 
         if node.name not in self.symboltable:
             self.symboltable[node.name] = node.datatype
         else:
-            self.error("question indentifier \"{}\" "
-                       "is already used".format(node.name))
+            self.error("question name \"{}\" is already "
+                       "used".format(node.name))
 
     def visit_if_conditional(self, node):
         for statement in node.ifbody:

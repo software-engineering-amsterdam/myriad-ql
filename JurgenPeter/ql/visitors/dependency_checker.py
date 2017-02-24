@@ -26,6 +26,9 @@ class DependencyChecker:
     def visit_computed_question(self, node):
         dependencies = node.computation.accept(self)
 
+        if not dependencies:
+            self.constants.append(node.name)
+
         # Find all (indirect) dependencies of this questions dependencies using
         # breadth first search on the dependency table.
         for dependency in dependencies:
@@ -33,13 +36,10 @@ class DependencyChecker:
 
         for dependency in dependencies:
             if dependency in self.dependencies and node.name in self.dependencies[dependency]:
-                self.error("circular dependency between \"{}\" and \"{}\"".format(node.name, dependency))
+                self.error("circular dependency between questions "
+                           "\"{}\" and \"{}\"".format(node.name, dependency))
 
         self.dependencies[node.name] = dependencies
-
-        if not dependencies:
-            self.constants.append(node.name)
-
         return [node.name]
 
     def visit_if_conditional(self, node):
@@ -48,9 +48,11 @@ class DependencyChecker:
 
         for variable in requires:
             if variable in scope:
-                self.error("condition depends on question \"{}\" in scope".format(variable))
+                self.error("condition depends on question \"{}\" within "
+                           "own scope".format(variable))
             if variable in self.constants:
-                self.warn("condition depends on computed question \"{}\"".format(variable))
+                self.warn("condition depends on constant computed "
+                          "question \"{}\"".format(variable))
 
         return scope
 
@@ -60,9 +62,11 @@ class DependencyChecker:
 
         for variable in requires:
             if variable in scope:
-                self.error("condition depends on question \"{}\" in scope".format(variable))
+                self.error("condition depends on question \"{}\" within "
+                           "own scope".format(variable))
             if variable in self.constants:
-                self.warn("condition depends on computed question \"{}\"".format(variable))
+                self.warn("condition depends on constant computed "
+                          "question \"{}\"".format(variable))
 
         return scope
 

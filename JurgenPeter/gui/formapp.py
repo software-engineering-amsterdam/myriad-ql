@@ -1,16 +1,17 @@
 from appJar import gui
 
-from gui.visitors.update_computations import UpdateComputations
-from gui.visitors.update_gui import UpdateGUI
-from gui.widgets import *
 from ql.ast import Datatype
 from ql.visitors.question_finder import QuestionFinder
+from gui.widgets import *
+from gui.visitors.update_computations import UpdateComputations
+from gui.visitors.update_gui import UpdateGUI
+
 
 default_widgets = {
     Datatype.integer: IntegerEntryWidget,
     Datatype.decimal: DecimalEntryWidget,
     Datatype.boolean: CheckBoxWidget,
-    Datatype.string:  StringEntryWidget}
+    Datatype.string:  EntryWidget}
 
 
 class FormApp:
@@ -23,8 +24,10 @@ class FormApp:
         self.app = gui(ast.name)
         self.app.bindKey("<KeyPress>", self.update_gui)
 
-        self.questions = QuestionFinder().visit(ast)
-        for question in self.questions:
+        questions = QuestionFinder().visit(ast)
+
+        # TODO merge visitor with widget creation
+        for question in questions:
             widget = default_widgets[question.datatype](self.app, question)
             widget.set_listener(self.update_gui)
             self.widgets[question.name] = widget
@@ -40,10 +43,7 @@ class FormApp:
     def update_gui(self, _):
         for name, widget in self.widgets.items():
             self.environment[name] = widget.get_value()
-
-        computer = UpdateComputations(self.environment)
-        for question in self.questions:
-            computer.visit(question)
+        UpdateComputations(self.environment).visit(self.ast)
         UpdateGUI(self, self.environment).visit(self.ast)
 
     def show_widget(self, name):

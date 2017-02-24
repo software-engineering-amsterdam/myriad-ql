@@ -41,11 +41,6 @@ class EntryWidget(Widget):
         return self.app.getEntry(self.entry_id)
 
 
-# StringEntryWidget is identical to the EntryWidget super class
-class StringEntryWidget(EntryWidget):
-    pass
-
-
 class IntegerEntryWidget(EntryWidget):
     def __init__(self, app, question):
         super().__init__(app, question)
@@ -108,6 +103,9 @@ class CheckBoxWidget(Widget):
         self.app.addCheckBox(self.entry_id)
         self.app.getCheckBoxWidget(self.entry_id).config(text="")
 
+    def set_listener(self, listener):
+        self.app.setCheckBoxFunction(self.entry_id, listener)
+
     def show(self):
         self.app.showLabel(self.label_id)
         self.app.showCheckBox(self.entry_id)
@@ -125,5 +123,3 @@ class CheckBoxWidget(Widget):
     def get_value(self):
         return self.app.getCheckBox(self.entry_id)
 
-    def set_listener(self, listener):
-        self.app.setCheckBoxFunction(self.entry_id, listener)

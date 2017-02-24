@@ -55,7 +55,6 @@ class TypeChecker:
         if right_type in self.arithmetic_datatypes:
             return right_type
         self.error("unary + operator has incompatible datatype")
-
         return None
 
     def visit_minop(self, node):
@@ -157,8 +156,8 @@ class TypeChecker:
     def visit_variable(self, node):
         if node.name in self.symboltable:
             return self.symboltable[node.name]
-        self.error("varable name \"{}\" does not correspond with a "
-                   "question".format(node.name))
+        self.error("varable name \"{}\" is not a "
+                   "question name".format(node.name))
         return None
 
     def visit_constant(self, node):
