@@ -104,6 +104,7 @@
     <Compile Include="Ast\Statements\FormStatement.cs" />
     <Compile Include="Ast\Statements\QuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
+    <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\TypeChecker.cs" />
     <Compile Include="Checker\TypeCheckerVisitor.cs" />
     <Compile Include="CustomQlVisitor.cs" />

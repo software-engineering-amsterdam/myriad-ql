@@ -11,6 +11,7 @@
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules;
+    using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Ast.Style.Widgets;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
 

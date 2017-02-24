@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.LanguageCore.Checker.Messages.Base
 {
-    using OffByOne.LanguageCore.Checker.Messages.Models;
+    using OffByOne.LanguageCore.Checker.Models;
 
     public abstract class CheckerMessage
     {

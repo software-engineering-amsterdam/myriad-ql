@@ -6,7 +6,7 @@
     using MoreDotNet.Extensions.Collections;
 
     using OffByOne.LanguageCore.Checker.Messages.Base;
-    using OffByOne.LanguageCore.Checker.Messages.Models;
+    using OffByOne.LanguageCore.Checker.Models;
 
     public class CheckerReport
     {

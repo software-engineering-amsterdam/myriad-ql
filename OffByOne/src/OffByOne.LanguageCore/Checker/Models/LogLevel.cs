@@ -1,4 +1,4 @@
-﻿namespace OffByOne.LanguageCore.Checker.Messages.Models
+﻿namespace OffByOne.LanguageCore.Checker.Models
 {
     public enum LogLevel
     {

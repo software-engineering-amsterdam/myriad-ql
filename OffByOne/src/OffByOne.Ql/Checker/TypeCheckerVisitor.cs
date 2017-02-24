@@ -10,7 +10,7 @@
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
     using OffByOne.LanguageCore.Checker.Messages;
-    using OffByOne.LanguageCore.Checker.Messages.Models;
+    using OffByOne.LanguageCore.Checker.Models;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;

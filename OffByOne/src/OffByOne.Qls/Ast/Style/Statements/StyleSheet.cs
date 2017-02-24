@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Qls.Ast.Style
+﻿namespace OffByOne.Qls.Ast.Style.Statements
 {
     using System.Collections.Generic;
 

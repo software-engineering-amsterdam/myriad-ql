@@ -80,7 +80,7 @@
     <Compile Include="Checker\BaseTypeCheckerVisitor.cs" />
     <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
-    <Compile Include="Checker\Messages\Models\LogLevel.cs" />
+    <Compile Include="Checker\Models\LogLevel.cs" />
     <Compile Include="Checker\Messages\InvaildTypeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\Contracts\ILiteralVisitor.cs" />

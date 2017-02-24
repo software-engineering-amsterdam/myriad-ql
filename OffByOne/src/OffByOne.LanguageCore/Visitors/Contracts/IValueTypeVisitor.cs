@@ -2,7 +2,7 @@
 {
     using OffByOne.LanguageCore.Ast.ValueTypes;
 
-    public interface IValueTypeVisitor<out TResult> : IVisitor
+    public interface IValueTypeVisitor<out TResult, in TContext> : IVisitor
     {
         TResult Visit(IntegerValueType valueType);
 
