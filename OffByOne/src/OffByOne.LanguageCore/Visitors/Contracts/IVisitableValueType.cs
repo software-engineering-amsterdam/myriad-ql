@@ -2,6 +2,7 @@
 {
     public interface IVisitableValueType : IVisitable
     {
-        TResult Accept<TResult>(IValueTypeVisitor<TResult> visitor);
+        TResult Accept<TResult, TContext>(IValueTypeVisitor<TResult, TContext> visitor, TContext context)
+            where TContext : IContext;
     }
 }

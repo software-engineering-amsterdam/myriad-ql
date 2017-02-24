@@ -1,10 +1,9 @@
 ﻿namespace OffByOne.LanguageCore.Ast.ValueTypes
 {
-    using System;
+    using MoreDotNet.Extensions.Common;
 
+    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Visitors.Contracts;
-
-    using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
 
     public class BooleanValueType : ValueType
     {
@@ -18,19 +17,21 @@
             return "boolean";
         }
 
-        public override TResult Accept<TResult>(IValueTypeVisitor<TResult> visitor)
+        public override TResult Accept<TResult, TContext>(
+            IValueTypeVisitor<TResult, TContext> visitor,
+            TContext context)
         {
-            return visitor.Visit(this);
+            return visitor.Visit(this, context);
         }
 
         public override bool Equals(object obj)
         {
-            return obj is BooleanValueType;
+            return obj.Is<BooleanValueType>();
         }
 
         public override bool Equals(ValueType other)
         {
-            return other is BooleanValueType;
+            return other.Is<BooleanValueType>();
         }
     }
 }

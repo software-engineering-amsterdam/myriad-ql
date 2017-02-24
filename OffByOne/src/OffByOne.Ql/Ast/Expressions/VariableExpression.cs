@@ -11,9 +11,11 @@
 
         public string Identifier { get; private set; }
 
-        public override TResult Accept<TResult>(IExpressionVisitor<TResult> visitor)
+        public override TResult Accept<TResult, TContext>(
+            IExpressionVisitor<TResult, TContext> visitor,
+            TContext context)
         {
-            return visitor.Visit(this);
+            return visitor.Visit(this, context);
         }
     }
 }

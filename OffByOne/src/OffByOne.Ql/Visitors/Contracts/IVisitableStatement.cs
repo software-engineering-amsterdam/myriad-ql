@@ -4,6 +4,7 @@
 
     public interface IVisitableStatement : IVisitable
     {
-        TResult Accept<TResult>(IStatementVisitor<TResult> visitor);
+        TResult Accept<TResult, TContext>(IStatementVisitor<TResult, TContext> visitor, TContext context)
+            where TContext : IContext;
     }
 }

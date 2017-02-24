@@ -21,7 +21,10 @@
             return !(typeOne == typeTwo);
         }
 
-        public abstract TResult Accept<TResult>(IValueTypeVisitor<TResult> visitor);
+        public abstract TResult Accept<TResult, TContext>(
+            IValueTypeVisitor<TResult, TContext> visitor,
+            TContext context)
+            where TContext : IContext;
 
         public override int GetHashCode()
         {

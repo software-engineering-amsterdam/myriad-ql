@@ -23,9 +23,11 @@
 
         public IEnumerable<Statement> ElseStatements { get; private set; }
 
-        public override TResult Accept<TResult>(IStatementVisitor<TResult> visitor)
+        public override TResult Accept<TResult, TContext>(
+            IStatementVisitor<TResult, TContext> visitor,
+            TContext context)
         {
-            return visitor.Visit(this);
+            return visitor.Visit(this, context);
         }
     }
 }

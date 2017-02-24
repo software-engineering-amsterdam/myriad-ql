@@ -5,42 +5,43 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
 
-    public interface IExpressionVisitor<out TResult> : IVisitor
+    public interface IExpressionVisitor<out TResult, in TContext> : IVisitor
+        where TContext : IContext
     {
-        TResult Visit(AddExpression expression);
+        TResult Visit(AddExpression expression, TContext context);
 
-        TResult Visit(SubtractExpression expression);
+        TResult Visit(SubtractExpression expression, TContext context);
 
-        TResult Visit(MultiplyExpression expression);
+        TResult Visit(MultiplyExpression expression, TContext context);
 
-        TResult Visit(DivideExpression expression);
+        TResult Visit(DivideExpression expression, TContext context);
 
-        TResult Visit(AndExpression expression);
+        TResult Visit(AndExpression expression, TContext context);
 
-        TResult Visit(OrExpression expression);
+        TResult Visit(OrExpression expression, TContext context);
 
-        TResult Visit(EqualExpression expression);
+        TResult Visit(EqualExpression expression, TContext context);
 
-        TResult Visit(NotEqualExpression expression);
+        TResult Visit(NotEqualExpression expression, TContext context);
 
-        TResult Visit(GreaterThanExpression expression);
+        TResult Visit(GreaterThanExpression expression, TContext context);
 
-        TResult Visit(GreaterThanOrEqualExpression expression);
+        TResult Visit(GreaterThanOrEqualExpression expression, TContext context);
 
-        TResult Visit(LessThanExpression expression);
+        TResult Visit(LessThanExpression expression, TContext context);
 
-        TResult Visit(LessThanOrEqualExpression expression);
+        TResult Visit(LessThanOrEqualExpression expression, TContext context);
 
-        TResult Visit(NotExpression expression);
+        TResult Visit(NotExpression expression, TContext context);
 
-        TResult Visit(NegativeExpression expression);
+        TResult Visit(NegativeExpression expression, TContext context);
 
-        TResult Visit(PositiveExpression expression);
+        TResult Visit(PositiveExpression expression, TContext context);
 
-        TResult Visit(VariableExpression expression);
+        TResult Visit(VariableExpression expression, TContext context);
 
-        TResult Visit(BracketExpression expression);
+        TResult Visit(BracketExpression expression, TContext context);
 
-        TResult Visit(LiteralExpression expression);
+        TResult Visit(LiteralExpression expression, TContext context);
     }
 }

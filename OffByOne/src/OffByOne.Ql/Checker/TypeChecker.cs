@@ -3,6 +3,7 @@
     using System;
 
     using OffByOne.LanguageCore.Checker;
+    using OffByOne.LanguageCore.Visitors;
     using OffByOne.Ql.Ast.Statements;
 
     public class TypeChecker
@@ -27,7 +28,7 @@
 
         public CheckerReport Check(FormStatement node)
         {
-            this.visitor.Visit(node);
+            this.visitor.Visit(node, new VisitorContext());
             return this.visitor.Report;
         }
     }

@@ -3,6 +3,7 @@
     using OffByOne.LanguageCore.Ast.Literals;
 
     public interface ILiteralVisitor<out TResult, in TContext> : IVisitor
+        where TContext : IContext
     {
         TResult Visit(IntegerLiteral literal, TContext context);
 
