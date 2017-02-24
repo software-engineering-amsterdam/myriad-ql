@@ -188,3 +188,8 @@ class Variable(Node):
     def __init__(self, value):
         Node.__init__(self, "variable")
         self._identifier = value
+
+    def __str__(self):
+        return self._identifier
+
+    __repr__ = __str__
