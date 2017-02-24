@@ -30,9 +30,9 @@ namespace DSL.AST
             return new QLParser(tokens);
         }
 
-        public INode CreateQLObject(QLParser parser, QLObjectType qlObjectType)
+        public INode CreateQLObject(QLParser parser, QLObjectType qlObjectType, QLContext context)
         {
-            QLVisitor visitor = new QLVisitor();
+            QLVisitor visitor = new QLVisitor(context);
 
             switch (qlObjectType)
             {

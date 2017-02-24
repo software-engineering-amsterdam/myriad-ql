@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -25,16 +26,10 @@ namespace DSL.AST
             get;
         }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            bool childrenValid = true;
-            foreach(var statement in Statements)
-            {
-                if (!statement.Validate(ref warnings, ref errors))
-                    childrenValid = false;
-            }
-
-            return childrenValid;
+            // No type validation to do here.
+            return null;
         }
     }
 }

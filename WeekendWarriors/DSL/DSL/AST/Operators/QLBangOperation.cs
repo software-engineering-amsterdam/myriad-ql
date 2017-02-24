@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST.Operators
 {
@@ -13,18 +15,18 @@ namespace DSL.AST.Operators
 
         }
 
-        public override bool Validate(ref List<string> warnings, ref List<string> errors)
+        public override QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            // Don't propagate errors up if we already encountered an error in the operand
-            if (!Operand.Validate(ref warnings, ref errors))
-                return false;
+            Debug.Assert(parameters.Count == 1);
 
-            // Positive operation can only be applied to numbers and decimals
-            if (Operand.GetQLType() == QLType.Bool)
-                return true;
+            var operandType = parameters[0];
 
-            errors.Add(string.Format("Cannot apply bang operator on type {0}", Operand.GetQLType()));
-            return false;
+            // The operator accepts number and money. The result type is equal to the operand type
+            if (operandType == QLType.Bool)
+                return operandType;
+
+            events.Add(new SemanticAnalysisError(string.Format("Cannot apply bang operator on type {0}", operandType)));
+            return null;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DSL.AST;
+using DSL;
 
 namespace Tests.QL.AST
 {
@@ -13,7 +14,8 @@ namespace Tests.QL.AST
         public T CreateASTNode<T>(string input) where T : INode
         {
             var parser = astFactory.CreateParser(input);
-            return (T)astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
+            var context = new QLContext();
+            return (T)astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression, context);
         }
 
         [TestInitialize]

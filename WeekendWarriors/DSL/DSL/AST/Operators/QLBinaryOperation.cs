@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -46,7 +47,6 @@ namespace DSL.AST
             get;
         }
 
-        public abstract QLType? GetQLType();
-        public abstract bool Validate(ref List<string> warnings, ref List<string> errors);
+        public abstract QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

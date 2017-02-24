@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST
 {
@@ -30,40 +32,19 @@ namespace DSL.AST
             get;
         }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            bool childrenValid = ValidateChildred(ref warnings, ref errors);
-            if (!childrenValid)
-                return false;
+            Trace.Assert(parameters.Count == 1);
+            var conditionType = parameters[0];
 
-            // Conditional is valid if the condition is of type boolean
-            if(Condition.GetQLType() != QLType.Bool)
+            // We only accept conditions of boolean types (this is not C)
+            if(conditionType != QLType.Bool)
             {
-                errors.Add("Condition for conditional statement cannot be resolved to boolean");
-                return false;
+                events.Add(new SemanticAnalysisError("Condition for conditional statement cannot be resolved to boolean"));
             }
 
-            return true;
-        }
-
-        private bool ValidateChildred(ref List<string> warnings, ref List<string> errors)
-        {
-            bool childrenValid = true;
-
-            foreach (var statement in ThenStatements)
-            {
-                if (!statement.Validate(ref warnings, ref errors))
-                    childrenValid = false;
-            }
-            foreach (var statement in ElseStatements)
-            {
-                if (!statement.Validate(ref warnings, ref errors))
-                    childrenValid = false;
-            }
-            if (!Condition.Validate(ref warnings, ref errors))
-                childrenValid = false;
-
-            return childrenValid;
+            // An if statement has no type to return
+            return null;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -20,6 +21,6 @@ namespace DSL.AST
      * All AST nodes inherit from this interface */
     public interface INode
     {
-        bool Validate(ref List<string> warnings, ref List<string> errors);
+        QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

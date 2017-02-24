@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -25,13 +26,6 @@ namespace DSL.AST
             get;
         }
 
-        public abstract bool Validate(ref List<string> warnings, ref List<string> errors);
-
-        QLType? IQLExpression.GetQLType()
-        {
-            // The unary operation alwyas has the same type as its operand.
-            // Even if the operand is null
-            return Operand.GetQLType();
-        }        
+        public abstract QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

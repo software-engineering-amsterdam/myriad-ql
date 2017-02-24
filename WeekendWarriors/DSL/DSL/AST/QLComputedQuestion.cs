@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -25,28 +26,21 @@ namespace DSL.AST
             get;
         }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            bool questionValid = Question.Validate(ref warnings, ref errors);
-            bool ExpressionValid = Expression.Validate(ref warnings, ref errors);
-
-            if (!questionValid || !ExpressionValid)
-                return false;
+            Trace.Assert(parameters.Count == 2);
+            var leftHandSideType = parameters[0];
+            var rightHandsSideType = parameters[1];
 
             // Computed question is like an assignment. Only valid when question type is
-            // equal to the expression type
-            var questionType = Question.Type;
-            var expressionType = Expression.GetQLType();
-
-            Debug.Assert(expressionType.HasValue);
-
-            if (questionType != expressionType)
+            // equal to the expression type (we do not support (implicit) casts
+            if(leftHandSideType != rightHandsSideType)
             {
-                errors.Add(string.Format("Cannot assign expression with type {0} to question of type {1}", expressionType, questionType));
-                return false;
+                events.Add(new SemanticAnalysisError(string.Format("Cannot assign expression with type {0} to question of type {1}", rightHandsSideType, leftHandSideType)));                
             }
 
-            return true;
+            // Question is our end stop so there is no type to return
+            return null;
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST
 {
@@ -17,29 +19,26 @@ namespace DSL.AST
 
         public decimal Value { get { return decimal.Parse(StringValue); } }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
+            Trace.Assert(parameters.Count == 0);
+
             try
             {
                 // Literal is invalid if we cannot parse it to a decimal
                 var val = Value;
-                return true;
+                return QLType.Money;
             }
             catch (FormatException)
             {
-                errors.Add(string.Format("Cannot convert literal {0} to money", StringValue));
-                return false;
+                events.Add(new SemanticAnalysisError(string.Format("Cannot convert literal {0} to money", StringValue)));                
             }
             catch (OverflowException)
             {
-                errors.Add(string.Format("Value {0} is too large for decimal variable", StringValue));
-                return false;
+                events.Add(new SemanticAnalysisError(string.Format("Value {0} is too large for decimal variable", StringValue)));                
             }
-        }
 
-        QLType? IQLExpression.GetQLType()
-        {
-            return QLType.Money;
+            return null;
         }
     }
 }

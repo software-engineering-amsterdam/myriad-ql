@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 using DSL.SemanticAnalysis;
 using DSL.AST;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DSL;
 
 namespace Tests.QL.SemanticAnalysis
 {
     public class SemanticTestHarness
     {
-        protected Analyzer SemanticAnalyzer = new Analyzer();
         protected uint ErrorCount = 0;
         protected ASTFactory ASTFactory = new ASTFactory();
         protected ASTFactory.QLObjectType Type;
 
         public SemanticTestHarness(ASTFactory.QLObjectType type)
         {
-            SemanticAnalyzer.SemanticError += SemanticAnalyzer_SemanticError;
-            Type = type;
+            this.Type = type;
         }
 
         public void TestExpression(string input, uint exprectedErrorCount, string failureMessage)
         {
+            QLContext context = new QLContext();
+            Analyzer SemanticAnalyzer = new Analyzer(context);
+            SemanticAnalyzer.SemanticError += SemanticAnalyzer_SemanticError;
             ErrorCount = 0;
             var parser = ASTFactory.CreateParser(input);
-            var node = ASTFactory.CreateQLObject(parser, Type);
+            var node = ASTFactory.CreateQLObject(parser, Type, context);
             SemanticAnalyzer.Analyze(node);
 
             Assert.AreEqual(exprectedErrorCount, ErrorCount, failureMessage);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace DSL.AST
 {
@@ -29,11 +30,11 @@ namespace DSL.AST
         {
             get;
         }
+        
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            // TODO: check if the question has been defined already and which type it was
-            return true;
+            return Type;
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST
 {
@@ -18,13 +20,10 @@ namespace DSL.AST
             get;
         }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            return true;
-        }
+            Trace.Assert(parameters.Count == 0);
 
-        QLType? IQLExpression.GetQLType()
-        {
             return QLType.String;
         }
     }

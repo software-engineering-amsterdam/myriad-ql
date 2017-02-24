@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST.Operators
 {
@@ -11,38 +13,20 @@ namespace DSL.AST.Operators
         public QLLogicalOperation(IQLExpression lhs, QLBinaryOperator operation, IQLExpression rhs) : base(lhs, operation, rhs)
         {
         }
-      
-        public override QLType? GetQLType()
+
+        public override QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            // Logical operation requires two operands of type boolean
-            var lhsType = Lhs.GetQLType();
-            var rhsType = Rhs.GetQLType();
+            Trace.Assert(parameters.Count == 2);
+            var leftHandSideType = parameters[0];
+            var rightHandsSideType = parameters[1];
 
-            if (lhsType == QLType.Bool && rhsType == QLType.Bool)
-                return QLType.Bool;
-
-            return null;
-        }
-
-        public bool Validate()
-        {
-            var type = GetQLType();
-            return type != null;
-        }
-
-        public override bool Validate(ref List<string> warnings, ref List<string> errors)
-        {
-            // Don't propagate errors up if we already encountered an error in the operand
-            if (!Lhs.Validate(ref warnings, ref errors) || !Rhs.Validate(ref warnings, ref errors))
-                return false;
-
-            if (!GetQLType().HasValue)
+            if (!(leftHandSideType == QLType.Bool && rightHandsSideType == QLType.Bool))
             {
-                errors.Add(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this.Operator, Lhs.GetQLType(), Rhs.GetQLType()));
-                return false;
+                events.Add(new SemanticAnalysisError(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this.Operator, leftHandSideType, rightHandsSideType)));
+                return null;
             }
 
-            return true;
+            return QLType.Bool;
         }
     }
 }

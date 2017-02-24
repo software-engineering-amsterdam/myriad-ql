@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST.Operators
 {
@@ -12,41 +14,20 @@ namespace DSL.AST.Operators
         {
         }
 
-        public override QLType? GetQLType()
+        public override QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
+            Trace.Assert(parameters.Count == 2);
+            var leftHandSideType = parameters[0];
+            var rightHandsSideType = parameters[1];
+
             var validTypes = new List<QLType> { QLType.Number, QLType.Money };
-
-            var lhsType = Lhs.GetQLType();
-            var rhsType = Rhs.GetQLType();
-
-            if (!lhsType.HasValue || !rhsType.HasValue)
-                return null;
-
-            if (!validTypes.Contains(lhsType.Value))
-                return null;
-
-            if (!validTypes.Contains(rhsType.Value))
-                return null;
-
-            if (lhsType == QLType.Money || rhsType == QLType.Money)
-                return QLType.Money;
-
-            return QLType.Number;
-        }
-
-        public override bool Validate(ref List<string> warnings, ref List<string> errors)
-        {
-            // Don't propagate errors up if we already encountered an error in the operand
-            if (!Lhs.Validate(ref warnings, ref errors) || !Rhs.Validate(ref warnings, ref errors))
-                return false;
-
-            if (!GetQLType().HasValue)
+            if(!(validTypes.Contains(leftHandSideType) && validTypes.Contains(rightHandsSideType)))
             {
-                errors.Add(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this.Operator, Lhs.GetQLType(), Rhs.GetQLType()));
-                return false;
+                events.Add(new SemanticAnalysisError(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this.Operator, leftHandSideType, rightHandsSideType)));
+                return null;
             }
 
-            return true;
+            return QLType.Bool;
         }
     }
 }

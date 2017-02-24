@@ -23,12 +23,12 @@ namespace DSL
                     }
                 }
                 ";
-
+            var context = new QLContext();
             var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(inputString);
-            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
+            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form, context);
 
-            var semanticAnalyzer = new SemanticAnalysis.Analyzer();
+            var semanticAnalyzer = new SemanticAnalysis.Analyzer(context);
 
             semanticAnalyzer.SemanticError += ReportSemanticError;
             semanticAnalyzer.Analyze(form);

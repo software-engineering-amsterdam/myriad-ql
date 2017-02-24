@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSL.AST
+namespace DSL.SemanticAnalysis.SemenaticAnalysisEvents
 {
-    public interface IQLExpression : INode
+    public interface ISemenaticAnalysisEvent
     {
-
+        string ToString();
     }
 }

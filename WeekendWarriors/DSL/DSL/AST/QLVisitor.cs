@@ -8,6 +8,13 @@ namespace DSL.AST
 {
     public class QLVisitor : QLBaseVisitor<INode>
     {
+        private QLContext Questions;
+
+        public QLVisitor(QLContext context)
+        {
+            this.Questions = context;
+        }
+
         private List<INode> GetStatements(QLParser.StatementContext[] context)
         {
             List<INode> statements = new List<INode>();
@@ -34,19 +41,29 @@ namespace DSL.AST
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
             // TODO: We should be able to do better than this, but I could not make it work.
+
+            QLType parsedType;
+
             switch (type)
             {
                 case "boolean":
-                    return new QLQuestion(identifier, body, QLType.Bool);
+                    parsedType = QLType.Bool;
+                    break;                   
                 case "money":
-                    return new QLQuestion(identifier, body, QLType.Money);
+                    parsedType = QLType.Money;
+                    break;
                 case "int":
-                    return new QLQuestion(identifier, body, QLType.Number);
+                    parsedType = QLType.Number;
+                    break;
                 case "string":
-                    return new QLQuestion(identifier, body, QLType.String);
+                    parsedType = QLType.String;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
             }
 
-            throw new InvalidEnumArgumentException();
+            Questions.AddQuestion(identifier, parsedType);
+            return new QLQuestion(identifier, body, parsedType);
         }
 
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)

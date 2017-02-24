@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSL.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace DSL.AST
 {
@@ -17,17 +19,17 @@ namespace DSL.AST
         {
             get;
         }
-        
-        public QLType? GetQLType()
-        {
-            // TODO: See how to handle this. Pass set of defined variables into type funcion?
-            throw new NotImplementedException();
-        }
 
-        public bool Validate(ref List<string> warnings, ref List<string> errors)
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
-            // TODO check if this identifier exists
-            return true;
+            Trace.Assert(parameters.Count == 0);
+            
+            if(!context.ContainsQuestion(Name))
+            {
+                return null;
+            }
+
+            return context.GetQuestionType(Name);
         }
     }
 }
