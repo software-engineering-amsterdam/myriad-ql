@@ -84,18 +84,22 @@ class TestDependencyChecker(TestCase):
          "  b: \"label 2\" integer = a }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
-         "  b: \"label 1\" integer = c"
-         "  c: \"label 2\" integer = a }", 1, 0),
+         "  b: \"label 2\" integer = c"
+         "  c: \"label 3\" integer = a }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  if true {"
-         "    b: \"label 1\" integer = c"
-         "    c: \"label 1\" integer = d"
-         "    d: \"label 2\" integer = a } }", 1, 0),
+         "    b: \"label 2\" integer = c"
+         "    c: \"label 3\" integer = d"
+         "    d: \"label 4\" integer = a } }", 1, 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  b: \"label 2\" integer = a"
-         "  c: \"label 2\" integer = a }", 1, 0),
+         "  c: \"label 3\" integer = a }", 1, 0),
+        ("form Name {"
+         "  a: \"label 1\" integer = b + c"
+         "  b: \"label 2\" integer = a"
+         "  c: \"label 3\" integer = a }", 3, 0),
         ("form Name {"
          "  if a > 0 {"
          "    a: \"label 1\" integer } }", 1, 0),
@@ -110,6 +114,10 @@ class TestDependencyChecker(TestCase):
         ("form Name {"
          "a: \"label 1\" integer = 0"
          "  if a > 0 { } }", 0, 1),
+        ("form Name {"
+         "a: \"label 1\" integer"
+         "b: \"label 2\" integer = 2 * a"
+         "  if b > 0 { } }", 0, 0),
     ]
 
     def testDependencyErrors(self):

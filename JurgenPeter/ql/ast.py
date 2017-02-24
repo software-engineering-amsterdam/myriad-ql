@@ -68,7 +68,7 @@ class UnOp:
         self.right = right
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return type(self) == type(other) and self.__dict__ == other.__dict__
 
 
 class PlusOp(UnOp):
