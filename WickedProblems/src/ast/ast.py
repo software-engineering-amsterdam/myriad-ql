@@ -14,6 +14,7 @@
 '''
 
 class Node(object):
+    indent = 0
     # Base class of all nodes
     def __init__(self, identifier):
         # variables are now internal (rather than private)
@@ -26,21 +27,78 @@ class Node(object):
         self._children.append(child)
 
 class Root(Node):
-    def __init__(self, identifier, content):
+    def __init__(self, identifier, children):
         Node.__init__(self, "form")
+        self._identifier = identifier
+        self._children = children
+
+    def __str__(self):
+        __ret = "{}{} \"{}\", Children: {}\n".format("\t" * Node.indent,
+                                                    self.__class__.__name__,
+                                                    self._identifier,
+                                                    len(self._children))
+        Node.indent += 1
+        for __child in self._children:
+            __ret += "{}{}".format("\t" * Node.indent,__child)
+        Node.indent -= 1
+        return __ret
+
+    __repr__ = __str__
 
 class Question(Node):
-    def __init__(self, identifier, content):
+    def __init__(self, text, identifier, field_type):
         Node.__init__(self, "question")
+        self._text = text
+        self._identifier = identifier
+        self._field_type = field_type
+
+    def __str__(self):
+        return "{} \"{}\", Field Type: {}, Question: \"{}\"\n".format(
+                                                    self.__class__.__name__,
+                                                    self._identifier,
+                                                    self._field_type,
+                                                    self._text)
+    __repr__ = __str__
 
 class Conditional(Node):
-    def __init__(self, identifier, evaluation):
+    def __init__(self, evaluation, children):
         Node.__init__(self, "conditional")
+        self._evaluation = evaluation
+        self._children = children
+
+    def __str__(self):
+        __ret = "{} Evaluation: \"{}\", Children: {}\n".format(
+                                                    self.__class__.__name__,
+                                                    self._evaluation,
+                                                    len(self._children))
+        Node.indent += 1
+        for __child in self._children:
+            __ret += "{}{}\n".format("\t" * Node.indent, __child)
+        Node.indent -= 1
+        return __ret
+
+    __repr__ = __str__
 
 class Statement(Node):
-    def __init__(self, identifier, content):
+    def __init__(self, text, identifier, field_type, children):
         Node.__init__(self, "statement")
+        self._identifier = identifier
+        self._field_type = field_type
+        self._children = children
 
+    def __str__(self):
+        __ret = "{} \"{}\", Field Type: {} Children: {}\n".format(
+                                                self.__class__.__name__,
+                                                self._identifier,
+                                                self._field_type,
+                                                len(self._children))
+        Node.indent += 1
+        for __child in self._children:
+            __ret += "{}{}\n".format("\t" * Node.indent, __child)
+        Node.indent -= 1
+        return __ret
+
+    __repr__ = __str__
 '''
 https://www.codingunit.com/unary-and-binary-operator-table
 '''
