@@ -1,25 +1,35 @@
 from pyparsing import *
+from ast.ast import *
+
+'''
+References:
+https://pyparsing.wikispaces.com/file/view/simpleArith.py
+
+'''
 
 class QL:
     # Booleans
-    AND = '&&'
-    OR = '||'
-    NOT = '!'
+    AND = Literal('&&').addParseAction(lambda : LogicalAnd)
+    OR = Literal('||').addParseAction(lambda : LogicalOr)
+    NOT = Literal('!').addParseAction(lambda : LogicalNot) # Unary
 
     # Comparisons
-    GT = '>'
-    LT = '<'
-    GTE = '>='
-    LTE = '<='
-    EQ = '='
-    NEQ = '!='
+    GT = Literal('>').addParseAction(lambda : GreaterThan)
+    LT = Literal('<').addParseAction(lambda : LessThan)
+    GTE = Literal('>=').addParseAction(lambda : GreaterThanEquals)
+    LTE = Literal('<=').addParseAction(lambda : LessThanEquals)
+    EQ = Literal('=').addParseAction(lambda : Equality)
+    NEQ = Literal('!=').addParseAction(lambda : Inequality)
 
     # Basic Arithmics
-    ADD = '+'
-    SUB = '-'
-    MUL = '*'
-    DIV = '/'
-    arithmic = oneOf([ADD,SUB,MUL,DIV])
+    ADD = Literal('+').addParseAction(lambda : Addition)
+    SUB = Literal('-').addParseAction(lambda : Substraction)
+    MUL = Literal('*').addParseAction(lambda : Multiplication)
+    DIV = Literal('/').addParseAction(lambda : Division)
+
+    # Missing Unary Operators (plus, minus)
+    POS = Literal('+').addParseAction(lambda : UnaryPlus) # Unary
+    NEG = Literal('-').addParseAction(lambda : UnaryNegation) # Unary
 
     # Defines
     IF = 'if'
@@ -31,35 +41,59 @@ class QL:
     form_type = oneOf('form')
     field_type = oneOf('boolean string integer data decimal money currency')
     word = Word(alphas)
-    identifier = word
+    identifier = word.setResultsName("identifier")
+    identifier.addParseAction(lambda identifier : Variable(*identifier))
 
-    # Quoted data
+    boolean_precedence = [(AND, 2, opAssoc.LEFT),
+                          (OR, 2, opAssoc.LEFT),
+                          (NOT, 1, opAssoc.RIGHT)]
+
+    comparison_precedence = [(GT, 2, opAssoc.LEFT),
+                             (LT, 2, opAssoc.LEFT),
+                             (GTE, 2, opAssoc.LEFT),
+                             (LTE, 2, opAssoc.LEFT),
+                             (EQ, 2, opAssoc.LEFT),
+                             (NEQ, 2, opAssoc.LEFT)]
+
+    arithmic_precedence = [(ADD, 2, opAssoc.LEFT),
+                           (SUB, 2, opAssoc.LEFT),
+                           (MUL, 2, opAssoc.LEFT),
+                           (DIV, 2, opAssoc.LEFT)]
+
+
+    boolean_expression = operatorPrecedence(identifier,
+                                            boolean_precedence)
+
+    comparison_expression = operatorPrecedence(identifier,
+                                               comparison_precedence)
+
+    arithmic_expression = operatorPrecedence(identifier,
+                                             arithmic_precedence)
+
     string = QuotedString('"')
-    evaluation = QuotedString(quoteChar="(", endQuoteChar=")", escChar='\\',
-                             unquoteResults=False)
-    evaluation_unquoted = QuotedString(quoteChar="(", endQuoteChar=")",
-                                       escChar='\\')
-    codeblock = QuotedString(quoteChar="{", endQuoteChar="}", escChar='\\',
-                             unquoteResults=False)
-    codeblock_unquoted = QuotedString(quoteChar="{", endQuoteChar="}",
-                                      escChar='\\')
-
-    # Evaluation Parsing
-    match_evaluation = Forward()
-    nested_parens = nestedExpr('(', ')', content=match_evaluation)
-    match_evaluation << (Word(alphas) | nested_parens)
 
     # form content
     question = string + identifier + Suppress(colon) + field_type
-    statement = string + identifier + Suppress(colon) + field_type + EQ + \
-                evaluation
-    conditional = IF + Group(evaluation + Suppress(lcurly) + \
-                Group(OneOrMore(Group(Or([statement,question])))) + Suppress(rcurly))
+    question.addParseAction(lambda content : Question(*content))
+
+    statement = string + identifier + Suppress(colon) + field_type + \
+                Suppress("=") + arithmic_expression
+    statement.addParseAction(lambda content : Statement(*content))
+
+    evaluated = Suppress(lcurly) + \
+    Group(OneOrMore(Group(statement | question))) + \
+    Suppress(rcurly)
+
+    conditional = Suppress(IF) + \
+    boolean_expression.addParseAction(
+        lambda evaluation : Evaluation(*evaluation)
+    ) + evaluated
+    conditional.addParseAction(lambda content : Conditional(*content))
 
     # form items
-    form_content = Or([conditional,statement,question])
-    form_item = OneOrMore(Group(form_content))
+    form_content = conditional | statement | question
+    form_item = Group(OneOrMore(Group(form_content))).setResultsName('form_content')
 
     # outer form
-    form = form_type + identifier + Suppress(lcurly) + form_item + \
-                Suppress(rcurly)
+    form = Suppress(form_type) + identifier + Suppress(lcurly) + form_item + Suppress(rcurly)
+    form.addParseAction(lambda form_content : Root(*form_content))
