@@ -3,11 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using OffByOne.LanguageCore;
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
-    using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules;
@@ -215,32 +214,32 @@
 
         public override AstNode VisitBooleanType(QlsGrammarParser.BooleanTypeContext context)
         {
-            return new BooleanValueType();
+            return TypeConstants.BooleanType;
         }
 
         public override AstNode VisitIntegerType(QlsGrammarParser.IntegerTypeContext context)
         {
-            return new IntegerValueType();
+            return TypeConstants.IntegerType;
         }
 
         public override AstNode VisitFloatType(QlsGrammarParser.FloatTypeContext context)
         {
-            return new FloatValueType();
+            return TypeConstants.FloatType;
         }
 
         public override AstNode VisitMoneyType(QlsGrammarParser.MoneyTypeContext context)
         {
-            return new MoneyValueType();
+            return TypeConstants.MoneyType;
         }
 
         public override AstNode VisitStringType(QlsGrammarParser.StringTypeContext context)
         {
-            return new StringValueType();
+            return TypeConstants.StringType;
         }
 
         public override AstNode VisitDateType(QlsGrammarParser.DateTypeContext context)
         {
-            return new DateValueType();
+            return TypeConstants.DateType;
         }
     }
 }

@@ -171,8 +171,7 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression.LeftExpression,
                     TypeConstants.NumericTypes,
-                    leftExpressionType,
-                    LogLevel.Error));
+                    leftExpressionType));
 
                 return TypeConstants.VoidType;
             }
@@ -182,8 +181,7 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression.RightExpression,
                     TypeConstants.NumericTypes,
-                    rightEpressionType,
-                    LogLevel.Error));
+                    rightEpressionType));
             }
 
             if (leftExpressionType.Is<IntegerValueType>() && rightEpressionType.Is<IntegerValueType>())
@@ -212,8 +210,7 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression,
                     TypeConstants.NumericTypes,
-                    subExpressionType,
-                    LogLevel.Error));
+                    subExpressionType));
             }
 
             return subExpressionType;
@@ -242,8 +239,7 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression.LeftExpression,
                     TypeConstants.BooleanType,
-                    leftExpressionType,
-                    LogLevel.Error));
+                    leftExpressionType));
 
                 return leftExpressionType;
             }
@@ -253,8 +249,7 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression.RightExpression,
                     TypeConstants.BooleanType,
-                    rightEpressionType,
-                    LogLevel.Error));
+                    rightEpressionType));
 
                 return rightEpressionType;
             }
@@ -271,13 +266,12 @@
                 this.Report.Add(new InvaildTypeMessage(
                     expression,
                     TypeConstants.BooleanType,
-                    subExpressionType,
-                    LogLevel.Error));
+                    subExpressionType));
 
                 return subExpressionType;
             }
 
-            return new BooleanValueType();
+            return TypeConstants.BooleanType;
         }
 
         private ValueType CheckIfStatement(IfStatement statement, VisitorContext context)
@@ -285,10 +279,10 @@
             var conditionType = statement.Condition.Accept(this, context);
             if (conditionType.IsNot<BooleanValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(statement, new BooleanValueType(), conditionType, LogLevel.Error));
+                this.Report.Add(new InvaildTypeMessage(statement, TypeConstants.BooleanType, conditionType));
             }
 
-            return new VoidValueType();
+            return TypeConstants.VoidType;
         }
     }
 }

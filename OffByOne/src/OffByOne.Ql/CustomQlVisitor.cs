@@ -7,6 +7,7 @@
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
 
+    using OffByOne.LanguageCore;
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes;
@@ -54,17 +55,17 @@
             switch (type)
             {
                 case "boolean":
-                    return new QuestionStatement(id, new BooleanValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.BooleanType, question, value);
                 case "integer":
-                    return new QuestionStatement(id, new IntegerValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.IntegerType, question, value);
                 case "decimal":
-                    return new QuestionStatement(id, new FloatValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.FloatType, question, value);
                 case "money":
-                    return new QuestionStatement(id, new MoneyValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.MoneyType, question, value);
                 case "string":
-                    return new QuestionStatement(id, new StringValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.StringType, question, value);
                 case "date":
-                    return new QuestionStatement(id, new DateValueType(), question, value);
+                    return new QuestionStatement(id, TypeConstants.DateType, question, value);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }

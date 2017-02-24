@@ -14,7 +14,7 @@
             AstNode node,
             ValueType expected,
             ValueType actual,
-            LogLevel level)
+            LogLevel level = LogLevel.Error)
             : base($"Invalid type at: {node.SourceCode}. Expected {expected}, got {actual}", level)
         {
         }
@@ -23,7 +23,7 @@
             AstNode node,
             IEnumerable<ValueType> expected,
             ValueType actual,
-            LogLevel level)
+            LogLevel level = LogLevel.Error)
             : base($"Invalid type at: {node.SourceCode}. Expected [{GetListStringValue(expected)}], got {actual}", level)
         {
         }

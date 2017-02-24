@@ -11,37 +11,37 @@
     {
         public ValueType Visit(IntegerLiteral literal, VisitorContext context)
         {
-            return new IntegerValueType();
+            return TypeConstants.IntegerType;
         }
 
         public ValueType Visit(MoneyLiteral literal, VisitorContext context)
         {
-            return new MoneyValueType();
+            return TypeConstants.MoneyType;
         }
 
         public ValueType Visit(DecimalLiteral literal, VisitorContext context)
         {
-            return new FloatValueType();
+            return TypeConstants.FloatType;
         }
 
         public ValueType Visit(BooleanLiteral literal, VisitorContext context)
         {
-            return new BooleanValueType();
+            return TypeConstants.BooleanType;
         }
 
         public ValueType Visit(StringLiteral literal, VisitorContext context)
         {
-            return new StringValueType();
+            return TypeConstants.StringType;
         }
 
         public ValueType Visit(DateLiteral literal, VisitorContext context)
         {
-            return new DateValueType();
+            return TypeConstants.DateType;
         }
 
         public ValueType Visit(HexLiteral literal, VisitorContext context)
         {
-            return new StringValueType();
+            return TypeConstants.StringType;
         }
     }
 }
