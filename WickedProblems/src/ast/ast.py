@@ -193,3 +193,27 @@ class Variable(Node):
         return self._identifier
 
     __repr__ = __str__
+
+class FieldType(Node):
+    def __init__(self):
+        Node.__init__(self, "field_type")
+
+class Boolean(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
+
+class Integer(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
+
+class Data(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
+
+class Decimal(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
+
+class Money(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
