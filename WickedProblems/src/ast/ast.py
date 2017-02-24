@@ -111,7 +111,7 @@ class BinaryOperation(Node):
 class UnaryOperation(Node):
     def __init__(self, identifier, child):
         Node.__init__(self, identifier)
-        self.right_child = right_child
+        self.right_child = child
 
 # Binary Operations
 class Inequality(BinaryOperation):
