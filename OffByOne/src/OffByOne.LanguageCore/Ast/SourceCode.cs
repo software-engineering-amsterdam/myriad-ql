@@ -27,7 +27,7 @@
 
         public override string ToString()
         {
-            return $"({this.Line}|{this.Column}) : {this.Text}";
+            return $"({this.Line}|{this.Column}) : {this.Text.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty)}";
         }
     }
 }

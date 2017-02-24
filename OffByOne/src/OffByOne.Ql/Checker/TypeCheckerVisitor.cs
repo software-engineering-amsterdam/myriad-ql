@@ -6,6 +6,7 @@
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;
 
+    using OffByOne.LanguageCore;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Checker;
@@ -19,6 +20,7 @@
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Contracts;
 
     using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
@@ -117,8 +119,14 @@
 
         public ValueType Visit(VariableExpression expression, VisitorContext context)
         {
-            // TODO: Need to add a enviorment to the visitor
-            throw new System.NotImplementedException();
+            var quetionType = context.GetTypeOf(expression.Identifier);
+            if (quetionType == null)
+            {
+                this.Report.Add(new UndeclaredVariableMessage(expression));
+                return TypeConstants.VoidType;
+            }
+
+            return quetionType;
         }
 
         public ValueType Visit(BracketExpression expression, VisitorContext context)
@@ -133,7 +141,8 @@
 
         public ValueType Visit(QuestionStatement expression, VisitorContext context)
         {
-            return new VoidValueType();
+            context.AddSymbol(expression.Identifier, expression.Type);
+            return TypeConstants.VoidType;
         }
 
         public ValueType Visit(IfStatement expression, VisitorContext context)
@@ -149,7 +158,7 @@
         {
             expression.Statements.ForEach(x => x.Accept(this, context));
 
-            return new VoidValueType();
+            return TypeConstants.VoidType;
         }
 
         private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression, VisitorContext context)
@@ -157,22 +166,42 @@
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightEpressionType = expression.RightExpression.Accept(this, context);
 
-            if (leftExpressionType is IntegerValueType && rightEpressionType is IntegerValueType)
+            if (leftExpressionType.IsNot<NumericalValueType>())
             {
-                return new IntegerValueType();
+                this.Report.Add(new InvaildTypeMessage(
+                    expression.LeftExpression,
+                    TypeConstants.NumericTypes,
+                    leftExpressionType,
+                    LogLevel.Error));
+
+                return TypeConstants.VoidType;
             }
 
-            if (leftExpressionType is FloatValueType || rightEpressionType is FloatValueType)
+            if (rightEpressionType.IsNot<NumericalValueType>())
             {
-                return new FloatValueType();
+                this.Report.Add(new InvaildTypeMessage(
+                    expression.RightExpression,
+                    TypeConstants.NumericTypes,
+                    rightEpressionType,
+                    LogLevel.Error));
             }
 
-            if (leftExpressionType is MoneyValueType || rightEpressionType is MoneyValueType)
+            if (leftExpressionType.Is<IntegerValueType>() && rightEpressionType.Is<IntegerValueType>())
             {
-                return new MoneyValueType();
+                return TypeConstants.IntegerType;
             }
 
-            throw new Exception("Ivalid argument");
+            if (leftExpressionType.Is<FloatValueType>() || rightEpressionType.Is<FloatValueType>())
+            {
+                return TypeConstants.FloatType;
+            }
+
+            if (leftExpressionType.Is<MoneyValueType>() || rightEpressionType.Is<MoneyValueType>())
+            {
+                return TypeConstants.MoneyType;
+            }
+
+            return TypeConstants.VoidType;
         }
 
         private ValueType CheckUnaryMatematicalExpression(UnaryExpression expression, VisitorContext context)
@@ -182,7 +211,7 @@
             {
                 this.Report.Add(new InvaildTypeMessage(
                     expression,
-                    new List<ValueType> { new IntegerValueType(), new FloatValueType(), new MoneyValueType() },
+                    TypeConstants.NumericTypes,
                     subExpressionType,
                     LogLevel.Error));
             }
@@ -200,7 +229,7 @@
                 this.Report.Add(new InvaildTypeMessage(expression, leftExpressionType, rightEpressionType, LogLevel.Error));
             }
 
-            return new BooleanValueType();
+            return TypeConstants.BooleanType;
         }
 
         private ValueType CheckBinaryBooleanLogicExpression(BinaryExpression expression, VisitorContext context)
@@ -208,29 +237,53 @@
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightEpressionType = expression.RightExpression.Accept(this, context);
 
-            if (leftExpressionType is BooleanValueType && rightEpressionType is BooleanValueType)
+            if (leftExpressionType.IsNot<BooleanValueType>())
             {
-                return new BooleanValueType();
+                this.Report.Add(new InvaildTypeMessage(
+                    expression.LeftExpression,
+                    TypeConstants.BooleanType,
+                    leftExpressionType,
+                    LogLevel.Error));
+
+                return leftExpressionType;
             }
 
-            throw new Exception("Only boolean arguments are allowed.");
+            if (rightEpressionType.IsNot<BooleanValueType>())
+            {
+                this.Report.Add(new InvaildTypeMessage(
+                    expression.RightExpression,
+                    TypeConstants.BooleanType,
+                    rightEpressionType,
+                    LogLevel.Error));
+
+                return rightEpressionType;
+            }
+
+            return TypeConstants.BooleanType;
         }
 
         private ValueType CheckUnaryBooleanLogicExpression(UnaryExpression expression, VisitorContext context)
         {
             var subExpressionType = expression.Expression.Accept(this, context);
-            if (subExpressionType is BooleanValueType)
+
+            if (subExpressionType.IsNot<BooleanValueType>())
             {
-                return new BooleanValueType();
+                this.Report.Add(new InvaildTypeMessage(
+                    expression,
+                    TypeConstants.BooleanType,
+                    subExpressionType,
+                    LogLevel.Error));
+
+                return subExpressionType;
             }
 
-            throw new Exception("Only boolean arguments are allowed.");
+            return new BooleanValueType();
         }
 
         private ValueType CheckIfStatement(IfStatement statement, VisitorContext context)
         {
             var conditionType = statement.Condition.Accept(this, context);
-            if (!(conditionType is BooleanValueType))
+            if (conditionType.IsNot<BooleanValueType>())
             {
                 this.Report.Add(new InvaildTypeMessage(statement, new BooleanValueType(), conditionType, LogLevel.Error));
             }

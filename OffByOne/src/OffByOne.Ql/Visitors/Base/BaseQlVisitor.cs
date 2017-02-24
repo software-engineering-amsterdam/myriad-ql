@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors
+﻿namespace OffByOne.Ql.Visitors.Base
 {
     using MoreDotNet.Extensions.Collections;
 
