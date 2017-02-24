@@ -3,11 +3,6 @@ form BoxHouseOwning {
     hasBoughtHouse: "Did you by a house in 2010?" boolean = hasSoldHouse
     sellingPrice: "How much did you sell the house for?" integer
 
-    a: "How much did you sell the house for?" decimal
-    b: "How much did you sell the house for?" decimal = 3 * a
-
-    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
-
     if sellingPriceB >= 10 {
         privateDebt: "Private debts for the sold house:" decimal
         valueResidue: "Value residue:" decimal

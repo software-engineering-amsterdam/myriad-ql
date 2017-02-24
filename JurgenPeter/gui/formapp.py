@@ -1,9 +1,10 @@
 from appJar import gui
-from ql.visitors.questionfinder import QuestionFinder
-from gui.update_gui import UpdateGUI
-from gui.update_computations import UpdateComputations
+
+from gui.visitors.update_computations import UpdateComputations
+from gui.visitors.update_gui import UpdateGUI
 from gui.widgets import *
 from ql.ast import Datatype
+from ql.visitors.question_finder import QuestionFinder
 
 default_widgets = {
     Datatype.integer: IntegerEntryWidget,
@@ -43,7 +44,6 @@ class FormApp:
         computer = UpdateComputations(self.environment)
         for question in self.questions:
             computer.visit(question)
-
         UpdateGUI(self, self.environment).visit(self.ast)
 
     def show_widget(self, name):
