@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
+    using MoreDotNet.Extensions.Common;
+
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.Ql.Ast.Expressions;
@@ -24,6 +26,8 @@
         public ValueType Type { get; private set; }
 
         public LiteralExpression Question { get; private set; }
+
+        public string Name => this.Question.Literal.As<StringLiteral>().Value;
 
         public Expression ComputedValue { get; private set; }
 

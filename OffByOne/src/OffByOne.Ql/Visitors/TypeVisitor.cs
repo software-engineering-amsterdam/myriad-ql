@@ -1,8 +1,5 @@
 ﻿namespace OffByOne.Ql.Checker
 {
-    using System;
-    using System.Collections.Generic;
-
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;
 
@@ -23,19 +20,17 @@
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Contracts;
 
-    using ValueType = OffByOne.LanguageCore.Ast.ValueTypes.Base.ValueType;
-
-    public class TypeCheckerVisitor
+    public class TypeVisitor
         : BaseTypeCheckerVisitor,
         IExpressionVisitor<ValueType, VisitorContext>,
         IStatementVisitor<ValueType, VisitorContext>
     {
-        public TypeCheckerVisitor()
+        public TypeVisitor()
             : this(new CheckerReport())
         {
         }
 
-        public TypeCheckerVisitor(CheckerReport report)
+        public TypeVisitor(CheckerReport report)
         {
             this.Report = report;
         }

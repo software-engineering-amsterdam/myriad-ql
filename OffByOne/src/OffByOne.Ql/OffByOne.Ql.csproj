@@ -104,6 +104,8 @@
     <Compile Include="Ast\Statements\FormStatement.cs" />
     <Compile Include="Ast\Statements\QuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionNameMessage.cs" />
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\TypeChecker.cs" />
     <Compile Include="Checker\TypeCheckerVisitor.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Visitors\Contracts\IVisitableExpression.cs" />
     <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
     <Compile Include="Visitors\QuestionVisitor.cs" />
+    <Compile Include="Visitors\QuestionVisitorContext.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
   <ItemGroup>

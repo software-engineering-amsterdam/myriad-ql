@@ -186,7 +186,7 @@
         public virtual TResult Visit(QuestionStatement expression, TContext context)
         {
             expression.Type.Accept(this, context);
-            expression.ComputedValue.Accept(this, context);
+            expression.ComputedValue?.Accept(this, context);
             expression.Question.Accept(this, context);
             return default(TResult);
         }
