@@ -17,7 +17,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1 + 2 + 3", 0, "Triple number addition" );
             TestHarness.TestExpression("(1+1)+1", 0, "Number addition with brackets" );
             TestHarness.TestExpression("1 + true", 1, "Adding a number and a boolean" );
-            TestHarness.TestExpression("1 + 1.123 ", 1, "Adding a number and a money" );
+            TestHarness.TestExpression("1 + 1.123 ", 0, "Adding a number and a money" );
             TestHarness.TestExpression("1 + \"string\"", 1, "Adding a number and a string" );
         }
 
@@ -28,7 +28,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1.23 + 2.34 + 3.45", 0, "Triple money addition");
             TestHarness.TestExpression("(1.23+2.34)+3.45", 0, "money addition with brackets");
             TestHarness.TestExpression("1.23 + true", 1, "Adding a money and a boolean");
-            TestHarness.TestExpression("1.23 + 1 ", 1, "Adding a money and a number");
+            TestHarness.TestExpression("1.23 + 1 ", 0, "Adding a money and a number");
             TestHarness.TestExpression("1.23 + \"string\"", 1, "Adding a money and a string");
         }
 
@@ -48,7 +48,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1 - 2 - 3", 0, "Triple number subtraction");
             TestHarness.TestExpression("(1-1)-1", 0, "Number subtraction with brackets");
             TestHarness.TestExpression("1 - true", 1, "Subtracting a boolean from a number");
-            TestHarness.TestExpression("1 - 1.123", 1, "Subtracting a money from number");
+            TestHarness.TestExpression("1 - 1.123", 0, "Subtracting a money from number");
             TestHarness.TestExpression("1 - \"string\"", 1, "Adding a number and a string");
         }
 
@@ -59,7 +59,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1.23 - 2.34 - 3.45", 0, "Triple money subtraction");
             TestHarness.TestExpression("(1.23-2.34)-3.45", 0, "money subtraction with brackets");
             TestHarness.TestExpression("1.23 - true", 1, "Subtracting a boolean from a money");
-            TestHarness.TestExpression("1.234 - 1", 1, "Subtracting a money from money");
+            TestHarness.TestExpression("1.234 - 1", 0, "Subtracting a money from money");
             TestHarness.TestExpression("1.23 - \"string\"", 1, "Adding a money and a string");
         }
 
@@ -85,7 +85,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("(1*1)*1", 0, "Number multiplication with brackets");
             TestHarness.TestExpression("1 * true", 1, "Multiplying a boolean with a number");
             TestHarness.TestExpression("45 * false", 1, "Multiplying a number with a boolean");
-            TestHarness.TestExpression("1 * 1.23", 1, "Multiplying a number with money");
+            TestHarness.TestExpression("1 * 1.23", 0, "Multiplying a number with money");
             TestHarness.TestExpression("1 * \"string\"", 1, "Multiplying a number and a string");
         }
 
@@ -96,7 +96,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1.23 * 2.34 * 3.45", 0, "Triple money multiplication");
             TestHarness.TestExpression("(1.23*2.34)*3.45", 0, "money multiplication with brackets");
             TestHarness.TestExpression("1.23 * true", 1, "Multiplying a money and a boolean");;
-            TestHarness.TestExpression("1.234 * 1", 1, "Multiplying a money and a number");
+            TestHarness.TestExpression("1.234 * 1", 0, "Multiplying a money and a number");
             TestHarness.TestExpression("1.23 * \"string\"", 1, "Multiplying a money and a string");
         }
 
@@ -122,7 +122,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("(1/1)/1", 0, "Number division with brackets");
             TestHarness.TestExpression("1 / true", 1, "Dividing a boolean by a number");
             TestHarness.TestExpression("45 / false", 1, "Dividing a number by a boolean");
-            TestHarness.TestExpression("1 / 1.23", 1, "Dividing a number by a money");
+            TestHarness.TestExpression("1 / 1.23", 0, "Dividing a number by a money");
             TestHarness.TestExpression("1 / \"string\"", 1, "Dividing a number by a string");
         }
 
@@ -133,7 +133,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1.23 / 2.34 / 3.45", 0, "Triple money division");
             TestHarness.TestExpression("(1.23/2.34)/3.45", 0, "money division with brackets");
             TestHarness.TestExpression("1.23 / true", 1, "Dividing a money by a boolean"); ;
-            TestHarness.TestExpression("1.234 / 1", 1, "Dividing a money by a number");
+            TestHarness.TestExpression("1.234 / 1", 0, "Dividing a money by a number");
             TestHarness.TestExpression("1.23 / \"string\"", 1, "Dividing a money by a string");
         }
 

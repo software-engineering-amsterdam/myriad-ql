@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace Questionnaires.AST
 {
-    public class QLBoolean : INode
+    public class QLBoolean : IQLExpression
     {
         public QLBoolean(bool value)
         {
@@ -17,5 +19,11 @@ namespace Questionnaires.AST
         {
             get;
         }
+
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        {
+            Trace.Assert(parameters.Count == 0);
+            return QLType.Bool;
+        }        
     }
 }

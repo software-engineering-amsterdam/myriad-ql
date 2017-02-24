@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using System.Diagnostics;
 
 namespace Questionnaires.AST
 {
-    public class QLString : INode
+    public class QLString : IQLExpression
     {
         public QLString(string value)
         {
@@ -16,6 +18,13 @@ namespace Questionnaires.AST
         public string Value
         {
             get;
+        }
+
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        {
+            Trace.Assert(parameters.Count == 0);
+
+            return QLType.String;
         }
     }
 }

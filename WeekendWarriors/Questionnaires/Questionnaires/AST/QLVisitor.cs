@@ -2,11 +2,16 @@
 using Antlr4.Runtime.Misc;
 using Questionnaires.AST.Operators;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Questionnaires.AST
 {
     public class QLVisitor : QLBaseVisitor<INode>
     {
+        public QLVisitor()
+        {
+        }
+
         private List<INode> GetStatements(QLParser.StatementContext[] context)
         {
             List<INode> statements = new List<INode>();
@@ -33,19 +38,28 @@ namespace Questionnaires.AST
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
             // TODO: We should be able to do better than this, but I could not make it work.
+
+            QLType parsedType;
+
             switch (type)
             {
                 case "boolean":
-                    return new QLQuestion(identifier, body, QLType.Bool);
+                    parsedType = QLType.Bool;
+                    break;                   
                 case "money":
-                    return new QLQuestion(identifier, body, QLType.Money);
+                    parsedType = QLType.Money;
+                    break;
                 case "int":
-                    return new QLQuestion(identifier, body, QLType.Number);
+                    parsedType = QLType.Number;
+                    break;
                 case "string":
-                    return new QLQuestion(identifier, body, QLType.String);
+                    parsedType = QLType.String;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
             }
-
-            throw new InvalidEnumArgumentException();
+            
+            return new QLQuestion(identifier, body, parsedType);
         }
 
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)
@@ -56,14 +70,16 @@ namespace Questionnaires.AST
             if(context.elseBlock != null)
                 GetStatements(context.elseBlock.statement());
 
-            return new QLConditional(expression, thenStatements, elseStatements);
+            Debug.Assert(expression is IQLExpression);
+
+            return new QLConditional((dynamic)expression, thenStatements, elseStatements);
         }
 
         public override INode VisitComputedQuestion([NotNull] QLParser.ComputedQuestionContext context)
         {
             INode question = Visit(context.question());
             INode expression = Visit(context.expression());
-            return new QLComputedQuestion(question, expression);
+            return new QLComputedQuestion((dynamic)question, (dynamic)expression);
         }
 
         public override INode VisitID([NotNull] QLParser.IDContext context)
@@ -79,32 +95,32 @@ namespace Questionnaires.AST
             switch (context.op.Type)
             {
                 case QLLexer.OP_ADD:
-                   return new QLArithmeticOperation(lhs, QLBinaryOperator.Addition, rhs);                   
+                   return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Addition, (dynamic)rhs);                   
                 case QLLexer.OP_SUB: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Subtraction, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Subtraction, (dynamic)rhs);
                 case QLLexer.OP_MUL: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Multiplication, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Multiplication, (dynamic)rhs);
                 case QLLexer.OP_DIV: 
-                    return new QLArithmeticOperation(lhs, QLBinaryOperator.Division, rhs);
+                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Division, (dynamic)rhs);
 
                 case QLLexer.OP_GT: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThan, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThan, (dynamic)rhs);
                 case QLLexer.OP_GE: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.GreaterThanOrEqual, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThanOrEqual, (dynamic)rhs);
                 case QLLexer.OP_LT: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThan, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThan, (dynamic)rhs);
                 case QLLexer.OP_LE: 
-                    return new QLComparisonOperation(lhs, QLBinaryOperator.LessThanOrEqual, rhs);
+                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThanOrEqual, (dynamic)rhs);
 
                 case QLLexer.OP_EQ: 
-                    return new QLEqualityOperation(lhs, QLBinaryOperator.Equal, rhs);
+                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Equal, (dynamic)rhs);
                 case QLLexer.OP_NE: 
-                    return new QLEqualityOperation(lhs, QLBinaryOperator.Inequal, rhs);
+                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Inequal, (dynamic)rhs);
 
                 case QLLexer.OP_OR: 
-                    return new QLLogicalOperation(lhs, QLBinaryOperator.Or, rhs);
+                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.Or, (dynamic)rhs);
                 case QLLexer.OP_AND: 
-                    return new QLLogicalOperation(lhs, QLBinaryOperator.And, rhs);
+                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.And, (dynamic)rhs);
 
                 default:
                     throw new InvalidEnumArgumentException();
@@ -120,11 +136,11 @@ namespace Questionnaires.AST
             switch (context.op.Type)
             {
                 case QLLexer.OP_BANG:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Bang);
+                    return new QLBangOperation((dynamic)operand);
                 case QLLexer.OP_ADD:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Plus);
+                    return new QLPositiveOperation((dynamic)operand);
                 case QLLexer.OP_SUB:
-                    return new QLUnaryOperation(operand, QLUnaryOperator.Minus);
+                    return new QLNegativeOperation((dynamic)operand);
                 default:
                     throw new InvalidEnumArgumentException();
             }          

@@ -61,6 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AST\IQLExpression.cs" />
+    <Compile Include="AST\Operators\QLBangOperation.cs" />
+    <Compile Include="AST\Operators\QLNegativeOperation.cs" />
+    <Compile Include="AST\Operators\QLPositiveOperation.cs" />
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Question\Question.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
@@ -71,12 +75,13 @@
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
     <Compile Include="SemanticAnalysis\Analyzer.cs" />
-    <Compile Include="SemanticAnalysis\ExpressionValidator.cs" />
     <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
-    <Compile Include="SemanticAnalysis\LiteralValidator.cs" />
+    <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\ISemenaticAnalysisEvent.cs" />
+    <Compile Include="QLContext.cs" />
+    <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisError.cs" />
+    <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisEvent.cs" />
+    <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisWarning.cs" />
     <Compile Include="SemanticAnalysis\SemanticErrorArgs.cs" />
-    <Compile Include="SemanticAnalysis\StatementValidator.cs" />
-    <Compile Include="SemanticAnalysis\Validator.cs" />
     <Compile Include="Value\BoolValue.cs" />
     <Compile Include="Value\DecimalValue.cs" />
     <Compile Include="Value\IntValue.cs" />

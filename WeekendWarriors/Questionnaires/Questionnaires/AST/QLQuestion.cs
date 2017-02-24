@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace Questionnaires.AST
 {
@@ -28,6 +29,12 @@ namespace Questionnaires.AST
         public QLType Type
         {
             get;
+        }
+        
+
+        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        {
+            return Type;
         }
     }
 }

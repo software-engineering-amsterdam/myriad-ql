@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace Questionnaires.AST
 {
@@ -22,16 +23,16 @@ namespace Questionnaires.AST
         Inequal
     };
 
-    public class QLBinaryOperation : INode
+    public abstract class QLBinaryOperation : IQLExpression
     {
-        protected QLBinaryOperation(INode lhs, QLBinaryOperator operation, INode rhs)
+        protected QLBinaryOperation(IQLExpression lhs, QLBinaryOperator operation, IQLExpression rhs)
         {
             this.Lhs = lhs;
             this.Operator = operation;
             this.Rhs = rhs;
         }
 
-        public INode Lhs
+        public IQLExpression Lhs
         {
             get;
         }
@@ -41,9 +42,11 @@ namespace Questionnaires.AST
             get;
         }
 
-        public INode Rhs
+        public IQLExpression Rhs
         {
             get;
         }
+
+        public abstract QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

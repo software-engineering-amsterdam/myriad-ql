@@ -10,19 +10,13 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class Analyzer
     {
-        private Dictionary<string, QLType> IdentifiertoType = new Dictionary<string, QLType>();
-        // TODO: injection
-        private ExpressionValidator expressionValidator = new ExpressionValidator();
-        private LiteralValidator literalValidator = new LiteralValidator();
-        private StatementValidator statementValidator = new StatementValidator();
+        private QLContext Context;
 
-        public Analyzer()
+        public Analyzer(QLContext context)
         {
-            expressionValidator.InvalidExpression += ValidatorInvalidExpression;
-            literalValidator.InvalidExpression += ValidatorInvalidExpression;
-            statementValidator.InvalidExpression += ValidatorInvalidExpression;
+            this.Context = context;
         }
-        
+
         private void ValidatorInvalidExpression(object sender, InvalidExpressionEventArgs e)
         {
             OnSemanticError(new SemanticErrorArgs(e.Message));
@@ -33,118 +27,124 @@ namespace Questionnaires.SemanticAnalysis
             Visit((dynamic)node);
         } 
         
-        protected QLType Visit(QLForm node)
+        protected QLType? Visit(QLForm node)
         {
             foreach (var statement in node.Statements)
-                Visit((dynamic)statement);
+                Visit((dynamic)statement);            
 
             return QLType.None;
         }
 
-        protected QLType Visit(QLQuestion node)
+        protected QLType? Visit(QLQuestion node)
         {
-            // Store the type of this identifier
-            IdentifiertoType[node.Identifier] = node.Type;
+            List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
+            var type = node.CheckTypes(new List<QLType>(), Context, events);
+            ReportEvents(events);
 
-            return statementValidator.Evaluate(node);
+            return type;
         }
 
-        protected QLType Visit(QLComputedQuestion node)
-        {
-            QLType assigneeType = Visit((dynamic)node.Question);
-            QLType assignorType = Visit((dynamic)node.Expression);
+        
 
-            return statementValidator.Evaluate(node, assigneeType, assignorType);               
+        protected QLType? Visit(QLComputedQuestion node)
+        {
+            return Evaluate(new List<INode> { node.Question, node.Expression }, node);
         }
 
-        protected QLType Visit(QLConditional node)
-        {
-            QLType conditionType = Visit((dynamic)node.Condition);
+        
 
+        protected QLType? Visit(QLConditional node)
+        {   
+            // Make sure to visit all the then and else statements
             foreach (var statement in node.ThenStatements)
                 Visit((dynamic)statement);
             foreach (var statement in node.ElseStatements)
                 Visit((dynamic)statement);
 
-            return statementValidator.Evaluate(node, conditionType);            
+            // And validate the condition
+            return Evaluate(new List<INode> { node.Condition }, node);          
         }
 
-        protected QLType Visit(QLArithmeticOperation node)
-        {          
-            QLType lhsType = Visit((dynamic)node.Lhs);
-            QLType rhsType = Visit((dynamic)node.Rhs);
-
-            return expressionValidator.Evaluate(node, lhsType, rhsType);
-        }
-
-        protected QLType Visit(QLComparisonOperation node)
+        protected QLType? Visit(QLArithmeticOperation node)
         {
-            QLType lhsType = Visit((dynamic)node.Lhs);
-            QLType rhsType = Visit((dynamic)node.Rhs);
-
-            return expressionValidator.Evaluate(node, lhsType, rhsType);
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);                   
         }
 
-        protected QLType Visit(QLEqualityOperation node)
+        protected QLType? Visit(QLComparisonOperation node)
         {
-            QLType lhsType = Visit((dynamic)node.Lhs);
-            QLType rhsType = Visit((dynamic)node.Rhs);
-
-            return expressionValidator.Evaluate(node, lhsType, rhsType);
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType Visit(QLLogicalOperation node)
+        protected QLType? Visit(QLEqualityOperation node)
         {
-            QLType lhsType = Visit((dynamic)node.Lhs);
-            QLType rhsType = Visit((dynamic)node.Rhs);
-
-            return expressionValidator.Evaluate(node, lhsType, rhsType);
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType Visit(QLUnaryOperation node)
+        protected QLType? Visit(QLLogicalOperation node)
         {
-            QLType operandType = Visit((dynamic)node.Operand);
-
-            return expressionValidator.Evaluate(node, operandType);
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType Visit(QLBoolean node)
+        protected QLType? Visit(QLUnaryOperation node)
         {
-            return QLType.Bool;
+            return Evaluate(new List<INode> { node.Operand }, node);
+        }
+
+        protected QLType? Visit(QLBoolean node)
+        {
+            return Evaluate(new List<INode> { }, node);            
         }
             
-        protected QLType Visit(QLMoney node)
+        protected QLType? Visit(QLMoney node)
         {
-            return literalValidator.Evaluate(node);
+            return Evaluate(new List<INode> { }, node);
         }   
 
-        protected QLType Visit(QLNumber node)
+        protected QLType? Visit(QLNumber node)
         {
-            return literalValidator.Evaluate(node);
+            return Evaluate(new List<INode> { }, node);
         }
 
-        protected QLType Visit(QLString node)
+        protected QLType? Visit(QLString node)
         {
-            return QLType.String;
+            return Evaluate(new List<INode> { }, node);
         }
 
-        protected QLType Visit(QLIdentifier node)
+        protected QLType? Visit(QLIdentifier node)
         {
-            if (IdentifiertoType.ContainsKey(node.Name))
-            {
-                return IdentifiertoType[node.Name];
-            }
-            else
-            {
-                /* TODO: double check if there is any way in which we can get here
-                 * before we get to the question node that introduces the identifier.
-                 * Since it is not specified we will take the old school/easy way and
-                 * only allow usage of a variable after declaration */
+            return Evaluate(new List<INode> { }, node);
+        }
 
-                OnSemanticError(new SemanticErrorArgs("Encountered undefined Identifier \"" + node.Name));
+        protected QLType? Evaluate(List<INode> children, INode parent)
+        {
+            List<QLType> childTypes = new List<QLType>();
+            bool hasInvalidChild = false;
+
+            foreach (var child in children)
+            {
+                QLType? childType = Visit((dynamic)child);
+                if (childType.HasValue)
+                    childTypes.Add(childType.Value);
+                else
+                    hasInvalidChild = true;
             }
-            
-            return QLType.None;
+
+            if (!hasInvalidChild)
+            {
+                List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
+                var parentType = parent.CheckTypes(childTypes, Context, events);
+                ReportEvents(events);
+                return parentType;
+            }
+
+            return null;
+        }
+
+        private void ReportEvents(List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events)
+        {
+            // Report any warnings/errors that occurred.
+            foreach (var analysisEvent in events)
+                OnSemanticError(new SemanticErrorArgs(analysisEvent.ToString()));
         }
 
         public delegate void SemanticErrorEventHandler(object sender, SemanticErrorArgs e);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace Questionnaires.AST
 {
@@ -13,22 +14,18 @@ namespace Questionnaires.AST
         Minus
     }
 
-    public class QLUnaryOperation : INode
+    public abstract class QLUnaryOperation : IQLExpression
     {
-        public QLUnaryOperation(INode operand, QLUnaryOperator op)
+        public QLUnaryOperation(IQLExpression operand)
         {
             this.Operand = operand;
-            this.Operator = op;
         }
 
-        public QLUnaryOperator Operator
+        public IQLExpression Operand
         {
             get;
         }
 
-        public INode Operand
-        {
-            get;
-        }
+        public abstract QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }
