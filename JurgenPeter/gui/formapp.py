@@ -1,17 +1,8 @@
 from appJar import gui
 
-from ql.ast import Datatype
-from ql.visitors.question_finder import QuestionFinder
-from gui.widgets import *
+from gui.visitors.widget_creator import WidgetCreator
 from gui.visitors.update_computations import UpdateComputations
 from gui.visitors.update_gui import UpdateGUI
-
-
-default_widgets = {
-    Datatype.integer: IntegerEntryWidget,
-    Datatype.decimal: DecimalEntryWidget,
-    Datatype.boolean: CheckBoxWidget,
-    Datatype.string:  EntryWidget}
 
 
 class FormApp:
@@ -24,13 +15,7 @@ class FormApp:
         self.app = gui(ast.name)
         self.app.bindKey("<KeyPress>", self.update_gui)
 
-        questions = QuestionFinder().visit(ast)
-
-        # TODO merge visitor with widget creation
-        for question in questions:
-            widget = default_widgets[question.datatype](self.app, question)
-            widget.set_listener(self.update_gui)
-            self.widgets[question.name] = widget
+        WidgetCreator(self.app, self.widgets, self.update_gui).visit(ast)
 
     def start(self):
         self.update_gui(None)
@@ -50,9 +35,6 @@ class FormApp:
 
     def hide_widget(self, name):
         self.widgets[name].hide()
-
-    def disable_widget(self, name):
-        self.widgets[name].disable()
 
     def set_widget(self, name, value):
         self.widgets[name].set_value(value)

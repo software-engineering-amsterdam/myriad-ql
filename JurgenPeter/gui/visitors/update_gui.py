@@ -48,6 +48,5 @@ class UpdateGUI:
             self.form_app.hide_widget(node.name)
 
     def visit_computed_question(self, node):
-        self.form_app.disable_widget(node.name)
-        self.form_app.set_widget(node.name, self.environment[node.name])
         self.visit_question(node)
+        self.form_app.set_widget(node.name, self.environment[node.name])
