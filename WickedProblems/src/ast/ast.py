@@ -120,3 +120,13 @@ class UnaryPlus(UnaryOperation):
 class UnaryNegation(UnaryOperation):
     def __init__(self, child):
         UnaryOperation.__init__(self, "unary_negation", child)
+
+class Evaluation(Node):
+    def __init__(self, evaluation):
+        Node.__init__(self, "evaluation")
+        self._evaluation = evaluation
+
+class Variable(Node):
+    def __init__(self, value):
+        Node.__init__(self, "variable")
+        self._identifier = value
