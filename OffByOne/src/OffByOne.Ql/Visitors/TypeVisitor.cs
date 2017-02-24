@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Checker
+﻿namespace OffByOne.Ql.Visitors
 {
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;

@@ -108,7 +108,7 @@
     <Compile Include="Checker\Messages\DuplicateQuestionNameMessage.cs" />
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\TypeChecker.cs" />
-    <Compile Include="Checker\TypeCheckerVisitor.cs" />
+    <Compile Include="Visitors\TypeVisitor.cs" />
     <Compile Include="CustomQlVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\Base\BaseQlVisitor.cs" />
