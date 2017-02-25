@@ -2,6 +2,7 @@ package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 import java.util.List;
 
@@ -37,5 +38,9 @@ public class Conditional extends ASTNode implements Item{
 
     public void setElseStatements(List<Item> elseStatements) {
         this.elseStatements = elseStatements;
+    }
+
+    public void accept(Visitor visitor){
+        visitor.visit(this);
     }
 }

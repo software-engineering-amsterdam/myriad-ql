@@ -2,6 +2,7 @@ package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 public class Question extends ASTNode implements Item{
 
@@ -44,5 +45,9 @@ public class Question extends ASTNode implements Item{
                 ", value='" + value + '\'' +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    public void accept(Visitor visitor){
+        visitor.visit(this);
     }
 }
