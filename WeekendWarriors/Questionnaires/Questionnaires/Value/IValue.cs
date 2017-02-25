@@ -8,8 +8,9 @@ namespace Questionnaires.Value
 {
     interface IValue
     {
-        int? AsInt();
-        decimal? AsDecimal();
-        bool? AsBool();
+        int AsInt();
+        decimal AsDecimal();
+        bool AsBool();
+        String AsString();
     }
 }

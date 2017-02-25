@@ -8,19 +8,12 @@ namespace Questionnaires.Value
 {
     class IntValue : Value<int>
     {
-        protected bool? Value = null;
-
         public IntValue(int value)
         {
             this.Val = value;
         }
 
-        public IntValue()
-        {
-            // Default constructor creates type as null
-        }
-
-        public override int? AsInt()
+        public override int AsInt()
         {
             return this.Val;
         }

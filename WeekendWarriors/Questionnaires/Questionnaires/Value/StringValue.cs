@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class BoolValue : Value<bool>
+    class StringValue : Value<String>
     {
-        public BoolValue(bool value)
+        public StringValue(String value)
         {
             this.Val = value;
         }
 
-        public override bool AsBool()
+        public override String AsString()
         {
             return this.Val;
         }

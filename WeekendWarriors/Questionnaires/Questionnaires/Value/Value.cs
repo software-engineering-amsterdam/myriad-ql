@@ -7,21 +7,25 @@ using System.Threading.Tasks;
 namespace Questionnaires.Value
 {
     class Value<T> : IValue
-    where T : struct
     {
-        protected T? Val = null;
+        protected T Val = default(T);
 
-        public virtual int? AsInt()
+        public virtual int AsInt()
         {
             throw new NotSupportedException();
         }
 
-        public virtual decimal? AsDecimal()
+        public virtual decimal AsDecimal()
         {
             throw new NotSupportedException();
         }
 
-        public virtual bool? AsBool()
+        public virtual bool AsBool()
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual String AsString()
         {
             throw new NotSupportedException();
         }

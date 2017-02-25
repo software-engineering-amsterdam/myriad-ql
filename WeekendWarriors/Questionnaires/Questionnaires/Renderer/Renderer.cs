@@ -31,36 +31,42 @@ namespace Questionnaires.Renderer
             // Render the question by adding it to the questionnaire stack
             IQuestionWidget questionWidget;
 
+            var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
+
             switch (question.Type)
             {
                 case QuestionType.Bool:
-                    questionWidget = new BooleanQuestionWidget();
+                    questionWidget = new BooleanQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
                     questionWidget.SetQuestionValue(question.Value);
+                    questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
                     QuestionnaireStack.Children.Add((BooleanQuestionWidget)questionWidget);
                     break;
                 case QuestionType.Money:
-                    questionWidget = new MoneyQuestionWidget();
+                    questionWidget = new MoneyQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
                     questionWidget.SetQuestionValue(question.Value);
+                    questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
                     QuestionnaireStack.Children.Add((MoneyQuestionWidget)questionWidget);
                     break;
                 case QuestionType.Number:
-                    questionWidget = new NumberQuestionWidget();
+                    questionWidget = new NumberQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
                     questionWidget.SetQuestionValue(question.Value);
+                    questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
                     QuestionnaireStack.Children.Add((NumberQuestionWidget)questionWidget);
                     break;
                 case QuestionType.String:
-                    questionWidget = new StringQuestionWidget();
+                    questionWidget = new StringQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
                     questionWidget.SetQuestionValue(question.Value);
+                    questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
                     QuestionnaireStack.Children.Add((StringQuestionWidget)questionWidget);
@@ -79,5 +85,12 @@ namespace Questionnaires.Renderer
         {
             Questions[name].SetVisibility(visibility);
         }
+
+        public delegate void InputChangedCallback(string name, IValue value);
+        public void InputChanged(string name, IValue value)
+        {
+            var x = 10;
+        }
+         
     }
 }

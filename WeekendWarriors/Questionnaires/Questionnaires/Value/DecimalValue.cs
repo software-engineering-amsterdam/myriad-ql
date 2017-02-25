@@ -13,12 +13,7 @@ namespace Questionnaires.Value
             this.Val = value;
         }
 
-        public DecimalValue()
-        {
-            // Default constructor creates type as null
-        }
-
-        public override decimal? AsDecimal()
+        public override decimal AsDecimal()
         {
             return this.Val;
         }

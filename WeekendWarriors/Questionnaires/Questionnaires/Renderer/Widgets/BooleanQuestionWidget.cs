@@ -13,12 +13,14 @@ namespace Questionnaires.Renderer.Widgets
 {
     class BooleanQuestionWidget : StackPanel, IQuestionWidget
     {
+        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private CheckBox QuestionInputWidget = new CheckBox();
 
-        public BooleanQuestionWidget()
+        public BooleanQuestionWidget(string name)
             : base()
         {
+            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
@@ -44,6 +46,11 @@ namespace Questionnaires.Renderer.Widgets
             {
                 Visibility = System.Windows.Visibility.Hidden;
             }
+        }
+
+        public void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
+        {
+            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BoolValue(QuestionInputWidget.IsChecked.Value));
         }
     }
 }

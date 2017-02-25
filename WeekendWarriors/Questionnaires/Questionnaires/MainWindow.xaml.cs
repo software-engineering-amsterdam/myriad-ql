@@ -61,11 +61,27 @@ namespace Questionnaires
             q2.Value = new IntValue(230);
             q2.Visibility = Question.Visibility.Visible;
 
+            var q3 = new Question.Question();
+            q3.Body = "Favorite decimal?";
+            q3.Name = "Decimal question";
+            q3.Type = QuestionType.Money;
+            q3.Value = new DecimalValue(210.12m);
+            q3.Visibility = Question.Visibility.Visible;
+
+            var q4 = new Question.Question();
+            q4.Body = "Favorite string?";
+            q4.Name = "String question";
+            q4.Type = QuestionType.String;
+            q4.Value = new StringValue("This is text");
+            q4.Visibility = Question.Visibility.Visible;
+
             renderer.AddQuestion(q1);
             renderer.AddQuestion(q2);
+            renderer.AddQuestion(q3);
+            renderer.AddQuestion(q4);
 
-            renderer.SetVisibility("Number question", Question.Visibility.Hidden);
-            renderer.SetValue("Apple question", new BoolValue(false));            
+            //renderer.SetVisibility("Number question", Question.Visibility.Hidden);
+            //renderer.SetValue("Apple question", new BoolValue(false));            
 
             //renderer.AddQuestion(new Question.IQuestion) ?
             // we may need a visitor here to visit the form again and provide the renderer with questions.

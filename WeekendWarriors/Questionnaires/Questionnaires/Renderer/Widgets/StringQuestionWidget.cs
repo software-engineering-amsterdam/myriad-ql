@@ -10,12 +10,14 @@ namespace Questionnaires.Renderer.Widgets
 {
     class StringQuestionWidget : StackPanel, IQuestionWidget
     {
+        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private TextBox QuestionInputWidget = new TextBox();
 
-        public StringQuestionWidget()
+        public StringQuestionWidget(string name)
             : base()
         {
+            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
@@ -28,7 +30,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(IValue value)
         {
-            QuestionInputWidget.Text = value.ToString();
+            QuestionInputWidget.Text = value.AsString();
         }
 
         public void SetVisibility(Question.Visibility visibility)
@@ -41,6 +43,11 @@ namespace Questionnaires.Renderer.Widgets
             {
                 Visibility = System.Windows.Visibility.Hidden;
             }
+        }
+
+        public void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
+        {
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new StringValue(QuestionInputWidget.Text));
         }
     }
 }

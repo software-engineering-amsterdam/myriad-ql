@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static Questionnaires.Renderer.Renderer;
 
 namespace Questionnaires.Renderer.Widgets
 {
@@ -12,5 +13,7 @@ namespace Questionnaires.Renderer.Widgets
         void SetLabel(string text);
         void SetQuestionValue(Questionnaires.Value.IValue value);
         void SetVisibility(Question.Visibility visibility);
+
+        void SetOnInputChanged(InputChangedCallback inputChanged);
     }
 }
