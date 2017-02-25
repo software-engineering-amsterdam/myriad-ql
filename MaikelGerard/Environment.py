@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from Undefined import Undefined
 
 
 class Environment(object):
@@ -12,12 +13,11 @@ class Environment(object):
 
     def add_var(self, question_node):
         var_name = question_node.name.val
-        default = question_node.type.default
 
         if var_name in self.variables:
             self.error_handler.add_duplicate_error(self.context, question_node)
             return False
-        self.variables[var_name] = {"node": question_node, "value": default}
+        self.variables[var_name] = {"node": question_node, "value": Undefined}
         return True
 
     def get_var_type(self, var_node):

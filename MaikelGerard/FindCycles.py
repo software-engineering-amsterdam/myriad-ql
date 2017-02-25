@@ -11,12 +11,12 @@ class FindCycles(object):
         self.handler = error_handler
         self.context = "FindCycles"
         self.directed_graph = nx.DiGraph()
-        self.node_stack = []
+        self.node_stack = [[]]
 
     def start_traversal(self):
         # Ensure the environment and error log are empty.
         self.directed_graph.clear()
-        self.node_stack = []
+        self.node_stack = [[]]
         self.handler.clear_errors()
 
         self.ast.root.accept(self)

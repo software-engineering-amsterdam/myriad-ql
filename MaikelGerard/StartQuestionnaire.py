@@ -27,9 +27,10 @@ if __name__ == '__main__':
     environment = Environment(error_handler)
 
     # Type-check and evaluate the AST.
-    #FindCycles(parsedAST, error_handler).start_traversal()
+    FindCycles(parsedAST, error_handler).start_traversal()
     TypeChecker(parsedAST, environment, error_handler).start_traversal()
     evaluator = Evaluate(parsedAST, environment, error_handler)
+    evaluator.start_traversal()
 
     # Finally, draw the GUI.
     DrawGUI(environment, error_handler).start_traversal()

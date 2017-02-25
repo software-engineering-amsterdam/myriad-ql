@@ -1,4 +1,6 @@
 from FormGUI import FormGUI
+from Undefined import Undefined
+from AST import BoolTypeNode
 
 
 class DrawGUI(object):
@@ -33,7 +35,16 @@ class DrawGUI(object):
         question_node = question["node"]
         identifier = question_node.name.val
         question_str = question_node.question.val
-        value = question["value"]
+
+        # Check on undefined questions, and get their default value.
+        if question["value"] == Undefined:
+            value = question_node.type.default
+            # A boolean question has always to be evaluated to false, and it is not logical to
+            # expect a user to check a checkbox to un-check it to get the correct form displayed.
+            if question_node.type == BoolTypeNode:
+                question["value"] = False
+        else:
+            value = question["value"]
 
         # Visit the type node to get the draw function to use.
         draw_function = question_node.type.accept(self)

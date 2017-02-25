@@ -1,3 +1,6 @@
+from Undefined import Undefined
+
+
 class Evaluate(object):
     def __init__(self, ast, env, error_handler):
         """
@@ -36,25 +39,37 @@ class Evaluate(object):
 
     def if_else_node(self, if_else_node):
         condition = if_else_node.expression.accept(self)
-        assert (type(condition) == bool), \
+        assert (type(condition) == bool) or (type(condition) == Undefined), \
             "Invalid type if condition, expected boolean got: {}"\
             .format(condition)
+        if condition == Undefined:
+            condition = False
+
         if condition:
             if_else_node.if_block.accept(self)
         else:
             if_else_node.else_block.accept(self)
 
     def neg_node(self, neg_node):
-        return not neg_node.expression.accept(self)
+        result = neg_node.expression.accept(self)
+        return (not result) if result != Undefined else Undefined
 
     def min_node(self, min_node):
-        return -min_node.expression.accept(self)
+        result = min_node.expression.accept(self)
+        return (-result) if result != Undefined else Undefined
 
     def plus_node(self, plus_node):
-        return +plus_node.expression.accept(self)
+        result = plus_node.expression.accept(self)
+        return (+result) if result != Undefined else Undefined
+
+    def is_defined_binop(self, left, right):
+        if left == Undefined or right == Undefined:
+            return False
+        return True
 
     def mul_node(self, mul_node):
-        return mul_node.left.accept(self) * mul_node.right.accept(self)
+        left, right = mul_node.left.accept(self), mul_node.right.accept(self)
+        return (left * right) if self.is_defined_binop(left, right) else Undefined
 
     def div_node(self, div_node):
         # Return 0 when diving by zero and show an warning.
@@ -66,34 +81,44 @@ class Evaluate(object):
         return div_node.left.accept(self) / right_value
 
     def add_node(self, add_node):
-        return add_node.left.accept(self) + add_node.right.accept(self)
+        left, right = add_node.left.accept(self), add_node.right.accept(self)
+        return (left + right) if self.is_defined_binop(left, right) else Undefined
 
     def sub_node(self, sub_node):
-        return sub_node.left.accept(self) - sub_node.right.accept(self)
+        left, right = sub_node.left.accept(self), sub_node.right.accept(self)
+        return (left - right) if self.is_defined_binop(left, right) else Undefined
 
     def lt_node(self, lt_node):
-        return lt_node.left.accept(self) < lt_node.right.accept(self)
+        left, right = lt_node.left.accept(self), lt_node.right.accept(self)
+        return (left < right) if self.is_defined_binop(left, right) else Undefined
 
     def lte_node(self, lte_node):
-        return lte_node.left.accept(self) <= lte_node.right.accept(self)
+        left, right = lte_node.left.accept(self), lte_node.right.accept(self)
+        return (left <= right) if self.is_defined_binop(left, right) else Undefined
 
     def gt_node(self, gt_node):
-        return gt_node.left.accept(self) > gt_node.right.accept(self)
+        left, right = gt_node.left.accept(self), gt_node.right.accept(self)
+        return (left > right) if self.is_defined_binop(left, right) else Undefined
 
     def gte_node(self, gte_node):
-        return gte_node.left.accept(self) >= gte_node.right.accept(self)
+        left, right = gte_node.left.accept(self), gte_node.right.accept(self)
+        return (left >= right) if self.is_defined_binop(left, right) else Undefined
 
     def eq_node(self, eq_node):
-        return eq_node.left.accept(self) == eq_node.right.accept(self)
+        left, right = eq_node.left.accept(self), eq_node.right.accept(self)
+        return (left == right) if self.is_defined_binop(left, right) else Undefined
 
     def neq_node(self, neq_node):
-        return neq_node.left.accept(self) != neq_node.right.accept(self)
+        left, right = neq_node.left.accept(self), neq_node.right.accept(self)
+        return (left != right) if self.is_defined_binop(left, right) else Undefined
 
     def and_node(self, and_node):
-        return and_node.left.accept(self) and and_node.right.accept(self)
+        left, right = and_node.left.accept(self), and_node.right.accept(self)
+        return (left and right) if self.is_defined_binop(left, right) else Undefined
 
     def or_node(self, or_node):
-        return or_node.left.accept(self) or or_node.right.accept(self)
+        left, right = or_node.left.accept(self), or_node.right.accept(self)
+        return (left or right) if self.is_defined_binop(left, right) else Undefined
 
     @staticmethod
     def string_node(string_node):

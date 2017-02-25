@@ -482,8 +482,8 @@ class DecimalNode(VarNode):
 
 
 class DateNode(VarNode):
-    def __init__(self, date, line=0, col=0):
-        super(DateNode, self).__init__(date, line, col)
+    def __init__(self, date_val, line=0, col=0):
+        super(DateNode, self).__init__(date_val, line, col)
 
     def accept(self, visitor):
         return visitor.date_node(self)
