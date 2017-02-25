@@ -13,7 +13,12 @@ class TestParser(unittest.TestCase):
 
     def validate_node(self, parse_method, parse_str, test_node):
         parse_res = self.parse(parse_method, parse_str)[0]
+        print "=========================="
+        print "Parse String: {}".format(parse_str)
+        print "Parse Result: {}".format(parse_res)
+        print "Test Node: {}".format(test_node)
         self.assertEqual(parse_res, test_node)
+        print "\n=========================="
 
     def invalidate_node(self, parse_method, parse_str, test_node):
         parse_res = self.parse(parse_method, parse_str)[0]
@@ -34,20 +39,20 @@ class TestParser(unittest.TestCase):
 
         question = "Did you sell a house in 2010?"
         name = "hasSoldHouse"
-        q_type = "boolean"
+        q_type = AST.BoolTypeNode()
         q_str = format_question(question, name, q_type)
         test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "Did you sell a house in 2010?"
-        q_type = "money"
+        q_type = AST.MoneyTypeNode()
         q_str = format_question(question, name, q_type)
         test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "question?"
         name = "moneyVar"
-        q_type = "decimal"
+        q_type = AST.DecimalTypeNode()
         q_str = format_question(question, name, q_type)
         test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
@@ -62,7 +67,7 @@ class TestParser(unittest.TestCase):
 
         question = "Did you sell a house in 2010?"
         name = "hasSoldHouse"
-        q_type = "boolean"
+        q_type = AST.BoolTypeNode()
         q_expr = "-var >= 600"
         node_expr = AST.GTENode(AST.MinNode(AST.VarNode("var")), AST.IntNode(Decimal("600")))
 
@@ -121,6 +126,7 @@ class TestParser(unittest.TestCase):
     def test_decimal_lit_in_expr(self):
         decimal_val = "100.005"
         dec_node1 = AST.DecimalNode(Decimal(decimal_val))
+        print dec_node1
         self.validate_node(self.exp_parser, decimal_val, dec_node1)
 
         decimal_val = "100."
@@ -194,7 +200,7 @@ class TestParser(unittest.TestCase):
 
     def test_conditionalIf(self):
         if_expr = AST.VarNode("var")
-        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), "boolean")
+        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), AST.BoolTypeNode())
         if_block = AST.BlockNode([if_block_question])
         if_cond = AST.IfNode(if_expr, if_block)
 
@@ -204,7 +210,7 @@ class TestParser(unittest.TestCase):
 
     def test_conditionalIfElse(self):
         if_expr = AST.VarNode("var")
-        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), "boolean")
+        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), AST.BoolTypeNode())
         if_block = AST.BlockNode([if_block_question])
         if_else_cond = AST.IfElseNode(if_expr, if_block, if_block)
 
@@ -223,8 +229,8 @@ class TestParser(unittest.TestCase):
                 }
                 """
 
-        q1 = AST.QuestionNode(AST.StringNode("question1?"), AST.VarNode("var1"), "money")
-        q2 = AST.QuestionNode(AST.StringNode("question2?"), AST.VarNode("var2"), "string")
+        q1 = AST.QuestionNode(AST.StringNode("question1?"), AST.VarNode("var1"), AST.MoneyTypeNode())
+        q2 = AST.QuestionNode(AST.StringNode("question2?"), AST.VarNode("var2"), AST.StringTypeNode())
         expr = AST.GTNode(AST.VarNode("var1"), AST.IntNode(Decimal("200")))
         if_block = AST.IfNode(expr, AST.BlockNode([q2]))
         form_block = AST.BlockNode([q1, if_block])
