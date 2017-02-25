@@ -29,15 +29,20 @@ class DependencyChecker:
         if not dependencies:
             self.constants.append(node.name)
 
+        if node.name in dependencies:
+            self.error("computed question \"{}\" has dependency on "
+                       "itself".format(node.name))
+
         # Find all (indirect) dependencies of this questions dependencies using
         # breadth first search on the dependency table.
         for dependency in dependencies:
             dependencies += [d for d in self.dependencies.get(dependency, []) if d not in dependencies]
 
         for dependency in dependencies:
-            if dependency in self.dependencies and node.name in self.dependencies[dependency]:
-                self.error("circular dependency between questions "
-                           "\"{}\" and \"{}\"".format(node.name, dependency))
+            if node.name in self.dependencies.get(dependency, []):
+                self.error("computed question \"{}\" has circular dependency "
+                           " on computed question \"{}\"".format(node.name,
+                                                                 dependency))
 
         self.dependencies[node.name] = dependencies
         return [node.name]

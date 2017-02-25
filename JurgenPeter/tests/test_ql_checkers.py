@@ -118,6 +118,8 @@ class TestDependencyChecker(TestCase):
          "a: \"label 1\" integer"
          "b: \"label 2\" integer = 2 * a"
          "  if b > 0 { } }", 0, 0),
+        ("form Name {"
+         "a: \"label 1\" integer = 2 * a }", 1, 0),
     ]
 
     def testDependencyErrors(self):
