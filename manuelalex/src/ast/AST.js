@@ -10,7 +10,7 @@ export class AST {
     }
 
     validate() {
-        for(let statement of this.form.statements){
+        for(let statement of this.program.statements){
             statement.validate();
         }
     }

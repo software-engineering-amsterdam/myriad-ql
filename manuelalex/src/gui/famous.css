@@ -1,0 +1,114 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Owner: mark@famo.us
+ * @license MPL 2.0
+ * @copyright Famous Industries, Inc. 2015
+ */
+
+.famous-root {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    opacity: .999999; /* ios8 hotfix */
+    overflow: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.arva-select {
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    height: 48px;
+    line-height: 48px;
+    overflow: hidden;
+    width: 240px;
+
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+.arva-select select {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px; /* If you add too much padding here, the options won't show in IE */
+    width: 268px;
+}
+
+svg {
+    position: absolute;
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.famous-container, .famous-group {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow: visible;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    pointer-events: none;
+}
+
+.famous-group {
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.famous-surface {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+}
+
+.famous-container-group {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.famous-native-scroller {
+    overflow: scroll;
+    position: absolute;
+    pointer-events: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.famous-native-scroller::after {
+    content: " "
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+/* Prevent the yellow color from appearing when auto filling fields */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+

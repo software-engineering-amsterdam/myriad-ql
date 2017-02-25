@@ -40,7 +40,11 @@
     "name": "manuelalex",
     "main": "main.js",
     "dependencies": {
+      "arva-js": "github:manueloverdijk/arva-js@develop",
+      "arva-kit": "github:manueloverdijk/arva-kit@develop",
       "babel-register": "npm:babel-register@^6.22.0",
+      "css": "github:systemjs/plugin-css@^0.1.32",
+      "famous": "github:bizboard/famous@develop",
       "lodash": "npm:lodash@^4.17.4",
       "nearley": "npm:nearley@^2.7.12",
       "nearly": "npm:nearly@^1.7.1"
@@ -70,14 +74,26 @@
       "process": "npm:jspm-nodelibs-process@^0.2.0",
       "react": "npm:react@^15.0.0",
       "readline": "npm:jspm-nodelibs-readline@^0.2.0",
+      "source-map": "npm:source-map",
       "stream": "npm:jspm-nodelibs-stream@^0.2.0",
       "string_decoder": "npm:jspm-nodelibs-string_decoder@^0.2.0",
+      "timers": "npm:jspm-nodelibs-timers@^0.2.0",
       "url": "npm:jspm-nodelibs-url@^0.2.0",
       "util": "npm:jspm-nodelibs-util@^0.2.0",
       "vm": "npm:jspm-nodelibs-vm@^0.2.0",
       "zlib": "npm:jspm-nodelibs-zlib@^0.2.0"
     },
     "overrides": {
+      "github:firebase/firebase-bower@3.6.10": {
+        "main": "firebase.js",
+        "registry": "jspm",
+        "meta": {
+          "firebase.js": {
+            "exports": "firebase",
+            "format": "global"
+          }
+        }
+      },
       "npm:browserify-zlib@0.1.4": {
         "dependencies": {
           "readable-stream": "^2.0.2",

@@ -2,7 +2,14 @@ SystemJS.config({
     paths: {
         "npm:": "jspm_packages/npm/",
         "src/": "src/",
+        "github:": "jspm_packages/github/",
         "manuelalex/": "src/"
+    },
+    arvaOptions: {
+        "iconOptions": {
+            "form": "rounded",
+            "thickness": "bold"
+        }
     },
     babelOptions: {
         "plugins": [
@@ -103,15 +110,22 @@ SystemJS.config({
                 }
             }
         }
+    },
+    map: {
+        "text": "github:bizboard/arva-js@develop/utils/IconLoader.js"
     }
 });
 
 SystemJS.config({
     packageConfigPaths: [
         "npm:@*/*.json",
-        "npm:*.json"
+        "npm:*.json",
+        "github:*/*.json"
     ],
     map: {
+        "css": "github:systemjs/plugin-css@0.1.32",
+        "arva-js": "github:manueloverdijk/arva-js@develop",
+        "arva-kit": "github:manueloverdijk/arva-kit@develop",
         "assert": "npm:jspm-nodelibs-assert@0.2.0",
         "babel-register": "npm:babel-register@6.22.0",
         "buffer": "npm:jspm-nodelibs-buffer@0.2.1",
@@ -120,6 +134,7 @@ SystemJS.config({
         "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
         "domain": "npm:jspm-nodelibs-domain@0.2.0",
         "events": "npm:jspm-nodelibs-events@0.2.0",
+        "famous": "github:bizboard/famous@develop",
         "fs": "npm:jspm-nodelibs-fs@0.2.0",
         "http": "npm:jspm-nodelibs-http@0.2.0",
         "https": "npm:jspm-nodelibs-https@0.2.1",
@@ -132,8 +147,10 @@ SystemJS.config({
         "process": "npm:jspm-nodelibs-process@0.2.0",
         "react": "npm:react@15.4.2",
         "readline": "npm:jspm-nodelibs-readline@0.2.0",
+        "source-map": "npm:source-map@0.5.6",
         "stream": "npm:jspm-nodelibs-stream@0.2.0",
         "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
+        "timers": "npm:jspm-nodelibs-timers@0.2.0",
         "url": "npm:jspm-nodelibs-url@0.2.0",
         "util": "npm:jspm-nodelibs-util@0.2.1",
         "vm": "npm:jspm-nodelibs-vm@0.2.0",
@@ -181,7 +198,7 @@ SystemJS.config({
                 "create-hmac": "npm:create-hmac@1.1.4",
                 "inherits": "npm:inherits@2.0.3",
                 "create-hash": "npm:create-hash@1.1.2",
-                "elliptic": "npm:elliptic@6.3.3",
+                "elliptic": "npm:elliptic@6.4.0",
                 "bn.js": "npm:bn.js@4.11.6",
                 "browserify-rsa": "npm:browserify-rsa@4.0.1",
                 "parse-asn1": "npm:parse-asn1@5.0.0"
@@ -231,7 +248,7 @@ SystemJS.config({
         },
         "npm:create-ecdh@4.0.0": {
             "map": {
-                "elliptic": "npm:elliptic@6.3.3",
+                "elliptic": "npm:elliptic@6.4.0",
                 "bn.js": "npm:bn.js@4.11.6"
             }
         },
@@ -284,7 +301,7 @@ SystemJS.config({
         "npm:miller-rabin@4.0.0": {
             "map": {
                 "bn.js": "npm:bn.js@4.11.6",
-                "brorand": "npm:brorand@1.0.7"
+                "brorand": "npm:brorand@1.1.0"
             }
         },
         "npm:jspm-nodelibs-stream@0.2.0": {
@@ -306,7 +323,7 @@ SystemJS.config({
         "npm:stream-browserify@2.0.1": {
             "map": {
                 "inherits": "npm:inherits@2.0.3",
-                "readable-stream": "npm:readable-stream@2.2.2"
+                "readable-stream": "npm:readable-stream@2.2.3"
             }
         },
         "npm:asn1.js@4.9.1": {
@@ -582,14 +599,6 @@ SystemJS.config({
                 "pako": "npm:pako@0.2.9"
             }
         },
-        "npm:elliptic@6.3.3": {
-            "map": {
-                "inherits": "npm:inherits@2.0.3",
-                "bn.js": "npm:bn.js@4.11.6",
-                "brorand": "npm:brorand@1.0.7",
-                "hash.js": "npm:hash.js@1.0.3"
-            }
-        },
         "npm:url@0.11.0": {
             "map": {
                 "punycode": "npm:punycode@1.3.2",
@@ -618,6 +627,178 @@ SystemJS.config({
             "map": {
                 "underscore": "npm:underscore@1.4.4",
                 "colors": "npm:colors@0.5.1"
+            }
+        },
+        "npm:readable-stream@2.2.3": {
+            "map": {
+                "isarray": "npm:isarray@1.0.0",
+                "inherits": "npm:inherits@2.0.3",
+                "string_decoder": "npm:string_decoder@0.10.31",
+                "core-util-is": "npm:core-util-is@1.0.2",
+                "process-nextick-args": "npm:process-nextick-args@1.0.7",
+                "buffer-shims": "npm:buffer-shims@1.0.0",
+                "util-deprecate": "npm:util-deprecate@1.0.2"
+            }
+        },
+        "npm:elliptic@6.4.0": {
+            "map": {
+                "bn.js": "npm:bn.js@4.11.6",
+                "inherits": "npm:inherits@2.0.3",
+                "minimalistic-assert": "npm:minimalistic-assert@1.0.0",
+                "hash.js": "npm:hash.js@1.0.3",
+                "brorand": "npm:brorand@1.1.0",
+                "hmac-drbg": "npm:hmac-drbg@1.0.0",
+                "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1"
+            }
+        },
+        "npm:hmac-drbg@1.0.0": {
+            "map": {
+                "hash.js": "npm:hash.js@1.0.3",
+                "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
+                "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+            }
+        },
+        "npm:jspm-nodelibs-timers@0.2.0": {
+            "map": {
+                "timers-browserify": "npm:timers-browserify@1.4.2"
+            }
+        },
+        "npm:timers-browserify@1.4.2": {
+            "map": {
+                "process": "npm:process@0.11.9"
+            }
+        },
+        "github:manueloverdijk/arva-js@develop": {
+            "map": {
+                "bowser": "npm:bowser@1.6.0",
+                "xml2js": "npm:xml2js@0.4.17",
+                "fastclick": "npm:fastclick@1.0.6",
+                "camelcase": "npm:camelcase@2.1.1",
+                "lodash-decorators": "npm:lodash-decorators@3.0.1",
+                "ordered-hashmap": "npm:ordered-hashmap@1.0.0",
+                "eventemitter3": "npm:eventemitter3@1.2.0",
+                "lodash": "npm:lodash@4.17.4",
+                "famous-flex": "github:bizboard/famous-flex@master",
+                "famous": "github:bizboard/famous@develop",
+                "request-animation-frame-mock": "github:erykpiast/request-animation-frame-mock@0.1.8",
+                "firebase": "github:firebase/firebase-bower@3.6.10"
+            }
+        },
+        "npm:lodash-decorators@3.0.1": {
+            "map": {
+                "lodash": "npm:lodash@4.0.1"
+            }
+        },
+        "npm:xml2js@0.4.17": {
+            "map": {
+                "xmlbuilder": "npm:xmlbuilder@4.2.1",
+                "sax": "npm:sax@1.2.2"
+            }
+        },
+        "npm:xmlbuilder@4.2.1": {
+            "map": {
+                "lodash": "npm:lodash@4.17.4"
+            }
+        },
+        "github:bizboard/famous-flex@master": {
+            "map": {
+                "es6-map": "npm:es6-map@0.1.4"
+            }
+        },
+        "npm:es6-map@0.1.4": {
+            "map": {
+                "es6-iterator": "npm:es6-iterator@2.0.0",
+                "es6-set": "npm:es6-set@0.1.4",
+                "es6-symbol": "npm:es6-symbol@3.1.0",
+                "d": "npm:d@0.1.1",
+                "es5-ext": "npm:es5-ext@0.10.12",
+                "event-emitter": "npm:event-emitter@0.3.4"
+            }
+        },
+        "npm:es6-iterator@2.0.0": {
+            "map": {
+                "d": "npm:d@0.1.1",
+                "es5-ext": "npm:es5-ext@0.10.12",
+                "es6-symbol": "npm:es6-symbol@3.1.0"
+            }
+        },
+        "npm:es6-set@0.1.4": {
+            "map": {
+                "es6-iterator": "npm:es6-iterator@2.0.0",
+                "d": "npm:d@0.1.1",
+                "es5-ext": "npm:es5-ext@0.10.12",
+                "es6-symbol": "npm:es6-symbol@3.1.0",
+                "event-emitter": "npm:event-emitter@0.3.4"
+            }
+        },
+        "npm:es6-symbol@3.1.0": {
+            "map": {
+                "d": "npm:d@0.1.1",
+                "es5-ext": "npm:es5-ext@0.10.12"
+            }
+        },
+        "npm:d@0.1.1": {
+            "map": {
+                "es5-ext": "npm:es5-ext@0.10.12"
+            }
+        },
+        "npm:event-emitter@0.3.4": {
+            "map": {
+                "es5-ext": "npm:es5-ext@0.10.12",
+                "d": "npm:d@0.1.1"
+            }
+        },
+        "npm:es5-ext@0.10.12": {
+            "map": {
+                "es6-symbol": "npm:es6-symbol@3.1.0",
+                "es6-iterator": "npm:es6-iterator@2.0.0"
+            }
+        },
+        "github:manueloverdijk/arva-kit@develop": {
+            "map": {
+                "color": "npm:color@0.11.4",
+                "bowser": "npm:bowser@1.4.3",
+                "lodash": "npm:lodash@4.17.4",
+                "degrees-radians": "npm:degrees-radians@1.0.3",
+                "rgbcolor": "npm:rgbcolor@0.0.4",
+                "famous-autosizetextarea": "github:ijzerenhein/famous-autosizetextarea@0.3.1",
+                "arva-js": "github:bizboard/arva-js@develop",
+                "famous-bkimagesurface": "github:bizboard/famous-bkimagesurface@master",
+                "famous-flex": "github:bizboard/famous-flex@master",
+                "famous": "github:bizboard/famous@develop"
+            }
+        },
+        "npm:color@0.11.4": {
+            "map": {
+                "clone": "npm:clone@1.0.2",
+                "color-convert": "npm:color-convert@1.9.0",
+                "color-string": "npm:color-string@0.3.0"
+            }
+        },
+        "npm:color-convert@1.9.0": {
+            "map": {
+                "color-name": "npm:color-name@1.1.1"
+            }
+        },
+        "npm:color-string@0.3.0": {
+            "map": {
+                "color-name": "npm:color-name@1.1.1"
+            }
+        },
+        "github:bizboard/arva-js@develop": {
+            "map": {
+                "bowser": "npm:bowser@1.6.0",
+                "lodash": "npm:lodash@4.17.4",
+                "famous": "github:bizboard/famous@develop",
+                "famous-flex": "github:bizboard/famous-flex@master",
+                "camelcase": "npm:camelcase@2.1.1",
+                "xml2js": "npm:xml2js@0.4.17",
+                "eventemitter3": "npm:eventemitter3@1.2.0",
+                "lodash-decorators": "npm:lodash-decorators@3.0.1",
+                "fastclick": "npm:fastclick@1.0.6",
+                "ordered-hashmap": "npm:ordered-hashmap@1.0.0",
+                "request-animation-frame-mock": "github:erykpiast/request-animation-frame-mock@0.1.8",
+                "firebase": "github:firebase/firebase-bower@3.6.10"
             }
         }
     }
