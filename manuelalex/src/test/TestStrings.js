@@ -5,19 +5,9 @@
 
 export let test1 =
 `form taxOfficeExample{
-    question 'Did you sell a house in 2010?'
-    hasSoldHouse: boolean
-    question 'Did you buy a house in 2010?'
-    hasBoughtHouse: boolean
-    question 'Did you enter a loan?'
-    hasMaintLoan: boolean
-    if (hasSoldHouse-hasBoughtHouse) {
+    if (hasSoldHouse && myHouse) {
         question 'What was the selling price?'
         sellingPrice: money
-        question 'What was the private debts for the sold house?'
-        privateDebt: money
-        answer 'Value residue:'
-        valueResidue: money = (sellingPrice-privateDebt)
     }
      }`;
 

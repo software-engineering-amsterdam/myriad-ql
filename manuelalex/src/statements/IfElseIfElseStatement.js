@@ -9,7 +9,7 @@ module.exports = class IfElseIfElseStatement extends IfElseStatement {
     constructor(options = {}) {
         super(options);
 
-        this.elseIfConditional = options.elseIfConditional;
+        this.elseIfCondition = options.elseIfCondition;
         this.elseIfBody = options.elseIfBody;
     }
 

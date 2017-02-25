@@ -14,6 +14,7 @@ const IfStatement = require('../statements/IfStatement.js');
 const IfElseStatement = require('../statements/IfElseStatement.js');
 const IfElseIfElseStatement = require('../statements/IfElseIfElseStatement.js');
 
+const Comparison = require('../expressions/Comparison.js');
 const Expression = require('../expressions/Expression.js');
 const Allocation = require('../allocation/Allocation.js');
 const Factor = require('../expressions/Factor.js');
@@ -48,7 +49,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
 
     // ifBody statements are one level too deep
     ifStatement(data, location, reject) {
-        return new IfStatement({ condition: data[2][1], ifBody: data[3][3], location });
+        return new IfStatement({ condition: _.flattenDeep(data[2][1]), ifBody: data[3][3], location });
     }
 
     ifElseStatement(data, location, reject) {
@@ -58,7 +59,7 @@ module.exports = class FormPostProcessor extends PostProcessor {
     ifElseIfElseStatement(data, location, reject) {
         return new IfElseIfElseStatement(_.merge(data[0].getOptions(), {
             location,
-            elseIfConditional: data[3][1],
+            elseIfCondition: data[3][1],
             elseIfBody: _.flattenDeep(data[4][3]),
             elseBody: _.flattenDeep(data[5][4])
         }));
@@ -83,7 +84,6 @@ module.exports = class FormPostProcessor extends PostProcessor {
         }
     }
 
-    // todo
     allocation(data, location, reject) {
         return new Allocation({
             propertyName: data[0].trim(),
@@ -93,7 +93,6 @@ module.exports = class FormPostProcessor extends PostProcessor {
         });
     }
 
-    // todo
     expression(data, location, reject) {
         if (data.length === 3) {
             return new Expression({
@@ -105,10 +104,29 @@ module.exports = class FormPostProcessor extends PostProcessor {
         } else {
             console.error(`Retrieved different expression: ${JSON.stringify(data)} at location ${location}`);
         }
-
     }
 
-    // todo probably obsolete
+    booleanExpression(data, location, reject){
+        return data;
+    }
+
+    comparison(data, location, reject){
+        return new Comparison({
+            location,
+            leftHand: data[0],
+            rightHand: data[4],
+            comparisonOperator: data[2][0]
+        });
+    }
+
+    and_test(data, location, reject){
+        return data;
+    }
+
+    not_test(data, location, reject){
+        return data;
+    }
+
     operator(data, location, reject) {
         return data;
     }

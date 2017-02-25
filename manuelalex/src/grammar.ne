@@ -43,10 +43,10 @@ multiply_op             -> "*"                                                  
 assignOp                -> "="
 
 
-bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test
-and_test                -> not_test | and_test _ ("&&" | "&") _ not_test
-not_test                -> comparison | "!" not_test | propertyName
-comparison              -> propertyName _ comp_operator _ propertyName
+bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test                                {% FormPostProcessor.booleanExpression %}
+and_test                -> not_test | and_test _ ("&&" | "&") _ not_test                                         {% FormPostProcessor.and_test %}
+not_test                -> comparison | "!" not_test | propertyName                                              {% FormPostProcessor.not_test %}
+comparison              -> propertyName _ comp_operator _ propertyName                                         {% FormPostProcessor.comparison %}
 comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
 
 

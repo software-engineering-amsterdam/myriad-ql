@@ -20,7 +20,6 @@ let test1, test2, test3, test4, test5;
 module.exports = class Parser {
 
     constructor() {
-        this.parser;
         Promise.all([
             jspmImport('nearley'),
             jspmImport('./src/test/TestStrings.js')
@@ -38,7 +37,7 @@ module.exports = class Parser {
         let result = [];
         let testString;
         try {
-            testString = test1.replace(/(\r\n|\n|\r)/gm,"");
+            testString = test1.replace(/(\r\n|\n|\r)/gm, "");
             console.log(`Testing: ${test1}`);
             result = parser.feed(testString).results;
         } catch (parseError) {
@@ -46,7 +45,7 @@ module.exports = class Parser {
             console.log(`${parseError}`);
         }
         if (result.length > 1) {
-            console.error('Ambigious parsing '+ result.length +' options, chosing the first parsing');
+            console.error('Ambigious parsing ' + result.length + ' options, chosing the first parsing');
             for (let i = 0; i < result.length; i++) {
                 console.log(JSON.stringify(result[i]));
             }
@@ -57,7 +56,7 @@ module.exports = class Parser {
         return result;
     }
 
-    makeAST(result = {}){
+    makeAST(result = {}) {
         return new AST(result);
     }
 
