@@ -1,5 +1,6 @@
 import pyparsing as pp
 import decimal
+import datetime
 import AST
 
 
@@ -56,19 +57,25 @@ class QuestionnaireParser(object):
             del src, loc
             return decimal.Decimal(tokens[0])
 
+        def create_date(src, loc, tokens):
+            del src, loc
+            return datetime.datetime.strptime(tokens[0], "%d.%m.%Y").date()
+
         types = {
             "BOOLEAN": (pp.Keyword("true").addParseAction(lambda _: True) |
-                     pp.Keyword("false").addParseAction(lambda _: False)),
+                        pp.Keyword("false").addParseAction(lambda _: False)),
             "INTEGER": pp.Word(pp.nums),
             "VARIABLE": pp.Word(pp.alphas, pp.alphanums + "_"),
             "DECIMAL": pp.Regex("(\d+\.\d*)|(\d*\.\d+)"),
             "MONEY": pp.Regex("(\d+\.\d{0,2})|(\d*\.\d{1,2})"),
-            "DATE": pp.Regex("^[0-9]{2}-[0-9]{2}-[0-9]{4}$"),
+            "DATE": pp.Regex("([0][1-9])|([1-3][0-9])\.[0-9]{2}\.[0-9]{4}"),
             "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
         }
         types["INTEGER"].addParseAction(create_decimal)
         types["DECIMAL"].addParseAction(create_decimal)
         types["MONEY"].addParseAction(create_decimal)
+
+        types["DATE"].addParseAction(create_date)
 
         return types
 
@@ -172,12 +179,12 @@ class QuestionnaireParser(object):
                 self.create_node(AST.BoolNode)) |
             self.var_types["VARIABLE"].addParseAction(
                 self.create_node(AST.VarNode)) |
+            self.var_types["DATE"].addParseAction(
+                self.create_node(AST.DateNode)) |
             self.var_types["DECIMAL"].addParseAction(
                 self.create_node(AST.DecimalNode)) |
             self.var_types["INTEGER"].addParseAction(
                 self.create_node(AST.IntNode)) |
-            self.var_types["DATE"].addParseAction(
-                self.create_node(AST.DateNode)) |
             self.var_types["STRING"].addParseAction(
                 self.create_node(AST.StringNode))
         )
