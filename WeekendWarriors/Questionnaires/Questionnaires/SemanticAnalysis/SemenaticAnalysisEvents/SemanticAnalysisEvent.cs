@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
 {
-    public class SemanticAnalysisEvent : ISemenaticAnalysisEvent
+    public abstract class SemanticAnalysisEvent : ISemenaticAnalysisEvent
     {
         protected string Message;
         public SemanticAnalysisEvent(string messsage)
         {
             this.Message = messsage;
         }
+
+        public abstract bool IsError();
 
         public override string ToString()
         {

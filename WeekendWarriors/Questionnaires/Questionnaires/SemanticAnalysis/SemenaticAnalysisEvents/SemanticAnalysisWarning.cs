@@ -12,5 +12,10 @@ namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
         {
            
         }
+
+        public override bool IsError()
+        {
+            return false;
+        }
     }
 }

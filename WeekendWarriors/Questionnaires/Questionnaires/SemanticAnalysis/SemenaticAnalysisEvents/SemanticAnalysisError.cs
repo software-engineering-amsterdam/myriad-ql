@@ -8,9 +8,14 @@ namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
 {
     class SemanticAnalysisError : SemanticAnalysisEvent
     {
-        public SemanticAnalysisError(string message) : base("Warning: " + message)
+        public SemanticAnalysisError(string message) : base("Error: " + message)
         {
 
+        }
+
+        public override bool IsError()
+        {
+            return true;
         }
     }
 }

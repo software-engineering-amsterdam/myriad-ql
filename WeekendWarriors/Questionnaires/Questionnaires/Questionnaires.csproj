@@ -75,8 +75,11 @@
     <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
-    <Compile Include="SemanticAnalysis\TypeChecker.cs" />
-    <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
+    <Compile Include="SemanticAnalysis\Run\ISemanticAnalyzerRun.cs" />
+    <Compile Include="SemanticAnalysis\Run\IResult.cs" />
+    <Compile Include="SemanticAnalysis\Run\Result.cs" />
+    <Compile Include="SemanticAnalysis\SemanticAnalyzer.cs" />
+    <Compile Include="SemanticAnalysis\Run\TypeChecker.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\ISemenaticAnalysisEvent.cs" />
     <Compile Include="QLContext.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisError.cs" />

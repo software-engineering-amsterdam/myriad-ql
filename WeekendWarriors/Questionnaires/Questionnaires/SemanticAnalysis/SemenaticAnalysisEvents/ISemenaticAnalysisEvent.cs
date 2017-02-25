@@ -9,5 +9,6 @@ namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
     public interface ISemenaticAnalysisEvent
     {
         string ToString();
+        bool IsError();
     }
 }

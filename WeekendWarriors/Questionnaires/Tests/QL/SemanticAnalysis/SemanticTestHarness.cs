@@ -21,22 +21,14 @@ namespace Tests.QL.SemanticAnalysis
             this.Type = type;
         }
 
-        public void TestExpression(string input, uint exprectedErrorCount, string failureMessage)
+        public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
-            QLContext context = new QLContext();
-            TypeChecker SemanticAnalyzer = new TypeChecker(context);
-            SemanticAnalyzer.SemanticError += SemanticAnalyzer_SemanticError;
-            ErrorCount = 0;
+            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();            
             var parser = ASTFactory.CreateParser(input);
             var node = ASTFactory.CreateQLObject(parser, Type);
-            SemanticAnalyzer.Analyze(node);
+            var result = SemanticAnalyzer.Analyze(node);
 
-            Assert.AreEqual(exprectedErrorCount, ErrorCount, failureMessage);
-        }
-
-        private void SemanticAnalyzer_SemanticError(object sender, SemanticErrorArgs e)
-        {
-            ErrorCount++;
+            Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }
     }
 }

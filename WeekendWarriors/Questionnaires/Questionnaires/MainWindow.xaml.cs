@@ -26,23 +26,14 @@ namespace Questionnaires
             InitializeComponent();            
         }
 
-        private void ReportSemanticError(object sender, SemanticAnalysis.SemanticErrorArgs e)
-        {
-            textBlock.Text = textBlock.Text + "\n Semantic error: " + e.Message;
-        }
-
         private void Interpret_Click(object sender, RoutedEventArgs e)
         {
             textBlock.Text = "";
 
             var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(Input.Text);
-            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
-            var context = new QLContext();
-            var semanticAnalyzer = new SemanticAnalysis.TypeChecker(context);
-
-            semanticAnalyzer.SemanticError += ReportSemanticError;
-            semanticAnalyzer.Analyze(form);
+            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);            
+            var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
 
             // Example renderer functionality
             Renderer.Renderer renderer = new Renderer.Renderer();

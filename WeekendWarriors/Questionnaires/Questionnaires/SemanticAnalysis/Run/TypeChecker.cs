@@ -7,25 +7,19 @@ using Questionnaires.AST;
 using Questionnaires.AST.Operators;
 using Questionnaires.AST.Visitor;
 
-namespace Questionnaires.SemanticAnalysis
+namespace Questionnaires.SemanticAnalysis.Run
 {
-    public class TypeChecker : IASTVisitor<QLType?>
+    public class TypeChecker : ISemanticAnalyzerRun, IASTVisitor<QLType?>
     {
-        private QLContext Context;
+        protected QLContext Context;
+        protected Result result = new Result();
 
-        public TypeChecker(QLContext context)
+        public IResult Analyze(AST.INode node, QLContext context)
         {
             this.Context = context;
-        }
 
-        private void ValidatorInvalidExpression(object sender, InvalidExpressionEventArgs e)
-        {
-            OnSemanticError(new SemanticErrorArgs(e.Message));
-        }
-
-        public void Analyze(AST.INode node)
-        {
             Visit((dynamic)node);
+            return result;
         }
 
         public QLType? Visit(QLForm node)
@@ -45,14 +39,10 @@ namespace Questionnaires.SemanticAnalysis
             return type;
         }
 
-
-
         public QLType? Visit(QLComputedQuestion node)
         {
             return Evaluate(new List<INode> { node.Question, node.Expression }, node);
         }
-
-
 
         public QLType? Visit(QLConditional node)
         {   
@@ -116,6 +106,26 @@ namespace Questionnaires.SemanticAnalysis
             return Evaluate(new List<INode> { }, node);
         }
 
+        public QLType? Visit(QLBinaryOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLPositiveOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLNegativeOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLBangOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
         protected QLType? Evaluate(List<INode> children, INode parent)
         {
             List<QLType> childTypes = new List<QLType>();
@@ -145,36 +155,7 @@ namespace Questionnaires.SemanticAnalysis
         {
             // Report any warnings/errors that occurred.
             foreach (var analysisEvent in events)
-                OnSemanticError(new SemanticErrorArgs(analysisEvent.ToString()));
-        }
-
-        public delegate void SemanticErrorEventHandler(object sender, SemanticErrorArgs e);
-        public event SemanticErrorEventHandler SemanticError;
-
-        protected virtual void OnSemanticError(SemanticErrorArgs e)
-        {
-            if (SemanticError != null)
-                SemanticError(this, e);
-        }
-
-        public QLType? Visit(QLBinaryOperation node)
-        {
-            return Visit((dynamic)node);
-        }
-
-        public QLType? Visit(QLPositiveOperation node)
-        {
-            return Visit((dynamic)node);
-        }
-
-        public QLType? Visit(QLNegativeOperation node)
-        {
-            return Visit((dynamic)node);
-        }
-
-        public QLType? Visit(QLBangOperation node)
-        {
-            return Visit((dynamic)node);
+                result.AddEvent(analysisEvent);
         }
     }
 }
