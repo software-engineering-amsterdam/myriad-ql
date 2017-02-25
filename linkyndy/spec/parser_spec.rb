@@ -51,29 +51,25 @@ describe Parser do
     end
   end
 
+  describe '#hashrocket' do
+    it 'consumes a hashrocket' do
+      expect(subject.hashrocket).to parse('=>')
+    end
+  end
+
   describe '#string' do
-    it 'consumes lowercase letters' do
-      expect(subject.string).to parse('abc')
+    it 'consumes an arbitrary string' do
+      expect(subject.string).to parse('"aB3# ?"')
     end
 
-    it 'consumes uppercase letters' do
-      expect(subject.string).to parse('ABC')
+    it 'consumes empty strings' do
+      expect(subject.string).to parse('""')
     end
 
-    it 'consumes digits' do
-      expect(subject.string).to parse('123')
-    end
-
-    it 'consumes whitespace' do
-      expect(subject.string).to parse(' ')
-    end
-
-    it 'consumes a combination of letters, digits and whitespace' do
-      expect(subject.string).to parse('aB3 ')
-    end
-
-    it 'consumes single characters' do
-      expect(subject.string).to parse('a')
+    it 'only consumes strings enclosed in quotes' do
+      expect do
+        subject.string.parse('abc')
+      end.to raise_error(Parslet::ParseFailed)
     end
   end
 
@@ -99,7 +95,7 @@ describe Parser do
 
   describe '#literal' do
     it 'consumes a string' do
-      expect(subject.literal).to parse('foo')
+      expect(subject.literal).to parse('"foo"')
     end
 
     it 'consumes an integer' do
@@ -205,7 +201,17 @@ describe Parser do
   end
 
   describe '#block' do
+    it 'consumes an if statement' do
+      expect(subject.block).to parse('if foo "bar?" text baz end')
+    end
 
+    it 'consumes a question' do
+      expect(subject.block).to parse('"foo bar?" text baz')
+    end
+
+    it 'may be empty' do
+      expect(subject.block).to parse('')
+    end
   end
 
   describe '#if_statement' do
@@ -221,33 +227,11 @@ describe Parser do
 
   describe '#question' do
     it 'consumes a well formed question' do
-      expect(subject.question).to parse('"foo bar?"')
+      expect(subject.question).to parse('"foo bar?" text baz')
     end
 
-    it 'must end with a question mark' do
-      expect(subject.question).to parse('"foo?"')
-    end
-
-    it 'must be quoted' do
-      expect do
-        subject.question.parse('bar?')
-      end.to raise_error(Parslet::ParseFailed)
-    end
-  end
-
-  describe '#answer' do
-    it 'consumes a well formed answer' do
-      expect(subject.answer).to parse('text foo')
-    end
-
-    it 'consumes a well formed answer with an expression' do
-      expect(subject.answer).to parse('text foo => bar')
-    end
-  end
-
-  describe '#item' do
-    it 'consumes a well formed question - answer pair' do
-      expect(subject.item).to parse('"foo?" text bar')
+    it 'consumes a well formed question with an expression' do
+      expect(subject.question).to parse('"foo bar?" text baz => qux')
     end
   end
 
