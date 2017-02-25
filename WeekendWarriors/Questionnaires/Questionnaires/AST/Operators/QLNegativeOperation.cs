@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Questionnaires.AST.Operators
 {
-    class QLNegativeOperation : QLUnaryOperation
+    public class QLNegativeOperation : QLUnaryOperation
     {
         public QLNegativeOperation(IQLExpression operand) : base(operand)
         {

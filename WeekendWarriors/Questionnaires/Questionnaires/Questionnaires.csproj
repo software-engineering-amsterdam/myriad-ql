@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AST\Visitor\IASTVisitor.cs" />
     <Compile Include="AST\IQLExpression.cs" />
     <Compile Include="AST\Operators\QLBangOperation.cs" />
     <Compile Include="AST\Operators\QLNegativeOperation.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
-    <Compile Include="SemanticAnalysis\Analyzer.cs" />
+    <Compile Include="SemanticAnalysis\TypeChecker.cs" />
     <Compile Include="SemanticAnalysis\InvalidExpressionEventArgs.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\ISemenaticAnalysisEvent.cs" />
     <Compile Include="QLContext.cs" />

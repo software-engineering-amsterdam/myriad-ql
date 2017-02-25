@@ -24,7 +24,7 @@ namespace Tests.QL.SemanticAnalysis
         public void TestExpression(string input, uint exprectedErrorCount, string failureMessage)
         {
             QLContext context = new QLContext();
-            Analyzer SemanticAnalyzer = new Analyzer(context);
+            TypeChecker SemanticAnalyzer = new TypeChecker(context);
             SemanticAnalyzer.SemanticError += SemanticAnalyzer_SemanticError;
             ErrorCount = 0;
             var parser = ASTFactory.CreateParser(input);

@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.AST;
 using Questionnaires.AST.Operators;
+using Questionnaires.AST.Visitor;
 
 namespace Questionnaires.SemanticAnalysis
 {
-    public class Analyzer
+    public class TypeChecker : IASTVisitor<QLType?>
     {
         private QLContext Context;
 
-        public Analyzer(QLContext context)
+        public TypeChecker(QLContext context)
         {
             this.Context = context;
         }
@@ -25,9 +26,9 @@ namespace Questionnaires.SemanticAnalysis
         public void Analyze(AST.INode node)
         {
             Visit((dynamic)node);
-        } 
-        
-        protected QLType? Visit(QLForm node)
+        }
+
+        public QLType? Visit(QLForm node)
         {
             foreach (var statement in node.Statements)
                 Visit((dynamic)statement);            
@@ -35,7 +36,7 @@ namespace Questionnaires.SemanticAnalysis
             return QLType.None;
         }
 
-        protected QLType? Visit(QLQuestion node)
+        public QLType? Visit(QLQuestion node)
         {
             List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
             var type = node.CheckTypes(new List<QLType>(), Context, events);
@@ -44,16 +45,16 @@ namespace Questionnaires.SemanticAnalysis
             return type;
         }
 
-        
 
-        protected QLType? Visit(QLComputedQuestion node)
+
+        public QLType? Visit(QLComputedQuestion node)
         {
             return Evaluate(new List<INode> { node.Question, node.Expression }, node);
         }
 
-        
 
-        protected QLType? Visit(QLConditional node)
+
+        public QLType? Visit(QLConditional node)
         {   
             // Make sure to visit all the then and else statements
             foreach (var statement in node.ThenStatements)
@@ -65,52 +66,52 @@ namespace Questionnaires.SemanticAnalysis
             return Evaluate(new List<INode> { node.Condition }, node);          
         }
 
-        protected QLType? Visit(QLArithmeticOperation node)
+        public QLType? Visit(QLArithmeticOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);                   
         }
 
-        protected QLType? Visit(QLComparisonOperation node)
+        public QLType? Visit(QLComparisonOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType? Visit(QLEqualityOperation node)
+        public QLType? Visit(QLEqualityOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType? Visit(QLLogicalOperation node)
+        public QLType? Visit(QLLogicalOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        protected QLType? Visit(QLUnaryOperation node)
+        public QLType? Visit(QLUnaryOperation node)
         {
             return Evaluate(new List<INode> { node.Operand }, node);
         }
 
-        protected QLType? Visit(QLBoolean node)
+        public QLType? Visit(QLBoolean node)
         {
             return Evaluate(new List<INode> { }, node);            
         }
-            
-        protected QLType? Visit(QLMoney node)
-        {
-            return Evaluate(new List<INode> { }, node);
-        }   
 
-        protected QLType? Visit(QLNumber node)
+        public QLType? Visit(QLMoney node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        protected QLType? Visit(QLString node)
+        public QLType? Visit(QLNumber node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        protected QLType? Visit(QLIdentifier node)
+        public QLType? Visit(QLString node)
+        {
+            return Evaluate(new List<INode> { }, node);
+        }
+
+        public QLType? Visit(QLIdentifier node)
         {
             return Evaluate(new List<INode> { }, node);
         }
@@ -156,5 +157,24 @@ namespace Questionnaires.SemanticAnalysis
                 SemanticError(this, e);
         }
 
+        public QLType? Visit(QLBinaryOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLPositiveOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLNegativeOperation node)
+        {
+            return Visit((dynamic)node);
+        }
+
+        public QLType? Visit(QLBangOperation node)
+        {
+            return Visit((dynamic)node);
+        }
     }
 }

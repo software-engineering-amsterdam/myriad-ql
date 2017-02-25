@@ -39,7 +39,7 @@ namespace Questionnaires
             var parser = formFactory.CreateParser(Input.Text);
             var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);
             var context = new QLContext();
-            var semanticAnalyzer = new SemanticAnalysis.Analyzer(context);
+            var semanticAnalyzer = new SemanticAnalysis.TypeChecker(context);
 
             semanticAnalyzer.SemanticError += ReportSemanticError;
             semanticAnalyzer.Analyze(form);
