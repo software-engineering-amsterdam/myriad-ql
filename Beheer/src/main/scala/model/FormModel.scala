@@ -17,6 +17,11 @@ class FormModel(form: Form) {
 
   lazy val referencedIdentifiers: Set[String] = expressions.map { case (e, _) => extractIdentifiers(e) }.reduce(_ ++ _)
 
+  lazy val displayQuestions: Seq[DisplayQuestion] = questionsWithShowConditions.map {
+    case (Question(i, l, t, Some(e)), conditions) => ComputedQuestion(i, l, t, conditions, e)
+    case (Question(i, l, t, None), conditions) => OpenQuestion(i, l, t, conditions)
+  }
+
   lazy val questionsWithReferences: Map[String, Set[String]] = questionsWithShowConditions.map {
     case (Question(identifier, _, _, None), conditionals) => (identifier, extractIdentifiers(conditionals))
     case (Question(identifier, _, _, Some(expr)), conditionals) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditionals))
