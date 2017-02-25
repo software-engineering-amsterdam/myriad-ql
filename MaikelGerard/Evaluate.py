@@ -72,13 +72,14 @@ class Evaluate(object):
         return (left * right) if self.is_defined_binop(left, right) else Undefined
 
     def div_node(self, div_node):
-        # Return 0 when diving by zero and show an warning.
-        right_value = div_node.right.accept(self)
+        # When diving by zero show an warning, and change the return value to Undefined.
+        right = div_node.right.accept(self)
 
-        if right_value == 0:
+        if right == 0:
             self.handler.add_zero_division_warning(self.env.context, div_node)
-            return right_value
-        return div_node.left.accept(self) / right_value
+            return Undefined
+        left = div_node.left.accept(self)
+        return (left / right) if self.is_defined_binop(left, right) else Undefined
 
     def add_node(self, add_node):
         left, right = add_node.left.accept(self), add_node.right.accept(self)
