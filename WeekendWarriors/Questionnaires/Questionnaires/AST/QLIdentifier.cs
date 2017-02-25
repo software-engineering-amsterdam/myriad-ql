@@ -26,6 +26,7 @@ namespace Questionnaires.AST
             
             if(!context.ContainsQuestion(Name))
             {
+                events.Add(new SemanticAnalysisError(string.Format("Invalid use of undefined identifier {0}", Name)));
                 return null;
             }
 

@@ -47,7 +47,7 @@ namespace Tests.QL.SemanticAnalysis
                 }
                 ";
 
-            TestHarness.TestExpression(input, 2, "Referencing an undefined question");
+            TestHarness.TestExpression(input, 1, "Referencing an undefined question");
         }
     }
 }

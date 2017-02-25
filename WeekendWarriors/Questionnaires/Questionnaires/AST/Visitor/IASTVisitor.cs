@@ -28,4 +28,28 @@ namespace Questionnaires.AST.Visitor
         ReturnType Visit(QLString node);
         ReturnType Visit(QLIdentifier node);
     }
+
+    // TODO: Passing in void as a generic parameter is not allowed. Apparently creating a second non-generic 
+    // interface is the standard solution the .NET framework uses
+    public interface IASTVisitor
+    {
+        void Visit(QLForm node);
+        void Visit(QLQuestion node);
+        void Visit(QLComputedQuestion node);
+        void Visit(QLConditional node);
+        void Visit(QLBinaryOperation node);
+        void Visit(QLArithmeticOperation node);
+        void Visit(QLComparisonOperation node);
+        void Visit(QLEqualityOperation node);
+        void Visit(QLLogicalOperation node);
+        void Visit(QLUnaryOperation node);
+        void Visit(QLPositiveOperation node);
+        void Visit(QLNegativeOperation node);
+        void Visit(QLBangOperation node);
+        void Visit(QLBoolean node);
+        void Visit(QLMoney node);
+        void Visit(QLNumber node);
+        void Visit(QLString node);
+        void Visit(QLIdentifier node);
+    }
 }

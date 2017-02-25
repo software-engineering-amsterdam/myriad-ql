@@ -75,6 +75,7 @@
     <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
+    <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
     <Compile Include="SemanticAnalysis\Run\ISemanticAnalyzerRun.cs" />
     <Compile Include="SemanticAnalysis\Run\IResult.cs" />
     <Compile Include="SemanticAnalysis\Run\Result.cs" />

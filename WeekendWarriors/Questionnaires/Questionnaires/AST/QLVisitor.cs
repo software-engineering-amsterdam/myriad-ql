@@ -68,7 +68,7 @@ namespace Questionnaires.AST
             List<INode> thenStatements = GetStatements(context.thenBlock.statement());
             List<INode> elseStatements = new List<INode>();
             if(context.elseBlock != null)
-                GetStatements(context.elseBlock.statement());
+                elseStatements = GetStatements(context.elseBlock.statement());
 
             Debug.Assert(expression is IQLExpression);
 

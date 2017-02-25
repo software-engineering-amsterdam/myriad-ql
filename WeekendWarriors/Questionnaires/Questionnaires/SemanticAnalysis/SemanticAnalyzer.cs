@@ -14,6 +14,7 @@ namespace Questionnaires.SemanticAnalysis
 
         public SemanticAnalyzer()
         {
+            Runs.Add(new Run.DeclarationValidator());
             Runs.Add(new Run.TypeChecker());
         }
 
