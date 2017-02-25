@@ -78,7 +78,7 @@ namespace Questionnaires.SemanticAnalysis.Run
 
         public QLType? Visit(QLUnaryOperation node)
         {
-            return Evaluate(new List<INode> { node.Operand }, node);
+            return Visit((dynamic)node);
         }
 
         public QLType? Visit(QLBoolean node)
@@ -113,17 +113,17 @@ namespace Questionnaires.SemanticAnalysis.Run
 
         public QLType? Visit(QLPositiveOperation node)
         {
-            return Visit((dynamic)node);
+            return Evaluate(new List<INode> { node.Operand }, node);
         }
 
         public QLType? Visit(QLNegativeOperation node)
         {
-            return Visit((dynamic)node);
+            return Evaluate(new List<INode> { node.Operand }, node);
         }
 
         public QLType? Visit(QLBangOperation node)
         {
-            return Visit((dynamic)node);
+            return Evaluate(new List<INode> { node.Operand }, node);
         }
 
         protected QLType? Evaluate(List<INode> children, INode parent)

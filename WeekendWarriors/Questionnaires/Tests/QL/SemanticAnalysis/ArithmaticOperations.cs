@@ -150,7 +150,5 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("\"string\" / 1", 1, "Invalid division: string and number");
             TestHarness.TestExpression("\"string\" / 1.23", 1, "Invalid division: string and decimal");
         }
-
-
     }
 }

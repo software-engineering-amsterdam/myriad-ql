@@ -138,12 +138,42 @@ namespace Questionnaires.AST
                 case QLLexer.OP_BANG:
                     return new QLBangOperation((dynamic)operand);
                 case QLLexer.OP_ADD:
-                    return new QLPositiveOperation((dynamic)operand);
+                    return VisitPositiveOperation((dynamic)operand);
                 case QLLexer.OP_SUB:
-                    return new QLNegativeOperation((dynamic)operand);
+                    return VisitNegativeOperation((dynamic)operand);
                 default:
                     throw new InvalidEnumArgumentException();
             }          
+        }
+
+        public INode VisitPositiveOperation(QLNumber number)
+        {
+            return new QLNumber("+" + number.StringValue);
+        }
+
+        public INode VisitPositiveOperation(QLMoney money)
+        {
+            return new QLMoney("+" + money.StringValue);
+        }
+
+        public INode VisitPositiveOperation(IQLExpression expression)
+        {
+            return new QLPositiveOperation(expression);
+        }
+
+        public INode VisitNegativeOperation(QLNumber number)
+        {
+            return new QLNumber("-" + number.StringValue);            
+        }       
+
+        public INode VisitNegativeOperation(QLMoney money)
+        {
+            return new QLMoney("-" + money.StringValue);
+        }
+
+        public INode VisitNegativeOperation(IQLExpression expression)
+        {
+            return new QLNegativeOperation(expression);
         }
 
         public override INode VisitMoney([NotNull] QLParser.MoneyContext context)

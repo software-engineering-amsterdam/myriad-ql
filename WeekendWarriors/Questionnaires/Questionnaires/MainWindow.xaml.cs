@@ -28,12 +28,15 @@ namespace Questionnaires
 
         private void Interpret_Click(object sender, RoutedEventArgs e)
         {
-            textBlock.Text = "";
+            Output.Text = "";
 
             var formFactory = new AST.ASTFactory();
             var parser = formFactory.CreateParser(Input.Text);
             var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);            
             var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
+            var analysisResult = semanticAnalyzer.Analyze(form);
+            foreach (var analysisEvent in analysisResult.Events)
+                Output.Text += analysisEvent.ToString() + '\n';
 
             // Example renderer functionality
             Renderer.Renderer renderer = new Renderer.Renderer();

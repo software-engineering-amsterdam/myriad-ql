@@ -39,6 +39,7 @@
       <HintPath>..\packages\Antlr4.Runtime.Standard.4.6.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -48,7 +49,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -62,6 +65,7 @@
     <Compile Include="QL\SemanticAnalysis\QuestionDefinition.cs" />
     <Compile Include="QL\SemanticAnalysis\Scoping.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticTestHarness.cs" />
+    <Compile Include="QL\SemanticAnalysis\Ranges.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Questionnaires\Questionnaires.csproj">

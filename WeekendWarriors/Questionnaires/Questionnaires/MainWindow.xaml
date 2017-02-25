@@ -26,7 +26,7 @@ boolean
 }
         </TextBox>
         <Button x:Name="Interpret" Grid.Row="1" Width="70" Content="Interpret!" Click="Interpret_Click"/>
-        <TextBlock x:Name="textBlock" TextWrapping="Wrap" Grid.Row="2">output</TextBlock>
+        <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2">output</TextBlock>
             <!-- <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Output:" VerticalAlignment="Top" Height="299" Width="497"/> -->
        
         <!-- Todo add interface for input -->
