@@ -37,7 +37,6 @@ class FindCycles(object):
         for from_var in from_vars:
             for to_var in to_vars:
                 self.directed_graph.add_edge(from_var, to_var)
-                # self.node_relations.append((from_var, to_var))
 
     def traverse_branch(self, node, node_branch):
         self.node_stack.append([])

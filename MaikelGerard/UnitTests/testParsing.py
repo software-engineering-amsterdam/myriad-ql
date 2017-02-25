@@ -126,7 +126,6 @@ class TestParser(unittest.TestCase):
     def test_decimal_lit_in_expr(self):
         decimal_val = "100.005"
         dec_node1 = AST.DecimalNode(Decimal(decimal_val))
-        print dec_node1
         self.validate_node(self.exp_parser, decimal_val, dec_node1)
 
         decimal_val = "100."

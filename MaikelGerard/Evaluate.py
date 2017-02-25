@@ -57,7 +57,7 @@ class Evaluate(object):
         return mul_node.left.accept(self) * mul_node.right.accept(self)
 
     def div_node(self, div_node):
-        # Return 0 when diving by zero and show an error.
+        # Return 0 when diving by zero and show an warning.
         right_value = div_node.right.accept(self)
 
         if right_value == 0:
