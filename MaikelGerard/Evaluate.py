@@ -1,14 +1,24 @@
 class Evaluate(object):
-    def __init__(self, ast, env):
-        """ :type ast: AST.QuestionnaireAST """
+    def __init__(self, ast, env, error_handler):
+        """
+        :type ast: AST.QuestionnaireAST
+        :type env: Environment.Environment
+        :type error_handler: ErrorHandler.ErrorHandler
+        """
         self.ast = ast
         self.env = env
+        self.handler = error_handler
 
     def start_traversal(self):
-        # Ensure the environment and error log are empty.
+        self.handler.clear_errors()
+
+        # Set context for outputting errors; start traversal.
         prev_context = self.env.context
         self.env.context = "Evaluate"
         self.ast.root.accept(self)
+
+        # Output errors afterwards.
+        self.handler.print_errors()
         self.env.context = prev_context
 
     def question_node(self, question_node):
@@ -17,7 +27,7 @@ class Evaluate(object):
     def comp_question_node(self, comp_question_node):
         """ :type comp_question_node: AST.CompQuestionNode """
         new_val = comp_question_node.expression.accept(self)
-        self.env.set_value(comp_question_node.name.val, new_val)
+        self.env.set_var_value(comp_question_node.name.val, new_val)
 
     def if_node(self, if_node):
         condition = if_node.expression.accept(self)
@@ -27,7 +37,8 @@ class Evaluate(object):
     def if_else_node(self, if_else_node):
         condition = if_else_node.expression.accept(self)
         assert (type(condition) == bool), \
-            "Invalid type if condition, expected boolean got: {}".format(condition)
+            "Invalid type if condition, expected boolean got: {}"\
+            .format(condition)
         if condition:
             if_else_node.if_block.accept(self)
         else:
@@ -37,17 +48,21 @@ class Evaluate(object):
         return not neg_node.expression.accept(self)
 
     def min_node(self, min_node):
-        return - min_node.expression.accept(self)
+        return -min_node.expression.accept(self)
 
     def plus_node(self, plus_node):
-        return + plus_node.expression.accept(self)
+        return +plus_node.expression.accept(self)
 
     def mul_node(self, mul_node):
         return mul_node.left.accept(self) * mul_node.right.accept(self)
 
     def div_node(self, div_node):
-        # TODO: What to do with division through zero?
+        # Return 0 when diving by zero and show an error.
         right_value = div_node.right.accept(self)
+
+        if right_value == 0:
+            self.handler.add_zero_division_warning(self.env.context, div_node)
+            return right_value
         return div_node.left.accept(self) / right_value
 
     def add_node(self, add_node):
@@ -97,7 +112,7 @@ class Evaluate(object):
 
     def var_node(self, var_node):
         """ :type var_node: AST.VarNode """
-        return self.env.get_value(var_node.val)
+        return self.env.get_var_value(var_node.val)
 
     @staticmethod
     def decimal_node(decimal_node):
