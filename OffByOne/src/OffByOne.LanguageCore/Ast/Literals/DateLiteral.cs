@@ -1,27 +1,35 @@
 ﻿namespace OffByOne.LanguageCore.Ast.Literals
 {
     using System;
+    using System.Globalization;
 
     using OffByOne.LanguageCore.Ast.Literals.Base;
+    using OffByOne.LanguageCore.Visitors.Contracts;
 
     public class DateLiteral : Literal
     {
+        public const string Format = "dd-MM-yyyy";
+
         public DateLiteral(DateTime value)
         {
             this.Value = value;
         }
 
-        // TODO: Is this the right place for parsing the date?
-        // TODO: Or should we do it completely different anyway?
-        // TODO: Parse the date
         public DateLiteral(string dateString)
+            : this(DateTime.ParseExact(
+                dateString.Trim('\''),
+                DateLiteral.Format,
+                CultureInfo.InvariantCulture))
         {
-            int day = int.Parse(dateString.Substring(1, 2));
-            int month = int.Parse(dateString.Substring(4, 2));
-            int year = int.Parse(dateString.Substring(7, 4));
-            this.Value = new DateTime(year, month, day);
         }
 
-        public DateTime Value { get; set; }
+        public DateTime Value { get; private set; }
+
+        public override TResult Accept<TResult, TContext>(
+            ILiteralVisitor<TResult, TContext> visitor,
+            TContext context)
+        {
+            return visitor.Visit(this, context);
+        }
     }
 }

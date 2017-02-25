@@ -1,11 +1,20 @@
 ﻿namespace OffByOne.Runner
 {
     using System;
+    using System.Collections.Generic;
 
     using Antlr4.Runtime;
 
-    using OffByOne.LanguageCore.Ast;
+    using MoreDotNet.Extensions.Collections;
+
+    using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.Ql;
+    using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
 
@@ -13,48 +22,66 @@
     {
         public static void Main(string[] args)
         {
-            ////TestQlGrammar();
+            TestQlGrammar();
             TestQlsGrammar();
+
+            ////var typeChcker = new TypeChecker();
+            ////var testCondition = new IfStatement(
+            ////    new EqualExpression(
+            ////        new LiteralExpression(new BooleanLiteral(true)),
+            ////        new LiteralExpression(new IntegerLiteral(2))),
+            ////    new List<Statement>(),
+            ////    new List<Statement>());
+
+            ////var report = typeChcker.Check(new FormStatement(
+            ////    "test",
+            ////    new List<Statement> { testCondition }));
+
+            ////foreach (var message in report.AllMessages)
+            ////{
+            ////    Console.WriteLine(message);
+            ////}
+
+            ////Console.WriteLine("Type check done!");
         }
 
         private static void TestQlGrammar()
         {
             ICharStream input = new AntlrInputStream(@"
-                form questionaire { 
-                    ""What is your birth date?"" 
-                        birthDate: date
-
-                    ""Do you want to continue?""
-                        continue: boolean
-
-                    if birthDate < '01-01-2000' and continue { 
-                        ""How much money do you spend on alcoholic beverages?""
-                            alcoholicBeverages: money
-                    } else if continue {
-                        ""How much money do you spend on soda?""
-                            soda: money 
-                    } else {
-                        ""Okay. Goodbye?""
-                            exit: boolean
+                form questionnaire { 
+                    if (2 + 3 * 4 < someVar) { 
+                        ""Is this a question?""
+                            existentialism: boolean
                     }
-                }");
-            var lexer = new QlLexer(input);
-            var parser = new QlParser(new CommonTokenStream(lexer));
-            var v = new MyQlVisitor();
+                    ""Did you sell a house in 2010?""
+                        hasSoldHouse: boolean
+                    ""Did you buy a house in 2010?""
+                        hasBoughtHouse: boolean
+                    ""Did you enter a loan?""
+                        hasMaintLoan: boolean
+                }
+            ");
+            ICharStream input2 = new AntlrInputStream("true or false");
+            QlLexer lexer = new QlLexer(input);
+            QlParser parser = new QlParser(new CommonTokenStream(lexer));
+            var v = new CustomQlVisitor();
             var tree = v.Visit(parser.form());
+            CheckQlTypes((FormStatement)tree);
             Console.WriteLine("Done!");
         }
 
         private static void TestQlsGrammar()
         {
-            ICharStream input = new AntlrInputStream(@"
+            var input = new AntlrInputStream(@"
                 stylesheet taxOfficeExample
                   page Housing {
-                    section ""Buying""
+                    section ""Buying"" {
                       question hasBoughtHouse  
                         widget checkbox 
-                    section ""Loaning""  
+                    }
+                    section ""Loaning"" {
                       question hasMaintLoan
+                    }
                   } 
                   page Selling { 
                     section ""Selling"" {
@@ -83,6 +110,19 @@
             var visitor = new CustomQlsVisitor();
             var astTree = visitor.Visit(parser.stylesheet());
             Console.WriteLine("QLS AST conversion done.");
+        }
+
+        private static void CheckQlTypes(FormStatement ast)
+        {
+            var typeChcker = new TypeChecker();
+            var report = typeChcker.Check(ast);
+
+            foreach (var message in report.AllMessages)
+            {
+                Console.WriteLine(message);
+            }
+
+            Console.WriteLine("Type check done!");
         }
     }
 }
