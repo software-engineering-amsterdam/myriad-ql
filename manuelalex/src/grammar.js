@@ -1,7 +1,11 @@
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
+import {FormPostProcessor as FP} from './processors/FormPostProcessor.js';
+var FormPostProcessor = new FP();
+
 (function () {
 function id(x) {return x[0]; }
+
 
 function nth(n) {
     return function(d) {
@@ -19,10 +23,7 @@ function $(o) {
         return ret;
     };
 }
-
- let FormPostProcessor = require('./processors/FormPostProcessor.js');
-    FormPostProcessor = new FormPostProcessor();
- var grammar = {
+var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["wschar", "_$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
@@ -147,13 +148,13 @@ function $(o) {
     {"name": "form$string$1", "symbols": [{"literal":"f"}, {"literal":"o"}, {"literal":"r"}, {"literal":"m"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "form$ebnf$1", "symbols": []},
     {"name": "form$ebnf$1", "symbols": ["statement", "form$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "form", "symbols": ["form$string$1", "_", "formName", "_", "openBrace", "_", "form$ebnf$1", "closedBrace"], "postprocess": FormPostProcessor.form.bind(FormPostProcessor)},
+    {"name": "form", "symbols": ["form$string$1", "_", "formName", "_", "openBrace", "_", "form$ebnf$1", "closedBrace"], "postprocess": FormPostProcessor.form},
     {"name": "formName", "symbols": ["word"]},
-    {"name": "statement", "symbols": ["question"], "postprocess": FormPostProcessor.statement.bind(FormPostProcessor)},
-    {"name": "statement", "symbols": ["answer"], "postprocess": FormPostProcessor.statement.bind(FormPostProcessor)},
-    {"name": "statement", "symbols": ["if_statement"], "postprocess": FormPostProcessor.statement.bind(FormPostProcessor)},
-    {"name": "statement", "symbols": ["ifelse_statement"], "postprocess": FormPostProcessor.statement.bind(FormPostProcessor)},
-    {"name": "statement", "symbols": ["ifelseifelse_statement"], "postprocess": FormPostProcessor.statement.bind(FormPostProcessor)},
+    {"name": "statement", "symbols": ["question"], "postprocess": FormPostProcessor.statement},
+    {"name": "statement", "symbols": ["answer"], "postprocess": FormPostProcessor.statement},
+    {"name": "statement", "symbols": ["if_statement"], "postprocess": FormPostProcessor.statement},
+    {"name": "statement", "symbols": ["ifelse_statement"], "postprocess": FormPostProcessor.statement},
+    {"name": "statement", "symbols": ["ifelseifelse_statement"], "postprocess": FormPostProcessor.statement},
     {"name": "question$string$1", "symbols": [{"literal":"q"}, {"literal":"u"}, {"literal":"e"}, {"literal":"s"}, {"literal":"t"}, {"literal":"i"}, {"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "question", "symbols": ["question$string$1", "_", "prime", "sentence", "prime", "_", "propertyName", {"literal":":"}, "_", "propertyType", "_"], "postprocess": FormPostProcessor.question},
     {"name": "ifelseifelse_statement$string$1", "symbols": [{"literal":"e"}, {"literal":"l"}, {"literal":"s"}, {"literal":"e"}, {"literal":" "}, {"literal":"i"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -197,16 +198,16 @@ function $(o) {
     {"name": "bool_expression$subexpression$1$string$1", "symbols": [{"literal":"|"}, {"literal":"|"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "bool_expression$subexpression$1", "symbols": ["bool_expression$subexpression$1$string$1"]},
     {"name": "bool_expression$subexpression$1", "symbols": [{"literal":"|"}]},
-    {"name": "bool_expression", "symbols": ["bool_expression", "_", "bool_expression$subexpression$1", "_", "and_test"]},
+    {"name": "bool_expression", "symbols": ["bool_expression", "_", "bool_expression$subexpression$1", "_", "and_test"], "postprocess": FormPostProcessor.booleanExpression},
     {"name": "and_test", "symbols": ["not_test"]},
     {"name": "and_test$subexpression$1$string$1", "symbols": [{"literal":"&"}, {"literal":"&"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "and_test$subexpression$1", "symbols": ["and_test$subexpression$1$string$1"]},
     {"name": "and_test$subexpression$1", "symbols": [{"literal":"&"}]},
-    {"name": "and_test", "symbols": ["and_test", "_", "and_test$subexpression$1", "_", "not_test"]},
+    {"name": "and_test", "symbols": ["and_test", "_", "and_test$subexpression$1", "_", "not_test"], "postprocess": FormPostProcessor.and_test},
     {"name": "not_test", "symbols": ["comparison"]},
     {"name": "not_test", "symbols": [{"literal":"!"}, "not_test"]},
-    {"name": "not_test", "symbols": ["propertyName"]},
-    {"name": "comparison", "symbols": ["propertyName", "_", "comp_operator", "_", "propertyName"]},
+    {"name": "not_test", "symbols": ["propertyName"], "postprocess": FormPostProcessor.not_test},
+    {"name": "comparison", "symbols": ["propertyName", "_", "comp_operator", "_", "propertyName"], "postprocess": FormPostProcessor.comparison},
     {"name": "comp_operator", "symbols": [{"literal":"<"}]},
     {"name": "comp_operator", "symbols": [{"literal":">"}]},
     {"name": "comp_operator$string$1", "symbols": [{"literal":">"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
@@ -219,7 +220,7 @@ function $(o) {
     {"name": "comp_operator", "symbols": ["comp_operator$string$4"]},
     {"name": "propertyName$ebnf$1", "symbols": [/[A-Za-z0-9]/]},
     {"name": "propertyName$ebnf$1", "symbols": [/[A-Za-z0-9]/, "propertyName$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "propertyName", "symbols": ["propertyName$ebnf$1"], "postprocess": FormPostProcessor.toString},
+    {"name": "propertyName", "symbols": ["propertyName$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
     {"name": "propertyType$string$1", "symbols": [{"literal":"b"}, {"literal":"o"}, {"literal":"o"}, {"literal":"l"}, {"literal":"e"}, {"literal":"a"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "propertyType", "symbols": ["propertyType$string$1"], "postprocess": ()=> Boolean},
     {"name": "propertyType$string$2", "symbols": [{"literal":"s"}, {"literal":"t"}, {"literal":"r"}, {"literal":"i"}, {"literal":"n"}, {"literal":"g"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -237,7 +238,7 @@ function $(o) {
     {"name": "sentence", "symbols": ["sentence$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
     {"name": "word$ebnf$1", "symbols": [/[A-Za-z0-9]/]},
     {"name": "word$ebnf$1", "symbols": [/[A-Za-z0-9]/, "word$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "word", "symbols": ["word$ebnf$1"], "postprocess": FormPostProcessor.toString},
+    {"name": "word", "symbols": ["word$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
     {"name": "prime", "symbols": [{"literal":"'"}]},
     {"name": "openBrace", "symbols": [{"literal":"{"}]},
     {"name": "closedBrace", "symbols": [{"literal":"}"}]},

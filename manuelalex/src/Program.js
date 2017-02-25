@@ -3,10 +3,9 @@
  */
 
 // todo
-class Program {
+export class Program {
 
     constructor(options = {}) {
 
     }
 }
-module.exports = Program;

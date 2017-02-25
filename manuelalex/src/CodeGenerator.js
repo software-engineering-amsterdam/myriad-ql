@@ -6,28 +6,19 @@ const grammar = require('./grammar.js');
 const Question = require('./statements/Question.js');
 const Answer = require('./statements/Answer.js');
 const TypeConverter = require('./utils/TypeConverter.js');
-
-
-let nearley;
-let test1, test2;
-
 /**
  * To build the grammer: nearleyc grammar.ne -o qrammar.js
  * (Building the grammar is not yet supported due to us requiring the PostProcessor inside the grammar, need to find a solution)
  * @type {Parser}
  */
-module.exports = class Parser {
+
+import nearly from 'nearley';
+import {test1, test2} from './src/test/TestStrings.js';
+
+export class CodeGenerator {
 
     constructor() {
-        Promise.all([
-            jspmImport('nearley'),
-            jspmImport('./src/test/TestStrings.js')
-        ]).then((imports) => {
-            [nearley, {test1, test2}] = imports;
-        }).then(this._run.bind(this)).catch((error) => {
-            // todo handle import errors correctly
-            console.log(error);
-        });
+       this._run();
     }
 
     _run() {

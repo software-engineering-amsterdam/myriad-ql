@@ -1,13 +1,12 @@
 /**
  * Created by Manuel on 20/02/2017.
  */
-module.exports = class AST {
-    constructor(form = {}) {
+export class AST {
+    constructor(program = {}) {
 
-        this.form = form;
+        this.program = program;
 
-        // todo fix code smell
-        this.validate()
+        // this.validate()
     }
 
     validate() {

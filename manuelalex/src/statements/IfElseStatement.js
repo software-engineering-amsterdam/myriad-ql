@@ -2,9 +2,9 @@
  * Created by Manuel on 13/02/2017.
  */
 
-let IfStatement = require('./IfStatement.js');
+import {IfStatement}  from './IfStatement.js';
 
-module.exports = class IfElseStatement extends IfStatement {
+export class IfElseStatement extends IfStatement {
 
     constructor(options = {}) {
         super(options);

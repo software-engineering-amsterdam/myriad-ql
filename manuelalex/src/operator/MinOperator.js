@@ -1,9 +1,9 @@
 /**
  * Created by Manuel on 20/02/2017.
  */
-const Operator = require('./Operator.js');
+import {Operator} from './Operator.js';
 
-module.exports = class MinOperator extends Operator {
+export class MinOperator extends Operator {
 
     constructor(options = {}) {
         super(options);

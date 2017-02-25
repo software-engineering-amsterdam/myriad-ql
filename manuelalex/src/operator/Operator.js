@@ -1,7 +1,7 @@
 /**
  * Created by Manuel on 20/02/2017.
  */
-module.exports = class Operator {
+export class Operator {
 
     constructor(options = {}) {
         this.options = options;

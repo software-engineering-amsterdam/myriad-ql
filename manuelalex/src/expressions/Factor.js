@@ -1,7 +1,7 @@
 /**
  * Created by Manuel on 20/02/2017.
  */
-module.exports = class Factor {
+export class Factor {
     constructor(options = {}) {
 
     }

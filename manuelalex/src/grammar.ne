@@ -1,22 +1,16 @@
-# Match a CSS color
-# http://www.w3.org/TR/css3-color/#colorunits
 
 @builtin "whitespace.ne" # `_` means arbitrary amount of whitespace
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
-@{% let FormPostProcessor = require('./processors/FormPostProcessor.js');
-    FormPostProcessor = new FormPostProcessor();
- %}
 
-
-form                    -> "form" _ formName _ openBrace _ statement:* closedBrace                            {% FormPostProcessor.form.bind(FormPostProcessor) %}
+form                    -> "form" _ formName _ openBrace _ statement:* closedBrace                            {% FormPostProcessor.form %}
 formName                -> word
 
-statement               -> question                                                                           {% FormPostProcessor.statement.bind(FormPostProcessor) %}
-                        | answer                                                                              {% FormPostProcessor.statement.bind(FormPostProcessor) %}
-                        | if_statement                                                                        {% FormPostProcessor.statement.bind(FormPostProcessor) %}
-                        | ifelse_statement                                                                    {% FormPostProcessor.statement.bind(FormPostProcessor) %}
-                        | ifelseifelse_statement                                                              {% FormPostProcessor.statement.bind(FormPostProcessor) %}
+statement               -> question                                                                           {% FormPostProcessor.statement %}
+                        | answer                                                                              {% FormPostProcessor.statement %}
+                        | if_statement                                                                        {% FormPostProcessor.statement %}
+                        | ifelse_statement                                                                    {% FormPostProcessor.statement %}
+                        | ifelseifelse_statement                                                              {% FormPostProcessor.statement %}
 
 question                -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _              {% FormPostProcessor.question %}
 
@@ -51,7 +45,7 @@ comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
 
 
 
-propertyName            -> [A-Za-z0-9]:+                                                                      {% FormPostProcessor.toString %}
+propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
 propertyType            -> "boolean"                                                                          {% ()=> Boolean %}
                          | "string"                                                                           {% ()=> String %}
                          | "integer"                                                                          {% ()=> Number %}
@@ -62,7 +56,7 @@ propertyType            -> "boolean"                                            
 sentence                -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+                                     {% function(d) { return d[0].join("") } %}
 
 
-word                    -> [A-Za-z0-9]:+                                                                      {% FormPostProcessor.toString %}
+word                    -> [A-Za-z0-9]:+                                                                     {% function(d) { return d[0].join("") } %}
 prime                   -> "'"
 openBrace               -> "{"
 closedBrace             -> "}"

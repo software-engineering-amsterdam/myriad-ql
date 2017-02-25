@@ -2,9 +2,8 @@
  * Created by Manuel on 12/02/2017.
  */
 
-let Parser = require('./Parser.js');
-let Form = require('./Form.js');
-let CodeGenerator = require('./CodeGenerator.js');
+import {Parser} from './Parser.js';
+import {Form} from './Form.js';
 
 new Parser();
 // let form = new Parser().parse("something",4);

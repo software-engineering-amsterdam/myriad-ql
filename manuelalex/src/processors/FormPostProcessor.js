@@ -2,30 +2,30 @@
  * Created by Manuel on 13/02/2017.
  */
 
-let _ = require('lodash');
+import _    from 'lodash';
 
-const PostProcessor = require('./PostProcessor.js');
+import {PostProcessor} from './PostProcessor.js';
 
-const Form = require('../Form.js');
-const Question = require('../statements/Question.js');
-const Answer = require('../statements/Answer.js');
+import {Form} from '../Form.js';
+import {Question} from '../statements/Question.js';
+import {Answer} from '../statements/Answer.js';
 
-const IfStatement = require('../statements/IfStatement.js');
-const IfElseStatement = require('../statements/IfElseStatement.js');
-const IfElseIfElseStatement = require('../statements/IfElseIfElseStatement.js');
+import {IfStatement} from '../statements/IfStatement.js';
+import {IfElseStatement} from '../statements/IfElseStatement.js';
+import {IfElseIfElseStatement} from '../statements/IfElseIfElseStatement.js';
 
-const Comparison = require('../expressions/Comparison.js');
-const Expression = require('../expressions/Expression.js');
-const Allocation = require('../allocation/Allocation.js');
-const Factor = require('../expressions/Factor.js');
+import {Comparison} from '../expressions/Comparison.js';
+import {Expression} from '../expressions/Expression.js';
+import {Allocation} from '../allocation/Allocation.js';
+import {Factor} from '../expressions/Factor.js';
 
-const MinOperator = require('../operator/MinOperator.js');
-const PlusOperator = require('../operator/PlusOperator.js');
-const DivideOperator = require('../operator/DivideOperator.js');
-const MultiplyOperator = require('../operator/MultiplyOperator.js');
-const Money = require('../properties/Money.js');
+import {MinOperator} from '../operator/MinOperator.js';
+import {PlusOperator} from '../operator/PlusOperator.js';
+import {DivideOperator} from '../operator/DivideOperator.js';
+import {MultiplyOperator} from '../operator/MultiplyOperator.js';
+import {Money} from '../properties/Money.js';
 
-module.exports = class FormPostProcessor extends PostProcessor {
+export class FormPostProcessor extends PostProcessor {
 
     constructor() {
         super();

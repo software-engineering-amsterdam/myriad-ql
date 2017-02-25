@@ -1,9 +1,9 @@
 /**
  * Created by Manuel on 20/02/2017.
  */
-const Operator = require('./Operator.js');
+import {Operator} from './Operator.js';
 
-module.exports = class MultiplyOperator extends Operator {
+export class MultiplyOperator extends Operator {
 
     constructor(options = {}) {
         super(options)
@@ -12,4 +12,4 @@ module.exports = class MultiplyOperator extends Operator {
     toString() {
         return '*'
     }
-};
+}

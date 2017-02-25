@@ -1,37 +1,32 @@
-const jspmImport = require('./utils/JspmImport.js');
+import nearley                                   from 'nearley';
 
 
-const Form = require('./Form.js');
-const grammar = require('./grammar.js');
-const Question = require('./statements/Question.js');
-const Answer = require('./statements/Answer.js');
-const CodeGenerator = require('./CodeGenerator.js');
-
-const AST = require('./ast/AST.js');
-
-let nearley;
-let test1, test2, test3, test4, test5;
+import {test1, test2, test3, test4 ,test5}       from './test/TestStrings.js';
+import {Form}                                    from './Form.js';
+import  './grammar.js'; // probably window.grammar;
+import {Question}                                from './statements/Question.js';
+import {Answer}                                  from './statements/Answer.js';
+import {Generator}                               from './gui/Generator.js';
+import {AST}                                     from './ast/AST.js';
+import {FormPostProcessor}                       from './processors/FormPostProcessor.js';
 
 /**
  * To build the grammer: nearleyc grammar.ne -o grammar.js
  * (Building the grammar is not yet supported due to us requiring the PostProcessor inside the grammar, need to find a solution)
  * @type {Parser}
  */
-module.exports = class Parser {
+export class Parser {
 
     constructor() {
-        Promise.all([
-            jspmImport('nearley'),
-            jspmImport('./src/test/TestStrings.js')
-        ]).then((imports) => {
-            [nearley, { test1, test2, test3, test4, test5 }] = imports;
-        }).then(this._run.bind(this)).catch((error) => {
-            // todo handle import errors correctly
-            console.log(error);
-        });
+
+       this._run();
+
+
     }
 
     _run() {
+        window.FormPostProcessor = new FormPostProcessor();
+        // grammar = window.grammar;
         // Create a Parser object from our grammar.
         const parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
         let result = [];
@@ -53,6 +48,8 @@ module.exports = class Parser {
         }
         console.log(`Result: ${JSON.stringify(result)}`);
         let AST = this.makeAST(result[0]);
+        let generator = new Generator(AST);
+
         return result;
     }
 

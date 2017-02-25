@@ -2,10 +2,9 @@
  * Created by Manuel on 13/02/2017.
  */
 
-let Program = require('./Program.js');
+import {Program} from './Program.js';
 
-// todo
-class Form extends Program {
+export class Form extends Program {
 
     constructor(options = {}) {
         super(options);
@@ -15,4 +14,3 @@ class Form extends Program {
 
 
 }
-module.exports = Form;

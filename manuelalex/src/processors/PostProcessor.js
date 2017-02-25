@@ -4,7 +4,7 @@
 
 
 
-module.exports = class PostProcessor {
+export class PostProcessor {
 
     toString(data, location, reject){
         return data.join().split(",").join("");

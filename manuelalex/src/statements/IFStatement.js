@@ -2,9 +2,9 @@
  * Created by Manuel on 13/02/2017.
  */
 
-let Statement = require('./Statement.js');
+import {Statement}  from './Statement.js';
 
-module.exports = class IfStatement extends Statement {
+export class IfStatement extends Statement {
 
     constructor(options = {}) {
         super(options);
