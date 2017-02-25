@@ -201,7 +201,17 @@ describe Parser do
   end
 
   describe '#block' do
+    it 'consumes an if statement' do
+      expect(subject.block).to parse('if foo "bar?" text baz end')
+    end
 
+    it 'consumes a question' do
+      expect(subject.block).to parse('"foo bar?" text baz')
+    end
+
+    it 'may be empty' do
+      expect(subject.block).to parse('')
+    end
   end
 
   describe '#if_statement' do
