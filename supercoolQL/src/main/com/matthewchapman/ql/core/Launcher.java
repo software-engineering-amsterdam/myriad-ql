@@ -12,17 +12,14 @@ import java.lang.reflect.InvocationTargetException;
 public class Launcher {
 
     public static void main(String[] args) {
-
         CoreParser coreParser = new CoreParser();
         QLFileReader QLFileReader = new QLFileReader();
         String inputContent = null;
-
 
         //TODO This feels messy. Candidate for refactoring
         if (args.length > 0 && args[0].equals("-debug")) {
             inputContent = QLFileReader.readFile(new File("res/test.txt"));
         } else {
-
             try {
                 inputContent = new QLFileReader().QlRead();
             } catch (InvocationTargetException | InterruptedException e) {
@@ -40,9 +37,5 @@ public class Launcher {
         } else {
             System.out.println("Error: No input file chosen");
         }
-
     }
-
-
-
 }

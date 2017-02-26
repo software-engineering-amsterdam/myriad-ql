@@ -15,11 +15,12 @@ public class Form extends ASTNode {
         this.statements = statements;
     }
 
-    public ArrayList<Statement> getStatements()
-    {
+    public ArrayList<Statement> getStatements() {
         return this.statements;
     }
 
-    public String getName(){return formName;}
+    public String getName() {
+        return formName;
+    }
 
 }
