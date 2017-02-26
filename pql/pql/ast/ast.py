@@ -23,6 +23,9 @@ class Form(Node):
         self.name = form_identifier
         self.children = form_statement_list
 
+    def apply(self, visitor):
+        return visitor.form(self)
+
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"
         for child in self.children:
@@ -39,17 +42,26 @@ class Field(Node):
         if arithmetic_statement:
             self.add_child(arithmetic_statement)
 
+    def apply(self, visitor):
+        return visitor.field(self)
+
 
 class Expression(Node):
     def __init__(self, arithmetic):
         super(Expression, self).__init__('arithmetic_expression')
         self.add_child(arithmetic)
 
+    def apply(self, visitor):
+        return visitor.expression(self)
+
 
 class Arithmetic(Node):
     def __init__(self, parsed_output):
         super(Arithmetic, self).__init__('arithmetic_statement')
         self.add_child(parsed_output)
+
+    def apply(self, visitor):
+        return visitor.arithmetic(self)
 
 
 class Conditional(Node):
@@ -60,6 +72,9 @@ class Conditional(Node):
         self.else_statement_list = None
         if boolean_statement.else_statement is not None and len(boolean_statement.else_statement) > 0:
             self.else_statement_list = boolean_statement.else_statement[0]
+
+    def apply(self, visitor):
+        return visitor.conditional(self)
 
 
 class BinaryOperation(Node):
@@ -82,10 +97,16 @@ class Subtraction(BinaryOperation):
     def __init__(self, lhs, rhs):
         super(Subtraction, self).__init__('substraction', lhs, rhs)
 
+    def apply(self, visitor):
+        return visitor.subtraction(self)
+
 
 class Division(BinaryOperation):
     def __init__(self, lhs, rhs):
         super(Division, self).__init__('division', lhs, rhs)
+
+    def apply(self, visitor):
+        return visitor.division(self)
 
 
 class BoolOperand(Node):
@@ -121,6 +142,9 @@ class And(BinaryOperation):
     def __init__(self,  left, right):
         super(And, self).__init__('and', left, right)
 
+    def apply(self, visitor):
+        return visitor._and(self)
+
 
 class Or(BinaryOperation):
     eval_function = any
@@ -128,6 +152,8 @@ class Or(BinaryOperation):
     def __init__(self,  left, right):
         super(Or, self).__init__('or', left, right)
 
+    def apply(self, visitor):
+        return visitor._or(self)
 
 class Equality(BinaryOperation):
     def __init__(self,  left, right):
@@ -163,3 +189,8 @@ class Condition(Node):
     def __init__(self, parsed_output):
         super(Condition, self).__init__('condition')
         self.add_child(parsed_output)
+
+
+class Value:
+    def __init__(self, value):
+        self.value = value

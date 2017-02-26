@@ -2,14 +2,22 @@
 # the needed methods from the pyparsing package
 from pyparsing import *
 from pql.ast import ast
+from pql.typechecker.types import types
 
 
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
-    number = Word(nums + ".")
+
+    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))
+    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))
+    number = integer | money
+
+    true = Literal("true").setParseAction(lambda _: ast.Value(True))
+    false = Literal("false").setParseAction(lambda _: ast.Value(False))
+    boolean = true | false
 
     arith_operand = number | identifier
-    bool_operand = Literal("true") | Literal("false") | number | identifier
+    bool_operand = boolean | arith_operand
     bool_operand.setParseAction(ast.BoolOperand).setResultsName('bool_operand')
 
     # Reserved keywords
@@ -41,7 +49,7 @@ def parse(input_string):
     op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     colon = Suppress(":")
-    data_types = oneOf(["boolean", "money", "string", "integer"])
+    data_types = oneOf(types)
 
     assign_op = Suppress("=")
 
