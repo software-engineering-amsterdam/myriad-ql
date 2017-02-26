@@ -42,7 +42,7 @@ namespace Questionnaires
 
             // Testing from here
             var variableStore = new VariableStore.VariableStore();
-            var renderer = new Renderer.Renderer();
+            var renderer = new Renderer.Renderer(variableStore);
             var ruleContainer = new RuleContainer.RuleContainer();
 
             var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer);
