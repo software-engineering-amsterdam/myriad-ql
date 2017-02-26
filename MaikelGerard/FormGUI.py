@@ -80,8 +80,16 @@ class FormGUI(object):
     def add_radiobutton_question(self, identifier, question, value):
         pass
 
-    def add_label_question(self, identifier, question, value):
-        pass
+    def add_computed_question(self, identifier, question, value):
+        self.main.addLabel(identifier, question, row=self.row, column=0)
+        computed_identifier = "@computed_" + identifier
+        self.main.addLabel(computed_identifier, row=self.row, column=1)
+        self.add_listener(self.main.getLabelWidget(computed_identifier))
+
+        # Set the entry's value and save the retieval method.
+        self.main.setLabel(computed_identifier, value)
+        self.questions[identifier] = self.main.getLabel
+        self.row += 1
 
     def add_listener(self, tkinter_obj):
         tkinter_obj.bind("<FocusOut>", self.force_redraw)
@@ -96,7 +104,6 @@ class FormGUI(object):
         # Remove all current widgets and redraw the gui.
         #self.main.removeAllWidgets()
         #self.draw_gui.redraw()
-
         print "Oh, I'm so busy redrawing stuff!"
 
     def button_action(self, button_pressed):
@@ -109,4 +116,4 @@ class FormGUI(object):
         # TODO: Output the data as JSON.
         for identifier, get_value in self.questions.iteritems():
             value = get_value(identifier)
-            print "{}: {}".format(identifier, value)
+            #print "{}: {}".format(identifier, value)
