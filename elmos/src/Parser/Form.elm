@@ -2,22 +2,17 @@ module Parser.Form exposing (..)
 
 import AST exposing (..)
 import Combine exposing (..)
-import Combine.Extra exposing (whitespace1, trimmed)
+import Combine.Extra exposing (whitespace1, trimmed, stringAs)
 import Parser.Expression as Expression
-import Parser.Token exposing (quotedString, variableName)
+import Parser.Token exposing (quotedString, identifier)
 
 
 form : Parser s Form
 form =
     trimmed <|
         succeed Form
-            <*> (formToken *> whitespace1 *> variableName)
+            <*> (string "form" *> whitespace1 *> identifier)
             <*> (whitespace *> block)
-
-
-formToken : Parser s String
-formToken =
-    string "form"
 
 
 formItems : Parser s (List FormItem)
@@ -30,40 +25,61 @@ formItem =
     lazy <|
         \() ->
             choice
-                [ IfItem <$> ifBlock
-                , FieldItem <$> field
+                [ ifThenElse
+                , ifThen
+                , computedField
+                , field
                 ]
 
 
-field : Parser s Field
+field : Parser s FormItem
 field =
     succeed Field
         <*> quotedString
-        <*> (whitespace1 *> variableName)
+        <*> (whitespace1 *> identifier)
         <*> (trimmed (string ":") *> valueType)
-        <*> maybe (trimmed (string "=") *> Expression.expression)
 
 
-ifBlock : Parser s IfBlock
-ifBlock =
+computedField : Parser s FormItem
+computedField =
+    succeed ComputedField
+        <*> quotedString
+        <*> (whitespace1 *> identifier)
+        <*> (trimmed (string ":") *> valueType)
+        <*> (trimmed (string "=") *> Expression.expression)
+
+
+ifThen : Parser s FormItem
+ifThen =
     lazy <|
         \() ->
-            succeed IfBlock
+            succeed IfThen
                 <*> (string "if" *> trimmed (parens Expression.expression))
                 <*> block
-                <*> maybe (trimmed (string "else") *> block)
+
+
+ifThenElse : Parser s FormItem
+ifThenElse =
+    lazy <|
+        \() ->
+            succeed IfThenElse
+                <*> (string "if" *> trimmed (parens Expression.expression))
+                <*> block
+                <*> (trimmed (string "else") *> block)
 
 
 block : Parser s (List FormItem)
 block =
-    lazy <| \() -> braces <| trimmed formItems
+    lazy <| \() -> braces (trimmed formItems)
 
 
+{-| TODO Own module for QLS?
+-}
 valueType : Parser s ValueType
 valueType =
     choice
-        [ string "string" $> StringType
-        , string "boolean" $> BooleanType
-        , string "integer" $> IntegerType
-        , string "money" $> IntegerType
+        [ stringAs "string" StringType
+        , stringAs "boolean" BooleanType
+        , stringAs "integer" IntegerType
+        , stringAs "money" MoneyType
         ]

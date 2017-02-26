@@ -1,14 +1,28 @@
-module UI.Widget.Base exposing (container)
+module UI.Widget.Base exposing (WidgetContext, container)
 
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
-import AST exposing (Field)
+import Environment exposing (Environment)
+import Values exposing (Value)
 
 
-container : Field -> (Field -> Html msg) -> Html msg
-container field f =
+type alias WidgetContext msg =
+    { identifier : String
+    , label : String
+    , env : Environment
+    , onChange : Value -> msg
+    , editable : Bool
+    }
+
+
+type alias Widget msg =
+    WidgetContext msg -> Html msg
+
+
+container : WidgetContext msg -> Widget msg -> Html msg
+container context widget =
     div [ class "form-group" ]
-        [ label [ for field.id ]
-            [ text field.label ]
-        , f field
+        [ label [ for context.identifier ]
+            [ text context.label ]
+        , widget context
         ]

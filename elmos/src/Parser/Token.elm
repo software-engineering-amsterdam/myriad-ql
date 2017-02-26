@@ -1,11 +1,27 @@
-module Parser.Token exposing (variableName, quotedString)
+module Parser.Token exposing (identifier, quotedString, parseLoc, withLoc)
 
-import Combine exposing (Parser, string, regex, (*>), (<*))
+import AST exposing (Location(Location), Id)
+import Combine exposing (Parser, string, regex, withLocation, succeed, (>>=), (*>), (<*), (<$>))
 
 
-variableName : Parser s String
-variableName =
-    regex "[a-z0-9][a-zA-Z0-9_]*"
+parseLoc : Parser s Location
+parseLoc =
+    withLocation (asLocation >> succeed)
+
+
+withLoc : Parser state (Location -> res) -> Parser state res
+withLoc p =
+    withLocation (asLocation >> \loc -> (|>) loc <$> p)
+
+
+asLocation : Combine.ParseLocation -> Location
+asLocation { line, column } =
+    Location line column
+
+
+identifier : Parser s Id
+identifier =
+    withLoc ((,) <$> regex "[a-z][a-zA-Z0-9_]*")
 
 
 quotedString : Parser s String

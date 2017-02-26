@@ -1,41 +1,46 @@
 module AST exposing (..)
 
 
+type alias Label =
+    String
+
+
+type Location
+    = Location Int Int
+
+
+type alias Id =
+    ( String, Location )
+
+
 type alias Form =
-    { name : String
-    , items : List FormItem
+    { id : Id
+    , items : Block
     }
+
+
+type alias Block =
+    List FormItem
 
 
 type FormItem
-    = FieldItem Field
-    | IfItem IfBlock
-
-
-type alias Field =
-    { label : String
-    , id : String
-    , valueType : ValueType
-    , valueExpression : Maybe Expression
-    }
-
-
-type alias IfBlock =
-    { expression : Expression
-    , thenBranch : List FormItem
-    , elseBranch : Maybe (List FormItem)
-    }
+    = Field Label Id ValueType
+    | ComputedField Label Id ValueType Expression
+    | IfThen Expression Block
+    | IfThenElse Expression Block Block
 
 
 type Expression
-    = Var String
-    | Integer Int
-    | Boolean Bool
-    | ParensExpression Expression
-    | ArithmeticExpression Operator Expression Expression
-    | RelationExpression Relation Expression Expression
-    | LogicExpression Logic Expression Expression
-    | ComparisonExpression Comparison Expression Expression
+    = Var Id
+    | Str Location String
+    | Decimal Location Float
+    | Integer Location Int
+    | Boolean Location Bool
+    | ParensExpression Location Expression
+    | ArithmeticExpression Operator Location Expression Expression
+    | RelationExpression Relation Location Expression Expression
+    | LogicExpression Logic Location Expression Expression
+    | ComparisonExpression Comparison Location Expression Expression
 
 
 type Operator
@@ -66,3 +71,4 @@ type ValueType
     = StringType
     | BooleanType
     | IntegerType
+    | MoneyType

@@ -1,28 +1,38 @@
 grammar QL;
 
-form: 'form'  ID  BRACKET_OPEN (formItem)*  BRACKET_CLOSE;
+form: 'form'  ID  '{' (formItem)*  '}';
 
-formItem: input # in
-        | condition  #cond
+formItem: question
+        | computed
+        | condition
         ;
 
-input: ID':' QUESTION type;
+question: STRING_LITERAL ID':' type;
 
-type: BOOL | STRING | INT | DATE | DEC | MONEY | '('intExpr')';
+computed: STRING_LITERAL ID':' expression;
 
-condition: 'if' '('boolExpr')' BRACKET_OPEN formItem BRACKET_CLOSE;
+type: BOOL | STRING | INT | DATE | DEC | MONEY;
 
-boolExpr: boolExpr op=('&&' | '||') boolExpr                          # andor
-        | intExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') intExpr  # comparison
-        | ID                                                          # boolId
-        | ('true' | 'false')                                          # bool
+condition: 'if' '('boolExpr')' '{' (formItem)* '}' (elseblock)?;
+
+elseblock: 'else' '{'(formItem)*'}';
+
+expression: BOOL '=' '('boolExpr')'       # booleanExpression
+          | (DEC|INT) '=' '('numExpr')'   # numberExpression
+          | MONEY '=' '('numExpr')'       # moneyExpression
+          ;
+
+boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
+        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
+        | ID
+        | ('true' | 'false')
         ;
 
-intExpr: intExpr op=('*' | '/') intExpr # div
-    | intExpr op=('+' | '-') intExpr    # add
-    | NUMBER                            # int
-    | ID                                # intId
-    ;
+numExpr: numExpr op=('*' | '/') numExpr
+       | numExpr op=('+' | '-') numExpr
+       | NUMBER
+       | ID
+       ;
 
 //datatypes
 BOOL:   'boolean';
@@ -32,18 +42,10 @@ DATE:   'date';
 DEC:    'decimal';
 MONEY:  'money';
 
-//Operands
-ADD: '+';
-SUB: '-';
+NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
-NUMBER: ('0'..'9')+;
-
-QUESTION: '"'(~'"')+'"' ;
-ID: [a-zA-Z]+;
-
-//symbols
-BRACKET_OPEN: '{';
-BRACKET_CLOSE: '}';
+STRING_LITERAL: '"'(~'"')+'"' ;
+ID: [a-zA-Z][a-zA-Z0-9]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;

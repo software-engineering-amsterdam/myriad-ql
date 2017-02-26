@@ -1,10 +1,34 @@
-module UI.Widget.Integer exposing (..)
+module UI.Widget.Integer exposing (view)
 
 import Html exposing (Html, input)
-import Html.Attributes exposing (type_, class)
-import AST exposing (Field)
+import Html.Attributes exposing (type_, class, defaultValue, id, disabled)
+import Html.Events exposing (onInput)
+import UI.Widget.Base exposing (WidgetContext)
+import Environment
+import Values exposing (Value(Undefined))
 
 
-view : Field -> Html msg
-view field =
-    input [ type_ "text", class "form-control" ] []
+view : WidgetContext msg -> Html msg
+view { identifier, env, onChange, editable } =
+    let
+        textValue =
+            Environment.getInteger identifier env
+                |> Maybe.map toString
+                |> Maybe.withDefault ""
+    in
+        input
+            [ type_ "text"
+            , class "form-control"
+            , defaultValue textValue
+            , id identifier
+            , disabled (not editable)
+            , onInput (parseIntegerInput >> onChange)
+            ]
+            []
+
+
+parseIntegerInput : String -> Value
+parseIntegerInput =
+    String.toInt
+        >> Result.map Values.int
+        >> Result.withDefault Undefined

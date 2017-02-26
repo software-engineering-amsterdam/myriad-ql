@@ -1,76 +1,85 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.*;
+import UvA.Gamma.AST.Expressions.BooleanExpression;
+import UvA.Gamma.AST.Expressions.Expression;
+import UvA.Gamma.AST.Expressions.MoneyExpression;
+import UvA.Gamma.AST.Expressions.NumberExpression;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
-import UvA.Gamma.Models.Form;
-import UvA.Gamma.Models.Input;
-import UvA.Gamma.Models.QLType;
-import UvA.Gamma.Models.QLValue;
-import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Tjarco on 08-02-17.
  */
 
-public class QLVisitor extends QLBaseVisitor<Object> {
-    Map<String, String> ids;
+public class QLVisitor extends QLBaseVisitor<ASTNode> {
     private Form form;
 
     QLVisitor() {
-        ids = new HashMap<>();
         form = new Form();
     }
 
-    public Form getForm(){
+    public Form getForm() {
         return this.form;
     }
 
     @Override
-    public Object visit(ParseTree tree) {
-        return super.visit(tree);
-    }
-
-    @Override
     public Form visitForm(QLParser.FormContext ctx) {
-        for (QLParser.FormItemContext formItemContext: ctx.formItem()){
-            visit(formItemContext);
+        for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
+            form.addFormItem((FormItem) visit(formItemContext));
         }
         return form;
     }
 
     @Override
-    public Input visitInput(QLParser.InputContext ctx) {
-        String id = ctx.ID().getText();
-        String question = ctx.QUESTION().getText();
-        String type = (String) visit(ctx.type());
-        QLValue value = new QLValue(QLType.valueOf(type.toUpperCase()), null);
-        Input input = new Input(id, question, value);
-        form.addInput(input);
-        return input;
+    public Question visitQuestion(QLParser.QuestionContext ctx) {
+        Question question = new Question();
+        question.setQuestion(ctx.STRING_LITERAL().getText());
+        question.setId(ctx.ID().getText());
+        question.setType(ctx.type().getText());
+        return question;
     }
 
     @Override
-    public Object visitType(QLParser.TypeContext ctx) {
-        if (ctx.intExpr() != null) {
-            return String.valueOf(visit(ctx.intExpr()));
+    public Computed visitComputed(QLParser.ComputedContext ctx) {
+        Computed computed = new Computed();
+        computed.setLabel(ctx.STRING_LITERAL().getText());
+        computed.setId(ctx.ID().getText());
+        computed.setType("");
+        computed.setExpression((Expression) visit(ctx.expression()));
+        return computed;
+    }
+
+    @Override
+    public Condition visitCondition(QLParser.ConditionContext ctx) {
+        Condition condition = new Condition();
+        condition.setExpression(new BooleanExpression(ctx.boolExpr().getText()));
+        for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
+            condition.addFormItem((FormItem) visit(formItemContext));
         }
-        return ctx.getText();
-    }
 
-    //Expressions
+        if (ctx.elseblock() != null) {
+            for (QLParser.FormItemContext elseItemContext : ctx.elseblock().formItem()) {
+                condition.addElseBlockItem((FormItem) visit(elseItemContext));
+            }
+        }
 
-    @Override
-    public Object visitAdd(QLParser.AddContext ctx) {
-        double left = (double)visit(ctx.intExpr(0));
-        double right  = (double)visit(ctx.intExpr(1));
-        return ctx.op.getType() == QLParser.ADD ? left + right : left - right;
+        return condition;
     }
 
     @Override
-    public Object visitInt(QLParser.IntContext ctx) {
-        return Double.valueOf(ctx.NUMBER().getText());
+    public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
+        return new BooleanExpression(ctx.boolExpr().getText());
+    }
+
+    @Override
+    public NumberExpression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
+        return new NumberExpression(ctx.numExpr().getText());
+    }
+
+    @Override
+    public ASTNode visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+        return new MoneyExpression(ctx.numExpr().getText());
     }
 }
