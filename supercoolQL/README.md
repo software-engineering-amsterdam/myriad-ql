@@ -1,2 +1,49 @@
-# ToDo List
-- [ ] Lots of things
+# QL Implementation
+**Author**: Matt Chapman
+
+# Example QL File
+
+```
+form exampleForm {
+  "Test question 1"
+    testQuestion1: boolean;
+  "Test question 2"
+    testQuestion2: boolean;
+  "Test question 3"
+    testQuestion3: boolean;
+
+  if (testQuestion1 AND testQuestion2 OR testQuestion3) {
+    "Conditional question 1"
+      conditionalQuestion1: integer;
+    "Conditional question 2"
+      conditionalQuestion2: integer;
+    "Math question 1:"
+      mathQuestion1:integer =
+        (conditionalQuestion1 - conditionalQuestion2);
+  }
+
+  if (simpleCondition) {
+    "Simple conditional question 1"
+      simpleConditionalQuestion: boolean;
+  }
+
+}
+```
+
+# Prerequisites
+
+* Antlr4
+* JUnit 4
+
+# Usage
+
+`java Launcher` to run. The application will provide a filepicker for input. Append the argument `-debug` to bypass the filepicker and run using `res/test.txt`.
+
+# Implementation Progress
+- [x] QL Grammar
+- [ ] QLVisitor implementation (based on Antlr's visitor)
+- [x] Replacement error listener for parser
+- [x] Application launcher
+- [ ] AST
+  - [x] Form, Statement, Question classes
+  - [x] Classes for Operations
