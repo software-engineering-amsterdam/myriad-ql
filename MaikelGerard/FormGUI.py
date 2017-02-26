@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from appJar import gui
 from collections import OrderedDict
+from Undefined import Undefined
 import json
 
 
@@ -11,6 +12,9 @@ class FormGUI(object):
         self.main = gui("QL Language Form - © 2017")
         self.row = 0
         self.add_header()
+        self.ast = draw_gui.ast
+        self.evaluator = draw_gui.evaluator
+        self.hide_branch = False
 
         self.draw_gui = draw_gui
         self.questions = OrderedDict()
@@ -20,9 +24,68 @@ class FormGUI(object):
             ["Save details", "Exit"], self.button_action, self.row, 0, 2
         )
 
+    def redraw(self):
+        self.evaluator.start_traversal()
+        self.start_traversal()
+
     def start(self):
         self.add_buttons()
+        self.start_traversal()
         self.main.go()
+
+    def start_traversal(self):
+        self.ast.root.accept(self)
+
+    def if_node(self, if_node):
+        condition = if_node.expression.accept(self.evaluator)
+        condition = condition if condition != Undefined else False
+        if condition or self.hide_branch:
+            if_node.if_block.accept(self)
+        else:
+            self.hide_branch = True
+            if_node.if_block.accept(self)
+            self.hide_branch = False
+
+    def if_else_node(self, if_else_node):
+        condition = if_else_node.expression.accept(self.evaluator)
+        condition = condition if condition != Undefined else False
+
+        current_val = self.hide_branch
+        if condition or self.hide_branch:
+            if_else_node.if_block.accept(self)
+            self.hide_branch = True
+            if_else_node.else_block.accept(self)
+            self.hide_branch = current_val
+        else:
+            self.hide_branch = True
+            if_else_node.if_block.accept(self)
+            self.hide_branch = current_val
+            if_else_node.else_block.accept(self)
+
+    def question_node(self, question_node):
+        identifier = question_node.name.val
+        if self.hide_branch:
+            (get_data_func, set_data_func, show, hide) = self.questions[identifier]
+            self.main.hideLabel(identifier)
+            hide(identifier)
+        else:
+            (get_data_func, set_data_func, show, hide) = self.questions[identifier]
+            self.main.showLabel(identifier)
+            show(identifier)
+            set_data_func(identifier, self.draw_gui.env.get_var_value(identifier))
+
+    def comp_question_node(self, comp_question):
+        identifier = comp_question.name.val
+        if self.hide_branch:
+            self.main.hideLabel("@computed_" + identifier)
+            self.main.hideLabel(identifier)
+        else:
+            value = self.draw_gui.env.get_var_value(identifier)
+            if value == comp_question.type.default:
+                return
+            self.main.showLabel("@computed_" + identifier)
+            self.main.showLabel(identifier)
+            self.main.setLabel(identifier, value)
 
     def add_header(self):
         self.main.addLabel("header", "Please fill in the form!", self.row, 0, 2)
@@ -36,7 +99,8 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setEntry(identifier, value)
-        self.questions[identifier] = self.main.getEntry
+        self.questions[identifier] = (self.main.getEntry, self.main.setEntry,
+                                      self.main.showEntry, self.main.hideEntry)
         self.row += 1
 
     def add_numeric_entry_question(self, identifier, question, value):
@@ -51,7 +115,8 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setEntry(identifier, value)
-        self.questions[identifier] = self.main.getEntry
+        self.questions[identifier] = (self.main.getEntry, self.main.setEntry,
+                                      self.main.showEntry, self.main.hideEntry)
         self.row += 1
 
     def add_datepicker_question(self, identifier, question, value):
@@ -65,7 +130,9 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setSpinBox(identifier, value)
-        self.questions[identifier] = self.main.getSpinBox
+        self.questions[identifier] = (self.main.getSpinBox, self.main.setSpinBox,
+                                      self.main.showSpinBox, self.main.hideSpinBox)
+
         self.row += 1
 
     def add_checkbox_question(self, identifier, question, value):
@@ -77,7 +144,8 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setCheckBox(identifier, ticked=value)
-        self.questions[identifier] = self.main.getCheckBox
+        self.questions[identifier] = (self.main.getCheckBox, self.main.setCheckBox,
+                                      self.main.showCheckBox, self.main.hideCheckBox)
         self.row += 1
 
     def add_radiobutton_question(self, identifier, question, value):
@@ -90,35 +158,34 @@ class FormGUI(object):
         self.add_listener(self.main.getLabelWidget(identifier))
 
         # Set the entry's value and save the retieval method.
+        if value == Undefined:
+            value = "@undefined"
         self.main.setLabel(identifier, value)
-        self.questions[identifier] = self.main.getLabel
+        self.questions[identifier] = (self.main.getLabel, self.main.setLabel,
+                                      self.main.showLabel, self.main.hideLabel)
         self.row += 1
 
     def add_listener(self, tkinter_obj):
         tkinter_obj.bind("<FocusOut>", self.force_redraw)
-        #tkinter_obj.bind("<Key>", self.force_redraw)
-        #tkinter_obj.bind("<ButtonRelease-1>", self.force_redraw)
+        # tkinter_obj.bind("<Key>", self.force_redraw)
+        tkinter_obj.bind("<ButtonRelease-1>", self.force_redraw)
 
     def get_question_values(self):
         question_values = OrderedDict()
         for question in self.questions:
-            get_date_function = self.questions[question]
-            question_value = get_date_function(question)
+            get_data_func, set_data_func, show, hide = self.questions[question]
+            question_value = get_data_func(question)
+            print question, question_value
             question_values[question] = question_value
         return question_values
 
-    def force_redraw(self, event):
+    def force_redraw(self, _):
         # Request all form values, adjust the environment.
         question_values = self.get_question_values()
         self.draw_gui.adjust_env(question_values)
 
         # Remove all current widgets and redraw the gui.
-        self.main.removeAllWidgets()
-        self.row = 0
-        self.questions = OrderedDict()
-        self.add_header()
-        self.draw_gui.redraw()
-        self.add_buttons()
+        self.redraw()
         print "Oh, I'm so busy redrawing stuff!"
 
     def button_action(self, button_pressed):
@@ -133,6 +200,6 @@ class FormGUI(object):
             value = get_value(identifier)
             json_dict[identifier] = value
 
-        # TODO: Add flag were to save.
+        # TODO: Add flag where to save.
         with open("./form_output.txt", "w+") as form_output:
             json.dump(json_dict, form_output, indent=4)

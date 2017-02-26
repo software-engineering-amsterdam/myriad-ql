@@ -37,6 +37,9 @@ class DrawGUI(object):
             question_node = self.env.variables[question]["node"]
 
             new_value = question_values[question]
+            if new_value == "@undefined":
+                continue
+
             question_type = question_node.type
             new_value = question_type.convert_to_type(new_value)
 
@@ -45,23 +48,12 @@ class DrawGUI(object):
                 self.env.set_var_value(question, new_value)
                 question_node.is_defined = True
 
-    def redraw(self):
-        self.evaluator.start_traversal()
-        self.ast.root.accept(self)
-
     def if_node(self, if_node):
-        condition = if_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-        if condition:
-            if_node.if_block.accept(self)
+        if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-        if condition:
-            if_else_node.if_block.accept(self)
-        else:
-            if_else_node.else_block.accept(self)
+        if_else_node.if_block.accept(self)
+        if_else_node.else_block.accept(self)
 
     def get_question_val(self, identifier, question_node):
         var_value = self.env.get_var_value(identifier)
@@ -70,7 +62,7 @@ class DrawGUI(object):
 
         # Value is undefined, we evaluate the boolean question to False as it is not logical to
         # expect a user to check a checkbox to un-check to get a defined checkbox value.
-        if question_node.type == BoolTypeNode:
+        if question_node.type == BoolTypeNode():
             question_node.is_defined = True
             return False
         return question_node.type.default
@@ -95,8 +87,7 @@ class DrawGUI(object):
         var_value = self.env.get_var_value(identifier)
 
         # Draw the value of the computed question within a label.
-        if var_value != Undefined:
-            self.gui.add_computed_question(identifier, question_str, var_value)
+        self.gui.add_computed_question(identifier, question_str, var_value)
 
     def bool_type_node(self, _):
         return self.gui.add_checkbox_question
