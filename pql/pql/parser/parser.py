@@ -7,6 +7,7 @@ from pql.typechecker.types import types
 
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
+    identifier.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))
     money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))

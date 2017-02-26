@@ -13,14 +13,14 @@ class TestTypechecker(TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result
         type_checker_result = check_type(form_node)
-    #
-    # def test_parse_field_assignment(self):
-    #     input_string = """
-    #     form taxOfficeExample {
-    #         "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
-    #     }
-    #     """
-    #     parse_result = parse(input_string).asList()
-    #     form_node = parse_result
-    #     type_checker_result = check_type(form_node)
+
+    def test_parse_field_assignment(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
+        }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result
+        type_checker_result = check_type(form_node)
 

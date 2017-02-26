@@ -194,3 +194,8 @@ class Condition(Node):
 class Value:
     def __init__(self, value):
         self.value = value
+
+
+class Identifier:
+    def __init__(self, name):
+        self.name = name
