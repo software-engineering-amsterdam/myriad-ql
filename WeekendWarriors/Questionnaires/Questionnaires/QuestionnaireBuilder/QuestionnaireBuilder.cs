@@ -13,7 +13,7 @@ using Questionnaires.Value;
 
 namespace Questionnaires.QuestionaireBuilder
 {
-    class QuestionnaireBuilder : IASTVisitor
+    class QuestionnaireBuilder : IASTVisitor<Func<IValue>>
     {
         private VariableStore.VariableStore VariableStore;
         private Renderer.Renderer Renderer;
@@ -28,7 +28,7 @@ namespace Questionnaires.QuestionaireBuilder
             RuleContainer = ruleContainer;
         }
 
-        public void Visit(QLComputedQuestion node)
+        public Func<IValue> Visit(QLComputedQuestion node)
         {
             // Add it as a question
             Visit(node.Question);
@@ -88,108 +88,87 @@ namespace Questionnaires.QuestionaireBuilder
                 }
             );
             RuleContainer.AddRule(rule);
+            return null;
         }
 
-        public void Visit(QLBinaryOperation node)
+        public Func<IValue> Visit(QLBinaryOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLComparisonOperation node)
+        public Func<IValue> Visit(QLComparisonOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLLogicalOperation node)
+        public Func<IValue> Visit(QLLogicalOperation node)
         {
-            Visit((dynamic)node.Lhs);
-            Visit((dynamic)node.Rhs);
-
-            var rule = new Rule.Rule(
-                (VariableStore.IVariableStore variableStore, Renderer.Renderer renderer) =>
-                {
-                    // Given a logical operation Lhs Operator Rhs
-                    
-                }
-            );
-            RuleContainer.AddRule(rule);
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return (() => { return new BoolValue(lhsFunc().asBool() && rhsFunc().asBool()); });
         }
 
-        public void Visit(QLPositiveOperation node)
+        public Func<IValue> Visit(QLPositiveOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLBangOperation node)
+        public Func<IValue> Visit(QLBangOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLMoney node)
+        public Func<IValue> Visit(QLMoney node)
+        {
+            return () => { return new DecimalValue(node.Value); };
+        }
+
+        public Func<IValue> Visit(QLString node)
+        {
+            return () => { return new StringValue(node.Value); };
+        }
+
+        public Func<IValue> Visit(QLIdentifier node)
+        {
+            return () => { return VariableStore.GetValue(node.Name); };
+        }
+
+        public Func<IValue> Visit(QLNumber node)
+        {
+            return () => { return new IntValue(node.Value); };
+        }
+
+        public Func<IValue> Visit(QLBoolean node)
+        {
+            return () => { return new BoolValue(node.Value); };
+        }
+
+        public Func<IValue> Visit(QLNegativeOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLString node)
+        public Func<IValue> Visit(QLUnaryOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLIdentifier node)
-        {
-            QuestionRules.Add(() =>
-            {
-                try
-                {
-                    VariableStore.GetValue(node.Name);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            });
-        }
-
-        public void Visit(QLNumber node)
+        public Func<IValue> Visit(QLEqualityOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLBoolean node)
-        {
-            QuestionResult.Add(() =>
-            {
-                return new BoolValue(node.Value);
-            });
-        }
-
-        public void Visit(QLNegativeOperation node)
+        public Func<IValue> Visit(QLArithmeticOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLUnaryOperation node)
+        public Func<IValue> Visit(QLConditional node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLEqualityOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(QLArithmeticOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(QLConditional node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(QLQuestion node)
+        public Func<IValue> Visit(QLQuestion node)
         {
             // Renderer needs an IQuestion so we build that
             var question = new Question.Question();
@@ -217,10 +196,10 @@ namespace Questionnaires.QuestionaireBuilder
             }
 
             Renderer.AddQuestion(question);
-            
+            return null;
         }
 
-        public void Visit(QLForm node)
+        public Func<IValue> Visit(QLForm node)
         {
             foreach (var statement in node.Statements)
             {
@@ -230,6 +209,7 @@ namespace Questionnaires.QuestionaireBuilder
             // For a form all we want to do is just change the window title
             // you cannot change this later through user input
             Renderer.SetWindowTitle(node.Identifier);
+            return null;
         }
 
         public void Visit(QLAndOperation node)
