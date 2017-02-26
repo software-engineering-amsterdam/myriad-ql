@@ -12,15 +12,11 @@ namespace Questionnaires.AST
         Number,
         Money,
         Bool,
-        String,
-        None        // TODO: remove
+        String
     };
 
-    /* For now this is basically a useless interface that has no other purpose
-     * than to allow us to use a single return type for all visit functions
-     * All AST nodes inherit from this interface */
     public interface INode
     {
-        QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
+        QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

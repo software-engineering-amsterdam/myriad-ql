@@ -10,6 +10,11 @@ namespace Questionnaires.Value
     {
         protected T Val = default(T);
 
+        public T GetValue()
+        {
+            return Val;
+        }
+
         public virtual int AsInt()
         {
             throw new NotSupportedException();
@@ -31,7 +36,7 @@ namespace Questionnaires.Value
         }
 
         public virtual IValue Add(IValue value)
-        {
+        {            
             throw new NotSupportedException();
         }
 

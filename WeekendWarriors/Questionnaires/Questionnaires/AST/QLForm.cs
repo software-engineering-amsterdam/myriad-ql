@@ -26,7 +26,7 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             // No type validation to do here.
             return null;

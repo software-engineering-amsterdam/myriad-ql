@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Questionnaires.Value;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Questionnaires.VariableStore
         void SetValue(string name, bool value);
         void SetValue(string name, decimal value);
         void SetValue(string name, string value);
+        void SetValue(string name, IValue value);
 
         void RemoveValue(string name);
     };

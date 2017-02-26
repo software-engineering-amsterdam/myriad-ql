@@ -14,7 +14,7 @@ using Questionnaires.Value;
 namespace Questionnaires.QuestionaireBuilder
 {
     class QuestionnaireBuilder : IASTVisitor<Func<IValue>>
-    {
+    {        
         private VariableStore.VariableStore VariableStore;
         private Renderer.Renderer Renderer;
         private RuleContainer.RuleContainer RuleContainer;
@@ -24,6 +24,15 @@ namespace Questionnaires.QuestionaireBuilder
             VariableStore = variableStore;
             Renderer = renderer;
             RuleContainer = ruleContainer;
+
+            // Connect runtime components
+            VariableStore.VariableChanged += VariableStore_VariableChanged;
+        }
+
+        private void VariableStore_VariableChanged(object sender, VariableChangedEventArgs arg)
+        {
+            Renderer.SetValue(arg.Name, arg.Value);
+            RuleContainer.ApplyRules(VariableStore, Renderer);
         }
 
         public Func<IValue> Visit(QLComputedQuestion node)
@@ -34,24 +43,26 @@ namespace Questionnaires.QuestionaireBuilder
             switch (node.Question.Type)
             {
                 case QLType.Bool:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsBool());
-                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
                     break;
                 case QLType.Money:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsDecimal());
-                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
                     break;
                 case QLType.Number:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsInt());
-                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
                     break;
                 case QLType.String:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsString());
-                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
                     break;
                 default://\todo: What do we do here...
                     throw new Exception("fk");
             }
+
+            RuleContainer.AddRule(
+                new Rule.Rule((variableStore, renderer) =>
+                {
+                    variableStore.SetValue(node.Question.Identifier, expressionFunction());
+                }));
             
             return questionFunction;
         }
@@ -120,6 +131,8 @@ namespace Questionnaires.QuestionaireBuilder
 
             // We gotta convert the enums here, also we gotta assign default values
             question.Type = (Question.QuestionType)node.Type; // This is a hack to cast because they have the same indexes
+            Renderer.AddQuestion(question);
+
             switch (node.Type)
             {
                 case QLType.Bool:
@@ -136,9 +149,7 @@ namespace Questionnaires.QuestionaireBuilder
                     break;
                 default://\todo: What do we do here...
                     throw new Exception("fk");
-            }
-
-            Renderer.AddQuestion(question);
+            }            
             return () => { return new StringValue(node.Identifier); };
         }
 
@@ -152,6 +163,9 @@ namespace Questionnaires.QuestionaireBuilder
             // For a form all we want to do is just change the window title
             // you cannot change this later through user input
             Renderer.SetWindowTitle(node.Identifier);
+
+            
+
             return null;
         }
 
@@ -161,7 +175,7 @@ namespace Questionnaires.QuestionaireBuilder
             var rhsFunc = Visit((dynamic)node.Rhs);
             return () =>
             {
-                return new BoolValue(lhsFunc().AsBool() && rhsFunc().AsBool());
+                return new BoolValue(lhsFunc().And(rhsFunc()));
             };
         }
 
@@ -171,7 +185,7 @@ namespace Questionnaires.QuestionaireBuilder
             var rhsFunc = Visit((dynamic)node.Rhs);
             return () =>
             {
-                return new BoolValue(lhsFunc().AsBool() || rhsFunc().AsBool());
+                return new BoolValue(lhsFunc().Or(rhsFunc()));
             };
         }
 
@@ -272,6 +286,9 @@ namespace Questionnaires.QuestionaireBuilder
             foreach (var thenStatement in node.ThenStatements)
             {
                 Func<IValue> thenFunction = Visit((dynamic)thenStatement);
+                if (thenFunction == null)
+                    continue;
+
                 RuleContainer.AddRule(
                     new Rule.Rule((variableStore, renderer) =>
                     {
@@ -290,6 +307,9 @@ namespace Questionnaires.QuestionaireBuilder
             foreach (var elseStatement in node.ElseStatements)
             {
                 Func<IValue> elseFunction = Visit((dynamic)elseStatement);
+                if (elseFunction == null)
+                    continue;
+
                 RuleContainer.AddRule(
                     new Rule.Rule((variableStore, renderer) =>
                     {

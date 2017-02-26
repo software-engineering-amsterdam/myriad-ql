@@ -27,13 +27,13 @@ namespace Questionnaires.SemanticAnalysis.Run
             foreach (var statement in node.Statements)
                 Visit((dynamic)statement);            
 
-            return QLType.None;
+            return null;
         }
 
         public QLType? Visit(QLQuestion node)
         {
             List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
-            var type = node.CheckTypes(new List<QLType>(), Context, events);
+            var type = node.CheckOperandTypes(new List<QLType>(), Context, events);
             ReportEvents(events);
 
             return type;
@@ -178,7 +178,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             if (!hasInvalidChild)
             {
                 List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
-                var parentType = parent.CheckTypes(childTypes, Context, events);
+                var parentType = parent.CheckOperandTypes(childTypes, Context, events);
                 ReportEvents(events);
                 return parentType;
             }

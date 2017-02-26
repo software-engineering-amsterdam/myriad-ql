@@ -92,7 +92,7 @@ namespace Questionnaires.Renderer
         public delegate void InputChangedCallback(string name, IValue value);
         public void InputChanged(string name, IValue value)
         {
-            VariableStore.SetValue(name, value.AsBool());
+            VariableStore.SetValue(name, value);
         }
          
     }

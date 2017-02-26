@@ -111,6 +111,7 @@
     <Compile Include="Value\StringValue.cs" />
     <Compile Include="Value\Value.cs" />
     <Compile Include="VariableStore\IVariableStore.cs" />
+    <Compile Include="VariableStore\VariableChangedEventArgs.cs" />
     <Compile Include="VariableStore\VariableStore.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

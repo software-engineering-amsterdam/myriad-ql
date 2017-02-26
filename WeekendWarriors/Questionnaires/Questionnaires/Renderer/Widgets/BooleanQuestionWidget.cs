@@ -51,6 +51,7 @@ namespace Questionnaires.Renderer.Widgets
         public void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
             QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BoolValue(QuestionInputWidget.IsChecked.Value));
+            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(QuestionName, new BoolValue(QuestionInputWidget.IsChecked.Value));
         }
     }
 }

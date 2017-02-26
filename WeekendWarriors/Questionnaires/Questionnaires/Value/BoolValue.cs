@@ -18,24 +18,46 @@ namespace Questionnaires.Value
             return this.Val;
         }
 
-        public IValue And(BoolValue value)
+        public override IValue And(IValue value)
         {
-            return new BoolValue(this.Val && value.AsBool());
+            return And((dynamic)value);
         }
 
-        public IValue Or(BoolValue value)
+        public override IValue Or(IValue value)
         {
-            return new BoolValue(this.Val || value.AsBool());
+            return Or((dynamic)value);
         }
 
-        public IValue EqualTo(BoolValue value)
+        public override IValue EqualTo(IValue value)
         {
-            return new BoolValue(this.Val == value.AsBool());
+            return EqualTo((dynamic)value);
         }
 
-        public IValue InequalTo(BoolValue value)
+        public override IValue InequalTo(IValue value)
         {
-            return new BoolValue(this.Val != value.AsBool());
+            return InequalTo((dynamic)value);
         }
+
+        protected IValue And(BoolValue value)
+        {
+            return new BoolValue(this.Val && value.GetValue());
+        }
+
+        protected IValue Or(BoolValue value)
+        {
+            return new BoolValue(this.Val || value.GetValue());
+        }
+
+        protected IValue EqualTo(BoolValue value)
+        {
+            return new BoolValue(this.Val == value.GetValue());
+        }
+
+        protected IValue InequalTo(BoolValue value)
+        {
+            return new BoolValue(this.Val != value.GetValue());
+        }
+
+        
     }
 }

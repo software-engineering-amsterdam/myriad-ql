@@ -17,15 +17,25 @@ namespace Questionnaires.Value
         {
             return this.Val;
         }
-        
+
+        public override IValue EqualTo(IValue value)
+        {
+            return EqualTo((dynamic)value);
+        }
+
+        public override IValue InequalTo(IValue value)
+        {
+            return InequalTo((dynamic)value);
+        }
+
         public IValue EqualTo(StringValue value)
         {
-            return new BoolValue(this.Val == value.AsString());
+            return new BoolValue(this.Val == value.GetValue());
         }
 
         public IValue InequalTo(StringValue value)
         {
-            return new BoolValue(this.Val != value.AsString());
+            return new BoolValue(this.Val != value.GetValue());
         }
     }
 }

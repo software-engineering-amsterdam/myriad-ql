@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Questionnaires.Value;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,22 +14,51 @@ namespace Questionnaires.VariableStore
 
         public void SetValue(string name, decimal value)
         {
-            variables[name] = new Value.DecimalValue(value);
+            var newValue = new Value.DecimalValue(value);
+            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
+            variables[name] = newValue;
+
+            if (changed)
+                OnVariableChanged(name, newValue);
         }
 
         public void SetValue(string name, bool value)
         {
-            variables[name] = new Value.BoolValue(value);
+            var newValue = new Value.BoolValue(value);
+            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
+            variables[name] = newValue;
+
+            if (changed)
+                OnVariableChanged(name, newValue);
         }
 
         public void SetValue(string name, int value)
         {
-            variables[name] = new Value.IntValue(value);
+            var newValue = new Value.IntValue(value);
+            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
+            variables[name] = newValue;
+
+            if (changed)
+                OnVariableChanged(name, newValue);
         }
 
         public void SetValue(string name, string value)
         {
-            variables[name] = new Value.StringValue(value);
+            var newValue = new Value.StringValue(value);
+            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
+            variables[name] = newValue;
+
+            if (changed)
+                OnVariableChanged(name, newValue);
+        }
+
+        public void SetValue(string name, IValue value)
+        {            
+            bool changed = (!variables.ContainsKey(name) || value.InequalTo((dynamic)variables[name]).AsBool());
+            variables[name] = value;
+
+            if (changed)
+                OnVariableChanged(name, value);
         }
 
         public void RemoveValue(string name)
@@ -40,5 +70,13 @@ namespace Questionnaires.VariableStore
         {
             return variables[name];
         }
+
+        public delegate void VariableChangedEventHandler(object sender, VariableChangedEventArgs arg);
+        public event VariableChangedEventHandler VariableChanged;
+        public void OnVariableChanged(string name, IValue value)
+        {
+            if (VariableChanged != null)
+                VariableChanged(this, new VariableChangedEventArgs(name, value));
+        }        
     }
 }
