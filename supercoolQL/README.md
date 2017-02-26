@@ -47,3 +47,17 @@ form exampleForm {
 - [ ] AST
   - [x] Form, Statement, Question classes
   - [x] Classes for Operations
+  - [x] Basic types
+    - [x] Strings
+    - [x] Booleans
+    - [x] Integers
+- [ ] AST Processing
+  - [ ] Type checking
+    - [ ] reference to undefined questions
+    - [ ] duplicate question declarations with different types
+    - [ ] conditions that are not of the type boolean
+    - [ ] operands of invalid type to operators
+    - [ ] cyclic dependencies between questions
+    - [ ] duplicate labels
+  - [ ] Error output in GUI
+- [ ] GUI generation
