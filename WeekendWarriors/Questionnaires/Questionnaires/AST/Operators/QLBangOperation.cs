@@ -15,7 +15,7 @@ namespace Questionnaires.AST.Operators
 
         }
 
-        public override QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public override QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             Debug.Assert(parameters.Count == 1);
 

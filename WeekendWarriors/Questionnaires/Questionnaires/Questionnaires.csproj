@@ -87,11 +87,13 @@
     <Compile Include="Renderer\Widgets\IQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
+    <Compile Include="Renderer\Widgets\QuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
     <Compile Include="RuleContainer\IRuleContainer.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
     <Compile Include="Rule\IRule.cs" />
     <Compile Include="Rule\Rule.cs" />
+    <Compile Include="SemanticAnalysis\QLContext.cs" />
     <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
     <Compile Include="SemanticAnalysis\Run\ISemanticAnalyzerRun.cs" />
     <Compile Include="SemanticAnalysis\Run\IResult.cs" />
@@ -99,7 +101,6 @@
     <Compile Include="SemanticAnalysis\SemanticAnalyzer.cs" />
     <Compile Include="SemanticAnalysis\Run\TypeChecker.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\ISemenaticAnalysisEvent.cs" />
-    <Compile Include="QLContext.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisError.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisEvent.cs" />
     <Compile Include="SemanticAnalysis\SemenaticAnalysisEvents\SemanticAnalysisWarning.cs" />

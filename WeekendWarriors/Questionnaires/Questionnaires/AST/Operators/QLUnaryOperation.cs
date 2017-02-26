@@ -26,6 +26,6 @@ namespace Questionnaires.AST
             get;
         }
 
-        public abstract QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
+        public abstract QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

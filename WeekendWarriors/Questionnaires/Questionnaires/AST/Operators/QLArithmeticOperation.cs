@@ -15,7 +15,7 @@ namespace Questionnaires.AST.Operators
                         
         }
 
-        public override QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public override QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             Trace.Assert(parameters.Count == 2);
             var leftHandSideType = parameters[0];
@@ -28,7 +28,6 @@ namespace Questionnaires.AST.Operators
                 return null;
             }
 
-            // TODO: this is not maintainable 
             if (leftHandSideType == QLType.Money || rightHandsSideType == QLType.Money)
                 return QLType.Money;
             else

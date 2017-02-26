@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// TODO: find the right namespace
-namespace Questionnaires
+namespace Questionnaires.SemanticAnalysis
 {
     public class QLContext
     {
@@ -18,9 +17,7 @@ namespace Questionnaires
         }
 
         public QLType GetQuestionType(string name)
-        {
-            // Todo: double check that this will throw when the quesion is not in the dict
-            // Do we want to let the original error bubble up or create a new exception?
+        {            
             return Context[name];
         }
 

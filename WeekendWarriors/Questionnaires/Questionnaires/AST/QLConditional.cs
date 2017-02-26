@@ -32,7 +32,7 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             Trace.Assert(parameters.Count == 1);
             var conditionType = parameters[0];

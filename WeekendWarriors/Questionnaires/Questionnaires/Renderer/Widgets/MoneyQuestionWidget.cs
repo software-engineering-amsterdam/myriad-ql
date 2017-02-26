@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class MoneyQuestionWidget : StackPanel, IQuestionWidget
+    class MoneyQuestionWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
@@ -23,17 +23,17 @@ namespace Questionnaires.Renderer.Widgets
             Children.Add(QuestionInputWidget);
         }
 
-        public void SetLabel(string text)
+        public override void SetLabel(string text)
         {
             QuestionLabelWidget.Text = text;
         }
 
-        public void SetQuestionValue(IValue value)
+        public override void SetQuestionValue(IValue value)
         {
             QuestionInputWidget.Text = value.AsDecimal().ToString();
         }
 
-        public void SetVisibility(Question.Visibility visibility)
+        public override void SetVisibility(Question.Visibility visibility)
         {
             if (visibility == Question.Visibility.Visible)
             {
@@ -45,7 +45,7 @@ namespace Questionnaires.Renderer.Widgets
             }
         }
 
-        public void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
+        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
             QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new DecimalValue(decimal.Parse(QuestionInputWidget.Text)));
         }

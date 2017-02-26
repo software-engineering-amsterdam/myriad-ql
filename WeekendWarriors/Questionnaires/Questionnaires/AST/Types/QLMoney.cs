@@ -19,7 +19,7 @@ namespace Questionnaires.AST
 
         public decimal Value { get { return decimal.Parse(StringValue); } }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             Trace.Assert(parameters.Count == 0);
 

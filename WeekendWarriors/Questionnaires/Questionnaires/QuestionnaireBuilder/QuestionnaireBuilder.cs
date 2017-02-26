@@ -10,6 +10,7 @@ using Questionnaires.Rule;
 using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Value;
+using System.ComponentModel;
 
 namespace Questionnaires.QuestionaireBuilder
 {
@@ -54,8 +55,8 @@ namespace Questionnaires.QuestionaireBuilder
                 case QLType.String:
                     VariableStore.SetValue(node.Question.Identifier, expressionFunction());
                     break;
-                default://\todo: What do we do here...
-                    throw new Exception("fk");
+                default:
+                    throw new InvalidEnumArgumentException();
             }
 
             RuleContainer.AddRule(
@@ -147,8 +148,8 @@ namespace Questionnaires.QuestionaireBuilder
                 case QLType.String:
                     VariableStore.SetValue(question.Name, "");
                     break;
-                default://\todo: What do we do here...
-                    throw new Exception("fk");
+                default:
+                    throw new InvalidEnumArgumentException();
             }            
             return () => { return new StringValue(node.Identifier); };
         }

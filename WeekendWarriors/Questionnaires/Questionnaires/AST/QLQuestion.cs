@@ -32,7 +32,7 @@ namespace Questionnaires.AST
         }
         
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
         {
             return Type;
         }

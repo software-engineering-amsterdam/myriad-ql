@@ -37,8 +37,6 @@ namespace Questionnaires.AST
             string identifier = context.Identifier().GetText();
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
-            // TODO: We should be able to do better than this, but I could not make it work.
-
             QLType parsedType;
 
             switch (type)

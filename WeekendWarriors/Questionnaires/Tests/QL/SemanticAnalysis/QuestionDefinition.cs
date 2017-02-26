@@ -9,7 +9,6 @@ namespace Tests.QL.SemanticAnalysis
     {
         protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Form);
 
-        // TODO: this should induce a warning. We currently do not support warnings
         [TestMethod]
         public void TestDoubleDefinition()
         {

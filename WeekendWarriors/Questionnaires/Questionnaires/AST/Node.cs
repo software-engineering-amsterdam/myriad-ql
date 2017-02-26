@@ -17,6 +17,6 @@ namespace Questionnaires.AST
 
     public interface INode
     {
-        QLType? CheckOperandTypes(List<QLType> parameters, QLContext context, List<ISemenaticAnalysisEvent> events);
+        QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events);
     }
 }

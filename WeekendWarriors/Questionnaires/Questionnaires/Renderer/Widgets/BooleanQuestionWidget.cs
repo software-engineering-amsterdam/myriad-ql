@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class BooleanQuestionWidget : StackPanel, IQuestionWidget
+    class BooleanQuestionWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
@@ -26,17 +26,17 @@ namespace Questionnaires.Renderer.Widgets
             Children.Add(QuestionInputWidget);
         }
 
-        public void SetLabel(string text)
+        public override void SetLabel(string text)
         {
             QuestionLabelWidget.Text = text;
         }
 
-        public void SetQuestionValue(IValue value)
+        public override void SetQuestionValue(IValue value)
         {
             QuestionInputWidget.IsChecked = value.AsBool();
         }
 
-        public void SetVisibility(Question.Visibility visibility)
+        public override void SetVisibility(Question.Visibility visibility)
         {
             if (visibility == Question.Visibility.Visible)
             {
@@ -48,7 +48,7 @@ namespace Questionnaires.Renderer.Widgets
             }
         }
 
-        public void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
+        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
             QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BoolValue(QuestionInputWidget.IsChecked.Value));
             QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(QuestionName, new BoolValue(QuestionInputWidget.IsChecked.Value));

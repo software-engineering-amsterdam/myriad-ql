@@ -31,47 +31,32 @@ namespace Questionnaires.Renderer
         public void AddQuestion(IQuestion question)
         {
             // Render the question by adding it to the questionnaire stack
-            IQuestionWidget questionWidget;
+            QuestionWidget questionWidget;
 
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
 
-            switch (question.Type) //\todo: Massive code smell
+            switch (question.Type) 
             {
                 case QuestionType.Bool:
-                    questionWidget = new BooleanQuestionWidget(question.Name);
-                    questionWidget.SetLabel(question.Body);
-                    questionWidget.SetOnInputChanged(inputChangedDelegate);
-
-                    Questions.Add(question.Name, questionWidget);
-                    QuestionnaireStack.Children.Add((BooleanQuestionWidget)questionWidget);
+                    questionWidget = new BooleanQuestionWidget(question.Name);                    
                     break;
                 case QuestionType.Money:
                     questionWidget = new MoneyQuestionWidget(question.Name);
-                    questionWidget.SetLabel(question.Body);
-                    questionWidget.SetOnInputChanged(inputChangedDelegate);
-
-                    Questions.Add(question.Name, questionWidget);
-                    QuestionnaireStack.Children.Add((MoneyQuestionWidget)questionWidget);
                     break;
                 case QuestionType.Number:
                     questionWidget = new NumberQuestionWidget(question.Name);
-                    questionWidget.SetLabel(question.Body);
-                    questionWidget.SetOnInputChanged(inputChangedDelegate);
-
-                    Questions.Add(question.Name, questionWidget);
-                    QuestionnaireStack.Children.Add((NumberQuestionWidget)questionWidget);
                     break;
                 case QuestionType.String:
                     questionWidget = new StringQuestionWidget(question.Name);
-                    questionWidget.SetLabel(question.Body);
-                    questionWidget.SetOnInputChanged(inputChangedDelegate);
-
-                    Questions.Add(question.Name, questionWidget);
-                    QuestionnaireStack.Children.Add((StringQuestionWidget)questionWidget);
                     break;
                 default:
                     throw new System.ComponentModel.InvalidEnumArgumentException();
             }
+
+            questionWidget.SetLabel(question.Body);
+            questionWidget.SetOnInputChanged(inputChangedDelegate);
+            Questions.Add(question.Name, questionWidget);
+            QuestionnaireStack.Children.Add(questionWidget);
         }
 
         public void SetValue(string name, Questionnaires.Value.IValue value)

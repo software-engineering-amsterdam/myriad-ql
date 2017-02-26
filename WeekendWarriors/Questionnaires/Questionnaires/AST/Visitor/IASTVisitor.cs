@@ -37,7 +37,7 @@ namespace Questionnaires.AST.Visitor
         ReturnType Visit(QLIdentifier node);
     }
 
-    // TODO: Passing in void as a generic parameter is not allowed. Apparently creating a second non-generic 
+    // Passing in void as a generic parameter is not allowed. Apparently creating a second non-generic 
     // interface is the standard solution the .NET framework uses
     public interface IASTVisitor
     {
