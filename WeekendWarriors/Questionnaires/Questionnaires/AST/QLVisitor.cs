@@ -95,32 +95,32 @@ namespace Questionnaires.AST
             switch (context.op.Type)
             {
                 case QLLexer.OP_ADD:
-                   return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Addition, (dynamic)rhs);                   
+                   return new QLAdditionOperation((dynamic)lhs, (dynamic)rhs);                   
                 case QLLexer.OP_SUB: 
-                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Subtraction, (dynamic)rhs);
+                    return new QLSubtractionOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_MUL: 
-                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Multiplication, (dynamic)rhs);
+                    return new QLMultiplyOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_DIV: 
-                    return new QLArithmeticOperation((dynamic)lhs, QLBinaryOperator.Division, (dynamic)rhs);
+                    return new QLDivisionOperation((dynamic)lhs,(dynamic)rhs);
 
                 case QLLexer.OP_GT: 
-                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThan, (dynamic)rhs);
+                    return new QLGreaterThanOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_GE: 
-                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.GreaterThanOrEqual, (dynamic)rhs);
+                    return new QLGreaterThanOrEqualOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_LT: 
-                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThan, (dynamic)rhs);
+                    return new QLLessThanOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_LE: 
-                    return new QLComparisonOperation((dynamic)lhs, QLBinaryOperator.LessThanOrEqual, (dynamic)rhs);
+                    return new QLLessThanOrEqualOperation((dynamic)lhs, (dynamic)rhs);
 
                 case QLLexer.OP_EQ: 
-                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Equal, (dynamic)rhs);
+                    return new QLEqualOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_NE: 
-                    return new QLEqualityOperation((dynamic)lhs, QLBinaryOperator.Inequal, (dynamic)rhs);
+                    return new QLInequalOperation((dynamic)lhs, (dynamic)rhs);
 
                 case QLLexer.OP_OR: 
-                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.Or, (dynamic)rhs);
+                    return new QLOrOperation((dynamic)lhs, (dynamic)rhs);
                 case QLLexer.OP_AND: 
-                    return new QLLogicalOperation((dynamic)lhs, QLBinaryOperator.And, (dynamic)rhs);
+                    return new QLAndOperation((dynamic)lhs, (dynamic)rhs);
 
                 default:
                     throw new InvalidEnumArgumentException();

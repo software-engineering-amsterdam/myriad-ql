@@ -61,6 +61,66 @@ namespace Questionnaires.SemanticAnalysis.Run
         }
 
         // TODO: this is ugly. Look into creating a base class for the visitor from which we can override only the mehtods of interes.
+        public void Visit(QLOrOperation node)
+        {
+            
+        }
+
+        public void Visit(QLSubtractionOperation node)
+        {
+           
+        }
+
+        public void Visit(QLMultiplyOperation node)
+        {
+            
+        }
+
+        public void Visit(QLGreaterThanOrEqualOperation node)
+        {
+            
+        }
+
+        public void Visit(QLLessThanOrEqualOperation node)
+        {
+            
+        }
+
+        public void Visit(QLInequalOperation node)
+        {
+           
+        }
+
+        public void Visit(QLEqualityOperation node)
+        {
+            
+        }
+
+        public void Visit(QLLessThanOperation node)
+        {
+            
+        }
+
+        public void Visit(QLGreaterThanOperation node)
+        {
+           
+        }
+
+        public void Visit(QLDivisionOperation node)
+        {
+           
+        }
+
+        public void Visit(QLAdditionOperation node)
+        {
+            
+        }
+
+        public void Visit(QLAndOperation node)
+        {
+            
+        }
+        
         public void Visit(QLBoolean node)
         {
            
@@ -86,21 +146,6 @@ namespace Questionnaires.SemanticAnalysis.Run
 
         }
 
-        public void Visit(QLArithmeticOperation node)
-        {
-            
-        }
-
-        public void Visit(QLEqualityOperation node)
-        {
-            
-        }
-
-        public void Visit(QLUnaryOperation node)
-        {
-            
-        }
-
         public void Visit(QLNegativeOperation node)
         {
             
@@ -115,20 +160,6 @@ namespace Questionnaires.SemanticAnalysis.Run
         {
             
         }
-
-        public void Visit(QLLogicalOperation node)
-        {
-            
-        }
-
-        public void Visit(QLComparisonOperation node)
-        {
-           
-        }
-
-        public void Visit(QLBinaryOperation node)
-        {
-            
-        }        
+      
     }
 }

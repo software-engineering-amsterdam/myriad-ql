@@ -231,5 +231,60 @@ namespace Questionnaires.QuestionaireBuilder
             // you cannot change this later through user input
             Renderer.SetWindowTitle(node.Identifier);
         }
+
+        public void Visit(QLAndOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLOrOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLAdditionOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLSubtractionOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLDivisionOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLMultiplyOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLGreaterThanOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLGreaterThanOrEqualOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLLessThanOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLLessThanOrEqualOperation node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QLInequalOperation node)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

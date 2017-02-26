@@ -56,12 +56,37 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Evaluate(new List<INode> { node.Condition }, node);          
         }
 
-        public QLType? Visit(QLArithmeticOperation node)
+        public QLType? Visit(QLOrOperation node)
         {
-            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);                   
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLComparisonOperation node)
+        public QLType? Visit(QLSubtractionOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLMultiplyOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLGreaterThanOrEqualOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLLessThanOrEqualOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLInequalOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLLessThanOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
@@ -71,14 +96,24 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLLogicalOperation node)
+        public QLType? Visit(QLGreaterThanOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLUnaryOperation node)
+        public QLType? Visit(QLDivisionOperation node)
         {
-            return Visit((dynamic)node);
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLAdditionOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
+        }
+
+        public QLType? Visit(QLAndOperation node)
+        {
+            return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
         public QLType? Visit(QLBoolean node)

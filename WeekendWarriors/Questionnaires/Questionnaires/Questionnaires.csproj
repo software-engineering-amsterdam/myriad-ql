@@ -61,6 +61,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AST\Operators\QLAdditionOperation.cs" />
+    <Compile Include="AST\Operators\QLAndOperation.cs" />
+    <Compile Include="AST\Operators\QLDivisionOperation.cs" />
+    <Compile Include="AST\Operators\QLEqualOperation.cs" />
+    <Compile Include="AST\Operators\QLGreaterThanOperation.cs" />
+    <Compile Include="AST\Operators\QLGreaterThanOrEqualOperation.cs" />
+    <Compile Include="AST\Operators\QLInequalOperation.cs" />
+    <Compile Include="AST\Operators\QLLessThanOperation.cs" />
+    <Compile Include="AST\Operators\QLLessThanOrEqualOperation.cs" />
+    <Compile Include="AST\Operators\QLMultiplyOperation.cs" />
+    <Compile Include="AST\Operators\QLOrOperation.cs" />
+    <Compile Include="AST\Operators\QLSubtractionOperation.cs" />
     <Compile Include="AST\Visitor\IASTVisitor.cs" />
     <Compile Include="AST\IQLExpression.cs" />
     <Compile Include="AST\Operators\QLBangOperation.cs" />
