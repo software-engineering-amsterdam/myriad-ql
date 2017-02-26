@@ -212,57 +212,57 @@ namespace Questionnaires.QuestionaireBuilder
             return null;
         }
 
-        public void Visit(QLAndOperation node)
+        public Func<IValue> Visit(QLAndOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLOrOperation node)
+        public Func<IValue> Visit(QLOrOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLAdditionOperation node)
+        public Func<IValue> Visit(QLAdditionOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLSubtractionOperation node)
+        public Func<IValue> Visit(QLSubtractionOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLDivisionOperation node)
+        public Func<IValue> Visit(QLDivisionOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLMultiplyOperation node)
+        public Func<IValue> Visit(QLMultiplyOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLGreaterThanOperation node)
+        public Func<IValue> Visit(QLGreaterThanOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLGreaterThanOrEqualOperation node)
+        public Func<IValue> Visit(QLGreaterThanOrEqualOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLLessThanOperation node)
+        public Func<IValue> Visit(QLLessThanOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLLessThanOrEqualOperation node)
+        public Func<IValue> Visit(QLLessThanOrEqualOperation node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(QLInequalOperation node)
+        public Func<IValue> Visit(QLInequalOperation node)
         {
             throw new NotImplementedException();
         }
