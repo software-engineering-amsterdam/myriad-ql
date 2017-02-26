@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from appJar import gui
 from collections import OrderedDict
+import json
 
 
 class FormGUI(object):
@@ -14,11 +15,13 @@ class FormGUI(object):
         self.draw_gui = draw_gui
         self.questions = OrderedDict()
 
-    def start(self):
-        # TODO: find a more suitable place to add the buttons.
+    def add_buttons(self):
         self.main.addButtons(
             ["Save details", "Exit"], self.button_action, self.row, 0, 2
         )
+
+    def start(self):
+        self.add_buttons()
         self.main.go()
 
     def add_header(self):
@@ -81,29 +84,41 @@ class FormGUI(object):
         pass
 
     def add_computed_question(self, identifier, question, value):
-        self.main.addLabel(identifier, question, row=self.row, column=0)
-        computed_identifier = "@computed_" + identifier
-        self.main.addLabel(computed_identifier, row=self.row, column=1)
-        self.add_listener(self.main.getLabelWidget(computed_identifier))
+        computed_id = "@computed_" + identifier
+        self.main.addLabel(computed_id, question, row=self.row, column=0)
+        self.main.addLabel(identifier, row=self.row, column=1)
+        self.add_listener(self.main.getLabelWidget(identifier))
 
         # Set the entry's value and save the retieval method.
-        self.main.setLabel(computed_identifier, value)
+        self.main.setLabel(identifier, value)
         self.questions[identifier] = self.main.getLabel
         self.row += 1
 
     def add_listener(self, tkinter_obj):
         tkinter_obj.bind("<FocusOut>", self.force_redraw)
-        tkinter_obj.bind("<Key>", self.force_redraw)
-        tkinter_obj.bind("<ButtonRelease-1>", self.force_redraw)
+        #tkinter_obj.bind("<Key>", self.force_redraw)
+        #tkinter_obj.bind("<ButtonRelease-1>", self.force_redraw)
+
+    def get_question_values(self):
+        question_values = OrderedDict()
+        for question in self.questions:
+            get_date_function = self.questions[question]
+            question_value = get_date_function(question)
+            question_values[question] = question_value
+        return question_values
 
     def force_redraw(self, event):
         # Request all form values, adjust the environment.
-        #question_values = get_question_values()
-        #self.draw_gui.adjust_env()
+        question_values = self.get_question_values()
+        self.draw_gui.adjust_env(question_values)
 
         # Remove all current widgets and redraw the gui.
-        #self.main.removeAllWidgets()
-        #self.draw_gui.redraw()
+        self.main.removeAllWidgets()
+        self.row = 0
+        self.questions = OrderedDict()
+        self.add_header()
+        self.draw_gui.redraw()
+        self.add_buttons()
         print "Oh, I'm so busy redrawing stuff!"
 
     def button_action(self, button_pressed):
@@ -113,7 +128,11 @@ class FormGUI(object):
             self.main.stop()
 
     def save_data(self):
-        # TODO: Output the data as JSON.
+        json_dict = OrderedDict()
         for identifier, get_value in self.questions.iteritems():
             value = get_value(identifier)
-            #print "{}: {}".format(identifier, value)
+            json_dict[identifier] = value
+
+        # TODO: Add flag were to save.
+        with open("./form_output.txt", "w+") as form_output:
+            json.dump(json_dict, form_output, indent=4)

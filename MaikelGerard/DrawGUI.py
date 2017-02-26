@@ -4,13 +4,15 @@ from AST import BoolTypeNode
 
 
 class DrawGUI(object):
-    def __init__(self, env, error_handler):
+    def __init__(self, ast, env, evaluator, error_handler):
         """
         :type env: Environment.Environment
         :type error_handler: ErrorHandler.ErrorHandler
         """
         self.env = env
+        self.ast = ast
         self.handler = error_handler
+        self.evaluator = evaluator
 
         # Create a GUI instance.
         self.gui = FormGUI(self)
@@ -23,13 +25,41 @@ class DrawGUI(object):
         self.env.context = "DrawGUI"
 
         # Draw all the questions in the environment.
-        for question in self.env.variables.values():
-            question["node"].accept(self)
+        self.ast.root.accept(self)
         self.gui.start()
 
         # Output errors afterwards.
         self.handler.print_errors()
         self.env.context = prev_context
+
+    def adjust_env(self, question_values):
+        for question in question_values:
+            question_node = self.env.variables[question]["node"]
+
+            new_value = question_values[question]
+            question_type = question_node.type
+            new_value = question_type.convert_to_type(new_value)
+            # Value is non default, update the environment.
+            if question_type.is_boolean() or new_value != question_type.default:
+                self.env.set_var_value(question, new_value)
+
+    def redraw(self):
+        self.evaluator.start_traversal()
+        self.ast.root.accept(self)
+
+    def if_node(self, if_node):
+        condition = if_node.expression.accept(self.evaluator)
+        condition = condition if condition != Undefined else False
+        if condition:
+            if_node.if_block.accept(self)
+
+    def if_else_node(self, if_else_node):
+        condition = if_else_node.expression.accept(self.evaluator)
+        condition = condition if condition != Undefined else False
+        if condition:
+            if_else_node.if_block.accept(self)
+        else:
+            if_else_node.else_block.accept(self)
 
     def get_question_val(self, identifier, question_node):
         var_value = self.env.get_var_value(identifier)
@@ -62,7 +92,8 @@ class DrawGUI(object):
         var_value = self.env.get_var_value(identifier)
 
         # Draw the value of the computed question within a label.
-        self.gui.add_computed_question(identifier, question_str, var_value)
+        if var_value != Undefined:
+            self.gui.add_computed_question(identifier, question_str, var_value)
 
     def bool_type_node(self, _):
         return self.gui.add_checkbox_question

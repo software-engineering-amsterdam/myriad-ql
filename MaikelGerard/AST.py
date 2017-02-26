@@ -377,6 +377,9 @@ class BoolTypeNode(TypeNode):
         super(BoolTypeNode, self).__init__("boolean", line, col)
         self.default = False
 
+    def convert_to_type(self, value):
+        return value
+
     def accept(self, visitor):
         return visitor.bool_type_node(self)
 
@@ -385,6 +388,9 @@ class IntTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
         super(IntTypeNode, self).__init__("integer", line, col)
         self.default = Decimal("0")
+
+    def convert_to_type(self, value):
+        return Decimal(value)
 
     def accept(self, visitor):
         return visitor.int_type_node(self)
@@ -395,6 +401,9 @@ class MoneyTypeNode(TypeNode):
         super(MoneyTypeNode, self).__init__("money", line, col)
         self.default = Decimal("0.00")
 
+    def convert_to_type(self, value):
+        return Decimal(value)
+
     def accept(self, visitor):
         return visitor.money_type_node(self)
 
@@ -404,6 +413,9 @@ class DecimalTypeNode(TypeNode):
         super(DecimalTypeNode, self).__init__("decimal", line, col)
         self.default = Decimal("0.00")
 
+    def convert_to_type(self, value):
+        return Decimal(value)
+
     def accept(self, visitor):
         return visitor.decimal_type_node(self)
 
@@ -412,6 +424,9 @@ class StringTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
         super(StringTypeNode, self).__init__("string", line, col)
         self.default = ""
+
+    def convert_to_type(self, value):
+        return value
 
     def accept(self, visitor):
         return visitor.string_type_node(self)
