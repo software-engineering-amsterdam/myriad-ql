@@ -1,9 +1,9 @@
-package semanticChecker.dependency.stateData.stateValues;
+package semanticChecker.formDataStorage.valueData.values;
 
 /**
  * Created by LGGX on 22-Feb-17.
  */
-public class BooleanValue extends StateValue {
+public class BooleanValue extends Value {
 
     private final Boolean value;
 
@@ -17,27 +17,27 @@ public class BooleanValue extends StateValue {
     }
 
     @Override
-    public StateValue eq(StateValue valueArgument) {
+    public Value eq(Value valueArgument) {
         return new BooleanValue(value == (Boolean) valueArgument.getValue());
     }
 
     @Override
-    public StateValue neq(StateValue valueArgument) {
+    public Value neq(Value valueArgument) {
         return new BooleanValue(value != (Boolean) valueArgument.getValue());
     }
 
     @Override
-    public StateValue and(StateValue valueArgument) {
+    public Value and(Value valueArgument) {
         return new BooleanValue(value && (Boolean) valueArgument.getValue());
     }
 
     @Override
-    public StateValue or(StateValue valueArgument) {
+    public Value or(Value valueArgument) {
         return new BooleanValue(value || (Boolean) valueArgument.getValue());
     }
 
     @Override
-    public StateValue negation() {
+    public Value negation() {
         return new BooleanValue(!value);
     }
 

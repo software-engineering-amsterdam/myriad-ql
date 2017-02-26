@@ -4,16 +4,16 @@
 
 package ASTnodes.expressions.unaries;
 
+import ASTnodes.LineNumber;
 import ASTnodes.types.BooleanType;
 import ASTnodes.types.Type;
 import ASTnodes.types.UndefinedType;
 import ASTnodes.visitors.ExpressionVisitor;
-import ASTnodes.CodeLocation;
 import ASTnodes.expressions.Expression;
 
 public class Negation extends Unary {
 
-    public Negation(Expression expression, CodeLocation location) {
+    public Negation(Expression expression, LineNumber location) {
         super(expression, location);
     }
 

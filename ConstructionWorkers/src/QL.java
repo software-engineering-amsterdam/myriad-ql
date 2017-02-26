@@ -2,9 +2,14 @@
  * QL.java.
  */
 
+import ASTnodes.ASTBuilder;
 import ASTnodes.Form;
+import GUI.GUI;
+import GUI.GUIComponents.FormFrame;
+import GUI.GUIComponents.GUIManager;
+import GUI.widgets.WidgetFactory;
 import semanticChecker.SemanticChecker;
-import semanticChecker.dependency.stateData.QuestionStateData;
+import semanticChecker.formDataStorage.valueData.ValueData;
 import semanticChecker.messageHandling.MessageData;
 import semanticChecker.messageHandling.MessageHandler;
 import semanticChecker.messageHandling.errors.ErrorHandler;
@@ -45,14 +50,18 @@ public class QL {
 
         InputStream qlInputStream = new FileInputStream(inputFile);
         Form qlAST = getAST(qlInputStream);
-        Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST);
+
+        ValueData questionStates =  new ValueData();
+
+        Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, questionStates);
 
         if(!semanticallyCorrect) {
             System.out.println("QL form is semantically incorrect.");
             System.exit(0);
         } else {
             System.out.println("Create GUI...");
-            System.exit(0);
+            buildGUI(qlAST, questionStates);
+            //System.exit(0);
         }
     }
 
@@ -71,8 +80,7 @@ public class QL {
         return qlAstBuilder.buildAST();
     }
 
-    private boolean checkSemanticCorrectness(Form qlAST) {
-        QuestionStateData questionStates =  new QuestionStateData();
+    private boolean checkSemanticCorrectness(Form qlAST, ValueData questionStates) {
         SemanticChecker semanticChecker = new SemanticChecker(qlAST, questionStates);
         MessageData messages = semanticChecker.getMessages();
 
@@ -94,5 +102,13 @@ public class QL {
         } else {
             return true;
         }
+    }
+
+    private void buildGUI(Form ast, ValueData valueData) {
+        GUI gui = new GUI (ast, new WidgetFactory(),
+                new GUIManager(new FormFrame(ast.getIdentifier().getName())),
+                valueData
+        );
+        gui.showUI();
     }
 }

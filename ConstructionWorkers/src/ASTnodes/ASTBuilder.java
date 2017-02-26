@@ -1,12 +1,10 @@
-/**
- * ASTBuilder.java.
+package ASTnodes; /**
+ * ASTnodes.ASTBuilder.java.
  */
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import ASTnodes.Form;
-import ASTnodes.Node;
 import antlr.QLLexer;
 import antlr.QLParser;
 import org.antlr.v4.runtime.ANTLRInputStream;

@@ -4,7 +4,7 @@
 
 package ASTnodes.statements;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 import ASTnodes.visitors.FormAndStatementVisitor;
 import ASTnodes.expressions.Expression;
@@ -14,7 +14,7 @@ public class ComputedQuestion extends SimpleQuestion {
 
     private final Expression expression;
 
-    public ComputedQuestion(Identifier identifier, String text, Type type, Expression expression, CodeLocation location) {
+    public ComputedQuestion(Identifier identifier, String text, Type type, Expression expression, LineNumber location) {
         super(identifier, text, type, location);
         this.expression = expression;
     }

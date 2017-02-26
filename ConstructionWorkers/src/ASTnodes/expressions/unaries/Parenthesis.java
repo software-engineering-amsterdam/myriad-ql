@@ -4,14 +4,14 @@
 
 package ASTnodes.expressions.unaries;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.Expression;
 import ASTnodes.types.*;
 import ASTnodes.visitors.ExpressionVisitor;
 
 public class Parenthesis extends Unary {
 
-    public Parenthesis(Expression expression, CodeLocation location) {
+    public Parenthesis(Expression expression, LineNumber location) {
         super(expression, location);
     }
 

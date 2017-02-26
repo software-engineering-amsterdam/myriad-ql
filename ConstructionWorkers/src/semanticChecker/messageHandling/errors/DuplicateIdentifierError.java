@@ -4,14 +4,14 @@
 
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 public class DuplicateIdentifierError extends ErrorHandler {
 
     private final Identifier identifier;
 
-    public DuplicateIdentifierError(CodeLocation location, Identifier identifier) {
+    public DuplicateIdentifierError(LineNumber location, Identifier identifier) {
         super(location);
         this.identifier = identifier;
     }

@@ -5,7 +5,7 @@
 package ASTnodes.expressions.literals;
 
 import ASTnodes.types.Type;
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.types.StringType;
 import ASTnodes.visitors.ExpressionVisitor;
 
@@ -14,7 +14,7 @@ public class MyString extends Literal {
     private final Type type;
     private final String value;
 
-    public MyString(String value, CodeLocation location) {
+    public MyString(String value, LineNumber location) {
         super(location);
         this.value = value;
         this.type = new StringType(location);

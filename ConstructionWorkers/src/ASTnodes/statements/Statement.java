@@ -4,13 +4,13 @@
 
 package ASTnodes.statements;
 
+import ASTnodes.LineNumber;
 import ASTnodes.Node;
-import ASTnodes.CodeLocation;
 import ASTnodes.visitors.FormAndStatementVisitor;
 
 public abstract class Statement extends Node {
 
-    public Statement(CodeLocation location) {
+    public Statement(LineNumber location) {
         super(location);
     }
 

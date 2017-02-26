@@ -4,9 +4,9 @@
 
 package ASTnodes.types;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.MoneyValue;
+import semanticChecker.formDataStorage.valueData.values.MoneyValue;
 
 import java.math.BigDecimal;
 
@@ -16,7 +16,7 @@ public class MoneyType extends Type {
         super();
     }
 
-    public MoneyType(CodeLocation location) {
+    public MoneyType(LineNumber location) {
         super(location);
     }
 

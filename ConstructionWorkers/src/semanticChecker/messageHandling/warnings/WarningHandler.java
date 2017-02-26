@@ -4,19 +4,19 @@
 
 package semanticChecker.messageHandling.warnings;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import semanticChecker.messageHandling.MessageHandler;
 
 public abstract class WarningHandler extends MessageHandler {
 
-    private final CodeLocation location;
+    private final LineNumber location;
 
-    public WarningHandler(CodeLocation location) {
+    public WarningHandler(LineNumber location) {
         this.location = location;
         this.type = "Warning";
     }
 
-    public CodeLocation getLocation() {
+    public LineNumber getLocation() {
         return location;
     }
 }

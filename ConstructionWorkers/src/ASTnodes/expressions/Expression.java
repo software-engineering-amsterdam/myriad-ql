@@ -4,13 +4,13 @@
 
 package ASTnodes.expressions;
 
+import ASTnodes.LineNumber;
 import ASTnodes.Node;
-import ASTnodes.CodeLocation;
 import ASTnodes.visitors.ExpressionVisitor;
 
 public abstract class Expression extends Node {
 
-    public Expression(CodeLocation location) {
+    public Expression(LineNumber location) {
         super(location);
     }
 

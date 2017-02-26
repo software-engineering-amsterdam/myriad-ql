@@ -5,12 +5,11 @@
 package ASTnodes.expressions.literals;
 
 import ASTnodes.expressions.Expression;
-import ASTnodes.types.Type;
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 
 public abstract class Literal extends Expression {
 
-    public Literal(CodeLocation location) {
+    public Literal(LineNumber location) {
         super(location);
     }
 }

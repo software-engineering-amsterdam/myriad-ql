@@ -4,7 +4,7 @@
  * TODO: check.
  */
 
-package semanticChecker.dependency;
+package semanticChecker;
 
 import java.util.*;
 

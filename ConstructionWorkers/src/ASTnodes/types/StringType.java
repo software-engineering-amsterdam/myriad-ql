@@ -4,9 +4,9 @@
 
 package ASTnodes.types;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.StringValue;
+import semanticChecker.formDataStorage.valueData.values.StringValue;
 
 public class StringType extends Type {
 
@@ -14,7 +14,7 @@ public class StringType extends Type {
         super();
     }
 
-    public StringType(CodeLocation location) {
+    public StringType(LineNumber location) {
         super(location);
     }
 

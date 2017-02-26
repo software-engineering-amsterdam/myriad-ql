@@ -5,9 +5,9 @@
 package ASTnodes.types;
 
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.BooleanValue;
+import semanticChecker.formDataStorage.valueData.values.BooleanValue;
 
 public class BooleanType extends Type {
 
@@ -15,7 +15,7 @@ public class BooleanType extends Type {
         super();
     }
 
-    public BooleanType(CodeLocation location) {
+    public BooleanType(LineNumber location) {
         super(location);
     }
 

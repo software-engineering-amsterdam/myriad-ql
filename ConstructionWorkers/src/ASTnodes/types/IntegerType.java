@@ -4,9 +4,9 @@
 
 package ASTnodes.types;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.IntegerValue;
+import semanticChecker.formDataStorage.valueData.values.IntegerValue;
 
 public class IntegerType extends Type {
 
@@ -14,7 +14,7 @@ public class IntegerType extends Type {
         super();
     }
 
-    public IntegerType(CodeLocation location) {
+    public IntegerType(LineNumber location) {
         super(location);
     }
 

@@ -1,6 +1,6 @@
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 /**
@@ -10,7 +10,7 @@ public class IfExpressionUndefinedError extends ErrorHandler {
 
     private final Identifier identifier;
 
-    public IfExpressionUndefinedError(CodeLocation location, Identifier identifier) {
+    public IfExpressionUndefinedError(LineNumber location, Identifier identifier) {
         super(location);
         this.identifier = identifier;
     }

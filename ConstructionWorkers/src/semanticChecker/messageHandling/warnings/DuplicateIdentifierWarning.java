@@ -4,14 +4,14 @@
 
 package semanticChecker.messageHandling.warnings;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 public class DuplicateIdentifierWarning extends WarningHandler {
 
     private final Identifier identifier;
 
-    public DuplicateIdentifierWarning(CodeLocation location, Identifier identifier) {
+    public DuplicateIdentifierWarning(LineNumber location, Identifier identifier) {
         super(location);
         this.identifier = identifier;
     }

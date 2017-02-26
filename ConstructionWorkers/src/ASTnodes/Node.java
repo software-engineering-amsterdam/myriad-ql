@@ -6,17 +6,17 @@ package ASTnodes;
 
 public abstract class Node {
 
-    private final CodeLocation location;
+    private final LineNumber location;
 
     public Node() {
         this.location = null;
     }
 
-    public Node(CodeLocation location) {
+    public Node(LineNumber location) {
         this.location = location;
     }
 
-    public CodeLocation getLocation() {
+    public LineNumber getLocation() {
         return location;
     }
 }

@@ -4,19 +4,19 @@
 
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import semanticChecker.messageHandling.MessageHandler;
 
 public abstract class ErrorHandler extends MessageHandler {
 
-    private final CodeLocation location;
+    private final LineNumber location;
 
-    public ErrorHandler(CodeLocation location) {
+    public ErrorHandler(LineNumber location) {
         this.location = location;
         this.type = "Error";
     }
 
-    public CodeLocation getLocation() {
+    public LineNumber getLocation() {
         return location;
     }
 }

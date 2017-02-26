@@ -1,14 +1,14 @@
 /**
- * CodeLocation.java.
+ * LineNumber.java.
  */
 
 package ASTnodes;
 
-public class CodeLocation {
+public class LineNumber {
 
     private final int startingLine;
 
-    public CodeLocation(int startingLine) {
+    public LineNumber(int startingLine) {
         this.startingLine = startingLine;
     }
 

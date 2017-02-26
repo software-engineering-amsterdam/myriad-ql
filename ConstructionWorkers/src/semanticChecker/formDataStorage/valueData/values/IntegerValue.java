@@ -1,11 +1,9 @@
-package semanticChecker.dependency.stateData.stateValues;
-
-import java.math.RoundingMode;
+package semanticChecker.formDataStorage.valueData.values;
 
 /**
  * Created by LGGX on 22-Feb-17.
  */
-public class IntegerValue extends StateValue {
+public class IntegerValue extends Value {
 
     private final Integer value;
 
@@ -19,62 +17,62 @@ public class IntegerValue extends StateValue {
     }
 
     @Override
-    public StateValue addition(StateValue valueArgument) {
+    public Value addition(Value valueArgument) {
         return new IntegerValue(value + (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue subtraction(StateValue valueArgument) {
+    public Value subtraction(Value valueArgument) {
         return new IntegerValue(value - (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue eq(StateValue valueArgument) {
+    public Value eq(Value valueArgument) {
         return new BooleanValue(value.equals((Integer) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue neq(StateValue valueArgument) {
+    public Value neq(Value valueArgument) {
         return new BooleanValue(value.equals((Integer) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue gt(StateValue valueArgument) {
+    public Value gt(Value valueArgument) {
         return new BooleanValue(value > (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue gteq(StateValue valueArgument) {
+    public Value gteq(Value valueArgument) {
         return new BooleanValue(value >= (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue lt(StateValue valueArgument) {
+    public Value lt(Value valueArgument) {
         return new BooleanValue(value < (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue lteq(StateValue valueArgument) {
+    public Value lteq(Value valueArgument) {
         return new BooleanValue(value <= (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue division(StateValue valueArgument) {
+    public Value division(Value valueArgument) {
         return new IntegerValue(value / (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue multiplication(StateValue valueArgument) {
+    public Value multiplication(Value valueArgument) {
         return new IntegerValue(value * (Integer) valueArgument.getValue());
     }
 
     @Override
-    public StateValue negative(StateValue valueArgument) {
-        return new IntegerValue(-((Integer) valueArgument.getValue()));
+    public Value negative() {
+        return new IntegerValue(-value);
     }
 
     @Override
-    public StateValue positive(StateValue valueArgument) {
-        return new IntegerValue(Math.abs(((Integer) valueArgument.getValue())));
+    public Value positive() {
+        return new IntegerValue(Math.abs(value));
     }
 }

@@ -4,7 +4,7 @@
 
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 public class CyclicDependencyError extends ErrorHandler {
@@ -12,7 +12,7 @@ public class CyclicDependencyError extends ErrorHandler {
     private final Identifier end;
     private final Identifier start;
 
-    public CyclicDependencyError(CodeLocation location, Identifier end, Identifier start) {
+    public CyclicDependencyError(LineNumber location, Identifier end, Identifier start) {
         super(location);
         this.end = end;
         this.start = start;

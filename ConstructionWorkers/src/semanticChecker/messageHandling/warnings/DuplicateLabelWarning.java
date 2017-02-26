@@ -4,7 +4,7 @@
 
 package semanticChecker.messageHandling.warnings;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 public class DuplicateLabelWarning extends WarningHandler {
@@ -12,7 +12,7 @@ public class DuplicateLabelWarning extends WarningHandler {
     private final Identifier identifier;
     private final String label;
 
-    public DuplicateLabelWarning(CodeLocation location, Identifier identifier, String label) {
+    public DuplicateLabelWarning(LineNumber location, Identifier identifier, String label) {
         super(location);
         this.identifier = identifier;
         this.label = label;

@@ -4,7 +4,7 @@
 
 package ASTnodes.expressions.unaries;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.Expression;
 import ASTnodes.types.IntegerType;
 import ASTnodes.types.MoneyType;
@@ -15,7 +15,7 @@ public abstract class Unary extends Expression {
 
     private final Expression expression;
 
-    public Unary(Expression expression, CodeLocation location) {
+    public Unary(Expression expression, LineNumber location) {
         super(location);
         this.expression = expression;
     }

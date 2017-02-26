@@ -1,9 +1,9 @@
-package semanticChecker.dependency.stateData.stateValues;
+package semanticChecker.formDataStorage.valueData.values;
 
 /**
  * Created by LGGX on 22-Feb-17.
  */
-public class StringValue extends StateValue{
+public class StringValue extends Value {
 
     private final String value;
 
@@ -17,32 +17,32 @@ public class StringValue extends StateValue{
     }
 
     @Override
-    public StateValue eq(StateValue valueArgument) {
+    public Value eq(Value valueArgument) {
         return new BooleanValue(value.equals((String) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue neq(StateValue valueArgument) {
+    public Value neq(Value valueArgument) {
         return new BooleanValue(!value.equals((String) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue gt(StateValue valueArgument) {
+    public Value gt(Value valueArgument) {
         return new BooleanValue(value.length() > ((String) valueArgument.getValue()).length());
     }
 
     @Override
-    public StateValue gteq(StateValue valueArgument) {
+    public Value gteq(Value valueArgument) {
         return new BooleanValue(value.length() >= ((String) valueArgument.getValue()).length());
     }
 
     @Override
-    public StateValue lt(StateValue valueArgument) {
+    public Value lt(Value valueArgument) {
         return new BooleanValue(value.length() < ((String) valueArgument.getValue()).length());
     }
 
     @Override
-    public StateValue lteq(StateValue valueArgument) {
+    public Value lteq(Value valueArgument) {
         return new BooleanValue(value.length() <= ((String) valueArgument.getValue()).length());
     }
 }

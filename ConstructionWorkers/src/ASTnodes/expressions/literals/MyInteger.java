@@ -5,7 +5,7 @@
 package ASTnodes.expressions.literals;
 
 import ASTnodes.types.Type;
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.types.IntegerType;
 import ASTnodes.visitors.ExpressionVisitor;
 
@@ -14,7 +14,7 @@ public class MyInteger extends Literal {
     private final Type type;
     private final Integer value;
 
-    public MyInteger(Integer value, CodeLocation location) {
+    public MyInteger(Integer value, LineNumber location) {
         super(location);
         this.value = value;
         this.type = new IntegerType(location);

@@ -5,7 +5,7 @@
 package ASTnodes.types;
 
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.UndefinedValue;
+import semanticChecker.formDataStorage.valueData.values.UndefinedValue;
 
 public class UndefinedType extends Type {
 

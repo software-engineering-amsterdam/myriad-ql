@@ -1,4 +1,4 @@
-package semanticChecker.dependency.stateData.stateValues;
+package semanticChecker.formDataStorage.valueData.values;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Created by LGGX on 22-Feb-17.
  */
-public class MoneyValue extends StateValue {
+public class MoneyValue extends Value {
 
     private final BigDecimal value;
 
@@ -20,62 +20,62 @@ public class MoneyValue extends StateValue {
     }
 
     @Override
-    public StateValue addition(StateValue valueArgument) {
+    public Value addition(Value valueArgument) {
         return new MoneyValue(value.add((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue subtraction(StateValue valueArgument) {
+    public Value subtraction(Value valueArgument) {
         return new MoneyValue(value.subtract((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue eq(StateValue valueArgument) {
+    public Value eq(Value valueArgument) {
         return new BooleanValue(value.equals((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue neq(StateValue valueArgument) {
+    public Value neq(Value valueArgument) {
         return new BooleanValue(!value.equals((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue gt(StateValue valueArgument) {
+    public Value gt(Value valueArgument) {
         return new BooleanValue(value.compareTo((BigDecimal) valueArgument.getValue()) > 0);
     }
 
     @Override
-    public StateValue gteq(StateValue valueArgument) {
+    public Value gteq(Value valueArgument) {
         return new BooleanValue(value.compareTo((BigDecimal) valueArgument.getValue()) >= 0);
     }
 
     @Override
-    public StateValue lt(StateValue valueArgument) {
+    public Value lt(Value valueArgument) {
         return new BooleanValue(value.compareTo((BigDecimal) valueArgument.getValue()) < 0);
     }
 
     @Override
-    public StateValue lteq(StateValue valueArgument) {
+    public Value lteq(Value valueArgument) {
         return new BooleanValue(value.compareTo((BigDecimal) valueArgument.getValue()) <= 0);
     }
 
     @Override
-    public StateValue division(StateValue valueArgument) {
+    public Value division(Value valueArgument) {
         return new MoneyValue(value.divide((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue multiplication(StateValue valueArgument) {
+    public Value multiplication(Value valueArgument) {
         return new MoneyValue(value.multiply((BigDecimal) valueArgument.getValue()));
     }
 
     @Override
-    public StateValue negative(StateValue valueArgument) {
-        return new MoneyValue(((BigDecimal) valueArgument.getValue()).negate());
+    public Value negative() {
+        return new MoneyValue(value.negate());
     }
 
     @Override
-    public StateValue positive(StateValue valueArgument) {
-        return new MoneyValue(((BigDecimal) valueArgument.getValue()).abs());
+    public Value positive() {
+        return new MoneyValue(value.abs());
     }
 }

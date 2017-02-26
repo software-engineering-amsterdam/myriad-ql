@@ -24,8 +24,7 @@ import ASTnodes.statements.Statement;
 import ASTnodes.types.Type;
 import ASTnodes.visitors.ExpressionVisitor;
 import ASTnodes.visitors.FormAndStatementVisitor;
-import semanticChecker.dependency.stateData.QuestionState;
-import semanticChecker.dependency.stateData.QuestionStateData;
+import semanticChecker.formDataStorage.valueData.ValueData;
 import semanticChecker.messageHandling.MessageData;
 import semanticChecker.messageHandling.errors.DuplicateIdentifierError;
 import semanticChecker.messageHandling.errors.IfExpressionUndefinedError;
@@ -42,10 +41,10 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
     private Set<String> questionLabels;
-    private QuestionStateData questionStates;
+    private ValueData questionStates;
 
     public IdentifierChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages,
-                             QuestionStateData questionStates) {
+                             ValueData questionStates) {
 
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
@@ -77,7 +76,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(SimpleQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addState(statement.getIdentifier(), new QuestionState(statement.getType().getDefaultState()));
+            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultState());
         }
 
         if (!duplicateQuestionLabels(statement)) {
@@ -90,7 +89,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(ComputedQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addState(statement.getIdentifier(), new QuestionState(statement.getType().getDefaultState()));
+            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultState());
         }
 
         if (!duplicateQuestionLabels(statement)) {

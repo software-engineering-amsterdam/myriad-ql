@@ -4,7 +4,7 @@
 
 package ASTnodes.statements;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 import ASTnodes.visitors.FormAndStatementVisitor;
 
@@ -16,7 +16,7 @@ public class SimpleQuestion extends Statement {
     private final String text;
     private final Type type;
 
-    public SimpleQuestion(Identifier identifier, String text, Type type, CodeLocation location) {
+    public SimpleQuestion(Identifier identifier, String text, Type type, LineNumber location) {
         super(location);
         this.identifier = identifier;
         this.text = text;

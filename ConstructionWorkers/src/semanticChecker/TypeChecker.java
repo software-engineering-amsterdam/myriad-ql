@@ -14,7 +14,6 @@ import ASTnodes.statements.*;
 import ASTnodes.types.*;
 import ASTnodes.visitors.ExpressionVisitor;
 import ASTnodes.visitors.FormAndStatementVisitor;
-import semanticChecker.dependency.DependencyData;
 import semanticChecker.messageHandling.MessageData;
 import semanticChecker.messageHandling.errors.CyclicDependencyError;
 import semanticChecker.messageHandling.errors.InvalidTypeError;
@@ -162,15 +161,25 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     @Override
     public Void visit(ComputedQuestion statement) {
         // TODO: check this.
+
         tempIdentifierLiteral = statement.getIdentifier();
 
         Type expressionType = statement.getExpression().accept(this);
 
         tempIdentifierLiteral = null;
 
-        if (!expressionType.getClass().equals(statement.getType().getClass())) {
+
+
+        if(expressionType == null) {
+
             messages.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
+
+        } else {
+            if (!expressionType.getClass().equals(statement.getType().getClass())) {
+                messages.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
+            }
         }
+
         return null;
     }
 
@@ -218,7 +227,17 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         }
 
         if (tempIdentifierLiteral != null) {
-            this.checkCyclicDependency(identifier);
+
+            if (tempIdentifierLiteral.getName().equals(identifier.getName())) {
+
+                messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLocation(),
+                        tempIdentifierLiteral, identifier));
+
+            } else {
+
+                this.checkCyclicDependency(identifier);
+
+            }
         }
 
         return identifierToTypeMap.get(identifier.getName());

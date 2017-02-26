@@ -4,7 +4,7 @@
 
 package ASTnodes.statements;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.types.BooleanType;
 import ASTnodes.types.Type;
 import ASTnodes.types.UndefinedType;
@@ -18,7 +18,7 @@ public class IfStatement extends Statement {
     private final Expression expression;
     private final List<Statement> statements;
 
-    public IfStatement(Expression expression, List<Statement> statements, CodeLocation location) {
+    public IfStatement(Expression expression, List<Statement> statements, LineNumber location) {
         super(location);
         this.expression = expression;
         this.statements = statements;

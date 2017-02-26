@@ -5,10 +5,9 @@
 package ASTnodes.types;
 
 import ASTnodes.Node;
-import ASTnodes.CodeLocation;
-import ASTnodes.visitors.FormAndStatementVisitor;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.TypeVisitor;
-import semanticChecker.dependency.stateData.stateValues.StateValue;
+import semanticChecker.formDataStorage.valueData.values.Value;
 
 public abstract class Type extends Node {
 
@@ -16,11 +15,11 @@ public abstract class Type extends Node {
         super();
     }
 
-    public Type(CodeLocation location) {
+    public Type(LineNumber location) {
         super(location);
     }
 
-    public abstract StateValue getDefaultState();
+    public abstract Value getDefaultState();
 
     public String toString() {
         return "Type";

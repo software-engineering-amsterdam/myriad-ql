@@ -4,14 +4,14 @@
 
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.types.Type;
 
 public class InvalidTypeError extends ErrorHandler {
 
     private final Type validType;
 
-    public InvalidTypeError(CodeLocation location, Type validType) {
+    public InvalidTypeError(LineNumber location, Type validType) {
         super(location);
         this.validType = validType;
     }

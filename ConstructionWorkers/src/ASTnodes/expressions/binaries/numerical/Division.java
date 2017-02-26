@@ -4,13 +4,13 @@
 
 package ASTnodes.expressions.binaries.numerical;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.Expression;
 import ASTnodes.visitors.ExpressionVisitor;
 
 public class Division extends Numerical {
 
-    public Division(Expression left, Expression right, CodeLocation location) {
+    public Division(Expression left, Expression right, LineNumber location) {
         super(left, right, location);
     }
 

@@ -4,14 +4,14 @@
 
 package semanticChecker.messageHandling.errors;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.expressions.literals.Identifier;
 
 public class UndefinedQuestionError extends ErrorHandler {
 
     private final Identifier identifier;
 
-    public UndefinedQuestionError(CodeLocation location, Identifier identifier) {
+    public UndefinedQuestionError(LineNumber location, Identifier identifier) {
         super(location);
         this.identifier = identifier;
     }

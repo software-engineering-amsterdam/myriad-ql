@@ -4,14 +4,14 @@
 
 package ASTnodes.expressions.literals;
 
-import ASTnodes.CodeLocation;
+import ASTnodes.LineNumber;
 import ASTnodes.visitors.ExpressionVisitor;
 
 public class Identifier extends Literal {
 
     private final String value;
 
-    public Identifier(String value, CodeLocation location) {
+    public Identifier(String value, LineNumber location) {
         super(location);
         this.value = value;
     }
