@@ -18,8 +18,6 @@ namespace Questionnaires.QuestionaireBuilder
         private VariableStore.VariableStore VariableStore;
         private Renderer.Renderer Renderer;
         private RuleContainer.RuleContainer RuleContainer;
-        private List<Func<bool>> QuestionRules; // I don't really likes this
-        private List<Func<IValue>> QuestionResult;
 
         public QuestionnaireBuilder(VariableStore.VariableStore variableStore, Renderer.Renderer renderer, RuleContainer.RuleContainer ruleContainer)
         {
@@ -30,92 +28,62 @@ namespace Questionnaires.QuestionaireBuilder
 
         public Func<IValue> Visit(QLComputedQuestion node)
         {
-            // Add it as a question
-            Visit(node.Question);
-            QuestionRules = new List<Func<bool>>();
-            QuestionResult = new List<Func<IValue>>();
-            Visit((dynamic)node.Expression);
+            Func<IValue> questionFunction = Visit(node.Question);
+            Func<IValue> expressionFunction = Visit((dynamic)node.Expression);
 
-            // Now we add a rule for the visibility and the value
-            var rule = new Rule.Rule(
-                (VariableStore.IVariableStore variableStore, Renderer.Renderer renderer) =>
-                {
-                    // We display a computed question if all of the identifiers in the expression hold a value
-                    var computedRules = QuestionRules;
-
-                    bool visibility = true;
-                    foreach (var computedRule in computedRules)
-                    {
-                        if (!computedRule.Invoke())
-                        {
-                            visibility = false;
-                        }
-                    }
-                    renderer.SetVisibility(
-                        node.Question.Identifier,
-                        visibility ? Question.Visibility.Visible : Question.Visibility.Hidden
-                    );
-                    if (!visibility)
-                    {
-                        // if not visible remove from store so we don't get destroyed by conditionals
-                        try
-                        {
-                            VariableStore.RemoveValue(node.Question.Identifier);
-                        }
-                        catch (Exception)
-                        { }
-                        // return;
-                    }
-                    else
-                    {
-                        // Now we set the value based on the computation
-                        switch (node.Question.Type)
-                        {
-                            case QLType.Bool:
-                                VariableStore.SetValue(node.Question.Identifier, QuestionResult[0].Invoke().AsBool());
-                                Renderer.SetValue(node.Question.Identifier, QuestionResult[0].Invoke());
-                                break;
-                            case QLType.Money:
-                                break;
-                            case QLType.Number:
-                                break;
-                            case QLType.String:
-                                break;
-                            default://\todo: What do we do here...
-                                throw new Exception("fk");
-                        }
-                    }
-                }
-            );
-            RuleContainer.AddRule(rule);
-            return null;
+            switch (node.Question.Type)
+            {
+                case QLType.Bool:
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsBool());
+                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    break;
+                case QLType.Money:
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsDecimal());
+                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    break;
+                case QLType.Number:
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsInt());
+                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    break;
+                case QLType.String:
+                    VariableStore.SetValue(node.Question.Identifier, expressionFunction().AsString());
+                    Renderer.SetValue(node.Question.Identifier, expressionFunction());
+                    break;
+                default://\todo: What do we do here...
+                    throw new Exception("fk");
+            }
+            
+            return questionFunction;
         }
-
-        public Func<IValue> Visit(QLBinaryOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLComparisonOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLLogicalOperation node)
-        {
-            var lhsFunc = Visit((dynamic)node.Lhs);
-            var rhsFunc = Visit((dynamic)node.Rhs);
-            return (() => { return new BoolValue(lhsFunc().asBool() && rhsFunc().asBool()); });
-        }
-
+        
         public Func<IValue> Visit(QLPositiveOperation node)
         {
-            throw new NotImplementedException();
+            return Visit((dynamic)node.Operand);
+        }
+
+        public Func<IValue> Visit(QLNegativeOperation node)
+        {
+            var lhsFunc = Visit((dynamic)node.Operand);
+            return () =>
+            {
+                try
+                {
+                    return new IntValue(-lhsFunc().AsInt());
+                }
+                catch (NotSupportedException)
+                {
+                    return new DecimalValue(-lhsFunc().AsDecimal());
+                }
+            };
         }
 
         public Func<IValue> Visit(QLBangOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Operand);
+            return () => 
+            {
+                return new BoolValue(!lhsFunc().AsBool());
+            };
         }
 
         public Func<IValue> Visit(QLMoney node)
@@ -142,32 +110,7 @@ namespace Questionnaires.QuestionaireBuilder
         {
             return () => { return new BoolValue(node.Value); };
         }
-
-        public Func<IValue> Visit(QLNegativeOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLUnaryOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLEqualityOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLArithmeticOperation node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Func<IValue> Visit(QLConditional node)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public Func<IValue> Visit(QLQuestion node)
         {
             // Renderer needs an IQuestion so we build that
@@ -196,7 +139,7 @@ namespace Questionnaires.QuestionaireBuilder
             }
 
             Renderer.AddQuestion(question);
-            return null;
+            return () => { return new StringValue(node.Identifier); };
         }
 
         public Func<IValue> Visit(QLForm node)
@@ -214,57 +157,165 @@ namespace Questionnaires.QuestionaireBuilder
 
         public Func<IValue> Visit(QLAndOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return new BoolValue(lhsFunc().AsBool() && rhsFunc().AsBool());
+            };
         }
 
         public Func<IValue> Visit(QLOrOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return new BoolValue(lhsFunc().AsBool() || rhsFunc().AsBool());
+            };
         }
 
         public Func<IValue> Visit(QLAdditionOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().Add((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLSubtractionOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().Subtract((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLDivisionOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().Divide((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLMultiplyOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().Multiply((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLGreaterThanOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().GreaterThan((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLGreaterThanOrEqualOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().GreaterThanOrEqual((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLLessThanOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().LessThan((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLLessThanOrEqualOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().LessThanOrEqual((dynamic)rhsFunc());
+            };
         }
 
         public Func<IValue> Visit(QLInequalOperation node)
         {
-            throw new NotImplementedException();
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().InequalTo((dynamic)rhsFunc());
+            };
+        }
+
+        public Func<IValue> Visit(QLConditional node)
+        {
+            Func<IValue> conditionFunction = Visit((dynamic)node.Condition);
+            
+            foreach (var thenStatement in node.ThenStatements)
+            {
+                Func<IValue> thenFunction = Visit((dynamic)thenStatement);
+                RuleContainer.AddRule(
+                    new Rule.Rule((variableStore, renderer) =>
+                    {
+                        if (conditionFunction().AsBool())
+                        {
+                            renderer.SetVisibility(thenFunction().AsString(), Question.Visibility.Visible);
+                        }
+                        else
+                        {
+                            renderer.SetVisibility(thenFunction().AsString(), Question.Visibility.Hidden);
+                        }
+                    })
+                );
+            }
+
+            foreach (var elseStatement in node.ElseStatements)
+            {
+                Func<IValue> elseFunction = Visit((dynamic)elseStatement);
+                RuleContainer.AddRule(
+                    new Rule.Rule((variableStore, renderer) =>
+                    {
+                        if (!conditionFunction().AsBool())
+                        {
+                            renderer.SetVisibility(elseFunction().AsString(), Question.Visibility.Visible);
+                        }
+                        else
+                        {
+                            renderer.SetVisibility(elseFunction().AsString(), Question.Visibility.Hidden);
+                        }
+                    })
+                );
+            }
+
+            return null;
+        }
+
+        public Func<IValue> Visit(QLEqualOperation node)
+        {
+            var lhsFunc = Visit((dynamic)node.Lhs);
+            var rhsFunc = Visit((dynamic)node.Rhs);
+            return () =>
+            {
+                return lhsFunc().EqualTo((dynamic)rhsFunc());
+            };
         }
     }
 }

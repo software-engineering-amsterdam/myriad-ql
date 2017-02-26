@@ -17,5 +17,25 @@ namespace Questionnaires.Value
         {
             return this.Val;
         }
+
+        public IValue And(BoolValue value)
+        {
+            return new BoolValue(this.Val && value.AsBool());
+        }
+
+        public IValue Or(BoolValue value)
+        {
+            return new BoolValue(this.Val || value.AsBool());
+        }
+
+        public IValue EqualTo(BoolValue value)
+        {
+            return new BoolValue(this.Val == value.AsBool());
+        }
+
+        public IValue InequalTo(BoolValue value)
+        {
+            return new BoolValue(this.Val != value.AsBool());
+        }
     }
 }

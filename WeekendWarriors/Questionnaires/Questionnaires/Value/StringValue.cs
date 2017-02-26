@@ -17,5 +17,15 @@ namespace Questionnaires.Value
         {
             return this.Val;
         }
+        
+        public IValue EqualTo(StringValue value)
+        {
+            return new BoolValue(this.Val == value.AsString());
+        }
+
+        public IValue InequalTo(StringValue value)
+        {
+            return new BoolValue(this.Val != value.AsString());
+        }
     }
 }

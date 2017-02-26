@@ -24,7 +24,7 @@ namespace Questionnaires.AST.Visitor
         ReturnType Visit(QLGreaterThanOrEqualOperation node);
         ReturnType Visit(QLLessThanOperation node);
         ReturnType Visit(QLLessThanOrEqualOperation node);
-        ReturnType Visit(QLEqualityOperation node);
+        ReturnType Visit(QLEqualOperation node);
         ReturnType Visit(QLInequalOperation node);        
         ReturnType Visit(QLPositiveOperation node);
         ReturnType Visit(QLNegativeOperation node);
@@ -56,7 +56,7 @@ namespace Questionnaires.AST.Visitor
         void Visit(QLGreaterThanOrEqualOperation node);
         void Visit(QLLessThanOperation node);
         void Visit(QLLessThanOrEqualOperation node);
-        void Visit(QLEqualityOperation node);
+        void Visit(QLEqualOperation node);
         void Visit(QLInequalOperation node);
         void Visit(QLPositiveOperation node);
         void Visit(QLNegativeOperation node);

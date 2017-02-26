@@ -91,7 +91,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLEqualityOperation node)
+        public QLType? Visit(QLEqualOperation node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }

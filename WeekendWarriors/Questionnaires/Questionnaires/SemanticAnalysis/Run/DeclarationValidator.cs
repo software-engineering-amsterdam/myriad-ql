@@ -60,7 +60,7 @@ namespace Questionnaires.SemanticAnalysis.Run
                 result.AddEvent(new SemanticAnalysis.SemenaticAnalysisEvents.SemanticAnalysisError(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
 
-        // TODO: this is ugly. Look into creating a base class for the visitor from which we can override only the mehtods of interes.
+        // TODO: this is ugly. Look into creating a base class for the visitor from which we can override only the methods of interest.
         public void Visit(QLOrOperation node)
         {
             
@@ -91,7 +91,7 @@ namespace Questionnaires.SemanticAnalysis.Run
            
         }
 
-        public void Visit(QLEqualityOperation node)
+        public void Visit(QLEqualOperation node)
         {
             
         }
