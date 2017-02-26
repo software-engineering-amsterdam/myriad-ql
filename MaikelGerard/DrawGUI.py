@@ -39,9 +39,11 @@ class DrawGUI(object):
             new_value = question_values[question]
             question_type = question_node.type
             new_value = question_type.convert_to_type(new_value)
+
             # Value is non default, update the environment.
-            if question_type.is_boolean() or new_value != question_type.default:
+            if question_node.is_defined or new_value != question_type.default:
                 self.env.set_var_value(question, new_value)
+                question_node.is_defined = True
 
     def redraw(self):
         self.evaluator.start_traversal()
@@ -69,6 +71,7 @@ class DrawGUI(object):
         # Value is undefined, we evaluate the boolean question to False as it is not logical to
         # expect a user to check a checkbox to un-check to get a defined checkbox value.
         if question_node.type == BoolTypeNode:
+            question_node.is_defined = True
             return False
         return question_node.type.default
 

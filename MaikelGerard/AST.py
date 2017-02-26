@@ -83,6 +83,7 @@ class QuestionNode(Node):
         self.question = question
         self.name = name
         self.type = var_type
+        self.is_defined = False
 
     def accept(self, visitor):
         visitor.question_node(self)
