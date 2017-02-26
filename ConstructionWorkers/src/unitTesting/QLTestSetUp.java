@@ -21,7 +21,7 @@ public abstract class QLTestSetUp {
     protected String inputFile;
     protected String fileName;
 
-    private final String path = "./unitTesting/QLTestForms/";
+    private final String path = "src/unitTesting/QLTestForms/";
 
     @Before
     public void setUp() throws IOException {

@@ -18,13 +18,23 @@ public class SemanticChecker {
 
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
+    private IdentifierChecker identifierChecker;
+    private TypeChecker typeChecker;
 
     public SemanticChecker(Form ast, ValueData questionStates) {
         identifierToTypeMap = new HashMap<>();
         messages = new MessageData();
         // TODO: refactor?
-        new IdentifierChecker(ast, identifierToTypeMap, messages, questionStates);
-        new TypeChecker(ast, identifierToTypeMap, messages);
+        identifierChecker = new IdentifierChecker(ast, identifierToTypeMap, messages, questionStates);
+        typeChecker = new TypeChecker(ast, identifierToTypeMap, messages);
+    }
+
+    public IdentifierChecker getIDCheck() {
+        return identifierChecker;
+    }
+
+    public TypeChecker getTypeCheck() {
+        return typeChecker;
     }
 
     public MessageData getMessages() {

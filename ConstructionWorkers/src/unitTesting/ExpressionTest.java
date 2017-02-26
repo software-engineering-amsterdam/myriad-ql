@@ -34,9 +34,8 @@ public class ExpressionTest extends QLTestSetUp {
     @Test
     public void testInteger() {
         MyInteger integerLiteral = testInteger;
-        // Implement
-        // Type type = .visit(integerLiteral);
-        //Assert.assertEquals(type, new IntegerType());
+        Type type = semanticChecker.getTypeCheck().visit(integerLiteral);
+        Assert.assertEquals(type.getClass(), new IntegerType().getClass());
     }
 
 

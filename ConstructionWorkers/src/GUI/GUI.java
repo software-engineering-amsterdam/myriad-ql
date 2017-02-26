@@ -32,12 +32,7 @@ public class GUI implements GUIInterface{
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
 
-    public GUI(
-            Form form,
-            WidgetFactory widgetFactory,
-            GUIManager manager,
-            ValueData valueData)
-    {
+    public GUI(Form form, WidgetFactory widgetFactory, GUIManager manager, ValueData valueData) {
         this.valueData = valueData;
         this.evaluator = new QuestionEvaluator(valueData);
 
