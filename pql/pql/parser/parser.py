@@ -116,7 +116,7 @@ def parse(input_string):
     if_stmt.setParseAction(ast.Conditional)
 
     statement = field_expr | if_stmt
-    statement_list <<= l_curly + ZeroOrMore(statement) + r_curly
+    statement_list <<= l_curly + OneOrMore(statement) + r_curly
     statement_list.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     statement_list.setResultsName('statement_list')
 
