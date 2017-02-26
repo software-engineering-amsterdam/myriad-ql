@@ -66,6 +66,7 @@
     <Compile Include="AST\Operators\QLBangOperation.cs" />
     <Compile Include="AST\Operators\QLNegativeOperation.cs" />
     <Compile Include="AST\Operators\QLPositiveOperation.cs" />
+    <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Question\Question.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="Renderer\Widgets\MoneyQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
+    <Compile Include="RuleContainer\IRuleContainer.cs" />
+    <Compile Include="RuleContainer\RuleContainer.cs" />
+    <Compile Include="Rule\IRule.cs" />
+    <Compile Include="Rule\Rule.cs" />
     <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
     <Compile Include="SemanticAnalysis\Run\ISemanticAnalyzerRun.cs" />
     <Compile Include="SemanticAnalysis\Run\IResult.cs" />
@@ -163,11 +168,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="QuestionaireBuilder\" />
-    <Folder Include="RuleContainer\" />
-    <Folder Include="Rule\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\Grammar\QL.g4" -o "$(ProjectDir)\Generated"</PreBuildEvent>

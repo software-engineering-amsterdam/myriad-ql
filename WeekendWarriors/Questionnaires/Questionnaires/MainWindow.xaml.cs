@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Questionnaires.Value;
+using Questionnaires.QuestionaireBuilder;
+using System.Threading;
 
 namespace Questionnaires
 {
@@ -38,47 +40,15 @@ namespace Questionnaires
             foreach (var analysisEvent in analysisResult.Events)
                 Output.Text += analysisEvent.ToString() + '\n';
 
-            // Example renderer functionality
-            Renderer.Renderer renderer = new Renderer.Renderer();
+            // Testing from here
+            var variableStore = new VariableStore.VariableStore();
+            var renderer = new Renderer.Renderer();
+            var ruleContainer = new RuleContainer.RuleContainer();
 
-            var q1 = new Question.Question();
-            q1.Body = "Do you like apples?";
-            q1.Name = "Apple question";
-            q1.Type = QuestionType.Bool;
-            q1.Value = new BoolValue(true);
-            q1.Visibility = Question.Visibility.Visible;
-
-            var q2 = new Question.Question();
-            q2.Body = "Favorite number?";
-            q2.Name = "Number question";
-            q2.Type = QuestionType.Number;
-            q2.Value = new IntValue(230);
-            q2.Visibility = Question.Visibility.Visible;
-
-            var q3 = new Question.Question();
-            q3.Body = "Favorite decimal?";
-            q3.Name = "Decimal question";
-            q3.Type = QuestionType.Money;
-            q3.Value = new DecimalValue(210.12m);
-            q3.Visibility = Question.Visibility.Visible;
-
-            var q4 = new Question.Question();
-            q4.Body = "Favorite string?";
-            q4.Name = "String question";
-            q4.Type = QuestionType.String;
-            q4.Value = new StringValue("This is text");
-            q4.Visibility = Question.Visibility.Visible;
-
-            renderer.AddQuestion(q1);
-            renderer.AddQuestion(q2);
-            renderer.AddQuestion(q3);
-            renderer.AddQuestion(q4);
-
-            //renderer.SetVisibility("Number question", Question.Visibility.Hidden);
-            //renderer.SetValue("Apple question", new BoolValue(false));            
-
-            //renderer.AddQuestion(new Question.IQuestion) ?
-            // we may need a visitor here to visit the form again and provide the renderer with questions.
+            var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer);
+            questionBuilder.Visit((QLForm)form); // Can casting to form here cause problems?
+            
+            ruleContainer.ApplyRules(variableStore, renderer);
         }
     }
 }

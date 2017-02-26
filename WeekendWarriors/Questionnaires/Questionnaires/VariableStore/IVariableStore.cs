@@ -11,5 +11,8 @@ namespace Questionnaires.VariableStore
         void SetValue(string name, int value);
         void SetValue(string name, bool value);
         void SetValue(string name, decimal value);
+        void SetValue(string name, string value);
+
+        void RemoveValue(string name);
     };
 }

@@ -13,17 +13,19 @@ namespace Questionnaires.Renderer
 {
     class Renderer
     {
+        private Window QuestionnaireWindow = new Window();
         private StackPanel QuestionnaireStack = new StackPanel();
         private Dictionary<string, IQuestionWidget> Questions = new Dictionary<string, IQuestionWidget>();
+        private VariableStore.VariableStore VariableStore;
 
-        public Renderer()
+        public Renderer(VariableStore.VariableStore variableStore)
         {
-            var questionnaireWindow = new Window();
+            VariableStore = variableStore;
 
             QuestionnaireStack.Orientation = Orientation.Vertical;
-            questionnaireWindow.Content = QuestionnaireStack;
+            QuestionnaireWindow.Content = QuestionnaireStack;
 
-            questionnaireWindow.Show();
+            QuestionnaireWindow.Show();
         }
 
         public void AddQuestion(IQuestion question)
@@ -33,12 +35,11 @@ namespace Questionnaires.Renderer
 
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
 
-            switch (question.Type)
+            switch (question.Type) //\todo: Massive code smell
             {
                 case QuestionType.Bool:
                     questionWidget = new BooleanQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
-                    questionWidget.SetQuestionValue(question.Value);
                     questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
@@ -47,7 +48,6 @@ namespace Questionnaires.Renderer
                 case QuestionType.Money:
                     questionWidget = new MoneyQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
-                    questionWidget.SetQuestionValue(question.Value);
                     questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
@@ -56,7 +56,6 @@ namespace Questionnaires.Renderer
                 case QuestionType.Number:
                     questionWidget = new NumberQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
-                    questionWidget.SetQuestionValue(question.Value);
                     questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
@@ -65,7 +64,6 @@ namespace Questionnaires.Renderer
                 case QuestionType.String:
                     questionWidget = new StringQuestionWidget(question.Name);
                     questionWidget.SetLabel(question.Body);
-                    questionWidget.SetQuestionValue(question.Value);
                     questionWidget.SetOnInputChanged(inputChangedDelegate);
 
                     Questions.Add(question.Name, questionWidget);
@@ -86,10 +84,15 @@ namespace Questionnaires.Renderer
             Questions[name].SetVisibility(visibility);
         }
 
+        public void SetWindowTitle(string title)
+        {
+            QuestionnaireWindow.Title = title;
+        }
+
         public delegate void InputChangedCallback(string name, IValue value);
         public void InputChanged(string name, IValue value)
         {
-            var x = 10;
+            VariableStore.SetValue(name, value.AsBool());
         }
          
     }
