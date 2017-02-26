@@ -6,86 +6,29 @@ import json
 
 
 class FormGUI(object):
-    def __init__(self, draw_gui):
+    def __init__(self, built_gui):
         # Random comment; the 'cget' function can be used to retrieve
         # properties of the Tkinter object reference.
         self.main = gui("QL Language Form - © 2017")
         self.row = 0
         self.add_header()
-        self.ast = draw_gui.ast
-        self.evaluator = draw_gui.evaluator
-        self.hide_branch = False
+        self.ast = built_gui.ast
+        self.evaluator = built_gui.evaluator
+        self.redraw_function = None
 
-        self.draw_gui = draw_gui
         self.questions = OrderedDict()
+
+    def get_question_functions(self, identifier):
+        return self.questions[identifier]
+
+    def start(self):
+        self.add_buttons()
+        self.main.go()
 
     def add_buttons(self):
         self.main.addButtons(
             ["Save details", "Exit"], self.button_action, self.row, 0, 2
         )
-
-    def redraw(self):
-        self.evaluator.start_traversal()
-        self.start_traversal()
-
-    def start(self):
-        self.add_buttons()
-        self.start_traversal()
-        self.main.go()
-
-    def start_traversal(self):
-        self.ast.root.accept(self)
-
-    def if_node(self, if_node):
-        condition = if_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-        if condition or self.hide_branch:
-            if_node.if_block.accept(self)
-        else:
-            self.hide_branch = True
-            if_node.if_block.accept(self)
-            self.hide_branch = False
-
-    def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-
-        current_val = self.hide_branch
-        if condition or self.hide_branch:
-            if_else_node.if_block.accept(self)
-            self.hide_branch = True
-            if_else_node.else_block.accept(self)
-            self.hide_branch = current_val
-        else:
-            self.hide_branch = True
-            if_else_node.if_block.accept(self)
-            self.hide_branch = current_val
-            if_else_node.else_block.accept(self)
-
-    def question_node(self, question_node):
-        identifier = question_node.name.val
-        if self.hide_branch:
-            (get_data_func, set_data_func, show, hide) = self.questions[identifier]
-            self.main.hideLabel(identifier)
-            hide(identifier)
-        else:
-            (get_data_func, set_data_func, show, hide) = self.questions[identifier]
-            self.main.showLabel(identifier)
-            show(identifier)
-            set_data_func(identifier, self.draw_gui.env.get_var_value(identifier))
-
-    def comp_question_node(self, comp_question):
-        identifier = comp_question.name.val
-        if self.hide_branch:
-            self.main.hideLabel("@computed_" + identifier)
-            self.main.hideLabel(identifier)
-        else:
-            value = self.draw_gui.env.get_var_value(identifier)
-            if value == comp_question.type.default:
-                return
-            self.main.showLabel("@computed_" + identifier)
-            self.main.showLabel(identifier)
-            self.main.setLabel(identifier, value)
 
     def add_header(self):
         self.main.addLabel("header", "Please fill in the form!", self.row, 0, 2)
@@ -175,17 +118,15 @@ class FormGUI(object):
         for question in self.questions:
             get_data_func, set_data_func, show, hide = self.questions[question]
             question_value = get_data_func(question)
-            print question, question_value
             question_values[question] = question_value
         return question_values
 
     def force_redraw(self, _):
+        assert self.redraw_function is not None, "Force redraw function not initialized!"
         # Request all form values, adjust the environment.
         question_values = self.get_question_values()
-        self.draw_gui.adjust_env(question_values)
+        self.redraw_function(question_values)
 
-        # Remove all current widgets and redraw the gui.
-        self.redraw()
         print "Oh, I'm so busy redrawing stuff!"
 
     def button_action(self, button_pressed):
@@ -196,7 +137,8 @@ class FormGUI(object):
 
     def save_data(self):
         json_dict = OrderedDict()
-        for identifier, get_value in self.questions.iteritems():
+        for identifier, widget_functions in self.questions.iteritems():
+            get_value = widget_functions[0]
             value = get_value(identifier)
             json_dict[identifier] = value
 

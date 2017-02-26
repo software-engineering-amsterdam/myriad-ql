@@ -5,6 +5,7 @@ from ErrorHandler import ErrorHandler
 from Evaluate import Evaluate
 from FindCycles import FindCycles
 from DrawGUI import DrawGUI
+from InitGUI import InitGUI
 import sys
 
 
@@ -31,5 +32,7 @@ if __name__ == '__main__':
     TypeChecker(parsedAST, environment, error_handler).start_traversal()
     evaluator = Evaluate(parsedAST, environment, error_handler)
 
-    # Finally, draw the GUI.
-    DrawGUI(parsedAST, environment, evaluator, error_handler).start_traversal()
+    # Finally, draw the GUI.09o8
+    built_gui = InitGUI(parsedAST, environment, evaluator, error_handler)
+    built_gui.start_traversal()
+    DrawGUI(built_gui).start()
