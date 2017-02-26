@@ -60,7 +60,7 @@ public class QL {
             System.exit(0);
         } else {
             System.out.println("Create GUI...");
-            buildGUI(qlAST, questionStates);
+            //buildGUI(qlAST, questionStates);
             //System.exit(0);
         }
     }
