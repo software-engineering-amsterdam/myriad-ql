@@ -2,6 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import value.Value;
 
 public class LExpression extends BinaryExpression {
 
@@ -14,5 +15,10 @@ public class LExpression extends BinaryExpression {
 	public Atom evaluate() {
 		// TODO Auto-generated method stub
 		return getLhs().less(getRhs());
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 }

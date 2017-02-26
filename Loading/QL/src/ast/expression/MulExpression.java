@@ -2,6 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import value.Value;
 
 public class MulExpression extends BinaryExpression {
 	@Override
@@ -16,5 +17,10 @@ public class MulExpression extends BinaryExpression {
 		System.out.println("getRhs: " + getRhs().getNumber());
 		System.out.println("getLhs().mul(getRhs()): " + getLhs().mul(getRhs()).getNumber());
 		return getLhs().mul(getRhs());
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 }

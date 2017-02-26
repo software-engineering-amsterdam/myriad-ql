@@ -2,6 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import value.Value;
 
 public class DivExpression extends BinaryExpression {
 
@@ -17,5 +18,10 @@ public class DivExpression extends BinaryExpression {
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 }

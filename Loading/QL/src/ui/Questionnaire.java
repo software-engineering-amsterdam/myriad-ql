@@ -89,8 +89,8 @@ public class Questionnaire extends Application {
             	for (QuestionnaireQuestion activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
-            		System.out.println("answer:");
-            		System.out.println(answer);
+//            		System.out.println("answer:");
+//            		System.out.println(answer);
             		if (answer.getValue() == null) {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please Fill in all Fields");
@@ -101,9 +101,8 @@ public class Questionnaire extends Application {
                 actiontarget.setFill(Color.SPRINGGREEN);
                 actiontarget.setText("Thank you for filling\n in the questionnaire");
             	
-            	// TODO Accept or Reject form depending whether everything
-            	// is filled in
-            	// renderQuestionnaire(primaryStage, grid);
+            	// TODO Accept or Reject form depending whether everything is filled in
+            	renderQuestionnaire(primaryStage, grid);
             }
         });
 

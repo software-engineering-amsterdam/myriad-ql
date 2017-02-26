@@ -47,13 +47,7 @@ public class ExpressionVisitor extends Visitor {
 		System.out.println("IdExpression VISIT");
 		
 		Atom result = id.evaluate();
-//		if (result.getType() != "string") {
-//			throw new RuntimeException("Expected a id with a variablename, but got type " +
-//						result.getType());
-//		}
 
-//		environment.
-		
 		if (!environment.variableExists(id.getName())) {
 			throw new RuntimeException("The variable with name " + id.getName() +
 					" on line ... is not defined");

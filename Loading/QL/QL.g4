@@ -40,19 +40,17 @@ computed_question returns [Expression result]
  ;
 
 statement returns [Statement result]
- : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);}
- | WHILE parenthesisExpr block { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO do we need while?
+ : IF parenthesisExpr  block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO else does not work
  ;
 
 parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
- | ('(' atom ')' | atom) { $result = $atom.result;}
- | ('(' ID ')' | ID ) { System.out.println($ID.text);
-        $result = new IdExpression($ID.text); }
+ | ('(' atom ')' | atom ) { $result = $atom.result; }
+ | ('(' ID ')' | ID ) { $result = new IdExpression($ID.text); }
  ;
 
 expr returns [Expression result]
- : lhs = parenthesisExpr (binOp rhs = parenthesisExpr)+ { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
+ : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
  | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
  // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  // | atom { $result = $atom.result; }
