@@ -2,6 +2,7 @@ package ast.atom;
 
 import ast.Visitor;
 import ast.expression.Expression;
+import value.Value;
 
 // TODO rename to Literal??
 public abstract class Atom extends Expression {
@@ -35,6 +36,11 @@ public abstract class Atom extends Expression {
 	@Override
 	public Atom evaluate() {
 		return this;
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 	
 	@Override
