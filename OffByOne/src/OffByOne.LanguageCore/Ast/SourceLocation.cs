@@ -4,9 +4,9 @@
 
     using Antlr4.Runtime;
 
-    public class SourceCode
+    public class SourceLocation
     {
-        public SourceCode(ParserRuleContext context)
+        public SourceLocation(ParserRuleContext context)
         {
             var textOutput = new StringBuilder();
             for (var i = 0; i < context.ChildCount; i++)

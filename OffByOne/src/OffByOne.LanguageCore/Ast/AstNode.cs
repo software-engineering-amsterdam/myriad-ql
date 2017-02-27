@@ -2,6 +2,6 @@
 {
     public abstract class AstNode
     {
-        public SourceCode SourceCode { get; set; }
+        public SourceLocation SourceCode { get; set; }
     }
 }

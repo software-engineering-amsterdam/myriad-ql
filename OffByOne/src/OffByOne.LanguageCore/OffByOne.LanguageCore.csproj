@@ -67,7 +67,7 @@
     <Compile Include="Ast\Literals\IntegerLiteral.cs" />
     <Compile Include="Ast\Literals\MoneyLiteral.cs" />
     <Compile Include="Ast\Literals\StringLiteral.cs" />
-    <Compile Include="Ast\SourceCode.cs" />
+    <Compile Include="Ast\SourceLocation.cs" />
     <Compile Include="Ast\ValueTypes\Base\NumericalValueType.cs" />
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />

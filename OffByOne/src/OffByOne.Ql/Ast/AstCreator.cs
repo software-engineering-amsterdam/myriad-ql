@@ -23,7 +23,7 @@
         public AstNode Visit(ParserRuleContext context)
         {
             var node = base.Visit(context);
-            node.SourceCode = new SourceCode(context);
+            node.SourceCode = new SourceLocation(context);
             return node;
         }
 
