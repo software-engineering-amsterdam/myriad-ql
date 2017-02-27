@@ -29,9 +29,9 @@ def parse(input_string):
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = (true | false)
 
-    #TODO: check if needed
+    # TODO: check if needed
     arith_operand = (number | name)
-    bool_operand = (boolean | arith_operand).setParseAction(ast.BoolOperand).setResultsName('bool_operand')
+    bool_operand = (boolean | arith_operand)  # .setParseAction(ast.BoolOperand).setResultsName('bool_operand')
 
     op_multiplication = Literal("*").setParseAction(lambda _: ast.Multiplication)
     op_division = Literal("/").setParseAction(lambda _: ast.Division)
