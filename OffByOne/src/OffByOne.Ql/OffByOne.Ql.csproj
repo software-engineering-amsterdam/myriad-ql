@@ -74,10 +74,6 @@
   <ItemGroup>
     <None Include="OffByOne.Ql.ruleset" />
     <None Include="packages.config" />
-    <Antlr4 Include="Parser\QlLexer.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
-    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
@@ -140,7 +136,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Antlr4 Include="Parser\QlParser.g4">
+    <Antlr4 Include="Parser\Ql.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>OffByOne.Ql.Generated</CustomToolNamespace>
     </Antlr4>

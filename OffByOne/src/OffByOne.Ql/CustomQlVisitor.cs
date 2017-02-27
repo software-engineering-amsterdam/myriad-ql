@@ -10,18 +10,16 @@
     using OffByOne.LanguageCore;
     using OffByOne.LanguageCore.Ast;
     using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Generated;
 
-    // TODO: Extract creation of OperatorExpressions to factory method
-    public class CustomQlVisitor : QlParserBaseVisitor<AstNode>
+    public class CustomQlVisitor : QlBaseVisitor<AstNode>
     {
-        // TODO: Is this the right place? We probably want to use it in QLS too, right?
         public AstNode Visit(ParserRuleContext context)
         {
             var node = base.Visit(context);
@@ -97,128 +95,110 @@
                     .ToList();
         }
 
-#region:Expressions
-        public override AstNode VisitExpressionBracket([NotNull] QlParser.ExpressionBracketContext context)
+        #region:Expressions
+        public override AstNode VisitBrackets([NotNull] QlParser.BracketsContext context)
         {
             return new BracketExpression((Expression)this.Visit(context.expression()));
         }
 
-        public override AstNode VisitExpressionIdentifier([NotNull] QlParser.ExpressionIdentifierContext context)
+        public override AstNode VisitIdentifier([NotNull] QlParser.IdentifierContext context)
         {
             return new VariableExpression(context.Identifier().GetText());
         }
 
-        public override AstNode VisitExpressionNegate([NotNull] QlParser.ExpressionNegateContext context)
+        public override AstNode VisitUnary([NotNull] QlParser.UnaryContext context)
         {
             var exp = (Expression)this.Visit(context.expression());
             return new NegativeExpression(exp);
         }
 
-        public override AstNode VisitExpressionNot([NotNull] QlParser.ExpressionNotContext context)
+        public override AstNode VisitAddition([NotNull] QlParser.AdditionContext context)
         {
-            var exp = (Expression)this.Visit(context.expression());
-            return new NotExpression(exp);
+            var op = context.op.ToString();
+            BinaryExpression binExp = null;
+            var lhs = this.Visit(context.lhs) as Expression;
+            var rhs = this.Visit(context.rhs) as Expression;
+            switch (op)
+            {
+                case "+":
+                    binExp = new AddExpression(lhs, rhs);
+                    break;
+                case "-":
+                    binExp = new SubtractExpression(lhs, rhs);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(op), "Unsupported operator.");
+            }
+
+            return binExp;
         }
 
-        public override AstNode VisitExpressionAdd([NotNull] QlParser.ExpressionAddContext context)
+        public override AstNode VisitMultiplication([NotNull] QlParser.MultiplicationContext context)
         {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new AddExpression(expressions);
+            var op = context.op.ToString();
+            BinaryExpression binExp = null;
+            var lhs = this.Visit(context.lhs) as Expression;
+            var rhs = this.Visit(context.rhs) as Expression;
+            switch (op)
+            {
+                case "*":
+                    binExp = new MultiplyExpression(lhs, rhs);
+                    break;
+                case "/":
+                    binExp = new DivideExpression(lhs, rhs);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(op), "Unsupported operator.");
+            }
+
+            return binExp;
         }
 
-        public override AstNode VisitExpressionAnd([NotNull] QlParser.ExpressionAndContext context)
+        public override AstNode VisitCompare([NotNull] QlParser.CompareContext context)
         {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new AndExpression(expressions);
+            var op = context.op.ToString();
+            BinaryExpression binExp = null;
+            var lhs = this.Visit(context.lhs) as Expression;
+            var rhs = this.Visit(context.rhs) as Expression;
+            switch (op)
+            {
+                case "<":
+                    binExp = new LessThanExpression(lhs, rhs);
+                    break;
+                case "<=":
+                    binExp = new LessThanOrEqualExpression(lhs, rhs);
+                    break;
+                case ">":
+                    binExp = new GreaterThanExpression(lhs, rhs);
+                    break;
+                case ">=":
+                    binExp = new GreaterThanOrEqualExpression(lhs, rhs);
+                    break;
+                case "==":
+                    binExp = new EqualExpression(lhs, rhs);
+                    break;
+                case "!=":
+                    binExp = new NotEqualExpression(lhs, rhs);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(op), "Unsupported operator.");
+            }
+
+            return binExp;
         }
 
-        public override AstNode VisitExpressionDivide([NotNull] QlParser.ExpressionDivideContext context)
+        public override AstNode VisitAnd([NotNull] QlParser.AndContext context)
         {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new DivideExpression(expressions);
+            var lhs = this.Visit(context.lhs) as Expression;
+            var rhs = this.Visit(context.rhs) as Expression;
+            return new AndExpression(lhs, rhs);
         }
 
-        public override AstNode VisitExpressionEqual([NotNull] QlParser.ExpressionEqualContext context)
+        public override AstNode VisitOr([NotNull] QlParser.OrContext context)
         {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new EqualExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionGreaterThan([NotNull] QlParser.ExpressionGreaterThanContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new GreaterThanExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionGreaterThanOrEqual([NotNull] QlParser.ExpressionGreaterThanOrEqualContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new GreaterThanOrEqualExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionLesserThan([NotNull] QlParser.ExpressionLesserThanContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new LessThanExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionLesserThanOrEqual([NotNull] QlParser.ExpressionLesserThanOrEqualContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new LessThanExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionLiteral([NotNull] QlParser.ExpressionLiteralContext context)
-        {
-            return this.Visit(context.GetChild(0));
-        }
-
-        public override AstNode VisitExpressionMultiply([NotNull] QlParser.ExpressionMultiplyContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new MultiplyExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionNotEqual([NotNull] QlParser.ExpressionNotEqualContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new NotEqualExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionOr([NotNull] QlParser.ExpressionOrContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new OrExpression(expressions);
-        }
-
-        public override AstNode VisitExpressionSubtract([NotNull] QlParser.ExpressionSubtractContext context)
-        {
-            var expressions = context.expression()
-                .Select(x => (Expression)this.Visit(x))
-                .ToList();
-            return new SubtractExpression(expressions);
+            var lhs = this.Visit(context.lhs) as Expression;
+            var rhs = this.Visit(context.rhs) as Expression;
+            return new OrExpression(lhs, rhs);
         }
         #endregion
 
