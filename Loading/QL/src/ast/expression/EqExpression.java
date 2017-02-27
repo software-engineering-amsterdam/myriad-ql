@@ -8,6 +8,8 @@ public class EqExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
+		System.out.println("LHS"+ getLhs());
+		System.out.println("RHS"+ getRhs());
 		return getLhs().eq(getRhs());
 	}
 

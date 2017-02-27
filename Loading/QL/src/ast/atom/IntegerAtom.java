@@ -51,12 +51,12 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public BoolAtom eq(Atom other) {
-		return new BoolAtom(number == other.getNumber());
+		return new BoolAtom(number.equals(other.getNumber()));
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(number != other.getNumber());
+		return new BoolAtom(!number.equals(other.getNumber()));
 	}
 	
 	@Override
@@ -81,7 +81,6 @@ public class IntegerAtom extends Atom {
 	
 	@Override
 	public Atom plus() {
-		
 		return new IntegerAtom(+ number);
 	}
 
