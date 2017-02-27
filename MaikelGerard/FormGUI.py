@@ -6,7 +6,7 @@ import json
 
 
 class FormGUI(object):
-    def __init__(self, built_gui):
+    def __init__(self):
         # Random comment; the 'cget' function can be used to retrieve
         # properties of the Tkinter object reference.
         self.main = gui("QL Language Form - © 2017")
@@ -18,6 +18,38 @@ class FormGUI(object):
 
     def get_question_functions(self, identifier):
         return self.questions[identifier]
+
+    def show_question(self, identifier, value):
+        (get_func, set_func, show_func, hide_func) = \
+            self.get_question_functions(identifier)
+        self.main.showLabel(identifier)
+        show_func(identifier)
+        set_func(identifier, value)
+
+    def hide_question(self, identifier):
+        (get_func, set_func, show_func, hide_func) = \
+            self.get_question_functions(identifier)
+        self.main.hideLabel(identifier)
+        hide_func(identifier)
+
+    def show_computed(self, identifier, value):
+        self.main.showLabel(identifier)
+        self.main.showLabel("@computed_" + identifier)
+        self.main.setLabel(identifier, value)
+
+    def hide_computed(self, identifier):
+        self.main.hideLabel(identifier)
+        self.main.hideLabel("@computed_" + identifier)
+
+    def get_set_function(self, identifier):
+        (get_func, set_func, show_func, hide_func) = \
+            self.get_question_functions(identifier)
+        return set_func
+
+    def get_get_function(self, identifier):
+        (get_func, set_func, show_func, hide_func) = \
+            self.get_question_functions(identifier)
+        return get_func
 
     def start(self):
         self.add_buttons()
@@ -114,13 +146,14 @@ class FormGUI(object):
     def get_question_values(self):
         question_values = OrderedDict()
         for question in self.questions:
-            get_data_func, set_data_func, show, hide = self.questions[question]
+            get_data_func = self.get_get_function(question)
             question_value = get_data_func(question)
             question_values[question] = question_value
         return question_values
 
     def force_redraw(self, _):
-        assert self.redraw_function is not None, "Force redraw function not initialized!"
+        assert self.redraw_function is not None, \
+            "Force redraw function not initialized!"
         # Request all form values, adjust the environment.
         question_values = self.get_question_values()
         self.redraw_function(question_values)
@@ -135,10 +168,10 @@ class FormGUI(object):
 
     def save_data(self):
         json_dict = OrderedDict()
-        for identifier, widget_functions in self.questions.iteritems():
-            get_value = widget_functions[0]
-            value = get_value(identifier)
-            json_dict[identifier] = value
+        for question in self.questions:
+            get_value = self.get_get_function(question)
+            value = get_value(question)
+            json_dict[question] = value
 
         # TODO: Add flag where to save.
         with open("./form_output.txt", "w+") as form_output:

@@ -1,9 +1,10 @@
 from Undefined import Undefined
+from EvaluateDrawState import EvaluateDrawState
 
 
 class DrawGUI(object):
-    def __init__(self, built_gui, ast, environment, evaluator, error_handler):
-        self.env = environment
+    def __init__(self, built_gui, ast, env, evaluator, error_handler):
+        self.env = env
         self.ast = ast
         self.handler = error_handler
         self.evaluator = evaluator
@@ -12,6 +13,9 @@ class DrawGUI(object):
         self.form_gui = built_gui.gui
         self.built_gui = built_gui
         self.form_gui.redraw_function = self.redraw
+
+        self.set_draw_state = EvaluateDrawState(ast, env, evaluator,
+                                                self.form_gui, error_handler)
 
     def adjust_env(self, question_values):
         for question in question_values:
@@ -22,56 +26,23 @@ class DrawGUI(object):
                 continue
             elif new_value == "":
                 self.env.set_var_value(question, Undefined)
+                question_node.is_defined = False
                 continue
 
             question_type = question_node.type
             new_value = question_type.convert_to_type(new_value)
 
             # Value is non default, update the environment.
-            if question_node.is_defined or new_value != question_type.default:
+            if question_node.is_defined or new_value != question_node.get_default_val():
                 self.env.set_var_value(question, new_value)
                 question_node.is_defined = True
 
     def start(self):
         self.evaluator.start_traversal()
-        for question in self.env.variables.values():
-            question["node"].accept(self)
-
+        self.set_draw_state.start_traversal()
         self.form_gui.start()
 
     def redraw(self, question_values):
         self.adjust_env(question_values)
         self.evaluator.start_traversal()
-        for question in self.env.variables.values():
-            question["node"].accept(self)
-
-    def question_node(self, question_node):
-        identifier = question_node.get_identifier()
-        if self.env.is_hidden(identifier):
-            (get_data_func, set_data_func, show, hide) = \
-                self.form_gui.get_question_functions(identifier)
-            self.form_gui.main.hideLabel(identifier)
-            hide(identifier)
-        else:
-            (get_data_func, set_data_func, show, hide) = \
-                self.form_gui.get_question_functions(identifier)
-            self.form_gui.main.showLabel(identifier)
-
-            show(identifier)
-            value = self.env.get_var_value(identifier)
-            if value == Undefined:
-                value = question_node.type.default
-            set_data_func(identifier, value)
-
-    def comp_question_node(self, comp_question):
-        identifier = comp_question.get_identifier()
-        if self.env.is_hidden(identifier):
-            self.form_gui.main.hideLabel("@computed_" + identifier)
-            self.form_gui.main.hideLabel(identifier)
-        else:
-            value = self.env.get_var_value(identifier)
-            if value == Undefined:
-                return
-            self.form_gui.main.showLabel("@computed_" + identifier)
-            self.form_gui.main.showLabel(identifier)
-            self.form_gui.main.setLabel(identifier, value)
+        self.set_draw_state.start_traversal()

@@ -15,7 +15,7 @@ class InitGUI(object):
         self.evaluator = evaluator
 
         # Create a GUI instance.
-        self.gui = FormGUI(self)
+        self.gui = FormGUI()
 
     def start_traversal(self):
         self.error_handler.clear_errors()

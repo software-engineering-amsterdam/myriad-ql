@@ -11,11 +11,9 @@ class Evaluate(object):
         self.ast = ast
         self.env = env
         self.handler = error_handler
-        self.show_stack = []
 
     def start_traversal(self):
         self.handler.clear_errors()
-        self.show_stack = []
 
         # Set context for outputting errors; start traversal.
         prev_context = self.env.context
@@ -26,39 +24,20 @@ class Evaluate(object):
         self.handler.print_errors()
         self.env.context = prev_context
 
-    def traverse_branch(self, node_branch, condition):
-        self.show_stack.append(condition)
-        node_branch.accept(self)
-        self.show_stack.pop()
-
     def if_node(self, if_node):
-        condition = if_node.expression.accept(self)
-        condition = condition if condition != Undefined else False
-
-        self.traverse_branch(if_node.if_block, condition)
+        if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self)
-        condition = condition if condition != Undefined else False
-
-        self.traverse_branch(if_else_node.if_block, condition)
-        self.traverse_branch(if_else_node.else_block, not condition)
-
-    def set_hide_state(self, question_node):
-        identifier = question_node.get_identifier()
-        if all(self.show_stack):
-            self.env.show_var(identifier)
-        else:
-            self.env.hide_var(identifier)
+        if_else_node.else_block.accept(self)
+        if_else_node.if_block.accept(self)
 
     def question_node(self, question_node):
-        self.set_hide_state(question_node)
+        pass
 
     def comp_question_node(self, comp_question_node):
         identifier = comp_question_node.get_identifier()
         new_value = comp_question_node.expression.accept(self)
         self.env.set_var_value(identifier, new_value)
-        self.set_hide_state(comp_question_node)
 
     def neg_node(self, neg_node):
         result = neg_node.expression.accept(self)
