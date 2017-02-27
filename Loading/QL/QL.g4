@@ -22,8 +22,8 @@ block returns [Block result]
 
 // TODO decide on maximum characters on one line
 question returns [Question result]
- : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result); }
- | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate());}
+ : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result, $type.start.getLine()); }
+ | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate(), $type.start.getLine());}
  ;
 
 type returns [Type result]

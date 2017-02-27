@@ -19,7 +19,7 @@ public class QuestionnaireVisitor extends Visitor {
 	private Map<String, Value> answers;
 	
 	public QuestionnaireVisitor(Map<String, Value> answers) {
-		this.activeQuestions = new ArrayList<QuestionnaireQuestion>();
+		this.activeQuestions = new ArrayList<>();
 		this.answers = answers;
 	}
 	
@@ -38,8 +38,8 @@ public class QuestionnaireVisitor extends Visitor {
 
 		// Call the evaluator with answers
 		if (answers.size() != 0) {
-			List<Value> valuesList = new ArrayList<Value>(answers.values());
-			List<String> keysList = new ArrayList<String>(answers.keySet());
+			List<Value> valuesList = new ArrayList<>(answers.values());
+			List<String> keysList = new ArrayList<>(answers.keySet());
 
 			Value answer = valuesList.get(0);
 			String question = keysList.get(0);
