@@ -45,7 +45,6 @@ public class Questionnaire extends Application implements Notifier {
 	private static Form form;
 	private static Map<String, Value> answers;
 	private static GridPane grid;
-	private static Stage primaryStage;
 	
     public static void main(Form f) {
     	form = f;
@@ -54,9 +53,8 @@ public class Questionnaire extends Application implements Notifier {
     }
         
     @Override
-    public void start(Stage pstage) {
+    public void start(Stage primaryStage) {
        
-    	primaryStage = pstage;
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
@@ -67,6 +65,8 @@ public class Questionnaire extends Application implements Notifier {
         renderTitle(grid, form.getId());
         
         renderQuestionnaire(grid);
+        
+        primaryStage.show();
 
     }
     
@@ -137,8 +137,6 @@ public class Questionnaire extends Application implements Notifier {
                 
             }
         });
-        
-        primaryStage.show();
     }
     
     private void renderTitle(GridPane grid, String title) {
