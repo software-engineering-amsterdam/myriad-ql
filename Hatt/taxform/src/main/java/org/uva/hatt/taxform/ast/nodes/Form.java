@@ -1,6 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes;
 
 import org.uva.hatt.taxform.ast.nodes.items.Item;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +39,9 @@ public class Form extends ASTNode {
                 ", questions=" + questions +
                 '}';
     }
+
+    public void accept(Visitor visitor){
+        visitor.visit(this);
+    }
+
 }
