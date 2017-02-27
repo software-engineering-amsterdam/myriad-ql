@@ -5,6 +5,9 @@ from pql.typechecker.types import DataTypes
 
 class TypeChecker(Visitor):
 
+    def __init__(self, ql_identifier_check_result):
+        self.identifier_dict = ql_identifier_check_result
+
     def visit(self, pql_ast):
         return [form.apply(self) for form in pql_ast]
 
@@ -78,7 +81,7 @@ class TypeChecker(Visitor):
         return (type, errors)
 
     def identifier(self, node):
-        return node.name
+        return self.identifier_dict[node.name]
 
     def value(self, node):
         return node.data_type

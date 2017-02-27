@@ -29,7 +29,7 @@ def main(sys_args):
     if identifier_result_errors:
         print_result('Identifier checker had errors', identifier_result_errors, 4)
 
-    ql_type_check_result = check_type(ql_ast)
+    ql_type_check_result = check_type(ql_ast, ql_identifier_check_result)
     if ql_type_check_result:
         print_result('Type checker had errors', ql_type_check_result, 5)
 
@@ -66,8 +66,8 @@ def acquire_identifiers(ql_ast):
     return result
 
 
-def check_type(ql_ast):
-    type_checker = TypeChecker()
+def check_type(ql_ast, ql_identifier_check_result):
+    type_checker = TypeChecker(ql_identifier_check_result)
     result = type_checker.visit(ql_ast)
     del type_checker
     return result
