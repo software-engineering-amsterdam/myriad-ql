@@ -7,13 +7,13 @@ class UpdateGUI:
         self.form_app = form_app
         self.environment = environment
         self.evaluator = Evaluator(environment)
-        self.stack = []
+        self.previous_conditions = []
 
-    def push(self, element):
-        self.stack.append(element)
+    def push_condition(self, element):
+        self.previous_conditions.append(element)
 
-    def pop(self):
-        self.stack.pop()
+    def pop_condition(self):
+        self.previous_conditions.pop()
 
     def visit(self, node):
         node.accept(self)
@@ -23,26 +23,26 @@ class UpdateGUI:
             element.accept(self)
 
     def visit_if_conditional(self, node):
-        state = self.evaluator.visit(node.condition)
-        self.push(state)
+        condition = self.evaluator.visit(node.condition)
+        self.push_condition(condition)
         for element in node.ifbody:
             element.accept(self)
-        self.pop()
+        self.pop_condition()
 
     def visit_ifelse_conditional(self, node):
-        state = self.evaluator.visit(node.condition)
-        self.push(state)
+        condition = self.evaluator.visit(node.condition)
+        self.push_condition(condition)
         for element in node.ifbody:
             element.accept(self)
-        self.pop()
+        self.pop_condition()
 
-        self.push(not state)
+        self.push_condition(not condition)
         for element in node.elsebody:
             element.accept(self)
-        self.pop()
+        self.pop_condition()
 
     def visit_question(self, node):
-        if all(self.stack):
+        if all(self.previous_conditions):
             self.form_app.show_widget(node.name)
         else:
             self.form_app.hide_widget(node.name)
