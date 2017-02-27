@@ -1,4 +1,4 @@
-package GUI.widgets;
+package GUI.GUIComponents.GUIWidgets;
 
 import GUI.GUIComponents.FormFrame;
 import semanticChecker.formDataStorage.valueData.values.Value;

@@ -2,7 +2,7 @@ package GUI.GUIComponents.GUIFields;
 
 import ASTnodes.statements.SimpleQuestion;
 import GUI.GUIInterface;
-import GUI.widgets.Widget;
+import GUI.GUIComponents.GUIWidgets.Widget;
 import semanticChecker.formDataStorage.valueData.values.BooleanValue;
 import semanticChecker.formDataStorage.valueData.values.Value;
 

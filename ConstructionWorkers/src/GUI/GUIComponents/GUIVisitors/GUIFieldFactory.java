@@ -10,8 +10,8 @@ import GUI.GUIEvaluation.QuestionEvaluator;
 import GUI.GUIInterface;
 import GUI.GUIComponents.GUIFields.ComputerQuestionField;
 import GUI.GUIComponents.GUIFields.Field;
-import GUI.widgets.Widget;
-import GUI.widgets.WidgetFactory;
+import GUI.GUIComponents.GUIWidgets.Widget;
+import GUI.GUIComponents.GUIWidgets.WidgetFactory;
 import semanticChecker.formDataStorage.valueData.ValueData;
 import semanticChecker.formDataStorage.valueData.values.Value;
 

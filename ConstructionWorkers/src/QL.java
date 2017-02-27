@@ -7,7 +7,7 @@ import ASTnodes.Form;
 import GUI.GUI;
 import GUI.GUIComponents.FormFrame;
 import GUI.GUIComponents.GUIManager;
-import GUI.widgets.WidgetFactory;
+import GUI.GUIComponents.GUIWidgets.WidgetFactory;
 import semanticChecker.SemanticChecker;
 import semanticChecker.formDataStorage.valueData.ValueData;
 import semanticChecker.messageHandling.MessageData;
@@ -60,7 +60,7 @@ public class QL {
             System.exit(0);
         } else {
             System.out.println("Create GUI...");
-            //buildGUI(qlAST, questionStates);
+            buildGUI(qlAST, questionStates);
             //System.exit(0);
         }
     }

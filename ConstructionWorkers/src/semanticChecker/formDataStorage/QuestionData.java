@@ -19,6 +19,7 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     private final List<ComputedQuestion> computedQuestions;
     private final List<IfStatement> ifStatements;
 
+    private final List<SimpleQuestion> allQuestions;
     public QuestionData(Form ast) {
 
         this.simpleQuestions = new ArrayList<>();
@@ -26,6 +27,8 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         this.ifStatements = new ArrayList<>();
 
         ast.accept(this);
+
+        this.allQuestions = setAllQuestions();
 
     }
 
@@ -42,8 +45,15 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     }
 
     public List<SimpleQuestion> getAllQuestions(){
+        return this.allQuestions;
+    }
+
+
+    public List<SimpleQuestion> setAllQuestions(){
         List<SimpleQuestion> allQuestions = this.getSimpleQuestions();
+
         List<ComputedQuestion> computedQuestions = this.getComputedQuestions();
+
         allQuestions.addAll(computedQuestions);
 
         return allQuestions;

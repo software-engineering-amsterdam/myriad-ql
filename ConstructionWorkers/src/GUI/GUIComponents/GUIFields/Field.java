@@ -4,7 +4,7 @@ import ASTnodes.statements.SimpleQuestion;
 import GUI.GUIInterface;
 import GUI.GUIAbstractComponent;
 import GUI.GUIComponents.FormFrame;
-import GUI.widgets.Widget;
+import GUI.GUIComponents.GUIWidgets.Widget;
 import semanticChecker.formDataStorage.valueData.values.Value;
 
 /**
