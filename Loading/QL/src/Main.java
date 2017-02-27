@@ -17,7 +17,9 @@ public class Main {
 				 + "Name1: \"Question1\" string "
 				 + "if (Name1 == false) {"
  		 		 + "Name2: \"Question2\" integer"
-				 + "}}";
+				 + "}"
+				 + "Name3: \"Question3\" boolean "
+				 + "}";
 //		String tmp = "form Testing { Name0: \"Question\" boolean\n"
 //				+ "Name1: \"Question1\" integer\n"
 //				+ "if (((1 + 5) * 3) == ((15+2) + 1)) {"
