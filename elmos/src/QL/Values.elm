@@ -1,4 +1,4 @@
-module QL.Values exposing (Value(Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat, isUndefined)
+module QL.Values exposing (Value, string, bool, int, float, undefined, asString, asBool, asInt, asFloat, isUndefined)
 
 
 type Value

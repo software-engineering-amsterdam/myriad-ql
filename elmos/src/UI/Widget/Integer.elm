@@ -5,7 +5,7 @@ import Html.Attributes exposing (type_, class, defaultValue, id, disabled)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
-import QL.Values as Values exposing (Value(Undefined))
+import QL.Values as Values exposing (Value)
 
 
 view : WidgetContext msg -> Html msg
@@ -31,4 +31,4 @@ parseIntegerInput : String -> Value
 parseIntegerInput =
     String.toInt
         >> Result.map Values.int
-        >> Result.withDefault Undefined
+        >> Result.withDefault Values.undefined

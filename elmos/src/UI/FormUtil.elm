@@ -1,4 +1,4 @@
-module QL.FormUtil exposing (ActiveField(Editable, Computed), updateValue, activeFields, fieldValueType)
+module UI.FormUtil exposing (Field(Editable, Computed), updateValue, activeFields, fieldValueType)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import QL.Environment as Env exposing (Environment)
@@ -7,12 +7,12 @@ import QL.Evaluator as Evaluator
 import Tuple3
 
 
-type ActiveField
+type Field
     = Editable Label String ValueType
     | Computed Label String ValueType Expression
 
 
-fieldValueType : ActiveField -> ValueType
+fieldValueType : Field -> ValueType
 fieldValueType field =
     case field of
         Editable _ _ valueType ->
@@ -56,17 +56,17 @@ activeComputedFields env form =
             )
 
 
-activeFields : Environment -> Form -> List ActiveField
+activeFields : Environment -> Form -> List Field
 activeFields env { items } =
     activeFieldsForItems env items
 
 
-activeFieldsForItems : Environment -> List FormItem -> List ActiveField
+activeFieldsForItems : Environment -> List FormItem -> List Field
 activeFieldsForItems env =
     List.concatMap (activeFieldsForItem env)
 
 
-activeFieldsForItem : Environment -> FormItem -> List ActiveField
+activeFieldsForItem : Environment -> FormItem -> List Field
 activeFieldsForItem env item =
     case item of
         Field label ( identifier, _ ) valueType ->

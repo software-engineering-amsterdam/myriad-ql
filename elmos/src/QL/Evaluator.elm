@@ -74,12 +74,9 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Boolean l, Values.Boolean r ) ->
-                        Values.bool (applicativeForLogic op l r)
-
-                    _ ->
-                        Values.undefined
+                Maybe.map2 (,) (Values.asBool leftValue) (Values.asBool rightValue)
+                    |> Maybe.map (\( l, r ) -> Values.bool (applicativeForLogic op l r))
+                    |> Maybe.withDefault Values.undefined
 
         ComparisonExpression op _ left right ->
             let

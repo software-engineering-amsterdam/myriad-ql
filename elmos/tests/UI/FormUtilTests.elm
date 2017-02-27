@@ -1,8 +1,8 @@
-module QL.FormUtilTests exposing (all)
+module UI.FormUtilTests exposing (all)
 
 import Test exposing (Test, describe, test)
 import QL.AST exposing (..)
-import QL.FormUtil as FormUtil exposing (ActiveField(Editable, Computed))
+import UI.FormUtil as FormUtil exposing (Field(Editable, Computed))
 import QL.Environment as Env
 import Expect
 

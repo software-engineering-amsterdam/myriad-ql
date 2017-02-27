@@ -5,7 +5,7 @@ import Html.Attributes exposing (type_, id, class, checked)
 import Html.Events exposing (onCheck)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
-import QL.Values exposing (Value(Boolean))
+import QL.Values as Values exposing (Value)
 
 
 view : WidgetContext msg -> Html msg
@@ -21,7 +21,7 @@ view { identifier, env, onChange } =
                     [ type_ "checkbox"
                     , id identifier
                     , checked isChecked
-                    , onCheck (Boolean >> onChange)
+                    , onCheck (Values.bool >> onChange)
                     ]
                     []
                 ]

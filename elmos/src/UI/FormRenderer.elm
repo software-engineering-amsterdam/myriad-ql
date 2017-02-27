@@ -2,7 +2,6 @@ module UI.FormRenderer exposing (..)
 
 import Html exposing (Html, form, div, text, pre, hr, h3)
 import Html.Attributes exposing (class)
-import Dict
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -11,7 +10,7 @@ import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import QL.Environment as Env exposing (Environment)
 import QL.Values exposing (Value)
 import QL.AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
-import QL.FormUtil as FormUtil exposing (ActiveField(Editable, Computed))
+import UI.FormUtil as FormUtil exposing (Field(Editable, Computed))
 
 
 type alias Model =
@@ -56,19 +55,11 @@ view model =
                 ]
             , div [ class "col-md-6" ]
                 [ h3 [] [ text "Result" ]
-                , environmentPreview model.env
                 ]
             ]
 
 
-environmentPreview : Environment -> Html msg
-environmentPreview env =
-    pre []
-        [ text <| String.join "\n" <| List.map toString <| Dict.toList env
-        ]
-
-
-viewField : Model -> ActiveField -> Html Msg
+viewField : Model -> Field -> Html Msg
 viewField model field =
     BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
         case FormUtil.fieldValueType field of
@@ -85,7 +76,7 @@ viewField model field =
                 FloatWidget.view
 
 
-visibleFieldWidgetConfig : Environment -> ActiveField -> WidgetContext Msg
+visibleFieldWidgetConfig : Environment -> Field -> WidgetContext Msg
 visibleFieldWidgetConfig env field =
     case field of
         Editable label identifier _ ->
