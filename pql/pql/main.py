@@ -21,11 +21,11 @@ def main(sys_args):
     ql_ast = parse(ql_str)
     if ql_ast is not None:
         ql_ast.pprint()
-    ql_type_check_result = check_type(ql_ast)
-    if ql_type_check_result:
-        print('Type checker had errors')
-        print('\n'.join(map(str, ql_type_check_result)))
-        exit(3)
+    # ql_type_check_result = check_type(ql_ast)
+    # if ql_type_check_result:
+    #     print('Type checker had errors')
+    #     print('\n'.join(map(str, ql_type_check_result)))
+    #     exit(3)
 
 
 def acquire_text(sys_args):
