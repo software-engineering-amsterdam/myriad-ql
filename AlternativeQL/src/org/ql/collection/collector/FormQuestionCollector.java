@@ -1,12 +1,11 @@
-package org.ql.typechecker.statement;
+package org.ql.collection.collector;
 
 import org.ql.ast.Form;
 import org.ql.ast.Statement;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
-import org.ql.collector.QuestionCollector;
+import org.ql.collection.Questions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FormQuestionCollector implements QuestionCollector<Form> {
@@ -18,8 +17,8 @@ public class FormQuestionCollector implements QuestionCollector<Form> {
     }
 
     @Override
-    public List<Question> collect(Form form) {
-        List<Question> questions = new ArrayList<>();
+    public Questions collect(Form form) {
+        Questions questions = new Questions();
 
         for (Statement statement : form.getStatements()) {
             questions.addAll(statement.accept(questionVisitor));

@@ -5,4 +5,8 @@ public class BooleanType extends Type {
     public String toString() {
         return "boolean";
     }
+
+    public boolean equals(Type type) {
+        return this.toString().equals(type.toString());
+    }
 }

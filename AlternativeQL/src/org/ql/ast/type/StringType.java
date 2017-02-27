@@ -5,4 +5,8 @@ public class StringType extends Type {
     public String toString() {
         return "string";
     }
+
+    public boolean equals(Type type) {
+        return this.toString().equals(type.toString());
+    }
 }

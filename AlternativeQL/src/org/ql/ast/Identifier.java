@@ -7,8 +7,8 @@ public class Identifier extends AbstractNode {
         this.id = id;
     }
 
-    public boolean equals(Identifier obj) {
-        return id.equals(obj.toString());
+    public boolean equals(Identifier identifier) {
+        return id.equals(identifier.toString());
     }
 
     @Override

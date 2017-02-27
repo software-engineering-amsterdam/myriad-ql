@@ -9,7 +9,8 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
-import org.ql.collector.QuestionCollector;
+import org.ql.collection.collector.FormQuestionCollector;
+import org.ql.collection.collector.QuestionCollector;
 
 import java.util.ArrayList;
 import java.util.List;

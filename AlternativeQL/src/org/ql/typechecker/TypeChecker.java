@@ -10,7 +10,8 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
-import org.ql.collector.QuestionCollector;
+import org.ql.collection.Questions;
+import org.ql.collection.collector.QuestionCollector;
 import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
@@ -39,7 +40,11 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
             messages.addError("Form name cannot be empty", form.getName());
         }
 
-        expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(form));
+        Questions questions = questionCollector.collect(form);
+
+        checkQuestionDuplicates(questions);
+
+        expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
 
         checkStatements(form.getStatements());
 
@@ -54,20 +59,6 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
         return null;
     }
-
-    private void checkIfCondition(Expression condition) {
-        try {
-            Type conditionType = condition.accept(expressionTypeChecker);
-            if (!(conditionType instanceof BooleanType)) {
-                messages.addError(new TypeMismatchException(new BooleanType(), conditionType));
-            }
-        } catch (TypeError typeError) {
-            messages.addError(typeError);
-        } catch (Throwable throwable) {
-            messages.addError("Unrecognized error occurred: " + throwable, condition);
-        }
-    }
-
     @Override
     public Void visit(IfThenElse ifThenElse) {
         checkIfCondition(ifThenElse.getCondition());
@@ -100,8 +91,7 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
         return null;
     }
 
-    private SymbolTable createSymbolTable(Form form) {
-        List<Question> questions = questionCollector.collect(form);
+    private SymbolTable createSymbolTable(List<Question> questions) {
         SymbolTable symbolTable = new HashMapSymbolTable();
         for (Question question : questions) {
             symbolTable.put(question.getId(), question.getType());
@@ -113,6 +103,27 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     private void checkStatements(List<Statement> statements) {
         for (Statement statement : statements) {
             statement.accept(this);
+        }
+    }
+
+    private void checkQuestionDuplicates(Questions questions) {
+        for (Question question : questions) {
+            if (questions.hasDuplicates(question)) {
+                messages.addError("Question '" + question.getId() + "' has duplicate(s)", question);
+            }
+        }
+    }
+
+    private void checkIfCondition(Expression condition) {
+        try {
+            Type conditionType = condition.accept(expressionTypeChecker);
+            if (!(conditionType instanceof BooleanType)) {
+                messages.addError(new TypeMismatchException(new BooleanType(), conditionType));
+            }
+        } catch (TypeError typeError) {
+            messages.addError(typeError);
+        } catch (Throwable throwable) {
+            messages.addError("Unrecognized error occurred: " + throwable, condition);
         }
     }
 }

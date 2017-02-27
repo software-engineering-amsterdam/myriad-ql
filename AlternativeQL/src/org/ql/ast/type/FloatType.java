@@ -5,4 +5,8 @@ public class FloatType extends NumberType {
     public String toString() {
         return "float";
     }
+
+    public boolean equals(Type type) {
+        return this.toString().equals(type.toString());
+    }
 }

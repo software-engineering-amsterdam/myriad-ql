@@ -5,7 +5,9 @@ form ExampleForm {
 
     if (hasSoldHouse) {
         money sellingPrice: "What was the selling price?";
-        money privateDebt: "Private debts for the sold house:";
-        money valueResidue: "Value residue:" = (3.343*2 / sellingPrice * privateDebt);
+        //money privateDebt: "Private debts for the sold house:";
+        //money valueResidue: "Value residue:" = (3.343*2 / sellingPrice * privateDebt);
+    } else {
+        boolean sellingPrice: "What was the selling price again?";
     }
 }
