@@ -1,6 +1,10 @@
 package org.uva.hatt.taxform.ast.nodes;
 
-public class ASTNode {
+import org.uva.hatt.taxform.ast.visitors.Visitor;
+
+public abstract class ASTNode {
+
+    public abstract void accept(Visitor visitor);
 
     private int lineNumber;
 
