@@ -69,6 +69,8 @@ def binop_action(tokens):
         nodetype = tokens.pop(0)
         right = tokens.pop(0)
         tokens.insert(0, nodetype(left, right))
+
+    assert len(tokens) == 1
     return tokens[0]
 
 expression = infixNotation(

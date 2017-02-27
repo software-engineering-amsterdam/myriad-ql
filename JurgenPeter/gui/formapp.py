@@ -7,15 +7,15 @@ from gui.visitors.update_gui import UpdateGUI
 
 class FormApp:
 
-    def __init__(self, ast):
-        self.ast = ast
+    def __init__(self, form):
+        self.form = form
         self.environment = {}
         self.widgets = {}
 
-        self.app = gui(ast.name)
+        self.app = gui(form.name)
         self.app.bindKey("<KeyPress>", self.update_gui)
 
-        WidgetCreator(self.app, self.widgets, self.update_gui).visit(ast)
+        WidgetCreator(self.app, self.widgets, self.update_gui).visit(form)
 
     def start(self):
         self.update_gui(None)
@@ -27,8 +27,8 @@ class FormApp:
     def update_gui(self, _):
         for name, widget in self.widgets.items():
             self.environment[name] = widget.get_value()
-        UpdateComputations(self.environment).visit(self.ast)
-        UpdateGUI(self, self.environment).visit(self.ast)
+        UpdateComputations(self.environment).visit(self.form)
+        UpdateGUI(self, self.environment).visit(self.form)
 
     def show_widget(self, name):
         self.widgets[name].show()

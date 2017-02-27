@@ -66,7 +66,8 @@ class DependencyChecker:
 
     def visit_ifelse_conditional(self, node):
         requires = node.condition.accept(self)
-        scope = sum([element.accept(self) for element in node.ifbody + node.elsebody], [])
+        scope = sum([element.accept(self) for element in node.ifbody +
+                     node.elsebody], [])
 
         for variable in requires:
             if variable in scope:

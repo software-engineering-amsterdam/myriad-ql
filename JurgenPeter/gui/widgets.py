@@ -19,6 +19,14 @@ class EntryWidget(Widget):
         super().__init__(app, question)
         self.app.addLabel(self.label_id, question.label)
         self.app.addEntry(self.entry_id)
+        command = self.app.getEntryWidget(self.entry_id).register(
+            self.validate)
+        self.app.getEntryWidget(self.entry_id).config(
+            validate="key", validatecommand=(command, "%P"))
+
+    @staticmethod
+    def validate(text):
+        return True
 
     def show(self):
         self.app.showLabel(self.label_id)
@@ -42,12 +50,6 @@ class EntryWidget(Widget):
 
 
 class IntegerEntryWidget(EntryWidget):
-    def __init__(self, app, question):
-        super().__init__(app, question)
-        v = self.app.getEntryWidget(self.entry_id).register(self.validate)
-        self.app.getEntryWidget(self.entry_id).config(validate="key",
-                                                      validatecommand=(v, "%P"))
-
     @staticmethod
     def validate(text):
         if re.match("^(-|\+)?[0-9]*$", text):
@@ -68,12 +70,6 @@ class IntegerEntryWidget(EntryWidget):
 
 
 class DecimalEntryWidget(EntryWidget):
-    def __init__(self, app, question):
-        super().__init__(app, question)
-        v = self.app.getEntryWidget(self.entry_id).register(self.validate)
-        self.app.getEntryWidget(self.entry_id).config(validate="key",
-                                                      validatecommand=(v, "%P"))
-
     @staticmethod
     def validate(text):
         if re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text):
