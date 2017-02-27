@@ -11,6 +11,10 @@ describe QLSParser do
     it 'parses' do
       expect(parser.question).to parse('question hasBoughtHouse widget checkbox')
       expect(parser.question).to parse('question hasMaintLoan')
+      expect(parser.question).to parse('question hasBoughtHouse {
+        widget checkbox
+        width: 400
+      }')
       # expect(parser.question.parse('question hasBoughtHouse')).to eq('aa')
     end
   end

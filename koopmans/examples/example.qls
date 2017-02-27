@@ -12,8 +12,14 @@ stylesheet taxOfficeExample
       question hasSoldHouse
         widget radio("Yes", "No")
       section "You sold a house" {
-        question sellingPrice
+        question sellingPrice {
           widget spinbox
+          width: 400
+          font: "Arial"
+          fontsize: 14
+          color: #999999
+          widget spinbox
+        }
         question privateDebt
           widget spinbox
         question valueResidue

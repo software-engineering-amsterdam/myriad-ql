@@ -19,5 +19,5 @@ contents = File.read('examples/example.qls')
 p contents
 parsed = QLSParser.new.parse(contents)
 pp parsed
-ast = QLS::Parser::Transformer.new.apply(parsed)
-pp ast
+# ast = QLS::Parser::Transformer.new.apply(parsed)
+# pp ast

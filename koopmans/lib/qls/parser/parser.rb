@@ -28,14 +28,19 @@ class QLSParser < Parslet::Parser
   rule(:section_no_brackets) { (question | default).repeat }
 
   # question
-  rule(:question) { spaces? >> str('question') >> spaces? >> (variable >> spaces? >> widget.maybe).as(:question) >> spaces? }
+  rule(:question) { (spaces? >> str('question') >> spaces? >> variable >> spaces? >> (question_brackets | question_no_brackets).as(:properties) >> spaces?).as(:question)  }
+  rule(:question_brackets) { str('{') >> (spaces? >> attributes).repeat >> spaces? >> str('}') }
+  rule(:question_no_brackets) { attributes.maybe }
+
+  # widget
   rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | radio_button).as(:widget) >> spaces? }
   rule(:radio_button) { str('radio') >> spaces? >> str('(') >> spaces? >> (string_literal.as(:first) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second)).as(:radio_button) >> spaces? >> str(')') }
 
   # default
   rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }
   rule(:default_brackets) { str('{') >> default_no_brackets >> str('}') }
-  rule(:default_no_brackets) { (spaces? >> (width | font | fontsize | color | widget)).repeat >> spaces? }
+  rule(:default_no_brackets) { (spaces? >> attributes).repeat >> spaces? }
+  rule(:attributes) { width | font | fontsize | color | widget}
 
   # default attributes
   rule(:type) { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> spaces? }
