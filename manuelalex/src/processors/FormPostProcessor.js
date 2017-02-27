@@ -39,24 +39,23 @@ export class FormPostProcessor extends PostProcessor {
         });
     }
 
-    statement(data, location, reject) {
+    statement(data) {
         return data[0];
     }
 
-    question(data, location, reject) {
+    question(data, location) {
         return new Question({ name: data[3].trim(), propertyName: data[6], propertyType: data[9], location });
     }
 
-    // ifBody statements are one level too deep
-    ifStatement(data, location, reject) {
+    ifStatement(data, location) {
         return new IfStatement({ condition: _.flattenDeep(data[2][1]), ifBody: data[3][3], location });
     }
 
-    ifElseStatement(data, location, reject) {
+    ifElseStatement(data, location) {
         return new IfElseStatement(_.merge(data[0].getOptions(), { location, elseBody: _.flattenDeep(data[1][4]) }));
     }
 
-    ifElseIfElseStatement(data, location, reject) {
+    ifElseIfElseStatement(data, location) {
         return new IfElseIfElseStatement(_.merge(data[0].getOptions(), {
             location,
             elseIfCondition: data[3][1],
@@ -66,25 +65,11 @@ export class FormPostProcessor extends PostProcessor {
     }
 
     // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
-    answer(data, location, reject) {
-        return new Answer({ name: data[3].trim(), allocation: data[6, location] });
+    answer(data, location) {
+        return new Answer({ name: data[3].trim(), allocation: data[6], location });
     }
 
-    // todo probably obsolete
-    factor(data, location, reject) {
-
-        if (data[1] instanceof Expression) {
-            return
-        }
-        /* Factor is an Expression */
-        if (data.length === 3) {
-            return data[1];
-        } else {
-            return new Factor({});
-        }
-    }
-
-    allocation(data, location, reject) {
+    allocation(data, location) {
         return new Allocation({
             propertyName: data[0].trim(),
             type: data[3],
@@ -103,14 +88,15 @@ export class FormPostProcessor extends PostProcessor {
             });
         } else {
             console.error(`Retrieved different expression: ${JSON.stringify(data)} at location ${location}`);
+            return reject;
         }
     }
 
-    booleanExpression(data, location, reject) {
+    booleanExpression(data) {
         return data;
     }
 
-    comparison(data, location, reject) {
+    comparison(data, location) {
         return new Comparison({
             location,
             leftHand: data[0],
@@ -119,36 +105,36 @@ export class FormPostProcessor extends PostProcessor {
         });
     }
 
-    and_test(data, location, reject) {
+    and_test(data) {
         return data;
     }
 
-    not_test(data, location, reject) {
+    not_test(data) {
         return data;
     }
 
-    operator(data, location, reject) {
+    operator(data) {
         return data;
     }
 
-    minOp(data, location, reject) {
+    minOp(data, location) {
         return new MinOperator({ location });
     }
 
-    plusOp(data, location, reject) {
+    plusOp(data, location) {
         return new PlusOperator({ location });
     }
 
-    divideOp(data, location, reject) {
+    divideOp(data, location) {
         return new DivideOperator({ location });
     }
 
-    multiplyOp(data, location, reject) {
+    multiplyOp(data, location) {
         return new MultiplyOperator({ location });
     }
 
-    money(data, location, reject) {
-        return new Money()
+    money(data, location) {
+        return new Money({ location })
     }
 
 }

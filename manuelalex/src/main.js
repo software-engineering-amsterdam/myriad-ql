@@ -5,23 +5,15 @@
 import {Parser} from './Parser.js';
 import {Visitor} from './Visitor.js';
 
+import {Gui}                                     from './gui/Gui.js';
+import {AST}                                     from './ast/AST.js';
+
+import {test1, test2, test3, test4 ,test5}       from './test/TestStrings.js';
+
 let parser = new Parser();
+let result = parser.parse(test1);
+
+let ast = new AST(result);
 let visitor = new Visitor();
-visitor.visitAST(parser.AST);
-
-
-// let form = new Parser().parse("something",4);
-// console.log(form);
-// let html = new CodeGenerator().generate(form);
-//
-// console.log(html);
-//
-// //TODO: Make function of this.
-// fs = require('fs');
-// fs.writeFile('qs.html', html, function (err) {
-//     if (err) return console.log(err);
-//     console.log(html +' > qs.html');
-// });
-//
-
-
+visitor.visitAST(ast);
+let gui = new Gui(ast);
