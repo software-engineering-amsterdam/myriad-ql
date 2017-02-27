@@ -29,31 +29,21 @@ valueType       : 'boolean'                                                 # bo
                 | 'money'                                                   # money
                 ;
 
-expression      : StringLiteral
-                | BooleanLiteral
-                | IntegerLiteral
-                | Identifier
-                | '(' expression ')'
-                | Unary expression
-                | expression operator expression
-                ;
-
-//operators in order of precedence from highest to lowest
-operator        : Unary
-                | Multiplicative
-                | Additive
-                | Relational
-                | Equality
-                | ConditionalAND
-                | ConditionalOR
+expression      : BooleanLiteral                                            # booleanLiteral
+                | StringLiteral                                             # stringLiteral
+                | IntegerLiteral                                            # integerLiteral
+                | Identifier                                                # identifier
+                | '(' expression ')'                                                                    # groupedExpression
+                | left=expression op=('/' | '*' | '-' | '+' | '<' | '>' | '>=' | '<=') right=expression # computationExpression
+                | left=expression op=('&&' | '||' | '==' | '!=') right=expression                       # booleanExpression
                 ;
 
 // Tokens
 WS              : (' ' | '\t' | '\n' | '\r')-> channel(HIDDEN);
 Comment         : ('/*' .* '*/') -> channel(HIDDEN);
+BooleanLiteral  : ('true' | 'false');
 Identifier      : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 StringLiteral   : '"' (~'"')* '"';
-BooleanLiteral  : 'true' | 'false';
 IntegerLiteral  : ('0'..'9')+;
 
 //operators in order of precedence from highest to lowest
