@@ -26,6 +26,7 @@ export class QuestionView extends View {
 
         let type = options.type;
         let renderable;
+/*
 
         switch(type instanceof){
             case Boolean:
@@ -35,6 +36,7 @@ export class QuestionView extends View {
              default
 
         }
+*/
 
     }
 }
