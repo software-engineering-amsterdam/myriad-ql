@@ -1,20 +1,17 @@
 package com.matthewchapman.ql.ast.atomic;
 
+import com.matthewchapman.ql.ast.ASTNode;
+import com.matthewchapman.ql.ast.Atomic;
+import com.matthewchapman.ql.ast.Type;
+
 /**
  * Created by matt on 24/02/2017.
  */
-public class IntegerLiteral {
+public class IntegerLiteral extends Type {
 
-    private final Integer value;
-
-    public IntegerLiteral(Integer i)
+    public IntegerLiteral(String s)
     {
-        this.value = i;
-    }
-
-    public Integer getValue()
-    {
-        return this.value;
+        super(s);
     }
 
 }

@@ -1,22 +1,16 @@
 package com.matthewchapman.ql.ast.expression;
 
-import com.matthewchapman.ql.ast.ASTNode;
+import com.matthewchapman.ql.ast.Expression;
 
 /**
- * Created by matt on 24/02/2017.
+ * Created by matt on 27/02/2017.
  */
-public abstract class Expression extends ASTNode {
+public abstract class BinaryOperation extends Expression {
 
     private Expression left;
     private Expression right;
 
-    //TODO Remove default constructor
-    public Expression()
-    {
-
-    }
-
-    public Expression(Expression left, Expression right)
+    public BinaryOperation(Expression left, Expression right)
     {
         this.left = left;
         this.right = right;
@@ -32,5 +26,6 @@ public abstract class Expression extends ASTNode {
     {
         return this.right;
     }
+
 
 }

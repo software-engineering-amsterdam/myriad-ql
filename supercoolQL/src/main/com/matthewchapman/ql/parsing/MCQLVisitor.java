@@ -6,11 +6,14 @@ import com.matthewchapman.ql.ast.ASTNode;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.atomic.BooleanLiteral;
+import com.matthewchapman.ql.ast.atomic.IntegerLiteral;
 import com.matthewchapman.ql.ast.atomic.StringLiteral;
-import com.matthewchapman.ql.ast.expression.Expression;
-import com.matthewchapman.ql.ast.expression.LogicalAnd;
-import com.matthewchapman.ql.ast.expression.LogicalOr;
+import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.expression.ParameterGroup;
+import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
+import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
@@ -75,5 +78,116 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
         return new LogicalOr(left, right);
+    }
+
+    @Override
+    public ASTNode visitNegation(QLParser.NegationContext ctx) {
+        return new Negation((Expression) visit(ctx.expression()));
+    }
+
+    @Override
+    public ASTNode visitSubtraction(QLParser.SubtractionContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new Subtraction(left, right);
+    }
+
+    @Override
+    public ASTNode visitNotEqual(QLParser.NotEqualContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new NotEqual(left, right);
+    }
+
+    @Override
+    public ASTNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
+        ArrayList<Parameter> parameters = new ArrayList<>();
+
+        for (QLParser.ExpressionContext expressionContext : ctx.expression()) {
+            parameters.add((Parameter) visit(expressionContext));
+        }
+
+        return new ParameterGroup(parameters);
+    }
+
+    @Override
+    public ASTNode visitDivision(QLParser.DivisionContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new Division(left, right);
+    }
+
+    @Override
+    public ASTNode visitEqual(QLParser.EqualContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new Equal(left, right);
+    }
+
+    @Override
+    public ASTNode visitLessThan(QLParser.LessThanContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new LessThan(left, right);
+    }
+
+    @Override
+    public ASTNode visitGreaterThanEqualTo(QLParser.GreaterThanEqualToContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new GreaterThanEqualTo(left, right);
+    }
+
+    @Override
+    public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
+        return new IntegerLiteral(ctx.NUMBER().getText());
+    }
+
+    @Override
+    public ASTNode visitMultiplication(QLParser.MultiplicationContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new Multiplication(left, right);
+    }
+
+    @Override
+    public ASTNode visitAddition(QLParser.AdditionContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new Addition(left, right);
+    }
+
+    @Override
+    public ASTNode visitGreaterThan(QLParser.GreaterThanContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new GreaterThan(left, right);
+    }
+
+    @Override
+    public ASTNode visitLessThanEqualTo(QLParser.LessThanEqualToContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+        return new LessThanEqualTo(left, right);
+    }
+
+    @Override
+    public ASTNode visitCalculatedValue(QLParser.CalculatedValueContext ctx) {
+        return super.visitCalculatedValue(ctx);
+    }
+
+    @Override
+    public ASTNode visitBooleanType(QLParser.BooleanTypeContext ctx) {
+        return new BooleanLiteral(ctx.getText());
+    }
+
+    @Override
+    public ASTNode visitIntegerType(QLParser.IntegerTypeContext ctx) {
+        return new IntegerLiteral(ctx.getText());
+    }
+
+    @Override
+    public ASTNode visitStringType(QLParser.StringTypeContext ctx) {
+        return new StringLiteral(ctx.getText());
     }
 }

@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.expression.Expression;
+import com.matthewchapman.ql.ast.Expression;
 
 import java.util.ArrayList;
 
