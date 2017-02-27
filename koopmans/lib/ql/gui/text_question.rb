@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class GUITextQuestion < GUIQuestion
+    class TextQuestion < Question
       attr_accessor :previous_value
 
       def initialize(args)

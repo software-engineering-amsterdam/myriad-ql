@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class GUIQuestion
+    class Question
       attr_accessor :gui
       attr_accessor :label
       attr_accessor :frame

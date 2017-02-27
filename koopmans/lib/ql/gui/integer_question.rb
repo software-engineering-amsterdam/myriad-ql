@@ -1,11 +1,11 @@
 module QL
   module GUI
-    class GUIStringQuestion < GUITextQuestion
+    class IntegerQuestion < TextQuestion
       include AST
       def initialize(args)
         super
-        @variable.value = ("")
-        @variable.type = StringType
+        @variable.value = (0)
+        @variable.type = IntegerType
         @previous_value = value
       end
     end

@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class GUIBooleanQuestion < GUIQuestion
+    class BooleanQuestion < Question
       include AST
       def initialize(args)
         super

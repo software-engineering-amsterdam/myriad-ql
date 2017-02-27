@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class GUIComputedQuestion < GUIQuestion
+    class ComputedQuestion < Question
       attr_accessor :calculation
 
       def initialize(args)

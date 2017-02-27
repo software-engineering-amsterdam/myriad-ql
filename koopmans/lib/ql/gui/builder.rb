@@ -29,27 +29,27 @@ module QL
         question.condition = condition if condition
 
         if question.assignment
-          GUIComputedQuestion.new(gui: gui,
-                                  label: question.label,
-                                  id: question.variable.name,
-                                  type: question.type.class,
-                                  calculation: visit_calculation(question.assignment),
-                                  condition: visit_calculation(question.condition))
+          ComputedQuestion.new(gui: gui,
+                               label: question.label,
+                               id: question.variable.name,
+                               type: question.type.class,
+                               calculation: visit_calculation(question.assignment),
+                               condition: visit_calculation(question.condition))
         elsif question.type.is_a?(AST::BooleanType)
-          GUIBooleanQuestion.new(gui: gui,
-                                 label: question.label,
-                                 id: question.variable.name,
-                                 condition: visit_calculation(question.condition))
+          BooleanQuestion.new(gui: gui,
+                              label: question.label,
+                              id: question.variable.name,
+                              condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::MoneyType) || question.type.kind_of?(AST::IntegerType)
-          GUIIntegerQuestion.new(gui: gui,
-                                 label: question.label,
-                                 id: question.variable.name,
-                                 condition: visit_calculation(question.condition))
+          IntegerQuestion.new(gui: gui,
+                              label: question.label,
+                              id: question.variable.name,
+                              condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::StringType)
-          GUIStringQuestion.new(gui: gui,
-                                label: question.label,
-                                id: question.variable.name,
-                                condition: visit_calculation(question.condition))
+          StringQuestion.new(gui: gui,
+                             label: question.label,
+                             id: question.variable.name,
+                             condition: visit_calculation(question.condition))
         end
       end
 
