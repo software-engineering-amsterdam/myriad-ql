@@ -1,4 +1,4 @@
-module UI.FormRenderer exposing (..)
+module UI.FormRenderer exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, form, div, text, pre, hr, h3)
 import Html.Attributes exposing (class)
@@ -41,17 +41,17 @@ update msg model =
 
 
 view : Model -> Html Msg
-view model =
+view { env, form } =
     let
         visibleFields =
-            FormUtil.activeFields model.env model.form
+            FormUtil.activeFields env form
     in
         div
             [ class "row" ]
             [ div [ class "col-md-6" ]
-                [ h3 [] [ text "Form: ", text (Tuple.first model.form.id) ]
-                , form []
-                    (List.map (viewField model) visibleFields)
+                [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
+                , Html.form []
+                    (List.map (viewField env) visibleFields)
                 ]
             , div [ class "col-md-6" ]
                 [ h3 [] [ text "Result" ]
@@ -59,9 +59,9 @@ view model =
             ]
 
 
-viewField : Model -> Field -> Html Msg
-viewField model field =
-    BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
+viewField : Environment -> Field -> Html Msg
+viewField env field =
+    BaseWidget.container (visibleFieldWidgetConfig env field) <|
         case FormUtil.fieldValueType field of
             StringType ->
                 StringWidget.view

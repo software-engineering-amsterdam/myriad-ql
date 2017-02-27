@@ -22,13 +22,13 @@ view { identifier, env, onChange, editable } =
             , defaultValue textValue
             , id identifier
             , disabled (not editable)
-            , onInput (parseIntegerInput >> onChange)
+            , onInput (parseFloatInput >> onChange)
             ]
             []
 
 
-parseIntegerInput : String -> Value
-parseIntegerInput =
+parseFloatInput : String -> Value
+parseFloatInput =
     String.toFloat
         >> Result.map Values.float
         >> Result.withDefault Values.undefined

@@ -4,7 +4,6 @@ import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, Comp
 import QL.Environment as Env exposing (Environment)
 import QL.Values as Values exposing (Value)
 import QL.Evaluator as Evaluator
-import Tuple3
 
 
 type Field
@@ -33,7 +32,7 @@ updateComputedFields form env =
     let
         newEnv =
             activeComputedFields env form
-                |> List.map (Tuple3.tail >> Tuple.mapSecond (Evaluator.evaluate env))
+                |> List.map (Tuple.mapSecond (Evaluator.evaluate env))
                 |> List.foldr (\( identifier, value ) -> Env.withFormValue identifier value) env
     in
         if newEnv == env then
@@ -42,14 +41,14 @@ updateComputedFields form env =
             updateComputedFields form newEnv
 
 
-activeComputedFields : Environment -> Form -> List ( Label, String, Expression )
+activeComputedFields : Environment -> Form -> List ( String, Expression )
 activeComputedFields env form =
     activeFields env form
         |> List.filterMap
             (\field ->
                 case field of
                     Computed label identifier _ expression ->
-                        Just ( label, identifier, expression )
+                        Just ( identifier, expression )
 
                     _ ->
                         Nothing
