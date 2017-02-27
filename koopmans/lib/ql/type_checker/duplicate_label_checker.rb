@@ -1,8 +1,8 @@
-require_relative '../visitor/question_visitor'
-
 module QL
   module TypeChecker
     class DuplicateLabelChecker
+      include Visitor
+
       # gather all labels from all questions and check for duplicates
       def visit_form(form)
         labels = form.accept(QuestionVisitor.new).map(&:label)

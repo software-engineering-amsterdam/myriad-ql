@@ -1,11 +1,7 @@
 module QL
   module TypeChecker
     class TypeChecker
-      # require_relative 'duplicate_label_checker'
-      # require_relative 'duplicate_variable_checker'
-      # require_relative 'undefined_variable_checker'
-      # require_relative 'operands_type_checker'
-      # require_relative 'cyclic_checker'
+      include Visitor
 
       def self.check(ast)
         {errors: [DuplicateVariableChecker, UndefinedVariableChecker,
