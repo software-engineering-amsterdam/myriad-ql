@@ -27,4 +27,9 @@ public abstract class CalculatedField extends NamedNode {
     public String toString() {
         return mCondition.toString();
     }
+
+    @Override
+    public String resolve() {
+        return mCondition.evaluate();
+    }
 }

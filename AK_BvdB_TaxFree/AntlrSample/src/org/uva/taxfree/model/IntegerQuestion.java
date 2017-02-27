@@ -2,7 +2,7 @@ package org.uva.taxfree.model;
 
 import javax.swing.*;
 
-public class IntegerQuestion extends NumberNode {
+public class IntegerQuestion extends NamedNode {
     private JFormattedTextField mTextField;
 
     public IntegerQuestion(String description, String id, Integer defaultValue) {
@@ -14,6 +14,11 @@ public class IntegerQuestion extends NumberNode {
     @Override
     protected void fillPanel(JPanel parent) {
         parent.add(mTextField);
+    }
+
+    @Override
+    public String resolve() {
+        return mTextField.getText();
     }
 
 }
