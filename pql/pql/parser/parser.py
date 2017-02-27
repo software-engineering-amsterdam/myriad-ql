@@ -13,8 +13,7 @@ def parse(input_string):
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
         return flattened_tokens[0]
 
-    def flatten_unary_operators(unflattened_tokens):
-        flattened_tokens = unflattened_tokens[0]
+    def flatten_unary_operators(flattened_tokens):
         type_call = flattened_tokens[0]
         return type_call(flattened_tokens[1])
 
@@ -66,7 +65,7 @@ def parse(input_string):
     operand_bool = (boolean | operand_arith)
 
     arith_precedence = [
-        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
+        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
         (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT,
