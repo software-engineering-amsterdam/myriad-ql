@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.ql.ast.Identifier;
 import org.ql.ast.type.StringType;
 
-public class SymbolTableTest {
+public class HashMapSymbolTableTest {
     @Test
     public void shouldPutIdentifierWhenPutExecuted() {
         SymbolTable symbolTable = new HashMapSymbolTable();

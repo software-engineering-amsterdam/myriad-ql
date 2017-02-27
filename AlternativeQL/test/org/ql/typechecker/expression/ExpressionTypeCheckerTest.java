@@ -116,7 +116,9 @@ public class ExpressionTypeCheckerTest {
 
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(HashMapSymbolTable);
 
-        visitor.visit(new Parameter(new Identifier("example")));
+        Type actualParameterType = visitor.visit(new Parameter(new Identifier("example")));
+
+        assertTrue(actualParameterType instanceof StringType);
     }
 
     @Test

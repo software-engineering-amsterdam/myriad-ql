@@ -7,6 +7,10 @@ public class Identifier extends AbstractNode {
         this.id = id;
     }
 
+    public boolean equals(Identifier obj) {
+        return id.equals(obj.toString());
+    }
+
     @Override
     public String toString() {
         return id;
