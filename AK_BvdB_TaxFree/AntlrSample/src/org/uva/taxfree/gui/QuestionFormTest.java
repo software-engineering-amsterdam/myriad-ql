@@ -15,7 +15,6 @@ public class QuestionFormTest {
         mRoot = new FormNode("TaxForm");
         mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
         mForm = new QuestionForm(mRoot);
-
     }
 
 
@@ -79,7 +78,6 @@ public class QuestionFormTest {
     @Test
     public void testBooleanIf() throws Exception {
         IfStatementNode ifStatementNode = new IfStatementNode();
-        mRoot.addChild(ifStatementNode);
         ConditionNode condition = new BooleanLiteralNode("true");
         ifStatementNode.addChild(condition);
         ifStatementNode.addChild(new BooleanQuestion("Hello, do you have a name?", "hasName"));
@@ -104,16 +102,18 @@ public class QuestionFormTest {
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
+        CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two");
+        intField.addChild(new IntegerLiteralNode("52"));
         mRoot.addChild(intField);
     }
 
     public void testIntFieldCalculation() throws Exception {
-        CalculatedField intField = new IntegerField("The result of 1 + 5:", "six");
+        CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six");
         intField.addChild(CalcOnePlusFive());
         mRoot.addChild(intField);
     }
 
-    private Node CalcOnePlusFive(){
+    private Node CalcOnePlusFive() {
         ConditionNode calc = new CalculationExpressionNode("+");
         calc.addChild(new IntegerLiteralNode("1"));
         calc.addChild(new IntegerLiteralNode("5"));
