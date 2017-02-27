@@ -17,7 +17,7 @@ import {QuestionView}   from './views/QuestionView.js';
 
 import './famous.css!';
 
-export class Generator {
+export class Gui {
 
     program = null;
     propertyNames = {};
@@ -36,7 +36,6 @@ export class Generator {
     _addStatements(program = {}, ast = {}) {
         this.program.setTitle(ast.program.name);
 
-        window.x = this;
         let views = program.getViews();
         let view = views[0]; // for now, just use the first view
 

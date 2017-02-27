@@ -21,4 +21,4 @@ export class Statement {
     _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }
-};
+}

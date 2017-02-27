@@ -1,9 +1,9 @@
 import nearley                                   from 'nearley';
-
+import  './grammar.js';
 
 import {test1, test2, test3, test4 ,test5}       from './test/TestStrings.js';
 import {Form}                                    from './Form.js';
-import  './grammar.js'; // probably window.grammar;
+
 import {Question}                                from './statements/Question.js';
 import {Answer}                                  from './statements/Answer.js';
 import {Generator}                               from './gui/Generator.js';
@@ -48,9 +48,14 @@ export class Parser {
         }
         console.log(`Result: ${JSON.stringify(result)}`);
         let AST = this.makeAST(result[0]);
+        evaluate(AST);
         let generator = new Generator(AST);
 
         return result;
+    }
+
+    evaluate(AST){
+
     }
 
     makeAST(result = {}) {
