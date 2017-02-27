@@ -6,13 +6,13 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
-import org.ql.typechecker.statement.QuestionCollector;
+import org.ql.collector.QuestionCollector;
 
 public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
-    private final QuestionCollector questionCollector;
+    private final QuestionCollector<Form> questionCollector;
 
-    public TypeChecker(QuestionCollector questionCollector) {
+    public TypeChecker(QuestionCollector<Form> questionCollector) {
         this.questionCollector = questionCollector;
     }
 
