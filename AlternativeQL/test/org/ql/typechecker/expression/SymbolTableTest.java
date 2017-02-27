@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.ql.ast.Identifier;
 import org.ql.ast.type.StringType;
+import org.ql.symbol_table.HashMapSymbolTable;
+import org.ql.symbol_table.SymbolTable;
 
 public class SymbolTableTest {
     @Test

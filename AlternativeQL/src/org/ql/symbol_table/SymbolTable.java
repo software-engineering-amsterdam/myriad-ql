@@ -1,4 +1,4 @@
-package org.ql.typechecker.expression;
+package org.ql.symbol_table;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.type.Type;
