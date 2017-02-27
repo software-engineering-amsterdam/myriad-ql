@@ -31,7 +31,7 @@ public class Launcher {
             if (!inputContent.isEmpty()) {
                 //TODO ugh, application result should not be here
                 Form ast = coreParser.buildQLAST(inputContent);
-                System.out.println();
+                coreParser.visitAST(ast);
             } else {
                 System.out.println("Error: Input file is empty");
             }

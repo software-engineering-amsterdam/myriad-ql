@@ -1,6 +1,5 @@
 package com.matthewchapman.ql.validation;
 
-import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.BooleanLiteral;
 import com.matthewchapman.ql.ast.atomic.IntegerLiteral;
@@ -45,11 +44,6 @@ public class ASTVisitor<ASTNode> implements Visitor<ASTNode> {
 
     @Override
     public ASTNode visitParameterGroup(ParameterGroup parameterGroup) {
-        return null;
-    }
-
-    @Override
-    public ASTNode visitExpression(Expression expression) {
         return null;
     }
 
@@ -130,6 +124,8 @@ public class ASTVisitor<ASTNode> implements Visitor<ASTNode> {
 
     @Override
     public ASTNode visitForm(Form form) {
+        System.out.println("Form: " + form.getName());
+        
         return null;
     }
 }

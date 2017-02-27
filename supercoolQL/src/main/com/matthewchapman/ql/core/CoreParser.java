@@ -5,6 +5,7 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.parsing.MCQLErrorListener;
 import com.matthewchapman.ql.parsing.MCQLVisitor;
+import com.matthewchapman.ql.validation.ASTVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -29,5 +30,13 @@ public class CoreParser {
         MCQLVisitor visitor = new MCQLVisitor();
 
         return (Form) visitor.visit(formDeclarationContext);
+
+
+    }
+
+    public void visitAST(Form form)
+    {
+        ASTVisitor astVisitor = new ASTVisitor();
+        astVisitor.visitForm(form);
     }
 }
