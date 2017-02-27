@@ -321,8 +321,8 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node = condition_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node.name)
+        self.assertEqual('identifier', boolean_operand_node.var_type)
 
     def test_ast_if_with_and_expression_single_question(self):
         input_string = """
@@ -366,13 +366,13 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node_1 = boolean_and_node.lhs
         self.assertEqual(0, len(boolean_operand_node_1.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node_1.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node_1.name)
+        self.assertEqual('identifier', boolean_operand_node_1.var_type)
 
         boolean_operand_node_2 = boolean_and_node.rhs
         self.assertEqual(0, len(boolean_operand_node_2.children))
-        self.assertEqual('hasBoughtHouse', boolean_operand_node_2.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
+        self.assertEqual('hasBoughtHouse', boolean_operand_node_2.name)
+        self.assertEqual('identifier', boolean_operand_node_2.var_type)
 
     def test_ast_if_expression_or_and_combined_single_question(self):
         input_string = """
@@ -414,9 +414,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(0, len(boolean_or_node.children), 'Boolean OR node should have no children')
 
         boolean_operand_node_1 = boolean_or_node.lhs
-        self.assertEqual(0, len(boolean_operand_node_1.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node_1.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node_1.name)
+        self.assertEqual('identifier', boolean_operand_node_1.var_type)
 
         boolean_and_node = boolean_or_node.rhs
         self.assertEqual('and', boolean_and_node.var_type)
@@ -424,13 +423,13 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node_2 = boolean_and_node.lhs
         self.assertEqual(0, len(boolean_operand_node_2.children))
-        self.assertEqual('hasBoughtHouse', boolean_operand_node_2.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
+        self.assertEqual('hasBoughtHouse', boolean_operand_node_2.name)
+        self.assertEqual('identifier', boolean_operand_node_2.var_type)
 
         boolean_operand_node_3 = boolean_and_node.rhs
         self.assertEqual(0, len(boolean_operand_node_3.children))
-        self.assertEqual('wantsToBuyHouse', boolean_operand_node_3.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_3.var_type)
+        self.assertEqual('wantsToBuyHouse', boolean_operand_node_3.name)
+        self.assertEqual('identifier', boolean_operand_node_3.var_type)
 
     def test_ast_if_with_complex_expression_and_3_operands_single_question(self):
         input_string = """
@@ -474,21 +473,21 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node_1 = boolean_and_node.rhs
         self.assertEqual(0, len(boolean_operand_node_1.children))
-        self.assertEqual('wantsToBuyHouse', boolean_operand_node_1.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_1.var_type)
+        self.assertEqual('wantsToBuyHouse', boolean_operand_node_1.name)
+        self.assertEqual('identifier', boolean_operand_node_1.var_type)
 
         boolean_and_node_2 = boolean_and_node.lhs
         self.assertEqual(0, len(boolean_and_node_2.children))
 
         boolean_operand_node_2 = boolean_and_node_2.lhs
         self.assertEqual(0, len(boolean_operand_node_2.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node_2.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node_2.name)
+        self.assertEqual('identifier', boolean_operand_node_2.var_type)
 
         boolean_operand_node_3 = boolean_and_node_2.rhs
         self.assertEqual(0, len(boolean_operand_node_3.children))
-        self.assertEqual('hasBoughtHouse', boolean_operand_node_3.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_3.var_type)
+        self.assertEqual('hasBoughtHouse', boolean_operand_node_3.name)
+        self.assertEqual('identifier', boolean_operand_node_3.var_type)
 
     def test_ast_if_with_complex_expression_and_3_operands_with_or_single_question(self):
         input_string = """
@@ -541,23 +540,23 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node_2 = boolean_and_node_2.lhs
         self.assertEqual(0, len(boolean_operand_node_2.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node_2.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_2.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node_2.name)
+        self.assertEqual('identifier', boolean_operand_node_2.var_type)
 
         boolean_operand_node_3 = boolean_and_node_2.rhs
         self.assertEqual(0, len(boolean_operand_node_3.children))
-        self.assertEqual('hasBoughtHouse', boolean_operand_node_3.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_3.var_type)
+        self.assertEqual('hasBoughtHouse', boolean_operand_node_3.name)
+        self.assertEqual('identifier', boolean_operand_node_3.var_type)
 
         boolean_operand_node_4 = boolean_or_node.lhs
         self.assertEqual(0, len(boolean_operand_node_4.children))
-        self.assertEqual('wantsToBuyHouse', boolean_operand_node_4.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_4.var_type)
+        self.assertEqual('wantsToBuyHouse', boolean_operand_node_4.name)
+        self.assertEqual('identifier', boolean_operand_node_4.var_type)
 
         boolean_operand_node_5 = boolean_or_node.rhs
         self.assertEqual(0, len(boolean_operand_node_5.children))
-        self.assertEqual('wantsToRentHouse', boolean_operand_node_5.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node_5.var_type)
+        self.assertEqual('wantsToRentHouse', boolean_operand_node_5.name)
+        self.assertEqual('identifier', boolean_operand_node_5.var_type)
 
     def test_ast_if_else_single_question(self):
         input_string = """
@@ -600,9 +599,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
 
         boolean_operand_node = condition_node.children[0]
-        self.assertEqual(0, len(boolean_operand_node.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node.name)
+        self.assertEqual('identifier', boolean_operand_node.var_type)
 
         else_statement_list = conditional_node.else_statement_list
 
@@ -661,8 +659,8 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node = condition_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node.name)
+        self.assertEqual('identifier', boolean_operand_node.var_type)
 
     def test_ast_question_with_if_questions_below_and_above(self):
         input_string = """
@@ -719,8 +717,8 @@ class TestAst(unittest.TestCase):
 
         boolean_operand_node = condition_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
-        self.assertEqual('hasSoldHouse', boolean_operand_node.label.name)
-        self.assertEqual('bool_operand', boolean_operand_node.var_type)
+        self.assertEqual('hasSoldHouse', boolean_operand_node.name)
+        self.assertEqual('identifier', boolean_operand_node.var_type)
 
     def test_ast_recursive_if(self):
         input_string = """

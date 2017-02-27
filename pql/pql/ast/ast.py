@@ -115,12 +115,6 @@ class Division(BinaryOperation):
         return visitor.division(self)
 
 
-class BoolOperand(Node):
-    def __init__(self, parsed_output):
-        super(BoolOperand, self).__init__('bool_operand')
-        self.label = parsed_output[0]
-
-
 class UnaryOperation(Node):
     def __init__(self, var_type, right):
         super(UnaryOperation, self).__init__(var_type)
@@ -219,8 +213,9 @@ class Condition(Node):
         return visitor.condition(self)
 
 
-class Value:
+class Value(Node):
     def __init__(self, value, data_type):
+        super(Value, self).__init__('value')
         self.value = value
         self.data_type = data_type
 
@@ -228,8 +223,9 @@ class Value:
         return visitor.value(self)
 
 
-class Identifier:
+class Identifier(Node):
     def __init__(self, name):
+        super(Identifier, self).__init__('identifier')
         self.name = name
 
     def apply(self, visitor):
