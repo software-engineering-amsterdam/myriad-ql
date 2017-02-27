@@ -2,6 +2,7 @@
 {
     using Antlr4.Runtime;
     using OffByOne.LanguageCore.Ast;
+    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Generated;
 
     public abstract class ParserTest
@@ -11,7 +12,7 @@
             var charStream = new AntlrInputStream(input);
             var lexer = new QlLexer(charStream);
             var parser = new QlParser(new CommonTokenStream(lexer));
-            var visitor = new CustomQlVisitor();
+            var visitor = new AstCreator();
             return visitor.Visit(parser.form());
         }
     }

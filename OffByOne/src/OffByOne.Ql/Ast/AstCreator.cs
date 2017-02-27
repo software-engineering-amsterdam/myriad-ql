@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql
+﻿namespace OffByOne.Ql.Ast
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Generated;
 
-    public class CustomQlVisitor : QlBaseVisitor<AstNode>
+    public class AstCreator : QlBaseVisitor<AstNode>
     {
         public AstNode Visit(ParserRuleContext context)
         {

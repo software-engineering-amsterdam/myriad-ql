@@ -10,7 +10,7 @@
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes;
     using OffByOne.LanguageCore.Visitors;
-    using OffByOne.Ql;
+    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Statements;
@@ -79,7 +79,7 @@
             ICharStream input2 = new AntlrInputStream("true or false");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
-            var v = new CustomQlVisitor();
+            var v = new AstCreator();
             var tree = v.Visit(parser.form());
             CheckTypes((FormStatement)tree);
             Console.WriteLine("Done!");

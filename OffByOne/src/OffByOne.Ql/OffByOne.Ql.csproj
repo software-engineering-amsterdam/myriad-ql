@@ -109,7 +109,7 @@
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\TypeChecker.cs" />
     <Compile Include="Visitors\TypeVisitor.cs" />
-    <Compile Include="CustomQlVisitor.cs" />
+    <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Evaluator\Controls\Questions\BooleanControl.cs" />
     <Compile Include="Evaluator\Controls\Questions\DateControl.cs" />
     <Compile Include="Evaluator\Controls\Questions\FloatControl.cs" />
