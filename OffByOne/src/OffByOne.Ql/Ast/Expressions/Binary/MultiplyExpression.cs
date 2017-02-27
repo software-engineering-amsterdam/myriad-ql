@@ -14,11 +14,6 @@
         {
         }
 
-        public MultiplyExpression(IList<Expression> expressions)
-            : this(expressions[0], expressions[1])
-        {
-        }
-
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,
             TContext context)
