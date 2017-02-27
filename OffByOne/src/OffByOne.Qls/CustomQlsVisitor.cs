@@ -46,11 +46,7 @@
                 .Select(x => (ValueTypeRule)this.VisitDefaultBlock(x))
                 .ToList();
 
-            var nodes = new List<AstNode>();
-            nodes.AddRange(sections);
-            nodes.AddRange(defaultBlocks);
-
-            return new Page(id, nodes);
+            return new Page(id, sections, defaultBlocks);
         }
 
         public override AstNode VisitSection(QlsGrammarParser.SectionContext context)
@@ -70,12 +66,7 @@
                 .Select(x => (ValueTypeRule)this.VisitDefaultBlock(x))
                 .ToList();
 
-            var nodes = new List<AstNode>();
-            nodes.AddRange(questions);
-            nodes.AddRange(sections);
-            nodes.AddRange(defaultBlocks);
-
-            return new Section(name, nodes);
+            return new Section(name, sections, questions, defaultBlocks);
         }
 
         public override AstNode VisitQuestion(QlsGrammarParser.QuestionContext context)

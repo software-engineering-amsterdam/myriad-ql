@@ -128,62 +128,73 @@
 
         public virtual TResult Visit(QuestionRule expression, TContext context)
         {
+            expression.Properties.ForEach(x => x.Accept(this, context));
+            expression.Widget.Accept(this, context);
             return default(TResult);
         }
 
         public virtual TResult Visit(ValueTypeRule expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            expression.ValueType.Accept(this, context);
+            expression.Properties.ForEach(x => x.Accept(this, context));
+            expression.Widget.Accept(this, context);
+            return default(TResult);
         }
 
         public virtual TResult Visit(Page expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            // TODO: AstNode doesn't have Accept method. This is problematic.
+            return default(TResult);
         }
 
         public virtual TResult Visit(Section expression, TContext context)
         {
+            // TODO: AstNode doesn't have Accept method. This is problematic.
             throw new System.NotImplementedException();
         }
 
         public virtual TResult Visit(StyleSheet expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            expression.Pages.ForEach(x => x.Accept(this, context));
+            return default(TResult);
         }
 
         public virtual TResult Visit(CheckBoxWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            return default(TResult);
         }
 
         public virtual TResult Visit(DropDownWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            expression.Values.ForEach(x => x.Accept(this, context));
+            return default(TResult);
         }
 
         public virtual TResult Visit(RadioButtonWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            expression.Values.ForEach(x => x.Accept(this, context));
+            return default(TResult);
         }
 
         public virtual TResult Visit(DefaultWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            return default(TResult);
         }
 
         public virtual TResult Visit(SliderWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            expression.Values.ForEach(x => x.Accept(this, context));
+            return default(TResult);
         }
 
         public virtual TResult Visit(SpinboxWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            return default(TResult);
         }
 
         public virtual TResult Visit(TextFieldWidget expression, TContext context)
         {
-            throw new System.NotImplementedException();
+            return default(TResult);
         }
     }
 }

@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Style\Statements\Base\Statement.cs" />
     <Compile Include="Ast\Style\Statements\Page.cs" />
     <Compile Include="Ast\Style\Properties\Base\Property.cs" />
     <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
