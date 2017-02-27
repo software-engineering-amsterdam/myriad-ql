@@ -8,13 +8,13 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 
 public interface Visitor {
-    public void visit(Form node);
-    public void visit(FormId node);
-    public void visit(Question node);
-    public void visit(Conditional node);
-    public void visit(Boolean node);
-    public void visit(Integer node);
-    public void visit(Money node);
-    public void visit(String node);
-    public void visit(ValueType node);
+    public Form visit(Form node);
+    public FormId visit(FormId node);
+    public Question visit(Question node);
+    public Conditional visit(Conditional node);
+    public Boolean visit(Boolean node);
+    public Integer visit(Integer node);
+    public Money visit(Money node);
+    public String visit(String node);
+    public ValueType visit(ValueType node);
 }
