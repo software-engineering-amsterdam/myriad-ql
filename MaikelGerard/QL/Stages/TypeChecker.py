@@ -1,4 +1,4 @@
-import AST
+from QL import AST
 
 
 class TypeChecker(object):

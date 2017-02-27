@@ -1,8 +1,10 @@
-import Parser
-import AST
-import pyparsing as pp
 import unittest
 from decimal import Decimal
+
+import pyparsing as pp
+
+from QL import AST
+from QL.Stages import Parser
 
 
 class TestParser(unittest.TestCase):

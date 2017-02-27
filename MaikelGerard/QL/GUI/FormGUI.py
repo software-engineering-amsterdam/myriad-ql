@@ -113,9 +113,9 @@ class FormGUI(object):
         self.draw_gui.adjust_env(question_values)
 
         # Remove all current widgets and redraw the gui.
-        self.main.removeAllWidgets()
         self.row = 0
         self.questions = OrderedDict()
+        self.main.removeAllWidgets()
         self.add_header()
         self.draw_gui.redraw()
         self.add_buttons()

@@ -1,6 +1,6 @@
 from FormGUI import FormGUI
-from Undefined import Undefined
-from AST import BoolTypeNode
+from QL.Undefined import Undefined
+from QL.AST import BoolTypeNode
 
 
 class DrawGUI(object):

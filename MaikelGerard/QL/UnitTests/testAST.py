@@ -1,6 +1,7 @@
-import AST
 import unittest
-from UnitTests.testUtils import create_node
+
+from QL import AST
+from QL.UnitTests.testUtils import create_node
 
 
 class TestAST(unittest.TestCase):
