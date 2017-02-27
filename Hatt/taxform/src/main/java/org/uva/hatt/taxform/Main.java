@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.visitors.QLVisitor;
+import org.uva.hatt.taxform.ast.visitors.TypeChecker;
 import org.uva.hatt.taxform.ast.visitors.TypeCheckerVisitor;
 
 public class Main {
@@ -23,11 +24,11 @@ public class Main {
         Form form = visitor.getForm();
         System.out.println(form.toString());
 
-        TypeCheckerVisitor typeCheckerVisitor = new TypeCheckerVisitor();
+        TypeChecker typeCheckerVisitor = new TypeChecker();
         typeCheckerVisitor.visit(form);
 
-        System.out.println(typeCheckerVisitor.getErrors().toString());
-        System.out.println(typeCheckerVisitor.getWarnings().toString());
+//        System.out.println(typeCheckerVisitor.getErrors().toString());
+//        System.out.println(typeCheckerVisitor.getWarnings().toString());
     }
 
 }
