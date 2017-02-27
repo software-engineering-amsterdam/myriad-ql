@@ -38,16 +38,11 @@ class InitGUI(object):
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
 
-    def get_question_val(self, identifier, question_node):
-        var_value = self.env.get_var_value(identifier)
-        if var_value != Undefined:
-            return var_value
-
+    def get_question_val(self, question_node):
         # Value is undefined, we evaluate the boolean question to False as it is not logical to
         # expect a user to check a checkbox to un-check to get a defined checkbox value.
         if question_node.type == BoolTypeNode():
             question_node.is_defined = True
-            return False
         return question_node.type.default
 
     def question_node(self, question_node):
@@ -55,8 +50,7 @@ class InitGUI(object):
         question_str = question_node.question.val
 
         # Check on undefined questions, and get their default value.
-        var_value = self.get_question_val(identifier, question_node)
-        self.env.set_var_value(identifier, var_value)
+        var_value = self.get_question_val(question_node)
 
         # Visit the type node to get the draw function to use.
         draw_function = question_node.type.accept(self)
@@ -66,11 +60,8 @@ class InitGUI(object):
         identifier = comp_question.name.val
         question_str = comp_question.question.val
 
-        # Get any value of the computed question.
-        var_value = self.env.get_var_value(identifier)
-
         # Draw the value of the computed question within a label.
-        self.gui.add_computed_question(identifier, question_str, var_value)
+        self.gui.add_computed_question(identifier, question_str, Undefined)
 
     def bool_type_node(self, _):
         return self.gui.add_checkbox_question

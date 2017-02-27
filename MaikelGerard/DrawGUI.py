@@ -80,7 +80,10 @@ class DrawGUI(object):
                 self.form_gui.get_question_functions(identifier)
             self.form_gui.main.showLabel(identifier)
             show(identifier)
-            set_data_func(identifier, self.env.get_var_value(identifier))
+            value = self.env.get_var_value(identifier)
+            if value == Undefined:
+                value = question_node.type.default
+            set_data_func(identifier, value)
 
     def comp_question_node(self, comp_question):
         identifier = comp_question.name.val
@@ -89,7 +92,7 @@ class DrawGUI(object):
             self.form_gui.main.hideLabel(identifier)
         else:
             value = self.env.get_var_value(identifier)
-            if value == comp_question.type.default:
+            if value == Undefined:
                 return
             self.form_gui.main.showLabel("@computed_" + identifier)
             self.form_gui.main.showLabel(identifier)
