@@ -108,6 +108,11 @@ class BinaryOperation(Node):
         self.left_child = left_child
         self.right_child = right_child
 
+    def __call__(self, left_child, right_child):
+        self.left_child = left_child
+        self.right_child = right_child
+        return self
+
 class UnaryOperation(Node):
     def __init__(self, identifier, child):
         Node.__init__(self, identifier)
@@ -133,6 +138,8 @@ class Addition(BinaryOperation):
 class Substraction(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "substraction", left_child, right_child)
+
+    __call__ = __init__
 
 class Division(BinaryOperation):
     def __init__(self, left_child, right_child):
@@ -166,6 +173,8 @@ class LogicalOr(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "logical_or", left_child, right_child)
 
+    __call__ = __init__
+
 # Unary Operations
 class LogicalNot(UnaryOperation):
     def __init__(self, child):
@@ -180,19 +189,18 @@ class UnaryNegation(UnaryOperation):
         UnaryOperation.__init__(self, "unary_negation", child)
 
 class Evaluation(Node):
-    def __init__(self, evaluation):
-        Node.__init__(self, "evaluation")
-        self._evaluation = evaluation
+    def __init__(self, child):
+        UnaryOperation.__init__(self, "evaluation", child[0]) # it really sorta is
 
 class Variable(Node):
     def __init__(self, value):
         Node.__init__(self, "variable")
         self._identifier = value
 
-    def __str__(self):
-        return self._identifier
-
-    __repr__ = __str__
+    # def __str__(self):
+    #     return "Variable Object: " + self._identifier
+    #
+    # __repr__ = __str__
 
 class FieldType(Node):
     def __init__(self):

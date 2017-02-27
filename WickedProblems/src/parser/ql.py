@@ -13,7 +13,7 @@ class QL:
         left_child, right_child : LogicalAnd(left_child, right_child))
     OR = Literal('||').addParseAction(lambda \
         left_child, right_child : LogicalOr(left_child, right_child))
-    NOT = Literal('!').addParseAction(lambda : LogicalNot) # Unary
+    NOT = Literal('!').addParseAction(lambda child : LogicalNot(child)) # Unary
 
     # Comparisons
     GT = Literal('>').addParseAction(lambda \
@@ -64,10 +64,9 @@ class QL:
     identifier.addParseAction(lambda identifier : Variable(*identifier))
 
     def parse_binary(self, content):
-        # print(content)
-        return content
-        # return content[0][1]
-        # return (content[0][0],content[0][2])
+        left_child, condition, right_child = \
+                content[0][0], content[0][1], content[0][2]
+        return condition(left_child, right_child)
 
     def parse_unary(self, content):
         # print(content)
@@ -92,6 +91,7 @@ class QL:
 
     boolean_expression = operatorPrecedence(identifier,
                                             boolean_precedence)
+
 
     boolean_expression.addParseAction(lambda child : \
             Evaluation(child))
