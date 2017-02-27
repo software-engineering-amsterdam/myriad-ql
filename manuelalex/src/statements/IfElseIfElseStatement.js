@@ -16,4 +16,4 @@ export class IfElseIfElseStatement extends IfElseStatement {
     validate() {
 
     }
-};
+}

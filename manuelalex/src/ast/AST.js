@@ -15,7 +15,10 @@ export class AST {
         }
     }
 
-    evaluate() {
-
+    validate() {
+        for(let statement of this.program.statements){
+            statement.validate();
+        }
     }
+
 };

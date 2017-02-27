@@ -11,9 +11,14 @@ export class IfStatement extends Statement {
 
         this.condition = options.condition;
         this.ifBody = options.ifBody;
+
     }
 
     validate() {
 
     }
-};
+
+    accept(visitor){
+        visitor.visitIfStatement(this);
+    }
+}

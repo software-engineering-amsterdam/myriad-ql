@@ -2,6 +2,8 @@
  * Created by Manuel on 13/02/2017.
  */
 
+
+
 export class Statement {
 
     constructor(options = {}) {
@@ -20,5 +22,9 @@ export class Statement {
 
     _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
+    }
+
+    accept(visitor){
+        throw new Error('Accept method should have been overwritten');
     }
 }

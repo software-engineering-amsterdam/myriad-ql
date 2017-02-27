@@ -9,6 +9,8 @@ import {Answer}                                  from './statements/Answer.js';
 import {Generator}                               from './gui/Generator.js';
 import {AST}                                     from './ast/AST.js';
 import {FormPostProcessor}                       from './processors/FormPostProcessor.js';
+import {Visitor}                                 from './Visitor.js';
+
 
 /**
  * To build the grammer: nearleyc grammar.ne -o grammar.js
@@ -16,12 +18,8 @@ import {FormPostProcessor}                       from './processors/FormPostProc
  * @type {Parser}
  */
 export class Parser {
-
     constructor() {
-
        this._run();
-
-
     }
 
     _run() {
@@ -47,15 +45,24 @@ export class Parser {
             result = result[0];
         }
         console.log(`Result: ${JSON.stringify(result)}`);
-        let AST = this.makeAST(result[0]);
-        evaluate(AST);
-        let generator = new Generator(AST);
+        this.AST = this.makeAST(result[0]);
+        this.evaluate();
+        // let generator = new Generator(AST);
 
         return result;
     }
 
-    evaluate(AST){
+    evaluate(){
 
+        let visitor = new Visitor();
+        visitor.visitAST(this.AST);
+
+
+        // for (let statement of this.AST.program.statements) {
+        //     console.log(statement);
+        //     statement.accept(visitor);
+        //
+        // }
     }
 
     makeAST(result = {}) {
