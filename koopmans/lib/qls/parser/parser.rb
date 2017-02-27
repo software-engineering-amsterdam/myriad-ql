@@ -47,7 +47,7 @@ class QLSParser < Parslet::Parser
   rule(:width) { str('width:') >> spaces? >> integer_literal.as(:width) }
   rule(:font) { str('font:') >> spaces? >> string_literal.as(:font) }
   rule(:fontsize) { str('fontsize:') >> spaces? >> integer_literal.as(:fontsize) }
-  rule(:color) { str('color:') >> spaces? >> (hex_value | variable).as(:color) }
+  rule(:color) { str('color:') >> spaces? >> hex_value.as(:string).as(:color) }
   rule(:hex_value) { str('#') >> (digit_hex.repeat(6, 6) | digit_hex.repeat(3, 3)) }
   rule(:digit_hex) { match('[0-9a-fA-F]') }
 end
