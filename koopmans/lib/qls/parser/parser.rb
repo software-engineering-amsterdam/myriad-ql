@@ -33,7 +33,7 @@ class QLSParser < Parslet::Parser
   rule(:radio_button) { str('radio') >> spaces? >> str('(') >> spaces? >> (string_literal.as(:first) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second)).as(:radio_button) >> spaces? >> str(')') }
 
   # default
-  rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets)).as(:default) }
+  rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }
   rule(:default_brackets) { str('{') >> default_no_brackets >> str('}') }
   rule(:default_no_brackets) { (spaces? >> (width | font | fontsize | color | widget)).repeat >> spaces? }
 
