@@ -1,15 +1,8 @@
 require 'rspec'
-
-require_relative '../../lib/ast/expression'
-require_relative '../../lib/ast/type'
-require_relative '../../lib/ast/literal'
-require_relative '../../lib/ast/statement'
-require_relative '../../lib/ast/form'
-require_relative '../../lib/ast/variable'
-
-require_relative '../../lib/type_checker/type_checker'
-
 require 'pp'
+require 'require_all'
+
+require_all 'lib'
 
 describe TypeChecker do
   # create question

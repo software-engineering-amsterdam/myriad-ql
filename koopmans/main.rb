@@ -5,19 +5,15 @@ require 'pp'
 
 require_rel 'lib'
 
-# read file
-file_reader = FileReader.new
-contents = file_reader.read_file('examples/simple_questionnaire.ql')
-
-# parse content
-parser = Parser.new
-parsed = parser.parse(contents)
-
-transformer = Transformer.new
-ast = transformer.apply(parsed)
-
-typechecker = TypeChecker.check(ast)
-
-GUI.new(ast, typechecker)
+# # read file
+# contents = File.read('examples/simple_questionnaire.ql')
+#
+# # parse content
+# parsed = Parser.new.parse(contents)
+# ast = Transformer.new.apply(parsed)
+#
+# GUI.new(ast, TypeChecker.check(ast))
 
 
+contents = File.read('examples/example.qls')
+p contents
