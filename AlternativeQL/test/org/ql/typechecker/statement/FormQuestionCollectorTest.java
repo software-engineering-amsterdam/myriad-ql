@@ -11,6 +11,7 @@ import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.collection.collector.FormQuestionCollector;
 import org.ql.collection.collector.QuestionCollector;
+import org.ql.collection.collector.QuestionVisitor;
 
 import java.util.ArrayList;
 import java.util.List;

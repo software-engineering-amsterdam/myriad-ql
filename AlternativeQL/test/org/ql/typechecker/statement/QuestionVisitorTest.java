@@ -11,6 +11,7 @@ import org.ql.ast.statement.StatementVisitor;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.IntegerType;
+import org.ql.collection.collector.QuestionVisitor;
 
 import java.util.ArrayList;
 import java.util.List;

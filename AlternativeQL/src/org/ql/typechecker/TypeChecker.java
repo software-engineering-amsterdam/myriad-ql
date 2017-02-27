@@ -18,7 +18,7 @@ import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
-import org.ql.typechecker.statement.QuestionVisitor;
+import org.ql.collection.collector.QuestionVisitor;
 
 import java.util.List;
 

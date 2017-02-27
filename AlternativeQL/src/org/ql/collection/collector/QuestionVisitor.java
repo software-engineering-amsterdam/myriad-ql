@@ -1,4 +1,4 @@
-package org.ql.typechecker.statement;
+package org.ql.collection.collector;
 
 import org.ql.ast.Statement;
 import org.ql.ast.statement.IfThen;
