@@ -1,17 +1,17 @@
-module QL.Parser.Token exposing (identifier, quotedString, parseLoc, withLoc)
+module QL.Parser.Token exposing (identifier, quotedString, parseLocation, withLocation)
 
 import QL.AST exposing (Location(Location), Id)
-import Combine exposing (Parser, string, regex, withLocation, succeed, (>>=), (*>), (<*), (<$>))
+import Combine exposing (Parser, string, regex, succeed, (>>=), (*>), (<*), (<$>))
 
 
-parseLoc : Parser s Location
-parseLoc =
-    withLocation (asLocation >> succeed)
+parseLocation : Parser s Location
+parseLocation =
+    Combine.withLocation (asLocation >> succeed)
 
 
-withLoc : Parser state (Location -> res) -> Parser state res
-withLoc p =
-    withLocation (asLocation >> \loc -> (|>) loc <$> p)
+withLocation : Parser state (Location -> res) -> Parser state res
+withLocation p =
+    Combine.withLocation (asLocation >> \loc -> (|>) loc <$> p)
 
 
 asLocation : Combine.ParseLocation -> Location
@@ -21,7 +21,7 @@ asLocation { line, column } =
 
 identifier : Parser s Id
 identifier =
-    withLoc ((,) <$> regex "[a-z][a-zA-Z0-9_]*")
+    withLocation ((,) <$> regex "[a-z][a-zA-Z0-9_]*")
 
 
 quotedString : Parser s String

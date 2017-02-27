@@ -13,7 +13,7 @@ import QL.AST
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
         , Operator(Plus, Minus, Multiply, Divide)
         )
-import QL.Parser.Token exposing (identifier, quotedString, withLoc, parseLoc)
+import QL.Parser.Token exposing (identifier, quotedString, withLocation, parseLocation)
 
 
 type alias BinaryOperator =
@@ -32,8 +32,8 @@ precedenceOrderedOperators =
         , andOp
         , comparisonOp
         , relationalOp
-        , addOp
-        , multiplyOp
+        , addOrMinOp
+        , multiplyOrDivideOp
         ]
 
 
@@ -49,7 +49,7 @@ andOp =
 
 defineBinary : String -> (a -> Location -> BinaryOperator) -> a -> Parser s BinaryOperator
 defineBinary token expr operand =
-    trimmed (withLoc (stringAs token (expr operand)))
+    trimmed (withLocation (stringAs token (expr operand)))
 
 
 comparisonOp : Parser s BinaryOperator
@@ -70,16 +70,16 @@ relationalOp =
         ]
 
 
-addOp : Parser s BinaryOperator
-addOp =
+addOrMinOp : Parser s BinaryOperator
+addOrMinOp =
     choice
         [ defineBinary "+" ArithmeticExpression Plus
         , defineBinary "-" ArithmeticExpression Minus
         ]
 
 
-multiplyOp : Parser s BinaryOperator
-multiplyOp =
+multiplyOrDivideOp : Parser s BinaryOperator
+multiplyOrDivideOp =
     choice
         [ defineBinary "*" ArithmeticExpression Multiply
         , defineBinary "/" ArithmeticExpression Divide
@@ -88,14 +88,9 @@ multiplyOp =
 
 atom : Parser s Expression
 atom =
-    lazy <| \() -> anyAtom
-
-
-anyAtom : Parser s Expression
-anyAtom =
     lazy <|
         \() ->
-            choice <|
+            choice
                 [ integerAtom
                 , decimalAtom
                 , stringAtom
@@ -108,21 +103,21 @@ anyAtom =
 integerAtom : Parser s Expression
 integerAtom =
     succeed Integer
-        <*> parseLoc
+        <*> parseLocation
         <*> int
 
 
 decimalAtom : Parser s Expression
 decimalAtom =
     succeed Decimal
-        <*> parseLoc
+        <*> parseLocation
         <*> float
 
 
 stringAtom : Parser s Expression
 stringAtom =
     succeed Str
-        <*> parseLoc
+        <*> parseLocation
         <*> quotedString
 
 
@@ -134,12 +129,12 @@ varAtom =
 booleanAtom : Parser s Expression
 booleanAtom =
     succeed Boolean
-        <*> parseLoc
+        <*> parseLocation
         <*> (stringAs "true" True <|> stringAs "false" False)
 
 
 parensAtom : Parser s Expression
 parensAtom =
     succeed ParensExpression
-        <*> parseLoc
+        <*> parseLocation
         <*> parens (trimmed expression)

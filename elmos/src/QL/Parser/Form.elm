@@ -15,6 +15,11 @@ form =
             <*> (whitespace *> block)
 
 
+block : Parser s (List FormItem)
+block =
+    lazy <| \() -> braces (trimmed formItems)
+
+
 formItems : Parser s (List FormItem)
 formItems =
     lazy <| \() -> sepBy1 whitespace1 formItem
@@ -68,13 +73,6 @@ ifThenElse =
                 <*> (trimmed (string "else") *> block)
 
 
-block : Parser s (List FormItem)
-block =
-    lazy <| \() -> braces (trimmed formItems)
-
-
-{-| TODO Own module for QLS?
--}
 valueType : Parser s ValueType
 valueType =
     choice
