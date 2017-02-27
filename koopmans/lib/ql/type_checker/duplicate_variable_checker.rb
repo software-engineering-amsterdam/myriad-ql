@@ -1,7 +1,8 @@
-require_relative '../visitor/question_visitor'
 module QL
   module TypeChecker
     class DuplicateVariableChecker
+      include Visitor
+
       # gather all variables from all questions and check for duplicates
       def visit_form(form)
         variables = form.accept(QuestionVisitor.new).map(&:variable).map(&:name)

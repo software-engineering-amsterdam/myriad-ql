@@ -1,7 +1,4 @@
 require 'parslet'
-require 'require_all'
-
-require_rel '../ast'
 
 module QL
   module Parser

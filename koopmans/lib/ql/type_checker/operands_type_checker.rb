@@ -1,8 +1,7 @@
-require_relative '../visitor/question_visitor'
-
 module QL
   module TypeChecker
     class OperandsTypeChecker
+      include Visitor
       include AST
 
       def visit_form(form)

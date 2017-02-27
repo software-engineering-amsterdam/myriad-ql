@@ -1,5 +1,3 @@
-require 'parslet'
-
 module QL
   module AST
     class Variable

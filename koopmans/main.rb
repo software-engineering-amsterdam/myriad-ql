@@ -1,6 +1,4 @@
 require 'require_all'
-require 'tk'
-require 'parslet'
 require 'pp'
 
 require_rel 'lib'

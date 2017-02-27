@@ -1,8 +1,8 @@
-require_relative '../visitor/cyclic_visitor'
-
 module QL
   module TypeChecker
     class CyclicChecker
+      include Visitor
+
       def visit_form(form)
         # get question variables with dependency variables as hash
         # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
