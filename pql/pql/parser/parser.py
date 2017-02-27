@@ -132,7 +132,5 @@ def parse(input_string):
     body.setResultsName('statement_list')
 
     # Form
-    form = lit_form + name + body
-    form.addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
-    tokens = form.parseString(input_string)
-    return tokens
+    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
+    return form.parseString(input_string)
