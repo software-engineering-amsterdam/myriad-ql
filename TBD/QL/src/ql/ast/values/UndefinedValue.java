@@ -1,5 +1,8 @@
 package ql.ast.values;
 
+import ql.ast.types.ErrorType;
+import ql.ast.types.FloatType;
+
 /**
  * Created by Erik on 21-2-2017.
  */

@@ -1,5 +1,6 @@
 package ql.ast.values;
 
+import ql.ast.types.Type;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Erik on 14-2-2017.
  */
-public class PrintASTVisitor implements ASTVisitor<Void> {
+public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(Form node) {
         System.out.print("form ");

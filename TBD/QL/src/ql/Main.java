@@ -12,10 +12,8 @@ import ql.ast.types.FloatType;
 import ql.ast.types.IntType;
 import ql.ast.types.Type;
 import ql.ast.values.Value;
-import ql.ast.visistor.ASTVisitor;
-import ql.ast.visistor.EvalASTVisitor;
-import ql.ast.visistor.PrintASTVisitor;
-import ql.ast.visistor.TypeASTVisitor;
+import ql.ast.visistor.*;
+import ql.ast.visistor.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
 
@@ -45,7 +43,10 @@ public class Main {
             ASTVisitor<Void> printVisitor = new PrintASTVisitor();
             printVisitor.visit(parser.getResult());
 
-            TypeASTVisitor typeVisitor = new TypeASTVisitor();
+            EnvASTVisitor envASTVisitor = new EnvASTVisitor();
+            Environment env = envASTVisitor.startVisitor(parser.getResult());
+
+            TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
             typeVisitor.startVisitor(parser.getResult());
 
 

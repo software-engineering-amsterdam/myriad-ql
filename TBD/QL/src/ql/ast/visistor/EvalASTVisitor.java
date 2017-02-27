@@ -1,48 +1,17 @@
 package ql.ast.visistor;
 
-import ql.ast.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.values.IntValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
 
 /**
  * Created by Erik on 14-2-2017.
  */
-public class EvalASTVisitor implements ASTVisitor<Value> {
-    @Override
-    public Value visit(Form node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Statements node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(If node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(IfElse node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Question node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(QuestionExpr node) {
-        return null;
-    }
+public class EvalASTVisitor extends ASTVisitor<Value> {
 
     @Override
     public Value visit(QLIdent node) {

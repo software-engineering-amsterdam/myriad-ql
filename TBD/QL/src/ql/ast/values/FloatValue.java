@@ -1,5 +1,8 @@
 package ql.ast.values;
 
+import ql.ast.types.BooleanType;
+import ql.ast.types.FloatType;
+
 /**
  * Created by Erik on 21-2-2017.
  */
@@ -13,6 +16,7 @@ public class FloatValue extends Value<Float>{
     public Float getValue() {
         return value;
     }
+
 
     @Override
     public String toString() {

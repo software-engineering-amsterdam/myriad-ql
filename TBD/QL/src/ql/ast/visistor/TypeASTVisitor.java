@@ -7,6 +7,7 @@ import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.ast.visistor.environment.Environment;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 
@@ -17,11 +18,14 @@ import java.util.Map;
 /**
  * Created by Erik on 14-2-2017.
  */
-public class TypeASTVisitor implements ASTVisitor<Type> {
+public class TypeASTVisitor extends ASTVisitor<Type>{
 
-    private final Map<String, Type> identTable = new HashMap<>();
     private final ErrorHandler errorHandler = new ErrorHandler();
+    private final Environment env;
 
+    public TypeASTVisitor(Environment env) {
+        this.env = env;
+    }
 
     public Type startVisitor(ASTNode node) {
         node.accept(this);
@@ -80,22 +84,22 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(Question node) {
-        if (identTable.containsKey(node.getId().getValue())) {
+     /*   if (identTable.containsKey(node.getId().getValue())) {
             errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
         }
 
-        identTable.put(node.getId().getValue(), node.getType());
+        identTable.put(node.getId().getValue(), node.getType());*/
         return null;
     }
 
     @Override
     public Type visit(QuestionExpr node) {
-        if (identTable.containsKey(node.getId().getValue())) {
+      /*  if (identTable.containsKey(node.getId().getValue())) {
             errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
         }
 
         identTable.put(node.getId().getValue(), node.getType());
-
+*/
         Type expr = node.getExpr().accept(this);
         if (!expr.equals(node.getType())) {
             errorHandler.addError(new Error("Wrong type for assignment!", node.getId().getRowNumber()));
@@ -111,11 +115,11 @@ public class TypeASTVisitor implements ASTVisitor<Type> {
 
     @Override
     public Type visit(QLIdent node) {
-        if (identTable.containsKey(node.getValue())) {
-            return identTable.get(node.getValue());
+        if (env.contains(node.getValue())) {
+            return env.getVariable(node.getValue()).getType();
         }
-        errorHandler.addError(new Error("Identifier doesn't exist!", node.getRowNumber()));
-        return null;
+        errorHandler.addError(new Error("Identifier " + node.getValue() + " doesn't exist!", node.getRowNumber()));
+        return new ErrorType();
     }
 
     @Override
