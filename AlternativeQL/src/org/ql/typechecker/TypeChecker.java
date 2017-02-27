@@ -2,6 +2,7 @@ package org.ql.typechecker;
 
 import org.ql.ast.Expression;
 import org.ql.ast.Form;
+import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.IfThen;
@@ -22,37 +23,36 @@ import org.ql.typechecker.messages.TypeCheckMessages;
 
 import java.util.List;
 
-public class TypeChecker implements FormVisitor<MessageBag>, StatementVisitor<MessageBag> {
+// TODO decouple TypeChecker from StatementVisitor.
+public class TypeChecker implements StatementVisitor<MessageBag> {
 
     private final QuestionCollector<Form> questionCollector;
-    private final MessageBag messages;
 
     private ExpressionTypeChecker expressionTypeChecker;
 
-    public TypeChecker(QuestionCollector<Form> questionCollector, MessageBag messages) {
+    public TypeChecker(QuestionCollector<Form> questionCollector) {
         this.questionCollector = questionCollector;
-        this.messages = messages;
     }
 
-    @Override
-    public MessageBag visit(Form form) {
-        MessageBag messages = new TypeCheckMessages();
-
-        if (form.getName().toString().isEmpty()) {
-            messages.addError("Form name cannot be empty", form.getName());
-        }
-
+    public MessageBag checkForm(Form form) {
         Questions questions = questionCollector.collect(form);
 
-        MessageBag questionDuplicateMessages = checkQuestionDuplicates(questions);
-        MessageBag questionLabelsDuplicateMessages = checkQuestionLabelsDuplicates(questions);
-        MessageBag statementsMessages = checkStatements(form.getStatements());
-
+        // TODO pass the symbol table as a context parameter in the expr visitor
         this.expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
 
-        return messages.merge(questionDuplicateMessages)
-                .merge(questionLabelsDuplicateMessages)
-                .merge(statementsMessages);
+        return checkIdentifier(form.getName())
+                .merge(checkQuestionDuplicates(questions))
+                .merge(checkQuestionLabelsDuplicates(questions))
+                .merge(checkStatements(form.getStatements()));
+    }
+
+    private MessageBag checkIdentifier(Identifier identifier) {
+        MessageBag messages = new TypeCheckMessages();
+        if (identifier.toString().isEmpty()) {
+            messages.addError("Form name cannot be empty", identifier);
+        }
+
+        return messages;
     }
 
     @Override
@@ -74,13 +74,7 @@ public class TypeChecker implements FormVisitor<MessageBag>, StatementVisitor<Me
 
     @Override
     public MessageBag visit(Question question) {
-        MessageBag questionTextMessages = checkQuestionText(question);
-        MessageBag defaultValueMessages = checkDefaultValue(question);
-
-        return questionTextMessages.merge(defaultValueMessages);
-
-        // TODO: Note that question.accept(this) gives an error.
-        //return question.accept(this).merge(questionTextMessages).merge(defaultValueMessages);
+        return checkQuestionText(question).merge(checkDefaultValue(question));
     }
 
     private MessageBag checkQuestionText(Question question) {
@@ -124,7 +118,7 @@ public class TypeChecker implements FormVisitor<MessageBag>, StatementVisitor<Me
         MessageBag messages = new TypeCheckMessages();
 
         for (Statement statement : statements) {
-            messages.merge(statement.accept(this));
+            messages = messages.merge(statement.accept(this));
         }
 
         return messages;

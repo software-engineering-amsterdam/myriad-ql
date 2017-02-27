@@ -20,9 +20,9 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenFormNameEmpty() {
-        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()), new TypeCheckMessages());
+        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
 
-        MessageBag messages = typeChecker.visit(new FormBuilder().getDefault().setName("").build());
+        MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().setName("").build());
 
         assertTrue(messages.getErrors().size() == 1);
         assertEquals("Form name cannot be empty", messages.getErrors().get(0));
@@ -30,21 +30,20 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldContainNoErrorsWhenQuestionAdded() {
-        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()), new TypeCheckMessages());
+        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
 
-        MessageBag messages = typeChecker.visit(new FormBuilder().getDefault().build());
+        MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().build());
 
         assertTrue(messages.getErrors().size() == 0);
     }
 
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
-        QuestionCollector<Form> collector = new FormQuestionCollector(new QuestionVisitor());
-        TypeChecker typeChecker = new TypeChecker(collector, new TypeCheckMessages());
+        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
 
-        MessageBag messages = typeChecker.visit(new FormBuilder()
+        MessageBag messages = typeChecker.checkForm(new FormBuilder()
                 .setName("exampleForm")
                 .addStatement(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null))
                 .addStatement(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null))

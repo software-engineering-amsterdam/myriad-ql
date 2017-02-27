@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TypeCheckMessages implements MessageBag {
 
-    private final List<String> errors = new ArrayList<>();
+    private List<String> errors = new ArrayList<>();
 
     @Override
     public void addError(TypeError error) {
@@ -33,18 +33,24 @@ public class TypeCheckMessages implements MessageBag {
     }
 
     @Override
+    public void addErrors(List<String> errors) {
+        for (String error : errors) {
+            addError(error);
+        }
+    }
+
+    @Override
     public List<String> getErrors() {
         return errors;
     }
 
     @Override
     public MessageBag merge(MessageBag anotherBag) {
+        MessageBag bag = new TypeCheckMessages();
+        bag.addErrors(getErrors());
+        bag.addErrors(anotherBag.getErrors());
 
-        for (String error : anotherBag.getErrors()) {
-            addError(error);
-        }
-
-        return this;
+        return bag;
     }
 
     @Override

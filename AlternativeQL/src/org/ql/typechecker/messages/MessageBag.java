@@ -12,6 +12,8 @@ public interface MessageBag {
 
     void addError(String message);
 
+    void addErrors(List<String> errors);
+
     List<String> getErrors();
 
     MessageBag merge(MessageBag anotherBag);
