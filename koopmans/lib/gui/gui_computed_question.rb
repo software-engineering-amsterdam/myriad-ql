@@ -1,4 +1,4 @@
-class ComputedQuestion < GUIQuestion
+class GUIComputedQuestion < GUIQuestion
   attr_accessor :calculation
 
   def initialize(args)

@@ -1,4 +1,4 @@
-class TextQuestion < GUIQuestion
+class GUITextQuestion < GUIQuestion
   attr_accessor :previous_value
 
   def initialize(args)

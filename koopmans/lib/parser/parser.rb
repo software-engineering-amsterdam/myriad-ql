@@ -38,4 +38,6 @@ class Parser < Parslet::Parser
   # variable
   rule(:variable) { match('\w+').repeat(1).as(:variable) }
   rule(:variable_assignment) { variable >> str(':') >> spaces? }
+
+  root(:form)
 end

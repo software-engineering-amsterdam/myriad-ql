@@ -1,4 +1,4 @@
-class BooleanQuestion < GUIQuestion
+class GUIBooleanQuestion < GUIQuestion
   def initialize(args)
     super
     @variable.value = (true)

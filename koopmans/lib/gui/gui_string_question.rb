@@ -1,5 +1,4 @@
-class StringQuestion < TextQuestion
-
+class GUIStringQuestion < GUITextQuestion
   def initialize(args)
     super
     @variable.value = ("")

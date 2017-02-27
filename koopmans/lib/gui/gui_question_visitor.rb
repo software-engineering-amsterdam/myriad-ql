@@ -27,27 +27,27 @@ class GUIQuestionVisitor
     question.condition = condition if condition
 
     if question.assignment
-      ComputedQuestion.new(gui: self,
-                           label: question.label,
-                           id: question.variable.name,
-                           type: question.type.class,
-                           calculation: visit_calculation(question.assignment),
-                           condition: visit_calculation(question.condition))
+      GUIComputedQuestion.new(gui: self,
+                              label: question.label,
+                              id: question.variable.name,
+                              type: question.type.class,
+                              calculation: visit_calculation(question.assignment),
+                              condition: visit_calculation(question.condition))
     elsif question.type.is_a?(BooleanType)
-      BooleanQuestion.new(gui: self,
-                          label: question.label,
-                          id: question.variable.name,
-                          condition: visit_calculation(question.condition))
+      GUIBooleanQuestion.new(gui: self,
+                             label: question.label,
+                             id: question.variable.name,
+                             condition: visit_calculation(question.condition))
     elsif question.type.kind_of?(MoneyType) || question.type.kind_of?(IntegerType)
-      IntegerQuestion.new(gui: self,
-                         label: question.label,
-                         id: question.variable.name,
-                         condition: visit_calculation(question.condition))
+      GUIIntegerQuestion.new(gui: self,
+                             label: question.label,
+                             id: question.variable.name,
+                             condition: visit_calculation(question.condition))
     elsif question.type.kind_of?(StringType)
-      StringQuestion.new(gui: self,
-                        label: question.label,
-                        id: question.variable.name,
-                        condition: visit_calculation(question.condition))
+      GUIStringQuestion.new(gui: self,
+                            label: question.label,
+                            id: question.variable.name,
+                            condition: visit_calculation(question.condition))
     end
   end
 
