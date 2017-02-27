@@ -20,4 +20,8 @@ export class Answer extends Statement {
     getGeneratedCode(type) {
         return "<div>" + this.name + "<input type='" + type + "' id='" + this.propertyName + "'></div>";
     }
+
+    accept(visitor){
+        visitor.visitAnswer(self);
+    }
 };
