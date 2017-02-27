@@ -19,26 +19,26 @@ class UpdateGUI:
         node.accept(self)
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_if_conditional(self, node):
         state = self.evaluator.visit(node.condition)
         self.push(state)
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
         self.pop()
 
     def visit_ifelse_conditional(self, node):
         state = self.evaluator.visit(node.condition)
         self.push(state)
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
         self.pop()
 
         self.push(not state)
-        for statement in node.elsebody:
-            statement.accept(self)
+        for element in node.elsebody:
+            element.accept(self)
         self.pop()
 
     def visit_question(self, node):

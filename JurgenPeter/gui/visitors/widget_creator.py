@@ -20,8 +20,8 @@ class WidgetCreator:
         node.accept(self)
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_question(self, node):
         widget = self.default_widgets[node.datatype](self.app, node)
@@ -34,11 +34,11 @@ class WidgetCreator:
         widget.disable()
 
     def visit_if_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
 
     def visit_ifelse_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
-        for statement in node.elsebody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
+        for element in node.elsebody:
+            element.accept(self)

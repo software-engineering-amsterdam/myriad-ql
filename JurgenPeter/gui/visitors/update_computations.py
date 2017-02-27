@@ -11,8 +11,8 @@ class UpdateComputations:
         node.accept(self)
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_question(self, node):
         pass
@@ -21,11 +21,11 @@ class UpdateComputations:
         self.environment[node.name] = self.evaluator.visit(node.computation)
 
     def visit_if_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
 
     def visit_ifelse_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
-        for statement in node.elsebody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
+        for element in node.elsebody:
+            element.accept(self)

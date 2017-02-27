@@ -17,8 +17,8 @@ class DependencyChecker:
         return self.errors, self.warnings
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_question(self, node):
         return [node.name]
@@ -36,7 +36,10 @@ class DependencyChecker:
         # Find all (indirect) dependencies of this questions dependencies using
         # breadth first search on the dependency table.
         for dependency in dependencies:
-            dependencies += [d for d in self.dependencies.get(dependency, []) if d not in dependencies]
+            dependencies += [implicit_dependency
+                             for implicit_dependency in
+                             self.dependencies.get(dependency, [])
+                             if implicit_dependency not in dependencies]
 
         for dependency in dependencies:
             if node.name in self.dependencies.get(dependency, []):
@@ -49,7 +52,7 @@ class DependencyChecker:
 
     def visit_if_conditional(self, node):
         requires = node.condition.accept(self)
-        scope = sum([statement.accept(self) for statement in node.ifbody], [])
+        scope = sum([element.accept(self) for element in node.ifbody], [])
 
         for variable in requires:
             if variable in scope:
@@ -63,7 +66,7 @@ class DependencyChecker:
 
     def visit_ifelse_conditional(self, node):
         requires = node.condition.accept(self)
-        scope = sum([statement.accept(self) for statement in node.ifbody + node.elsebody], [])
+        scope = sum([element.accept(self) for element in node.ifbody + node.elsebody], [])
 
         for variable in requires:
             if variable in scope:

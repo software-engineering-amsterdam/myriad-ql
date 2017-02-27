@@ -122,4 +122,3 @@ class CheckBoxWidget(Widget):
 
     def get_value(self):
         return self.app.getCheckBox(self.entry_id)
-

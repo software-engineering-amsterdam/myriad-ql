@@ -6,7 +6,7 @@ class Printer:
     def visit_form(self, node):
         return "form {} [\n{}\n]".format(
             node.name,
-            "\n".join([s.accept(self) for s in node.body]))
+            "\n".join([element.accept(self) for element in node.body]))
 
     def visit_question(self, node):
         return "{}: \"{}\" {}".format(
@@ -20,13 +20,13 @@ class Printer:
     def visit_if_conditional(self, node):
         return "if {} [\n{}\n]".format(
             node.condition.accept(self),
-            "\n".join([s.accept(self) for s in node.ifbody]))
+            "\n".join([element.accept(self) for element in node.ifbody]))
 
     def visit_ifelse_conditional(self, node):
         return "if {} [\n{}\n]\nelse [\n{}\n]".format(
             node.condition.accept(self),
-            "\n".join([s.accept(self) for s in node.ifbody]),
-            "\n".join([s.accept(self) for s in node.elsebody]))
+            "\n".join([element.accept(self) for element in node.ifbody]),
+            "\n".join([element.accept(self) for element in node.elsebody]))
 
     def visit_plusop(self, node):
         return "+{}".format(node.right.accept(self))

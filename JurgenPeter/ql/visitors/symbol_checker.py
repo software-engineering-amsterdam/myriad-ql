@@ -17,8 +17,8 @@ class SymbolChecker:
         return self.errors, self.warnings, self.symboltable
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_question(self, node):
         if node.label not in self.labels:
@@ -45,11 +45,11 @@ class SymbolChecker:
                        "used".format(node.name))
 
     def visit_if_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
 
     def visit_ifelse_conditional(self, node):
-        for statement in node.ifbody:
-            statement.accept(self)
-        for statement in node.elsebody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
+        for element in node.elsebody:
+            element.accept(self)

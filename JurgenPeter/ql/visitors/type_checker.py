@@ -21,8 +21,8 @@ class TypeChecker:
         return self.errors, self.warnings
 
     def visit_form(self, node):
-        for statement in node.body:
-            statement.accept(self)
+        for element in node.body:
+            element.accept(self)
 
     def visit_question(self, node):
         pass
@@ -35,18 +35,18 @@ class TypeChecker:
         if conditiontype is not None and conditiontype != Datatype.boolean:
             self.error("condition does not evaluate to boolean value")
 
-        for statement in node.ifbody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
 
     def visit_ifelse_conditional(self, node):
         conditiontype = node.condition.accept(self)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             self.error("condition does not evaluate to boolean value")
 
-        for statement in node.ifbody:
-            statement.accept(self)
-        for statement in node.elsebody:
-            statement.accept(self)
+        for element in node.ifbody:
+            element.accept(self)
+        for element in node.elsebody:
+            element.accept(self)
 
     def visit_plusop(self, node):
         right_type = node.right.accept(self)
