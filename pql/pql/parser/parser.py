@@ -18,8 +18,30 @@ def parse(input_string):
     lit_l_paren = Suppress("(")
     lit_r_paren = Suppress(")")
 
-    name = Word(alphas, alphanums + '_').setResultsName('identifier')
-    name.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
+    lit_colon = Suppress(":")
+    lit_assign_op = Suppress("=")
+
+    lit_op_multiplication = Literal("*").setParseAction(lambda _: ast.Multiplication)
+    lit_op_division = Literal("/").setParseAction(lambda _: ast.Division)
+    lit_op_subtract = Literal("-").setParseAction(lambda _: ast.Subtraction)
+    lit_op_addition = Literal("+").setParseAction(lambda _: ast.Addition)
+    lit_op_positive = Literal("+").setParseAction(lambda _: ast.Positive)
+    lit_op_negative = Literal("-").setParseAction(lambda _: ast.Negative)
+
+    lit_op_not = Literal("!").setParseAction(lambda _: ast.Negation)
+    lit_op_lower_exclusive = Literal("<").setParseAction(lambda _: ast.LowerExclusive)
+    lit_op_lower_inclusive = Literal("<=").setParseAction(lambda _: ast.LowerInclusive)
+    lit_op_greater_inclusive = Literal(">=").setParseAction(lambda _: ast.GreaterInclusive)
+    lit_op_greater_exclusive = Literal(">").setParseAction(lambda _: ast.GreaterExclusive)
+    lit_op_equality = Literal("==").setParseAction(lambda _: ast.Equality)
+    lit_op_inequality = Literal("!=").setParseAction(lambda _: ast.Inequality)
+    lit_op_and = Literal("&&").setParseAction(lambda _: ast.And)
+    lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
+
+    data_types = oneOf([data_type.value for data_type in DataTypes])
+
+    name = Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
+        lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
     money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
@@ -29,31 +51,8 @@ def parse(input_string):
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = (true | false)
 
-    # TODO: check if needed
     arith_operand = (number | name)
-    bool_operand = (boolean | arith_operand)  # .setParseAction(ast.BoolOperand).setResultsName('bool_operand')
-
-    op_multiplication = Literal("*").setParseAction(lambda _: ast.Multiplication)
-    op_division = Literal("/").setParseAction(lambda _: ast.Division)
-    op_subtract = Literal("-").setParseAction(lambda _: ast.Subtraction)
-    op_addition = Literal("+").setParseAction(lambda _: ast.Addition)
-    op_positive = Literal("+").setParseAction(lambda _: ast.Positive)
-    op_negative = Literal("-").setParseAction(lambda _: ast.Negative)
-
-    op_not = Literal("!").setParseAction(lambda _: ast.Negation)
-    op_lower_exclusive = Literal("<").setParseAction(lambda _: ast.LowerExclusive)
-    op_lower_inclusive = Literal("<=").setParseAction(lambda _: ast.LowerInclusive)
-    op_greater_inclusive = Literal(">=").setParseAction(lambda _: ast.GreaterInclusive)
-    op_greater_exclusive = Literal(">").setParseAction(lambda _: ast.GreaterExclusive)
-    op_equality = Literal("==").setParseAction(lambda _: ast.Equality)
-    op_inequality = Literal("!=").setParseAction(lambda _: ast.Inequality)
-    op_and = Literal("&&").setParseAction(lambda _: ast.And)
-    op_or = Literal("||").setParseAction(lambda _: ast.Or)
-
-    colon = Suppress(":")
-    data_types = oneOf([data_type.value for data_type in DataTypes])
-
-    assign_op = Suppress("=")
+    bool_operand = (boolean | arith_operand)
 
     def flatten_binary_operators(unflattened_tokens):
         flattened_tokens = unflattened_tokens[0]
@@ -68,18 +67,18 @@ def parse(input_string):
         return type_call(flattened_tokens[1])
 
     arith_precedent = [
-        (op_positive | op_negative | op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
-        (op_multiplication | op_division, 2, opAssoc.LEFT, flatten_binary_operators),
-        (op_addition | op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
+        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
+        (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT, flatten_binary_operators),
+        (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
     bool_precedent = [
-        (op_lower_exclusive | op_lower_inclusive |
-         op_greater_inclusive | op_greater_exclusive,
+        (lit_op_lower_exclusive | lit_op_lower_inclusive |
+         lit_op_greater_inclusive | lit_op_greater_exclusive,
          2, opAssoc.LEFT, flatten_binary_operators),
-        (op_equality | op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
-        (op_and, 2, opAssoc.LEFT, flatten_binary_operators),
-        (op_or, 2, opAssoc.LEFT, flatten_binary_operators)
+        (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
+        (lit_op_and, 2, opAssoc.LEFT, flatten_binary_operators),
+        (lit_op_or, 2, opAssoc.LEFT, flatten_binary_operators)
     ]
 
     # Arithmetic precedence
@@ -110,10 +109,10 @@ def parse(input_string):
     field_expr = \
         QuotedString('"', unquoteResults=True).setResultsName("title") + \
         name.setResultsName("identifier") + \
-        colon + \
+        lit_colon + \
         data_types.setResultsName("data_type") + \
         Optional(
-            assign_op +
+            lit_assign_op +
             arithmetic_expression
         )
     field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
