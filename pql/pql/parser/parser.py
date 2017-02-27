@@ -7,31 +7,31 @@ from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
-    identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
-    identifier.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
+    # Reserved keywords
+    lit_form = Suppress("form")
+    lit_if = Suppress("if")
+    lit_else = Suppress("else")
+
+    # Reserved symbols
+    lit_l_curly = Suppress("{")
+    lit_r_curly = Suppress("}")
+    lit_l_paren = Suppress("(")
+    lit_r_paren = Suppress(")")
+
+    name = Word(alphas, alphanums + '_').setResultsName('identifier')
+    name.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
     money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
-    number = integer | money
+    number = (integer | money)
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
-    boolean = true | false
+    boolean = (true | false)
 
-    arith_operand = number | identifier
-    bool_operand = boolean | arith_operand
-    bool_operand.setParseAction(ast.BoolOperand).setResultsName('bool_operand')
-
-    # Reserved keywords
-    form_lit = Suppress("form")
-    if_lit = Suppress("if")
-    else_lit = Suppress("else")
-
-    # Reserved symbols
-    l_curly = Suppress("{")
-    r_curly = Suppress("}")
-    l_paren = Suppress("(")
-    r_paren = Suppress(")")
+    #TODO: check if needed
+    arith_operand = (number | name)
+    bool_operand = (boolean | arith_operand).setParseAction(ast.BoolOperand).setResultsName('bool_operand')
 
     op_multiplication = Literal("*").setParseAction(lambda _: ast.Multiplication)
     op_division = Literal("/").setParseAction(lambda _: ast.Division)
@@ -99,17 +99,17 @@ def parse(input_string):
 
     arithmetic_expression = \
         OneOrMore(
-            arithmetic | (l_paren + arithmetic + r_paren)
+            arithmetic | (lit_l_paren + arithmetic + lit_r_paren)
         ).setResultsName("arithmetic_statement")
 
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
     boolean_statement = \
-        OneOrMore(boolean_expr | (l_paren + boolean_expr + r_paren))
+        OneOrMore(boolean_expr | (lit_l_paren + boolean_expr + lit_r_paren))
     boolean_statement.setParseAction(lambda parsed_tokens: ast.Condition(*parsed_tokens))
 
     field_expr = \
         QuotedString('"', unquoteResults=True).setResultsName("title") + \
-        identifier.setResultsName("identifier") + \
+        name.setResultsName("identifier") + \
         colon + \
         data_types.setResultsName("data_type") + \
         Optional(
@@ -118,19 +118,19 @@ def parse(input_string):
         )
     field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
-    statement_list = Forward()
-    if_stmt = Forward()
-    if_stmt << if_lit + l_paren + boolean_statement + r_paren + statement_list + Optional(
-        else_lit + statement_list).setResultsName('else_statement')
-    if_stmt.setParseAction(ast.Conditional)
+    body = Forward()
+    if_block = Forward()
+    if_block << lit_if + lit_l_paren + boolean_statement + lit_r_paren + body + Optional(
+        lit_else + body).setResultsName('else_statement')
+    if_block.setParseAction(ast.Conditional)
 
-    statement = field_expr | if_stmt
-    statement_list <<= l_curly + OneOrMore(statement) + r_curly
-    statement_list.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
-    statement_list.setResultsName('statement_list')
+    statement = field_expr | if_block
+    body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
+    body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
+    body.setResultsName('statement_list')
 
     # Form
-    form = form_lit + identifier + statement_list
+    form = lit_form + name + body
     form.addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
     tokens = form.parseString(input_string)
     return tokens
