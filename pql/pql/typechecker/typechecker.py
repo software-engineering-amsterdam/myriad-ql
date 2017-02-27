@@ -1,5 +1,6 @@
 # coding=utf-8
 from pql.visitor.visitor import Visitor
+from pql.typechecker.types import DataTypes
 
 
 class TypeChecker(Visitor):
@@ -15,9 +16,6 @@ class TypeChecker(Visitor):
 
     def expression(self, node):
         return [expression.apply(self) for expression in node.children]
-
-    def arithmetic(self, node):
-        return [arithmetic.apply(self) for arithmetic in node.children]
 
     def subtraction(self, node):
         return self.binary(node)
@@ -59,8 +57,25 @@ class TypeChecker(Visitor):
         return []
 
     def binary(self, node):
+        allowed_types = {DataTypes.integer, DataTypes.money}
+        type = None
+        errors = []
         type_left = node.lhs.apply(self)
         type_right = node.rhs.apply(self)
+        type_set = {type_left, type_right}
+
+        if type_set.issubset(allowed_types):
+            if len(type_set) is 2:
+                type = DataTypes.money
+            else:
+                type = DataTypes.integer
+        else:
+            errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
+            type_set, allowed_types))
+
+        # print(type, errors)
+
+        return (type, errors)
 
     def identifier(self, node):
         return node.name

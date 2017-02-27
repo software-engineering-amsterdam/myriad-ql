@@ -250,3 +250,11 @@ class TestParser(TestCase):
         with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs a title')
+
+    def test_parse_form_single_assignment_money(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (8 - 4.14)
+        }
+        """
+        parse(input_string)

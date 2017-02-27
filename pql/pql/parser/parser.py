@@ -1,6 +1,6 @@
 # coding=utf-8
 from pyparsing import (Suppress, Literal, oneOf, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
-                       QuotedString, Optional, Forward)
+                       QuotedString, Optional, Forward, Combine)
 
 from pql.ast import ast
 from pql.typechecker.types import DataTypes
@@ -52,8 +52,8 @@ def parse(input_string):
         lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
-    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
-    number = (integer | money)
+    money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
+    number = (money | integer)
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))

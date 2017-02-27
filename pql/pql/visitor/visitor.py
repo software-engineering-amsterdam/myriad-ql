@@ -21,10 +21,6 @@ class Visitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def arithmetic(self, node):
-        pass
-
-    @abstractmethod
     def subtraction(self, node):
         pass
 
