@@ -3,9 +3,13 @@
  */
 
 import {Parser} from './Parser.js';
-import {Form} from './Form.js';
+import {Visitor} from './Visitor.js';
 
-new Parser();
+let parser = new Parser();
+let visitor = new Visitor();
+visitor.visitAST(parser.AST);
+
+
 // let form = new Parser().parse("something",4);
 // console.log(form);
 // let html = new CodeGenerator().generate(form);
