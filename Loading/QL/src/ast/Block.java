@@ -3,7 +3,7 @@ package ast;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Block implements Node { // TODO rename block
+public class Block extends Node { // TODO rename block
 	
 	private List<Question> questions;
 	private List<Statement> statements;

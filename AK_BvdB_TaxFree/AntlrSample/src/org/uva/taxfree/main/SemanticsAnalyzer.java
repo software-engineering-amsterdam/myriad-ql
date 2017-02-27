@@ -3,6 +3,7 @@ package org.uva.taxfree.main;
 import org.uva.taxfree.ast.Ast;
 import org.uva.taxfree.model.NamedNode;
 import org.uva.taxfree.model.Node;
+import org.uva.taxfree.model.SymbolTable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 public class SemanticsAnalyzer {
     private Ast mAst;
+    private SymbolTable mSymbolTable;
 
     /*
      * UNDEFINES - reference to undefined questions // TODO
@@ -32,6 +34,10 @@ public class SemanticsAnalyzer {
         mAst = ast;
     }
 
+    public SymbolTable getSymbolTable() {
+        return mSymbolTable;
+    }
+
     public boolean validSemantics() {
         return getSemanticErrors().isEmpty();
     }
@@ -43,19 +49,15 @@ public class SemanticsAnalyzer {
         return errorMessages;
     }
 
-    public List<String> getUndefinedQuestionErrors() {
-        // TODO
+    private List<String> getUndefinedQuestionErrors() {
+        mAst.getConditionsV2(); // TODO: Remove, having this for test purposes.
         List<String> errorMessages = new ArrayList<>();
-        Set<String> processedConditionIds = new LinkedHashSet<>();
-        for (String Id : getConditionIds()) {
-            if(!getQuestionIds().contains(Id)){
-                errorMessages.add("Unresolved condition in questions: " + Id);
-            }
-        }
+        // TODO
+        // Get conditions, for every varName check the value/question belonging to it
         return errorMessages;
     }
 
-    public List<String> getDuplicateQuestionErrors() {
+    private List<String> getDuplicateQuestionErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionIds = new LinkedHashSet<>();
         for (NamedNode questionNode : mAst.getQuestions()) {
@@ -67,7 +69,7 @@ public class SemanticsAnalyzer {
         return errorMessages;
     }
 
-    public List<String> getDuplicateLabelErrors() {
+    private List<String> getDuplicateLabelErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionLabels = new LinkedHashSet<>();
         for (NamedNode questionNode : mAst.getQuestions()) {

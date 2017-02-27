@@ -2,7 +2,7 @@ package ast.type;
 
 import ast.Node;
 
-public abstract class Type implements Node {
+public abstract class Type extends Node {
 	
 	final private String type;
 	

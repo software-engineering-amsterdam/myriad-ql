@@ -7,8 +7,8 @@ public class Count {
         increment(1);
     }
 
-    protected void increment(int amount) {
-        mCount += amount;
+    public void increment(Number amount) {
+        mCount += amount.intValue();
     }
 
     public int getCount() {

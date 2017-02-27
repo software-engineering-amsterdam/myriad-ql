@@ -15,8 +15,10 @@ public abstract class ConditionNode extends Node {
         }
     }
 
-    // Allows the typeChecker to perform a testrun on all expressions.
+    // Allows the typeChecker to perform a test run on all expressions.
     public String tryEvaluate() throws ScriptException {
-        return Evaluator.calculate(toString());
+        return Evaluator.calculate(resolve());
     }
+
+    public abstract String resolve();
 }

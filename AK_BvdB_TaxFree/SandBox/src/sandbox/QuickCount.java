@@ -1,7 +1,8 @@
 package sandbox;
 
 public class QuickCount extends Count {
-    public void increment() {
-        increment(2);
+
+    public void increment(Integer amount) {
+        increment(2 * amount.intValue());
     }
 }

@@ -48,4 +48,6 @@ public abstract class NamedNode extends Node {
     public String getLabel() {
         return mLabel;
     }
+
+    public abstract String resolve();
 }
