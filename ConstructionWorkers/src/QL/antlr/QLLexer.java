@@ -1,12 +1,10 @@
 // Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
+package QL.antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class QLLexer extends Lexer {
@@ -29,7 +27,7 @@ public class QLLexer extends Lexer {
 		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 		"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
-		"BOOL", "MyString", "INT", "Money", "Identifier", "LINE_COMMENT", "MULTI_LINE_COMMENT",
+		"BOOL", "STRING", "INT", "MONEY", "IDENTIFIER", "LINE_COMMENT", "MULTI_LINE_COMMENT", 
 		"WS", "ESC", "UNICODE", "HEX"
 	};
 
@@ -41,7 +39,7 @@ public class QLLexer extends Lexer {
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, "BOOL", "MyString", "INT", "Money", "Identifier", "LINE_COMMENT",
+		null, null, "BOOL", "STRING", "INT", "MONEY", "IDENTIFIER", "LINE_COMMENT", 
 		"MULTI_LINE_COMMENT", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
