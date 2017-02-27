@@ -3,6 +3,7 @@ module QLS.TypeChecker exposing (check)
 import AST exposing (Form)
 import QLS.AST exposing (StyleSheet)
 import QLS.TypeChecker.InvalidQuestionReferences as InvalidQuestionReferences
+import QLS.TypeChecker.Messages exposing (Message)
 
 
 {-| TODO
@@ -11,7 +12,7 @@ import QLS.TypeChecker.InvalidQuestionReferences as InvalidQuestionReferences
  - [ ] (default) widget assignments are compatible with question types (e.g. no radio button for integer widgets).
  - [ ] you cannot place a single question multiple times.
 -}
-check : Form -> StyleSheet -> List String
+check : Form -> StyleSheet -> List Message
 check form stylesheet =
     List.concat
         [ InvalidQuestionReferences.check form stylesheet

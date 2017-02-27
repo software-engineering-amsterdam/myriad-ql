@@ -4,24 +4,20 @@ import AST exposing (Form, Location)
 import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
 import QLS.FormVisitor as FormVisitor exposing (defaultConfig)
 import QLS.StyleSheetVisitor as StyleSheetVisitor
+import QLS.TypeChecker.Messages exposing (Message, undefinedQuestionReference)
 import Dict exposing (Dict)
 
 
-check : Form -> StyleSheet -> List String
+check : Form -> StyleSheet -> List Message
 check form styleSheet =
     let
         declaredQuestions =
             declaredQuestionsInForm form
-
-        usedQuestion =
-            usedQuestionForStyleSheet styleSheet
-
-        invalidReferences =
-            usedQuestion
-                |> Dict.filter (\k _ -> not (List.member k declaredQuestions))
-                |> Dict.toList
     in
-        []
+        usedQuestionForStyleSheet styleSheet
+            |> Dict.filter (\k _ -> not (List.member k declaredQuestions))
+            |> Dict.toList
+            |> List.map (uncurry undefinedQuestionReference)
 
 
 declaredQuestionsInForm : Form -> List String
@@ -54,5 +50,5 @@ onQuestion question context =
         Question ( k, v ) ->
             Dict.insert k v context
 
-        QLS.AST.ConfiguredQuestion ( k, v ) _ ->
+        ConfiguredQuestion ( k, v ) _ ->
             Dict.insert k v context
