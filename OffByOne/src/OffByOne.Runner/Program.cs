@@ -9,6 +9,7 @@
 
     using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.LanguageCore.Ast.ValueTypes;
+    using OffByOne.LanguageCore.Visitors;
     using OffByOne.Ql;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
@@ -81,7 +82,7 @@
             CheckQlTypes((FormStatement)tree);
             Console.WriteLine("Done!");
             var eval = new QlEvaluator();
-            eval.Visit((FormStatement)tree);
+            eval.Visit((FormStatement)tree, new VisitorContext());
         }
 
         private static void TestQlsGrammar()
