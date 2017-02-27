@@ -2,7 +2,7 @@ module QLS.Parser.Widget exposing (widget)
 
 import Combine exposing (Parser, choice, regex, parens, sepBy1, string, (<$>), (<$), (*>), fail)
 import QLS.AST exposing (Widget(Checkbox, Spinbox, Radio))
-import Parser.Token exposing (quotedString)
+import QL.Parser.Token exposing (quotedString)
 import Combine.Extra exposing (whitespace1, trimmed)
 
 

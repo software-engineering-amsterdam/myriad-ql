@@ -4,8 +4,8 @@ import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, value, id)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
-import Environment
-import Values exposing (string)
+import QL.Environment as Environment
+import QL.Values as Values
 
 
 view : WidgetContext msg -> Html msg
@@ -20,6 +20,6 @@ view { identifier, env, onChange } =
             , class "form-control"
             , id identifier
             , value textValue
-            , onInput (string >> onChange)
+            , onInput (Values.string >> onChange)
             ]
             []

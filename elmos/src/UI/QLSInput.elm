@@ -4,7 +4,7 @@ import Html exposing (Html, form, textarea, div, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
-import AST exposing (Form)
+import QL.AST exposing (Form)
 import QLS.Parser as Parser
 import QLS.TypeChecker
 

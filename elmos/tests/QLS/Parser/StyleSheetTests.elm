@@ -4,7 +4,7 @@ import Test exposing (..)
 import QLS.Parser.StyleSheet exposing (styleSheet, page, section, question)
 import ParserTestUtil exposing (testWithParser)
 import QLS.AST exposing (..)
-import AST exposing (Location(Location), ValueType(BooleanType, MoneyType))
+import QL.AST exposing (Location(Location), ValueType(BooleanType, MoneyType))
 
 
 all : Test

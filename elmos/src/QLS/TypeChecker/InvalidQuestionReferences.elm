@@ -1,6 +1,6 @@
 module QLS.TypeChecker.InvalidQuestionReferences exposing (check)
 
-import AST exposing (Form, Location)
+import QL.AST exposing (Form, Location)
 import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
 import QLS.FormVisitor as FormVisitor exposing (defaultConfig)
 import QLS.StyleSheetVisitor as StyleSheetVisitor

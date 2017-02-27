@@ -3,7 +3,7 @@ module QLS.Parser.Style exposing (style)
 import Combine exposing (Parser, choice, string, regex, (<$>), (*>))
 import Combine.Num exposing (int)
 import QLS.AST exposing (Style(Width, Font, FontSize, Color))
-import Parser.Token exposing (quotedString)
+import QL.Parser.Token exposing (quotedString)
 import Combine.Extra exposing (whitespace1)
 
 

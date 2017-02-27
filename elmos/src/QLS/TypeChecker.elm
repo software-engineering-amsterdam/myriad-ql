@@ -1,6 +1,6 @@
 module QLS.TypeChecker exposing (check)
 
-import AST exposing (Form)
+import QL.AST exposing (Form)
 import QLS.AST exposing (StyleSheet)
 import QLS.TypeChecker.InvalidQuestionReferences as InvalidQuestionReferences
 import QLS.TypeChecker.Messages exposing (Message)

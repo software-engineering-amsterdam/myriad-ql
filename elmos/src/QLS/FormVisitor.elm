@@ -1,6 +1,6 @@
 module QLS.FormVisitor exposing (..)
 
-import AST exposing (..)
+import QL.AST exposing (..)
 
 
 type Order context node

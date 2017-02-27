@@ -1,6 +1,6 @@
 module QLS.TypeChecker.Messages exposing (..)
 
-import AST exposing (ValueType, Operator, Comparison, Logic, Relation, Location, Id)
+import QL.AST exposing (ValueType, Operator, Comparison, Logic, Relation, Location, Id)
 
 
 type Message

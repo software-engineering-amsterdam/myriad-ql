@@ -2,10 +2,10 @@ module QLS.Parser.StyleSheet exposing (..)
 
 import Combine exposing (..)
 import Combine.Extra exposing (trimmed, whitespace1)
-import Parser.Token exposing (quotedString, identifier)
+import QL.Parser.Token exposing (quotedString, identifier)
+import QL.Parser.Form exposing (valueType)
 import QLS.AST exposing (..)
 import QLS.Parser.Configuration exposing (configuration)
-import Parser.Form exposing (valueType)
 
 
 styleSheet : Parser s StyleSheet

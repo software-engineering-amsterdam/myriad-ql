@@ -8,10 +8,10 @@ import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Float as FloatWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
-import Environment as Env exposing (Environment)
-import Values exposing (Value)
-import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
-import FormUtil exposing (VisibleField(Editable, Computed))
+import QL.Environment as Env exposing (Environment)
+import QL.Values exposing (Value)
+import QL.AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
+import QL.FormUtil as FormUtil exposing (ActiveField(Editable, Computed))
 
 
 type alias Model =
@@ -68,7 +68,7 @@ environmentPreview env =
         ]
 
 
-viewField : Model -> VisibleField -> Html Msg
+viewField : Model -> ActiveField -> Html Msg
 viewField model field =
     BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
         case FormUtil.fieldValueType field of
@@ -85,7 +85,7 @@ viewField model field =
                 FloatWidget.view
 
 
-visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
+visibleFieldWidgetConfig : Environment -> ActiveField -> WidgetContext Msg
 visibleFieldWidgetConfig env field =
     case field of
         Editable label identifier _ ->

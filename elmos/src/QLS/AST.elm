@@ -1,6 +1,6 @@
 module QLS.AST exposing (..)
 
-import AST as QL exposing (ValueType, Id)
+import QL.AST as QL exposing (ValueType, Id)
 
 
 type alias StyleSheet =

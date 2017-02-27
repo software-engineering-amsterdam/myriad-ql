@@ -1,12 +1,12 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import AST exposing (Form, Location)
+import QL.AST exposing (Form, Location(Location))
 import Html exposing (Html, div, form, h3, hr, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
-import Parser.Parser as Parser
-import TypeChecker
-import TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
+import QL.Parser as Parser
+import QL.TypeChecker as TypeChecker
+import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
 
 
 type alias Model =
@@ -145,5 +145,5 @@ renderMessage message =
 
 
 locationToString : Location -> String
-locationToString (AST.Location line col) =
+locationToString (Location line col) =
     "line " ++ toString line ++ "( col " ++ toString col ++ ")"
