@@ -7,7 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
@@ -43,6 +45,7 @@ public class Questionnaire extends Application implements Notifier {
 	private static Form form;
 	private static Map<String, Value> answers;
 	private static GridPane grid;
+	private static Stage primaryStage;
 	
     public static void main(Form f) {
     	form = f;
@@ -51,20 +54,29 @@ public class Questionnaire extends Application implements Notifier {
     }
         
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage pstage) {
+       
+    	primaryStage = pstage;
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
         
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
-        
+             
         renderTitle(grid, form.getId());
         
         renderQuestionnaire(grid);
-        
-        primaryStage.show();
 
+    }
+    
+    // TODO improve
+    public void start2() {
+    	
+    	Node title = grid.getChildren().get(0);
+    	grid.getChildren().clear();
+    	grid.add(title, 0, 0);
+        renderQuestionnaire(grid);
     }
     
     private GridPane initGrid() {
@@ -122,8 +134,11 @@ public class Questionnaire extends Application implements Notifier {
             	}  
                 actiontarget.setFill(Color.SPRINGGREEN);
                 actiontarget.setText("Thank you for filling\n in the questionnaire");
+                
             }
         });
+        
+        primaryStage.show();
     }
     
     private void renderTitle(GridPane grid, String title) {
@@ -172,7 +187,8 @@ public class Questionnaire extends Application implements Notifier {
     	Value oldAnswer = answers.get(name); 
 		if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
 			answers.put(name, newValue);
-			renderQuestionnaire(grid);
+			// renderQuestionnaire(grid);
+			start2();
 		}
 	}
 }
