@@ -18,10 +18,11 @@ import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
+import org.ql.typechecker.messages.TypeCheckMessages;
 
 import java.util.List;
 
-public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
+public class TypeChecker implements FormVisitor<MessageBag>, StatementVisitor<MessageBag> {
 
     private final QuestionCollector<Form> questionCollector;
     private final MessageBag messages;
@@ -34,60 +35,67 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     }
 
     @Override
-    public Void visit(Form form) {
+    public MessageBag visit(Form form) {
+        MessageBag messages = new TypeCheckMessages();
+
         if (form.getName().toString().isEmpty()) {
             messages.addError("Form name cannot be empty", form.getName());
         }
 
         Questions questions = questionCollector.collect(form);
 
-        checkQuestionDuplicates(questions);
+        MessageBag questionDuplicateMessages = checkQuestionDuplicates(questions);
+        MessageBag questionLabelsDuplicateMessages = checkQuestionLabelsDuplicates(questions);
+        MessageBag statementsMessages = checkStatements(form.getStatements());
 
-        checkQuestionLabelsDuplicates(questions);
+        this.expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
 
-        expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
-
-        checkStatements(form.getStatements());
-
-        return null;
+        return messages.merge(questionDuplicateMessages)
+                .merge(questionLabelsDuplicateMessages)
+                .merge(statementsMessages);
     }
 
     @Override
-    public Void visit(IfThen ifThen) {
-        checkIfCondition(ifThen.getCondition());
+    public MessageBag visit(IfThen ifThen) {
+        MessageBag ifConditionMessages = checkIfCondition(ifThen.getCondition());
+        MessageBag ifThenMessages = checkStatements(ifThen.getThenStatements());
 
-        checkStatements(ifThen.getThenStatements());
-
-        return null;
-    }
-    @Override
-    public Void visit(IfThenElse ifThenElse) {
-        checkIfCondition(ifThenElse.getCondition());
-
-        checkStatements(ifThenElse.getThenStatements());
-        checkStatements(ifThenElse.getElseStatements());
-
-        return null;
+        return ifConditionMessages.merge(ifThenMessages);
     }
 
     @Override
-    public Void visit(Question question) {
-        checkQuestionText(question);
+    public MessageBag visit(IfThenElse ifThenElse) {
+        MessageBag ifMessages = checkIfCondition(ifThenElse.getCondition());
+        MessageBag ifThenMessages = checkStatements(ifThenElse.getThenStatements());
+        MessageBag ifThenElseMessages = checkStatements(ifThenElse.getElseStatements());
 
-        checkDefaultValue(question);
-
-        question.accept(this);
-
-        return null;
+        return ifMessages.merge(ifThenMessages).merge(ifThenElseMessages);
     }
 
-    private void checkQuestionText(Question question) {
+    @Override
+    public MessageBag visit(Question question) {
+        MessageBag questionTextMessages = checkQuestionText(question);
+        MessageBag defaultValueMessages = checkDefaultValue(question);
+
+        return questionTextMessages.merge(defaultValueMessages);
+
+        // TODO: Note that question.accept(this) gives an error.
+        //return question.accept(this).merge(questionTextMessages).merge(defaultValueMessages);
+    }
+
+    private MessageBag checkQuestionText(Question question) {
+        MessageBag messages = new TypeCheckMessages();
+
         if (question.getQuestionText().toString().isEmpty()) {
             messages.addError("No question text found", question.getQuestionText());
         }
+
+        return messages;
     }
 
-    private void checkDefaultValue(Question question) {
+    private MessageBag checkDefaultValue(Question question) {
+        MessageBag messages = new TypeCheckMessages();
+
         if (question.getDefaultValue() != null) {
             try {
                 Type value = question.getDefaultValue().accept(expressionTypeChecker);
@@ -98,10 +106,13 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
                 messages.addError("An error occurred with the default value", question.getDefaultValue());
             }
         }
+
+        return messages;
     }
 
     private SymbolTable createSymbolTable(List<Question> questions) {
         SymbolTable symbolTable = new HashMapSymbolTable();
+
         for (Question question : questions) {
             symbolTable.put(question.getId(), question.getType());
         }
@@ -109,29 +120,43 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
         return symbolTable;
     }
 
-    private void checkStatements(List<Statement> statements) {
+    private MessageBag checkStatements(List<Statement> statements) {
+        MessageBag messages = new TypeCheckMessages();
+
         for (Statement statement : statements) {
-            statement.accept(this);
+            messages.merge(statement.accept(this));
         }
+
+        return messages;
     }
 
-    private void checkQuestionDuplicates(Questions questions) {
+    private MessageBag checkQuestionDuplicates(Questions questions) {
+        MessageBag messages = new TypeCheckMessages();
+
         for (Question question : questions) {
             if (questions.hasDuplicates(question)) {
                 messages.addError("Question '" + question.getId() + "' has duplicate(s)", question);
             }
         }
+
+        return messages;
     }
 
-    private void checkQuestionLabelsDuplicates(Questions questions) {
+    private MessageBag checkQuestionLabelsDuplicates(Questions questions) {
+        MessageBag messages = new TypeCheckMessages();
+
         for(Question question : questions) {
             if (questions.hasLabelDuplicates(question)) {
                 messages.addError("Question '" + question.getId() + "' label has duplicate(s)", question);
             }
         }
+
+        return messages;
     }
 
-    private void checkIfCondition(Expression condition) {
+    private MessageBag checkIfCondition(Expression condition) {
+        MessageBag messages = new TypeCheckMessages();
+
         try {
             Type conditionType = condition.accept(expressionTypeChecker);
             if (!(conditionType instanceof BooleanType)) {
@@ -142,5 +167,7 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
         } catch (Throwable throwable) {
             messages.addError("Unrecognized error occurred: " + throwable, condition);
         }
+
+        return messages;
     }
 }
