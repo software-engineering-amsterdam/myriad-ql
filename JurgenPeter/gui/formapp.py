@@ -13,18 +13,18 @@ class FormApp:
         self.widgets = {}
 
         self.app = gui(form.name)
-        self.app.bindKey("<KeyPress>", self.update_gui)
+        self.app.bindKey("<KeyPress>", self.update)
 
-        WidgetCreator(self.app, self.widgets, self.update_gui).visit(form)
+        WidgetCreator(self.app, self.widgets, self.update).visit(form)
 
     def start(self):
-        self.update_gui(None)
+        self.update(None)
         self.app.go()
 
     def stop(self):
         self.app.stop()
 
-    def update_gui(self, _):
+    def update(self, _):
         for name, widget in self.widgets.items():
             self.environment[name] = widget.get_value()
         ComputationUpdater(self.environment).visit(self.form)

@@ -7,13 +7,13 @@ class GuiUpdater:
         self.form_app = form_app
         self.environment = environment
         self.evaluator = Evaluator(environment)
-        self.previous_conditions = []
+        self.conditions = []
 
     def push_condition(self, element):
-        self.previous_conditions.append(element)
+        self.conditions.append(element)
 
     def pop_condition(self):
-        self.previous_conditions.pop()
+        self.conditions.pop()
 
     def visit(self, node):
         node.accept(self)
@@ -42,7 +42,7 @@ class GuiUpdater:
         self.pop_condition()
 
     def visit_question(self, node):
-        if all(self.previous_conditions):
+        if all(self.conditions):
             self.form_app.show_widget(node.name)
         else:
             self.form_app.hide_widget(node.name)

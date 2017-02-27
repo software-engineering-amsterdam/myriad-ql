@@ -15,18 +15,14 @@ class Widget:
 
 
 class EntryWidget(Widget):
+
     def __init__(self, app, question):
         super().__init__(app, question)
         self.app.addLabel(self.label_id, question.label)
         self.app.addEntry(self.entry_id)
-        command = self.app.getEntryWidget(self.entry_id).register(
-            self.validate)
-        self.app.getEntryWidget(self.entry_id).config(
-            validate="key", validatecommand=(command, "%P"))
-
-    @staticmethod
-    def validate(text):
-        return True
+        widget = self.app.getEntryWidget(self.entry_id)
+        command = widget.register(self.validate)
+        widget.config(validate="key", validatecommand=(command, "%P"))
 
     def show(self):
         self.app.showLabel(self.label_id)
@@ -39,6 +35,10 @@ class EntryWidget(Widget):
     def disable(self):
         self.app.disableEntry(self.entry_id)
 
+    @staticmethod
+    def validate(text):
+        return True
+
     def set_value(self, value):
         if value is not None:
             self.app.setEntry(self.entry_id, str(value))
@@ -50,45 +50,33 @@ class EntryWidget(Widget):
 
 
 class IntegerEntryWidget(EntryWidget):
+
     @staticmethod
     def validate(text):
         if re.match("^(-|\+)?[0-9]*$", text):
             return True
         return False
 
-    def set_value(self, value):
-        if value is not None:
-            self.app.setEntry(self.entry_id, str(value))
-        else:
-            self.app.setEntry(self.entry_id, "0")
-
     def get_value(self):
-        value = self.app.getEntry(self.entry_id)
-        if re.match("^(-|\+)?[0-9]+$", value):
-            return int(value)
-        return None
+        try:
+            return int(self.app.getEntry(self.entry_id))
+        except ValueError:
+            return None
 
 
 class DecimalEntryWidget(EntryWidget):
+
     @staticmethod
     def validate(text):
         if re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text):
             return True
         return False
 
-    def set_value(self, value):
-        if value is not None:
-            self.app.setEntry(self.entry_id, str(value))
-        else:
-            self.app.setEntry(self.entry_id, "0.0")
-
     def get_value(self):
-        value = self.app.getEntry(self.entry_id)
-        if re.match("^(-|\+)?[0-9]+\.?[0-9]*$", value):
-            return float(value)
-        if re.match("^(-|\+)?[0-9]*\.?[0-9]+$", value):
-            return float(value)
-        return None
+        try:
+            return float(self.app.getEntry(self.entry_id))
+        except ValueError:
+            return None
 
 
 class CheckBoxWidget(Widget):

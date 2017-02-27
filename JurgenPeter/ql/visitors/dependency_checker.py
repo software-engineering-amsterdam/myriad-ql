@@ -34,7 +34,7 @@ class DependencyChecker:
                        "itself".format(node.name))
 
         # Find all (indirect) dependencies of this questions dependencies using
-        # breadth first search on the dependency table.
+        # breadth first search on the known dependencies.
         for dependency in dependencies:
             dependencies += [implicit_dependency
                              for implicit_dependency in
