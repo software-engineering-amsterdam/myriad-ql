@@ -69,7 +69,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         } else if ("string".equals(ctx.varType().toString())) {
             questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
         } else if ("integer".equals(ctx.varType().toString())) {
-            questionNode = new IntegerQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString(), 0);
+            questionNode = new IntegerQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
         } else {
             // TODO: Bail out!
             return;
