@@ -79,8 +79,8 @@ class TestAst(unittest.TestCase):
         substraction_node = arithmetic_statement_node.children[0]
         self.assertEqual(0, len(substraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', substraction_node.var_type,
+                         'Subtraction node should have type subtraction')
 
         self.assertEqual('sellingPrice', substraction_node.lhs.name)
         self.assertEqual('privateDebt', substraction_node.rhs.name)
@@ -118,8 +118,8 @@ class TestAst(unittest.TestCase):
         substraction_node = arithmetic_statement_node.children[0]
         self.assertEqual(0, len(substraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', substraction_node.var_type,
+                         'Subtraction node should have type subtraction')
         self.assertEqual('interest', substraction_node.rhs.name)
 
         addition_node = substraction_node.lhs
@@ -171,8 +171,8 @@ class TestAst(unittest.TestCase):
         substraction_node = addition_node.lhs
         self.assertEqual(0, len(substraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', substraction_node.var_type,
+                         'Subtraction node should have type subtraction')
 
         self.assertEqual('sellingPrice', substraction_node.lhs.name)
         self.assertEqual('privateDebt', substraction_node.rhs.name)
@@ -217,8 +217,8 @@ class TestAst(unittest.TestCase):
         substraction_node = multiplication_node.lhs
         self.assertEqual(0, len(substraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', substraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', substraction_node.var_type,
+                         'Subtraction node should have type subtraction')
 
         self.assertEqual('sellingPrice', substraction_node.lhs.name)
         self.assertEqual('privateDebt', substraction_node.rhs.name)
@@ -262,8 +262,8 @@ class TestAst(unittest.TestCase):
         subtraction_node = addition_node.lhs
         self.assertEqual(0, len(subtraction_node.children),
                          'Subtraction node should have no nodes as children')
-        self.assertEqual('substraction', subtraction_node.var_type,
-                         'Subtraction node should have type substraction')
+        self.assertEqual('subtraction', subtraction_node.var_type,
+                         'Subtraction node should have type subtraction')
         self.assertEqual('sellingPrice', subtraction_node.lhs.name)
 
         multiplication_node_1 = subtraction_node.rhs

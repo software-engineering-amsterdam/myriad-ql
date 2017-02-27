@@ -101,7 +101,7 @@ class Addition(BinaryOperation):
 
 class Subtraction(BinaryOperation):
     def __init__(self, lhs, rhs):
-        super(Subtraction, self).__init__('substraction', lhs, rhs)
+        super(Subtraction, self).__init__('subtraction', lhs, rhs)
 
     def apply(self, visitor):
         return visitor.subtraction(self)
@@ -160,7 +160,6 @@ class Or(BinaryOperation):
 
     def apply(self, visitor):
         return visitor.or_(self)
-
 
 
 class Equality(BinaryOperation):
