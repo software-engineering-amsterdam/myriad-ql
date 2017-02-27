@@ -1,11 +1,11 @@
 package com.matthewchapman.ql.ast.atomic;
 
-import com.matthewchapman.ql.ast.QLType;
+import com.matthewchapman.ql.ast.Type;
 
 /**
  * Created by matt on 27/02/2017.
  */
-public class BooleanLiteral extends QLType {
+public class BooleanLiteral extends Type {
 
     public BooleanLiteral(String s)
     {

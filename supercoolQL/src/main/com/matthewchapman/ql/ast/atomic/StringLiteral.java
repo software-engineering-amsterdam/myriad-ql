@@ -1,11 +1,11 @@
 package com.matthewchapman.ql.ast.atomic;
 
-import com.matthewchapman.ql.ast.QLType;
+import com.matthewchapman.ql.ast.Type;
 
 /**
  * Created by matt on 24/02/2017.
  */
-public class StringLiteral extends QLType {
+public class StringLiteral extends Type {
 
     public StringLiteral(String s)
     {

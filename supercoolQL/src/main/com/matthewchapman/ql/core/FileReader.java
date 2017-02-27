@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 
 
-class QLFileReader {
+class FileReader {
 
     private String resultString = "";
 
@@ -41,7 +41,7 @@ class QLFileReader {
 
     String readFile(File selectedFile) {
         String fileContents = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
+        try (BufferedReader br = new BufferedReader(new java.io.FileReader(selectedFile))) {
             String line;
 
             while ((line = br.readLine()) != null) {

@@ -15,7 +15,7 @@ expression
     :   STRING                                  #stringLiteral
     |   NUMBER                                  #integerLiteral
     |   ID                                      #parameter
-    |   '(' expression+ ')'                      #parameterGroup
+    |   '(' expression+ ')'                     #parameterGroup
     |   '!' expression                          #negation
     |   left=expression '/' right=expression    #division
     |   left=expression '*' right=expression    #multiplication

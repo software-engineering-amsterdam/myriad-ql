@@ -1,13 +1,13 @@
 package com.matthewchapman.ql.validation.validator;
 
-import com.matthewchapman.ql.ast.QLStatement;
+import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 27/02/2017.
  */
-public class ASTVisitor implements Visitor<Void> {
+public class QLTreeVisitor implements QLVisitor<Void> {
 
 
     @Override
@@ -19,7 +19,7 @@ public class ASTVisitor implements Visitor<Void> {
     @Override
     public Void visit(IfStatement ifStatement) {
 
-        for (QLStatement statement:ifStatement.getStatements()) {
+        for (Statement statement:ifStatement.getStatements()) {
             statement.accept(this);
         }
 

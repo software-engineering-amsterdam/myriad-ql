@@ -41,7 +41,7 @@ form exampleForm {
 
 # Implementation Progress
 - [x] QL Grammar
-- [ ] QLVisitor implementation (based on Antlr's visitor)
+- [ ] QLVisitor implementation
 - [x] Replacement error listener for parser
 - [x] Application launcher
 - [ ] AST
@@ -55,9 +55,10 @@ form exampleForm {
   - [ ] Type checking
     - [ ] reference to undefined questions
     - [ ] duplicate question declarations with different types
-    - [ ] conditions that are not of the type boolean
+    - [ ] conditions that are not of the type boolean
     - [ ] operands of invalid type to operators
     - [ ] cyclic dependencies between questions
     - [ ] duplicate labels
   - [ ] Error output in GUI
 - [ ] GUI generation
+- [ ] Unit tests

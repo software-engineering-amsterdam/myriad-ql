@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.core;
 
-import com.matthewchapman.ql.ast.QLForm;
+import com.matthewchapman.ql.ast.Form;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ public class Launcher {
 
     public static void main(String[] args) {
         CoreParser coreParser = new CoreParser();
-        QLFileReader QLFileReader = new QLFileReader();
+        FileReader QLFileReader = new FileReader();
         String inputContent = null;
 
         //TODO This feels messy. Candidate for refactoring
@@ -21,7 +21,7 @@ public class Launcher {
             inputContent = QLFileReader.readFile(new File("res/test.txt"));
         } else {
             try {
-                inputContent = new QLFileReader().QlRead();
+                inputContent = new FileReader().QlRead();
             } catch (InvocationTargetException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -30,7 +30,7 @@ public class Launcher {
         if (inputContent != null) {
             if (!inputContent.isEmpty()) {
                 //TODO ugh, application result should not be here
-                QLForm ast = coreParser.buildQLAST(inputContent);
+                Form ast = coreParser.buildQLAST(inputContent);
                 coreParser.visitAST(ast);
             } else {
                 System.out.println("Error: Input file is empty");

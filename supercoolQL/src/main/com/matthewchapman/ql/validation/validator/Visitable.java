@@ -5,5 +5,5 @@ package com.matthewchapman.ql.validation.validator;
  */
 public interface Visitable {
 
-    <T> T accept(Visitor<T> visitor);
+    <T> T accept(QLVisitor<T> visitor);
 }
