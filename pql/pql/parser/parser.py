@@ -97,8 +97,7 @@ def parse(input_string):
     #
     arithmetic_expression = \
         OneOrMore(
-            arithmetic_precedence | (lit_l_paren + arithmetic_precedence + lit_r_paren)
-        ).setResultsName("arithmetic_statement")
+            arithmetic_precedence | (lit_l_paren + arithmetic_precedence + lit_r_paren))
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
     #
