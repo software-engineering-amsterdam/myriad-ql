@@ -50,7 +50,7 @@ public class ExpressionVisitor extends Visitor {
 
 		if (!environment.variableExists(id.getName())) {
 			throw new RuntimeException("The variable with name " + id.getName() +
-					" on line ... is not defined");
+					" on line "+ id.getLine() + " is not defined");
 		}
 
 		System.out.println("Eval: " + result.getValue());
@@ -59,10 +59,10 @@ public class ExpressionVisitor extends Visitor {
 	// TODO do we want to add the throw after this function
 	private void check(Atom result) {
 		if (result == null) {
-			throw new RuntimeException("The expression on line .. cannot be evaluated");
+			throw new RuntimeException("The expression on line "+ result.getLine() + " cannot be evaluated");
 		}
 		else if (result.getType() != "boolean") {
-			throw new RuntimeException("The condition on line ... does not return a boolean");	
+			throw new RuntimeException("The condition on line " + result.getLine() + " does not return a boolean");
 			// TODO implement line numbers
 		}
 		

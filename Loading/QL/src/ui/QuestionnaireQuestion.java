@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.function.Function;
+
 import ast.type.Type;
 import value.*;
 import javafx.beans.value.ChangeListener;
@@ -7,13 +9,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import ui.field.Check;
+import ui.field.Field;
+import ui.field.Text;
+import ui.field.Number;
 
 public class QuestionnaireQuestion {
 	
 	private String name;
 	private String label;
 	private Type type;
-	private Control entryField;
+	private QControl entryField;
 	
 	public QuestionnaireQuestion(String name, String label, Type type) {
 		this.name = name;
@@ -23,22 +29,13 @@ public class QuestionnaireQuestion {
 	}
 	
 	// TODO move to field
-	private Control deriveField(Type type) {
+	private QControl deriveField(Type type) {
         if ("string" == type.getType()) {
-        	return new TextField();
+        	return new QControl(new ui.field.Text());
         } else if ("boolean" == type.getType()) {
-        	return new CheckBox();
+        	return new QControl(new ui.field.Check());
         } else if ("integer" == type.getType()) {
-        	TextField field = new TextField();
-        	field.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d*")) {
-                        (field).setText(newValue.replaceAll("[^\\d]", ""));
-                    }
-                }
-            });
-        	return field;
+        	return new QControl(new ui.field.Number());
         } else {
         	// TODO error
         	return null;
@@ -49,19 +46,26 @@ public class QuestionnaireQuestion {
 	// TODO move to field
 	// TODO default return statement
 	public Value getAnswer() {
-		if ("boolean" == type.getType()) {
-			return new BoolValue(((CheckBox) entryField).isSelected());
-		} else {
-			String str = ((TextField) entryField).getText();
-			if (str.isEmpty()) {
-				return new EmptyValue();
-			} else if ("string" == type.getType()) {
-				return new StringValue(str);
-			} else {
-				return new IntegerValue(Integer.valueOf(str));
-			}
 		
-		}
+		return entryField.getAnswer();
+		
+//		if ("boolean" == type.getType()) {
+//			return new BoolValue(((CheckBox) entryField).isSelected());
+//		} else {
+//			String str = ((TextField) entryField).getText();
+//			if (str.isEmpty()) {
+//				return new EmptyValue();
+//			} else if ("string" == type.getType()) {
+//				return new StringValue(str);
+//			} else {
+//				return new IntegerValue(Integer.valueOf(str));
+//			}
+//		
+//		}
+	}
+	
+	public void setAnswer(Value value) {
+		entryField.setAnswer(value);
 	}
 	
 	public String getName() {
@@ -76,7 +80,7 @@ public class QuestionnaireQuestion {
 		return type;
 	}
 	
-	public Control getEntryField() {
+	public QControl getEntryField() {
 		return entryField;
 	}
 	

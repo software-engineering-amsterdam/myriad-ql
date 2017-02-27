@@ -72,7 +72,7 @@
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
     <Compile Include="Ast\ValueTypes\DateValueType.cs" />
-    <Compile Include="Ast\ValueTypes\FloatValueType.cs" />
+    <Compile Include="Ast\ValueTypes\DecimalValueType.cs" />
     <Compile Include="Ast\ValueTypes\IntegerValueType.cs" />
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />

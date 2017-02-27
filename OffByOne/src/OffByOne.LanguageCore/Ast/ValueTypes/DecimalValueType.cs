@@ -5,16 +5,16 @@
     using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.LanguageCore.Visitors.Contracts;
 
-    public class FloatValueType : NumericalValueType
+    public class DecimalValueType : NumericalValueType
     {
         public override bool Equals(object obj)
         {
-            return obj.Is<FloatValueType>();
+            return obj.Is<DecimalValueType>();
         }
 
         public override bool Equals(ValueType obj)
         {
-            return obj.Is<FloatValueType>();
+            return obj.Is<DecimalValueType>();
         }
 
         public override int GetHashCode()
