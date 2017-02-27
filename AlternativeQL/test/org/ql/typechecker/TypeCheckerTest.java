@@ -1,17 +1,14 @@
 package org.ql.typechecker;
 
 import org.junit.Test;
-import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
 import org.ql.collection.collector.FormQuestionCollector;
-import org.ql.collection.collector.QuestionCollector;
 import org.ql.collection.collector.QuestionVisitor;
 import org.ql.typechecker.messages.MessageBag;
-import org.ql.typechecker.messages.TypeCheckMessages;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -20,7 +17,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenFormNameEmpty() {
-        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().setName("").build());
 
@@ -30,7 +27,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldContainNoErrorsWhenQuestionAdded() {
-        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().build());
 
@@ -39,7 +36,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
-        TypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
 

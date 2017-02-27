@@ -4,7 +4,6 @@ import org.ql.ast.Expression;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
-import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
@@ -20,20 +19,23 @@ import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
 import org.ql.typechecker.messages.TypeCheckMessages;
+import org.ql.typechecker.statement.StatementProxyVisitor;
 
 import java.util.List;
 
-// TODO decouple TypeChecker from StatementVisitor.
-public class TypeChecker implements StatementVisitor<MessageBag> {
+public class TypeChecker implements ITypeChecker {
 
     private final QuestionCollector<Form> questionCollector;
 
     private ExpressionTypeChecker expressionTypeChecker;
+    private StatementVisitor<MessageBag> visitor;
 
     public TypeChecker(QuestionCollector<Form> questionCollector) {
         this.questionCollector = questionCollector;
+        visitor = new StatementProxyVisitor(this);
     }
 
+    @Override
     public MessageBag checkForm(Form form) {
         Questions questions = questionCollector.collect(form);
 
@@ -46,38 +48,28 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
                 .merge(checkStatements(form.getStatements()));
     }
 
-    private MessageBag checkIdentifier(Identifier identifier) {
-        MessageBag messages = new TypeCheckMessages();
-        if (identifier.toString().isEmpty()) {
-            messages.addError("Form name cannot be empty", identifier);
-        }
-
-        return messages;
-    }
-
     @Override
-    public MessageBag visit(IfThen ifThen) {
-        MessageBag ifConditionMessages = checkIfCondition(ifThen.getCondition());
-        MessageBag ifThenMessages = checkStatements(ifThen.getThenStatements());
-
-        return ifConditionMessages.merge(ifThenMessages);
-    }
-
-    @Override
-    public MessageBag visit(IfThenElse ifThenElse) {
-        MessageBag ifMessages = checkIfCondition(ifThenElse.getCondition());
-        MessageBag ifThenMessages = checkStatements(ifThenElse.getThenStatements());
-        MessageBag ifThenElseMessages = checkStatements(ifThenElse.getElseStatements());
-
-        return ifMessages.merge(ifThenMessages).merge(ifThenElseMessages);
-    }
-
-    @Override
-    public MessageBag visit(Question question) {
+    public MessageBag checkQuestion(Question question) {
         return checkQuestionText(question).merge(checkDefaultValue(question));
     }
 
-    private MessageBag checkQuestionText(Question question) {
+    @Override
+    public MessageBag checkIfThenElse(IfThenElse ifThenElse) {
+        MessageBag ifThenMessages = checkStatements(ifThenElse.getThenStatements());
+        MessageBag ifThenElseMessages = checkStatements(ifThenElse.getElseStatements());
+
+        return checkIfCondition(ifThenElse.getCondition()).merge(ifThenMessages).merge(ifThenElseMessages);
+    }
+
+    @Override
+    public MessageBag checkIfThen(IfThen ifThen) {
+        MessageBag ifThenMessages = checkStatements(ifThen.getThenStatements());
+
+        return checkIfCondition(ifThen.getCondition()).merge(ifThenMessages);
+    }
+
+    @Override
+    public MessageBag checkQuestionText(Question question) {
         MessageBag messages = new TypeCheckMessages();
 
         if (question.getQuestionText().toString().isEmpty()) {
@@ -87,7 +79,8 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
         return messages;
     }
 
-    private MessageBag checkDefaultValue(Question question) {
+    @Override
+    public MessageBag checkDefaultValue(Question question) {
         MessageBag messages = new TypeCheckMessages();
 
         if (question.getDefaultValue() != null) {
@@ -96,35 +89,29 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
                 if (!question.getType().toString().equals(value.toString())) {
                     messages.addError(new TypeMismatchException(question.getType(), value));
                 }
+            } catch (TypeError typeError) {
+                messages.addError(typeError);
             } catch (Throwable throwable) {
-                messages.addError("An error occurred with the default value", question.getDefaultValue());
+                messages.addError("Unrecognized error occurred: " + throwable, question);
             }
         }
 
         return messages;
     }
 
-    private SymbolTable createSymbolTable(List<Question> questions) {
-        SymbolTable symbolTable = new HashMapSymbolTable();
-
-        for (Question question : questions) {
-            symbolTable.put(question.getId(), question.getType());
-        }
-
-        return symbolTable;
-    }
-
-    private MessageBag checkStatements(List<Statement> statements) {
+    @Override
+    public MessageBag checkStatements(List<Statement> statements) {
         MessageBag messages = new TypeCheckMessages();
 
         for (Statement statement : statements) {
-            messages = messages.merge(statement.accept(this));
+            messages = messages.merge(statement.accept(visitor));
         }
 
         return messages;
     }
 
-    private MessageBag checkQuestionDuplicates(Questions questions) {
+    @Override
+    public MessageBag checkQuestionDuplicates(Questions questions) {
         MessageBag messages = new TypeCheckMessages();
 
         for (Question question : questions) {
@@ -136,7 +123,8 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
         return messages;
     }
 
-    private MessageBag checkQuestionLabelsDuplicates(Questions questions) {
+    @Override
+    public MessageBag checkQuestionLabelsDuplicates(Questions questions) {
         MessageBag messages = new TypeCheckMessages();
 
         for(Question question : questions) {
@@ -148,7 +136,8 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
         return messages;
     }
 
-    private MessageBag checkIfCondition(Expression condition) {
+    @Override
+    public MessageBag checkIfCondition(Expression condition) {
         MessageBag messages = new TypeCheckMessages();
 
         try {
@@ -163,5 +152,25 @@ public class TypeChecker implements StatementVisitor<MessageBag> {
         }
 
         return messages;
+    }
+
+    @Override
+    public MessageBag checkIdentifier(Identifier identifier) {
+        MessageBag messages = new TypeCheckMessages();
+        if (identifier.toString().isEmpty()) {
+            messages.addError("Form name cannot be empty", identifier);
+        }
+
+        return messages;
+    }
+
+    private SymbolTable createSymbolTable(List<Question> questions) {
+        SymbolTable symbolTable = new HashMapSymbolTable();
+
+        for (Question question : questions) {
+            symbolTable.put(question.getId(), question.getType());
+        }
+
+        return symbolTable;
     }
 }
