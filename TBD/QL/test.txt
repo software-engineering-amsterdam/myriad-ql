@@ -4,15 +4,18 @@ form taxOfficeExample {
   "Did you buy a house in 2010?"
     hasBoughtHouse: int
   "Did you enter a loan?"
-    hasMaintLoa: boolean
+    hasMaintLoan: boolean
 
-  if (hasMaintLoan + hasSoldHouse) {
+  if (hasSoldHouse) {
     "What was the selling price?"
-      sellingPrice: float
+      sellingPrice: int
     "Private debts for the sold house:"
       privateDebt: int
     "Value residue:"
       valueResidue: int =
-        (sellingPrice - hasMaintLoan)
+        (sellingPrice - hasBoughtHouse)
+     "Private debts for the sold house:"
+       test: int =
+                (5 + hasBoughtHouse)
   }
 }

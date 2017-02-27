@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Created by Erik on 14-2-2017.
  */
-public class ASTVisitor<T> {
-    
+public abstract class ASTVisitor<T> {
+
     public T visit(Form node) {
         node.getName().accept(this);
         node.getStatements().accept(this);

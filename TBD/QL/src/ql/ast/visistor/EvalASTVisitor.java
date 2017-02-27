@@ -1,22 +1,32 @@
 package ql.ast.visistor;
 
+import ql.ast.ASTNode;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
+import ql.ast.visistor.environment.Environment;
 
 /**
  * Created by Erik on 14-2-2017.
  */
 public class EvalASTVisitor extends ASTVisitor<Value> {
+    private final Environment environment;
+
+    public EvalASTVisitor(Environment environment) {
+        this.environment = environment;
+    }
+
+    public Value startVisitor(ASTNode node) {
+        return node.accept(this);
+    }
+
 
     @Override
     public Value visit(QLIdent node) {
-        //TODO fix this
-        return new UndefinedValue();
+        return environment.getVariableValue(node.getValue());
     }
 
     @Override

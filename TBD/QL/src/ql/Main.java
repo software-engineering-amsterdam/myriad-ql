@@ -11,6 +11,7 @@ import ql.ast.literals.QLInt;
 import ql.ast.types.FloatType;
 import ql.ast.types.IntType;
 import ql.ast.types.Type;
+import ql.ast.values.IntValue;
 import ql.ast.values.Value;
 import ql.ast.visistor.*;
 import ql.ast.visistor.environment.Environment;
@@ -50,14 +51,11 @@ public class Main {
             typeVisitor.startVisitor(parser.getResult());
 
 
+            env.setVariableValue("hasBoughtHouse", new IntValue(6));
+            System.out.println("Value of expr: " + env.getVariableValue("test"));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        Div exprtest = new Div(new QLInt(2, 1), new QLFloat(0.1f, 2), 3);
-
-        ASTVisitor<Value> evalASTVisitor = new EvalASTVisitor();
-        System.out.println(evalASTVisitor.visit(exprtest));
-
     }
 }

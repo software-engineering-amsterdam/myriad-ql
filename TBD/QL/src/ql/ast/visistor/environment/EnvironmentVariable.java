@@ -35,4 +35,12 @@ public class EnvironmentVariable {
     public Value getValue() {
         return value;
     }
+
+    public boolean hasExpr() {
+        return expr != null;
+    }
+
+    public Expr getExpr() {
+        return expr;
+    }
 }

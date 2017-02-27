@@ -52,7 +52,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     public Type visit(If node) {
         Type expr = node.getCondition().accept(this);
 
-        if (!expr.equals(new ErrorType())) {
+        if (expr.equals(new ErrorType())) {
             errorHandler.addError(new Error("Error in the expression", node.getCondition().getRowNumber()));
         }
 
@@ -84,22 +84,11 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
 
     @Override
     public Type visit(Question node) {
-     /*   if (identTable.containsKey(node.getId().getValue())) {
-            errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
-        }
-
-        identTable.put(node.getId().getValue(), node.getType());*/
         return null;
     }
 
     @Override
     public Type visit(QuestionExpr node) {
-      /*  if (identTable.containsKey(node.getId().getValue())) {
-            errorHandler.addError(new Error("Identifier already exist!", node.getId().getRowNumber()));
-        }
-
-        identTable.put(node.getId().getValue(), node.getType());
-*/
         Type expr = node.getExpr().accept(this);
         if (!expr.equals(node.getType())) {
             errorHandler.addError(new Error("Wrong type for assignment!", node.getId().getRowNumber()));
@@ -116,7 +105,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     @Override
     public Type visit(QLIdent node) {
         if (env.contains(node.getValue())) {
-            return env.getVariable(node.getValue()).getType();
+            return env.getVariableType(node.getValue());
         }
         errorHandler.addError(new Error("Identifier " + node.getValue() + " doesn't exist!", node.getRowNumber()));
         return new ErrorType();
