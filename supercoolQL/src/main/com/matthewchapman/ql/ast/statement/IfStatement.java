@@ -1,9 +1,7 @@
 package com.matthewchapman.ql.ast.statement;
 
-import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.ast.Visitable;
-import com.matthewchapman.ql.validation.Visitor;
+import com.matthewchapman.ql.ast.Statement;
 
 import java.util.ArrayList;
 
@@ -11,7 +9,7 @@ import java.util.ArrayList;
  * Created by matt on 21/02/2017.
  */
 
-public class IfStatement extends Statement implements Visitable{
+public class IfStatement extends Statement {
 
     private final ArrayList<Statement> statements;
     private Expression expression;
@@ -40,10 +38,6 @@ public class IfStatement extends Statement implements Visitable{
     public Expression getExpression()
     {
         return this.expression;
-    }
-
-    public void accept(Visitor visitor) {
-        visitor.visitIfStatement(this);
     }
 
 }

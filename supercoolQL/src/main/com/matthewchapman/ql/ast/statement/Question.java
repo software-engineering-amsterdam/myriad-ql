@@ -3,7 +3,6 @@ package com.matthewchapman.ql.ast.statement;
 import com.matthewchapman.ql.ast.QLType;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
-import com.matthewchapman.ql.validation.Visitor;
 
 /**
  * Created by matt on 20/02/2017.
@@ -23,7 +22,4 @@ public class Question extends Statement{
         this.calculatedValue = calculatedValue;
     }
 
-    public void accept(Visitor visitor) {
-        visitor.visitQuestion(this);
-    }
 }

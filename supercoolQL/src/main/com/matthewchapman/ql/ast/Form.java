@@ -1,13 +1,12 @@
 package com.matthewchapman.ql.ast;
 
-import com.matthewchapman.ql.validation.Visitor;
 
 import java.util.ArrayList;
 
 /**
  * Created by matt on 20/02/2017.
  */
-public class Form extends ASTNode implements Visitable{
+public class Form extends ASTNode {
 
     private final ArrayList<Statement> statements;
     private final String formName;
@@ -25,8 +24,5 @@ public class Form extends ASTNode implements Visitable{
         return formName;
     }
 
-    public void accept(Visitor visitor) {
-        visitor.visitForm(this);
-    }
 
 }

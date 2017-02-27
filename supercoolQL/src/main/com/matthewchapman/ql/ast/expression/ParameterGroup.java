@@ -1,7 +1,6 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.validation.Visitor;
 
 import java.util.ArrayList;
 
@@ -27,10 +26,6 @@ public class ParameterGroup extends Expression {
     public void addExpression(Expression e)
     {
         this.expressions.add(e);
-    }
-
-    public void accept(Visitor visitor) {
-        visitor.visitParameterGroup(this);
     }
 
 }
