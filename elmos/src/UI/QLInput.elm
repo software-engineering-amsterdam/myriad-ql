@@ -135,9 +135,6 @@ renderMessage message =
                 , UI.Messages.location loc
                 ]
 
-        (Error (UndefinedExpressionVariable _ _)) as error ->
-            text <| toString error
-
         (Error (ArithmeticExpressionTypeMismatch _ _ _ _)) as error ->
             text <| toString error
 

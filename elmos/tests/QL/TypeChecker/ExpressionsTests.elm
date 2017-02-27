@@ -16,7 +16,7 @@ all =
         [ test "type for undefined variable" <|
             \() ->
                 Expressions.getType Dict.empty (Var ( "a", emptyLoc ))
-                    |> Expect.equal (Err [ (Error (UndefinedExpressionVariable "a" emptyLoc)) ])
+                    |> Expect.equal (Err [])
         , test "type for string type" <|
             \() ->
                 Expressions.getType Dict.empty (Str emptyLoc "foo")
@@ -45,11 +45,7 @@ all =
             \() ->
                 Expressions.getType Dict.empty (ArithmeticExpression Plus emptyLoc (Var ( "a", emptyLoc )) (Var ( "b", emptyLoc )))
                     |> Expect.equal
-                        (Err
-                            [ (Error (UndefinedExpressionVariable "a" emptyLoc))
-                            , (Error (UndefinedExpressionVariable "b" emptyLoc))
-                            ]
-                        )
+                        (Err [])
         , test "type of relation expression" <|
             \() ->
                 Expressions.getType Dict.empty (RelationExpression LessThan emptyLoc (Integer emptyLoc 2) (Integer emptyLoc 1))
@@ -66,11 +62,7 @@ all =
             \() ->
                 Expressions.getType Dict.empty (RelationExpression GreaterThan emptyLoc (Var ( "a", emptyLoc )) (Var ( "b", emptyLoc )))
                     |> Expect.equal
-                        (Err
-                            [ (Error (UndefinedExpressionVariable "a" emptyLoc))
-                            , (Error (UndefinedExpressionVariable "b" emptyLoc))
-                            ]
-                        )
+                        (Err [])
         , test "type of logic expression" <|
             \() ->
                 Expressions.getType Dict.empty (LogicExpression And emptyLoc (Boolean emptyLoc True) (Boolean emptyLoc False))
@@ -87,11 +79,7 @@ all =
             \() ->
                 Expressions.getType Dict.empty (LogicExpression Or emptyLoc (Var ( "a", emptyLoc )) (Var ( "b", emptyLoc )))
                     |> Expect.equal
-                        (Err
-                            [ (Error (UndefinedExpressionVariable "a" emptyLoc))
-                            , (Error (UndefinedExpressionVariable "b" emptyLoc))
-                            ]
-                        )
+                        (Err [])
         , test "type of comparison expression with both boolean" <|
             \() ->
                 Expressions.getType Dict.empty (ComparisonExpression Equal emptyLoc (Boolean emptyLoc True) (Boolean emptyLoc False))
@@ -112,9 +100,5 @@ all =
             \() ->
                 Expressions.getType Dict.empty (ComparisonExpression Equal emptyLoc (Var ( "a", emptyLoc )) (Var ( "b", emptyLoc )))
                     |> Expect.equal
-                        (Err
-                            [ (Error (UndefinedExpressionVariable "a" emptyLoc))
-                            , (Error (UndefinedExpressionVariable "b" emptyLoc))
-                            ]
-                        )
+                        (Err [])
         ]

@@ -8,18 +8,12 @@ type Message
 
 
 type ErrorMessage
-    = UndefinedExpressionVariable String Location
-    | ArithmeticExpressionTypeMismatch Operator Location ValueType ValueType
+    = ArithmeticExpressionTypeMismatch Operator Location ValueType ValueType
     | LogicExpressionTypeMismatch Logic Location ValueType ValueType
     | ComparisonExpressionTypeMismatch Comparison Location ValueType ValueType
     | RelationExpressionTypeMismatch Relation Location ValueType ValueType
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
-
-
-undefinedExpressionVariable : String -> Location -> Message
-undefinedExpressionVariable name loc =
-    Error (UndefinedExpressionVariable name loc)
 
 
 arithmeticExpressionTypeMismatch : Operator -> Location -> ValueType -> ValueType -> Message

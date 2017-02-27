@@ -31,7 +31,7 @@ getType variableTypes expression =
     case expression of
         Var ( name, loc ) ->
             Result.fromMaybe
-                [ Messages.undefinedExpressionVariable name loc ]
+                []
                 (Dict.get name variableTypes)
 
         Str _ _ ->
