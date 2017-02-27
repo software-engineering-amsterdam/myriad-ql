@@ -1,7 +1,7 @@
 # coding=utf-8
-# At a stable state of lexing and parsing this import needs to be changed to a more concrete version which only imports
-# the needed methods from the pyparsing package
-from pyparsing import *
+from pyparsing import (Suppress, Literal, oneOf, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
+                       QuotedString, Optional, Forward)
+
 from pql.ast import ast
 from pql.typechecker.types import DataTypes
 
@@ -17,12 +17,10 @@ def parse(input_string):
         type_call = flattened_tokens[0]
         return type_call(flattened_tokens[1])
 
-    # Reserved keywords
     lit_form = Suppress("form")
     lit_if = Suppress("if")
     lit_else = Suppress("else")
 
-    # Reserved symbols
     lit_l_curly = Suppress("{")
     lit_r_curly = Suppress("}")
     lit_l_paren = Suppress("(")
@@ -65,7 +63,8 @@ def parse(input_string):
     operand_bool = (boolean | operand_arith)
 
     operand_list_arith = [
-        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
+        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT,
+         lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
         (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT,
@@ -81,25 +80,21 @@ def parse(input_string):
         (lit_op_or, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
-    # Arithmetic precedence
     arithmetic_precedence = infixNotation(
         operand_arith,
         operand_list_arith
     )
 
-    # Boolean precedence
     boolean_precedence = infixNotation(
         operand_bool,
         (operand_list_arith + operand_list_bool)
     )
 
-    #
     arithmetic_expression = \
         OneOrMore(
             arithmetic_precedence | (lit_l_paren + arithmetic_precedence + lit_r_paren))
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
-    #
     boolean_expression = \
         OneOrMore(boolean_precedence | (lit_l_paren + boolean_precedence + lit_r_paren))
     boolean_expression.setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
@@ -131,6 +126,5 @@ def parse(input_string):
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
 
-    # Form
     form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))
     return form.parseString(input_string)
