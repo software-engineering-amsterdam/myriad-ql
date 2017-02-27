@@ -5,6 +5,8 @@ module QL
 
     # parser for forms
     class Parser < Parslet::Parser
+      root(:form)
+
       # spaces
       rule(:spaces) { match('\s').repeat(1) }
       rule(:spaces?) { spaces.maybe }
@@ -38,8 +40,6 @@ module QL
       # variable
       rule(:variable) { match('\w+').repeat(1).as(:variable) }
       rule(:variable_assignment) { variable >> str(':') >> spaces? }
-
-      root(:form)
     end
   end
 end

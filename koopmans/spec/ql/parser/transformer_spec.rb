@@ -3,6 +3,7 @@ require 'parslet/rig/rspec'
 require 'require_all'
 
 require_all 'lib'
+
 module QL
   module Parser
     include AST

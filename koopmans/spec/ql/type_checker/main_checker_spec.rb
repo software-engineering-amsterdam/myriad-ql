@@ -3,6 +3,7 @@ require 'pp'
 require 'require_all'
 
 require_all 'lib'
+
 module QL
   module TypeChecker
     include AST
