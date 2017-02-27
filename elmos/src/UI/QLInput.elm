@@ -102,9 +102,8 @@ view { rawInput, parsedForm, messages } =
                 ]
             , div [ class "col-md-6" ]
                 [ h3 [] [ text "TypeChecker" ]
-                , pre []
-                    [ text <| String.join "\n" <| List.map toString <| messages
-                    ]
+                , div []
+                    (List.map renderMessage messages)
                 ]
             ]
         , pre [] [ text <| toString parsedForm ]
@@ -114,23 +113,37 @@ view { rawInput, parsedForm, messages } =
 renderMessage : Message -> Html.Html Msg
 renderMessage message =
     case message of
-        Error (DuplicateQuestionDefinition _ _) ->
-            text "TODO"
+        Error (DuplicateQuestionDefinition name locations) ->
+            div [ class "alert-danger" ]
+                [ text <|
+                    "Duplicate question definitions for variable <"
+                        ++ name
+                        ++ "> at ["
+                        ++ String.join ", " (List.map locationToString locations)
+                        ++ "]"
+                ]
 
-        Error (ReferenceToUndefinedQuestion ( name, AST.Location line col )) ->
-            text <| "Reference to undefined variable <" ++ name ++ "> at line " ++ toString line ++ "(" ++ toString col ++ ")"
+        Error (ReferenceToUndefinedQuestion ( name, loc )) ->
+            div [ class "alert-danger" ]
+                [ text <| "Reference to undefined variable <" ++ name ++ "> at " ++ locationToString loc
+                ]
 
         Error (UndefinedExpressionVariable _ _) ->
-            text "TODO"
+            Debug.crash "TODO"
 
         Error (ArithmeticExpressionTypeMismatch _ _ _ _) ->
-            text "TODO"
+            Debug.crash "TODO"
 
         Error (LogicExpressionTypeMismatch _ _ _ _) ->
-            text "TODO"
+            Debug.crash "TODO"
 
         Error (ComparisonExpressionTypeMismatch _ _ _ _) ->
-            text "TODO"
+            Debug.crash "TODO"
 
         Error (RelationExpressionTypeMismatch _ _ _ _) ->
-            text "TODO"
+            Debug.crash "TODO"
+
+
+locationToString : Location -> String
+locationToString (AST.Location line col) =
+    "line " ++ toString line ++ "( col " ++ toString col ++ ")"
