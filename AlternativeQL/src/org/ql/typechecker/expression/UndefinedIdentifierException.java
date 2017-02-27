@@ -1,4 +1,4 @@
-package org.ql.typechecker.exception;
+package org.ql.typechecker.expression;
 
 
 import org.ql.ast.Identifier;

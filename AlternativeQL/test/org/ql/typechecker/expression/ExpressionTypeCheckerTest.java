@@ -11,9 +11,6 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
-import org.ql.typechecker.exception.TypeMismatchException;
-import org.ql.typechecker.exception.UndefinedIdentifierException;
-import org.ql.typechecker.exception.UnexpectedTypeException;
 
 import java.math.BigDecimal;
 
