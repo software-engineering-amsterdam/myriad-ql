@@ -112,7 +112,7 @@ SystemJS.config({
         }
     },
     map: {
-        "text": "github:bizboard/arva-js@develop/utils/IconLoader.js"
+        "text": "github:manueloverdijk/arva-js@develop/utils/IconLoader.js"
     }
 });
 
@@ -762,7 +762,7 @@ SystemJS.config({
                 "degrees-radians": "npm:degrees-radians@1.0.3",
                 "rgbcolor": "npm:rgbcolor@0.0.4",
                 "famous-autosizetextarea": "github:ijzerenhein/famous-autosizetextarea@0.3.1",
-                "arva-js": "github:bizboard/arva-js@develop",
+                "arva-js": "github:manueloverdijk/arva-js@develop",
                 "famous-bkimagesurface": "github:bizboard/famous-bkimagesurface@master",
                 "famous-flex": "github:bizboard/famous-flex@master",
                 "famous": "github:bizboard/famous@develop"
@@ -783,22 +783,6 @@ SystemJS.config({
         "npm:color-string@0.3.0": {
             "map": {
                 "color-name": "npm:color-name@1.1.1"
-            }
-        },
-        "github:bizboard/arva-js@develop": {
-            "map": {
-                "bowser": "npm:bowser@1.6.0",
-                "lodash": "npm:lodash@4.17.4",
-                "famous": "github:bizboard/famous@develop",
-                "famous-flex": "github:bizboard/famous-flex@master",
-                "camelcase": "npm:camelcase@2.1.1",
-                "xml2js": "npm:xml2js@0.4.17",
-                "eventemitter3": "npm:eventemitter3@1.2.0",
-                "lodash-decorators": "npm:lodash-decorators@3.0.1",
-                "fastclick": "npm:fastclick@1.0.6",
-                "ordered-hashmap": "npm:ordered-hashmap@1.0.0",
-                "request-animation-frame-mock": "github:erykpiast/request-animation-frame-mock@0.1.8",
-                "firebase": "github:firebase/firebase-bower@3.6.10"
             }
         }
     }

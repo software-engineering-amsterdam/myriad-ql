@@ -106,11 +106,11 @@ export class FormPostProcessor extends PostProcessor {
         }
     }
 
-    booleanExpression(data, location, reject){
+    booleanExpression(data, location, reject) {
         return data;
     }
 
-    comparison(data, location, reject){
+    comparison(data, location, reject) {
         return new Comparison({
             location,
             leftHand: data[0],
@@ -119,11 +119,11 @@ export class FormPostProcessor extends PostProcessor {
         });
     }
 
-    and_test(data, location, reject){
+    and_test(data, location, reject) {
         return data;
     }
 
-    not_test(data, location, reject){
+    not_test(data, location, reject) {
         return data;
     }
 
@@ -151,4 +151,5 @@ export class FormPostProcessor extends PostProcessor {
         return Money
     }
 
-};
+}
+;
