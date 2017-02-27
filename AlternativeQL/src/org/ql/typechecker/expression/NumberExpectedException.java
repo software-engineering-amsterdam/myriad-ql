@@ -3,10 +3,10 @@ package org.ql.typechecker.expression;
 import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 
-public class UnexpectedTypeException extends Throwable implements TypeError {
+public class NumberExpectedException extends Throwable implements TypeError {
     private final Type innerExpressionType;
 
-    public UnexpectedTypeException(Type innerExpressionType) {
+    public NumberExpectedException(Type innerExpressionType) {
         this.innerExpressionType = innerExpressionType;
     }
 
@@ -17,6 +17,6 @@ public class UnexpectedTypeException extends Throwable implements TypeError {
 
     @Override
     public String getMessage() {
-        return super.getMessage();
+        return "Expected number type, got " + innerExpressionType;
     }
 }

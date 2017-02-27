@@ -69,7 +69,7 @@ public class ExpressionTypeCheckerTest {
         assertTrue(actualFloatType instanceof FloatType);
     }
 
-    @Test(expected = UnexpectedTypeException.class)
+    @Test(expected = NumberExpectedException.class)
     public void shouldThrowUnexpectedTypeExceptionWhenIncrementAppliedOnNonIntegerOrFloat() throws Throwable {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
@@ -94,7 +94,7 @@ public class ExpressionTypeCheckerTest {
         assertTrue(actualFloatType instanceof FloatType);
     }
 
-    @Test(expected = UnexpectedTypeException.class)
+    @Test(expected = NumberExpectedException.class)
     public void shouldThrowUnexpectedTypeExceptionWhenDecrementAppliedOnNonIntegerOrFloat() throws Throwable {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 

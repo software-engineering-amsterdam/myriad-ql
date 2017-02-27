@@ -42,7 +42,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
         Type innerExpressionType = node.getExpression().accept(this);
 
         if(!(innerExpressionType instanceof NumberType)) {
-            throw new UnexpectedTypeException(innerExpressionType);
+            throw new NumberExpectedException(innerExpressionType);
         }
 
         return innerExpressionType;
@@ -117,7 +117,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
         Type innerExpressionType = node.getExpression().accept(this);
 
         if (!(innerExpressionType instanceof NumberType)) {
-            throw new UnexpectedTypeException(innerExpressionType);
+            throw new NumberExpectedException(innerExpressionType);
         }
 
         return innerExpressionType;

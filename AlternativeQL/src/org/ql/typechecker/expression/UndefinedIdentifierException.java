@@ -18,6 +18,6 @@ public class UndefinedIdentifierException extends RuntimeException implements Ty
 
     @Override
     public String getMessage() {
-        return super.getMessage();
+        return "Undefined identifier '" + identifier + "' used";
     }
 }
