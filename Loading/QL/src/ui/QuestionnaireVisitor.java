@@ -26,7 +26,7 @@ public class QuestionnaireVisitor extends Visitor {
 	@Override 
 	public void visit(Question question) {
         activeQuestions.add(new QuestionnaireQuestion(question.getVariable(),
-        		question.getLabel(), question.getType()));
+        		question.getLabel(), question.getType())); // TODO change last argument
 	}
 	
 	@Override
