@@ -172,9 +172,7 @@ class GreaterThanEquals(BinaryOperation):
 class LogicalOr(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "logical_or", left_child, right_child)
-
-    __call__ = __init__
-
+        
 # Unary Operations
 class LogicalNot(UnaryOperation):
     def __init__(self, child):
