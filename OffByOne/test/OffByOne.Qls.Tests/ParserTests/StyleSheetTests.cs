@@ -80,8 +80,7 @@
             var sectionsOnFirstPage = castAstTree
                 .Pages
                 .Where(x => x.Id == "Housing")
-                .SelectMany(x => x.Nodes
-                    .Select(y => (Section)y))
+                .SelectMany(x => x.Sections)
                 .ToList();
 
             Assert.Equal(2, sectionsOnFirstPage.Count);
@@ -90,11 +89,11 @@
 
             var assumption = castAstTree.Pages
                 .Where(x => x.Id == "Selling")
-                .SelectMany(x => x.Nodes.OfType<Section>())
+                .SelectMany(x => x.Sections)
                 .Where(x => x.Name.Value == "Selling")
-                .SelectMany(x => x.Nodes.OfType<Section>())
+                .SelectMany(x => x.Sections)
                 .Where(x => x.Name.Value == "You sold a house")
-                .SelectMany(x => x.Nodes.OfType<QuestionRule>())
+                .SelectMany(x => x.QuestionRules)
                 .Any(x => x.Name == "valueResidue");
 
             Assert.True(assumption);
