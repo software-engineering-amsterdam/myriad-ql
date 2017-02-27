@@ -1,6 +1,8 @@
-package QL; /**
- * QL.QL.java.
+/**
+ * QL.java.
  */
+
+package QL;
 
 import QL.ASTnodes.ASTBuilder;
 import QL.ASTnodes.Form;
