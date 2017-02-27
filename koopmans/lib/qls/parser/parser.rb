@@ -17,10 +17,10 @@ class QLSParser < Parslet::Parser
   rule(:variable) { match('\w+').repeat(1).as(:variable) }
 
   # stylesheet
-  rule(:stylesheet) { spaces? >> (str('stylesheet') >> spaces? >> variable >> spaces? >> page.repeat >> spaces?).as(:stylesheet) }
+  rule(:stylesheet) { spaces? >> (str('stylesheet') >> spaces? >> variable >> spaces? >> page.repeat.as(:pages) >> spaces?).as(:stylesheet) }
 
   # page
-  rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> (spaces? >> (section | default)).repeat).as(:page) >> str('}') >> spaces? }
+  rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> (spaces? >> (section | default)).repeat.as(:block)).as(:page) >> str('}') >> spaces? }
 
   # section
   rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets) >> spaces?).as(:section) }
