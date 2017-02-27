@@ -120,9 +120,8 @@ def parse(input_string):
 
     statement_list = Forward()
     if_stmt = Forward()
-    if_stmt << if_lit + l_paren + boolean_statement + r_paren + \
-               statement_list + \
-               Optional(else_lit + statement_list).setResultsName('else_statement')
+    if_stmt << if_lit + l_paren + boolean_statement + r_paren + statement_list + Optional(
+        else_lit + statement_list).setResultsName('else_statement')
     if_stmt.setParseAction(ast.Conditional)
 
     statement = field_expr | if_stmt
