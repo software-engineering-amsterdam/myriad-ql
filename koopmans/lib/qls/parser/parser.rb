@@ -23,7 +23,7 @@ class QLSParser < Parslet::Parser
   rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> (spaces? >> (section | default)).repeat.as(:block)).as(:page) >> str('}') >> spaces? }
 
   # section
-  rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets) >> spaces?).as(:section) }
+  rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets).as(:block) >> spaces?).as(:section) }
   rule(:section_brackets) { str('{') >> spaces? >> (section | question | default).repeat >> spaces? >> str('}') }
   rule(:section_no_brackets) { (question | default).repeat }
 
