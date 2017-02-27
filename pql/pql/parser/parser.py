@@ -9,12 +9,12 @@ def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
     identifier.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
-    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))
-    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0]))
+    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], types.integer))
+    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], types.money))
     number = integer | money
 
-    true = Literal("true").setParseAction(lambda _: ast.Value(True))
-    false = Literal("false").setParseAction(lambda _: ast.Value(False))
+    true = Literal("true").setParseAction(lambda _: ast.Value(True, types.boolean))
+    false = Literal("false").setParseAction(lambda _: ast.Value(False, types.boolean))
     boolean = true | false
 
     arith_operand = number | identifier
