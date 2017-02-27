@@ -7,6 +7,18 @@ from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
+    def flatten_binary_operators(unflattened_tokens):
+        flattened_tokens = unflattened_tokens[0]
+        while len(flattened_tokens) >= 3:
+            lhs, type_call, rhs = flattened_tokens[:3]
+            flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
+        return flattened_tokens[0]
+
+    def flatten_unary_operators(unflattened_tokens):
+        flattened_tokens = unflattened_tokens[0]
+        type_call = flattened_tokens[0]
+        return type_call(flattened_tokens[1])
+
     # Reserved keywords
     lit_form = Suppress("form")
     lit_if = Suppress("if")
@@ -51,31 +63,18 @@ def parse(input_string):
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = (true | false)
 
-    arith_operand = (number | name)
-    bool_operand = (boolean | arith_operand)
+    operand_arith = (number | name)
+    operand_bool = (boolean | operand_arith)
 
-    def flatten_binary_operators(unflattened_tokens):
-        flattened_tokens = unflattened_tokens[0]
-        while len(flattened_tokens) >= 3:
-            lhs, type_call, rhs = flattened_tokens[:3]
-            flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
-        return flattened_tokens[0]
-
-    def flatten_unary_operators(unflattened_tokens):
-        flattened_tokens = unflattened_tokens[0]
-        type_call = flattened_tokens[0]
-        return type_call(flattened_tokens[1])
-
-    arith_precedent = [
+    arith_precedence = [
         (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
         (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT, flatten_binary_operators),
         (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
-    bool_precedent = [
-        (lit_op_lower_exclusive | lit_op_lower_inclusive |
-         lit_op_greater_inclusive | lit_op_greater_exclusive,
-         2, opAssoc.LEFT, flatten_binary_operators),
+    bool_precedence = [
+        (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive, 2,
+         opAssoc.LEFT, flatten_binary_operators),
         (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
         (lit_op_and, 2, opAssoc.LEFT, flatten_binary_operators),
         (lit_op_or, 2, opAssoc.LEFT, flatten_binary_operators)
@@ -83,13 +82,13 @@ def parse(input_string):
 
     # Arithmetic precedence
     arithmetic = infixNotation(
-        arith_operand.setResultsName('arithmetic_operand*'),
-        arith_precedent
+        operand_arith.setResultsName('arithmetic_operand*'),
+        arith_precedence
     ).setResultsName('arithmetic_expr')
 
     bool_expr = infixNotation(
-        bool_operand.setResultsName('boolean_operand'),
-        (arith_precedent + bool_precedent)
+        operand_bool.setResultsName('boolean_operand'),
+        (arith_precedence + bool_precedence)
     ).setResultsName('boolean_expr')
 
     arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
