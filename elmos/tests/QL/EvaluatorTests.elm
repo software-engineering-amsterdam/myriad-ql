@@ -1,7 +1,7 @@
 module QL.EvaluatorTests exposing (all)
 
-import Dict
 import QL.Evaluator as Evaluator
+import QL.Environment as Env exposing (Environment)
 import QL.AST exposing (Expression)
 import QL.Parser.Expression exposing (expression)
 import ParserTestUtil exposing (parseToMaybe)
@@ -15,15 +15,14 @@ asExpression =
     parseToMaybe expression
 
 
-sampleData : Dict.Dict String Value
+sampleData : Environment
 sampleData =
-    Dict.fromList
-        [ ( "a", Values.string "A" )
-        , ( "b", Values.string "B" )
-        , ( "x", Values.int 1 )
-        , ( "y", Values.int 2 )
-        , ( "z", Values.int 3 )
-        ]
+    Env.empty
+        |> Env.withString "a" "A"
+        |> Env.withString "b" "B"
+        |> Env.withInteger "x" 1
+        |> Env.withInteger "y" 2
+        |> Env.withInteger "z" 3
 
 
 all : Test

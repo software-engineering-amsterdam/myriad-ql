@@ -1,20 +1,17 @@
 module QL.EnvironmentTests exposing (all)
 
-import Dict
 import Expect
 import Test exposing (Test, describe, test, fuzz2)
 import QL.Environment as Env exposing (Environment)
-import QL.Values as Values
 import Fuzz exposing (string, bool, int)
 
 
 startingEnvironment : Environment
 startingEnvironment =
-    Dict.fromList
-        [ ( "foo", Values.int 1 )
-        , ( "bar", Values.string "Hello" )
-        , ( "baz", Values.bool True )
-        ]
+    Env.empty
+        |> Env.withInteger "foo" 1
+        |> Env.withString "bar" "Hello"
+        |> Env.withBoolean "baz" True
 
 
 all : Test
@@ -23,7 +20,7 @@ all =
         [ test "removeFields" <|
             \() ->
                 Env.removeKeys [ "foo", "baz" ] startingEnvironment
-                    |> Expect.equal (Dict.fromList [ ( "bar", Values.string "Hello" ) ])
+                    |> Expect.equal (Env.empty |> Env.withString "bar" "Hello")
         , test "getBoolean for existing value" <|
             \() ->
                 Env.getBoolean "baz" startingEnvironment |> Expect.equal (Just True)

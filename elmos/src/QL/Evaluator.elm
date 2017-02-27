@@ -8,8 +8,7 @@ import QL.AST as AST
         , Logic(And, Or)
         , Comparison(Equal, NotEqual)
         )
-import Dict exposing (Dict)
-import QL.Environment exposing (Environment)
+import QL.Environment as Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
 
 
@@ -17,7 +16,8 @@ evaluate : Environment -> Expression -> Value
 evaluate env expression =
     case expression of
         Var ( x, _ ) ->
-            Dict.get x env |> Maybe.withDefault Values.undefined
+            Environment.getFormValue x env
+                |> Maybe.withDefault Values.undefined
 
         AST.Str _ str ->
             Values.string str
