@@ -5,4 +5,5 @@ package com.matthewchapman.ql.ast;
  */
 
 public abstract class ASTNode {
+
 }

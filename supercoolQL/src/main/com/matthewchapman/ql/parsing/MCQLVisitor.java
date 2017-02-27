@@ -23,13 +23,13 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
         String ID = ctx.ID().getText();
-        ArrayList<Statement> statements = new ArrayList<>();
+        ArrayList<QLStatement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
-            statements.add((Statement) visit(statementContext));
+            statements.add((QLStatement) visit(statementContext));
         }
 
-        return new Form(ID, statements);
+        return new QLForm(ID, statements);
     }
 
     @Override
@@ -48,13 +48,13 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitIfStatement(QLParser.IfStatementContext ctx) {
-        ArrayList<Statement> statements = new ArrayList<>();
+        ArrayList<QLStatement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
-            statements.add((Statement) visit(statementContext));
+            statements.add((QLStatement) visit(statementContext));
         }
 
-        return new IfStatement((Expression) visit(ctx.expression()), statements);
+        return new IfStatement((QLExpression) visit(ctx.expression()), statements);
     }
 
     @Override
@@ -69,34 +69,34 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitLogicalAnd(QLParser.LogicalAndContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new LogicalAnd(left, right);
     }
 
     @Override
     public ASTNode visitLogicalOr(QLParser.LogicalOrContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new LogicalOr(left, right);
     }
 
     @Override
     public ASTNode visitNegation(QLParser.NegationContext ctx) {
-        return new Negation((Expression) visit(ctx.expression()));
+        return new Negation((QLExpression) visit(ctx.expression()));
     }
 
     @Override
     public ASTNode visitSubtraction(QLParser.SubtractionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new Subtraction(left, right);
     }
 
     @Override
     public ASTNode visitNotEqual(QLParser.NotEqualContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new NotEqual(left, right);
     }
 
@@ -105,7 +105,7 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
         ParameterGroup parameterGroup = new ParameterGroup();
 
         for (QLParser.ExpressionContext expressionContext: ctx.expression()) {
-            parameterGroup.addExpression((Expression) visit(expressionContext));
+            parameterGroup.addExpression((QLExpression) visit(expressionContext));
         }
 
         return parameterGroup;
@@ -113,29 +113,29 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitDivision(QLParser.DivisionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new Division(left, right);
     }
 
     @Override
     public ASTNode visitEqual(QLParser.EqualContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new Equal(left, right);
     }
 
     @Override
     public ASTNode visitLessThan(QLParser.LessThanContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new LessThan(left, right);
     }
 
     @Override
     public ASTNode visitGreaterThanEqualTo(QLParser.GreaterThanEqualToContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new GreaterThanEqualTo(left, right);
     }
 
@@ -146,29 +146,29 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitMultiplication(QLParser.MultiplicationContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new Multiplication(left, right);
     }
 
     @Override
     public ASTNode visitAddition(QLParser.AdditionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new Addition(left, right);
     }
 
     @Override
     public ASTNode visitGreaterThan(QLParser.GreaterThanContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new GreaterThan(left, right);
     }
 
     @Override
     public ASTNode visitLessThanEqualTo(QLParser.LessThanEqualToContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
+        QLExpression left = (QLExpression) visit(ctx.left);
+        QLExpression right = (QLExpression) visit(ctx.right);
         return new LessThanEqualTo(left, right);
     }
 

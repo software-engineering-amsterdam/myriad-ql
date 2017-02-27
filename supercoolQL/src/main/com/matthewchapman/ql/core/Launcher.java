@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.core;
 
-import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.ast.QLForm;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +30,7 @@ public class Launcher {
         if (inputContent != null) {
             if (!inputContent.isEmpty()) {
                 //TODO ugh, application result should not be here
-                Form ast = coreParser.buildQLAST(inputContent);
+                QLForm ast = coreParser.buildQLAST(inputContent);
                 coreParser.visitAST(ast);
             } else {
                 System.out.println("Error: Input file is empty");

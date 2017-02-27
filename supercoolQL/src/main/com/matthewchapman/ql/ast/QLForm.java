@@ -6,17 +6,17 @@ import java.util.ArrayList;
 /**
  * Created by matt on 20/02/2017.
  */
-public class Form extends ASTNode {
+public class QLForm extends ASTNode {
 
-    private final ArrayList<Statement> statements;
+    private final ArrayList<QLStatement> statements;
     private final String formName;
 
-    public Form (String name, ArrayList<Statement> statements) {
+    public QLForm(String name, ArrayList<QLStatement> statements) {
         this.formName = name;
         this.statements = statements;
     }
 
-    public ArrayList<Statement> getStatements() {
+    public ArrayList<QLStatement> getStatements() {
         return this.statements;
     }
 

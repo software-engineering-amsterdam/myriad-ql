@@ -1,28 +1,28 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
-import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.QLExpression;
 
 /**
  * Created by matt on 27/02/2017.
  */
-public abstract class BinaryOperation extends Expression {
+public abstract class BinaryOperation extends QLExpression {
 
-    private Expression left;
-    private Expression right;
+    private QLExpression left;
+    private QLExpression right;
 
-    public BinaryOperation(Expression left, Expression right)
+    public BinaryOperation(QLExpression left, QLExpression right)
     {
         this.left = left;
         this.right = right;
     }
 
 
-    public Expression getLeft()
+    public QLExpression getLeft()
     {
         return this.left;
     }
 
-    public Expression getRight()
+    public QLExpression getRight()
     {
         return this.right;
     }
