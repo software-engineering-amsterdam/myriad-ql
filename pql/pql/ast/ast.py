@@ -155,6 +155,7 @@ class Or(BinaryOperation):
     def apply(self, visitor):
         return visitor._or(self)
 
+
 class Equality(BinaryOperation):
     def __init__(self,  left, right):
         super(Equality, self).__init__('equality', left, right)
