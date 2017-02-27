@@ -6,12 +6,24 @@ import {Statement}      from './Statement.js';
 
 
 export class Question extends Statement {
-    constructor(options = {}) {
-        super(options);
+    constructor(name = '', propertyName = '', propertyType = null, location) {
+        super(location);
 
-        this.name = options.name;
-        this.propertyName = options.propertyName;
-        this.propertyType = options.propertyType;
+        this.name = name;
+        this.propertyName = propertyName;
+        this.propertyType = propertyType;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getPropertyName(){
+        return this.propertyName;
+    }
+
+    getPropertyType(){
+        return this.propertyType;
     }
 
     validate() {
@@ -20,12 +32,7 @@ export class Question extends Statement {
         }
     }
 
-    // todo probably remove this
-    getGeneratedCode(type) {
-        return "<div>" + this.name + "<input type='" + type + "' onchange='click" + this.propertyName + "()' id='" + this.propertyName + "'></div>";
-    }
-
     accept(visitor){
         visitor.visitQuestion(this);
     }
-};
+}

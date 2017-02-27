@@ -41,6 +41,7 @@ export class Gui {
 
         for (let index in ast.program.statements) {
             let statement = ast.program.statements[index];
+
             if (statement instanceof Question) {
                 let renderable = new QuestionView({
                     label: statement.name,

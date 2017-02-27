@@ -6,9 +6,23 @@ import {Program} from './Program.js';
 
 export class Form extends Program {
 
-    constructor(options = {}) {
-        super(options);
-        this.name = options.name;
-        this.statements = options.statements;
+    constructor(name = '', statements = [], location) {
+        super();
+
+        this.name = name;
+        this.statements = statements;
+        this.location = location;
+    }
+
+    getStatements(){
+        return this.statements;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getLocation(){
+        return this.location;
     }
 }

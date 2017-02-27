@@ -5,10 +5,6 @@ import {Operator} from './Operator.js';
 
 export class MultiplyOperator extends Operator {
 
-    constructor(options = {}) {
-        super(options)
-    }
-
     toString() {
         return '*'
     }

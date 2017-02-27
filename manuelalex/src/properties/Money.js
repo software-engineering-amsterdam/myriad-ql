@@ -4,7 +4,11 @@
 
 export class Money {
 
-    constructor(options = {}){
-        this._location = options.location;
+    constructor(location = null) {
+        this.location = location;
+    }
+
+    getLocation(){
+        return this.location;
     }
 }

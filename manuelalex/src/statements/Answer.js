@@ -6,11 +6,11 @@ import {Statement}   from './Statement.js';
 
 export class Answer extends Statement {
 
-    constructor(options = {}) {
-        super(options);
+    constructor(name = '', allocation = {}, location = null) {
+        super(location);
 
-        this.name = options.name;
-        this.allocation = options.allocation;
+        this.name = name;
+        this.allocation = allocation;
     }
 
     validate() {
@@ -24,4 +24,6 @@ export class Answer extends Statement {
     accept(visitor){
         visitor.visitAnswer(self);
     }
-};
+
+
+}

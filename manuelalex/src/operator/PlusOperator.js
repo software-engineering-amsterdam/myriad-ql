@@ -5,11 +5,7 @@ import {Operator}  from './Operator.js';
 
 export class PlusOperator extends Operator {
 
-    constructor(options = {}){
-        super(options)
-    }
-
     toString(){
         return '+';
     }
-};
+}

@@ -6,9 +6,14 @@ import {IfStatement}  from './IfStatement.js';
 
 export class IfElseStatement extends IfStatement {
 
-    constructor(options = {}) {
-        super(options);
-        this.elseBody = options.elseBody;
+    constructor(condition, ifBody, elseBody, location) {
+        super(condition, ifBody, elseBody);
+        this.elseBody = elseBody;
+
+    }
+
+    getElseBody(){
+        return this.elseBody;
     }
 
     validate() {

@@ -4,21 +4,37 @@
 
 export class Comparison {
 
-    constructor(options = {}){
-        this.options = options;
+    constructor(leftHand, comparisonOperator, rightHand, location) {
 
-        this.leftHand = options.leftHand;
-        this.comparisonOperator = options.comparisonOperator;
-        this.rightHand = options.rightHand;
+        this.leftHand = leftHand;
+        this.comparisonOperator = comparisonOperator;
+        this.rightHand = rightHand;
 
-        this._location = options.location;
+        this.location = location;
+    }
+
+    getLeftHand() {
+        return this.leftHand;
+    }
+
+    getComparisonOperator() {
+        return this.comparisonOperator;
+    }
+
+    getRightHand() {
+        return this.rightHand;
+    }
+
+    getLocation() {
+        return this.location;
     }
 
     validate() {
         throw new Error('Validate method should have been overwritten');
     }
 
-    _throwError(errorText = ''){
+    _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }
-};
+}
+;

@@ -3,20 +3,31 @@
  */
 export class Allocation {
 
-    constructor(options = {}) {
+    constructor(propertyName = '', type = null, expression = null, location) {
 
-        this.options = options;
 
-        this.propertyName = options.propertyName;
-        this.type = options.type;
-        this.expression = options.expression;
+        this.propertyName = propertyName;
+        this.type = type;
+        this.expression = expression;
 
-        this._location = options.location;
+        this.location = location;
 
     }
 
-    getOptions() {
-        return this.options;
+    getPropertyName(){
+        return this.propertyName;
+    }
+
+    getType(){
+        return this.type;
+    }
+
+    getExpression(){
+        return this.expression;
+    }
+
+    getLocation(){
+        return this.location;
     }
 
     validate() {

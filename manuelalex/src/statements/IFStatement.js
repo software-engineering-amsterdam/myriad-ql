@@ -6,12 +6,20 @@ import {Statement}  from './Statement.js';
 
 export class IfStatement extends Statement {
 
-    constructor(options = {}) {
-        super(options);
+    constructor(condition, ifBody, location) {
+        super(location);
 
-        this.condition = options.condition;
-        this.ifBody = options.ifBody;
+        this.condition = condition;
+        this.ifBody = ifBody;
 
+    }
+
+    getCondition(){
+        return this.condition;
+    }
+
+    getIfBody(){
+        return this.ifBody;
     }
 
     validate() {

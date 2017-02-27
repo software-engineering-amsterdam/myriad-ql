@@ -7,11 +7,27 @@ export class Expression {
     constructor(options = {}){
         this.options = options;
 
-        this.term = options.term;
+        this.leftHand = options.term;
         this.operator = options.operator;
-        this.expression = options.expression;
+        this.rightHand = options.expression;
 
-        this._location = options.location;
+        this.location = options.location;
+    }
+
+    getLocation(){
+        return this.location;
+    }
+
+    getLeftHand(){
+        return this.leftHand;
+    }
+
+    getRightHand(){
+        return this.rightHand;
+    }
+
+    getOperator(){
+        return this.operator;
     }
 
     validate() {

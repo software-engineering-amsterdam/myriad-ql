@@ -6,14 +6,12 @@
 
 export class Statement {
 
-    constructor(options = {}) {
-        this.options = options;
-
-        this._location = options.location;
+    constructor(location) {
+        this.location = location;
     }
 
-    getOptions() {
-        return this.options;
+    getLocation(){
+        return this._location;
     }
 
     validate() {
