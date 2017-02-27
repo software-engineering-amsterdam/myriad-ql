@@ -1,4 +1,4 @@
-package sandbox;
+package settest;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
