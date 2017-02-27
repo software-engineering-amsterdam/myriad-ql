@@ -1,5 +1,8 @@
 # coding=utf-8
-class TypeChecker(object):
+from pql.visitor.visitor import Visitor
+
+
+class TypeChecker(Visitor):
 
     def visit(self, pql_ast):
         return [form.apply(self) for form in pql_ast]
