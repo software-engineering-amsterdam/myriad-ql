@@ -17,9 +17,9 @@ class OperandsTypeChecker
 
   # visit calculation of if condition and visit all statements in if block
   def visit_if_statement(if_statement)
-    test = []
-    test.push(if_statement.expression.accept(self))
-    test.push(if_statement.block.map { |statement| statement.accept(self) })
+    errors = []
+    errors.push(if_statement.expression.accept(self))
+    errors.push(if_statement.block.map { |statement| statement.accept(self) })
   end
 
   # variable is useless here
