@@ -18,7 +18,6 @@ stylesheet taxOfficeExample
           font: "Arial"
           fontsize: 14
           color: #999999
-          widget spinbox
         }
         question privateDebt
           widget spinbox
