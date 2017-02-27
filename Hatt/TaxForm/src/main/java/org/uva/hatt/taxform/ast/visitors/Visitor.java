@@ -10,7 +10,6 @@ import org.uva.hatt.taxform.ast.nodes.types.String;
 public interface Visitor {
     public void visit(Form node);
     public void visit(FormId node);
-    public void visit(Items node);
     public void visit(Question node);
     public void visit(Conditional node);
     public void visit(Boolean node);
