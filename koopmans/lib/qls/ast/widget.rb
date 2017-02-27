@@ -1,46 +1,50 @@
-class SliderWidget
-  attr_reader :min
-  attr_reader :max
+module QLS
+  module AST
+    class SliderWidget
+      attr_reader :min
+      attr_reader :max
 
-  def initialize(min, max)
-    @min = min
-    @max = max
-  end
-end
+      def initialize(min, max)
+        @min = min
+        @max = max
+      end
+    end
 
-class SpinboxWidget
+    class SpinboxWidget
 
-end
+    end
 
-class TextWidget
+    class TextWidget
 
-end
+    end
 
 
-class RadioWidget
-  attr_reader :true_text
-  attr_reader :false_text
+    class RadioWidget
+      attr_reader :true_text
+      attr_reader :false_text
 
-  def initialize(true_text, false_text)
-    @true_text = true_text
-    @false_text = false_text
-  end
-end
+      def initialize(true_text, false_text)
+        @true_text = true_text
+        @false_text = false_text
+      end
+    end
 
-class CheckboxWidget
-  attr_reader :true_text
+    class CheckboxWidget
+      attr_reader :true_text
 
-  def initialize(true_text)
-    @true_text = true_text
-  end
-end
+      def initialize(true_text)
+        @true_text = true_text
+      end
+    end
 
-class DropdownWidget
-  attr_reader :true_text
-  attr_reader :false_text
+    class DropdownWidget
+      attr_reader :true_text
+      attr_reader :false_text
 
-  def initialize(true_text, false_text)
-    @true_text = true_text
-    @false_text = false_text
+      def initialize(true_text, false_text)
+        @true_text = true_text
+        @false_text = false_text
+      end
+    end
   end
 end
