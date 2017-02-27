@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface MessageBag {
     void addError(TypeError error);
+
     void addError(String message, Node node);
+
     void addError(String message);
+
     List<String> getErrors();
+
     boolean hasErrors();
 }

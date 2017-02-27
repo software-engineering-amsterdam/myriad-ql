@@ -22,7 +22,7 @@ public class GUIVisitor implements FormVisitor<Pane>, StatementVisitor<Pane> {
         System.out.println(form.getName().toString());
         mainStage.getStage().setTitle(form.getName().toString());
 
-        for(Statement statement : form.getStatements()) {
+        for (Statement statement : form.getStatements()) {
             Pane pane = statement.accept(this);
             mainStage.addPaneToScene(pane);
         }

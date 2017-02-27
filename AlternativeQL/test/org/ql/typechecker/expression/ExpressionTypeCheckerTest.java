@@ -1,8 +1,8 @@
 package org.ql.typechecker.expression;
 
 import org.junit.Test;
-import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.Identifier;
+import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
@@ -15,7 +15,7 @@ import org.ql.symbol_table.HashMapSymbolTable;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class ExpressionTypeCheckerTest {
     @Test(expected = TypeMismatchException.class)

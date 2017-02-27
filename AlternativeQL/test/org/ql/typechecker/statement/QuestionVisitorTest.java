@@ -1,6 +1,5 @@
 package org.ql.typechecker.statement;
 
-import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.ql.ast.Expression;
 import org.ql.ast.Identifier;
@@ -16,7 +15,9 @@ import org.ql.ast.type.IntegerType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
 
 public class QuestionVisitorTest {
     @Test

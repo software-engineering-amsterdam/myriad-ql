@@ -4,15 +4,15 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.*;
 import org.ql.ast.expression.Parameter;
+import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
-import org.ql.ast.expression.arithmetic.*;
+import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
-import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.*;
 import org.ql.grammar.QLParser;
@@ -38,10 +38,10 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLVi
     @Override
     public Node visitQuestion(QLParser.QuestionContext ctx) {
         AbstractNode question = new Question(
-            (Identifier) visit(ctx.id),
-            (QuestionText) visit(ctx.text),
-            (Type) visit(ctx.type()),
-            ctx.defaultValue() == null ? null : (Expression) visit(ctx.defaultValue())
+                (Identifier) visit(ctx.id),
+                (QuestionText) visit(ctx.text),
+                (Type) visit(ctx.type()),
+                ctx.defaultValue() == null ? null : (Expression) visit(ctx.defaultValue())
         );
 
         return question.setMetadata(extractMetadata(ctx));

@@ -1,8 +1,9 @@
 package org.ql.parser.expression.relational;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ql.parser.Parser;
+
+import static org.junit.Assert.assertEquals;
 
 public class GreaterThanOrEqualTest {
     @Test

@@ -8,8 +8,9 @@ import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.StringType;
 import org.ql.typechecker.expression.TypeMismatchException;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class TypeCheckMessagesTest {
     @Test

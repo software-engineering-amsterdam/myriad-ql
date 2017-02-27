@@ -2,7 +2,6 @@ package org.ql.symbol_table;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.type.Type;
-import org.ql.symbol_table.SymbolTable;
 
 import java.util.HashMap;
 import java.util.Map;

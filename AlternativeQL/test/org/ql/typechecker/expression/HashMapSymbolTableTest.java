@@ -1,11 +1,13 @@
 package org.ql.typechecker.expression;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.ql.ast.Identifier;
 import org.ql.ast.type.StringType;
 import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
+
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class HashMapSymbolTableTest {
     @Test

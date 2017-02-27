@@ -17,7 +17,6 @@ import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
 import org.ql.typechecker.messages.TypeCheckMessages;
-import org.ql.typechecker.statement.FormQuestionCollector;
 import org.ql.typechecker.statement.QuestionVisitor;
 
 import java.util.List;
@@ -100,7 +99,7 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     private SymbolTable createSymbolTable(Form form) {
         List<Question> questions = questionCollector.collect(form);
         SymbolTable symbolTable = new HashMapSymbolTable();
-        for(Question question : questions) {
+        for (Question question : questions) {
             symbolTable.put(question.getId(), question.getType());
         }
 
@@ -108,7 +107,7 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     }
 
     private void checkStatements(List<Statement> statements) {
-        for(Statement statement : statements) {
+        for (Statement statement : statements) {
             statement.accept(this);
         }
     }

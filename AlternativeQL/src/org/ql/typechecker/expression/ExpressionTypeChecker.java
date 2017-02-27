@@ -1,8 +1,8 @@
 package org.ql.typechecker.expression;
 
 import org.ql.ast.expression.BinaryExpression;
-import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.ExpressionVisitor;
+import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
@@ -41,7 +41,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     public Type visit(Increment node) throws Throwable {
         Type innerExpressionType = node.getExpression().accept(this);
 
-        if(!(innerExpressionType instanceof NumberType)) {
+        if (!(innerExpressionType instanceof NumberType)) {
             throw new NumberExpectedException(innerExpressionType);
         }
 

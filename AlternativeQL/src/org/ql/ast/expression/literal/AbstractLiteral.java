@@ -2,8 +2,6 @@ package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
 
-import java.lang.*;
-
 abstract class AbstractLiteral<T> extends Expression {
     final T value;
 

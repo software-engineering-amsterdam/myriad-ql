@@ -2,7 +2,6 @@ package org.ql.ast.expression.literal;
 
 import org.ql.ast.expression.ExpressionVisitor;
 
-import java.lang.*;
 import java.math.BigDecimal;
 
 public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
