@@ -17,7 +17,7 @@ import java.util.Set;
 public class Ast {
 
     private Ast() {
-
+        // Private to prevent empty initialization
     }
 
     private Node mRootNode;
@@ -40,10 +40,16 @@ public class Ast {
         return questions;
     }
 
+    // By implicitely modifying the list
     public Set<Node> getConditions() {
         Set<Node> conditions = new LinkedHashSet<>();
         mRootNode.retrieveConditions(conditions);
         return conditions;
+    }
+
+    // "Getter"
+    public Set<Node> getConditionsV2() {
+        return mRootNode.getConditionsV2();
     }
 
     public String getFormName() {

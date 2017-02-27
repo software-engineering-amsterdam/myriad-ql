@@ -1,7 +1,7 @@
 package org.uva.taxfree.model;
 
 public class ParenthesizedExpressionNode extends ConditionNode {
-    private Node mChild;
+    private ConditionNode mChild;
 
     public ParenthesizedExpressionNode() {
         super();
@@ -10,7 +10,7 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     @Override
     public void addChild(Node child) {
         if (mChild == null) {
-            mChild = child;
+            mChild = (ConditionNode) child;
         } else {
             throw new RuntimeException("Multiple children in parentheses");
         }
@@ -18,6 +18,11 @@ public class ParenthesizedExpressionNode extends ConditionNode {
 
     @Override
     public String toString() {
-        return mChild.toString();
+        return resolve();
+    }
+
+    @Override
+    public String resolve() {
+        return mChild.resolve();
     }
 }

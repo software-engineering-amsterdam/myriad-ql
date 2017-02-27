@@ -1,6 +1,7 @@
 package org.uva.taxfree.model;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class CalculatedField extends NamedNode {
     ConditionNode mCondition;
@@ -10,11 +11,12 @@ public abstract class CalculatedField extends NamedNode {
         super(label, id);
         mTextField = new JTextField();
         mTextField.setEditable(false);
+        mTextField.setPreferredSize(new Dimension(100, 25));
     }
 
     @Override
     protected void fillPanel(JPanel parent) {
-
+        parent.add(mTextField);
     }
 
     @Override
@@ -29,7 +31,14 @@ public abstract class CalculatedField extends NamedNode {
     }
 
     @Override
+    public void setVisibility(boolean isVisible) {
+        mTextField.setText(resolve());
+        super.setVisibility(isVisible);
+    }
+
+    @Override
     public String resolve() {
         return mCondition.evaluate();
     }
+
 }

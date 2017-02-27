@@ -34,8 +34,6 @@ public class Main {
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
 
-//        List<String> stringList = new ArrayList<>();
-//        stringList.get
     }
 }
 
