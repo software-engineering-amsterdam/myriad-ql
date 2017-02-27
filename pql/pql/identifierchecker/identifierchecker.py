@@ -1,3 +1,4 @@
+# coding=utf-8
 class IdentifierChecker(object):
     def __init__(self):
         self.identifier_map = {}

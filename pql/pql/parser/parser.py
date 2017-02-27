@@ -1,3 +1,4 @@
+# coding=utf-8
 # At a stable state of lexing and parsing this import needs to be changed to a more concrete version which only imports
 # the needed methods from the pyparsing package
 from pyparsing import *

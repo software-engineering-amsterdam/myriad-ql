@@ -1,3 +1,4 @@
+# coding=utf-8
 from sys import exit
 from sys import argv
 from io import open
@@ -11,7 +12,7 @@ PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
 def open_file(path):
     try:
-        return open(path, "r")
+        return open(path)
     except FileNotFoundError:
         print("The given file could not be found. Usage: python pql.py %s" % PATH_EXAMPLE)
         exit(1)

@@ -1,7 +1,8 @@
+# coding=utf-8
 class TypeChecker(object):
 
-    def visit(self, input):
-        return [form.apply(self) for form in input]
+    def visit(self, pql_ast):
+        return [form.apply(self) for form in pql_ast]
 
     def form(self, node):
         return [statement.apply(self) for statement in node.children]
