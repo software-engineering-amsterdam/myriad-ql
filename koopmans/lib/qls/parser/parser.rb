@@ -34,9 +34,9 @@ class QLSParser < Parslet::Parser
 
   # widget
   rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | str('slider') | str('text') | radio_button | dropdown).as(:widget) >> spaces? }
-  rule(:widget_init) { spaces? >> str('(') >> spaces? >> (string_literal.as(:true_value) >> spaces? >> str(',') >> spaces? >> string_literal.as(:false_value)).as(:radio_button) >> spaces? >> str(')') }
-  rule(:radio_button) { str('radio') >> widget_init }
-  rule(:dropdown) { str('dropdown') >> widget_init }
+  rule(:widget_init) { spaces? >> str('(') >> spaces? >> string_literal.as(:true_value) >> spaces? >> str(',') >> spaces? >> string_literal.as(:false_value) >> spaces? >> str(')') }
+  rule(:radio_button) { str('radio') >> widget_init.as(:radio_button) }
+  rule(:dropdown) { str('dropdown') >> widget_init.as(:dropdown) }
 
   # default
   rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }
