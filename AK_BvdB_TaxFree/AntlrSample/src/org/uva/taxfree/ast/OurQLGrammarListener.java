@@ -84,7 +84,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
         if ("boolean".equals(ctx.varType().toString())) {
             calculatedFieldNode = new BooleanCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
         } else if ("integer".equals(ctx.varType().toString())) {
-            calculatedFieldNode = new IntegerCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString(), 0);
+            calculatedFieldNode = new IntegerCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
         } else {
             // TODO: Bail out!
             return;
