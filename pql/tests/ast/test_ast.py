@@ -65,19 +65,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_expression_node = field_node_1.children[0]
-        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
-                         'First child should have type: arithmetic_expression')
+        self.assertEqual('expression', arithmetic_expression_node.var_type,
+                         'First child should have type: expression')
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic expression should have 1 node as child')
 
-        arithmetic_statement_node = arithmetic_expression_node.children[0]
-        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
-                         'First child should have type: arithmetic_statement')
-
-        self.assertEqual(1, len(arithmetic_expression_node.children),
-                         'Arithmetic statement should have 1 node as child')
-
-        subtraction_node = arithmetic_statement_node.children[0]
+        subtraction_node = arithmetic_expression_node.children[0]
         self.assertEqual(0, len(subtraction_node.children),
                          'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
@@ -104,19 +97,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_expression_node = field_node_1.children[0]
-        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
-                         'First child should have type: arithmetic_expression')
+        self.assertEqual('expression', arithmetic_expression_node.var_type,
+                         'First child should have type: expression')
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic expression should have 1 node as child')
 
-        arithmetic_statement_node = arithmetic_expression_node.children[0]
-        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
-                         'First child should have type: arithmetic_statement')
-
-        self.assertEqual(1, len(arithmetic_expression_node.children),
-                         'Arithmetic statement should have 1 node as child')
-
-        subtraction_node = arithmetic_statement_node.children[0]
+        subtraction_node = arithmetic_expression_node.children[0]
         self.assertEqual(0, len(subtraction_node.children),
                          'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
@@ -150,19 +136,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_expression_node = field_node_1.children[0]
-        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
-                         'First child should have type: arithmetic_expression')
+        self.assertEqual('expression', arithmetic_expression_node.var_type,
+                         'First child should have type: expression')
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic expression should have 1 node as child')
 
-        arithmetic_statement_node = arithmetic_expression_node.children[0]
-        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
-                         'First child should have type: arithmetic_statement')
-
-        self.assertEqual(1, len(arithmetic_expression_node.children),
-                         'Arithmetic statement should have 1 node as child')
-
-        addition_node = arithmetic_statement_node.children[0]
+        addition_node = arithmetic_expression_node.children[0]
         self.assertEqual(0, len(addition_node.children),
                          'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
@@ -196,19 +175,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_expression_node = field_node_1.children[0]
-        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
-                         'First child should have type: arithmetic_expression')
+        self.assertEqual('expression', arithmetic_expression_node.var_type,
+                         'First child should have type: expression')
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic expression should have 1 node as child')
 
-        arithmetic_statement_node = arithmetic_expression_node.children[0]
-        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
-                         'First child should have type: arithmetic_statement')
-
-        self.assertEqual(1, len(arithmetic_expression_node.children),
-                         'Arithmetic statement should have 1 node as child')
-
-        multiplication_node = arithmetic_statement_node.children[0]
+        multiplication_node = arithmetic_expression_node.children[0]
         self.assertEqual(0, len(multiplication_node.children),
                          'Multiplication node should have no nodes as children')
         self.assertEqual('multiplication', multiplication_node.var_type,
@@ -242,18 +214,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         arithmetic_expression_node = field_node_1.children[0]
-        self.assertEqual('arithmetic_expression', arithmetic_expression_node.var_type,
-                         'First child should have type: arithmetic_expression')
+        self.assertEqual('expression', arithmetic_expression_node.var_type,
+                         'First child should have type: expression')
         self.assertEqual(1, len(arithmetic_expression_node.children),
                          'Arithmetic expression should have 1 node as child')
 
-        arithmetic_statement_node = arithmetic_expression_node.children[0]
-        self.assertEqual('arithmetic_statement', arithmetic_statement_node.var_type,
-                         'First child should have type: arithmetic_statement')
-
-        self.assertEqual(1, len(arithmetic_expression_node.children),
-                         'Arithmetic statement should have 1 node as child')
-        addition_node = arithmetic_statement_node.children[0]
+        addition_node = arithmetic_expression_node.children[0]
         self.assertEqual(0, len(addition_node.children),
                          'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
@@ -314,12 +280,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
+        expression_node = conditional_node.condition
 
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
 
-        boolean_operand_node = condition_node.children[0]
+        boolean_operand_node = expression_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)
@@ -355,11 +321,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        expression_node = conditional_node.condition
 
-        boolean_and_node = condition_node.children[0]
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
+
+        boolean_and_node = expression_node.children[0]
 
         self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should have no children')
@@ -405,11 +372,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        expression_node = conditional_node.condition
 
-        boolean_or_node = condition_node.children[0]
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
+
+        boolean_or_node = expression_node.children[0]
         self.assertEqual('or', boolean_or_node.var_type)
         self.assertEqual(0, len(boolean_or_node.children), 'Boolean OR node should have no children')
 
@@ -462,11 +430,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        expression_node = conditional_node.condition
 
-        boolean_and_node = condition_node.children[0]
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
+
+        boolean_and_node = expression_node.children[0]
 
         self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should no children')
@@ -520,11 +489,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        expression_node = conditional_node.condition
 
-        boolean_and_node = condition_node.children[0]
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
+
+        boolean_and_node = expression_node.children[0]
 
         self.assertEqual('and', boolean_and_node.var_type)
         self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should no children')
@@ -593,12 +563,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        condition_node = conditional_node.condition
+        expression_node = conditional_node.condition
 
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
 
-        boolean_operand_node = condition_node.children[0]
+        boolean_operand_node = expression_node.children[0]
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)
 
@@ -652,12 +622,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('money', field_node_2.data_type)
         self.assertEqual('What was the selling price?', field_node_2.title)
 
-        condition_node = conditional_node.condition
+        expression_node = conditional_node.condition
 
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
 
-        boolean_operand_node = condition_node.children[0]
+        boolean_operand_node = expression_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)
@@ -710,12 +680,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual('boolean', field_node_3.data_type)
         self.assertEqual('Did you buy a house in 2010?', field_node_3.title)
 
-        condition_node = conditional_node.condition
+        expression_node = conditional_node.condition
 
-        self.assertEqual(1, len(condition_node.children), 'Condition node should have 1 child')
-        self.assertEqual('condition', condition_node.var_type, 'Condition node should have type condition')
+        self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
+        self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
 
-        boolean_operand_node = condition_node.children[0]
+        boolean_operand_node = expression_node.children[0]
         self.assertEqual(0, len(boolean_operand_node.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)

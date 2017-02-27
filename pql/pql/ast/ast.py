@@ -47,21 +47,12 @@ class Field(Node):
 
 
 class Expression(Node):
-    def __init__(self, arithmetic):
-        super(Expression, self).__init__('arithmetic_expression')
-        self.add_child(arithmetic)
+    def __init__(self, expression):
+        super(Expression, self).__init__('expression')
+        self.add_child(expression)
 
     def apply(self, visitor):
         return visitor.expression(self)
-
-
-class Arithmetic(Node):
-    def __init__(self, parsed_output):
-        super(Arithmetic, self).__init__('arithmetic_statement')
-        self.add_child(parsed_output)
-
-    def apply(self, visitor):
-        return visitor.arithmetic(self)
 
 
 class Conditional(Node):
@@ -202,15 +193,6 @@ class Inequality(BinaryOperation):
 
     def apply(self, visitor):
         return visitor.inequality(self)
-
-
-class Condition(Node):
-    def __init__(self, parsed_output):
-        super(Condition, self).__init__('condition')
-        self.add_child(parsed_output)
-
-    def apply(self, visitor):
-        return visitor.condition(self)
 
 
 class Value(Node):
