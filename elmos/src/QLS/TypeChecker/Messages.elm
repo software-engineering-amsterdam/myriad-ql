@@ -9,8 +9,14 @@ type Message
 
 type ErrorMessage
     = UndefinedQuestionReference String Location
+    | UnplacedQuestion String
 
 
 undefinedQuestionReference : String -> Location -> Message
 undefinedQuestionReference name location =
     Error (UndefinedQuestionReference name location)
+
+
+unplacedQuestion : String -> Message
+unplacedQuestion name =
+    Error (UnplacedQuestion name)
