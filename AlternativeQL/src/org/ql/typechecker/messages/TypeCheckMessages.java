@@ -21,10 +21,15 @@ public class TypeCheckMessages implements MessageBag {
         Metadata metadata = node.getMetadata();
 
         if (metadata != null) {
-            errors.add(message + " on line " + metadata.getLine() + ":" + metadata.getColumn());
+            addError(message + " on line " + metadata.getLine() + ":" + metadata.getColumn());
         } else {
-            errors.add(message);
+            addError(message);
         }
+    }
+
+    @Override
+    public void addError(String message) {
+        errors.add(message);
     }
 
     @Override
