@@ -1,9 +1,9 @@
 import nearley                                   from 'nearley';
-
+import  './grammar.js';
 
 import {test1, test2, test3, test4 ,test5}       from './test/TestStrings.js';
 import {Form}                                    from './Form.js';
-import  './grammar.js'; // probably window.grammar;
+
 import {Question}                                from './statements/Question.js';
 import {Answer}                                  from './statements/Answer.js';
 import {Generator}                               from './gui/Generator.js';
