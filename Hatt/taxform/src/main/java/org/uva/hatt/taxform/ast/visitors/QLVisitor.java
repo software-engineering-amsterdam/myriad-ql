@@ -1,7 +1,10 @@
 package org.uva.hatt.taxform.ast.visitors;
 
 import org.uva.hatt.taxform.ast.nodes.*;
+import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
+import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.items.Conditional;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
@@ -53,6 +56,30 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
         conditional.setElseStatements(ctx.elseBlock() == null ? new ArrayList<>() : getStatements(ctx.elseBlock().items()));
 
         return conditional;
+    }
+
+    @Override
+    public ASTNode visitComputationExpression(QLParser.ComputationExpressionContext ctx) {
+        ComputationExpression computationExpression = new ComputationExpression(ctx.start.getLine());
+        computationExpression.setExpression(ctx.getText());
+
+        return computationExpression;
+    }
+
+    @Override
+    public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
+        BooleanExpression booleanExpression = new BooleanExpression(ctx.start.getLine());
+        booleanExpression.setExpression(ctx.getText());
+
+        return booleanExpression;
+    }
+
+    @Override
+    public ASTNode visitGroupedExpression(QLParser.GroupedExpressionContext ctx) {
+        GroupedExpression groupedExpression = new GroupedExpression(ctx.start.getLine());
+        groupedExpression.setExpression(ctx.getText());
+
+        return groupedExpression;
     }
 
     private List<Item> getStatements(List<QLParser.ItemsContext> items) {
