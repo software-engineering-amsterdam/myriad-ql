@@ -1,12 +1,13 @@
 module QLS
   module AST
-    class Page
+    class StyleSheet
       attr_reader :variable
-      attr_reader :block
+      attr_reader :pages
 
-      def initialize(variable, block)
+
+      def initialize(variable, pages)
         @variable = variable
-        @block = block
+        @pages = pages
       end
     end
   end
