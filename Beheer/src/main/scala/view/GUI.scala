@@ -3,23 +3,22 @@ package view
 import java.io.FileReader
 
 import ast._
-import checker.{Error, FormChecker, Issue, Warning}
+import checker.{ Error, FormChecker, Issue, Warning }
 import parser.FormParser
-import values.{BooleanValue, IntegerValue, Value}
+import values.{ BooleanValue, IntegerValue, Value }
 
 import scalafx.application.JFXApp
 import scalafx.scene.Scene
 import scalafx.scene.layout.FlowPane
+import ast.ExpressionNode.Env
 
 object GUI extends JFXApp {
-  var env: Map[String, Value] = Map(
+  val env: Env = Map(
     "hasSoldHouse" -> BooleanValue(true),
     "sellingPrice" -> IntegerValue(1000)
   )
 
-  def updateEnv(identifier: String, value: Value) = {
-    env + identifier -> value
-  }
+  def updateEnv(identifier: String, value: Value) = env + identifier -> value
 
   val filename = "src/main/resources/example.ql"
   val parsedForm = FormParser(new FileReader(filename))

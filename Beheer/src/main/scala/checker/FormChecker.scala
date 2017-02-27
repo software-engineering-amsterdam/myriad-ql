@@ -5,13 +5,8 @@ import model.FormModel
 import scala.annotation.tailrec
 
 class FormChecker(db: FormModel) extends Checker {
-  lazy val check: Issues = {
-    errors.flatten ++ warnings.flatten
-  }
-  lazy val checkExpressions: Issues =
-    db.expressions.flatMap { case (expression, expectedType) => ExpressionChecker(db, expression, expectedType) }
-  private lazy val errors = List(duplicateIdentifiers, undefinedReferences, dependencyCycles, checkExpressions)
-  private lazy val warnings = List(duplicateLabels)
+  lazy val check: Issues = duplicateIdentifiers ++ undefinedReferences ++ dependencyCycles ++ checkExpressions ++ duplicateLabels
+
   private lazy val undefinedReferences: Errors =
     (db.referencedIdentifiers -- db.definedIdentifiers.toSet).map(i => Error(s"Undefined reference: $i")).toSeq
   private lazy val duplicateIdentifiers: Errors =
@@ -20,6 +15,7 @@ class FormChecker(db: FormModel) extends Checker {
     db.questionLabels.diff(db.questionLabels.distinct).distinct.map(l => Warning(s"Duplicate label: $l"))
   private lazy val dependencyCycles: Errors =
     db.definedIdentifiers.filter(findCycle).map(q => Error(s"Dependency cycle in question: $q"))
+  private lazy val checkExpressions: Issues = db.expressions.flatMap { case (expression, expectedType) => ExpressionChecker(db, expression, expectedType) }
 
   private def findCycle(rootIdentifier: String): Boolean = {
     @tailrec
@@ -32,10 +28,8 @@ class FormChecker(db: FormModel) extends Checker {
 
     findCycleInLayer(db.questionsWithReferences.getOrElse(rootIdentifier, Set.empty), Set.empty)
   }
-
 }
 
 object FormChecker {
   def apply(formModel: FormModel): Seq[Issue] = new FormChecker(formModel).check
 }
-

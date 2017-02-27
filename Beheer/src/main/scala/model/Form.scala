@@ -1,7 +1,7 @@
 package model
 
-import ast.{ExpressionNode, Type}
-import values.{BooleanValue, Value}
+import ast.{ ExpressionNode, Type }
+import values.{ BooleanValue, Value }
 
 sealed trait DisplayQuestion {
   val identifier: String

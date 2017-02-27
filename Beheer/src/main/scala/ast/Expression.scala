@@ -2,12 +2,15 @@ package ast
 
 import java.util.Date
 
+import ast.ExpressionNode.Env
 import values._
 
 sealed trait ExpressionNode {
-  type Env = Map[String, Value]
-
   def value(env: Env): Value
+}
+
+object ExpressionNode {
+  type Env = Map[String, Value]
 }
 
 sealed trait InfixNode extends ExpressionNode {
