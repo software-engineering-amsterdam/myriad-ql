@@ -4,7 +4,7 @@ package org.ql.typechecker.expression;
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
 
-public class UndefinedIdentifierException extends RuntimeException implements TypeError {
+public class UndefinedIdentifierException extends TypeError {
     private final Identifier identifier;
 
     public UndefinedIdentifierException(Identifier identifier) {

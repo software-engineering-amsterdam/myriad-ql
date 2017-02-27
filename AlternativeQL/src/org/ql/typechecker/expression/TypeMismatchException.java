@@ -3,7 +3,7 @@ package org.ql.typechecker.expression;
 import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 
-public class TypeMismatchException extends Throwable implements TypeError {
+public class TypeMismatchException extends TypeError {
     private final Type expected;
     private final Type actual;
 

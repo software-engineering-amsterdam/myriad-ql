@@ -14,6 +14,7 @@ import org.ql.collector.QuestionCollector;
 import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
+import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
 import org.ql.typechecker.statement.QuestionVisitor;
@@ -48,20 +49,22 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     @Override
     public Void visit(IfThen ifThen) {
         checkIfCondition(ifThen.getCondition());
+
         checkStatements(ifThen.getThenStatements());
 
         return null;
     }
 
     private void checkIfCondition(Expression condition) {
-        Type conditionType = null;
         try {
-            conditionType = condition.accept(expressionTypeChecker);
+            Type conditionType = condition.accept(expressionTypeChecker);
             if (!(conditionType instanceof BooleanType)) {
                 messages.addError(new TypeMismatchException(new BooleanType(), conditionType));
             }
+        } catch (TypeError typeError) {
+            messages.addError(typeError);
         } catch (Throwable throwable) {
-            messages.addError("An error occurred while checking if condition", conditionType);
+            messages.addError("Unrecognized error occurred: " + throwable, condition);
         }
     }
 
