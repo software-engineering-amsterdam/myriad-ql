@@ -2,23 +2,23 @@ module QL.TypeChecker.Expressions exposing (..)
 
 import Dict exposing (Dict)
 import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
-import QL.TypeChecker.CheckerUtil as CheckerUtil
+import QL.TypeChecker.CheckerUtil as CheckerUtil exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
-
-
-type alias VariableTypes =
-    Dict String ValueType
 
 
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
-    CheckerUtil.collectExpressions form
-        |> List.concatMap typeCheckerErrorsFromExpression
+    let
+        questionTypes =
+            CheckerUtil.questionTypes form
+    in
+        CheckerUtil.collectExpressions form
+            |> List.concatMap (typeCheckerErrorsFromExpression questionTypes)
 
 
-typeCheckerErrorsFromExpression : Expression -> List Message
-typeCheckerErrorsFromExpression expression =
-    case getType Dict.empty expression of
+typeCheckerErrorsFromExpression : QuestionTypes -> Expression -> List Message
+typeCheckerErrorsFromExpression questionTypes expression =
+    case getType questionTypes expression of
         Ok _ ->
             []
 
@@ -26,7 +26,7 @@ typeCheckerErrorsFromExpression expression =
             messages
 
 
-getType : VariableTypes -> Expression -> Result (List Message) ValueType
+getType : QuestionTypes -> Expression -> Result (List Message) ValueType
 getType variableTypes expression =
     case expression of
         Var ( name, loc ) ->
