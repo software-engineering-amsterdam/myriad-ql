@@ -86,7 +86,6 @@ def parse(input_string):
         operand_arith.setResultsName('arithmetic_operand*'),
         operand_list_arith
     ).setResultsName('arithmetic_expr')
-    # arithmetic_precedence.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
 
     # Boolean precedence
     boolean_precedence = infixNotation(
