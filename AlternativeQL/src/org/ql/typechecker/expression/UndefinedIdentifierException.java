@@ -13,7 +13,7 @@ public class UndefinedIdentifierException extends RuntimeException implements Ty
 
     @Override
     public Node getNode() {
-        return null;
+        return identifier;
     }
 
     @Override

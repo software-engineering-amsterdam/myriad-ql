@@ -12,7 +12,7 @@ public class UnexpectedTypeException extends Throwable implements TypeError {
 
     @Override
     public Node getNode() {
-        return null;
+        return innerExpressionType;
     }
 
     @Override
