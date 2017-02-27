@@ -1,9 +1,9 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import Html exposing (Html, div, form, h3, pre, text, textarea)
+import Html exposing (Html, b, div, form, h3, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
-import QL.AST exposing (Form, Location(Location))
+import QL.AST exposing (Form, Location(Location), ValueType)
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
@@ -135,14 +135,23 @@ renderMessage message =
                 , UI.Messages.location loc
                 ]
 
-        (Error (ArithmeticExpressionTypeMismatch _ _ _ _)) as error ->
-            text <| toString error
+        (Error (ArithmeticExpressionTypeMismatch operator loc leftType rightType)) as error ->
+            operatorMismatchMessage operator loc leftType rightType
 
-        (Error (LogicExpressionTypeMismatch _ _ _ _)) as error ->
-            text <| toString error
+        (Error (LogicExpressionTypeMismatch operator loc leftType rightType)) as error ->
+            operatorMismatchMessage operator loc leftType rightType
 
-        (Error (ComparisonExpressionTypeMismatch _ _ _ _)) as error ->
-            text <| toString error
+        (Error (ComparisonExpressionTypeMismatch operator loc leftType rightType)) as error ->
+            operatorMismatchMessage operator loc leftType rightType
 
-        (Error (RelationExpressionTypeMismatch _ _ _ _)) as error ->
-            text <| toString error
+        (Error (RelationExpressionTypeMismatch operator loc leftType rightType)) as error ->
+            operatorMismatchMessage operator loc leftType rightType
+
+
+operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> Html msg
+operatorMismatchMessage operator loc leftType rightType =
+    UI.Messages.error
+        [ b [] [ text <| toString operator ]
+        , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
+        , UI.Messages.location loc
+        ]

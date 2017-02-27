@@ -56,6 +56,15 @@ getType variableTypes expression =
                         ( IntegerType, IntegerType ) ->
                             Ok IntegerType
 
+                        ( MoneyType, IntegerType ) ->
+                            Ok MoneyType
+
+                        ( IntegerType, MoneyType ) ->
+                            Ok MoneyType
+
+                        ( MoneyType, MoneyType ) ->
+                            Ok MoneyType
+
                         ( l, r ) ->
                             Err [ Messages.arithmeticExpressionTypeMismatch op loc l r ]
             in
