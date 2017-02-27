@@ -1,7 +1,7 @@
 from ql.visitors.evaluator import *
 
 
-class UpdateGUI:
+class GuiUpdater:
 
     def __init__(self, form_app, environment):
         self.form_app = form_app

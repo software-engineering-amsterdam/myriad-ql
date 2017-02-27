@@ -1,8 +1,8 @@
 from appJar import gui
 
 from gui.visitors.widget_creator import WidgetCreator
-from gui.visitors.update_computations import UpdateComputations
-from gui.visitors.update_gui import UpdateGUI
+from gui.visitors.computation_updater import ComputationUpdater
+from gui.visitors.gui_updater import GuiUpdater
 
 
 class FormApp:
@@ -27,8 +27,8 @@ class FormApp:
     def update_gui(self, _):
         for name, widget in self.widgets.items():
             self.environment[name] = widget.get_value()
-        UpdateComputations(self.environment).visit(self.form)
-        UpdateGUI(self, self.environment).visit(self.form)
+        ComputationUpdater(self.environment).visit(self.form)
+        GuiUpdater(self, self.environment).visit(self.form)
 
     def show_widget(self, name):
         self.widgets[name].show()

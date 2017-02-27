@@ -1,7 +1,7 @@
 from ql.visitors.evaluator import *
 
 
-class UpdateComputations:
+class ComputationUpdater:
 
     def __init__(self, environment):
         self.environment = environment
