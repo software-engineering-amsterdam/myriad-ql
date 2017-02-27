@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,7 +11,7 @@ import javafx.beans.property.StringProperty;
 public class Question implements FormItem {
     private String question;
     private String id;
-    private String type;
+    private Value type;
     private SimpleStringProperty stringValueProperty;
 
     public Question() {
@@ -33,7 +34,7 @@ public class Question implements FormItem {
         this.id = id;
     }
 
-    public void setType(String type) {
+    public void setType(Value type) {
         this.type = type;
     }
 
@@ -52,6 +53,20 @@ public class Question implements FormItem {
         screen.showQuestion(this);
     }
 
+    @Override
+    public boolean hasId(String id) {
+        return this.id.equals(id);
+    }
+
+    @Override
+    public Value[] getValuesForIds() {
+        return new Value[]{type};
+    }
+
+    @Override
+    public String[] getReferencedIds() {
+        return new String[0];
+    }
 
     @Override
     public String toString() {
