@@ -83,13 +83,13 @@ def parse(input_string):
 
     # Arithmetic precedence
     arithmetic_precedence = infixNotation(
-        operand_arith.setResultsName('arithmetic_operand*'),
+        operand_arith,
         operand_list_arith
     )
 
     # Boolean precedence
     boolean_precedence = infixNotation(
-        operand_bool.setResultsName('boolean_operand'),
+        operand_bool,
         (operand_list_arith + operand_list_bool)
     )
 
