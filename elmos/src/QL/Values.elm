@@ -1,4 +1,4 @@
-module QL.Values exposing (Value(Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat)
+module QL.Values exposing (Value(Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat, isUndefined)
 
 
 type Value
@@ -38,6 +38,11 @@ float f =
 undefined : Value
 undefined =
     Undefined
+
+
+isUndefined : Value -> Bool
+isUndefined =
+    (==) Undefined
 
 
 isNanOrInfinite : Float -> Bool

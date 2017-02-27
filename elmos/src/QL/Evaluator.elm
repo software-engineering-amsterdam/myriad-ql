@@ -10,6 +10,7 @@ import QL.AST as AST
         )
 import QL.Environment as Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
+import Maybe.Extra as Maybe
 
 
 evaluate : Environment -> Expression -> Value
@@ -42,24 +43,16 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
 
-                maybeIntegerPair =
+                maybeInteger =
                     Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
+                        |> Maybe.map (\( l, r ) -> Values.int (binaryForIntArithmitic op l r))
 
-                maybeFloatPair =
+                maybeFloat =
                     Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
-
-                ( intOperator, floatOperator ) =
-                    applicativeForOperator op
+                        |> Maybe.map (\( l, r ) -> Values.float (binaryForFloatArithmitic op l r))
             in
-                case ( maybeIntegerPair, maybeFloatPair ) of
-                    ( Just ( l, r ), _ ) ->
-                        Values.int (intOperator l r)
-
-                    ( _, Just ( l, r ) ) ->
-                        Values.float (floatOperator l r)
-
-                    _ ->
-                        Values.undefined
+                Maybe.or maybeInteger maybeFloat
+                    |> Maybe.withDefault Values.undefined
 
         RelationExpression op _ left right ->
             let
@@ -69,12 +62,9 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue) of
-                    Just ( l, r ) ->
-                        Values.bool (applicativeForRelation op l r)
-
-                    _ ->
-                        Values.undefined
+                Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
+                    |> Maybe.map (\( l, r ) -> Values.bool (applicativeForRelation op l r))
+                    |> Maybe.withDefault Values.undefined
 
         LogicExpression op _ left right ->
             let
@@ -99,31 +89,42 @@ evaluate env expression =
                 rightValue =
                     evaluate env right
             in
-                case ( leftValue, rightValue ) of
-                    ( Values.Undefined, _ ) ->
-                        Values.undefined
-
-                    ( _, Values.Undefined ) ->
-                        Values.undefined
-
-                    ( a, b ) ->
-                        Values.bool (applicativeForComparison op a b)
+                if Values.isUndefined leftValue || Values.isUndefined rightValue then
+                    Values.undefined
+                else
+                    Values.bool (applicativeForComparison op leftValue rightValue)
 
 
-applicativeForOperator : Operator -> ( Int -> Int -> Int, Float -> Float -> Float )
-applicativeForOperator op =
+binaryForIntArithmitic : Operator -> Int -> Int -> Int
+binaryForIntArithmitic op =
     case op of
         Plus ->
-            ( (+), (+) )
+            (+)
 
         Minus ->
-            ( (-), (-) )
+            (-)
 
         Divide ->
-            ( (//), (/) )
+            (//)
 
         Multiply ->
-            ( (*), (*) )
+            (*)
+
+
+binaryForFloatArithmitic : Operator -> (Float -> Float -> Float)
+binaryForFloatArithmitic op =
+    case op of
+        Plus ->
+            (+)
+
+        Minus ->
+            (-)
+
+        Divide ->
+            (/)
+
+        Multiply ->
+            (*)
 
 
 applicativeForRelation : Relation -> comparable -> comparable -> Bool

@@ -91,8 +91,8 @@ atom =
     lazy <|
         \() ->
             choice
-                [ integerAtom
-                , decimalAtom
+                [ decimalAtom
+                , integerAtom
                 , stringAtom
                 , booleanAtom
                 , parensAtom
