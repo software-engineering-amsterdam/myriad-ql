@@ -2,10 +2,13 @@ require 'tk'
 
 module QL
   module GUI
-    class GUI < Builder
+    class GUI
+      attr_accessor :questions
+
       def initialize(ast, type_checker)
         return if check(type_checker) == 'quit'
-        super
+        @questions = Hash.new
+        Builder.new(ast, self)
 
         create_submit_button
         Tk.mainloop

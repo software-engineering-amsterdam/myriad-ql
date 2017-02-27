@@ -1,10 +1,10 @@
 module QL
   module GUI
     class Builder
-      attr_accessor :questions
+      attr_accessor :gui
 
-      def initialize(ast, type_checker)
-        @questions = Hash.new
+      def initialize(ast, gui)
+        @gui = gui
         visit_form(ast)
       end
 
@@ -29,24 +29,24 @@ module QL
         question.condition = condition if condition
 
         if question.assignment
-          GUIComputedQuestion.new(gui: self,
+          GUIComputedQuestion.new(gui: gui,
                                   label: question.label,
                                   id: question.variable.name,
                                   type: question.type.class,
                                   calculation: visit_calculation(question.assignment),
                                   condition: visit_calculation(question.condition))
         elsif question.type.is_a?(AST::BooleanType)
-          GUIBooleanQuestion.new(gui: self,
+          GUIBooleanQuestion.new(gui: gui,
                                  label: question.label,
                                  id: question.variable.name,
                                  condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::MoneyType) || question.type.kind_of?(AST::IntegerType)
-          GUIIntegerQuestion.new(gui: self,
+          GUIIntegerQuestion.new(gui: gui,
                                  label: question.label,
                                  id: question.variable.name,
                                  condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::StringType)
-          GUIStringQuestion.new(gui: self,
+          GUIStringQuestion.new(gui: gui,
                                 label: question.label,
                                 id: question.variable.name,
                                 condition: visit_calculation(question.condition))
@@ -90,7 +90,7 @@ module QL
 
       # change variable to tk variable for gui
       def visit_variable(subject)
-        @questions[subject.name].variable
+        gui.questions[subject.name].variable
       end
     end
   end
