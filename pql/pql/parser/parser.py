@@ -3,19 +3,19 @@
 # the needed methods from the pyparsing package
 from pyparsing import *
 from pql.ast import ast
-from pql.typechecker.types import DATA_TYPES
+from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
     identifier = Word(alphas, alphanums + '_').setResultsName('identifier')
     identifier.setParseAction(lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
-    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DATA_TYPES.integer))
-    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DATA_TYPES.money))
+    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
+    money = Word(nums + ".").setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
     number = integer | money
 
-    true = Literal("true").setParseAction(lambda _: ast.Value(True, DATA_TYPES.boolean))
-    false = Literal("false").setParseAction(lambda _: ast.Value(False, DATA_TYPES.boolean))
+    true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
+    false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = true | false
 
     arith_operand = number | identifier
@@ -51,7 +51,7 @@ def parse(input_string):
     op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     colon = Suppress(":")
-    data_types = oneOf(DATA_TYPES)
+    data_types = oneOf([data_type.value for data_type in DataTypes])
 
     assign_op = Suppress("=")
 

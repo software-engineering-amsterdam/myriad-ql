@@ -1,2 +1,9 @@
 # coding=utf-8
-DATA_TYPES = ["boolean", "money", "string", "integer"]
+from enum import Enum
+
+
+class DataTypes(Enum):
+    boolean = "boolean"
+    money = "money"
+    string = "string"
+    integer = "integer"
