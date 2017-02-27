@@ -5,7 +5,8 @@ public class OpExpression extends Expression {
 	private final Expression right;
 	private final String operator;
 	
-	public OpExpression(Expression left, Expression right, String operator) {
+	public OpExpression(Expression left, Expression right, String operator, Integer line_number) {
+		super(line_number);
 		this.left = left;
 		this.right = right;
 		this.operator = operator;

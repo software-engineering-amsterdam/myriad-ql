@@ -15,6 +15,11 @@ public class BooleanQuestion extends NamedNode {
     }
 
     @Override
+    public String resolve() {
+        return String.valueOf(isTrue());
+    }
+
+    @Override
     public void printValue() {
         System.out.println("Value of bool: " + isTrue());
     }

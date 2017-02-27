@@ -20,4 +20,9 @@ public class ConditionalBlock implements Node {
 	public List<FormElement> getFormElements() {
 		return this.form_elements;
 	}
+
+	@Override
+	public <T> T accept(NodeVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
 }

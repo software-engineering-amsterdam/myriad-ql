@@ -1,9 +1,9 @@
 package org.uva.taxfree.model;
 
 public class ExpressionNode extends ConditionNode {
-    private Node mLeft;
+    private ConditionNode mLeft;
     private String mOperator;
-    private Node mRight;
+    private ConditionNode mRight;
 
     public ExpressionNode(String operator) {
         mOperator = operator;
@@ -12,9 +12,9 @@ public class ExpressionNode extends ConditionNode {
     @Override
     public void addChild(Node node) {
         if (mLeft == null) {
-            mLeft = node;
+            mLeft = (ConditionNode) node;
         } else if (mRight == null) {
-            mRight = node;
+            mRight = (ConditionNode) node;
         } else {
             // Error handling!
         }
@@ -22,7 +22,12 @@ public class ExpressionNode extends ConditionNode {
 
     @Override
     public String toString() {
-        return "(" + mLeft.toString() + mOperator + mRight.toString() + ")";
+        return resolve();
+    }
+
+    @Override
+    public String resolve() {
+        return "(" + mLeft.resolve() + mOperator + mRight.resolve() + ")";
     }
 
 }

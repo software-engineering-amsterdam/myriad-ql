@@ -5,12 +5,16 @@ import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.AST.Expressions.Expression;
 import UvA.Gamma.AST.Expressions.MoneyExpression;
 import UvA.Gamma.AST.Expressions.NumberExpression;
+import UvA.Gamma.AST.Values.Boolean;
+import UvA.Gamma.AST.Values.Money;
+import UvA.Gamma.AST.Values.Number;
+import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 
 
 /**
- * Created by Tjarco on 08-02-17.
+ * Created by Tjarco, 08-02-17.
  */
 
 public class QLVisitor extends QLBaseVisitor<ASTNode> {
@@ -37,7 +41,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Question question = new Question();
         question.setQuestion(ctx.STRING_LITERAL().getText());
         question.setId(ctx.ID().getText());
-        question.setType(ctx.type().getText());
+        question.setType((Value) visit(ctx.type()));
         return question;
     }
 
@@ -46,7 +50,6 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Computed computed = new Computed();
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
-        computed.setType("");
         computed.setExpression((Expression) visit(ctx.expression()));
         return computed;
     }
@@ -69,7 +72,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
+    public BooleanExpression visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
         return new BooleanExpression(ctx.boolExpr().getText());
     }
 
@@ -79,7 +82,23 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+    public MoneyExpression visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
         return new MoneyExpression(ctx.numExpr().getText());
+    }
+
+    @Override
+    public Value visitType(QLParser.TypeContext ctx) {
+        switch (ctx.getText()) {
+            case "BOOL":
+                return new Boolean(false);
+            case "INT":
+                return new Number(0);
+            case "DEC":
+                return new Number(0);
+            case "MONEY":
+                return new Money(0);
+            default:
+                return new Number(0);
+        }
     }
 }

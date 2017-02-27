@@ -24,23 +24,23 @@ public class QuestionVisitor extends Visitor {
 	public void visit(Question question) {	
 		
 		question.getType().accept(this);	
-		addVariableType(question.getVariable(), question.getType());
-		addLabel(question.getLabel(), question.getVariable());
+		addVariableType(question.getVariable(), question.getType(), question.getLine());
+		addLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
-	private void addVariableType(String variable, Type type) {
+	private void addVariableType(String variable, Type type, int line) {
 		if (environment.variableExists(variable)) {
-			throw new RuntimeException("The variable: " + variable + " on line ... " +
+			throw new RuntimeException("The variable: " + variable + " on line " + line +
 					" cannot be added, because it is already defined");
 		}
 		environment.addVariableType(variable, type);
 	}
 
-	private void addLabel(String label, String variableName) {
+	private void addLabel(String label, String variableName, int line) {
 		if (environment.labelExists(label)) {
 			// TODO WARNING not throw
 			System.out.println("The question \" "  + label
-					+ " \"on line ... exists twice in the questionnaire.");
+					+ " \"on line " + line + " exists twice in the questionnaire.");
 		}
 		environment.addLabel(label, variableName);
 	}

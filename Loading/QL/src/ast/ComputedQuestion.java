@@ -7,8 +7,8 @@ public class ComputedQuestion extends Question {
 
 	private Atom computedQuestion;
 
-	public ComputedQuestion(String variable, String label, Type type, Atom computedQuestion) {
-		super(variable, label, type);
+	public ComputedQuestion(String variable, String label, Type type, Atom computedQuestion, int line) {
+		super(variable, label, type, line);
 		this.computedQuestion = computedQuestion;
 	}
 

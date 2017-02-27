@@ -24,12 +24,14 @@ expression: BOOL '=' '('boolExpr')'       # booleanExpression
 
 boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
         | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
+        | '('numExpr')'
         | ID
         | ('true' | 'false')
         ;
 
 numExpr: numExpr op=('*' | '/') numExpr
        | numExpr op=('+' | '-') numExpr
+       | '('numExpr')'
        | NUMBER
        | ID
        ;

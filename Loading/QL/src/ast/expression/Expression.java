@@ -5,7 +5,7 @@ import ast.Visitor;
 import ast.atom.Atom;
 import value.Value;
 
-public abstract class Expression implements Node {
+public abstract class Expression extends Node {
 	
 	public abstract Atom evaluate();
 

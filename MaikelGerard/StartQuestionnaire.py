@@ -1,13 +1,13 @@
-from Parser import QuestionnaireParser
-from TypeChecker import TypeChecker
-from Environment import Environment
-from ErrorHandler import ErrorHandler
-from Evaluate import Evaluate
-from FindCycles import FindCycles
-from DrawGUI import DrawGUI
-from InitGUI import InitGUI
 import sys
 
+from QL.Environment import Environment
+from QL.ErrorHandler import ErrorHandler
+from QL.GUI.DrawGUI import DrawGUI
+from QL.GUI.InitGUI import InitGUI
+from QL.Stages.Evaluator import Evaluate
+from QL.Stages.FindCycles import FindCycles
+from QL.Stages.Parser import QuestionnaireParser
+from QL.Stages.TypeChecker import TypeChecker
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

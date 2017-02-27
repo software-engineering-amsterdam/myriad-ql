@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.StringProperty;
 
@@ -12,4 +13,12 @@ public interface FormItem extends ASTNode {
     void show(MainScreen screen);
 
     void idChanged(Form root, String id, String value);
+
+    String getId();
+
+    boolean hasId(String id);
+
+    String[] getReferencedIds();
+
+    Value[] getValuesForIds();
 }

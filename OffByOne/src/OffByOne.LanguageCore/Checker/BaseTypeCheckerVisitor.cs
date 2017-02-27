@@ -21,7 +21,7 @@
 
         public ValueType Visit(DecimalLiteral literal, VisitorContext context)
         {
-            return TypeConstants.FloatType;
+            return TypeConstants.DecimalType;
         }
 
         public ValueType Visit(BooleanLiteral literal, VisitorContext context)

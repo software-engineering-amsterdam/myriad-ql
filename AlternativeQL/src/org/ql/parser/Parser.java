@@ -5,12 +5,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.ql.ast.*;
 import org.ql.grammar.QLParserLexer;
 import org.ql.grammar.QLParserParser;
-import org.ql.grammar.QLParserParser.*;
 import org.ql.grammar.QLParserVisitor;
 
 public class Parser {
 
-    private final QLParserVisitor<Node> visitor = new Visitor();
+    private final QLParserVisitor<Node> visitor = new AntlrVisitor();
 
     public Form parseForm(String code) {
         return (Form) visitor.visit(createParser(code).form());

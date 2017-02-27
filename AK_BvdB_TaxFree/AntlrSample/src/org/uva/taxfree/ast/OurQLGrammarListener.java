@@ -64,17 +64,32 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
         Node questionNode;
-        if ("boolean".equals(ctx.varType().toString())) {
+        if ("boolean".equals(ctx.varType().getText())) {
             questionNode = new BooleanQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
-        } else if ("string".equals(ctx.varType().toString())) {
+        } else if ("string".equals(ctx.varType().getText())) {
             questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
-        } else if ("integer".equals(ctx.varType().toString())) {
-            questionNode = new IntegerQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString(), 0);
+        } else if ("integer".equals(ctx.varType().getText())) {
+            questionNode = new IntegerQuestion(ctx.QUESTION().toString(), ctx.VARIABLE_LITERAL().toString());
         } else {
             // TODO: Bail out!
-            return;
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
         }
         addNodeToAst(questionNode);
+    }
+
+    @Override
+    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.enterCalculation(ctx);
+        Node calculatedFieldNode;
+        if ("boolean".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new BooleanCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else if ("integer".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new IntegerCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else {
+            // TODO: Bail out!
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+        }
+        addParentNodeToAst(calculatedFieldNode);
     }
 
     @Override
@@ -147,6 +162,12 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     }
 
     @Override
+    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.exitCalculation(ctx);
+        popParent();
+    }
+
+    @Override
     public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.exitCalculationExpression(ctx);
         popParent();
@@ -178,19 +199,11 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
             throw new AssertionError("After parsing the form, the stack should be empty");
         }
     }
+
+    // Unused calls
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);
-    }
-
-    @Override
-    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.enterCalculation(ctx);
-    }
-
-    @Override
-    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.exitCalculation(ctx);
     }
 
     @Override

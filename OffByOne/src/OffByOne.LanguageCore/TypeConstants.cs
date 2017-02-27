@@ -9,7 +9,7 @@
     {
         public static readonly BooleanValueType BooleanType = new BooleanValueType();
         public static readonly StringValueType StringType = new StringValueType();
-        public static readonly FloatValueType FloatType = new FloatValueType();
+        public static readonly DecimalValueType DecimalType = new DecimalValueType();
         public static readonly IntegerValueType IntegerType = new IntegerValueType();
         public static readonly MoneyValueType MoneyType = new MoneyValueType();
         public static readonly DateValueType DateType = new DateValueType();
@@ -19,7 +19,7 @@
         {
             IntegerType,
             MoneyType,
-            FloatType
+            DecimalType
         };
     }
 }
