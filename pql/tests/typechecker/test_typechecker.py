@@ -1,3 +1,4 @@
+# coding=utf-8
 from unittest import TestCase
 from pql.parser.parser import parse
 from pql.main import check_type
