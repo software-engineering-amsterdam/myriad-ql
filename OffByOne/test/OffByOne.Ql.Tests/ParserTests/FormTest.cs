@@ -47,6 +47,7 @@
                 .OfType<QuestionStatement>()
                 .ToList();
 
+            // TODO: Fix processing of StringLiterals
             Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Label == "What is your birth date?"));
             Assert.True(questions.Any(x => x.Identifier == "continue" && x.Label == "Do you want to continue?"));
 
