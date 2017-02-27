@@ -1,4 +1,4 @@
-module QLS.FormVisitor exposing (..)
+module QL.FormVisitor exposing (..)
 
 import QL.AST exposing (..)
 

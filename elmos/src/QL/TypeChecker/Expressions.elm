@@ -2,6 +2,7 @@ module QL.TypeChecker.Expressions exposing (..)
 
 import Dict exposing (Dict)
 import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
+import QL.TypeChecker.CheckerUtil as CheckerUtil
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
 
@@ -11,39 +12,13 @@ type alias VariableTypes =
 
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
-    expressionFromBlock form.items
+    CheckerUtil.collectExpressions form
         |> List.concatMap typeCheckerErrorsFromExpression
-
-
-{-| Do not remove the argument. There is a bug in the elm-compiler that will result in a runtime error. Possibly due to the currying
--}
-expressionFromBlock : List FormItem -> List Expression
-expressionFromBlock x =
-    List.concatMap expressionsFromItem x
-
-
-expressionsFromItem : FormItem -> List Expression
-expressionsFromItem formItem =
-    case formItem of
-        Field _ _ _ ->
-            []
-
-        ComputedField _ _ _ computation ->
-            [ computation ]
-
-        IfThen condition thenBlock ->
-            condition
-                :: expressionFromBlock thenBlock
-
-        IfThenElse condition thenBlock elseBlock ->
-            condition
-                :: expressionFromBlock thenBlock
-                ++ expressionFromBlock elseBlock
 
 
 typeCheckerErrorsFromExpression : Expression -> List Message
 typeCheckerErrorsFromExpression expression =
-    case (getType Dict.empty expression) of
+    case getType Dict.empty expression of
         Ok _ ->
             []
 

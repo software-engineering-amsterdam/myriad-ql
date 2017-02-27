@@ -1,27 +1,56 @@
-module QL.TypeChecker.CheckerUtil exposing (..)
+module QL.TypeChecker.CheckerUtil exposing (QuestionIndex, collectDeclaredIds, collectExpressions, questionIndexFromForm, questionIndexFromBlock)
 
 import QL.AST exposing (..)
-import DictList exposing (DictList)
+import QL.FormVisitor exposing (Order(Post), defaultConfig)
+import Dict exposing (Dict)
 
 
 type alias QuestionIndex =
-    DictList String (List Location)
+    Dict String (List Location)
+
+
+type alias QuestionValueDict =
+    Dict String (List Location)
+
+
+collectDeclaredIds : Form -> List Id
+collectDeclaredIds form =
+    QL.FormVisitor.inspect
+        { defaultConfig
+            | onField = Post (\( _, id, _ ) result -> id :: result)
+            , onComputedField = Post (\( _, id, _, _ ) result -> id :: result)
+        }
+        form
+        []
+
+
+collectExpressions : Form -> List Expression
+collectExpressions form =
+    QL.FormVisitor.inspect
+        { defaultConfig | onExpression = Post (::) }
+        form
+        []
+
+
+questionIndexFromForm : Form -> QuestionIndex
+questionIndexFromForm =
+    .items >> questionIndexFromBlock
 
 
 questionIndexFromBlock : Block -> QuestionIndex
 questionIndexFromBlock =
     -- We want the first occurence of a question in the index, concat gives preference to the second which is why the list is reversed
-    List.map questionIndexFromItem >> List.reverse >> DictList.concat
+    List.foldr (questionIndexFromItem >> Dict.union) Dict.empty
 
 
 questionIndexFromItem : FormItem -> QuestionIndex
 questionIndexFromItem item =
     case item of
         Field _ ( id, loc ) _ ->
-            DictList.singleton id [ loc ]
+            Dict.singleton id [ loc ]
 
         ComputedField _ ( id, loc ) _ _ ->
-            DictList.singleton id [ loc ]
+            Dict.singleton id [ loc ]
 
         IfThen _ thenBranch ->
             questionIndexFromBlock thenBranch
@@ -34,10 +63,10 @@ questionIndexFromItem item =
 
 mergeSharedQuestionDefinitions : QuestionIndex -> QuestionIndex -> QuestionIndex
 mergeSharedQuestionDefinitions indexA indexB =
-    DictList.merge
-        DictList.insert
-        (\questionId locationsInA locationsInB result -> DictList.insert questionId (locationsInA ++ locationsInB) result)
-        DictList.insert
+    Dict.merge
+        Dict.insert
+        (\questionId locationsInA locationsInB result -> Dict.insert questionId (locationsInA ++ locationsInB) result)
+        Dict.insert
         indexA
         indexB
-        DictList.empty
+        Dict.empty

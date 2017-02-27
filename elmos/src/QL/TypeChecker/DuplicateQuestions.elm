@@ -1,82 +1,60 @@
 module QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 
 import QL.AST exposing (..)
-import DictList exposing (DictList)
-import List.Extra
-import Maybe.Extra
-import QL.TypeChecker.CheckerUtil exposing (QuestionIndex, questionIndexFromBlock)
+import Dict exposing (Dict)
+import List.Extra as List
+import QL.TypeChecker.CheckerUtil as CheckerUtil exposing (QuestionIndex)
 import QL.TypeChecker.Messages as Messages exposing (Message)
-
-
--- TODO: Use DictSet instead of DictList?
 
 
 type alias Duplicate =
     ( String, List Location )
 
 
+type alias DuplicateIndex =
+    Dict String (List Location)
+
+
 duplicateQuestions : Form -> List Message
 duplicateQuestions form =
-    duplicateQuestionsInBlock (questionIndexFromBlock form.items) form.items
-        |> mergeOverlappingDuplicates
-        |> DictList.map Messages.duplicateQuestionDefinition
-        |> DictList.values
+    let
+        questionIds =
+            CheckerUtil.questionIndexFromForm form
+
+        itemIds =
+            CheckerUtil.collectDeclaredIds form
+    in
+        List.filterMap (duplicateQuestionDeclarations questionIds) itemIds
+            |> mergeOverlappingDuplicates
+            |> Dict.map Messages.duplicateQuestionDefinition
+            |> Dict.values
 
 
-mergeOverlappingDuplicates : List Duplicate -> DictList String (List Location)
+mergeOverlappingDuplicates : List Duplicate -> DuplicateIndex
 mergeOverlappingDuplicates duplicates =
-    let
-        updateDuplicateIndex ( id, locations ) duplicateIndex =
-            DictList.update id (updateLocations locations) duplicateIndex
-
-        updateLocations : List Location -> Maybe (List Location) -> Maybe (List Location)
-        updateLocations newLocations existingLocations =
-            Maybe.withDefault [] existingLocations
-                |> (++) newLocations
-                |> List.Extra.uniqueBy (\(Location line col) -> ( line, col ))
-                |> Just
-    in
-        List.foldl (updateDuplicateIndex) DictList.empty duplicates
+    List.foldl updateDuplicateIndex Dict.empty duplicates
 
 
-duplicateQuestionsInBlock : QuestionIndex -> Block -> List Duplicate
-duplicateQuestionsInBlock parentScope block =
-    let
-        currentScope =
-            DictList.union parentScope (questionIndexFromBlock block)
-    in
-        List.concatMap (duplicateQuestionsInItem currentScope) block
+updateDuplicateIndex : Duplicate -> DuplicateIndex -> DuplicateIndex
+updateDuplicateIndex ( id, locations ) duplicateIndex =
+    Dict.update id (Maybe.withDefault [] >> updateLocations locations >> Just) duplicateIndex
 
 
-duplicateQuestionsInItem : QuestionIndex -> FormItem -> List Duplicate
-duplicateQuestionsInItem declaredQuestions formItem =
-    case formItem of
-        Field _ questionId _ ->
-            duplicateQuestionDeclarations declaredQuestions questionId
-                |> Maybe.Extra.maybeToList
-
-        ComputedField _ questionId _ _ ->
-            duplicateQuestionDeclarations declaredQuestions questionId
-                |> Maybe.Extra.maybeToList
-
-        IfThen _ thenBranch ->
-            duplicateQuestionsInBlock declaredQuestions thenBranch
-
-        IfThenElse _ thenBranch elseBranch ->
-            (++)
-                (duplicateQuestionsInBlock declaredQuestions thenBranch)
-                (duplicateQuestionsInBlock declaredQuestions elseBranch)
+updateLocations : List Location -> List Location -> List Location
+updateLocations newLocations existingLocations =
+    (existingLocations ++ newLocations)
+        |> List.uniqueBy (\(Location line col) -> ( line, col ))
 
 
 duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate
-duplicateQuestionDeclarations declaredQuestions question =
-    DictList.get (Tuple.first question) declaredQuestions
-        |> Maybe.andThen (duplicateQuestion question)
+duplicateQuestionDeclarations declaredQuestions (( value, _ ) as question) =
+    Dict.get value declaredQuestions
+        |> Maybe.andThen (asDuplicate question)
 
 
-duplicateQuestion : Id -> List Location -> Maybe Duplicate
-duplicateQuestion ( id, location ) declaredQuestionLocations =
-    if List.member location declaredQuestionLocations then
+asDuplicate : Id -> List Location -> Maybe Duplicate
+asDuplicate ( value, questionLocation ) declaredQuestionLocations =
+    if List.member questionLocation declaredQuestionLocations then
         Nothing
     else
-        Just ( id, declaredQuestionLocations ++ [ location ] )
+        Just ( value, declaredQuestionLocations ++ [ questionLocation ] )

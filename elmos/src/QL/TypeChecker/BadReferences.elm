@@ -1,48 +1,22 @@
 module QL.TypeChecker.BadReferences exposing (badReferences)
 
 import QL.AST exposing (..)
-import DictList
+import Dict
 import Set exposing (Set)
-import QL.TypeChecker.CheckerUtil exposing (..)
+import QL.TypeChecker.CheckerUtil as CheckerUtil
 import QL.TypeChecker.Messages exposing (Message, referenceToUndefinedQuestion)
 
 
 badReferences : Form -> List Message
 badReferences form =
-    badReferencesInBlock (questionIdsInBlock form.items) form.items
+    let
+        ids =
+            CheckerUtil.questionIndexFromForm form |> Dict.keys |> Set.fromList
 
-
-badReferencesInBlock : Set String -> Block -> List Message
-badReferencesInBlock questionIds block =
-    List.concatMap (badReferencesInFormItem questionIds) block
-
-
-questionIdsInBlock : Block -> Set String
-questionIdsInBlock =
-    questionIndexFromBlock >> DictList.keys >> Set.fromList
-
-
-badReferencesInFormItem : Set String -> FormItem -> List Message
-badReferencesInFormItem availableIdentifiers formItem =
-    case formItem of
-        Field _ _ _ ->
-            []
-
-        ComputedField _ _ _ computation ->
-            badReferencesInExpression availableIdentifiers computation
-
-        IfThen condition thenBranch ->
-            List.concat
-                [ badReferencesInExpression availableIdentifiers condition
-                , badReferencesInBlock availableIdentifiers thenBranch
-                ]
-
-        IfThenElse condition thenBranch elseBranch ->
-            List.concat
-                [ badReferencesInExpression availableIdentifiers condition
-                , badReferencesInBlock availableIdentifiers thenBranch
-                , badReferencesInBlock availableIdentifiers elseBranch
-                ]
+        expressions =
+            CheckerUtil.collectExpressions form
+    in
+        List.concatMap (badReferencesInExpression ids) expressions
 
 
 badReferencesInExpression : Set String -> Expression -> List Message

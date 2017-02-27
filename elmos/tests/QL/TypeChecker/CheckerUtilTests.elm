@@ -5,7 +5,7 @@ import QL.AST exposing (..)
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.CheckerUtil exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
-import DictList
+import Dict
 
 
 all : Test
@@ -24,7 +24,7 @@ questionIndexFromBlockTest =
                         [ Field "label" ( "x", loc 3 3 ) StringType ]
                         [ Field "label" ( "x", loc 4 4 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 3 3, loc 4 4 ])
+                    |> Expect.equal (Dict.singleton "x" [ loc 3 3, loc 4 4 ])
         , test "definitions on rootscope for ifthenelse block with no shared definitions " <|
             \() ->
                 questionIndexFromBlock
@@ -32,21 +32,21 @@ questionIndexFromBlockTest =
                         [ Field "label" ( "x", loc 3 3 ) StringType ]
                         [ Field "label" ( "y", loc 4 4 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.fromList [ ( "x", [ loc 3 3 ] ), ( "y", [ loc 4 4 ] ) ])
+                    |> Expect.equal (Dict.fromList [ ( "x", [ loc 3 3 ] ), ( "y", [ loc 4 4 ] ) ])
         , test "definition on rootscope for single ifThen block" <|
             \() ->
                 questionIndexFromBlock
                     [ IfThen (Boolean emptyLoc True)
                         [ Field "label" ( "x", loc 3 3 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
+                    |> Expect.equal (Dict.singleton "x" [ loc 3 3 ])
         , test "no duplicate definitions in questionIndex for double ifthenelse blocks" <|
             \() ->
                 questionIndexFromBlock
                     [ Field "label" ( "x", loc 3 3 ) StringType
                     , Field "label" ( "x", loc 4 4 ) StringType
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
+                    |> Expect.equal (Dict.singleton "x" [ loc 3 3 ])
         , test "no duplicate definitions in questionIndex for double ifthenelse blocks" <|
             \() ->
                 questionIndexFromBlock
@@ -57,14 +57,14 @@ questionIndexFromBlockTest =
                         [ Field "label" ( "x", loc 5 5 ) StringType ]
                         [ Field "label" ( "x", loc 7 7 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 3 3, loc 4 4 ])
+                    |> Expect.equal (Dict.singleton "x" [ loc 3 3, loc 4 4 ])
         , test "put the first occurrence of a declaration in the questionIndex" <|
             \() ->
                 questionIndexFromBlock
                     [ Field "QuestionA" ( "x", loc 3 3 ) StringType
                     , IfThen (Boolean emptyLoc True) [ Field "QuestionB" ( "x", loc 4 4 ) StringType ]
                     ]
-                    |> Expect.equal (DictList.singleton "x" [ loc 3 3 ])
+                    |> Expect.equal (Dict.singleton "x" [ loc 3 3 ])
         ]
 
 
