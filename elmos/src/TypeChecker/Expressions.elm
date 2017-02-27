@@ -15,9 +15,11 @@ typeCheckerErrors form =
         |> List.concatMap typeCheckerErrorsFromExpression
 
 
+{-| Do not remove the argument. There is a bug in the elm-compiler that will result in a runtime error. Possibly due to the currying
+-}
 expressionFromBlock : List FormItem -> List Expression
-expressionFromBlock =
-    List.concatMap expressionsFromItem
+expressionFromBlock x =
+    List.concatMap expressionsFromItem x
 
 
 expressionsFromItem : FormItem -> List Expression
