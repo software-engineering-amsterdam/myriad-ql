@@ -143,14 +143,18 @@
 
         public virtual TResult Visit(Page expression, TContext context)
         {
-            // TODO: AstNode doesn't have Accept method. This is problematic.
+            expression.Sections.ForEach(x => x.Accept(this, context));
+            expression.ValueTypeRules.ForEach(x => x.Accept(this, context));
             return default(TResult);
         }
 
         public virtual TResult Visit(Section expression, TContext context)
         {
-            // TODO: AstNode doesn't have Accept method. This is problematic.
-            throw new System.NotImplementedException();
+            expression.Name.Accept(this, context);
+            expression.Sections.ForEach(x => x.Accept(this, context));
+            expression.QuestionRules.ForEach(x => x.Accept(this, context));
+            expression.ValueTypeRules.ForEach(x => x.Accept(this, context));
+            return default(TResult);
         }
 
         public virtual TResult Visit(StyleSheet expression, TContext context)
