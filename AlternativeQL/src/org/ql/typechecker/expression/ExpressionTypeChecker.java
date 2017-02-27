@@ -10,6 +10,7 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
+import org.ql.symbol_table.SymbolTable;
 
 public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
 

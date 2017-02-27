@@ -1,11 +1,10 @@
-package org.ql.typechecker.expression;
+package org.ql.symbol_table;
 
 import org.ql.ast.Identifier;
-import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
+import org.ql.symbol_table.SymbolTable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HashMapSymbolTable implements SymbolTable {
