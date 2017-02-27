@@ -47,7 +47,7 @@ export class Parser {
             result = result[0];
         }
         console.log(`Result: ${JSON.stringify(result)}`);
-        let AST = this.makeAST(result[0]);
+        this.AST = this.makeAST(result[0]);
         let gui = new Gui(AST);
 
         return result;
