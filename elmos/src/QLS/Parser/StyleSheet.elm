@@ -13,7 +13,7 @@ styleSheet =
     trimmed
         (StyleSheet
             <$> (string "stylesheet" *> whitespace1 *> identifier)
-            <*> (whitespace1 *> (sepBy1 whitespace1 page))
+            <*> (whitespace1 *> sepBy1 whitespace1 page)
         )
 
 
@@ -21,7 +21,7 @@ page : Parser s Page
 page =
     Page
         <$> (string "page" *> whitespace1 *> pageId <* whitespace <* string "{")
-        <*> (whitespace *> (sepBy1 whitespace1 section))
+        <*> (whitespace *> sepBy1 whitespace1 section)
         <*> (whitespace1 *> sepBy whitespace1 defaultValueConfig <* whitespace)
         <* string "}"
 

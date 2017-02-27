@@ -1,6 +1,6 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3, form, pre, ul, li, a)
+import Html exposing (Html, div, text, h3, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
 import UI.FormRenderer as FormRenderer

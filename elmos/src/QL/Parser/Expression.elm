@@ -7,7 +7,18 @@ import List exposing (foldr)
 import QL.AST
     exposing
         ( Location
-        , Expression(Integer, Decimal, ParensExpression, Var, Str, Boolean, LogicExpression, ComparisonExpression, RelationExpression, ArithmeticExpression)
+        , Expression
+            ( Integer
+            , Decimal
+            , ParensExpression
+            , Var
+            , Str
+            , Boolean
+            , LogicExpression
+            , ComparisonExpression
+            , RelationExpression
+            , ArithmeticExpression
+            )
         , Logic(And, Or)
         , Comparison(Equal, NotEqual)
         , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)

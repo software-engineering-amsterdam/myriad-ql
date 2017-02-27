@@ -1,9 +1,9 @@
 module QLS.Parser.Widget exposing (widget)
 
-import Combine exposing (Parser, choice, regex, parens, sepBy1, string, (<$>), (<$), (*>), fail)
+import Combine exposing (Parser, choice, parens, sepBy1, string, (<$>), (<$), (*>))
 import QLS.AST exposing (Widget(Checkbox, Spinbox, Radio))
 import QL.Parser.Token exposing (quotedString)
-import Combine.Extra exposing (whitespace1, trimmed)
+import Combine.Extra exposing (trimmed)
 
 
 widget : Parser state Widget

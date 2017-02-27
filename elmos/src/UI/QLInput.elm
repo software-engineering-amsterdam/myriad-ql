@@ -1,7 +1,7 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
 import QL.AST exposing (Form, Location(Location))
-import Html exposing (Html, div, form, h3, hr, pre, text, textarea)
+import Html exposing (Html, div, form, h3, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
 import QL.Parser as Parser

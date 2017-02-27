@@ -47,7 +47,7 @@ activeComputedFields env form =
         |> List.filterMap
             (\field ->
                 case field of
-                    Computed label identifier _ expression ->
+                    Computed _ identifier _ expression ->
                         Just ( identifier, expression )
 
                     _ ->

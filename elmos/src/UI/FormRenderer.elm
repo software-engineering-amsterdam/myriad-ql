@@ -1,6 +1,6 @@
 module UI.FormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, form, div, text, pre, hr, h3)
+import Html exposing (Html, div, text, h3)
 import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
@@ -87,7 +87,7 @@ visibleFieldWidgetConfig env field =
             , editable = True
             }
 
-        Computed label identifier valuedType _ ->
+        Computed label identifier _ _ ->
             { identifier = identifier
             , label = label
             , env = env

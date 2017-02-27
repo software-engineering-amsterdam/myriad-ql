@@ -1,6 +1,6 @@
 module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
 
-import Html exposing (Html, form, textarea, div, pre, text)
+import Html exposing (Html, textarea, div, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
@@ -25,7 +25,7 @@ init form =
 
 setForm : Maybe Form -> Model -> Model
 setForm form (Model input styleSheet _) =
-    (Model input styleSheet form)
+    Model input styleSheet form
 
 
 exampleDsl : String
@@ -69,10 +69,10 @@ asStylesheet (Model _ maybeStylesheet _) =
 
 
 update : Msg -> Model -> Model
-update msg (Model _ _ form) =
+update msg (Model _ _ parsedForm) =
     case msg of
         OnInput newInput ->
-            Model newInput (Parser.parse newInput) form
+            Model newInput (Parser.parse newInput) parsedForm
 
 
 view : Model -> Html Msg
@@ -80,7 +80,7 @@ view (Model rawText parsedStyleSheet parsedForm) =
     div []
         [ div [ class "row" ]
             [ div [ class "col-md-6" ]
-                [ form [ class "form" ]
+                [ Html.form [ class "form" ]
                     [ textarea
                         [ defaultValue rawText
                         , rows 20
