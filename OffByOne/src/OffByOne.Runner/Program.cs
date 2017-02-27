@@ -15,11 +15,13 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
 
     public class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             TestQlGrammar();
@@ -49,16 +51,26 @@
         {
             ICharStream input = new AntlrInputStream(@"
                 form questionnaire { 
-                    if (2 + 3 * 4 < someVar) { 
-                        ""Is this a question?""
-                            existentialism: boolean
-                    }
-                    ""Did you sell a house in 2010?""
-                        hasSoldHouse: boolean
-                    ""Did you buy a house in 2010?""
-                        hasBoughtHouse: boolean
-                    ""Did you enter a loan?""
-                        hasMaintLoan: boolean
+                    ""Is this a question?""
+                        existentialism: boolean
+
+                    ""Is this a question?""
+                        existentialism: boolean
+
+                    ""When will this be finished?""
+                        deadline: date
+
+                    ""What is your favourite colour?""
+                        deadline: string
+
+                    ""What is your favourite number?""
+                        deadline: integer
+
+                    ""How much does one beer cost?""
+                        deadline: money
+
+                    ""What is your favourite decimal number?""
+                        deadline: decimal
                 }
             ");
             ICharStream input2 = new AntlrInputStream("true or false");
@@ -68,6 +80,8 @@
             var tree = v.Visit(parser.form());
             CheckQlTypes((FormStatement)tree);
             Console.WriteLine("Done!");
+            var eval = new QlEvaluator();
+            eval.Visit((FormStatement)tree);
         }
 
         private static void TestQlsGrammar()
