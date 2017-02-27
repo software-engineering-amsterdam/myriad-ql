@@ -20,4 +20,10 @@ export class MemoryState {
         this.memory.set(elementName, element);
     }
 
+
+    getType(elementName){
+        let element = this.memory.get(elementName);
+        return element.type;
+    }
+
 }

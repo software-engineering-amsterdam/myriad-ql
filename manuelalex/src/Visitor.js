@@ -55,8 +55,25 @@ export class Visitor {
     visitIfStatement(ifstatement) {
         console.log("The question is:" + ifstatement.condition);
         console.log("The question type is :" + ifstatement.ifBody);
+        this.visitCondition(ifstatement.condition);
         // if(true){
         //     this.visitStatements(ifstatement.ifBody);
         // }
+    }
+
+    visitCondition(condition) {
+
+        condition = condition[0]; // fix ast
+
+        let typeLeftHand = this.memoryState.getType(condition.leftHand);
+        let typeRightHand = this.memoryState.getType(condition.rightHand);
+
+        if(!typeLeftHand.constructor == Boolean){
+            //throw exception
+        }
+
+
+
+
     }
 }
