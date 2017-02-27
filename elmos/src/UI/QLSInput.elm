@@ -1,6 +1,6 @@
 module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
 
-import Html exposing (Html, form, textarea, div, hr, pre, text)
+import Html exposing (Html, form, textarea, div, pre, text)
 import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)

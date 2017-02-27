@@ -1,14 +1,19 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import Html exposing (Html, form, textarea, div, hr, pre, text)
-import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
+import AST exposing (Form, Location)
+import Html exposing (Html, div, form, h3, hr, pre, text, textarea)
+import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
-import AST exposing (Form)
 import Parser.Parser as Parser
+import TypeChecker exposing (messages)
+import TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
 
 
-type Model
-    = Model String (Maybe Form)
+type alias Model =
+    { rawInput : String
+    , parsedForm : Maybe Form
+    , messages : List Message
+    }
 
 
 type Msg
@@ -17,7 +22,10 @@ type Msg
 
 init : Model
 init =
-    Model "" Nothing
+    { rawInput = ""
+    , parsedForm = Nothing
+    , messages = []
+    }
         |> update (OnDslInput exampleDsl)
 
 
@@ -56,25 +64,33 @@ exampleDsl =
 
 
 asForm : Model -> Maybe Form
-asForm (Model _ maybeForm) =
-    maybeForm
+asForm { parsedForm } =
+    parsedForm
 
 
 update : Msg -> Model -> Model
-update msg _ =
+update msg model =
     case msg of
         OnDslInput newDslInput ->
-            Model newDslInput (Parser.parse newDslInput)
+            let
+                parseResult =
+                    Parser.parse newDslInput
+            in
+                { model
+                    | rawInput = newDslInput
+                    , parsedForm = parseResult
+                    , messages = Maybe.withDefault [] <| Maybe.map messages <| parseResult
+                }
 
 
 view : Model -> Html Msg
-view (Model rawText parsedForm) =
+view { rawInput, parsedForm, messages } =
     div []
         [ div [ class "row" ]
             [ div [ class "col-md-6" ]
                 [ form [ class "form" ]
                     [ textarea
-                        [ defaultValue rawText
+                        [ defaultValue rawInput
                         , rows 20
                         , cols 45
                         , class "form-control"
@@ -85,7 +101,36 @@ view (Model rawText parsedForm) =
                     ]
                 ]
             , div [ class "col-md-6" ]
-                [ text "TypeChecker" ]
+                [ h3 [] [ text "TypeChecker" ]
+                , pre []
+                    [ text <| String.join "\n" <| List.map toString <| messages
+                    ]
+                ]
             ]
         , pre [] [ text <| toString parsedForm ]
         ]
+
+
+renderMessage : Message -> Html.Html Msg
+renderMessage message =
+    case message of
+        Error (DuplicateQuestionDefinition _ _) ->
+            text "TODO"
+
+        Error (ReferenceToUndefinedQuestion ( name, AST.Location line col )) ->
+            text <| "Reference to undefined variable <" ++ name ++ "> at line " ++ toString line ++ "(" ++ toString col ++ ")"
+
+        Error (UndefinedExpressionVariable _ _) ->
+            text "TODO"
+
+        Error (ArithmeticExpressionTypeMismatch _ _ _ _) ->
+            text "TODO"
+
+        Error (LogicExpressionTypeMismatch _ _ _ _) ->
+            text "TODO"
+
+        Error (ComparisonExpressionTypeMismatch _ _ _ _) ->
+            text "TODO"
+
+        Error (RelationExpressionTypeMismatch _ _ _ _) ->
+            text "TODO"

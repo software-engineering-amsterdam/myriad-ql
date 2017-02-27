@@ -1,12 +1,52 @@
 module TypeChecker.Expressions exposing (..)
 
-import AST exposing (Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
+import AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
 import Dict exposing (Dict)
 import TypeChecker.Messages as Messages exposing (Message)
 
 
 type alias VariableTypes =
     Dict String ValueType
+
+
+typeCheckerErrors : Form -> List Message
+typeCheckerErrors form =
+    expressionFromBlock form.items
+        |> List.concatMap typeCheckerErrorsFromExpression
+
+
+expressionFromBlock : List FormItem -> List Expression
+expressionFromBlock =
+    List.concatMap expressionsFromItem
+
+
+expressionsFromItem : FormItem -> List Expression
+expressionsFromItem formItem =
+    case formItem of
+        Field _ _ _ ->
+            []
+
+        ComputedField _ _ _ computation ->
+            [ computation ]
+
+        IfThen condition thenBlock ->
+            condition
+                :: expressionFromBlock thenBlock
+
+        IfThenElse condition thenBlock elseBlock ->
+            condition
+                :: expressionFromBlock thenBlock
+                ++ expressionFromBlock elseBlock
+
+
+typeCheckerErrorsFromExpression : Expression -> List Message
+typeCheckerErrorsFromExpression expression =
+    case (getType Dict.empty expression) of
+        Ok _ ->
+            []
+
+        Err messages ->
+            messages
 
 
 getType : VariableTypes -> Expression -> Result (List Message) ValueType
