@@ -46,7 +46,7 @@ namespace Questionnaires
             var ruleContainer = new RuleContainer.RuleContainer();
 
             var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer);
-            questionBuilder.Visit((QLForm)form); // Can casting to form here cause problems?
+            questionBuilder.Visit((Form)form); // Can casting to form here cause problems?
             
             ruleContainer.ApplyRules(variableStore, renderer);
         }

@@ -20,7 +20,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return result;
         }
 
-        public void Visit(QLConditional node)
+        public void Visit(Conditional node)
         {
             // We are only intereted in questions, so there is no need to visit the condition
             foreach (var statement in node.ThenStatements)
@@ -29,7 +29,7 @@ namespace Questionnaires.SemanticAnalysis.Run
                 Visit((dynamic)statement);
         }
 
-        public void Visit(QLForm node)
+        public void Visit(Form node)
         {
             foreach (var statement in node.Statements)
             {
@@ -37,12 +37,12 @@ namespace Questionnaires.SemanticAnalysis.Run
             }
         }
 
-        public void Visit(QLComputedQuestion node)
+        public void Visit(ComputedQuestion node)
         {
             Visit((dynamic)node.Question);
         }
 
-        public void Visit(QLQuestion node)
+        public void Visit(AST.Question node)
         {
             if (!Context.ContainsQuestion(node.Identifier))
             {
@@ -60,102 +60,102 @@ namespace Questionnaires.SemanticAnalysis.Run
                 result.AddEvent(new SemanticAnalysis.SemenaticAnalysisEvents.SemanticAnalysisError(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
         
-        public void Visit(QLOrOperation node)
+        public void Visit(Or node)
         {
             
         }
 
-        public void Visit(QLSubtractionOperation node)
+        public void Visit(Subtraction node)
         {
            
         }
 
-        public void Visit(QLMultiplyOperation node)
+        public void Visit(Multiply node)
         {
             
         }
 
-        public void Visit(QLGreaterThanOrEqualOperation node)
+        public void Visit(GreaterThanOrEqual node)
         {
             
         }
 
-        public void Visit(QLLessThanOrEqualOperation node)
+        public void Visit(LessThanOrEqual node)
         {
             
         }
 
-        public void Visit(QLInequalOperation node)
+        public void Visit(Inequal node)
         {
            
         }
 
-        public void Visit(QLEqualOperation node)
+        public void Visit(Equal node)
         {
             
         }
 
-        public void Visit(QLLessThanOperation node)
+        public void Visit(LessThan node)
         {
             
         }
 
-        public void Visit(QLGreaterThanOperation node)
+        public void Visit(GreaterThan node)
         {
            
         }
 
-        public void Visit(QLDivisionOperation node)
+        public void Visit(Division node)
         {
            
         }
 
-        public void Visit(QLAdditionOperation node)
+        public void Visit(Addition node)
         {
             
         }
 
-        public void Visit(QLAndOperation node)
+        public void Visit(And node)
         {
             
         }
         
-        public void Visit(QLBoolean node)
+        public void Visit(AST.Literals.Boolean node)
         {
            
         }
 
-        public void Visit(QLNumber node)
+        public void Visit(AST.Literals.Number node)
         {
             
         }
 
-        public void Visit(QLString node)
+        public void Visit(AST.Literals.String node)
         {
             
         }
 
-        public void Visit(QLMoney node)
+        public void Visit(AST.Literals.Money node)
         {
             
         }
 
-        public void Visit(QLIdentifier node)
+        public void Visit(Identifier node)
         {
 
         }
 
-        public void Visit(QLNegativeOperation node)
-        {
-            
-        }
-
-        public void Visit(QLBangOperation node)
+        public void Visit(Negative node)
         {
             
         }
 
-        public void Visit(QLPositiveOperation node)
+        public void Visit(Bang node)
+        {
+            
+        }
+
+        public void Visit(Positive node)
         {
             
         }

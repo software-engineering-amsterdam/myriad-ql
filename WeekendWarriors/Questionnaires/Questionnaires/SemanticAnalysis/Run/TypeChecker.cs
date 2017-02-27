@@ -22,7 +22,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return result;
         }
 
-        public QLType? Visit(QLForm node)
+        public QLType? Visit(Form node)
         {
             foreach (var statement in node.Statements)
                 Visit((dynamic)statement);            
@@ -30,7 +30,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return null;
         }
 
-        public QLType? Visit(QLQuestion node)
+        public QLType? Visit(AST.Question node)
         {
             List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
             var type = node.CheckOperandTypes(new List<QLType>(), Context, events);
@@ -39,12 +39,12 @@ namespace Questionnaires.SemanticAnalysis.Run
             return type;
         }
 
-        public QLType? Visit(QLComputedQuestion node)
+        public QLType? Visit(ComputedQuestion node)
         {
             return Evaluate(new List<INode> { node.Question, node.Expression }, node);
         }
 
-        public QLType? Visit(QLConditional node)
+        public QLType? Visit(Conditional node)
         {   
             // Make sure to visit all the then and else statements
             foreach (var statement in node.ThenStatements)
@@ -56,107 +56,107 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Evaluate(new List<INode> { node.Condition }, node);          
         }
 
-        public QLType? Visit(QLOrOperation node)
+        public QLType? Visit(Or node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLSubtractionOperation node)
+        public QLType? Visit(Subtraction node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLMultiplyOperation node)
+        public QLType? Visit(Multiply node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLGreaterThanOrEqualOperation node)
+        public QLType? Visit(GreaterThanOrEqual node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLLessThanOrEqualOperation node)
+        public QLType? Visit(LessThanOrEqual node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLInequalOperation node)
+        public QLType? Visit(Inequal node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLLessThanOperation node)
+        public QLType? Visit(LessThan node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLEqualOperation node)
+        public QLType? Visit(Equal node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLGreaterThanOperation node)
+        public QLType? Visit(GreaterThan node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLDivisionOperation node)
+        public QLType? Visit(Division node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLAdditionOperation node)
+        public QLType? Visit(Addition node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLAndOperation node)
+        public QLType? Visit(And node)
         {
             return Evaluate(new List<INode> { node.Lhs, node.Rhs }, node);
         }
 
-        public QLType? Visit(QLBoolean node)
+        public QLType? Visit(AST.Literals.Boolean node)
         {
             return Evaluate(new List<INode> { }, node);            
         }
 
-        public QLType? Visit(QLMoney node)
+        public QLType? Visit(AST.Literals.Money node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        public QLType? Visit(QLNumber node)
+        public QLType? Visit(AST.Literals.Number node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        public QLType? Visit(QLString node)
+        public QLType? Visit(AST.Literals.String node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        public QLType? Visit(QLIdentifier node)
+        public QLType? Visit(Identifier node)
         {
             return Evaluate(new List<INode> { }, node);
         }
 
-        public QLType? Visit(QLBinaryOperation node)
+        public QLType? Visit(Binary node)
         {
             return Visit((dynamic)node);
         }
 
-        public QLType? Visit(QLPositiveOperation node)
+        public QLType? Visit(Positive node)
         {
             return Evaluate(new List<INode> { node.Operand }, node);
         }
 
-        public QLType? Visit(QLNegativeOperation node)
+        public QLType? Visit(Negative node)
         {
             return Evaluate(new List<INode> { node.Operand }, node);
         }
 
-        public QLType? Visit(QLBangOperation node)
+        public QLType? Visit(Bang node)
         {
             return Evaluate(new List<INode> { node.Operand }, node);
         }

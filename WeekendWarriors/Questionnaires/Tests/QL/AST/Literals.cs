@@ -36,7 +36,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLString>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.AST.Literals.String>(testCase.Key).Value,
                     testCase.Key, testCase.Value
                 );
             }
@@ -54,7 +54,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLBoolean>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.AST.Literals.Boolean>(testCase.Key).Value,
                     Boolean.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -73,7 +73,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLNumber>(testCase.Key).Value.ToString(),
+                    CreateASTNode<Questionnaires.AST.Literals.Number>(testCase.Key).Value.ToString(),
                     testCase.Key, testCase.Value
                 );
             }
@@ -92,7 +92,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLMoney>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.AST.Literals.Money>(testCase.Key).Value,
                     Decimal.Parse(testCase.Key), testCase.Value
                 );
             }

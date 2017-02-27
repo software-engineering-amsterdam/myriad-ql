@@ -9,63 +9,63 @@ namespace Questionnaires.AST.Visitor
 {
     public interface IASTVisitor<ReturnType>
     {
-        ReturnType Visit(QLForm node);
-        ReturnType Visit(QLQuestion node);
-        ReturnType Visit(QLComputedQuestion node);
-        ReturnType Visit(QLConditional node);
+        ReturnType Visit(Form node);
+        ReturnType Visit(Question node);
+        ReturnType Visit(ComputedQuestion node);
+        ReturnType Visit(Conditional node);
 
-        ReturnType Visit(QLAndOperation node);
-        ReturnType Visit(QLOrOperation node);
-        ReturnType Visit(QLAdditionOperation node);
-        ReturnType Visit(QLSubtractionOperation node);
-        ReturnType Visit(QLDivisionOperation node);
-        ReturnType Visit(QLMultiplyOperation node);
-        ReturnType Visit(QLGreaterThanOperation node);
-        ReturnType Visit(QLGreaterThanOrEqualOperation node);
-        ReturnType Visit(QLLessThanOperation node);
-        ReturnType Visit(QLLessThanOrEqualOperation node);
-        ReturnType Visit(QLEqualOperation node);
-        ReturnType Visit(QLInequalOperation node);        
-        ReturnType Visit(QLPositiveOperation node);
-        ReturnType Visit(QLNegativeOperation node);
-        ReturnType Visit(QLBangOperation node);
+        ReturnType Visit(And node);
+        ReturnType Visit(Or node);
+        ReturnType Visit(Addition node);
+        ReturnType Visit(Subtraction node);
+        ReturnType Visit(Division node);
+        ReturnType Visit(Multiply node);
+        ReturnType Visit(GreaterThan node);
+        ReturnType Visit(GreaterThanOrEqual node);
+        ReturnType Visit(LessThan node);
+        ReturnType Visit(LessThanOrEqual node);
+        ReturnType Visit(Equal node);
+        ReturnType Visit(Inequal node);        
+        ReturnType Visit(Positive node);
+        ReturnType Visit(Negative node);
+        ReturnType Visit(Bang node);
 
-        ReturnType Visit(QLBoolean node);
-        ReturnType Visit(QLMoney node);
-        ReturnType Visit(QLNumber node);
-        ReturnType Visit(QLString node);
-        ReturnType Visit(QLIdentifier node);
+        ReturnType Visit(Literals.Boolean node);
+        ReturnType Visit(Literals.Money node);
+        ReturnType Visit(Literals.Number node);
+        ReturnType Visit(Literals.String node);
+        ReturnType Visit(Identifier node);
     }
 
     // Passing in void as a generic parameter is not allowed. Apparently creating a second non-generic 
     // interface is the standard solution the .NET framework uses
     public interface IASTVisitor
     {
-        void Visit(QLForm node);
-        void Visit(QLQuestion node);
-        void Visit(QLComputedQuestion node);
-        void Visit(QLConditional node);
+        void Visit(Form node);
+        void Visit(Question node);
+        void Visit(ComputedQuestion node);
+        void Visit(Conditional node);
 
-        void Visit(QLAndOperation node);
-        void Visit(QLOrOperation node);
-        void Visit(QLAdditionOperation node);
-        void Visit(QLSubtractionOperation node);
-        void Visit(QLDivisionOperation node);
-        void Visit(QLMultiplyOperation node);
-        void Visit(QLGreaterThanOperation node);
-        void Visit(QLGreaterThanOrEqualOperation node);
-        void Visit(QLLessThanOperation node);
-        void Visit(QLLessThanOrEqualOperation node);
-        void Visit(QLEqualOperation node);
-        void Visit(QLInequalOperation node);
-        void Visit(QLPositiveOperation node);
-        void Visit(QLNegativeOperation node);
-        void Visit(QLBangOperation node);
+        void Visit(And node);
+        void Visit(Or node);
+        void Visit(Addition node);
+        void Visit(Subtraction node);
+        void Visit(Division node);
+        void Visit(Multiply node);
+        void Visit(GreaterThan node);
+        void Visit(GreaterThanOrEqual node);
+        void Visit(LessThan node);
+        void Visit(LessThanOrEqual node);
+        void Visit(Equal node);
+        void Visit(Inequal node);
+        void Visit(Positive node);
+        void Visit(Negative node);
+        void Visit(Bang node);
 
-        void Visit(QLBoolean node);
-        void Visit(QLMoney node);
-        void Visit(QLNumber node);
-        void Visit(QLString node);
-        void Visit(QLIdentifier node);
+        void Visit(Literals.Boolean node);
+        void Visit(Literals.Money node);
+        void Visit(Literals.Number node);
+        void Visit(Literals.String node);
+        void Visit(Identifier node);
     }
 }

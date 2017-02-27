@@ -32,24 +32,24 @@ namespace Questionnaires.AST
 
         public INode CreateQLObject(QLParser parser, QLObjectType qlObjectType)
         {
-            QLVisitor visitor = new QLVisitor();
+            ASTBuilder builder = new ASTBuilder();
 
             switch (qlObjectType)
             {
                 case QLObjectType.Form:
-                    return visitor.Visit(parser.form());
+                    return builder.Visit(parser.form());
                 case QLObjectType.Statement:
-                    return visitor.Visit(parser.statement());
+                    return builder.Visit(parser.statement());
                 case QLObjectType.ComputedQuestion:
-                    return visitor.Visit(parser.computedQuestion());
+                    return builder.Visit(parser.computedQuestion());
                 case QLObjectType.Question:
-                    return visitor.Visit(parser.question());
+                    return builder.Visit(parser.question());
                 case QLObjectType.Conditional:
-                    return visitor.Visit(parser.conditionalBlock());
+                    return builder.Visit(parser.conditionalBlock());
                 case QLObjectType.Composite:
-                    return visitor.Visit(parser.composite());
+                    return builder.Visit(parser.composite());
                 case QLObjectType.Expression:                
-                    return visitor.Visit(parser.expression());
+                    return builder.Visit(parser.expression());
                 default:
                     throw new InvalidEnumArgumentException();
             }

@@ -11,6 +11,7 @@ using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Value;
 using System.ComponentModel;
+using Questionnaires.AST.Visitor;
 
 namespace Questionnaires.QuestionaireBuilder
 {
@@ -36,7 +37,7 @@ namespace Questionnaires.QuestionaireBuilder
             RuleContainer.ApplyRules(VariableStore, Renderer);
         }
 
-        public Func<IValue> Visit(QLComputedQuestion node)
+        public Func<IValue> Visit(ComputedQuestion node)
         {
             Func<IValue> questionFunction = Visit(node.Question);
             Func<IValue> expressionFunction = Visit((dynamic)node.Expression);
@@ -68,12 +69,12 @@ namespace Questionnaires.QuestionaireBuilder
             return questionFunction;
         }
         
-        public Func<IValue> Visit(QLPositiveOperation node)
+        public Func<IValue> Visit(Positive node)
         {
             return Visit((dynamic)node.Operand);
         }
 
-        public Func<IValue> Visit(QLNegativeOperation node)
+        public Func<IValue> Visit(Negative node)
         {
             var lhsFunc = Visit((dynamic)node.Operand);
             return () =>
@@ -89,7 +90,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLBangOperation node)
+        public Func<IValue> Visit(Bang node)
         {
             var lhsFunc = Visit((dynamic)node.Operand);
             return () => 
@@ -98,32 +99,32 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLMoney node)
+        public Func<IValue> Visit(AST.Literals.Money node)
         {
             return () => { return new DecimalValue(node.Value); };
         }
 
-        public Func<IValue> Visit(QLString node)
+        public Func<IValue> Visit(AST.Literals.String node)
         {
             return () => { return new StringValue(node.Value); };
         }
 
-        public Func<IValue> Visit(QLIdentifier node)
+        public Func<IValue> Visit(Identifier node)
         {
             return () => { return VariableStore.GetValue(node.Name); };
         }
 
-        public Func<IValue> Visit(QLNumber node)
+        public Func<IValue> Visit(AST.Literals.Number node)
         {
             return () => { return new IntValue(node.Value); };
         }
 
-        public Func<IValue> Visit(QLBoolean node)
+        public Func<IValue> Visit(AST.Literals.Boolean node)
         {
             return () => { return new BoolValue(node.Value); };
         }
         
-        public Func<IValue> Visit(QLQuestion node)
+        public Func<IValue> Visit(AST.Question node)
         {
             // Renderer needs an IQuestion so we build that
             var question = new Question.Question();
@@ -154,7 +155,7 @@ namespace Questionnaires.QuestionaireBuilder
             return () => { return new StringValue(node.Identifier); };
         }
 
-        public Func<IValue> Visit(QLForm node)
+        public Func<IValue> Visit(Form node)
         {
             foreach (var statement in node.Statements)
             {
@@ -170,7 +171,7 @@ namespace Questionnaires.QuestionaireBuilder
             return null;
         }
 
-        public Func<IValue> Visit(QLAndOperation node)
+        public Func<IValue> Visit(And node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -180,7 +181,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLOrOperation node)
+        public Func<IValue> Visit(Or node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -190,7 +191,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLAdditionOperation node)
+        public Func<IValue> Visit(Addition node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -200,7 +201,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLSubtractionOperation node)
+        public Func<IValue> Visit(Subtraction node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -210,7 +211,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLDivisionOperation node)
+        public Func<IValue> Visit(Division node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -220,7 +221,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLMultiplyOperation node)
+        public Func<IValue> Visit(Multiply node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -230,7 +231,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLGreaterThanOperation node)
+        public Func<IValue> Visit(GreaterThan node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -240,7 +241,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLGreaterThanOrEqualOperation node)
+        public Func<IValue> Visit(GreaterThanOrEqual node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -250,7 +251,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLLessThanOperation node)
+        public Func<IValue> Visit(LessThan node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -260,7 +261,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLLessThanOrEqualOperation node)
+        public Func<IValue> Visit(LessThanOrEqual node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -270,7 +271,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLInequalOperation node)
+        public Func<IValue> Visit(Inequal node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
@@ -280,7 +281,7 @@ namespace Questionnaires.QuestionaireBuilder
             };
         }
 
-        public Func<IValue> Visit(QLConditional node)
+        public Func<IValue> Visit(Conditional node)
         {
             Func<IValue> conditionFunction = Visit((dynamic)node.Condition);
             
@@ -329,7 +330,7 @@ namespace Questionnaires.QuestionaireBuilder
             return null;
         }
 
-        public Func<IValue> Visit(QLEqualOperation node)
+        public Func<IValue> Visit(Equal node)
         {
             var lhsFunc = Visit((dynamic)node.Lhs);
             var rhsFunc = Visit((dynamic)node.Rhs);
