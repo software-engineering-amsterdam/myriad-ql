@@ -9,23 +9,35 @@ https://pyparsing.wikispaces.com/file/view/simpleArith.py
 
 class QL:
     # Booleans
-    AND = Literal('&&').addParseAction(lambda : LogicalAnd)
-    OR = Literal('||').addParseAction(lambda : LogicalOr)
+    AND = Literal('&&').addParseAction(lambda \
+        left_child, right_child : LogicalAnd(left_child, right_child))
+    OR = Literal('||').addParseAction(lambda \
+        left_child, right_child : LogicalOr(left_child, right_child))
     NOT = Literal('!').addParseAction(lambda : LogicalNot) # Unary
 
     # Comparisons
-    GT = Literal('>').addParseAction(lambda : GreaterThan)
-    LT = Literal('<').addParseAction(lambda : LessThan)
-    GTE = Literal('>=').addParseAction(lambda : GreaterThanEquals)
-    LTE = Literal('<=').addParseAction(lambda : LessThanEquals)
-    EQ = Literal('=').addParseAction(lambda : Equality)
-    NEQ = Literal('!=').addParseAction(lambda : Inequality)
+    GT = Literal('>').addParseAction(lambda \
+        left_child, right_child : GreaterThan(left_child, right_child))
+    LT = Literal('<').addParseAction(lambda \
+        left_child, right_child : LessThan(left_child, right_child))
+    GTE = Literal('>=').addParseAction(lambda \
+        left_child, right_child : GreaterThanEquals(left_child, right_child))
+    LTE = Literal('<=').addParseAction(lambda \
+        left_child, right_child : LessThanEquals(left_child, right_child))
+    EQ = Literal('=').addParseAction(lambda \
+        left_child, right_child : Equality(left_child, right_child))
+    NEQ = Literal('!=').addParseAction(lambda \
+        left_child, right_child : Inequality(left_child, right_child))
 
     # Basic Arithmics
-    ADD = Literal('+').addParseAction(lambda : Addition)
-    SUB = Literal('-').addParseAction(lambda : Substraction)
-    MUL = Literal('*').addParseAction(lambda : Multiplication)
-    DIV = Literal('/').addParseAction(lambda : Division)
+    ADD = Literal('+').addParseAction(lambda \
+        left_child, right_child : Addition(left_child, right_child))
+    SUB = Literal('-').addParseAction(lambda \
+        left_child, right_child : Substraction(left_child, right_child))
+    MUL = Literal('*').addParseAction(lambda \
+        left_child, right_child : Multiplication(left_child, right_child))
+    DIV = Literal('/').addParseAction(lambda \
+        left_child, right_child : Division(left_child, right_child))
 
     # Missing Unary Operators (plus, minus)
     POS = Literal('+').addParseAction(lambda : UnaryPlus) # Unary
@@ -51,25 +63,38 @@ class QL:
     identifier = word.setResultsName("identifier")
     identifier.addParseAction(lambda identifier : Variable(*identifier))
 
-    boolean_precedence = [(AND, 2, opAssoc.LEFT),
-                          (OR, 2, opAssoc.LEFT),
-                          (NOT, 1, opAssoc.RIGHT)]
+    def parse_binary(self, content):
+        # print(content)
+        return content
+        # return content[0][1]
+        # return (content[0][0],content[0][2])
 
-    comparison_precedence = [(GT, 2, opAssoc.LEFT),
-                             (LT, 2, opAssoc.LEFT),
-                             (GTE, 2, opAssoc.LEFT),
-                             (LTE, 2, opAssoc.LEFT),
-                             (EQ, 2, opAssoc.LEFT),
-                             (NEQ, 2, opAssoc.LEFT)]
+    def parse_unary(self, content):
+        # print(content)
+        return content
 
-    arithmic_precedence = [(ADD, 2, opAssoc.LEFT),
-                           (SUB, 2, opAssoc.LEFT),
-                           (MUL, 2, opAssoc.LEFT),
-                           (DIV, 2, opAssoc.LEFT)]
+    boolean_precedence = [(AND, 2, opAssoc.LEFT, parse_binary),
+                          (OR, 2, opAssoc.LEFT, parse_binary),
+                          (NOT, 1, opAssoc.RIGHT, parse_unary)] # Unary
+
+    comparison_precedence = [(GT, 2, opAssoc.LEFT, parse_binary),
+                             (LT, 2, opAssoc.LEFT, parse_binary),
+                             (GTE, 2, opAssoc.LEFT, parse_binary),
+                             (LTE, 2, opAssoc.LEFT, parse_binary),
+                             (EQ, 2, opAssoc.LEFT, parse_binary),
+                             (NEQ, 2, opAssoc.LEFT, parse_binary)]
+
+    arithmic_precedence = [(ADD, 2, opAssoc.LEFT, parse_binary),
+                           (SUB, 2, opAssoc.LEFT, parse_binary),
+                           (MUL, 2, opAssoc.LEFT, parse_binary),
+                           (DIV, 2, opAssoc.LEFT, parse_binary)]
 
 
     boolean_expression = operatorPrecedence(identifier,
                                             boolean_precedence)
+
+    boolean_expression.addParseAction(lambda child : \
+            Evaluation(child))
 
     comparison_expression = operatorPrecedence(identifier,
                                                comparison_precedence)
@@ -91,10 +116,7 @@ class QL:
     Group(OneOrMore(Group(statement | question))) + \
     Suppress(rcurly)
 
-    conditional = Suppress(IF) + \
-    boolean_expression.addParseAction(
-        lambda evaluation : Evaluation(*evaluation)
-    ) + evaluated
+    conditional = Suppress(IF) + boolean_expression + evaluated
     conditional.addParseAction(lambda content : Conditional(*content))
 
     # form items
