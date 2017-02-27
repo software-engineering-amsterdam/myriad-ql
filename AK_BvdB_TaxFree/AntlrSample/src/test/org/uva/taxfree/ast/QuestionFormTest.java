@@ -1,7 +1,8 @@
-package org.uva.taxfree.gui;
+package test.org.uva.taxfree.ast;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.*;
 
 import java.util.Timer;
@@ -57,6 +58,14 @@ public class QuestionFormTest {
 
         mRoot.addChild(new StringQuestion("What is your name?", "userName"));
         mRoot.addChild(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
+        mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
+        mRoot.addChild(new IntegerQuestion("What is the value of the sold house?", "soldHouseValue"));
+        mRoot.addChild(new IntegerQuestion("Whwat is the value of the bought house?", "boughtHouseValue"));
+    }
+
+    @Test
+    public void testCalculatedQuestion() throws Exception {
+
     }
 
     @Test
