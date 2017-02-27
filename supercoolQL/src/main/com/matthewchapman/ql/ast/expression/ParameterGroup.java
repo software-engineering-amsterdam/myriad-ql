@@ -11,16 +11,21 @@ import java.util.ArrayList;
 public class ParameterGroup extends Expression {
 
     //TODO implement ParameterGroup
-    private ArrayList<Parameter> parameters;
+    private ArrayList<Expression> expressions;
 
-    public ParameterGroup(ArrayList<Parameter> parameters)
+    public ParameterGroup()
     {
-        this.parameters = parameters;
+        this.expressions = new ArrayList<>();
     }
 
-    public ArrayList<Parameter> getParameters()
+    public ArrayList<Expression> getParameters()
     {
-        return this.parameters;
+        return this.expressions;
+    }
+
+    public void addExpression(Expression e)
+    {
+        this.expressions.add(e);
     }
 
 }

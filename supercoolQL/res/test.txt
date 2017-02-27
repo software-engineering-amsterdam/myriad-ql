@@ -13,7 +13,7 @@ form exampleForm {
       conditionalQuestion2: integer;
     "Math question 1:"
       mathQuestion1:integer =
-        (conditionalQuestion1 - conditionalQuestion2);
+        (conditionalQuestion1 - conditionalQuestion2 + conditionalQuestion1);
   }
 
   if (simpleCondition) {

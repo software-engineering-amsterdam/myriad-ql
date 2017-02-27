@@ -2,17 +2,13 @@ package com.matthewchapman.ql.parsing;
 
 import com.matthewchapman.antlr.QLBaseVisitor;
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.ast.ASTNode;
-import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.*;
 import com.matthewchapman.ql.ast.atomic.BooleanLiteral;
 import com.matthewchapman.ql.ast.atomic.IntegerLiteral;
 import com.matthewchapman.ql.ast.atomic.StringLiteral;
-import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
-import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -41,8 +37,13 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
         String questionID = ctx.ID().getText();
         String questionContent = ctx.STRING().getText();
         Type questionReturnType = (Type) visit(ctx.type());
+        ParameterGroup parameterGroup = new ParameterGroup();
 
-        return new Question(questionID, questionContent, questionReturnType);
+        if(ctx.calculatedValue() != null) {
+            parameterGroup = (ParameterGroup) visit(ctx.calculatedValue());
+        }
+
+        return new Question(questionID, questionContent, questionReturnType, parameterGroup);
     }
 
     @Override
@@ -101,13 +102,13 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
-        ArrayList<Parameter> parameters = new ArrayList<>();
+        ParameterGroup parameterGroup = new ParameterGroup();
 
-        for (QLParser.ExpressionContext expressionContext : ctx.expression()) {
-            parameters.add((Parameter) visit(expressionContext));
+        for (QLParser.ExpressionContext expressionContext: ctx.expression()) {
+            parameterGroup.addExpression((Expression) visit(expressionContext));
         }
 
-        return new ParameterGroup(parameters);
+        return parameterGroup;
     }
 
     @Override
@@ -173,7 +174,9 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitCalculatedValue(QLParser.CalculatedValueContext ctx) {
-        return super.visitCalculatedValue(ctx);
+        ParameterGroup parameterGroup = (ParameterGroup) visit(ctx.expression());
+
+        return parameterGroup;
     }
 
     @Override
