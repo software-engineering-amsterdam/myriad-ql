@@ -1,12 +1,13 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import QL.AST exposing (Form, Location(Location))
 import Html exposing (Html, div, form, h3, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
+import QL.AST exposing (Form, Location(Location))
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
+import UI.Messages
 
 
 type alias Model =
@@ -34,6 +35,9 @@ exampleDsl =
     """form taxOfficeExample {
   "Name?"
   name : string
+
+  "Age?"
+  age : integer
 
   "Age?"
   age : integer
@@ -114,36 +118,34 @@ renderMessage : Message -> Html.Html Msg
 renderMessage message =
     case message of
         Error (DuplicateQuestionDefinition name locations) ->
-            div [ class "alert-danger" ]
-                [ text <|
-                    "Duplicate question definitions for variable <"
-                        ++ name
-                        ++ "> at ["
-                        ++ String.join ", " (List.map locationToString locations)
-                        ++ "]"
-                ]
+            UI.Messages.error
+                ([ text "Duplicate question definitions for variable "
+                 , UI.Messages.varName name
+                 , text " at the following locations: [ "
+                 , UI.Messages.locations locations
+                 , text "]"
+                 ]
+                )
 
         Error (ReferenceToUndefinedQuestion ( name, loc )) ->
-            div [ class "alert-danger" ]
-                [ text <| "Reference to undefined variable <" ++ name ++ "> at " ++ locationToString loc
+            UI.Messages.error
+                [ text <| "Reference to undefined variable "
+                , UI.Messages.varName name
+                , text " at "
+                , UI.Messages.location loc
                 ]
 
-        Error (UndefinedExpressionVariable _ _) ->
-            Debug.crash "TODO"
+        (Error (UndefinedExpressionVariable _ _)) as error ->
+            text <| toString error
 
-        Error (ArithmeticExpressionTypeMismatch _ _ _ _) ->
-            Debug.crash "TODO"
+        (Error (ArithmeticExpressionTypeMismatch _ _ _ _)) as error ->
+            text <| toString error
 
-        Error (LogicExpressionTypeMismatch _ _ _ _) ->
-            Debug.crash "TODO"
+        (Error (LogicExpressionTypeMismatch _ _ _ _)) as error ->
+            text <| toString error
 
-        Error (ComparisonExpressionTypeMismatch _ _ _ _) ->
-            Debug.crash "TODO"
+        (Error (ComparisonExpressionTypeMismatch _ _ _ _)) as error ->
+            text <| toString error
 
-        Error (RelationExpressionTypeMismatch _ _ _ _) ->
-            Debug.crash "TODO"
-
-
-locationToString : Location -> String
-locationToString (Location line col) =
-    "line " ++ toString line ++ "( col " ++ toString col ++ ")"
+        (Error (RelationExpressionTypeMismatch _ _ _ _)) as error ->
+            text <| toString error
