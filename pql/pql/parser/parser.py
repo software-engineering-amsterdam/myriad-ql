@@ -91,7 +91,7 @@ def parse(input_string):
     boolean_precedence = infixNotation(
         operand_bool.setResultsName('boolean_operand'),
         (operand_list_arith + operand_list_bool)
-    ).setResultsName('boolean_expr')
+    )
 
     #
     arithmetic_expression = \
