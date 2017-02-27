@@ -1,7 +1,6 @@
 module QL
   module GUI
-    class GUIQuestionVisitor
-      include AST
+    class Builder
       attr_accessor :questions
 
       def initialize(ast, type_checker)
@@ -17,7 +16,7 @@ module QL
       # if there is an if in an if block create an And with both conditions
       def visit_if_statement(subject, condition)
         if condition
-          condition = And.new(condition, subject.expression)
+          condition = AST::And.new(condition, subject.expression)
         else
           condition = subject.expression
         end
@@ -36,17 +35,17 @@ module QL
                                   type: question.type.class,
                                   calculation: visit_calculation(question.assignment),
                                   condition: visit_calculation(question.condition))
-        elsif question.type.is_a?(BooleanType)
+        elsif question.type.is_a?(AST::BooleanType)
           GUIBooleanQuestion.new(gui: self,
                                  label: question.label,
                                  id: question.variable.name,
                                  condition: visit_calculation(question.condition))
-        elsif question.type.kind_of?(MoneyType) || question.type.kind_of?(IntegerType)
+        elsif question.type.kind_of?(AST::MoneyType) || question.type.kind_of?(AST::IntegerType)
           GUIIntegerQuestion.new(gui: self,
                                  label: question.label,
                                  id: question.variable.name,
                                  condition: visit_calculation(question.condition))
-        elsif question.type.kind_of?(StringType)
+        elsif question.type.kind_of?(AST::StringType)
           GUIStringQuestion.new(gui: self,
                                 label: question.label,
                                 id: question.variable.name,
@@ -56,9 +55,9 @@ module QL
 
       # is it a question or an if statement?
       def visit_statement(statement, condition)
-        if statement.kind_of?(Question)
+        if statement.kind_of?(AST::Question)
           visit_question(statement, condition)
-        elsif statement.kind_of?(IfStatement)
+        elsif statement.kind_of?(AST::IfStatement)
           visit_if_statement(statement, condition)
         end
       end
@@ -66,11 +65,11 @@ module QL
       # is the calculation a literal, a variable or an expression?
       def visit_calculation(calculation)
         return unless calculation
-        if calculation.kind_of?(Variable)
+        if calculation.kind_of?(AST::Variable)
           visit_variable(calculation)
-        elsif calculation.kind_of?(BinaryExpression)
+        elsif calculation.kind_of?(AST::BinaryExpression)
           visit_binary_expression(calculation)
-        elsif calculation.kind_of?(Negation)
+        elsif calculation.kind_of?(AST::Negation)
           visit_negation(calculation)
         else
           calculation

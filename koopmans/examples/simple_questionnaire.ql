@@ -17,7 +17,7 @@ form taxOfficeExample {
         }
     "Value residue:"
       valueResidue: money =
-        (-sellingPrice)
+        (8 + 8)
   }
 
 }

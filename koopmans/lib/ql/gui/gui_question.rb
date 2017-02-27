@@ -14,11 +14,13 @@ module QL
         @condition = args[:condition]
 
         @enabled = true
-        @variable = GUIVariable.new
+        @variable = QL::GUI::Variable.new
+        p @variable
         @gui.questions[args[:id]] = self
 
         create_frame
         create_label
+        p @condition
         check_condition
       end
 

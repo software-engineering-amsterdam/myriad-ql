@@ -1,15 +1,14 @@
 module QL
   module GUI
-    class GUIVariable < TkVariable
-      include AST
+    class Variable < TkVariable
       attr_accessor :type
 
       def eval
-        if type == BooleanType
+        if type == AST::BooleanType
           bool
-        elsif type == StringType
+        elsif type == AST::StringType
           string
-        elsif type == IntegerType || type == MoneyType
+        elsif type == AST::IntegerType || type == AST::MoneyType
           numeric
         else
           value

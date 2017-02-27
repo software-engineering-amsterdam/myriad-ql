@@ -2,7 +2,7 @@ require 'tk'
 
 module QL
   module GUI
-    class GUI < GUIQuestionVisitor
+    class GUI < Builder
       def initialize(ast, type_checker)
         return if check(type_checker) == 'quit'
         super
