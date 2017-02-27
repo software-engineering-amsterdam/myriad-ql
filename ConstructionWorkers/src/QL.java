@@ -50,9 +50,7 @@ public class QL {
 
         InputStream qlInputStream = new FileInputStream(inputFile);
         Form qlAST = getAST(qlInputStream);
-
         ValueData questionStates =  new ValueData();
-
         Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, questionStates);
 
         if(!semanticallyCorrect) {

@@ -45,14 +45,11 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
 
     public IdentifierChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages,
                              ValueData questionStates) {
-
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
         this.questionLabels = new HashSet<>();
         this.questionStates = questionStates;
-
         ast.accept(this);
-
     }
 
     @Override

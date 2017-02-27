@@ -41,7 +41,6 @@ public class DependencyData {
         if (dependList == null) {
             dependList = new ArrayList<>();
         }
-
         dependList.add(dependant);
         dependencyList.put(id, dependList);
     }

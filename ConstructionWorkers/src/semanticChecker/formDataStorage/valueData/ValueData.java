@@ -1,3 +1,7 @@
+/**
+ * ValueData.java.
+ */
+
 package semanticChecker.formDataStorage.valueData;
 
 import semanticChecker.formDataStorage.valueData.values.Value;
@@ -5,9 +9,6 @@ import semanticChecker.formDataStorage.valueData.values.Value;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class ValueData {
 
     private Map<String, Value> states;
@@ -23,7 +24,6 @@ public class ValueData {
     }
 
     public Value getValue(String key) {
-        Value state = states.get(key);
-        return state;
+        return states.get(key);
     }
 }

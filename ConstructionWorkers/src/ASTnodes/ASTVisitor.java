@@ -1,6 +1,8 @@
-package ASTnodes; /**
- * ASTnodes.ASTVisitor.java.
+/**
+ * ASTVisitor.java.
  */
+
+package ASTnodes;
 
 import ASTnodes.expressions.Expression;
 import ASTnodes.expressions.binaries.equality.*;

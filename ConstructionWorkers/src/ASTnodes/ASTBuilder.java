@@ -1,6 +1,8 @@
-package ASTnodes; /**
- * ASTnodes.ASTBuilder.java.
+/**
+ * ASTBuilder.java.
  */
+
+package ASTnodes;
 
 import java.io.IOException;
 import java.io.InputStream;

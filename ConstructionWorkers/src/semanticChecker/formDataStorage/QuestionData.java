@@ -1,3 +1,7 @@
+/**
+ * QuestionData.java.
+ */
+
 package semanticChecker.formDataStorage;
 
 import ASTnodes.Form;
@@ -10,9 +14,6 @@ import ASTnodes.visitors.FormAndStatementVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
 public class QuestionData implements FormAndStatementVisitor<Void>{
 
     private final List<SimpleQuestion> simpleQuestions;
@@ -20,13 +21,10 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     private final List<IfStatement> ifStatements;
 
     public QuestionData(Form ast) {
-
         this.simpleQuestions = new ArrayList<>();
         this.computedQuestions = new ArrayList<>();
         this.ifStatements = new ArrayList<>();
-
         ast.accept(this);
-
     }
 
     public List<ComputedQuestion> getComputedQuestions(){
@@ -45,7 +43,6 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         List<SimpleQuestion> allQuestions = this.getSimpleQuestions();
         List<ComputedQuestion> computedQuestions = this.getComputedQuestions();
         allQuestions.addAll(computedQuestions);
-
         return allQuestions;
     }
 
@@ -77,5 +74,4 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         }
         return null;
     }
-
 }
