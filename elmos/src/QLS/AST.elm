@@ -9,11 +9,8 @@ type alias StyleSheet =
     }
 
 
-type alias Page =
-    { name : String
-    , sections : List Section
-    , defaults : List DefaultValueConfig
-    }
+type Page
+    = Page String (List Section) (List DefaultValueConfig)
 
 
 type Section

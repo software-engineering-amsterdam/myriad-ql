@@ -2,9 +2,10 @@ module QLS.TypeChecker.InvalidQuestionReferences exposing (check)
 
 import QL.AST exposing (Form, Location)
 import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
-import QL.FormVisitor as FormVisitor exposing (defaultConfig)
-import QLS.StyleSheetVisitor as StyleSheetVisitor
+import QLS.StyleSheetVisitor as StyleSheetVisitor exposing (defaultConfig)
 import QLS.TypeChecker.Messages exposing (Message, undefinedQuestionReference)
+import QL.TypeChecker.CheckerUtil as CheckerUtil
+import VisitorUtil exposing (Order(Post))
 import Dict exposing (Dict)
 
 
@@ -12,43 +13,28 @@ check : Form -> StyleSheet -> List Message
 check form styleSheet =
     let
         declaredQuestions =
-            declaredQuestionsInForm form
+            CheckerUtil.collectDeclaredIds form
+                |> List.map Tuple.first
     in
-        usedQuestionForStyleSheet styleSheet
+        collectQuestionReferences styleSheet
             |> Dict.filter (\k _ -> not (List.member k declaredQuestions))
             |> Dict.toList
             |> List.map (uncurry undefinedQuestionReference)
 
 
-declaredQuestionsInForm : Form -> List String
-declaredQuestionsInForm form =
-    FormVisitor.inspect
-        { defaultConfig
-            | onField = FormVisitor.Post (\( _, ( id, _ ), _ ) context -> id :: context)
-            , onComputedField = FormVisitor.Post (\( _, ( id, _ ), _, _ ) context -> id :: context)
-        }
-        form
-        []
-
-
-usedQuestionForStyleSheet : StyleSheet -> Dict String Location
-usedQuestionForStyleSheet styleSheet =
+collectQuestionReferences : StyleSheet -> Dict String Location
+collectQuestionReferences styleSheet =
     StyleSheetVisitor.inspect
-        { defaultConfigStyleSheetVisitor | onQuestion = StyleSheetVisitor.Post onQuestion }
+        { defaultConfig | onQuestion = Post onQuestion }
         styleSheet
         Dict.empty
-
-
-defaultConfigStyleSheetVisitor : StyleSheetVisitor.Config x
-defaultConfigStyleSheetVisitor =
-    StyleSheetVisitor.defaultConfig
 
 
 onQuestion : Question -> Dict String Location -> Dict String Location
 onQuestion question context =
     case question of
-        Question ( k, v ) ->
-            Dict.insert k v context
+        Question ( name, location ) ->
+            Dict.insert name location context
 
-        ConfiguredQuestion ( k, v ) _ ->
-            Dict.insert k v context
+        ConfiguredQuestion ( name, location ) _ ->
+            Dict.insert name location context

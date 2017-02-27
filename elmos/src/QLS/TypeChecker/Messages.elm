@@ -12,5 +12,5 @@ type ErrorMessage
 
 
 undefinedQuestionReference : String -> Location -> Message
-undefinedQuestionReference name loc =
-    Error (UndefinedQuestionReference name loc)
+undefinedQuestionReference name location =
+    Error (UndefinedQuestionReference name location)

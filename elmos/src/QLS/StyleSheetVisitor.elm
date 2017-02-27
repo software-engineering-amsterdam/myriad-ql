@@ -1,16 +1,11 @@
 module QLS.StyleSheetVisitor exposing (..)
 
 import QLS.AST exposing (..)
-
-
-type Order context node
-    = Continue
-    | Pre (node -> context -> context)
-    | Post (node -> context -> context)
+import VisitorUtil exposing (Order(Continue), actionLambda)
 
 
 type alias Config context =
-    { onQuestion : Order context Question
+    { onQuestion : VisitorUtil.Order context Question
     }
 
 
@@ -20,27 +15,14 @@ defaultConfig =
     }
 
 
-actionLambda : Order context node -> (context -> context) -> node -> context -> context
-actionLambda action =
-    case action of
-        Continue ->
-            (\f _ context -> f context)
-
-        Pre g ->
-            (\f node context -> g node context |> f)
-
-        Post g ->
-            (\f node context -> f context |> g node)
-
-
 inspect : Config a -> StyleSheet -> a -> a
 inspect config styleSheet context =
     List.foldl (inspectPage config) context styleSheet.pages
 
 
 inspectPage : Config a -> Page -> a -> a
-inspectPage config page context =
-    List.foldl (inspectSection config) context page.sections
+inspectPage config (Page _ sections _) context =
+    List.foldl (inspectSection config) context sections
 
 
 inspectSection : Config a -> Section -> a -> a

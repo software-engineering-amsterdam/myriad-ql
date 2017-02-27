@@ -16,8 +16,10 @@ radio =
     Radio
         <$> (string "radio"
                 *> parens
-                    (sepBy1 (trimmed (string ","))
-                        radioOption
+                    (trimmed
+                        (sepBy1 (trimmed (string ","))
+                            radioOption
+                        )
                     )
             )
 

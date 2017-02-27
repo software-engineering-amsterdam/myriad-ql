@@ -55,37 +55,34 @@ styleSheetTests =
           , Just
                 { id = ( "taxOfficeExample", Location 1 11 )
                 , pages =
-                    [ { name = "Housing"
-                      , sections =
-                            [ SingleChildSection "Buying"
-                                (Field
-                                    (ConfiguredQuestion
-                                        ( "hasBoughtHouse", Location 3 14 )
-                                        (SingleConfig (WidgetConfig Checkbox))
+                    [ Page
+                        "Housing"
+                        [ SingleChildSection "Buying"
+                            (Field
+                                (ConfiguredQuestion
+                                    ( "hasBoughtHouse", Location 3 14 )
+                                    (SingleConfig (WidgetConfig Checkbox))
+                                )
+                            )
+                        , SingleChildSection "Loaning" (Field (Question ( "hasMaintLoan", Location 6 14 )))
+                        ]
+                        []
+                    , Page "Selling"
+                        [ MultiChildSection "Selling"
+                            ([ Field (ConfiguredQuestion ( "hasSoldHouse", Location 11 14 ) (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))))
+                             , SubSection
+                                (MultiChildSection "You sold a house"
+                                    ([ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig (WidgetConfig Spinbox)))
+                                     , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig (WidgetConfig Spinbox)))
+                                     , Field (Question ( "valueResidue", Location 18 16 ))
+                                     , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999999"), WidgetConfig Spinbox ])))
+                                     ]
                                     )
                                 )
-                            , SingleChildSection "Loaning" (Field (Question ( "hasMaintLoan", Location 6 14 )))
-                            ]
-                      , defaults = []
-                      }
-                    , { name = "Selling"
-                      , sections =
-                            [ MultiChildSection "Selling"
-                                ([ Field (ConfiguredQuestion ( "hasSoldHouse", Location 11 14 ) (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))))
-                                 , SubSection
-                                    (MultiChildSection "You sold a house"
-                                        ([ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig (WidgetConfig Spinbox)))
-                                         , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig (WidgetConfig Spinbox)))
-                                         , Field (Question ( "valueResidue", Location 18 16 ))
-                                         , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999999"), WidgetConfig Spinbox ])))
-                                         ]
-                                        )
-                                    )
-                                 ]
-                                )
-                            ]
-                      , defaults = [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
-                      }
+                             ]
+                            )
+                        ]
+                        [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
                     ]
                 }
           )
@@ -103,13 +100,12 @@ pageTests =
         , ( "page with single section"
           , "page Foo { section \"Selling\" question foo }"
           , Just
-                { name = "Foo"
-                , sections =
+                (Page "Foo"
                     [ SingleChildSection "Selling"
                         (Field (Question ( "foo", Location 1 38 )))
                     ]
-                , defaults = []
-                }
+                    []
+                )
           )
         , ( "page with default but no section"
           , "page Foo { default boolean widget radio(\"Yes\", \"No\") }"
@@ -118,13 +114,13 @@ pageTests =
         , ( "page with section and default"
           , "page Foo { section \"Selling\" question foo default boolean widget radio(\"Yes\", \"No\") }"
           , Just
-                { name = "Foo"
-                , sections =
+                (Page
+                    "Foo"
                     [ SingleChildSection "Selling"
                         (Field (Question ( "foo", Location 1 38 )))
                     ]
-                , defaults = [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
-                }
+                    [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
+                )
           )
         ]
 

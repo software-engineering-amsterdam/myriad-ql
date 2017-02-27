@@ -20,10 +20,15 @@ styleSheet =
 page : Parser s Page
 page =
     Page
-        <$> (string "page" *> whitespace1 *> regex "[A-Z][a-zA-Z0-9]*" <* whitespace <* string "{")
+        <$> (string "page" *> whitespace1 *> pageId <* whitespace <* string "{")
         <*> (whitespace *> (sepBy1 whitespace1 section))
         <*> (whitespace1 *> sepBy whitespace1 defaultValueConfig <* whitespace)
         <* string "}"
+
+
+pageId : Parser s String
+pageId =
+    regex "[A-Z][a-zA-Z0-9]*"
 
 
 section : Parser s Section

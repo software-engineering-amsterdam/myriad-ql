@@ -1,7 +1,8 @@
 module QL.TypeChecker.CheckerUtil exposing (QuestionIndex, QuestionTypes, collectDeclaredIds, collectExpressions, questionIndexFromForm, questionIndexFromBlock, questionTypes)
 
 import QL.AST exposing (..)
-import QL.FormVisitor exposing (Order(Post), defaultConfig)
+import QL.FormVisitor exposing (defaultConfig)
+import VisitorUtil exposing (Order(Post))
 import Dict exposing (Dict)
 
 
