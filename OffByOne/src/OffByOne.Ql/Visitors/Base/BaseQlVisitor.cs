@@ -61,7 +61,7 @@
             return default(TResult);
         }
 
-        public virtual TResult Visit(FloatValueType valueType, TContext context)
+        public virtual TResult Visit(DecimalValueType valueType, TContext context)
         {
             return default(TResult);
         }

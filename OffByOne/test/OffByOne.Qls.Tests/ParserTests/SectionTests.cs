@@ -49,8 +49,7 @@
         private IList<Section> GetAllSectionNodes(StyleSheet tree)
         {
             var nodes = tree.Pages
-                .SelectMany(x => x.Nodes
-                    .Select(y => (Section)y))
+                .SelectMany(x => x.Sections)
                 .OrderBy(x => x.Name.Value)
                 .ToList();
 

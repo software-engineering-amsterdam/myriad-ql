@@ -59,7 +59,7 @@
                 case "integer":
                     return new QuestionStatement(id, TypeConstants.IntegerType, question, value);
                 case "decimal":
-                    return new QuestionStatement(id, TypeConstants.FloatType, question, value);
+                    return new QuestionStatement(id, TypeConstants.DecimalType, question, value);
                 case "money":
                     return new QuestionStatement(id, TypeConstants.MoneyType, question, value);
                 case "string":
