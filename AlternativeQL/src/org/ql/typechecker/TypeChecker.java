@@ -14,6 +14,9 @@ import org.ql.collector.QuestionCollector;
 import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
+import org.ql.typechecker.expression.TypeMismatchException;
+import org.ql.typechecker.messages.MessageBag;
+import org.ql.typechecker.messages.TypeCheckMessages;
 import org.ql.typechecker.statement.FormQuestionCollector;
 import org.ql.typechecker.statement.QuestionVisitor;
 
@@ -22,7 +25,7 @@ import java.util.List;
 public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
     private final QuestionCollector<Form> questionCollector;
-
+    private MessageBag messages = new TypeCheckMessages();
     private ExpressionTypeChecker expressionTypeChecker;
 
     public TypeChecker(QuestionCollector<Form> questionCollector) {
@@ -31,8 +34,8 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
     @Override
     public Void visit(Form form) {
-        if(form.getName().toString().isEmpty()) {
-            // TODO: Collect error
+        if (form.getName().toString().isEmpty()) {
+            messages.addError("No form method found", form.getName());
         }
 
         expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(form));
@@ -51,12 +54,14 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
     }
 
     private void checkIfCondition(Expression condition) {
+        Type conditionType = null;
         try {
-            if (!(condition.accept(expressionTypeChecker) instanceof BooleanType)) {
-                // TODO: Collect the errors
+            conditionType = condition.accept(expressionTypeChecker);
+            if (!(conditionType instanceof BooleanType)) {
+                messages.addError(new TypeMismatchException(new BooleanType(), conditionType));
             }
         } catch (Throwable throwable) {
-            // TODO: Collect the errors
+            messages.addError("An error occurred while checking if condition", conditionType);
         }
     }
 
@@ -72,15 +77,18 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
     @Override
     public Void visit(Question question) {
-        if(question.getQuestionText().toString().isEmpty()) {
-            // TODO: Collect the errors
+        if (question.getQuestionText().toString().isEmpty()) {
+            messages.addError("No question text found", question.getQuestionText());
         }
 
-        if(question.getDefaultValue() != null) {
+        if (question.getDefaultValue() != null) {
             try {
-                question.getDefaultValue().accept(expressionTypeChecker);
+                Type value = question.getDefaultValue().accept(expressionTypeChecker);
+                if (question.getType() != value) {
+                    messages.addError(new TypeMismatchException(question.getType(), value));
+                }
             } catch (Throwable throwable) {
-                // TODO: Collect the errors
+                messages.addError("An error occurred with the default value", question.getDefaultValue());
             }
         }
 
