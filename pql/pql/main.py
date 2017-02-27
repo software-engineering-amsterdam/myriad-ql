@@ -4,6 +4,7 @@ from io import open
 from os.path import join
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import Typechecker
+from pql.identifierchecker.identifierchecker import Identifierchecker
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
@@ -19,13 +20,23 @@ def open_file(path):
 def main(sys_args):
     ql_str = acquire_text(sys_args)
     ql_ast = parse(ql_str)
-    if ql_ast is not None:
-        ql_ast.pprint()
+    if ql_ast is None:
+        exit(3)
+    ql_ast.pprint()
+    ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
+
+    if identifier_result_errors:
+        print_result('Identifier checker had errors', identifier_result_errors, 4)
+
     ql_type_check_result = check_type(ql_ast)
     if ql_type_check_result:
-        print('Type checker had errors')
-        print('\n'.join(map(str, ql_type_check_result)))
-        exit(3)
+        print_result('Type checker had errors', ql_type_check_result, 5)
+
+
+def print_result(main_message, error_list, exit_code):
+    print(main_message)
+    print('\n'.join(map(str, error_list)))
+    exit(exit_code)
 
 
 def acquire_text(sys_args):
@@ -45,6 +56,13 @@ def acquire_text(sys_args):
     ql_file.close()
     del ql_file
     return ql_str
+
+
+def acquire_identifiers(ql_ast):
+    identifier_checker = Identifierchecker()
+    result = identifier_checker.visit(ql_ast)
+    del identifier_checker
+    return result
 
 
 def check_type(ql_ast):

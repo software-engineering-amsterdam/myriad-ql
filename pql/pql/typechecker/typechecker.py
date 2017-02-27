@@ -18,6 +18,48 @@ class Typechecker(object):
     def subtraction(self, node):
         return self.binary(node)
 
+    def division(self, node):
+        return self.binary(node)
+
+    def multiplication(self, node):
+        return self.binary(node)
+
+    def addition(self, node):
+        return self.binary(node)
+
+    def conditional(self, node):
+        return []
+
+    def greater_exclusive(self, node):
+        return []
+
+    def greater_inclusive(self, node):
+        return []
+
+    def lower_inclusive(self, node):
+        return []
+
+    def lower_exclusive(self, node):
+        return []
+
+    def equality(self, node):
+        return []
+
+    def inequality(self, node):
+        return []
+
+    def and_(self, node):
+        return []
+
+    def or_(self, node):
+        return []
+
     def binary(self, node):
         type_left = node.lhs.apply(self)
         type_right = node.rhs.apply(self)
+
+    def identifier(self, node):
+        return node.name
+
+    def value(self, node):
+        return node.data_type
