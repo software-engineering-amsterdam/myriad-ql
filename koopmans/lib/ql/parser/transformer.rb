@@ -8,6 +8,7 @@ class Transformer < Parslet::Transform
   rule(variable: simple(:variable)) { Variable.new(variable) }
 
   # question
+  # TODO: BooleanType.new -> BooleanType
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'boolean'}) { Question.new(string, Variable.new(variable), BooleanType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'integer'}) { Question.new(string, Variable.new(variable), IntegerType.new) }
   rule(question: {string: simple(:string), variable: simple(:variable), type: 'money'}) { Question.new(string, Variable.new(variable), MoneyType.new) }
