@@ -16,7 +16,6 @@ import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
-import org.ql.typechecker.messages.TypeCheckMessages;
 import org.ql.typechecker.statement.QuestionVisitor;
 
 import java.util.List;
@@ -24,17 +23,19 @@ import java.util.List;
 public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
     private final QuestionCollector<Form> questionCollector;
-    private MessageBag messages = new TypeCheckMessages();
+    private final MessageBag messages;
+
     private ExpressionTypeChecker expressionTypeChecker;
 
-    public TypeChecker(QuestionCollector<Form> questionCollector) {
+    public TypeChecker(QuestionCollector<Form> questionCollector, MessageBag messages) {
         this.questionCollector = questionCollector;
+        this.messages = messages;
     }
 
     @Override
     public Void visit(Form form) {
         if (form.getName().toString().isEmpty()) {
-            messages.addError("No form method found", form.getName());
+            messages.addError("Form name cannot be empty", form.getName());
         }
 
         expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(form));
