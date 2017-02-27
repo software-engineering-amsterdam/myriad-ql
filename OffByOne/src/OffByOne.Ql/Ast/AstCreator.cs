@@ -126,7 +126,7 @@
 
         public override AstNode VisitAddition([NotNull] QlParser.AdditionContext context)
         {
-            var op = context.op.ToString();
+            var op = context.op.Text;
             BinaryExpression binExp = null;
             var lhs = this.Visit(context.lhs) as Expression;
             var rhs = this.Visit(context.rhs) as Expression;
@@ -147,7 +147,7 @@
 
         public override AstNode VisitMultiplication([NotNull] QlParser.MultiplicationContext context)
         {
-            var op = context.op.ToString();
+            var op = context.op.Text;
             BinaryExpression binExp = null;
             var lhs = this.Visit(context.lhs) as Expression;
             var rhs = this.Visit(context.rhs) as Expression;
@@ -168,7 +168,7 @@
 
         public override AstNode VisitCompare([NotNull] QlParser.CompareContext context)
         {
-            var op = context.op.ToString();
+            var op = context.op.Text;
             BinaryExpression binExp = null;
             var lhs = this.Visit(context.lhs) as Expression;
             var rhs = this.Visit(context.rhs) as Expression;
