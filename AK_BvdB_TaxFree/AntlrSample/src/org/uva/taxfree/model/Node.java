@@ -5,8 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class Node {
-
-    private Node mParent;
     private Set<Node> mChildren;
 
     public Node() {
@@ -53,7 +51,7 @@ public abstract class Node {
 
     public void printAll() {
         System.out.println(toString());
-        for(Node child : mChildren){
+        for (Node child : mChildren) {
             child.printAll();
         }
     }
