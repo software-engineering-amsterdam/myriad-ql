@@ -97,12 +97,28 @@ public class QuestionFormTest {
         cond.addChild(new IntegerLiteralNode("0"));
         ConditionNode parenthesized = new ParenthesizedExpressionNode();
         cond.addChild(parenthesized);
-        ConditionNode calc = new CalculationExpressionNode("+");
-        parenthesized.addChild(calc);
-        calc.addChild(new IntegerLiteralNode("1"));
-        calc.addChild(new IntegerLiteralNode("5"));
-
+        parenthesized.addChild(CalcOnePlusFive());
         ifStatement.addChild(new BooleanQuestion("Do you see me?", "amIVisible?"));
         mRoot.addChild(ifStatement);
     }
+
+    @Test
+    public void testCalculatedLiteralField() throws Exception {
+        mRoot.addChild(intField);
+    }
+
+    public void testIntFieldCalculation() throws Exception {
+        CalculatedField intField = new IntegerField("The result of 1 + 5:", "six");
+        intField.addChild(CalcOnePlusFive());
+        mRoot.addChild(intField);
+    }
+
+    private Node CalcOnePlusFive(){
+        ConditionNode calc = new CalculationExpressionNode("+");
+        calc.addChild(new IntegerLiteralNode("1"));
+        calc.addChild(new IntegerLiteralNode("5"));
+        return calc;
+    }
+
+
 }
