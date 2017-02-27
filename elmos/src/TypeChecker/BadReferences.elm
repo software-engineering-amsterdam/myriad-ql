@@ -4,7 +4,7 @@ import AST exposing (..)
 import DictList
 import Set exposing (Set)
 import TypeChecker.CheckerUtil exposing (..)
-import TypeChecker.Messages as Message exposing (Message, referenceToUndefinedQuestion)
+import TypeChecker.Messages exposing (Message, referenceToUndefinedQuestion)
 
 
 badReferences : Form -> List Message
@@ -88,4 +88,4 @@ questionReferences expression =
             questionReferences exprLeft ++ questionReferences exprRight
 
         ComparisonExpression _ _ exprLeft exprRight ->
-            questionReferences exprLeft ++ (questionReferences exprRight)
+            questionReferences exprLeft ++ questionReferences exprRight
