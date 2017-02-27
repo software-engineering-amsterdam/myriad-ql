@@ -39,5 +39,11 @@ public class Number extends TextField implements Field {
 		setText((String) value.getValue());
 		
 	}
+
+	@Override
+	public Boolean isChanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

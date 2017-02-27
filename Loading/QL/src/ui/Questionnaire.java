@@ -144,15 +144,15 @@ public class Questionnaire extends Application {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 
-            Control text_field = (Control) question.getEntryField().getField();
            //  grid.add(question.getEntryField(), 1, 1 + rowIndex);
-            grid.add(text_field, 1, 1 + rowIndex);
-            
             Field field = question.getEntryField().getField();
+            grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
             
-//            if (question.getEntryField().isChanged() != null && question.getEntryField().isChanged()) {
-//                renderQuestionnaire(primaryStage, grid);
+//            if (question.getEntryField().getField().isChanged()) {
+//            	// answers.put(question.getName(), new BoolValue(true));
+//            	renderQuestionnaire(primaryStage, grid);
 //            }
+           
        
             // TODO use class Field
             if (question.getType().getType() == "boolean") {

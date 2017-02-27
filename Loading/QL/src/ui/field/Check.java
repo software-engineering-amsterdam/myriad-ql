@@ -24,6 +24,12 @@ public class Check extends CheckBox implements Field {
 	public void setAnswer(Value value) {
 		setSelected((boolean) value.getValue());	
 	}
+
+	@Override
+	public Boolean isChanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	// @Override
 //	public String setOnChange(Function<String, String> func) {

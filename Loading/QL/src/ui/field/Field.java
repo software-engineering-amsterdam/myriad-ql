@@ -23,7 +23,7 @@ public interface Field {
 	
 	public void setAnswer(Value value);
 		
-	// public Boolean isChanged();
+	public Boolean isChanged();
 	
 //	public <V extends Value, T extends Type> V getAnswer(T type) {
 //		return null;
