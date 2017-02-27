@@ -36,7 +36,7 @@ public class MCQLVisitor extends QLBaseVisitor<ASTNode> {
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
         String questionID = ctx.ID().getText();
         String questionContent = ctx.STRING().getText();
-        Type questionReturnType = (Type) visit(ctx.type());
+        QLType questionReturnType = (QLType) visit(ctx.type());
         ParameterGroup parameterGroup = new ParameterGroup();
 
         if(ctx.calculatedValue() != null) {

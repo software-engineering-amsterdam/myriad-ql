@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.ast.expression;
+package com.matthewchapman.ql.ast.expression.unary;
 
 import com.matthewchapman.ql.ast.ASTNode;
 import com.matthewchapman.ql.ast.Expression;

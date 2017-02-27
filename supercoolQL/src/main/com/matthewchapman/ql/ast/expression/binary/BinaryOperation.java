@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.ast.expression;
+package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.ql.ast.Expression;
 
