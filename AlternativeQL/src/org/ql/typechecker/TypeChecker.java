@@ -18,7 +18,6 @@ import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
-import org.ql.collection.collector.QuestionVisitor;
 
 import java.util.List;
 
@@ -43,6 +42,8 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
         Questions questions = questionCollector.collect(form);
 
         checkQuestionDuplicates(questions);
+
+        checkQuestionLabelsDuplicates(questions);
 
         expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
 
@@ -71,24 +72,32 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
 
     @Override
     public Void visit(Question question) {
+        checkQuestionText(question);
+
+        checkDefaultValue(question);
+
+        question.accept(this);
+
+        return null;
+    }
+
+    private void checkQuestionText(Question question) {
         if (question.getQuestionText().toString().isEmpty()) {
             messages.addError("No question text found", question.getQuestionText());
         }
+    }
 
+    private void checkDefaultValue(Question question) {
         if (question.getDefaultValue() != null) {
             try {
                 Type value = question.getDefaultValue().accept(expressionTypeChecker);
-                if (question.getType() != value) {
+                if (!question.getType().toString().equals(value.toString())) {
                     messages.addError(new TypeMismatchException(question.getType(), value));
                 }
             } catch (Throwable throwable) {
                 messages.addError("An error occurred with the default value", question.getDefaultValue());
             }
         }
-
-        question.accept(new QuestionVisitor());
-
-        return null;
     }
 
     private SymbolTable createSymbolTable(List<Question> questions) {
@@ -110,6 +119,14 @@ public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
         for (Question question : questions) {
             if (questions.hasDuplicates(question)) {
                 messages.addError("Question '" + question.getId() + "' has duplicate(s)", question);
+            }
+        }
+    }
+
+    private void checkQuestionLabelsDuplicates(Questions questions) {
+        for(Question question : questions) {
+            if (questions.hasLabelDuplicates(question)) {
+                messages.addError("Question '" + question.getId() + "' label has duplicate(s)", question);
             }
         }
     }
