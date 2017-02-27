@@ -57,8 +57,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     public Expression visit(PlusBinary plusBinary) {
         NumericLit left = (NumericLit) plusBinary.getLeft().accept(this);
         NumericLit right = (NumericLit) plusBinary.getLeft().accept(this);
-        System.err.println(left.plus(right));
-        return left.plus(right);
+//        System.err.println(left.plus(right));
+//        return left.plus(right);
+
+        return null;
     }
 
     @Override

@@ -1,79 +1,63 @@
 package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.expressions.Literal;
-import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLType;
+import org.lemonade.nodes.types.*;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
  *
  */
-public class DecimalLit extends Literal implements NumericLit {
-    private double value;
+public class DecimalLit extends NumericLit<Double> implements Comparable<DecimalLit> {
 
     public DecimalLit(QLType type, String value) {
-        super(type);
+        super(type, Double.parseDouble(value));
         assert type instanceof QLDecimalType;
-        this.value = Double.parseDouble(value);
+    }
+
+    public DecimalLit(QLDecimalType type, double value) {
+        super(type, value);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
+    public DecimalLit plus(IntegerLit that) {
+        return new DecimalLit(new QLDecimalType(), this.getValue() + that.getValue());
+    }
+
+    public DecimalLit plus(DecimalLit that) {
+        return new DecimalLit(new QLDecimalType(), this.getValue() + that.getValue());
+    }
+
+    public MoneyLit plus(MoneyLit that) {
+        return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
+    }
+
     @Override
     public String toString() {
-        return Double.toString(value);
+        return Double.toString(this.getValue());
     }
 
     @Override
-    public NumericLit plus(NumericLit that) {
-        return null;
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DecimalLit)){
+            return false;
+        }
+        DecimalLit that = (DecimalLit) obj;
+        return this.getValue() == that.getValue();
     }
 
     @Override
-    public NumericLit minus(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public NumericLit product(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public NumericLit divide(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit gt(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit lt(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit gte(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit lte(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit eq(NumericLit that) {
-        return null;
-    }
-
-    @Override
-    public BooleanLit ne(NumericLit that) {
-        return null;
+    public int compareTo(DecimalLit that) {
+        if (this.getValue() < that.getValue()) {
+            return -1;
+        }
+        else if (this.getValue() > that.getValue()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }

@@ -8,17 +8,11 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class StringLit extends Literal {
-    String value;
+public class StringLit extends Literal<String> implements Comparable<StringLit>{
 
     public StringLit(QLType type, String value) {
-        super(type);
+        super(type, value);
         assert type instanceof QLStringType;
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
@@ -27,6 +21,20 @@ public class StringLit extends Literal {
 
     @Override
     public String toString() {
-        return value;
+        return this.getValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof StringLit)){
+            return false;
+        }
+        StringLit that = (StringLit) obj;
+        return this.getValue() == that.getValue();
+    }
+
+    @Override
+    public int compareTo(StringLit that) {
+        return this.getValue().compareTo(that.getValue());
     }
 }

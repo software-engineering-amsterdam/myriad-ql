@@ -6,13 +6,13 @@ import org.lemonade.nodes.types.QLType;
 /**
  *
  */
-public abstract class NumericLit extends Literal {
+public abstract class NumericLit<T> extends Literal<T> {
 
-    public NumericLit(QLType type) {
-        super(type);
+    public NumericLit(QLType type, T value) {
+        super(type, value);
     }
 
-    T plus(MoneyLit that) {
-        return new NumericLit(this.value + that.value);
-    }
+    public abstract NumericLit plus(IntegerLit that);
+    public abstract NumericLit plus(DecimalLit that);
+    public abstract NumericLit plus(MoneyLit that);
 }

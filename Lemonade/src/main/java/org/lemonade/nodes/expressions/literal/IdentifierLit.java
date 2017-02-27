@@ -8,17 +8,11 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IdentifierLit extends Literal {
-    private String value;
+public class IdentifierLit extends Literal<String> implements Comparable<IdentifierLit>{
 
     public IdentifierLit(QLType type, String value) {
-        super(type);
+        super(type, value);
         assert type instanceof QLStringType;//TODO can we do this?
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
@@ -27,8 +21,19 @@ public class IdentifierLit extends Literal {
 
     @Override
     public String toString() {
-        return value;
+        return this.getValue();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof IdentifierLit)){
+            return false;
+        }
+        IdentifierLit that = (IdentifierLit) obj;
+        return this.getValue() == that.getValue();
+    }
 
+    public int compareTo(IdentifierLit that) {
+        return this.getValue().compareTo(that.getValue());
+    }
 }
