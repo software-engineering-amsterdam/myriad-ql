@@ -57,12 +57,10 @@ class GUIQuestionVisitor
       visit_question(statement, condition)
     elsif statement.kind_of?(IfStatement)
       visit_if_statement(statement, condition)
-    else
-      raise NotImplementedError
     end
   end
 
-  # #is the calculation a literal, a variable or an expression?
+  # is the calculation a literal, a variable or an expression?
   def visit_calculation(calculation)
     return unless calculation
     if calculation.kind_of?(Variable)
