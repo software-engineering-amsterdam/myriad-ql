@@ -44,6 +44,10 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
         question.setValue(ctx.Identifier().getText());
         question.setType((ValueType) visit(ctx.valueType()));
 
+        if (ctx.computedValue() != null) {
+            question.setExpression((Expression) visit(ctx.computedValue()));
+        }
+
         return question;
     }
 

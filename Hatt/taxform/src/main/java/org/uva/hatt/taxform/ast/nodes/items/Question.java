@@ -1,6 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
+import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
@@ -9,6 +10,7 @@ public class Question extends ASTNode implements Item{
     private String question;
     private String value;
     private ValueType type;
+    private Expression expression;
 
     public Question(int lineNumber) {
         super(lineNumber);
@@ -36,6 +38,14 @@ public class Question extends ASTNode implements Item{
 
     public void setType(ValueType type) {
         this.type = type;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public void setExpression(Expression expression) {
+        this.expression = expression;
     }
 
     @Override
