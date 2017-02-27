@@ -38,19 +38,16 @@ class InitGUI(object):
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
 
-    def get_question_val(self, question_node):
-        # Value is undefined, we evaluate the boolean question to False as it is not logical to
-        # expect a user to check a checkbox to un-check to get a defined checkbox value.
-        if question_node.type == BoolTypeNode():
-            question_node.is_defined = True
-        return question_node.type.default
-
     def question_node(self, question_node):
         identifier = question_node.name.val
         question_str = question_node.question.val
 
-        # Check on undefined questions, and get their default value.
-        var_value = self.get_question_val(question_node)
+        # Value is always undefined, we evaluate the boolean question to False as
+        # it is not logical to expect a user to check a checkbox to un-check to get
+        # a defined checkbox value.
+        if question_node.type == BoolTypeNode():
+            question_node.is_defined = True
+        var_value = question_node.get_default_val()
 
         # Visit the type node to get the draw function to use.
         draw_function = question_node.type.accept(self)

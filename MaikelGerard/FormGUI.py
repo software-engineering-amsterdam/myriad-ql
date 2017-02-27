@@ -12,8 +12,6 @@ class FormGUI(object):
         self.main = gui("QL Language Form - © 2017")
         self.row = 0
         self.add_header()
-        self.ast = built_gui.ast
-        self.evaluator = built_gui.evaluator
         self.redraw_function = None
 
         self.questions = OrderedDict()
@@ -100,7 +98,7 @@ class FormGUI(object):
         self.main.addLabel(identifier, row=self.row, column=1)
         self.add_listener(self.main.getLabelWidget(identifier))
 
-        # Set the entry's value and save the retieval method.
+        # Set the entry's value and save the retrieval method.
         if value == Undefined:
             value = "@undefined"
         self.main.setLabel(identifier, value)

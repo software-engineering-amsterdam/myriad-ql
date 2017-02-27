@@ -2,12 +2,11 @@ from Undefined import Undefined
 
 
 class DrawGUI(object):
-    def __init__(self, built_gui):
-        self.env = built_gui.env
-        self.ast = built_gui.ast
-        self.handler = built_gui.error_handler
-        self.evaluator = built_gui.evaluator
-        self.hide_branch = False
+    def __init__(self, built_gui, ast, environment, evaluator, error_handler):
+        self.env = environment
+        self.ast = ast
+        self.handler = error_handler
+        self.evaluator = evaluator
 
         # Obtain the GUI instances.
         self.form_gui = built_gui.gui
@@ -21,6 +20,9 @@ class DrawGUI(object):
             new_value = question_values[question]
             if new_value == "@undefined":
                 continue
+            elif new_value == "":
+                self.env.set_var_value(question, Undefined)
+                continue
 
             question_type = question_node.type
             new_value = question_type.convert_to_type(new_value)
@@ -31,46 +33,21 @@ class DrawGUI(object):
                 question_node.is_defined = True
 
     def start(self):
-        self.start_traversal()
+        self.evaluator.start_traversal()
+        for question in self.env.variables.values():
+            question["node"].accept(self)
+
         self.form_gui.start()
 
     def redraw(self, question_values):
         self.adjust_env(question_values)
         self.evaluator.start_traversal()
-        self.start_traversal()
-
-    def start_traversal(self):
-        self.ast.root.accept(self)
-
-    def if_node(self, if_node):
-        condition = if_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-        if condition or self.hide_branch:
-            if_node.if_block.accept(self)
-        else:
-            self.hide_branch = True
-            if_node.if_block.accept(self)
-            self.hide_branch = False
-
-    def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self.evaluator)
-        condition = condition if condition != Undefined else False
-
-        current_val = self.hide_branch
-        if condition or self.hide_branch:
-            if_else_node.if_block.accept(self)
-            self.hide_branch = True
-            if_else_node.else_block.accept(self)
-            self.hide_branch = current_val
-        else:
-            self.hide_branch = True
-            if_else_node.if_block.accept(self)
-            self.hide_branch = current_val
-            if_else_node.else_block.accept(self)
+        for question in self.env.variables.values():
+            question["node"].accept(self)
 
     def question_node(self, question_node):
-        identifier = question_node.name.val
-        if self.hide_branch:
+        identifier = question_node.get_identifier()
+        if self.env.is_hidden(identifier):
             (get_data_func, set_data_func, show, hide) = \
                 self.form_gui.get_question_functions(identifier)
             self.form_gui.main.hideLabel(identifier)
@@ -79,6 +56,7 @@ class DrawGUI(object):
             (get_data_func, set_data_func, show, hide) = \
                 self.form_gui.get_question_functions(identifier)
             self.form_gui.main.showLabel(identifier)
+
             show(identifier)
             value = self.env.get_var_value(identifier)
             if value == Undefined:
@@ -86,8 +64,8 @@ class DrawGUI(object):
             set_data_func(identifier, value)
 
     def comp_question_node(self, comp_question):
-        identifier = comp_question.name.val
-        if self.hide_branch:
+        identifier = comp_question.get_identifier()
+        if self.env.is_hidden(identifier):
             self.form_gui.main.hideLabel("@computed_" + identifier)
             self.form_gui.main.hideLabel(identifier)
         else:
