@@ -8,7 +8,7 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IntegerLit extends Literal {
+public class IntegerLit extends Literal implements NumericLit {
     private int value;
 
     public IntegerLit(QLType type, String value) {
@@ -32,5 +32,55 @@ public class IntegerLit extends Literal {
 
     public IntegerLit plus(IntegerLit that) {
         return new IntegerLit(new QLIntegerType(), this.value + that.value);
+    }
+
+    @Override
+    public NumericLit plus(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public NumericLit minus(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public NumericLit product(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public NumericLit divide(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit gt(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit lt(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit gte(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit lte(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit eq(NumericLit that) {
+        return null;
+    }
+
+    @Override
+    public BooleanLit ne(NumericLit that) {
+        return null;
     }
 }
