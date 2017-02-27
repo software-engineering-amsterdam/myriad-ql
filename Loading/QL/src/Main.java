@@ -16,7 +16,7 @@ public class Main {
 		String tmp = "form Testing { "
 				 + "Name1: \"Question1\" boolean "
 				 + "if (Name1) {"
- 		 		 + "Name2: \"Question2\" integer"
+ 		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
 				 + "Name3: \"Question3\" boolean "
 				 + "}";

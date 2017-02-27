@@ -22,9 +22,19 @@ public class Check extends CheckBox implements Field {
 	private String name;
 	
 	public Check(String name) {
+		
 		super();
 		this.name = name;
-		onChanged();
+		
+		selectedProperty().addListener(new ChangeListener<Boolean>()  {
+	           
+			@Override
+           public void changed(ObservableValue<? extends Boolean> observable,
+                               Boolean oldValue, Boolean newValue) {
+           	
+	       		listener.updateQuestionnaire(name, new BoolValue(newValue));
+            }
+		});
 	}
 	
 	@Override
@@ -41,43 +51,5 @@ public class Check extends CheckBox implements Field {
 	public void setAnswer(Value value) {
 		setSelected((boolean) value.getValue());	
 	}
-	
-	public void onChanged() {
-		
-		selectedProperty().addListener(new ChangeListener<Boolean>()  {
-           
-			@Override
-           public void changed(ObservableValue<? extends Boolean> observable,
-                               Boolean oldValue, Boolean newValue) {
-           	
-	       		listener.someoneSaidHello(name, new BoolValue(newValue));
-            }
-		});
-	}
-
-	
-	// @Override
-//	public String setOnChange(Function<String, String> func) {
-//    	field.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable,
-//                                String oldValue, String newValue) {
-//            	func.apply(newValue);
-//            	return newValue;
-//            }
-//    	}); 		
-//	}
-
-////	@Override
-////	public Control getControl(BooleanType type) { 
-////		return new CheckBox(); 
-////	}
-//
-//	@Override
-//	<T = CheckBox>
-//	public CheckBox getControl(Type type) {
-//		// TODO Auto-generated method stub
-//		return new CheckBox();
-//	}
 
 }

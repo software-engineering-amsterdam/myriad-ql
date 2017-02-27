@@ -145,51 +145,10 @@ public class Questionnaire extends Application implements Notifier {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 
-           //  grid.add(question.getEntryField(), 1, 1 + rowIndex);
             Field field = question.getEntryField().getField();
             grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
             
             field.addListener(this);
-            
-            // Met een changed
-//            Value oldAnswer = answers.get(question.getName());
-//            System.out.println(oldAnswer);
-//            
-//            while (question.getEntryField().getField().isChanged(oldAnswer)) {
-//            	answers.put(question.getName(), question.getAnswer());
-//            	renderQuestionnaire(primaryStage, grid);
-            //}
-//           
-//       
-//            // TODO use class Field
-//            if (question.getType().getType() == "boolean") {
-//            	((CheckBox) field).selectedProperty().addListener(new ChangeListener<Boolean>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends Boolean> observable, 
-//                    		Boolean oldValue, Boolean newValue) {
-//                    	Value oldAnswer = answers.get(question.getName()); 
-//                    	if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
-//                    		answers.put(question.getName(), new BoolValue(newValue));
-//                    		renderQuestionnaire(primaryStage, grid);
-//                    		((CheckBox) field).requestFocus();
-//                    	}
-//                    }
-//            	});  	
-//            } else {
-//            	((TextField) field).textProperty().addListener(new ChangeListener<String>()  {
-//                    @Override
-//                    public void changed(ObservableValue<? extends String> observable,
-//                                        String oldValue, String newValue) {
-//                		Value oldAnswer = answers.get(question.getName()); 
-//                    	if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
-//                    		answers.put(question.getName(), new StringValue(newValue));
-//                    		renderQuestionnaire(primaryStage, grid); // Only render when something actually changes in the form
-//                    		((TextField) field).requestFocus();
-//                    	}
-//                    	
-//                    }
-//            	});
-//            }    
             ++rowIndex;
         }
         
@@ -209,12 +168,11 @@ public class Questionnaire extends Application implements Notifier {
 
 	@Override
 	// TODO change to already implemented observer pattern
-	public void someoneSaidHello(String name, Value newValue) {
-		System.out.println("YESSS");
+	public void updateQuestionnaire(String name, Value newValue) {
     	Value oldAnswer = answers.get(name); 
-		if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
+		if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
 			answers.put(name, newValue);
+			renderQuestionnaire(grid);
 		}
-    	renderQuestionnaire(grid);
 	}
 }

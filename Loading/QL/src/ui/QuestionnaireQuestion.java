@@ -31,37 +31,20 @@ public class QuestionnaireQuestion {
 	// TODO move to field
 	private QControl deriveField(Type type) {
         if ("string" == type.getType()) {
-        	return new QControl(new ui.field.Text());
+        	return new QControl(new ui.field.Text(name));
         } else if ("boolean" == type.getType()) {
         	return new QControl(new ui.field.Check(name));
         } else if ("integer" == type.getType()) {
-        	return new QControl(new ui.field.Number());
+        	return new QControl(new ui.field.Number(name));
         } else {
         	System.out.println("unknown type!");
         	return null;
         }        	
 	}
 	
-	
-	// TODO move to field
 	// TODO default return statement
-	public Value getAnswer() {
-		
+	public Value getAnswer() {	
 		return entryField.getAnswer();
-		
-//		if ("boolean" == type.getType()) {
-//			return new BoolValue(((CheckBox) entryField).isSelected());
-//		} else {
-//			String str = ((TextField) entryField).getText();
-//			if (str.isEmpty()) {
-//				return new EmptyValue();
-//			} else if ("string" == type.getType()) {
-//				return new StringValue(str);
-//			} else {
-//				return new IntegerValue(Integer.valueOf(str));
-//			}
-//		
-//		}
 	}
 	
 	public void setAnswer(Value value) {

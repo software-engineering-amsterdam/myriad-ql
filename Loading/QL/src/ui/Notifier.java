@@ -3,5 +3,5 @@ package ui;
 import value.Value;
 
 public interface Notifier {
-	void someoneSaidHello(String name, Value value);
+	void updateQuestionnaire(String name, Value value);
 }
