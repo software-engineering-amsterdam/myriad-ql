@@ -64,7 +64,7 @@ def parse(input_string):
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
 
-    arith_precedence = [
+    operand_list_arith = [
         (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
         (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
@@ -72,7 +72,7 @@ def parse(input_string):
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
-    bool_precedence = [
+    operand_list_bool = [
         (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive, 2,
          opAssoc.LEFT, flatten_binary_operators),
         (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT,
@@ -82,29 +82,29 @@ def parse(input_string):
     ]
 
     # Arithmetic precedence
-    arithmetic = infixNotation(
+    arithmetic_precedence = infixNotation(
         operand_arith.setResultsName('arithmetic_operand*'),
-        arith_precedence
+        operand_list_arith
     ).setResultsName('arithmetic_expr')
+    # arithmetic_precedence.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
 
-    bool_expr = infixNotation(
+    # Boolean precedence
+    boolean_precedence = infixNotation(
         operand_bool.setResultsName('boolean_operand'),
-        (arith_precedence + bool_precedence)
+        (operand_list_arith + operand_list_bool)
     ).setResultsName('boolean_expr')
 
-    arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))
-
-    boolean_expr = bool_expr
-
+    #
     arithmetic_expression = \
         OneOrMore(
-            arithmetic | (lit_l_paren + arithmetic + lit_r_paren)
+            arithmetic_precedence | (lit_l_paren + arithmetic_precedence + lit_r_paren)
         ).setResultsName("arithmetic_statement")
-
     arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
-    boolean_statement = \
-        OneOrMore(boolean_expr | (lit_l_paren + boolean_expr + lit_r_paren))
-    boolean_statement.setParseAction(lambda parsed_tokens: ast.Condition(*parsed_tokens))
+
+    #
+    boolean_expression = \
+        OneOrMore(boolean_precedence | (lit_l_paren + boolean_precedence + lit_r_paren))
+    boolean_expression.setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
     field_expr = \
         QuotedString('"', unquoteResults=True).setResultsName("title") + \
@@ -119,7 +119,7 @@ def parse(input_string):
 
     body = Forward()
     if_block = Forward()
-    if_block << lit_if + lit_l_paren + boolean_statement + lit_r_paren + body + Optional(
+    if_block << lit_if + lit_l_paren + boolean_expression + lit_r_paren + body + Optional(
         lit_else + body).setResultsName('else_statement')
     if_block.setParseAction(ast.Conditional)
 
