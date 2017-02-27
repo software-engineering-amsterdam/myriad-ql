@@ -5,7 +5,7 @@ import Html exposing (Html, div, form, h3, hr, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
 import Parser.Parser as Parser
-import TypeChecker exposing (messages)
+import TypeChecker
 import TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
 
 
@@ -79,7 +79,7 @@ update msg model =
                 { model
                     | rawInput = newDslInput
                     , parsedForm = parseResult
-                    , messages = Maybe.withDefault [] <| Maybe.map messages <| parseResult
+                    , messages = Maybe.withDefault [] <| Maybe.map TypeChecker.check <| parseResult
                 }
 
 

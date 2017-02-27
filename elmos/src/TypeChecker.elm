@@ -1,4 +1,4 @@
-module TypeChecker exposing (messages)
+module TypeChecker exposing (check)
 
 import AST exposing (Form)
 import TypeChecker.BadReferences exposing (badReferences)
@@ -10,8 +10,8 @@ import TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 import TypeChecker.Messages exposing (Message)
 
 
-messages : Form -> List Message
-messages form =
+check : Form -> List Message
+check form =
     List.concat
         [ badReferences form
         , duplicateQuestions form

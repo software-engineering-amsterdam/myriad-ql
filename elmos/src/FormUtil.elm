@@ -1,4 +1,4 @@
-module FormUtil exposing (VisibleField(Editable, Computed), updateValue, activeFields, fieldValueType)
+module FormUtil exposing (ActiveField(Editable, Computed), updateValue, activeFields, fieldValueType)
 
 import AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import Environment as Env exposing (Environment)
@@ -7,12 +7,12 @@ import Evaluator
 import Tuple3
 
 
-type VisibleField
+type ActiveField
     = Editable Label String ValueType
     | Computed Label String ValueType Expression
 
 
-fieldValueType : VisibleField -> ValueType
+fieldValueType : ActiveField -> ValueType
 fieldValueType field =
     case field of
         Editable _ _ valueType ->
@@ -56,17 +56,17 @@ activeComputedFields env form =
             )
 
 
-activeFields : Environment -> Form -> List VisibleField
+activeFields : Environment -> Form -> List ActiveField
 activeFields env { items } =
     activeFieldsForItems env items
 
 
-activeFieldsForItems : Environment -> List FormItem -> List VisibleField
+activeFieldsForItems : Environment -> List FormItem -> List ActiveField
 activeFieldsForItems env =
     List.concatMap (activeFieldsForItem env)
 
 
-activeFieldsForItem : Environment -> FormItem -> List VisibleField
+activeFieldsForItem : Environment -> FormItem -> List ActiveField
 activeFieldsForItem env item =
     case item of
         Field label ( identifier, _ ) valueType ->

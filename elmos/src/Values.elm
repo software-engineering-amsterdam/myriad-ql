@@ -1,4 +1,4 @@
-module Values exposing (Value(Str, Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat)
+module Values exposing (Value(Boolean, Undefined), string, bool, int, float, undefined, asString, asBool, asInt, asFloat)
 
 
 type Value
@@ -17,11 +17,6 @@ string =
 bool : Bool -> Value
 bool =
     Boolean
-
-
-isNanOrInfinite : Float -> Bool
-isNanOrInfinite x =
-    isNaN x || isInfinite x
 
 
 int : Int -> Value
@@ -43,6 +38,11 @@ float f =
 undefined : Value
 undefined =
     Undefined
+
+
+isNanOrInfinite : Float -> Bool
+isNanOrInfinite x =
+    isNaN x || isInfinite x
 
 
 asInt : Value -> Maybe Int
