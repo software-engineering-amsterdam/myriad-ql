@@ -6,8 +6,8 @@
 export class MemoryElement {
 
     constructor(options = {}) {
-        this.name = options.name;
         this.type = options.type;
+        this.value = options.value;
     }
 
 }
