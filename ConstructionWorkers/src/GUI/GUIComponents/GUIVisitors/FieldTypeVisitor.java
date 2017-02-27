@@ -5,7 +5,7 @@ import ASTnodes.types.*;
 import ASTnodes.visitors.TypeVisitor;
 import GUI.GUIInterface;
 import GUI.GUIComponents.GUIFields.*;
-import GUI.widgets.Widget;
+import GUI.GUIComponents.GUIWidgets.Widget;
 
 /**
  * Created by LGGX on 24-Feb-17.

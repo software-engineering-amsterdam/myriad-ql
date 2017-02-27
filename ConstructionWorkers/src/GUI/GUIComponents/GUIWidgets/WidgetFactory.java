@@ -1,4 +1,4 @@
-package GUI.widgets;
+package GUI.GUIComponents.GUIWidgets;
 
 import ASTnodes.statements.SimpleQuestion;
 import ASTnodes.types.*;

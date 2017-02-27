@@ -16,16 +16,16 @@ public class QuestionPanel {
         this.panel.setLayout(layout);
     }
 
-    public void render(JFrame _rootContainer) {
-        _rootContainer.add(this.panel);
+    public void render(JFrame formFrame) {
+        formFrame.add(this.panel);
     }
 
-    public void add(JComponent _component) {
-        this.panel.add(_component);
+    public void add(JComponent component) {
+        this.panel.add(component);
     }
 
-    public void remove(JComponent _component) {
-        this.panel.remove(_component);
+    public void remove(JComponent component) {
+        this.panel.remove(component);
     }
 
 }

@@ -2,7 +2,7 @@ package GUI.GUIComponents.GUIFields;
 
 import ASTnodes.statements.ComputedQuestion;
 import GUI.GUIInterface;
-import GUI.widgets.Widget;
+import GUI.GUIComponents.GUIWidgets.Widget;
 import semanticChecker.formDataStorage.valueData.values.UndefinedValue;
 import semanticChecker.formDataStorage.valueData.values.Value;
 

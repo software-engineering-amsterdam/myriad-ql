@@ -3,12 +3,13 @@ package GUI;
 import ASTnodes.Form;
 import ASTnodes.statements.ComputedQuestion;
 import ASTnodes.statements.IfStatement;
+import ASTnodes.statements.SimpleQuestion;
 import GUI.GUIEvaluation.QuestionEvaluator;
 import GUI.GUIComponents.GUIFields.ComputerQuestionField;
 import GUI.GUIComponents.GUIFields.Field;
 import GUI.GUIComponents.GUIManager;
 import GUI.GUIComponents.GUIVisitors.GUIFieldFactory;
-import GUI.widgets.WidgetFactory;
+import GUI.GUIComponents.GUIWidgets.WidgetFactory;
 import semanticChecker.formDataStorage.QuestionData;
 import semanticChecker.formDataStorage.valueData.ValueData;
 import semanticChecker.formDataStorage.valueData.values.Value;
@@ -27,8 +28,8 @@ public class GUI implements GUIInterface{
     private final ValueData valueData;
     private final QuestionEvaluator evaluator;
     private final GUIFieldFactory fieldFactory;
-
-    protected final GUIManager manager;
+    private final QuestionData questionData;
+    private final GUIManager manager;
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
 
@@ -39,11 +40,11 @@ public class GUI implements GUIInterface{
         this.manager = manager;
         this.fieldFactory = new GUIFieldFactory(this, valueData, widgetFactory);
 
-        QuestionData formDataStorage = new QuestionData(form);
+        this.questionData = new QuestionData(form);
 
-        this.questionsWithConditions = new OptionalQuestions(formDataStorage, valueData, this.fieldFactory).getMap();
+        this.questionsWithConditions = new OptionalQuestions(this.questionData, valueData, this.fieldFactory).getMap();
 
-        this.computedQuestions = formDataStorage.getComputedQuestions();
+        this.computedQuestions = this.questionData.getComputedQuestions();
     }
 
 
@@ -59,14 +60,19 @@ public class GUI implements GUIInterface{
         this.manager.render();
     }
 
-    protected void updateGUIData(Map<Field, List<IfStatement>> conditionsOfQuestions) {
-        for (Field field : conditionsOfQuestions.keySet()) {
-            if (this.isConditionTrue(conditionsOfQuestions, field)) {
-                this.manager.addQuestion(field);
-            } else {
-                this.manager.removeQuestion(field);
+    private void updateGUIData(Map<Field, List<IfStatement>> conditionsOfQuestions) {
+        for (SimpleQuestion question : questionData.getAllQuestions()) {
+            for (Field field : conditionsOfQuestions.keySet()) {
+                if (question.getIdentifier().getName() == field.getId()) {
+                    if (this.isConditionTrue(conditionsOfQuestions, field)) {
+                        this.manager.addQuestion(field);
+                    } else {
+                        this.manager.removeQuestion(field);
+                    }
+                }
             }
         }
+
     }
 
     // Helper functions etc...
@@ -95,7 +101,7 @@ public class GUI implements GUIInterface{
         return null;
     }
 
-    protected boolean isConditionTrue(
+    private boolean isConditionTrue(
             Map<Field, List<IfStatement>> conditionsOfQuestions, Field field)
     {
         boolean condition = true;
