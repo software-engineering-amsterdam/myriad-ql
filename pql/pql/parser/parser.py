@@ -54,8 +54,8 @@ def parse(input_string):
 
     assign_op = Suppress("=")
 
-    def flatten_binary_operators(unflatted_tokens):
-        flattened_tokens = unflatted_tokens[0]
+    def flatten_binary_operators(unflattened_tokens):
+        flattened_tokens = unflattened_tokens[0]
         while len(flattened_tokens) >= 3:
             lhs, type_call, rhs = flattened_tokens[:3]
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
