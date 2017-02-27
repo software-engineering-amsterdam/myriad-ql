@@ -1,6 +1,5 @@
 package org.ql.typechecker.expression;
 
-import org.ql.ast.Expression;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.ExpressionVisitor;
