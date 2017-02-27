@@ -6,9 +6,9 @@ import {View}               from 'arva-js/core/View.js';
 import {layout}             from 'arva-js/layout/Decorators.js';
 import {combineOptions}     from 'arva-js/utils/CombineOptions.js';
 
-import {Checkbox}           from 'arva-kit/components/Checkbox.js';
-import {TextCaption}        from 'arva-kit/text/TextCaption.js';
-import {LabeledTextInput}   from 'arva-kit/input/LabeledTextInput.js';
+import {Checkbox}               from 'arva-kit/components/Checkbox.js';
+import {TextCaption}            from 'arva-kit/text/TextCaption.js';
+import {SingleLineTextInput}    from 'arva-kit/input/SingleLineTextInput.js';
 
 
 import {Money}              from '../../properties/Money.js';
@@ -16,7 +16,7 @@ import {Money}              from '../../properties/Money.js';
 export class QuestionView extends View {
 
 
-    @layout.dock.top(16,0, 10)
+    @layout.dock.top(16, 0, 10)
     label = new TextCaption({
         content: this.options.label
     });
@@ -25,18 +25,45 @@ export class QuestionView extends View {
         super(options);
 
         let type = options.type;
-        let renderable;
-/*
+        let inputRenderable;
 
-        switch(type instanceof){
+        switch (type.constructor) {
             case Boolean:
-                return renderable = new Checkbox({
+                inputRenderable = new Checkbox({
+                    state: false,
                     enabled: true
-                })
-             default
-
+                });
+                break;
+            case String:
+                inputRenderable = new SingleLineTextInput({
+                    required: false,
+                    enabled: true,
+                    usesFeedback: false,
+                    type: 'text',
+                    inputOptions: { clearOnEnter: true }
+                });
+                break;
+            case Number:
+                inputRenderable = new SingleLineTextInput({
+                    required: false,
+                    enabled: true,
+                    usesFeedback: false,
+                    type: 'number',
+                    inputOptions: { clearOnEnter: true }
+                });
+                break;
+            default:
+                inputRenderable = new SingleLineTextInput({
+                    required: false,
+                    enabled: true,
+                    usesFeedback: false,
+                    type: 'text',
+                    inputOptions: { clearOnEnter: true }
+                });
+                break;
         }
-*/
 
+        this.addRenderable(inputRenderable,'input', layout.dock.top(~44,10,10));
+        this.reflowRecursively();
     }
 }

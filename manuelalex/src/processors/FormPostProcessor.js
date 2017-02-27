@@ -148,8 +148,7 @@ export class FormPostProcessor extends PostProcessor {
     }
 
     money(data, location, reject) {
-        return Money
+        return new Money()
     }
 
 }
-;
