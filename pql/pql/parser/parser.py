@@ -29,7 +29,6 @@ def parse(input_string):
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = (true | false)
 
-    # TODO: check if needed
     arith_operand = (number | name)
     bool_operand = (boolean | arith_operand)
 
