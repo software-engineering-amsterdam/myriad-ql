@@ -18,6 +18,10 @@ export class Statement {
         throw new Error('Validate method should have been overwritten');
     }
 
+    render(){
+        throw new Error('Render method should have been overwritten');
+    }
+
     _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }

@@ -6,6 +6,8 @@ import {Statement}  from './Statement.js';
 
 export class IfStatement extends Statement {
 
+    render = null;
+
     constructor(condition, ifBody, location) {
         super(location);
 

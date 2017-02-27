@@ -19,7 +19,8 @@ import {MinOperator} from '../operator/MinOperator.js';
 import {PlusOperator} from '../operator/PlusOperator.js';
 import {DivideOperator} from '../operator/DivideOperator.js';
 import {MultiplyOperator} from '../operator/MultiplyOperator.js';
-import {Money} from '../properties/Money.js';
+import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
+import {Label} from '../Label.js';
 
 export class FormPostProcessor {
 
@@ -28,7 +29,7 @@ export class FormPostProcessor {
     }
 
     question(data, location) {
-        return new Question(data[3].trim(), data[6], data[9], location);
+        return new Question(new Label(data[3].trim()), data[6], data[9], location);
     }
 
     ifStatement(data, location) {
@@ -95,7 +96,23 @@ export class FormPostProcessor {
     }
 
     money(data, location) {
-        return new Money(location)
+        return new QLMoney(location)
+    }
+
+    string(data, location){
+        return new QLString(location);
+    }
+
+    number(data, location){
+        return new QLNumber(location);
+    }
+
+    date(data, location){
+        return new QLDate(location)
+    }
+
+    boolean(data, location){
+        return new QLBoolean(location);
     }
 
     toString(data) {

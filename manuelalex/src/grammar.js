@@ -1,7 +1,6 @@
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
 import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; var FormPostProcessor = new FP();
-
 (function () {
 function id(x) {return x[0]; }
 
@@ -220,15 +219,15 @@ var grammar = {
     {"name": "propertyName$ebnf$1", "symbols": [/[A-Za-z0-9]/, "propertyName$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "propertyName", "symbols": ["propertyName$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
     {"name": "propertyType$string$1", "symbols": [{"literal":"b"}, {"literal":"o"}, {"literal":"o"}, {"literal":"l"}, {"literal":"e"}, {"literal":"a"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "propertyType", "symbols": ["propertyType$string$1"], "postprocess": ()=> new Boolean()},
+    {"name": "propertyType", "symbols": ["propertyType$string$1"], "postprocess": FormPostProcessor.boolean},
     {"name": "propertyType$string$2", "symbols": [{"literal":"s"}, {"literal":"t"}, {"literal":"r"}, {"literal":"i"}, {"literal":"n"}, {"literal":"g"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "propertyType", "symbols": ["propertyType$string$2"], "postprocess": ()=> new String()},
+    {"name": "propertyType", "symbols": ["propertyType$string$2"], "postprocess": FormPostProcessor.string},
     {"name": "propertyType$string$3", "symbols": [{"literal":"i"}, {"literal":"n"}, {"literal":"t"}, {"literal":"e"}, {"literal":"g"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "propertyType", "symbols": ["propertyType$string$3"], "postprocess": ()=> new Number()},
+    {"name": "propertyType", "symbols": ["propertyType$string$3"], "postprocess": FormPostProcessor.number},
     {"name": "propertyType$string$4", "symbols": [{"literal":"d"}, {"literal":"a"}, {"literal":"t"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "propertyType", "symbols": ["propertyType$string$4"], "postprocess": ()=> new Date()},
+    {"name": "propertyType", "symbols": ["propertyType$string$4"], "postprocess": FormPostProcessor.date},
     {"name": "propertyType$string$5", "symbols": [{"literal":"d"}, {"literal":"e"}, {"literal":"c"}, {"literal":"i"}, {"literal":"m"}, {"literal":"a"}, {"literal":"l"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "propertyType", "symbols": ["propertyType$string$5"], "postprocess": ()=> new Number()},
+    {"name": "propertyType", "symbols": ["propertyType$string$5"], "postprocess": FormPostProcessor.number},
     {"name": "propertyType$string$6", "symbols": [{"literal":"m"}, {"literal":"o"}, {"literal":"n"}, {"literal":"e"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "propertyType", "symbols": ["propertyType$string$6"], "postprocess": FormPostProcessor.money},
     {"name": "sentence$ebnf$1", "symbols": [/[ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?\/>.<,i]/]},

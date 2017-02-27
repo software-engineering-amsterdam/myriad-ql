@@ -3,10 +3,15 @@
  */
 export class AST {
     constructor(program = {}) {
-
         this.program = program;
+    }
 
-        // this.validate()
+    getStatements(){
+        return this.program.getStatements();
+    }
+
+    getName(){
+        return this.program.getName();
     }
 
     validate() {

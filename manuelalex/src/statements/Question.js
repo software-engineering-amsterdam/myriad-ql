@@ -6,16 +6,16 @@ import {Statement}      from './Statement.js';
 
 
 export class Question extends Statement {
-    constructor(name = '', propertyName = '', propertyType = null, location) {
+    constructor(label = {}, propertyName = '', propertyType = null, location) {
         super(location);
 
-        this.name = name;
+        this.label = label;
         this.propertyName = propertyName;
         this.propertyType = propertyType;
     }
 
-    getName(){
-        return this.name;
+    getLabel(){
+        return this.label;
     }
 
     getPropertyName(){
@@ -34,5 +34,9 @@ export class Question extends Statement {
 
     accept(visitor){
         visitor.visitQuestion(this);
+    }
+
+    render(visitor, view){
+        visitor.renderQuestion(this, view);
     }
 }

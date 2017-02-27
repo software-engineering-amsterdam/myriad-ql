@@ -11,7 +11,7 @@ import {TextCaption}            from 'arva-kit/text/TextCaption.js';
 import {SingleLineTextInput}    from 'arva-kit/input/SingleLineTextInput.js';
 
 
-import {Money}              from '../../properties/Money.js';
+import {Money}              from '../../types/Types.js';
 
 export class QuestionView extends View {
 

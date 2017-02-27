@@ -46,11 +46,11 @@ comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
 
 
 propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
-propertyType            -> "boolean"                                                                          {% ()=> new Boolean() %}
-                         | "string"                                                                           {% ()=> new String() %}
-                         | "integer"                                                                          {% ()=> new Number() %}
-                         | "date"                                                                             {% ()=> new Date() %}
-                         | "decimal"                                                                          {% ()=> new Number() %}
+propertyType            -> "boolean"                                                                          {% FormPostProcessor.boolean %}
+                         | "string"                                                                           {% FormPostProcessor.string %}
+                         | "integer"                                                                          {% FormPostProcessor.number %}
+                         | "date"                                                                             {% FormPostProcessor.date %}
+                         | "decimal"                                                                          {% FormPostProcessor.number %}
                          | "money"                                                                            {% FormPostProcessor.money %}
 
 sentence                -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+                                     {% function(d) { return d[0].join("") } %}

@@ -15,6 +15,8 @@ import {Program}        from './Program.js';
 import {Question}       from '../statements/Question.js';
 import {QuestionView}   from './views/QuestionView.js';
 
+import {RenderVisitor}  from './RenderVisitor.js';
+
 import './famous.css!';
 
 export class Gui {
@@ -25,7 +27,11 @@ export class Gui {
     constructor(ast = {}) {
 
         this.ast = ast;
+
+
         this.createGUI(ast);
+
+
     }
 
     createGUI(ast = {}) {
@@ -39,6 +45,9 @@ export class Gui {
         let views = program.getViews();
         let view = views[0]; // for now, just use the first view
 
+        let visitor = new RenderVisitor(ast, view);
+
+        return;
         for (let index in ast.program.statements) {
             let statement = ast.program.statements[index];
 
