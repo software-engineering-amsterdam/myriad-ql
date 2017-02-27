@@ -1,4 +1,4 @@
-package sandbox;
+package functionpointer;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

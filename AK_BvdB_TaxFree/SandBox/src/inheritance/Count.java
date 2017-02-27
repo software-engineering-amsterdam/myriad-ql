@@ -1,4 +1,4 @@
-package sandbox;
+package inheritance;
 
 public class Count {
     private int mCount = 0;

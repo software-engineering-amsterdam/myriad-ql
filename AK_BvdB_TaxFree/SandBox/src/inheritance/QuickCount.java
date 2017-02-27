@@ -1,4 +1,6 @@
-package sandbox;
+package inheritance;
+
+import inheritance.Count;
 
 public class QuickCount extends Count {
 
