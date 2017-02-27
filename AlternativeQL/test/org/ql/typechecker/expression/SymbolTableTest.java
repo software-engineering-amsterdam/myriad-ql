@@ -8,17 +8,17 @@ import org.ql.ast.type.StringType;
 public class SymbolTableTest {
     @Test
     public void shouldPutIdentifierWhenPutExecuted() {
-        SymbolTable symbolTable = new SymbolTable();
+        SymbolTable symbolTable = new HashMapSymbolTable();
 
         symbolTable.put(new Identifier("example"), new StringType());
 
-        assertTrue(symbolTable.has("example"));
+        assertTrue(symbolTable.has(new Identifier("example")));
         assertSame(symbolTable.size(), 1);
     }
 
     @Test
     public void shouldGetIdentifierWhenGetExecuted() {
-        SymbolTable symbolTable = new SymbolTable();
+        SymbolTable symbolTable = new HashMapSymbolTable();
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 
@@ -29,7 +29,7 @@ public class SymbolTableTest {
 
     @Test
     public void shouldContainKeyWhenContainsKeyExecuted() {
-        SymbolTable symbolTable = new SymbolTable();
+        SymbolTable symbolTable = new HashMapSymbolTable();
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 

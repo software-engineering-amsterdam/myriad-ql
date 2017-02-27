@@ -1,6 +1,5 @@
 package org.ql.ast.statement;
 
-import com.sun.istack.internal.Nullable;
 import org.ql.ast.Expression;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
@@ -13,7 +12,7 @@ public class Question extends Statement {
     private final Type type;
     private final Expression defaultValue;
 
-    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue) {
+    public Question(Identifier id, QuestionText questionText, Type type, Expression defaultValue) {
         this.id = id;
         this.questionText = questionText;
         this.type = type;

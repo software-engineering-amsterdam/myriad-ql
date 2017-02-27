@@ -12,6 +12,9 @@ public class HashMapSymbolTable implements SymbolTable {
 
     private final Map<String, Type> definitions = new HashMap<>();
 
+    public HashMapSymbolTable() {
+    }
+
     public HashMapSymbolTable(List<Question> questions) {
         putAll(questions);
     }
@@ -26,6 +29,11 @@ public class HashMapSymbolTable implements SymbolTable {
 
     public boolean has(Identifier id) {
         return definitions.containsKey(id.toString());
+    }
+
+    @Override
+    public int size() {
+        return definitions.size();
     }
 
     public void putAll(List<Question> questions) {

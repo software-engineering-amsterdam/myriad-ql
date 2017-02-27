@@ -3,13 +3,13 @@ package org.ql.parser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.ql.ast.*;
-import org.ql.grammar.QLParserLexer;
-import org.ql.grammar.QLParserParser;
-import org.ql.grammar.QLParserVisitor;
+import org.ql.grammar.QLLexer;
+import org.ql.grammar.QLParser;
+import org.ql.grammar.QLVisitor;
 
 public class Parser {
 
-    private final QLParserVisitor<Node> visitor = new AntlrVisitor();
+    private final QLVisitor<Node> visitor = new AntlrVisitor();
 
     public Form parseForm(String code) {
         return (Form) visitor.visit(createParser(code).form());
@@ -23,7 +23,7 @@ public class Parser {
         return (Expression) visitor.visit(createParser(code).expression());
     }
 
-    private QLParserParser createParser(String code) {
-        return new QLParserParser(new CommonTokenStream(new QLParserLexer(new ANTLRInputStream(code))));
+    private QLParser createParser(String code) {
+        return new QLParser(new CommonTokenStream(new QLLexer(new ANTLRInputStream(code))));
     }
 }

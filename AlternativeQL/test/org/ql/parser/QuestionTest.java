@@ -19,6 +19,7 @@ public class QuestionTest {
 
         assertEquals(expectedId, actualQuestion.getId().toString());
         assertEquals(expectedQuestion, actualQuestion.getQuestionText().toString());
+        assertNull(actualQuestion.getDefaultValue());
         assertTrue(actualQuestion.getType() instanceof BooleanType);
     }
 
@@ -30,6 +31,7 @@ public class QuestionTest {
         Question actualQuestion = (Question) new Parser().parseStatement(inputCode);
         BooleanLiteral actualDefaultValue = (BooleanLiteral) actualQuestion.getDefaultValue();
 
+        assertNotNull(actualDefaultValue);
         assertEquals(expectedDefaultValue, actualDefaultValue.getValue());
     }
 }

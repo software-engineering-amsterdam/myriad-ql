@@ -15,20 +15,20 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.*;
-import org.ql.grammar.QLParserParser;
-import org.ql.grammar.QLParserVisitor;
+import org.ql.grammar.QLParser;
+import org.ql.grammar.QLVisitor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLParserVisitor<Node> {
+public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLVisitor<Node> {
 
     @Override
-    public Node visitForm(QLParserParser.FormContext ctx) {
+    public Node visitForm(QLParser.FormContext ctx) {
         List<Statement> statements = new ArrayList<>();
 
-        for (QLParserParser.StatementContext statementContext : ctx.statement()) {
+        for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
         }
 
@@ -36,7 +36,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     }
 
     @Override
-    public Node visitQuestion(QLParserParser.QuestionContext ctx) {
+    public Node visitQuestion(QLParser.QuestionContext ctx) {
         AbstractNode question = new Question(
             (Identifier) visit(ctx.id),
             (QuestionText) visit(ctx.text),
@@ -48,7 +48,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     }
 
     @Override
-    public Node visitIfThen(QLParserParser.IfThenContext ctx) {
+    public Node visitIfThen(QLParser.IfThenContext ctx) {
         AbstractNode ifThen = new IfThen(
                 (Expression) visit(ctx.expression()),
                 createStatements(ctx.thenStatements)
@@ -58,7 +58,7 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     }
 
     @Override
-    public Node visitIfElseThen(QLParserParser.IfElseThenContext ctx) {
+    public Node visitIfElseThen(QLParser.IfElseThenContext ctx) {
         AbstractNode ifThenElse = new IfThenElse(
                 (Expression) visit(ctx.expression()),
                 createStatements(ctx.thenStatements),
@@ -68,17 +68,17 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
         return ifThenElse.setMetadata(extractMetadata(ctx));
     }
 
-    private List<Statement> createStatements(List<QLParserParser.StatementContext> statementsContext) {
+    private List<Statement> createStatements(List<QLParser.StatementContext> statementsContext) {
         List<Statement> thenStatements = new ArrayList<>();
 
-        for (QLParserParser.StatementContext statementContext : statementsContext) {
+        for (QLParser.StatementContext statementContext : statementsContext) {
             thenStatements.add((Statement) visit(statementContext));
         }
         return thenStatements;
     }
 
     @Override
-    public Node visitQuestionText(QLParserParser.QuestionTextContext ctx) {
+    public Node visitQuestionText(QLParser.QuestionTextContext ctx) {
         AbstractNode questionText = new QuestionText(removeQuotes(ctx.getText()));
 
         return questionText.setMetadata(extractMetadata(ctx));
@@ -89,185 +89,185 @@ public class AntlrVisitor extends AbstractParseTreeVisitor<Node> implements QLPa
     }
 
     @Override
-    public Node visitDefaultValue(QLParserParser.DefaultValueContext ctx) {
+    public Node visitDefaultValue(QLParser.DefaultValueContext ctx) {
         return visit(ctx.expression());
     }
 
     @Override
-    public Node visitDecimalLiteral(QLParserParser.DecimalLiteralContext ctx) {
+    public Node visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
         AbstractNode decimalLiteral = new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
 
         return decimalLiteral.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitNegation(QLParserParser.NegationContext ctx) {
+    public Node visitNegation(QLParser.NegationContext ctx) {
         AbstractNode negation = new Negation((Expression) visit(ctx.expression()));
 
         return negation.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitProduct(QLParserParser.ProductContext ctx) {
+    public Node visitProduct(QLParser.ProductContext ctx) {
         AbstractNode product = new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return product.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitIncrement(QLParserParser.IncrementContext ctx) {
+    public Node visitIncrement(QLParser.IncrementContext ctx) {
         AbstractNode increment = new Increment((Expression) visit(ctx.expression()));
 
         return increment.setMetadata(new Metadata(ctx.start.getLine(), ctx.start.getCharPositionInLine()));
     }
 
     @Override
-    public Node visitSubtraction(QLParserParser.SubtractionContext ctx) {
+    public Node visitSubtraction(QLParser.SubtractionContext ctx) {
         AbstractNode subtraction = new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return subtraction.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitNotEqual(QLParserParser.NotEqualContext ctx) {
+    public Node visitNotEqual(QLParser.NotEqualContext ctx) {
         AbstractNode notEqual = new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return notEqual.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitLogicalAnd(QLParserParser.LogicalAndContext ctx) {
+    public Node visitLogicalAnd(QLParser.LogicalAndContext ctx) {
         AbstractNode logicalAnd = new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return logicalAnd.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitLowerThan(QLParserParser.LowerThanContext ctx) {
+    public Node visitLowerThan(QLParser.LowerThanContext ctx) {
         AbstractNode lowerThan = new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return lowerThan.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitGreaterThanOrEqual(QLParserParser.GreaterThanOrEqualContext ctx) {
+    public Node visitGreaterThanOrEqual(QLParser.GreaterThanOrEqualContext ctx) {
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return greaterThanOrEqual.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitDivision(QLParserParser.DivisionContext ctx) {
+    public Node visitDivision(QLParser.DivisionContext ctx) {
         Division division = new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return division.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitParameter(QLParserParser.ParameterContext ctx) {
+    public Node visitParameter(QLParser.ParameterContext ctx) {
         return new Parameter(new Identifier(ctx.ID().getText()));
     }
 
     @Override
-    public Node visitIdentifier(QLParserParser.IdentifierContext ctx) {
+    public Node visitIdentifier(QLParser.IdentifierContext ctx) {
         return new Identifier(ctx.ID().getText()).setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitBooleanLiteral(QLParserParser.BooleanLiteralContext ctx) {
+    public Node visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
         BooleanLiteral booleanLiteral = new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
 
         return booleanLiteral.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitGroup(QLParserParser.GroupContext ctx) {
+    public Node visitGroup(QLParser.GroupContext ctx) {
         return new Group((Expression) visit(ctx.expression())).setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitAddition(QLParserParser.AdditionContext ctx) {
+    public Node visitAddition(QLParser.AdditionContext ctx) {
         Addition addition = new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return addition.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitGreaterThan(QLParserParser.GreaterThanContext ctx) {
+    public Node visitGreaterThan(QLParser.GreaterThanContext ctx) {
         GreaterThan greaterThan = new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return greaterThan.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitStringLiteral(QLParserParser.StringLiteralContext ctx) {
+    public Node visitStringLiteral(QLParser.StringLiteralContext ctx) {
         StringLiteral stringLiteral = new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
 
         return stringLiteral.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitDecrement(QLParserParser.DecrementContext ctx) {
+    public Node visitDecrement(QLParser.DecrementContext ctx) {
         Decrement decrement = new Decrement((Expression) visit(ctx.expression()));
 
         return decrement.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitEquals(QLParserParser.EqualsContext ctx) {
+    public Node visitEquals(QLParser.EqualsContext ctx) {
         Equals equals = new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return equals.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitLowerThanOrEqual(QLParserParser.LowerThanOrEqualContext ctx) {
+    public Node visitLowerThanOrEqual(QLParser.LowerThanOrEqualContext ctx) {
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return lowerThanOrEqual.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitIntegerLiteral(QLParserParser.IntegerLiteralContext ctx) {
+    public Node visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
         IntegerLiteral integerLiteral = new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
 
         return integerLiteral.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitLogicalOr(QLParserParser.LogicalOrContext ctx) {
+    public Node visitLogicalOr(QLParser.LogicalOrContext ctx) {
         LogicalOr logicalOr = new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 
         return logicalOr.setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeBoolean(QLParserParser.TypeBooleanContext ctx) {
+    public Node visitTypeBoolean(QLParser.TypeBooleanContext ctx) {
         return new BooleanType().setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeFloat(QLParserParser.TypeFloatContext ctx) {
+    public Node visitTypeFloat(QLParser.TypeFloatContext ctx) {
         return new FloatType().setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeInteger(QLParserParser.TypeIntegerContext ctx) {
+    public Node visitTypeInteger(QLParser.TypeIntegerContext ctx) {
         return new IntegerType().setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeString(QLParserParser.TypeStringContext ctx) {
+    public Node visitTypeString(QLParser.TypeStringContext ctx) {
         return new StringType().setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeMoney(QLParserParser.TypeMoneyContext ctx) {
+    public Node visitTypeMoney(QLParser.TypeMoneyContext ctx) {
         return new MoneyType().setMetadata(extractMetadata(ctx));
     }
 
     @Override
-    public Node visitTypeDate(QLParserParser.TypeDateContext ctx) {
+    public Node visitTypeDate(QLParser.TypeDateContext ctx) {
         return new DateType().setMetadata(extractMetadata(ctx));
     }
 
