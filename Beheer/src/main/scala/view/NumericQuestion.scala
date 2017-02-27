@@ -1,20 +1,29 @@
 package view
 
-import ast.ExpressionNode.Env
 import model.DisplayQuestion
+import values.MoneyValue
 
+import scalafx.Includes._
+import scalafx.event.ActionEvent
 import scalafx.scene.control.TextField
 import scalafx.scene.layout.HBox
 import scalafx.scene.text.Text
 
-class NumericQuestion(question: DisplayQuestion, env: Env) extends GUIQuestion {
+class NumericQuestion(question: DisplayQuestion) extends GUIQuestion {
+  val textField = new TextField {
+    maxWidth = 200
+    onAction = (a: ActionEvent) => {
+      val s = this.delegate.text.value.toDouble
+      updateEnv(question.identifier, MoneyValue(s))
+    }
+  }
+
   val element = new HBox {
     children = Seq(
       new Text(question.label),
-      new TextField {
-        maxWidth = 200
-      }
+      textField
     )
-    visible = question.show(env)
+    disable = isDisabled(question)
+    visible <== isVisible(question)
   }
 }

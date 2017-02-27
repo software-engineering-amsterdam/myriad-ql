@@ -4,7 +4,7 @@ form Box1HouseOwning {
     hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean(True)
     if (hasSoldHouse) {
         if (hasBoughtHouse) {
-            sellingPrice: "Price the house was sold for:" money
+            sellingPrice: "Price the house was sold for:" boolean
         }
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money(privateDept)

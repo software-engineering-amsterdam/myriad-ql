@@ -1,13 +1,12 @@
 package view
 
-import ast.ExpressionNode.Env
 import model.DisplayQuestion
 
 import scalafx.scene.control.TextField
 import scalafx.scene.layout.HBox
 import scalafx.scene.text.Text
 
-class DateQuestion(question: DisplayQuestion, env: Env) extends GUIQuestion {
+class DateQuestion(question: DisplayQuestion) extends GUIQuestion {
   val element = new HBox {
     children = Seq(
       new Text(question.label),
@@ -15,6 +14,6 @@ class DateQuestion(question: DisplayQuestion, env: Env) extends GUIQuestion {
         maxWidth = 200
       }
     )
-    visible = question.show(env)
+    visible <== isVisible(question)
   }
 }
