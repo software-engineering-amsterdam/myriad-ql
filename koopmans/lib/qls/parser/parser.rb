@@ -33,10 +33,13 @@ class QLSParser < Parslet::Parser
   rule(:question_no_brackets) { attributes.maybe }
 
   # widget
-  rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | str('slider') | str('text') | radio | dropdown).as(:widget) >> spaces? }
-  rule(:widget_init) { spaces? >> str('(') >> spaces? >> string_literal.as(:true_value) >> spaces? >> str(',') >> spaces? >> string_literal.as(:false_value) >> spaces? >> str(')') }
-  rule(:radio) { str('radio') >> widget_init.as(:radio) }
-  rule(:dropdown) { str('dropdown') >> widget_init.as(:dropdown) }
+  rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> spaces? }
+  rule(:widget_string) { string_literal.as(:first_value) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second_value) }
+  rule(:widget_integer) { integer_literal.as(:first_value) >> spaces? >> str(',') >> spaces? >> integer_literal.as(:second_value) }
+
+  rule(:radio) { str('radio') >> str('(') >> spaces? >> widget_string.as(:radio) >> spaces? >> str(')') }
+  rule(:dropdown) { str('dropdown') >> str('(') >> spaces? >>  widget_string.as(:dropdown) >> spaces? >> str(')') }
+  rule(:slider) { str('slider') >> str('(') >> spaces? >>  widget_integer.as(:slider) >> spaces? >> str(')') }
 
   # default
   rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }

@@ -46,7 +46,7 @@ describe QLSParser do
 
   describe 'radio button' do
     it 'parses' do
-      expect(parser.radio_button).to parse('radio("Yes", "No")')
+      expect(parser.radio).to parse('radio("Yes", "No")')
     end
   end
 

@@ -31,5 +31,5 @@ stylesheet taxOfficeExample
         }
       }
     }
-    default boolean widget radio("Yes", "No")
+    default boolean widget slider(2,5)
   }
