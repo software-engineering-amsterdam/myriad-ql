@@ -19,7 +19,12 @@ public class Main {
         
         AstVisitor visitor = new AstVisitor();
         Form form = (Form) visitor.visit(tree);
-        CheckForm result = new CheckForm(form);
+        try {
+        	new CheckForm(form);
+        }
+        catch(Exception e) {
+        	System.out.println(e.getMessage());
+        }
     }
 	
 }
