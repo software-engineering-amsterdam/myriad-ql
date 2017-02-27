@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import ui.Notifier;
 import value.StringValue;
 import value.Value;
 
@@ -22,8 +23,8 @@ public interface Field {
 	public Value getAnswer();
 	
 	public void setAnswer(Value value);
-		
-	public Boolean isChanged();
+	
+	public void addListener(Notifier toAdd);
 	
 //	public <V extends Value, T extends Type> V getAnswer(T type) {
 //		return null;

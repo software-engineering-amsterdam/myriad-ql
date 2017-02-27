@@ -33,11 +33,11 @@ public class QuestionnaireQuestion {
         if ("string" == type.getType()) {
         	return new QControl(new ui.field.Text());
         } else if ("boolean" == type.getType()) {
-        	return new QControl(new ui.field.Check());
+        	return new QControl(new ui.field.Check(name));
         } else if ("integer" == type.getType()) {
         	return new QControl(new ui.field.Number());
         } else {
-        	// TODO error
+        	System.out.println("unknown type!");
         	return null;
         }        	
 	}

@@ -28,6 +28,10 @@ public class QControl {
 		return field;
 	}
 	
+	public Boolean isChanged(Value oldAnswer) {
+		return field.isChanged(oldAnswer);
+	}
+	
 //	public Boolean isChanged() {
 //		if (field == null) {
 //			return null;

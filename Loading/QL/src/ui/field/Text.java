@@ -15,8 +15,8 @@ public class Text extends TextField implements Field {
 	
 	public Text() {
 ////		// super(field);
-		this.changed = false;
-		setOnChange();
+		// this.changed = false;
+		// setOnChange();
 	}
 //	
 //	
@@ -49,16 +49,21 @@ public class Text extends TextField implements Field {
 	}
 
 
-	// @Override
+	@Override
 	 // public String setOnChange(Function<String, String> func) {
-	private void setOnChange() {
-    	textProperty().addListener(new ChangeListener<String>()  {
+	public Boolean isChanged(Value oldAnswer) {
+		
+		changed = false;
+		
+		textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
             	
-            	changed = true;
-            	requestFocus();
+            	if (newValue.equals(oldAnswer.getValue())) {
+            		changed = true;
+            		requestFocus();
+            	}
 
 //        		Value oldAnswer = answers.get(question.getName()); 
 //            	if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
@@ -69,13 +74,11 @@ public class Text extends TextField implements Field {
             	
             }
     	});
+		
+		return changed;
 	}
 		
 	// }
 //
-	@Override
-	public Boolean isChanged() {
-		return changed;
-	}
 
 }
