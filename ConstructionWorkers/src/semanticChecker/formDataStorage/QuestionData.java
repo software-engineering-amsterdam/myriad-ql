@@ -21,12 +21,12 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     private final List<IfStatement> ifStatements;
 
     private final List<SimpleQuestion> allQuestions;
+
     public QuestionData(Form ast) {
         this.simpleQuestions = new ArrayList<>();
         this.computedQuestions = new ArrayList<>();
         this.ifStatements = new ArrayList<>();
         ast.accept(this);
-
         this.allQuestions = setAllQuestions();
     }
 

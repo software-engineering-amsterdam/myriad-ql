@@ -1,3 +1,7 @@
+/**
+ * QLTestSetUp.java.
+ */
+
 package unitTesting;
 
 import ASTnodes.ASTBuilder;
@@ -9,36 +13,31 @@ import semanticChecker.formDataStorage.valueData.ValueData;
 
 import java.io.*;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public abstract class QLTestSetUp {
 
-    protected SemanticChecker semanticChecker;
     protected Form form;
     protected ValueData questionStates;
+    protected SemanticChecker semanticChecker;
 
-    protected String inputFile;
-    protected String fileName;
+    protected String inputFileName;
+    protected String inputFilePath;
 
-    private final String path = "src/unitTesting/QLTestForms/";
+    private final String path = "./src/unitTesting/QLTestForms/";
 
     @Before
     public void setUp() throws IOException {
 
-        if (this.fileName == null) {
-            System.err.println("No filename given as input!");
+        if (inputFileName == null) {
+            System.err.println("Undefined filename.");
             System.exit(-1);
         }
 
-        this.inputFile = this.path.concat(this.fileName);
+        inputFilePath = path.concat(inputFileName);
 
-        InputStream qlInputStream = new FileInputStream(this.inputFile);
+        InputStream qlInputStream = new FileInputStream(inputFilePath);
         ASTBuilder astBuilder = new ASTBuilder(qlInputStream);
-
-        this.form = astBuilder.buildAST();
-        this.questionStates =  new ValueData();
-        this.semanticChecker =  new SemanticChecker(this.form , this.questionStates);
-
+        form = astBuilder.buildAST();
+        questionStates =  new ValueData();
+        semanticChecker =  new SemanticChecker(form , questionStates);
     }
 }

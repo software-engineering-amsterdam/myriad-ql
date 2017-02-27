@@ -1,3 +1,7 @@
+/**
+ * ExpressionTest.java.
+ */
+
 package unitTesting;
 
 import ASTnodes.LineNumber;
@@ -14,9 +18,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-/**
- * Created by LGGX on 25-Feb-17.
- */
 public class ExpressionTest extends QLTestSetUp {
 
     private final MyInteger testInteger = new MyInteger(1, new LineNumber(1));
@@ -26,17 +27,13 @@ public class ExpressionTest extends QLTestSetUp {
 
     @Before
     public void setUp() throws IOException{
-        this.fileName = "CorrectForm.ql";
+        inputFileName = "CorrectForm.ql";
         super.setUp();
     }
 
-
     @Test
     public void testInteger() {
-        MyInteger integerLiteral = testInteger;
-        Type type = semanticChecker.getTypeCheck().visit(integerLiteral);
-        Assert.assertEquals(type.getClass(), new IntegerType().getClass());
+        Type type = semanticChecker.getTypeCheck().visit(testInteger);
+        Assert.assertEquals(type.getClass(), IntegerType.class);
     }
-
-
 }
