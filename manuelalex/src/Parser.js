@@ -48,9 +48,14 @@ export class Parser {
         }
         console.log(`Result: ${JSON.stringify(result)}`);
         let AST = this.makeAST(result[0]);
+        evaluate(AST);
         let generator = new Generator(AST);
 
         return result;
+    }
+
+    evaluate(AST){
+
     }
 
     makeAST(result = {}) {
