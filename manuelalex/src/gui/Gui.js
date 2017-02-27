@@ -43,7 +43,8 @@ export class Gui {
             let statement = ast.program.statements[index];
             if (statement instanceof Question) {
                 let renderable = new QuestionView({
-                    label: statement.name
+                    label: statement.name,
+                    type: statement.propertyType
                 });
                 this.propertyNames[statement.propertyName] = '';
 

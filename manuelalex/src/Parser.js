@@ -6,7 +6,7 @@ import {Form}                                    from './Form.js';
 
 import {Question}                                from './statements/Question.js';
 import {Answer}                                  from './statements/Answer.js';
-import {Generator}                               from './gui/Generator.js';
+import {Gui}                                     from './gui/Gui.js';
 import {AST}                                     from './ast/AST.js';
 import {FormPostProcessor}                       from './processors/FormPostProcessor.js';
 
@@ -48,8 +48,7 @@ export class Parser {
         }
         console.log(`Result: ${JSON.stringify(result)}`);
         let AST = this.makeAST(result[0]);
-        evaluate(AST);
-        let generator = new Generator(AST);
+        let gui = new Gui(AST);
 
         return result;
     }
