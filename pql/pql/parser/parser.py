@@ -104,24 +104,29 @@ def parse(input_string):
         OneOrMore(boolean_precedence | (lit_l_paren + boolean_precedence + lit_r_paren))
     boolean_expression.setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
-    field_expr = \
-        QuotedString('"', unquoteResults=True).setResultsName("title") + \
-        name.setResultsName("identifier") + \
-        lit_colon + \
-        data_types.setResultsName("data_type") + \
+    field_statement = (
+        QuotedString('"', unquoteResults=True).setResultsName("title") +
+        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type") +
         Optional(
             lit_assign_op +
             arithmetic_expression
         )
-    field_expr.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
+    )
+    field_statement.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
+    if_statement = Forward()
+    statement = Forward()
     body = Forward()
-    if_block = Forward()
-    if_block << lit_if + lit_l_paren + boolean_expression + lit_r_paren + body + Optional(
-        lit_else + body).setResultsName('else_statement')
-    if_block.setParseAction(ast.Conditional)
 
-    statement = field_expr | if_block
+    if_statement <<= (
+        lit_if + lit_l_paren + boolean_expression + lit_r_paren +
+        body +
+        Optional(lit_else + body).setResultsName('else_statement')
+    )
+    if_statement.setParseAction(ast.Conditional)
+
+    statement <<= (field_statement | if_statement)
+
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
