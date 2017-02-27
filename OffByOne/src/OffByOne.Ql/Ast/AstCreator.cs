@@ -40,7 +40,7 @@
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var question = this.Visit(context.literal()) as LiteralExpression;
+            var question = context.label.Text;
             var type = context.Type().GetText();
 
             var computedValue = context.expression();
@@ -205,38 +205,32 @@
         #region:Literals
         public override AstNode VisitDateLiteral([NotNull] QlParser.DateLiteralContext context)
         {
-            var literal = new DateLiteral(context.DateLiteral().GetText());
-            return new LiteralExpression(literal);
+            return new DateLiteral(context.DateLiteral().GetText());
         }
 
         public override AstNode VisitBooleanLiteral([NotNull] QlParser.BooleanLiteralContext context)
         {
-            var literal = new BooleanLiteral(context.GetText());
-            return new LiteralExpression(literal);
+            return new BooleanLiteral(context.GetText());
         }
 
         public override AstNode VisitDecimalLiteral([NotNull] QlParser.DecimalLiteralContext context)
         {
-            var literal = new DecimalLiteral(context.GetText());
-            return new LiteralExpression(literal);
+            return new DecimalLiteral(context.GetText());
         }
 
         public override AstNode VisitIntegerLiteral([NotNull] QlParser.IntegerLiteralContext context)
         {
-            var literal = new IntegerLiteral(context.GetText());
-            return new LiteralExpression(literal);
+            return new IntegerLiteral(context.GetText());
         }
 
         public override AstNode VisitMoneyLiteral([NotNull] QlParser.MoneyLiteralContext context)
         {
-            var literal = new MoneyLiteral(context.GetText());
-            return new LiteralExpression(literal);
+            return new MoneyLiteral(context.GetText());
         }
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
         {
-            var literal = new StringLiteral(context.GetText());
-            return new LiteralExpression(literal);
+            return new StringLiteral(context.GetText());
         }
         #endregion
     }

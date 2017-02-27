@@ -21,13 +21,13 @@
 
         public override object Visit(QuestionStatement expression, QuestionVisitorContext context)
         {
-            if (context.IsNameDuplicate(expression.Name))
+            if (context.IsNameDuplicate(expression.Label))
             {
                 this.Report.Add(new DuplicateQuestionNameMessage(expression));
             }
             else
             {
-                context.AddQuestionName(expression.Name);
+                context.AddQuestionName(expression.Label);
             }
 
             if (context.IsLableDuplicate(expression.Identifier))

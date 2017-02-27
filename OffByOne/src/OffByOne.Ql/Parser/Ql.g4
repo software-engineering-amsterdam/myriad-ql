@@ -1,7 +1,7 @@
 ﻿grammar Ql;
 
 form : 'form' Identifier '{' stat+ '}';
-question : literal Identifier ':' Type ('(' expression ')')? ;
+question : label=StringLiteral Identifier ':' Type ('(' expression ')')? ;
 stat
 	: question
 	| ifStat

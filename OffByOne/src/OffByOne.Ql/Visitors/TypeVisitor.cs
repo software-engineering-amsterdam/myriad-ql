@@ -129,11 +129,6 @@
             return expression.Expression.Accept(this, context);
         }
 
-        public ValueType Visit(LiteralExpression expression, VisitorContext context)
-        {
-            return expression.Literal.Accept(this, context);
-        }
-
         public ValueType Visit(QuestionStatement expression, VisitorContext context)
         {
             context.AddSymbol(expression.Identifier, expression.Type);

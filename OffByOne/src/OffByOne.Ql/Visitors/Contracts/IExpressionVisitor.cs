@@ -41,7 +41,5 @@
         TResult Visit(VariableExpression expression, TContext context);
 
         TResult Visit(BracketExpression expression, TContext context);
-
-        TResult Visit(LiteralExpression expression, TContext context);
     }
 }

@@ -47,8 +47,8 @@
                 .OfType<QuestionStatement>()
                 .ToList();
 
-            Assert.True(questions.Any(x => x.Identifier == "birthDate" && ((StringLiteral)x.Question.Literal).Value == "What is your birth date?"));
-            Assert.True(questions.Any(x => x.Identifier == "continue" && ((StringLiteral)x.Question.Literal).Value == "Do you want to continue?"));
+            Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Label == "What is your birth date?"));
+            Assert.True(questions.Any(x => x.Identifier == "continue" && x.Label == "Do you want to continue?"));
 
             var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
             Assert.True(ifStatement.Condition is OrExpression);
@@ -61,15 +61,15 @@
             var variableExp = (VariableExpression)condition.RightExpression;
 
             Assert.IsType<VariableExpression>(lessThanExp.LeftExpression);
-            Assert.IsType<LiteralExpression>(lessThanExp.RightExpression);
+            Assert.IsType<Expression>(lessThanExp.RightExpression);
             Assert.Equal(variableExp.Identifier, "continue");
 
             var lhs = (VariableExpression)lessThanExp.LeftExpression;
-            var rhs = (LiteralExpression)lessThanExp.RightExpression;
-            Assert.IsType<DateLiteral>(rhs.Literal);
+            var rhs = (Expression)lessThanExp.RightExpression;
+            Assert.IsType<DateLiteral>(rhs);
 
             Assert.Equal(lhs.Identifier, "birthDate");
-            Assert.Equal(((DateLiteral)rhs.Literal).Value, new DateTime(1999, 12, 31));
+            Assert.Equal(((DateLiteral)rhs).Value, new DateTime(1999, 12, 31));
 
             var elseStatements = ifStatement.ElseStatements;
             Assert.Equal(1, elseStatements.Count());
@@ -81,10 +81,10 @@
 
             var computedValue = (OrExpression)computedQuestion.ComputedValue;
             Assert.IsType<VariableExpression>(computedValue.LeftExpression);
-            Assert.IsType<LiteralExpression>(computedValue.RightExpression);
+            Assert.IsType<Expression>(computedValue.RightExpression);
 
-            var computedRhs = (LiteralExpression)computedValue.RightExpression;
-            Assert.IsType<BooleanLiteral>(computedRhs.Literal);
+            var computedRhs = (Expression)computedValue.RightExpression;
+            Assert.IsType<BooleanLiteral>(computedRhs);
         }
 
         [Fact]

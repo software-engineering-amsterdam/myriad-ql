@@ -7,7 +7,7 @@
     public class DuplicateQuestionNameMessage : CheckerMessage
     {
         public DuplicateQuestionNameMessage(QuestionStatement question, LogLevel level = LogLevel.Warning)
-            : base($"Duplicate question name \"{question.Name}\" at: {question.SourceCode}", level)
+            : base($"Duplicate question name \"{question.Label}\" at: {question.SourceCode}", level)
         {
         }
     }

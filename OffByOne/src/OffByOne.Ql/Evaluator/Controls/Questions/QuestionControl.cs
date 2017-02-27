@@ -11,7 +11,7 @@
         {
             this.Control = new ListView();
             var label = new Label();
-            label.Content = ((StringLiteral)statement.Question.Literal).Value;
+            label.Content = statement.Label;
             this.Control.Items.Add(label);
         }
 

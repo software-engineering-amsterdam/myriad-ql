@@ -12,12 +12,12 @@
         public QuestionStatement(
             string identifier,
             ValueType type,
-            LiteralExpression question,
+            string label,
             Expression value = null)
         {
             this.Identifier = identifier;
             this.Type = type;
-            this.Question = question;
+            this.Label = label;
             this.ComputedValue = value;
         }
 
@@ -25,9 +25,7 @@
 
         public ValueType Type { get; private set; }
 
-        public LiteralExpression Question { get; private set; }
-
-        public string Name => this.Question.Literal.As<StringLiteral>().Value;
+        public string Label { get; private set; }
 
         public Expression ComputedValue { get; private set; }
 
