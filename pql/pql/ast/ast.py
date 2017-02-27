@@ -162,6 +162,7 @@ class Or(BinaryOperation):
         return visitor.or_(self)
 
 
+
 class Equality(BinaryOperation):
     def __init__(self,  left, right):
         super(Equality, self).__init__('equality', left, right)
