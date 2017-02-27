@@ -32,6 +32,11 @@ export class Parser {
         return result;
     }
 
+    /**
+     * The nearley parser contains a state, thus can only be used once
+     * @returns {Parser}
+     * @private
+     */
     _createParser() {
         return new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
     }
