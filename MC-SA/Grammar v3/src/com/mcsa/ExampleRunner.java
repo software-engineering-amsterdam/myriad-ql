@@ -1,7 +1,6 @@
 package com.mcsa;
 
-import com.mcsa.QL.Form;
-import com.mcsa.QL.OpenAndReadTheQl;
+import com.mcsa.QL.*;
 import com.mcsa.antlr.QLLexer;
 import com.mcsa.antlr.QLParser;
 import com.mcsa.parsing.mcsaQLVisitor;
@@ -77,9 +76,42 @@ public class ExampleRunner {
 
         mcsaQLVisitor visitor = new mcsaQLVisitor();
         Form traverseResult = (Form) visitor.visit(formDeclarationContext);
+        for(IfStatement ifst : traverseResult.getIfStatementList()) {
+            //System.out.println("case " + ifst.getIfCase().toString());
+            printIfCheck(ifst.getIfCase());
+            for (Question qu : ifst.getQuestionList()) {
+                System.out.println("Questions in if statement: " + qu.text + " " + qu.name );
+                printTypeCheck(qu.type);
+            }
+        }
+        for(Question ifst : traverseResult.getQuestionList()) {
 
+            System.out.println("Questions outside if statement: " + ifst.text + " " + ifst.name);
+            printTypeCheck(ifst.type);
+
+        }
         return traverseResult;
 
+    }
+
+    private void printTypeCheck(Type typeCheck) {
+        if (typeCheck.getLeft() == null &&  typeCheck.getRight() == null){
+            System.out.println(typeCheck.getToken());
+        }else {
+            printTypeCheck(typeCheck.getLeft());
+            System.out.println(typeCheck.getToken());
+            printTypeCheck(typeCheck.getRight());
+        }
+    }
+
+    private void printIfCheck(IfCase typeCheck) {
+        if (typeCheck.getLeft() == null &&  typeCheck.getRight() == null){
+            System.out.println(typeCheck.getToken());
+        }else {
+            printIfCheck(typeCheck.getLeft());
+            System.out.println(typeCheck.getToken());
+            printIfCheck(typeCheck.getRight());
+        }
     }
 
 }

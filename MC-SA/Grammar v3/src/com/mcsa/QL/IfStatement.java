@@ -8,14 +8,18 @@ import java.util.ArrayList;
 
 public class IfStatement implements Node {
 
+    private IfCase caseStatement;
     private ArrayList<Question> questionList;
     private ArrayList<IfStatement> ifStatementList;
-    public String name;
 
-    public IfStatement(String name) {
-        this.name = name;
+    public IfStatement() {
         this.questionList = new ArrayList<>();
         this.ifStatementList = new ArrayList<>();
+    }
+
+    public void ifStatementAddCase( IfCase ifcase)
+    {
+        this.caseStatement = ifcase;
     }
 
     public void ifStatementAddQuestion( ArrayList<Question> quList)
@@ -27,6 +31,8 @@ public class IfStatement implements Node {
     {
         this.ifStatementList = IfList;
     }
+
+    public IfCase getIfCase() { return caseStatement; }
 
     public ArrayList<Question> getQuestionList() { return questionList; }
 

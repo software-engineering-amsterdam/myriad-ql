@@ -481,11 +481,8 @@ public class QLParser extends Parser {
 	}
 
 	public static class TypeContext extends ParserRuleContext {
-		public List<MathactionContext> mathaction() {
-			return getRuleContexts(MathactionContext.class);
-		}
-		public MathactionContext mathaction(int i) {
-			return getRuleContext(MathactionContext.class,i);
+		public MathactionContext mathaction() {
+			return getRuleContext(MathactionContext.class,0);
 		}
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -503,7 +500,7 @@ public class QLParser extends Parser {
 		enterRule(_localctx, 14, RULE_type);
 		int _la;
 		try {
-			setState(77);
+			setState(74);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__3:
@@ -546,22 +543,18 @@ public class QLParser extends Parser {
 				{
 				setState(69);
 				match(T__8);
-				setState(74);
+				setState(72);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__9) {
-					{
+				if (_la==T__9) {
 					{
 					setState(70);
 					match(T__9);
 					setState(71);
 					mathaction(0);
 					}
-					}
-					setState(76);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
 				}
+
 				}
 				break;
 			default:
@@ -580,22 +573,72 @@ public class QLParser extends Parser {
 	}
 
 	public static class MathactionContext extends ParserRuleContext {
+		public MathactionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_mathaction; }
+	 
+		public MathactionContext() { }
+		public void copyFrom(MathactionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ParensContext extends MathactionContext {
+		public MathactionContext mathaction() {
+			return getRuleContext(MathactionContext.class,0);
+		}
+		public ParensContext(MathactionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitParens(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class MulDivContext extends MathactionContext {
 		public Token op;
-		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
-		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
 		public List<MathactionContext> mathaction() {
 			return getRuleContexts(MathactionContext.class);
 		}
 		public MathactionContext mathaction(int i) {
 			return getRuleContext(MathactionContext.class,i);
 		}
-		public MathactionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_mathaction; }
+		public MulDivContext(MathactionContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitMathaction(this);
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitMulDiv(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AddSubContext extends MathactionContext {
+		public Token op;
+		public List<MathactionContext> mathaction() {
+			return getRuleContexts(MathactionContext.class);
+		}
+		public MathactionContext mathaction(int i) {
+			return getRuleContext(MathactionContext.class,i);
+		}
+		public AddSubContext(MathactionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitAddSub(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdContext extends MathactionContext {
+		public TerminalNode ID() { return getToken(QLParser.ID, 0); }
+		public IdContext(MathactionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntContext extends MathactionContext {
+		public TerminalNode NUMBER() { return getToken(QLParser.NUMBER, 0); }
+		public IntContext(MathactionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitInt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -616,28 +659,38 @@ public class QLParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86);
+			setState(83);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				{
-				setState(80);
+				_localctx = new IntContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(77);
 				match(NUMBER);
 				}
 				break;
 			case ID:
 				{
-				setState(81);
+				_localctx = new IdContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(78);
 				match(ID);
 				}
 				break;
 			case OPEN_PARENTH:
 				{
-				setState(82);
+				_localctx = new ParensContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(79);
 				match(OPEN_PARENTH);
-				setState(83);
+				setState(80);
 				mathaction(0);
-				setState(84);
+				setState(81);
 				match(CLOSE_PARENTH);
 				}
 				break;
@@ -645,7 +698,7 @@ public class QLParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(96);
+			setState(93);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -653,20 +706,41 @@ public class QLParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(94);
+					setState(91);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
-						_localctx = new MathactionContext(_parentctx, _parentState);
+						_localctx = new MulDivContext(new MathactionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_mathaction);
-						setState(88);
+						setState(85);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(89);
-						((MathactionContext)_localctx).op = _input.LT(1);
+						setState(86);
+						((MulDivContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__10 || _la==T__11) ) {
-							((MathactionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((MulDivContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
+							consume();
+						}
+						setState(87);
+						mathaction(6);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new AddSubContext(new MathactionContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_mathaction);
+						setState(88);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(89);
+						((AddSubContext)_localctx).op = _input.LT(1);
+						_la = _input.LA(1);
+						if ( !(_la==T__12 || _la==T__13) ) {
+							((AddSubContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -674,34 +748,13 @@ public class QLParser extends Parser {
 							consume();
 						}
 						setState(90);
-						mathaction(6);
-						}
-						break;
-					case 2:
-						{
-						_localctx = new MathactionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_mathaction);
-						setState(91);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(92);
-						((MathactionContext)_localctx).op = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==T__12 || _la==T__13) ) {
-							((MathactionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(93);
 						mathaction(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(98);
+				setState(95);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
@@ -745,32 +798,31 @@ public class QLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\32f\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\32c\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2"+
 		"\3\2\6\2\31\n\2\r\2\16\2\32\3\2\3\2\3\3\3\3\5\3!\n\3\3\4\3\4\3\4\3\4\3"+
 		"\4\3\4\6\4)\n\4\r\4\16\4*\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6"+
 		"\7\68\n\6\f\6\16\6;\13\6\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\7\tK\n\t\f\t\16\tN\13\t\5\tP\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3"+
-		"\n\5\nY\n\n\3\n\3\n\3\n\3\n\3\n\3\n\7\na\n\n\f\n\16\nd\13\n\3\n\2\4\n"+
-		"\22\13\2\4\6\b\n\f\16\20\22\2\5\4\2\22\22\24\24\3\2\r\16\3\2\17\20j\2"+
-		"\24\3\2\2\2\4 \3\2\2\2\6\"\3\2\2\2\b.\3\2\2\2\n\61\3\2\2\2\f<\3\2\2\2"+
-		"\16>\3\2\2\2\20O\3\2\2\2\22X\3\2\2\2\24\25\7\3\2\2\25\26\7\22\2\2\26\30"+
-		"\7\27\2\2\27\31\5\4\3\2\30\27\3\2\2\2\31\32\3\2\2\2\32\30\3\2\2\2\32\33"+
-		"\3\2\2\2\33\34\3\2\2\2\34\35\7\30\2\2\35\3\3\2\2\2\36!\5\b\5\2\37!\5\6"+
-		"\4\2 \36\3\2\2\2 \37\3\2\2\2!\5\3\2\2\2\"#\7\4\2\2#$\7\31\2\2$%\5\n\6"+
-		"\2%&\7\32\2\2&(\7\27\2\2\')\5\4\3\2(\'\3\2\2\2)*\3\2\2\2*(\3\2\2\2*+\3"+
-		"\2\2\2+,\3\2\2\2,-\7\30\2\2-\7\3\2\2\2./\7\23\2\2/\60\5\16\b\2\60\t\3"+
-		"\2\2\2\61\62\b\6\1\2\62\63\5\f\7\2\639\3\2\2\2\64\65\f\3\2\2\65\66\7\21"+
-		"\2\2\668\5\n\6\4\67\64\3\2\2\28;\3\2\2\29\67\3\2\2\29:\3\2\2\2:\13\3\2"+
-		"\2\2;9\3\2\2\2<=\t\2\2\2=\r\3\2\2\2>?\7\22\2\2?@\7\5\2\2@A\5\20\t\2A\17"+
-		"\3\2\2\2BP\7\6\2\2CP\7\7\2\2DP\7\b\2\2EP\7\t\2\2FP\7\n\2\2GL\7\13\2\2"+
-		"HI\7\f\2\2IK\5\22\n\2JH\3\2\2\2KN\3\2\2\2LJ\3\2\2\2LM\3\2\2\2MP\3\2\2"+
-		"\2NL\3\2\2\2OB\3\2\2\2OC\3\2\2\2OD\3\2\2\2OE\3\2\2\2OF\3\2\2\2OG\3\2\2"+
-		"\2P\21\3\2\2\2QR\b\n\1\2RY\7\24\2\2SY\7\22\2\2TU\7\31\2\2UV\5\22\n\2V"+
-		"W\7\32\2\2WY\3\2\2\2XQ\3\2\2\2XS\3\2\2\2XT\3\2\2\2Yb\3\2\2\2Z[\f\7\2\2"+
-		"[\\\t\3\2\2\\a\5\22\n\b]^\f\6\2\2^_\t\4\2\2_a\5\22\n\7`Z\3\2\2\2`]\3\2"+
-		"\2\2ad\3\2\2\2b`\3\2\2\2bc\3\2\2\2c\23\3\2\2\2db\3\2\2\2\13\32 *9LOX`"+
-		"b";
+		"\t\3\t\3\t\5\tK\n\t\5\tM\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\nV\n\n\3\n"+
+		"\3\n\3\n\3\n\3\n\3\n\7\n^\n\n\f\n\16\na\13\n\3\n\2\4\n\22\13\2\4\6\b\n"+
+		"\f\16\20\22\2\5\4\2\22\22\24\24\3\2\r\16\3\2\17\20g\2\24\3\2\2\2\4 \3"+
+		"\2\2\2\6\"\3\2\2\2\b.\3\2\2\2\n\61\3\2\2\2\f<\3\2\2\2\16>\3\2\2\2\20L"+
+		"\3\2\2\2\22U\3\2\2\2\24\25\7\3\2\2\25\26\7\22\2\2\26\30\7\27\2\2\27\31"+
+		"\5\4\3\2\30\27\3\2\2\2\31\32\3\2\2\2\32\30\3\2\2\2\32\33\3\2\2\2\33\34"+
+		"\3\2\2\2\34\35\7\30\2\2\35\3\3\2\2\2\36!\5\b\5\2\37!\5\6\4\2 \36\3\2\2"+
+		"\2 \37\3\2\2\2!\5\3\2\2\2\"#\7\4\2\2#$\7\31\2\2$%\5\n\6\2%&\7\32\2\2&"+
+		"(\7\27\2\2\')\5\4\3\2(\'\3\2\2\2)*\3\2\2\2*(\3\2\2\2*+\3\2\2\2+,\3\2\2"+
+		"\2,-\7\30\2\2-\7\3\2\2\2./\7\23\2\2/\60\5\16\b\2\60\t\3\2\2\2\61\62\b"+
+		"\6\1\2\62\63\5\f\7\2\639\3\2\2\2\64\65\f\3\2\2\65\66\7\21\2\2\668\5\n"+
+		"\6\4\67\64\3\2\2\28;\3\2\2\29\67\3\2\2\29:\3\2\2\2:\13\3\2\2\2;9\3\2\2"+
+		"\2<=\t\2\2\2=\r\3\2\2\2>?\7\22\2\2?@\7\5\2\2@A\5\20\t\2A\17\3\2\2\2BM"+
+		"\7\6\2\2CM\7\7\2\2DM\7\b\2\2EM\7\t\2\2FM\7\n\2\2GJ\7\13\2\2HI\7\f\2\2"+
+		"IK\5\22\n\2JH\3\2\2\2JK\3\2\2\2KM\3\2\2\2LB\3\2\2\2LC\3\2\2\2LD\3\2\2"+
+		"\2LE\3\2\2\2LF\3\2\2\2LG\3\2\2\2M\21\3\2\2\2NO\b\n\1\2OV\7\24\2\2PV\7"+
+		"\22\2\2QR\7\31\2\2RS\5\22\n\2ST\7\32\2\2TV\3\2\2\2UN\3\2\2\2UP\3\2\2\2"+
+		"UQ\3\2\2\2V_\3\2\2\2WX\f\7\2\2XY\t\3\2\2Y^\5\22\n\bZ[\f\6\2\2[\\\t\4\2"+
+		"\2\\^\5\22\n\7]W\3\2\2\2]Z\3\2\2\2^a\3\2\2\2_]\3\2\2\2_`\3\2\2\2`\23\3"+
+		"\2\2\2a_\3\2\2\2\13\32 *9JLU]_";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

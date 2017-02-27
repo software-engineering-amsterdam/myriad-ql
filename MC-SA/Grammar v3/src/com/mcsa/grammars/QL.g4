@@ -35,15 +35,15 @@ type
     | 'double'
     | 'float'
     | 'string'
-    | 'money' ('=' mathaction)*
+    | 'money' ('=' mathaction)?
     ;
 
 mathaction
-    :   mathaction op = ( '*' | '/' ) mathaction  // MulDiv
-    |   mathaction op = ( '+' | '-' ) mathaction  // AddSub
-    |   NUMBER                              // int
-    |   ID                                  // id
-    |   '(' mathaction ')'                  // parens
+    :   mathaction op = ( '*' | '/' ) mathaction    # MulDiv
+    |   mathaction op = ( '+' | '-' ) mathaction    # AddSub
+    |   NUMBER                                      # int
+    |   ID                                          # id
+    |   '(' mathaction ')'                          # parens
     ;
 
 //lexer

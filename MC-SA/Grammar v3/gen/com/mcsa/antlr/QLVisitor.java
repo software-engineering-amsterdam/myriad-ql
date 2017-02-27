@@ -59,9 +59,38 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(QLParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#mathaction}.
+	 * Visit a parse tree produced by the {@code parens}
+	 * labeled alternative in {@link QLParser#mathaction}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMathaction(QLParser.MathactionContext ctx);
+	T visitParens(QLParser.ParensContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MulDiv}
+	 * labeled alternative in {@link QLParser#mathaction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMulDiv(QLParser.MulDivContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link QLParser#mathaction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSub(QLParser.AddSubContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code id}
+	 * labeled alternative in {@link QLParser#mathaction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId(QLParser.IdContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code int}
+	 * labeled alternative in {@link QLParser#mathaction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt(QLParser.IntContext ctx);
 }

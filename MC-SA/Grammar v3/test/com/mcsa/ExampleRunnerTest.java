@@ -76,7 +76,7 @@ public class ExampleRunnerTest {
     @Test
     public void checkFormAddIfStatement()
     {
-        formToTest.addIfStatement(new IfStatement(null));
+        formToTest.addIfStatement(new IfStatement());
 
         assertEquals(2, formToTest.getIfStatementList().size());
     }
