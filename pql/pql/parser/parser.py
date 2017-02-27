@@ -7,8 +7,7 @@ from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
-    def flatten_binary_operators(unflattened_tokens):
-        flattened_tokens = unflattened_tokens[0]
+    def flatten_binary_operators(flattened_tokens):
         while len(flattened_tokens) >= 3:
             lhs, type_call, rhs = flattened_tokens[:3]
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
@@ -68,16 +67,19 @@ def parse(input_string):
 
     arith_precedence = [
         (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
-        (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT, flatten_binary_operators),
-        (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
+        (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
     bool_precedence = [
         (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive, 2,
          opAssoc.LEFT, flatten_binary_operators),
-        (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT, flatten_binary_operators),
-        (lit_op_and, 2, opAssoc.LEFT, flatten_binary_operators),
-        (lit_op_or, 2, opAssoc.LEFT, flatten_binary_operators)
+        (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_and, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_or, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
     # Arithmetic precedence
