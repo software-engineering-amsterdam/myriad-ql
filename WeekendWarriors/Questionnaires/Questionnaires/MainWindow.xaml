@@ -1,0 +1,27 @@
+﻿<Window x:Class="Questionnaires.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Questionnaires"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Input" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
+form Box1HouseOwning { 
+    hasSoldHouse: "Did you sell a house in 2010?" boolean
+    hasBoughtHouse: "Did you by a house in 2010?" boolean
+    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?"
+boolean(true)
+
+}
+        </TextBox>
+        <Button x:Name="Interpret" Grid.Row="1" Width="70" Content="Interpret!" Click="Interpret_Click"/>
+        <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2">output</TextBlock>
+    </Grid>
+</Window>

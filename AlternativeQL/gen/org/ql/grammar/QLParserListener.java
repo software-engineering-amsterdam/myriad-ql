@@ -1,4 +1,4 @@
-// Generated from QLParser.g4 by ANTLR 4.6
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/grammar/QLParser.g4 by ANTLR 4.6
 package org.ql.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -30,17 +30,29 @@ public interface QLParserListener extends ParseTreeListener {
 	 */
 	void exitQuestion(QLParserParser.QuestionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code if}
+	 * Enter a parse tree produced by the {@code ifThen}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterIf(QLParserParser.IfContext ctx);
+	void enterIfThen(QLParserParser.IfThenContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code if}
+	 * Exit a parse tree produced by the {@code ifThen}
 	 * labeled alternative in {@link QLParserParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitIf(QLParserParser.IfContext ctx);
+	void exitIfThen(QLParserParser.IfThenContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ifElseThen}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElseThen(QLParserParser.IfElseThenContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ifElseThen}
+	 * labeled alternative in {@link QLParserParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElseThen(QLParserParser.IfElseThenContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QLParserParser#questionText}.
 	 * @param ctx the parse tree

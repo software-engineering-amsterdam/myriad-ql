@@ -1,6 +1,0 @@
-#!/bin/bash
-cd src/org/ql/grammar
-antlr4 QLParser.g4 -o ../../../../gen/org/ql/grammar -package org.ql.grammar -visitor
-cd ../../../../
-javac  gen/org/ql/grammar/*.java -d out
-

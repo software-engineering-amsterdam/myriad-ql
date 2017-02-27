@@ -2,6 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import value.Value;
 
 public class GEqExpression extends BinaryExpression {
 	@Override
@@ -12,5 +13,10 @@ public class GEqExpression extends BinaryExpression {
 	@Override
 	public Atom evaluate() {
 		return getLhs().greaterEq(getRhs());
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 }

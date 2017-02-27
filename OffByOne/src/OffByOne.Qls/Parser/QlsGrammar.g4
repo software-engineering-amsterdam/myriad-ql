@@ -1,15 +1,15 @@
 grammar QlsGrammar;
 
 stylesheet
-    : STYLESHEET Identifier (page)+
+    : STYLESHEET Identifier (page)*
     ;
 
 page
-    : PAGE Identifier OPEN_BRACKET (section|defaultBlock)+ CLOSE_BRACKET
+    : PAGE Identifier OPEN_BRACE (section|defaultBlock)* CLOSE_BRACE
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACKET? (question|section|defaultBlock)+ CLOSE_BRACKET?
+    : SECTION StringLiteral OPEN_BRACE (question|section|defaultBlock)* CLOSE_BRACE
     ;
 
 question	
@@ -22,19 +22,23 @@ widget
 
 defaultBlock
 	: DEFAULT type widget
-	| DEFAULT type OPEN_BRACKET (styleRule)+ widget CLOSE_BRACKET
+	| DEFAULT type OPEN_BRACE (styleRule)* widget CLOSE_BRACE
 	;
 
 styleRule
-	: Identifier COLON literal
+	: 'height' COLON IntegerLiteral     # heightStyleRule
+    | 'width' COLON IntegerLiteral      # widthStyleRule
+    | 'fontsize' COLON IntegerLiteral   # fontSizeStyleRule
+    | 'color' COLON HexColorLiteral     # colorStyleRule
+    | 'fontstyle' COLON StringLiteral   # fontStyleStyleRule
+    | 'font' COLON StringLiteral        # fontNameStyleRule
 	;
 
 widgetType
-    : 'checkbox'
-    | 'spinbox'
-    | 'radio' optionsList
-    | 'dropdown' optionsList
-    | 'checkbox' optionsList
+    : 'spinbox' # spinboxWidgetType
+    | 'radio' optionsList # radioWidgetType
+    | 'dropdown' optionsList # dropdownWidgetType
+    | 'checkbox' # checkboxWidgetType
     ;
 
 optionsList
@@ -42,24 +46,27 @@ optionsList
 	;
 
 option
-	: literal ',' option
-	| literal
+	: StringLiteral ',' option
+	| StringLiteral
 	;
 
 type
-	: 'boolean'
-	| 'string'
-	| 'integer'
-	| 'float'
-	| 'money'
-    | 'date'
+	: 'boolean'     # booleanType
+	| 'string'      # stringType
+	| 'integer'     # integerType
+	| 'float'       # floatType
+	| 'money'       # moneyType
+    | 'date'        # dateType
 	;
 
 literal
-	: BooleanLieral
-	| IntegerLiteral
-	| StringLiteral
-    | HexColorLiteral
+	: BooleanLieral     # booleanLiteralType
+	| IntegerLiteral    # integerLiteralType
+	| StringLiteral     # stringLiteralType
+    | HexColorLiteral   # hexLiteralType
+    | MoneyLiteral      # moneyLiteralType
+    | DecimalLiteral    # decimalLiteralType
+    | DateLiteral       # dateLiteralType
 	;
 
 // Lexer tokens. Move to separate file?
@@ -74,8 +81,8 @@ DEFAULT: 'default';
 
 
 // Syntax
-OPEN_BRACKET : '{';
-CLOSE_BRACKET : '}';
+OPEN_BRACE : '{';
+CLOSE_BRACE : '}';
 OPEN_PARENTHESIS : '(';
 CLOSE_PARENTHESIS : ')';
 SEMICOLON : ';';
@@ -97,5 +104,11 @@ BooleanLieral :  'true' | 'false';
 IntegerLiteral  :   ('0'..'9')+;
 StringLiteral  :   '"' .*? '"';
 HexColorLiteral : '#' ('0'..'9' | 'a'..'f')+;
+DateLiteral : '\'' Digit Digit '-' Digit Digit '-' Digit Digit Digit Digit '\'' ;
+MoneyLiteral : '-'? Int+ '.' Digit Digit ;
+DecimalLiteral : '-'? Int+ '.' [0-9]+ ;
+
+fragment Int: Digit | ([1-9] Digit*) ;
+fragment Digit: [0-9] ;
 
 Identifier : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;

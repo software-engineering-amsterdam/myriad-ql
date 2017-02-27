@@ -78,6 +78,21 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     }
 
     @Override
+    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.enterCalculation(ctx);
+        Node calculatedFieldNode;
+        if ("boolean".equals(ctx.varType().toString())) {
+            calculatedFieldNode = new BooleanCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else if ("integer".equals(ctx.varType().toString())) {
+            calculatedFieldNode = new IntegerCalculatedField(ctx.DESCRIPTION().toString(), ctx.VARIABLE_LITERAL().toString());
+        } else {
+            // TODO: Bail out!
+            return;
+        }
+        addParentNodeToAst(calculatedFieldNode);
+    }
+
+    @Override
     public void enterBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.enterBooleanExpression(ctx);
         Node booleanExpressionNode = new BooleanExpressionNode(ctx.operator.toString());
@@ -147,6 +162,12 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     }
 
     @Override
+    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.exitCalculation(ctx);
+        popParent();
+    }
+
+    @Override
     public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.exitCalculationExpression(ctx);
         popParent();
@@ -178,19 +199,11 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
             throw new AssertionError("After parsing the form, the stack should be empty");
         }
     }
+
+    // Unused calls
     @Override
     public void exitQuestion(QLGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);
-    }
-
-    @Override
-    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.enterCalculation(ctx);
-    }
-
-    @Override
-    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.exitCalculation(ctx);
     }
 
     @Override

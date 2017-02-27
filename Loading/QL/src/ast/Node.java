@@ -1,5 +1,15 @@
 package ast;
 
-public interface Node {
-	void accept ( Visitor v );
+public abstract class Node {
+	private int line;
+
+	public abstract void accept(Visitor v);
+
+	public int getLine() {
+		return line;
+	}
+
+	public void setLine(int i) {
+		this.line = i;
+	}
 }

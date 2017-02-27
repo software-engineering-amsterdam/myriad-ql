@@ -108,8 +108,8 @@ public class Questionnaire extends Application {
             public void handle(ActionEvent e) {
             	for (QuestionnaireQuestion activeQuestion : activeQuestions) {
             		
-            		Value finalAnswer = activeQuestion.getAnswer();
-            		if (finalAnswer.getValue() == null) {
+            		Value answer = activeQuestion.getAnswer();
+            		if (answer.getValue() == null) {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please Fill in all Fields");
                         return;

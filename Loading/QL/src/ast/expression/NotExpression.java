@@ -2,6 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import value.Value;
 
 public class NotExpression extends UnaryExpression {
 	
@@ -13,5 +14,10 @@ public class NotExpression extends UnaryExpression {
 	@Override
 	public Atom evaluate() {
 		return getLhs().not(); 
+	}
+
+	@Override
+	public Atom evaluate(Value test) {
+		return null;
 	}
 }

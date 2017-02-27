@@ -22,8 +22,8 @@ block returns [Block result]
 
 // TODO decide on maximum characters on one line
 question returns [Question result]
- : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result); }
- | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate());}
+ : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result, $type.start.getLine()); }
+ | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate(), $type.start.getLine());}
  ;
 
 type returns [Type result]
@@ -40,19 +40,17 @@ computed_question returns [Expression result]
  ;
 
 statement returns [Statement result]
- : IF parenthesisExpr block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);}
- | WHILE parenthesisExpr block { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO do we need while?
+ : IF parenthesisExpr  block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO else does not work
  ;
 
 parenthesisExpr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
- | ('(' atom ')' | atom) { $result = $atom.result;}
- | ('(' ID ')' | ID ) { System.out.println($ID.text);
-        $result = new IdExpression($ID.text); }
+ | ('(' atom ')' | atom ) { $result = $atom.result; }
+ | ('(' ID ')' | ID ) { $result = new IdExpression($ID.text); }
  ;
 
 expr returns [Expression result]
- : lhs = parenthesisExpr (binOp rhs = parenthesisExpr)+ { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
+ : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
  | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
  // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  // | atom { $result = $atom.result; }
