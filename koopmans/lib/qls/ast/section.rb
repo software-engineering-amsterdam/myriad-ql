@@ -1,8 +1,7 @@
 module QLS
   module AST
     class Section
-      attr_reader :name
-      attr_reader :block
+      attr_reader :name, :block
 
       def initialize(name, block)
         @name = name

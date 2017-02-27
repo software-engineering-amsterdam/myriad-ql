@@ -1,8 +1,7 @@
 module QLS
   module AST
     class StyleSheet
-      attr_reader :variable
-      attr_reader :pages
+      attr_reader :variable, :pages
 
 
       def initialize(variable, pages)

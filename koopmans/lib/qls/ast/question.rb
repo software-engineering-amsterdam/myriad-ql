@@ -1,8 +1,7 @@
 module QLS
   module AST
     class Question
-      attr_reader :variable
-      attr_reader :properties
+      attr_reader :variable, :properties
 
       def initialize(variable, properties)
         @variable = variable

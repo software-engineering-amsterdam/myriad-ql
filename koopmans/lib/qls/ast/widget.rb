@@ -1,12 +1,11 @@
 module QLS
   module AST
     class SliderWidget
-      attr_reader :min
-      attr_reader :max
+      attr_reader :minimum, :maximum
 
-      def initialize(min, max)
-        @min = min
-        @max = max
+      def initialize(minimum, maximum)
+        @minimum = minimum
+        @maximum = maximum
       end
     end
 
@@ -20,8 +19,7 @@ module QLS
 
 
     class RadioWidget
-      attr_reader :true_text
-      attr_reader :false_text
+      attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
         @true_text = true_text
@@ -30,16 +28,11 @@ module QLS
     end
 
     class CheckboxWidget
-      attr_reader :true_text
 
-      def initialize(true_text)
-        @true_text = true_text
-      end
     end
 
     class DropdownWidget
-      attr_reader :true_text
-      attr_reader :false_text
+      attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
         @true_text = true_text
