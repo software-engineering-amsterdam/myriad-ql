@@ -9,12 +9,21 @@ sealed trait DisplayQuestion {
   val displayCondition: Iterable[ExpressionNode]
   val `type`: Type
 
-  def show(env: Map[String, Value]): Boolean = displayCondition.map {
-    _.value(env) match {
-      case BooleanValue(b) => b
-      case _ => false
+  def show(env: Map[String, Value]): Boolean = {
+    def show(env: Map[String, Value], conditions: Iterable[ExpressionNode]): Boolean = {
+      conditions match {
+        case Nil => true
+        case head :: tail =>
+          val headValue = head.value(env) match {
+            case BooleanValue(b) => b
+            case _ => false
+          }
+          headValue && show(env, tail)
+      }
     }
-  }.reduce(_ && _)
+
+    show(env, displayCondition)
+  }
 }
 
 case class OpenQuestion(identifier: String, label: String, `type`: Type, displayCondition: Iterable[ExpressionNode]) extends DisplayQuestion
