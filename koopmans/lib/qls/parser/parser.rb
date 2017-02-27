@@ -10,27 +10,31 @@ class QLSParser < Parslet::Parser
   rule(:spaces?) { spaces.maybe }
 
 
-  rule(:stylesheet) { spaces? >> (str('stylesheet') >> spaces? >> variable >> spaces? >> page.repeat).as(:form) }
-  rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> spaces? >> section.repeat).as(:page) >> str('}') }
+  rule(:stylesheet) { spaces? >> (str('stylesheet') >> spaces? >> variable >> spaces? >> page.repeat >> spaces?).as(:stylesheet) }
+  rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> (spaces? >> (section | default)).repeat).as(:page) >> str('}') >> spaces? }
   rule(:block) { spaces? >> str('{') >> spaces? >> section.repeat >> str('}') >> spaces? }
   rule(:variable) { match('\w+').repeat(1).as(:variable) }
 
 
-  rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets)).as(:section) }
-  rule(:section_brackets) { str('{') >> spaces? >> (section | question).repeat >> str('}') }
-  rule(:section_no_brackets) { (section | question).repeat }
+  # rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets)).as(:section) }
+  # rule(:section_brackets) { str('{') >> spaces? >> section_no_brackets >> spaces? >> str('}') }
+  # rule(:section_no_brackets) { (section | question).repeat }
+
+  rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets) >> spaces?).as(:section) }
+  rule(:section_brackets) { str('{') >> spaces? >> section_no_brackets >> spaces? >> str('}') }
+  rule(:section_no_brackets) { (section | question | default).repeat }
 
   rule(:string_literal) { str('"') >> match('[^"]').repeat.as(:string) >> str('"') >> spaces? }
   rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer) >> spaces? }
 
   rule(:question) { spaces? >> str('question') >> spaces? >> (variable >> spaces? >> widget.maybe).as(:question) >> spaces? }
   rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | radio_button).as(:widget) >> spaces? }
-  rule(:radio_button) { str('radio') >> spaces? >> str('(') >> spaces? >> string_literal.as(:first) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second) >> spaces? >> str(')') }
+  rule(:radio_button) { str('radio') >> spaces? >> str('(') >> spaces? >> (string_literal.as(:first) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second)).as(:radio_button) >> spaces? >> str(')') }
 
 
-  rule(:default) { str('default') >> spaces? >> (type >> default_brackets | default_no_brackets).as(:default) }
+  rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets)).as(:default) }
   rule(:default_brackets) { str('{') >> default_no_brackets >> str('}') }
-  rule(:default_no_brackets) { (spaces? >> (width | font | fontsize | color | widget)).repeat).as(:default) >> spaces? }
+  rule(:default_no_brackets) { (spaces? >> (width | font | fontsize | color | widget)).repeat >> spaces? }
 
   rule(:type) { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> spaces? }
   rule(:width) { str('width:') >> spaces? >> integer_literal.as(:width) }
