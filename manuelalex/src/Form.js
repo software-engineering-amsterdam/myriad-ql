@@ -11,6 +11,4 @@ export class Form extends Program {
         this.name = options.name;
         this.statements = options.statements;
     }
-
-
 }

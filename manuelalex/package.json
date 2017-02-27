@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --recursive --timeout 15000",
-    "build": "jspm build src/main.js bundle.js",
-    "watch": "jspm build src/main.js bundle.js -wid"
+    "build": "jspm build src/main.js www/bundle.js",
+    "watch": "jspm build src/main.js www/bundle.js -wid"
   },
   "repository": {
     "type": "git",
