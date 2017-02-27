@@ -90,7 +90,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
 
     @Override
     public Type visit(Parameter node) throws Throwable {
-        if (!symbolTable.containsKey(node.getId())) {
+        if (!symbolTable.has(node.getId())) {
             throw new UndefinedIdentifierException(node.getId());
         }
 

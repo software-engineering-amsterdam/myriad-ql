@@ -12,7 +12,7 @@ public class SymbolTableTest {
 
         symbolTable.put(new Identifier("example"), new StringType());
 
-        assertTrue(symbolTable.containsKey("example"));
+        assertTrue(symbolTable.has("example"));
         assertSame(symbolTable.size(), 1);
     }
 
@@ -35,6 +35,6 @@ public class SymbolTableTest {
 
         symbolTable.put(identifier, actualType);
 
-        assertTrue(symbolTable.containsKey(identifier));
+        assertTrue(symbolTable.has(identifier));
     }
 }
