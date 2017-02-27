@@ -128,8 +128,8 @@
 
         public virtual TResult Visit(QuestionRule expression, TContext context)
         {
-            expression.Properties.ForEach(x => x.Accept(this, context));
-            expression.Widget.Accept(this, context);
+            expression.Properties?.ForEach(x => x.Accept(this, context));
+            expression.Widget?.Accept(this, context);
             return default(TResult);
         }
 

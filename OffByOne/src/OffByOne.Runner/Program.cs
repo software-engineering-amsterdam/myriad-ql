@@ -19,13 +19,15 @@
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
     using OffByOne.Qls;
+    using OffByOne.Qls.Ast.Style.Statements;
+    using OffByOne.Qls.Checker;
 
     public class Program
     {
         [STAThread]
         public static void Main(string[] args)
         {
-            TestQlGrammar();
+            ////TestQlGrammar();
             TestQlsGrammar();
 
             ////var typeChcker = new TypeChecker();
@@ -79,7 +81,7 @@
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
             var v = new CustomQlVisitor();
             var tree = v.Visit(parser.form());
-            CheckQlTypes((FormStatement)tree);
+            CheckTypes((FormStatement)tree);
             Console.WriteLine("Done!");
             var eval = new QlEvaluator();
             eval.Visit((FormStatement)tree, new VisitorContext());
@@ -93,6 +95,9 @@
                     section ""Buying"" {
                       question hasBoughtHouse  
                         widget checkbox 
+                    }
+                    section ""Loaning"" {
+                      question hasMaintLoan
                     }
                     section ""Loaning"" {
                       question hasMaintLoan
@@ -124,12 +129,26 @@
             var parser = new QlsGrammarParser(new CommonTokenStream(lexer));
             var visitor = new CustomQlsVisitor();
             var astTree = visitor.Visit(parser.stylesheet());
+            CheckTypes((StyleSheet)astTree);
             Console.WriteLine("QLS AST conversion done.");
         }
 
-        private static void CheckQlTypes(FormStatement ast)
+        private static void CheckTypes(FormStatement ast)
         {
             var typeChcker = new TypeChecker();
+            var report = typeChcker.Check(ast);
+
+            foreach (var message in report.AllMessages)
+            {
+                Console.WriteLine(message);
+            }
+
+            Console.WriteLine("Type check done!");
+        }
+
+        private static void CheckTypes(StyleSheet ast)
+        {
+            var typeChcker = new StyleSheetAnalyzer();
             var report = typeChcker.Check(ast);
 
             foreach (var message in report.AllMessages)

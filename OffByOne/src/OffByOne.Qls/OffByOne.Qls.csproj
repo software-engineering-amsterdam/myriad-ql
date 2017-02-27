@@ -83,6 +83,11 @@
     <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
     <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
     <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
+    <Compile Include="Checker\Messages\DuplicatePageMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
+    <Compile Include="Checker\StyleSheetAnalyzer.cs" />
     <Compile Include="Checker\TypeCheckerVisitor.cs" />
     <Compile Include="CustomQlsVisitor.cs" />
     <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
@@ -99,6 +104,8 @@
     <Compile Include="Visitors\Contracts\IVisitableWidget.cs" />
     <Compile Include="Visitors\Contracts\IVisitibleRule.cs" />
     <Compile Include="Visitors\Contracts\IWidigetVisitor.cs" />
+    <Compile Include="Visitors\FormCheckerContext.cs" />
+    <Compile Include="Visitors\FormCheckerVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Parser\QlsGrammar.g4">
