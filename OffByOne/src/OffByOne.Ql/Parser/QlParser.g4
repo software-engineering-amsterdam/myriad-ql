@@ -1,46 +1,37 @@
-﻿parser grammar QlParser;
-options { tokenVocab=QlLexer; }
+﻿grammar QlParser;
 
-form : FORM Identifier LBRACE stat+ RBRACE ;
-question : literal Identifier COLON Type (LPAREN expression RPAREN)? ;
+form : 'form' Identifier '{' stat+ '}';
+question : literal Identifier ':' Type ('(' expression ')')? ;
 stat
 	: question
 	| ifStat
 	;
 
-ifStat : IF LPAREN expression RPAREN LBRACE stat+ RBRACE elseStat? ;
+ifStat : 'if' '(' expression ')' '{' stat+ '}' elseStat? ;
 
-elseStat : ELSE LBRACE elseStats=stat+ RBRACE;
+elseStat : 'else' '{' elseStats=stat+ '}';
 
 expression
-    : literal                       # ExpressionLiteral
-    | Identifier                    # ExpressionIdentifier
-    | LPAREN expression RPAREN      # ExpressionBracket
+    : literal                       # Literal
+    | Identifier                    # Identifier
+    | '(' expression ')'            # Brackets
 
-    | OP_NOT expression             # ExpressionNot
-    | OP_SUB expression             # ExpressionNegate
+    | op=('!'|'-') expression       # Unary
 
-    | expression OP_MUL expression  # ExpressionMultiply
-    | expression OP_DIV<assoc=left> expression  # ExpressionDivide
-    | expression OP_SUB<assoc=left> expression  # ExpressionSubtract
-    | expression OP_ADD expression  # ExpressionAdd
+    | expression op=('*'|'/'<assoc=left>) expression         # Multiplication
+    | expression op=('+'|'-'<assoc=left>) expression         # Addition
 
-    | expression OP_GTE expression  # ExpressionGreaterThanOrEqual
-    | expression OP_LTE expression  # ExpressionLesserThanOrEqual
-    | expression OP_GT expression   # ExpressionGreaterThan
-    | expression OP_LT expression   # ExpressionLesserThan
-    | expression OP_NEQ expression  # ExpressionNotEqual
-    | expression OP_EQ expression   # ExpressionEqual
+    | expression op=('>'|'>='|'<'|'<='|'=='|'!=') expression # Compare
 
-    | expression OP_AND expression  # ExpressionAnd
-    | expression OP_OR expression   # ExpressionOr
-	;
+    | expression op='&&' expression # Conjunction
+    | expression op='||' expression # Disjunction
+    ;
 
 literal
-	: DateLiteral	 # DateLiteral
-	| BooleanLiteral # BooleanLiteral
-	| MoneyLiteral	 # MoneyLiteral
-	| DecimalLiteral # DecimalLiteral
-	| IntLiteral	 # IntegerLiteral
-	| StringLiteral  # StringLiteral
-	;
+    : DateLiteral    # DateLiteral
+    | BooleanLiteral # BooleanLiteral
+    | MoneyLiteral   # MoneyLiteral
+    | DecimalLiteral # DecimalLiteral
+    | IntLiteral     # IntegerLiteral
+    | StringLiteral  # StringLiteral
+    ;
