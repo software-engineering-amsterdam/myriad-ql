@@ -1,8 +1,9 @@
-package org.ql.ast.expression.arithmetic;
+package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
+import org.ql.ast.expression.ExpressionVisitor;
 
-public class Negation implements Expression {
+public class Negation extends Expression {
     private final Expression expression;
 
     public Negation(Expression expression) {
@@ -16,5 +17,10 @@ public class Negation implements Expression {
     @Override
     public String toString() {
         return "!" + expression;
+    }
+
+    @Override
+    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
     }
 }

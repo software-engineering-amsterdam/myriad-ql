@@ -1,4 +1,4 @@
-// Generated from QLParser.g4 by ANTLR 4.6
+// Generated from /home/yoan/github/myriad-ql/AlternativeQL/src/org/ql/grammar/QLParser.g4 by ANTLR 4.6
 package org.ql.grammar;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -40,13 +40,25 @@ public class QLParserBaseListener implements QLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf(QLParserParser.IfContext ctx) { }
+	@Override public void enterIfThen(QLParserParser.IfThenContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf(QLParserParser.IfContext ctx) { }
+	@Override public void exitIfThen(QLParserParser.IfThenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfElseThen(QLParserParser.IfElseThenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfElseThen(QLParserParser.IfElseThenContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
