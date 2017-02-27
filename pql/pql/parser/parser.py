@@ -66,13 +66,13 @@ def parse(input_string):
         type_call = flattened_tokens[0]
         return type_call(flattened_tokens[1])
 
-    arith_prec = [
+    arith_precedent = [
         (op_positive | op_negative | op_not, 1, opAssoc.RIGHT, flatten_unary_operators),
         (op_multiplication | op_division, 2, opAssoc.LEFT, flatten_binary_operators),
         (op_addition | op_subtract, 2, opAssoc.LEFT, flatten_binary_operators),
     ]
 
-    bool_prec = [
+    bool_precedent = [
         (op_lower_exclusive | op_lower_inclusive |
          op_greater_inclusive | op_greater_exclusive,
          2, opAssoc.LEFT, flatten_binary_operators),
@@ -84,12 +84,12 @@ def parse(input_string):
     # Arithmetic precedence
     arithmetic = infixNotation(
         arith_operand.setResultsName('arithmetic_operand*'),
-        arith_prec
+        arith_precedent
     ).setResultsName('arithmetic_expr')
 
     bool_expr = infixNotation(
         bool_operand.setResultsName('boolean_operand'),
-        (arith_prec + bool_prec)
+        (arith_precedent + bool_precedent)
     ).setResultsName('boolean_expr')
 
     arithmetic.setParseAction(lambda parsed_tokens: ast.Arithmetic(*parsed_tokens))

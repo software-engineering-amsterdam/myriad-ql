@@ -1,4 +1,4 @@
-class Typechecker(object):
+class TypeChecker(object):
 
     def visit(self, input):
         return [form.apply(self) for form in input]

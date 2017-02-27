@@ -1,4 +1,4 @@
-class Identifierchecker(object):
+class IdentifierChecker(object):
     def __init__(self):
         self.identifier_map = {}
         self.messages = []

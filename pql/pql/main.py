@@ -3,8 +3,8 @@ from sys import argv
 from io import open
 from os.path import join
 from pql.parser.parser import parse
-from pql.typechecker.typechecker import Typechecker
-from pql.identifierchecker.identifierchecker import Identifierchecker
+from pql.typechecker.typechecker import TypeChecker
+from pql.identifierchecker.identifierchecker import IdentifierChecker
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
@@ -59,16 +59,16 @@ def acquire_text(sys_args):
 
 
 def acquire_identifiers(ql_ast):
-    identifier_checker = Identifierchecker()
+    identifier_checker = IdentifierChecker()
     result = identifier_checker.visit(ql_ast)
     del identifier_checker
     return result
 
 
 def check_type(ql_ast):
-    typechecker = Typechecker()
-    result = typechecker.visit(ql_ast)
-    del typechecker
+    type_checker = TypeChecker()
+    result = type_checker.visit(ql_ast)
+    del type_checker
     return result
 
 if __name__ == '__main__':
