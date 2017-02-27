@@ -44,5 +44,3 @@ class DropdownWidget
     @false_text = false_text
   end
 end
-
-end
