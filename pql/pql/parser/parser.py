@@ -41,7 +41,7 @@ def parse(input_string):
 
     op_not = Literal("!").setParseAction(lambda _: ast.Negation)
     op_lower_exclusive = Literal("<").setParseAction(lambda _: ast.LowerExclusive)
-    op_lower_inclusive = Literal("<=").setParseAction(lambda _: ast.LowerInlusive)
+    op_lower_inclusive = Literal("<=").setParseAction(lambda _: ast.LowerInclusive)
     op_greater_inclusive = Literal(">=").setParseAction(lambda _: ast.GreaterInclusive)
     op_greater_exclusive = Literal(">").setParseAction(lambda _: ast.GreaterExclusive)
     op_equality = Literal("==").setParseAction(lambda _: ast.Equality)

@@ -186,9 +186,9 @@ class GreaterInclusive(BinaryOperation):
         return visitor.greater_inclusive(self)
 
 
-class LowerInlusive(BinaryOperation):
+class LowerInclusive(BinaryOperation):
     def __init__(self,  left, right):
-        super(LowerInlusive, self).__init__('lower_inclusive', left, right)
+        super(LowerInclusive, self).__init__('lower_inclusive', left, right)
 
     def apply(self, visitor):
         return visitor.lower_incusive(self)
