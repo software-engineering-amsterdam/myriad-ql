@@ -16,7 +16,7 @@
                     return new BooleanControl(statement);
                 case DateValueType _:
                     return new DateControl(statement);
-                case FloatValueType _:
+                case DecimalValueType _:
                     return new FloatControl(statement);
                 case IntegerValueType _:
                     return new IntegerControl(statement);

@@ -184,9 +184,9 @@
                 return TypeConstants.IntegerType;
             }
 
-            if (leftExpressionType.Is<FloatValueType>() || rightEpressionType.Is<FloatValueType>())
+            if (leftExpressionType.Is<DecimalValueType>() || rightEpressionType.Is<DecimalValueType>())
             {
-                return TypeConstants.FloatType;
+                return TypeConstants.DecimalType;
             }
 
             if (leftExpressionType.Is<MoneyValueType>() || rightEpressionType.Is<MoneyValueType>())

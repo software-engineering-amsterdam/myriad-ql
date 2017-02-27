@@ -7,7 +7,7 @@
     {
         TResult Visit(IntegerValueType valueType, TContext context);
 
-        TResult Visit(FloatValueType valueType, TContext context);
+        TResult Visit(DecimalValueType valueType, TContext context);
 
         TResult Visit(MoneyValueType valueType, TContext context);
 

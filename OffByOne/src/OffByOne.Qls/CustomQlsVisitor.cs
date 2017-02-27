@@ -215,7 +215,7 @@
 
         public override AstNode VisitFloatType(QlsGrammarParser.FloatTypeContext context)
         {
-            return TypeConstants.FloatType;
+            return TypeConstants.DecimalType;
         }
 
         public override AstNode VisitMoneyType(QlsGrammarParser.MoneyTypeContext context)
