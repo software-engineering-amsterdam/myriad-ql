@@ -18,7 +18,7 @@ pp type_checker
 
 contents = File.read('examples/example.qls')
 p contents
-parsed = QLSParser.new.parse(contents)
+parsed = QLS::Parser::Parser.new.parse(contents)
 pp parsed
 ast = QLS::Parser::Transformer.new.apply(parsed)
 pp ast
