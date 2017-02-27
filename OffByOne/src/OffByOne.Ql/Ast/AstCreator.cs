@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
@@ -23,7 +24,18 @@
         public AstNode Visit(ParserRuleContext context)
         {
             var node = base.Visit(context);
-            node.SourceCode = new SourceLocation(context);
+
+            var textOutput = new StringBuilder();
+            for (var i = 0; i < context.ChildCount; i++)
+            {
+                textOutput.AppendLine(context.GetChild(i).GetText());
+            }
+
+            var text = textOutput.ToString();
+            var line = context.Start.Line;
+            var column = context.Start.Column;
+
+            node.SourceCode = new SourceLocation(text, line, column);
             return node;
         }
 

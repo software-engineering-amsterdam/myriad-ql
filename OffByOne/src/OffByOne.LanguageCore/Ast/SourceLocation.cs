@@ -1,22 +1,12 @@
 ﻿namespace OffByOne.LanguageCore.Ast
 {
-    using System.Text;
-
-    using Antlr4.Runtime;
-
     public class SourceLocation
     {
-        public SourceLocation(ParserRuleContext context)
+        public SourceLocation(string text, int line, int column)
         {
-            var textOutput = new StringBuilder();
-            for (var i = 0; i < context.ChildCount; i++)
-            {
-                textOutput.AppendLine(context.GetChild(i).GetText());
-            }
-
-            this.Text = textOutput.ToString();
-            this.Line = context.Start.Line;
-            this.Column = context.Start.Column;
+            this.Text = text;
+            this.Line = line;
+            this.Column = column;
         }
 
         public string Text { get; }
