@@ -1,6 +1,5 @@
 package org.lemonade.nodes.expressions.literal;
 
-import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
@@ -8,7 +7,7 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IntegerLit extends Literal implements NumericLit {
+public class IntegerLit extends NumericLit {
     private int value;
 
     public IntegerLit(QLType type, String value) {
@@ -30,9 +29,9 @@ public class IntegerLit extends Literal implements NumericLit {
         return Integer.toString(value);
     }
 
-    public IntegerLit plus(IntegerLit that) {
-        return new IntegerLit(new QLIntegerType(), this.value + that.value);
-    }
+//    public IntegerLit plus(IntegerLit that) {
+//        return new IntegerLit(new QLIntegerType(), this.value + that.value);
+//    }
 
     @Override
     public NumericLit plus(NumericLit that) {

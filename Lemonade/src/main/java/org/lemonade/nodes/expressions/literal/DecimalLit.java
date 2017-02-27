@@ -9,7 +9,7 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class DecimalLit extends Literal implements NumericLit {
+public class DecimalLit extends NumericLit {
     private double value;
 
     public DecimalLit(QLType type, String value) {
