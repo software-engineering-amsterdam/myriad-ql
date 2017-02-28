@@ -75,7 +75,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
         }
 
         if (!duplicateQuestionLabels(statement)) {
-            questionLabels.add(statement.getText());
+            questionLabels.add(statement.getLabel());
         }
         return null;
     }
@@ -87,7 +87,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
         }
 
         if (!duplicateQuestionLabels(statement)) {
-            questionLabels.add(statement.getText());
+            questionLabels.add(statement.getLabel());
         }
         return null;
     }
@@ -97,10 +97,10 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {
             if ((identifierToTypeMap.get(questionIdentifierName)).getClass().equals(question.getType().getClass())) {
-                messages.addWarning(new DuplicateIdentifierWarning(question.getLocation(), question.getIdentifier()));
+                messages.addWarning(new DuplicateIdentifierWarning(question.getLineNumber(), question.getIdentifier()));
                 return true;
             } else {
-                messages.addError(new DuplicateIdentifierError(question.getLocation(), question.getIdentifier()));
+                messages.addError(new DuplicateIdentifierError(question.getLineNumber(), question.getIdentifier()));
                 return true;
             }
         } else {
@@ -115,9 +115,9 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
 
     private boolean duplicateQuestionLabels(SimpleQuestion question) {
         for (String label : questionLabels) {
-            if (label.equals(question.getText())) {
-                messages.addWarning(new DuplicateLabelWarning(question.getLocation(), question.getIdentifier(),
-                        question.getText()));
+            if (label.equals(question.getLabel())) {
+                messages.addWarning(new DuplicateLabelWarning(question.getLineNumber(), question.getIdentifier(),
+                        question.getLabel()));
                 return true;
             }
         }
@@ -142,7 +142,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     @Override
     public Identifier visit(Identifier literal) {
         if(identifierToTypeMap.get(literal.getName()) == null)
-            messages.addError(new IfExpressionUndefinedError(literal.getLocation(), literal));
+            messages.addError(new IfExpressionUndefinedError(literal.getLineNumber(), literal));
         return null;
     }
 
