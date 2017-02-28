@@ -1,31 +1,25 @@
 package org.uva.taxfree.model.node.statement;
 
-import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.condition.ConditionNode;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class CalculatedField extends NamedNode {
-    ConditionNode mCondition;
-    JTextField mTextField;
+    private final ConditionNode mCondition;
+    private final JTextField mTextField;
 
-    public CalculatedField(String label, String id) {
+    public CalculatedField(String label, String id, ConditionNode condition) {
         super(label, id);
         mTextField = new JTextField();
         mTextField.setEditable(false);
         mTextField.setPreferredSize(new Dimension(100, 25));
+        mCondition = condition;
     }
 
     @Override
     protected void fillPanel(JPanel parent) {
         parent.add(mTextField);
-    }
-
-    @Override
-    public void addChild(Node child) {
-        assert mCondition == null;
-        mCondition = (ConditionNode) child;
     }
 
     @Override
