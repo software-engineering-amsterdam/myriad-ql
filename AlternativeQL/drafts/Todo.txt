@@ -1,0 +1,54 @@
+- defaultvalue  -> rename ->
+
+- assoc=left division is currently stronger than *. need to make it equally
+
+- metadata -> rename to SourceLocation
+
+- AbstractNode doesn't need to use node ()
+
+- Node interface is perhaps not needed (there is no ast node that has as child a node)
+(use the abstractnode as a node)
+
+- AntlrVisitor rename to AstBuilder
+
+- Return type from visitForm in the astBuilder (currently visitor) should be Form because it is more specific.
+
+ - Chnge 'abstractode' in the antlrvisitor (astbuilder) to node
+
+ - Regarding the throws 'throwable': SOlution: extend runtimeexception with our own custom exception class. ()
+
+ - Throws is terrible; avoid it.
+
+- AbsractLiteral is not needed (you need to cast it anyway): get rid of it.
+
+- BooleanType equals (as with the other literals) can not done. (Not equals but: compatibility!)
+
+- instance of: flip it around (NumberType is number) innerExpressionType isNUberOf). THe implementation should be in the Type class (override it)
+
+- In ExpressionTypeChecker, the metadata in type checking is not necessary.
+
+- a + b gives currently only one error (because it is throwed like that)
+
+- WHy not use the messagebag also in the expressions type checker?
+
+- MessageBag: just tell it what to do. PAss it and the others willa dd the message.
+
+- ExpressionTypechecker: The stop one (!innerexpressiontype instanceof booleantype)
+Why not introduce an unknown type?
+visit(Negation node)  throw new typemismatch
+Using exceptions here is abusing them (non-local control flow).
+
+- SYmboltable interface can be deleted (only hashmapymbtoltable to symboltable)
+- Make the symboltable more specific in terms of names. (declare, hasDeclared, lookupSymbol)
+
+- QuestioNCollector<T extends Node> can be just Node. No need for the generics.
+
+- StatementVisitor<LIst<Question>> = also no need to make it generic. It just gives back the questions. THe interface implies that there are multiple implementations of different sutff.
+
+THe FormQuestionCollector can be merged with the QuestionVisitor.
+
+- QUestionVisior should be renamed to QuestionCollector.
+
+- get rid of the proxy, just use hte visit name
+
+- TypeChecker visitor (ITypeChecker)
