@@ -17,11 +17,10 @@ class TypeChecker(Visitor):
         [statement.apply(self) for statement in node.children]
 
     def field(self, node):
-        temp = [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
-        return temp
-
-    def expression(self, node):
-        return [expression.apply(self) for expression in node.children]
+        # temp = [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
+        if node.expression:
+            expression_type = node.expression.apply(self)
+            print(expression_type)
 
     def subtraction(self, node):
         return self.arithmetic_type_detection(node)

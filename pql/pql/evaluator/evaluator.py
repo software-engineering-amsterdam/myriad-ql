@@ -18,9 +18,6 @@ class Evaluator(Visitor):
     def lower_exclusive(self, node):
         pass
 
-    def expression(self, node):
-        pass
-
     def and_(self, node):
         pass
 
