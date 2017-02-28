@@ -8,7 +8,7 @@ class Evaluator(Visitor):
 
     def visit(self, pql_ast):
         [form.apply(self) for form in pql_ast]
-        wait_here = True
+        return self.environment
 
     def form(self, node):
         [statement.apply(self) for statement in node.children]
