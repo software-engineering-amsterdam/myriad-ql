@@ -11,9 +11,14 @@ form taxOfficeExample {
       sellingPrice: money
     "Private debts for the sold house:"
       privateDebt: money
+          "JOEHOE"
+            aap: string
     "Value residue:"
       valueResidue: money =
         (sellingPrice - privateDebt)
+        "Value res2idue:"
+              xx: string =
+                (aap)
   }
 
 }
