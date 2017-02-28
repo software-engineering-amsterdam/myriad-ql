@@ -29,26 +29,26 @@ module QL
         question.condition = condition if condition
 
         if question.assignment
-          ComputedQuestion.new(gui: gui,
-                               label: question.label,
-                               id: question.variable.name,
-                               type: question.type.class,
+          ComputedQuestion.new(gui:         gui,
+                               label:       question.label,
+                               id:          question.variable.name,
+                               type:        question.type.class,
                                calculation: visit_calculation(question.assignment),
-                               condition: visit_calculation(question.condition))
+                               condition:   visit_calculation(question.condition))
         elsif question.type.is_a?(AST::BooleanType)
-          BooleanQuestion.new(gui: gui,
-                              label: question.label,
-                              id: question.variable.name,
+          BooleanQuestion.new(gui:       gui,
+                              label:     question.label,
+                              id:        question.variable.name,
                               condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::MoneyType) || question.type.kind_of?(AST::IntegerType)
-          IntegerQuestion.new(gui: gui,
-                              label: question.label,
-                              id: question.variable.name,
+          IntegerQuestion.new(gui:       gui,
+                              label:     question.label,
+                              id:        question.variable.name,
                               condition: visit_calculation(question.condition))
         elsif question.type.kind_of?(AST::StringType)
-          StringQuestion.new(gui: gui,
-                             label: question.label,
-                             id: question.variable.name,
+          StringQuestion.new(gui:       gui,
+                             label:     question.label,
+                             id:        question.variable.name,
                              condition: visit_calculation(question.condition))
         end
       end
@@ -78,7 +78,7 @@ module QL
 
       # visit the calculations of both the left and right sides
       def visit_binary_expression(subject)
-        subject.left = visit_calculation(subject.left)
+        subject.left  = visit_calculation(subject.left)
         subject.right = visit_calculation(subject.right)
         subject
       end

@@ -9,7 +9,7 @@ module QL
       end
 
       def create_entry
-        entry = TkEntry.new(@frame).pack
+        entry              = TkEntry.new(@frame).pack
         entry.textvariable = @variable
         # every time enter is pressed
         entry.bind('Return') do

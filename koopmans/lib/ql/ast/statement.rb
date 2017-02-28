@@ -6,7 +6,7 @@ module QL
 
       def initialize(expression, block)
         @expression = expression
-        @block = block
+        @block      = block
       end
 
       def accept(visitor)
@@ -21,11 +21,11 @@ module QL
       attr_accessor :condition
 
       def initialize(label, variable, type, expression=nil, condition=nil)
-        @label = label.to_s
-        @variable = variable
-        @type = type
+        @label      = label.to_s
+        @variable   = variable
+        @type       = type
         @assignment = expression if expression
-        @condition = condition if condition
+        @condition  = condition if condition
       end
 
       def accept(visitor)

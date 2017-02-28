@@ -1,4 +1,5 @@
 # TODO if-else-then?
+# TODO BooleanType.new naar BooleanType
 
 require 'require_all'
 require 'pp'

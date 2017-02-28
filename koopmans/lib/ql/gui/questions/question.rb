@@ -9,11 +9,11 @@ module QL
       attr_accessor :condition
 
       def initialize(args)
-        @gui = args[:gui]
-        @label = args[:label]
+        @gui       = args[:gui]
+        @label     = args[:label]
         @condition = args[:condition]
 
-        @enabled = true
+        @enabled  = true
         @variable = QL::GUI::Variable.new
         p @variable
         @gui.questions[args[:id]] = self
@@ -33,7 +33,7 @@ module QL
       end
 
       def to_json
-        {@label => value}
+        { @label => value }
       end
 
       def reload
@@ -55,7 +55,7 @@ module QL
       end
 
       def create_label
-        label = TkLabel.new(@frame).pack
+        label      = TkLabel.new(@frame).pack
         label.text = @label
       end
     end

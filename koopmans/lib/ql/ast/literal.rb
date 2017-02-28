@@ -13,7 +13,7 @@ module QL
     end
 
     class BooleanLiteral < Literal
-      def self.accept_types
+      def accept_types
         [BooleanType]
       end
 
@@ -24,7 +24,7 @@ module QL
     end
 
     class IntegerLiteral < Literal
-      def self.accept_types
+      def accept_types
         [IntegerType]
       end
 
@@ -34,7 +34,7 @@ module QL
     end
 
     class StringLiteral < Literal
-      def self.accept_types
+      def accept_types
         [StringType]
       end
 

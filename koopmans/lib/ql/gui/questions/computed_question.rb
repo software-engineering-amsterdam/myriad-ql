@@ -5,7 +5,7 @@ module QL
 
       def initialize(args)
         super
-        @calculation = args[:calculation]
+        @calculation   = args[:calculation]
         @variable.type = args[:type]
         create_computed_entry
         calculate
@@ -21,9 +21,9 @@ module QL
       end
 
       def create_computed_entry
-        entry = TkEntry.new(@frame).pack
+        entry              = TkEntry.new(@frame).pack
         entry.textvariable = @variable
-        entry.state = 'disabled'
+        entry.state        = 'disabled'
       end
     end
   end

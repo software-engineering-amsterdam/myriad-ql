@@ -2,6 +2,7 @@ module QL
   module TypeChecker
     class UndefinedVariableChecker
       include Visitor
+
       def visit_form(form)
         # get all question variables e.g. ["hasSoldHouse", "hasBoughtHouse", "hasMaintLoan"]
         @question_variables = form.accept(QuestionVisitor.new).map(&:variable).map(&:name)

@@ -2,7 +2,6 @@ require 'parslet'
 
 module QL
   module Parser
-
     # parser for forms
     class Parser < Parslet::Parser
       root(:form)

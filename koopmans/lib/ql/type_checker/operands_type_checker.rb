@@ -8,6 +8,7 @@ module QL
         # get all variables and their types as defined by the questions
         # e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>, "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
         @types = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
+        pp @types
 
         # do the actual operands type checking
         form.statements.map { |statement| statement.accept(self) }.flatten.compact
@@ -40,17 +41,18 @@ module QL
 
       # an expression is checked for correctness
       def visit_expression(expression)
-        subject_class = expression.class
-        left_type = type(expression.left)
-        right_type = type(expression.right)
+        left_type          = type(expression.left)
+        right_type         = type(expression.right)
+        correct_comparison = false
 
         errors = []
         # the left side does not match the operator
-        errors.push(error(left_type.accept_types.first, subject_class)) unless subject_class.includes_type?(left_type.accept_types)
+        errors.push(error(left_type, expression.class)) unless expression.accept_types.include? left_type
         # the right side does not match the operator
-        errors.push(error(right_type.accept_types.first, subject_class)) unless subject_class.includes_type?(right_type.accept_types)
-        # the left and right side do not match
-        errors.push(error(left_type.accept_types.first, right_type)) if ([left_type.accept_types].flatten & [right_type.accept_types].flatten).empty?
+        errors.push(error(right_type, expression.class)) unless expression.accept_types.include? right_type
+        # do the left and right side match?
+        correct_comparison = left_type.accept_types.include? right_type if left_type
+        errors.push(error(left_type, right_type)) unless correct_comparison
 
         errors.push([expression.left.accept(self), expression.right.accept(self)])
       end
@@ -58,14 +60,16 @@ module QL
       # get the type of a variable or other
       def type(left_or_right)
         if left_or_right.kind_of?(Variable)
-          @types[left_or_right.name].class
+          @types[left_or_right.name]
         else
-          left_or_right.class
+          left_or_right.accept_types.first
         end
       end
 
       # generate error message
       def error(left, right)
+        left  = 'undefined' unless left
+        right = 'undefined' unless right
         "[ERROR]: #{left} can not be used with #{right}"
       end
     end

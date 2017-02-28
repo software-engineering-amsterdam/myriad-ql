@@ -5,19 +5,15 @@ form taxOfficeExample {
     hasBoughtHouse: boolean
   "Did you enter a loan?"
     hasMaintLoan: boolean
-    "Dij oiasjd asd "
-        aap: string
 
-  if (!hasSoldHouse) {
+  if (hasSoldHouse) {
     "What was the selling price?"
       sellingPrice: money
-      if (sellingPrice > 10){
-        "Private debts for the sold house:"
-        privateDebt: money
-        }
+    "Private debts for the sold house:"
+      privateDebt: money
     "Value residue:"
       valueResidue: money =
-        (8 + 8)
+        (sellingPrice - privateDebt)
   }
 
 }

@@ -1,10 +1,6 @@
 module QL
   module AST
     class Expression
-      def self.includes_type?(type)
-        !([type].flatten & accept_types).empty?
-      end
-
       def accept(visitor)
         visitor.visit_expression(self)
       end
@@ -27,7 +23,7 @@ module QL
         !expression.eval
       end
 
-      def self.accept_types
+      def accept_types
         [BooleanType]
       end
     end
@@ -37,7 +33,7 @@ module QL
         0 - expression.eval
       end
 
-      def self.accept_types
+      def accept_types
         [IntegerType, MoneyType]
       end
     end
@@ -46,14 +42,14 @@ module QL
       attr_accessor :left, :right
 
       def initialize(left, right)
-        @left = left
+        @left  = left
         @right = right
       end
     end
 
     # booleans: && ||
     class BooleanExpression < BinaryExpression
-      def self.accept_types
+      def accept_types
         [BooleanType]
       end
     end
@@ -72,7 +68,7 @@ module QL
 
     # arithmetic: - + * /
     class ArithmeticExpression < BinaryExpression
-      def self.accept_types
+      def accept_types
         [IntegerType, MoneyType]
       end
     end
@@ -103,7 +99,7 @@ module QL
 
     # comparisons == !=
     class ComparisonEqual < BinaryExpression
-      def self.accept_types
+      def accept_types
         [BooleanType, IntegerType, StringType, MoneyType]
       end
     end
@@ -122,7 +118,7 @@ module QL
 
     # comparisons: < > <= >=
     class ComparisonOrdering < BinaryExpression
-      def self.accept_types
+      def accept_types
         [IntegerType, MoneyType]
       end
     end

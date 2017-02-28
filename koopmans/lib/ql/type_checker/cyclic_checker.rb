@@ -22,7 +22,7 @@ module QL
 
       # visit question, and visit calculation for the assignment of the question
       def visit_question(question)
-        {question.variable.name => question.assignment.accept(self).flatten.compact} if question.assignment
+        { question.variable.name => question.assignment.accept(self).flatten.compact } if question.assignment
       end
 
       # visit the calculation of the negation expression
