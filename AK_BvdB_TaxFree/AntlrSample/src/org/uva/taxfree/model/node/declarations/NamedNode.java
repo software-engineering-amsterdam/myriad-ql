@@ -1,8 +1,9 @@
-package org.uva.taxfree.model.node.statement;
+package org.uva.taxfree.model.node.declarations;
 
 import org.uva.taxfree.model.node.Node;
 
 import javax.swing.*;
+import java.util.Set;
 
 public abstract class NamedNode extends Node {
     private final String mLabel;
@@ -29,9 +30,19 @@ public abstract class NamedNode extends Node {
 
     protected abstract void fillPanel(JPanel parent);
 
-    public String toString() {
+    public abstract String resolveValue();
+
+    public String getId() {
         return mId;
     }
 
-    public abstract String resolveValue();
+    @Override
+    public void printId() {
+        System.out.println("My name is: " + getId());
+    }
+
+    @Override
+    public void addDeclaration(Set<NamedNode> set) {
+        set.add(this);
+    }
 }
