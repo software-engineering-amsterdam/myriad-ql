@@ -61,7 +61,7 @@ class TypeChecker(Visitor):
 
     def binary(self, node):
         allowed_types = {DataTypes.integer, DataTypes.money}
-        type = None
+        dominant_type = None
         errors = []
         type_left = node.lhs.apply(self)
         type_right = node.rhs.apply(self)
@@ -69,16 +69,16 @@ class TypeChecker(Visitor):
 
         if type_set.issubset(allowed_types):
             if len(type_set) is 2:
-                type = DataTypes.money
+                dominant_type = DataTypes.money
             else:
-                type = DataTypes.integer
+                dominant_type = DataTypes.integer
         else:
             errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
             type_set, allowed_types))
 
         # print(type, errors)
 
-        return (type, errors)
+        return (dominant_type, errors)
 
     def identifier(self, node):
         return self.identifier_dict[node.name]

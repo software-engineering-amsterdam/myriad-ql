@@ -101,7 +101,8 @@ def parse(input_string):
 
     field_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
-        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type") +
+        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type").setParseAction(
+            lambda data_type: DataTypes(data_type[0])) +
         Optional(
             lit_assign_op +
             arithmetic_expression
