@@ -1,4 +1,4 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.statement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,17 +15,18 @@ public class StringQuestion extends NamedNode {
     @Override
     public void fillPanel(JPanel parentPanel) {
         mTextField.setPreferredSize(new Dimension(100, 25));
-        setVisible(true);
         parentPanel.add(mTextField);
     }
 
     @Override
-    public String resolve() {
+    public String resolveValue() {
         return mTextField.getText();
     }
 
-    public void setVisible(boolean isVisible) {
+    @Override
+    public void setVisibility(boolean isVisible) {
         mTextField.setVisible(isVisible);
+        super.setVisibility(isVisible);
     }
 
     @Override

@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
-import value.Value;
+import semantic.Environment;
 
 public class MinusExpression extends UnaryExpression {
 
@@ -14,11 +14,11 @@ public class MinusExpression extends UnaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		return getLhs().min();
+		return getLhs().evaluate().min();
 	}
 
 	@Override
-	public Atom evaluate(Value test) {
+	public Atom evaluate(Environment env) {
 		return null;
 	}
 

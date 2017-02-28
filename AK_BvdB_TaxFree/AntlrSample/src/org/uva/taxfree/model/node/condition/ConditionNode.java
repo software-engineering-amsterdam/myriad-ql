@@ -1,5 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.condition;
 
+import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;
@@ -17,8 +18,8 @@ public abstract class ConditionNode extends Node {
 
     // Allows the typeChecker to perform a test run on all expressions.
     public String tryEvaluate() throws ScriptException {
-        return Evaluator.calculate(resolve());
+        return Evaluator.calculate(resolveValue());
     }
 
-    public abstract String resolve();
+    public abstract String resolveValue();
 }

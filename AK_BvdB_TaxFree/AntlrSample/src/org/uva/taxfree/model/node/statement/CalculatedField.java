@@ -1,4 +1,7 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.statement;
+
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.condition.ConditionNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,12 +35,12 @@ public abstract class CalculatedField extends NamedNode {
 
     @Override
     public void setVisibility(boolean isVisible) {
-        mTextField.setText(resolve());
+        mTextField.setText(resolveValue());
         super.setVisibility(isVisible);
     }
 
     @Override
-    public String resolve() {
+    public String resolveValue() {
         return mCondition.evaluate();
     }
 

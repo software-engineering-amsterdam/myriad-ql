@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.environment;
+
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 public class Symbol {
     private String mId;
@@ -13,7 +15,7 @@ public class Symbol {
         return mReference.toString();
     }
 
-    public String resolve() {
-        return mReference.resolve();
+    public String resolveValue() {
+        return mReference.resolveValue();
     }
 }

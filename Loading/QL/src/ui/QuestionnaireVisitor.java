@@ -45,9 +45,9 @@ public class QuestionnaireVisitor extends Visitor {
 			String question = keysList.get(0);
 			System.out.println("question: " + question);
 			System.out.println("answer: " + answer);
-			System.out.println("getvalue: " + statement.getExpression().evaluate(answer).getValue());
+			System.out.println("getvalue: " + statement.getExpression().evaluate().getValue());
 
-			if (statement.getExpression().evaluate(answer).getValue()) {
+			if (statement.getExpression().evaluate().getValue()) {
 				statement.getBlock().accept(this);
 			}
 		}

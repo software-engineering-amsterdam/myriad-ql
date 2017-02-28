@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
-import value.Value;
+import semantic.Environment;
 
 public class LEqExpression extends BinaryExpression {
 
@@ -13,11 +13,11 @@ public class LEqExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		return getLhs().lessEq(getRhs());
+		return getLhs().evaluate().lessEq(getRhs().evaluate());
 	}
 
 	@Override
-	public Atom evaluate(Value test) {
+	public Atom evaluate(Environment env) {
 		return null;
 	}
 }

@@ -12,6 +12,8 @@ public class TypeChecker {
         QVisitor.visit(form);
         // TODO if you forget this statement you continue working with the old environment
 
+        System.out.println("!!!!!!");
+        environment.variableExists("Name1");
         ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
         expressionVisitor.visit(form);
         return expressionVisitor.getEnvironment();

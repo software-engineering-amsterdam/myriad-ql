@@ -1,7 +1,7 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
+import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.Node;
 
 import javax.swing.*;
 import java.util.LinkedHashSet;

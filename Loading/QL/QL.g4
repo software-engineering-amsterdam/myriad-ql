@@ -53,9 +53,22 @@ parenthesisExpr returns [Expression result]
  | ('(' ID ')' | ID ) { $result = new IdExpression($ID.text); }
  ;
 
+//expr2 returns [Expression result]
+// : lhs = parenthesisExpr op=('/' | '*') rhs = parenthesisExpr
+//    {
+//      if ($op.text.equals("/")) {
+//        $result = new DivExpression($lhs.result, $rhs.result);
+//      }
+//      if ($op.text.equals("*")) {
+//        $result = new MulExpression($lhs.result, $rhs.result);
+//      }
+//    }
+//
+// ;
+
 expr returns [Expression result]
- : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
- | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
+ : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result); }
  // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  // | atom { $result = $atom.result; }
  ;

@@ -42,9 +42,10 @@ import ast.type.Type;
 public class Questionnaire extends Application implements Notifier {
 	// TODO make Notifier an inner class or add extra environment
 	
-	private Form form;
-	private Map<String, Value> answers;
-	private GridPane grid;
+	// TODO do not make static
+	private static Form form;
+	private static Map<String, Value> answers;
+	private static GridPane grid;
 	
     public void main(Form f) {
     	form = f;

@@ -1,4 +1,7 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.expression;
+
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.condition.ConditionNode;
 
 public class ParenthesizedExpressionNode extends ConditionNode {
     private ConditionNode mChild;
@@ -17,12 +20,7 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     }
 
     @Override
-    public String toString() {
-        return resolve();
-    }
-
-    @Override
-    public String resolve() {
-        return mChild.resolve();
+    public String resolveValue() {
+        return mChild.resolveValue();
     }
 }

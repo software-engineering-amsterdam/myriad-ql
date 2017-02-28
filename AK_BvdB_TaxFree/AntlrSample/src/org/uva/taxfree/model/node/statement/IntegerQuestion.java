@@ -1,4 +1,4 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.statement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class IntegerQuestion extends NamedNode {
     }
 
     @Override
-    public String resolve() {
+    public String resolveValue() {
         return mTextField.getValue().toString();
     }
 

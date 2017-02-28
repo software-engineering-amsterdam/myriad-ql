@@ -1,4 +1,7 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.expression;
+
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.condition.ConditionNode;
 
 public class ExpressionNode extends ConditionNode {
     private ConditionNode mLeft;
@@ -21,13 +24,8 @@ public class ExpressionNode extends ConditionNode {
     }
 
     @Override
-    public String toString() {
-        return resolve();
-    }
-
-    @Override
-    public String resolve() {
-        return "(" + mLeft.resolve() + mOperator + mRight.resolve() + ")";
+    public String resolveValue() {
+        return "(" + mLeft.resolveValue() + mOperator + mRight.resolveValue() + ")";
     }
 
 }

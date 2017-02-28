@@ -17,7 +17,7 @@ public class QuestionnaireQuestion {
 		this.entryField = deriveField(type);
 	}
 	
-	// TODO move to type or add typevisitor
+	// TODO move to type or add type visitor
 	private QControl deriveField(Type type) {
         if ("string" == type.getType()) {
         	return new QControl(new ui.field.Text(name));
