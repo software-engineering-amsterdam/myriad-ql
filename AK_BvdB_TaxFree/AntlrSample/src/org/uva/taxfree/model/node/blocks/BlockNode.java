@@ -25,6 +25,8 @@ public abstract class BlockNode extends Node {
         }
     }
 
+    protected abstract boolean isVisible();
+
     public void retrieveDeclarations(Set<NamedNode> set) {
         addDeclaration(set);
     }

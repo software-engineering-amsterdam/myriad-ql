@@ -16,4 +16,9 @@ public class FormNode extends BlockNode {
     public String toString() {
         return mFormName;
     }
+
+    @Override
+    protected boolean isVisible() {
+        return true;
+    }
 }

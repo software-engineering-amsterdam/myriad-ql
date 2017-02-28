@@ -5,17 +5,22 @@ import org.uva.taxfree.model.node.Node;
 import java.util.Set;
 
 public class IfElseStatementNode extends BlockNode {
-    private final IfStatementNode mIfStatementNode;
+    private final BlockNode mIfStatementNode;
 
-    public IfElseStatementNode(IfStatementNode ifStatement, Set<Node> children) {
+    public IfElseStatementNode(BlockNode ifStatement, Set<Node> children) {
         super(children);
         mIfStatementNode = ifStatement;
     }
 
     @Override
+    protected boolean isVisible() {
+        return !mIfStatementNode.isVisible();
+    }
+
+    @Override
     public void setVisible(boolean isVisible) {
         mIfStatementNode.setVisible(isVisible);
-        super.setVisible(!mIfStatementNode.isTrue() && isVisible);
+        super.setVisible(isVisible() && isVisible);
     }
 
     @Override

@@ -13,15 +13,15 @@ public class IfStatementNode extends BlockNode {
         mCondition = condition;
     }
 
-    protected boolean isTrue() {
-        assert mCondition != null;
-        return ("true" == mCondition.evaluate());
+    @Override
+    protected boolean isVisible() {
+        return ("true".equals(mCondition.evaluate()));
     }
 
     @Override
     public void setVisible(boolean isVisible) {
-        System.out.println("I evaluate to " + isTrue());
-        super.setVisible(isTrue() && isVisible);
+        System.out.println("I evaluate to " + isVisible());
+        super.setVisible(isVisible() && isVisible);
     }
 
     @Override
