@@ -37,11 +37,11 @@ mergeOverlappingDuplicates duplicates =
 
 updateDuplicateIndex : Duplicate -> DuplicateIndex -> DuplicateIndex
 updateDuplicateIndex ( id, locations ) duplicateIndex =
-    Dict.update id (Maybe.withDefault [] >> updateLocations locations >> Just) duplicateIndex
+    Dict.update id (Maybe.withDefault [] >> mergeLocations locations >> Just) duplicateIndex
 
 
-updateLocations : List Location -> List Location -> List Location
-updateLocations newLocations existingLocations =
+mergeLocations : List Location -> List Location -> List Location
+mergeLocations newLocations existingLocations =
     (existingLocations ++ newLocations)
         |> List.uniqueBy (\(Location line col) -> ( line, col ))
 
