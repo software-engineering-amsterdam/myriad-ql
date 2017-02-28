@@ -24,12 +24,6 @@ public class StringQuestion extends NamedNode {
     }
 
     @Override
-    public void setVisible(boolean isVisible) {
-        mTextField.setVisible(isVisible);
-        super.setVisible(isVisible);
-    }
-
-    @Override
     public void printValue() {
         System.out.println("Value of string: " + mTextField.getText());
     }

@@ -28,9 +28,4 @@ public class IfStatementNode extends BlockNode {
     public void addCondition(Set<Node> set) {
         set.add(mCondition);
     }
-
-    @Override
-    public String toString() {
-        return mCondition.toString();
-    }
 }
