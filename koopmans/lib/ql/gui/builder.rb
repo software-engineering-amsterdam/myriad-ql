@@ -27,7 +27,6 @@ module QL
       def visit_question(question, condition)
         # set optional condition
         question.condition = condition if condition
-
         if question.assignment
           ComputedQuestion.new(gui:         gui,
                                label:       question.label,
@@ -35,17 +34,17 @@ module QL
                                type:        question.type.class,
                                calculation: visit_calculation(question.assignment),
                                condition:   visit_calculation(question.condition))
-        elsif question.type.is_a?(AST::BooleanType)
+        elsif question.type == AST::BooleanType
           BooleanQuestion.new(gui:       gui,
                               label:     question.label,
                               id:        question.variable.name,
                               condition: visit_calculation(question.condition))
-        elsif question.type.kind_of?(AST::MoneyType) || question.type.kind_of?(AST::IntegerType)
+        elsif question.type == AST::MoneyType || question.type == AST::IntegerType
           IntegerQuestion.new(gui:       gui,
                               label:     question.label,
                               id:        question.variable.name,
                               condition: visit_calculation(question.condition))
-        elsif question.type.kind_of?(AST::StringType)
+        elsif question.type == AST::StringType
           StringQuestion.new(gui:       gui,
                              label:     question.label,
                              id:        question.variable.name,
