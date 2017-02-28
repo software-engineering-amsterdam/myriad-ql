@@ -50,7 +50,6 @@ public class SemanticsAnalyzer {
     }
 
     private List<String> getUndefinedQuestionErrors() {
-        mAst.getConditionsV2(); // TODO: Remove, having this for test purposes.
         List<String> errorMessages = new ArrayList<>();
         // TODO
         // Get conditions, for every varName check the value/question belonging to it
