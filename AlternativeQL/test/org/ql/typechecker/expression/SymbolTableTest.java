@@ -3,26 +3,25 @@ package org.ql.typechecker.expression;
 import org.junit.Test;
 import org.ql.ast.Identifier;
 import org.ql.ast.type.StringType;
-import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public class HashMapSymbolTableTest {
+public class SymbolTableTest {
     @Test
     public void shouldPutIdentifierWhenPutExecuted() {
-        SymbolTable symbolTable = new HashMapSymbolTable();
+        SymbolTable symbolTable = new SymbolTable();
 
         symbolTable.declare(new Identifier("example"), new StringType());
 
-        assertTrue(symbolTable.has(new Identifier("example")));
+        assertTrue(symbolTable.hasDeclared(new Identifier("example")));
         assertSame(symbolTable.size(), 1);
     }
 
     @Test
     public void shouldGetIdentifierWhenGetExecuted() {
-        SymbolTable symbolTable = new HashMapSymbolTable();
+        SymbolTable symbolTable = new SymbolTable();
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 
@@ -33,12 +32,12 @@ public class HashMapSymbolTableTest {
 
     @Test
     public void shouldContainKeyWhenContainsKeyExecuted() {
-        SymbolTable symbolTable = new HashMapSymbolTable();
+        SymbolTable symbolTable = new SymbolTable();
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 
         symbolTable.declare(identifier, actualType);
 
-        assertTrue(symbolTable.has(identifier));
+        assertTrue(symbolTable.hasDeclared(identifier));
     }
 }

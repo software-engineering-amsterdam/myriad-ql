@@ -12,7 +12,6 @@ import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
 import org.ql.collection.Questions;
 import org.ql.collection.collector.QuestionCollector;
-import org.ql.symbol_table.HashMapSymbolTable;
 import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeError;
@@ -128,7 +127,7 @@ public class TypeChecker implements ITypeChecker {
 
         for (Question question : questions) {
             if (questions.hasDuplicates(question)) {
-                messages.addError("Question '" + question.getId() + "' has duplicate(s)", question);
+                messages.addError("Question '" + question.getId() + "' hasDeclared duplicate(s)", question);
             }
         }
 
@@ -141,7 +140,7 @@ public class TypeChecker implements ITypeChecker {
 
         for (Question question : questions) {
             if (questions.hasLabelDuplicates(question)) {
-                messages.addError("Question '" + question.getId() + "' label has duplicate(s)", question);
+                messages.addError("Question '" + question.getId() + "' label hasDeclared duplicate(s)", question);
             }
         }
 
@@ -177,7 +176,7 @@ public class TypeChecker implements ITypeChecker {
     }
 
     private SymbolTable createSymbolTable(List<Question> questions) {
-        SymbolTable symbolTable = new HashMapSymbolTable();
+        SymbolTable symbolTable = new SymbolTable();
 
         for (Question question : questions) {
             symbolTable.declare(question.getId(), question.getType());
