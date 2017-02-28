@@ -3,12 +3,15 @@ package ql;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ql.ast.types.NumType;
 import ql.ast.values.IntValue;
 import ql.ast.visistor.*;
 import ql.ast.visistor.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
 import ql.view.FormGenerator;
+import ql.view.elements.QLBox;
+import ql.view.elements.QLFormBox;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -47,13 +50,18 @@ public class Main extends Application {
 
             TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
             typeVisitor.startVisitor(parser.getResult());
-
+/*
 
             env.setVariableValue("hasBoughtHouse", new IntValue(6));
-            System.out.println("Value of expr: " + env.getVariableValue("test"));
+            System.out.println("Value of expr: " + env.getVariableValue("test"));*/
 
-            FormGenerator formGenerator = new FormGenerator(env);
-            primaryStage.setScene(formGenerator.addForm("Form"));
+            /*FormGenerator formGenerator = new FormGenerator(env);*/
+
+            QLFormBox formBox = new QLFormBox("test");
+
+            NumType num = new NumType();
+            formBox.addQuestion("Did you sell a house in 2011?", num, null);
+            primaryStage.setScene(new Scene(formBox));
             primaryStage.show();
 
         } catch (FileNotFoundException e) {
