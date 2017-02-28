@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class OrExpression extends BinaryExpression {
 
+	public OrExpression(Expression lhs, Expression rhs) {
+		super(lhs, rhs);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

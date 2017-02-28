@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class DivExpression extends BinaryExpression {
 
+	public DivExpression(Expression lhs, Expression rhs) {
+		super(lhs, rhs);
+	}
+
 	@Override
 	public Atom evaluate() {
 //		System.out.println("getLhs: " + getLhs().getNumber());

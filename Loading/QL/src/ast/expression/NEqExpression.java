@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class NEqExpression extends BinaryExpression {
 
+	public NEqExpression(Expression lhs, Expression rhs) {
+		super(lhs, rhs);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

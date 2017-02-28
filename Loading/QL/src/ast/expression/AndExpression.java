@@ -5,8 +5,11 @@ import ast.atom.Atom;
 import semantic.Environment;
 
 public class AndExpression extends BinaryExpression {
-	
-	
+
+	public AndExpression(Expression lhs, Expression rhs) {
+		super(lhs, rhs);
+	}
+
 	@Override
 	public Atom evaluate() {
 		return getLhs().evaluate().and(getRhs().evaluate());

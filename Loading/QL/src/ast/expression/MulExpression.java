@@ -5,6 +5,10 @@ import ast.atom.Atom;
 import semantic.Environment;
 
 public class MulExpression extends BinaryExpression {
+	public MulExpression(Expression lhs, Expression rhs) {
+		super(lhs, rhs);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
