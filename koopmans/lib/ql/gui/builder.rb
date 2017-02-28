@@ -40,7 +40,7 @@ module QL
                               id:        question.variable.name,
                               condition: visit_calculation(question.condition))
         elsif question.type == AST::MoneyType || question.type == AST::IntegerType
-          IntegerQuestion.new(gui:       gui,
+          NumericQuestion.new(gui:       gui,
                               label:     question.label,
                               id:        question.variable.name,
                               condition: visit_calculation(question.condition))

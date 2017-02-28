@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class StringQuestion < TextQuestion
+    class StringQuestion < Question
       include AST
 
       def initialize(args)

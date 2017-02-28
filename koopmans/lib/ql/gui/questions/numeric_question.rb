@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class IntegerQuestion < TextQuestion
+    class NumericQuestion < Question
       include AST
 
       def initialize(args)
@@ -10,6 +10,7 @@ module QL
 
         # SliderWidget.new(question: self, minimum: 0, maximum: 10)
         SpinboxWidget.new(question: self)
+        # TextWidget.new(question: self)
       end
     end
   end
