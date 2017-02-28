@@ -21,11 +21,7 @@ public class Form extends Node {
         return statements;
     }
 
-    public Statement getStatement(int index) {
-        return statements.get(index);
-    }
-
-    public <T> T accept(FormVisitor<T> visitor) throws Throwable {
+    public <T> T accept(FormVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

@@ -1,22 +1,4 @@
-- defaultvalue  -> rename ->
-
-- assoc=left division is currently stronger than *. need to make it equally
-
-- metadata -> rename to SourceLocation
-
-- AbstractNode doesn't need to use node ()
-
-- Node interface is perhaps not needed (there is no ast node that has as child a node)
-(use the abstractnode as a node)
-
-- AntlrVisitor rename to AstBuilder
-
-- Return type from visitForm in the astBuilder (currently visitor) should be Form because it is more specific.
-
- - Chnge 'abstractode' in the antlrvisitor (astbuilder) to node
-
  - Regarding the throws 'throwable': SOlution: extend runtimeexception with our own custom exception class. ()
-
  - Throws is terrible; avoid it.
 
 - AbsractLiteral is not needed (you need to cast it anyway): get rid of it.
@@ -52,3 +34,5 @@ THe FormQuestionCollector can be merged with the QuestionVisitor.
 - get rid of the proxy, just use hte visit name
 
 - TypeChecker visitor (ITypeChecker)
+
+- assoc=left division is currently stronger than *. need to make it equally

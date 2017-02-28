@@ -13,7 +13,7 @@ import java.util.List;
 
 public class QuestionVisitor implements FormVisitor<List<Question>>, StatementVisitor<List<Question>> {
 
-    public static List<Question> collect(Form form) throws Throwable {
+    public static List<Question> collect(Form form) {
         return form.accept(new QuestionVisitor());
     }
 

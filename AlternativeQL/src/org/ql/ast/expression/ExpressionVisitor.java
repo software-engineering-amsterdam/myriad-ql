@@ -7,46 +7,26 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 
-public interface ExpressionVisitor<T> {
-    T visit(Negation node) throws Throwable;
-
-    T visit(Product node) throws Throwable;
-
-    T visit(Increment node) throws Throwable;
-
-    T visit(Subtraction node) throws Throwable;
-
-    T visit(NotEqual node) throws Throwable;
-
-    T visit(LogicalAnd node) throws Throwable;
-
-    T visit(LowerThan node) throws Throwable;
-
-    T visit(GreaterThanOrEqual node) throws Throwable;
-
-    T visit(Division node) throws Throwable;
-
-    T visit(Parameter node) throws Throwable;
-
-    T visit(Group node) throws Throwable;
-
-    T visit(Addition node) throws Throwable;
-
-    T visit(GreaterThan node) throws Throwable;
-
-    T visit(Decrement node) throws Throwable;
-
-    T visit(Equals node) throws Throwable;
-
-    T visit(LowerThanOrEqual node) throws Throwable;
-
-    T visit(LogicalOr node) throws Throwable;
-
-    T visit(BooleanLiteral node) throws Throwable;
-
-    T visit(DecimalLiteral node) throws Throwable;
-
-    T visit(IntegerLiteral node) throws Throwable;
-
-    T visit(StringLiteral node) throws Throwable;
+public interface ExpressionVisitor<T, C> {
+    T visit(Negation node, C context);
+    T visit(Product node, C context);
+    T visit(Increment node, C context);
+    T visit(Subtraction node, C context);
+    T visit(NotEqual node, C context);
+    T visit(LogicalAnd node, C context);
+    T visit(LowerThan node, C context);
+    T visit(GreaterThanOrEqual node, C context);
+    T visit(Division node, C context);
+    T visit(Parameter node, C context);
+    T visit(Group node, C context);
+    T visit(Addition node, C context);
+    T visit(GreaterThan node, C context);
+    T visit(Decrement node, C context);
+    T visit(Equals node, C context);
+    T visit(LowerThanOrEqual node, C context);
+    T visit(LogicalOr node, C context);
+    T visit(BooleanLiteral node, C context);
+    T visit(DecimalLiteral node, C context);
+    T visit(IntegerLiteral node, C context);
+    T visit(StringLiteral node, C context);
 }

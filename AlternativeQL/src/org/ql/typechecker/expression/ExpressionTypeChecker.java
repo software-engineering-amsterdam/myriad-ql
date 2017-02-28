@@ -11,8 +11,9 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.type.*;
 import org.ql.symbol_table.SymbolTable;
+import org.ql.typechecker.messages.MessageBag;
 
-public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
+public class ExpressionTypeChecker implements ExpressionVisitor<Type, MessageBag> {
 
     private final SymbolTable symbolTable;
 
@@ -21,12 +22,11 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     }
 
     @Override
-    public Type visit(Negation node) throws Throwable {
-        Type innerExpressionType = node.getExpression().accept(this);
+    public Type visit(Negation node, MessageBag messages) {
+        Type innerExpressionType = node.getExpression().accept(this, messages);
 
         if (!(innerExpressionType instanceof BooleanType)) {
-            // TODO Do not use exceptions as error management
-            throw new TypeMismatchException(new BooleanType(), innerExpressionType);
+            messages.addError(new TypeMismatchException(new BooleanType(), innerExpressionType));
         }
 
         // TODO this is wrong
@@ -34,147 +34,146 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     }
 
     @Override
-    public Type visit(Product node) throws Throwable {
-        return checkTypeMismatch(node);
+    public Type visit(Product node, MessageBag messages) {
+        return checkTypeMismatch(node, messages);
     }
 
     @Override
-    public Type visit(Increment node) throws Throwable {
-        Type innerExpressionType = node.getExpression().accept(this);
+    public Type visit(Increment node, MessageBag messages) {
+        Type innerExpressionType = node.getExpression().accept(this, messages);
 
         if (!(innerExpressionType instanceof NumberType)) {
-            throw new NumberExpectedException(innerExpressionType);
+            messages.addError(new NumberExpectedException(innerExpressionType));
         }
 
         return innerExpressionType;
     }
 
     @Override
-    public Type visit(Subtraction node) throws Throwable {
-        return checkTypeMismatch(node);
+    public Type visit(Subtraction node, MessageBag messages) {
+        return checkTypeMismatch(node, messages);
     }
 
     @Override
-    public Type visit(NotEqual node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(NotEqual node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(LogicalAnd node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(LogicalAnd node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(LowerThan node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(LowerThan node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(GreaterThanOrEqual node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(GreaterThanOrEqual node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(Division node) throws Throwable {
-        return checkTypeMismatch(node);
+    public Type visit(Division node, MessageBag messages) {
+        return checkTypeMismatch(node, messages);
     }
 
     @Override
-    public Type visit(Parameter node) throws Throwable {
+    public Type visit(Parameter node, MessageBag messages) {
         if (!symbolTable.has(node.getId())) {
-            throw new UndefinedIdentifierException(node.getId());
+            messages.addError(new UndefinedIdentifierException(node.getId()));
         }
 
         return symbolTable.lookup(node.getId());
     }
 
     @Override
-    public Type visit(Group node) throws Throwable {
-        return node.getExpression().accept(this);
+    public Type visit(Group node, MessageBag messages) {
+        return node.getExpression().accept(this, messages);
     }
 
     @Override
-    public Type visit(Addition node) throws Throwable {
-        return checkTypeMismatch(node);
+    public Type visit(Addition node, MessageBag messages) {
+        return checkTypeMismatch(node, messages);
     }
 
     @Override
-    public Type visit(GreaterThan node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(GreaterThan node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(Decrement node) throws Throwable {
-        Type innerExpressionType = node.getExpression().accept(this);
+    public Type visit(Decrement node, MessageBag messages) {
+        Type innerExpressionType = node.getExpression().accept(this, messages);
 
-        // TODO make this work
-        if (!(innerExpressionType.isNumeric())) {
-            throw new NumberExpectedException(innerExpressionType);
+        if (!(innerExpressionType instanceof NumberType)) {
+            messages.addError(new NumberExpectedException(innerExpressionType));
         }
 
         return innerExpressionType;
     }
 
     @Override
-    public Type visit(Equals node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(Equals node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        // TODO remove metadata set here
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(LowerThanOrEqual node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(LowerThanOrEqual node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(LogicalOr node) throws Throwable {
-        checkTypeMismatch(node);
+    public BooleanType visit(LogicalOr node, MessageBag messages) {
+        checkTypeMismatch(node, messages);
 
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(BooleanLiteral node) {
-        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
+    public BooleanType visit(BooleanLiteral node, MessageBag messages) {
+        return new BooleanType();
     }
 
     @Override
-    public Type visit(DecimalLiteral node) {
-        return (Type) new FloatType().setSourceLocation(node.getSourceLocation());
+    public FloatType visit(DecimalLiteral node, MessageBag messages) {
+        return new FloatType();
     }
 
     @Override
-    public Type visit(IntegerLiteral node) {
-        return (Type) new IntegerType().setSourceLocation(node.getSourceLocation());
+    public IntegerType visit(IntegerLiteral node, MessageBag messages) {
+        return new IntegerType();
     }
 
     @Override
-    public Type visit(StringLiteral node) {
-        return (Type) new StringType().setSourceLocation(node.getSourceLocation());
+    public StringType visit(StringLiteral node, MessageBag messages) {
+        return new StringType();
     }
 
-    private Type checkTypeMismatch(BinaryExpression node) throws Throwable {
-        Type leftType = node.getLeft().accept(this);
-        Type rightType = node.getRight().accept(this);
+    private Type checkTypeMismatch(BinaryExpression node, MessageBag messages) {
+        Type leftType = node.getLeft().accept(this, messages);
+        Type rightType = node.getRight().accept(this, messages);
 
         if (!leftType.equals(rightType)) {
-            throw new TypeMismatchException(leftType, rightType);
+            messages.addError(new TypeMismatchException(leftType, rightType));
         }
 
+        // todo make UndefinedType
         return leftType;
     }
 }

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ExpressionTypeCheckerTest {
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowExceptionWhenNegationAppliedOnNonBoolean() throws Throwable {
+    public void shouldThrowExceptionWhenNegationAppliedOnNonBoolean() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Negation negation = new Negation(new StringLiteral("example string"));
 
@@ -27,7 +27,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeWhenNegationHasABooleanLiteral() throws Throwable {
+    public void shouldReturnBooleanTypeWhenNegationHasABooleanLiteral() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Negation negation = new Negation(new BooleanLiteral(true));
 
@@ -37,7 +37,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnLiteralTypes() throws Throwable {
+    public void shouldReturnLiteralTypes() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualStringType = visitor.visit(new StringLiteral("example"));
@@ -52,7 +52,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnIntegerLiteralWhenIncrementAppliedOnInteger() throws Throwable {
+    public void shouldReturnIntegerLiteralWhenIncrementAppliedOnInteger() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualIntegerType = visitor.visit(new Increment(new IntegerLiteral(3)));
@@ -61,7 +61,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnFloatWhenIncrementAppliedOnFloat() throws Throwable {
+    public void shouldReturnFloatWhenIncrementAppliedOnFloat() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualFloatType = visitor.visit(new Increment(new DecimalLiteral(new BigDecimal(10.40))));
@@ -70,14 +70,14 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = NumberExpectedException.class)
-    public void shouldThrowUnexpectedTypeExceptionWhenIncrementAppliedOnNonIntegerOrFloat() throws Throwable {
+    public void shouldThrowUnexpectedTypeExceptionWhenIncrementAppliedOnNonIntegerOrFloat() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         visitor.visit(new Increment(new StringLiteral("example")));
     }
 
     @Test
-    public void shouldReturnIntegerTypeWhenDecrementAppliedOnInteger() throws Throwable {
+    public void shouldReturnIntegerTypeWhenDecrementAppliedOnInteger() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualIntegerType = visitor.visit(new Decrement(new IntegerLiteral(3)));
@@ -86,7 +86,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnFloatTypeWhenDecrementAppliedOnFloat() throws Throwable {
+    public void shouldReturnFloatTypeWhenDecrementAppliedOnFloat() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualFloatType = visitor.visit(new Decrement(new DecimalLiteral(new BigDecimal(10.40))));
@@ -95,7 +95,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = NumberExpectedException.class)
-    public void shouldThrowUnexpectedTypeExceptionWhenDecrementAppliedOnNonIntegerOrFloat() throws Throwable {
+    public void shouldThrowUnexpectedTypeExceptionWhenDecrementAppliedOnNonIntegerOrFloat() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualType = visitor.visit(new Decrement(new StringLiteral("example")));
@@ -104,14 +104,14 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = UndefinedIdentifierException.class)
-    public void shouldThrowUndefinedIdentifierExceptionWhenIdentifierDoesNotExist() throws Throwable {
+    public void shouldThrowUndefinedIdentifierExceptionWhenIdentifierDoesNotExist() {
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         visitor.visit(new Parameter(new Identifier("example")));
     }
 
     @Test
-    public void shouldReturnParameterWhenIdentifierExists() throws Throwable {
+    public void shouldReturnParameterWhenIdentifierExists() {
         HashMapSymbolTable HashMapSymbolTable = new HashMapSymbolTable();
         HashMapSymbolTable.declare(new Identifier("example"), new StringType());
 
@@ -123,7 +123,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForLogicalOr() throws Throwable {
+    public void shouldReturnBooleanTypeForLogicalOr() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -133,7 +133,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalOr() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalOr() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -141,7 +141,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForLowerThanOrEquals() throws Throwable {
+    public void shouldReturnBooleanTypeForLowerThanOrEquals() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -151,7 +151,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThanOrEqual() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThanOrEqual() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -159,7 +159,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForEquals() throws Throwable {
+    public void shouldReturnBooleanTypeForEquals() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Equals actualEqual = new Equals(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -169,7 +169,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInEquals() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInEquals() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Equals actualEquals = new Equals(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -177,7 +177,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForGreaterThan() throws Throwable {
+    public void shouldReturnBooleanTypeForGreaterThan() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -187,7 +187,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThan() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThan() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -195,7 +195,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnIntegerTypeForAddition() throws Throwable {
+    public void shouldReturnIntegerTypeForAddition() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Addition actualAddition = new Addition(new IntegerLiteral(123), new IntegerLiteral(321));
 
@@ -205,7 +205,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInAddition() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInAddition() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Addition actualAddition = new Addition(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -213,7 +213,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnIntegerTypeForDivision() throws Throwable {
+    public void shouldReturnIntegerTypeForDivision() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Division actualDivision = new Division(new IntegerLiteral(123), new IntegerLiteral(321));
 
@@ -223,7 +223,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInDivision() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInDivision() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Division actualDivision = new Division(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -231,7 +231,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForGreaterThanOrEqual() throws Throwable {
+    public void shouldReturnBooleanTypeForGreaterThanOrEqual() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -241,7 +241,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThanOrEqual() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInGreaterThanOrEqual() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -249,7 +249,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForLowerThan() throws Throwable {
+    public void shouldReturnBooleanTypeForLowerThan() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -259,7 +259,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThan() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLowerThan() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -267,7 +267,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForLogicalAnd() throws Throwable {
+    public void shouldReturnBooleanTypeForLogicalAnd() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -277,7 +277,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalAnd() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInLogicalAnd() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -285,7 +285,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeForNotEqual() throws Throwable {
+    public void shouldReturnBooleanTypeForNotEqual() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
@@ -295,7 +295,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInNotEqual() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInNotEqual() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
@@ -304,7 +304,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnBooleanTypeOnGroupedRelationalExpression() throws Throwable {
+    public void shouldReturnBooleanTypeOnGroupedRelationalExpression() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Group actualGroup = new Group(new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true)));
 
@@ -314,7 +314,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnIntegerTypeForProduct() throws Throwable {
+    public void shouldReturnIntegerTypeForProduct() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Product actualProduct = new Product(new IntegerLiteral(123), new IntegerLiteral(321));
 
@@ -324,7 +324,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInProduct() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesAreUsedInProduct() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
         Product actualProduct = new Product(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -332,7 +332,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test
-    public void shouldReturnWhenIntegerTypeForSubtraction() throws Throwable {
+    public void shouldReturnWhenIntegerTypeForSubtraction() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         Type actualSubtractionType = visitor.visit(new Subtraction(new IntegerLiteral(12), new IntegerLiteral(4)));
@@ -341,7 +341,7 @@ public class ExpressionTypeCheckerTest {
     }
 
     @Test(expected = TypeMismatchException.class)
-    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesUsedForSubtraction() throws Throwable {
+    public void shouldThrowTypeMismatchExceptionWhenDifferentTypesUsedForSubtraction() {
         ExpressionVisitor<Type> visitor = new ExpressionTypeChecker(new HashMapSymbolTable());
 
         visitor.visit(new Subtraction(new IntegerLiteral(12), new StringLiteral("example")));

@@ -20,7 +20,7 @@ public class Group extends Expression {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
-    }
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+         return visitor.visit(this, context);
+     }
 }
