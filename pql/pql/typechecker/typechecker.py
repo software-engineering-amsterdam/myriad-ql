@@ -37,10 +37,17 @@ class TypeChecker(Visitor):
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def conditional_if(self, node):
-        return []
+        condition = node.condition.apply(self)
+        if condition is not DataTypes.boolean:
+            self.errors.append("Condition does not contain a boolean expression: %s" % condition)
+        [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
-        return []
+        condition = node.condition.apply(self)
+        if condition is not DataTypes.boolean:
+            self.errors.append("Condition does not contain a boolean expression: %s" % condition)
+        [statement.apply(self) for statement in node.statements]
+        [statement.apply(self) for statement in node.else_statement_list]
 
     def greater_exclusive(self, node):
         # return self.boolean_type_detection(node)

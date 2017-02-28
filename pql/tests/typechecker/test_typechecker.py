@@ -381,3 +381,15 @@ class TestTypeChecker(TestCase):
         """
         type_checker_result = self.apply_type_checking(input_string)
         self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_success_if(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean
+            if(v1){
+                "q2" v2: money = 4.14
+            }
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Error: %s" % type_checker_result)
