@@ -70,15 +70,6 @@ public class Questionnaire extends Application implements Notifier {
 
     }
     
-    // TODO improve
-    public void start2() {
-    	
-    	Node title = grid.getChildren().get(0);
-    	grid.getChildren().clear();
-    	grid.add(title, 0, 0);
-        renderQuestionnaire(grid);
-    }
-    
     private GridPane initGrid() {
     	
         GridPane grid = new GridPane();
@@ -185,8 +176,11 @@ public class Questionnaire extends Application implements Notifier {
     	Value oldAnswer = answers.get(name); 
 		if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
 			answers.put(name, newValue);
-			// renderQuestionnaire(grid);
-			start2();
+			// Save the title
+			Node title = grid.getChildren().get(0);
+	    	grid.getChildren().clear();
+	    	grid.add(title, 0, 0);
+	        renderQuestionnaire(grid);
 		}
 	}
 }
