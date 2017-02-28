@@ -18,9 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import ql.ast.types.BooleanType;
-import ql.ast.types.NumType;
-import ql.ast.types.StringType;
+import ql.ast.types.*;
 import ql.ast.visistor.environment.Environment;
 
 /**
@@ -44,7 +42,7 @@ public class FormGenerator {
 
         BooleanType bool = new BooleanType();
         addQuestion(vbox, "Did you sell a house in 2010?", bool, null);
-        NumType num = new NumType();
+        IntType num = new IntType();
         addQuestion(vbox, "Did you sell a house in 20112?", num, null);
 
         return new Scene(vbox);
@@ -61,7 +59,7 @@ public class FormGenerator {
             public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
 
                 if (toggleGroup.getSelectedToggle() != null) {
-                    System.out.println("Radio button clicked");
+                    System.out.println("Radio button changed");
                 }
 
             }
@@ -70,24 +68,28 @@ public class FormGenerator {
         vbox.getChildren().add(new HBox(rbYes, rbNo));
     }
 
-    public void addQuestion(VBox vbox, String question, NumType type, String variableName) {
-        ObjectProperty<String> objectProperty = new SimpleObjectProperty<>();
-        TextField textField1 = new TextField();
-        TextField textField2 = new TextField();
-        textField1.textProperty().addListener(new ChangeListener<String>() {
+    public void addQuestion(VBox vbox, String question, IntType type, String variableName) {
+        TextField textField = new TextField();
+        textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                objectProperty.set(newValue);
+
             }
         });
-
-
-        textField2.textProperty().bind(objectProperty);
-
-        objectProperty.set("test");
-        vbox.getChildren().addAll(new Text(question), textField1);
-        vbox.getChildren().addAll(new Text(question), textField2);
+        vbox.getChildren().addAll(new Text(question), textField);
     }
+
+    public void addQuestion(VBox vbox, String question, FloatType type, String variableName) {
+        TextField textField = new TextField();
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+            }
+        });
+        vbox.getChildren().addAll(new Text(question), textField);
+    }
+
     public void addQuestion(VBox vbox, String question, StringType type, String variableName) {
         vbox.getChildren().addAll(new Text(question), new TextField());
     }

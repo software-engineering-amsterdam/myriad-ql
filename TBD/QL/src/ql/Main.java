@@ -30,8 +30,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
-            reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
-            //reader = new FileReader("/home/rico/Desktop/test.txt");
+            //reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
+            reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
 
