@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class Builder
+    class FormBuilder
       attr_accessor :gui
 
       def initialize(ast, gui)

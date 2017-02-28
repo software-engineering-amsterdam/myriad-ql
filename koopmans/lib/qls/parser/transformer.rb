@@ -5,7 +5,7 @@ module QLS
     class Transformer < Parslet::Transform
       include AST
       # stylesheet
-      rule(stylesheet: { variable: simple(:variable), pages: subtree(:pages) }) { StyleSheet.new(variable, pages) }
+      rule(stylesheet: { variable: simple(:variable), pages: subtree(:pages) }) { Stylesheet.new(variable, pages) }
 
       # page
       rule(page: { variable: simple(:variable), block: subtree(:block) }) { Page.new(variable, block) }

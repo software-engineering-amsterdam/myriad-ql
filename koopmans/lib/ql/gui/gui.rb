@@ -8,7 +8,7 @@ module QL
       def initialize(ast, type_checker)
         return if check(type_checker) == 'quit'
         @questions = Hash.new
-        Builder.new(ast, self)
+        FormBuilder.new(ast, self)
 
         create_submit_button
         Tk.mainloop

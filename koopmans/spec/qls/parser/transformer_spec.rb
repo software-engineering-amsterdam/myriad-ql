@@ -60,7 +60,7 @@ module QLS
 
       describe 'stylesheet' do
         it 'transforms' do
-          expect(transformer.apply(stylesheet: { variable: 'Section name', pages: {} })).to be_a StyleSheet
+          expect(transformer.apply(stylesheet: { variable: 'Section name', pages: {} })).to be_a Stylesheet
         end
       end
     end
