@@ -2,10 +2,8 @@ package org.uva.taxfree.main;
 
 import org.uva.taxfree.ast.Ast;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.condition.ConditionNode;
-import org.uva.taxfree.model.node.statement.NamedNode;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.literal.LiteralNode;
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -55,12 +53,12 @@ public class SemanticsAnalyzer {
         List<String> errorMessages = new ArrayList<>();
 
         List<String> questions = getQuestionIds();
-        Set<ConditionNode> conditions = mAst.getConditionsV2();
-        for (ConditionNode conditionNode : conditions) {
-            for (LiteralNode variable : conditionNode.getVariables()) {
-                variable.toString();
-            }
-        }
+//        Set<ConditionNode> conditions = mAst.getConditionsV2();
+//        for (ConditionNode conditionNode : conditions) {
+//            for (LiteralNode variable : conditionNode.getVariables()) {
+//                variable.toString();
+//            }
+//        }
 
         return errorMessages;
     }

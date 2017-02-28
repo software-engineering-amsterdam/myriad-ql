@@ -2,7 +2,6 @@ package org.uva.taxfree.model.node.condition;
 
 import org.uva.taxfree.model.node.Node;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
@@ -39,13 +38,6 @@ public class IfStatementNode extends Node {
     @Override
     protected void addCondition(Set<Node> set) {
         set.add(mCondition);
-    }
-
-    @Override
-    protected Set<ConditionNode> addConditions() {
-        Set<ConditionNode> nodeSet = new LinkedHashSet<>();
-        nodeSet.add(mCondition);
-        return nodeSet;
     }
 
     @Override
