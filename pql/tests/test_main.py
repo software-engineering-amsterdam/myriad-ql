@@ -12,11 +12,6 @@ class TestMain(unittest.TestCase):
         the_exception = cm.exception
         self.assertEqual(the_exception.code, 1)
 
-    def test_main_test_file(self):
-        my_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-        path = os.path.join(my_path, "examples/taxOfficeExample.ql")
-        main.main(("", path))
-
     def test_open_file_invalid_path(self):
         with self.assertRaises(SystemExit):
             main.open_file("pql/examples/taxOfficeExample.ql")

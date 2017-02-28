@@ -51,8 +51,10 @@ def parse(input_string):
     name = Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
         lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
-    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
-    money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
+    integer = Word(nums).setParseAction(
+        lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
+    money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
+        lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
     number = (money | integer)
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
@@ -63,21 +65,30 @@ def parse(input_string):
     operand_bool = (boolean | operand_arith)
 
     operand_list_arith = [
-        (lit_op_positive | lit_op_negative | lit_op_not, 1, opAssoc.RIGHT,
+        (lit_op_positive | lit_op_negative | lit_op_not,
+         1, opAssoc.RIGHT,
          lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
-        (lit_op_multiplication | lit_op_division, 2, opAssoc.LEFT,
+        (lit_op_multiplication | lit_op_division,
+         2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
-        (lit_op_addition | lit_op_subtract, 2, opAssoc.LEFT,
+        (lit_op_addition | lit_op_subtract,
+         2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
     operand_list_bool = [
-        (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive, 2,
-         opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
-        (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT,
+        (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive,
+         2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
-        (lit_op_and, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
-        (lit_op_or, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_equality | lit_op_inequality,
+         2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_and,
+         2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+        (lit_op_or,
+         2, opAssoc.LEFT,
+         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
     operator_precendence = infixNotation(
