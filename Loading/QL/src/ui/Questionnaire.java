@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import ast.Form;
+import evaluation.Environment;
+import evaluation.Evaluator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import semantic.TypeChecker;
 import ui.field.Field;
 import value.Value;
 
@@ -30,16 +33,16 @@ public class Questionnaire extends Application {
 	
 	// TODO do not make static
 	private static Form form;
-	private static Map<String, Value> answers;
+	private static evaluation.Environment answers;
 	private static GridPane grid;
 	
 	public class Notifier {
 
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = answers.get(name); 
+	    	Value oldAnswer = answers.getAnswer(name); 
 			if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
-				answers.put(name, newValue);
+				answers.addAnswer(name, newValue);
 				// Save the title
 				Node title = grid.getChildren().get(0);
 		    	grid.getChildren().clear();
@@ -51,7 +54,10 @@ public class Questionnaire extends Application {
 	
     public void main(Form f) {
     	form = f;
-    	answers = new HashMap<>();
+    	answers = new Environment();
+		Evaluator evaluator = new Evaluator(answers);
+
+		evaluator.visit(form);
         launch();
     }
         
@@ -90,7 +96,7 @@ public class Questionnaire extends Application {
     	// TODO change
     	for (QuestionnaireQuestion question : activeQuestions) {
     		
-    		Value value = answers.get(question.getName());
+    		Value value = answers.getAnswer(question.getName());
     		if (value == null) {
     			continue;
     		}

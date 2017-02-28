@@ -4,7 +4,8 @@ import ast.ExpressionVisitor;
 import ast.type.Type;
 
 public class BoolAtom extends Atom {
-    private boolean value;
+    
+	private boolean value;
 
     public BoolAtom(Boolean value, int line) {
     	super(line);

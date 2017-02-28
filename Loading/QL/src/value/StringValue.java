@@ -1,23 +1,20 @@
 package value;
 
+import ast.atom.StringAtom;
 import ast.type.StringType;
 import ast.type.Type;
 
 public class StringValue extends Value {
 	
-	private String value;
+	private StringAtom value;
 	
 	public StringValue(String value) {
-		this.value = value;
+		this.value = new StringAtom(value, 0);
 	}
 	
 	@Override
-	public Object getValue() {
+	public StringAtom getValue() {
 		return value;
 	}
 
-	@Override
-	public Type getType() {
-		return new StringType(0);
-	}
 }

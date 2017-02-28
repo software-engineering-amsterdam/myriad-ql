@@ -44,7 +44,7 @@ public class Number implements Field {
 
 	@Override
 	public void setAnswer(Value value) {
-		field.setText((String) value.getValue());
+		field.setText(Integer.toString(value.getValue().getNumber())); // TODO improve
 		
 	}
 

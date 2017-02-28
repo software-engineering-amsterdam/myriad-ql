@@ -1,16 +1,12 @@
 package value;
 
+import ast.atom.Atom;
 import ast.type.Type;
 
 public class EmptyValue extends Value {
 	
 	@Override
-	public Object getValue() {
-		return null;
-	}
-
-	@Override
-	public Type getType() {
+	public Atom getValue() { // TODO is this still necessary
 		return null;
 	}
 

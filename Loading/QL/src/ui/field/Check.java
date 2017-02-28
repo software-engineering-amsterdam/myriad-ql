@@ -48,7 +48,7 @@ public class Check implements Field {
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setSelected((boolean) value.getValue());	
+		field.setSelected(value.getValue().getValue()); // TODO two times getValue()??	
 	}
 	
 	@Override

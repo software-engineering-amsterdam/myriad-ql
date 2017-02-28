@@ -2,12 +2,13 @@ import ast.Form;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import semantic.TypeChecker;
+import ui.Questionnaire;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name1: \"Question1\" integer "
-				 + "if (Name1 + 2 == 2) {"
+				 + "if (1 + 2 == 2) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
 				 + "Name3: \"Question3\" boolean "

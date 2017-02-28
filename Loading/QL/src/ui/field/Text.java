@@ -36,7 +36,7 @@ public class Text implements Field {
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setText((String) value.getValue());	
+		field.setText(value.getValue().getString());	
 	}
 
 

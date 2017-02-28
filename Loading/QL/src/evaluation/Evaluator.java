@@ -8,6 +8,7 @@ import ast.atom.StringAtom;
 import ast.expression.*;
 import ast.type.BooleanType;
 import ast.type.Type;
+import value.EmptyValue;
 import value.Value;
 
 public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
@@ -38,11 +39,15 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
     @Override
     public void visit(Question question) {
+    	// TODO default value when question is not answered
+    	environment.addAnswer(question.getVariable(), new EmptyValue());
     }
 
     @Override
     public void visit(ComputedQuestion question) {
         Atom atom = question.getComputedQuestion().accept(this);
+        // TODO add computed answer to environment
+        environment.addAnswer(question.getVariable(), new EmptyValue());
         // Add to environment
     }
 
@@ -55,6 +60,8 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
     @Override
     public Atom visit(AddExpression expr) {
+    	System.out.println(expr.getLhs().accept(this));
+    	System.out.println(expr.getRhs().accept(this));
         return expr.getLhs().accept(this).add(expr.getRhs().accept(this));
     }
 
@@ -85,9 +92,17 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
     @Override
 	public Atom visit(IdExpression id) {
-        environment.getAnswer(id.getName());
-        // TODO
-        return new BoolAtom(true, id.getLine());
+    	
+    	System.out.println(id.getName());
+    	System.out.println(environment.getAnswer(id.getName()));
+    	System.out.println(new EmptyValue());
+    	System.out.println("dit was het");
+		if (environment.getAnswer(id.getName()).equals(new EmptyValue())) {
+			// TODO throw
+			System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
+			return null;
+		}
+		return environment.getAnswer(id.getName()).getValue();	
 	}
 
     @Override

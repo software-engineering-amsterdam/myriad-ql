@@ -14,6 +14,7 @@ import ast.type.Type;
 // Checks unreferenced variables
 // Checks whether condition returns a boolean
 // operands of invalid type to operators
+// TODO rename
 public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Type>, TypeVisitor {
 	
 	private final Environment environment;
