@@ -1,17 +1,19 @@
 package org.uva.taxfree.model;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-public class VariableLiteralNode extends LiteralNode{
-    public VariableLiteralNode(String label){
+public class VariableLiteralNode extends LiteralNode {
+    private NamedNode mReference;
+
+    public VariableLiteralNode(String label) {
         super(label);
     }
 
+    public void setReference(NamedNode reference) {
+        mReference = reference;
+    }
+
     @Override
-    protected Set<LiteralNode> addVariables() {
-        Set<LiteralNode> nodeSet = new LinkedHashSet<>();
-        nodeSet.add(this);
-        return nodeSet;
+    public String resolve() {
+        return mReference.resolve();
     }
 }

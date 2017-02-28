@@ -1,4 +1,4 @@
-module QLS.Parser.Configuration exposing (..)
+module QLS.Parser.Configuration exposing (configuration)
 
 import Combine exposing (Parser, braces, choice, or, sepBy, string, (<$>), (*>))
 import QLS.AST exposing (Configuration(SingleConfig, MultiConfig), ConfigItem(StyleConfig, WidgetConfig))

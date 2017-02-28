@@ -9,5 +9,6 @@ public interface NodeVisitor<T> {
 	public T visit(Question question);
 	public T visit(ConditionalBlock conditional_block);
 	public T visit(IfStatement if_statement);
-	public T visit(Expression espression);
+	public T visit(Expression expression);
+	public T visit(Atom<T> atom);
 }

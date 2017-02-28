@@ -1,8 +1,10 @@
 package ui.field;
 
 import javafx.scene.control.TextField;
+import ui.Notifier;
 import value.EmptyValue;
 import value.IntegerValue;
+import value.StringValue;
 import value.Value;
 
 import java.util.function.Function;
@@ -12,14 +14,21 @@ import javafx.beans.value.ObservableValue;
 
 public class Number extends TextField implements Field {
 	
-	public Number() {
-		// this.field = new TextField();
+	private Notifier listener;
+	private String name;
+	
+	public Number(String name) {
+		super();
+		this.name = name;
+		
     	textProperty().addListener(new ChangeListener<String>() {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
 	          if (!newValue.matches("\\d*")) {
 	              setText(newValue.replaceAll("[^\\d]", ""));
+	          } else {
+	        	  listener.updateQuestionnaire(name, new StringValue(newValue));
 	          }
 	      }
     	});
@@ -41,9 +50,8 @@ public class Number extends TextField implements Field {
 	}
 
 	@Override
-	public Boolean isChanged() {
-		// TODO Auto-generated method stub
-		return false;
+	public void addListener(Notifier listener) {
+		this.listener = listener;	
 	}
 	
 }

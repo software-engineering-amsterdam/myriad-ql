@@ -1,11 +1,13 @@
 package UvA.Gamma;
 
-import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.IdNotFoundException;
+import UvA.Gamma.Validation.IdRedeclaredException;
+import UvA.Gamma.Validation.Validator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -22,7 +24,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        String test = "form test {\"How much do you want to pay? \" pay: money\n " +
+        String test = "form test {" +
+                "\"Some complex expression: \" test: decimal = (12*(3+4)/3*(2+3))" +
+                "\"How much do you want to pay? \" pay: money\n " +
                 "if(pay > 20.0){ \"You paid too much: \" paid: money = (pay - 20) } else { " +
                 "\"You paid not enough: \" paid: money = (20 - pay) } }";
 
@@ -36,18 +40,20 @@ public class Main extends Application {
         visitor.visit(parseTree);
         Form form = visitor.getForm();
 
+        Validator checker = new Validator(form);
+        try {
+            checker.visit();
+        } catch (IdNotFoundException | IdRedeclaredException ex) {
+            System.out.println(ex.getMessage());
+        }
+
         MainScreen mainScreen = new MainScreen(form);
         mainScreen.initUI(primaryStage);
 
         for (FormItem item : form.getFormItems()) {
             mainScreen.addFormItem(item);
             System.out.println(item);
-            if (item instanceof Computed) {
-                System.out.println(((Computed) item).expression);
-            }
         }
-
-
     }
 
     public static void main(String[] args) throws IOException {

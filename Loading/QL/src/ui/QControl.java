@@ -27,23 +27,4 @@ public class QControl {
 	public Field getField() {
 		return field;
 	}
-	
-//	public Boolean isChanged() {
-//		if (field == null) {
-//			return null;
-//		}
-//		System.out.println("in ischanged van qcontrol");
-//		return field.isChanged();
-//	}
-	
-//	public void setOnChange(Function<String, String> func) {
-//		field.setOnChange(func);
-//		
-//	}
-
-//	public String setOnChange(Function<String, String> func) {
-//		return field.setOnChange(func);
-//		
-//	}
-	
 }

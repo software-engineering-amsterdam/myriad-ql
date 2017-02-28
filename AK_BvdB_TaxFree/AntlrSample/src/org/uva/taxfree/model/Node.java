@@ -43,10 +43,7 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    public String getType() {
-        return this.getClass().toString();
-    }
-
+    // declare abstract to force implementation. default Object.toString() is not declared abstract
     public abstract String toString();
 
     public void printAll() {

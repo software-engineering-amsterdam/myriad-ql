@@ -2,8 +2,8 @@ module UI.Widget.Base exposing (WidgetContext, container)
 
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
-import Environment exposing (Environment)
-import Values exposing (Value)
+import QL.Environment exposing (Environment)
+import QL.Values exposing (Value)
 
 
 type alias WidgetContext msg =

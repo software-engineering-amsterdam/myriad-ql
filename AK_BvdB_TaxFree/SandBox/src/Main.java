@@ -1,5 +1,5 @@
-import sandbox.Count;
-import sandbox.QuickCount;
+import inheritance.Count;
+import inheritance.QuickCount;
 
 public class Main {
     public static void main(String[] args) {
