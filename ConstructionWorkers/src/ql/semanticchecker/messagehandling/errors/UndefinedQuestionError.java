@@ -11,13 +11,13 @@ public class UndefinedQuestionError extends Error {
 
     private final Identifier identifier;
 
-    public UndefinedQuestionError(LineNumber location, Identifier identifier) {
-        super(location);
+    public UndefinedQuestionError(LineNumber lineNumber, Identifier identifier) {
+        super(lineNumber);
         this.identifier = identifier;
     }
 
     public String getMessage() {
-        return "ERROR: Question " + identifier.getName() + " at line " + getLocation().getStartingLine() +
+        return "ERROR: Question " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
                 " is undefined.";
     }
 }

@@ -11,8 +11,8 @@ public class DuplicateIdentifierError extends Error {
 
     private final Identifier identifier;
 
-    public DuplicateIdentifierError(LineNumber location, Identifier identifier) {
-        super(location);
+    public DuplicateIdentifierError(LineNumber lineNumber, Identifier identifier) {
+        super(lineNumber);
         this.identifier = identifier;
     }
 
@@ -21,7 +21,7 @@ public class DuplicateIdentifierError extends Error {
     }
 
     public String getMessage() {
-        return "ERROR: Question " + identifier.getName() + " at line " + getLocation().getStartingLine() +
+        return "ERROR: Question " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
                 " has a duplicate identifier with a different type.";
     }
 }

@@ -11,8 +11,8 @@ public class DuplicateIdentifierWarning extends Warning {
 
     private final Identifier identifier;
 
-    public DuplicateIdentifierWarning(LineNumber location, Identifier identifier) {
-        super(location);
+    public DuplicateIdentifierWarning(LineNumber lineNumber, Identifier identifier) {
+        super(lineNumber);
         this.identifier = identifier;
     }
 
@@ -21,7 +21,7 @@ public class DuplicateIdentifierWarning extends Warning {
     }
 
     public String getMessage() {
-        return "WARNING: Question " + identifier.getName() + " at line " + getLocation().getStartingLine() +
+        return "WARNING: Question " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
                 " has a duplicate identifier with the same type.";
     }
 }

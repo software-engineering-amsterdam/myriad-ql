@@ -35,4 +35,18 @@ public class MessageData {
     public List<Error> getErrors() {
         return errors;
     }
+
+    public Boolean containsErrors() {
+        if (this.errors.size() > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean containsWarnings() {
+        if (this.warnings.size() > 0) {
+            return false;
+        }
+        return true;
+    }
 }

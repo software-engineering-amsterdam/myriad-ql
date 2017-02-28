@@ -11,17 +11,13 @@ public class InvalidTypeError extends Error {
 
     private final Type validType;
 
-    public InvalidTypeError(LineNumber location, Type validType) {
-        super(location);
+    public InvalidTypeError(LineNumber lineNumber, Type validType) {
+        super(lineNumber);
         this.validType = validType;
     }
 
-    public Type getValidType() {
-        return validType;
-    }
-
     public String getMessage() {
-        return "ERROR: Invalid type at line " + getLocation().getStartingLine() + ". Type should be " +
+        return "ERROR: Invalid type at line " + getLineNumber().getStartingLine() + ". Type should be " +
                 validType.toString() + ".";
     }
 }

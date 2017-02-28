@@ -9,14 +9,14 @@ import ql.semanticchecker.messagehandling.Message;
 
 public abstract class Warning extends Message {
 
-    private final LineNumber location;
+    private final String type;
 
-    public Warning(LineNumber location) {
-        this.location = location;
+    public Warning(LineNumber lineNumber) {
+        super(lineNumber);
         this.type = "Warning";
     }
 
-    public LineNumber getLocation() {
-        return location;
+    public String getType(){
+        return type;
     }
 }
