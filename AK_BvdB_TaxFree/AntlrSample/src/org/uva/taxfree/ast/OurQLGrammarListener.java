@@ -20,14 +20,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-//public class OurQLGrammarListener implements ParseTreeListener { // Now we do not need to override everything while developing
-public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce us to override every method. We can also extend the base one to not override everything
+public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     private SymbolTable mSymbolTable;
     private FormNode mRootNode;
 
     private final List<Node> mCachedChildren = new ArrayList<>();
-    private final List<BlockNode> mCachedIfStatementNodes = new ArrayList<>(); // The only 'stack' that won't be empty in the end
+    private final List<BlockNode> mCachedIfStatementNodes = new ArrayList<>(); // The only list that won't be empty in the end
     private final List<ConditionNode> mCachedConditions = new ArrayList<>();
 
     public OurQLGrammarListener() {
@@ -40,6 +39,10 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
 
     private ConditionNode popCachedCondition() {
         return mCachedConditions.remove(mCachedConditions.size());
+    }
+
+    private void cacheCondition(ConditionNode conditionNode) {
+        mCachedConditions.add(conditionNode);
     }
 
     // Enters
@@ -87,28 +90,28 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
         super.enterBooleanLiteral(ctx);
         ConditionNode booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
-        mCachedConditions.add(booleanLiteralNode);
+        cacheCondition(booleanLiteralNode);
     }
 
     @Override
     public void enterStringLiteral(QLGrammarParser.StringLiteralContext ctx) {
         super.enterStringLiteral(ctx);
         ConditionNode stringLiteralNode = new StringLiteralNode(ctx.getText());
-        mCachedConditions.add(stringLiteralNode);
+        cacheCondition(stringLiteralNode);
     }
 
     @Override
     public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
         super.enterIntegerLiteral(ctx);
         ConditionNode integerLiteralNode = new IntegerLiteralNode(ctx.getText());
-        mCachedConditions.add(integerLiteralNode);
+        cacheCondition(integerLiteralNode);
     }
 
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
         ConditionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
-        mCachedConditions.add(varNameLiteral);
+        cacheCondition(varNameLiteral);
     }
 
     // Exits
@@ -116,28 +119,28 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.exitBooleanExpression(ctx);
         ConditionNode booleanExpressionNode = new BooleanExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
-        mCachedConditions.add(booleanExpressionNode);
+        cacheCondition(booleanExpressionNode);
     }
 
     @Override
     public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.exitCalculationExpression(ctx);
         ConditionNode calculationExpressionNode = new CalculationExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
-        mCachedConditions.add(calculationExpressionNode);
+        cacheCondition(calculationExpressionNode);
     }
 
     @Override
     public void exitUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
         super.exitUniformExpression(ctx);
         ConditionNode uniformExpressionNode = new UniformExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
-        mCachedConditions.add(uniformExpressionNode);
+        cacheCondition(uniformExpressionNode);
     }
 
     @Override
     public void exitParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
         super.exitParenthesizedExpression(ctx);
         ConditionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition());
-        mCachedConditions.add(parenthesizedExpressionNode);
+        cacheCondition(parenthesizedExpressionNode);
     }
 
     @Override
