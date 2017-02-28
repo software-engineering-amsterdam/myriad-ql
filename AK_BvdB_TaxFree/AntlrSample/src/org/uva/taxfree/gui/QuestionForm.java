@@ -1,34 +1,36 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
+import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 import javax.swing.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class QuestionForm {
-    private Node mFormNode;
-    private JFrame mFrame;
-    public QuestionForm(Node formNode) {
+    private final BlockNode mFormNode;
+
+    public QuestionForm(BlockNode formNode) {
         mFormNode = formNode;
     }
 
     public void show() {
-        mFormNode.setVisibility(true);
+        generateForm();
+        mFormNode.setVisible(true);
     }
 
-    public void printData(){
-        mFormNode.printData();
+    public void printDeclarations() {
+        mFormNode.printDeclarations();
     }
 
-    private void generateForm() {
-        mFrame = new JFrame(mFormNode.getId());
-        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mFrame.add(createComponents());
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
-        mFrame.setVisible(true);
+    private JFrame generateForm() {
+        JFrame frame = new JFrame(mFormNode.toString());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(createComponents());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        return frame;
     }
 
     private JPanel createComponents() {
@@ -40,15 +42,22 @@ public class QuestionForm {
     }
 
     private void fillWidgetPanel(JPanel parentPanel) {
-        for (Node q : extractQuestions()) {
-            parentPanel.add(((NamedNode) q).getWidget());
+        for (NamedNode q : extractDeclarations()) {
+            parentPanel.add(q.getWidget());
         }
     }
 
-    private Set<NamedNode> extractQuestions() {
+    private Set<NamedNode> extractDeclarations() {
         Set<NamedNode> questions = new LinkedHashSet<>();
-        mFormNode.retrieveQuestions(questions);
+        mFormNode.retrieveDeclarations(questions);
         return questions;
     }
 
+    public void updateVisibility() {
+        mFormNode.setVisible(true);
+    }
+
+    public void printValues() {
+        mFormNode.printValues();
+    }
 }

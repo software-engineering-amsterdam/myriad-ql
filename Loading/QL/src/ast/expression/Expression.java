@@ -1,14 +1,22 @@
 package ast.expression;
 
 import ast.Node;
-import ast.Visitor;
 import ast.atom.Atom;
+import ast.type.Type;
+import semantic.Environment;
+import value.Value;
 
-public abstract class Expression implements Node {
+// TODO remove expression from name
+public abstract class Expression extends Node {
 	
+	public Expression(int line) {
+		super(line);
+	}
+
 	public abstract Atom evaluate();
-	
-	@Override
-	public abstract void accept(Visitor v);
+
+	public abstract Atom evaluate(Environment env);
+
+
 	
 }

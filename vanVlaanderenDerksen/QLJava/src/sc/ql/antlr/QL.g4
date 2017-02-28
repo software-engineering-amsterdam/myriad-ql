@@ -6,9 +6,8 @@ form
 	: 'form' form_element+ 'endform' EOF
 	;
 
-form_element
-	: STR ID TYPE 																			#Question
-	| STR ID TYPE '=' expression 															#calcQuestion
+form_element																			
+	: STR ID TYPE ('=' expression) ? 														#Question
 	| 'if' conditional_block ('else if' conditional_block)* ('else' form_element+)? 'endif' #if_statement
 	;
 
@@ -18,11 +17,11 @@ conditional_block
 	
 expression
 	: '(' expression ')' 												#parenExpr
-	| '!' expression													#boolExpr
+	| '!' expression													#notExpr
 	| left=expression op=('*'|'/') right=expression						#opExpr
 	| left=expression op=('+'|'-') right=expression						#opExpr
-	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #relExpr
-	| left=expression op=('&&'|'||') right=expression					#boolExpr
+	| left=expression op=('<'|'<='|'>'|'>='|'=='|'!=') right=expression #opExpr
+	| left=expression op=('&&'|'||') right=expression					#opExpr
 	| atom=BOOL															#boolAtom
 	| atom=INT															#intAtom
 	| atom=ID															#idAtom
@@ -34,12 +33,12 @@ BOOL
 	;
 	
 TYPE
-	: 'boolean'
-	| 'date'
-	| 'float'
-	| 'integer'
-	| 'money'
-	| 'text'
+	: 'BOOLEAN'
+	| 'DATE'
+	| 'FLOAT'
+	| 'INTEGER'
+	| 'MONEY'
+	| 'STRING'
 	;
 
 INT

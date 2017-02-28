@@ -2,12 +2,12 @@ package ast.type;
 
 public class StringType extends Type {
 
-	public StringType() {
-		super("string");
+	public StringType(int line) {
+		super("string", line);
 	}
 	
 	@Override
 	public void accept(ast.Visitor v) {
-		v.visit(this);		
+		// TODO empty accept
 	}
 }

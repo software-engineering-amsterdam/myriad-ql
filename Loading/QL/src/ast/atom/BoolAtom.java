@@ -1,39 +1,38 @@
 package ast.atom;
 
-import java.lang.Boolean;
-
 import ast.Visitor;
 
 public class BoolAtom extends Atom {
     private boolean value;
 
-    public BoolAtom(Boolean value) {
+    public BoolAtom(Boolean value, int line) {
+    	super(line);
     	this.value = value;
     }
 
 	@Override
     public BoolAtom and(Atom other) {
-    	return new BoolAtom(value && other.getValue());
+    	return new BoolAtom(value && other.getValue(), getLine());
     }
 
 	@Override
 	public BoolAtom or(Atom other) {
-		return new BoolAtom(value || other.getValue());
+		return new BoolAtom(value || other.getValue(), getLine());
 	}
 
 	@Override
 	public BoolAtom eq(Atom other) {
-		return new BoolAtom(value == other.getValue());
+		return new BoolAtom(value == other.getValue(), getLine());
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(value != other.getValue());
+		return new BoolAtom(value != other.getValue(), getLine());
 	}
 
 	@Override
 	public BoolAtom not() {
-		return new BoolAtom(!value);
+		return new BoolAtom(!value, getLine());
 	}
 
 	@Override
@@ -45,7 +44,12 @@ public class BoolAtom extends Atom {
 	public String getType() {
 		return "boolean";
 	}
-    
+
+	@Override
+	public Atom evaluate(semantic.Environment env) {
+		return this;
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);		

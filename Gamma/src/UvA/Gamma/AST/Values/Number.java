@@ -2,14 +2,16 @@ package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.ASTNode;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Number implements ASTNode {
-    private double value;
+public class Number extends Value implements ASTNode {
+    protected BigDecimal value;
 
     public Number(double value) {
-        this.value = value;
+        setValue(value);
     }
 
     public Number(String value) {
@@ -17,53 +19,69 @@ public class Number implements ASTNode {
     }
 
     public void setValue(double value) {
-        this.value = value;
+        this.value = new BigDecimal(value);
     }
 
+    @Override
     public void setValue(String value) {
         try {
-            this.value = Double.parseDouble(value);
+            this.value = new BigDecimal(value);
         } catch (NumberFormatException ex) {
-            this.value = 0;
+            this.value = new BigDecimal(0);
         }
     }
 
+    @Override
+    public Type getType() {
+        return Type.DECIMAL;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return type == Type.DECIMAL || type == Type.INTEGER;
+    }
+
     public double doubleValue() {
-        return value;
+        return value.doubleValue();
     }
 
     public int intValue() {
-        return (int) value;
+        return value.intValue();
     }
 
     public boolean isInteger() {
-        return value % 1 == 0;
+        return value.doubleValue() % 1 == 0;
     }
 
     public Number add(Number toAdd) {
-        this.value += toAdd.doubleValue();
+        this.value = this.value.add(toAdd.value);
         return this;
     }
 
     public Number subtract(Number toSubtract) {
-        this.value -= toSubtract.doubleValue();
+        this.value = this.value.subtract(toSubtract.value);
         return this;
     }
 
     public Number divide(Number toDivide) {
-        this.value /= toDivide.doubleValue();
+        this.value = this.value.divide(toDivide.value);
         return this;
     }
 
     public Number multiply(Number toMultiply) {
-        this.value *= toMultiply.doubleValue();
+        this.value = this.value.multiply(toMultiply.value);
         return this;
+    }
+
+    @Override
+    public String computableString() {
+        return toString();
     }
 
     @Override
     public String toString() {
         if (this.isInteger()) {
-            return "" + (int) this.value;
+            return "" + this.value.toBigInteger();
         } else {
             return "" + this.value;
         }

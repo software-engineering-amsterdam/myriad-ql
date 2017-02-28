@@ -4,7 +4,6 @@ package semantic;
 import ast.Visitor;
 import ast.atom.Atom;
 import ast.expression.BinaryExpression;
-import ast.expression.Expression;
 import ast.expression.IdExpression;
 import ast.expression.UnaryExpression;
 
@@ -26,7 +25,9 @@ public class ExpressionVisitor extends Visitor {
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
-		Atom result = binaryExpression.evaluate() ;	
+
+		// TODO this should check not evaluate
+		Atom result = binaryExpression.evaluate(environment) ;
 		check(result);
 		
 		System.out.println("Eval: " + result.getValue());
@@ -35,7 +36,7 @@ public class ExpressionVisitor extends Visitor {
 	@Override
 	public void visit(UnaryExpression unaryExpression) {
 		
-		Atom result = unaryExpression.evaluate();
+		Atom result = unaryExpression.evaluate(environment);
 		check(result);
 		
 		System.out.println("Eval: " + result);
@@ -43,28 +44,27 @@ public class ExpressionVisitor extends Visitor {
 	
 	@Override 
 	public void visit(IdExpression id) {
+
+		System.out.println("IdExpression VISIT");
 		
-		Atom result = id.evaluate();
-		if (result.getType() != "string") { 
-			throw new RuntimeException("Expected a id with a variablename, but got type " +
-						result.getType());
-		}
-		
-		if (!environment.variableExists(result.getString())) {
-			throw new RuntimeException("The variable with name " + result.getString() +
-					" on line ... is not defined");
+		Atom result = id.evaluate(environment);
+
+		if (!environment.variableExists(id.getName())) {
+			throw new RuntimeException("The variable with name " + id.getName() +
+					" on line "+ id.getLine() + " is not defined");
 		}
 
-		System.out.println("Eval: " + result);
+		System.out.println("Eval: " + result.getValue());
 	}
 	
 	// TODO do we want to add the throw after this function
 	private void check(Atom result) {
+		// TODO we do not know what is wrong at this moment
 		if (result == null) {
-			throw new RuntimeException("The expression on line .. cannot be evaluated");
+			throw new RuntimeException("The expression on line "+ result.getLine() + " cannot be evaluated");
 		}
 		else if (result.getType() != "boolean") {
-			throw new RuntimeException("The condition on line ... does not return a boolean");	
+			throw new RuntimeException("The condition on line " + result.getLine() + " does not return a boolean");
 			// TODO implement line numbers
 		}
 		

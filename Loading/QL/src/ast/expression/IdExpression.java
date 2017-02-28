@@ -3,13 +3,16 @@ package ast.expression;
 import ast.Visitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
+import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
+import semantic.Environment;
 
 public class IdExpression extends Expression {
 
 	private String name;
 	
-	public IdExpression(String name) {
+	public IdExpression(String name, int line) {
+		super(line);
 		this.name = name;
 	}
 
@@ -19,14 +22,33 @@ public class IdExpression extends Expression {
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		v.visit(this);
 	}
 	
 	@Override
 	public Atom evaluate() {
-		return new StringAtom(name); // TODO actually return unknown variable : not a string
-		// String Atom
+		System.out.println("idExpression evaluate();");
+		return new BoolAtom(false, getLine());
+	}
+
+	@Override
+	public Atom evaluate(Environment env) {
+//		System.out.println("TESTING STUFF HERE"+ test.getValue());
+//		return new BoolAtom((Boolean)  test.getValue());
+		System.out.println("HAS TYPE: " + env.hasType(name));
+
+		String t = env.hasType(name).getType();
+		if (t.equals("integer")) {
+			return new IntegerAtom(1, getLine());
+		}
+		if (t.equals("string")) {
+			return new StringAtom("string", getLine());
+		}
+		if (t.equals("boolean")) {
+			return new BoolAtom(true, getLine());
+		}
+
+		return null;
 	}
 	
 }

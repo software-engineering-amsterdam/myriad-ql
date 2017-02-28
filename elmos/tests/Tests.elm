@@ -1,23 +1,17 @@
 module Tests exposing (all)
 
+import Test exposing (Test, concat)
 import Combine.ExtraTests
-import Parser.ExpressionTests as ExpressionTests
-import Parser.FormTests as FormTests
-import Parser.TokenTests as TokenTests
-import TypeChecker.TypeCheckerTests as TypeCheckerTests
-import EvaluatorTests
-import UI.FormDataTests
-import Test exposing (Test, describe)
+import QL.Tests
+import QLS.Tests
+import UI.FormUtilTests
 
 
 all : Test
 all =
-    describe "QL Parser"
-        [ FormTests.all
-        , Combine.ExtraTests.all
-        , ExpressionTests.all
-        , TokenTests.all
-        , UI.FormDataTests.all
-        , TypeCheckerTests.all
-        , EvaluatorTests.all
+    concat
+        [ Combine.ExtraTests.all
+        , QL.Tests.all
+        , QLS.Tests.all
+        , UI.FormUtilTests.all
         ]

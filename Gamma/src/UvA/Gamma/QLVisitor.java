@@ -1,13 +1,19 @@
 package UvA.Gamma;
 
 import UvA.Gamma.AST.*;
+import UvA.Gamma.AST.Expressions.BooleanExpression;
+import UvA.Gamma.AST.Expressions.Expression;
+import UvA.Gamma.AST.Expressions.MoneyExpression;
+import UvA.Gamma.AST.Expressions.NumberExpression;
 import UvA.Gamma.AST.Values.Boolean;
+import UvA.Gamma.AST.Values.*;
+import UvA.Gamma.AST.Values.Number;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 
 
 /**
- * Created by Tjarco on 08-02-17.
+ * Created by Tjarco, 08-02-17.
  */
 
 public class QLVisitor extends QLBaseVisitor<ASTNode> {
@@ -34,7 +40,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Question question = new Question();
         question.setQuestion(ctx.STRING_LITERAL().getText());
         question.setId(ctx.ID().getText());
-        question.setType(ctx.type().getText());
+        question.setValue((Value) visit(ctx.type()));
         return question;
     }
 
@@ -43,71 +49,58 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Computed computed = new Computed();
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
-        computed.setType(ctx.type().getText());
         computed.setExpression((Expression) visit(ctx.expression()));
+
         return computed;
     }
 
     @Override
     public Condition visitCondition(QLParser.ConditionContext ctx) {
         Condition condition = new Condition();
-        condition.setExpression(visit(ctx.boolExpr()).toString());
+        condition.setExpression(new BooleanExpression(ctx.boolExpr().getText()));
+        for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
+            condition.addFormItem((FormItem) visit(formItemContext));
+        }
+
+        if (ctx.elseblock() != null) {
+            for (QLParser.FormItemContext elseItemContext : ctx.elseblock().formItem()) {
+                condition.addElseBlockItem((FormItem) visit(elseItemContext));
+            }
+        }
+
         return condition;
     }
 
-
-//    @Override
-//    public Expression visitExpression(QLParser.ExpressionContext ctx) {
-//        super.visitExpression(ctx);
-//        return new NumberExpression(ctx.getText());
-//    }
-
     @Override
-    public NumberExpression visitNumExpr(QLParser.NumExprContext ctx) {
-        return new NumberExpression(ctx.getText());
+    public BooleanExpression visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
+        return new BooleanExpression(ctx.boolExpr().getText());
     }
 
-    //
-//    @Override
-//    public Number visitAdd(QLParser.AddContext ctx) {
-//        Number left = (Number) visit(ctx.numExpr(0));
-//        Number right = (Number) visit(ctx.numExpr(1));
-//        return ctx.op.getText().equals("+") ? left.add(right) : left.subtract(right);
-//    }
-//
-//    //Expressions
-//    @Override
-//    public Number visitDiv(QLParser.DivContext ctx) {
-//        Number left = (Number) visit(ctx.numExpr(0));
-//        Number right = (Number) visit(ctx.numExpr(1));
-//        return ctx.op.getText().equals("*") ? left.multiply(right) : left.divide(right);
-//    }
-//
-//    @Override
-//    public Number visitNum(QLParser.NumContext ctx) {
-//        return new Number(ctx.getText());
-//    }
+    @Override
+    public NumberExpression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
+        return new NumberExpression(ctx.numExpr().getText());
+    }
 
     @Override
-    public Boolean visitAndor(QLParser.AndorContext ctx) {
-        Boolean left = (Boolean) visit(ctx.boolExpr(0));
-        Boolean right = (Boolean) visit(ctx.boolExpr(1));
-        switch (ctx.op.getText()) {
-            case "&&":
-                return new Boolean(left.and(right));
-            case "||":
-                return new Boolean(left.or(right));
-            case "==":
-                return new Boolean(left.equals(right));
-            case "!=":
-                return new Boolean(!left.equals(right));
+    public MoneyExpression visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+        return new MoneyExpression(ctx.numExpr().getText());
+    }
+
+    @Override
+    public Value visitType(QLParser.TypeContext ctx) {
+        switch (ctx.getText()) {
+            case "boolean":
+                return new Boolean(false);
+            case "integer":
+                return new Number(0);
+            case "decimal":
+                return new Number(0);
+            case "money":
+                return new Money(0);
+            case "string":
+                return new StringValue();
             default:
-                return left;
+                return new Number(0);
         }
-    }
-
-    @Override
-    public Boolean visitBool(QLParser.BoolContext ctx) {
-        return new Boolean(ctx.getText());
     }
 }

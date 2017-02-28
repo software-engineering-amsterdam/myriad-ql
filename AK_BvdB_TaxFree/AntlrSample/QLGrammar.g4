@@ -4,34 +4,35 @@ grammar QLGrammar;
 package org.uva.taxfree.gen;
 }
 
-form : 'form ' formId=STRING_LITERAL '{' statement* '}';
+form : 'form ' formId=VARIABLE_LITERAL '{' statement* '}';
 statement : question
           | calculation
           | ifStatement
           | ifElseStatement
           ;
 
-question : QUESTION '->' STRING_LITERAL ':' varType;
-calculation : DESCRIPTION '->' STRING_LITERAL ':' varType '=' expression;
-ifStatement : 'if (' expression ')' '{' question* '}';
-ifElseStatement : ifStatement 'else' '{' question* '}';
+question : QUESTION '->' VARIABLE_LITERAL ':' varType;
+calculation : DESCRIPTION '->' VARIABLE_LITERAL ':' varType '=' expression;
+ifStatement : 'if (' expression ')' '{' statement* '}';
+ifElseStatement : ifStatement 'else' '{' statement* '}';
 
-expression : BOOLEAN_LITERAL
-           | INTEGER_LITERAL
-           | STRING_LITERAL
-           | '(' expression ')'
-           | left=expression op='==' right=expression
-           | left=expression op='!=' right=expression
-           | left=expression op='||' right=expression
-           | left=expression op='&&' right=expression
-           | left=expression op='>=' right=expression
-           | left=expression op='<=' right=expression
-           | left=expression op='-' right=expression
-           | left=expression op='+' right=expression
-           | left=expression op='<' right=expression
-           | left=expression op='>' right=expression
-           | left=expression op='/' right=expression
-           | left=expression op='*' right=expression
+expression : BOOLEAN_LITERAL                                #booleanLiteral
+           | INTEGER_LITERAL                                #integerLiteral
+           | STRING_LITERAL                                 #stringLiteral
+           | VARIABLE_LITERAL                               #varNameLiteral
+           | '(' expression ')'                             #parenthesizedExpression
+           | left=expression operator='/' right=expression  #calculationExpression
+           | left=expression operator='*' right=expression  #calculationExpression
+           | left=expression operator='-' right=expression  #calculationExpression
+           | left=expression operator='+' right=expression  #calculationExpression
+           | left=expression operator='<' right=expression  #calculationExpression
+           | left=expression operator='>' right=expression  #calculationExpression
+           | left=expression operator='>=' right=expression #calculationExpression
+           | left=expression operator='<=' right=expression #calculationExpression
+           | left=expression operator='||' right=expression #booleanExpression
+           | left=expression operator='&&' right=expression #booleanExpression
+           | left=expression operator='!=' right=expression #uniformExpression
+           | left=expression operator='==' right=expression #uniformExpression
            ;
 
 varType : 'boolean' # booleanType
@@ -46,4 +47,5 @@ QUESTION : '"'~[?]+'?"';
 DESCRIPTION : '"'~[:]+':"';
 BOOLEAN_LITERAL : ('true' | 'false');
 INTEGER_LITERAL : [0-9]+;
-STRING_LITERAL : [a-zA-Z]+;
+STRING_LITERAL : '"'~["]+'"';
+VARIABLE_LITERAL : [a-zA-Z]+;

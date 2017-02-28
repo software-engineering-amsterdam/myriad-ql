@@ -7,6 +7,7 @@ import ast.expression.*;
 import ast.type.*;
 
 // In order traversal
+// TODO implements VisitorInterface 
 public class Visitor {
 	
 	public void visit(Form form) {
@@ -19,22 +20,21 @@ public class Visitor {
 	
 	public void visit(Block block) {
 		
-		// TODO generalize
-		List<Question> questions = block.getQuestions();		
-		for (Question question : questions) {
-			question.accept(this);
-		}
-		
-		List<Statement> statements = block.getStatements();
-		for (Statement statement : statements) {
-			statement.accept(this);
+		for (BlockItem blockItem : block.getBlockItems()) {
+			blockItem.accept(this);
 		}
 	}
 	
+	public void visit(BlockItem blockItem) {	
+		blockItem.accept(this);		
+	}
+	
+	// TODO remove?
 	public void visit(Question question) {	
 		question.getType().accept(this);		
 	}
 	
+	// TODO remove?
 	public void visit(Statement statement) {		
 		statement.getExpression().accept(this);
 		statement.getBlock().accept(this); // TODO circulair dependencies?
@@ -56,28 +56,15 @@ public class Visitor {
 	
 	public void visit(IdExpression id) {
 		System.out.println(id.getName());
-		
 	}
 
 	public void visit(BoolAtom boolAtom) {
 		System.out.println(boolAtom.getValue());
 	}
 
-//	public void visit(DateAtom dateAtom) {
-//		System.out.println(dateAtom.getValue());
-//	}
-//
-//	public void visit(DecimalAtom decimalAtom) {
-//		//System.out.println(decimalAtom.getValue());
-//	}
-
 	public void visit(IntegerAtom integerAtom) {
-//		System.out.println(integerAtom.getValue());
+		System.out.println(integerAtom.getNumber());
 	}
-
-//	public void visit(MoneyAtom moneyAtom) {
-//		//System.out.println(moneyAtom.getValue());
-//	}
 
 	public void visit(StringAtom stringAtom) {
 		System.out.println(stringAtom.getValue());

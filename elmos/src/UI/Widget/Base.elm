@@ -2,15 +2,16 @@ module UI.Widget.Base exposing (WidgetContext, container)
 
 import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, for)
-import AST exposing (Field)
-import UI.FormData exposing (FormData)
-import Values exposing (Value)
+import QL.Environment exposing (Environment)
+import QL.Values exposing (Value)
 
 
 type alias WidgetContext msg =
-    { field : Field
-    , formData : FormData
+    { identifier : String
+    , label : String
+    , env : Environment
     , onChange : Value -> msg
+    , editable : Bool
     }
 
 
@@ -21,7 +22,7 @@ type alias Widget msg =
 container : WidgetContext msg -> Widget msg -> Html msg
 container context widget =
     div [ class "form-group" ]
-        [ label [ for context.field.id ]
-            [ text context.field.label ]
+        [ label [ for context.identifier ]
+            [ text context.label ]
         , widget context
         ]

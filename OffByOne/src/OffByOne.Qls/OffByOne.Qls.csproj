@@ -38,9 +38,14 @@
     <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=e9931a4108ef2354, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Antlr4.Runtime.4.5.4-beta001\lib\net45\Antlr4.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="MoreDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MoreDotNet.0.6\lib\MoreDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -54,11 +59,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Style\Statements\Base\Statement.cs" />
+    <Compile Include="Ast\Style\Statements\Page.cs" />
+    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
+    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
+    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
+    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
+    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
+    <Compile Include="Ast\Style\Statements\Section.cs" />
+    <Compile Include="Ast\Style\Statements\StyleSheet.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\OptionsList.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
+    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
+    <Compile Include="Checker\Messages\DuplicatePageMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
+    <Compile Include="Checker\StyleSheetAnalyzer.cs" />
+    <Compile Include="Checker\TypeCheckerVisitor.cs" />
     <Compile Include="CustomQlsVisitor.cs" />
+    <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
     <Compile Include="obj\Debug\QlsGrammarLexer.cs" />
     <Compile Include="obj\Debug\QlsGrammarParser.cs" />
     <Compile Include="obj\Debug\QlsGrammarVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visitors\Base\BaseQlsVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IPropertyVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IRuleVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IStatementVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableProperty.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableWidget.cs" />
+    <Compile Include="Visitors\Contracts\IVisitibleRule.cs" />
+    <Compile Include="Visitors\Contracts\IWidigetVisitor.cs" />
+    <Compile Include="Visitors\FormCheckerContext.cs" />
+    <Compile Include="Visitors\FormCheckerVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Parser\QlsGrammar.g4">
@@ -79,6 +126,7 @@
       <Name>OffByOne.LanguageCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,34 +1,28 @@
 package ast.expression;
 
 import ast.Visitor;
-import ast.atom.Atom;
 
 public abstract class BinaryExpression extends Expression {
 
-	private Atom lhs;
-	private Atom rhs;
-	// protected boolean eval;
-	
-	// TODO is this preferred over a constructor with lhs and rhs?
-	public BinaryExpression() {
-	}
-	
-	public BinaryExpression setElements(Atom lhs, Atom rhs) {
+	private Expression lhs;
+	private Expression rhs;
+
+	public BinaryExpression(Expression lhs, Expression rhs, int line) {
+		super(line);
 		this.lhs = lhs;
 		this.rhs = rhs;
-		return this;
 	}
-	
-	public Atom getLhs() {
+
+	public Expression getLhs() {
 		return lhs;
 	}
 	
-	public Atom getRhs() {
+	public Expression getRhs() {
 		return rhs;
 	}
 	
-@Override 
-public void accept(Visitor v) {
+	@Override
+	public void accept(Visitor v) {
 		v.visit(this);
 	}
 }

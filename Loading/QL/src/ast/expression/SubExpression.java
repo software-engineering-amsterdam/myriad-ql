@@ -2,8 +2,14 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
+import semantic.Environment;
 
 public class SubExpression extends BinaryExpression {
+
+	public SubExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
@@ -11,7 +17,14 @@ public class SubExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		// TODO Auto-generated method stub
-		return getLhs().sub(getRhs());
+		System.out.println("getLhs: " + getLhs().evaluate().getNumber());
+		System.out.println("getRhs: " + getRhs().evaluate().getNumber());
+//		System.out.println("getLhs().sub(getRhs()): " + getLhs().sub(getRhs()).getNumber());
+		return getLhs().evaluate().sub(getRhs().evaluate());
+	}
+
+    @Override
+	public Atom evaluate(Environment env) {
+		return null;
 	}
 }

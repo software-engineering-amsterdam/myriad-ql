@@ -1,6 +1,6 @@
 package ast;
 
-public class Form implements Node {
+public class Form extends Node {
 	
 	private final String id;
 	private Block block;
@@ -12,8 +12,10 @@ public class Form implements Node {
 	public Block getBlock() {
 		return block;
 	}
-
-	public Form(String id, Block block) {
+	
+	// TODO move line to Node
+	public Form(String id, Block block, int line) {
+		super(line);
 		this.id = id;
 		this.block = block;
 	}

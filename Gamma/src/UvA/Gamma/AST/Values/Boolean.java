@@ -6,35 +6,59 @@ import UvA.Gamma.AST.ASTNode;
  * Created by Tjarco, 14-02-17.
  */
 
-public class Boolean implements ASTNode {
+public class Boolean extends Value implements ASTNode {
     private boolean value;
 
-    public Boolean(boolean value){
+    public Boolean(boolean value) {
         this.value = value;
     }
 
-    public Boolean(String value){
+    public Boolean(String value) {
+        setValue(value);
+    }
+
+    @Override
+    public void setValue(String value) {
         this.value = java.lang.Boolean.valueOf(value);
     }
 
-    public boolean getValue(){
+    @Override
+    public Type getType() {
+        return Type.BOOL;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return type == Type.BOOL;
+    }
+
+    public boolean getValue() {
         return value;
     }
 
-    public boolean and(Boolean other){
-       return this.value && other.getValue();
+    public boolean and(Boolean other) {
+        return this.value && other.getValue();
     }
 
-    public boolean or(Boolean other){
+    public boolean or(Boolean other) {
         return this.value || other.getValue();
     }
 
-    public boolean equals(Boolean other){
+    public boolean equals(Boolean other) {
         return this.value == other.getValue();
     }
 
     @Override
+    public String computableString() {
+        return toString();
+    }
+
+    @Override
     public String toString() {
-        return "<Boolean> " + this.value;
+        return "" + this.value;
+    }
+
+    public static boolean isBoolean(String value) {
+        return value.toLowerCase().equals("true") || value.toLowerCase().equals("false");
     }
 }

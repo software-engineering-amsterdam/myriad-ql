@@ -1,178 +1,174 @@
 package org.uva.taxfree.ast;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.*;
+import org.uva.taxfree.model.environment.Environment;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.blocks.FormNode;
+import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
+import org.uva.taxfree.model.node.blocks.IfStatementNode;
+import org.uva.taxfree.model.node.expression.*;
+import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
+import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
+import org.uva.taxfree.model.node.literal.StringLiteralNode;
+import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.statement.*;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
-//public class OurQLGrammarListener implements ParseTreeListener { // Now we do not need to override everything while developing
-public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce us to override every method. We can also extend the base one to not override everything
+public class OurQLGrammarListener extends QLGrammarBaseListener {
 
-    private Ast mAst;
-    Stack<Node> mParentStack = new Stack<>();
+    private SymbolTable mSymbolTable;
+    private FormNode mRootNode;
 
-    private void popParent() {
-        mParentStack.pop();
+    private final List<Node> mCachedChildren = new ArrayList<>();
+    private final List<BlockNode> mCachedIfStatementNodes = new ArrayList<>(); // The only list that won't be empty in the end
+    private final List<ConditionNode> mCachedConditions = new ArrayList<>();
+
+    public OurQLGrammarListener() {
+        mSymbolTable = new SymbolTable();
     }
 
-    private void addParentNodeToAst(Node node) {
-        addNodeToAst(node);
-        mParentStack.push(node);
+    public Environment getEnvironment() {
+        return new Environment(mSymbolTable, mRootNode);
     }
 
-    private void addNodeToAst(Node node) {
-        mParentStack.peek().addChild(node);
+    private ConditionNode popCachedCondition() {
+        return mCachedConditions.remove(mCachedConditions.size()-1);
     }
 
-    public Ast getAst() {
-        return mAst;
+    private void cacheCondition(ConditionNode conditionNode) {
+        mCachedConditions.add(conditionNode);
     }
-
 
     // Enters
     @Override
-    public void enterForm(QLGrammarParser.FormContext ctx) {
-        super.enterForm(ctx);
-        Node formNode = new FormNode(ctx.formId.toString());
-        if (mAst == null) {
-            // It's the root!
-            mAst = new Ast(formNode);
-            mParentStack.push(formNode);
-        } else {
-            addParentNodeToAst(formNode);
-        }
-    }
-
-    @Override
-    public void enterIfStatement(QLGrammarParser.IfStatementContext ctx) {
-        super.enterIfStatement(ctx);
-        Node ifStatementNode = new IfStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(ifStatementNode);
-    }
-
-    @Override
-    public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
-        super.enterIfElseStatement(ctx);
-        Node ifElseStatementNode = new IfElseStatementNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(ifElseStatementNode);
-    }
-
-    @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        Node questionNode = new StringQuestion(ctx.QUESTION().toString(), ctx.STRING_LITERAL().toString());
-        addNodeToAst(questionNode);
-    }
+        NamedNode questionNode;
+        String questionText = ctx.QUESTION().getText();
+        String questionId = ctx.VARIABLE_LITERAL().getText();
 
-    @Override
-    public void enterExpression(QLGrammarParser.ExpressionContext ctx) {
-        super.enterExpression(ctx);
-        Node expressionNode = new ExpressionNode(ctx.getText(), String.valueOf(ctx.getRuleIndex()));
-        addParentNodeToAst(expressionNode);
-    }
-
-    // Exits
-    @Override
-    public void exitIfStatement(QLGrammarParser.IfStatementContext ctx) {
-        super.exitIfStatement(ctx);
-        popParent();
-    }
-
-    @Override
-    public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
-        super.exitIfElseStatement(ctx);
-        popParent();
-    }
-
-    @Override
-    public void exitExpression(QLGrammarParser.ExpressionContext ctx) {
-        super.exitExpression(ctx);
-        popParent();
-    }
-
-    @Override
-    public void exitForm(QLGrammarParser.FormContext ctx) {
-        super.exitForm(ctx);
-        popParent(); // Clear stack
-    }
-
-    ////////////////
-    @Override
-    public void enterStatement(QLGrammarParser.StatementContext ctx) {
-        super.enterStatement(ctx);
-    }
-
-    @Override
-    public void exitStatement(QLGrammarParser.StatementContext ctx) {
-        super.exitStatement(ctx);
-    }
-
-    @Override
-    public void exitQuestion(QLGrammarParser.QuestionContext ctx) {
-        super.exitQuestion(ctx);
+        if ("boolean".equals(ctx.varType().getText())) {
+            questionNode = new BooleanQuestion(questionText, questionId);
+        } else if ("string".equals(ctx.varType().getText())) {
+            questionNode = new StringQuestion(questionText, questionId);
+        } else if ("integer".equals(ctx.varType().getText())) {
+            questionNode = new IntegerQuestion(questionText, questionId);
+        } else {
+            // TODO: Bail out!
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+        }
+        mSymbolTable.addSymbol(questionNode);
+        mCachedChildren.add(questionNode);
     }
 
     @Override
     public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
         super.enterCalculation(ctx);
+        NamedNode calculatedFieldNode;
+        String fieldDescription = ctx.DESCRIPTION().getText();
+        String fieldId = ctx.VARIABLE_LITERAL().getText();
+
+        if ("boolean".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else if ("integer".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else {
+            // TODO: Bail out!
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+        }
+        mSymbolTable.addSymbol(calculatedFieldNode);
+        mCachedChildren.add(calculatedFieldNode);
     }
 
     @Override
-    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.exitCalculation(ctx);
+    public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
+        super.enterBooleanLiteral(ctx);
+        ConditionNode booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
+        cacheCondition(booleanLiteralNode);
     }
 
     @Override
-    public void enterBooleanType(QLGrammarParser.BooleanTypeContext ctx) {
-        super.enterBooleanType(ctx);
+    public void enterStringLiteral(QLGrammarParser.StringLiteralContext ctx) {
+        super.enterStringLiteral(ctx);
+        ConditionNode stringLiteralNode = new StringLiteralNode(ctx.getText());
+        cacheCondition(stringLiteralNode);
     }
 
     @Override
-    public void exitBooleanType(QLGrammarParser.BooleanTypeContext ctx) {
-        super.exitBooleanType(ctx);
+    public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
+        super.enterIntegerLiteral(ctx);
+        ConditionNode integerLiteralNode = new IntegerLiteralNode(ctx.getText());
+        cacheCondition(integerLiteralNode);
     }
 
     @Override
-    public void enterStringType(QLGrammarParser.StringTypeContext ctx) {
-        super.enterStringType(ctx);
+    public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
+        super.enterVarNameLiteral(ctx);
+        ConditionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
+        cacheCondition(varNameLiteral);
+    }
+
+    // Exits
+    @Override
+    public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
+        super.exitBooleanExpression(ctx);
+        ConditionNode booleanExpressionNode = new BooleanExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        cacheCondition(booleanExpressionNode);
     }
 
     @Override
-    public void exitStringType(QLGrammarParser.StringTypeContext ctx) {
-        super.exitStringType(ctx);
+    public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
+        super.exitCalculationExpression(ctx);
+        ConditionNode calculationExpressionNode = new CalculationExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        cacheCondition(calculationExpressionNode);
     }
 
     @Override
-    public void enterIntegerType(QLGrammarParser.IntegerTypeContext ctx) {
-        super.enterIntegerType(ctx);
+    public void exitUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
+        super.exitUniformExpression(ctx);
+        ConditionNode uniformExpressionNode = new UniformExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        cacheCondition(uniformExpressionNode);
     }
 
     @Override
-    public void exitIntegerType(QLGrammarParser.IntegerTypeContext ctx) {
-        super.exitIntegerType(ctx);
+    public void exitParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
+        super.exitParenthesizedExpression(ctx);
+        ConditionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition());
+        cacheCondition(parenthesizedExpressionNode);
     }
 
     @Override
-    public void enterEveryRule(ParserRuleContext ctx) {
-        super.enterEveryRule(ctx);
+    public void exitIfStatement(QLGrammarParser.IfStatementContext ctx) {
+        super.exitIfStatement(ctx);
+        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), new LinkedHashSet<>(mCachedChildren));
+        mCachedChildren.clear();
+        mCachedChildren.add(ifStatementNode);
+        mCachedIfStatementNodes.add(ifStatementNode);
     }
 
     @Override
-    public void exitEveryRule(ParserRuleContext ctx) {
-        super.exitEveryRule(ctx);
+    public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
+        super.exitIfElseStatement(ctx);
+        // Retrieve the if statement, which is the first child.
+        // Then remove it, remaining childs are the childs in the ELSE block.
+        // Childs in the IF block are contained in the ifStatement node already, which is a member of the IfElseStatementNode
+        BlockNode ifStatementNode = mCachedIfStatementNodes.remove(mCachedIfStatementNodes.size()-1);
+        mCachedChildren.remove(0); // Remove the ifStatementNode from the children
+        BlockNode ifElseStatementNode = new IfElseStatementNode(ifStatementNode, new LinkedHashSet<>(mCachedChildren));
+        mCachedChildren.clear();
+        mCachedChildren.add(ifElseStatementNode);
     }
 
     @Override
-    public void visitTerminal(TerminalNode node) {
-        super.visitTerminal(node);
-    }
-
-    @Override
-    public void visitErrorNode(ErrorNode node) {
-        super.visitErrorNode(node);
+    public void exitForm(QLGrammarParser.FormContext ctx) {
+        super.exitForm(ctx);
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), new LinkedHashSet<>(mCachedChildren));
+        mCachedChildren.clear();
     }
 }

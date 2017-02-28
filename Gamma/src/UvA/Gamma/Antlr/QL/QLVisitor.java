@@ -46,39 +46,38 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondition(QLParser.ConditionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#expression}.
+	 * Visit a parse tree produced by {@link QLParser#elseblock}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(QLParser.ExpressionContext ctx);
+	T visitElseblock(QLParser.ElseblockContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code andor}
-	 * labeled alternative in {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by the {@code booleanExpression}
+	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAndor(QLParser.AndorContext ctx);
+	T visitBooleanExpression(QLParser.BooleanExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code comparison}
-	 * labeled alternative in {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by the {@code numberExpression}
+	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComparison(QLParser.ComparisonContext ctx);
+	T visitNumberExpression(QLParser.NumberExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code bool}
-	 * labeled alternative in {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by the {@code moneyExpression}
+	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBool(QLParser.BoolContext ctx);
+	T visitMoneyExpression(QLParser.MoneyExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code boolId}
-	 * labeled alternative in {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by {@link QLParser#boolExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolId(QLParser.BoolIdContext ctx);
+	T visitBoolExpr(QLParser.BoolExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#numExpr}.
 	 * @param ctx the parse tree

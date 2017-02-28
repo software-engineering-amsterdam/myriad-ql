@@ -1,27 +1,22 @@
 package org.ql.ast.expression.relational;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Node;
+import org.ql.ast.expression.BinaryExpression;
+import org.ql.ast.expression.ExpressionVisitor;
 
-public class GreaterThan implements Expression {
-    private Expression left;
-    private Expression right;
+public class GreaterThan extends BinaryExpression {
 
     public GreaterThan(Expression left, Expression right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    public Expression getLeft() {
-        return left;
-    }
-
-    public Expression getRight() {
-        return right;
+        super(left, right);
     }
 
     @Override
     public String toString() {
-        return "(" + left + ">" + right + ")";
+        return "(" + getLeft() + ">" + getRight() + ")";
+    }
+
+    @Override
+    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
+        return visitor.visit(this);
     }
 }

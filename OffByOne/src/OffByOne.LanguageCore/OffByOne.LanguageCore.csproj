@@ -34,8 +34,22 @@
     <CodeAnalysisRuleSet>OffByOne.LanguageCore.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=e9931a4108ef2354, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr4.Runtime.4.5.4-beta001\lib\net45\Antlr4.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MoreDotNet.0.6\lib\MoreDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,75 +59,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ast\AstNode.cs" />
-    <Compile Include="Ast\Expressions\Binary\AddExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\AndExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\Base\BinaryExpression.cs" />
-    <Compile Include="Ast\Expressions\BracketExpression.cs" />
     <Compile Include="Ast\Literals\Base\Literal.cs" />
     <Compile Include="Ast\Literals\BooleanLiteral.cs" />
     <Compile Include="Ast\Literals\DateLiteral.cs" />
     <Compile Include="Ast\Literals\DecimalLiteral.cs" />
-    <Compile Include="Ast\Expressions\Expression.cs" />
-    <Compile Include="Ast\Expressions\Binary\DivideExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\EqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\GreaterThanExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\GreaterThanOrEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\LessThanExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\LessThanOrEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\MultiplyExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
-    <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
+    <Compile Include="Ast\Literals\HexLiteral.cs" />
     <Compile Include="Ast\Literals\IntegerLiteral.cs" />
     <Compile Include="Ast\Literals\MoneyLiteral.cs" />
     <Compile Include="Ast\Literals\StringLiteral.cs" />
-    <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\NotExpression.cs" />
-    <Compile Include="Ast\Expressions\Unary\PositiveExpression.cs" />
-    <Compile Include="Ast\Expressions\VariableExpression.cs" />
-    <Compile Include="Ast\Statements\Branch\ElseStatement.cs" />
-    <Compile Include="Ast\Statements\FormStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\Base\QuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\BooleanQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DateQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\DecimalQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\IntegerQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\MoneyQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Questions\StringQuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Statement.cs" />
-    <Compile Include="Ast\Style\Page.cs" />
-    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
-    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
-    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
-    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
-    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
-    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
-    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
-    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
-    <Compile Include="Ast\Style\Section.cs" />
-    <Compile Include="Ast\Style\StyleSheet.cs" />
-    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
-    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
-    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
+    <Compile Include="Ast\SourceCode.cs" />
+    <Compile Include="Ast\ValueTypes\Base\NumericalValueType.cs" />
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
     <Compile Include="Ast\ValueTypes\DateValueType.cs" />
+    <Compile Include="Ast\ValueTypes\DecimalValueType.cs" />
     <Compile Include="Ast\ValueTypes\IntegerValueType.cs" />
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
+    <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
+    <Compile Include="Checker\BaseTypeCheckerVisitor.cs" />
+    <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
+    <Compile Include="Checker\CheckerReport.cs" />
+    <Compile Include="Checker\Models\LogLevel.cs" />
+    <Compile Include="Checker\Messages\InvaildTypeMessage.cs" />
+    <Compile Include="TypeConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visitors\Contracts\IContext.cs" />
+    <Compile Include="Visitors\Contracts\IVisitorContext.cs" />
+    <Compile Include="Visitors\Contracts\ILiteralVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IValueTypeVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IVisitable.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableLiteral.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
+    <Compile Include="Visitors\Contracts\IVisitor.cs" />
+    <Compile Include="Visitors\VisitorContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
     <None Include="OffByOne.LanguageCore.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
