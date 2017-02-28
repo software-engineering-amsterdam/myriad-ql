@@ -55,17 +55,25 @@ class Expression(Node):
         return visitor.expression(self)
 
 
-class Conditional(Node):
+class If(Node):
     def __init__(self,  boolean_statement):
-        super(Conditional, self).__init__('conditional')
+        super(If, self).__init__('if')
         self.condition = boolean_statement[0]
         self.statements = boolean_statement[1]
-        self.else_statement_list = None
-        if boolean_statement.else_statement is not None and len(boolean_statement.else_statement) > 0:
-            self.else_statement_list = boolean_statement.else_statement[0]
 
     def apply(self, visitor):
-        return visitor.conditional(self)
+        return visitor.conditional_if(self)
+
+
+class IfElse(Node):
+    def __init__(self,  boolean_statement):
+        super(IfElse, self).__init__('if_else')
+        self.condition = boolean_statement[0]
+        self.statements = boolean_statement[1]
+        self.else_statement_list = boolean_statement.else_statement[0]
+
+    def apply(self, visitor):
+        return visitor.conditional_if_else(self)
 
 
 class BinaryOperation(Node):
@@ -109,22 +117,22 @@ class Division(BinaryOperation):
 class UnaryOperation(Node):
     def __init__(self, var_type, right):
         super(UnaryOperation, self).__init__(var_type)
-        self.right = right
+        self.rhs = right
 
 
 class Positive(UnaryOperation):
-    def __init__(self, right):
-        super(Positive, self).__init__('positive', right)
+    def __init__(self, rhs):
+        super(Positive, self).__init__('positive', rhs)
 
 
 class Negative(UnaryOperation):
-    def __init__(self, right):
-        super(Negative, self).__init__('negative', right)
+    def __init__(self, rhs):
+        super(Negative, self).__init__('negative', rhs)
 
 
 class Negation(UnaryOperation):
-    def __init__(self, right):
-        super(Negation, self).__init__('negation', right)
+    def __init__(self, rhs):
+        super(Negation, self).__init__('negation', rhs)
 
 
 class And(BinaryOperation):

@@ -22,7 +22,7 @@ def main(sys_args):
     ql_str = acquire_text(sys_args)
     ql_ast = parse(ql_str)
     if ql_ast is None:
-        exit(3)
+        exit(4)
     ql_ast.pprint()
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
 
@@ -51,7 +51,7 @@ def acquire_text(sys_args):
 
     if ql_file is None:
         print("No file was found:  usage: python pql.py %s" % PATH_EXAMPLE)
-        exit(2)
+        exit(3)
 
     ql_str = ql_file.read()
     ql_file.close()
