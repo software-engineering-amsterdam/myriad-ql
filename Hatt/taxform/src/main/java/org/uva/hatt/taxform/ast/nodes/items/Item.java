@@ -1,5 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
-public interface Item {
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
+public interface Item {
+    public void accept(Visitor visitor);
 }
