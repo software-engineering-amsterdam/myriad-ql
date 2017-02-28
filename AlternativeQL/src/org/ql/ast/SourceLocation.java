@@ -1,10 +1,11 @@
 package org.ql.ast;
 
-public class Metadata {
+// TODO better name (like src location?? )
+public class SourceLocation {
     private int line;
     private int column;
 
-    public Metadata(int line, int column) {
+    public SourceLocation(int line, int column) {
         this.line = line;
         this.column = column;
     }

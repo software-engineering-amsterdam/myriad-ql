@@ -113,7 +113,7 @@ public class ExpressionTypeCheckerTest {
     @Test
     public void shouldReturnParameterWhenIdentifierExists() throws Throwable {
         HashMapSymbolTable HashMapSymbolTable = new HashMapSymbolTable();
-        HashMapSymbolTable.put(new Identifier("example"), new StringType());
+        HashMapSymbolTable.declare(new Identifier("example"), new StringType());
 
         ExpressionTypeChecker visitor = new ExpressionTypeChecker(HashMapSymbolTable);
 

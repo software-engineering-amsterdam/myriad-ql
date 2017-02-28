@@ -1,6 +1,6 @@
 package org.ql.ast.type;
 
-import org.ql.ast.AbstractNode;
+import org.ql.ast.Node;
 
-public abstract class Type extends AbstractNode {
+public abstract class Type extends Node {
 }

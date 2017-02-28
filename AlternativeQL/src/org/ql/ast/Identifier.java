@@ -1,6 +1,6 @@
 package org.ql.ast;
 
-public class Identifier extends AbstractNode {
+public class Identifier extends Node {
     private final String id;
 
     public Identifier(String id) {

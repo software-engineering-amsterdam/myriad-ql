@@ -2,7 +2,7 @@ package org.ql.typechecker.messages;
 
 import org.junit.Test;
 import org.ql.ast.Identifier;
-import org.ql.ast.Metadata;
+import org.ql.ast.SourceLocation;
 import org.ql.ast.Statement;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.StringType;
@@ -27,7 +27,7 @@ public class TypeCheckMessagesTest {
     public void shouldAddTypeMismatchErrorWithMetadata() {
         MessageBag messageBag = new TypeCheckMessages();
         StringType actualType = new StringType();
-        actualType.setMetadata(new Metadata(12, 34));
+        actualType.setSourceLocation(new SourceLocation(12, 34));
         messageBag.addError(new TypeMismatchException(new BooleanType(), actualType));
 
         assertEquals(1, messageBag.getErrors().size());
@@ -48,7 +48,7 @@ public class TypeCheckMessagesTest {
     public void shouldAddStringErrorWithNodeWithMetadata() {
         MessageBag messageBag = new TypeCheckMessages();
         Identifier actualNode = new Identifier("haha");
-        actualNode.setMetadata(new Metadata(12, 34));
+        actualNode.setSourceLocation(new SourceLocation(12, 34));
         messageBag.addError("Strange error", actualNode);
 
         assertEquals(1, messageBag.getErrors().size());

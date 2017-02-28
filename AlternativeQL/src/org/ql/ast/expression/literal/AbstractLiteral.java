@@ -2,6 +2,7 @@ package org.ql.ast.expression.literal;
 
 import org.ql.ast.Expression;
 
+// TODO abstraction not needed
 abstract class AbstractLiteral<T> extends Expression {
     final T value;
 

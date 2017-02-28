@@ -25,10 +25,11 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
         Type innerExpressionType = node.getExpression().accept(this);
 
         if (!(innerExpressionType instanceof BooleanType)) {
-
+            // TODO Do not use exceptions as error management
             throw new TypeMismatchException(new BooleanType(), innerExpressionType);
         }
 
+        // TODO this is wrong
         return innerExpressionType;
     }
 
@@ -57,28 +58,28 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     public Type visit(NotEqual node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(LogicalAnd node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(LowerThan node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(GreaterThanOrEqual node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
             throw new UndefinedIdentifierException(node.getId());
         }
 
-        return symbolTable.get(node.getId());
+        return symbolTable.lookup(node.getId());
     }
 
     @Override
@@ -109,14 +110,15 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     public Type visit(GreaterThan node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(Decrement node) throws Throwable {
         Type innerExpressionType = node.getExpression().accept(this);
 
-        if (!(innerExpressionType instanceof NumberType)) {
+        // TODO make this work
+        if (!(innerExpressionType.isNumeric())) {
             throw new NumberExpectedException(innerExpressionType);
         }
 
@@ -127,48 +129,49 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     public Type visit(Equals node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        // TODO remove metadata set here
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(LowerThanOrEqual node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(LogicalOr node) throws Throwable {
         checkTypeMismatch(node);
 
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(BooleanLiteral node) {
-        return (Type) new BooleanType().setMetadata(node.getMetadata());
+        return (Type) new BooleanType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(DecimalLiteral node) {
-        return (Type) new FloatType().setMetadata(node.getMetadata());
+        return (Type) new FloatType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(IntegerLiteral node) {
-        return (Type) new IntegerType().setMetadata(node.getMetadata());
+        return (Type) new IntegerType().setSourceLocation(node.getSourceLocation());
     }
 
     @Override
     public Type visit(StringLiteral node) {
-        return (Type) new StringType().setMetadata(node.getMetadata());
+        return (Type) new StringType().setSourceLocation(node.getSourceLocation());
     }
 
     private Type checkTypeMismatch(BinaryExpression node) throws Throwable {
         Type leftType = node.getLeft().accept(this);
         Type rightType = node.getRight().accept(this);
 
-        if (!leftType.getClass().equals(rightType.getClass())) {
+        if (!leftType.equals(rightType)) {
             throw new TypeMismatchException(leftType, rightType);
         }
 

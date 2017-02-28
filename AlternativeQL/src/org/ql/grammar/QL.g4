@@ -5,21 +5,22 @@ form
     ;
 
 statement
-    :   type id=identifier ':' text=questionText defaultValue? ';'      #question
+    :   type id=identifier ':' text=questionText value? ';'      #question
     |   'if' '(' expression ')' '{'
-                (thenStatements+=statement)* '}'                        #ifThen
+                (thenStatements+=statement)* '}'                 #ifThen
     |   'if' '(' expression ')' '{'
             (thenStatements+=statement)* '}'
         ('else' '{'
-            (elseStatements+=statement)* '}')?                          #ifElseThen
+            (elseStatements+=statement)* '}')?                   #ifThenElse
     ;
 
 questionText
     : STRING_LITERAL
     ;
 
-defaultValue
-    :   '=' value=expression
+// TODO find better name
+value
+    :   '=' expression
     ;
 
 expression

@@ -17,10 +17,10 @@ public class FormQuestionCollector implements QuestionCollector<Form> {
     }
 
     @Override
-    public Questions collect(Form form) {
+    public Questions collect(Form node) {
         Questions questions = new Questions();
 
-        for (Statement statement : form.getStatements()) {
+        for (Statement statement : node.getStatements()) {
             questions.addAll(statement.accept(questionVisitor));
         }
 

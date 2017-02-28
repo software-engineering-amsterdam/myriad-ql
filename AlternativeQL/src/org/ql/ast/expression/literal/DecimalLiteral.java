@@ -14,6 +14,7 @@ public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
         return value.toPlainString();
     }
 
+    // TODO specific AST visitor exception OR skip (rely on RuntimeException)
     @Override
     public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
         return visitor.visit(this);

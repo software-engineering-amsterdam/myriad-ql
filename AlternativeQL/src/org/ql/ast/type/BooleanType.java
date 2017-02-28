@@ -1,5 +1,6 @@
 package org.ql.ast.type;
 
+// TODO compatible (without
 public class BooleanType extends Type {
     @Override
     public String toString() {

@@ -1,6 +1,8 @@
 package org.ql.collection.collector;
 
+import org.ql.ast.Form;
 import org.ql.ast.Statement;
+import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
@@ -9,7 +11,23 @@ import org.ql.ast.statement.StatementVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionVisitor implements StatementVisitor<List<Question>> {
+public class QuestionVisitor implements FormVisitor<List<Question>>, StatementVisitor<List<Question>> {
+
+    public static List<Question> collect(Form form) throws Throwable {
+        return form.accept(new QuestionVisitor());
+    }
+
+    private QuestionVisitor() {
+
+    }
+
+    @Override
+    public List<Question> visit(Form form) {
+        for (Statement s: form.getStatements()) {
+            s.accept(this);
+        }
+        return null;
+    }
 
     @Override
     public List<Question> visit(IfThen ifThen) {

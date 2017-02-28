@@ -12,7 +12,7 @@ import org.ql.grammar.QLVisitor;
 
 public class Parser {
 
-    private final QLVisitor<Node> visitor = new AntlrVisitor();
+    private final QLVisitor<Node> visitor = new ASTBuilder();
 
     public Form parseForm(String code) {
         return (Form) visitor.visit(createParser(code).form());

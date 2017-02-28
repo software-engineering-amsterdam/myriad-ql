@@ -14,7 +14,7 @@ public class HashMapSymbolTableTest {
     public void shouldPutIdentifierWhenPutExecuted() {
         SymbolTable symbolTable = new HashMapSymbolTable();
 
-        symbolTable.put(new Identifier("example"), new StringType());
+        symbolTable.declare(new Identifier("example"), new StringType());
 
         assertTrue(symbolTable.has(new Identifier("example")));
         assertSame(symbolTable.size(), 1);
@@ -26,9 +26,9 @@ public class HashMapSymbolTableTest {
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 
-        symbolTable.put(identifier, actualType);
+        symbolTable.declare(identifier, actualType);
 
-        assertSame(symbolTable.get(identifier), actualType);
+        assertSame(symbolTable.lookup(identifier), actualType);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class HashMapSymbolTableTest {
         Identifier identifier = new Identifier("example");
         StringType actualType = new StringType();
 
-        symbolTable.put(identifier, actualType);
+        symbolTable.declare(identifier, actualType);
 
         assertTrue(symbolTable.has(identifier));
     }

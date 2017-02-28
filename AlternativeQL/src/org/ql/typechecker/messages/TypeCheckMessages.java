@@ -1,6 +1,6 @@
 package org.ql.typechecker.messages;
 
-import org.ql.ast.Metadata;
+import org.ql.ast.SourceLocation;
 import org.ql.ast.Node;
 import org.ql.typechecker.expression.TypeError;
 
@@ -18,10 +18,10 @@ public class TypeCheckMessages implements MessageBag {
 
     @Override
     public void addError(String message, Node node) {
-        Metadata metadata = node.getMetadata();
+        SourceLocation sourceLocation = node.getSourceLocation();
 
-        if (metadata != null) {
-            addError(message + " on line " + metadata.getLine() + ":" + metadata.getColumn());
+        if (sourceLocation != null) {
+            addError(message + " on line " + sourceLocation.getLine() + ":" + sourceLocation.getColumn());
         } else {
             addError(message);
         }

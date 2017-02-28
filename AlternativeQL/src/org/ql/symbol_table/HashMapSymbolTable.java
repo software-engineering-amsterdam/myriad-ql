@@ -10,11 +10,11 @@ public class HashMapSymbolTable implements SymbolTable {
 
     private final Map<String, Type> definitions = new HashMap<>();
 
-    public Type put(Identifier id, Type value) {
+    public Type declare(Identifier id, Type value) {
         return definitions.put(id.toString(), value);
     }
 
-    public Type get(Identifier id) {
+    public Type lookup(Identifier id) {
         return definitions.get(id.toString());
     }
 

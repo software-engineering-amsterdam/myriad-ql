@@ -35,6 +35,7 @@ public class TypeChecker implements ITypeChecker {
         visitor = new StatementProxyVisitor(this);
     }
 
+    // TODO pass the message bag as argument
     @Override
     public MessageBag checkForm(Form form) {
         Questions questions = questionCollector.collect(form);
@@ -179,7 +180,7 @@ public class TypeChecker implements ITypeChecker {
         SymbolTable symbolTable = new HashMapSymbolTable();
 
         for (Question question : questions) {
-            symbolTable.put(question.getId(), question.getType());
+            symbolTable.declare(question.getId(), question.getType());
         }
 
         return symbolTable;

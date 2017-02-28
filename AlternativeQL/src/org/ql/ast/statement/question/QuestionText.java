@@ -1,8 +1,8 @@
 package org.ql.ast.statement.question;
 
-import org.ql.ast.AbstractNode;
+import org.ql.ast.Node;
 
-public class QuestionText extends AbstractNode {
+public class QuestionText extends Node {
     private final String questionText;
 
     public QuestionText(String questionText) {
