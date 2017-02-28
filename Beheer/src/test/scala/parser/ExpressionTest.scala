@@ -79,10 +79,11 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
 
   property("Operator precedence.") {
     forAll(infixExpressions) {
-      e: String => {
-        val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
-        nodeRelations.filter(isValidNodeRelation) == nodeRelations
-      }
+      e: String =>
+        {
+          val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
+          nodeRelations.filter(isValidNodeRelation) == nodeRelations
+        }
     }
   }
 
@@ -129,24 +130,16 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
       case (Lt(_, _), child) => comparisonChildAllowed(child)
       case (And(_, _), child) => logicalChildAllowed(child)
       case (Or(_, _), child) => logicalChildAllowed(child)
+      case _ => true //non infix, not relevant for the test, so always 'valid'.
     }
   }
 
-  private def operatorPrecedenceProperty(validRelation: NodePair => Boolean) =
-    forAll(infixExpressions) {
-      e: String => {
-        val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
-        nodeRelations.filter(validRelation) == nodeRelations
-      }
-    }
-
   private def trCls(input: NodeRel): NodeRel = {
-    def trClsRec(rel: NodeRel): NodeRel = {
+    def trClsHelper(rel: NodeRel): NodeRel = {
       val res = rel ++ (for ((x, y) <- rel; (a, b) <- input if a == y) yield (x, b))
-      if (res == rel) res else trClsRec(res)
+      if (res == rel) res else trClsHelper(res)
     }
-
-    trClsRec(input)
+    trClsHelper(input)
   }
 
   private def flattenExpressionRelations(expressionNode: ExpressionNode): NodeRel = expressionNode match {
