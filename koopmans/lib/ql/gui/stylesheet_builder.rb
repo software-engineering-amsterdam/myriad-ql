@@ -8,10 +8,10 @@ module QL
         visit_stylesheet(qls_ast, ql_ast)
       end
 
-      # gather all variables from all questions of the QL and from the QLS and check for reference errors
+      # gather all widgets
       def visit_stylesheet(stylesheet, form)
-        qls_variables = stylesheet.pages.map { |page| page.accept(self) }.flatten.compact
-        pp qls_variables
+        widgets = stylesheet.pages.map { |page| page.accept(self) }.flatten.compact
+        pp widgets
       end
 
       def visit_page(page)
@@ -23,7 +23,7 @@ module QL
       end
 
       def visit_question(question)
-        { question.variable.name => Array(question.properties).map { |property| property.accept(self) }.compact } if question.properties
+        { question.variable.name => question.properties } if question.properties
       end
 
       def visit_default(default)
@@ -31,11 +31,11 @@ module QL
       end
 
       def visit_widget(widget)
-        widget
+        # widget
       end
 
       def visit_property(property)
-        property
+        # property
       end
     end
   end

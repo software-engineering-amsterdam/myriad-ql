@@ -5,7 +5,8 @@ module QLS
 
       def initialize(variable, properties)
         @variable   = variable
-        @properties = properties if properties
+        p properties
+        @properties = [properties].flatten.inject(:merge) if properties
       end
 
       def accept(visitor)
