@@ -3,9 +3,13 @@ from sys import exit
 from sys import argv
 from io import open
 from os.path import join
+
+from PyQt5.QtWidgets import QApplication
+
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import TypeChecker
 from pql.identifierchecker.identifierchecker import IdentifierChecker
+from pql.gui.QuestionairWizard import QuestionairWizard
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
@@ -74,3 +78,8 @@ def check_type(ql_ast, ql_identifier_check_result):
 
 if __name__ == '__main__':
     main(argv)
+
+    app = QApplication(argv)
+    wiz = QuestionairWizard()
+
+    exit(app.exec_())
