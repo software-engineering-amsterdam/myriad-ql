@@ -42,7 +42,7 @@ public class TypeCheckerTest {
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
         ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
         String questionLabel = "example";
-        String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
+        String expectedError = "Question '" + questionLabel + "' hasDeclared duplicate(s)";
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder()
                 .setName("exampleForm")
