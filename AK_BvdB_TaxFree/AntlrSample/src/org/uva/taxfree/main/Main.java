@@ -1,7 +1,7 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.environment.Environment;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,12 +33,8 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
-
-        // New way
-        SymbolTable symbolTable = new SymbolTable();
-
-        Ast ast = Ast.generateAst(new File("input"), symbolTable);
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast, symbolTable);
+        Environment environment = Ast.generateAst(new File("input"));
+        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
         semanticsAnalyzer.validSemantics();
     }
 

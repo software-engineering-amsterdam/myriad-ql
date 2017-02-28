@@ -1,9 +1,7 @@
 package org.uva.taxfree.main;
 
-import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.statement.NamedNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -11,8 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SemanticsAnalyzer {
-    private Ast mAst;
-    private SymbolTable mSymbolTable;
+    private final Environment mEnvironment;
 
     /*
      * UNDEFINES - reference to undefined questions // TODO
@@ -30,9 +27,8 @@ public class SemanticsAnalyzer {
      * - Check | if (1)
      */
 
-    public SemanticsAnalyzer(Ast ast, SymbolTable symbolTable) {
-        mAst = ast;
-        mSymbolTable = symbolTable;
+    public SemanticsAnalyzer(Environment environment) {
+        mEnvironment = environment;
     }
 
     public boolean validSemantics() {
@@ -91,28 +87,28 @@ public class SemanticsAnalyzer {
     private List<String> getDuplicateLabelErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionLabels = new LinkedHashSet<>();
-        for (NamedNode node : mAst.getDeclarations()) {
-            String questionLabel = node.getLabel();
-            if (!processedQuestionLabels.add(questionLabel)) {
-                errorMessages.add("Duplicate question label found: " + questionLabel);
-            }
-        }
+//        for (NamedNode node : nmEnvironment.getDeclarations()) {
+//            String questionLabel = node.getLabel();
+//            if (!processedQuestionLabels.add(questionLabel)) {
+//                errorMessages.add("Duplicate question label found: " + questionLabel);
+//            }
+//        }
         return errorMessages;
     }
 
     private List<String> getQuestionIds() {
         List<String> ids = new ArrayList<>();
-        for (Node node : mAst.getDeclarations()) {
-            ids.add(node.toString());
-        }
+//        for (Node node : mEnvironment.getDeclarations()) {
+//            ids.add(node.toString());
+//        }
         return ids;
     }
 
     private List<String> getConditionIds() {
         List<String> ids = new ArrayList<>();
-        for (Node node : mAst.getConditions()) {
-            ids.add(node.toString());
-        }
+//        for (Node node : mEnvironment.getAbstractSyntaxTree()getConditions()) {
+//            ids.add(node.toString());
+//        }
         return ids;
     }
 
