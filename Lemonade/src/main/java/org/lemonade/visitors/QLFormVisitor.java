@@ -5,7 +5,7 @@ import org.lemonade.QLParser;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.expressions.UnaryExpression;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
@@ -81,35 +81,35 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitLiteralExpression(QLParser.LiteralExpressionContext ctx) {
-        Literal literal = (Literal) ctx.literal().accept(this);
+        Value literal = (Value) ctx.literal().accept(this);
         return literal;
     }
 
     @Override
     public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        return new BooleanLit(new QLBooleanType(), ctx.BOOLEAN().getText());
+        return new BooleanValue(new QLBooleanType(), ctx.BOOLEAN().getText());
     }
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringLit(new QLStringType(), ctx.STR().getText());
+        return new StringValue(new QLStringType(), ctx.STR().getText());
     }
 
     @Override
     public ASTNode visitIdentifierLiteral(QLParser.IdentifierLiteralContext ctx) {
-        return new IdentifierLit(new QLStringType(), ctx.IDENT().getText());
+        return new IdentifierValue(new QLStringType(), ctx.IDENT().getText());
     }
 
     @Override
     public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
         System.err.println("integer");
-        return new IntegerLit(new QLIntegerType(), ctx.INT().getText());
+        return new IntegerValue(new QLIntegerType(), ctx.INT().getText());
     }
 
     @Override
     public ASTNode visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
         System.err.println("decimal");
-        return new DecimalLit(new QLDecimalType(), ctx.DECIMAL().getText());
+        return new DecimalValue(new QLDecimalType(), ctx.DECIMAL().getText());
     }
 
     @Override

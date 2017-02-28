@@ -1,8 +1,6 @@
 package org.lemonade.nodes.expressions.literal;
 
-import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
@@ -10,14 +8,14 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class MoneyLit extends NumericLit<Double> implements Comparable<MoneyLit> {
+public class MoneyValue extends NumericValue<Double> implements Comparable<MoneyValue> {
 
-    public MoneyLit(QLType type, String value) {
+    public MoneyValue(QLType type, String value) {
         super(type, Double.parseDouble(value));
         assert type instanceof QLMoneyType;
     }
 
-    public MoneyLit(QLMoneyType type, double value) {
+    public MoneyValue(QLMoneyType type, double value) {
         super(type, value);
     }
 
@@ -25,19 +23,19 @@ public class MoneyLit extends NumericLit<Double> implements Comparable<MoneyLit>
         return visitor.visit(this);
     }
 
-    public MoneyLit plus(IntegerLit that) {
-        return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
+    public MoneyValue plus(IntegerValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public DecimalLit plus(DecimalLit that) {
-        return new DecimalLit(new QLDecimalType(), this.getValue() + that.getValue());
+    public DecimalValue plus(DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
     }
 
-    public MoneyLit plus(MoneyLit that) {
-        return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
+    public MoneyValue plus(MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericLit plus(NumericLit that) {
+    public NumericValue plus(NumericValue that) {
         return that.plus(this);
     }
 
@@ -48,15 +46,15 @@ public class MoneyLit extends NumericLit<Double> implements Comparable<MoneyLit>
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof MoneyLit)){
+        if (!(obj instanceof MoneyValue)){
             return false;
         }
-        MoneyLit that = (MoneyLit) obj;
+        MoneyValue that = (MoneyValue) obj;
         return this.getValue() == that.getValue();
     }
 
     @Override
-    public int compareTo(MoneyLit that) {
+    public int compareTo(MoneyValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
         }

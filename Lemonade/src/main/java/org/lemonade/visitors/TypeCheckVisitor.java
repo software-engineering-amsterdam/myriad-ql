@@ -126,31 +126,31 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         throw new RuntimeException("QLNumeric type mismatch in unary expression.");
     }
 
-    public QLType visit(BooleanLit booleanLit) {
-        return booleanLit.getType();
+    public QLType visit(BooleanValue booleanValue) {
+        return booleanValue.getType();
     }
 
-    public QLType visit(DecimalLit decimalLit) {
-        return decimalLit.getType();
+    public QLType visit(DecimalValue decimalValue) {
+        return decimalValue.getType();
     }
 
-    public QLType visit(MoneyLit moneyLit) {
-        return moneyLit.getType();
+    public QLType visit(MoneyValue moneyValue) {
+        return moneyValue.getType();
     }
 
-    public QLType visit(IdentifierLit identifierLit) {
-        if (symbolTable.containsKey(identifierLit.getValue())) {
-            return symbolTable.get(identifierLit.getValue());
+    public QLType visit(IdentifierValue identifierValue) {
+        if (symbolTable.containsKey(identifierValue.getValue())) {
+            return symbolTable.get(identifierValue.getValue());
         }
         throw new RuntimeException("Symbol not found!");
     }
 
-    public QLType visit(IntegerLit integerLit) {
-        return integerLit.getType();
+    public QLType visit(IntegerValue integerValue) {
+        return integerValue.getType();
     }
 
-    public QLType visit(StringLit stringLit) {
-        return stringLit.getType();
+    public QLType visit(StringValue stringValue) {
+        return stringValue.getType();
     }
 
     @Override

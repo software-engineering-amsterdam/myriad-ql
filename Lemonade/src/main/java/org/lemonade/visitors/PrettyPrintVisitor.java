@@ -167,39 +167,39 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visit(BooleanLit booleanLit) {
-        System.err.print(booleanLit);
-        return booleanLit;
+    public ASTNode visit(BooleanValue booleanValue) {
+        System.err.print(booleanValue);
+        return booleanValue;
     }
 
     @Override
-    public ASTNode visit(DecimalLit decimalLit) {
-        System.err.print(decimalLit);
-        return decimalLit;
+    public ASTNode visit(DecimalValue decimalValue) {
+        System.err.print(decimalValue);
+        return decimalValue;
     }
 
     @Override
-    public ASTNode visit(IntegerLit integerLit) {
-        System.err.print(integerLit);
-        return integerLit;
+    public ASTNode visit(IntegerValue integerValue) {
+        System.err.print(integerValue);
+        return integerValue;
     }
 
     @Override
-    public ASTNode visit(StringLit stringLit) {
-        System.err.print(stringLit);
-        return stringLit;
+    public ASTNode visit(StringValue stringValue) {
+        System.err.print(stringValue);
+        return stringValue;
     }
 
     @Override
-    public ASTNode visit(IdentifierLit identifierLit) {
-        System.err.print(identifierLit);
-        return identifierLit;
+    public ASTNode visit(IdentifierValue identifierValue) {
+        System.err.print(identifierValue);
+        return identifierValue;
     }
 
     @Override
-    public ASTNode visit(MoneyLit moneyLit) {
-        System.err.print(moneyLit);
-        return moneyLit;
+    public ASTNode visit(MoneyValue moneyValue) {
+        System.err.print(moneyValue);
+        return moneyValue;
     }
 
     @Override

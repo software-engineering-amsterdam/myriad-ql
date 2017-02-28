@@ -1,7 +1,6 @@
 package org.lemonade.nodes.expressions.literal;
 
 
-import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
@@ -11,13 +10,13 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IntegerLit extends NumericLit<Integer> implements Comparable<IntegerLit>{
+public class IntegerValue extends NumericValue<Integer> implements Comparable<IntegerValue>{
 
-    public IntegerLit(QLType type, String value) {
+    public IntegerValue(QLType type, String value) {
         super(type, Integer.parseInt(value));
     }
 
-    public IntegerLit(QLType type, int value) {
+    public IntegerValue(QLType type, int value) {
         super(type, value);
     }
 
@@ -25,19 +24,19 @@ public class IntegerLit extends NumericLit<Integer> implements Comparable<Intege
         return visitor.visit(this);
     }
 
-    public IntegerLit plus(IntegerLit that) {
-        return new IntegerLit(new QLIntegerType(), this.getValue() + that.getValue());
+    public IntegerValue plus(IntegerValue that) {
+        return new IntegerValue(new QLIntegerType(), this.getValue() + that.getValue());
     }
 
-    public DecimalLit plus(DecimalLit that) {
-        return new DecimalLit(new QLDecimalType(), this.getValue() + that.getValue());
+    public DecimalValue plus(DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
     }
 
-    public MoneyLit plus(MoneyLit that) {
-        return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
+    public MoneyValue plus(MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericLit plus(NumericLit that) {
+    public NumericValue plus(NumericValue that) {
         return that.plus(this);
     }
 
@@ -48,15 +47,15 @@ public class IntegerLit extends NumericLit<Integer> implements Comparable<Intege
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof IntegerLit)){
+        if (!(obj instanceof IntegerValue)){
             return false;
         }
-        IntegerLit that = (IntegerLit) obj;
+        IntegerValue that = (IntegerValue) obj;
         return this.getValue() == that.getValue();
     }
 
     @Override
-    public int compareTo(IntegerLit that) {
+    public int compareTo(IntegerValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
         }

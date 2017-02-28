@@ -1,6 +1,6 @@
 package org.lemonade.nodes.expressions.literal;
 
-import org.lemonade.nodes.expressions.Literal;
+import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
@@ -8,9 +8,9 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class StringLit extends Literal<String> implements Comparable<StringLit>{
+public class StringValue extends Value<String> implements Comparable<StringValue>{
 
-    public StringLit(QLType type, String value) {
+    public StringValue(QLType type, String value) {
         super(type, value);
         assert type instanceof QLStringType;
     }
@@ -26,15 +26,15 @@ public class StringLit extends Literal<String> implements Comparable<StringLit>{
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof StringLit)){
+        if (!(obj instanceof StringValue)){
             return false;
         }
-        StringLit that = (StringLit) obj;
+        StringValue that = (StringValue) obj;
         return this.getValue() == that.getValue();
     }
 
     @Override
-    public int compareTo(StringLit that) {
+    public int compareTo(StringValue that) {
         return this.getValue().compareTo(that.getValue());
     }
 }

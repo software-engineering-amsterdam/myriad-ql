@@ -51,17 +51,17 @@ public interface ASTVisitor<T> {
 
     T visit(NegUnary negUnary);
 
-    T visit(BooleanLit booleanLit);
+    T visit(BooleanValue booleanValue);
 
-    T visit(DecimalLit decimalLit);
+    T visit(DecimalValue decimalValue);
 
-    T visit(MoneyLit moneyLit);
+    T visit(MoneyValue moneyValue);
 
-    T visit(IntegerLit integerLit);
+    T visit(IntegerValue integerValue);
 
-    T visit(StringLit stringLit);
+    T visit(StringValue stringValue);
 
-    T visit(IdentifierLit identifierLit);
+    T visit(IdentifierValue identifierValue);
 
     T visit(QLType qlType);
 //    T visit(QLBooleanType qlBooleanType);

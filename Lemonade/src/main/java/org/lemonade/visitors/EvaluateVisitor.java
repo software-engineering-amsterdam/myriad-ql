@@ -4,9 +4,7 @@ import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
-import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
@@ -55,8 +53,8 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(PlusBinary plusBinary) {
-        NumericLit left = (NumericLit) plusBinary.getLeft().accept(this);
-        NumericLit right = (NumericLit) plusBinary.getLeft().accept(this);
+        NumericValue left = (NumericValue) plusBinary.getLeft().accept(this);
+        NumericValue right = (NumericValue) plusBinary.getLeft().accept(this);
         System.err.println(left.plus(right));
         return left.plus(right);
 
@@ -109,7 +107,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(BangUnary bangUnary) {
-        BooleanLit expression = (BooleanLit) bangUnary.getExpression().accept(this);
+        BooleanValue expression = (BooleanValue) bangUnary.getExpression().accept(this);
         return expression.neg();
     }
 
@@ -119,33 +117,33 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     }
 
     @Override
-    public Expression visit(BooleanLit booleanLit) {
-        return booleanLit;
+    public Expression visit(BooleanValue booleanValue) {
+        return booleanValue;
     }
 
     @Override
-    public Expression visit(DecimalLit decimalLit) {
-        return decimalLit;
+    public Expression visit(DecimalValue decimalValue) {
+        return decimalValue;
     }
 
     @Override
-    public Expression visit(MoneyLit moneyLit) {
-        return moneyLit;
+    public Expression visit(MoneyValue moneyValue) {
+        return moneyValue;
     }
 
     @Override
-    public Expression visit(IntegerLit integerLit) {
-        return integerLit;
+    public Expression visit(IntegerValue integerValue) {
+        return integerValue;
     }
 
     @Override
-    public Expression visit(StringLit stringLit) {
-        return stringLit;
+    public Expression visit(StringValue stringValue) {
+        return stringValue;
     }
 
     @Override
-    public Expression visit(IdentifierLit identifierLit) {
-        return identifierLit;
+    public Expression visit(IdentifierValue identifierValue) {
+        return identifierValue;
     }
 
     @Override
