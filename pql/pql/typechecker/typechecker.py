@@ -4,25 +4,23 @@ from pql.typechecker.types import DataTypes
 
 
 class TypeChecker(Visitor):
-
     def __init__(self, ql_identifier_check_result):
         self.identifier_dict = ql_identifier_check_result
         self.errors = list()
 
     def visit(self, pql_ast):
-        print("visit")
+        self.errors.clear()
         [form.apply(self) for form in pql_ast]
+        return self.errors
 
     def form(self, node):
-        print("form")
         [statement.apply(self) for statement in node.children]
 
     def field(self, node):
-        print("field")
-        [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
+        temp = [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
+        return temp
 
     def expression(self, node):
-        print("expression")
         return [expression.apply(self) for expression in node.children]
 
     def subtraction(self, node):
@@ -78,7 +76,7 @@ class TypeChecker(Visitor):
                 dominant_type = DataTypes.integer
         else:
             self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
-            type_set, allowed_types))
+                type_set, allowed_types))
 
         return dominant_type
 
@@ -93,9 +91,12 @@ class TypeChecker(Visitor):
 
         if type_set.issubset(allowed_types):
             if type_set.issubset(allowed_arithmetic_types):
-               dominant_type = DataTypes.boolean
+                dominant_type = DataTypes.boolean
             elif type_set.issubset(allowed_boolean_types):
                 dominant_type = DataTypes.boolean
+            else:
+                self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
+                type_set, allowed_types))
         else:
             self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
                 type_set, allowed_types))
