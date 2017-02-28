@@ -7,7 +7,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * Created by Erik on 21-2-2017.
  */
 public abstract class Value<T> {
-    abstract T getValue();
+    public abstract T getValue();
 
     public Value add(Value other) {
         throw new NotImplementedException();

@@ -9,7 +9,7 @@ import ql.ast.types.FloatType;
 public class UndefinedValue extends Value<String> {
 
     @Override
-    String getValue() {
+    public String getValue() {
         return "Undefined";
     }
 
