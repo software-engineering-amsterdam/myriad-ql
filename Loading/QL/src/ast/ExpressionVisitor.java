@@ -6,26 +6,26 @@ import ast.atom.StringAtom;
 import ast.expression.*;
 import ast.type.Type;
 
-public interface ExpressionVisitor {
+public interface ExpressionVisitor<T> {
 
-    Type visit(AddExpression expr);
-    Type visit(AndExpression expr);
-    Type visit(DivExpression expr);
-    Type visit(EqExpression expr);
-    Type visit(GEqExpression expr);
-    Type visit(GExpression expr);
-    Type visit(IdExpression expr);
-    Type visit(LEqExpression expr);
-    Type visit(LExpression expr);
-    Type visit(MinusExpression expr);
-    Type visit(MulExpression expr);
-    Type visit(NEqExpression expr);
-    Type visit(NotExpression expr);
-    Type visit(OrExpression expr);
-    Type visit(PlusExpression expr);
-    Type visit(SubExpression expr);
-
-    Type visit(BoolAtom expr);
-    Type visit(IntegerAtom expr);
-    Type visit(StringAtom expr);
+    T visit(AddExpression expr);
+    T visit(AndExpression expr);
+    T visit(DivExpression expr);
+    T visit(EqExpression expr);
+    T visit(GEqExpression expr);
+    T visit(GExpression expr);
+    T visit(IdExpression expr);
+    T visit(LEqExpression expr);
+    T visit(LExpression expr);
+    T visit(MinusExpression expr);
+    T visit(MulExpression expr);
+    T visit(NEqExpression expr);
+    T visit(NotExpression expr);
+    T visit(OrExpression expr);
+    T visit(PlusExpression expr);
+    T visit(SubExpression expr);
+ 
+    T visit(BoolAtom expr);
+    T visit(IntegerAtom expr);
+    T visit(StringAtom expr);
 }

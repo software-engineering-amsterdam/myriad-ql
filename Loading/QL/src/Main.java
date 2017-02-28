@@ -47,12 +47,12 @@ public class Main {
 		TypeChecker typeChecker = new TypeChecker();
 
 		semantic.Environment semanticEv = typeChecker.analyze(form);
-//
+
 //		Environment env = new Environment();
 ////		Evaluator evaluator = new Evaluator(env);
 //
-//		Questionnaire questionnaire = new Questionnaire();
-//		questionnaire.main(form);
+		Questionnaire questionnaire = new Questionnaire();
+		questionnaire.main(form);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 

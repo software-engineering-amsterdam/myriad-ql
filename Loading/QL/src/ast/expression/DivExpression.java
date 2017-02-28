@@ -20,7 +20,7 @@ public class DivExpression extends BinaryExpression {
 //	}
 
 	@Override
-	public Type accept(ExpressionVisitor v) {
+	public <T> T accept(ExpressionVisitor<T> v) {
 		return v.visit(this);
 	}
 

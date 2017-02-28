@@ -18,6 +18,6 @@ public abstract class Expression extends Node {
 //
 //	public abstract Atom evaluate(Environment env);
 
-	public abstract Type accept(ExpressionVisitor v);
+	public abstract <T> T accept(ExpressionVisitor<T> v);
 	
 }

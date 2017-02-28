@@ -41,5 +41,5 @@ public abstract class Atom extends Expression {
 //		return this;
 //	}
 
-	public abstract Type accept(ExpressionVisitor v);
+	public abstract <T> T accept(ExpressionVisitor<T> v);
 }

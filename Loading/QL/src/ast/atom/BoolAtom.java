@@ -52,7 +52,7 @@ public class BoolAtom extends Atom {
 //	}
 
 	@Override
-	public Type accept(ExpressionVisitor v) {
+	public <T> T accept(ExpressionVisitor<T> v) {
 		return v.visit(this);
 	}
 }
