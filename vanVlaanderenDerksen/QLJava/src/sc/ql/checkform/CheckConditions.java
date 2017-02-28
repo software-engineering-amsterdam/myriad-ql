@@ -21,17 +21,14 @@ public class CheckConditions implements NodeVisitor<Question.Type> {
 	
 	public CheckConditions(HashMap<String, Question.Type> identifier_types) {
 		this.identifier_types = identifier_types;
-		
-		System.out.println(identifier_types);
 	}
 	
 	@Override
 	public Question.Type visit(ConditionalBlock conditional_block) throws Exception {
 		Type type = conditional_block.getExpression().accept(this);
-		System.out.println("ConditionalBlock Type => "+ type);
 		
-		if (type != Question.Type.BOOLEAN) {
-			throw new Exception("Condition on line  is not of type Boolean.");
+		if (type != Type.BOOLEAN) {
+			throw new Exception("Condition on line "+conditional_block.getLineNumber()+" is not of type Boolean.");
 		}
 		
 		return type;
@@ -41,82 +38,72 @@ public class CheckConditions implements NodeVisitor<Question.Type> {
 	public Question.Type visit(IfStatement if_statement) throws Exception {
 		for (ConditionalBlock conditional_block : if_statement.getConditionalBlocks()) {
 			conditional_block.accept(this);
-			System.out.println("IfStatement");
 		}
 		
 		return null;
 	}
 	
 	@Override
-	public Question.Type visit(NotExpression not_expression) {
-		not_expression.getExpression();
+	public Question.Type visit(NotExpression not_expression) throws Exception {
+		Type type = not_expression.getExpression().accept(this);
 		
+		if (type != Type.BOOLEAN) {
+			throw new Exception("Expression negation on line "+not_expression.getLineNumber()+" is not of type Boolean.");
+		}
 		
-		System.out.println("NotExpression");
-		System.out.println(not_expression);
-		
-		return null;
+		return type;
 	}
 
 	@Override
 	public Question.Type visit(OpExpression op_expression) throws Exception {
-		try {
-			op_expression.getLeft().accept(this);
-			op_expression.getRight().accept(this);
-		} catch (Exception e) {
-			e.printStackTrace();
+		Type left_side = op_expression.getLeft().accept(this);
+		Type right_side = op_expression.getRight().accept(this);
+		String operator = op_expression.getOperator();
+		
+		if (operator.matches("<|<=|>|>=|==|!=") && left_side != right_side) {
+			throw new Exception("Both sides of the "+operator+" operator on line "+op_expression.getLineNumber()+" needs to be of the same expression/type.");
+		}
+		else if (operator.equals("&&") && left_side != Type.BOOLEAN && right_side != Type.BOOLEAN) {
+			throw new Exception("Both sides of the && (AND) operator on line "+op_expression.getLineNumber()+" needs to be a Boolean expression/type.");
+		}
+		else if(operator.equals("||") && (left_side != Type.BOOLEAN || right_side != Type.BOOLEAN)) {
+			throw new Exception("Both sides of the || (OR) operator on line "+op_expression.getLineNumber()+" needs to be a Boolean expression/type.");
+		}
+		else if (!operator.matches("<|<=|>|>=|==|!=|&&|\\|\\||")) {
+			throw new Exception("Operator "+operator+" on line "+op_expression.getLineNumber()+" is not permitted, only Boolean expressions are allowed.");
 		}
 		
-		System.out.println("OpExpression");
-		System.out.println(op_expression.getOperator());
-		
-		return null;
+		return Type.BOOLEAN;
 	}
 
 	@Override
 	public Question.Type visit(AtomBoolean atom_boolean) {
-		// TODO Auto-generated method stub
-		System.out.println("AtomBoolean");
-		
-		return null;
+		return Type.BOOLEAN;
 	}
 
 	@Override
 	public Question.Type visit(AtomFloat atom_float) {
-		// TODO Auto-generated method stub
-		System.out.println("AtomFloat");
-		
-		return null;
+		return Type.FLOAT;
 	}
 
 	@Override
 	public Question.Type visit(AtomId atom_id) {
-		System.out.println("AtomId => "+ this.identifier_types.get(atom_id.getValue()));
 		return this.identifier_types.get(atom_id.getValue());
 	}
 
 	@Override
 	public Question.Type visit(AtomInteger atom_integer) {
-		// TODO Auto-generated method stub
-		System.out.println("AtomInteger");
-		
-		return null;
+		return Type.INTEGER;
 	}
 
 	@Override
 	public Question.Type visit(AtomMoney atom_money) {
-		// TODO Auto-generated method stub
-		System.out.println("AtomMoney");
-		
-		return null;
+		return Type.MONEY;
 	}
 
 	@Override
 	public Question.Type visit(AtomString atom_string) {
-		// TODO Auto-generated method stub
-		System.out.println("AtomString");
-		
-		return null;
+		return Type.STRING;
 	}
 
 	@Override

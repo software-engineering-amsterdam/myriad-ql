@@ -46,8 +46,9 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	public Node visitConditional_block(QLParser.Conditional_blockContext ctx) {
 		Node expression = visit(ctx.expression());
 		List<FormElement> form_elements = getFormElements(ctx.form_element());
+		Integer line_number = ctx.getStart().getLine();
 		
-		return new ConditionalBlock(expression, form_elements);
+		return new ConditionalBlock(expression, form_elements, line_number);
 	}
 	
 	@Override 
