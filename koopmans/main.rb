@@ -18,12 +18,12 @@ ast = QL::Parser::Transformer.new.apply(parsed)
 pp ast
 type_checker = QL::TypeChecker::TypeChecker.check(ast)
 pp type_checker
-# QL::GUI::GUI.new(ast, type_checker)
+QL::GUI::GUI.new(ast, type_checker)
 
 
-contents = File.read('examples/example.qls')
-p contents
-parsed = QLS::Parser::Parser.new.parse(contents)
-pp parsed
-ast = QLS::Parser::Transformer.new.apply(parsed)
-pp ast
+# contents = File.read('examples/example.qls')
+# p contents
+# parsed = QLS::Parser::Parser.new.parse(contents)
+# pp parsed
+# ast = QLS::Parser::Transformer.new.apply(parsed)
+# pp ast
