@@ -7,6 +7,10 @@ module QLS
         @variable   = variable
         @properties = properties if properties
       end
+
+      def accept(visitor)
+        visitor.visit_question(self)
+      end
     end
   end
 end
