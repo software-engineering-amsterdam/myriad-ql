@@ -16,7 +16,5 @@ public interface MessageBag {
 
     List<String> getErrors();
 
-    MessageBag merge(MessageBag anotherBag);
-
     boolean hasErrors();
 }

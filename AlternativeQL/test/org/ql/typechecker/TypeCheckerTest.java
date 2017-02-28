@@ -2,6 +2,8 @@ package org.ql.typechecker;
 
 import org.junit.Test;
 import org.ql.ast.Identifier;
+import org.ql.ast.Statement;
+import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
@@ -9,6 +11,9 @@ import org.ql.ast.type.Type;
 import org.ql.collection.collector.FormQuestionCollector;
 import org.ql.collection.collector.QuestionVisitor;
 import org.ql.typechecker.messages.MessageBag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -51,7 +56,16 @@ public class TypeCheckerTest {
         assertEquals(expectedError, messages.getErrors().get(1));
     }
 
-    private Question createQuestion() {
-        return new Question(mock(Identifier.class), mock(QuestionText.class), mock(Type.class), null);
+    @Test
+    public void shouldCheckStatementsAndGiveErrors() {
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        List<Statement> statements = new ArrayList<>();
+
+        statements.add(new Question(new Identifier("test"), new QuestionText("example question?"), new BooleanType(), new IntegerLiteral(12)));
+        statements.add(new Question(new Identifier("test"), new QuestionText(""), new BooleanType(), null));
+
+        MessageBag messageBag = typeChecker.checkStatements(statements);
+
+        assertEquals(2, messageBag.getErrors().size());
     }
 }

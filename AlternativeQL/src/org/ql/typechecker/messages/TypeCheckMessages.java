@@ -45,15 +45,6 @@ public class TypeCheckMessages implements MessageBag {
     }
 
     @Override
-    public MessageBag merge(MessageBag anotherBag) {
-        MessageBag bag = new TypeCheckMessages();
-        bag.addErrors(getErrors());
-        bag.addErrors(anotherBag.getErrors());
-
-        return bag;
-    }
-
-    @Override
     public boolean hasErrors() {
         return errors.size() > 0;
     }

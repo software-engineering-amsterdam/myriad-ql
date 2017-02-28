@@ -42,30 +42,41 @@ public class TypeChecker implements ITypeChecker {
         // TODO pass the symbol table as a context parameter in the expr visitor
         this.expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
 
-        return checkIdentifier(form.getName())
-                .merge(checkQuestionDuplicates(questions))
-                .merge(checkQuestionLabelsDuplicates(questions))
-                .merge(checkStatements(form.getStatements()));
+        return mergeMessages(
+                checkIdentifier(form.getName()),
+                checkQuestionDuplicates(questions),
+                checkQuestionLabelsDuplicates(questions),
+                checkStatements(form.getStatements())
+        );
     }
 
     @Override
     public MessageBag checkQuestion(Question question) {
-        return checkQuestionText(question).merge(checkDefaultValue(question));
+        return mergeMessages(
+                checkQuestionText(question),
+                checkDefaultValue(question)
+        );
     }
 
     @Override
     public MessageBag checkIfThenElse(IfThenElse ifThenElse) {
         MessageBag ifThenMessages = checkStatements(ifThenElse.getThenStatements());
         MessageBag ifThenElseMessages = checkStatements(ifThenElse.getElseStatements());
+        MessageBag ifConditionMessages = checkIfCondition(ifThenElse.getCondition());
 
-        return checkIfCondition(ifThenElse.getCondition()).merge(ifThenMessages).merge(ifThenElseMessages);
+        return mergeMessages(
+                ifConditionMessages,
+                ifThenMessages,
+                ifThenElseMessages
+        );
     }
 
     @Override
     public MessageBag checkIfThen(IfThen ifThen) {
         MessageBag ifThenMessages = checkStatements(ifThen.getThenStatements());
+        MessageBag ifConditionMessages = checkIfCondition(ifThen.getCondition());
 
-        return checkIfCondition(ifThen.getCondition()).merge(ifThenMessages);
+        return mergeMessages(ifConditionMessages, ifThenMessages);
     }
 
     @Override
@@ -101,13 +112,13 @@ public class TypeChecker implements ITypeChecker {
 
     @Override
     public MessageBag checkStatements(List<Statement> statements) {
-        MessageBag messages = new TypeCheckMessages();
+        MessageBag[] messageBags = new MessageBag[statements.size()];
 
-        for (Statement statement : statements) {
-            messages = messages.merge(statement.accept(visitor));
+        for (int i = 0; i < statements.size(); i++) {
+            messageBags[i] = statements.get(i).accept(visitor);
         }
 
-        return messages;
+        return mergeMessages(messageBags);
     }
 
     @Override
@@ -172,5 +183,15 @@ public class TypeChecker implements ITypeChecker {
         }
 
         return symbolTable;
+    }
+
+    private MessageBag mergeMessages(MessageBag... messageBags) {
+        MessageBag finalBag = new TypeCheckMessages();
+
+        for (MessageBag messageBag : messageBags) {
+            finalBag.addErrors(messageBag.getErrors());
+        }
+
+        return finalBag;
     }
 }
