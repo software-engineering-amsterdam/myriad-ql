@@ -18,7 +18,7 @@ class TypeChecker(Visitor):
 
     def field(self, node):
         # temp = [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
-        if node.expression:
+        if node.expression is not None:
             expression_type = node.expression.apply(self)
             print(expression_type)
 

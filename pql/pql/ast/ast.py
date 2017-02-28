@@ -174,7 +174,7 @@ class LowerInclusive(BinaryOperation):
         super(LowerInclusive, self).__init__('lower_inclusive', left, right)
 
     def apply(self, visitor):
-        return visitor.lower_incusive(self)
+        return visitor.lower_inclusive(self)
 
 
 class LowerExclusive(BinaryOperation):
