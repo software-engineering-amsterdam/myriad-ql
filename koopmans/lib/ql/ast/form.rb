@@ -9,7 +9,6 @@ module QL
         @statements = statements
       end
 
-      # go through each element and 'visit' it
       def accept(visitor)
         visitor.visit_form(self)
       end

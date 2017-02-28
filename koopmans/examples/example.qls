@@ -12,7 +12,7 @@ stylesheet taxOfficeExample
       question hasSoldHouse
         widget radio("Yes", "No")
       section "You sold a house" {
-        question sellingPrice {
+        question sellingPrice2 {
           widget spinbox
           width: 400
           font: "Arial"
@@ -21,6 +21,9 @@ stylesheet taxOfficeExample
         }
         question privateDebt
           widget spinbox
+          question privateDebt
+                          widget spinbox
+                          question valueResidue
         question valueResidue
         default money {
           width: 400

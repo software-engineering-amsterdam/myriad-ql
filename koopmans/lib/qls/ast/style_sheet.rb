@@ -7,6 +7,10 @@ module QLS
         @variable = variable
         @pages    = pages
       end
+
+      def accept(visitor, form)
+        visitor.visit_stylesheet(self, form)
+      end
     end
   end
 end
