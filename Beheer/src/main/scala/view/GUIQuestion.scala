@@ -4,7 +4,7 @@ import javafx.beans.binding.{ BooleanBinding, StringBinding }
 
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 
-import scalafx.scene.layout.HBox
+import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
 
 trait GUIQuestion {
@@ -12,10 +12,16 @@ trait GUIQuestion {
 
   val textLabel = new Text(question.label)
 
-  val element = new HBox {
+  val element = new VBox {
     children = Seq(textLabel)
     disable = isDisabled(question)
     visible <== isVisible(question)
+  }
+
+  def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
+    bind(env)
+
+    override def computeValue = question.value.value(env.toMap).display
   }
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {
@@ -27,11 +33,5 @@ trait GUIQuestion {
     bind(env)
 
     override def computeValue: Boolean = question.show(env.toMap)
-  }
-
-  def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
-    bind(env)
-
-    override def computeValue = question.value.value(env.toMap).display
   }
 }
