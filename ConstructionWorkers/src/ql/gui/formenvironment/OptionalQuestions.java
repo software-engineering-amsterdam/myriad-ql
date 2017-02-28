@@ -4,8 +4,6 @@ import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.components.fields.Field;
 import ql.gui.components.visitors.GUIFieldFactory;
-import ql.gui.formenvironment.QuestionData;
-import ql.gui.formenvironment.ValueData;
 import ql.gui.formenvironment.values.Value;
 
 import java.util.ArrayList;
@@ -19,12 +17,12 @@ import java.util.Map;
 public class OptionalQuestions {
 
     private final Map<Field, List<IfStatement>> conditionQuestionMap;
-    private final ValueData valueData;
+    private final Context context;
     private final GUIFieldFactory fieldFactory;
 
-    public OptionalQuestions(QuestionData questionData, ValueData valueData, GUIFieldFactory fieldFactory) {
+    public OptionalQuestions(QuestionData questionData, Context context, GUIFieldFactory fieldFactory) {
 
-        this.valueData = valueData;
+        this.context = context;
         this.fieldFactory = fieldFactory;
 
         this.conditionQuestionMap = getQuestionsWithConditions(questionData);
@@ -54,7 +52,7 @@ public class OptionalQuestions {
     }
 
     private void saveValue(String id, Value value) {
-        this.valueData.addValue(id, value);
+        this.context.addValue(id, value);
     }
 
     private void addIfStatementsToQuestion(

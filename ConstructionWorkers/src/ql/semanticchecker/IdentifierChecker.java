@@ -24,7 +24,6 @@ import ql.astnodes.statements.Statement;
 import ql.astnodes.types.Type;
 import ql.astnodes.visitors.ExpressionVisitor;
 import ql.astnodes.visitors.FormAndStatementVisitor;
-import ql.gui.formenvironment.ValueData;
 import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.DuplicateIdentifierError;
 import ql.semanticchecker.messagehandling.errors.IfExpressionUndefinedError;

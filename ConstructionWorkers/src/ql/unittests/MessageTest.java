@@ -17,7 +17,6 @@ import ql.astnodes.types.StringType;
 import org.junit.Assert;
 import org.junit.Test;
 import ql.semanticchecker.IdentifierChecker;
-import ql.gui.formenvironment.ValueData;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.MessageData;
 

@@ -12,7 +12,7 @@ import ql.gui.components.fields.ComputerQuestionField;
 import ql.gui.components.fields.Field;
 import ql.gui.components.widgets.Widget;
 import ql.gui.components.widgets.WidgetFactory;
-import ql.gui.formenvironment.ValueData;
+import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.Value;
 
 /**
@@ -25,10 +25,10 @@ public class GUIFieldFactory implements FormAndStatementVisitor<Field>{
     private final WidgetFactory widgetFactory;
 
     public GUIFieldFactory(
-            GUIInterface updates, ValueData valueData, WidgetFactory widgetFactory)
+            GUIInterface updates, Context context, WidgetFactory widgetFactory)
     {
         this.updates = updates;
-        this.evaluator = new QuestionEvaluator(valueData);
+        this.evaluator = new QuestionEvaluator(context);
         this.widgetFactory = widgetFactory;
     }
 

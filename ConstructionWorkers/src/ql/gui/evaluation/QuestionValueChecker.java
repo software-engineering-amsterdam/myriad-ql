@@ -13,7 +13,7 @@ import ql.astnodes.expressions.unaries.Negative;
 import ql.astnodes.expressions.unaries.Parentheses;
 import ql.astnodes.expressions.unaries.Positive;
 import ql.astnodes.visitors.ExpressionVisitor;
-import ql.gui.formenvironment.ValueData;
+import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.*;
 
 /**
@@ -21,10 +21,10 @@ import ql.gui.formenvironment.values.*;
  */
 public class QuestionValueChecker implements ExpressionVisitor<Value>{
 
-    private final ValueData valueData;
+    private final Context context;
 
-    public QuestionValueChecker(ValueData values) {
-        this.valueData = values;
+    public QuestionValueChecker(Context values) {
+        this.context = values;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
 
     @Override
     public Value visit(Identifier literal) {
-        return this.valueData.getValue(literal.getName());
+        return this.context.getValue(literal.getName());
     }
 
     @Override

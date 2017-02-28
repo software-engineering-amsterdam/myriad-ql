@@ -1,5 +1,5 @@
 /**
- * ql.java.
+ * QL.java.
  */
 
 package ql;
@@ -12,17 +12,17 @@ import ql.antlr.QLParser;
 import ql.astnodes.ASTVisitor;
 import ql.astnodes.Form;
 import ql.astnodes.Node;
+import ql.astnodes.types.Type;
 import ql.gui.GUI;
 import ql.gui.components.FormFrame;
 import ql.gui.components.GUIManager;
 import ql.gui.components.widgets.WidgetFactory;
+import ql.gui.formenvironment.Context;
 import ql.semanticchecker.IdentifierChecker;
-import ql.gui.formenvironment.ValueData;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
 import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.Error;
-import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class QL {
 
@@ -75,7 +75,7 @@ public class QL {
             System.exit(1);
         } else {
             System.out.println("Create ql.gui...");
-            ValueData questionStates =  new ValueData();
+            Context questionStates =  new Context();
             buildGUI(qlAST, questionStates);
         }
     }
@@ -104,7 +104,7 @@ public class QL {
     }
 
     private boolean checkSemanticCorrectness(Form qlAST, MessageData messages) {
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
@@ -118,11 +118,9 @@ public class QL {
         return messages.containsErrors();
     }
 
-    private void buildGUI(Form ast, ValueData valueData) {
-        GUI gui = new GUI (ast, new WidgetFactory(),
-                new GUIManager(new FormFrame(ast.getIdentifier().getName())),
-                valueData
-        );
+    private void buildGUI(Form ast, Context context) {
+        GUI gui = new GUI (ast, new WidgetFactory(), new GUIManager(new FormFrame(ast.getIdentifier().getName())),
+                context);
         gui.showUI();
     }
 }

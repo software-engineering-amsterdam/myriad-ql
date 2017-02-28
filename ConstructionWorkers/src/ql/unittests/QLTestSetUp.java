@@ -14,8 +14,7 @@ import ql.astnodes.Form;
 
 import org.junit.Before;
 import ql.astnodes.Node;
-import ql.astnodes.expressions.literals.Identifier;
-import ql.gui.formenvironment.ValueData;
+import ql.gui.formenvironment.Context;
 import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.MessageData;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 public abstract class QLTestSetUp {
 
     protected Form form;
-    protected ValueData questionStates;
+    protected Context questionStates;
     protected IdentifierChecker idChecker;
     protected TypeChecker typeChecker;
 
@@ -57,7 +56,7 @@ public abstract class QLTestSetUp {
         Node nodeAST = parseTree.accept(astVisitor);
 
         form = (Form) nodeAST;
-        questionStates =  new ValueData();
+        questionStates =  new Context();
 
         MessageData messages = new MessageData();
         HashMap identifierToTypeMap = new HashMap<>();

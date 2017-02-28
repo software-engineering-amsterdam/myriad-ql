@@ -10,9 +10,9 @@ import ql.gui.components.fields.Field;
 import ql.gui.components.GUIManager;
 import ql.gui.components.visitors.GUIFieldFactory;
 import ql.gui.components.widgets.WidgetFactory;
+import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.OptionalQuestions;
 import ql.gui.formenvironment.QuestionData;
-import ql.gui.formenvironment.ValueData;
 import ql.gui.formenvironment.values.Value;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class GUI implements GUIInterface{
 
     private final Map<Field, List<IfStatement>> questionsWithConditions;
 
-    private final ValueData valueData;
+    private final Context context;
     private final QuestionEvaluator evaluator;
     private final GUIFieldFactory fieldFactory;
     private final QuestionData questionData;
@@ -34,16 +34,16 @@ public class GUI implements GUIInterface{
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
 
-    public GUI(Form form, WidgetFactory widgetFactory, GUIManager manager, ValueData valueData) {
-        this.valueData = valueData;
-        this.evaluator = new QuestionEvaluator(valueData);
+    public GUI(Form form, WidgetFactory widgetFactory, GUIManager manager, Context context) {
+        this.context = context;
+        this.evaluator = new QuestionEvaluator(context);
 
         this.manager = manager;
-        this.fieldFactory = new GUIFieldFactory(this, valueData, widgetFactory);
+        this.fieldFactory = new GUIFieldFactory(this, context, widgetFactory);
 
         this.questionData = new QuestionData(form);
 
-        this.questionsWithConditions = new OptionalQuestions(this.questionData, valueData, this.fieldFactory).getMap();
+        this.questionsWithConditions = new OptionalQuestions(this.questionData, context, this.fieldFactory).getMap();
 
         this.computedQuestions = this.questionData.getComputedQuestions();
     }
@@ -79,7 +79,7 @@ public class GUI implements GUIInterface{
     // Helper functions etc...
 
     private void saveValue(String id, Value value) {
-        this.valueData.addValue(id, value);
+        this.context.addValue(id, value);
     }
 
     private void evaluateComputedQuestion(List<ComputedQuestion> questions) {

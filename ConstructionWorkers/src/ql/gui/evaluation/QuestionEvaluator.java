@@ -3,7 +3,7 @@ package ql.gui.evaluation;
 import ql.astnodes.expressions.Expression;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
-import ql.gui.formenvironment.ValueData;
+import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.BooleanValue;
 import ql.gui.formenvironment.values.Value;
 
@@ -13,11 +13,11 @@ import ql.gui.formenvironment.values.Value;
 public class QuestionEvaluator {
 
     private final QuestionValueChecker evaluator;
-    private final ValueData valueData;
+    private final Context context;
 
-    public QuestionEvaluator(ValueData valueData) {
-        this.valueData = valueData;
-        this.evaluator = new QuestionValueChecker(valueData);
+    public QuestionEvaluator(Context context) {
+        this.context = context;
+        this.evaluator = new QuestionValueChecker(context);
     }
 
     private Value computedQuestionEvaluation(ComputedQuestion question) {
@@ -27,7 +27,7 @@ public class QuestionEvaluator {
 
     public Value expressionEvaluation(ComputedQuestion expression) {
         Value result = this.computedQuestionEvaluation(expression);
-        valueData.addValue(expression.getIdentifier().getName(), result);
+        context.addValue(expression.getIdentifier().getName(), result);
         return result;
     }
 
