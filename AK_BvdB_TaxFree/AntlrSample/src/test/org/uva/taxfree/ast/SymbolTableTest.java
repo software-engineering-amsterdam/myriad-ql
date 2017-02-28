@@ -3,8 +3,8 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.uva.taxfree.model.BooleanQuestion;
-import org.uva.taxfree.model.SymbolTable;
+import org.uva.taxfree.model.node.statement.BooleanQuestion;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 public class SymbolTableTest {
     SymbolTable mSymbolTable;

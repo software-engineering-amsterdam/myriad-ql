@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.environment;
+
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -17,9 +19,9 @@ public class SymbolTable {
     public String resolve(String variableId) {
         for (Symbol s : mSymbols) {
             if (variableId.equals(s.toString())) {
-                return s.resolve();
+                return s.resolveValue();
             }
         }
-        throw new RuntimeException("Unable to resolve id: " + variableId);
+        throw new RuntimeException("Unable to resolveValue id: " + variableId);
     }
 }

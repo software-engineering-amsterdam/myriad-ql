@@ -5,7 +5,19 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.*;
+import org.uva.taxfree.model.node.FormNode;
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.condition.IfElseStatementNode;
+import org.uva.taxfree.model.node.condition.IfStatementNode;
+import org.uva.taxfree.model.node.expression.BooleanExpressionNode;
+import org.uva.taxfree.model.node.expression.CalculationExpressionNode;
+import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
+import org.uva.taxfree.model.node.expression.UniformExpressionNode;
+import org.uva.taxfree.model.node.statement.*;
+import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
+import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
+import org.uva.taxfree.model.node.literal.StringLiteralNode;
+import org.uva.taxfree.model.node.literal.VariableLiteralNode;
 
 import java.util.Stack;
 

@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.condition;
+
+import org.uva.taxfree.model.node.Node;
 
 public class IfElseStatementNode extends Node {
     private IfStatementNode mIfStatementNode;
@@ -18,6 +20,12 @@ public class IfElseStatementNode extends Node {
 
     public void setIfStatementNode(IfStatementNode ifStatementNode) {
         mIfStatementNode = ifStatementNode;
+    }
+
+    @Override
+    public void setVisibility(boolean isVisible) {
+        mIfStatementNode.setVisibility(isVisible);
+        super.setVisibility(!mIfStatementNode.isTrue() && isVisible);
     }
 
     @Override

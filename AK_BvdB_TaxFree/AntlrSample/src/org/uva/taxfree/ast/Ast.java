@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
+import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.Node;
 
 import java.io.*;
 import java.util.BitSet;
@@ -47,11 +47,6 @@ public class Ast {
         return conditions;
     }
 
-    // "Getter"
-    public Set<Node> getConditionsV2() {
-        return mRootNode.getConditionsV2();
-    }
-
     public String getFormName() {
         return mRootNode.toString();
     }
@@ -87,7 +82,7 @@ public class Ast {
         qlGrammarParser.addErrorListener(errorListener);
         qlGrammarLexer.addErrorListener(errorListener);
 
-        QLGrammarParser.FormContext formContext= qlGrammarParser.form();
+        QLGrammarParser.FormContext formContext = qlGrammarParser.form();
 
         // Walk it and attach our listener
         ParseTreeWalker walker = new ParseTreeWalker();

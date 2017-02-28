@@ -1,11 +1,12 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node;
 
-import java.util.Collections;
+import org.uva.taxfree.model.node.statement.NamedNode;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class Node {
-    private Set<Node> mChildren;
+    private final Set<Node> mChildren;
 
     public Node() {
         mChildren = new LinkedHashSet<>(); ///< preserves the order in which the items were inserted
@@ -39,12 +40,9 @@ public abstract class Node {
         }
     }
 
-    public void printValue() {
+    protected void printValue() {
         // Intentionally left blank
     }
-
-    // declare abstract to force implementation. default Object.toString() is not declared abstract
-    public abstract String toString();
 
     public void printAll() {
         System.out.println(toString());
@@ -62,29 +60,5 @@ public abstract class Node {
 
     protected void addCondition(Set<Node> set) {
         // Intentionally left blank
-    }
-
-    public Set<Node> getConditionsV2() {
-        Set<Node> nodeSet = new LinkedHashSet<>();
-        for (Node n : mChildren) {
-            nodeSet.addAll(n.getConditionsV2());
-        }
-        nodeSet.addAll(addCondition());
-
-//        By checking with a method that we need to override
-        if (isCondition()) {
-            nodeSet.add(this);
-        }
-//        By calling a method that we need to override
-//        nodeSet.addAll(addCondition());
-        return nodeSet;
-    }
-
-    protected boolean isCondition() {
-        return true;
-    }
-
-    protected Set<Node> addCondition() {
-        return Collections.emptySet();
     }
 }

@@ -1,10 +1,11 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.condition;
+
+import org.uva.taxfree.model.node.Node;
 
 import java.util.Set;
 
 public class IfStatementNode extends Node {
-    ConditionNode mCondition;
-
+    private ConditionNode mCondition;
 
     public IfStatementNode() {
         super();
@@ -31,17 +32,16 @@ public class IfStatementNode extends Node {
     @Override
     public void setVisibility(boolean isVisible) {
         System.out.println("I evaluate to " + isTrue());
-        super.setVisibility(isTrue());
+        super.setVisibility(isTrue() && isVisible);
     }
 
     @Override
     protected void addCondition(Set<Node> set) {
-        set.add(this);
+        set.add(mCondition);
     }
 
     @Override
     public String toString() {
         return mCondition.toString();
     }
-
 }

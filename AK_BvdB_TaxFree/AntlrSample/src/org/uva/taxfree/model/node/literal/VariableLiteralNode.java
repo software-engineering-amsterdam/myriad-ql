@@ -1,4 +1,7 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.literal;
+
+
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 public class VariableLiteralNode extends LiteralNode {
     private NamedNode mReference;
@@ -12,7 +15,7 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
-    public String resolve() {
-        return mReference.resolve();
+    public String resolveValue() {
+        return mReference.resolveValue();
     }
 }
