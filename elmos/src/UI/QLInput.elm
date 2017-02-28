@@ -3,7 +3,7 @@ module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 import Html exposing (Html, b, div, form, h3, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style)
 import Html.Events exposing (onInput)
-import QL.AST exposing (Form, Location(Location), ValueType)
+import QL.AST exposing (Form, Location, ValueType)
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
@@ -119,13 +119,12 @@ renderMessage message =
     case message of
         Error (DuplicateQuestionDefinition name locations) ->
             UI.Messages.error
-                ([ text "Duplicate question definitions for variable "
-                 , UI.Messages.varName name
-                 , text " at the following locations: [ "
-                 , UI.Messages.locations locations
-                 , text "]"
-                 ]
-                )
+                [ text "Duplicate question definitions for variable "
+                , UI.Messages.varName name
+                , text " at the following locations: [ "
+                , UI.Messages.locations locations
+                , text "]"
+                ]
 
         Error (ReferenceToUndefinedQuestion ( name, loc )) ->
             UI.Messages.error

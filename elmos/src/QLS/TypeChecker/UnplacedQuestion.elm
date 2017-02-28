@@ -1,7 +1,7 @@
 module QLS.TypeChecker.UnplacedQuestion exposing (check)
 
 import QL.AST exposing (Form, Location)
-import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
+import QLS.AST exposing (StyleSheet, Question)
 import QLS.TypeChecker.Messages exposing (Message, unplacedQuestion)
 import QL.TypeChecker.CheckerUtil as QLCheckerUtil
 import QLS.TypeChecker.CheckerUtil as QLSCheckerUtil

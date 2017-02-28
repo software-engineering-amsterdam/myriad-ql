@@ -29,7 +29,7 @@ typeCheckerErrorsFromExpression questionTypes expression =
 getType : QuestionTypes -> Expression -> Result (List Message) ValueType
 getType variableTypes expression =
     case expression of
-        Var ( name, loc ) ->
+        Var ( name, _ ) ->
             Result.fromMaybe
                 []
                 (Dict.get name variableTypes)

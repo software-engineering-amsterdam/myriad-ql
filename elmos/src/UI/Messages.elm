@@ -34,5 +34,6 @@ varName name =
     b [] [ text name ]
 
 
+locationToString : Location -> String
 locationToString (Location line col) =
     "line " ++ toString line ++ " ( col " ++ toString col ++ " )"
