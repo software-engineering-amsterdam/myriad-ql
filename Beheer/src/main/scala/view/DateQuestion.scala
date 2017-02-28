@@ -4,7 +4,7 @@ import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util.Date
 import javafx.beans.binding.ObjectBinding
 
-import ast.DateType
+import ast.{ DateType, ExpressionNode }
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
 
@@ -35,7 +35,7 @@ class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
     bind(env)
 
     override def computeValue: LocalDate = {
-      question.value.value(env.toMap) match {
+      ExpressionNode.calculate(env.toMap, question.value) match {
         case DateValue(d) => d
         case _ => LocalDate.now()
       }

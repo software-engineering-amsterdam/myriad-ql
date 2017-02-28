@@ -6,7 +6,9 @@ boolean
  if (hasSoldHouse) {
  sellingPrice: "Price the house was sold for:" money
  privateDebt: "Private debts for the sold house:" money
- valueResidue: "Value residue:" money(sellingPrice - privateDebt)
+ if (sellingPrice > privateDebt) {
+    valueResidue: "Value residue:" money(sellingPrice - privateDebt)
+    }
  }
  text1: "Text1" string
  text2: "Text2" string(text1)

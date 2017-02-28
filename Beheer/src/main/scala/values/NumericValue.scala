@@ -44,7 +44,7 @@ case class IntegerValue(value: BigDecimal) extends NumericValue {
     case _ => UndefinedValue
   }
 
-  override def !(other: Value): Value = other match {
+  override def -(other: Value): Value = other match {
     case IntegerValue(o) => IntegerValue(value - o)
     case DecimalValue(o) => DecimalValue(value - o)
     case MoneyValue(o) => MoneyValue(value - o)
@@ -78,7 +78,7 @@ case class DecimalValue(value: BigDecimal) extends NumericValue {
     case _ => UndefinedValue
   }
 
-  override def !(other: Value): Value = other match {
+  override def -(other: Value): Value = other match {
     case MoneyValue(o) => MoneyValue(value - o)
     case o: NumericValue => DecimalValue(value - o.value)
     case _ => UndefinedValue
@@ -108,7 +108,7 @@ case class MoneyValue(value: BigDecimal) extends NumericValue {
     case _ => UndefinedValue
   }
 
-  override def !(other: Value): Value = other match {
+  override def -(other: Value): Value = other match {
     case o: NumericValue => MoneyValue(value - o.value)
     case _ => UndefinedValue
   }
