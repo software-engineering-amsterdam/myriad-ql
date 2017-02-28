@@ -32,7 +32,10 @@ class TypeChecker(Visitor):
     def addition(self, node):
         return self.arithmetic_type_detection(node)
 
-    def conditional(self, node):
+    def conditional_if(self, node):
+        return []
+
+    def conditional_if_else(self, node):
         return []
 
     def greater_exclusive(self, node):

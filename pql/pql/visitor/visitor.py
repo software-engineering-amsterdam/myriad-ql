@@ -33,7 +33,11 @@ class Visitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def conditional(self, node):
+    def conditional_if(self, node):
+        pass
+
+    @abstractmethod
+    def conditional_if_else(self, node):
         pass
 
     @abstractmethod
