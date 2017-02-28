@@ -91,7 +91,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
         return null;
     }
 
-    public boolean duplicateQuestionIdentifiers(SimpleQuestion question) {
+    private boolean duplicateQuestionIdentifiers(SimpleQuestion question) {
         String questionIdentifierName = question.getIdentifier().getName();
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {

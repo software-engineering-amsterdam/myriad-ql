@@ -16,6 +16,7 @@ import ql.astnodes.types.BooleanType;
 import ql.astnodes.types.StringType;
 import org.junit.Assert;
 import org.junit.Test;
+import ql.astnodes.types.Type;
 import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.MessageData;
@@ -23,6 +24,7 @@ import ql.semanticchecker.messagehandling.MessageData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MessageTest {
 
@@ -38,7 +40,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -60,7 +62,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -91,7 +93,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -122,7 +124,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -147,7 +149,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -178,7 +180,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);
@@ -209,7 +211,7 @@ public class MessageTest {
                 new LineNumber(1));
 
         MessageData messages = new MessageData();
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(form, identifierToTypeMap, messages);
         new TypeChecker(form, identifierToTypeMap, messages);

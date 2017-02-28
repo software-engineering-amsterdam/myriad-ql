@@ -272,13 +272,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type expressionType = statement.getExpression().accept(this);
         tempIdentifierLiteral = null;
 
-        if(expressionType == null) {
+        if (!expressionType.getClass().equals(statement.getType().getClass())) {
             messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
-        } else {
-            if (!expressionType.getClass().equals(statement.getType().getClass())) {
-                messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
-            }
         }
+
         return null;
     }
 
