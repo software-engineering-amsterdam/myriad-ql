@@ -9,4 +9,9 @@ public class StringType extends Type {
     public boolean equals(Type type) {
         return this.toString().equals(type.toString());
     }
+
+    @Override
+    public boolean isString() {
+        return true;
+    }
 }

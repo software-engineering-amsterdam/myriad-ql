@@ -23,8 +23,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     @Override
     public Type visit(Negation node) throws Throwable {
         Type innerExpressionType = node.getExpression().accept(this);
-
-        if (!(innerExpressionType instanceof BooleanType)) {
+        if (!innerExpressionType.isBoolean()) {
             // TODO Do not use exceptions as error management
             throw new TypeMismatchException(new BooleanType(), innerExpressionType);
         }
@@ -42,7 +41,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type> {
     public Type visit(Increment node) throws Throwable {
         Type innerExpressionType = node.getExpression().accept(this);
 
-        if (!(innerExpressionType instanceof NumberType)) {
+        if (!(innerExpressionType.isNumeric())) {
             throw new NumberExpectedException(innerExpressionType);
         }
 
