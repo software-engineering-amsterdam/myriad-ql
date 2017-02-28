@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.FormRenderer;
 import org.uva.taxfree.model.node.FormNode;
-import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.condition.ConditionNode;
 import org.uva.taxfree.model.node.condition.IfElseStatementNode;
 import org.uva.taxfree.model.node.condition.IfStatementNode;
@@ -84,16 +83,14 @@ public class QuestionFormTest {
         mRoot.addChild(QuestionSold);
         mRoot.addChild(QuestionBought);
 
-        ExpressionNode expCalc = new CalculationExpressionNode("-");
-        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
         variableSold.setReference(QuestionSold);
 
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue");
         variableBought.setReference(QuestionBought);
 
-        expCalc.addChild(variableSold);
-        expCalc.addChild(variableBought);
+        ExpressionNode expCalc = new CalculationExpressionNode(variableSold, "-", variableBought);
+        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
@@ -151,12 +148,10 @@ public class QuestionFormTest {
 
     @Test
     public void testConstantCondition() throws Exception {
-        IfStatementNode ifStatement = new IfStatementNode();
-        ConditionNode cond = new BooleanExpressionNode("<");
-        ifStatement.addChild(cond);
-        cond.addChild(new IntegerLiteralNode("0"));
         ConditionNode parenthesized = new ParenthesizedExpressionNode();
-        cond.addChild(parenthesized);
+        ConditionNode cond = new BooleanExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
+        IfStatementNode ifStatement = new IfStatementNode();
+        ifStatement.addChild(cond);
         parenthesized.addChild(CalcOnePlusFive());
         ifStatement.addChild(new BooleanQuestion("Do you see me?", "amIVisible?"));
         mRoot.addChild(ifStatement);
@@ -175,9 +170,8 @@ public class QuestionFormTest {
     }
 
     private ConditionNode CalcOnePlusFive() {
-        ConditionNode calc = new CalculationExpressionNode("+");
+        ConditionNode calc = new CalculationExpressionNode(new IntegerLiteralNode("1"),"+", new IntegerLiteralNode("5"));
         calc.addChild(new IntegerLiteralNode("1"));
-        calc.addChild(new IntegerLiteralNode("5"));
         return calc;
     }
 }
