@@ -48,12 +48,12 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
   }
 
   private def checkPrefixExpression(prefixNode: PrefixNode): (Option[Type], Issues) =
-    (prefixNode, checkExpression(prefixNode.rhs)) match {
+    (prefixNode, checkExpression(prefixNode.operand)) match {
       case (_, (None, errors)) => (None, errors)
-      case (_: NEG, (Some(t: NumericType), errors)) => (Some(t), errors)
-      case (_: NOT, (Some(BooleanType), errors)) => (Some(BooleanType), errors)
-      case (_: NEG, (Some(t: Type), errors)) => (None, errors :+ Error(s"Wrong operand type $t for operator NEG"))
-      case (_: NOT, (Some(t: Type), errors)) => (Some(BooleanType), errors :+ Error(s"Wrong operand type $t for operator NOT"))
+      case (_: Neg, (Some(t: NumericType), errors)) => (Some(t), errors)
+      case (_: Not, (Some(BooleanType), errors)) => (Some(BooleanType), errors)
+      case (_: Neg, (Some(t: Type), errors)) => (None, errors :+ Error(s"Wrong operand type $t for operator NEG"))
+      case (_: Not, (Some(t: Type), errors)) => (Some(BooleanType), errors :+ Error(s"Wrong operand type $t for operator NOT"))
     }
 
   private def isSubType(candidate: NumericType, expectedType: NumericType): Boolean =

@@ -13,7 +13,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, """\+""") == nodeCount(parser.parseExpression(e), {
-          case ADD(_, _) => true
+          case Add(_, _) => true
           case _ => false
         })
     }
@@ -22,8 +22,8 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, "-") == nodeCount(parser.parseExpression(e), {
-          case NEG(_) => true
-          case SUB(_, _) => true
+          case Neg(_) => true
+          case Sub(_, _) => true
           case _ => false
         })
     }
@@ -32,7 +32,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, """/""") == nodeCount(parser.parseExpression(e), {
-          case DIV(_, _) => true
+          case Div(_, _) => true
           case _ => false
         })
     }
@@ -42,7 +42,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, """\*""") == nodeCount(parser.parseExpression(e), {
-          case MUL(_, _) => true
+          case Mul(_, _) => true
           case _ => false
         })
     }
@@ -51,7 +51,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, "!") - operatorCount(e, "!=") == nodeCount(parser.parseExpression(e), {
-          case NOT(_) => true
+          case Not(_) => true
           case _ => false
         })
     }
@@ -60,7 +60,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, """\&\&""") == nodeCount(parser.parseExpression(e), {
-          case AND(_, _) => true
+          case And(_, _) => true
           case _ => false
         })
     }
@@ -69,7 +69,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, """\|\|""") == nodeCount(parser.parseExpression(e), {
-          case OR(_, _) => true
+          case Or(_, _) => true
           case _ => false
         })
     }
@@ -78,8 +78,8 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, ">") == nodeCount(parser.parseExpression(e), {
-          case GT(_, _) => true
-          case GEQ(_, _) => true
+          case Gt(_, _) => true
+          case Geq(_, _) => true
           case _ => false
         })
     }
@@ -88,8 +88,8 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, "<") == nodeCount(parser.parseExpression(e), {
-          case LT(_, _) => true
-          case LEQ(_, _) => true
+          case Lt(_, _) => true
+          case Leq(_, _) => true
           case _ => false
         })
     }
@@ -98,7 +98,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, "==") == nodeCount(parser.parseExpression(e), {
-          case EQ(_, _) => true
+          case Eq(_, _) => true
           case _ => false
         })
     }
@@ -107,7 +107,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     forAll(expressions) {
       e: String =>
         operatorCount(e, "!=") == nodeCount(parser.parseExpression(e), {
-          case NEQ(_, _) => true
+          case Neq(_, _) => true
           case _ => false
         })
     }
@@ -121,7 +121,7 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
   private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Boolean): Int = {
     lazy val childResult = expressionNode match {
       case i: InfixNode => nodeCount(i.lhs, matcher) + nodeCount(i.rhs, matcher)
-      case p: PrefixNode => nodeCount(p.rhs, matcher)
+      case p: PrefixNode => nodeCount(p.operand, matcher)
       case _ => 0
     }
     (if (matcher(expressionNode)) 1 else 0) + childResult
