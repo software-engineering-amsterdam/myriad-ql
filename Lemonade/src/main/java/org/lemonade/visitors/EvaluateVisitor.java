@@ -57,8 +57,8 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(PlusBinary plusBinary) {
-        NumericValue left = (NumericValue) plusBinary.getLeft().accept(this);
-        NumericValue right = (NumericValue) plusBinary.getRight().accept(this);
+        NumericValue<?> left = (NumericValue<?>) plusBinary.getLeft().accept(this);
+        NumericValue<?> right = (NumericValue<?>) plusBinary.getRight().accept(this);
         System.err.println(left.plus(right));
         return left.plus(right);
     }
@@ -70,8 +70,8 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(MinusBinary minusBinary) {
-        NumericValue left = (NumericValue) minusBinary.getLeft().accept(this);
-        NumericValue right = (NumericValue) minusBinary.getRight().accept(this);
+        NumericValue<?> left = (NumericValue<?>) minusBinary.getLeft().accept(this);
+        NumericValue<?> right = (NumericValue<?>) minusBinary.getRight().accept(this);
         System.err.println(left.minus(right));
         return left.minus(right);
     }
@@ -113,13 +113,13 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(BangUnary bangUnary) {
-        BooleanValue expression = (BooleanValue) bangUnary.getExpression().accept(this);
-        return expression.neg();
+        return null;
     }
 
     @Override
     public Expression visit(NegUnary negUnary) {
-        return null;
+        BooleanValue expression = (BooleanValue) negUnary.getExpression().accept(this);
+        return expression.neg();
     }
 
     @Override

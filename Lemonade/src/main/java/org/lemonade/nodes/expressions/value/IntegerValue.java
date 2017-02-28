@@ -36,23 +36,35 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericValue plus(NumericValue that) {
+    public NumericValue<?> plus(NumericValue<?> that) {
         return that.plus(this);
     }
 
-    public IntegerValue product(final IntegerValue that) {
+    public IntegerValue product(IntegerValue that) {
         return new IntegerValue(new QLIntegerType(), this.getValue() * that.getValue());
     }
 
-    public DecimalValue product(final DecimalValue that) {
+    public DecimalValue product(DecimalValue that) {
         return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
     }
 
-    public MoneyValue product(final MoneyValue that) {
+    public MoneyValue product(MoneyValue that) {
         return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
     }
 
-    public Value divide(IntegerValue that) {
+    public IntegerValue minus(IntegerValue that) {
+        return new IntegerValue(new QLIntegerType(), this.getValue() - that.getValue());
+    }
+
+    public DecimalValue minus(DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
+    }
+
+    public MoneyValue minus(MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
+    }
+
+    public Value<?> divide(IntegerValue that) {
         if (this.getValue() == 0 || that.getValue() == 0) {
             return new UndefinedValue(new QLIntegerType(), "Division with zero");
         }
@@ -60,7 +72,7 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
     }
 
     @Override
-    public Value divide(DecimalValue that) {
+    public Value<?> divide(DecimalValue that) {
         if (this.getValue() == 0 || that.getValue() == 0) {
             return new UndefinedValue(new QLDecimalType(), "Division with zero");
         }
@@ -68,12 +80,12 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
     }
 
     @Override
-    public NumericValue divide(MoneyValue that) {
+    public NumericValue<?> divide(MoneyValue that) {
         return null;
     }
 
     @Override
-    public NumericValue divide(NumericValue that) {
+    public NumericValue<?> divide(NumericValue<?> that) {
         return null;
     }
 
