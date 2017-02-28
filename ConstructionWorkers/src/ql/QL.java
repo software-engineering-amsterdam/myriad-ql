@@ -4,14 +4,21 @@
 
 package ql;
 
-import ql.astnodes.ASTBuilder;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import ql.antlr.QLLexer;
+import ql.antlr.QLParser;
+import ql.astnodes.ASTVisitor;
 import ql.astnodes.Form;
+import ql.astnodes.Node;
 import ql.gui.GUI;
 import ql.gui.components.FormFrame;
 import ql.gui.components.GUIManager;
 import ql.gui.components.widgets.WidgetFactory;
-import ql.semanticchecker.SemanticChecker;
+import ql.semanticchecker.IdentifierChecker;
 import ql.gui.formenvironment.ValueData;
+import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
 import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.Error;
@@ -23,6 +30,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 public class QL {
@@ -38,10 +46,10 @@ public class QL {
     public static void main(String[] arguments) throws Exception {
         String inputFile = "./src/test.ql";
         QL ql = new QL(inputFile);
-        ql.parseAndCheck();
+        ql.testFunctionality();
     }
 
-    private void parseAndCheck() throws IOException, IllegalArgumentException{
+    private void testFunctionality() throws IOException, IllegalArgumentException{
         if (!fileExists()) {
             throw new IOException();
         }
@@ -52,14 +60,22 @@ public class QL {
 
         InputStream qlInputStream = new FileInputStream(inputFile);
         Form qlAST = getAST(qlInputStream);
-        ValueData questionStates =  new ValueData();
-        Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, questionStates);
+
+        MessageData messages = new MessageData();
+
+        Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, messages);
 
         if(!semanticallyCorrect) {
-            System.out.println("ql.ql form is semantically incorrect.");
+            System.out.println("QL form is semantically incorrect.");
+
+            for (Error error : messages.getErrors()) {
+                System.out.println(error.getMessage());
+            }
+
             System.exit(1);
         } else {
             System.out.println("Create ql.gui...");
+            ValueData questionStates =  new ValueData();
             buildGUI(qlAST, questionStates);
         }
     }
@@ -75,32 +91,31 @@ public class QL {
     }
 
     private Form getAST(InputStream inputStream) throws IOException {
-        ASTBuilder qlAstBuilder = new ASTBuilder(inputStream);
-        return qlAstBuilder.buildAST();
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+        QLLexer lexer = new QLLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        QLParser parser = new QLParser(tokens);
+
+        ParseTree parseTree = parser.form();
+        ASTVisitor astVisitor = new ASTVisitor(parseTree);
+        Node nodeAST = parseTree.accept(astVisitor);
+
+        return (Form) nodeAST;
     }
 
-    private boolean checkSemanticCorrectness(Form qlAST, ValueData questionStates) {
-        SemanticChecker semanticChecker = new SemanticChecker(qlAST, questionStates);
-        MessageData messages = semanticChecker.getMessages();
+    private boolean checkSemanticCorrectness(Form qlAST, MessageData messages) {
+        HashMap identifierToTypeMap = new HashMap<>();
 
-        if (messages.getWarnings().size() > 0) {
-            List<Warning> warnings = messages.getWarnings();
+        new IdentifierChecker(qlAST, identifierToTypeMap, messages);
+        new TypeChecker(qlAST, identifierToTypeMap, messages);
 
-            for (Message warning : warnings) {
+        if (messages.containsWarnings()) {
+            for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }
         }
 
-        if (messages.getErrors().size() > 0) {
-            List<Error> errors = messages.getErrors();
-
-            for (Error error : errors) {
-                System.out.println(error.getMessage());
-            }
-            return false;
-        } else {
-            return true;
-        }
+        return messages.containsErrors();
     }
 
     private void buildGUI(Form ast, ValueData valueData) {

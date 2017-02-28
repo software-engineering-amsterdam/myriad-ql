@@ -12,8 +12,8 @@ public class DuplicateLabelWarning extends Warning {
     private final Identifier identifier;
     private final String label;
 
-    public DuplicateLabelWarning(LineNumber location, Identifier identifier, String label) {
-        super(location);
+    public DuplicateLabelWarning(LineNumber lineNumber, Identifier identifier, String label) {
+        super(lineNumber);
         this.identifier = identifier;
         this.label = label;
     }
@@ -23,7 +23,7 @@ public class DuplicateLabelWarning extends Warning {
     }
 
     public String getMessage() {
-        return "WARNING: Question " + identifier.getName() + " at line " + getLocation().getStartingLine() +
+        return "WARNING: Question " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
                 " has a duplicate label: " + label + ".";
     }
 }

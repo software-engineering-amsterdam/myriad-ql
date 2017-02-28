@@ -16,11 +16,13 @@ import ql.astnodes.types.BooleanType;
 import ql.astnodes.types.StringType;
 import org.junit.Assert;
 import org.junit.Test;
-import ql.semanticchecker.SemanticChecker;
+import ql.semanticchecker.IdentifierChecker;
 import ql.gui.formenvironment.ValueData;
+import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.MessageData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MessageTest {
@@ -36,9 +38,12 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
+
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
                 "ERROR: Invalid type at line 1. Type should be Boolean.");
@@ -55,9 +60,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
                 "ERROR: Identifier anIdentifier at line 1 in IF statement condition is undefined.");
@@ -84,9 +91,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
                 "ERROR: Cyclomatic dependency between testQuestion2 and testQuestion1 at line 2.");
@@ -113,9 +122,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
                 "ERROR: Question testQuestion1 at line 2 has a duplicate identifier with a different type.");
@@ -136,9 +147,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
                 "ERROR: Question testQuestion2 at line 2 is undefined.");
@@ -165,9 +178,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getWarnings().get(0).getMessage(),
                 "WARNING: Question testQuestion1 at line 2 has a duplicate identifier with the same type.");
@@ -194,9 +209,11 @@ public class MessageTest {
         Form form = new Form(new Identifier("testForm", new LineNumber(1)), statements,
                 new LineNumber(1));
 
-        ValueData questionData = new ValueData();
-        SemanticChecker semanticChecker = new SemanticChecker(form, questionData);
-        MessageData messages = semanticChecker.getMessages();
+        MessageData messages = new MessageData();
+        HashMap identifierToTypeMap = new HashMap<>();
+
+        new IdentifierChecker(form, identifierToTypeMap, messages);
+        new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getWarnings().get(0).getMessage(),
                 "WARNING: Question testQuestion2 at line 2 has a duplicate label: Question text.");

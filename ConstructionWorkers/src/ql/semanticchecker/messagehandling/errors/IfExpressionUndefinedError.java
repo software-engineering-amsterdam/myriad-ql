@@ -10,13 +10,13 @@ public class IfExpressionUndefinedError extends Error {
 
     private final Identifier identifier;
 
-    public IfExpressionUndefinedError(LineNumber location, Identifier identifier) {
-        super(location);
+    public IfExpressionUndefinedError(LineNumber lineNumber, Identifier identifier) {
+        super(lineNumber);
         this.identifier = identifier;
     }
 
     public String getMessage() {
-        return "ERROR: Identifier " + identifier.getName() + " at line " + getLocation().getStartingLine() +
+        return "ERROR: Identifier " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
                 " in IF statement condition is undefined.";
     }
 }

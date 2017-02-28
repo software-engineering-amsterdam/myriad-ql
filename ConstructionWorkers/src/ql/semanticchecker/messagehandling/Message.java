@@ -4,13 +4,18 @@
 
 package ql.semanticchecker.messagehandling;
 
+import ql.astnodes.LineNumber;
+
 public abstract class Message {
 
-    public String type;
+    private final LineNumber lineNumber;
 
+    public Message(LineNumber lineNumber) {
+        this.lineNumber = lineNumber;
+    }
     public abstract String getMessage();
 
-    public String getType() {
-        return type;
+    public LineNumber getLineNumber() {
+        return lineNumber;
     }
 }

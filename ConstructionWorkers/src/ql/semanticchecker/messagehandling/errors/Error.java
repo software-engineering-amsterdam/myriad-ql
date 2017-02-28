@@ -9,14 +9,14 @@ import ql.semanticchecker.messagehandling.Message;
 
 public abstract class Error extends Message {
 
-    private final LineNumber location;
+    private final String type;
 
-    public Error(LineNumber location) {
-        this.location = location;
+    public Error(LineNumber lineNumber) {
+        super(lineNumber);
         this.type = "Error";
     }
 
-    public LineNumber getLocation() {
-        return location;
+    public String getType(){
+        return type;
     }
 }

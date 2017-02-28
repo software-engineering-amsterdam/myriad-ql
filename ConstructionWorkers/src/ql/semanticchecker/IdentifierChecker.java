@@ -41,14 +41,13 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
     private Set<String> questionLabels;
-    private ValueData questionStates;
 
-    public IdentifierChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages,
-                             ValueData questionStates) {
+
+    public IdentifierChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages) {
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
         this.questionLabels = new HashSet<>();
-        this.questionStates = questionStates;
+
         ast.accept(this);
     }
 
@@ -73,7 +72,6 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(SimpleQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultValue());
         }
 
         if (!duplicateQuestionLabels(statement)) {
@@ -86,7 +84,6 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(ComputedQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultValue());
         }
 
         if (!duplicateQuestionLabels(statement)) {

@@ -33,7 +33,7 @@ public class ExpressionTest extends QLTestSetUp {
 
     @Test
     public void testInteger() {
-        Type type = semanticChecker.getTypeCheck().visit(testInteger);
+        Type type = typeChecker.visit(testInteger);
         Assert.assertEquals(type.getClass(), IntegerType.class);
     }
 }
