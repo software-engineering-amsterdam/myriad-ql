@@ -9,7 +9,7 @@ import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import java.io.*;
 import java.util.BitSet;

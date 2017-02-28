@@ -1,4 +1,4 @@
-package org.uva.taxfree.model.node.statement;
+package org.uva.taxfree.model.node.declarations;
 
 import javax.swing.*;
 
