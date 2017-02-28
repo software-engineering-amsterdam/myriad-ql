@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class LTEQ extends Equality {
 
-    public LTEQ(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public LTEQ(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

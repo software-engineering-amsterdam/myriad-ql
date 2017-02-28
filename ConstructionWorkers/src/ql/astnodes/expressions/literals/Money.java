@@ -15,10 +15,10 @@ public class Money extends Literal {
     private final Type type;
     private final BigDecimal value;
 
-    public Money(BigDecimal value, LineNumber location) {
-        super(location);
+    public Money(BigDecimal value, LineNumber lineNumber) {
+        super(lineNumber);
         this.value = value;
-        this.type = new MoneyType(location);
+        this.type = new MoneyType(lineNumber);
     }
 
     public Type getType() {

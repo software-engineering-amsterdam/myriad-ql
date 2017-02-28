@@ -10,8 +10,8 @@ import ql.astnodes.expressions.Expression;
 
 public class Negative extends Unary {
 
-    public Negative(Expression expression, LineNumber location) {
-        super(expression, location);
+    public Negative(Expression expression, LineNumber lineNumber) {
+        super(expression, lineNumber);
     }
 
     @Override

@@ -14,10 +14,10 @@ public class MyInteger extends Literal {
     private final Type type;
     private final Integer value;
 
-    public MyInteger(Integer value, LineNumber location) {
-        super(location);
+    public MyInteger(Integer value, LineNumber lineNumber) {
+        super(lineNumber);
         this.value = value;
-        this.type = new IntegerType(location);
+        this.type = new IntegerType(lineNumber);
     }
 
     public Type getType() {

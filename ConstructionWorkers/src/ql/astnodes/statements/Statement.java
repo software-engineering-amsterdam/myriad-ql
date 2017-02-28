@@ -10,8 +10,8 @@ import ql.astnodes.visitors.FormAndStatementVisitor;
 
 public abstract class Statement extends Node {
 
-    public Statement(LineNumber location) {
-        super(location);
+    public Statement(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     public abstract <T> T accept(FormAndStatementVisitor<T> visitor);

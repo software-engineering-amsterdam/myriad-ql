@@ -14,10 +14,10 @@ public class MyBoolean extends Literal {
     private final Type type;
     private final Boolean value;
 
-    public MyBoolean(Boolean value, LineNumber location) {
-        super(location);
+    public MyBoolean(Boolean value, LineNumber lineNumber) {
+        super(lineNumber);
         this.value = value;
-        this.type = new BooleanType(location);
+        this.type = new BooleanType(lineNumber);
     }
 
     public Type getType() {

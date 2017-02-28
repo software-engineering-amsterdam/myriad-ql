@@ -13,13 +13,13 @@ import ql.astnodes.types.Type;
 public class SimpleQuestion extends Statement {
 
     private final Identifier identifier;
-    private final String text;
+    private final String label;
     private final Type type;
 
-    public SimpleQuestion(Identifier identifier, String text, Type type, LineNumber location) {
-        super(location);
+    public SimpleQuestion(Identifier identifier, String label, Type type, LineNumber lineNumber) {
+        super(lineNumber);
         this.identifier = identifier;
-        this.text = text;
+        this.label = label;
         this.type = type;
     }
 
@@ -27,8 +27,8 @@ public class SimpleQuestion extends Statement {
         return identifier;
     }
 
-    public String getText() {
-        return text;
+    public String getLabel() {
+        return label;
     }
 
     public Type getType() {

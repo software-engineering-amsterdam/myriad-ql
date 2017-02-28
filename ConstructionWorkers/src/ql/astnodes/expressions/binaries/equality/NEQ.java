@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class NEQ extends Equality {
 
-    public NEQ(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public NEQ(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

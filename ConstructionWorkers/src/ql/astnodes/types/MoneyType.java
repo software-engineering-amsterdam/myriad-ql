@@ -16,18 +16,18 @@ public class MoneyType extends Type {
         super();
     }
 
-    public MoneyType(LineNumber location) {
-        super(location);
-    }
-
-    @Override
-    public String toString() {
-        return "Money";
+    public MoneyType(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     @Override
     public MoneyValue getDefaultValue() {
         return new MoneyValue(new BigDecimal(0));
+    }
+
+    @Override
+    public String toString() {
+        return "Money";
     }
 
     @Override

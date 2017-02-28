@@ -15,8 +15,8 @@ public abstract class Type extends Node {
         super();
     }
 
-    public Type(LineNumber location) {
-        super(location);
+    public Type(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     public abstract Value getDefaultValue();

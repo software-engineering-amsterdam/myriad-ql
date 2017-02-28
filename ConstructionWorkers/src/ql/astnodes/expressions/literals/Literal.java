@@ -9,7 +9,7 @@ import ql.astnodes.LineNumber;
 
 public abstract class Literal extends Expression {
 
-    public Literal(LineNumber location) {
-        super(location);
+    public Literal(LineNumber lineNumber) {
+        super(lineNumber);
     }
 }

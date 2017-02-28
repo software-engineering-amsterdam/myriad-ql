@@ -9,15 +9,15 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Identifier extends Literal {
 
-    private final String value;
+    private final String name;
 
-    public Identifier(String value, LineNumber location) {
-        super(location);
-        this.value = value;
+    public Identifier(String name, LineNumber lineNumber) {
+        super(lineNumber);
+        this.name = name;
     }
 
     public String getName() {
-        return this.value;
+        return this.name;
     }
 
     @Override

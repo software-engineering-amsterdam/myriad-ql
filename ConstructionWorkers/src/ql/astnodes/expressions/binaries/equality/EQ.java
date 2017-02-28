@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class EQ extends Equality {
 
-    public EQ(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public EQ(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

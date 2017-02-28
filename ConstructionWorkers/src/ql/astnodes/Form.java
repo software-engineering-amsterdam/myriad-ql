@@ -15,8 +15,8 @@ public class Form extends Node {
     private final Identifier identifier;
     private final List<Statement> statements;
 
-    public Form(Identifier identifier, List<Statement> statements, LineNumber location) {
-        super(location);
+    public Form(Identifier identifier, List<Statement> statements, LineNumber lineNumber) {
+        super(lineNumber);
         this.identifier = identifier;
         this.statements = statements;
     }

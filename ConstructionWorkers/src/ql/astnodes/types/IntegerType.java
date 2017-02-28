@@ -14,18 +14,18 @@ public class IntegerType extends Type {
         super();
     }
 
-    public IntegerType(LineNumber location) {
-        super(location);
-    }
-
-    @Override
-    public String toString() {
-        return "Integer";
+    public IntegerType(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     @Override
     public IntegerValue getDefaultValue() {
         return new IntegerValue(0);
+    }
+
+    @Override
+    public String toString() {
+        return "Integer";
     }
 
     @Override

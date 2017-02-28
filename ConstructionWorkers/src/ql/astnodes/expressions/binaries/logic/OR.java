@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class OR extends Logic {
 
-    public OR(Expression left, Expression right, LineNumber location) {
-        super(left ,right, location);
+    public OR(Expression left, Expression right, LineNumber lineNumber) {
+        super(left ,right, lineNumber);
     }
 
     @Override

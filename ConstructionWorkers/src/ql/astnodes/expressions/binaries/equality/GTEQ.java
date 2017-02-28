@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class GTEQ extends Equality {
 
-    public GTEQ(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public GTEQ(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

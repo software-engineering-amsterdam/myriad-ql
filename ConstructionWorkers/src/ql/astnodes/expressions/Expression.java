@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public abstract class Expression extends Node {
 
-    public Expression(LineNumber location) {
-        super(location);
+    public Expression(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     public abstract <T> T accept(ExpressionVisitor<T> visitor);

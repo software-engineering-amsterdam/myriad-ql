@@ -14,10 +14,10 @@ public class MyString extends Literal {
     private final Type type;
     private final String value;
 
-    public MyString(String value, LineNumber location) {
-        super(location);
+    public MyString(String value, LineNumber lineNumber) {
+        super(lineNumber);
         this.value = value;
-        this.type = new StringType(location);
+        this.type = new StringType(lineNumber);
     }
 
     public Type getType() {

@@ -14,8 +14,13 @@ public class StringType extends Type {
         super();
     }
 
-    public StringType(LineNumber location) {
-        super(location);
+    public StringType(LineNumber lineNumber) {
+        super(lineNumber);
+    }
+
+    @Override
+    public StringValue getDefaultValue() {
+        return new StringValue(" ");
     }
 
     @Override
@@ -23,10 +28,6 @@ public class StringType extends Type {
         return "String";
     }
 
-    @Override
-    public StringValue getDefaultValue() {
-        return new StringValue(" ");
-    }
     @Override
     public <T> T accept(TypeVisitor<T> visitor) {
         return visitor.visit(this);

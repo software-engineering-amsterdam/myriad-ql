@@ -14,13 +14,13 @@ public class WidgetFactory implements TypeVisitor<Widget> {
 
     public Widget getWidgetForQuestion(SimpleQuestion question) {
         Type type = question.getType();
-        this.questionLabel = question.getText();
+        this.questionLabel = question.getLabel();
         return type.accept(this);
     }
 
     public Widget getWidgetForQuestion(SimpleQuestion question, Value value) {
         Type type = question.getType();
-        this.questionLabel = question.getText();
+        this.questionLabel = question.getLabel();
 
         Widget widget = type.accept(this);
         widget.setValue(value);

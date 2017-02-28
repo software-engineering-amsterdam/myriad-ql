@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Multiplication extends Numerical {
 
-    public Multiplication(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public Multiplication(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

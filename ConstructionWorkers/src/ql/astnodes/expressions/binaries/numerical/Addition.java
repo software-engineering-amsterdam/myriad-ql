@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Addition extends Numerical {
 
-    public Addition(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public Addition(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

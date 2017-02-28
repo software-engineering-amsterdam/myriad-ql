@@ -14,13 +14,13 @@ public class UndefinedType extends Type {
     }
 
     @Override
-    public String toString() {
-        return "Undefined";
+    public UndefinedValue getDefaultValue() {
+        return new UndefinedValue();
     }
 
     @Override
-    public UndefinedValue getDefaultValue() {
-        return new UndefinedValue();
+    public String toString() {
+        return "Undefined";
     }
 
     @Override

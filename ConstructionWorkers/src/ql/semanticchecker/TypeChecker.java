@@ -41,108 +41,189 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public Type visit(AND expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeLogic(left, right);
     }
 
     @Override
     public Type visit(OR expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeLogic(left, right);
+    }
+
+    private Type getTypeLogic(Type leftExpressionType, Type rightExpressionType) {
+        if (leftExpressionType == null || rightExpressionType == null) {
+            return new UndefinedType();
+        }
+
+        if (leftExpressionType.getClass().equals(rightExpressionType.getClass()) &&
+                leftExpressionType.getClass().equals(BooleanType.class)) {
+            return leftExpressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
     public Type visit(Addition expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeNumerical(left, right);
     }
 
     @Override
     public Type visit(Division expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeNumerical(left, right);
     }
 
     @Override
     public Type visit(Multiplication expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeNumerical(left, right);
     }
 
     @Override
     public Type visit(Subtraction expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeNumerical(left, right);
+    }
+
+    private Type getTypeNumerical(Type leftExpressionType, Type rightExpressionType) {
+        if (leftExpressionType == null || rightExpressionType == null) {
+            return new UndefinedType();
+        }
+
+        Class leftExpressionTypeClass = leftExpressionType.getClass();
+        if (leftExpressionTypeClass.equals(rightExpressionType.getClass())
+                && (leftExpressionTypeClass == MoneyType.class ||
+                leftExpressionTypeClass == IntegerType.class)) {
+            return leftExpressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
     public Type visit(Negation expression) {
         Type type = expression.getExpression().accept(this);
-        return expression.checkType(type);
+        return getTypeNegation(type);
     }
 
-    @Override
-    public Type visit(Negative expression) {
-        Type type = expression.getExpression().accept(this);
-        return expression.checkType(type);
+    private Type getTypeNegation(Type expressionType) {
+        if (expressionType == null) {
+            return new UndefinedType();
+        }
+
+        if (expressionType.getClass().equals(BooleanType.class)) {
+            return expressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
     public Type visit(Parentheses expression) {
         Type type = expression.getExpression().accept(this);
-        return expression.checkType(type);
+        return getTypeParentheses(type);
+    }
+
+    private Type getTypeParentheses(Type expressionType) {
+        if (expressionType == null) {
+            return new UndefinedType();
+        }
+
+        Class expressionTypeClass = expressionType.getClass();
+        if (expressionTypeClass.equals(IntegerType.class) || expressionTypeClass.equals(MoneyType.class) ||
+                expressionTypeClass.equals(BooleanType.class) || expressionTypeClass.equals(StringType.class)) {
+            return expressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
     public Type visit(Positive expression) {
         Type type = expression.getExpression().accept(this);
-        return expression.checkType(type);
+        return getTypePositiveNegative(type);
+    }
+
+    @Override
+    public Type visit(Negative expression) {
+        Type type = expression.getExpression().accept(this);
+        return getTypePositiveNegative(type);
+    }
+
+    private Type getTypePositiveNegative(Type expressionType) {
+        if (expressionType == null) {
+            return new UndefinedType();
+        }
+
+        if (expressionType.getClass().equals(IntegerType.class) || expressionType.getClass().equals(MoneyType.class)) {
+            return expressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
     public Type visit(EQ expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
     }
 
     @Override
     public Type visit(GT expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
     }
 
     @Override
     public Type visit(GTEQ expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
     }
 
     @Override
     public Type visit(LT expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
     }
 
     @Override
     public Type visit(LTEQ expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
     }
 
     @Override
     public Type visit(NEQ expression) {
         Type left = expression.getLeft().accept(this);
         Type right = expression.getRight().accept(this);
-        return expression.checkType(left, right);
+        return getTypeEquality(left, right);
+    }
+
+    private Type getTypeEquality(Type leftExpressionType, Type rightExpressionType) {
+        if (leftExpressionType == null || rightExpressionType == null) {
+            return new UndefinedType();
+        }
+
+        Class leftExpressionTypeClass = leftExpressionType.getClass();
+        if (leftExpressionTypeClass.equals(rightExpressionType.getClass()) &&
+                (leftExpressionTypeClass.equals(MoneyType.class) || leftExpressionTypeClass.equals(IntegerType.class) ||
+                        leftExpressionTypeClass.equals(StringType.class))) {
+            return new BooleanType();
+        }
+
+        return new UndefinedType();
     }
 
     @Override
@@ -157,15 +238,27 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public Void visit(IfStatement statement) {
         Type expressionType = statement.getExpression().accept(this);
 
-        Type statementType = statement.checkType(expressionType);
+        Type statementType = getTypeIfStatement(expressionType);
         if (statementType.getClass().equals(UndefinedType.class)) {
-            messages.addError(new InvalidTypeError(statement.getLocation(), new BooleanType()));
+            messages.addError(new InvalidTypeError(statement.getLineNumber(), new BooleanType()));
         }
 
         for (Statement subStatement : statement.getStatements()) {
             subStatement.accept(this);
         }
         return null;
+    }
+
+    private Type getTypeIfStatement(Type expressionType) {
+        if (expressionType == null) {
+            return new UndefinedType();
+        }
+
+        if (expressionType.getClass().equals(BooleanType.class)) {
+            return expressionType;
+        }
+
+        return new UndefinedType();
     }
 
     @Override
@@ -180,10 +273,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         tempIdentifierLiteral = null;
 
         if(expressionType == null) {
-            messages.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
+            messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
         } else {
             if (!expressionType.getClass().equals(statement.getType().getClass())) {
-                messages.addError(new InvalidTypeError(statement.getLocation(), statement.getType()));
+                messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
             }
         }
         return null;
@@ -192,12 +285,12 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     @Override
     public Type visit(Identifier identifier) {
         if (identifierToTypeMap.get(identifier.getName()) == null) {
-            messages.addError(new UndefinedQuestionError(identifier.getLocation(), identifier));
+            messages.addError(new UndefinedQuestionError(identifier.getLineNumber(), identifier));
         }
 
         if (tempIdentifierLiteral != null) {
             if (tempIdentifierLiteral.getName().equals(identifier.getName())) {
-                messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLocation(),
+                messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(),
                         tempIdentifierLiteral, identifier));
             } else {
                 checkCyclicDependency(identifier);
@@ -209,18 +302,14 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     private void checkCyclicDependency(Identifier start) {
         boolean revertedDependencyExists = checkRevertedDependency(start.getName());
         if (revertedDependencyExists) {
-            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLocation(), tempIdentifierLiteral, start));
+            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(), tempIdentifierLiteral, start));
         }
         updateDependencyData(start.getName());
     }
 
     private boolean checkRevertedDependency(String end) {
         List<String> toDependencies = dependencyList.getDependencyNames(end);
-
-        if (toDependencies.contains(tempIdentifierLiteral.getName())) {
-            return true;
-        }
-        return false;
+        return toDependencies.contains(tempIdentifierLiteral.getName());
     }
 
     private void updateDependencyData(String start) {

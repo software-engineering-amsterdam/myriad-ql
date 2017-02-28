@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Division extends Numerical {
 
-    public Division(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public Division(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

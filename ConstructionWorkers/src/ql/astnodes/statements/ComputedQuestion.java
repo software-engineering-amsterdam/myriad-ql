@@ -14,8 +14,9 @@ public class ComputedQuestion extends SimpleQuestion {
 
     private final Expression expression;
 
-    public ComputedQuestion(Identifier identifier, String text, Type type, Expression expression, LineNumber location) {
-        super(identifier, text, type, location);
+    public ComputedQuestion(Identifier identifier, String label, Type type, Expression expression,
+                            LineNumber lineNumber) {
+        super(identifier, label, type, lineNumber);
         this.expression = expression;
     }
 

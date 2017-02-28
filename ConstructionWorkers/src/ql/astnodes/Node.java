@@ -6,17 +6,17 @@ package ql.astnodes;
 
 public abstract class Node {
 
-    private final LineNumber location;
+    private final LineNumber lineNumber;
 
     public Node() {
-        this.location = null;
+        this.lineNumber = null;
     }
 
-    public Node(LineNumber location) {
-        this.location = location;
+    public Node(LineNumber lineNumber) {
+        this.lineNumber = lineNumber;
     }
 
-    public LineNumber getLocation() {
-        return location;
+    public LineNumber getLineNumber() {
+        return lineNumber;
     }
 }

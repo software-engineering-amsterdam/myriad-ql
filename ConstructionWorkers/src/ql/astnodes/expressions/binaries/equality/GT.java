@@ -10,8 +10,8 @@ import ql.astnodes.visitors.ExpressionVisitor;
 
 public class GT extends Equality {
 
-    public GT(Expression left, Expression right, LineNumber location) {
-        super(left, right, location);
+    public GT(Expression left, Expression right, LineNumber lineNumber) {
+        super(left, right, lineNumber);
     }
 
     @Override

@@ -15,18 +15,18 @@ public class BooleanType extends Type {
         super();
     }
 
-    public BooleanType(LineNumber location) {
-        super(location);
-    }
-
-    @Override
-    public String toString() {
-        return "Boolean";
+    public BooleanType(LineNumber lineNumber) {
+        super(lineNumber);
     }
 
     @Override
     public BooleanValue getDefaultValue() {
         return new BooleanValue(false);
+    }
+
+    @Override
+    public String toString() {
+        return "Boolean";
     }
 
     @Override
