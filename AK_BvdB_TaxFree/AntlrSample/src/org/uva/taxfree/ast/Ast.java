@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.statement.NamedNode;
 import org.uva.taxfree.model.node.Node;
 
@@ -26,12 +27,12 @@ public class Ast {
         mRootNode = rootNode;
     }
 
-    public static Ast generateAst(File input) throws IOException {
-        return generateAst(new FileReader(input));
+    public static Ast generateAst(File input, SymbolTable symbolTable) throws IOException {
+        return generateAst(new FileReader(input), symbolTable);
     }
 
-    public static Ast generateAst(String input) throws IOException {
-        return generateAst(new StringReader(input));
+    public static Ast generateAst(String input, SymbolTable symbolTable) throws IOException {
+        return generateAst(new StringReader(input), symbolTable);
     }
 
     public Set<NamedNode> getQuestions() {
@@ -51,7 +52,7 @@ public class Ast {
         return mRootNode.toString();
     }
 
-    private static Ast generateAst(Reader reader) throws IOException {
+    private static Ast generateAst(Reader reader, SymbolTable symbolTable) throws IOException {
         ANTLRInputStream inputStream = new ANTLRInputStream(reader);
         QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
@@ -86,7 +87,7 @@ public class Ast {
 
         // Walk it and attach our listener
         ParseTreeWalker walker = new ParseTreeWalker();
-        OurQLGrammarListener listener = new OurQLGrammarListener();
+        OurQLGrammarListener listener = new OurQLGrammarListener(symbolTable);
         walker.walk(listener, formContext);
         return listener.getAst();
     }

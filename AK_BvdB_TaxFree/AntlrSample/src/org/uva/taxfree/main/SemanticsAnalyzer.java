@@ -30,12 +30,9 @@ public class SemanticsAnalyzer {
      * - Check | if (1)
      */
 
-    public SemanticsAnalyzer(Ast ast) {
+    public SemanticsAnalyzer(Ast ast, SymbolTable symbolTable) {
         mAst = ast;
-    }
-
-    public SymbolTable getSymbolTable() {
-        return mSymbolTable;
+        mSymbolTable = symbolTable;
     }
 
     public boolean validSemantics() {

@@ -1,6 +1,7 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +12,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("** Starting our parser **");
         System.out.println("- Parsing the input");
 
@@ -34,7 +35,14 @@ public class Main {
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
 
+        // New way
+        SymbolTable symbolTable = new SymbolTable();
+
+        Ast ast = Ast.generateAst(new File("input"), symbolTable);
+        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast, symbolTable);
+        semanticsAnalyzer.validSemantics();
     }
+
 }
 
 
