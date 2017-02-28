@@ -13,65 +13,65 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
 
   property("Add operator match") {
     operatorCountProperty("\\+") {
-      case ADD(_, _) => true
+      case Add(_, _) => true
       case _ => false
     }
   }
   property("Minus operator match") {
     operatorCountProperty("-") {
-      case NEG(_) => true
-      case SUB(_, _) => true
+      case Neg(_) => true
+      case Sub(_, _) => true
       case _ => false
     }
   }
   property("Div operator match") {
     operatorCountProperty("/") {
-      case DIV(_, _) => true
+      case Div(_, _) => true
       case _ => false
     }
   }
   property("Mul operator match)") {
     operatorCountProperty("\\*") {
-      case MUL(_, _) => true
+      case Mul(_, _) => true
       case _ => false
     }
   }
   property("Not operator match") {
     operatorCountProperty("!") {
-      case NOT(_) => true
-      case NEQ(_, _) => true
+      case Not(_) => true
+      case Neq(_, _) => true
       case _ => false
     }
   }
   property("And operator match") {
     operatorCountProperty("&&") {
-      case AND(_, _) => true
+      case And(_, _) => true
       case _ => false
     }
   }
   property("Or operator match") {
     operatorCountProperty("\\|\\|") {
-      case OR(_, _) => true
+      case Or(_, _) => true
       case _ => false
     }
   }
   property("G/GE operator match") {
     operatorCountProperty(">") {
-      case GT(_, _) => true
-      case GEQ(_, _) => true
+      case Gt(_, _) => true
+      case Geq(_, _) => true
       case _ => false
     }
   }
   property("L/LE operator match") {
     operatorCountProperty("<") {
-      case LT(_, _) => true
-      case LEQ(_, _) => true
+      case Lt(_, _) => true
+      case Leq(_, _) => true
       case _ => false
     }
   }
   property("Equals operator match") {
     operatorCountProperty("==") {
-      case EQ(_, _) => true
+      case Eq(_, _) => true
       case _ => false
     }
   }
@@ -82,12 +82,12 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
         {
           val nodeToChildren = trCls(flattenExpressionRelations(parser.parseExpression(e)))
           val invalidRelations = nodeToChildren.filter {
-            case (ADD(_, _), ADD(_, _)) => false
-            case (ADD(_, _), SUB(_, _)) => false
-            case (SUB(_, _), SUB(_, _)) => false
-            case (SUB(_, _), ADD(_, _)) => false
-            case (ADD(_, _), _: InfixNode) => true
-            case (SUB(_, _), _: InfixNode) => true
+            case (Add(_, _), Add(_, _)) => false
+            case (Add(_, _), Sub(_, _)) => false
+            case (Sub(_, _), Sub(_, _)) => false
+            case (Sub(_, _), Add(_, _)) => false
+            case (Add(_, _), _: InfixNode) => true
+            case (Sub(_, _), _: InfixNode) => true
             case (_, _) => false
           }
           invalidRelations.isEmpty
@@ -111,14 +111,14 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
 
   private def flattenExpressionRelations(expressionNode: ExpressionNode): NodeRel = expressionNode match {
     case i: InfixNode => Set((i, i.lhs), (i, i.rhs)) ++ flattenExpressionRelations(i.lhs) ++ flattenExpressionRelations(i.rhs)
-    case p: PrefixNode => Set((p, p.rhs)) ++ flattenExpressionRelations(p.rhs)
+    case p: PrefixNode => Set((p, p.operand)) ++ flattenExpressionRelations(p.operand)
     case _ => Set.empty
   }
 
   private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Boolean): Int = {
     val childResult = expressionNode match {
       case i: InfixNode => nodeCount(i.lhs, matcher) + nodeCount(i.rhs, matcher)
-      case p: PrefixNode => nodeCount(p.rhs, matcher)
+      case p: PrefixNode => nodeCount(p.operand, matcher)
       case _ => 0
     }
     (if (matcher(expressionNode)) 1 else 0) + childResult
