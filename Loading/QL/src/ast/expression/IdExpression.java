@@ -1,10 +1,11 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class IdExpression extends Expression {
@@ -21,34 +22,13 @@ public class IdExpression extends Expression {
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public Type accept(ExpressionVisitor v) {
+		return v.visit(this);
 	}
 	
-	@Override
-	public Atom evaluate() {
-		System.out.println("idExpression evaluate();");
-		return new BoolAtom(false, getLine());
-	}
-
-	@Override
-	public Atom evaluate(Environment env) {
-//		System.out.println("TESTING STUFF HERE"+ test.getValue());
-//		return new BoolAtom((Boolean)  test.getValue());
-		System.out.println("HAS TYPE: " + env.hasType(name));
-
-		String t = env.hasType(name).getType();
-		if (t.equals("integer")) {
-			return new IntegerAtom(1, getLine());
-		}
-		if (t.equals("string")) {
-			return new StringAtom("string", getLine());
-		}
-		if (t.equals("boolean")) {
-			return new BoolAtom(true, getLine());
-		}
-
-		return null;
-	}
-	
+//	@Override
+//	public Atom evaluate() {
+//		System.out.println("idExpression evaluate();");
+//		return new BoolAtom(false, getLine());
+//	}
 }

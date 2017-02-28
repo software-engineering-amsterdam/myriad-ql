@@ -1,8 +1,8 @@
 package ast.atom;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.expression.Expression;
-import semantic.Environment;
+import ast.type.Type;
 
 // TODO rename to Literal??
 public abstract class Atom extends Expression {
@@ -36,11 +36,10 @@ public abstract class Atom extends Expression {
 	
 	public abstract String getType();
 	
-	@Override
-	public Atom evaluate() {
-		return this;
-	}
+//	@Override
+//	public Atom evaluate() {
+//		return this;
+//	}
 
-	@Override
-	public abstract void accept(Visitor v);	
+	public abstract Type accept(ExpressionVisitor v);
 }

@@ -1,5 +1,7 @@
 package ast.type;
 
+import ast.TypeVisitor;
+
 public class IntegerType extends Type {
 
     // TODO why can you not use the constructor of superclass Type directly
@@ -8,8 +10,8 @@ public class IntegerType extends Type {
 	}
 	
 	@Override
-	public void accept(ast.Visitor v) {
-		// TODO empty accept
+	public void accept(TypeVisitor v) {
+		v.visit(this);
 	}
 	
 }

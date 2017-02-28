@@ -1,7 +1,8 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class EqExpression extends BinaryExpression {
@@ -10,25 +11,16 @@ public class EqExpression extends BinaryExpression {
 		super(lhs, rhs, line);
 	}
 
-	@Override
-	public Atom evaluate() {
-		System.out.println("EqExpression evaluate()");
-		System.out.println(getLhs());
-		System.out.println(getRhs());
-		return getLhs().evaluate().eq(getRhs().evaluate());
-	}
+//	@Override
+//	public Atom evaluate() {
+//		System.out.println("EqExpression evaluate()");
+//		System.out.println(getLhs());
+//		System.out.println(getRhs());
+//		return getLhs().evaluate().eq(getRhs().evaluate());
+//	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
+	public Type accept(ExpressionVisitor v) {
+		return v.visit(this);
 	}
-
-	@Override
-	public Atom evaluate(Environment env) {
-		System.out.println("EqExpression evaluate(env)");
-		System.out.println(getLhs());
-		System.out.println(getRhs());
-		return getLhs().evaluate(env).eq(getRhs().evaluate(env));
-	}
-	
 }

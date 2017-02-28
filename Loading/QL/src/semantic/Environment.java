@@ -22,7 +22,7 @@ public class Environment {
 		variableType.put(variable, type);
 	}
 	
-	public Type hasType(String variable) {
+	public Type getType(String variable) {
 		if (!variableExists(variable)) {
 			return null;
 		}

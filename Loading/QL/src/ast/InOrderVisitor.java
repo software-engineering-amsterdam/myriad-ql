@@ -7,68 +7,58 @@ import ast.expression.*;
 import ast.type.*;
 
 // In order traversal
-// TODO implements VisitorInterface 
-public class Visitor {
-	
+// TODO implements VisitorInterface
+public abstract class InOrderVisitor implements FormVisitor {
+
+	@Override
 	public void visit(Form form) {
-		
-		// TODO or getBlock().accept()  // TODO violates the law of Demeter
-		// Is it correct do you have an accept
-		// method in getBlock if you don't use it?
 		form.getBlock().accept(this);
 	}
-	
+
+	@Override
 	public void visit(Block block) {
 		
 		for (BlockItem blockItem : block.getBlockItems()) {
 			blockItem.accept(this);
 		}
 	}
-	
-	public void visit(BlockItem blockItem) {	
-		blockItem.accept(this);		
-	}
-	
-	// TODO remove?
-	public void visit(Question question) {	
-		question.getType().accept(this);		
-	}
-	
-	// TODO remove?
-	public void visit(Statement statement) {		
-		statement.getExpression().accept(this);
-		statement.getBlock().accept(this); // TODO circulair dependencies?
-	}
-	
-	// TODO for types, atoms, expression can we only visit the general classes
-	public void visit(Type type) {	
-		type.accept(this);		
-	}
-	
-	public void visit(BinaryExpression binaryExpression) {
-		binaryExpression.getLhs().accept(this);
-		binaryExpression.getRhs().accept(this);
+
+	@Override
+	public void visit(BlockItem blockItem) {
+		blockItem.accept(this);
 	}
 
-	public void visit(UnaryExpression unaryExpression) {
-		unaryExpression.getLhs().accept(this);
-	}
-	
-	public void visit(IdExpression id) {
-		System.out.println(id.getName());
+	@Override
+	public void visit(Question question) {
+		// question.getType().accept(this);
 	}
 
-	public void visit(BoolAtom boolAtom) {
-		System.out.println(boolAtom.getValue());
+	@Override
+	public void visit(Statement statement) {
+		// statement.getExpression().accept(this);
+		// statement.getBlock().accept(this); // TODO circulair dependencies?
 	}
 
-	public void visit(IntegerAtom integerAtom) {
-		System.out.println(integerAtom.getNumber());
+	// TODO computed question
+	@Override
+	public void visit(ComputedQuestion question) {
+//		question.getType().accept(this);
 	}
 
-	public void visit(StringAtom stringAtom) {
-		System.out.println(stringAtom.getValue());
-	}
+
+//	public void visit(BinaryExpression binaryExpression) {
+//		binaryExpression.getLhs().accept(this);
+//		binaryExpression.getRhs().accept(this);
+//	}
+
+//	public void visit(UnaryExpression unaryExpression) {
+//		unaryExpression.getLhs().accept(this);
+//	}
+//
+//	public void visit(IdExpression id) {
+//		System.out.println(id.getName());
+//	}
+
 
 // TODO really not needed
 //	public void visit(AddExpression addExpression) {

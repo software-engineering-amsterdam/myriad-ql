@@ -1,7 +1,8 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class NotExpression extends UnaryExpression {
@@ -11,17 +12,11 @@ public class NotExpression extends UnaryExpression {
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public Type accept(ExpressionVisitor v) {
+		return v.visit(this);
 	}
-
-	@Override
-	public Atom evaluate() {
-		return getLhs().evaluate().not();
-	}
-
-	@Override
-	public Atom evaluate(Environment env) {
-		return null;
-	}
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().not();
+//	}
 }
