@@ -1,12 +1,9 @@
 package ui.field;
 
-import java.util.function.Function;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import ui.Notifier;
-import value.BoolValue;
+import ui.Questionnaire.Notifier;
 import value.EmptyValue;
 import value.StringValue;
 import value.Value;

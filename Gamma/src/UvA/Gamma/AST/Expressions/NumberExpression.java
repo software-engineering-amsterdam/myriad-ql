@@ -12,11 +12,9 @@ import javax.script.ScriptException;
 
 public class NumberExpression extends Expression {
 
-    protected Number value;
-
-
     public NumberExpression(String expr) {
         super(expr);
+        setValue(new Number(0));
     }
 
     private Number evaluateNumber() throws ScriptException {
@@ -27,12 +25,13 @@ public class NumberExpression extends Expression {
     }
 
     public Number getValue() {
-        return value;
+        return (Number) value;
     }
 
     @Override
     public String toString() {
         evaluate();
+        Number value = (Number) this.value;
         if (value == null) {
             return "";
         }

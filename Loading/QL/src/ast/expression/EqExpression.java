@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class EqExpression extends BinaryExpression {
 
+	public EqExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
+	}
+
 	@Override
 	public Atom evaluate() {
 		System.out.println("EqExpression evaluate()");

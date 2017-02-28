@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class BooleanQuestion extends NamedNode {
     private final JCheckBox mCheckbox;
+
     public BooleanQuestion(String description, String id) {
         super(description, id);
         mCheckbox = new JCheckBox("", false);
@@ -20,11 +21,11 @@ public class BooleanQuestion extends NamedNode {
     }
 
     @Override
-    protected void printValue() {
+    public void printValue() {
         System.out.println("Value of bool: " + isTrue());
     }
 
-    protected boolean isTrue(){
+    protected boolean isTrue() {
         return mCheckbox.isSelected();
     }
 }

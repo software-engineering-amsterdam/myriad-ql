@@ -2,13 +2,13 @@ package ast;
 
 import ast.expression.Expression;
 
-public class Statement extends Node {
+public class Statement extends BlockItem {
 	
-	// private boolean evaluate; // TODO change name
 	private Expression expression; // TODO change name
 	private Block block;
 	
-	public Statement(Expression expression, Block block) {
+	public Statement(Expression expression, Block block, int line) {
+		super(line);
 		this.expression = expression;
 		this.block = block;
 	}
@@ -20,11 +20,13 @@ public class Statement extends Node {
 	public Block getBlock() {
 		return block;
 	}
-	
-	// TODO end each class with overrides?
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
 		
 	}
+	
+	// TODO end each class with overrides?
+
 }

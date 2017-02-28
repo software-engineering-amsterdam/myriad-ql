@@ -1,6 +1,6 @@
 package org.uva.taxfree.model.node.statement;
 
-import org.uva.taxfree.model.node.condition.ConditionNode;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 
 public class IntegerCalculatedField extends CalculatedField {
     public IntegerCalculatedField(String label, String id, ConditionNode condition) {

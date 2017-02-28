@@ -1,6 +1,6 @@
 package ui.field;
 
-import ui.Notifier;
+import ui.Questionnaire.Notifier;
 import value.Value;
 
 

@@ -4,13 +4,12 @@ import ast.Visitor;
 
 public abstract class UnaryExpression extends Expression {
 
-    private Expression lhs; // TODO rename?
-    
-    // TODO not pretty to return a unary expression
-    public UnaryExpression setElements(Expression lhs) {
-        this.lhs = lhs;
-        return this;
-    }
+    private Expression lhs;
+
+	public UnaryExpression(Expression lhs, int line) {
+		super(line);
+		this.lhs = lhs;
+	}
 
 	public Expression getLhs() {
 		return lhs;

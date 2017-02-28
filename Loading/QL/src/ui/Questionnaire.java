@@ -1,22 +1,20 @@
 package ui;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import ast.Form;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -24,28 +22,32 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import value.StringValue;
-import value.BoolValue;
-import value.Value;
 import ui.field.Field;
+import value.Value;
 
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import ast.Form;
-import ast.Question;
-import ast.Visitor;
-import ast.type.Type;
-
-public class Questionnaire extends Application implements Notifier {
+public class Questionnaire extends Application {
 	// TODO make Notifier an inner class or add extra environment
 	
 	// TODO do not make static
 	private static Form form;
 	private static Map<String, Value> answers;
 	private static GridPane grid;
+	
+	public class Notifier {
+
+		// TODO change to already implemented observer pattern
+		public void updateQuestionnaire(String name, Value newValue) {
+	    	Value oldAnswer = answers.get(name); 
+			if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
+				answers.put(name, newValue);
+				// Save the title
+				Node title = grid.getChildren().get(0);
+		    	grid.getChildren().clear();
+		    	grid.add(title, 0, 0);
+		        renderQuestionnaire(grid);
+			}
+		}
+	}
 	
     public void main(Form f) {
     	form = f;
@@ -153,7 +155,7 @@ public class Questionnaire extends Application implements Notifier {
             Field field = question.getEntryField().getField();
             grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
             
-            field.addListener(this);
+            field.addListener(new Notifier());
             ++rowIndex;
         }
         
@@ -171,17 +173,4 @@ public class Questionnaire extends Application implements Notifier {
         return btn;
     }
 
-	@Override
-	// TODO change to already implemented observer pattern
-	public void updateQuestionnaire(String name, Value newValue) {
-    	Value oldAnswer = answers.get(name); 
-		if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
-			answers.put(name, newValue);
-			// Save the title
-			Node title = grid.getChildren().get(0);
-	    	grid.getChildren().clear();
-	    	grid.add(title, 0, 0);
-	        renderQuestionnaire(grid);
-		}
-	}
 }

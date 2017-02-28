@@ -11,7 +11,8 @@ public class IdExpression extends Expression {
 
 	private String name;
 	
-	public IdExpression(String name) {
+	public IdExpression(String name, int line) {
+		super(line);
 		this.name = name;
 	}
 
@@ -27,7 +28,7 @@ public class IdExpression extends Expression {
 	@Override
 	public Atom evaluate() {
 		System.out.println("idExpression evaluate();");
-		return new BoolAtom(false);
+		return new BoolAtom(false, getLine());
 	}
 
 	@Override
@@ -38,13 +39,13 @@ public class IdExpression extends Expression {
 
 		String t = env.hasType(name).getType();
 		if (t.equals("integer")) {
-			return new IntegerAtom(1);
+			return new IntegerAtom(1, getLine());
 		}
 		if (t.equals("string")) {
-			return new StringAtom("string");
+			return new StringAtom("string", getLine());
 		}
 		if (t.equals("boolean")) {
-			return new BoolAtom(true);
+			return new BoolAtom(true, getLine());
 		}
 
 		return null;

@@ -6,20 +6,20 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class SymbolTable {
-    private Set<Symbol> mSymbols;
+    private final Set<NamedNode> mSymbols; // All declarations
 
     public SymbolTable() {
         mSymbols = new LinkedHashSet<>();
     }
 
-    public void addSymbol(String hasSoldhouse, NamedNode node) {
-        mSymbols.add(new Symbol("hasSoldHouse", node));
+    public void addSymbol(NamedNode Node) {
+        mSymbols.add(Node);
     }
 
     public String resolve(String variableId) {
-        for (Symbol s : mSymbols) {
-            if (variableId.equals(s.toString())) {
-                return s.resolveValue();
+        for (NamedNode n : mSymbols) {
+            if (variableId.equals(n.toString())) {
+                return (n.resolveValue());
             }
         }
         throw new RuntimeException("Unable to resolveValue id: " + variableId);

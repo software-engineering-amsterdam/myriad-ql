@@ -1,6 +1,6 @@
 package org.uva.taxfree.model.node.literal;
 
-import org.uva.taxfree.model.node.condition.ConditionNode;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 
 public abstract class LiteralNode extends ConditionNode {
     private final String mId;

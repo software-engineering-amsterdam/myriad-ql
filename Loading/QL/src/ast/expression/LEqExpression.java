@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class LEqExpression extends BinaryExpression {
 
+	public LEqExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

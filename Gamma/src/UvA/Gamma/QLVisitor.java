@@ -6,9 +6,8 @@ import UvA.Gamma.AST.Expressions.Expression;
 import UvA.Gamma.AST.Expressions.MoneyExpression;
 import UvA.Gamma.AST.Expressions.NumberExpression;
 import UvA.Gamma.AST.Values.Boolean;
-import UvA.Gamma.AST.Values.Money;
+import UvA.Gamma.AST.Values.*;
 import UvA.Gamma.AST.Values.Number;
-import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 
@@ -41,7 +40,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Question question = new Question();
         question.setQuestion(ctx.STRING_LITERAL().getText());
         question.setId(ctx.ID().getText());
-        question.setType((Value) visit(ctx.type()));
+        question.setValue((Value) visit(ctx.type()));
         return question;
     }
 
@@ -51,6 +50,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
         computed.setExpression((Expression) visit(ctx.expression()));
+
         return computed;
     }
 
@@ -89,14 +89,16 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public Value visitType(QLParser.TypeContext ctx) {
         switch (ctx.getText()) {
-            case "BOOL":
+            case "boolean":
                 return new Boolean(false);
-            case "INT":
+            case "integer":
                 return new Number(0);
-            case "DEC":
+            case "decimal":
                 return new Number(0);
-            case "MONEY":
+            case "money":
                 return new Money(0);
+            case "string":
+                return new StringValue();
             default:
                 return new Number(0);
         }
