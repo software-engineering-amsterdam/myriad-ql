@@ -31,9 +31,6 @@ class IdentifierChecker(object):
                     dict_[key] = v
             return dict_
 
-        # TODO: Mooier maken evt?
-        errors = []
-        for key, value in dictionary.items():
-            if len(value) > 1:
-                errors.append('Key: {} contained multiple entries, the following: {}'.format(key, value))
+        errors = ['Key: {} contained multiple entries, the following: {}'.format(key, value)
+                  for (key, value) in dictionary.items() if len(value) > 1]
         return normalize_dictionary(dictionary), errors
