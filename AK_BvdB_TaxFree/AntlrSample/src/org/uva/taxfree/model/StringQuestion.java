@@ -15,7 +15,6 @@ public class StringQuestion extends NamedNode {
     @Override
     public void fillPanel(JPanel parentPanel) {
         mTextField.setPreferredSize(new Dimension(100, 25));
-        setVisible(true);
         parentPanel.add(mTextField);
     }
 
@@ -24,8 +23,10 @@ public class StringQuestion extends NamedNode {
         return mTextField.getText();
     }
 
-    public void setVisible(boolean isVisible) {
+    @Override
+    public void setVisibility(boolean isVisible) {
         mTextField.setVisible(isVisible);
+        super.setVisibility(isVisible);
     }
 
     @Override

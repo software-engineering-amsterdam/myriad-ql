@@ -3,7 +3,7 @@ package org.uva.taxfree.model;
 import javax.swing.*;
 
 public class BooleanQuestion extends NamedNode {
-    JCheckBox mCheckbox;
+    private final JCheckBox mCheckbox;
     public BooleanQuestion(String description, String id) {
         super(description, id);
         mCheckbox = new JCheckBox("", false);
@@ -15,16 +15,16 @@ public class BooleanQuestion extends NamedNode {
     }
 
     @Override
-    public String resolve() {
+    protected String resolve() {
         return String.valueOf(isTrue());
     }
 
     @Override
-    public void printValue() {
+    protected void printValue() {
         System.out.println("Value of bool: " + isTrue());
     }
 
-    public boolean isTrue(){
+    protected boolean isTrue(){
         return mCheckbox.isSelected();
     }
 }

@@ -13,20 +13,20 @@ public abstract class NamedNode extends Node {
         mId = id;
     }
 
-    public void setVisibility(boolean isVisible){
+    public void setVisibility(boolean isVisible) {
         getWidget().setVisible(isVisible);
         super.setVisibility(isVisible);
     }
 
 
     public JPanel getWidget() {
-        if(mPanel == null){
+        if (mPanel == null) {
             mPanel = createPanel();
         }
         return mPanel;
     }
 
-    private JPanel createPanel(){
+    private JPanel createPanel() {
         JPanel widgetPanel = new JPanel();
         widgetPanel.setName(mLabel);
         widgetPanel.add(new JLabel(mLabel));
@@ -49,5 +49,5 @@ public abstract class NamedNode extends Node {
         return mLabel;
     }
 
-    public abstract String resolve();
+    protected abstract String resolve();
 }
