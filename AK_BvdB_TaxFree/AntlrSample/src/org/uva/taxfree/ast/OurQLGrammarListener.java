@@ -2,6 +2,7 @@ package org.uva.taxfree.ast;
 
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
+import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
@@ -29,12 +30,12 @@ public class OurQLGrammarListener extends QLGrammarBaseListener{ // To enforce u
     private final List<BlockNode> mCachedIfStatementNodes = new ArrayList<>(); // The only 'stack' that won't be empty in the end
     private final List<ConditionNode> mCachedConditions = new ArrayList<>();
 
-    public OurQLGrammarListener(SymbolTable symbolTable) {
-        mSymbolTable = symbolTable;
+    public OurQLGrammarListener() {
+        mSymbolTable = new SymbolTable();
     }
 
-    public FormNode getRootNode() {
-        return mRootNode;
+    public Environment getEnvironment() {
+        return new Environment(mSymbolTable, mRootNode);
     }
 
     private ConditionNode popCachedCondition() {
