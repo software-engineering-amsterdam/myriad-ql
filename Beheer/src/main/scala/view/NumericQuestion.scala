@@ -1,7 +1,5 @@
 package view
 
-import javafx.beans.binding.StringBinding
-
 import ast.{ DecimalType, IntegerType, MoneyType }
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.{ DecimalValue, IntegerValue, MoneyValue, UndefinedValue }

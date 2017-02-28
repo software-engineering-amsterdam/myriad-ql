@@ -4,6 +4,7 @@ import model.DisplayQuestion
 import values.BooleanValue
 
 import scalafx.scene.control.{ RadioButton, ToggleGroup }
+import scalafx.scene.layout.HBox
 import scalafx.scene.text.Text
 
 class BooleanQuestion(val question: DisplayQuestion) extends GUIQuestion {
@@ -19,15 +20,19 @@ class BooleanQuestion(val question: DisplayQuestion) extends GUIQuestion {
 
   element.children = Seq(
     new Text(question.label),
-    new RadioButton {
-      text = "Yes"
-      toggleGroup = booleanToggle
-      userData = BooleanValue(true)
-    },
-    new RadioButton {
-      text = "No"
-      toggleGroup = booleanToggle
-      userData = BooleanValue(false)
+    new HBox {
+      children = Seq(
+        new RadioButton {
+          text = "Yes"
+          toggleGroup = booleanToggle
+          userData = BooleanValue(true)
+        },
+        new RadioButton {
+          text = "No"
+          toggleGroup = booleanToggle
+          userData = BooleanValue(false)
+        }
+      )
     }
   )
 }
