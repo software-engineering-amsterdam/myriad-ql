@@ -6,6 +6,10 @@ module QLS
       def initialize(value)
         @value = value
       end
+
+      def accept(visitor)
+        visitor.visit_property(self)
+      end
     end
 
     class Width < Property
