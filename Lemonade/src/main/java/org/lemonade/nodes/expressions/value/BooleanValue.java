@@ -1,4 +1,4 @@
-package org.lemonade.nodes.expressions.literal;
+package org.lemonade.nodes.expressions.value;
 
 import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLBooleanType;

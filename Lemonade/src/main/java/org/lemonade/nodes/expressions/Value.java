@@ -1,6 +1,6 @@
 package org.lemonade.nodes.expressions;
 
-import org.lemonade.nodes.expressions.literal.BooleanValue;
+import org.lemonade.nodes.expressions.value.BooleanValue;
 import org.lemonade.nodes.types.QLBooleanType;
 import org.lemonade.nodes.types.QLType;
 

@@ -1,4 +1,4 @@
-package org.lemonade.nodes.expressions.literal;
+package org.lemonade.nodes.expressions.value;
 
 import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLStringType;
@@ -8,11 +8,11 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IdentifierValue extends Value<String> implements Comparable<IdentifierValue>{
+public class StringValue extends Value<String> implements Comparable<StringValue>{
 
-    public IdentifierValue(QLType type, String value) {
+    public StringValue(QLType type, String value) {
         super(type, value);
-        assert type instanceof QLStringType;//TODO can we do this?
+        assert type instanceof QLStringType;
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
@@ -26,14 +26,15 @@ public class IdentifierValue extends Value<String> implements Comparable<Identif
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof IdentifierValue)){
+        if (!(obj instanceof StringValue)){
             return false;
         }
-        IdentifierValue that = (IdentifierValue) obj;
+        StringValue that = (StringValue) obj;
         return this.getValue() == that.getValue();
     }
 
-    public int compareTo(IdentifierValue that) {
+    @Override
+    public int compareTo(StringValue that) {
         return this.getValue().compareTo(that.getValue());
     }
 }

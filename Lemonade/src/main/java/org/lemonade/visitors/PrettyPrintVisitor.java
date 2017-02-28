@@ -3,7 +3,7 @@ package org.lemonade.visitors;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.value.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLType;

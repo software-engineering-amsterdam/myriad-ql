@@ -1,6 +1,8 @@
-package org.lemonade.nodes.expressions.literal;
+package org.lemonade.nodes.expressions.value;
+
 
 import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
@@ -8,14 +10,13 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class MoneyValue extends NumericValue<Double> implements Comparable<MoneyValue> {
+public class IntegerValue extends NumericValue<Integer> implements Comparable<IntegerValue>{
 
-    public MoneyValue(QLType type, String value) {
-        super(type, Double.parseDouble(value));
-        assert type instanceof QLMoneyType;
+    public IntegerValue(QLType type, String value) {
+        super(type, Integer.parseInt(value));
     }
 
-    public MoneyValue(QLMoneyType type, double value) {
+    public IntegerValue(QLType type, int value) {
         super(type, value);
     }
 
@@ -23,8 +24,8 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return visitor.visit(this);
     }
 
-    public MoneyValue plus(IntegerValue that) {
-        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
+    public IntegerValue plus(IntegerValue that) {
+        return new IntegerValue(new QLIntegerType(), this.getValue() + that.getValue());
     }
 
     public DecimalValue plus(DecimalValue that) {
@@ -41,20 +42,20 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
 
     @Override
     public String toString() {
-        return Double.toString(this.getValue());
+        return Integer.toString(this.getValue());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof MoneyValue)){
+        if (!(obj instanceof IntegerValue)){
             return false;
         }
-        MoneyValue that = (MoneyValue) obj;
+        IntegerValue that = (IntegerValue) obj;
         return this.getValue() == that.getValue();
     }
 
     @Override
-    public int compareTo(MoneyValue that) {
+    public int compareTo(IntegerValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
         }

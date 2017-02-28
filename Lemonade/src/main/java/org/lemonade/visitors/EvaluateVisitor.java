@@ -6,7 +6,7 @@ import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.value.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLType;
@@ -43,21 +43,24 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(AndBinary andBinary) {
-        return null;
+        BooleanValue left = (BooleanValue) andBinary.getLeft().accept(this);
+        BooleanValue right = (BooleanValue) andBinary.getRight().accept(this);
+        return left.and(right);
     }
 
     @Override
     public Expression visit(OrBinary orBinary) {
-        return null;
+        BooleanValue left = (BooleanValue) orBinary.getLeft().accept(this);
+        BooleanValue right = (BooleanValue) orBinary.getRight().accept(this);
+        return left.or(right);
     }
 
     @Override
     public Expression visit(PlusBinary plusBinary) {
         NumericValue left = (NumericValue) plusBinary.getLeft().accept(this);
-        NumericValue right = (NumericValue) plusBinary.getLeft().accept(this);
+        NumericValue right = (NumericValue) plusBinary.getRight().accept(this);
         System.err.println(left.plus(right));
         return left.plus(right);
-
     }
 
     @Override

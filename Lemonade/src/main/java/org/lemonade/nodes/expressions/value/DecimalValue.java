@@ -1,22 +1,19 @@
-package org.lemonade.nodes.expressions.literal;
+package org.lemonade.nodes.expressions.value;
 
-
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.nodes.types.QLType;
+import org.lemonade.nodes.types.*;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
  *
  */
-public class IntegerValue extends NumericValue<Integer> implements Comparable<IntegerValue>{
+public class DecimalValue extends NumericValue<Double> implements Comparable<DecimalValue> {
 
-    public IntegerValue(QLType type, String value) {
-        super(type, Integer.parseInt(value));
+    public DecimalValue(QLType type, String value) {
+        super(type, Double.parseDouble(value));
+        assert type instanceof QLDecimalType;
     }
 
-    public IntegerValue(QLType type, int value) {
+    public DecimalValue(QLDecimalType type, double value) {
         super(type, value);
     }
 
@@ -24,8 +21,8 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
         return visitor.visit(this);
     }
 
-    public IntegerValue plus(IntegerValue that) {
-        return new IntegerValue(new QLIntegerType(), this.getValue() + that.getValue());
+    public DecimalValue plus(IntegerValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
     }
 
     public DecimalValue plus(DecimalValue that) {
@@ -39,23 +36,22 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
     public NumericValue plus(NumericValue that) {
         return that.plus(this);
     }
-
     @Override
     public String toString() {
-        return Integer.toString(this.getValue());
+        return Double.toString(this.getValue());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof IntegerValue)){
+        if (!(obj instanceof DecimalValue)){
             return false;
         }
-        IntegerValue that = (IntegerValue) obj;
+        DecimalValue that = (DecimalValue) obj;
         return this.getValue() == that.getValue();
     }
 
     @Override
-    public int compareTo(IntegerValue that) {
+    public int compareTo(DecimalValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
         }
