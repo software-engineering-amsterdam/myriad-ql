@@ -9,21 +9,25 @@ require 'pp'
 require_rel 'lib'
 
 # read file
-contents = File.read('examples/simple_questionnaire.ql')
+
 
 # parse content
-parsed = QL::Parser::Parser.new.parse(contents)
-pp parsed
-ast = QL::Parser::Transformer.new.apply(parsed)
-pp ast
-type_checker = QL::TypeChecker::TypeChecker.check(ast)
+ql_contents = File.read('examples/simple_questionnaire.ql')
+pp ql_contents
+ql_parse_tree = QL::Parser::Parser.new.parse(ql_contents)
+pp ql_parse_tree
+ql_ast = QL::Parser::Transformer.new.apply(ql_parse_tree)
+pp ql_ast
+ql_errors = QL::TypeChecker::TypeChecker.check(ql_ast)
+pp ql_errors
+# QL::GUI::GUI.new(ast, type_checker)
+
+
+qls_contents = File.read('examples/example.qls')
+pp qls_contents
+qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
+pp qls_parsed
+qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
+pp qls_ast
+type_checker = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 pp type_checker
-QL::GUI::GUI.new(ast, type_checker)
-
-
-# contents = File.read('examples/example.qls')
-# p contents
-# parsed = QLS::Parser::Parser.new.parse(contents)
-# pp parsed
-# ast = QLS::Parser::Transformer.new.apply(parsed)
-# pp ast
