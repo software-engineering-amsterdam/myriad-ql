@@ -27,4 +27,10 @@ public class Question extends BlockItem {
 		return type;
 	}
 
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
+	}
+
 }

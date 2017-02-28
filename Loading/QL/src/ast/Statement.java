@@ -20,6 +20,12 @@ public class Statement extends BlockItem {
 	public Block getBlock() {
 		return block;
 	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+		
+	}
 	
 	// TODO end each class with overrides?
 

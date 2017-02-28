@@ -7,9 +7,4 @@ public abstract class BlockItem extends Node {
 		super(line);
 	}
 	
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);	
-	}
-	
 }
