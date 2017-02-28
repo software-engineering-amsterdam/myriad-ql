@@ -36,37 +36,37 @@ module QL
       describe DuplicateLabelChecker do
         it 'detects error' do
           expect(ast.accept(DuplicateLabelChecker.new))
-            .to match(["[WARNING]: question with label 'Did you sell a house in 2010?' is defined multiple times"])
+            .to match(['[WARNING]: question with label \'Did you sell a house in 2010?\' is defined multiple times'])
         end
       end
 
       describe DuplicateVariableChecker do
         it 'detects error' do
           expect(ast.accept(DuplicateVariableChecker.new))
-            .to match(["[ERROR]: variable 'hasSoldHouse' is defined multiple times"])
+            .to match(['[ERROR]: variable \'hasSoldHouse\' is defined multiple times'])
         end
       end
 
       describe UndefinedVariableChecker do
         it 'detects error' do
           expect(ast.accept(UndefinedVariableChecker.new))
-            .to match(["[ERROR]: variable '_' is undefined"])
+            .to match(['[ERROR]: variable \'_\' is undefined'])
         end
       end
 
       describe OperandsTypeChecker do
         it 'detects error' do
           expect(ast.accept(OperandsTypeChecker.new))
-            .to match(["[ERROR]: QL::AST::BooleanType can not be used with QL::AST::Add",
-                       "[ERROR]: QL::AST::IntegerType can not be used with QL::AST::BooleanType"])
+            .to match(['[ERROR]: QL::AST::BooleanType can not be used with QL::AST::Add',
+                       '[ERROR]: QL::AST::IntegerType can not be used with QL::AST::BooleanType'])
         end
       end
 
       describe CyclicChecker do
         it 'detects error' do
           expect(ast.accept(CyclicChecker.new))
-            .to match(["[ERROR]: question with variable 'privateDebt' has a cyclic dependency",
-                       "[ERROR]: question with variable 'sellingPrice' has a cyclic dependency"])
+            .to match(['[ERROR]: question with variable \'privateDebt\' has a cyclic dependency',
+                       '[ERROR]: question with variable \'sellingPrice\' has a cyclic dependency'])
         end
       end
     end

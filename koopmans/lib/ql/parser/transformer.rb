@@ -40,22 +40,22 @@ module QL
       rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) { IntegerNegation.new(IntegerLiteral.new(integer)) }
 
       # boolean: && ||
-      rule({ left: subtree(:left), operator: '&&', right: subtree(:right) }) { And.new(left, right) }
-      rule({ left: subtree(:left), operator: '||', right: subtree(:right) }) { Or.new(left, right) }
+      rule(left: subtree(:left), operator: '&&', right: subtree(:right)) { And.new(left, right) }
+      rule(left: subtree(:left), operator: '||', right: subtree(:right)) { Or.new(left, right) }
 
       # arithmetic: + - / *
-      rule({ left: subtree(:left), operator: '+', right: subtree(:right) }) { Add.new(left, right) }
-      rule({ left: subtree(:left), operator: '-', right: subtree(:right) }) { Subtract.new(left, right) }
-      rule({ left: subtree(:left), operator: '/', right: subtree(:right) }) { Divide.new(left, right) }
-      rule({ left: subtree(:left), operator: '*', right: subtree(:right) }) { Multiply.new(left, right) }
+      rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Add.new(left, right) }
+      rule(left: subtree(:left), operator: '-', right: subtree(:right)) { Subtract.new(left, right) }
+      rule(left: subtree(:left), operator: '/', right: subtree(:right)) { Divide.new(left, right) }
+      rule(left: subtree(:left), operator: '*', right: subtree(:right)) { Multiply.new(left, right) }
 
       # comparison: == != < > <= >=
-      rule({ left: subtree(:left), operator: '==', right: subtree(:right) }) { Equal.new(left, right) }
-      rule({ left: subtree(:left), operator: '!=', right: subtree(:right) }) { NotEqual.new(left, right) }
-      rule({ left: subtree(:left), operator: '<', right: subtree(:right) }) { Less.new(left, right) }
-      rule({ left: subtree(:left), operator: '>', right: subtree(:right) }) { Greater.new(left, right) }
-      rule({ left: subtree(:left), operator: '<=', right: subtree(:right) }) { LessEqual.new(left, right) }
-      rule({ left: subtree(:left), operator: '>=', right: subtree(:right) }) { GreaterEqual.new(left, right) }
+      rule(left: subtree(:left), operator: '==', right: subtree(:right)) { Equal.new(left, right) }
+      rule(left: subtree(:left), operator: '!=', right: subtree(:right)) { NotEqual.new(left, right) }
+      rule(left: subtree(:left), operator: '<', right: subtree(:right)) { Less.new(left, right) }
+      rule(left: subtree(:left), operator: '>', right: subtree(:right)) { Greater.new(left, right) }
+      rule(left: subtree(:left), operator: '<=', right: subtree(:right)) { LessEqual.new(left, right) }
+      rule(left: subtree(:left), operator: '>=', right: subtree(:right)) { GreaterEqual.new(left, right) }
     end
   end
 end
