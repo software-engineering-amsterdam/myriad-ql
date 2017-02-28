@@ -8,6 +8,10 @@ import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.items.Conditional;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
@@ -82,12 +86,41 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     public ASTNode visitGroupedExpression(QLParser.GroupedExpressionContext ctx) {
         GroupedExpression groupedExpression = new GroupedExpression(ctx.start.getLine());
         groupedExpression.setExpression(ctx.getText());
+        groupedExpression.setExpression((Expression) visit(ctx.expression()));
 
         return groupedExpression;
     }
 
     private List<Item> getStatements(List<QLParser.ItemsContext> items) {
         return items.stream().map(item -> (Item) visit(item)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ASTNode visitIdentifier(QLParser.IdentifierContext ctx) {
+        Identifier identifier = new Identifier(ctx.start.getLine(), ctx.getText());
+
+        return identifier;
+    }
+
+    @Override
+    public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
+        StringerLiteral stringerLiteral = new StringerLiteral(ctx.start.getLine(), ctx.getText());
+
+        return stringerLiteral;
+    }
+
+    @Override
+    public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
+        IntegerLiteral integerLiteral = new IntegerLiteral(ctx.start.getLine(), ctx.getText());
+
+        return integerLiteral;
+    }
+
+    @Override
+    public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
+        BooleanLiteral booleanLiteral = new BooleanLiteral(ctx.start.getLine(), ctx.getText());
+
+        return booleanLiteral;
     }
 
     @Override
