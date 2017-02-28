@@ -7,7 +7,7 @@ trait Value {
 
   def +(other: Value): Value = UndefinedValue
 
-  def !(other: Value): Value = UndefinedValue
+  def -(other: Value): Value = UndefinedValue
 
   def *(other: Value): Value = UndefinedValue
 
@@ -27,11 +27,11 @@ trait Value {
 
   def ! = Not
 
-  def Not: Value = UndefinedValue
+  private def Not: Value = UndefinedValue
 
   def - = Neg
 
-  def Neg: Value = UndefinedValue
+  private def Neg: Value = UndefinedValue
 
   def display: String
 }
