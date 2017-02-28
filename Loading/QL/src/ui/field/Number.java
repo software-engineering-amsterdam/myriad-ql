@@ -15,7 +15,6 @@ import javafx.beans.value.ObservableValue;
 public class Number implements Field {
 	
 	private Notifier listener;
-	private String name;
 	private TextField field;
 	
 	public Number(String name) {

@@ -8,7 +8,6 @@ import value.EmptyValue;
 import value.StringValue;
 import value.Value;
 
-// TODO do not extend the standard library
 public class Text implements Field {
 	
 	private Notifier listener;
@@ -21,7 +20,6 @@ public class Text implements Field {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	
             	listener.updateQuestionnaire(name, new StringValue(newValue));
             }
     	});
