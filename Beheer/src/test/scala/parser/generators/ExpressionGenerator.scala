@@ -7,27 +7,36 @@ import org.scalacheck.Gen
  */
 object ExpressionGenerator extends ValueGenerator {
   def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size))
+  def genInfixExpression: Gen[String] = Gen.sized(size => sizedInfixExpression(size))
+
+  private def sizedInfixExpression(maxDepth: Int): Gen[String] = maxDepth match {
+    case 0 => literalValue
+    case x => for {
+      newDepth <- Gen.choose(0, Math.max(x - 1, 0))
+      expression <- Gen.oneOf(literalValue, infixExpression(sizedInfixExpression, newDepth))
+    } yield expression
+  }
 
   private def sizedExpression(maxDepth: Int): Gen[String] = maxDepth match {
     case 0 => literalValue
     case x => for {
       newDepth <- Gen.choose(0, Math.max(x - 1, 0))
-      expression <- Gen.oneOf(literalValue, prefixExpression(newDepth), infixExpression(newDepth))
+      expression <- Gen.oneOf(literalValue, prefixExpression(sizedExpression, newDepth), infixExpression(sizedExpression, newDepth))
     } yield expression
   }
 
-  private def prefixExpression(maxDepth: Int): Gen[String] = for {
+  private def prefixExpression(childGenerator: Int => Gen[String], maxDepth: Int): Gen[String] = for {
     newDepth <- Gen.choose(0, Math.max(maxDepth - 1, 0))
     operator <- Gen.oneOf("-", "!")
-    expression <- sizedExpression(newDepth)
+    expression <- childGenerator(newDepth)
   } yield operator + "(" + expression + ")"
 
-  private def infixExpression(maxDepth: Int): Gen[String] = {
+  private def infixExpression(childGenerator: Int => Gen[String], maxDepth: Int): Gen[String] = {
     val operators = Seq(" + ", " - ", " / ", " * ", " || ", " && ", " == ", " != ", " >= ", " > ", " < ", " <= ")
     def infixExpressionTail(length: Int, depth: Int): Gen[String] = length match {
       case 0 => ""
       case l => for {
-        expression <- sizedExpression(depth)
+        expression <- childGenerator(depth)
         operator <- Gen.oneOf(operators)
         tail <- infixExpressionTail(l - 1, depth)
       } yield operator + expression + tail
@@ -36,7 +45,7 @@ object ExpressionGenerator extends ValueGenerator {
     for {
       newDepth <- Gen.choose(0, Math.max(maxDepth - 1, 0))
       numOperators <- Gen.choose(1, 10)
-      expression <- sizedExpression(newDepth)
+      expression <- childGenerator(newDepth)
       tail <- infixExpressionTail(numOperators, newDepth)
     } yield expression + tail
   }
