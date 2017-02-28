@@ -17,13 +17,10 @@ module QL
         @variable = QL::GUI::Variable.new
         @gui.questions[args[:id]] = self
 
-        create_frame
-        create_label
-        check_condition
-      end
+        Frame.new(question: self)
+        Label.new(question: self)
 
-      def create_frame
-        @frame = TkFrame.new.grid(row: @gui.questions.size)
+        check_condition
       end
 
       def value
@@ -50,11 +47,6 @@ module QL
       def enable
         @frame.grid
         @enabled = true
-      end
-
-      def create_label
-        label      = TkLabel.new(@frame).pack
-        label.text = @label
       end
     end
   end

@@ -102,5 +102,24 @@ module QL
         entry.state        = 'disabled'
       end
     end
+
+    class Label < Widget
+      def initialize(args)
+        super
+        label      = TkLabel.new(frame).pack
+        label.text = @question.label
+      end
+    end
+
+    class Frame < Widget
+      def initialize(args)
+        super
+        @question.frame = TkFrame.new.grid(row: position)
+      end
+
+      def position
+        @question.gui.questions.size
+      end
+    end
   end
 end
