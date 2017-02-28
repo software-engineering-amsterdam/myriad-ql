@@ -2,12 +2,12 @@
  * MyBoolean.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.BooleanType;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.types.Type;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.BooleanType;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class MyBoolean extends Literal {
 

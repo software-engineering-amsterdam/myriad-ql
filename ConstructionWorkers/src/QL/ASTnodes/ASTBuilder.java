@@ -2,13 +2,13 @@
  * ASTBuilder.java.
  */
 
-package QL.ASTnodes;
+package ql.astnodes;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import QL.antlr.QLLexer;
-import QL.antlr.QLParser;
+import ql.antlr.QLLexer;
+import ql.antlr.QLParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;

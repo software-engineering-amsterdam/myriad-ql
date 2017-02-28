@@ -2,25 +2,25 @@
  * ASTVisitor.java.
  */
 
-package QL.ASTnodes;
+package ql.astnodes;
 
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.expressions.binaries.equality.*;
-import QL.ASTnodes.expressions.binaries.logic.AND;
-import QL.ASTnodes.expressions.binaries.logic.Logic;
-import QL.ASTnodes.expressions.binaries.logic.OR;
-import QL.ASTnodes.expressions.binaries.numerical.*;
-import QL.ASTnodes.expressions.literals.*;
-import QL.ASTnodes.expressions.literals.MyInteger;
-import QL.ASTnodes.expressions.unaries.*;
-import QL.ASTnodes.statements.ComputedQuestion;
-import QL.ASTnodes.statements.IfStatement;
-import QL.ASTnodes.statements.SimpleQuestion;
-import QL.ASTnodes.statements.Statement;
-import QL.ASTnodes.types.*;
-import QL.antlr.QLBaseVisitor;
-import QL.antlr.QLParser;
-import QL.antlr.QLVisitor;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.expressions.binaries.equality.*;
+import ql.astnodes.expressions.binaries.logic.AND;
+import ql.astnodes.expressions.binaries.logic.Logic;
+import ql.astnodes.expressions.binaries.logic.OR;
+import ql.astnodes.expressions.binaries.numerical.*;
+import ql.astnodes.expressions.literals.*;
+import ql.astnodes.expressions.literals.MyInteger;
+import ql.astnodes.expressions.unaries.*;
+import ql.astnodes.statements.ComputedQuestion;
+import ql.astnodes.statements.IfStatement;
+import ql.astnodes.statements.SimpleQuestion;
+import ql.astnodes.statements.Statement;
+import ql.astnodes.types.*;
+import ql.antlr.QLBaseVisitor;
+import ql.antlr.QLParser;
+import ql.antlr.QLVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -166,10 +166,10 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public Parenthesis visitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx) {
+    public Parentheses visitParenthesesExpression(QLParser.ParenthesesExpressionContext ctx) {
         Expression expression = (Expression) ctx.expression().accept(this);
 
-        return new Parenthesis(expression, getLineNumber(ctx));
+        return new Parentheses(expression, getLineNumber(ctx));
     }
 
     @Override

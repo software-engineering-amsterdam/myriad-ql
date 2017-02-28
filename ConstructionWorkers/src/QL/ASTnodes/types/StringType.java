@@ -2,11 +2,11 @@
  * StringType.java.
  */
 
-package QL.ASTnodes.types;
+package ql.astnodes.types;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.visitors.TypeVisitor;
-import QL.semanticChecker.formDataStorage.valueData.values.StringValue;
+import ql.astnodes.LineNumber;
+import ql.astnodes.visitors.TypeVisitor;
+import ql.gui.formenvironment.values.StringValue;
 
 public class StringType extends Type {
 
@@ -24,7 +24,7 @@ public class StringType extends Type {
     }
 
     @Override
-    public StringValue getDefaultState() {
+    public StringValue getDefaultValue() {
         return new StringValue(" ");
     }
     @Override

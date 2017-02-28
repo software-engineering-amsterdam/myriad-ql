@@ -1,21 +1,21 @@
 /**
- * QL.java.
+ * ql.java.
  */
 
-package QL;
+package ql;
 
-import QL.ASTnodes.ASTBuilder;
-import QL.ASTnodes.Form;
-import QL.GUI.GUI;
-import QL.GUI.GUIComponents.FormFrame;
-import QL.GUI.GUIComponents.GUIManager;
-import QL.GUI.GUIComponents.GUIWidgets.WidgetFactory;
-import QL.semanticChecker.SemanticChecker;
-import QL.semanticChecker.formDataStorage.valueData.ValueData;
-import QL.semanticChecker.messageHandling.MessageData;
-import QL.semanticChecker.messageHandling.MessageHandler;
-import QL.semanticChecker.messageHandling.errors.ErrorHandler;
-import QL.semanticChecker.messageHandling.warnings.WarningHandler;
+import ql.astnodes.ASTBuilder;
+import ql.astnodes.Form;
+import ql.gui.GUI;
+import ql.gui.components.FormFrame;
+import ql.gui.components.GUIManager;
+import ql.gui.components.widgets.WidgetFactory;
+import ql.semanticchecker.SemanticChecker;
+import ql.gui.formenvironment.ValueData;
+import ql.semanticchecker.messagehandling.Message;
+import ql.semanticchecker.messagehandling.MessageData;
+import ql.semanticchecker.messagehandling.errors.Error;
+import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -56,12 +56,11 @@ public class QL {
         Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, questionStates);
 
         if(!semanticallyCorrect) {
-            System.out.println("QL.QL form is semantically incorrect.");
-            System.exit(0);
+            System.out.println("ql.ql form is semantically incorrect.");
+            System.exit(1);
         } else {
-            System.out.println("Create QL.GUI...");
+            System.out.println("Create ql.gui...");
             buildGUI(qlAST, questionStates);
-            //System.exit(0);
         }
     }
 
@@ -85,17 +84,17 @@ public class QL {
         MessageData messages = semanticChecker.getMessages();
 
         if (messages.getWarnings().size() > 0) {
-            List<WarningHandler> warnings = messages.getWarnings();
+            List<Warning> warnings = messages.getWarnings();
 
-            for (MessageHandler warning : warnings) {
+            for (Message warning : warnings) {
                 System.out.println(warning.getMessage());
             }
         }
 
         if (messages.getErrors().size() > 0) {
-            List<ErrorHandler> errors = messages.getErrors();
+            List<Error> errors = messages.getErrors();
 
-            for (ErrorHandler error : errors) {
+            for (Error error : errors) {
                 System.out.println(error.getMessage());
             }
             return false;

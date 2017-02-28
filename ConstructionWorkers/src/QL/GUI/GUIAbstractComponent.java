@@ -1,6 +1,6 @@
-package QL.GUI;
+package ql.gui;
 
-import QL.semanticChecker.formDataStorage.valueData.values.Value;
+import ql.gui.formenvironment.values.Value;
 
 /**
  * Created by LGGX on 22-Feb-17.

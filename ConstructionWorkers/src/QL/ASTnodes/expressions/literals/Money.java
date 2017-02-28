@@ -2,13 +2,13 @@
  * Money.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
 import java.math.BigDecimal;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.MoneyType;
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.MoneyType;
+import ql.astnodes.types.Type;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Money extends Literal {
 

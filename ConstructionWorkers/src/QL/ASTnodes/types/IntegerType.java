@@ -2,11 +2,11 @@
  * IntegerType.java.
  */
 
-package QL.ASTnodes.types;
+package ql.astnodes.types;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.visitors.TypeVisitor;
-import QL.semanticChecker.formDataStorage.valueData.values.IntegerValue;
+import ql.astnodes.LineNumber;
+import ql.astnodes.visitors.TypeVisitor;
+import ql.gui.formenvironment.values.IntegerValue;
 
 public class IntegerType extends Type {
 
@@ -24,7 +24,7 @@ public class IntegerType extends Type {
     }
 
     @Override
-    public IntegerValue getDefaultState() {
+    public IntegerValue getDefaultValue() {
         return new IntegerValue(0);
     }
 

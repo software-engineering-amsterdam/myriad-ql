@@ -2,34 +2,34 @@
  * IdentifierChecker.java.
  */
 
-package QL.semanticChecker;
+package ql.semanticchecker;
 
-import QL.ASTnodes.Form;
-import QL.ASTnodes.expressions.binaries.equality.*;
-import QL.ASTnodes.expressions.binaries.logic.AND;
-import QL.ASTnodes.expressions.binaries.logic.OR;
-import QL.ASTnodes.expressions.binaries.numerical.Addition;
-import QL.ASTnodes.expressions.binaries.numerical.Division;
-import QL.ASTnodes.expressions.binaries.numerical.Multiplication;
-import QL.ASTnodes.expressions.binaries.numerical.Subtraction;
-import QL.ASTnodes.expressions.literals.*;
-import QL.ASTnodes.expressions.unaries.Negation;
-import QL.ASTnodes.expressions.unaries.Negative;
-import QL.ASTnodes.expressions.unaries.Parenthesis;
-import QL.ASTnodes.expressions.unaries.Positive;
-import QL.ASTnodes.statements.ComputedQuestion;
-import QL.ASTnodes.statements.IfStatement;
-import QL.ASTnodes.statements.SimpleQuestion;
-import QL.ASTnodes.statements.Statement;
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.visitors.ExpressionVisitor;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
-import QL.semanticChecker.formDataStorage.valueData.ValueData;
-import QL.semanticChecker.messageHandling.MessageData;
-import QL.semanticChecker.messageHandling.errors.DuplicateIdentifierError;
-import QL.semanticChecker.messageHandling.errors.IfExpressionUndefinedError;
-import QL.semanticChecker.messageHandling.warnings.DuplicateIdentifierWarning;
-import QL.semanticChecker.messageHandling.warnings.DuplicateLabelWarning;
+import ql.astnodes.Form;
+import ql.astnodes.expressions.binaries.equality.*;
+import ql.astnodes.expressions.binaries.logic.AND;
+import ql.astnodes.expressions.binaries.logic.OR;
+import ql.astnodes.expressions.binaries.numerical.Addition;
+import ql.astnodes.expressions.binaries.numerical.Division;
+import ql.astnodes.expressions.binaries.numerical.Multiplication;
+import ql.astnodes.expressions.binaries.numerical.Subtraction;
+import ql.astnodes.expressions.literals.*;
+import ql.astnodes.expressions.unaries.Negation;
+import ql.astnodes.expressions.unaries.Negative;
+import ql.astnodes.expressions.unaries.Parentheses;
+import ql.astnodes.expressions.unaries.Positive;
+import ql.astnodes.statements.ComputedQuestion;
+import ql.astnodes.statements.IfStatement;
+import ql.astnodes.statements.SimpleQuestion;
+import ql.astnodes.statements.Statement;
+import ql.astnodes.types.Type;
+import ql.astnodes.visitors.ExpressionVisitor;
+import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.gui.formenvironment.ValueData;
+import ql.semanticchecker.messagehandling.MessageData;
+import ql.semanticchecker.messagehandling.errors.DuplicateIdentifierError;
+import ql.semanticchecker.messagehandling.errors.IfExpressionUndefinedError;
+import ql.semanticchecker.messagehandling.warnings.DuplicateIdentifierWarning;
+import ql.semanticchecker.messagehandling.warnings.DuplicateLabelWarning;
 
 import java.util.HashSet;
 
@@ -73,7 +73,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(SimpleQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultState());
+            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultValue());
         }
 
         if (!duplicateQuestionLabels(statement)) {
@@ -86,7 +86,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     public Identifier visit(ComputedQuestion statement) {
         if (!duplicateQuestionIdentifiers(statement)) {
             identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
-            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultState());
+            questionStates.addValue(statement.getIdentifier().getName(), statement.getType().getDefaultValue());
         }
 
         if (!duplicateQuestionLabels(statement)) {
@@ -155,7 +155,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     }
 
     @Override
-    public Identifier visit(Parenthesis expression) {
+    public Identifier visit(Parentheses expression) {
         return null;
     }
 

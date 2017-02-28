@@ -1,4 +1,4 @@
-package QL.GUI;
+package ql.gui;
 
 /**
  * Created by LGGX on 22-Feb-17.

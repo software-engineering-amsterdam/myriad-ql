@@ -2,13 +2,13 @@
  * SimpleQuestion.java.
  */
 
-package QL.ASTnodes.statements;
+package ql.astnodes.statements;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.literals.Identifier;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.literals.Identifier;
+import ql.astnodes.visitors.FormAndStatementVisitor;
 
-import QL.ASTnodes.types.Type;
+import ql.astnodes.types.Type;
 
 public class SimpleQuestion extends Statement {
 

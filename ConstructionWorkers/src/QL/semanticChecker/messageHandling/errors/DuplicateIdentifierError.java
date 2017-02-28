@@ -2,12 +2,12 @@
  * DuplicateIdentifierError.java.
  */
 
-package QL.semanticChecker.messageHandling.errors;
+package ql.semanticchecker.messagehandling.errors;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.literals.Identifier;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.literals.Identifier;
 
-public class DuplicateIdentifierError extends ErrorHandler {
+public class DuplicateIdentifierError extends Error {
 
     private final Identifier identifier;
 

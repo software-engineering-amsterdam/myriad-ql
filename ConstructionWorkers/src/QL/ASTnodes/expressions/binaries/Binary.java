@@ -2,11 +2,11 @@
  * Binary.java.
  */
 
-package QL.ASTnodes.expressions.binaries;
+package ql.astnodes.expressions.binaries;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.types.Type;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.types.Type;
 
 public abstract class Binary extends Expression {
 

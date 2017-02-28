@@ -2,11 +2,11 @@
  * Negative.java.
  */
 
-package QL.ASTnodes.expressions.unaries;
+package ql.astnodes.expressions.unaries;
 
-import QL.ASTnodes.visitors.ExpressionVisitor;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
+import ql.astnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
 
 public class Negative extends Unary {
 

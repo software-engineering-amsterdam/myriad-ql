@@ -2,10 +2,10 @@
  * UndefinedType.java.
  */
 
-package QL.ASTnodes.types;
+package ql.astnodes.types;
 
-import QL.ASTnodes.visitors.TypeVisitor;
-import QL.semanticChecker.formDataStorage.valueData.values.UndefinedValue;
+import ql.astnodes.visitors.TypeVisitor;
+import ql.gui.formenvironment.values.UndefinedValue;
 
 public class UndefinedType extends Type {
 
@@ -19,7 +19,7 @@ public class UndefinedType extends Type {
     }
 
     @Override
-    public UndefinedValue getDefaultState() {
+    public UndefinedValue getDefaultValue() {
         return new UndefinedValue();
     }
 

@@ -2,11 +2,11 @@
  * OR.java.
  */
 
-package QL.ASTnodes.expressions.binaries.logic;
+package ql.astnodes.expressions.binaries.logic;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class OR extends Logic {
 

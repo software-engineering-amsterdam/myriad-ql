@@ -1,18 +1,19 @@
-package QL.GUI;
+package ql.gui;
 
-import QL.ASTnodes.Form;
-import QL.ASTnodes.statements.ComputedQuestion;
-import QL.ASTnodes.statements.IfStatement;
-import QL.ASTnodes.statements.SimpleQuestion;
-import QL.GUI.GUIEvaluation.QuestionEvaluator;
-import QL.GUI.GUIComponents.GUIFields.ComputerQuestionField;
-import QL.GUI.GUIComponents.GUIFields.Field;
-import QL.GUI.GUIComponents.GUIManager;
-import QL.GUI.GUIComponents.GUIVisitors.GUIFieldFactory;
-import QL.GUI.GUIComponents.GUIWidgets.WidgetFactory;
-import QL.semanticChecker.formDataStorage.QuestionData;
-import QL.semanticChecker.formDataStorage.valueData.ValueData;
-import QL.semanticChecker.formDataStorage.valueData.values.Value;
+import ql.astnodes.Form;
+import ql.astnodes.statements.ComputedQuestion;
+import ql.astnodes.statements.IfStatement;
+import ql.astnodes.statements.SimpleQuestion;
+import ql.gui.evaluation.QuestionEvaluator;
+import ql.gui.components.fields.ComputerQuestionField;
+import ql.gui.components.fields.Field;
+import ql.gui.components.GUIManager;
+import ql.gui.components.visitors.GUIFieldFactory;
+import ql.gui.components.widgets.WidgetFactory;
+import ql.gui.formenvironment.OptionalQuestions;
+import ql.gui.formenvironment.QuestionData;
+import ql.gui.formenvironment.ValueData;
+import ql.gui.formenvironment.values.Value;
 
 import java.util.ArrayList;
 import java.util.List;

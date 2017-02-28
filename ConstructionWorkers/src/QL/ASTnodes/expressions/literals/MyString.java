@@ -2,12 +2,12 @@
  * MyString.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.StringType;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.types.Type;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.StringType;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class MyString extends Literal {
 

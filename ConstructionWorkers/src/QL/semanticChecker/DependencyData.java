@@ -4,7 +4,7 @@
  * TODO: check.
  */
 
-package QL.semanticChecker;
+package ql.semanticchecker;
 
 import java.util.*;
 

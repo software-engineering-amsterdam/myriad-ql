@@ -2,11 +2,11 @@
  * LT.java.
  */
 
-package QL.ASTnodes.expressions.binaries.equality;
+package ql.astnodes.expressions.binaries.equality;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class LT extends Equality {
 

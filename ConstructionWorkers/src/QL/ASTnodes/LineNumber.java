@@ -2,7 +2,7 @@
  * LineNumber.java.
  */
 
-package QL.ASTnodes;
+package ql.astnodes;
 
 public class LineNumber {
 

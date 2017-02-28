@@ -2,9 +2,9 @@
  * TypeVisitor.java.
  */
 
-package QL.ASTnodes.visitors;
+package ql.astnodes.visitors;
 
-import QL.ASTnodes.types.*;
+import ql.astnodes.types.*;
 
 public interface TypeVisitor<T> {
     T visit(BooleanType type);

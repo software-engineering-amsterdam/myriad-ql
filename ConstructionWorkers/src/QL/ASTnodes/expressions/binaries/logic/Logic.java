@@ -2,14 +2,14 @@
  * Logic.java.
  */
 
-package QL.ASTnodes.expressions.binaries.logic;
+package ql.astnodes.expressions.binaries.logic;
 
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.expressions.binaries.Binary;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.BooleanType;
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.types.UndefinedType;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.expressions.binaries.Binary;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.BooleanType;
+import ql.astnodes.types.Type;
+import ql.astnodes.types.UndefinedType;
 
 public abstract class Logic extends Binary {
 

@@ -2,10 +2,10 @@
  * Literal.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.LineNumber;
 
 public abstract class Literal extends Expression {
 

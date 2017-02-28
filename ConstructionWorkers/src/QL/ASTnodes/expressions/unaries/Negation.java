@@ -2,14 +2,14 @@
  * Negation.java.
  */
 
-package QL.ASTnodes.expressions.unaries;
+package ql.astnodes.expressions.unaries;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.BooleanType;
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.types.UndefinedType;
-import QL.ASTnodes.visitors.ExpressionVisitor;
-import QL.ASTnodes.expressions.Expression;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.BooleanType;
+import ql.astnodes.types.Type;
+import ql.astnodes.types.UndefinedType;
+import ql.astnodes.visitors.ExpressionVisitor;
+import ql.astnodes.expressions.Expression;
 
 public class Negation extends Unary {
 

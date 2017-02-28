@@ -2,11 +2,11 @@
  * Expression.java.
  */
 
-package QL.ASTnodes.expressions;
+package ql.astnodes.expressions;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.Node;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.Node;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public abstract class Expression extends Node {
 

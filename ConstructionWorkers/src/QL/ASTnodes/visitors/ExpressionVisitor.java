@@ -2,13 +2,13 @@
  * ExpressionVisitor.java.
  */
 
-package QL.ASTnodes.visitors;
+package ql.astnodes.visitors;
 
-import QL.ASTnodes.expressions.binaries.equality.*;
-import QL.ASTnodes.expressions.binaries.logic.*;
-import QL.ASTnodes.expressions.binaries.numerical.*;
-import QL.ASTnodes.expressions.literals.*;
-import QL.ASTnodes.expressions.unaries.*;
+import ql.astnodes.expressions.binaries.equality.*;
+import ql.astnodes.expressions.binaries.logic.*;
+import ql.astnodes.expressions.binaries.numerical.*;
+import ql.astnodes.expressions.literals.*;
+import ql.astnodes.expressions.unaries.*;
 
 public interface ExpressionVisitor<T> {
     T visit(MyBoolean literal);
@@ -17,7 +17,7 @@ public interface ExpressionVisitor<T> {
     T visit(Identifier literal);
     T visit(Money literal);
 
-    T visit(Parenthesis expression);
+    T visit(Parentheses expression);
     T visit(Negation expression);
     T visit(Negative expression);
     T visit(Positive expression);

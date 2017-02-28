@@ -2,11 +2,11 @@
  * Multiplication.java.
  */
 
-package QL.ASTnodes.expressions.binaries.numerical;
+package ql.astnodes.expressions.binaries.numerical;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Multiplication extends Numerical {
 

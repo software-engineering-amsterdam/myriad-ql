@@ -2,10 +2,10 @@
  * FormAndStatementVisitor.java.
  */
 
-package QL.ASTnodes.visitors;
+package ql.astnodes.visitors;
 
-import QL.ASTnodes.Form;
-import QL.ASTnodes.statements.*;
+import ql.astnodes.Form;
+import ql.astnodes.statements.*;
 
 public interface FormAndStatementVisitor<T> {
     T visit(Form form);

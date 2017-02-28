@@ -2,12 +2,12 @@
  * Equality.java
  */
 
-package QL.ASTnodes.expressions.binaries.equality;
+package ql.astnodes.expressions.binaries.equality;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.Expression;
-import QL.ASTnodes.expressions.binaries.Binary;
-import QL.ASTnodes.types.*;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.Expression;
+import ql.astnodes.expressions.binaries.Binary;
+import ql.astnodes.types.*;
 
 public abstract class Equality extends Binary {
 

@@ -2,12 +2,12 @@
  * BooleanType.java.
  */
 
-package QL.ASTnodes.types;
+package ql.astnodes.types;
 
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.visitors.TypeVisitor;
-import QL.semanticChecker.formDataStorage.valueData.values.BooleanValue;
+import ql.astnodes.LineNumber;
+import ql.astnodes.visitors.TypeVisitor;
+import ql.gui.formenvironment.values.BooleanValue;
 
 public class BooleanType extends Type {
 
@@ -25,7 +25,7 @@ public class BooleanType extends Type {
     }
 
     @Override
-    public BooleanValue getDefaultState() {
+    public BooleanValue getDefaultValue() {
         return new BooleanValue(false);
     }
 

@@ -2,22 +2,22 @@
  * TypeChecker.java.
  */
 
-package QL.semanticChecker;
+package ql.semanticchecker;
 
-import QL.ASTnodes.Form;
-import QL.ASTnodes.expressions.binaries.equality.*;
-import QL.ASTnodes.expressions.binaries.logic.*;
-import QL.ASTnodes.expressions.binaries.numerical.*;
-import QL.ASTnodes.expressions.literals.*;
-import QL.ASTnodes.expressions.unaries.*;
-import QL.ASTnodes.statements.*;
-import QL.ASTnodes.types.*;
-import QL.ASTnodes.visitors.ExpressionVisitor;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
-import QL.semanticChecker.messageHandling.MessageData;
-import QL.semanticChecker.messageHandling.errors.CyclicDependencyError;
-import QL.semanticChecker.messageHandling.errors.InvalidTypeError;
-import QL.semanticChecker.messageHandling.errors.UndefinedQuestionError;
+import ql.astnodes.Form;
+import ql.astnodes.expressions.binaries.equality.*;
+import ql.astnodes.expressions.binaries.logic.*;
+import ql.astnodes.expressions.binaries.numerical.*;
+import ql.astnodes.expressions.literals.*;
+import ql.astnodes.expressions.unaries.*;
+import ql.astnodes.statements.*;
+import ql.astnodes.types.*;
+import ql.astnodes.visitors.ExpressionVisitor;
+import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.semanticchecker.messagehandling.MessageData;
+import ql.semanticchecker.messagehandling.errors.CyclicDependencyError;
+import ql.semanticchecker.messagehandling.errors.InvalidTypeError;
+import ql.semanticchecker.messagehandling.errors.UndefinedQuestionError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     @Override
-    public Type visit(Parenthesis expression) {
+    public Type visit(Parentheses expression) {
         Type type = expression.getExpression().accept(this);
         return expression.checkType(type);
     }

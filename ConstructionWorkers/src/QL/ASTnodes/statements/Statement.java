@@ -2,11 +2,11 @@
  * Statement.java.
  */
 
-package QL.ASTnodes.statements;
+package ql.astnodes.statements;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.Node;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.Node;
+import ql.astnodes.visitors.FormAndStatementVisitor;
 
 public abstract class Statement extends Node {
 

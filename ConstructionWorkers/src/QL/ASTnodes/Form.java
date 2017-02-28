@@ -2,11 +2,11 @@
  * Form.java.
  */
 
-package QL.ASTnodes;
+package ql.astnodes;
 
-import QL.ASTnodes.expressions.literals.Identifier;
-import QL.ASTnodes.statements.Statement;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
+import ql.astnodes.expressions.literals.Identifier;
+import ql.astnodes.statements.Statement;
+import ql.astnodes.visitors.FormAndStatementVisitor;
 
 import java.util.List;
 

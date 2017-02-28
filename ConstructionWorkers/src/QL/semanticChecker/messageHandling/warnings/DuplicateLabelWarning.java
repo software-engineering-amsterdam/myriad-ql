@@ -2,12 +2,12 @@
  * DuplicateLabelWarning.java.
  */
 
-package QL.semanticChecker.messageHandling.warnings;
+package ql.semanticchecker.messagehandling.warnings;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.expressions.literals.Identifier;
+import ql.astnodes.LineNumber;
+import ql.astnodes.expressions.literals.Identifier;
 
-public class DuplicateLabelWarning extends WarningHandler {
+public class DuplicateLabelWarning extends Warning {
 
     private final Identifier identifier;
     private final String label;

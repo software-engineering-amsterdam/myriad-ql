@@ -2,12 +2,12 @@
  * InvalidTypeError.java.
  */
 
-package QL.semanticChecker.messageHandling.errors;
+package ql.semanticchecker.messagehandling.errors;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.Type;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.Type;
 
-public class InvalidTypeError extends ErrorHandler {
+public class InvalidTypeError extends Error {
 
     private final Type validType;
 

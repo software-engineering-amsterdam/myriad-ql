@@ -2,12 +2,12 @@
  * Type.java.
  */
 
-package QL.ASTnodes.types;
+package ql.astnodes.types;
 
-import QL.ASTnodes.Node;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.visitors.TypeVisitor;
-import QL.semanticChecker.formDataStorage.valueData.values.Value;
+import ql.astnodes.Node;
+import ql.astnodes.LineNumber;
+import ql.astnodes.visitors.TypeVisitor;
+import ql.gui.formenvironment.values.Value;
 
 public abstract class Type extends Node {
 
@@ -19,7 +19,7 @@ public abstract class Type extends Node {
         super(location);
     }
 
-    public abstract Value getDefaultState();
+    public abstract Value getDefaultValue();
 
     public String toString() {
         return "Type";

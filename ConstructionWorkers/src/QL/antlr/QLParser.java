@@ -1,5 +1,5 @@
 // Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
-package QL.antlr;
+package ql.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -70,7 +70,7 @@ public class QLParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "QL/QL.g4"; }
+	public String getGrammarFileName() { return "ql/QL.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

@@ -2,10 +2,10 @@
  * Identifier.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.LineNumber;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class Identifier extends Literal {
 

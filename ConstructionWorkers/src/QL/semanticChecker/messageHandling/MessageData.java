@@ -2,37 +2,37 @@
  * MessageData.java.
  */
 
-package QL.semanticChecker.messageHandling;
+package ql.semanticchecker.messagehandling;
 
-import QL.semanticChecker.messageHandling.errors.ErrorHandler;
-import QL.semanticChecker.messageHandling.warnings.WarningHandler;
+import ql.semanticchecker.messagehandling.errors.Error;
+import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageData {
 
-    private List<WarningHandler> warnings;
-    private List<ErrorHandler> errors;
+    private List<Warning> warnings;
+    private List<Error> errors;
 
     public MessageData() {
         warnings = new ArrayList<>();
         errors = new ArrayList<>();
     }
 
-    public void addWarning(WarningHandler warning) {
+    public void addWarning(Warning warning) {
         warnings.add(warning);
     }
 
-    public void addError(ErrorHandler error) {
+    public void addError(Error error) {
         errors.add(error);
     }
 
-    public List<WarningHandler> getWarnings() {
+    public List<Warning> getWarnings() {
         return warnings;
     }
 
-    public List<ErrorHandler> getErrors() {
+    public List<Error> getErrors() {
         return errors;
     }
 }

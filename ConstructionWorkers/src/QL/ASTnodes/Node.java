@@ -2,7 +2,7 @@
  * Node.java.
  */
 
-package QL.ASTnodes;
+package ql.astnodes;
 
 public abstract class Node {
 

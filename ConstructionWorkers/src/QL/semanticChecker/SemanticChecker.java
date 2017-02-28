@@ -4,12 +4,12 @@
  * TODO: Refactor!
  */
 
-package QL.semanticChecker;
+package ql.semanticchecker;
 
-import QL.ASTnodes.Form;
-import QL.ASTnodes.types.Type;
-import QL.semanticChecker.formDataStorage.valueData.ValueData;
-import QL.semanticChecker.messageHandling.MessageData;
+import ql.astnodes.Form;
+import ql.astnodes.types.Type;
+import ql.gui.formenvironment.ValueData;
+import ql.semanticchecker.messagehandling.MessageData;
 
 import java.util.HashMap;
 import java.util.Map;

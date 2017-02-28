@@ -2,14 +2,14 @@
  * IfStatement.java.
  */
 
-package QL.ASTnodes.statements;
+package ql.astnodes.statements;
 
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.BooleanType;
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.types.UndefinedType;
-import QL.ASTnodes.visitors.FormAndStatementVisitor;
-import QL.ASTnodes.expressions.Expression;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.BooleanType;
+import ql.astnodes.types.Type;
+import ql.astnodes.types.UndefinedType;
+import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.astnodes.expressions.Expression;
 
 import java.util.List;
 

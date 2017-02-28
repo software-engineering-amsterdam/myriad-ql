@@ -2,12 +2,12 @@
  * MyInteger.java.
  */
 
-package QL.ASTnodes.expressions.literals;
+package ql.astnodes.expressions.literals;
 
-import QL.ASTnodes.types.Type;
-import QL.ASTnodes.LineNumber;
-import QL.ASTnodes.types.IntegerType;
-import QL.ASTnodes.visitors.ExpressionVisitor;
+import ql.astnodes.types.Type;
+import ql.astnodes.LineNumber;
+import ql.astnodes.types.IntegerType;
+import ql.astnodes.visitors.ExpressionVisitor;
 
 public class MyInteger extends Literal {
 
