@@ -58,20 +58,108 @@ class TestTypeChecker(TestCase):
         """
         type_checker_result = self.apply_type_checking(input_string)
 
-    def test_typecheck_success_cases(self):
+    def test_typecheck_success_subtraction(self):
         input_string = """
         form taxOfficeExample {
-            "q1" v1: boolean = (4 - 2)
-            "q2" v2: boolean = (4 + 2)
-            "q3" v3: boolean = (4 * 2)
-            "q4" v4: boolean = (4 / 2)
+            "q1" v1: integer = (4 - 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_addition(self):
+        input_string = """
+        form taxOfficeExample {
+            "q2" v2: integer = (4 + 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_multiplication(self):
+        input_string = """
+        form taxOfficeExample {
+            "q3" v3: integer = (4 * 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_division(self):
+        input_string = """
+        form taxOfficeExample {
+            "q4" v4: integer = (4 / 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_gt(self):
+        input_string = """
+        form taxOfficeExample {
             "q5" v5: boolean = (4 > 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_gte(self):
+        input_string = """
+        form taxOfficeExample {
             "q6" v6: boolean = (4 >= 2)
-            "q7" v7: boolean = (4 > 2)
-            "q8" v8: boolean = (4 >= 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_lt(self):
+        input_string = """
+        form taxOfficeExample {
+            "q7" v7: boolean = (4 < 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_lte(self):
+        input_string = """
+        form taxOfficeExample {
+            "q8" v8: boolean = (4 <= 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_eq(self):
+        input_string = """
+        form taxOfficeExample {
             "q9" v9: boolean = (4 == 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_neq(self):
+        input_string = """
+        form taxOfficeExample {
             "q10" v10: boolean = (4 != 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_and(self):
+        input_string = """
+        form taxOfficeExample {
             "q11" v11: boolean = (true && false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertFalse(type_checker_result, "Errors: %s".format(type_checker_result))
+
+    def test_typecheck_success_or(self):
+        input_string = """
+        form taxOfficeExample {
             "q12" v12: boolean = (true || false)
         }
         """
