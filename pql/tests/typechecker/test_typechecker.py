@@ -61,10 +61,10 @@ class TestTypeChecker(TestCase):
     def test_typecheck_success_cases(self):
         input_string = """
         form taxOfficeExample {
-            "q1" v1: boolean = (4 - 2)
-            "q2" v2: boolean = (4 + 2)
-            "q3" v3: boolean = (4 * 2)
-            "q4" v4: boolean = (4 / 2)
+            "q1" v1: integer = (4 - 2)
+            "q2" v2: integer = (4 + 2)
+            "q3" v3: integer = (4 * 2)
+            "q4" v4: integer = (4 / 2)
             "q5" v5: boolean = (4 > 2)
             "q6" v6: boolean = (4 >= 2)
             "q7" v7: boolean = (4 > 2)
