@@ -64,29 +64,16 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
         return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
     }
 
-    public Value<?> divide(IntegerValue that) {
-        if (this.getValue() == 0 || that.getValue() == 0) {
-            return new UndefinedValue(new QLIntegerType(), "Division with zero");
-        }
+    public IntegerValue divide(IntegerValue that) {
         return new IntegerValue(new QLIntegerType(), this.getValue() / that.getValue());
     }
 
-    @Override
-    public Value<?> divide(DecimalValue that) {
-        if (this.getValue() == 0 || that.getValue() == 0) {
-            return new UndefinedValue(new QLDecimalType(), "Division with zero");
-        }
+    public DecimalValue divide(DecimalValue that) {
         return new DecimalValue(new QLDecimalType(), this.getValue() / that.getValue());
     }
 
-    @Override
-    public NumericValue<?> divide(MoneyValue that) {
-        return null;
-    }
-
-    @Override
-    public NumericValue<?> divide(NumericValue<?> that) {
-        return null;
+    public MoneyValue divide(MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() / that.getValue());
     }
 
     @Override

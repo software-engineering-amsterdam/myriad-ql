@@ -9,6 +9,7 @@ import org.lemonade.nodes.types.QLType;
 /**
  *
  */
+
 public abstract class NumericValue<T> extends Value<T> {
 
     public NumericValue(QLType type, T value) {
@@ -20,9 +21,17 @@ public abstract class NumericValue<T> extends Value<T> {
     public abstract NumericValue<?> plus(MoneyValue that);
     public abstract NumericValue<?> plus(NumericValue<?> that);
 
+    public abstract NumericValue<?> minus(IntegerValue that);
+    public abstract NumericValue<?> minus(DecimalValue that);
+    public abstract NumericValue<?> minus(MoneyValue that);
+
     public abstract NumericValue<?> product(IntegerValue that);
     public abstract NumericValue<?> product(DecimalValue that);
     public abstract NumericValue<?> product(MoneyValue that);
+
+    public abstract NumericValue<?> divide(IntegerValue that);
+    public abstract NumericValue<?> divide(DecimalValue that);
+    public abstract NumericValue<?> divide(MoneyValue that);
 
     public NumericValue<?> product(final NumericValue<?> that) {
         if (that.getType().isOf(QLIntegerType.class)) {
@@ -36,10 +45,6 @@ public abstract class NumericValue<T> extends Value<T> {
         }
     }
 
-    public abstract NumericValue<?> minus(IntegerValue that);
-    public abstract NumericValue<?> minus(DecimalValue that);
-    public abstract NumericValue<?> minus(MoneyValue that);
-
     public NumericValue<?> minus(final NumericValue<?> that) {
         if (that.getType().isOf(QLIntegerType.class)) {
             return this.minus((IntegerValue) that);
@@ -47,13 +52,22 @@ public abstract class NumericValue<T> extends Value<T> {
             return this.minus((DecimalValue) that);
         } else if (that.getType().isOf(QLMoneyType.class)) {
             return this.minus((MoneyValue) that);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException();
         }
     }
 
-    public abstract Value<?> divide(IntegerValue that);
-    public abstract Value<?> divide(DecimalValue that);
-    public abstract Value<?> divide(MoneyValue that);
-    public abstract Value<?> divide(NumericValue<?> that);
+    public NumericValue<?> divide(final NumericValue<?> that) {
+        if (that.getType().isOf(QLIntegerType.class)) {
+            return this.divide((IntegerValue) that);
+        } else if (that.getType().isOf(QLDecimalType.class)) {
+            return this.divide((DecimalValue) that);
+        } else if (that.getType().isOf(QLMoneyType.class)) {
+            return this.divide((MoneyValue) that);
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 }
