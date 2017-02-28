@@ -1,5 +1,6 @@
 package ql;
 
+import javafx.scene.Scene;
 import ql.ast.Expr;
 import ql.ast.expressions.binop.Add;
 import ql.ast.expressions.binop.Div;
@@ -17,6 +18,8 @@ import ql.ast.visistor.*;
 import ql.ast.visistor.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
+import ql.view.FormGenerator;
+import ql.view.GUIViewer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -53,6 +56,10 @@ public class Main {
 
             env.setVariableValue("hasBoughtHouse", new IntValue(6));
             System.out.println("Value of expr: " + env.getVariableValue("test"));
+
+            FormGenerator formGenerator = new FormGenerator(env);
+            Scene scene = new Scene(formGenerator.addForm("Form"));
+            GUIViewer guiViewer = new GUIViewer(scene);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

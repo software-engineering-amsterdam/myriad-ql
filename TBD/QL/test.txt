@@ -13,7 +13,7 @@ form taxOfficeExample {
       privateDebt: int
     "Value residue:"
       valueResidue: int =
-            (sellingPrice - hasMaintLoan)
+            (sellingPrice - hasBoughtHouse)
      "Private debts for the sold house:"
        test: int =
                 (5 + hasBoughtHouse)
