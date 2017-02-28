@@ -13,126 +13,67 @@ form returns [Form result]
 
 // TODO combine question and statement
 block returns [Block result]
- @init {
-     $result = new Block(); // TODO create list first and add to block later 
- }
- : '{' (question { $result.addQuestion($question.result); }
-            | statement { $result.addStatement($statement.result); })*
-   '}'
+ : '{' blockItems { $result = new Block($blockItems.result); } '}'
  ;
 
 // TODO decide on maximum characters on one line
-question returns [Question result]
- : ID ':' STRING type { $result = new Question($ID.text, $STRING.text, $type.result, $type.start.getLine()); }
- | ID ':' STRING type computed_question { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $computed_question.result.evaluate(), $type.start.getLine());}
+blockItems returns [List<BlockItem> result]
+@ init {
+	List<BlockItem> result = new ArrayList<BlockItem>();
+}
+ : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $type.start.getLine()); }
+ |   ID ':' STRING type expr { $result = new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result);}
+ |   'if' '(' expr ')' block ('else' block)? { $result.add(new Statement($expr.result, $block.result)); } // TODO add else
+   )*
  ;
 
 type returns [Type result]
  : 'boolean' { $result = new BooleanType(); }
- | 'date' 	{ $result = new DateType(); }
+ | 'date' 	 { $result = new DateType(); }
  | 'decimal' { $result = new DecimalType(); }
  | 'integer' { $result = new IntegerType(); }
  | 'money'   { $result = new MoneyType(); }
  | 'string'  { $result = new StringType(); }
  ;
 
-// TODO move to expression
-computed_question returns [Expression result]
- : parenthesisExpr { $result = $parenthesisExpr.result; }
- ;
-
-// TODO change IF to 'if' 
-// remove else if
-statement returns [Statement result]
- : IF parenthesisExpr  block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO else does not work
- ;
-
-parenthesisExpr returns [Expression result]
- : '(' expr ')' { $result = $expr.result; }
- | ('(' atom ')' | atom ) { $result = $atom.result; }
- | ('(' ID ')' | ID ) { $result = new IdExpression($ID.text); }
- ;
-
-//expr2 returns [Expression result]
-// : lhs = parenthesisExpr op=('/' | '*') rhs = parenthesisExpr
-//    {
-//      if ($op.text.equals("/")) {
-//        $result = new DivExpression($lhs.result, $rhs.result);
-//      }
-//      if ($op.text.equals("*")) {
-//        $result = new MulExpression($lhs.result, $rhs.result);
-//      }
-//    }
-//
-// ;
-
-expr returns [Expression result]
- : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
- | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result); }
- // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
- // | atom { $result = $atom.result; }
- ;
-
 // TODO implement precedence
-binOp returns [BinaryExpression result]
- : '/'  { $result = new DivExpression(); }
- | '*'  { $result = new MulExpression(); }
- | '+'  { $result = new AddExpression(); }
- | '-'  { $result = new SubExpression(); }
- | '==' { $result = new EqExpression(); }
- | '!=' { $result = new NEqExpression(); }
- | '<=' { $result = new LEqExpression(); }
- | '>=' { $result = new GEqExpression(); }
- | '>'  { $result = new GExpression(); }
- | '<'  { $result = new LExpression(); }
- | '&&' { $result = new AndExpression(); }
- | '||' { $result = new OrExpression(); }
+expr returns [Expression result]
+ : '(' expr ')' { $result = $expr.result; }
+ | lhs = expr '/'  rhs = expr { $result = new DivExpression($lhs.result, $rhs.result); }
+ | lhs = expr '*'  rhs = expr { $result = new MulExpression($lhs.result, $rhs.result); }
+ | lhs = expr '+'  rhs = expr { $result = new AddExpression($lhs.result, $rhs.result); }
+ | lhs = expr '-'  rhs = expr { $result = new SubExpression($lhs.result, $rhs.result); }
+ | lhs = expr '==' rhs = expr { $result = new EqExpression($lhs.result, $rhs.result); }
+ | lhs = expr '!=' rhs = expr { $result = new NEqExpression($lhs.result, $rhs.result); }
+ | lhs = expr '<=' rhs = expr { $result = new LEqExpression($lhs.result, $rhs.result); }
+ | lhs = expr '>=' rhs = expr { $result = new GEqExpression($lhs.result, $rhs.result); }
+ | lhs = expr '>'  rhs = expr { $result = new GExpression($lhs.result, $rhs.result); }
+ | lhs = expr '<'  rhs = expr { $result = new LExpression($lhs.result, $rhs.result); }
+ | lhs = expr '&&' rhs = expr { $result = new AndExpression($lhs.result, $rhs.result); }
+ | lhs = expr '||' rhs = expr { $result = new OrExpression($lhs.result, $rhs.result); } 
+ | '!' expr { $result = new NotExpression($expr.result); }
+ | '+' expr { $result = new PlusExpression($expr.result); }
+ | '-' expr { $result = new MinusExpression($expr.result); } 
+ | atom { $result = $atom.result; }
+ | ID  { $result = new IdExpression($ID.text); }
  ;
-
-unaryOp returns [UnaryExpression result]
-  : '!' { $result = new NotExpression(); }
-  | '+' { $result = new PlusExpression(); }
-  | '-' { $result = new MinusExpression(); }
-  ;
 
 atom returns [Atom result]
-:
-// :  DECIMAL { System.out.println($DECIMAL.text);
-//                      	  $result = new DecimalAtom(Float.valueOf($DECIMAL.text)); }
-//  | MONEY { System.out.println($MONEY.text);
-//           	  $result = new MoneyAtom(Float.valueOf($MONEY.text)); }
- | INT
- 	{ System.out.println($INT.text); 
- 	  $result = new IntegerAtom(Integer.parseInt($INT.text)); }
- | STRING { System.out.println($STRING.text);
-    $result = new StringAtom($STRING.text);
-            }
- | BOOL { System.out.println($BOOL.text);
-           $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
-// | DDMMYY { System.out.println($DDMMYY.text);
-//            $result = new DateAtom($DDMMYY.text); }
-
+ : INT    { $result = new IntegerAtom(Integer.parseInt($INT.text)); }
+ | STRING { $result = new StringAtom($STRING.text); }
+ | BOOL   { $result = new BoolAtom(Boolean.valueOf($BOOL.text)); }
  ;
 
-// TODO look up conventions tokens/names capital letters
 BOOL: 'true' | 'false';
-IF : 'if';
-ELSE : 'else';
 
 ID : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 INT : ('0'..'9')+;
 
-TWO_DIGIT : ('0'..'9')('0'..'9');
-
 DECIMAL : INT '.' INT | '.' INT;
-MONEY : INT '.' TWO_DIGIT;
-
-DDMMYY : TWO_DIGIT '.' TWO_DIGIT '.' TWO_DIGIT TWO_DIGIT; // TODO check valid date
 
 STRING : '"' .*? '"';
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+WS : [ \t\r\n]+ -> skip;
 
-// http://stackoverflow.com/questions/14778570/antlr-4-channel-hidden-and-options
 COMMENT : ( '//' ~[\r\n]* '\r'? '\n' | '/*' .*? '*/') -> skip;

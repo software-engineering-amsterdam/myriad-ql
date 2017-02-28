@@ -4,7 +4,6 @@ package semantic;
 import ast.Visitor;
 import ast.atom.Atom;
 import ast.expression.BinaryExpression;
-import ast.expression.Expression;
 import ast.expression.IdExpression;
 import ast.expression.UnaryExpression;
 

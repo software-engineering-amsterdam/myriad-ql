@@ -2,8 +2,8 @@ package ast.type;
 
 public class DecimalType extends Type {
 
-	public DecimalType() {
-		super("decimal");
+	public DecimalType(int line) {
+		super("decimal", line);
 	}
 		
 	@Override

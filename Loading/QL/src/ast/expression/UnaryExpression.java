@@ -6,6 +6,10 @@ public abstract class UnaryExpression extends Expression {
 
     private Expression lhs; // TODO rename?
     
+    public UnaryExpression(int line) {
+    	super(line);
+    }
+    
     // TODO not pretty to return a unary expression
     public UnaryExpression setElements(Expression lhs) {
         this.lhs = lhs;

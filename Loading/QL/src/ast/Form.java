@@ -15,9 +15,9 @@ public class Form extends Node {
 	
 	// TODO move line to Node
 	public Form(String id, Block block, int line) {
+		super(line);
 		this.id = id;
 		this.block = block;
-		this.setLine(line);
 	}
 
 	@Override

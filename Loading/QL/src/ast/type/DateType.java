@@ -2,8 +2,8 @@ package ast.type;
 
 public class DateType extends Type {
 	
-	public DateType() {
-		super("date");
+	public DateType(int line) {
+		super("date", line);
 	}
 	
 	@Override

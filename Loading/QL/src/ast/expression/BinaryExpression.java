@@ -10,7 +10,8 @@ public abstract class BinaryExpression extends Expression {
 	// protected boolean eval;
 	
 	// TODO is this preferred over a constructor with lhs and rhs?
-	public BinaryExpression() {
+	public BinaryExpression(int line) {
+		super(line);
 	}
 	
 	public BinaryExpression setElements(Expression lhs, Expression rhs) {
