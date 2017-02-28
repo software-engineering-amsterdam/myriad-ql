@@ -2,13 +2,12 @@ package test.org.uva.taxfree.ast;
 
 import org.testng.annotations.Test;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.condition.ConditionNode;
-import org.uva.taxfree.model.node.condition.IfStatementNode;
+import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.expression.BooleanExpressionNode;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class AstExpressionTest {

@@ -2,18 +2,17 @@ package org.uva.taxfree.ast;
 
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.environment.Symbol;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.FormNode;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.condition.ConditionNode;
-import org.uva.taxfree.model.node.condition.IfElseStatementNode;
-import org.uva.taxfree.model.node.condition.IfStatementNode;
-import org.uva.taxfree.model.node.expression.BooleanExpressionNode;
-import org.uva.taxfree.model.node.expression.CalculationExpressionNode;
-import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
-import org.uva.taxfree.model.node.expression.UniformExpressionNode;
-import org.uva.taxfree.model.node.literal.*;
+import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.blocks.FormNode;
+import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
+import org.uva.taxfree.model.node.blocks.IfStatementNode;
+import org.uva.taxfree.model.node.expression.*;
+import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
+import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
+import org.uva.taxfree.model.node.literal.StringLiteralNode;
+import org.uva.taxfree.model.node.literal.VariableLiteralNode;
 import org.uva.taxfree.model.node.statement.*;
 
 import java.util.ArrayList;
