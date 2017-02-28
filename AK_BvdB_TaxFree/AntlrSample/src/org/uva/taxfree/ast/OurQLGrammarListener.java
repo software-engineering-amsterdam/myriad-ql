@@ -38,7 +38,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     private ConditionNode popCachedCondition() {
-        return mCachedConditions.remove(mCachedConditions.size());
+        return mCachedConditions.remove(mCachedConditions.size()-1);
     }
 
     private void cacheCondition(ConditionNode conditionNode) {
@@ -158,7 +158,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         // Retrieve the if statement, which is the first child.
         // Then remove it, remaining childs are the childs in the ELSE block.
         // Childs in the IF block are contained in the ifStatement node already, which is a member of the IfElseStatementNode
-        BlockNode ifStatementNode = mCachedIfStatementNodes.remove(mCachedIfStatementNodes.size());
+        BlockNode ifStatementNode = mCachedIfStatementNodes.remove(mCachedIfStatementNodes.size()-1);
         mCachedChildren.remove(0); // Remove the ifStatementNode from the children
         BlockNode ifElseStatementNode = new IfElseStatementNode(ifStatementNode, new LinkedHashSet<>(mCachedChildren));
         mCachedChildren.clear();
