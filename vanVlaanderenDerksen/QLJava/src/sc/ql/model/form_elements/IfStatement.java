@@ -21,13 +21,9 @@ public class IfStatement implements FormElement {
 	public List<FormElement> getFormElements() {
 		return this.form_elements;
 	}
-	
-	public Type getElementType() {
-		return Type.IF_STATEMENT;
-	}
 
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) {
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
 		return visitor.visit(this);
 	}
 }

@@ -5,28 +5,39 @@ import java.util.HashMap;
 import java.util.List;
 
 import sc.ql.model.form_elements.*;
-import sc.ql.model.Atom;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
-import sc.ql.model.expressions.Expression;
+import sc.ql.model.Atoms.AtomId;
 
 public class CheckForm {
 	public CheckForm(Form form) throws Exception {
 		List<FormElement> form_elements = form.getFormElements();
-		List<Question> questions = new ArrayList<Question>();
-		List<Expression> conditions = new ArrayList<Expression>();
-		
-		for (FormElement form_element : form_elements) {
-			questions.addAll(form_element.accept(new GetFormQuestions()));
-			conditions.addAll(form_element.accept(new GetFormConditions()));
-        }
-		
+		List<Question> questions = createQuestionsList(form_elements);
+				
 		checkQuestions(questions);
-		checkConditions(conditions);
+		
+		try {
+			CheckConditions condition_visitor = new CheckConditions(createIdTypeHashmap(questions));
+			for (FormElement form_element : form_elements) {
+				form_element.accept(condition_visitor);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private HashMap<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
+		HashMap<String, Question.Type> identifier_types = new HashMap<String, Question.Type>();
+		
+		for (Question question : questions) {
+			identifier_types.put(question.getId().getValue(), question.getType());
+		}
+		
+		return identifier_types;
 	}
 	
 	private void checkQuestions(List<Question> questions) throws Exception {
-		HashMap<String, Question> identifier_hm = new HashMap<String, Question>();
+		HashMap<AtomId, Question> identifier_hm = new HashMap<AtomId, Question>();
 		HashMap<String, Question> question_hm = new HashMap<String, Question>();
 		
 		for (Question question : questions) {
@@ -35,7 +46,7 @@ public class CheckForm {
 			}
 			
 			// Check for duplicate identifiers
-			String identifier = question.getId().getValue();
+			AtomId identifier = question.getId();
 			if (identifier_hm.containsKey(identifier)) {
 				throw new Exception("Question '"+question.getId().getValue()+"' already declared at line: "+identifier_hm.get(identifier).getLineNumber());
 			}
@@ -56,14 +67,18 @@ public class CheckForm {
 		}
 	}
 	
-	private void checkConditions(List<Expression> conditions) throws Exception {
-		for (Expression condition : conditions) {
-			if (condition instanceof Atom<?>) {
-				condition = (Atom<?>) condition;
-				System.out.println(((Atom<?>) condition).getType());
+	private List<Question> createQuestionsList(List<FormElement> form_elements) {
+		List<Question> questions = new ArrayList<Question>();
+		
+		for (FormElement form_element : form_elements) {
+			try {
+				questions.addAll(form_element.accept(new GetFormQuestions()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			System.out.println(condition);
-		}
+        }
+
+		return questions;
 	}
 }
