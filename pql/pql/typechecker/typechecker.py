@@ -11,15 +11,15 @@ class TypeChecker(Visitor):
 
     def visit(self, pql_ast):
         print("visit")
-        return [form.apply(self) for form in pql_ast]
+        [form.apply(self) for form in pql_ast]
 
     def form(self, node):
         print("form")
-        return [statement.apply(self) for statement in node.children]
+        [statement.apply(self) for statement in node.children]
 
     def field(self, node):
         print("field")
-        return [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
+        [arithmetic_statement.apply(self) for arithmetic_statement in node.children]
 
     def expression(self, node):
         print("expression")
@@ -67,7 +67,6 @@ class TypeChecker(Visitor):
     def arithmetic_type_detection(self, node):
         allowed_types = {DataTypes.integer, DataTypes.money}
         dominant_type = None
-        errors = []
         type_left = node.lhs.apply(self)
         type_right = node.rhs.apply(self)
         type_set = {type_left, type_right}
@@ -78,17 +77,16 @@ class TypeChecker(Visitor):
             else:
                 dominant_type = DataTypes.integer
         else:
-            errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
+            self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
             type_set, allowed_types))
 
-        return (dominant_type, errors)
+        return dominant_type
 
     def boolean_type_detection(self, node, aat={DataTypes.integer, DataTypes.money}, abt={DataTypes.boolean}):
         allowed_arithmetic_types = aat
         allowed_boolean_types = abt
         allowed_types = allowed_arithmetic_types.union(allowed_boolean_types)
         dominant_type = None
-        errors = []
         type_left = node.lhs.apply(self)
         type_right = node.rhs.apply(self)
         type_set = {type_left, type_right}
@@ -99,10 +97,10 @@ class TypeChecker(Visitor):
             elif type_set.issubset(allowed_boolean_types):
                 dominant_type = DataTypes.boolean
         else:
-            errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
+            self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
                 type_set, allowed_types))
 
-        return (dominant_type, errors)
+        return dominant_type
 
     def identifier(self, node):
         return self.identifier_dict[node.name]
