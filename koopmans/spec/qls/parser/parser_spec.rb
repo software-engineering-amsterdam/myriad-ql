@@ -5,8 +5,8 @@ require 'require_all'
 require_all 'lib'
 module QLS
   module Parser
-    describe QLSParser do
-      let(:parser) { QLSParser.new }
+    describe Parser do
+      let(:parser) { Parser.new }
 
       describe 'question' do
         it 'parses' do

@@ -1,3 +1,5 @@
+require 'parslet'
+
 module QLS
   module Parser
     class Transformer < Parslet::Transform
@@ -14,7 +16,7 @@ module QLS
       # question
       rule(question: {variable: simple(:name), properties: subtree(:properties)}) { Question.new(QL::AST::Variable.new(name), properties) }
 
-      # default
+      # default type properties
       rule(default: {type: 'boolean', properties: subtree(:properties)}) { Default.new(QL::AST::BooleanType, properties) }
       rule(default: {type: 'integer', properties: subtree(:properties)}) { Default.new(QL::AST::IntegerType, properties) }
       rule(default: {type: 'money', properties: subtree(:properties)}) { Default.new(QL::AST::MoneyType, properties) }
