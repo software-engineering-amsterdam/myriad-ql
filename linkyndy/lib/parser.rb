@@ -29,8 +29,8 @@ class Parser < Parslet::Parser
     #   [match['+-'], 1, :left]
     # ) |
     (literal | identifier).as(:left) >> operator >> expression.as(:right) |
-    identifier |
-    literal
+    literal |
+    identifier
   end
   rule(:block) { (if_statement | question).repeat.as(:block) }
 
