@@ -2,18 +2,16 @@ package sc.ql.model;
 
 import java.util.List;
 
-import sc.ql.model.expressions.Expression;
-
 public class ConditionalBlock implements Node {
-	private final Expression expression;
+	private final Node expression;
 	private final List<FormElement> form_elements;
 	
-	public ConditionalBlock(Expression expression, List<FormElement> form_elements) {
+	public ConditionalBlock(Node expression, List<FormElement> form_elements) {
 		this.expression = expression;
 		this.form_elements = form_elements;
 	}
 	
-	public Expression getExpression() {
+	public Node getExpression() {
 		return this.expression;
 	}
 	
@@ -22,7 +20,7 @@ public class ConditionalBlock implements Node {
 	}
 
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) {
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
 		return visitor.visit(this);
 	}
 }

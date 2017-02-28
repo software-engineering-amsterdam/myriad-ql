@@ -5,7 +5,7 @@ import org.uva.taxfree.gui.QuestionForm;
 import java.util.TimerTask;
 
 public class FormRenderer extends TimerTask {
-    private QuestionForm mForm;
+    private final QuestionForm mForm;
 
     public FormRenderer(QuestionForm form) {
         mForm = form;

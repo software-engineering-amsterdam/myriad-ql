@@ -33,12 +33,12 @@ public class Number extends Value implements ASTNode {
 
     @Override
     public Type getType() {
-        return Type.DEC;
+        return Type.DECIMAL;
     }
 
     @Override
     public boolean conformsToType(Type type) {
-        return type == Type.DEC || type == Type.INT;
+        return type == Type.DECIMAL || type == Type.INTEGER;
     }
 
     public double doubleValue() {

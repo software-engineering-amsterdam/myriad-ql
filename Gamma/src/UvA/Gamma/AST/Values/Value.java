@@ -7,7 +7,12 @@ import UvA.Gamma.AST.ASTNode;
  */
 public abstract class Value implements ASTNode {
     public enum Type {
-        INT, DEC, MONEY, STRING, DATE, BOOL, CONDITION
+        INTEGER, DECIMAL, MONEY, STRING, DATE, BOOL, CONDITION;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
     }
 
     public abstract Type getType(); // Force the subclass to publish it's type

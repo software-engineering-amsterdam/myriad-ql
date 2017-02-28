@@ -1,5 +1,6 @@
 package UvA.Gamma.Validation;
 
+import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Values.Value;
@@ -14,46 +15,45 @@ public class Validator {
         this.form = form;
     }
 
-    public void visit() throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
+    public void visit() {
         for (FormItem item : form.getFormItems()) {
-            visit(item);
-        }
-    }
-
-    private void visit(FormItem item) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
-        for (String id : item.getReferencedIds()) {
-            validateId(id);
-        }
-        validateRedeclaration(item);
-        validateType(item.getReferencedIds(), item.getType());
-    }
-
-    private void validateType(String[] ids, Value.Type type) throws IncompatibleTypesException {
-        for (String id : ids) {
-            for (FormItem item : form.getFormItems()) {
-                if (item.hasId(id)) {
-                    for (Value value : item.getValuesForIds()) {
-                        if (!value.conformsToType(type)) {
-                            throw new IncompatibleTypesException("The identifier " + id + " is of the type " + value.getType() +
-                                    ", which does not conform to the type " + type);
-                        }
-                    }
-                }
+            try {
+                item.accept(this);
+            } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
+                System.out.println(ex.getMessage());
             }
         }
     }
 
-    private void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
+    public void validateIdentifierType(String id, Value.Type type) throws IncompatibleTypesException {
+        for (FormItem item : form.getFormItems()) {
+            if (item.hasId(id) && !item.conformsToType(type)) {
+                throw new IncompatibleTypesException("The identifier " + id + " is of the type " + item.getType() +
+                        ", which does not conform to the type " + type);
+            }
+        }
+    }
+
+    public void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
         String id = formItem.getId();
         if (id == null) return; // Condition items do not have an identifier
         for (FormItem item : form.getFormItems()) {
-            if (item != formItem && item.hasId(id)) {
+            if (item.getId() != null && item != formItem && item.hasId(id)) {
                 throw new IdRedeclaredException("The id: " + id + " is redeclared");
             }
         }
     }
 
-    private void validateId(String id) throws IdNotFoundException {
+    public void validateCyclicDependency(Computed computed) throws CyclicDependencyException {
+        for (FormItem item : form.getFormItems()) {
+            if (computed.isDependentOn(item.getId()) && item.isDependentOn(computed.getId())) {
+                throw new CyclicDependencyException("There exists a cyclic dependency between the items " +
+                        computed.getId() + " and " + item.getId());
+            }
+        }
+    }
+
+    public void validateId(String id) throws IdNotFoundException {
         boolean isValid = false;
         for (FormItem item : form.getFormItems()) {
             isValid = isValid || item.hasId(id);

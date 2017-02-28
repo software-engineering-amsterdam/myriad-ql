@@ -8,8 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class QuestionForm {
-    private BlockNode mFormNode;
-    private JFrame mFrame;
+    private final BlockNode mFormNode;
 
     public QuestionForm(BlockNode formNode) {
         mFormNode = formNode;
@@ -24,13 +23,14 @@ public class QuestionForm {
         mFormNode.printDeclarations();
     }
 
-    private void generateForm() {
-        mFrame = new JFrame(mFormNode.toString());
-        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mFrame.add(createComponents());
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
-        mFrame.setVisible(true);
+    private JFrame generateForm() {
+        JFrame frame = new JFrame(mFormNode.toString());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(createComponents());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        return frame;
     }
 
     private JPanel createComponents() {
