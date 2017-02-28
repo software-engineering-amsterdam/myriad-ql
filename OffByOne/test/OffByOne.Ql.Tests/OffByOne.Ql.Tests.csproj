@@ -87,10 +87,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OffByOne.LanguageCore\OffByOne.LanguageCore.csproj">
-      <Project>{b3fd3dbf-5a24-4d04-89e2-890197bbe323}</Project>
-      <Name>OffByOne.LanguageCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\OffByOne.Ql\OffByOne.Ql.csproj">
       <Project>{2c16acf6-fcc1-4513-bc05-646e7dbbecaa}</Project>
       <Name>OffByOne.Ql</Name>

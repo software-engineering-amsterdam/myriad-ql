@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Visitors.Contracts;
 
     public interface IVisitableWidget : IVisitable
     {

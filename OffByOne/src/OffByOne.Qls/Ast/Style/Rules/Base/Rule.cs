@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Ast;
+    using OffByOne.Ql.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
     using OffByOne.Qls.Visitors.Contracts;

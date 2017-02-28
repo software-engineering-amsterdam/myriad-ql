@@ -75,10 +75,6 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OffByOne.LanguageCore\OffByOne.LanguageCore.csproj">
-      <Project>{b3fd3dbf-5a24-4d04-89e2-890197bbe323}</Project>
-      <Name>OffByOne.LanguageCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OffByOne.Qls\OffByOne.Qls.csproj">
       <Project>{ba5cbb6e-f479-45fa-a0c3-7662d56e3aa1}</Project>
       <Name>OffByOne.Qls</Name>

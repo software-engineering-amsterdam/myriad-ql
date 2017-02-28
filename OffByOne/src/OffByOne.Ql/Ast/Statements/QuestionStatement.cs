@@ -2,9 +2,8 @@
 {
     using MoreDotNet.Extensions.Common;
 
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
     using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class QuestionStatement : Statement

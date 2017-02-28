@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Visitors.Contracts;
 
     public class QuestionVisitorContext : IContext
     {

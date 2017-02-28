@@ -8,13 +8,11 @@
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
 
-    using OffByOne.LanguageCore;
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Ast.Expressions.Unary;
+    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Generated;

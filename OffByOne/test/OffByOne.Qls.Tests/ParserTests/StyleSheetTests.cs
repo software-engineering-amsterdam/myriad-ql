@@ -5,7 +5,6 @@
 
     using Antlr4.Runtime;
 
-    using OffByOne.LanguageCore.Ast;
     using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;

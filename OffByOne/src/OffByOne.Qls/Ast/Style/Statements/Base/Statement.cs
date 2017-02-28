@@ -1,12 +1,13 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Statements.Base
 {
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Visitors.Contracts;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Ql.Ast;
+    using OffByOne.Ql.Visitors.Contracts;
+
+    using IVisitableStatement = OffByOne.Qls.Visitors.Contracts.IVisitableStatement;
 
     public abstract class Statement : AstNode, IVisitableStatement
     {
-        public abstract TResult Accept<TResult, TContext>(IStatementVisitor<TResult, TContext> visitor, TContext context)
+        public abstract TResult Accept<TResult, TContext>(Visitors.Contracts.IStatementVisitor<TResult, TContext> visitor, TContext context)
             where TContext : IContext;
     }
 }

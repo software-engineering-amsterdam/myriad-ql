@@ -3,13 +3,7 @@
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;
 
-    using OffByOne.LanguageCore;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
-    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
-    using OffByOne.LanguageCore.Checker;
-    using OffByOne.LanguageCore.Checker.Messages;
-    using OffByOne.LanguageCore.Checker.Models;
-    using OffByOne.LanguageCore.Visitors;
+    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -17,7 +11,11 @@
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Ast.ValueTypes;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Messages;
+    using OffByOne.Ql.Checker.Models;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeVisitor

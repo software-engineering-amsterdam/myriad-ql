@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    using OffByOne.LanguageCore.Checker;
+    using OffByOne.Ql.Checker;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Visitors;
 

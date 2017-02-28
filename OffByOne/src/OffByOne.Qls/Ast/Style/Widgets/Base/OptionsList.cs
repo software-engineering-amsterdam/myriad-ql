@@ -3,8 +3,8 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Literals.Base;
+    using OffByOne.Ql.Ast;
+    using OffByOne.Ql.Ast.Literals.Base;
 
     public class OptionsList<T> : AstNode, IList<T>
         where T : Literal

@@ -2,9 +2,8 @@
 {
     using System;
 
-    using OffByOne.LanguageCore.Ast.ValueTypes;
-
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.ValueTypes;
 
     public class ControlFactory
     {

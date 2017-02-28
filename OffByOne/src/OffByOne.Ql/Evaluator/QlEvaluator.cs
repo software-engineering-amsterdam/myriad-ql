@@ -3,9 +3,9 @@
     using System.Windows;
     using System.Windows.Controls;
 
-    using OffByOne.LanguageCore.Visitors;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Evaluator.Controls.Questions;
+    using OffByOne.Ql.Visitors;
     using OffByOne.Ql.Visitors.Base;
 
     public class QlEvaluator : BaseQlVisitor<UIElement, VisitorContext>

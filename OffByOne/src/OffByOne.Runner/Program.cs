@@ -7,9 +7,6 @@
 
     using MoreDotNet.Extensions.Collections;
 
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
-    using OffByOne.LanguageCore.Visitors;
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
@@ -18,6 +15,7 @@
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
+    using OffByOne.Ql.Visitors;
     using OffByOne.Qls;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker;

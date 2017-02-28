@@ -3,8 +3,6 @@
     using System;
     using System.Linq;
 
-    using OffByOne.LanguageCore.Checker;
-    using OffByOne.LanguageCore.Visitors;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Visitors;
 

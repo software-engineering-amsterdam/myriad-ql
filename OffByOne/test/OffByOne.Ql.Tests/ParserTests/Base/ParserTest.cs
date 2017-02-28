@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Ql.Tests.ParserTests.Base
 {
     using Antlr4.Runtime;
-    using OffByOne.LanguageCore.Ast;
+
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Generated;
 

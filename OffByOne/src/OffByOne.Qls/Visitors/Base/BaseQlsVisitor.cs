@@ -2,9 +2,9 @@
 {
     using MoreDotNet.Extensions.Collections;
 
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Ast.Literals;
+    using OffByOne.Ql.Ast.ValueTypes;
+    using OffByOne.Ql.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
@@ -15,8 +15,7 @@
         : ILiteralVisitor<TResult, TContext>,
         IValueTypeVisitor<TResult, TContext>,
         IPropertyVisitor<TResult, TContext>,
-        IRuleVisitor<TResult, TContext>,
-        IStatementVisitor<TResult, TContext>,
+        IRuleVisitor<TResult, TContext>, Contracts.IStatementVisitor<TResult, TContext>,
         IWidigetVisitor<TResult, TContext>
         where TContext : IContext
     {

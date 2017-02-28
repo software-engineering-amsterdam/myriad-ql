@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Visitors
 {
-    using OffByOne.LanguageCore.Checker;
+    using OffByOne.Ql.Checker;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker.Messages;

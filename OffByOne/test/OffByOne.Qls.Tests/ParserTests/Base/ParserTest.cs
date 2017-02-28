@@ -2,7 +2,7 @@
 {
     using Antlr4.Runtime;
 
-    using OffByOne.LanguageCore.Ast;
+    using OffByOne.Ql.Ast;
 
     public abstract class ParserTest
     {

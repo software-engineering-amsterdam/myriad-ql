@@ -1,6 +1,5 @@
 ﻿namespace OffByOne.Ql.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
 

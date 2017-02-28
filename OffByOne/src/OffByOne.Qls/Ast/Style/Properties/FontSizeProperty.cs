@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Properties
 {
-    using OffByOne.LanguageCore.Ast.Literals;
+    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Visitors.Contracts;
 

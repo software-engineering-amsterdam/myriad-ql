@@ -1,12 +1,10 @@
 ﻿namespace OffByOne.Qls
 {
-    using System.Collections.Generic;
     using System.Linq;
 
-    using OffByOne.LanguageCore;
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Ast;
+    using OffByOne.Ql.Ast.Literals;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules;

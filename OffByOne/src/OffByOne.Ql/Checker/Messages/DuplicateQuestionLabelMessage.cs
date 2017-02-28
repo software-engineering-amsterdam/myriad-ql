@@ -1,8 +1,8 @@
 ﻿namespace OffByOne.Ql.Checker.Messages
 {
-    using OffByOne.LanguageCore.Checker.Messages.Base;
-    using OffByOne.LanguageCore.Checker.Models;
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Checker.Messages.Base;
+    using OffByOne.Ql.Checker.Models;
 
     public class DuplicateQuestionLabelMessage : CheckerMessage
     {

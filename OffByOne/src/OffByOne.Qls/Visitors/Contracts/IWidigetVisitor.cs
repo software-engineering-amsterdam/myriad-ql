@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Widgets;
 
     public interface IWidigetVisitor<out TResult, in TContext> : IVisitor

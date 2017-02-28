@@ -1,6 +1,5 @@
 ﻿namespace OffByOne.Ql.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;

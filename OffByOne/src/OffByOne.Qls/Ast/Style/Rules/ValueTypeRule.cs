@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
