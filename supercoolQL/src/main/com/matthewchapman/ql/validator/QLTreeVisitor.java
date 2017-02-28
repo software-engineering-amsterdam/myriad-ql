@@ -13,7 +13,7 @@ import com.matthewchapman.ql.ast.statement.Question;
 public class QLTreeVisitor implements QLVisitor<Void> {
 
     // to store all questions for testing
-    private QuestionStore questionStore = new QuestionStore();
+    private final QuestionStore questionStore = new QuestionStore();
 
     public QuestionStore getQuestionStore() {return this.questionStore;}
 

@@ -9,7 +9,7 @@ import com.matthewchapman.ql.validator.Visitable;
  */
 public class CalculatedValue extends Expression implements Visitable {
 
-    private ParameterGroup parameterGroup;
+    private final ParameterGroup parameterGroup;
 
     public CalculatedValue(ParameterGroup e)
     {

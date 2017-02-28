@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ParameterGroup extends Expression implements Visitable{
 
     //TODO implement ParameterGroup
-    private ArrayList<Expression> expressions;
+    private final ArrayList<Expression> expressions;
 
     public ParameterGroup()
     {

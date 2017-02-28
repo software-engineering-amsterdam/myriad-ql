@@ -6,5 +6,5 @@ package com.matthewchapman.ql.ast;
 public enum QLTypes {
     BOOLEAN,
     STRING,
-    INTEGER;
+    INTEGER
 }

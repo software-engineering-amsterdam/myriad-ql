@@ -6,7 +6,7 @@ package com.matthewchapman.ql.ast;
 public abstract class Type<T> extends TreeNode {
 
     //TODO type should not be a string!
-    private T value;
+    private final T value;
 
     public Type(T value)
     {
