@@ -90,7 +90,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type, MessageBag
 
     @Override
     public Type visit(Parameter node, MessageBag messages) {
-        if (!symbolTable.hasDeclared(node.getId())) {
+        if (!symbolTable.isDeclared(node.getId())) {
             messages.addError(new UndefinedIdentifierException(node.getId()));
             return new UnknownType();
         }

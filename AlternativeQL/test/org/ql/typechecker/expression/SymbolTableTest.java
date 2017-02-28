@@ -15,7 +15,7 @@ public class SymbolTableTest {
 
         symbolTable.declare(new Identifier("example"), new StringType());
 
-        assertTrue(symbolTable.hasDeclared(new Identifier("example")));
+        assertTrue(symbolTable.isDeclared(new Identifier("example")));
         assertSame(symbolTable.size(), 1);
     }
 
@@ -38,6 +38,6 @@ public class SymbolTableTest {
 
         symbolTable.declare(identifier, actualType);
 
-        assertTrue(symbolTable.hasDeclared(identifier));
+        assertTrue(symbolTable.isDeclared(identifier));
     }
 }

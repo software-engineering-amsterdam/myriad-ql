@@ -18,7 +18,7 @@ public class SymbolTable {
         return definitions.get(id.toString());
     }
 
-    public boolean hasDeclared(Identifier id) {
+    public boolean isDeclared(Identifier id) {
         return definitions.containsKey(id.toString());
     }
 

@@ -1,5 +1,3 @@
-- Make the symboltable more specific in terms of names. (declare, hasDeclared, lookupSymbol)
-
 - QuestioNCollector<T extends Node> can be just Node. No need for the generics.
 
 - StatementVisitor<LIst<Question>> = also no need to make it generic. It just gives back the questions. THe interface implies that there are multiple implementations of different sutff.

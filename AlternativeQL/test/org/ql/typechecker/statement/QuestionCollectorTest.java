@@ -11,7 +11,7 @@ import org.ql.ast.statement.StatementVisitor;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.IntegerType;
-import org.ql.collection.collector.QuestionVisitor;
+import org.ql.collection.QuestionCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
-public class QuestionVisitorTest {
+public class QuestionCollectorTest {
     @Test
     public void shouldAddSingleQuestionToAList() {
         Question expectedQuestion = new Question(
                 new Identifier("question"), new QuestionText("a simple text"), new BooleanType(), null);
 
-        StatementVisitor<List<Question>> visitor = new QuestionVisitor();
+        StatementVisitor<List<Question>> visitor = new QuestionCollector();
         List<Question> actualQuestionList = visitor.visit(expectedQuestion);
         Question actualQuestion = actualQuestionList.get(0);
 
@@ -46,7 +46,7 @@ public class QuestionVisitorTest {
         questions.add(secondQuestion);
 
         IfThen ifThen = new IfThen(mock(Expression.class), questions);
-        StatementVisitor<List<Question>> visitor = new QuestionVisitor();
+        StatementVisitor<List<Question>> visitor = new QuestionCollector();
 
         List<Question> actualQuestionList = visitor.visit(ifThen);
 
@@ -68,7 +68,7 @@ public class QuestionVisitorTest {
         elseQuestions.add(secondQuestion);
 
         IfThenElse ifThenElse = new IfThenElse(mock(Expression.class), thenQuestions, elseQuestions);
-        StatementVisitor<List<Question>> visitor = new QuestionVisitor();
+        StatementVisitor<List<Question>> visitor = new QuestionCollector();
 
         List<Question> actualQuestionList = visitor.visit(ifThenElse);
 

@@ -10,8 +10,7 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 import org.ql.collection.collector.FormQuestionCollector;
-import org.ql.collection.collector.QuestionCollector;
-import org.ql.collection.collector.QuestionVisitor;
+import org.ql.collection.QuestionCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class FormQuestionCollectorTest {
         thenStatements.add(thirdQuestion);
         statements.add(new IfThen(mock(Expression.class), thenStatements));
         Form form = new Form(mock(Identifier.class), statements);
-        QuestionCollector<Form> collector = new FormQuestionCollector(new QuestionVisitor());
+        org.ql.collection.collector.QuestionCollector collector = new FormQuestionCollector(new QuestionCollector());
 
         List<Question> actualQuestionList = collector.collect(form);
 

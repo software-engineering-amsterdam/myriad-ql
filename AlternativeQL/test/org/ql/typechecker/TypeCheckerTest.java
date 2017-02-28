@@ -8,7 +8,7 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
 import org.ql.collection.collector.FormQuestionCollector;
-import org.ql.collection.collector.QuestionVisitor;
+import org.ql.collection.QuestionCollector;
 import org.ql.typechecker.messages.MessageBag;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenFormNameEmpty() {
-        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().setName("").build());
 
@@ -31,7 +31,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldContainNoErrorsWhenQuestionAdded() {
-        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().build());
 
@@ -40,9 +40,9 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
-        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
         String questionLabel = "example";
-        String expectedError = "Question '" + questionLabel + "' hasDeclared duplicate(s)";
+        String expectedError = "Question '" + questionLabel + "' isDeclared duplicate(s)";
 
         MessageBag messages = typeChecker.checkForm(new FormBuilder()
                 .setName("exampleForm")
@@ -57,7 +57,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldCheckStatementsAndGiveErrors() {
-        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionVisitor()));
+        ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
         List<Statement> statements = new ArrayList<>();
 
         statements.add(new Question(new Identifier("test"), new QuestionText("example question?"), new BooleanType(), new IntegerLiteral(12)));

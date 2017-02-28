@@ -10,34 +10,27 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.Type;
+import org.ql.collection.QuestionCollector;
 import org.ql.collection.Questions;
-import org.ql.collection.collector.QuestionCollector;
 import org.ql.symbol_table.SymbolTable;
 import org.ql.typechecker.expression.ExpressionTypeChecker;
 import org.ql.typechecker.expression.TypeError;
 import org.ql.typechecker.expression.TypeMismatchException;
 import org.ql.typechecker.messages.MessageBag;
 import org.ql.typechecker.messages.TypeCheckMessages;
-import org.ql.typechecker.statement.StatementProxyVisitor;
 
 import java.util.List;
 
-public class TypeChecker implements ITypeChecker {
-
-    private final QuestionCollector<Form> questionCollector;
+public class TypeChecker {
 
     private ExpressionTypeChecker expressionTypeChecker;
-    private StatementVisitor<MessageBag> visitor;
 
-    public TypeChecker(QuestionCollector<Form> questionCollector) {
-        this.questionCollector = questionCollector;
-        visitor = new StatementProxyVisitor(this);
+    public TypeChecker() {
     }
 
     // TODO pass the message bag as argument
-    @Override
     public MessageBag checkForm(Form form) {
-        Questions questions = questionCollector.collect(form);
+        Questions questions = (Questions) QuestionCollector.collect(form);
 
         // TODO pass the symbol table as a context parameter in the expr visitor
         this.expressionTypeChecker = new ExpressionTypeChecker(createSymbolTable(questions));
@@ -50,7 +43,6 @@ public class TypeChecker implements ITypeChecker {
         );
     }
 
-    @Override
     public MessageBag checkQuestion(Question question) {
         return mergeMessages(
                 checkQuestionText(question),
@@ -58,7 +50,6 @@ public class TypeChecker implements ITypeChecker {
         );
     }
 
-    @Override
     public MessageBag checkIfThenElse(IfThenElse ifThenElse) {
         MessageBag ifThenMessages = checkStatements(ifThenElse.getThenStatements());
         MessageBag ifThenElseMessages = checkStatements(ifThenElse.getElseStatements());
@@ -71,7 +62,6 @@ public class TypeChecker implements ITypeChecker {
         );
     }
 
-    @Override
     public MessageBag checkIfThen(IfThen ifThen) {
         MessageBag ifThenMessages = checkStatements(ifThen.getThenStatements());
         MessageBag ifConditionMessages = checkIfCondition(ifThen.getCondition());
@@ -79,7 +69,6 @@ public class TypeChecker implements ITypeChecker {
         return mergeMessages(ifConditionMessages, ifThenMessages);
     }
 
-    @Override
     public MessageBag checkQuestionText(Question question) {
         MessageBag messages = new TypeCheckMessages();
 
@@ -90,7 +79,6 @@ public class TypeChecker implements ITypeChecker {
         return messages;
     }
 
-    @Override
     public MessageBag checkDefaultValue(Question question) {
         MessageBag messages = new TypeCheckMessages();
 
@@ -110,7 +98,6 @@ public class TypeChecker implements ITypeChecker {
         return messages;
     }
 
-    @Override
     public MessageBag checkStatements(List<Statement> statements) {
         MessageBag[] messageBags = new MessageBag[statements.size()];
 
@@ -121,33 +108,30 @@ public class TypeChecker implements ITypeChecker {
         return mergeMessages(messageBags);
     }
 
-    @Override
     public MessageBag checkQuestionDuplicates(Questions questions) {
         MessageBag messages = new TypeCheckMessages();
 
         for (Question question : questions) {
             if (questions.hasDuplicates(question)) {
-                messages.addError("Question '" + question.getId() + "' hasDeclared duplicate(s)", question);
+                messages.addError("Question '" + question.getId() + "' isDeclared duplicate(s)", question);
             }
         }
 
         return messages;
     }
 
-    @Override
     public MessageBag checkQuestionLabelsDuplicates(Questions questions) {
         MessageBag messages = new TypeCheckMessages();
 
         for (Question question : questions) {
             if (questions.hasLabelDuplicates(question)) {
-                messages.addError("Question '" + question.getId() + "' label hasDeclared duplicate(s)", question);
+                messages.addError("Question '" + question.getId() + "' label isDeclared duplicate(s)", question);
             }
         }
 
         return messages;
     }
 
-    @Override
     public MessageBag checkIfCondition(Expression condition) {
         MessageBag messages = new TypeCheckMessages();
 
@@ -165,7 +149,6 @@ public class TypeChecker implements ITypeChecker {
         return messages;
     }
 
-    @Override
     public MessageBag checkIdentifier(Identifier identifier) {
         MessageBag messages = new TypeCheckMessages();
         if (identifier.toString().isEmpty()) {
