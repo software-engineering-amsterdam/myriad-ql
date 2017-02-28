@@ -1,12 +1,11 @@
 package checker
 
-import checker.Issue.{Errors, Issues, Warnings}
+import checker.Issue.{ Errors, Issues, Warnings }
 import model.FormModel
 
 import scala.annotation.tailrec
 
-
-class FormChecker(model: FormModel){
+class FormChecker(model: FormModel) {
   def check: Issues = duplicateIdentifiers ++ undefinedReferences ++ dependencyCycles ++ checkExpressions ++ duplicateLabels
 
   private val undefinedReferences: Errors =
