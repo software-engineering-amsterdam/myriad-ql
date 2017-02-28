@@ -1,11 +1,3 @@
-- MessageBag: just tell it what to do. PAss it and the others willa dd the message.
-
-- ExpressionTypechecker: The stop one (!innerexpressiontype instanceof booleantype)
-Why not introduce an unknown type?
-visit(Negation node)  throw new typemismatch
-Using exceptions here is abusing them (non-local control flow).
-
-- SYmboltable interface can be deleted (only hashmapymbtoltable to symboltable)
 - Make the symboltable more specific in terms of names. (declare, hasDeclared, lookupSymbol)
 
 - QuestioNCollector<T extends Node> can be just Node. No need for the generics.
