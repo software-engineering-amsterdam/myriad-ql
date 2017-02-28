@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
+import org.uva.taxfree.model.ConditionNode;
 import org.uva.taxfree.model.NamedNode;
 import org.uva.taxfree.model.Node;
 
@@ -48,7 +49,7 @@ public class Ast {
     }
 
     // "Getter"
-    public Set<Node> getConditionsV2() {
+    public Set<ConditionNode> getConditionsV2() {
         return mRootNode.getConditionsV2();
     }
 

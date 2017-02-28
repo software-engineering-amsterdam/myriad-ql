@@ -67,27 +67,41 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    public Set<Node> getConditionsV2() {
-        Set<Node> nodeSet = new LinkedHashSet<>();
+    public Set<ConditionNode> getConditionsV2() {
+        Set<ConditionNode> nodeSet = new LinkedHashSet<>();
         for (Node n : mChildren) {
             nodeSet.addAll(n.getConditionsV2());
         }
-        nodeSet.addAll(addCondition());
 
 //        By checking with a method that we need to override
-        if (isCondition()) {
-            nodeSet.add(this);
-        }
+//        if (isCondition()) {
+//            nodeSet.add(<mCondition>);
+//        }
 //        By calling a method that we need to override
-//        nodeSet.addAll(addCondition());
+        nodeSet.addAll(addConditions());
         return nodeSet;
     }
 
-    protected boolean isCondition() {
-        return true;
+//    protected boolean isCondition() {
+//        System.out.println("Condition? " + getClass().toString());
+//        return false;
+//    }
+
+    protected Set<ConditionNode> addConditions() {
+        return Collections.emptySet();
     }
 
-    protected Set<Node> addCondition() {
+    public Set<LiteralNode> getVariables() {
+        Set<LiteralNode> nodeSet = new LinkedHashSet<>();
+        for (Node n : mChildren) {
+            nodeSet.addAll(n.getVariables());
+        }
+
+        nodeSet.addAll(addVariables());
+        return nodeSet;
+    }
+
+    protected Set<LiteralNode> addVariables() {
         return Collections.emptySet();
     }
 }

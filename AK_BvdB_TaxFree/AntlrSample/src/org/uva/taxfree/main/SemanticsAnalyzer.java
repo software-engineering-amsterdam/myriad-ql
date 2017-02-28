@@ -1,9 +1,7 @@
 package org.uva.taxfree.main;
 
 import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
-import org.uva.taxfree.model.SymbolTable;
+import org.uva.taxfree.model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -50,18 +48,40 @@ public class SemanticsAnalyzer {
     }
 
     private List<String> getUndefinedQuestionErrors() {
-        mAst.getConditionsV2(); // TODO: Remove, having this for test purposes.
         List<String> errorMessages = new ArrayList<>();
-        // TODO
-        // Get conditions, for every varName check the value/question belonging to it
+
+        List<String> questions = getQuestionIds();
+        Set<ConditionNode> conditions = mAst.getConditionsV2();
+        for (ConditionNode conditionNode : conditions) {
+            for (LiteralNode variable : conditionNode.getVariables()) {
+                variable.toString();
+            }
+        }
+
         return errorMessages;
     }
+
+//    This is for condition stuff, not for undefined questions
+//    private List<String> getUndefinedQuestionErrors() {
+//        // TODO: Retrieve once, having this for test (and evaluate) purposes.
+//        Set<Node> conditionsTmp = mAst.getConditions(); // This one uses the implicit way
+//        Set<ConditionNode> conditions = mAst.getConditionsV2();
+//
+//        List<String> errorMessages = new ArrayList<>();
+//        List<String> questions = getQuestionIds();
+//        for(ConditionNode conditionNode : conditions) {
+//
+//        }
+//
+//        // TODO
+//        // Get conditions, for every varName check the value/question belonging to it
+//        return errorMessages;
+//    }
 
     private List<String> getDuplicateQuestionErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionIds = new LinkedHashSet<>();
-        for (NamedNode questionNode : mAst.getQuestions()) {
-            String questionId = questionNode.toString();
+        for (String questionId : getQuestionIds()) {
             if (!processedQuestionIds.add(questionId)) {
                 errorMessages.add("Duplicate question declaration found: " + questionId);
             }

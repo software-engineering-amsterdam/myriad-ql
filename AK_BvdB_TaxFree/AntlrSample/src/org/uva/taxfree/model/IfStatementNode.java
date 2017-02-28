@@ -1,10 +1,10 @@
 package org.uva.taxfree.model;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class IfStatementNode extends Node {
-    ConditionNode mCondition;
-
+    private ConditionNode mCondition;
 
     public IfStatementNode() {
         super();
@@ -36,7 +36,14 @@ public class IfStatementNode extends Node {
 
     @Override
     protected void addCondition(Set<Node> set) {
-        set.add(this);
+        set.add(mCondition);
+    }
+
+    @Override
+    protected Set<ConditionNode> addConditions() {
+        Set<ConditionNode> nodeSet = new LinkedHashSet<>();
+        nodeSet.add(mCondition);
+        return nodeSet;
     }
 
     @Override
