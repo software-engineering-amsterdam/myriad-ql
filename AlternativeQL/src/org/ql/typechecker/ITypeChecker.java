@@ -8,30 +8,29 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.collection.Questions;
-import org.ql.typechecker.messages.MessageBag;
 
 import java.util.List;
 
 public interface ITypeChecker {
-    MessageBag checkForm(Form form);
+    Messages checkForm(Form form);
 
-    MessageBag checkQuestion(Question question);
+    Messages checkQuestion(Question question);
 
-    MessageBag checkIfThenElse(IfThenElse ifThenElse);
+    Messages checkIfThenElse(IfThenElse ifThenElse);
 
-    MessageBag checkIfThen(IfThen ifThen);
+    Messages checkIfThen(IfThen ifThen);
 
-    MessageBag checkQuestionText(Question question);
+    Messages checkQuestionText(Question question);
 
-    MessageBag checkDefaultValue(Question question);
+    Messages checkDefaultValue(Question question);
 
-    MessageBag checkStatements(List<Statement> statements);
+    Messages checkStatements(List<Statement> statements);
 
-    MessageBag checkQuestionDuplicates(Questions questions);
+    Messages checkQuestionDuplicates(Questions questions);
 
-    MessageBag checkQuestionLabelsDuplicates(Questions questions);
+    Messages checkQuestionLabelsDuplicates(Questions questions);
 
-    MessageBag checkIfCondition(Expression condition);
+    Messages checkIfCondition(Expression condition);
 
-    MessageBag checkIdentifier(Identifier identifier);
+    Messages checkIdentifier(Identifier identifier);
 }

@@ -9,7 +9,6 @@ import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
 import org.ql.collection.collector.FormQuestionCollector;
 import org.ql.collection.QuestionCollector;
-import org.ql.typechecker.messages.MessageBag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class TypeCheckerTest {
     public void shouldAddErrorWhenFormNameEmpty() {
         ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
 
-        MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().setName("").build());
+        Messages messages = typeChecker.checkForm(new FormBuilder().getDefault().setName("").build());
 
         assertTrue(messages.getErrors().size() == 1);
         assertEquals("Form name cannot be empty", messages.getErrors().get(0));
@@ -33,7 +32,7 @@ public class TypeCheckerTest {
     public void shouldContainNoErrorsWhenQuestionAdded() {
         ITypeChecker typeChecker = new TypeChecker(new FormQuestionCollector(new QuestionCollector()));
 
-        MessageBag messages = typeChecker.checkForm(new FormBuilder().getDefault().build());
+        Messages messages = typeChecker.checkForm(new FormBuilder().getDefault().build());
 
         assertTrue(messages.getErrors().size() == 0);
     }
@@ -44,7 +43,7 @@ public class TypeCheckerTest {
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' isDeclared duplicate(s)";
 
-        MessageBag messages = typeChecker.checkForm(new FormBuilder()
+        Messages messages = typeChecker.checkForm(new FormBuilder()
                 .setName("exampleForm")
                 .addStatement(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null))
                 .addStatement(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null))
@@ -63,8 +62,8 @@ public class TypeCheckerTest {
         statements.add(new Question(new Identifier("test"), new QuestionText("example question?"), new BooleanType(), new IntegerLiteral(12)));
         statements.add(new Question(new Identifier("test"), new QuestionText(""), new BooleanType(), null));
 
-        MessageBag messageBag = typeChecker.checkStatements(statements);
+        Messages messages = typeChecker.checkStatements(statements);
 
-        assertEquals(2, messageBag.getErrors().size());
+        assertEquals(2, messages.getErrors().size());
     }
 }

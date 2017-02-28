@@ -8,7 +8,6 @@ import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionCollector implements FormVisitor<Void, List<Question>>, StatementVisitor<Void, List<Question>> {
@@ -16,8 +15,8 @@ public class QuestionCollector implements FormVisitor<Void, List<Question>>, Sta
     private QuestionCollector() {
     }
 
-    public static List<Question> collect(Form form) {
-        List<Question> questions = new ArrayList<>();
+    public static Questions collect(Form form) {
+        Questions questions = new Questions();
 
         form.accept(new QuestionCollector(), questions);
 
