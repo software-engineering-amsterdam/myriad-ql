@@ -22,11 +22,13 @@ form exampleForm {
         (conditionalQuestion1 - conditionalQuestion2);
   }
 
-  if (simpleCondition) {
-    "Simple conditional question 1"
-      simpleConditionalQuestion: boolean;
-  }
-
+   if (complexConditional) {
+     "if Question"
+         complexConditionalQuestion1: boolean;
+   } else {
+     "else Question"
+        complexConditionalQuestion2: boolean;
+   }
 }
 ```
 
@@ -46,6 +48,7 @@ form exampleForm {
 - [x] Application launcher
 - [ ] AST
   - [x] Form, Statement, Question classes
+  - [x] IfStatement, IfElseStatement classes
   - [x] Classes for Operations
   - [x] Basic types
     - [x] Strings
