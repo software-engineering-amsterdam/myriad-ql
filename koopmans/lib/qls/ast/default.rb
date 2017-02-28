@@ -4,7 +4,7 @@ module QLS
       attr_reader :type, :properties
 
       def initialize(type, properties)
-        @type = type
+        @type       = type
         @properties = properties
       end
     end

@@ -5,7 +5,7 @@ module QLS
 
       def initialize(variable, pages)
         @variable = variable
-        @pages = pages
+        @pages    = pages
       end
     end
   end

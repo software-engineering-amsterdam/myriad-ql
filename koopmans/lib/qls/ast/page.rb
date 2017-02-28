@@ -5,7 +5,7 @@ module QLS
 
       def initialize(variable, block)
         @variable = variable
-        @block = block
+        @block    = block
       end
     end
   end

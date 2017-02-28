@@ -22,7 +22,7 @@ module QLS
       attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
-        @true_text = true_text
+        @true_text  = true_text
         @false_text = false_text
       end
     end
@@ -35,7 +35,7 @@ module QLS
       attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
-        @true_text = true_text
+        @true_text  = true_text
         @false_text = false_text
       end
     end
