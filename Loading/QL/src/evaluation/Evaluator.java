@@ -13,7 +13,7 @@ import value.Value;
 
 public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
-	private Environment environment;
+	private final Environment environment;
 
 	public Evaluator(Environment environment) {
 		this.environment = environment;
@@ -40,15 +40,18 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
     @Override
     public void visit(Question question) {
     	// TODO default value when question is not answered
-    	environment.addAnswer(question.getVariable(), new EmptyValue());
+//    	if (!environment.isAnswered(question.getVariable())) {
+//    		environment.addAnswer(question.getVariable(), new EmptyValue());
+//    	}
     }
 
     @Override
     public void visit(ComputedQuestion question) {
         Atom atom = question.getComputedQuestion().accept(this);
         // TODO add computed answer to environment
-        environment.addAnswer(question.getVariable(), new EmptyValue());
-        // Add to environment
+//        if (!environment.isAnswered(question.getVariable())) {
+//        	environment.addAnswer(question.getVariable(), new EmptyValue());
+//        }// Add to environment
     }
 
     @Override
@@ -60,8 +63,6 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
     @Override
     public Atom visit(AddExpression expr) {
-    	System.out.println(expr.getLhs().accept(this));
-    	System.out.println(expr.getRhs().accept(this));
         return expr.getLhs().accept(this).add(expr.getRhs().accept(this));
     }
 
@@ -92,14 +93,10 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
     @Override
 	public Atom visit(IdExpression id) {
-    	
-    	System.out.println(id.getName());
-    	System.out.println(environment.getAnswer(id.getName()));
-    	System.out.println(new EmptyValue());
-    	System.out.println("dit was het");
-		if (environment.getAnswer(id.getName()).equals(new EmptyValue())) {
+
+		if (!environment.isAnswered(id.getName())) {
 			// TODO throw
-			System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
+			// System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
 			return null;
 		}
 		return environment.getAnswer(id.getName()).getValue();	

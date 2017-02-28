@@ -54,6 +54,12 @@ public class QuestionnaireVisitor extends Evaluator {
 	public List<QuestionnaireQuestion> getActiveQuestions() {
 		return activeQuestions;
 	}
+	
+    @Override
+    public void visit(Question question) {
+        activeQuestions.add(new QuestionnaireQuestion(question.getVariable(),
+        		question.getLabel(), question.getType()));
+    }
     
     @Override
     public void visit(ComputedQuestion question) {

@@ -21,6 +21,7 @@ public class Text implements Field {
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
             	listener.updateQuestionnaire(name, new StringValue(newValue));
+            	field.requestFocus();
             }
     	});
 	}

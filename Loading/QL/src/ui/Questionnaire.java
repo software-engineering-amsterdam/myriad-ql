@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import semantic.TypeChecker;
 import ui.field.Field;
+import value.EmptyValue;
 import value.Value;
 
 public class Questionnaire extends Application {
@@ -41,8 +42,12 @@ public class Questionnaire extends Application {
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
 	    	Value oldAnswer = answers.getAnswer(name); 
-			if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
+	    	// TODO change the getValue().getString() construction
+			if (oldAnswer == null || !newValue.getValue().getString().equals(oldAnswer.getValue().getString())) {
+				System.out.println("ik wil een waarde updaten");
 				answers.addAnswer(name, newValue);
+				System.out.println(name);
+				System.out.println(answers.getAnswer(name).getValue().getString());
 				// Save the title
 				Node title = grid.getChildren().get(0);
 		    	grid.getChildren().clear();
@@ -55,9 +60,9 @@ public class Questionnaire extends Application {
     public void main(Form f) {
     	form = f;
     	answers = new Environment();
-		Evaluator evaluator = new Evaluator(answers);
+		// Evaluator evaluator = new Evaluator(answers);
 
-		evaluator.visit(form);
+		// evaluator.visit(form);
         launch();
     }
         
@@ -95,12 +100,14 @@ public class Questionnaire extends Application {
     	
     	// TODO change
     	for (QuestionnaireQuestion question : activeQuestions) {
+    		System.out.println("begin setAnswers");
+    		System.out.println(question.getName());
     		
     		Value value = answers.getAnswer(question.getName());
     		if (value == null) {
     			continue;
     		}
-    		
+    		System.out.println(answers.getAnswer(question.getName()).getValue().getString());
     		question.setAnswer(value);
     	}
     }
