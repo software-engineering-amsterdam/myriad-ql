@@ -60,7 +60,7 @@ public class SemanticsAnalyzer {
         return errorMessages;
     }
 
-//    This is for condition stuff, not for undefined questions
+//    This is for blocks stuff, not for undefined questions
 //    private List<String> getUndefinedQuestionErrors() {
 //        // TODO: Retrieve once, having this for test (and evaluate) purposes.
 //        Set<Node> conditionsTmp = mAst.getConditions(); // This one uses the implicit way
@@ -91,8 +91,8 @@ public class SemanticsAnalyzer {
     private List<String> getDuplicateLabelErrors() {
         List<String> errorMessages = new ArrayList<>();
         Set<String> processedQuestionLabels = new LinkedHashSet<>();
-        for (NamedNode questionNode : mAst.getQuestions()) {
-            String questionLabel = questionNode.getLabel();
+        for (NamedNode node : mAst.getDeclarations()) {
+            String questionLabel = node.getLabel();
             if (!processedQuestionLabels.add(questionLabel)) {
                 errorMessages.add("Duplicate question label found: " + questionLabel);
             }
@@ -102,8 +102,8 @@ public class SemanticsAnalyzer {
 
     private List<String> getQuestionIds() {
         List<String> ids = new ArrayList<>();
-        for (NamedNode namedNode : mAst.getQuestions()) {
-            ids.add(namedNode.toString());
+        for (Node node : mAst.getDeclarations()) {
+            ids.add(node.toString());
         }
         return ids;
     }

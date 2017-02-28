@@ -1,4 +1,4 @@
-package org.uva.taxfree.model.node.condition;
+package org.uva.taxfree.model.node.expression;
 
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.util.Evaluator;

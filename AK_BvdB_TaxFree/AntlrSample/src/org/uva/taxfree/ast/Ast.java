@@ -7,8 +7,9 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.statement.NamedNode;
 import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 import java.io.*;
 import java.util.BitSet;
@@ -21,9 +22,9 @@ public class Ast {
         // Private to prevent empty initialization
     }
 
-    private Node mRootNode;
+    private BlockNode mRootNode;
 
-    public Ast(Node rootNode) {
+    public Ast(BlockNode rootNode) {
         mRootNode = rootNode;
     }
 
@@ -35,9 +36,9 @@ public class Ast {
         return generateAst(new StringReader(input), symbolTable);
     }
 
-    public Set<NamedNode> getQuestions() {
+    public Set<NamedNode> getDeclarations() {
         Set<NamedNode> questions = new LinkedHashSet<>();
-        mRootNode.retrieveQuestions(questions);
+        mRootNode.retrieveDeclarations(questions);
         return questions;
     }
 
