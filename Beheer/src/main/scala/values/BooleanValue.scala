@@ -12,4 +12,6 @@ case class BooleanValue(value: Boolean) extends Value {
   }
 
   override def NOT = BooleanValue(!value)
+
+  override def display = value.toString
 }

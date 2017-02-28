@@ -1,5 +1,7 @@
 package values
 
+import scala.math.BigDecimal.RoundingMode
+
 sealed trait NumericValue extends Value {
   val value: BigDecimal
 
@@ -65,6 +67,8 @@ case class IntegerValue(value: BigDecimal) extends NumericValue {
   }
 
   override def NEG = IntegerValue(-value)
+
+  override def display = value.setScale(0, RoundingMode.HALF_EVEN).toString
 }
 
 case class DecimalValue(value: BigDecimal) extends NumericValue {
@@ -94,6 +98,8 @@ case class DecimalValue(value: BigDecimal) extends NumericValue {
   }
 
   override def NEG = DecimalValue(-value)
+
+  override def display = value.setScale(2, RoundingMode.HALF_EVEN).toString
 }
 
 case class MoneyValue(value: BigDecimal) extends NumericValue {
@@ -118,4 +124,6 @@ case class MoneyValue(value: BigDecimal) extends NumericValue {
   }
 
   override def NEG = MoneyValue(-value)
+
+  override def display = s"€${value.setScale(2, RoundingMode.HALF_EVEN)}"
 }

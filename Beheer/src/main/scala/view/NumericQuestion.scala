@@ -1,29 +1,37 @@
 package view
 
-import model.DisplayQuestion
-import values.MoneyValue
+import javafx.beans.binding.StringBinding
 
+import ast.{ DecimalType, IntegerType, MoneyType }
+import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
+import values.{ DecimalValue, IntegerValue, MoneyValue, UndefinedValue }
+
+import scala.util.{ Failure, Success, Try }
 import scalafx.Includes._
-import scalafx.event.ActionEvent
 import scalafx.scene.control.TextField
-import scalafx.scene.layout.HBox
-import scalafx.scene.text.Text
 
-class NumericQuestion(question: DisplayQuestion) extends GUIQuestion {
-  val textField = new TextField {
-    maxWidth = 200
-    onAction = (a: ActionEvent) => {
-      val s = this.delegate.text.value.toDouble
-      updateEnv(question.identifier, MoneyValue(s))
-    }
+class NumericQuestion(val question: DisplayQuestion) extends GUIQuestion {
+
+  val textField = new TextField()
+
+  question match {
+    case c: ComputedQuestion => textField.text <== computeValue(c)
+    case o: OpenQuestion => textField.onAction = actionHandler(textField, o)
   }
 
-  val element = new HBox {
-    children = Seq(
-      new Text(question.label),
-      textField
-    )
-    disable = isDisabled(question)
-    visible <== isVisible(question)
+  element.children += textField
+
+  private def actionHandler(textField: TextField, question: OpenQuestion) = () => {
+    val value = Try(textField.text.value.toDouble) match {
+      case Success(d) => question.`type` match {
+        case MoneyType => MoneyValue(d)
+        case DecimalType => DecimalValue(d)
+        case IntegerType => IntegerValue(d)
+        case _ => UndefinedValue
+      }
+      case Failure(_) => UndefinedValue
+    }
+
+    updateEnv(question.identifier, value)
   }
 }

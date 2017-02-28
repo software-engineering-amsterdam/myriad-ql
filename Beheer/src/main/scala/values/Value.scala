@@ -28,5 +28,7 @@ trait Value {
   def NEG: Value = UndefinedValue
 
   def NOT: Value = UndefinedValue
+
+  def display: String
 }
 

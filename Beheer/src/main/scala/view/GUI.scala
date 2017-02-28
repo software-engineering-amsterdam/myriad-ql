@@ -4,7 +4,6 @@ import java.io.FileReader
 
 import ast._
 import checker.{ Error, FormChecker, Warning }
-import model.{ ComputedQuestion, OpenQuestion }
 import parser.FormParser
 
 import scalafx.application.JFXApp
@@ -18,10 +17,7 @@ object GUI extends JFXApp {
       case BooleanType => new BooleanQuestion(question).element
       case DateType => new DateQuestion(question).element
       case StringType => new StringQuestion(question).element
-      case _: NumericType => question match {
-        case c: ComputedQuestion => new ComputedNumericQuestion(question).element
-        case o: OpenQuestion => new NumericQuestion(question).element
-      }
+      case _: NumericType => new NumericQuestion(question).element
     }
   }
   private lazy val issues = {
