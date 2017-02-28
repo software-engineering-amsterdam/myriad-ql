@@ -263,10 +263,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -304,10 +302,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -355,10 +351,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -413,10 +407,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -472,10 +464,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(form_node.children))
 
         conditional_node = form_node.children[0]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -544,18 +534,18 @@ class TestAst(unittest.TestCase):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.children))
 
-        conditional_node = form_node.children[0]
-        self.assertIsNotNone(conditional_node.else_statement_list,
+        if_else_node = form_node.children[0]
+        self.assertIsNotNone(if_else_node.else_statement_list,
                              'This test has an else block, else block should not be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
-        self.assertEqual(1, len(conditional_node.statements),
+        self.assertEqual('if_else', if_else_node.var_type,
+                         'IfElse node should have type if_else')
+        self.assertEqual(1, len(if_else_node.statements),
                          'This else block has one question inside, length should be 1')
-        self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
+        self.assertIsNotNone(if_else_node.condition, 'If block should have a condition')
 
-        self.assertEqual(1, len(conditional_node.statements))
+        self.assertEqual(1, len(if_else_node.statements))
 
-        field_node_1 = conditional_node.statements[0]
+        field_node_1 = if_else_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
@@ -563,7 +553,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.money, field_node_1.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
-        expression_node = conditional_node.condition
+        expression_node = if_else_node.condition
 
         self.assertEqual(1, len(expression_node.children), 'Expression node should have 1 child')
         self.assertEqual('expression', expression_node.var_type, 'Expression node should have type condition')
@@ -572,7 +562,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)
 
-        else_statement_list = conditional_node.else_statement_list
+        else_statement_list = if_else_node.else_statement_list
 
         field_node_2 = else_statement_list[0]
 
@@ -605,10 +595,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
         conditional_node = form_node.children[1]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -656,10 +644,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
         conditional_node = form_node.children[1]
-        self.assertIsNone(conditional_node.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node.var_type,
-                         'Conditional node should have type conditional')
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -724,10 +708,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Did you buy a house in 2010?', field_node_2.title)
 
         conditional_node_1 = form_node.children[2]
-        self.assertIsNone(conditional_node_1.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node_1.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node_1.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node_1.statements),
                          'This if block has one if block inside, length should be 1')
         self.assertIsNotNone(conditional_node_1.condition, 'If block should have a condition')
@@ -735,10 +717,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node_1.statements))
 
         conditional_node_2 = conditional_node_1.statements[0]
-        self.assertIsNone(conditional_node_2.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node_2.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node_2.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node_2.statements),
                          'This if block has one field inside, length should be 1')
         self.assertIsNotNone(conditional_node_2.condition, 'If block should have a condition')
@@ -788,10 +768,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Did you buy a house in 2010?', field_node_2.title)
 
         conditional_node_1 = form_node.children[2]
-        self.assertIsNone(conditional_node_1.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node_1.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node_1.var_type,
+                         'If node should have type conditional')
         self.assertEqual(2, len(conditional_node_1.statements),
                          'This if block has one field and one if block inside, length should be 2')
         self.assertIsNotNone(conditional_node_1.condition, 'If block should have a condition')
@@ -807,10 +785,8 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Were you married?', field_node_2.title)
 
         conditional_node_2 = conditional_node_1.statements[1]
-        self.assertIsNone(conditional_node_2.else_statement_list,
-                          'This test has no else block, else block should be none')
-        self.assertEqual('conditional', conditional_node_2.var_type,
-                         'Conditional node should have type conditional')
+        self.assertEqual('if', conditional_node_2.var_type,
+                         'If node should have type if')
         self.assertEqual(1, len(conditional_node_2.statements),
                          'This if block has one field inside, length should be 1')
         self.assertIsNotNone(conditional_node_2.condition, 'If block should have a condition')

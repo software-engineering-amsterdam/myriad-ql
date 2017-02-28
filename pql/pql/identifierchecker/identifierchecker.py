@@ -15,10 +15,12 @@ class IdentifierChecker(object):
     def form(self, node):
         [statement.apply(self) for statement in node.children]
 
-    def conditional(self, node):
+    def conditional_if_else(self, node):
+        self.conditional_if(node)
+        [statement.apply(self) for statement in node.else_statement_list]
+
+    def conditional_if(self, node):
         [statement.apply(self) for statement in node.statements]
-        if node.else_statement_list is not None:
-            [statement.apply(self) for statement in node.else_statement_list]
 
     def field(self, node):
         self.identifier_dict[node.name.name].append(node.data_type)

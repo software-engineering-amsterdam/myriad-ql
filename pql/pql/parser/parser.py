@@ -111,18 +111,24 @@ def parse(input_string):
     )
     field_statement.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
-    if_statement = Forward()
+    conditional_if = Forward()
+    conditional_if_else = Forward()
     statement = Forward()
     body = Forward()
 
-    if_statement <<= (
-        lit_if + lit_l_paren + boolean_expression + lit_r_paren +
-        body +
+    if_statement = lit_if + lit_l_paren + boolean_expression + lit_r_paren + body
+    conditional_if <<= if_statement
+    conditional_if.setParseAction(ast.If)
+
+    conditional_if_else <<= (
+        if_statement +
         Optional(lit_else + body).setResultsName('else_statement')
     )
-    if_statement.setParseAction(ast.Conditional)
+    conditional_if_else.setParseAction(ast.IfElse)
 
-    statement <<= (field_statement | if_statement)
+    conditional = conditional_if_else | conditional_if
+
+    statement <<= (field_statement | conditional)
 
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])

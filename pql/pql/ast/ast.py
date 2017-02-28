@@ -55,17 +55,25 @@ class Expression(Node):
         return visitor.expression(self)
 
 
-class Conditional(Node):
+class If(Node):
     def __init__(self,  boolean_statement):
-        super(Conditional, self).__init__('conditional')
+        super(If, self).__init__('if')
         self.condition = boolean_statement[0]
         self.statements = boolean_statement[1]
-        self.else_statement_list = None
-        if boolean_statement.else_statement is not None and len(boolean_statement.else_statement) > 0:
-            self.else_statement_list = boolean_statement.else_statement[0]
 
     def apply(self, visitor):
-        return visitor.conditional(self)
+        return visitor.conditional_if(self)
+
+
+class IfElse(Node):
+    def __init__(self,  boolean_statement):
+        super(IfElse, self).__init__('if_else')
+        self.condition = boolean_statement[0]
+        self.statements = boolean_statement[1]
+        self.else_statement_list = boolean_statement.else_statement[0]
+
+    def apply(self, visitor):
+        return visitor.conditional_if_else(self)
 
 
 class BinaryOperation(Node):
