@@ -12,6 +12,7 @@ import ql.antlr.QLParser;
 import ql.astnodes.ASTVisitor;
 import ql.astnodes.Form;
 import ql.astnodes.Node;
+import ql.astnodes.types.Type;
 import ql.gui.GUI;
 import ql.gui.components.FormFrame;
 import ql.gui.components.GUIManager;
@@ -22,7 +23,6 @@ import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
 import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.Error;
-import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class QL {
 
@@ -104,7 +104,7 @@ public class QL {
     }
 
     private boolean checkSemanticCorrectness(Form qlAST, MessageData messages) {
-        HashMap identifierToTypeMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
