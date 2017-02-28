@@ -21,19 +21,15 @@ class TypeChecker(Visitor):
             node.expression.apply(self)
 
     def subtraction(self, node):
-        # return self.arithmetic_type_detection(node)
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def division(self, node):
-        # return self.arithmetic_type_detection(node)
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def multiplication(self, node):
-        # return self.arithmetic_type_detection(node)
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def addition(self, node):
-        # return self.arithmetic_type_detection(node)
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def conditional_if(self, node):
@@ -50,35 +46,27 @@ class TypeChecker(Visitor):
         [statement.apply(self) for statement in node.else_statement_list]
 
     def greater_exclusive(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def greater_inclusive(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def lower_inclusive(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def lower_exclusive(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def equality(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def inequality(self, node):
-        # return self.boolean_type_detection(node)
         return self.type_detection(node, self.boolean_type_detection)
 
     def and_(self, node):
-        # return self.boolean_type_detection(node, aat=set())
         return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
 
     def or_(self, node):
-        # return self.boolean_type_detection(node, aat=set())
         return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
 
     def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
@@ -110,7 +98,7 @@ class TypeChecker(Visitor):
 
         return dominant_type
 
-    def type_detection(self, node, func, allowed_arithmetic_types={DataTypes.integer, DataTypes.integer},
+    def type_detection(self, node, func, allowed_arithmetic_types={DataTypes.integer, DataTypes.money},
                        allowed_boolean_types={DataTypes.boolean}):
         type_set = {node.lhs.apply(self), node.rhs.apply(self)}
         return func(allowed_arithmetic_types, allowed_boolean_types, type_set)
