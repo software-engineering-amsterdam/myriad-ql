@@ -152,10 +152,11 @@ public class Questionnaire extends Application {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 
-            Field field = question.getEntryField().getField();
-            grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
             
-            field.addListener(new Notifier());
+            // TODO getEntryField - getField
+            grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex); 
+            
+            question.getEntryField().addListener(new Notifier());
             ++rowIndex;
         }
         

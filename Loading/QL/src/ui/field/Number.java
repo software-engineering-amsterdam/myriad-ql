@@ -12,21 +12,21 @@ import java.util.function.Function;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public class Number extends TextField implements Field {
+public class Number implements Field {
 	
 	private Notifier listener;
 	private String name;
+	private TextField field;
 	
 	public Number(String name) {
-		super();
-		this.name = name;
+		this.field = new TextField();
 		
-    	textProperty().addListener(new ChangeListener<String>() {
+    	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
 	          if (!newValue.matches("\\d*")) {
-	              setText(newValue.replaceAll("[^\\d]", ""));
+	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else {
 	        	  listener.updateQuestionnaire(name, new StringValue(newValue));
 	          }
@@ -36,7 +36,7 @@ public class Number extends TextField implements Field {
 
 	@Override
 	public Value getAnswer() {
-		String str = getText();
+		String str = field.getText();
 		if (str.isEmpty()) {
 			return new EmptyValue();
 		}
@@ -45,13 +45,18 @@ public class Number extends TextField implements Field {
 
 	@Override
 	public void setAnswer(Value value) {
-		setText((String) value.getValue());
+		field.setText((String) value.getValue());
 		
 	}
 
 	@Override
 	public void addListener(Notifier listener) {
 		this.listener = listener;	
+	}
+	
+	@Override 
+	public TextField getField() {
+		return field;
 	}
 	
 }

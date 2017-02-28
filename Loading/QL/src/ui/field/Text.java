@@ -9,16 +9,15 @@ import value.StringValue;
 import value.Value;
 
 // TODO do not extend the standard library
-public class Text extends TextField implements Field {
+public class Text implements Field {
 	
 	private Notifier listener;
-	private String name;
+	private TextField field;
 	
 	public Text(String name) {
-		super();
-		this.name = name;
+		this.field = new TextField();
 		
-		textProperty().addListener(new ChangeListener<String>()  {
+		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
@@ -30,22 +29,27 @@ public class Text extends TextField implements Field {
 	
 	@Override
 	public Value getAnswer() {
-		if (getText().isEmpty()) {
+		if (field.getText().isEmpty()) {
 			return new EmptyValue();
 		}	
-		return new StringValue(getText());
+		return new StringValue(field.getText());
 	}
 	
 	
 	@Override
 	public void setAnswer(Value value) {
-		setText((String) value.getValue());	
+		field.setText((String) value.getValue());	
 	}
 
 
 	@Override
 	public void addListener(Notifier listener) {
 		this.listener = listener;	
+	}
+	
+	@Override
+	public TextField getField() {
+		return field;
 	}
 
 }
