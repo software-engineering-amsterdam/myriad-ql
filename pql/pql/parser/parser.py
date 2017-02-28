@@ -73,30 +73,20 @@ def parse(input_string):
 
     operand_list_bool = [
         (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive, 2,
-         opAssoc.LEFT, flatten_binary_operators),
+         opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_equality | lit_op_inequality, 2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_and, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_or, 2, opAssoc.LEFT, lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
     ]
 
-    arithmetic_precedence = infixNotation(
-        operand_arith,
-        operand_list_arith
-    )
-
-    boolean_precedence = infixNotation(
+    operator_precendence = infixNotation(
         operand_bool,
         (operand_list_arith + operand_list_bool)
     )
 
-    arithmetic_expression = \
-        OneOrMore(
-            arithmetic_precedence | (lit_l_paren + arithmetic_precedence + lit_r_paren))
-    arithmetic_expression.addParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
-
     boolean_expression = \
-        OneOrMore(boolean_precedence | (lit_l_paren + boolean_precedence + lit_r_paren))
+        OneOrMore(operator_precendence | (lit_l_paren + operator_precendence + lit_r_paren))
     boolean_expression.setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
     field_statement = (
@@ -105,7 +95,7 @@ def parse(input_string):
             lambda data_type: DataTypes(data_type[0])) +
         Optional(
             lit_assign_op +
-            arithmetic_expression
+            boolean_expression
         )
     )
     field_statement.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
