@@ -11,7 +11,6 @@ import javafx.beans.property.StringProperty;
 public class Computed implements FormItem {
     private String label;
     private String id;
-    private Value type;
     public Expression expression;
 
     public String getLabel() {
@@ -30,8 +29,8 @@ public class Computed implements FormItem {
         this.id = id;
     }
 
-    public void setType(Value type) {
-        this.type = type;
+    public void setValue(Value value) {
+        this.expression.setValue(value);
     }
 
     public void setExpression(Expression expression) {
@@ -46,13 +45,18 @@ public class Computed implements FormItem {
     }
 
     @Override
+    public Value.Type getType() {
+        return expression.getValue().getType();
+    }
+
+    @Override
     public boolean hasId(String id) {
         return this.id.equals(id);
     }
 
     @Override
     public Value[] getValuesForIds() {
-        return new Value[]{type};
+        return new Value[]{expression.getValue()};
     }
 
     @Override
@@ -72,6 +76,6 @@ public class Computed implements FormItem {
 
     @Override
     public String toString() {
-        return "<Computed>: " + label + " " + id + ": " + type + " = " + expression;
+        return "<Computed>: " + label + " " + id + ": " + expression.getValue().getType() + " = " + expression;
     }
 }

@@ -41,7 +41,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Question question = new Question();
         question.setQuestion(ctx.STRING_LITERAL().getText());
         question.setId(ctx.ID().getText());
-        question.setType((Value) visit(ctx.type()));
+        question.setValue((Value) visit(ctx.type()));
         return question;
     }
 
@@ -51,6 +51,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
         computed.setExpression((Expression) visit(ctx.expression()));
+
         return computed;
     }
 

@@ -6,7 +6,7 @@ import UvA.Gamma.AST.ASTNode;
  * Created by Tjarco, 14-02-17.
  */
 
-public class Boolean implements ASTNode, Value {
+public class Boolean extends Value implements ASTNode {
     private boolean value;
 
     public Boolean(boolean value) {
@@ -23,8 +23,13 @@ public class Boolean implements ASTNode, Value {
     }
 
     @Override
-    public boolean canAcceptValue(String value) {
-        return Boolean.isBoolean(value);
+    public Type getType() {
+        return Type.BOOL;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return type == Type.BOOL;
     }
 
     public boolean getValue() {

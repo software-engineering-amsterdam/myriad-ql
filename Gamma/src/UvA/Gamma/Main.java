@@ -7,6 +7,7 @@ import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.IdNotFoundException;
 import UvA.Gamma.Validation.IdRedeclaredException;
+import UvA.Gamma.Validation.IncompatibleTypesException;
 import UvA.Gamma.Validation.Validator;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -43,7 +44,7 @@ public class Main extends Application {
         Validator checker = new Validator(form);
         try {
             checker.visit();
-        } catch (IdNotFoundException | IdRedeclaredException ex) {
+        } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException ex) {
             System.out.println(ex.getMessage());
         }
 

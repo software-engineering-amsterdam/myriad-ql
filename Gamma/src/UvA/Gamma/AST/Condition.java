@@ -121,4 +121,9 @@ public class Condition implements FormItem {
     public String toString() {
         return "<Condition>: " + expression;
     }
+
+    @Override
+    public Value.Type getType() {
+        return Value.Type.CONDITION;
+    }
 }

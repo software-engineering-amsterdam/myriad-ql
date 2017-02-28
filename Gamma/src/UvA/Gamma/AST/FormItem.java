@@ -21,4 +21,6 @@ public interface FormItem extends ASTNode {
     String[] getReferencedIds();
 
     Value[] getValuesForIds();
+
+    Value.Type getType();
 }

@@ -1,5 +1,9 @@
 grammar QL;
 
+@members{
+    String intID = "";
+}
+
 form: 'form'  ID  '{' (formItem)*  '}';
 
 formItem: question
@@ -21,6 +25,8 @@ expression: BOOL '=' '('boolExpr')'       # booleanExpression
           | (DEC|INT) '=' '('numExpr')'   # numberExpression
           | MONEY '=' '('numExpr')'       # moneyExpression
           ;
+
+
 
 boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
         | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr

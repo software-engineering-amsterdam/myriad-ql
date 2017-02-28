@@ -11,7 +11,7 @@ import javafx.beans.property.StringProperty;
 public class Question implements FormItem {
     private String question;
     private String id;
-    private Value type;
+    private Value value;
     private SimpleStringProperty stringValueProperty;
 
     public Question() {
@@ -34,8 +34,8 @@ public class Question implements FormItem {
         this.id = id;
     }
 
-    public void setType(Value type) {
-        this.type = type;
+    public void setValue(Value value) {
+        this.value = value;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Question implements FormItem {
 
     @Override
     public Value[] getValuesForIds() {
-        return new Value[]{type};
+        return new Value[]{value};
     }
 
     @Override
@@ -70,6 +70,11 @@ public class Question implements FormItem {
 
     @Override
     public String toString() {
-        return "<Question>: " + question + " " + id + ": " + type;
+        return "<Question>: " + question + " " + id + ": " + value.getType();
+    }
+
+    @Override
+    public Value.Type getType() {
+        return value.getType();
     }
 }

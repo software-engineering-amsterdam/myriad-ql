@@ -13,6 +13,7 @@ public class MoneyExpression extends NumberExpression {
 
     public MoneyExpression(String expr) {
         super(expr);
+        this.setValue(new Money(0));
     }
 
     private Money evaluateMoney() throws ScriptException {

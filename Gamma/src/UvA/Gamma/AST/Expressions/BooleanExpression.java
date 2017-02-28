@@ -15,6 +15,7 @@ public class BooleanExpression extends Expression {
 
     public BooleanExpression(String expr) {
         super(expr);
+        setValue(new Boolean(false));
     }
 
     private Boolean evaluateBool() throws ScriptException {

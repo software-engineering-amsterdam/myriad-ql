@@ -2,6 +2,7 @@ package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
+import UvA.Gamma.AST.Values.Value;
 
 /**
  * Created by Tjarco, 27-02-17.
@@ -13,30 +14,34 @@ public class Validator {
         this.form = form;
     }
 
-    public void visit() throws IdNotFoundException, IdRedeclaredException {
+    public void visit() throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
         for (FormItem item : form.getFormItems()) {
             visit(item);
         }
     }
 
-    private void visit(FormItem item) throws IdNotFoundException, IdRedeclaredException {
+    private void visit(FormItem item) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
         for (String id : item.getReferencedIds()) {
             validateId(id);
         }
-
         validateRedeclaration(item);
+        validateType(item.getReferencedIds(), item.getType());
     }
 
-//    public void validateAsNumbers(String[] ids) {
-//        for (String id : ids) {
-//            for (FormItem item : form.getFormItems()) {
-//                if (item.hasId(id)) {
-//                    Value[] values = item.getValuesForIds();
-//                    values[0].canAcceptValue("7");
-//                }
-//            }
-//        }
-//    }
+    private void validateType(String[] ids, Value.Type type) throws IncompatibleTypesException {
+        for (String id : ids) {
+            for (FormItem item : form.getFormItems()) {
+                if (item.hasId(id)) {
+                    for (Value value : item.getValuesForIds()) {
+                        if (!value.conformsToType(type)) {
+                            throw new IncompatibleTypesException("The identifier " + id + " is of the type " + value.getType() +
+                                    ", which does not conform to the type " + type);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
         String id = formItem.getId();

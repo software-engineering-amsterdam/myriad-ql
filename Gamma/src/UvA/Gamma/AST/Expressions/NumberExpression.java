@@ -17,6 +17,7 @@ public class NumberExpression extends Expression {
 
     public NumberExpression(String expr) {
         super(expr);
+        this.setValue(new Number(0));
     }
 
     private Number evaluateNumber() throws ScriptException {
