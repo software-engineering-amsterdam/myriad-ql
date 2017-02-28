@@ -1,21 +1,17 @@
 package org.uva.taxfree.model.node.literal;
 
-
-import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 public class VariableLiteralNode extends LiteralNode {
-    private NamedNode mReference;
+    private final SymbolTable mReference;
 
-    public VariableLiteralNode(String label) {
-        super(label);
-    }
-
-    public void setReference(NamedNode reference) {
+    public VariableLiteralNode(String id, SymbolTable reference) {
+        super(id);
         mReference = reference;
     }
 
     @Override
     public String resolveValue() {
-        return mReference.resolveValue();
+        return mReference.resolve(toString());
     }
 }
