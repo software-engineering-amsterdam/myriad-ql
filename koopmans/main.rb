@@ -1,6 +1,7 @@
 # TODO if-else-then?
 # TODO create Undefined class
 # TODO create Error & Warning classes
+# TODO rubocop
 
 require 'require_all'
 require 'pp'
