@@ -60,8 +60,8 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisi
         );
 
         ifThen.setSourceLocation(extractSourceLocation(ctx));
-    
-    return ifThen;
+
+        return ifThen;
     }
 
     @Override

@@ -139,7 +139,7 @@ public class TypeChecker implements ITypeChecker {
     public MessageBag checkQuestionLabelsDuplicates(Questions questions) {
         MessageBag messages = new TypeCheckMessages();
 
-        for(Question question : questions) {
+        for (Question question : questions) {
             if (questions.hasLabelDuplicates(question)) {
                 messages.addError("Question '" + question.getId() + "' label has duplicate(s)", question);
             }

@@ -13,17 +13,17 @@ import java.util.List;
 
 public class QuestionVisitor implements FormVisitor<List<Question>>, StatementVisitor<List<Question>> {
 
-    public static List<Question> collect(Form form) {
-        return form.accept(new QuestionVisitor());
-    }
-
     private QuestionVisitor() {
 
     }
 
+    public static List<Question> collect(Form form) {
+        return form.accept(new QuestionVisitor());
+    }
+
     @Override
     public List<Question> visit(Form form) {
-        for (Statement s: form.getStatements()) {
+        for (Statement s : form.getStatements()) {
             s.accept(this);
         }
         return null;

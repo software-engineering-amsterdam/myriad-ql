@@ -25,7 +25,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type, MessageBag
     public Type visit(Negation node, MessageBag messages) {
         Type innerExpressionType = node.getExpression().accept(this, messages);
 
-        if (!(innerExpressionType instanceof BooleanType)) {
+        if (!innerExpressionType.isBoolean()) {
             messages.addError(new TypeMismatchException(new BooleanType(), innerExpressionType));
         }
 
@@ -42,7 +42,7 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type, MessageBag
     public Type visit(Increment node, MessageBag messages) {
         Type innerExpressionType = node.getExpression().accept(this, messages);
 
-        if (!(innerExpressionType instanceof NumberType)) {
+        if (!(innerExpressionType.isNumeric())) {
             messages.addError(new NumberExpectedException(innerExpressionType));
         }
 
@@ -173,7 +173,6 @@ public class ExpressionTypeChecker implements ExpressionVisitor<Type, MessageBag
             messages.addError(new TypeMismatchException(leftType, rightType));
         }
 
-        // todo make UndefinedType
         return leftType;
     }
 }

@@ -1,12 +1,15 @@
 package org.ql.ast.expression.literal;
 
+import org.ql.ast.Expression;
 import org.ql.ast.expression.ExpressionVisitor;
 
 import java.math.BigDecimal;
 
-public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
+public class DecimalLiteral extends Expression {
+    private BigDecimal value;
+
     public DecimalLiteral(BigDecimal value) {
-        super(value);
+        this.value = value;
     }
 
     @Override
@@ -17,6 +20,6 @@ public class DecimalLiteral extends AbstractLiteral<BigDecimal> {
     // TODO specific AST visitor exception OR skip (rely on RuntimeException)
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
-         return visitor.visit(this, context);
-     }
+        return visitor.visit(this, context);
+    }
 }

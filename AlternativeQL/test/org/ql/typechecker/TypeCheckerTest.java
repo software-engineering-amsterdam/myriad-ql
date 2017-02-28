@@ -7,7 +7,6 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
-import org.ql.ast.type.Type;
 import org.ql.collection.collector.FormQuestionCollector;
 import org.ql.collection.collector.QuestionVisitor;
 import org.ql.typechecker.messages.MessageBag;
@@ -15,8 +14,8 @@ import org.ql.typechecker.messages.MessageBag;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TypeCheckerTest {
 

@@ -1,7 +1,7 @@
 package org.ql.typechecker.messages;
 
-import org.ql.ast.SourceLocation;
 import org.ql.ast.Node;
+import org.ql.ast.SourceLocation;
 import org.ql.typechecker.expression.TypeError;
 
 import java.util.ArrayList;
