@@ -1,17 +1,17 @@
 package ast.type;
 
-import ast.Visitor;
+import ast.TypeVisitor;
 
 public class BooleanType extends Type {
 	
     // TODO why can you not use the constructor of superclass Type directly
-	public BooleanType() {
-		super("boolean");
+	public BooleanType(int line) {
+		super("boolean", line);
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		// TODO empty accept
+	public void accept(TypeVisitor v) {
+		v.visit(this);
 		
 	}
 

@@ -16,6 +16,16 @@ public class Money extends Number {
     }
 
     @Override
+    public Type getType() {
+        return Type.MONEY;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return super.conformsToType(type) || type == Type.MONEY;
+    }
+
+    @Override
     public String computableString() {
         return super.toString();
     }

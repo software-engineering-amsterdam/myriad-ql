@@ -7,7 +7,7 @@ import org.ql.ast.Statement;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
 
-public class Question implements Statement {
+public class Question extends Statement {
     private final Identifier id;
     private final QuestionText questionText;
     private final Type type;
@@ -34,5 +34,10 @@ public class Question implements Statement {
 
     public Expression getDefaultValue() {
         return defaultValue;
+    }
+
+    @Override
+    public <T> T accept(StatementVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

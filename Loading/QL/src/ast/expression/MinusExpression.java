@@ -1,19 +1,24 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
+import semantic.Environment;
 
 public class MinusExpression extends UnaryExpression {
 
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-		
+	public MinusExpression(Expression lhs, int line) {
+		super(lhs, line);
 	}
 
 	@Override
-	public Atom evaluate() {
-		return getLhs().min();
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
+
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().min();
+//	}
 
 }

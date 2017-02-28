@@ -1,83 +1,59 @@
 package ui;
 
 import ast.type.Type;
-import value.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
+import value.Value;
 
 public class QuestionnaireQuestion {
-	
+
 	private String name;
 	private String label;
 	private Type type;
-	private Control entryField;
-	
+	private QControl entryField;
+
 	public QuestionnaireQuestion(String name, String label, Type type) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
 		this.entryField = deriveField(type);
 	}
-	
-	// TODO move to field
-	private Control deriveField(Type type) {
+
+	// TODO move to type or add type visitor
+	private QControl deriveField(Type type) {
         if ("string" == type.getType()) {
-        	return new TextField();
+        	return new QControl(new ui.field.Text(name));
         } else if ("boolean" == type.getType()) {
-        	return new CheckBox();
+        	return new QControl(new ui.field.Check(name));
         } else if ("integer" == type.getType()) {
-        	TextField field = new TextField();
-        	field.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d*")) {
-                        (field).setText(newValue.replaceAll("[^\\d]", ""));
-                    }
-                }
-            });
-        	return field;
+        	return new QControl(new ui.field.Number(name));
         } else {
-        	// TODO error
+        	System.out.println("unknown type!");
         	return null;
-        }        	
+        }
 	}
-	
-	
-	// TODO move to field
+
 	// TODO default return statement
 	public Value getAnswer() {
-		if ("boolean" == type.getType()) {
-			return new BoolValue(((CheckBox) entryField).isSelected());
-		} else {
-			String str = ((TextField) entryField).getText();
-			if (str.isEmpty()) {
-				return new EmptyValue();
-			} else if ("string" == type.getType()) {
-				return new StringValue(str);
-			} else {
-				return new IntegerValue(Integer.valueOf(str));
-			}
-		
-		}
+		return entryField.getAnswer();
 	}
-	
+
+	public void setAnswer(Value value) {
+		entryField.setAnswer(value);
+	}
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}
-	
+
 	public Type getType() {
 		return type;
 	}
-	
-	public Control getEntryField() {
+
+	public QControl getEntryField() {
 		return entryField;
 	}
-	
+
 }

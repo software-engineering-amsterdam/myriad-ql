@@ -1,33 +1,84 @@
 package sc.ql.checkform;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import sc.ql.model.form_elements.*;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
+import sc.ql.model.Atoms.AtomId;
 
 public class CheckForm {
-
-	public CheckForm(Form form) {
+	public CheckForm(Form form) throws Exception {
+		List<FormElement> form_elements = form.getFormElements();
+		List<Question> questions = createQuestionsList(form_elements);
+				
+		checkQuestions(questions);
 		
-		checkFormElements(form.getFormElements());
-		
-		
+		try {
+			CheckConditions condition_visitor = new CheckConditions(createIdTypeHashmap(questions));
+			for (FormElement form_element : form_elements) {
+				form_element.accept(condition_visitor);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
-	private void checkFormElements(List<FormElement> form_elements) {
+	private HashMap<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
+		HashMap<String, Question.Type> identifier_types = new HashMap<String, Question.Type>();
+		
+		for (Question question : questions) {
+			identifier_types.put(question.getId().getValue(), question.getType());
+		}
+		
+		return identifier_types;
+	}
+	
+	private void checkQuestions(List<Question> questions) throws Exception {
+		HashMap<AtomId, Question> identifier_hm = new HashMap<AtomId, Question>();
+		HashMap<String, Question> question_hm = new HashMap<String, Question>();
+		
+		for (Question question : questions) {
+			if (question.getQuestion().isEmpty()) {
+				throw new Exception("Undefined question '"+question.getId().getValue()+"' at line: "+question.getLineNumber());
+			}
+			
+			// Check for duplicate identifiers
+			AtomId identifier = question.getId();
+			if (identifier_hm.containsKey(identifier)) {
+				throw new Exception("Question '"+question.getId().getValue()+"' already declared at line: "+identifier_hm.get(identifier).getLineNumber());
+			}
+			else {
+				identifier_hm.put(identifier, question);
+			}
+			
+			// Check for duplicate question labels
+			String question_str = question.getQuestion();
+			if (question_hm.containsKey(question_str)) {
+				String first_element = "'"+question_hm.get(question_str).getId().getValue()+"' (line "+question_hm.get(question_str).getLineNumber()+")";
+				String second_element = "'"+question.getId().getValue()+"' (line "+question.getLineNumber()+")";
+				throw new Exception("Question "+first_element+" and question "+second_element+" have the same labels.");
+			}
+			else {
+				question_hm.put(question_str, question);
+			}
+		}
+	}
+	
+	private List<Question> createQuestionsList(List<FormElement> form_elements) {
+		List<Question> questions = new ArrayList<Question>();
+		
 		for (FormElement form_element : form_elements) {
-        	if (form_element.getElementType() == FormElement.Type.QUESTION) {
-        		Question question = (Question) form_element;
-        		System.out.println(question.getQuestion());
-        	}
-        	else if (form_element.getElementType() == FormElement.Type.IF_STATEMENT) {
-        		
-        	}
-        	else {
-        		// error
-        	}
+			try {
+				questions.addAll(form_element.accept(new GetFormQuestions()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
+
+		return questions;
 	}
-	
 }

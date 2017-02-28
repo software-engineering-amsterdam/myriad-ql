@@ -1,7 +1,7 @@
 package org.ql.ast.type;
 
-import org.ql.ast.Node;
+import org.ql.ast.AbstractNode;
 
-public enum Type implements Node {
-    BOOLEAN, FLOAT, INTEGER, STRING, MONEY, DATE
+public abstract class Type extends AbstractNode {
+
 }

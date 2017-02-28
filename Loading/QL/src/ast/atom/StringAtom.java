@@ -1,22 +1,24 @@
 package ast.atom;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
+import ast.type.Type;
 
 public class StringAtom extends Atom {
     private String str;
 
-    public StringAtom(String str) {
+    public StringAtom(String str, int line) {
+    	super(line);
         this.str = str;
     }
 
     @Override
 	public BoolAtom eq(Atom other) {
-		return new BoolAtom(str == other.getString());
+		return new BoolAtom(str == other.getString(), getLine());
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(str != other.getString());
+		return new BoolAtom(str != other.getString(), getLine());
 	}
 		
 	@Override
@@ -28,10 +30,15 @@ public class StringAtom extends Atom {
 	public String getType() {
 		return "string";
 	}
-	
+
+//	@Override
+//	public Atom evaluate(Environment env) {
+//		return this;
+//	}
+
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
 }

@@ -25,7 +25,7 @@
             Assert.Equal("fuckingShit", castAstTree.Id);
             Assert.Equal(2, castAstTree.Pages.Count);
             Assert.True(castAstTree.Pages
-                .Select(x => x.Nodes.Count == 0)
+                .Select(x => !x.Sections.Any() && !x.ValueTypeRules.Any())
                 .Aggregate((x, y) => x && y));
 
             Assert.Equal("Page1", castAstTree.Pages.ElementAt(0).Id);

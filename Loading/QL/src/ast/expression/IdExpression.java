@@ -1,16 +1,19 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
+import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class IdExpression extends Expression {
 
 	private String name;
 	
-	public IdExpression(String name) {
+	public IdExpression(String name, int line) {
+		super(line);
 		this.name = name;
 	}
 
@@ -19,17 +22,13 @@ public class IdExpression extends Expression {
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 	
-	@Override
-	public Atom evaluate() {
-
-		System.out.println("name: " + name);
-		// TODO we need all operations here?
-		// TODO get value of name from Environment
-		return new BoolAtom(false); // TODO actually return unknown variable : not a string
-	}
-	
+//	@Override
+//	public Atom evaluate() {
+//		System.out.println("idExpression evaluate();");
+//		return new BoolAtom(false, getLine());
+//	}
 }

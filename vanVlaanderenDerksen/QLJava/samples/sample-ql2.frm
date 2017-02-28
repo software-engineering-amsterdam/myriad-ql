@@ -1,8 +1,10 @@
 form
-	"What was the \\"buying price\\"?" buyingPrice MONEY
-	"What was the \\"selling price\\"?" sellingPrice MONEY = (5 - 3) / 2 + 5
-	
-	if (true)
-		"Vraag 2" vraag2 BOOLEAN
+	"dit is een test" buyingPrice BOOLEAN
+	"dit is een test 2" buyingPrice2 INTEGER
+
+	if (buyingPrice || false)
+		"nog een vraag" vraag4 STRING
+	else
+		"nog een vraag 7" vraag7 STRING
 	endif
 endform

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Number implements ASTNode, Value {
+public class Number extends Value implements ASTNode {
     protected BigDecimal value;
 
     public Number(double value) {
@@ -29,6 +29,16 @@ public class Number implements ASTNode, Value {
         } catch (NumberFormatException ex) {
             this.value = new BigDecimal(0);
         }
+    }
+
+    @Override
+    public Type getType() {
+        return Type.DECIMAL;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return type == Type.DECIMAL || type == Type.INTEGER;
     }
 
     public double doubleValue() {

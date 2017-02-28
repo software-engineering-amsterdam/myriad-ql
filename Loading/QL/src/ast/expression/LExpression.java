@@ -1,18 +1,24 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
+import semantic.Environment;
 
 public class LExpression extends BinaryExpression {
 
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public LExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
 	}
 
 	@Override
-	public Atom evaluate() {
-		// TODO Auto-generated method stub
-		return getLhs().less(getRhs());
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
+
+//	@Override
+//	public Atom evaluate() {
+//		// TODO Auto-generated method stub
+//		return getLhs().evaluate().less(getRhs().evaluate());
+//	}
 }

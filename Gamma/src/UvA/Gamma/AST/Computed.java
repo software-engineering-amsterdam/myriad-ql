@@ -1,8 +1,12 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.Expression;
+import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.*;
 import javafx.beans.property.StringProperty;
+
+import java.util.Arrays;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -10,7 +14,6 @@ import javafx.beans.property.StringProperty;
 public class Computed implements FormItem {
     private String label;
     private String id;
-    private String type;
     public Expression expression;
 
     public String getLabel() {
@@ -21,20 +24,12 @@ public class Computed implements FormItem {
         this.label = label;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setValue(Value value) {
+        this.expression.setValue(value);
     }
 
     public void setExpression(Expression expression) {
@@ -42,10 +37,45 @@ public class Computed implements FormItem {
     }
 
     @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
     public void idChanged(Form root, String id, String value) {
         if (expression.idChanged(id, value)) {
             root.idChanged(this.id, this.expression.toString());
         }
+    }
+
+    @Override
+    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
+        validator.validateRedeclaration(this);
+        validator.validateCyclicDependency(this);
+        for (String id : expression.getIds()) {
+            validator.validateId(id);
+            validator.validateIdentifierType(id, getType());
+        }
+    }
+
+    @Override
+    public boolean conformsToType(Value.Type type) {
+        return expression.getValue().conformsToType(type);
+    }
+
+    @Override
+    public boolean isDependentOn(String id) {
+        return Arrays.stream(expression.getIds()).anyMatch(i -> i.equals(id));
+    }
+
+    @Override
+    public Value.Type getType() {
+        return expression.getValue().getType();
+    }
+
+    @Override
+    public boolean hasId(String id) {
+        return this.id.equals(id);
     }
 
     @Override
@@ -60,6 +90,6 @@ public class Computed implements FormItem {
 
     @Override
     public String toString() {
-        return "<Computed>: " + label + " " + id + ": " + type + " = " + expression;
+        return "<Computed>: " + label + " " + id + ": " + expression.getValue().getType() + " = " + expression;
     }
 }

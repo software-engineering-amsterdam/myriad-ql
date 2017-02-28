@@ -1,5 +1,7 @@
 package value;
 
+import ast.type.BooleanType;
+import ast.type.Type;
 
 public class BoolValue extends Value {
 	
@@ -12,5 +14,10 @@ public class BoolValue extends Value {
 	@Override
 	public Object getValue() {
 		return value;
+	}
+
+	@Override
+	public Type getType() {
+		return new BooleanType(0);
 	}
 }

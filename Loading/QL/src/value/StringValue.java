@@ -1,5 +1,7 @@
 package value;
 
+import ast.type.StringType;
+import ast.type.Type;
 
 public class StringValue extends Value {
 	
@@ -12,5 +14,10 @@ public class StringValue extends Value {
 	@Override
 	public Object getValue() {
 		return value;
+	}
+
+	@Override
+	public Type getType() {
+		return new StringType(0);
 	}
 }
