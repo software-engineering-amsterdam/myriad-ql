@@ -1,4 +1,4 @@
-module UI.Messages exposing (error, warning, location, locations, varName, ids)
+module UI.Messages exposing (error, warning, renderLocation, renderLocations, renderVarName, renderIds)
 
 import QL.AST exposing (Location(Location), Id)
 import Html exposing (Html, div, text, b, span)
@@ -15,18 +15,18 @@ warning =
     div [ class "alert", class "alert-warning" ]
 
 
-location : Location -> Html msg
-location location =
+renderLocation : Location -> Html msg
+renderLocation location =
     b [] [ text <| locationToString location ]
 
 
-locations : List Location -> Html msg
-locations locs =
-    span [] (List.map location locs |> List.intersperse (text ", "))
+renderLocations : List Location -> Html msg
+renderLocations locs =
+    span [] (List.map renderLocation locs |> List.intersperse (text ", "))
 
 
-varName : String -> Html msg
-varName name =
+renderVarName : String -> Html msg
+renderVarName name =
     b [] [ text name ]
 
 
@@ -35,11 +35,11 @@ locationToString (Location line col) =
     "line " ++ toString line ++ " ( col " ++ toString col ++ " )"
 
 
-id : Id -> Html msg
-id ( name, loc ) =
-    span [] [ varName name, text " at ", location loc ]
+renderId : Id -> Html msg
+renderId ( name, loc ) =
+    span [] [ renderVarName name, text " at ", renderLocation loc ]
 
 
-ids : List Id -> Html msg
-ids idList =
-    span [] (List.map id idList |> List.intersperse (text ", "))
+renderIds : List Id -> Html msg
+renderIds idList =
+    span [] (List.map renderId idList |> List.intersperse (text ", "))

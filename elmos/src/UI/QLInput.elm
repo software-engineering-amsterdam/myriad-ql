@@ -120,18 +120,18 @@ renderMessage message =
         Error (DuplicateQuestionDefinition name locations) ->
             UI.Messages.error
                 [ text "Duplicate question definitions for variable "
-                , UI.Messages.varName name
+                , UI.Messages.renderVarName name
                 , text " at the following locations: [ "
-                , UI.Messages.locations locations
+                , UI.Messages.renderLocations locations
                 , text "]"
                 ]
 
         Error (ReferenceToUndefinedQuestion ( name, loc )) ->
             UI.Messages.error
                 [ text <| "Reference to undefined variable "
-                , UI.Messages.varName name
+                , UI.Messages.renderVarName name
                 , text " at "
-                , UI.Messages.location loc
+                , UI.Messages.renderLocation loc
                 ]
 
         Error (DependencyCycle cycle) ->
@@ -158,7 +158,7 @@ renderMessage message =
                 ([ text "label \""
                  , b [] [ text label ]
                  , text "\" is used for multiple questions : "
-                 , UI.Messages.ids ids
+                 , UI.Messages.renderIds ids
                  ]
                 )
 
@@ -168,5 +168,5 @@ operatorMismatchMessage operator loc leftType rightType =
     UI.Messages.error
         [ b [] [ text <| toString operator ]
         , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
-        , UI.Messages.location loc
+        , UI.Messages.renderLocation loc
         ]
