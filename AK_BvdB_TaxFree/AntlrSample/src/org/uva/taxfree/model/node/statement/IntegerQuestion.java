@@ -19,7 +19,7 @@ public class IntegerQuestion extends NamedNode {
     }
 
     @Override
-    public String resolve() {
+    public String resolveValue() {
         return mTextField.getValue().toString();
     }
 

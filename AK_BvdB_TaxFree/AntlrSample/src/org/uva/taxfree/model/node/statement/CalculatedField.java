@@ -35,12 +35,12 @@ public abstract class CalculatedField extends NamedNode {
 
     @Override
     public void setVisibility(boolean isVisible) {
-        mTextField.setText(resolve());
+        mTextField.setText(resolveValue());
         super.setVisibility(isVisible);
     }
 
     @Override
-    public String resolve() {
+    public String resolveValue() {
         return mCondition.evaluate();
     }
 

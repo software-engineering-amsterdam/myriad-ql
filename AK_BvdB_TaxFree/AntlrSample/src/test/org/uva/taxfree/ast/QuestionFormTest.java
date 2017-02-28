@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.uva.taxfree.gui.QuestionForm;
-import org.uva.taxfree.model.*;
+import org.uva.taxfree.model.FormRenderer;
 import org.uva.taxfree.model.node.FormNode;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.condition.ConditionNode;
@@ -14,10 +14,10 @@ import org.uva.taxfree.model.node.expression.BooleanExpressionNode;
 import org.uva.taxfree.model.node.expression.CalculationExpressionNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
-import org.uva.taxfree.model.node.statement.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.statement.*;
 
 import java.util.Timer;
 
@@ -96,7 +96,7 @@ public class QuestionFormTest {
         expCalc.addChild(variableSold);
         expCalc.addChild(variableBought);
 
-        Assert.assertEquals(expCalc.resolve(), "(0-0)", "Nodes should have ability to resolve data");
+        Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
         mRoot.addChild(intCalc);
         expCalc.evaluate();

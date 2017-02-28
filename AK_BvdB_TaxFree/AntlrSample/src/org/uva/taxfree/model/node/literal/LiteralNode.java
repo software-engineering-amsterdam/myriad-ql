@@ -10,12 +10,7 @@ public abstract class LiteralNode extends ConditionNode {
         mId = id;
     }
 
-    @Override
-    public String toString() {
-        return resolve();
-    }
-
-    public String resolve() {
+    public String resolveValue() {
         return mId;
     }
 

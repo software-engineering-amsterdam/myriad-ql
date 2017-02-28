@@ -44,9 +44,6 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    // declare abstract to force implementation. default Object.toString() is not declared abstract
-    public abstract String toString();
-
     public void printAll() {
         System.out.println(toString());
         for (Node child : mChildren) {

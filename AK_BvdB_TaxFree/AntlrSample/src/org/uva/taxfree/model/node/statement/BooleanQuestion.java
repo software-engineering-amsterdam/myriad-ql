@@ -15,7 +15,7 @@ public class BooleanQuestion extends NamedNode {
     }
 
     @Override
-    protected String resolve() {
+    public String resolveValue() {
         return String.valueOf(isTrue());
     }
 

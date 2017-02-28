@@ -51,5 +51,5 @@ public abstract class NamedNode extends Node {
         return mLabel;
     }
 
-    protected abstract String resolve();
+    public abstract String resolveValue();
 }

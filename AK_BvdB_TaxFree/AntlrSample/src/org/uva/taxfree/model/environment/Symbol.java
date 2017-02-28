@@ -15,7 +15,7 @@ public class Symbol {
         return mReference.toString();
     }
 
-    public String resolve() {
-        return mReference.resolve();
+    public String resolveValue() {
+        return mReference.resolveValue();
     }
 }
