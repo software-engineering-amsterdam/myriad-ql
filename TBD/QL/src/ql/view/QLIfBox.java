@@ -1,9 +1,9 @@
-package ql.view.elements;
+package ql.view;
 
 import javafx.scene.layout.VBox;
 
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLIfElseBox extends VBox {
+public class QLIfBox extends VBox {
 }

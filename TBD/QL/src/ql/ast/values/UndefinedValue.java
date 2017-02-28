@@ -1,7 +1,6 @@
 package ql.ast.values;
 
-import ql.ast.types.ErrorType;
-import ql.ast.types.FloatType;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by Erik on 21-2-2017.
@@ -10,85 +9,114 @@ public class UndefinedValue extends Value<String> {
 
     @Override
     public String getValue() {
-        return "Undefined";
+        return "";
     }
 
-    @Override
-    public String toString() {
-        return "Undefined";
-    }
-
-    @Override
     public Value add(Value other) {
         return this;
     }
 
-    @Override
+    protected Value addEval(IntValue other) {
+        return this;
+    }
+
+    protected Value addEval(FloatValue other) {
+        return this;
+    }
+
+
     public Value mul(Value other) {
         return this;
     }
 
-    @Override
+    protected Value mulEval(IntValue other) {
+        return this;
+    }
+
+    protected Value mulEval(FloatValue other) {
+        return this;
+    }
+
+
     public Value div(Value other) {
         return this;
     }
 
-    @Override
+    protected Value divEval(IntValue other) {
+        return this;
+    }
+
+    protected Value divEval(FloatValue other) {
+        return this;
+    }
+
+
     public Value gT(Value other) {
         return this;
     }
 
-    @Override
+    protected Value gTEval(IntValue other) {
+        return this;
+    }
+
+    protected Value gTEval(FloatValue other) {
+        return this;
+    }
+
+
     public Value and(Value other) {
         return this;
     }
 
-    @Override
+    protected Value andEval(BooleanValue other) {
+        return this;
+    }
+
+
     public Value or(Value other) {
         return this;
     }
 
-    @Override
+    protected Value orEval(BooleanValue other) {
+        return this;
+    }
+
+
     public Value gEq(Value other) {
         return this;
     }
 
-    @Override
     public Value lEq(Value other) {
         return this;
     }
 
-    @Override
     public Value lT(Value other) {
         return this;
     }
 
-    @Override
     public Value sub(Value other) {
         return this;
     }
 
-    @Override
+
     public Value eq(Value other) {
-        return this;
+        return new BooleanValue(other.equals(this));
     }
 
-    @Override
     public Value nEq(Value other) {
-        return this;
+        return new BooleanValue(!other.equals(this));
     }
 
-    @Override
+        /* Mono operators */
+
     public Value neg() {
         return this;
     }
 
-    @Override
     public Value not() {
         return this;
     }
 
-    @Override
     public Value pos() {
         return this;
     }

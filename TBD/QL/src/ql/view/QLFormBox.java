@@ -1,4 +1,4 @@
-package ql.view.elements;
+package ql.view;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
  */
 public class QLFormBox extends VBox {
 
-    public QLFormBox(String name, QLStatementsBox statementsBox) {
+    public QLFormBox(String name, VBox statementsBox) {
         this.setPadding(new Insets(10));
         this.setSpacing(8);
 

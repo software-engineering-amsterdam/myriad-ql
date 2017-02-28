@@ -3,9 +3,12 @@ package ql.ast.visistor;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
-import ql.ast.visistor.environment.Environment;
-import ql.view.FormGenerator;
+import ql.ast.environment.Environment;
+import ql.view.QLFormBox;
+import ql.view.QLQuestionBox;
+import ql.view.QLStatementsBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +16,9 @@ import java.util.List;
  */
 public class ViewASTVisitor extends ASTVisitor<VBox> {
     private final Environment environment;
-    private final FormGenerator formGenerator;
 
     public ViewASTVisitor(Environment environment) {
         this.environment = environment;
-        this.formGenerator = new FormGenerator(environment);
     }
 
     public Scene startVisitor(ASTNode node) {
@@ -25,18 +26,26 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
     }
 
     public VBox visit(Form node) {
-        VBox hbox = node.getStatements().accept(this);
-        return hbox;
+        VBox statements = node.getStatements().accept(this);
+        QLFormBox formBox = new QLFormBox(node.getName(), statements);
+
+        return formBox;
     }
 
 
     public VBox visit(Statements node) {
 
         List<Statement> statements = node.getStatements();
+        List<VBox> statementBoxes = new ArrayList<>();
         for (Statement statement: statements) {
-            statement.accept(this);
+            VBox stat = statement.accept(this);
+            if(stat != null)
+                statementBoxes.add(stat);
         }
-        return null;
+
+        QLStatementsBox statementsBox = new QLStatementsBox();
+        statementsBox.addStatements(statementBoxes.toArray(new VBox[statementBoxes.size()]));
+        return statementsBox;
     }
 
     public VBox visit(If node) {
@@ -54,13 +63,15 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
 
 
     public VBox visit(Question node) {
-        return null;
+        System.out.println("1:  " + node.getId());
+        return new QLQuestionBox(environment, node.getQuestion(), node.getId());
+
     }
 
 
 
     public VBox visit(QuestionExpr node) {
-        node.getExpr().accept(this);
-        return null;
+        System.out.println("2:  " + node.getId());
+        return new QLQuestionBox(environment, node.getQuestion(), node.getId());
     }
 }

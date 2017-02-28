@@ -7,7 +7,7 @@ import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.values.Value;
-import ql.ast.visistor.environment.Environment;
+import ql.ast.environment.Environment;
 
 /**
  * Created by Erik on 14-2-2017.

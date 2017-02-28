@@ -1,14 +1,11 @@
 package ql;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ql.ast.types.NumType;
 import ql.ast.visistor.*;
-import ql.ast.visistor.environment.Environment;
+import ql.ast.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
-import ql.view.elements.QLFormBox;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,8 +24,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
-            //reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
-            reader = new FileReader("/home/rico/Desktop/test.txt");
+            reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
+            //reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
 
@@ -47,6 +44,10 @@ public class Main extends Application {
 
             TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
             typeVisitor.startVisitor(parser.getResult());
+
+            ViewASTVisitor viewASTVisitor = new ViewASTVisitor(env);
+            primaryStage.setScene(viewASTVisitor.startVisitor(parser.getResult()));
+            primaryStage.show();
 /*
 
             env.setVariableValue("hasBoughtHouse", new IntValue(6));
@@ -54,12 +55,12 @@ public class Main extends Application {
 
             /*FormGenerator formGenerator = new FormGenerator(env);*/
 
-            QLFormBox formBox = new QLFormBox("test");
+/*            QLFormBox formBox = new QLFormBox("test");
 
             NumType num = new NumType();
             formBox.addQuestion("Did you sell a house in 2011?", num, null);
             primaryStage.setScene(new Scene(formBox));
-            primaryStage.show();
+            primaryStage.show();*/
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

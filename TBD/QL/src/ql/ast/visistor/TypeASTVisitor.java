@@ -7,13 +7,9 @@ import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.visistor.environment.Environment;
+import ql.ast.environment.Environment;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Erik on 14-2-2017.

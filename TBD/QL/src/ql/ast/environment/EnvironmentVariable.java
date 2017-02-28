@@ -1,4 +1,4 @@
-package ql.ast.visistor.environment;
+package ql.ast.environment;
 
 import ql.ast.Expr;
 import ql.ast.types.Type;
@@ -13,34 +13,34 @@ public class EnvironmentVariable {
     private Value value;
     private Expr expr = null;
 
-    public EnvironmentVariable(Type type) {
+    protected EnvironmentVariable(Type type) {
         this.type = type;
         this.value = new UndefinedValue();
     }
 
-    public EnvironmentVariable(Type type, Expr expr) {
+    protected EnvironmentVariable(Type type, Expr expr) {
         this(type);
         this.expr = expr;
     }
 
 
-    public Type getType() {
+    protected Type getType() {
         return type;
     }
 
-    public void setValue(Value value) {
+    protected void setValue(Value value) {
         this.value = value;
     }
 
-    public Value getValue() {
+    protected Value getValue() {
         return value;
     }
 
-    public boolean hasExpr() {
+    protected boolean hasExpr() {
         return expr != null;
     }
 
-    public Expr getExpr() {
+    protected Expr getExpr() {
         return expr;
     }
 }

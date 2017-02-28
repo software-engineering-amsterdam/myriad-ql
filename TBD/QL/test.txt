@@ -1,21 +1,24 @@
 form taxOfficeExample {
   "Did you sell a house in 2010?"
-    hasSoldHouse: boolean
+    hasSoldHouse: int
   "Did you buy a house in 2010?"
     hasBoughtHouse: int
-  "Did you enter a loan?"
-    hasMaintLoan: boolean
+   "asnwered?"
+    hasBoughtHouses: int =
+     (2 * hasBoughtHouse + hasSoldHouse)
 
-  if (hasSoldHouse) {
-    "What was the selling price?"
-      sellingPrice: int
-    "Private debts for the sold house:"
-      privateDebt: int
-    "Value residue:"
-      valueResidue: int =
-            (sellingPrice - hasBoughtHouse)
-     "Private debts for the sold house:"
-       test: int =
-                (5 + hasBoughtHouse)
-  }
+       "Did you sell a house in 2010?"
+         hasSoldHouse2: float
+        "asnwered?"
+         hasBoughtHouses2: float =
+          (2 * hasSoldHouse2 + hasSoldHouse)
+  "Did you enter a loan?"
+    hasMaintLoan: string
+
+      "Did you enter a loan?"
+        hasMaintLoan3: boolean
+
+             "Did you enter a loan?"
+               hasMaintLoan5: boolean =
+                hasMaintLoan3
 }

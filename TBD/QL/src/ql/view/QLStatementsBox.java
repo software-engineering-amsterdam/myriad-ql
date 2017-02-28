@@ -1,4 +1,4 @@
-package ql.view.elements;
+package ql.view;
 
 import javafx.scene.layout.VBox;
 

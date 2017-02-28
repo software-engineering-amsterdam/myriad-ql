@@ -1,11 +1,8 @@
 package ql.view;
 
 import javafx.beans.value.ChangeListener;
-import ql.ast.values.BooleanValue;
-import ql.ast.values.FloatValue;
-import ql.ast.values.IntValue;
-import ql.ast.values.StringValue;
-import ql.ast.visistor.environment.Environment;
+import ql.ast.values.*;
+import ql.ast.environment.Environment;
 
 /**
  * Created by rico on 27-2-17.
@@ -20,6 +17,9 @@ public abstract class QLChangeListener<T> implements ChangeListener<T> {
     }
 
     public void setValue(String value) {
+        if (value.isEmpty() || value.equals("")){
+            environment.setVariableValue(key, new UndefinedValue());
+        }
         environment.setVariableValue(key, new StringValue(value));
     }
 
@@ -33,5 +33,9 @@ public abstract class QLChangeListener<T> implements ChangeListener<T> {
 
     public void setValue(float value) {
         environment.setVariableValue(key, new FloatValue(value));
+    }
+
+    public void setValueUndefined() {
+        environment.setVariableValue(key, new UndefinedValue());
     }
 }
