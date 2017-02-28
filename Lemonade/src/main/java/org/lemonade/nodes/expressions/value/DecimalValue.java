@@ -36,11 +36,6 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericValue<?> plus(NumericValue<?> that) {
-        return that.plus(this);
-    }
-
-
     public DecimalValue minus(IntegerValue that) {
         return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
     }
@@ -51,10 +46,6 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
 
     public MoneyValue minus(final MoneyValue that) {
         return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
-    }
-
-    public NumericValue<?> minus(final NumericValue<?> that) {
-        return that.plus(this).product(new IntegerValue(new QLIntegerType(), -1));
     }
 
     public DecimalValue product(final IntegerValue that) {

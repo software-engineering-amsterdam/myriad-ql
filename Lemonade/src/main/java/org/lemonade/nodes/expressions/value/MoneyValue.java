@@ -36,10 +36,6 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericValue<?> plus(NumericValue<?> that) {
-        return that.plus(this);
-    }
-
     public MoneyValue minus(final IntegerValue that) {
         return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
     }

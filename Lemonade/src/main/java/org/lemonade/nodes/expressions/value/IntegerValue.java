@@ -36,10 +36,6 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericValue<?> plus(NumericValue<?> that) {
-        return that.plus(this);
-    }
-
     public IntegerValue product(IntegerValue that) {
         return new IntegerValue(new QLIntegerType(), this.getValue() * that.getValue());
     }

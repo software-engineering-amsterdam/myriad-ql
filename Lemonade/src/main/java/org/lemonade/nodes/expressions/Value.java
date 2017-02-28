@@ -76,4 +76,9 @@ public abstract class Value<T> extends Expression {
     public Value<?> neg() {
         return null;
     }
+
+    @Override
+    public int hashCode() {
+        return getValue().hashCode();
+    }
 }

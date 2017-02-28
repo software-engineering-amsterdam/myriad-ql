@@ -25,22 +25,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class EvaluateTest {
 
-<<<<<<< Updated upstream
+    private IntegerValue zero;
     private IntegerValue two;
     private IntegerValue one;
+    private DecimalValue zeroPointFive;
     private DecimalValue onePointFive;
+    private DecimalValue twoPointZero;
     private MoneyValue oneFifty;
     private NumericValue<?> onePointTwo;
-=======
-    IntegerValue zero;
-    IntegerValue two;
-    IntegerValue one;
-    DecimalValue zeroPointFive;
-    DecimalValue onePointFive;
-    DecimalValue twoPointZero;
-    MoneyValue oneFifty;
-    NumericValue onePointTwo;
->>>>>>> Stashed changes
+
 
     DateValue date;
     DateValue dateTwo;
@@ -99,7 +92,6 @@ public class EvaluateTest {
         assertThat(onePlusOnePointTwo).isInstanceOf(DecimalValue.class);
     }
 
-<<<<<<< Updated upstream
     @Test
     public void testNumericMinus() {
         IntegerValue twoMinusOne = two.minus(one);
@@ -119,28 +111,6 @@ public class EvaluateTest {
         assertThat(twoMinusOnePointTwo.getValue()).isEqualTo(0.8);
         assertThat(twoMinusOnePointTwo).isInstanceOf(DecimalValue.class);
     }
-=======
-    //
-    //    @Test
-    //    public void testNumericMinus() {
-    //        IntegerValue twoMinusOne = two.minus(one);
-    //        DecimalValue twoMinusOnePointFive = two.minus(onePointFive);
-    //        MoneyValue twoMinusOneFifty = two.minus(oneFifty);
-    //        NumericValue twoMinusOnePointTwo = two.minus(onePointTwo);
-    //
-    //        assertThat(twoMinusOne.getValue()).isEqualTo(1);
-    //        assertThat(twoMinusOne).isInstanceOf(IntegerValue.class);
-    //
-    //        assertThat(twoMinusOnePointFive.getValue()).isEqualTo(0.5);
-    //        assertThat(twoMinusOnePointFive).isInstanceOf(DecimalValue.class);
-    //
-    //        assertThat(twoMinusOneFifty.getValue()).isEqualTo(0.5);
-    //        assertThat(twoMinusOneFifty).isInstanceOf(MoneyValue.class);
-    //
-    //        assertThat(twoMinusOnePointTwo.getValue()).isEqualTo(0.8);
-    //        assertThat(twoMinusOnePointTwo).isInstanceOf(DecimalValue.class);
-    //    }
->>>>>>> Stashed changes
 
     @Test
     public void testNumericProduct() {

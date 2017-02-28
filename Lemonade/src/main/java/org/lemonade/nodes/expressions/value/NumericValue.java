@@ -19,7 +19,6 @@ public abstract class NumericValue<T> extends Value<T> {
     public abstract NumericValue<?> plus(IntegerValue that);
     public abstract NumericValue<?> plus(DecimalValue that);
     public abstract NumericValue<?> plus(MoneyValue that);
-    public abstract NumericValue<?> plus(NumericValue<?> that);
 
     public abstract NumericValue<?> minus(IntegerValue that);
     public abstract NumericValue<?> minus(DecimalValue that);
@@ -32,6 +31,18 @@ public abstract class NumericValue<T> extends Value<T> {
     public abstract NumericValue<?> divide(IntegerValue that);
     public abstract NumericValue<?> divide(DecimalValue that);
     public abstract NumericValue<?> divide(MoneyValue that);
+
+    public NumericValue<?> plus(NumericValue<?> that) {
+        if (that.getType().isOf(QLIntegerType.class)) {
+            return this.plus((IntegerValue) that);
+        } else if (that.getType().isOf(QLDecimalType.class)) {
+            return this.plus((DecimalValue) that);
+        } else if (that.getType().isOf(QLMoneyType.class)) {
+            return this.plus((MoneyValue) that);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 
     public NumericValue<?> product(final NumericValue<?> that) {
         if (that.getType().isOf(QLIntegerType.class)) {
