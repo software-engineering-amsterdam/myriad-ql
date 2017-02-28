@@ -5,108 +5,101 @@ module QL
 
       def initialize(args)
         @question = args[:question]
-        p @question
+      end
+
+      def frame
+        @question.frame
+      end
+
+      def variable
+        @question.variable
+      end
+
+      def callback
+        @question.gui.value_changed
       end
     end
 
     class RadioWidget < Widget
       def initialize(args)
         super
-        create_radio_button(args[:true_value], true)
-        create_radio_button(args[:false_value], false)
-      end
+        radio_button          = TkRadioButton.new(frame).pack
+        radio_button.text     = args[:true_value]
+        radio_button.value    = true
+        radio_button.variable = variable
+        radio_button.command  = proc { callback }
 
-      def create_radio_button(text, value)
-        radio_button          = TkRadioButton.new(@question.frame).pack
-        radio_button.variable = @question.variable
-        radio_button.command  = proc { @question.gui.value_changed }
-        radio_button.text     = text
-        radio_button.value    = value
+        radio_button          = TkRadioButton.new(frame).pack
+        radio_button.text     = args[:false_value]
+        radio_button.value    = false
+        radio_button.variable = variable
+        radio_button.command  = proc { callback }
       end
     end
 
     class CheckboxWidget < Widget
       def initialize(args)
         super
-        create_checkbox_button
-      end
-
-      def create_checkbox_button
-        check_button          = TkCheckButton.new(@question.frame).pack
-        check_button.variable = @question.variable
-        check_button.command  = proc { @question.gui.value_changed }
+        check_button          = TkCheckButton.new(frame).pack
+        check_button.variable = variable
+        check_button.command  = proc { callback }
       end
     end
 
     class DropdownWidget < Widget
       def initialize(args)
         super
-        create_combobox(args[:true_value], args[:false_value])
-      end
-
-      def create_combobox(true_value, false_value)
-        combobox        = Tk::Tile::Combobox.new(@question.frame).pack
-        combobox.values = [true_value, false_value]
+        combobox        = Tk::Tile::Combobox.new(frame).pack
+        combobox.values = [args[:true_value], args[:false_value]]
+        combobox.value = args[:true_value]
         combobox.bind('<ComboboxSelected>') do
-          @question.variable.value = true if combobox.value == true_value
-          @question.variable.value = false if combobox.value == false_value
-          @question.gui.value_changed
+          variable.value = true if combobox.value == args[:true_value]
+          variable.value = false if combobox.value == args[:false_value]
+          callback
         end
-        combobox.value = true_value
       end
     end
 
     class SpinboxWidget < Widget
       def initialize(args)
         super
-        create_spinbox
-      end
-
-      def create_spinbox
-        spinbox = TkSpinbox.new(@question.frame).pack
-        # system's min
-        spinbox.from = -(2**(0.size * 8 -2))
-        # system's max
-        spinbox.to = (2**(0.size * 8 -2) -1)
-        spinbox.value = 0
-        spinbox.textvariable = @question.variable
-        spinbox.command = proc { @question.gui.value_changed }
+        spinbox              = TkSpinbox.new(frame).pack
+        spinbox.from         = -(2**(0.size * 8 -2)) # system's min
+        spinbox.to           = (2**(0.size * 8 -2) -1) # system's max
+        spinbox.value        = 0
+        # spinbox.increment  = 0.1
+        # spinbox.format     = "%.2f"
+        spinbox.textvariable = variable
+        spinbox.command      = proc { callback }
       end
     end
 
     class SliderWidget < Widget
       def initialize(args)
         super
-        create_scale(args[:minimum], args[:maximum])
-      end
-      def create_scale(minimum, maximum)
-        scale = TkScale.new(@question.frame).pack
-        scale.orient 'horizontal'
-        scale.from = minimum
-        scale.to = maximum
-        scale.variable = @question.variable
-        scale.command = proc { @question.gui.value_changed }
+        scale          = TkScale.new(frame).pack
+        scale.from     = args[:minimum]
+        scale.to       = args[:maximum]
+        scale.variable = variable
+        scale.command  = proc { callback }
       end
     end
 
     class TextWidget < Widget
       def initialize(args)
         super
-        create_entry
+        entry              = TkEntry.new(frame).pack
+        entry.textvariable = variable
+        entry.bind('KeyRelease') { callback }
       end
+    end
 
-      def create_entry
-        entry              = TkEntry.new(@question.frame).pack
-        entry.textvariable = @question.variable
-        entry.bind('KeyRelease') do
-          # p @question.variable.type
-          # @question.variable.value = @question.previous_value if entry.value == ''
-          # only if value changes
-          unless @question.previous_value == entry.value
-            @question.gui.value_changed
-            @question.previous_value = entry.value
-          end
-        end
+    class ComputedWidget < Widget
+      def initialize(args)
+        super
+        entry              = TkEntry.new(frame).pack
+        entry.textvariable = variable
+        entry.state        = 'disabled'
       end
     end
   end

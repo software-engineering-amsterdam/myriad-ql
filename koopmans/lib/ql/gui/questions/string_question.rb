@@ -7,7 +7,7 @@ module QL
         super
         @variable.value = ("")
         @variable.type  = StringType
-        @previous_value = value
+
         TextWidget.new(question: self)
       end
     end

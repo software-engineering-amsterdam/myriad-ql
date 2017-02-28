@@ -1,8 +1,6 @@
 module QL
   module GUI
     class TextQuestion < Question
-      attr_accessor :previous_value
-
       def initialize(args)
         super
         # TextWidget.new(question: self)
