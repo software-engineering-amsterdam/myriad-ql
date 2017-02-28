@@ -21,7 +21,7 @@ badReferences form =
 
 badReferencesInExpression : Set String -> Expression -> List Message
 badReferencesInExpression availableIdentifiers expression =
-    questionReferences expression
+    CheckerUtil.collectQuestionReferences expression
         |> List.filter (flip isBadReference availableIdentifiers)
         |> List.map referenceToUndefinedQuestion
 
@@ -29,37 +29,3 @@ badReferencesInExpression availableIdentifiers expression =
 isBadReference : Id -> Set String -> Bool
 isBadReference ( id, _ ) =
     Set.member id >> not
-
-
-questionReferences : Expression -> List Id
-questionReferences expression =
-    case expression of
-        Var id ->
-            [ id ]
-
-        Integer _ _ ->
-            []
-
-        Decimal _ _ ->
-            []
-
-        Boolean _ _ ->
-            []
-
-        Str _ _ ->
-            []
-
-        ParensExpression _ expr ->
-            questionReferences expr
-
-        ArithmeticExpression _ _ exprLeft exprRight ->
-            questionReferences exprLeft ++ questionReferences exprRight
-
-        RelationExpression _ _ exprLeft exprRight ->
-            questionReferences exprLeft ++ questionReferences exprRight
-
-        LogicExpression _ _ exprLeft exprRight ->
-            questionReferences exprLeft ++ questionReferences exprRight
-
-        ComparisonExpression _ _ exprLeft exprRight ->
-            questionReferences exprLeft ++ questionReferences exprRight

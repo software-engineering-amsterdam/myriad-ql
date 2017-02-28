@@ -1,4 +1,14 @@
-module QL.TypeChecker.CheckerUtil exposing (QuestionIndex, QuestionTypes, collectDeclaredIds, collectExpressions, questionIndexFromForm, questionIndexFromBlock, questionTypes)
+module QL.TypeChecker.CheckerUtil
+    exposing
+        ( QuestionIndex
+        , QuestionTypes
+        , collectDeclaredIds
+        , collectExpressions
+        , collectQuestionReferences
+        , questionIndexFromForm
+        , questionIndexFromBlock
+        , questionTypes
+        )
 
 import QL.AST exposing (..)
 import QL.FormVisitor exposing (defaultConfig)
@@ -31,6 +41,40 @@ collectExpressions form =
         { defaultConfig | onExpression = Post (::) }
         form
         []
+
+
+collectQuestionReferences : Expression -> List Id
+collectQuestionReferences expression =
+    case expression of
+        Var id ->
+            [ id ]
+
+        Integer _ _ ->
+            []
+
+        Decimal _ _ ->
+            []
+
+        Boolean _ _ ->
+            []
+
+        Str _ _ ->
+            []
+
+        ParensExpression _ expr ->
+            collectQuestionReferences expr
+
+        ArithmeticExpression _ _ exprLeft exprRight ->
+            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
+
+        RelationExpression _ _ exprLeft exprRight ->
+            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
+
+        LogicExpression _ _ exprLeft exprRight ->
+            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
+
+        ComparisonExpression _ _ exprLeft exprRight ->
+            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
 
 
 questionTypes : Form -> QuestionTypes

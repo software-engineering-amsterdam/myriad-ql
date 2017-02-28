@@ -135,16 +135,23 @@ renderMessage message =
                 , UI.Messages.location loc
                 ]
 
-        (Error (ArithmeticExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        Error (DependencyCycle cycle) ->
+            UI.Messages.error
+                [ text <|
+                    "Found dependency cycle : "
+                        ++ String.join " -> " cycle
+                ]
+
+        Error (ArithmeticExpressionTypeMismatch operator loc leftType rightType) ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (LogicExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        Error (LogicExpressionTypeMismatch operator loc leftType rightType) ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (ComparisonExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        Error (ComparisonExpressionTypeMismatch operator loc leftType rightType) ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (RelationExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        Error (RelationExpressionTypeMismatch operator loc leftType rightType) ->
             operatorMismatchMessage operator loc leftType rightType
 
 

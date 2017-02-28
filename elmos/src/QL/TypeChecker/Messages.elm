@@ -14,6 +14,7 @@ type ErrorMessage
     | RelationExpressionTypeMismatch Relation Location ValueType ValueType
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
+    | DependencyCycle (List String)
 
 
 arithmeticExpressionTypeMismatch : Operator -> Location -> ValueType -> ValueType -> Message
@@ -44,3 +45,8 @@ duplicateQuestionDefinition questionId locations =
 referenceToUndefinedQuestion : Id -> Message
 referenceToUndefinedQuestion var =
     Error (ReferenceToUndefinedQuestion var)
+
+
+dependencyCycle : List String -> Message
+dependencyCycle names =
+    Error (DependencyCycle names)
