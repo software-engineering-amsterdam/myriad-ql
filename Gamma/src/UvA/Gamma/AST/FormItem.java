@@ -2,6 +2,7 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.*;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -14,13 +15,15 @@ public interface FormItem extends ASTNode {
 
     void idChanged(Form root, String id, String value);
 
+    void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException;
+
+    boolean conformsToType(Value.Type type);
+
     String getId();
 
     boolean hasId(String id);
 
-    String[] getReferencedIds();
-
-    Value[] getValuesForIds();
+    boolean isDependentOn(String id);
 
     Value.Type getType();
 }

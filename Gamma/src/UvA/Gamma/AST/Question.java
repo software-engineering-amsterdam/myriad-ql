@@ -2,6 +2,10 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.IdNotFoundException;
+import UvA.Gamma.Validation.IdRedeclaredException;
+import UvA.Gamma.Validation.IncompatibleTypesException;
+import UvA.Gamma.Validation.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -26,10 +30,6 @@ public class Question implements FormItem {
         this.question = question;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -39,8 +39,28 @@ public class Question implements FormItem {
     }
 
     @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
     public void idChanged(Form root, String id, String value) {
         // I don't care about that, I am an independent formitem and don't need your help
+    }
+
+    @Override
+    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
+        validator.validateRedeclaration(this);
+    }
+
+    @Override
+    public boolean conformsToType(Value.Type type) {
+        return value.conformsToType(type);
+    }
+
+    @Override
+    public boolean isDependentOn(String id) {
+        return false; // A question is never dependent on another item
     }
 
     @Override
@@ -56,16 +76,6 @@ public class Question implements FormItem {
     @Override
     public boolean hasId(String id) {
         return this.id.equals(id);
-    }
-
-    @Override
-    public Value[] getValuesForIds() {
-        return new Value[]{value};
-    }
-
-    @Override
-    public String[] getReferencedIds() {
-        return new String[0];
     }
 
     @Override
