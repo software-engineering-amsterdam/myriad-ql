@@ -14,7 +14,7 @@ import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.statement.*;
+import org.uva.taxfree.model.node.declarations.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -155,7 +155,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.exitIfElseStatement(ctx);
-        // Retrieve the if statement, which is the first child.
+        // Retrieve the if declarations, which is the first child.
         // Then remove it, remaining childs are the childs in the ELSE block.
         // Childs in the IF block are contained in the ifStatement node already, which is a member of the IfElseStatementNode
         BlockNode ifStatementNode = mCachedIfStatementNodes.remove(mCachedIfStatementNodes.size()-1);

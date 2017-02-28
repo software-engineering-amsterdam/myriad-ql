@@ -1,7 +1,7 @@
 package org.uva.taxfree.gui;
 
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import javax.swing.*;
 import java.util.LinkedHashSet;
@@ -58,6 +58,6 @@ public class QuestionForm {
     }
 
     public void printValues() {
-        mFormNode.printValues();
+        mFormNode.printValue();
     }
 }
