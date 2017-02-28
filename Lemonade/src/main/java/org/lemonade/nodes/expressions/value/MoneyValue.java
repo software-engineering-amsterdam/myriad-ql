@@ -28,8 +28,8 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public DecimalValue plus(DecimalValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
+    public MoneyValue plus(DecimalValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
     public MoneyValue plus(MoneyValue that) {
@@ -40,36 +40,28 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return that.plus(this);
     }
 
-    public NumericValue<?> minus(final IntegerValue that) {
-        return null;
+    public MoneyValue minus(final IntegerValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
     }
 
-    public NumericValue<?> minus(final DecimalValue that) {
-        return null;
+    public MoneyValue minus(final DecimalValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
     }
 
-    public NumericValue<?> minus(final MoneyValue that) {
-        return null;
+    public MoneyValue minus(final MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
     }
 
-    public NumericValue<?> minus(final NumericValue<?> that) {
-        return null;
+    public MoneyValue product(final IntegerValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
     }
 
-    public NumericValue<?> product(final IntegerValue that) {
-        return null;
+    public MoneyValue product(final DecimalValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
     }
 
-    public NumericValue<?> product(final DecimalValue that) {
-        return null;
-    }
-
-    public NumericValue<?> product(final MoneyValue that) {
-        return null;
-    }
-
-    public NumericValue<?> product(final NumericValue<?> that) {
-        return null;
+    public MoneyValue product(final MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
     }
 
     public MoneyValue divide(final IntegerValue that) {
