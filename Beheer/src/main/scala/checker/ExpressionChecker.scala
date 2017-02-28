@@ -1,9 +1,9 @@
 package checker
 
 import ast._
-import model.FormModel
+import checker.Issue.Issues
 
-class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType: Type) extends Checker {
+class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: ExpressionNode, expectedType: Type) {
 
   def check: Issues = checkExpression(expression) match {
     case (Some(expressionType), Nil) => (expressionType, expectedType) match {
@@ -14,7 +14,7 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
     case (_, errors) => errors
   }
 
-  def checkExpression(expressionNode: ExpressionNode): (Option[Type], Issues) = expressionNode match {
+  private def checkExpression(expressionNode: ExpressionNode): (Option[Type], Issues) = expressionNode match {
     case _: DecimalLiteral => (Some(DecimalType), Nil)
     case _: IntegerLiteral => (Some(IntegerType), Nil)
     case _: BooleanLiteral => (Some(BooleanType), Nil)
@@ -66,7 +66,7 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
   }
 
   private def identifierType(identifier: Identifier): (Option[Type], Issues) = {
-    db.identifiersWithType.filter { case (i, _) => identifier.value == i } match {
+    identifiersWithType.filter { case (i, _) => identifier.value == i } match {
       case (_, identifierType) :: Nil => (Some(identifierType), Nil)
       case _ => (None, Seq(Error(s"Duplicate identifier found in expression check: ${identifier.value}")))
     }
@@ -92,6 +92,6 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
 }
 
 object ExpressionChecker {
-  def apply(db: FormModel, expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
-    new ExpressionChecker(db, expressionNode, expectedType).check
+  def apply(identifiersWithType: Seq[(String, Type)], expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
+    new ExpressionChecker(identifiersWithType, expressionNode, expectedType).check
 }

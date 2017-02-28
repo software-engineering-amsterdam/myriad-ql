@@ -6,10 +6,8 @@ case class Error(message: String) extends Issue
 
 case class Warning(message: String) extends Issue
 
-trait Checker {
+object Issue {
   type Issues = Seq[Issue]
   type Errors = Seq[Error]
   type Warnings = Seq[Warning]
-
-  def check: Issues
 }
