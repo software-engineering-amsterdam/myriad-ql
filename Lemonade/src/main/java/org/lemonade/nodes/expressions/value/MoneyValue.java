@@ -39,6 +39,38 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return that.plus(this);
     }
 
+    public NumericValue minus(final IntegerValue that) {
+        return null;
+    }
+
+    public NumericValue minus(final DecimalValue that) {
+        return null;
+    }
+
+    public NumericValue minus(final MoneyValue that) {
+        return null;
+    }
+
+    public NumericValue minus(final NumericValue that) {
+        return null;
+    }
+
+    public NumericValue product(final IntegerValue that) {
+        return null;
+    }
+
+    public NumericValue product(final DecimalValue that) {
+        return null;
+    }
+
+    public NumericValue product(final MoneyValue that) {
+        return null;
+    }
+
+    public NumericValue product(final NumericValue that) {
+        return null;
+    }
+
     @Override
     public NumericValue divide(IntegerValue that) {
         return null;

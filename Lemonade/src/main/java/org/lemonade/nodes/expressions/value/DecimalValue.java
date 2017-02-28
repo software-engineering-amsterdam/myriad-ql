@@ -1,6 +1,9 @@
 package org.lemonade.nodes.expressions.value;
 
-import org.lemonade.nodes.types.*;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -57,6 +60,34 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
         return null;
     }
 
+    public DecimalValue minus(IntegerValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
+    }
+
+    public DecimalValue minus(final DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
+    }
+
+    public MoneyValue minus(final MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
+    }
+
+    public NumericValue minus(final NumericValue that) {
+        return that.plus(this).product(new IntegerValue(new QLIntegerType(), -1));
+    }
+
+    public DecimalValue product(final IntegerValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
+    }
+
+    public DecimalValue product(final DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
+    }
+
+    public MoneyValue product(final MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
+    }
+
     @Override
     public String toString() {
         return Double.toString(this.getValue());
@@ -64,7 +95,7 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof DecimalValue)){
+        if (!(obj instanceof DecimalValue)) {
             return false;
         }
         DecimalValue that = (DecimalValue) obj;
@@ -75,11 +106,9 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
     public int compareTo(DecimalValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
-        }
-        else if (this.getValue() > that.getValue()) {
+        } else if (this.getValue() > that.getValue()) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }

@@ -161,7 +161,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        if (leftType.isOf(rightType) && leftType.isNumeric()) {
+        if (leftType.isOf(rightType.getClass()) && leftType.isNumeric()) {
             return leftType;
         }
         throw new RuntimeException("QLNumeric Type mismatch");
@@ -172,7 +172,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType rightType = binaryExpression.getRight().accept(this);
 
         //Doesn't return it's own type because this can evaluate to a new type.
-        if (leftType.isOf(rightType) && leftType.isComparable()) {
+        if (leftType.isOf(rightType.getClass()) && leftType.isComparable()) {
             return new QLBooleanType();
         }
         throw new RuntimeException("QLComparable Type mismatch");
@@ -182,7 +182,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        if (leftType.isOf(rightType) && leftType.isBoolean()) {
+        if (leftType.isOf(rightType.getClass()) && leftType.isBoolean()) {
             return leftType;
         }
         throw new RuntimeException("QLBoolean Type mismatch");

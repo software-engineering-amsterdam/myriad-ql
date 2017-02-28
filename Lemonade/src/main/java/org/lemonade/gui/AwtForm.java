@@ -23,8 +23,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.nodes.Body;
+import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
+import org.lemonade.nodes.expressions.binary.EqBinary;
 import org.lemonade.nodes.types.QLBooleanType;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.visitors.EvaluateVisitor;
@@ -152,6 +154,11 @@ public class AwtForm {
                     } else if (question.getType() instanceof QLStringType) {
                         TextField field = new TextField();
                         contentPanel.add(field);
+                    }
+                } else if (body instanceof Conditional) {
+                    Conditional conditional = (Conditional) body;
+                    if (conditional.getCondition() instanceof EqBinary) {
+
                     }
                 }
             }

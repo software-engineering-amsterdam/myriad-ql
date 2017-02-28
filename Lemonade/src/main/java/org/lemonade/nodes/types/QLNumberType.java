@@ -9,8 +9,8 @@ public abstract class QLNumberType extends QLType {
     }
 
     @Override
-    public boolean isOf(QLType other) {
-        return other instanceof QLNumberType;
+    public boolean isOf(Class other) {
+        return this.getClass().equals(other);
     }
 
     @Override
