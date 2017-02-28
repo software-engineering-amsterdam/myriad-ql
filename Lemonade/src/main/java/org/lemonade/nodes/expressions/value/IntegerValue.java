@@ -1,7 +1,5 @@
 package org.lemonade.nodes.expressions.value;
 
-
-import jdk.nashorn.internal.runtime.Undefined;
 import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
@@ -12,7 +10,7 @@ import org.lemonade.visitors.ASTVisitor;
 /**
  *
  */
-public class IntegerValue extends NumericValue<Integer> implements Comparable<IntegerValue>{
+public class IntegerValue extends NumericValue<Integer> implements Comparable<IntegerValue> {
 
     public IntegerValue(QLType type, String value) {
         super(type, Integer.parseInt(value));
@@ -42,6 +40,17 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
         return that.plus(this);
     }
 
+    public IntegerValue product(final IntegerValue that) {
+        return new IntegerValue(new QLIntegerType(), this.getValue() * that.getValue());
+    }
+
+    public DecimalValue product(final DecimalValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
+    }
+
+    public MoneyValue product(final MoneyValue that) {
+        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
+    }
 
     public Value divide(IntegerValue that) {
         if (this.getValue() == 0 || that.getValue() == 0) {
@@ -75,7 +84,7 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof IntegerValue)){
+        if (!(obj instanceof IntegerValue)) {
             return false;
         }
         IntegerValue that = (IntegerValue) obj;
@@ -86,11 +95,9 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
     public int compareTo(IntegerValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
-        }
-        else if (this.getValue() > that.getValue()) {
+        } else if (this.getValue() > that.getValue()) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }

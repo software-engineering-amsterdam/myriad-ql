@@ -70,7 +70,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(MinusBinary minusBinary) {
-        return null;
+        NumericValue left = (NumericValue) minusBinary.getLeft().accept(this);
+        NumericValue right = (NumericValue) minusBinary.getRight().accept(this);
+        System.err.println(left.minus(right));
+        return left.minus(right);
     }
 
     @Override
