@@ -24,16 +24,16 @@ module QL
       def initialize(args)
         super
         radio_button          = TkRadioButton.new(frame).pack
-        radio_button.variable = variable
-        radio_button.command  = proc { callback }
         radio_button.text     = args[:true_value]
         radio_button.value    = true
-
-        radio_button          = TkRadioButton.new(frame).pack
         radio_button.variable = variable
         radio_button.command  = proc { callback }
+
+        radio_button          = TkRadioButton.new(frame).pack
         radio_button.text     = args[:false_value]
         radio_button.value    = false
+        radio_button.variable = variable
+        radio_button.command  = proc { callback }
       end
     end
 
@@ -51,12 +51,12 @@ module QL
         super
         combobox        = Tk::Tile::Combobox.new(frame).pack
         combobox.values = [args[:true_value], args[:false_value]]
+        combobox.value = args[:true_value]
         combobox.bind('<ComboboxSelected>') do
           variable.value = true if combobox.value == args[:true_value]
           variable.value = false if combobox.value == args[:false_value]
           callback
         end
-        combobox.value = args[:true_value]
       end
     end
 
