@@ -21,6 +21,12 @@ public class IfElseStatementNode extends Node {
     }
 
     @Override
+    public void setVisibility(boolean isVisible) {
+        mIfStatementNode.setVisibility(isVisible);
+        super.setVisibility(!mIfStatementNode.isTrue() && isVisible);
+    }
+
+    @Override
     public String toString() {
         return mIfStatementNode.toString();
     }

@@ -31,7 +31,7 @@ public class IfStatementNode extends Node {
     @Override
     public void setVisibility(boolean isVisible) {
         System.out.println("I evaluate to " + isTrue());
-        super.setVisibility(isTrue());
+        super.setVisibility(isTrue() && isVisible);
     }
 
     @Override
@@ -43,5 +43,4 @@ public class IfStatementNode extends Node {
     public String toString() {
         return mCondition.toString();
     }
-
 }
