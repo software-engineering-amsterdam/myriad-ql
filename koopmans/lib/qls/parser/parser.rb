@@ -40,8 +40,8 @@ module QLS
       rule(:widget_integer) { integer_literal.as(:first_value) >> spaces? >> str(',') >> spaces? >> integer_literal.as(:second_value) }
 
       rule(:radio) { str('radio') >> str('(') >> spaces? >> widget_string.as(:radio) >> spaces? >> str(')') }
-      rule(:dropdown) { str('dropdown') >> str('(') >> spaces? >>  widget_string.as(:dropdown) >> spaces? >> str(')') }
-      rule(:slider) { str('slider') >> str('(') >> spaces? >>  widget_integer.as(:slider) >> spaces? >> str(')') }
+      rule(:dropdown) { str('dropdown') >> str('(') >> spaces? >> widget_string.as(:dropdown) >> spaces? >> str(')') }
+      rule(:slider) { str('slider') >> str('(') >> spaces? >> widget_integer.as(:slider) >> spaces? >> str(')') }
 
       # default
       rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }

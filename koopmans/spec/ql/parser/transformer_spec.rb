@@ -49,34 +49,34 @@ module QL
 
       describe 'operators' do
         it 'transforms arithmetic' do
-          expect(transformer.apply({left: {}, operator: '/', right: {}})).to be_a(Divide)
+          expect(transformer.apply({ left: {}, operator: '/', right: {} })).to be_a(Divide)
         end
         it 'transforms boolean' do
-          expect(transformer.apply({left: {}, operator: '&&', right: {}})).to be_a(And)
+          expect(transformer.apply({ left: {}, operator: '&&', right: {} })).to be_a(And)
         end
         it 'transforms comparison' do
-          expect(transformer.apply({left: {}, operator: '<', right: {}})).to be_a(Less)
+          expect(transformer.apply({ left: {}, operator: '<', right: {} })).to be_a(Less)
         end
       end
 
       describe 'statements' do
         context 'questions' do
           it 'transforms' do
-            expect(transformer.apply(question: {string: '"How much is?"', variable: 'hasSoldHouse', type: 'boolean'})).to be_a(Question)
-            expect(transformer.apply(question: {string: '"Value residue:"', variable: 'valueResidue', type: 'money', expression: '(sellingPrice - privateDebt)'})).to be_a(Question)
+            expect(transformer.apply(question: { string: '"How much is?"', variable: 'hasSoldHouse', type: 'boolean' })).to be_a(Question)
+            expect(transformer.apply(question: { string: '"Value residue:"', variable: 'valueResidue', type: 'money', expression: '(sellingPrice - privateDebt)' })).to be_a(Question)
           end
         end
 
         context 'if statement' do
           it 'transforms' do
-            expect(transformer.apply(if_statement: {expression: 'hasSoldHouse', block: {}})).to be_a(IfStatement)
+            expect(transformer.apply(if_statement: { expression: 'hasSoldHouse', block: {} })).to be_a(IfStatement)
           end
         end
       end
 
       describe 'form' do
         it 'transforms' do
-          expect(transformer.apply(form: {variable: 'taxOfficeExample', block: {}})).to be_a(Form)
+          expect(transformer.apply(form: { variable: 'taxOfficeExample', block: {} })).to be_a(Form)
         end
       end
     end

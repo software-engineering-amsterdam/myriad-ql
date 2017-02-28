@@ -7,12 +7,6 @@ module QLS
         @name = name
         @block = block
       end
-
-      # def initialize(sections, questions, default_type_properties)
-      #   @sections = sections
-      #   @questions = questions
-      #   @default_type_properties = default_type_properties
-      # end
     end
   end
 end

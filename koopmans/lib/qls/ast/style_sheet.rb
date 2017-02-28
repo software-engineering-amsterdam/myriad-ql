@@ -3,7 +3,6 @@ module QLS
     class StyleSheet
       attr_reader :variable, :pages
 
-
       def initialize(variable, pages)
         @variable = variable
         @pages = pages
