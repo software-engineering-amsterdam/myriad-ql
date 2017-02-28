@@ -14,7 +14,7 @@ sealed trait DisplayQuestion {
       conditions match {
         case Nil => true
         case head :: tail =>
-          val headValue = head.value(env) match {
+          val headValue = ExpressionNode.calculate(env, head) match {
             case BooleanValue(b) => b
             case _ => false
           }
