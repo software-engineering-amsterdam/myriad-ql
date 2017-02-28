@@ -1,26 +1,16 @@
 package org.uva.taxfree.model.node.expression;
 
-import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.condition.ConditionNode;
 
 public class ExpressionNode extends ConditionNode {
-    private ConditionNode mLeft;
-    private String mOperator;
-    private ConditionNode mRight;
+    private final ConditionNode mLeft;
+    private final String mOperator;
+    private final ConditionNode mRight;
 
-    public ExpressionNode(String operator) {
+    public ExpressionNode(ConditionNode left, String operator, ConditionNode right) {
+        mLeft = left;
         mOperator = operator;
-    }
-
-    @Override
-    public void addChild(Node node) {
-        if (mLeft == null) {
-            mLeft = (ConditionNode) node;
-        } else if (mRight == null) {
-            mRight = (ConditionNode) node;
-        } else {
-            // Error handling!
-        }
+        mRight = right;
     }
 
     @Override

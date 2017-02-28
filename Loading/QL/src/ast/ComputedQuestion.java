@@ -1,18 +1,19 @@
 package ast;
 
 import ast.atom.Atom;
+import ast.expression.Expression;
 import ast.type.Type;
 
 public class ComputedQuestion extends Question {
 
-	private Atom computedQuestion;
+	private Expression computedQuestion;
 
-	public ComputedQuestion(String variable, String label, Type type, Atom computedQuestion, int line) {
+	public ComputedQuestion(String variable, String label, Type type, Expression computedQuestion, int line) {
 		super(variable, label, type, line);
 		this.computedQuestion = computedQuestion;
 	}
 
-	public Atom getComputedQuestion() {
+	public Expression getComputedQuestion() {
 		return computedQuestion;
 	}
 }

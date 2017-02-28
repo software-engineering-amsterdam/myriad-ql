@@ -7,6 +7,9 @@ import semantic.Environment;
 // TODO rename to Literal??
 public abstract class Atom extends Expression {
 	
+	public Atom(int line) {
+		super(line);
+	}
 	// Binary Operators
 	public Atom add(Atom other) { return null; }
 	public Atom sub(Atom other) { return null; }

@@ -7,6 +7,11 @@ import value.Value;
 
 public class AddExpression extends BinaryExpression {
 
+
+	public AddExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
+	}
+
 	@Override
 	public Atom evaluate() {
 

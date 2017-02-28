@@ -6,18 +6,19 @@ import semantic.Environment;
 public class StringAtom extends Atom {
     private String str;
 
-    public StringAtom(String str) {
+    public StringAtom(String str, int line) {
+    	super(line);
         this.str = str;
     }
 
     @Override
 	public BoolAtom eq(Atom other) {
-		return new BoolAtom(str == other.getString());
+		return new BoolAtom(str == other.getString(), getLine());
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(str != other.getString());
+		return new BoolAtom(str != other.getString(), getLine());
 	}
 		
 	@Override

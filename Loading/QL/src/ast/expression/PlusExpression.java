@@ -6,6 +6,10 @@ import semantic.Environment;
 
 public class PlusExpression extends UnaryExpression {
 
+	public PlusExpression(Expression lhs, int line) {
+		super(lhs, line);
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
