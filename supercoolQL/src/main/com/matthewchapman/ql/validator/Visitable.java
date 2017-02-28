@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validation.validator;
+package com.matthewchapman.ql.validator;
 
 /**
  * Created by matt on 27/02/2017.

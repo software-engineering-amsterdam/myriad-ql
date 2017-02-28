@@ -3,14 +3,14 @@ package com.matthewchapman.ql.ast;
 /**
  * Created by matt on 21/02/2017.
  */
-public abstract class Type extends TreeNode {
+public abstract class Type<T> extends TreeNode {
 
     //TODO type should not be a string!
-    final String type;
+    private T value;
 
-    public Type(String type)
+    public Type(T value)
     {
-        this.type = type;
+        this.value = value;
     }
 
 }

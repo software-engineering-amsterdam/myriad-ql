@@ -6,7 +6,8 @@ import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validation.validator.QLTreeVisitor;
+import com.matthewchapman.ql.validator.QLTreeVisitor;
+import com.matthewchapman.ql.validator.QuestionStore;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -41,5 +42,8 @@ class CoreParser {
         for (Statement statement:form.getStatements()) {
             statement.accept(visitor);
         }
+
+        QuestionStore store = visitor.getQuestionStore();
+        store.testAllQuestions();
     }
 }

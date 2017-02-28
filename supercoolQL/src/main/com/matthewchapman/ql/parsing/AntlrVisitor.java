@@ -37,11 +37,14 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     public TreeNode visitQuestion(QLParser.QuestionContext ctx) {
         String questionID = ctx.ID().getText();
         String questionContent = ctx.STRING().getText();
+
         Type questionReturnType = (Type) visit(ctx.type());
-        ParameterGroup parameterGroup = new ParameterGroup();
+        ParameterGroup parameterGroup;
 
         if(ctx.calculatedValue() != null) {
             parameterGroup = (ParameterGroup) visit(ctx.calculatedValue());
+        } else {
+            parameterGroup = null;
         }
 
         return new Question(questionID, questionContent, questionReturnType, parameterGroup);

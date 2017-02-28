@@ -1,6 +1,8 @@
-package com.matthewchapman.ql.validation.validator;
+package com.matthewchapman.ql.validator;
 
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.expression.Parameter;
+import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -10,10 +12,18 @@ import com.matthewchapman.ql.ast.statement.Question;
  */
 public class QLTreeVisitor implements QLVisitor<Void> {
 
+    // to store all questions for testing
+    private QuestionStore questionStore = new QuestionStore();
+
+    public QuestionStore getQuestionStore() {return this.questionStore;}
 
     @Override
     public Void visit(Question question) {
-        System.out.println(question.getName());
+        questionStore.add(question);
+
+        if(question.isCalculated()){
+        }
+
         return null;
     }
 
@@ -38,6 +48,16 @@ public class QLTreeVisitor implements QLVisitor<Void> {
             statement.accept(this);
         }
 
+        return null;
+    }
+
+    @Override
+    public Void visit(Parameter parameter) {
+        return null;
+    }
+
+    @Override
+    public Void visit(ParameterGroup parameterGroup) {
         return null;
     }
 }

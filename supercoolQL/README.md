@@ -43,7 +43,7 @@ form exampleForm {
 
 # Implementation Progress
 - [x] QL Grammar
-- [ ] QLVisitor implementation
+- [x] QLVisitor implementation
 - [x] Replacement error listener for parser
 - [x] Application launcher
 - [ ] AST

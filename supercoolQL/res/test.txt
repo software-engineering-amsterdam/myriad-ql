@@ -29,4 +29,9 @@ form exampleForm {
         complexConditionalQuestion2: boolean;
   }
 
+  "Duplicate question 1"
+    duplicateQuestion : boolean;
+   "Duplicate question 2"
+    duplicateQuestion : boolean;
+
 }
