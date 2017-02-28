@@ -1,6 +1,6 @@
 # coding=utf-8
 from pyparsing import (Suppress, Literal, oneOf, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
-                       QuotedString, Optional, Forward, Combine)
+                       QuotedString, Optional, Forward, Combine, ParserElement)
 
 from pql.ast import ast
 from pql.typechecker.types import DataTypes
@@ -16,6 +16,9 @@ def parse(input_string):
     def flatten_unary_operators(flattened_tokens):
         type_call = flattened_tokens[0]
         return type_call(flattened_tokens[1])
+
+    # Packrat
+    ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")

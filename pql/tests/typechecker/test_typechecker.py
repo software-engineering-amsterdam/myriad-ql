@@ -238,10 +238,145 @@ class TestTypeChecker(TestCase):
         type_checker_result = self.apply_type_checking(input_string)
         self.assertTrue(type_checker_result, "This cases is assumed to fail.")
 
-    def test_typecheck_fail_g2_1(self):
+    def test_typecheck_fail_gt_1(self):
         input_string = """
         form taxOfficeExample {
-            "q1" v1: boolean = (true * 2)
+            "q1" v1: boolean = (true > 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_gt_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 > true)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_gte_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (true >= 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_gte_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 >= true)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_lt_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 < true)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_lt_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (true < 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_lte_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 <= true)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_lte_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (true <= 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_eq_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 == false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_eq_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (false == 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_neq_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 != false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_neq_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (false != 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_and_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 && false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_and_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (false && 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_or_1(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (2 || false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "This cases is assumed to fail.")
+
+    def test_typecheck_fail_or_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = (false || 2)
         }
         """
         type_checker_result = self.apply_type_checking(input_string)

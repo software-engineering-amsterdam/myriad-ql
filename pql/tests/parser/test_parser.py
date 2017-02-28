@@ -269,6 +269,16 @@ class TestParser(TestCase):
             parse(input_string)
             self.fail('Cannot have double positive declaration')
 
+    def test_parse_switched_order_of_operator(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (sellingPrice =! privateDebt)
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('Switched operator order is not allowed')
+
     def test_parse_unary_positive_and_negative(self):
         input_string = """
         form taxOfficeExample {
