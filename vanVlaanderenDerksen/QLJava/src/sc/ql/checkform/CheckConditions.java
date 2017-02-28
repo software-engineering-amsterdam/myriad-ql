@@ -63,11 +63,9 @@ public class CheckConditions implements NodeVisitor<Question.Type> {
 		if (operator.matches("<|<=|>|>=|==|!=") && left_side != right_side) {
 			throw new Exception("Both sides of the "+operator+" operator on line "+op_expression.getLineNumber()+" needs to be of the same expression/type.");
 		}
-		else if (operator.equals("&&") && left_side != Type.BOOLEAN && right_side != Type.BOOLEAN) {
-			throw new Exception("Both sides of the && (AND) operator on line "+op_expression.getLineNumber()+" needs to be a Boolean expression/type.");
-		}
-		else if(operator.equals("||") && (left_side != Type.BOOLEAN || right_side != Type.BOOLEAN)) {
-			throw new Exception("Both sides of the || (OR) operator on line "+op_expression.getLineNumber()+" needs to be a Boolean expression/type.");
+		else if ((operator.equals("&&") && left_side != Type.BOOLEAN && right_side != Type.BOOLEAN) ||
+				 (operator.equals("||") && (left_side != Type.BOOLEAN || right_side != Type.BOOLEAN)) ) {
+			throw new Exception("Both sides of the "+operator+" operator on line "+op_expression.getLineNumber()+" needs to be a Boolean expression/type.");
 		}
 		else if (!operator.matches("<|<=|>|>=|==|!=|&&|\\|\\||")) {
 			throw new Exception("Operator "+operator+" on line "+op_expression.getLineNumber()+" is not permitted, only Boolean expressions are allowed.");
