@@ -47,11 +47,6 @@ public class Ast {
         return conditions;
     }
 
-    // "Getter"
-    public Set<Node> getConditionsV2() {
-        return mRootNode.getConditionsV2();
-    }
-
     public String getFormName() {
         return mRootNode.toString();
     }
@@ -87,7 +82,7 @@ public class Ast {
         qlGrammarParser.addErrorListener(errorListener);
         qlGrammarLexer.addErrorListener(errorListener);
 
-        QLGrammarParser.FormContext formContext= qlGrammarParser.form();
+        QLGrammarParser.FormContext formContext = qlGrammarParser.form();
 
         // Walk it and attach our listener
         ParseTreeWalker walker = new ParseTreeWalker();
