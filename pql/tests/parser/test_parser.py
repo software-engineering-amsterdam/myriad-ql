@@ -258,3 +258,24 @@ class TestParser(TestCase):
         }
         """
         parse(input_string)
+
+    def test_parse_unary_double_positive(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (sellingPrice - ++privateDebt)
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('Cannot have double positive declaration')
+
+    def test_parse_unary_positive_and_negative(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (sellingPrice - +-privateDebt)
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            #TODO: Decide if this needs fixing
+            self.fail('Cannot have double positive declaration')
