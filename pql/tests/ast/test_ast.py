@@ -824,3 +824,179 @@ class TestAst(unittest.TestCase):
         self.assertEqual('sellingPrice', field_node_3.name.name)
         self.assertEqual(DataTypes.money, field_node_3.data_type)
         self.assertEqual('What was the selling price?', field_node_3.title)
+
+    def test_ast_unary_positive(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  +privateDebt
+        }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        expression_node = field_node_1.children[0]
+        self.assertEqual('expression', expression_node.var_type,
+                         'First child should have type: expression')
+        self.assertEqual(1, len(expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        positive_node = expression_node.children[0]
+        self.assertEqual(0, len(positive_node.children),
+                         'Positive node should have no nodes as children')
+        self.assertEqual('positive', positive_node.var_type,
+                         'Positive node should have type positive')
+
+        identifier_node = positive_node.rhs
+        self.assertEqual(0, len(identifier_node.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('privateDebt', identifier_node.name)
+
+    def test_ast_unary_negative(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  -privateDebt
+        }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        expression_node = field_node_1.children[0]
+        self.assertEqual('expression', expression_node.var_type,
+                         'First child should have type: expression')
+        self.assertEqual(1, len(expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        negative = expression_node.children[0]
+        self.assertEqual(0, len(negative.children),
+                         'Negative node should have no nodes as children')
+        self.assertEqual('negative', negative.var_type,
+                         'Negative node should have type negative')
+
+        identifier_node = negative.rhs
+        self.assertEqual(0, len(identifier_node.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('privateDebt', identifier_node.name)
+
+    def test_ast_unary_not(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  !privateDebt
+        }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        expression_node = field_node_1.children[0]
+        self.assertEqual('expression', expression_node.var_type,
+                         'First child should have type: expression')
+        self.assertEqual(1, len(expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        negative = expression_node.children[0]
+        self.assertEqual(0, len(negative.children),
+                         'Negation node should have no nodes as children')
+        self.assertEqual('negation', negative.var_type,
+                         'Negation node should have type negation')
+
+        identifier_node = negative.rhs
+        self.assertEqual(0, len(identifier_node.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('privateDebt', identifier_node.name)
+
+    def test_ast_binary_unary_not(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money =  sellingPrice && (!privateDebt || hasLoans)
+        }
+        """
+        parse_result = parse(input_string).asList()
+        form_node = parse_result[0]
+        self.assertEqual('taxOfficeExample', form_node.name.name)
+        self.assertEqual(1, len(form_node.children))
+
+        field_node_1 = form_node.children[0]
+        self.assertEqual(1, len(field_node_1.children), 'Field node should have 1 node of arithmetic statement')
+        self.assertEqual('field', field_node_1.var_type)
+        self.assertEqual('valueResidue', field_node_1.name.name)
+        self.assertEqual('Value residue:', field_node_1.title)
+
+        expression_node = field_node_1.children[0]
+        self.assertEqual('expression', expression_node.var_type,
+                         'First child should have type: expression')
+        self.assertEqual(1, len(expression_node.children),
+                         'Arithmetic expression should have 1 node as child')
+
+        and_node = expression_node.children[0]
+        self.assertEqual(0, len(and_node.children),
+                         'And node should have no nodes as children')
+        self.assertEqual('and', and_node.var_type,
+                         'And node should have type and')
+
+        identifier_node = and_node.lhs
+        self.assertEqual(0, len(identifier_node.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('sellingPrice', identifier_node.name)
+
+        or_node = and_node.rhs
+        self.assertEqual(0, len(or_node.children),
+                         'Or node should have no nodes as children')
+        self.assertEqual('or', or_node.var_type,
+                         'Or node should have type or')
+
+        negation_node = or_node.lhs
+        self.assertEqual(0, len(negation_node.children),
+                         'Negation node should have no nodes as children')
+        self.assertEqual('negation', negation_node.var_type,
+                         'Negation node should have type negation')
+
+        identifier_node_2 = negation_node.rhs
+        self.assertEqual(0, len(identifier_node_2.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node_2.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('privateDebt', identifier_node_2.name)
+
+        identifier_node_3 = or_node.rhs
+        self.assertEqual(0, len(identifier_node_3.children),
+                         'Identifier node should have no nodes as children')
+        self.assertEqual('identifier', identifier_node_3.var_type,
+                         'Identifier node should have type identifier')
+
+        self.assertEqual('hasLoans', identifier_node_3.name)
