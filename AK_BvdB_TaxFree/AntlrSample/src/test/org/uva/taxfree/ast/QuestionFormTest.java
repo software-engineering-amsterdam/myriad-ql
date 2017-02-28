@@ -84,9 +84,8 @@ public class QuestionFormTest {
         mRoot.addChild(QuestionSold);
         mRoot.addChild(QuestionBought);
 
-        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance");
         ExpressionNode expCalc = new CalculationExpressionNode("-");
-        intCalc.addChild(expCalc);
+        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
         variableSold.setReference(QuestionSold);
 
@@ -165,19 +164,17 @@ public class QuestionFormTest {
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
-        CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two");
-        intField.addChild(new IntegerLiteralNode("2"));
+        CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two", new IntegerLiteralNode("2"));
         mRoot.addChild(intField);
     }
 
     @Test
     public void testIntFieldCalculation() throws Exception {
-        CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six");
-        intField.addChild(CalcOnePlusFive());
+        CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive());
         mRoot.addChild(intField);
     }
 
-    private Node CalcOnePlusFive() {
+    private ConditionNode CalcOnePlusFive() {
         ConditionNode calc = new CalculationExpressionNode("+");
         calc.addChild(new IntegerLiteralNode("1"));
         calc.addChild(new IntegerLiteralNode("5"));
