@@ -28,7 +28,7 @@ class Parser < Parslet::Parser
     #   [match['*/'], 2, :left],
     #   [match['+-'], 1, :left]
     # ) |
-    ((literal | identifier).as(:left) >> operator >> expression.as(:right)).as(:expression) |
+    ((literal | identifier).as(:left) >> operator >> expression.as(:right)) |
     literal |
     identifier
   end
