@@ -33,9 +33,19 @@ expression      : BooleanLiteral                                            # bo
                 | StringLiteral                                             # stringLiteral
                 | IntegerLiteral                                            # integerLiteral
                 | Identifier                                                # identifier
-                | '(' expression ')'                                                                    # groupedExpression
-                | left=expression op=('/' | '*' | '-' | '+' | '<' | '>' | '>=' | '<=') right=expression # computationExpression
-                | left=expression op=('&&' | '||' | '==' | '!=') right=expression                       # booleanExpression
+                | '(' expression ')'                                        # groupedExpression
+                | left=expression op='/'  right=expression                  # computationExpression
+                | left=expression op='*'  right=expression                  # computationExpression
+                | left=expression op='-'  right=expression                  # computationExpression
+                | left=expression op='+'  right=expression                  # computationExpression
+                | left=expression op='<'  right=expression                  # computationExpression
+                | left=expression op='<=' right=expression                  # computationExpression
+                | left=expression op='>'  right=expression                  # computationExpression
+                | left=expression op='>=' right=expression                  # computationExpression
+                | left=expression op='==' right=expression                  # booleanExpression
+                | left=expression op='!=' right=expression                  # booleanExpression
+                | left=expression op='&&' right=expression                  # booleanExpression
+                | left=expression op='||' right=expression                  # booleanExpression
                 ;
 
 // Tokens
@@ -45,12 +55,3 @@ BooleanLiteral  : ('true' | 'false');
 Identifier      : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 StringLiteral   : '"' (~'"')* '"';
 IntegerLiteral  : ('0'..'9')+;
-
-//operators in order of precedence from highest to lowest
-Unary           : '!';
-Multiplicative  : ' * ' | ' / ' | ' % ';
-Additive        : ' + ' | ' - ';
-Relational      : ' < ' | ' > ' | ' <= ' | ' >= ';
-Equality        : ' == ' | ' != ';
-ConditionalAND  : ' && ';
-ConditionalOR   : ' || ';
