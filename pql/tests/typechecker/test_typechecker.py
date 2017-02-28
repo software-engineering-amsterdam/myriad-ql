@@ -56,3 +56,21 @@ class TestTypeChecker(TestCase):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
+
+    def test_typecheck_arithmetic_gt(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (4 > 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+
+    def test_typecheck_arithmetic_gte(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = (4 >= 2)
+            "What is your private debt0?" privateDebt: money = (8 < 2)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        print(type_checker_result)
