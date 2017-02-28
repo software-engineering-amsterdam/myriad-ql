@@ -18,6 +18,6 @@ public class IntegerValue extends Value {
 
 	@Override
 	public Type getType() {
-		return new IntegerType();
+		return new IntegerType(0);
 	}
 }

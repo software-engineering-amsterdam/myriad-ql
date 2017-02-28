@@ -1,5 +1,7 @@
 package ast.type;
 
+import ast.TypeVisitor;
+
 public class StringType extends Type {
 
 	public StringType(int line) {
@@ -7,7 +9,7 @@ public class StringType extends Type {
 	}
 	
 	@Override
-	public void accept(ast.Visitor v) {
-		// TODO empty accept
+	public void accept(TypeVisitor v) {
+		v.visit(this);
 	}
 }

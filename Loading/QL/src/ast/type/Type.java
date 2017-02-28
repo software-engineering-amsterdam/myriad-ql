@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Node;
+import ast.TypeVisitor;
 
 public abstract class Type extends Node {
 	
@@ -14,5 +15,7 @@ public abstract class Type extends Node {
 	public String getType() {
 		return type;
 	}
-	
+
+	public abstract void accept(TypeVisitor v);
+
 }

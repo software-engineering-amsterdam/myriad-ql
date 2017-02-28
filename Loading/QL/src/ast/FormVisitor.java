@@ -1,10 +1,10 @@
 package ast;
 
-import org.antlr.runtime.tree.CommonTree;
+public interface FormVisitor {
 
-public interface BlockVisitor {
-
+    void visit(Form form);
     void visit(Block block);
+    void visit(BlockItem blockItem);
     void visit(Question question);
     void visit(Statement statement);
     void visit(ComputedQuestion question);

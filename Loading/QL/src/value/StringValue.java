@@ -18,6 +18,6 @@ public class StringValue extends Value {
 
 	@Override
 	public Type getType() {
-		return new StringType();
+		return new StringType(0);
 	}
 }

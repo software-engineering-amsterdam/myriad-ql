@@ -76,6 +76,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         return new BooleanExpression(ctx.boolExpr().getText());
     }
 
+
     @Override
     public NumberExpression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
         return new NumberExpression(ctx.numExpr().getText());
@@ -100,7 +101,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
             case "string":
                 return new StringValue();
             default:
-                return new Number(0);
+                System.out.println("The type " + ctx.getText() + " is not valid");
+                return null;
         }
     }
 }

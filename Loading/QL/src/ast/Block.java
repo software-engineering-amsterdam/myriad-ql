@@ -16,8 +16,7 @@ public class Block extends Node {
 		this.blockItems = blockItems;
 	}
 
-	@Override
-	public void accept(Visitor v) {
+	public void accept(FormVisitor v) {
 		v.visit(this);
 		
 	}

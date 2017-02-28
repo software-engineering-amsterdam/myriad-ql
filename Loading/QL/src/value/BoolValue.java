@@ -18,6 +18,6 @@ public class BoolValue extends Value {
 
 	@Override
 	public Type getType() {
-		return new BooleanType();
+		return new BooleanType(0);
 	}
 }

@@ -5,6 +5,7 @@ import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.QLParseErrorListener;
 import UvA.Gamma.Validation.Validator;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,8 +24,8 @@ public class Main extends Application {
 
 
         String test = "form test {" +
-                "\"First question\" first: string" +
-                "\"a computed one\" computed: integer = (computed2 - 5)" +
+                "\"First question\" first: boolean" +
+                "\"a computed one\" computed: integere = (computed2 - 5)" +
                 "if(first){ \"dependent\" computed2: integer = (computed + 5) }}";
 
         InputStream is = new ByteArrayInputStream(test.getBytes());
@@ -32,6 +33,8 @@ public class Main extends Application {
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QLParser parser = new QLParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new QLParseErrorListener());
         ParseTree parseTree = parser.form();
         QLVisitor visitor = new QLVisitor();
         visitor.visit(parseTree);

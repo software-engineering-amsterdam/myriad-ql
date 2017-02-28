@@ -1,6 +1,7 @@
 package ast.atom;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
+import ast.type.Type;
 
 public class IntegerAtom extends Atom {
 		
@@ -100,13 +101,13 @@ public class IntegerAtom extends Atom {
     	return "integer";
     }
 
-	@Override
-	public Atom evaluate(semantic.Environment env) {
-		return this;
-	}
+//	@Override
+//	public Atom evaluate(semantic.Environment env) {
+//		return this;
+//	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 }

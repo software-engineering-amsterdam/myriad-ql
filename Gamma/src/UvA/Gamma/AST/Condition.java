@@ -109,7 +109,10 @@ public class Condition implements FormItem {
 
     @Override
     public String toString() {
-        return "<Condition>: " + expression;
+        StringBuilder builder = new StringBuilder();
+        formItems.forEach(builder::append);
+        elseBlockItems.forEach(builder::append);
+        return "<Condition>: (" + expression + ")" + builder;
     }
 
     @Override

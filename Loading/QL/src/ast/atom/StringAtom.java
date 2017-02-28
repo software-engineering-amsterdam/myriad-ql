@@ -1,7 +1,7 @@
 package ast.atom;
 
-import ast.Visitor;
-import semantic.Environment;
+import ast.ExpressionVisitor;
+import ast.type.Type;
 
 public class StringAtom extends Atom {
     private String str;
@@ -31,14 +31,14 @@ public class StringAtom extends Atom {
 		return "string";
 	}
 
-	@Override
-	public Atom evaluate(Environment env) {
-		return this;
-	}
+//	@Override
+//	public Atom evaluate(Environment env) {
+//		return this;
+//	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
 }

@@ -1,7 +1,8 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class PlusExpression extends UnaryExpression {
@@ -11,19 +12,12 @@ public class PlusExpression extends UnaryExpression {
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-		
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
-	@Override
-	public Atom evaluate() {
-		return getLhs().evaluate().plus();
-	}
-
-	@Override
-	public Atom evaluate(Environment env) {
-		return null;
-	}
-
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().plus();
+//	}
 }

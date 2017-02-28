@@ -1,6 +1,7 @@
 package ast.atom;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
+import ast.type.Type;
 
 public class BoolAtom extends Atom {
     private boolean value;
@@ -45,13 +46,13 @@ public class BoolAtom extends Atom {
 		return "boolean";
 	}
 
-	@Override
-	public Atom evaluate(semantic.Environment env) {
-		return this;
-	}
+//	@Override
+//	public Atom evaluate(semantic.Environment env) {
+//		return this;
+//	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 }

@@ -14,25 +14,25 @@ import value.Value;
 
 // Or Statement Visitor
 public class QuestionnaireVisitor extends Visitor {
-	
+
 	private List<QuestionnaireQuestion> activeQuestions; // TODO QQuestion String and type?
 	private Map<String, Value> answers;
-	
+
 	public QuestionnaireVisitor(Map<String, Value> answers) {
 		this.activeQuestions = new ArrayList<>();
 		this.answers = answers;
 	}
-	
-	@Override 
+
+	@Override
 	public void visit(Question question) {
         activeQuestions.add(new QuestionnaireQuestion(question.getVariable(),
         		question.getLabel(), question.getType())); // TODO change last argument
 	}
-	
+
 	@Override
 	public void visit(Statement statement) {
 		statement.getExpression().accept(this);
-		
+
 		// TODO many functions - functions : can you assume the ATOM is a boolean?
 		System.out.println("QUESTIONNAIRE VISITOR: "+ statement.getExpression().evaluate().getValue());
 
@@ -83,5 +83,5 @@ public class QuestionnaireVisitor extends Visitor {
 
 	public List<QuestionnaireQuestion> getActiveQuestions() {
 		return activeQuestions;
-	}	
+	}
 }

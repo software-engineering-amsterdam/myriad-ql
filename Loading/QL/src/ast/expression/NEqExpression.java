@@ -1,7 +1,8 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class NEqExpression extends BinaryExpression {
@@ -11,17 +12,12 @@ public class NEqExpression extends BinaryExpression {
 	}
 
 	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
-	@Override
-	public Atom evaluate() {
-		return getLhs().evaluate().notEq(getRhs().evaluate());
-	}
-
-	@Override
-	public Atom evaluate(Environment env) {
-		return null;
-	}
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().notEq(getRhs().evaluate());
+//	}
 }

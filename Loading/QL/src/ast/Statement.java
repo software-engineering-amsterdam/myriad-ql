@@ -3,7 +3,7 @@ package ast;
 import ast.expression.Expression;
 
 public class Statement extends BlockItem {
-	
+
 	private Expression expression; // TODO change name
 	private Block block;
 	
@@ -21,12 +21,13 @@ public class Statement extends BlockItem {
 		return block;
 	}
 
+	// TODO end each class with overrides?
 	@Override
-	public void accept(Visitor v) {
+	public void accept(FormVisitor v) {
 		v.visit(this);
 		
 	}
-	
+
 	// TODO end each class with overrides?
 
 }

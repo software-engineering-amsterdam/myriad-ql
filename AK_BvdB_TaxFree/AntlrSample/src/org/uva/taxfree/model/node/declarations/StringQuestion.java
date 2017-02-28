@@ -1,4 +1,4 @@
-package org.uva.taxfree.model.node.statement;
+package org.uva.taxfree.model.node.declarations;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,12 +21,6 @@ public class StringQuestion extends NamedNode {
     @Override
     public String resolveValue() {
         return mTextField.getText();
-    }
-
-    @Override
-    public void setVisible(boolean isVisible) {
-        mTextField.setVisible(isVisible);
-        super.setVisible(isVisible);
     }
 
     @Override

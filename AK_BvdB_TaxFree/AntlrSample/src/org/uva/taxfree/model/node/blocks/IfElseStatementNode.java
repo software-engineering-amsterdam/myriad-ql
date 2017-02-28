@@ -13,14 +13,14 @@ public class IfElseStatementNode extends BlockNode {
     }
 
     @Override
-    protected boolean isVisible() {
-        return !mIfStatementNode.isVisible();
-    }
-
-    @Override
     public void setVisible(boolean isVisible) {
         mIfStatementNode.setVisible(isVisible);
         super.setVisible(isVisible() && isVisible);
+    }
+
+    @Override
+    protected boolean isVisible() {
+        return !mIfStatementNode.isVisible();
     }
 
     @Override

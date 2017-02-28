@@ -6,6 +6,7 @@ import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.FormRenderer;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
@@ -13,7 +14,7 @@ import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.statement.*;
+import org.uva.taxfree.model.node.declarations.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -21,6 +22,7 @@ import java.util.Timer;
 
 public class QuestionFormTest {
     private final Set<Node> mCachedNodes = new LinkedHashSet<>();
+    private final Set<NamedNode> mCachedDeclarations = new LinkedHashSet<>();
     private final SymbolTable mSymbolTable = new SymbolTable();
 
 
@@ -40,6 +42,7 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
+        mSymbolTable.addSymbols(mCachedDeclarations);
         QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
         createRenderer(form);
         form.show();
@@ -58,9 +61,9 @@ public class QuestionFormTest {
     @Test
     public void testSimpleQuestions() throws Exception {
 
-        mCachedNodes.add(new StringQuestion("What is your name?", "userName"));
-        mCachedNodes.add(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
-        mCachedNodes.add(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
+        add(new StringQuestion("What is your name?", "userName"));
+        add(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
+        add(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
     }
 
     @Test
@@ -69,8 +72,8 @@ public class QuestionFormTest {
         IntegerQuestion QuestionSold = new IntegerQuestion("What is the value of the sold house?", "soldHouseValue");
         IntegerQuestion QuestionBought = new IntegerQuestion("What is the value of the bought house?", "boughtHouseValue");
 
-        mCachedNodes.add(QuestionSold);
-        mCachedNodes.add(QuestionBought);
+        add(QuestionSold);
+        add(QuestionBought);
 
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mSymbolTable);
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
@@ -80,38 +83,54 @@ public class QuestionFormTest {
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
-        mCachedNodes.add(intCalc);
+        add(intCalc);
         expCalc.evaluate();
     }
 
     @Test
     public void testSimpleIfElseStatement() throws Exception {
-        Set<Node> questions = new LinkedHashSet<Node>();
+        Set<Node> questions = new LinkedHashSet<>();
         questions.add(new BooleanQuestion("Am I in the else?", "isInElse"));
         IfElseStatementNode ifElse = new IfElseStatementNode(createMultipleIfStatements(), questions);
-        mCachedNodes.add(ifElse);
+        add(ifElse);
+    }
+
+    private void add(BlockNode blockNode) {
+        Set<NamedNode> declarations = new LinkedHashSet<>();
+        blockNode.retrieveDeclarations(declarations);
+        mCachedDeclarations.addAll(declarations);
+        addNode(blockNode);
+    }
+
+    private void add(NamedNode namedNode) {
+        mCachedDeclarations.add(namedNode);
+        addNode(namedNode);
+    }
+
+    private void addNode(Node n) {
+        mCachedNodes.add(n);
     }
 
     @Test
     public void testSimpleIfStatements() throws Exception {
-        mCachedNodes.add(createMultipleIfStatements());
+        add(createMultipleIfStatements());
     }
 
-    private IfStatementNode createMultipleIfStatements() {
-        BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse");
-        mCachedNodes.add(boolQuestion);
+    private BlockNode createMultipleIfStatements() {
+        BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if declarations?", "hasSoldHouse");
+        add(boolQuestion);
         VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse", mSymbolTable);
         Set<Node> questions = new LinkedHashSet<>();
         questions.add(soldHouseLiteral);
         questions.add(new StringQuestion("Toggle me on and off by selling your house", "sellYourHouse"));
         IfStatementNode questionIfStatement = new IfStatementNode(soldHouseLiteral, questions);
-        mCachedNodes.add(questionIfStatement);
-        mCachedNodes.add(new StringQuestion("Am I inbetween two if's?", "isInBetween"));
+        add(questionIfStatement);
+        add(new StringQuestion("Am I inbetween two if's?", "isInBetween"));
         VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse", mSymbolTable);
 
         questions.clear();
         questions.add(condition);
-        questions.add(new BooleanQuestion("Am I inside the If statement?", "isInsideIfStatement"));
+        questions.add(new BooleanQuestion("Am I inside the If declarations?", "isInsideIfStatement"));
         IfStatementNode booleanIfStatementNode = new IfStatementNode(soldHouseLiteral, questions);
         return booleanIfStatementNode;
 
@@ -123,13 +142,13 @@ public class QuestionFormTest {
         Set<Node> questions = new LinkedHashSet<Node>() {{
             add(new BooleanQuestion("Hello, do you have a name?", "hasName"));
         }};
-        mCachedNodes.add(new IfStatementNode(condition, questions));
+        add(new IfStatementNode(condition, questions));
 
         Set<Node> secondQuestions = new LinkedHashSet<Node>() {{
             add(new BooleanLiteralNode("false"));
             add(new BooleanQuestion("If you see me, something's wrong", "noName"));
         }};
-        mCachedNodes.add(new IfStatementNode(condition, questions));
+        add(new IfStatementNode(condition, questions));
 
     }
 
@@ -142,19 +161,19 @@ public class QuestionFormTest {
         questions.add(cond);
         questions.add(new BooleanQuestion("Do you see me?", "amIVisible?"));
         IfStatementNode ifStatement = new IfStatementNode(cond, questions);
-        mCachedNodes.add(ifStatement);
+        add(ifStatement);
     }
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
         CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two", new IntegerLiteralNode("2"));
-        mCachedNodes.add(intField);
+        add(intField);
     }
 
     @Test
     public void testIntFieldCalculation() throws Exception {
         CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive());
-        mCachedNodes.add(intField);
+        add(intField);
     }
 
     private ConditionNode CalcOnePlusFive() {

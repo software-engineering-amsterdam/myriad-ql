@@ -16,27 +16,27 @@ trait ExpressionParser extends JavaTokenParsers {
   def expression: Parser[ExpressionNode] = logic
 
   private def logic: Parser[ExpressionNode] = infixOperationParser(comp, """&&|\|\|""".r) {
-    case (lhs, "&&" ~ rhs) => AND(lhs, rhs)
-    case (lhs, "||" ~ rhs) => OR(lhs, rhs)
+    case (lhs, "&&" ~ rhs) => And(lhs, rhs)
+    case (lhs, "||" ~ rhs) => Or(lhs, rhs)
   }
 
   private def comp: Parser[ExpressionNode] = infixOperationParser(subAdd, """>=|<=|>|<|\!=|==""".r) {
-    case (lhs, ">=" ~ rhs) => GEQ(lhs, rhs)
-    case (lhs, "<=" ~ rhs) => LEQ(lhs, rhs)
-    case (lhs, ">" ~ rhs) => GT(lhs, rhs)
-    case (lhs, "<" ~ rhs) => LT(lhs, rhs)
-    case (lhs, "!=" ~ rhs) => NEQ(lhs, rhs)
-    case (lhs, "==" ~ rhs) => EQ(lhs, rhs)
+    case (lhs, ">=" ~ rhs) => Geq(lhs, rhs)
+    case (lhs, "<=" ~ rhs) => Leq(lhs, rhs)
+    case (lhs, ">" ~ rhs) => Gt(lhs, rhs)
+    case (lhs, "<" ~ rhs) => Lt(lhs, rhs)
+    case (lhs, "!=" ~ rhs) => Neq(lhs, rhs)
+    case (lhs, "==" ~ rhs) => Eq(lhs, rhs)
   }
 
   private def subAdd: Parser[ExpressionNode] = infixOperationParser(mulDiv, """-|\+""".r) {
-    case (lhs, "-" ~ rhs) => SUB(lhs, rhs)
-    case (lhs, "+" ~ rhs) => ADD(lhs, rhs)
+    case (lhs, "-" ~ rhs) => Sub(lhs, rhs)
+    case (lhs, "+" ~ rhs) => Add(lhs, rhs)
   }
 
   private def mulDiv: Parser[ExpressionNode] = infixOperationParser(factor, """\*|/""".r) {
-    case (lhs, "*" ~ rhs) => MUL(lhs, rhs)
-    case (lhs, "/" ~ rhs) => DIV(lhs, rhs)
+    case (lhs, "*" ~ rhs) => Mul(lhs, rhs)
+    case (lhs, "/" ~ rhs) => Div(lhs, rhs)
   }
 
   private def factor: Parser[ExpressionNode] = literal | prefix | "(" ~> expression <~ ")"
@@ -44,8 +44,8 @@ trait ExpressionParser extends JavaTokenParsers {
   private def prefix: Parser[ExpressionNode] =
     """-|!""".r ~ factor ^^ {
       case op ~ rhs => op match {
-        case "-" => NEG(rhs)
-        case "!" => NOT(rhs)
+        case "-" => Neg(rhs)
+        case "!" => Not(rhs)
       }
     }
 

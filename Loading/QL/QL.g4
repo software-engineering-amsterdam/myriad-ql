@@ -29,10 +29,7 @@ blockItems returns [List<BlockItem> result]
 
 type returns [Type result]
  : 'boolean' { $result = new BooleanType($ctx.start.getLine()); }
- | 'date' 	 { $result = new DateType($ctx.start.getLine()); }
- | 'decimal' { $result = new DecimalType($ctx.start.getLine()); }
  | 'integer' { $result = new IntegerType($ctx.start.getLine()); }
- | 'money'   { $result = new MoneyType($ctx.start.getLine()); }
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
 

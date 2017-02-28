@@ -1,5 +1,6 @@
 package ast.expression;
 
+import ast.ExpressionVisitor;
 import ast.Node;
 import ast.atom.Atom;
 import ast.type.Type;
@@ -13,10 +14,10 @@ public abstract class Expression extends Node {
 		super(line);
 	}
 
-	public abstract Atom evaluate();
+//	public abstract Atom evaluate();
+//
+//	public abstract Atom evaluate(Environment env);
 
-	public abstract Atom evaluate(Environment env);
-
-
+	public abstract <T> T accept(ExpressionVisitor<T> v);
 	
 }

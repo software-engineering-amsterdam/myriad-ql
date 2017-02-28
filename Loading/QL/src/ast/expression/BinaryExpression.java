@@ -1,7 +1,5 @@
 package ast.expression;
 
-import ast.Visitor;
-
 public abstract class BinaryExpression extends Expression {
 
 	private Expression lhs;
@@ -20,9 +18,5 @@ public abstract class BinaryExpression extends Expression {
 	public Expression getRhs() {
 		return rhs;
 	}
-	
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-	}
+
 }

@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.statement.BooleanQuestion;
+import org.uva.taxfree.model.node.declarations.BooleanQuestion;
 
 public class SymbolTableTest {
     SymbolTable mSymbolTable;

@@ -16,17 +16,16 @@ import value.BoolValue;
 import value.StringValue;
 import value.Value;
 
-public class Check extends CheckBox implements Field {
+public class Check implements Field {
 
 	private Notifier listener;
-	private String name;
+	private CheckBox field;
 	
 	public Check(String name) {
 		
-		super();
-		this.name = name;
+		this.field = new CheckBox();
 		
-		selectedProperty().addListener(new ChangeListener<Boolean>()  {
+		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
 	           
 			@Override
            public void changed(ObservableValue<? extends Boolean> observable,
@@ -44,12 +43,17 @@ public class Check extends CheckBox implements Field {
 	
 	@Override
 	public Value getAnswer() {
-		return new BoolValue(isSelected());
+		return new BoolValue(field.isSelected());
 	}
 	
 	@Override
 	public void setAnswer(Value value) {
-		setSelected((boolean) value.getValue());	
+		field.setSelected((boolean) value.getValue());	
+	}
+	
+	@Override
+	public CheckBox getField() {
+		return field;
 	}
 
 }
