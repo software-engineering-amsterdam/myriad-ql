@@ -77,7 +77,7 @@ def parse(input_string):
     ]
 
     operand_list_bool = [
-        (lit_op_lower_exclusive | lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive,
+        (lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive | lit_op_lower_exclusive,
          2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
         (lit_op_equality | lit_op_inequality,
