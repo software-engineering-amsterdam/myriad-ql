@@ -8,6 +8,7 @@ class IdentifierChecker(object):
         self.identifier_dict = defaultdict(list)
 
     def visit(self, pql_ast):
+        self.identifier_dict.clear()
         [form.apply(self) for form in pql_ast]
         return self.__compute_result(self.identifier_dict)
 
