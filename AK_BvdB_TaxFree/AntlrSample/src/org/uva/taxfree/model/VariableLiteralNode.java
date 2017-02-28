@@ -1,5 +1,6 @@
 package org.uva.taxfree.model;
 
+
 public class VariableLiteralNode extends LiteralNode {
     private NamedNode mReference;
 
