@@ -41,14 +41,17 @@ public class FormGenerator {
         vbox.getChildren().add(textTitle);
 
         BooleanType bool = new BooleanType();
-        addQuestion(vbox, "Did you sell a house in 2010?", bool, null);
+        VBox q1 = addQuestion("Did you sell a house in 2010?", bool, null);
+        vbox.getChildren().add(q1);
         IntType num = new IntType();
-        addQuestion(vbox, "Did you sell a house in 20112?", num, null);
+        addQuestion(vbox, "Did you sell a house in int?", num, null);
+        FloatType num2 = new FloatType();
+        addQuestion(vbox, "Did you sell a house in float?", num, null);
 
         return new Scene(vbox);
     }
 
-    public void addQuestion(VBox vbox, String question, BooleanType type, String variableName) {
+    public VBox addQuestion(String question, BooleanType type, String variableName) {
         final ToggleGroup toggleGroup = new ToggleGroup();
         RadioButton rbYes = new RadioButton("Yes");
         RadioButton rbNo = new RadioButton("No");
@@ -65,29 +68,35 @@ public class FormGenerator {
             }
         });
 
-        vbox.getChildren().add(new HBox(rbYes, rbNo));
+        return new VBox(new Text(question), new HBox(rbYes, rbNo));
     }
 
-    public void addQuestion(VBox vbox, String question, IntType type, String variableName) {
+    public VBox addQuestion(VBox vbox, String question, IntType type, String variableName) {
         TextField textField = new TextField();
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
+                if(!textField.getText().matches("[-+]?[0-9]*")) {
+                    textField.setText(oldValue);
+                }
             }
         });
-        vbox.getChildren().addAll(new Text(question), textField);
+
+        return new VBox(new Text(question), textField);
     }
 
-    public void addQuestion(VBox vbox, String question, FloatType type, String variableName) {
+    public VBox addQuestion(VBox vbox, String question, FloatType type, String variableName) {
         TextField textField = new TextField();
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
+                if(!textField.getText().matches("[+-]?[0-9]*(\\.[0-9]*)?")) {
+                    textField.setText(oldValue);
+                }
             }
         });
-        vbox.getChildren().addAll(new Text(question), textField);
+
+        return new VBox(new Text(question), textField);
     }
 
     public void addQuestion(VBox vbox, String question, StringType type, String variableName) {
