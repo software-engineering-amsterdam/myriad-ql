@@ -23,22 +23,22 @@ class Parser < Parslet::Parser
   rule(:identifier) { (match['a-zA-Z'] >> match['a-zA-z0-9'].repeat).as(:identifier) >> space? }
   # TODO: Fix left recursion and allow nested expressions on left
   rule(:expression) do
-    lparen >> expression.as(:expression) >> rparen |
+    lparen >> expression >> rparen |
     # infix_expression(literal,
     #   [match['*/'], 2, :left],
     #   [match['+-'], 1, :left]
     # ) |
-    (literal | identifier).as(:left) >> operator >> expression.as(:right) |
-    identifier |
-    literal
+    ((literal | identifier).as(:left) >> operator >> expression.as(:right)) |
+    literal |
+    identifier
   end
-  rule(:block) { (if_statement | question).repeat.as(:block) }
+  rule(:block) { (if_statement | question).repeat }
 
-  rule(:if_statement) { (str('if') >> space >> expression >> block >> (str('else') >> space >> block).maybe >> str('end')).as(:if_statement) >> space? }
+  rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:if_true) >> (str('else') >> space >> block.as(:if_false)).maybe >> str('end')).as(:if_statement) >> space? }
 
-  rule(:question) { (string >> type >> identifier >> (hashrocket >> expression).maybe).as(:question) }
+  rule(:question) { (string >> type >> identifier >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
 
-  rule(:form) { (str('form') >> space >> identifier >> block >> str('end')).as(:form) >> space? }
+  rule(:form) { (str('form') >> space >> identifier >> block.as(:body) >> str('end')).as(:form) >> space? }
 
   root :form
 end
