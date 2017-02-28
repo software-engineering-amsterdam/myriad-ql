@@ -1,5 +1,6 @@
 package org.lemonade.nodes.expressions.literal;
 
+
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
