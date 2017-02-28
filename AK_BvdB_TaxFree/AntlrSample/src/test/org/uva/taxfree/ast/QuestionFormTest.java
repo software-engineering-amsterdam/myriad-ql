@@ -20,8 +20,6 @@ import java.util.Set;
 import java.util.Timer;
 
 public class QuestionFormTest {
-    private FormNode mRoot;
-    private QuestionForm mForm;
     private final Set<Node> mCachedNodes = new LinkedHashSet<>();
     private final SymbolTable mSymbolTable = new SymbolTable();
 
@@ -42,12 +40,13 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
-        createRenderer(mForm);
-        mForm.show();
+        QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
+        createRenderer(form);
+        form.show();
     }
 
-    private final int START_DELAY_MS = 1000;
-    private final int INTERVAL_MS = 1000;
+    private static final int START_DELAY_MS = 1000;
+    private static final int INTERVAL_MS = 1000;
 
     private void createRenderer(QuestionForm form) {
         FormRenderer renderer = new FormRenderer(form);
@@ -83,7 +82,6 @@ public class QuestionFormTest {
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
         mCachedNodes.add(intCalc);
         expCalc.evaluate();
-        mRoot = new FormNode("SampleForm", mCachedNodes);
     }
 
     @Test
