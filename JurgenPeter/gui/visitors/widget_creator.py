@@ -11,9 +11,9 @@ class WidgetCreator:
 
         # TODO replace with QLS styling object
         self.default_widgets = {
-            Datatype.integer: IntegerEntryWidget,
+            Datatype.integer: SliderWidget,
             Datatype.decimal: DecimalEntryWidget,
-            Datatype.boolean: CheckBoxWidget,
+            Datatype.boolean: RadioWidget,
             Datatype.string:  EntryWidget}
 
     def visit(self, node):
