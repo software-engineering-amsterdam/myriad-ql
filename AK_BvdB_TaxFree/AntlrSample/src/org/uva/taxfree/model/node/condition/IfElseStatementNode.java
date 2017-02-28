@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.condition;
+
+import org.uva.taxfree.model.node.Node;
 
 public class IfElseStatementNode extends Node {
     private IfStatementNode mIfStatementNode;

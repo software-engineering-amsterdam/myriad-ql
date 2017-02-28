@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
+import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.Node;
 
 import java.io.*;
 import java.util.BitSet;

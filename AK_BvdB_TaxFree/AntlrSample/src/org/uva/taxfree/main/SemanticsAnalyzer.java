@@ -1,7 +1,11 @@
 package org.uva.taxfree.main;
 
 import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.model.*;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.condition.ConditionNode;
+import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.literal.LiteralNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

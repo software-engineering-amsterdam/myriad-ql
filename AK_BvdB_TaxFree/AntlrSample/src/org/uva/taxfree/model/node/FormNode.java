@@ -1,6 +1,4 @@
-package org.uva.taxfree.model;
-
-import javax.swing.*;
+package org.uva.taxfree.model.node;
 
 public class FormNode extends Node {
     private String mFormName;

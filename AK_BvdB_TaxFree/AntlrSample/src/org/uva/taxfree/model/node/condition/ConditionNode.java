@@ -1,5 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.condition;
 
+import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;

@@ -1,4 +1,4 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.node.expression;
 
 public class BooleanExpressionNode extends ExpressionNode {
     public BooleanExpressionNode(String operator) {

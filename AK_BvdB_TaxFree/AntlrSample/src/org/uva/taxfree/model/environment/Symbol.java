@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.environment;
+
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 public class Symbol {
     private String mId;

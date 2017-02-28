@@ -1,4 +1,6 @@
-package org.uva.taxfree.model;
+package org.uva.taxfree.model.environment;
+
+import org.uva.taxfree.model.node.statement.NamedNode;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
