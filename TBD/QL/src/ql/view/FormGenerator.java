@@ -1,11 +1,13 @@
 package ql.view;
 
 
+import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -15,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import ql.ast.types.BooleanType;
 import ql.ast.types.NumType;
 import ql.ast.types.StringType;
@@ -30,7 +33,7 @@ public class FormGenerator {
         this.environment = environment;
     }
 
-    public VBox addForm(String title) {
+    public Scene addForm(String title) {
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
@@ -44,7 +47,7 @@ public class FormGenerator {
         NumType num = new NumType();
         addQuestion(vbox, "Did you sell a house in 20112?", num, null);
 
-        return vbox;
+        return new Scene(vbox);
     }
 
     public void addQuestion(VBox vbox, String question, BooleanType type, String variableName) {

@@ -1,25 +1,14 @@
 package ql;
 
+import javafx.application.Application;
 import javafx.scene.Scene;
-import ql.ast.Expr;
-import ql.ast.expressions.binop.Add;
-import ql.ast.expressions.binop.Div;
-import ql.ast.literals.QLFloat;
-import ql.ast.literals.QLIdent;
-import ql.ast.expressions.binop.Sub;
-import ql.ast.expressions.monop.Neg;
-import ql.ast.literals.QLInt;
-import ql.ast.types.FloatType;
-import ql.ast.types.IntType;
-import ql.ast.types.Type;
+import javafx.stage.Stage;
 import ql.ast.values.IntValue;
-import ql.ast.values.Value;
 import ql.ast.visistor.*;
 import ql.ast.visistor.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
 import ql.view.FormGenerator;
-import ql.view.GUIViewer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,8 +17,14 @@ import java.io.Reader;
 /**
  * Created by Erik on 7-2-2017.
  */
-public class Main {
-    public static void main(String[] args) {
+public class Main extends Application {
+
+    public static void main(String[] args)  {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
             reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
@@ -58,11 +53,12 @@ public class Main {
             System.out.println("Value of expr: " + env.getVariableValue("test"));
 
             FormGenerator formGenerator = new FormGenerator(env);
-            Scene scene = new Scene(formGenerator.addForm("Form"));
-            GUIViewer guiViewer = new GUIViewer(scene);
+            primaryStage.setScene(formGenerator.addForm("Form"));
+            primaryStage.show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 }

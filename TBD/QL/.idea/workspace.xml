@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/view/GUIViewer.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/view/Test.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/view/GUIViewer.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/view/FormGenerator.java" afterPath="$PROJECT_DIR$/src/ql/view/FormGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.txt" afterPath="$PROJECT_DIR$/test.txt" />
     </list>
     <list id="76b6b3a2-7088-4438-a30c-090bb2c79e79" name="Revert: " comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -24,12 +22,15 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="60" column="67" lean-forward="false" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
-              <folding />
+            <state relative-caret-position="663">
+              <caret line="51" column="68" lean-forward="true" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
+              <folding>
+                <element signature="e#507#508#0" expanded="true" />
+                <element signature="e#535#536#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,12 +58,12 @@
       <file leaf-file-name="FormGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/view/FormGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="-371">
+              <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#860#861#0" expanded="true" />
-                <element signature="e#906#907#0" expanded="true" />
+                <element signature="e#953#954#0" expanded="true" />
+                <element signature="e#999#1000#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,31 +75,6 @@
             <state relative-caret-position="204">
               <caret line="17" column="39" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="17" selection-end-column="39" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="If.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/If.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="48" lean-forward="false" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GUIViewer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ql/view/GUIViewer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="39" column="28" lean-forward="true" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
-              <folding>
-                <element signature="e#908#909#0" expanded="true" />
-                <element signature="e#942#943#0" expanded="true" />
-                <element signature="e#988#989#0" expanded="true" />
-                <element signature="e#1016#1017#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -208,7 +184,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/ql/ast/literals/QLBoolean.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/literals/QLIdent.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
@@ -255,10 +230,11 @@
         <option value="$PROJECT_DIR$/src/ql/ast/IfElse.java" />
         <option value="$PROJECT_DIR$/src/ql/parser/ql.jacc" />
         <option value="$PROJECT_DIR$/src/ql/view/Test.java" />
+        <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/ql/view/QLPreloader.java" />
         <option value="$PROJECT_DIR$/src/ql/view/GUIViewer.java" />
         <option value="$PROJECT_DIR$/src/ql/view/FormGenerator.java" />
         <option value="$PROJECT_DIR$/src/ql/Main.java" />
-        <option value="$PROJECT_DIR$/test.txt" />
       </list>
     </option>
   </component>
@@ -613,6 +589,26 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="ql.ast.test.Test" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="QL" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="FormGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="ql.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="ql.view.FormGenerator" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -1005,19 +1001,20 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="Application.GUIViewer" />
       <item index="2" class="java.lang.String" itemvalue="Application.test" />
       <item index="3" class="java.lang.String" itemvalue="Application.Test (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Application.FormGenerator" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.Main" />
-        <item index="1" class="java.lang.String" itemvalue="Application.GUIViewer" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Test (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Application.test" />
-        <item index="4" class="java.lang.String" itemvalue="Application.GUIViewer" />
+        <item index="1" class="java.lang.String" itemvalue="Application.FormGenerator" />
+        <item index="2" class="java.lang.String" itemvalue="Application.GUIViewer" />
+        <item index="3" class="java.lang.String" itemvalue="Application.Test (1)" />
+        <item index="4" class="java.lang.String" itemvalue="Application.test" />
       </list>
     </recent_temporary>
   </component>
@@ -1048,7 +1045,7 @@
       <workItem from="1487586386988" duration="12937000" />
       <workItem from="1487687344762" duration="8746000" />
       <workItem from="1488196221775" duration="12462000" />
-      <workItem from="1488285058761" duration="2824000" />
+      <workItem from="1488285058761" duration="4538000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1316,11 +1313,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488287194106</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="GUI try">
+      <created>1488287898026</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1488287898026</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83425000" />
+    <option name="totallyTimeSpent" value="85139000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1329,7 +1333,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1365,7 +1369,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Type checker and expr refactor" />
     <MESSAGE value="finished type checker" />
     <MESSAGE value="eval and fixes" />
     <MESSAGE value="check for duplicates" />
@@ -1390,7 +1393,8 @@
     <MESSAGE value="Added error messages" />
     <MESSAGE value="Environment working" />
     <MESSAGE value="fixed row numbers error log" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed row numbers error log" />
+    <MESSAGE value="GUI try" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI try" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1403,16 +1407,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/literals/QLString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/values/ErrorValue.java" />
     <entry file="file://$PROJECT_DIR$/src/ql/logger/Error.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1817,14 +1811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="60" column="67" lean-forward="false" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1833,27 +1819,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/view/FormGenerator.java">
+    <entry file="file://$PROJECT_DIR$/src/ql/view/QLPreloader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#860#861#0" expanded="true" />
-            <element signature="e#906#907#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="173">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/view/GUIViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="39" column="28" lean-forward="true" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+        <state relative-caret-position="272">
+          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/view/FormGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-371">
+          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
           <folding>
-            <element signature="e#908#909#0" expanded="true" />
-            <element signature="e#942#943#0" expanded="true" />
-            <element signature="e#988#989#0" expanded="true" />
-            <element signature="e#1016#1017#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#953#954#0" expanded="true" />
+            <element signature="e#999#1000#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="51" column="68" lean-forward="true" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
+          <folding>
+            <element signature="e#507#508#0" expanded="true" />
+            <element signature="e#535#536#0" expanded="true" />
           </folding>
         </state>
       </provider>
