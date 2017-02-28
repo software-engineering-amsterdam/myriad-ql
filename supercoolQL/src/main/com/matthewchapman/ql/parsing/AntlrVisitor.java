@@ -10,6 +10,7 @@ import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
@@ -56,6 +57,28 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
         return new IfStatement((Expression) visit(ctx.expression()), statements);
     }
+
+    @Override
+    public TreeNode visitIfElseStatement(QLParser.IfElseStatementContext ctx) {
+
+        ArrayList<Statement> ifCaseStatements = new ArrayList<>();
+        ArrayList<Statement> elseCaseStatements = new ArrayList<>();
+
+        for(QLParser.StatementContext statementContext : ctx.ifCase)
+        {
+            ifCaseStatements.add((Statement) visit(statementContext));
+        }
+
+        for(QLParser.StatementContext statementContext : ctx.elseCase)
+        {
+            elseCaseStatements.add((Statement) visit(statementContext));
+        }
+
+        return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements);
+
+    }
+
+
 
     @Override
     public TreeNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
@@ -174,9 +197,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitCalculatedValue(QLParser.CalculatedValueContext ctx) {
-        ParameterGroup parameterGroup = (ParameterGroup) visit(ctx.expression());
-
-        return parameterGroup;
+        return visit(ctx.expression());
     }
 
     @Override

@@ -21,4 +21,12 @@ form exampleForm {
       simpleConditionalQuestion: boolean;
   }
 
+  if (complexConditional) {
+    "if Question"
+        complexConditionalQuestion1: boolean;
+  } else {
+    "else Question"
+        complexConditionalQuestion2: boolean;
+  }
+
 }

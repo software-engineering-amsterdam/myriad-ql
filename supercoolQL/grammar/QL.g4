@@ -9,6 +9,7 @@ formDeclaration
 statement
     :   text=STRING ID ':' type calculatedValue? ';'                                        #question
     |   'if' OPEN_PARENTH expression CLOSE_PARENTH OPEN_BRACKET statement+ CLOSE_BRACKET    #ifStatement
+    |   'if' OPEN_PARENTH expression CLOSE_PARENTH OPEN_BRACKET ifCase+=statement CLOSE_BRACKET 'else' OPEN_BRACKET elseCase+=statement CLOSE_BRACKET #ifElseStatement
     ;
 
 expression

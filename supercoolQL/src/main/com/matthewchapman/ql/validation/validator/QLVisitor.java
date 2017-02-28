@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation.validator;
 
+import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
@@ -10,5 +11,6 @@ public interface QLVisitor<T> {
 
     T visit(Question question);
     T visit(IfStatement ifStatement);
+    T visit(IfElseStatement ifElseStatement);
 
 }
