@@ -68,15 +68,13 @@ class TypeChecker(Visitor):
         type_set = {type_left, type_right}
 
         if type_set.issubset(allowed_types):
-            if len(type_set) is 2:
+            if DataTypes.money in type_set:
                 dominant_type = DataTypes.money
             else:
                 dominant_type = DataTypes.integer
         else:
             errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
             type_set, allowed_types))
-
-        # print(type, errors)
 
         return (dominant_type, errors)
 
