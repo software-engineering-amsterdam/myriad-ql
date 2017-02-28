@@ -1,19 +1,18 @@
 package ast.expression;
 
 import ast.Visitor;
-import ast.atom.Atom;
 
 public abstract class UnaryExpression extends Expression {
 
-    private Atom lhs; // TODO rename?
+    private Expression lhs; // TODO rename?
     
     // TODO not pretty to return a unary expression
-    public UnaryExpression setElements(Atom lhs) {
+    public UnaryExpression setElements(Expression lhs) {
         this.lhs = lhs;
         return this;
     }
 
-	public Atom getLhs() {
+	public Expression getLhs() {
 		return lhs;
 	}
 	

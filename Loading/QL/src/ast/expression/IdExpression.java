@@ -3,9 +3,11 @@ package ast.expression;
 import ast.Visitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
+import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
+import ast.type.IntegerType;
+import ast.type.Type;
 import semantic.Environment;
-import value.Value;
 
 public class IdExpression extends Expression {
 
@@ -26,18 +28,28 @@ public class IdExpression extends Expression {
 	
 	@Override
 	public Atom evaluate() {
-
-		System.out.println("name: " + name);
-		// TODO we need all operations here?
-		// TODO get value of name from Environment
-		// TODO cannot be boolatom
-		return new BoolAtom(false); // TODO actually return unknown variable : not a string
+		System.out.println("idExpression evaluate();");
+		return new BoolAtom(false);
 	}
 
 	@Override
-	public Atom evaluate(Value test) {
-		System.out.println("TESTING STUFF HERE"+ test.getValue());
-		return new BoolAtom((Boolean)  test.getValue());
+	public Atom evaluate(Environment env) {
+//		System.out.println("TESTING STUFF HERE"+ test.getValue());
+//		return new BoolAtom((Boolean)  test.getValue());
+		System.out.println("HAS TYPE: " + env.hasType(name));
+
+		String t = env.hasType(name).getType();
+		if (t.equals("integer")) {
+			return new IntegerAtom(1);
+		}
+		if (t.equals("string")) {
+			return new StringAtom("string");
+		}
+		if (t.equals("boolean")) {
+			return new BoolAtom(true);
+		}
+
+		return null;
 	}
 	
 }

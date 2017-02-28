@@ -2,18 +2,18 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
-import value.Value;
+import semantic.Environment;
 
 public class AndExpression extends BinaryExpression {
 	
 	
 	@Override
 	public Atom evaluate() {
-		return getLhs().and(getRhs());
+		return getLhs().evaluate().and(getRhs().evaluate());
 	}
 
     @Override
-    public Atom evaluate(Value test) {
+    public Atom evaluate(Environment env) {
         return null;
     }
 

@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
-import value.Value;
+import semantic.Environment;
 
 public class MulExpression extends BinaryExpression {
 	@Override
@@ -13,14 +13,14 @@ public class MulExpression extends BinaryExpression {
 	@Override
 	public Atom evaluate() {
 
-		System.out.println("getLhs: " + getLhs().getNumber());
-		System.out.println("getRhs: " + getRhs().getNumber());
-		System.out.println("getLhs().mul(getRhs()): " + getLhs().mul(getRhs()).getNumber());
-		return getLhs().mul(getRhs());
+		System.out.println("getLhs: " + getLhs().evaluate().getNumber());
+		System.out.println("getRhs: " + getRhs().evaluate().getNumber());
+		System.out.println("getLhs().mul(getRhs()): " + getLhs().evaluate().mul(getRhs().evaluate()).getNumber());
+		return getLhs().evaluate().mul(getRhs().evaluate());
 	}
 
 	@Override
-	public Atom evaluate(Value test) {
+	public Atom evaluate(Environment env) {
 		return null;
 	}
 }
