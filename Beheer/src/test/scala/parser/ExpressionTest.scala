@@ -6,7 +6,8 @@ import org.scalatest.prop.PropertyChecks
 import parser.generators.ExpressionGenerator
 
 class ExpressionParserTest extends PropSpec with PropertyChecks {
-  type NodeRel = Set[(ExpressionNode, ExpressionNode)]
+  type NodePair = (ExpressionNode, ExpressionNode)
+  type NodeRel = Set[NodePair]
   private val fullExpressions = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
   private val infixExpressions = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
   private val parser = ConcreteExpressionParser
@@ -76,44 +77,90 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     }
   }
 
-  property("Operator precedence add/sub") {
+  property("Operator precedence.") {
     forAll(infixExpressions) {
-      e: String =>
-        {
-          val nodeToChildren = trCls(flattenExpressionRelations(parser.parseExpression(e)))
-          val invalidRelations = nodeToChildren.filter {
-            case (Add(_, _), Add(_, _)) => false
-            case (Add(_, _), Sub(_, _)) => false
-            case (Sub(_, _), Sub(_, _)) => false
-            case (Sub(_, _), Add(_, _)) => false
-            case (Add(_, _), _: InfixNode) => true
-            case (Sub(_, _), _: InfixNode) => true
-            case (_, _) => false
-          }
-          invalidRelations.isEmpty
-        }
+      e: String => {
+        val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
+        nodeRelations.filter(isValidNodeRelation) == nodeRelations
+      }
     }
   }
+
+  private def isValidNodeRelation(nodePair: NodePair): Boolean = {
+    def arithmeticChildAllowed(n: ExpressionNode): Boolean = n match {
+      case Add(_, _) => true
+      case Sub(_, _) => true
+      case _: InfixNode => false
+      case _ => true
+    }
+
+    def mulDivChildAllowed(n: ExpressionNode): Boolean = n match {
+      case Mul(_, _) => true
+      case Div(_, _) => true
+      case e => arithmeticChildAllowed(e)
+    }
+
+    def comparisonChildAllowed(n: ExpressionNode): Boolean = n match {
+      case Neq(_, _) => true
+      case Geq(_, _) => true
+      case Leq(_, _) => true
+      case Eq(_, _) => true
+      case Lt(_, _) => true
+      case Gt(_, _) => true
+      case e => mulDivChildAllowed(e)
+    }
+
+    def logicalChildAllowed(n: ExpressionNode): Boolean = n match {
+      case And(_, _) => true
+      case Or(_, _) => true
+      case e => comparisonChildAllowed(e)
+    }
+
+    nodePair match {
+      case (Add(_, _), child) => arithmeticChildAllowed(child)
+      case (Sub(_, _), child) => arithmeticChildAllowed(child)
+      case (Mul(_, _), child) => mulDivChildAllowed(child)
+      case (Div(_, _), child) => mulDivChildAllowed(child)
+      case (Neq(_, _), child) => comparisonChildAllowed(child)
+      case (Geq(_, _), child) => comparisonChildAllowed(child)
+      case (Leq(_, _), child) => comparisonChildAllowed(child)
+      case (Eq(_, _), child) => comparisonChildAllowed(child)
+      case (Gt(_, _), child) => comparisonChildAllowed(child)
+      case (Lt(_, _), child) => comparisonChildAllowed(child)
+      case (And(_, _), child) => logicalChildAllowed(child)
+      case (Or(_, _), child) => logicalChildAllowed(child)
+    }
+  }
+
+  private def operatorPrecedenceProperty(validRelation: NodePair => Boolean) =
+    forAll(infixExpressions) {
+      e: String => {
+        val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
+        nodeRelations.filter(validRelation) == nodeRelations
+      }
+    }
 
   private def trCls(input: NodeRel): NodeRel = {
     def trClsRec(rel: NodeRel): NodeRel = {
       val res = rel ++ (for ((x, y) <- rel; (a, b) <- input if a == y) yield (x, b))
       if (res == rel) res else trClsRec(res)
     }
+
     trClsRec(input)
   }
-  private def operatorCountProperty(operator: String)(matcher: ExpressionNode => Boolean) =
-    forAll(fullExpressions) {
-      e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), matcher)
-    }
-
-  private def operatorCount(input: String, operator: String): Int = operator.r.findAllIn(input).length
 
   private def flattenExpressionRelations(expressionNode: ExpressionNode): NodeRel = expressionNode match {
     case i: InfixNode => Set((i, i.lhs), (i, i.rhs)) ++ flattenExpressionRelations(i.lhs) ++ flattenExpressionRelations(i.rhs)
     case p: PrefixNode => Set((p, p.operand)) ++ flattenExpressionRelations(p.operand)
     case _ => Set.empty
   }
+
+  private def operatorCountProperty(operator: String)(matcher: ExpressionNode => Boolean) =
+    forAll(fullExpressions) {
+      e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), matcher)
+    }
+
+  private def operatorCount(input: String, operator: String): Int = operator.r.findAllIn(input).length
 
   private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Boolean): Int = {
     val childResult = expressionNode match {
