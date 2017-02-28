@@ -35,7 +35,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, ExpressionVisitor<Identifier>{
+public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, ExpressionVisitor<Void>{
 
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
@@ -124,109 +124,109 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     }
 
     @Override
-    public Identifier visit(MyBoolean literal) {
+    public Void visit(MyBoolean literal) {
         return null;
     }
 
     @Override
-    public Identifier visit(MyInteger literal) {
+    public Void visit(MyInteger literal) {
         return null;
     }
 
     @Override
-    public Identifier visit(MyString literal) {
+    public Void visit(MyString literal) {
         return null;
     }
 
     @Override
-    public Identifier visit(Identifier literal) {
+    public Void visit(Identifier literal) {
         if(identifierToTypeMap.get(literal.getName()) == null)
             messages.addError(new IfExpressionUndefinedError(literal.getLineNumber(), literal));
         return null;
     }
 
     @Override
-    public Identifier visit(Money literal) {
+    public Void visit(Money literal) {
         return null;
     }
 
     @Override
-    public Identifier visit(Parentheses expression) {
+    public Void visit(Parentheses expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Negation expression) {
+    public Void visit(Negation expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Negative expression) {
+    public Void visit(Negative expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Positive expression) {
+    public Void visit(Positive expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(AND expression) {
+    public Void visit(AND expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(OR expression) {
+    public Void visit(OR expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(EQ expression) {
+    public Void visit(EQ expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(NEQ expression) {
+    public Void visit(NEQ expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(GT expression) {
+    public Void visit(GT expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(LT expression) {
+    public Void visit(LT expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(GTEQ expression) {
+    public Void visit(GTEQ expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(LTEQ expression) {
+    public Void visit(LTEQ expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Addition expression) {
+    public Void visit(Addition expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Subtraction expression) {
+    public Void visit(Subtraction expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Multiplication expression) {
+    public Void visit(Multiplication expression) {
         return null;
     }
 
     @Override
-    public Identifier visit(Division expression) {
+    public Void visit(Division expression) {
         return null;
     }
 }
