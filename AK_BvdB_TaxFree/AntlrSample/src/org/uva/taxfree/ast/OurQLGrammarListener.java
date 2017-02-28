@@ -14,7 +14,7 @@ import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.statement.*;
+import org.uva.taxfree.model.node.declarations.*;
 
 import java.util.*;
 
@@ -23,8 +23,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     private SymbolTable mSymbolTable;
     private FormNode mRootNode;
 
-//    private final Stack<Node> mCurrentStack = new Stack<>();
-    private final List<BlockNode> mCachedIfStatementNodes = new ArrayList<>(); // The only list that won't be empty in the end
     private final List<ConditionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
     private boolean isInsideIfElse = false;
@@ -191,9 +189,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.exitIfElseStatement(ctx);
-        // Get the ifStatementNode
-//        BlockNode ifStatementNode = mCachedIfStatementNodes.remove(mCachedIfStatementNodes.size()-1);
-
         Set<Node> content = popStack();
         BlockNode ifStatementNode = lastBlock();
 
@@ -209,8 +204,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-
-
         mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popStack());
         assert mChildsStack.isEmpty();
     }

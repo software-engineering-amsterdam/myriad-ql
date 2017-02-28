@@ -1,7 +1,7 @@
 package org.uva.taxfree.model.node.blocks;
 
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.statement.NamedNode;
+import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import java.util.Set;
 
@@ -51,13 +51,21 @@ public abstract class BlockNode extends Node {
 
     public void printDeclarations() {
         for (Node child : mChildren) {
-            System.out.println(child.toString());
+            child.printId();
         }
     }
 
-    public void printValues() {
+    @Override
+    public void printValue() {
         for (Node child : mChildren) {
             child.printValue();
+        }
+    }
+
+    @Override
+    public void printId() {
+        for (Node child : mChildren){
+            child.printId();
         }
     }
 }
