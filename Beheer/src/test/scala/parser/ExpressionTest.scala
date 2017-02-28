@@ -6,120 +6,117 @@ import org.scalatest.prop.PropertyChecks
 import parser.generators.ExpressionGenerator
 
 class ExpressionParserTest extends PropSpec with PropertyChecks {
-  private val expressions = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
+  type NodeRel = Set[(ExpressionNode, ExpressionNode)]
+  private val fullExpressions = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
+  private val infixExpressions = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
   private val parser = ConcreteExpressionParser
 
   property("Add operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, """\+""") == nodeCount(parser.parseExpression(e), {
-          case ADD(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("\\+") {
+      case ADD(_, _) => true
+      case _ => false
     }
   }
   property("Minus operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, "-") == nodeCount(parser.parseExpression(e), {
-          case NEG(_) => true
-          case SUB(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("-") {
+      case NEG(_) => true
+      case SUB(_, _) => true
+      case _ => false
     }
   }
   property("Div operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, """/""") == nodeCount(parser.parseExpression(e), {
-          case DIV(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("/") {
+      case DIV(_, _) => true
+      case _ => false
     }
   }
-
   property("Mul operator match)") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, """\*""") == nodeCount(parser.parseExpression(e), {
-          case MUL(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("\\*") {
+      case MUL(_, _) => true
+      case _ => false
     }
   }
   property("Not operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, "!") - operatorCount(e, "!=") == nodeCount(parser.parseExpression(e), {
-          case NOT(_) => true
-          case _ => false
-        })
+    operatorCountProperty("!") {
+      case NOT(_) => true
+      case NEQ(_, _) => true
+      case _ => false
     }
   }
   property("And operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, """\&\&""") == nodeCount(parser.parseExpression(e), {
-          case AND(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("&&") {
+      case AND(_, _) => true
+      case _ => false
     }
   }
   property("Or operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, """\|\|""") == nodeCount(parser.parseExpression(e), {
-          case OR(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("\\|\\|") {
+      case OR(_, _) => true
+      case _ => false
     }
   }
   property("G/GE operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, ">") == nodeCount(parser.parseExpression(e), {
-          case GT(_, _) => true
-          case GEQ(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty(">") {
+      case GT(_, _) => true
+      case GEQ(_, _) => true
+      case _ => false
     }
   }
   property("L/LE operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, "<") == nodeCount(parser.parseExpression(e), {
-          case LT(_, _) => true
-          case LEQ(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("<") {
+      case LT(_, _) => true
+      case LEQ(_, _) => true
+      case _ => false
     }
   }
   property("Equals operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, "==") == nodeCount(parser.parseExpression(e), {
-          case EQ(_, _) => true
-          case _ => false
-        })
-    }
-  }
-  property("Not equals operator match") {
-    forAll(expressions) {
-      e: String =>
-        operatorCount(e, "!=") == nodeCount(parser.parseExpression(e), {
-          case NEQ(_, _) => true
-          case _ => false
-        })
+    operatorCountProperty("==") {
+      case EQ(_, _) => true
+      case _ => false
     }
   }
 
-  private def operatorCount(input: String, operator: String): Int = input match {
-    case "" => 0
-    case in => operator.r.findAllIn(in).length
+  property("Operator precedence add/sub") {
+    forAll(infixExpressions) {
+      e: String =>
+        {
+          val nodeToChildren = trCls(flattenExpressionRelations(parser.parseExpression(e)))
+          val invalidRelations = nodeToChildren.filter {
+            case (ADD(_, _), ADD(_, _)) => false
+            case (ADD(_, _), SUB(_, _)) => false
+            case (SUB(_, _), SUB(_, _)) => false
+            case (SUB(_, _), ADD(_, _)) => false
+            case (ADD(_, _), _: InfixNode) => true
+            case (SUB(_, _), _: InfixNode) => true
+            case (_, _) => false
+          }
+          invalidRelations.isEmpty
+        }
+    }
+  }
+
+  private def trCls(input: NodeRel): NodeRel = {
+    def trClsRec(rel: NodeRel): NodeRel = {
+      val res = rel ++ (for ((x, y) <- rel; (a, b) <- input if a == y) yield (x, b))
+      if (res == rel) res else trClsRec(res)
+    }
+    trClsRec(input)
+  }
+  private def operatorCountProperty(operator: String)(matcher: ExpressionNode => Boolean) =
+    forAll(fullExpressions) {
+      e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), matcher)
+    }
+
+  private def operatorCount(input: String, operator: String): Int = operator.r.findAllIn(input).length
+
+  private def flattenExpressionRelations(expressionNode: ExpressionNode): NodeRel = expressionNode match {
+    case i: InfixNode => Set((i, i.lhs), (i, i.rhs)) ++ flattenExpressionRelations(i.lhs) ++ flattenExpressionRelations(i.rhs)
+    case p: PrefixNode => Set((p, p.rhs)) ++ flattenExpressionRelations(p.rhs)
+    case _ => Set.empty
   }
 
   private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Boolean): Int = {
-    lazy val childResult = expressionNode match {
+    val childResult = expressionNode match {
       case i: InfixNode => nodeCount(i.lhs, matcher) + nodeCount(i.rhs, matcher)
       case p: PrefixNode => nodeCount(p.rhs, matcher)
       case _ => 0
