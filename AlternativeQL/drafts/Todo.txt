@@ -1,18 +1,3 @@
- - Regarding the throws 'throwable': SOlution: extend runtimeexception with our own custom exception class. ()
- - Throws is terrible; avoid it.
-
-- AbsractLiteral is not needed (you need to cast it anyway): get rid of it.
-
-- BooleanType equals (as with the other literals) can not done. (Not equals but: compatibility!)
-
-- instance of: flip it around (NumberType is number) innerExpressionType isNUberOf). THe implementation should be in the Type class (override it)
-
-- In ExpressionTypeChecker, the metadata in type checking is not necessary.
-
-- a + b gives currently only one error (because it is throwed like that)
-
-- WHy not use the messagebag also in the expressions type checker?
-
 - MessageBag: just tell it what to do. PAss it and the others willa dd the message.
 
 - ExpressionTypechecker: The stop one (!innerexpressiontype instanceof booleantype)
