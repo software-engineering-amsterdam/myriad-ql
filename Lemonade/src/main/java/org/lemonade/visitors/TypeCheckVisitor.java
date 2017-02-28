@@ -51,7 +51,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         }
 
         QLType condition = conditional.getCondition().accept(this);
-        if (condition instanceof QLBooleanType) {
+        if (condition.isBoolean()) {
             return condition;
         }
         throw new RuntimeException("Condition cannot be resolved because of type mismatch.");
@@ -111,7 +111,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(BangUnary bangUnary) {
         QLType expressionType = bangUnary.getExpression().accept(this);
-        if (expressionType instanceof QLBooleanType) {
+        if (expressionType.isBoolean()) {
             return expressionType;
         }
         throw new RuntimeException("QLBoolean type mismatch in unary expression.");
@@ -119,7 +119,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(NegUnary negUnary) {
         QLType expressionType = negUnary.getExpression().accept(this);
-        if (expressionType instanceof QLNumberType) {
+        if (expressionType.isNumeric()) {
             return expressionType;
         }
         throw new RuntimeException("QLNumeric type mismatch in unary expression.");
