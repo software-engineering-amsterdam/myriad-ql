@@ -67,8 +67,8 @@ module QL
     class SliderWidget < Widget
       def initialize(args)
         super
-        scale = TkScale.new(@question.frame).pack
-        scale.orient 'horizontal'
+        scale          = TkScale.new(@question.frame).pack
+        scale.orient   = 'horizontal'
         scale.from     = args[:minimum]
         scale.to       = args[:maximum]
         scale.variable = @question.variable
@@ -82,13 +82,7 @@ module QL
         entry              = TkEntry.new(@question.frame).pack
         entry.textvariable = @question.variable
         entry.bind('KeyRelease') do
-          # p @question.variable.type
-          # @question.variable.value = @question.previous_value if entry.value == ''
-          # only if value changes
-          unless @question.previous_value == entry.value
-            @question.gui.value_changed
-            @question.previous_value = entry.value
-          end
+          @question.gui.value_changed
         end
       end
     end
