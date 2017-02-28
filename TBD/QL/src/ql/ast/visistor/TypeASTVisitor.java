@@ -34,21 +34,6 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     @Override
-    public Type visit(Form node) {
-        node.getStatements().accept(this);
-        return null;
-    }
-
-    @Override
-    public Type visit(Statements node) {
-        List<Statement> statements = node.getStatements();
-        for (Statement statement : statements) {
-            statement.accept(this);
-        }
-        return null;
-    }
-
-    @Override
     public Type visit(If node) {
         Type expr = node.getCondition().accept(this);
 
@@ -83,19 +68,14 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     @Override
-    public Type visit(Question node) {
-        return null;
-    }
-
-    @Override
     public Type visit(QuestionExpr node) {
         Type expr = node.getExpr().accept(this);
         if (!expr.equals(node.getType())) {
-            errorHandler.addError(new Error("Wrong type for assignment!", node.getId().getRowNumber()));
+            errorHandler.addError(new Error("Wrong type for assignment!", node.getRowNumber()));
         }
 
         if (expr.equals(new ErrorType())) {
-            errorHandler.addError(new Error("Error in expression!", node.getId().getRowNumber()));
+            errorHandler.addError(new Error("Error in expression!", node.getRowNumber()));
         }
 
 

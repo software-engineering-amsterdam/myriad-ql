@@ -9,22 +9,22 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 6-2-2017.
  */
 public class Question extends Statement {
-    private final QLIdent id;
-    private final QLString question;
+    private final String id;
+    private final String question;
     private final Type type;
 
-    public Question(QLIdent id, QLString question, Type type, int rowNumber) {
-        super(rowNumber);
-        this.id = id;
-        this.question = question;
+    public Question(QLIdent id, QLString question, Type type) {
+        super(id.getRowNumber());
+        this.id = id.getValue();
+        this.question = question.getValue();
         this.type = type;
     }
 
-    public QLIdent getId() {
+    public String getId() {
         return id;
     }
 
-    public QLString getQuestion() {
+    public String getQuestion() {
         return question;
     }
 

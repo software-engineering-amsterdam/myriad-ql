@@ -23,24 +23,24 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
     }
 
     public Void visit(Question node) {
-        if (environment.contains(node.getId().getValue())) {
-            errorHandler.addError(new Error("Identifier " + node.getId().getValue() + " already exist!", node.getId().getRowNumber()));
+        if (environment.contains(node.getId())) {
+            errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
         EnvironmentVariable envVar = new EnvironmentVariable(node.getType());
-        environment.addVariable(node.getId().getValue(), envVar);
+        environment.addVariable(node.getId(), envVar);
         return null;
     }
 
 
 
     public Void visit(QuestionExpr node) {
-        if (environment.contains(node.getId().getValue())) {
-            errorHandler.addError(new Error("Identifier " + node.getId().getValue() + " already exist!", node.getId().getRowNumber()));
+        if (environment.contains(node.getId())) {
+            errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
         EnvironmentVariable envVar = new EnvironmentVariable(node.getType(), node.getExpr());
-        environment.addVariable(node.getId().getValue(), envVar);
+        environment.addVariable(node.getId(), envVar);
 
         node.getExpr().accept(this);
         return null;

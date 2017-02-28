@@ -17,7 +17,7 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(Form node) {
         System.out.print("form ");
-        node.getName().accept(this);
+        System.out.print(node.getName());
         System.out.print(" {\n");
         node.getStatements().accept(this);
         System.out.print("}\n\n");
@@ -60,9 +60,9 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(Question node) {
         System.out.print("\"");
-        node.getQuestion().accept(this);
+        System.out.print(node.getId());
         System.out.print("\" \n ");
-        node.getId().accept(this);
+        System.out.print(node.getQuestion());
         System.out.print(" : ");
         System.out.print(typeToString(node.getType()));
 
@@ -73,9 +73,9 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(QuestionExpr node) {
         System.out.print("\"");
-        node.getQuestion().accept(this);
+        System.out.print(node.getId());
         System.out.print("\" \n ");
-        node.getId().accept(this);
+        System.out.print(node.getQuestion());
         System.out.print(" : ");
         System.out.print(typeToString(node.getType()));
         System.out.print(" =\n");

@@ -10,8 +10,8 @@ public class IfElse extends Statement {
     private final Statements ifBlock;
     private final Statements elseBlock;
 
-    public IfElse(Expr condition, Statements ifBlock, Statements elseBlock, int rowNumber) {
-        super(rowNumber);
+    public IfElse(Expr condition, Statements ifBlock, Statements elseBlock) {
+        super(condition.getRowNumber());
         this.condition = condition;
         this.ifBlock = ifBlock;
         this.elseBlock = elseBlock;

@@ -9,8 +9,8 @@ public class If extends Statement {
     private final Expr condition;
     private final Statements ifBlock;
 
-    public If(Expr condition, Statements ifBlock, int rowNumber) {
-        super(rowNumber);
+    public If(Expr condition, Statements ifBlock) {
+        super(condition.getRowNumber());
         this.condition = condition;
         this.ifBlock = ifBlock;
     }

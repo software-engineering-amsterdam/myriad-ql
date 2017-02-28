@@ -7,16 +7,16 @@ import ql.ast.visistor.ASTVisitor;
  * Created by Erik on 6-2-2017.
  */
 public class Form extends ASTNode {
-    private final QLIdent name;
+    private final String name;
     private final Statements statements;
 
-    public Form(QLIdent name, Statements statements, int rowNumber) {
-        super(rowNumber);
-        this.name = name;
+    public Form(QLIdent name, Statements statements) {
+        super(name.getRowNumber());
+        this.name = name.getValue();
         this.statements = statements;
     }
 
-    public QLIdent getName() {
+    public String getName() {
         return name;
     }
 

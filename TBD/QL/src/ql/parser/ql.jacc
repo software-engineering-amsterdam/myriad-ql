@@ -43,7 +43,7 @@ import ql.ast.types.*;
 %%
 
 form
-            : FORM IDENT '{' statements '}'                     { result = new Form($2, $4, lexer.getRowNumber());    }
+            : FORM IDENT '{' statements '}'                     { result = new Form($2, $4);    }
             ;
 
 statements
@@ -58,8 +58,8 @@ statement
             ;
 
 question
-            : STRING IDENT ':' type '=' expr                    { $$ = new QuestionExpr($2, $1, $4, $6, lexer.getRowNumber());  }
-            | STRING IDENT ':' type                             { $$ = new Question($2, $1, $4, lexer.getRowNumber());          }
+            : STRING IDENT ':' type '=' expr                    { $$ = new QuestionExpr($2, $1, $4, $6);  }
+            | STRING IDENT ':' type                             { $$ = new Question($2, $1, $4);          }
             ;
 
 type
@@ -70,9 +70,9 @@ type
             ;
 
 if
-            : IF '(' expr ')' '{' statements '}'                { $$ = new If($3, $6, lexer.getRowNumber());      }
+            : IF '(' expr ')' '{' statements '}'                { $$ = new If($3, $6);      }
             | IF '(' expr ')' '{' statements '}'
-              ELSE '{' statements '}'                           { $$ = new IfElse($3, $6, $10, lexer.getRowNumber()); }
+              ELSE '{' statements '}'                           { $$ = new IfElse($3, $6, $10); }
             ;
 
 
