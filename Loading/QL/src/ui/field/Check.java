@@ -8,7 +8,7 @@ import ast.type.BooleanType;
 import ast.type.Type;
 // import javafx.scene.control.Control;
 import javafx.scene.control.Control;
-import ui.Notifier;
+import ui.Questionnaire.Notifier;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;

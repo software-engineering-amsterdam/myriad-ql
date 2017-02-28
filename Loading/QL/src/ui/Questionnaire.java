@@ -25,13 +25,29 @@ import javafx.stage.Stage;
 import ui.field.Field;
 import value.Value;
 
-public class Questionnaire extends Application implements Notifier {
+public class Questionnaire extends Application {
 	// TODO make Notifier an inner class or add extra environment
 	
 	// TODO do not make static
 	private static Form form;
 	private static Map<String, Value> answers;
 	private static GridPane grid;
+	
+	public class Notifier {
+
+		// TODO change to already implemented observer pattern
+		public void updateQuestionnaire(String name, Value newValue) {
+	    	Value oldAnswer = answers.get(name); 
+			if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
+				answers.put(name, newValue);
+				// Save the title
+				Node title = grid.getChildren().get(0);
+		    	grid.getChildren().clear();
+		    	grid.add(title, 0, 0);
+		        renderQuestionnaire(grid);
+			}
+		}
+	}
 	
     public void main(Form f) {
     	form = f;
@@ -139,7 +155,7 @@ public class Questionnaire extends Application implements Notifier {
             Field field = question.getEntryField().getField();
             grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
             
-            field.addListener(this);
+            field.addListener(new Notifier());
             ++rowIndex;
         }
         
@@ -157,17 +173,4 @@ public class Questionnaire extends Application implements Notifier {
         return btn;
     }
 
-	@Override
-	// TODO change to already implemented observer pattern
-	public void updateQuestionnaire(String name, Value newValue) {
-    	Value oldAnswer = answers.get(name); 
-		if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
-			answers.put(name, newValue);
-			// Save the title
-			Node title = grid.getChildren().get(0);
-	    	grid.getChildren().clear();
-	    	grid.add(title, 0, 0);
-	        renderQuestionnaire(grid);
-		}
-	}
 }
