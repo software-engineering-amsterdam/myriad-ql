@@ -8,7 +8,6 @@ module QL
         # get all variables and their types as defined by the questions
         # e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>, "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
         @types = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
-        pp @types
 
         # do the actual operands type checking
         form.statements.map { |statement| statement.accept(self) }.flatten.compact
