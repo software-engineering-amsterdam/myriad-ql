@@ -34,25 +34,15 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, title, identifier, data_type, arithmetic_statement=None):
+    def __init__(self, title, identifier, data_type, expression=None):
         super(Field, self).__init__('field')
         self.name = identifier
         self.title = title
         self.data_type = data_type
-        if arithmetic_statement:
-            self.add_child(arithmetic_statement)
+        self.expression = expression
 
     def apply(self, visitor):
         return visitor.field(self)
-
-
-class Expression(Node):
-    def __init__(self, expression):
-        super(Expression, self).__init__('expression')
-        self.add_child(expression)
-
-    def apply(self, visitor):
-        return visitor.expression(self)
 
 
 class If(Node):
