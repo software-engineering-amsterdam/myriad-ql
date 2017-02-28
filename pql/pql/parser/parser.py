@@ -51,8 +51,10 @@ def parse(input_string):
     name = Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
         lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
-    integer = Word(nums).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
-    money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
+    integer = Word(nums).setParseAction(
+        lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.integer))
+    money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
+        lambda parsed_tokens: ast.Value(parsed_tokens[0], DataTypes.money))
     number = (money | integer)
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
