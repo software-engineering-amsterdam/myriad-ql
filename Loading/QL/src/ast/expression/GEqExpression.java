@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Visitor;
 import ast.atom.Atom;
-import value.Value;
+import semantic.Environment;
 
 public class GEqExpression extends BinaryExpression {
 	@Override
@@ -12,11 +12,11 @@ public class GEqExpression extends BinaryExpression {
 
 	@Override
 	public Atom evaluate() {
-		return getLhs().greaterEq(getRhs());
+		return getLhs().evaluate().greaterEq(getRhs().evaluate());
 	}
 
 	@Override
-	public Atom evaluate(Value test) {
+	public Atom evaluate(Environment env) {
 		return null;
 	}
 }

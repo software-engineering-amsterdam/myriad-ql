@@ -7,6 +7,7 @@ import ast.expression.*;
 import ast.type.*;
 
 // In order traversal
+// TODO implements VisitorInterface 
 public class Visitor {
 	
 	public void visit(Form form) {

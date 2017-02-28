@@ -5,25 +5,25 @@ import ast.atom.Atom;
 
 public abstract class BinaryExpression extends Expression {
 
-	private Atom lhs;
-	private Atom rhs;
+	private Expression lhs;
+	private Expression rhs;
 	// protected boolean eval;
 	
 	// TODO is this preferred over a constructor with lhs and rhs?
 	public BinaryExpression() {
 	}
 	
-	public BinaryExpression setElements(Atom lhs, Atom rhs) {
+	public BinaryExpression setElements(Expression lhs, Expression rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		return this;
 	}
 	
-	public Atom getLhs() {
+	public Expression getLhs() {
 		return lhs;
 	}
 	
-	public Atom getRhs() {
+	public Expression getRhs() {
 		return rhs;
 	}
 	

@@ -2,7 +2,7 @@ package ast.atom;
 
 import ast.Visitor;
 import ast.expression.Expression;
-import value.Value;
+import semantic.Environment;
 
 // TODO rename to Literal??
 public abstract class Atom extends Expression {
@@ -12,7 +12,7 @@ public abstract class Atom extends Expression {
 	public Atom sub(Atom other) { return null; }
 	public Atom mul(Atom other) { return null; }
 	public Atom div(Atom other) { return null; }
-	
+
 	public BoolAtom and(Atom other) { return null; }
 	public BoolAtom or(Atom other) { return null; }
 	public BoolAtom eq(Atom other) { return null; }
@@ -38,11 +38,6 @@ public abstract class Atom extends Expression {
 		return this;
 	}
 
-	@Override
-	public Atom evaluate(Value test) {
-		return null;
-	}
-	
 	@Override
 	public abstract void accept(Visitor v);	
 }

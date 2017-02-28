@@ -26,7 +26,9 @@ public class ExpressionVisitor extends Visitor {
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
-		Atom result = binaryExpression.evaluate() ;	
+
+		// TODO this should check not evaluate
+		Atom result = binaryExpression.evaluate(environment) ;
 		check(result);
 		
 		System.out.println("Eval: " + result.getValue());
@@ -35,7 +37,7 @@ public class ExpressionVisitor extends Visitor {
 	@Override
 	public void visit(UnaryExpression unaryExpression) {
 		
-		Atom result = unaryExpression.evaluate();
+		Atom result = unaryExpression.evaluate(environment);
 		check(result);
 		
 		System.out.println("Eval: " + result);
@@ -46,7 +48,7 @@ public class ExpressionVisitor extends Visitor {
 
 		System.out.println("IdExpression VISIT");
 		
-		Atom result = id.evaluate();
+		Atom result = id.evaluate(environment);
 
 		if (!environment.variableExists(id.getName())) {
 			throw new RuntimeException("The variable with name " + id.getName() +
@@ -58,6 +60,7 @@ public class ExpressionVisitor extends Visitor {
 	
 	// TODO do we want to add the throw after this function
 	private void check(Atom result) {
+		// TODO we do not know what is wrong at this moment
 		if (result == null) {
 			throw new RuntimeException("The expression on line "+ result.getLine() + " cannot be evaluated");
 		}

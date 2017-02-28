@@ -11,6 +11,7 @@ import value.EmptyValue;
 import value.StringValue;
 import value.Value;
 
+// TODO do not extend the standard library
 public class Text extends TextField implements Field {
 	
 	private Notifier listener;

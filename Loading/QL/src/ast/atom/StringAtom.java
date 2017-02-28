@@ -1,6 +1,7 @@
 package ast.atom;
 
 import ast.Visitor;
+import semantic.Environment;
 
 public class StringAtom extends Atom {
     private String str;
@@ -28,7 +29,12 @@ public class StringAtom extends Atom {
 	public String getType() {
 		return "string";
 	}
-	
+
+	@Override
+	public Atom evaluate(Environment env) {
+		return this;
+	}
+
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);		

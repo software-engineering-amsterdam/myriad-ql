@@ -11,9 +11,10 @@ grammar QL;
 form returns [Form result] 
  : 'form' ID block { $result = new Form($ID.text, $block.result, $block.start.getLine()); };
 
+// TODO combine question and statement
 block returns [Block result]
  @init {
-     $result = new Block();
+     $result = new Block(); // TODO create list first and add to block later 
  }
  : '{' (question { $result.addQuestion($question.result); }
             | statement { $result.addStatement($statement.result); })*
@@ -35,10 +36,13 @@ type returns [Type result]
  | 'string'  { $result = new StringType(); }
  ;
 
+// TODO move to expression
 computed_question returns [Expression result]
  : parenthesisExpr { $result = $parenthesisExpr.result; }
  ;
 
+// TODO change IF to 'if' 
+// remove else if
 statement returns [Statement result]
  : IF parenthesisExpr  block (ELSE IF parenthesisExpr block)* (ELSE block)? { $result = new Statement($parenthesisExpr.result, $block.result);} // TODO else does not work
  ;
@@ -49,13 +53,27 @@ parenthesisExpr returns [Expression result]
  | ('(' ID ')' | ID ) { $result = new IdExpression($ID.text); }
  ;
 
+//expr2 returns [Expression result]
+// : lhs = parenthesisExpr op=('/' | '*') rhs = parenthesisExpr
+//    {
+//      if ($op.text.equals("/")) {
+//        $result = new DivExpression($lhs.result, $rhs.result);
+//      }
+//      if ($op.text.equals("*")) {
+//        $result = new MulExpression($lhs.result, $rhs.result);
+//      }
+//    }
+//
+// ;
+
 expr returns [Expression result]
- : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result.evaluate(), $rhs.result.evaluate()); }
- | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result.evaluate()); }
+ : lhs = parenthesisExpr binOp rhs = parenthesisExpr { $result = $binOp.result.setElements($lhs.result, $rhs.result); }
+ | unaryOp parenthesisExpr { $result = $unaryOp.result.setElements($parenthesisExpr.result); }
  // | unaryOp atom {  $result = $unaryOp.result.setElements($atom.result); }
  // | atom { $result = $atom.result; }
  ;
 
+// TODO implement precedence
 binOp returns [BinaryExpression result]
  : '/'  { $result = new DivExpression(); }
  | '*'  { $result = new MulExpression(); }
@@ -100,7 +118,6 @@ atom returns [Atom result]
 BOOL: 'true' | 'false';
 IF : 'if';
 ELSE : 'else';
-WHILE : 'while';
 
 ID : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 

@@ -58,8 +58,9 @@ public class Main {
 
 		Environment env = new Environment();
 //		Evaluator evaluator = new Evaluator(env);
-
-		Questionnaire.main(form);
+		
+		Questionnaire questionnaire = new Questionnaire();
+		questionnaire.main(form);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 
