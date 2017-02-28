@@ -29,9 +29,9 @@ public class EvaluateTest {
     @Test
     public void testIntegerLit(){
         IntegerLit one = new IntegerLit(new QLIntegerType(), 1);
-        NumericLit<Double> two = new DecimalLit(new QLDecimalType(), 2);
+        NumericLit two = new DecimalLit(new QLDecimalType(), 2);
 
         assert (one.compareTo(one)) == 0;
-        System.err.println(one.plus((DecimalLit) two)) ;
+        System.err.println(one.plus(two).getType());
     }
 }

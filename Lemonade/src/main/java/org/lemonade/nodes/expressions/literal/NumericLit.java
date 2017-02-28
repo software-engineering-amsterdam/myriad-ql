@@ -15,4 +15,5 @@ public abstract class NumericLit<T> extends Literal<T> {
     public abstract NumericLit plus(IntegerLit that);
     public abstract NumericLit plus(DecimalLit that);
     public abstract NumericLit plus(MoneyLit that);
+    public abstract NumericLit plus(NumericLit that);
 }

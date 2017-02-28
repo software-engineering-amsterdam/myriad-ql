@@ -36,6 +36,10 @@ public class IntegerLit extends NumericLit<Integer> implements Comparable<Intege
         return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
+    public NumericLit plus(NumericLit that) {
+        return that.plus(this);
+    }
+
     @Override
     public String toString() {
         return Integer.toString(this.getValue());

@@ -37,6 +37,10 @@ public class MoneyLit extends NumericLit<Double> implements Comparable<MoneyLit>
         return new MoneyLit(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
+    public NumericLit plus(NumericLit that) {
+        return that.plus(this);
+    }
+
     @Override
     public String toString() {
         return Double.toString(this.getValue());
