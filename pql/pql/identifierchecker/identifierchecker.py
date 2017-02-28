@@ -23,9 +23,17 @@ class IdentifierChecker(object):
         self.identifier_dict[node.name.name].append(node.data_type)
 
     def __compute_result(self, dictionary):
+        def normalize_dictionary(dictionary_):
+            # TODO: Mooier maken evt?
+            dict_ = {}
+            for key, value in dictionary_.items():
+                for v in value:
+                    dict_[key] = v
+            return dict_
+
         # TODO: Mooier maken evt?
         errors = []
         for key, value in dictionary.items():
             if len(value) > 1:
                 errors.append('Key: {} contained multiple entries, the following: {}'.format(key, value))
-        return dictionary, errors
+        return normalize_dictionary(dictionary), errors
