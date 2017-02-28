@@ -98,7 +98,6 @@ def parse(input_string):
 
     boolean_expression = \
         OneOrMore(operator_precendence | (lit_l_paren + operator_precendence + lit_r_paren))
-    boolean_expression.setParseAction(lambda parsed_tokens: ast.Expression(*parsed_tokens))
 
     field_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
