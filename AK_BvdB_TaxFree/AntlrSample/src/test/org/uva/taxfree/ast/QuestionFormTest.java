@@ -1,5 +1,6 @@
 package test.org.uva.taxfree.ast;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.uva.taxfree.gui.QuestionForm;
@@ -31,7 +32,7 @@ public class QuestionFormTest {
             e.printStackTrace();
         }
         try {
-            testConstantCondition();
+            testSimpleIfElseStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,28 +60,68 @@ public class QuestionFormTest {
         mRoot.addChild(new StringQuestion("What is your name?", "userName"));
         mRoot.addChild(new BooleanQuestion("Did you sell a house?", "hasSoldHouse"));
         mRoot.addChild(new BooleanQuestion("Did you buy a house?", "hasBoughtHouse"));
-        mRoot.addChild(new IntegerQuestion("What is the value of the sold house?", "soldHouseValue"));
-        mRoot.addChild(new IntegerQuestion("Whwat is the value of the bought house?", "boughtHouseValue"));
     }
 
     @Test
     public void testCalculatedQuestion() throws Exception {
 
+        IntegerQuestion QuestionSold = new IntegerQuestion("What is the value of the sold house?", "soldHouseValue");
+        IntegerQuestion QuestionBought = new IntegerQuestion("What is the value of the bought house?", "boughtHouseValue");
+
+        mRoot.addChild(QuestionSold);
+        mRoot.addChild(QuestionBought);
+
+        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance");
+        ExpressionNode expCalc = new CalculationExpressionNode("-");
+        intCalc.addChild(expCalc);
+        VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
+        variableSold.setReference(QuestionSold);
+
+        VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue");
+        variableBought.setReference(QuestionBought);
+
+        expCalc.addChild(variableSold);
+        expCalc.addChild(variableBought);
+
+        Assert.assertEquals(expCalc.resolve(), "(0-0)", "Nodes should have ability to resolve data");
+        Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
+        mRoot.addChild(intCalc);
+        expCalc.evaluate();
     }
 
     @Test
-    public void testSimpleIfStatement() throws Exception {
+    public void testSimpleIfElseStatement() throws Exception {
+        IfStatementNode ifStatementNode = createMultipleIfStatements();
+        IfElseStatementNode ifElse = new IfElseStatementNode();
+        ifElse.addChild(ifStatementNode);
+        BooleanQuestion booleanQuestion = new BooleanQuestion("Am I in the else?", "isInElse");
+        ifElse.addChild(booleanQuestion);
+        mRoot.addChild(ifElse);
+    }
+
+    @Test
+    public void testSimpleIfStatements() throws Exception {
+        mRoot.addChild(createMultipleIfStatements());
+    }
+
+    private IfStatementNode createMultipleIfStatements() {
         BooleanQuestion boolQuestion = new BooleanQuestion("Do you want to see the if statement?", "hasSoldHouse");
         mRoot.addChild(boolQuestion);
-        IfStatementNode ifStatement = new IfStatementNode();
-        ifStatement.addChild(new VariableLiteralNode("hasSoldHouse"));
-        ifStatement.addChild(new StringQuestion("Toggle me on and off by selling your house", "sellYourHouse"));
-        ifStatement = new IfStatementNode();
-        ConditionNode condition = new VariableLiteralNode("hasSoldHouse");
-        ifStatement.setCondition(condition);
-        mRoot.addChild(ifStatement);
-        ifStatement.addChild(new BooleanQuestion("Am I inside the If statement?", "isInsideIfStatement"));
+        IfStatementNode questionIfStatement = new IfStatementNode();
+        VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse");
+        soldHouseLiteral.setReference(boolQuestion);
+        questionIfStatement.addChild(soldHouseLiteral);
+        questionIfStatement.addChild(new StringQuestion("Toggle me on and off by selling your house", "sellYourHouse"));
+        mRoot.addChild(questionIfStatement);
 
+        mRoot.addChild(new StringQuestion("Am I inbetween two if's?", "isInBetween"));
+
+        IfStatementNode booleanIfStatementNode = new IfStatementNode();
+        VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse");
+        condition.setReference(boolQuestion);
+        booleanIfStatementNode.addChild(condition);
+        booleanIfStatementNode.addChild(new BooleanQuestion("Am I inside the If statement?", "isInsideIfStatement"));
+        return booleanIfStatementNode;
 
     }
 
@@ -112,10 +153,11 @@ public class QuestionFormTest {
     @Test
     public void testCalculatedLiteralField() throws Exception {
         CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two");
-        intField.addChild(new IntegerLiteralNode("52"));
+        intField.addChild(new IntegerLiteralNode("2"));
         mRoot.addChild(intField);
     }
 
+    @Test
     public void testIntFieldCalculation() throws Exception {
         CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six");
         intField.addChild(CalcOnePlusFive());
@@ -128,6 +170,4 @@ public class QuestionFormTest {
         calc.addChild(new IntegerLiteralNode("5"));
         return calc;
     }
-
-
 }
