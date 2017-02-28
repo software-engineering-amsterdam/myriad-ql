@@ -1,5 +1,6 @@
 # TODO if-else-then?
-# TODO BooleanType.new naar BooleanType
+# TODO create Undefined class
+# TODO create Error & Warning classes
 
 require 'require_all'
 require 'pp'
