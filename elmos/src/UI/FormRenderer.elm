@@ -1,6 +1,6 @@
 module UI.FormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3)
+import Html exposing (Html, div, text, h3, pre)
 import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
@@ -55,6 +55,7 @@ view { env, form } =
                 ]
             , div [ class "col-md-6" ]
                 [ h3 [] [ text "Result" ]
+                , pre [] [ text <| toString env ]
                 ]
             ]
 

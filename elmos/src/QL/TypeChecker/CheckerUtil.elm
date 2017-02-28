@@ -33,10 +33,6 @@ collectExpressions form =
         []
 
 
-
---TODO TESTS
-
-
 questionTypes : Form -> QuestionTypes
 questionTypes form =
     QL.FormVisitor.inspect
