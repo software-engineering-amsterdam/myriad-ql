@@ -7,9 +7,6 @@ import org.uva.taxfree.main.SemanticsAnalyzer;
 
 import java.io.File;
 
-/**
- * Created by Alex on 20-2-2017.
- */
 public class SemanticsAnalyzerTest {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
