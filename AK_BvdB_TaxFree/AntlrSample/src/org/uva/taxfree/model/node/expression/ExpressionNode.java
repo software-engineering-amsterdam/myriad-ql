@@ -1,8 +1,6 @@
 package org.uva.taxfree.model.node.expression;
 
-import org.uva.taxfree.model.node.condition.ConditionNode;
-
-public class ExpressionNode extends ConditionNode {
+public abstract class ExpressionNode extends ConditionNode {
     private final ConditionNode mLeft;
     private final String mOperator;
     private final ConditionNode mRight;

@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class StringQuestion extends NamedNode {
 
-    private JTextField mTextField;
+    private final JTextField mTextField;
 
     public StringQuestion(String description, String id) {
         super(description, id);
@@ -24,9 +24,9 @@ public class StringQuestion extends NamedNode {
     }
 
     @Override
-    public void setVisibility(boolean isVisible) {
+    public void setVisible(boolean isVisible) {
         mTextField.setVisible(isVisible);
-        super.setVisibility(isVisible);
+        super.setVisible(isVisible);
     }
 
     @Override

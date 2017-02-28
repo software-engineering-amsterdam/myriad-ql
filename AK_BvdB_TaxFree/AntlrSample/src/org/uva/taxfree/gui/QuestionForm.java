@@ -1,26 +1,27 @@
 package org.uva.taxfree.gui;
 
+import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.statement.NamedNode;
-import org.uva.taxfree.model.node.Node;
 
 import javax.swing.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class QuestionForm {
-    private Node mFormNode;
+    private BlockNode mFormNode;
     private JFrame mFrame;
-    public QuestionForm(Node formNode) {
+
+    public QuestionForm(BlockNode formNode) {
         mFormNode = formNode;
     }
 
     public void show() {
         generateForm();
-        mFormNode.setVisibility(true);
+        mFormNode.setVisible(true);
     }
 
-    public void printData(){
-        mFormNode.printData();
+    public void printDeclarations() {
+        mFormNode.printDeclarations();
     }
 
     private void generateForm() {
@@ -41,23 +42,22 @@ public class QuestionForm {
     }
 
     private void fillWidgetPanel(JPanel parentPanel) {
-        for (NamedNode q : extractQuestions()) {
+        for (NamedNode q : extractDeclarations()) {
             parentPanel.add(q.getWidget());
         }
     }
 
-    private Set<NamedNode> extractQuestions() {
+    private Set<NamedNode> extractDeclarations() {
         Set<NamedNode> questions = new LinkedHashSet<>();
-        mFormNode.retrieveQuestions(questions);
+        mFormNode.retrieveDeclarations(questions);
         return questions;
     }
 
     public void updateVisibility() {
-        mFormNode.setVisibility(true);
+        mFormNode.setVisible(true);
     }
 
-    public void printAll() {
-        mFormNode.printAll();
-
+    public void printValues() {
+        mFormNode.printValues();
     }
 }

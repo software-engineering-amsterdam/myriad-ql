@@ -13,8 +13,8 @@ public class FormRenderer extends TimerTask {
 
     @Override
     public void run() {
-        mForm.printData();
+        mForm.printDeclarations();
         mForm.updateVisibility();
-        mForm.printAll();
+        mForm.printValues();
     }
 }
