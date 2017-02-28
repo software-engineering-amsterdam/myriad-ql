@@ -3,8 +3,13 @@ package org.uva.hatt.taxform.ast.visitors;
 import org.uva.hatt.taxform.ast.nodes.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.items.*;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
+import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
@@ -23,4 +28,9 @@ public interface Visitor {
     BooleanExpression visit(BooleanExpression node);
     ComputationExpression visit(ComputationExpression node);
     GroupedExpression visit(GroupedExpression node);
+    Identifier visit(Identifier identifier);
+    StringerLiteral visit(StringerLiteral stringerLiteral);
+    IntegerLiteral visit(IntegerLiteral integerLiteral);
+    BooleanLiteral visit(BooleanLiteral booleanLiteral);
+    Expression visit(Expression expression);
 }
