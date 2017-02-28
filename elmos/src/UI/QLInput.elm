@@ -155,12 +155,11 @@ renderMessage message =
 
         Warning (DuplicateLabels label ids) ->
             UI.Messages.warning
-                ([ text "label \""
-                 , b [] [ text label ]
-                 , text "\" is used for multiple questions : "
-                 , UI.Messages.renderIds ids
-                 ]
-                )
+                [ text "label \""
+                , b [] [ text label ]
+                , text "\" is used for multiple questions : "
+                , UI.Messages.renderIds ids
+                ]
 
 
 operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> Html msg

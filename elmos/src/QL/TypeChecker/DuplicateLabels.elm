@@ -18,7 +18,7 @@ duplicateLabels form =
 
 groupByLabel : List ( Id, String ) -> Dict String (List ( Id, String ))
 groupByLabel =
-    Dict.groupBy (Tuple.second)
+    Dict.groupBy Tuple.second
 
 
 hasMultipleDeclarations : b -> List a -> Bool
