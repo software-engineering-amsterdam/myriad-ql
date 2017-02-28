@@ -1,7 +1,7 @@
-module UI.Messages exposing (error, warning, location, locations, varName)
+module UI.Messages exposing (error, warning, location, locations, varName, ids)
 
-import QL.AST exposing (Location(Location))
-import Html exposing (Html, div, text, b)
+import QL.AST exposing (Location(Location), Id)
+import Html exposing (Html, div, text, b, span)
 import Html.Attributes exposing (class)
 
 
@@ -21,12 +21,8 @@ location location =
 
 
 locations : List Location -> Html msg
-locations locations =
-    b []
-        [ List.map locationToString locations
-            |> String.join ", "
-            |> text
-        ]
+locations locs =
+    span [] (List.map location locs |> List.intersperse (text ", "))
 
 
 varName : String -> Html msg
@@ -37,3 +33,13 @@ varName name =
 locationToString : Location -> String
 locationToString (Location line col) =
     "line " ++ toString line ++ " ( col " ++ toString col ++ " )"
+
+
+id : Id -> Html msg
+id ( name, loc ) =
+    span [] [ varName name, text " at ", location loc ]
+
+
+ids : List Id -> Html msg
+ids idList =
+    span [] (List.map id idList |> List.intersperse (text ", "))

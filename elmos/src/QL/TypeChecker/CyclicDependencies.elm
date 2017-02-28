@@ -3,11 +3,9 @@ module QL.TypeChecker.CyclicDependencies exposing (cyclicDependencies)
 import DictList exposing (DictList)
 import List.Extra as List
 import QL.AST exposing (Expression, Form, Id)
-import QL.FormVisitor exposing (defaultConfig, inspect)
 import QL.TypeChecker.CheckerUtil as CheckerUtil
 import QL.TypeChecker.Messages as Messages exposing (Message)
 import Set exposing (Set)
-import VisitorUtil exposing (Order(Post))
 
 
 type alias DependencyTable =
@@ -26,7 +24,7 @@ cyclicDependencies : Form -> List Message
 cyclicDependencies form =
     let
         dependencyTable =
-            collectComputedFields form
+            CheckerUtil.collectComputedFields form
                 |> List.map extractDependencies
                 |> toDependencyTable
     in
@@ -50,16 +48,6 @@ asCyclicDependencies visited dependencyTable currentVar =
 dependenciesOf : String -> DependencyTable -> Set String
 dependenciesOf name table =
     DictList.get name table |> Maybe.withDefault Set.empty
-
-
-collectComputedFields : Form -> List ( String, Expression )
-collectComputedFields form =
-    inspect
-        { defaultConfig
-            | onComputedField = Post (\( _, ( name, _ ), _, computation ) result -> ( name, computation ) :: result)
-        }
-        form
-        []
 
 
 extractDependencies : ( String, Expression ) -> DependencyEntry

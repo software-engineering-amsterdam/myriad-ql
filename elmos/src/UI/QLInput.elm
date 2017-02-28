@@ -6,7 +6,7 @@ import Html.Events exposing (onInput)
 import QL.AST exposing (Form, Location, ValueType)
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
-import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
+import QL.TypeChecker.Messages exposing (Message(Error, Warning), ErrorMessage(..), WarningMessage(..))
 import UI.Messages
 
 
@@ -114,7 +114,7 @@ view { rawInput, parsedForm, messages } =
         ]
 
 
-renderMessage : Message -> Html.Html Msg
+renderMessage : Message -> Html.Html msg
 renderMessage message =
     case message of
         Error (DuplicateQuestionDefinition name locations) ->
@@ -152,6 +152,15 @@ renderMessage message =
 
         Error (RelationExpressionTypeMismatch operator loc leftType rightType) ->
             operatorMismatchMessage operator loc leftType rightType
+
+        Warning (DuplicateLabels label ids) ->
+            UI.Messages.warning
+                ([ text "label \""
+                 , b [] [ text label ]
+                 , text "\" is used for multiple questions : "
+                 , UI.Messages.ids ids
+                 ]
+                )
 
 
 operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> Html msg

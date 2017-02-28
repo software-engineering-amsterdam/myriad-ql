@@ -5,6 +5,7 @@ import QL.AST exposing (ValueType, Operator, Comparison, Logic, Relation, Locati
 
 type Message
     = Error ErrorMessage
+    | Warning WarningMessage
 
 
 type ErrorMessage
@@ -15,6 +16,10 @@ type ErrorMessage
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
     | DependencyCycle (List String)
+
+
+type WarningMessage
+    = DuplicateLabels String (List Id)
 
 
 arithmeticExpressionTypeMismatch : Operator -> Location -> ValueType -> ValueType -> Message
@@ -50,3 +55,8 @@ referenceToUndefinedQuestion var =
 dependencyCycle : List String -> Message
 dependencyCycle names =
     Error (DependencyCycle names)
+
+
+duplicateLabels : String -> List Id -> Message
+duplicateLabels label ids =
+    Warning (DuplicateLabels label ids)

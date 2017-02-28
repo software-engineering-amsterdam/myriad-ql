@@ -1,11 +1,12 @@
 module QL.TypeChecker.Tests exposing (all)
 
-import Test exposing (Test, describe)
 import QL.TypeChecker.BadReferencesTests
-import QL.TypeChecker.DuplicateQuestionsTests
 import QL.TypeChecker.CheckerUtilTests
-import QL.TypeChecker.ExpressionsTests
 import QL.TypeChecker.CyclicDependenciesTests
+import QL.TypeChecker.DuplicateLabelsTests
+import QL.TypeChecker.DuplicateQuestionsTests
+import QL.TypeChecker.ExpressionsTests
+import Test exposing (Test, describe)
 
 
 all : Test
@@ -16,4 +17,5 @@ all =
         , QL.TypeChecker.CheckerUtilTests.all
         , QL.TypeChecker.ExpressionsTests.all
         , QL.TypeChecker.CyclicDependenciesTests.all
+        , QL.TypeChecker.DuplicateLabelsTests.all
         ]

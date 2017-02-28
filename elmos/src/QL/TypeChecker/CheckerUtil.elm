@@ -2,8 +2,10 @@ module QL.TypeChecker.CheckerUtil
     exposing
         ( QuestionIndex
         , QuestionTypes
+        , collectComputedFields
         , collectDeclaredIds
         , collectExpressions
+        , collectQuestionLabels
         , collectQuestionReferences
         , questionIndexFromForm
         , questionIndexFromBlock
@@ -22,6 +24,27 @@ type alias QuestionIndex =
 
 type alias QuestionTypes =
     Dict String ValueType
+
+
+collectQuestionLabels : Form -> List ( Id, String )
+collectQuestionLabels form =
+    QL.FormVisitor.inspect
+        { defaultConfig
+            | onField = Post (\( label, id, _ ) result -> ( id, label ) :: result)
+            , onComputedField = Post (\( label, id, _, _ ) result -> ( id, label ) :: result)
+        }
+        form
+        []
+
+
+collectComputedFields : Form -> List ( String, Expression )
+collectComputedFields form =
+    QL.FormVisitor.inspect
+        { defaultConfig
+            | onComputedField = Post (\( _, ( name, _ ), _, computation ) result -> ( name, computation ) :: result)
+        }
+        form
+        []
 
 
 collectDeclaredIds : Form -> List Id

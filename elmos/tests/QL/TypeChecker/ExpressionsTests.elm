@@ -12,7 +12,7 @@ import QL.TypeChecker.Messages exposing (..)
 all : Test
 all =
     describe
-        "TypeChecker.Expressions"
+        "Expressions"
         [ test "type for undefined variable" <|
             \() ->
                 Expressions.getType Dict.empty (Var ( "a", emptyLoc ))
