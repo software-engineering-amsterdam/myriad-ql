@@ -10,9 +10,9 @@ import ql.ast.types.NumType;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLBox extends VBox {
+public class QLQuestionBox extends VBox {
 
-    public void addQuestion(String question, NumType type, String variableName) {
+    public QLQuestionBox(String question, NumType type, String variableName) {
         TextField textField1 = new TextField();
         textField1.textProperty().addListener(new ChangeListener<String>() {
             @Override

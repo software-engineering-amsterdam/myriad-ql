@@ -4,13 +4,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ql.ast.types.NumType;
-import ql.ast.values.IntValue;
 import ql.ast.visistor.*;
 import ql.ast.visistor.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
-import ql.view.FormGenerator;
-import ql.view.elements.QLBox;
 import ql.view.elements.QLFormBox;
 
 import java.io.FileNotFoundException;
