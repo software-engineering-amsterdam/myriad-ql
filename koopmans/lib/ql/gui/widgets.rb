@@ -93,5 +93,14 @@ module QL
         entry.bind('KeyRelease') { callback }
       end
     end
+
+    class ComputedWidget < Widget
+      def initialize(args)
+        super
+        entry              = TkEntry.new(frame).pack
+        entry.textvariable = variable
+        entry.state        = 'disabled'
+      end
+    end
   end
 end

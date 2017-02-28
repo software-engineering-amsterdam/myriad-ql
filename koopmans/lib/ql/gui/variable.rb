@@ -4,14 +4,17 @@ module QL
       attr_accessor :type
 
       def eval
-        if type == AST::BooleanType
-          bool
-        elsif type == AST::StringType
-          string
-        elsif type == AST::IntegerType || type == AST::MoneyType
-          numeric
-        else
-          value
+        case
+          when type == AST::BooleanType
+            bool
+          when type == AST::StringType
+            string
+          when type == AST::IntegerType
+            numeric
+          when type == AST::MoneyType
+            numeric
+          else
+            value
         end
       end
     end

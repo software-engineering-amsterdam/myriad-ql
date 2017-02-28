@@ -7,7 +7,7 @@ module QL
         super
         @calculation   = args[:calculation]
         @variable.type = args[:type]
-        create_computed_entry
+        ComputedWidget.new(question: self)
         calculate
       end
 
@@ -18,12 +18,6 @@ module QL
 
       def calculate
         @variable.value = @calculation.eval if @calculation
-      end
-
-      def create_computed_entry
-        entry              = TkEntry.new(@frame).pack
-        entry.textvariable = @variable
-        entry.state        = 'disabled'
       end
     end
   end
