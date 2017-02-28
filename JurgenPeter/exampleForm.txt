@@ -10,7 +10,7 @@ form BoxHouseOwning {
     else {
         x: "in de else?" boolean
         if x {
-            y: "geneste if?" string
+            y: "geneste if?" boolean
         }
     }
 
