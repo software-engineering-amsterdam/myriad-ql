@@ -72,7 +72,7 @@ public class QLParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "ql/QL.g4"; }
+	public String getGrammarFileName() { return "ql/ql.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
