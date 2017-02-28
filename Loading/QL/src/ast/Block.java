@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Block extends Node { // TODO rename block
 	
+	// TODO one list with question and statements
 	private List<Question> questions;
 	private List<Statement> statements;
 	

@@ -26,7 +26,8 @@ public class ExpressionVisitor extends Visitor {
 	@Override
 	public void visit(BinaryExpression binaryExpression) {
 		
-		Atom result = binaryExpression.evaluate() ;	
+		// TODO this should check not evaluate
+		Atom result = binaryExpression.evaluate();	
 		check(result);
 		
 		System.out.println("Eval: " + result.getValue());
@@ -58,6 +59,7 @@ public class ExpressionVisitor extends Visitor {
 	
 	// TODO do we want to add the throw after this function
 	private void check(Atom result) {
+		// TODO we do not know what is wrong at this moment
 		if (result == null) {
 			throw new RuntimeException("The expression on line "+ result.getLine() + " cannot be evaluated");
 		}

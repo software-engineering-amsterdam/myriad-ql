@@ -1,18 +1,7 @@
 package ui;
 
-import java.util.function.Function;
-
 import ast.type.Type;
-import value.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
-import ui.field.Check;
-import ui.field.Field;
-import ui.field.Text;
-import ui.field.Number;
+import value.Value;
 
 public class QuestionnaireQuestion {
 	
@@ -28,7 +17,7 @@ public class QuestionnaireQuestion {
 		this.entryField = deriveField(type);
 	}
 	
-	// TODO move to field
+	// TODO move to type or add typevisitor
 	private QControl deriveField(Type type) {
         if ("string" == type.getType()) {
         	return new QControl(new ui.field.Text(name));

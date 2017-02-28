@@ -40,13 +40,13 @@ import ast.Visitor;
 import ast.type.Type;
 
 public class Questionnaire extends Application implements Notifier {
+	// TODO make Notifier an inner class or add extra environment
 	
-	// TODO static variables??
-	private static Form form;
-	private static Map<String, Value> answers;
-	private static GridPane grid;
+	private Form form;
+	private Map<String, Value> answers;
+	private GridPane grid;
 	
-    public static void main(Form f) {
+    public void main(Form f) {
     	form = f;
     	answers = new HashMap<>();
         launch();

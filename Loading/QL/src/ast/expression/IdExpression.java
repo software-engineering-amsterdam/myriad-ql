@@ -3,8 +3,6 @@ package ast.expression;
 import ast.Visitor;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
-import ast.atom.StringAtom;
-import semantic.Environment;
 import value.Value;
 
 public class IdExpression extends Expression {

@@ -8,16 +8,13 @@ import ast.type.Type;
 
 // Checks for duplicated questions
 // Duplicate Labels (warning)
+// TODO change name - Visitor does not add to the understanding
 public class QuestionVisitor extends Visitor {
 	
 	private Environment environment;
 	
 	public QuestionVisitor(Environment environment) {
 		this.environment = environment;
-	}
-	
-	public Environment getEnvironment() {
-		return environment;
 	}
 	
 	@Override
