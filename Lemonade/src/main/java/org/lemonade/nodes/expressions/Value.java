@@ -25,55 +25,55 @@ public abstract class Value<T> extends Expression {
         return value;
     }
 
-    public Value and(Value that) {
+    public Value<Boolean> and(Value<Boolean> that) {
         return null;
     }
 
-    public Value or(Value that) {
+    public Value<Boolean> or(Value<Boolean> that) {
         return null;
     }
 
-    public Value eq(Value that) {
+    public Value<Boolean> eq(Value<?> that) {
         return new BooleanValue(new QLBooleanType(), that.equals(this));
     }
 
-    public Value nEq(Value that) {
+    public Value<Boolean> nEq(Value<?> that) {
         return new BooleanValue(new QLBooleanType(), !that.equals(this));
     }
 
-    public Value gT(Value that) {
+    public Value<Boolean> gT(Value<?> that) {
         return null;
     }
 
-    public Value gTEq(Value that) {
+    public Value<Boolean> gTEq(Value<?> that) {
         return null;
     }
 
-    public Value lT(Value that) {
+    public Value<Boolean> lT(Value<?> that) {
         return null;
     }
 
-    public Value lTEq(Value that) {
+    public Value<Boolean> lTEq(Value<?> that) {
         return null;
     }
 
-    public Value minus(Value that) {
+    public Value<?> minus(Value<?> that) {
         return null;
     }
 
-    public Value divide(Value that) {
+    public Value<?> divide(Value<?> that) {
         return null;
     }
 
-    public Value multiply(Value that) {
+    public Value<?> multiply(Value<?> that) {
         return null;
     }
 
-    public Value not() {
+    public Value<Boolean> not() {
         return null;
     }
 
-    public Value neg() {
+    public Value<?> neg() {
         return null;
     }
 }

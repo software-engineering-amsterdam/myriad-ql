@@ -35,59 +35,59 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
         return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
     }
 
-    public NumericValue plus(NumericValue that) {
+    public NumericValue<?> plus(NumericValue<?> that) {
         return that.plus(this);
     }
 
-    public NumericValue minus(final IntegerValue that) {
+    public NumericValue<?> minus(final IntegerValue that) {
         return null;
     }
 
-    public NumericValue minus(final DecimalValue that) {
+    public NumericValue<?> minus(final DecimalValue that) {
         return null;
     }
 
-    public NumericValue minus(final MoneyValue that) {
+    public NumericValue<?> minus(final MoneyValue that) {
         return null;
     }
 
-    public NumericValue minus(final NumericValue that) {
+    public NumericValue<?> minus(final NumericValue<?> that) {
         return null;
     }
 
-    public NumericValue product(final IntegerValue that) {
+    public NumericValue<?> product(final IntegerValue that) {
         return null;
     }
 
-    public NumericValue product(final DecimalValue that) {
+    public NumericValue<?> product(final DecimalValue that) {
         return null;
     }
 
-    public NumericValue product(final MoneyValue that) {
+    public NumericValue<?> product(final MoneyValue that) {
         return null;
     }
 
-    public NumericValue product(final NumericValue that) {
-        return null;
-    }
-
-    @Override
-    public NumericValue divide(IntegerValue that) {
+    public NumericValue<?> product(final NumericValue<?> that) {
         return null;
     }
 
     @Override
-    public NumericValue divide(DecimalValue that) {
+    public NumericValue<?> divide(IntegerValue that) {
         return null;
     }
 
     @Override
-    public NumericValue divide(MoneyValue that) {
+    public NumericValue<?> divide(DecimalValue that) {
         return null;
     }
 
     @Override
-    public NumericValue divide(NumericValue that) {
+    public NumericValue<?> divide(MoneyValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue<?> divide(NumericValue<?> that) {
         return null;
     }
 

@@ -8,7 +8,7 @@ import org.lemonade.visitors.ASTVisitor;
  */
 public abstract class QLType implements ASTNode {
 
-    public boolean isOf(Class other) {
+    public boolean isOf(Class<?> other) {
         return this.getClass().equals(other);
     }
 

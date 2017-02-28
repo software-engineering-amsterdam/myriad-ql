@@ -81,7 +81,7 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitLiteralExpression(QLParser.LiteralExpressionContext ctx) {
-        Value literal = (Value) ctx.literal().accept(this);
+        Value<?> literal = (Value<?>) ctx.literal().accept(this);
         return literal;
     }
 
