@@ -22,6 +22,10 @@ public class Boolean implements ASTNode, Value {
         this.value = java.lang.Boolean.valueOf(value);
     }
 
+    @Override
+    public boolean canAcceptValue(String value) {
+        return Boolean.isBoolean(value);
+    }
 
     public boolean getValue() {
         return value;

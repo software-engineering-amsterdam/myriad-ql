@@ -1,17 +1,16 @@
-module UI.FormRenderer exposing (..)
+module UI.FormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, form, div, text, pre, hr, h3)
+import Html exposing (Html, div, text, h3, pre)
 import Html.Attributes exposing (class)
-import Dict
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Float as FloatWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
-import Environment as Env exposing (Environment)
-import Values exposing (Value)
-import AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
-import FormUtil exposing (VisibleField(Editable, Computed))
+import QL.Environment as Env exposing (Environment)
+import QL.Values exposing (Value)
+import QL.AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
+import UI.FormUtil as FormUtil exposing (Field(Editable, Computed))
 
 
 type alias Model =
@@ -42,35 +41,28 @@ update msg model =
 
 
 view : Model -> Html Msg
-view model =
+view { env, form } =
     let
         visibleFields =
-            FormUtil.activeFields model.env model.form
+            FormUtil.activeFields env form
     in
         div
             [ class "row" ]
             [ div [ class "col-md-6" ]
-                [ h3 [] [ text "Form: ", text (Tuple.first model.form.id) ]
-                , form []
-                    (List.map (viewField model) visibleFields)
+                [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
+                , Html.form []
+                    (List.map (viewField env) visibleFields)
                 ]
             , div [ class "col-md-6" ]
                 [ h3 [] [ text "Result" ]
-                , environmentPreview model.env
+                , pre [] [ text <| toString env ]
                 ]
             ]
 
 
-environmentPreview : Environment -> Html msg
-environmentPreview env =
-    pre []
-        [ text <| String.join "\n" <| List.map toString <| Dict.toList env
-        ]
-
-
-viewField : Model -> VisibleField -> Html Msg
-viewField model field =
-    BaseWidget.container (visibleFieldWidgetConfig model.env field) <|
+viewField : Environment -> Field -> Html Msg
+viewField env field =
+    BaseWidget.container (visibleFieldWidgetConfig env field) <|
         case FormUtil.fieldValueType field of
             StringType ->
                 StringWidget.view
@@ -85,7 +77,7 @@ viewField model field =
                 FloatWidget.view
 
 
-visibleFieldWidgetConfig : Environment -> VisibleField -> WidgetContext Msg
+visibleFieldWidgetConfig : Environment -> Field -> WidgetContext Msg
 visibleFieldWidgetConfig env field =
     case field of
         Editable label identifier _ ->
@@ -96,7 +88,7 @@ visibleFieldWidgetConfig env field =
             , editable = True
             }
 
-        Computed label identifier valuedType _ ->
+        Computed label identifier _ _ ->
             { identifier = identifier
             , label = label
             , env = env

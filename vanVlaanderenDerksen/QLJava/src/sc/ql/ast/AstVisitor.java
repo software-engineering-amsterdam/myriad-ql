@@ -21,11 +21,13 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitQuestion(QLParser.QuestionContext ctx) {
 		String question 		= ctx.STR().toString();
+		question 				= question.substring(1, question.length()-1); // Remove the surrounding quotes
 		Atom<String> id 		= new Atom<String>(Atom.Type.ID, ctx.ID().toString());
 		Atom.Type type 			= Atom.Type.valueOf(ctx.TYPE().toString());
 		Expression expression	= ctx.expression() != null ? (Expression) visit(ctx.expression()) : null;
+		Integer line_number 	= ctx.getStart().getLine();
 		
-		return new Question(question, id, type, expression);
+		return new Question(question, id, type, expression, line_number);
 	}
 
 	@Override 
@@ -56,8 +58,9 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Node visitNotExpr(QLParser.NotExprContext ctx) {
 		Expression expression = (Expression) visit(ctx.expression());
+		Integer line_number   = ctx.getStart().getLine();
 		
-		return new NotExpression(expression);
+		return new NotExpression(expression, line_number);
 	}	
 	
 	@Override 
@@ -65,8 +68,9 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		Expression left  = (Expression) visit(ctx.left);	
 		Expression right = (Expression) visit(ctx.right);
 		String operator  = ctx.op.getText();
+		Integer line_number = ctx.getStart().getLine();
 		
-		return new OpExpression(left, right, operator);
+		return new OpExpression(left, right, operator, line_number);
 	}
 
 	@Override 

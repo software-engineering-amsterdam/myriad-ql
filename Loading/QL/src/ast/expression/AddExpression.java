@@ -5,7 +5,8 @@ import ast.atom.Atom;
 import value.Value;
 
 public class AddExpression extends BinaryExpression {
-	
+
+	@Override
 	public Atom evaluate() {
 
 		System.out.println("getLhs: " + getLhs().getNumber());

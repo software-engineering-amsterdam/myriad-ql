@@ -1,6 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.Expression;
+import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.StringProperty;
 
@@ -10,7 +11,7 @@ import javafx.beans.property.StringProperty;
 public class Computed implements FormItem {
     private String label;
     private String id;
-    private String type;
+    private Value type;
     public Expression expression;
 
     public String getLabel() {
@@ -29,11 +30,7 @@ public class Computed implements FormItem {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
+    public void setType(Value type) {
         this.type = type;
     }
 
@@ -46,6 +43,21 @@ public class Computed implements FormItem {
         if (expression.idChanged(id, value)) {
             root.idChanged(this.id, this.expression.toString());
         }
+    }
+
+    @Override
+    public boolean hasId(String id) {
+        return this.id.equals(id);
+    }
+
+    @Override
+    public Value[] getValuesForIds() {
+        return new Value[]{type};
+    }
+
+    @Override
+    public String[] getReferencedIds() {
+        return expression.getIds();
     }
 
     @Override

@@ -36,6 +36,10 @@ public abstract class Expression implements ASTNode {
         return false;
     }
 
+    public String[] getIds() {
+        return ids.keySet().toArray(new String[0]);
+    }
+
     public StringProperty getStringValueProperty() {
         return this.stringValueProperty;
     }
@@ -61,11 +65,10 @@ public abstract class Expression implements ASTNode {
             ids.put(matcher.group(), null);
         }
     }
-
+    
     abstract void evaluate();
 
     abstract void initId(String id, String value);
-
 
     public abstract String toString();
 

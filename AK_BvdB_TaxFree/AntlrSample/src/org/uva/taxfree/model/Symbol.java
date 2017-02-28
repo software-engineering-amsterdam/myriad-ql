@@ -2,14 +2,18 @@ package org.uva.taxfree.model;
 
 public class Symbol {
     private String mId;
-    private Node mReference;
+    private NamedNode mReference;
 
-    public void Symbol(String id, Node reference) {
+    public Symbol(String id, NamedNode reference) {
         mId = id;
         mReference = reference;
     }
 
     public String toString() {
         return mReference.toString();
+    }
+
+    public String resolve() {
+        return mReference.resolve();
     }
 }

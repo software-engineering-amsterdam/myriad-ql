@@ -31,6 +31,16 @@ public class Number implements ASTNode, Value {
         }
     }
 
+    @Override
+    public boolean canAcceptValue(String value) {
+        try {
+            new BigDecimal(value);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
     public double doubleValue() {
         return value.doubleValue();
     }
