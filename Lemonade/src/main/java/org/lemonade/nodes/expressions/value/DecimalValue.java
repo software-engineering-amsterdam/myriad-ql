@@ -36,6 +36,27 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
     public NumericValue plus(NumericValue that) {
         return that.plus(this);
     }
+
+    @Override
+    public DecimalValue divide(IntegerValue that) {
+        return new DecimalValue(new QLDecimalType(), this.getValue() / that.getValue());
+    }
+
+    @Override
+    public NumericValue divide(DecimalValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(MoneyValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(NumericValue that) {
+        return null;
+    }
+
     @Override
     public String toString() {
         return Double.toString(this.getValue());

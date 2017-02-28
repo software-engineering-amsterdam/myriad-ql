@@ -16,4 +16,10 @@ public abstract class NumericValue<T> extends Value<T> {
     public abstract NumericValue plus(DecimalValue that);
     public abstract NumericValue plus(MoneyValue that);
     public abstract NumericValue plus(NumericValue that);
+
+
+    public abstract Value divide(IntegerValue that);
+    public abstract Value divide(DecimalValue that);
+    public abstract Value divide(MoneyValue that);
+    public abstract Value divide(NumericValue that);
 }

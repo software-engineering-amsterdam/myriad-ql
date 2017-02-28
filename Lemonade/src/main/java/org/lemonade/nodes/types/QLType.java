@@ -15,4 +15,16 @@ public abstract class QLType implements ASTNode {
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
+
+    public boolean isNumeric() {
+        return false;
+    }
+
+    public boolean isBoolean() {
+        return false;
+    }
+
+    public boolean isComparable() {
+        return false;
+    }
 }

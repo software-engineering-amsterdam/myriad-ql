@@ -1,6 +1,8 @@
 package org.lemonade.nodes.expressions.value;
 
 
+import jdk.nashorn.internal.runtime.Undefined;
+import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
@@ -38,6 +40,32 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
 
     public NumericValue plus(NumericValue that) {
         return that.plus(this);
+    }
+
+
+    public Value divide(IntegerValue that) {
+        if (this.getValue() == 0 || that.getValue() == 0) {
+            return new UndefinedValue(new QLIntegerType(), "Division with zero");
+        }
+        return new IntegerValue(new QLIntegerType(), this.getValue() / that.getValue());
+    }
+
+    @Override
+    public Value divide(DecimalValue that) {
+        if (this.getValue() == 0 || that.getValue() == 0) {
+            return new UndefinedValue(new QLDecimalType(), "Division with zero");
+        }
+        return new DecimalValue(new QLDecimalType(), this.getValue() / that.getValue());
+    }
+
+    @Override
+    public NumericValue divide(MoneyValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(NumericValue that) {
+        return null;
     }
 
     @Override

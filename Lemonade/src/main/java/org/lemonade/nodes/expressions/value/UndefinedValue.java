@@ -7,9 +7,9 @@ import org.lemonade.nodes.types.QLType;
 /**
  *
  */
-public class UndefinedValue extends Value<Undefined> {
+public class UndefinedValue extends Value<String> {
 
-    public UndefinedValue(QLType type, Undefined value) {
+    public UndefinedValue(QLType type, String value) {
         super(type, value);
     }
 }

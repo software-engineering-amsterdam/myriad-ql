@@ -40,6 +40,26 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
     }
 
     @Override
+    public NumericValue divide(IntegerValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(DecimalValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(MoneyValue that) {
+        return null;
+    }
+
+    @Override
+    public NumericValue divide(NumericValue that) {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return Double.toString(this.getValue());
     }

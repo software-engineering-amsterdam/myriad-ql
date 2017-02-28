@@ -11,4 +11,5 @@ public class QLDecimalType extends QLNumberType {
     public String toString() {
         return "decimal";
     }
+
 }

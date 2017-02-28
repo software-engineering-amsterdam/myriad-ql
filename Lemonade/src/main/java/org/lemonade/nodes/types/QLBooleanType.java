@@ -12,4 +12,9 @@ public class QLBooleanType extends QLType {
     public String toString() {
         return "boolean";
     }
+
+    @Override
+    public boolean isBoolean() {
+        return true;
+    }
 }
