@@ -46,3 +46,13 @@ class TestTypeChecker(TestCase):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
+
+    def test_typecheck_arithmetic_field_w_field(self):
+        input_string = """
+        form taxOfficeExample {
+            "What was the selling price?" sellingPrice: money
+            "What is your private debt0?" privateDebt: money
+            "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
