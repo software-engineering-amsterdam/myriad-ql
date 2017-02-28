@@ -69,7 +69,9 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     @Override
     public ASTNode visitComputationExpression(QLParser.ComputationExpressionContext ctx) {
         ComputationExpression computationExpression = new ComputationExpression(ctx.start.getLine());
-        computationExpression.setExpression(ctx.getText());
+        computationExpression.setLeft((Expression) visit(ctx.left));
+        computationExpression.setRight((Expression) visit(ctx.right));
+        computationExpression.setOperator(ctx.op.getText());
 
         return computationExpression;
     }
@@ -77,7 +79,9 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     @Override
     public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
         BooleanExpression booleanExpression = new BooleanExpression(ctx.start.getLine());
-        booleanExpression.setExpression(ctx.getText());
+        booleanExpression.setLeft((Expression) visit(ctx.left));
+        booleanExpression.setRight((Expression) visit(ctx.right));
+        booleanExpression.setOperator(ctx.op.getText());
 
         return booleanExpression;
     }
@@ -85,7 +89,6 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     @Override
     public ASTNode visitGroupedExpression(QLParser.GroupedExpressionContext ctx) {
         GroupedExpression groupedExpression = new GroupedExpression(ctx.start.getLine());
-        groupedExpression.setExpression(ctx.getText());
         groupedExpression.setExpression((Expression) visit(ctx.expression()));
 
         return groupedExpression;
