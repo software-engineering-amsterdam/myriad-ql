@@ -13,6 +13,7 @@ module QLS
         errors.push((ql_variables - qls_variables).map { |error| "[ERROR] #{error} of the QL program is not placed by the QLS program." })
         errors.push((qls_variables - ql_variables).map { |error| "[ERROR] #{error} is referenced to a question that is not in the QL program" })
         errors.push((duplicate_qls_variables).map { |error| "[ERROR] #{error} is placed multiple times" })
+        errors.flatten.uniq
       end
 
       def visit_page(page)

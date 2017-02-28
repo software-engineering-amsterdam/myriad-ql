@@ -13,10 +13,11 @@ module QLS
         errors = []
         qls_widgets.each do |widget_hash|
           widget_hash.each do |type, widget_object|
+            type = 'undefined' unless type
             errors.push("[ERROR] #{widget_object.first.class} can not be used with #{type}") unless widget_object.first.accept_types.include?(type)
           end
         end
-        errors
+        errors.uniq
       end
 
       def visit_page(page)
