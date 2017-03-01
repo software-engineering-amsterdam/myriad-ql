@@ -6,6 +6,10 @@ export class AST {
         this.program = program;
     }
 
+    getProgram(){
+        return this.program;
+    }
+
     getStatements(){
         return this.program.getStatements();
     }

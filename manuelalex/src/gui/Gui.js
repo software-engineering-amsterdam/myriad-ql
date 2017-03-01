@@ -6,7 +6,7 @@ import Surface          from 'famous/core/Surface.js';
 
 import {Injection}      from 'arva-js/utils/Injection.js';
 import {layout}         from 'arva-js/layout/Decorators.js';
-import {App as ArvaApp} from 'arva-js/core/App.js';
+import {inject, provide} from 'arva-js/utils/di/Decorators.js';
 import {DataSource}     from 'arva-js/data/DataSource.js';
 import {Controller}     from 'arva-js/core/Controller.js';
 import {View}           from 'arva-js/core/View.js';
@@ -19,50 +19,29 @@ import {RenderVisitor}  from './RenderVisitor.js';
 
 import './famous.css!';
 
-export class Gui {
+export class GUI {
 
-    program = null;
-    propertyNames = {};
+    program;
+    ast;
 
     constructor(ast = {}) {
-
         this.ast = ast;
-
-
-        this.createGUI(ast);
-
-
     }
 
-    createGUI(ast = {}) {
-        this.program = new Program(ast.program);
-        this.program.start(this._addStatements.bind(this, this.program, this.ast));
+    async createGUI(ast = this.ast) {
+        this.application = new Program(ast.getProgram());
+        await this.application.start();
+
+        this.renderGUI.bind(this, this.application, this.ast)
     }
 
-    _addStatements(program = {}, ast = {}) {
-        this.program.setTitle(ast.program.name);
+    renderGUI(program = {}, ast = {}) {
 
         let views = program.getViews();
-        let view = views[0]; // for now, just use the first view
+        let view = views[0]; // Until we support QLS, just use the first view
 
-        let visitor = new RenderVisitor(ast, view);
+        let visitor = new RenderVisitor();
+        visitor.visitProgram(ast.getProgram(), view);
 
-        return;
-        for (let index in ast.program.statements) {
-            let statement = ast.program.statements[index];
-
-            if (statement instanceof Question) {
-                let renderable = new QuestionView({
-                    label: statement.name,
-                    type: statement.propertyType
-                });
-                this.propertyNames[statement.propertyName] = '';
-
-                renderable.on('message', (message) => {
-                    this.propertyNames[statement.propertyName] = message;
-                });
-                view.addRenderable(renderable, `Statement${index}`, layout.dock.top(~88, 10, 10));
-            }
-        }
     }
 }

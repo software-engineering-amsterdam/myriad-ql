@@ -22,4 +22,8 @@ export class Form {
     getLocation(){
         return this.location;
     }
+
+    renderTitle(visitor, view){
+        return visitor.renderProgamTitle(this.getName(), view);
+    }
 }

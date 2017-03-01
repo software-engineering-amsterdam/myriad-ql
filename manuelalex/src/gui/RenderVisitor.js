@@ -13,21 +13,26 @@ export class RenderVisitor {
 
     _viewCount = 0;
 
-    constructor(ast = {}, view = {}){
-        let statements = ast.getStatements();
-        let name = ast.getName();
+    async visitProgram(program, view){
+        view = this._addMarginsToView(view);
 
-        if(statements.length){
-            this.visitStatements(statements, view);
-        } else {
-            this._showError('No statements provided in AST');
-        }
+        program.renderTitle(this);
+
+       this.visitStatements(program.getStatements(), view);
     }
 
     visitStatements(statements = [], view = {}){
         for(let statement of statements){
             statement.render && statement.render(this, view);
         }
+    }
+
+    renderProgamTitle(title = '', view){
+        let titleRenderable = new Surface({
+            content: title
+        });
+
+        view.addRenderable(titleRenderable, 'programTitle', layout.dock.top(~20, 0, 10))
     }
 
     renderQuestion(question = {}, view = {}){
@@ -54,14 +59,14 @@ export class RenderVisitor {
         });
     }
 
-    renderBooleanInput(type){
+    renderBooleanInput(){
         return new Checkbox({
             state: false,
             enabled: true
         });
     }
 
-    renderStringInput(type){
+    renderStringInput(){
         return new SingleLineTextInput({});
     }
 
@@ -81,6 +86,11 @@ export class RenderVisitor {
         return new Surface({
             content: type.toString()
         });
+    }
+
+    // todo
+    _addMarginsToView(view){
+        return view;
     }
 
     _showError(error){

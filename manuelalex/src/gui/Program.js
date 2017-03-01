@@ -10,11 +10,12 @@ import {Injection}      from 'arva-js/utils/Injection.js';
 import {DataSource}     from 'arva-js/data/DataSource.js';
 import {Controller}     from 'arva-js/core/Controller.js';
 import {View}           from 'arva-js/core/View.js';
+import {Router}         from 'arva-js/core/Router.js';
 
 export class Program {
+    constructor() {
 
-    constructor(program = {}) {
-
+        /* BoilerPlate to get Arva working without an App.js */
         this.application = ArvaApp;
         window.cordova = {};
 
@@ -22,14 +23,37 @@ export class Program {
             return new DataSource(path, options);
         };
 
-        let firstController = HomeController;
-        this.application.controllers = [firstController];
+        let controller = this.createController();
+        this.application.controllers = [controller];
 
     }
 
-    start(callBack = () => {}) {
-        this.application.done = callBack;
-        this.application.start();
+    createController() {
+        let qlController = QLController;
+        return qlController;
+    }
+
+    createView() {
+        return new (class QLView extends View {});
+    }
+
+    start() {
+        return new Promise((resolve, reject) => {
+
+            let view = this.createView();
+            let controller = this.getControllers()[0];
+
+            controller.createMethod('Index', view);
+            this.setDefaultRoute('QL', 'Index');
+
+            this.application.start();
+            this.application.done = () => resolve;
+        });
+    }
+
+    setDefaultRoute(controller = 'QL', method = 'Index') {
+        const router = Injection.get(Router);
+        router.setDefault(controller, method);
     }
 
     getControllers() {
@@ -42,43 +66,37 @@ export class Program {
             return controller.getViews();
         });
     }
-
-    setTitle(title = ''){
-        let view = this.getViews()[0]; // for now just the first view;
-        view.setTitle(title);
-    }
 }
 
 
-class HomeController extends Controller {
+class QLController extends Controller {
 
     constructor() {
         super(...arguments);
-        this.indexView = new HomeView();
-    }
-
-    Index() {
-        return this.indexView;
+        this.views = {};
     }
 
     getViews() {
-        return this.indexView;
+        return this.views;
     }
-}
 
-class HomeView extends View {
+    getViewForMethod(method = '') {
+        return this.views[method];
+    }
 
-    setTitle(title = '') {
-        if (!this.titleRenderable) {
-            this.addRenderable(new Surface({
-                content: title
-            }), 'titleRenderable', layout.dock.top(44, 0, 10))
-        } else {
-            this.titleRenderable.setContent(title);
+    createMethod(methodName = '', view) {
+
+        this[methodName] = () => {
+            return this.views[methodName];
+        };
+
+        if (view) {
+            this.setViewForMethod(methodName, view);
         }
     }
 
-    getSize() {
-        return [window.innerWidth, window.innerHeight];
+    setViewForMethod(methodName = '', view = {}) {
+        this.views[methodName] = view;
     }
+
 }

@@ -20,7 +20,8 @@ function $(o) {
         return ret;
     };
 }
-var grammar = {
+
+ var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["wschar", "_$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
