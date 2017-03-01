@@ -212,7 +212,7 @@ class Integer(FieldType):
     def __init__(self):
         FieldType.__init__(self)
 
-class Data(FieldType):
+class Date(FieldType):
     def __init__(self):
         FieldType.__init__(self)
 
