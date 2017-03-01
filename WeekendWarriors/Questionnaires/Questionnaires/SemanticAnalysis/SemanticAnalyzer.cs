@@ -8,9 +8,9 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class SemanticAnalyzer
     {
-        protected List<Run.ISemanticAnalyzerRun> Runs = new List<Run.ISemanticAnalyzerRun>();
-        protected QLContext Context = new QLContext();
-        protected Run.Result AnalysisResult = new Run.Result();
+        private List<Run.ISemanticAnalyzerRun> Runs = new List<Run.ISemanticAnalyzerRun>();
+        private QLContext Context = new QLContext();
+        private Run.Result AnalysisResult = new Run.Result();
 
         public SemanticAnalyzer()
         {

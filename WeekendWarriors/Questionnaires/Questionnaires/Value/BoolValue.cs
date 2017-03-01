@@ -38,22 +38,22 @@ namespace Questionnaires.Value
             return InequalTo((dynamic)value);
         }
 
-        protected IValue And(BoolValue value)
+        private IValue And(BoolValue value)
         {
             return new BoolValue(this.Val && value.GetValue());
         }
 
-        protected IValue Or(BoolValue value)
+        private IValue Or(BoolValue value)
         {
             return new BoolValue(this.Val || value.GetValue());
         }
 
-        protected IValue EqualTo(BoolValue value)
+        private IValue EqualTo(BoolValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        protected IValue InequalTo(BoolValue value)
+        private IValue InequalTo(BoolValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }

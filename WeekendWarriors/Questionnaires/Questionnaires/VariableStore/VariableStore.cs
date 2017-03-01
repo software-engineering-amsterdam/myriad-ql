@@ -10,7 +10,7 @@ namespace Questionnaires.VariableStore
 {
     class VariableStore : IVariableStore
     {
-        protected Dictionary<string, Value.IValue> variables = new Dictionary<string, Value.IValue>();
+        private Dictionary<string, Value.IValue> variables = new Dictionary<string, Value.IValue>();
 
         public void SetValue(string name, decimal value)
         {

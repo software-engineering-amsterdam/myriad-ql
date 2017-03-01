@@ -11,8 +11,9 @@ namespace Questionnaires.SemanticAnalysis.Run
 {
     class DeclarationValidator : ISemanticAnalyzerRun, IASTVisitor
     {
-        protected QLContext Context;
-        protected Result result = new Result();
+        private QLContext Context;
+        private Result result = new Result();
+
         public IResult Analyze(INode node, QLContext context)
         {
             Context = context;

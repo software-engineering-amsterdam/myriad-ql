@@ -11,8 +11,8 @@ namespace Questionnaires.SemanticAnalysis.Run
 {
     public class TypeChecker : ISemanticAnalyzerRun, IASTVisitor<QLType?>
     {
-        protected QLContext Context;
-        protected Result result = new Result();
+        private QLContext Context;
+        private Result result = new Result();
 
         public IResult Analyze(AST.INode node, QLContext context)
         {
@@ -161,7 +161,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Evaluate(new List<INode> { node.Operand }, node);
         }
 
-        protected QLType? Evaluate(List<INode> children, INode parent)
+        private QLType? Evaluate(List<INode> children, INode parent)
         {
             List<QLType> childTypes = new List<QLType>();
             bool hasInvalidChild = false;

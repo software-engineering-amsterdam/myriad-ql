@@ -8,7 +8,8 @@ namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
 {
     public abstract class SemanticAnalysisEvent : ISemenaticAnalysisEvent
     {
-        protected string Message;
+        private string Message;
+
         public SemanticAnalysisEvent(string messsage)
         {
             this.Message = messsage;
