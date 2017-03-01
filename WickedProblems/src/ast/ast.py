@@ -208,6 +208,10 @@ class Boolean(FieldType):
     def __init__(self):
         FieldType.__init__(self)
 
+class String(FieldType):
+    def __init__(self):
+        FieldType.__init__(self)
+
 class Integer(FieldType):
     def __init__(self):
         FieldType.__init__(self)
