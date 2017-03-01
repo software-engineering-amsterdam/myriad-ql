@@ -103,6 +103,8 @@ class QL:
                                              arithmic_precedence)
 
     string = QuotedString('"')
+    string.setResultsName("text")
+    string.addParseAction(lambda text : String(text))
 
     # form content
     question = string + identifier + Suppress(colon) + field_type
