@@ -33,10 +33,9 @@ class Root(Node):
         self._children = children
 
     def __str__(self):
-        __ret = "{}{} \"{}\", Children: {}\n".format("\t" * Node.indent,
-                                                    self.__class__.__name__,
-                                                    self._identifier,
-                                                    len(self._children))
+        __ret = "{}{} \"{}\"\n".format("\t" * Node.indent,
+                                       self.__class__.__name__,
+                                       self._identifier)
         Node.indent += 1
         for __child in self._children:
             __ret += "{}{}".format("\t" * Node.indent,__child)
@@ -53,11 +52,11 @@ class Question(Node):
         self._field_type = field_type
 
     def __str__(self):
-        return "{} \"{}\", Field Type: {}, Question: \"{}\"\n".format(
-                                                    self.__class__.__name__,
-                                                    self._identifier,
-                                                    self._field_type,
-                                                    self._text)
+        return "{} \"{}\", {}, \"{}\"\n".format(
+            self.__class__,
+            self._identifier,
+            self._field_type,
+            self._text)
     __repr__ = __str__
 
 class Conditional(Node):
@@ -67,10 +66,9 @@ class Conditional(Node):
         self._children = children
 
     def __str__(self):
-        __ret = "{} Evaluation: \"{}\", Children: {}\n".format(
-                                                    self.__class__.__name__,
-                                                    self._evaluation,
-                                                    len(self._children))
+        __ret = "{} \"{}\"\n".format(
+            self.__class__,
+            self._evaluation)
         Node.indent += 1
         for __child in self._children:
             __ret += "{}{}\n".format("\t" * Node.indent, __child)
@@ -87,11 +85,10 @@ class Statement(Node):
         self._children = children
 
     def __str__(self):
-        __ret = "{} \"{}\", Field Type: {} Children: {}\n".format(
-                                                self.__class__.__name__,
-                                                self._identifier,
-                                                self._field_type,
-                                                len(self._children))
+        __ret = "{} \"{}\", {}\n".format(
+            self.__class__,
+            self._identifier,
+            self._field_type)
         Node.indent += 1
         for __child in self._children:
             __ret += "{}{}\n".format("\t" * Node.indent, __child)
@@ -176,7 +173,7 @@ class GreaterThanEquals(BinaryOperation):
 class LogicalOr(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "logical_or", left_child, right_child)
-        
+
 # Unary Operations
 class LogicalNot(UnaryOperation):
     def __init__(self, child):
