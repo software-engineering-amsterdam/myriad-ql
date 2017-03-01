@@ -1,8 +1,6 @@
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
-import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; 
-var FormPostProcessor = new FP();
-
+import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; var FormPostProcessor = new FP();
 (function () {
 function id(x) {return x[0]; }
 
@@ -153,11 +151,8 @@ var grammar = {
     {"name": "statement", "symbols": ["answer"], "postprocess": FormPostProcessor.statement},
     {"name": "statement", "symbols": ["if_statement"], "postprocess": FormPostProcessor.statement},
     {"name": "statement", "symbols": ["ifelse_statement"], "postprocess": FormPostProcessor.statement},
-    {"name": "statement", "symbols": ["ifelseifelse_statement"], "postprocess": FormPostProcessor.statement},
     {"name": "question$string$1", "symbols": [{"literal":"q"}, {"literal":"u"}, {"literal":"e"}, {"literal":"s"}, {"literal":"t"}, {"literal":"i"}, {"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "question", "symbols": ["question$string$1", "_", {"literal":"'"}, "sentence", {"literal":"'"}, "_", "propertyName", {"literal":":"}, "_", "propertyType", "_"], "postprocess": FormPostProcessor.question},
-    {"name": "ifelseifelse_statement$string$1", "symbols": [{"literal":"e"}, {"literal":"l"}, {"literal":"s"}, {"literal":"e"}, {"literal":" "}, {"literal":"i"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "ifelseifelse_statement", "symbols": ["if_statement", "ifelseifelse_statement$string$1", "_", "conditional", "if_body", "else_clause"], "postprocess": FormPostProcessor.ifElseIfElseStatement},
     {"name": "ifelse_statement", "symbols": ["if_statement", "else_clause"], "postprocess": FormPostProcessor.ifElseStatement},
     {"name": "if_statement$string$1", "symbols": [{"literal":"i"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "if_statement", "symbols": ["if_statement$string$1", "_", "conditional", "if_body"], "postprocess": FormPostProcessor.ifStatement},
@@ -173,14 +168,14 @@ var grammar = {
     {"name": "answer", "symbols": ["answer$string$1", "_", {"literal":"'"}, "sentence", {"literal":"'"}, "_", "allocation", "_"], "postprocess": FormPostProcessor.answer},
     {"name": "allocation$subexpression$1", "symbols": ["arithmetic_expression"]},
     {"name": "allocation$subexpression$1", "symbols": ["bool_expression"]},
-    {"name": "allocation", "symbols": ["propertyName", {"literal":":"}, "_", "propertyType", "_", "assignOp", "_", "allocation$subexpression$1"], "postprocess": FormPostProcessor.allocation},
+    {"name": "allocation", "symbols": ["propertyName", {"literal":":"}, "_", "propertyType", "_", {"literal":"="}, "_", "allocation$subexpression$1"], "postprocess": FormPostProcessor.allocation},
     {"name": "arithmetic_expression", "symbols": ["term"]},
-    {"name": "arithmetic_expression$subexpression$1", "symbols": ["min_op"]},
-    {"name": "arithmetic_expression$subexpression$1", "symbols": ["plus_op"]},
+    {"name": "arithmetic_expression$subexpression$1", "symbols": [{"literal":"-"}]},
+    {"name": "arithmetic_expression$subexpression$1", "symbols": [{"literal":"+"}]},
     {"name": "arithmetic_expression", "symbols": ["arithmetic_expression", "arithmetic_expression$subexpression$1", "term"], "postprocess": FormPostProcessor.expression},
     {"name": "term", "symbols": ["factor"]},
-    {"name": "term$subexpression$1", "symbols": ["divide_op"]},
-    {"name": "term$subexpression$1", "symbols": ["multiply_op"]},
+    {"name": "term$subexpression$1", "symbols": [{"literal":"/"}]},
+    {"name": "term$subexpression$1", "symbols": [{"literal":"*"}]},
     {"name": "term", "symbols": ["term", "term$subexpression$1", "factor"]},
     {"name": "factor", "symbols": ["digits"]},
     {"name": "factor", "symbols": ["propertyName"]},
@@ -188,11 +183,6 @@ var grammar = {
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/, "digits$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": (data)=> Number(data[0])},
-    {"name": "min_op", "symbols": [{"literal":"-"}], "postprocess": FormPostProcessor.minOp},
-    {"name": "plus_op", "symbols": [{"literal":"+"}], "postprocess": FormPostProcessor.plusOP},
-    {"name": "divide_op", "symbols": [{"literal":"/"}], "postprocess": FormPostProcessor.divideOp},
-    {"name": "multiply_op", "symbols": [{"literal":"*"}], "postprocess": FormPostProcessor.multiplyOp},
-    {"name": "assignOp", "symbols": [{"literal":"="}]},
     {"name": "bool_expression", "symbols": ["and_test"]},
     {"name": "bool_expression$subexpression$1$string$1", "symbols": [{"literal":"|"}, {"literal":"|"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "bool_expression$subexpression$1", "symbols": ["bool_expression$subexpression$1$string$1"]},

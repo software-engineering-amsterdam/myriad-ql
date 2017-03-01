@@ -10,31 +10,22 @@ statement               -> question                                             
                         | answer                                                                              {% FormPostProcessor.statement %}
                         | if_statement                                                                        {% FormPostProcessor.statement %}
                         | ifelse_statement                                                                    {% FormPostProcessor.statement %}
-                        | ifelseifelse_statement                                                              {% FormPostProcessor.statement %}
 
-question                -> "question" _ "'" sentence "'" _ propertyName ":" _ propertyType _              {% FormPostProcessor.question %}
+question                -> "question" _ "'" sentence "'" _ propertyName ":" _ propertyType _                  {% FormPostProcessor.question %}
 
-ifelseifelse_statement  -> if_statement "else if" _ conditional if_body else_clause                           {% FormPostProcessor.ifElseIfElseStatement %}
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
 if_body                 -> _ "{" _ statement:* "}" _
 conditional             -> "(" bool_expression ")"
 else_clause             -> "else" _ "{" _ statement:* "}" _
 
-answer                  -> "answer" _ "'" sentence "'" _ allocation _                                      {% FormPostProcessor.answer %}
-allocation              -> propertyName ":" _ propertyType _ assignOp _ (arithmetic_expression|bool_expression)           {% FormPostProcessor.allocation %}
+answer                  -> "answer" _ "'" sentence "'" _ allocation _                                         {% FormPostProcessor.answer %}
+allocation              -> propertyName ":" _ propertyType _ "=" _ (arithmetic_expression|bool_expression)           {% FormPostProcessor.allocation %}
 
-arithmetic_expression   -> term | arithmetic_expression (min_op|plus_op) term                                             {% FormPostProcessor.expression %}
-term                    -> factor | term (divide_op | multiply_op) factor
+arithmetic_expression   -> term | arithmetic_expression ("-"|"+") term                                             {% FormPostProcessor.expression %}
+term                    -> factor | term ("/" | "*") factor
 factor                  -> digits | propertyName | "(" arithmetic_expression ")"
 digits                  -> [0-9]:+                                                                             {% (data)=> Number(data[0]) %}
-
-min_op                  -> "-"                                                                                 {% FormPostProcessor.minOp %}
-plus_op                 -> "+"                                                                                 {% FormPostProcessor.plusOP %}
-divide_op               -> "/"                                                                                 {% FormPostProcessor.divideOp %}
-multiply_op             -> "*"                                                                                 {% FormPostProcessor.multiplyOp %}
-
-assignOp                -> "="
 
 
 bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test                                {% FormPostProcessor.booleanExpression %}
