@@ -21,11 +21,6 @@ public class MoneyType extends Type {
     }
 
     @Override
-    public MoneyValue getDefaultValue() {
-        return new MoneyValue(new BigDecimal(0));
-    }
-
-    @Override
     public String toString() {
         return "Money";
     }

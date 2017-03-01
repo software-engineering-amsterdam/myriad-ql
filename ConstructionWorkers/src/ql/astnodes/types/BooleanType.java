@@ -20,11 +20,6 @@ public class BooleanType extends Type {
     }
 
     @Override
-    public BooleanValue getDefaultValue() {
-        return new BooleanValue(false);
-    }
-
-    @Override
     public String toString() {
         return "Boolean";
     }

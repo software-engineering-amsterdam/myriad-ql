@@ -19,11 +19,6 @@ public class IntegerType extends Type {
     }
 
     @Override
-    public IntegerValue getDefaultValue() {
-        return new IntegerValue(0);
-    }
-
-    @Override
     public String toString() {
         return "Integer";
     }

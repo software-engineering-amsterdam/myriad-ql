@@ -19,7 +19,14 @@ public abstract class Type extends Node {
         super(lineNumber);
     }
 
-    public abstract Value getDefaultValue();
+    public boolean equals(Object object) {
+        if (!(object instanceof Type) ) {
+            return false;
+        }
+        Type type = (Type) object;
+
+        return getClass().equals(type.getClass());
+    }
 
     public String toString() {
         return "Type";

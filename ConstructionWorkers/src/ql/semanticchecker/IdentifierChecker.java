@@ -95,7 +95,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
         String questionIdentifierName = question.getIdentifier().getName();
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {
-            if ((identifierToTypeMap.get(questionIdentifierName)).getClass().equals(question.getType().getClass())) {
+            if (isEqual(identifierToTypeMap.get(questionIdentifierName), question.getType())) {
                 messages.addWarning(new DuplicateIdentifierWarning(question.getLineNumber(), question.getIdentifier()));
                 return true;
             } else {
@@ -228,5 +228,9 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
     @Override
     public Void visit(Division expression) {
         return null;
+    }
+
+    private static boolean isEqual(Object o1, Object o2) {
+        return o1 == o2 || (o1 != null && o1.equals(o2));
     }
 }

@@ -19,11 +19,6 @@ public class StringType extends Type {
     }
 
     @Override
-    public StringValue getDefaultValue() {
-        return new StringValue(" ");
-    }
-
-    @Override
     public String toString() {
         return "String";
     }

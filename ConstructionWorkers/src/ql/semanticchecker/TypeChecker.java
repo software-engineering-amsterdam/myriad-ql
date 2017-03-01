@@ -52,12 +52,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeLogic(Type leftExpressionType, Type rightExpressionType) {
-        if (leftExpressionType == null || rightExpressionType == null) {
-            return new UndefinedType();
-        }
 
-        if (leftExpressionType.getClass().equals(rightExpressionType.getClass()) &&
-                leftExpressionType.getClass().equals(BooleanType.class)) {
+        if (isEqual(leftExpressionType, rightExpressionType) &&
+                isEqual(leftExpressionType, new BooleanType())) {
             return leftExpressionType;
         }
 
@@ -93,14 +90,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNumerical(Type leftExpressionType, Type rightExpressionType) {
-        if (leftExpressionType == null || rightExpressionType == null) {
-            return new UndefinedType();
-        }
 
-        Class leftExpressionTypeClass = leftExpressionType.getClass();
-        if (leftExpressionTypeClass.equals(rightExpressionType.getClass())
-                && (leftExpressionTypeClass == MoneyType.class ||
-                leftExpressionTypeClass == IntegerType.class)) {
+        if (isEqual(leftExpressionType,rightExpressionType)
+                && (isEqual(leftExpressionType, new MoneyType()) ||
+                isEqual(leftExpressionType, new IntegerType()))) {
             return leftExpressionType;
         }
 
@@ -114,11 +107,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNegation(Type expressionType) {
-        if (expressionType == null) {
-            return new UndefinedType();
-        }
 
-        if (expressionType.getClass().equals(BooleanType.class)) {
+        if (expressionType.equals(new BooleanType())) {
             return expressionType;
         }
 
@@ -132,13 +122,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeParentheses(Type expressionType) {
-        if (expressionType == null) {
-            return new UndefinedType();
-        }
 
-        Class expressionTypeClass = expressionType.getClass();
-        if (expressionTypeClass.equals(IntegerType.class) || expressionTypeClass.equals(MoneyType.class) ||
-                expressionTypeClass.equals(BooleanType.class) || expressionTypeClass.equals(StringType.class)) {
+        if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType()) ||
+                isEqual(expressionType, new BooleanType()) || isEqual(expressionType, new StringType())) {
             return expressionType;
         }
 
@@ -158,11 +144,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypePositiveNegative(Type expressionType) {
-        if (expressionType == null) {
-            return new UndefinedType();
-        }
 
-        if (expressionType.getClass().equals(IntegerType.class) || expressionType.getClass().equals(MoneyType.class)) {
+        if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType())) {
             return expressionType;
         }
 
@@ -212,14 +195,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeEquality(Type leftExpressionType, Type rightExpressionType) {
-        if (leftExpressionType == null || rightExpressionType == null) {
-            return new UndefinedType();
-        }
 
-        Class leftExpressionTypeClass = leftExpressionType.getClass();
-        if (leftExpressionTypeClass.equals(rightExpressionType.getClass()) &&
-                (leftExpressionTypeClass.equals(MoneyType.class) || leftExpressionTypeClass.equals(IntegerType.class) ||
-                        leftExpressionTypeClass.equals(StringType.class))) {
+        if (isEqual(leftExpressionType,rightExpressionType) &&
+                (isEqual(leftExpressionType,new MoneyType()) || isEqual(leftExpressionType, new IntegerType()) ||
+                        isEqual(leftExpressionType, new StringType()))) {
             return new BooleanType();
         }
 
@@ -239,7 +218,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type expressionType = statement.getExpression().accept(this);
 
         Type statementType = getTypeIfStatement(expressionType);
-        if (statementType.getClass().equals(UndefinedType.class)) {
+        if (isEqual(statementType, new UndefinedType())) {
             messages.addError(new InvalidTypeError(statement.getLineNumber(), new BooleanType()));
         }
 
@@ -250,11 +229,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeIfStatement(Type expressionType) {
-        if (expressionType == null) {
-            return new UndefinedType();
-        }
 
-        if (expressionType.getClass().equals(BooleanType.class)) {
+        if (isEqual(expressionType, new BooleanType())) {
             return expressionType;
         }
 
@@ -272,7 +248,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type expressionType = statement.getExpression().accept(this);
         tempIdentifierLiteral = null;
 
-        if (!expressionType.getClass().equals(statement.getType().getClass())) {
+        if (!isEqual(expressionType, statement.getType())) {
             messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
         }
 
@@ -358,5 +334,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     @Override
     public Type visit(MyString literal) {
         return new StringType();
+    }
+
+    private static boolean isEqual(Object o1, Object o2) {
+        return o1 == o2 || (o1 != null && o1.equals(o2));
     }
 }
