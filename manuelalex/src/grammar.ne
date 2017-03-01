@@ -16,23 +16,23 @@ question                -> "question" _ "'" sentence "'" _ propertyName ":" _ pr
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
 if_body                 -> _ "{" _ statement:* "}" _
-conditional             -> "(" bool_expression ")"
+conditional             -> "(" or_expression ")"
 else_clause             -> "else" _ "{" _ statement:* "}" _
 
 answer                  -> "answer" _ "'" sentence "'" _ allocation _                                         {% FormPostProcessor.answer %}
-allocation              -> propertyName ":" _ propertyType _ "=" _ (arithmetic_expression|bool_expression)           {% FormPostProcessor.allocation %}
+allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}
 
-arithmetic_expression   -> term | arithmetic_expression ("-"|"+") term                                             {% FormPostProcessor.expression %}
+expression              -> term | expression ("-"|"+") term                                             {% FormPostProcessor.expression %}
 term                    -> factor | term ("/" | "*") factor
-factor                  -> digits | propertyName | "(" arithmetic_expression ")"
+factor                  -> digits | propertyName | "(" expression ")"
 digits                  -> [0-9]:+                                                                             {% (data)=> Number(data[0]) %}
 
 
-bool_expression         -> and_test | bool_expression _ ("||" | "|") _ and_test                                {% FormPostProcessor.booleanExpression %}
-and_test                -> not_test | and_test _ ("&&" | "&") _ not_test                                         {% FormPostProcessor.and_test %}
-not_test                -> comparison | "!" not_test | propertyName                                              {% FormPostProcessor.not_test %}
-comparison              -> propertyName _ comp_operator _ propertyName                                         {% FormPostProcessor.comparison %}
-comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
+or_expression           -> and_expression | or_expression _ ("||") _ and_expression                                {% FormPostProcessor.booleanExpression %}
+and_expression          -> not_expression | and_expression _ ("&&") _ not_expression                                         {% FormPostProcessor.and_test %}
+not_expression          -> comparison | "!" not_expression | propertyName                                              {% FormPostProcessor.not_test %}
+comparison              -> propertyName _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ propertyName              {% FormPostProcessor.comparison %}
+
 
 propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
 propertyType            -> "boolean"                                                                          {% FormPostProcessor.boolean %}
