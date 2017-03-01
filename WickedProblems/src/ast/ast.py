@@ -197,6 +197,9 @@ class Variable(Node):
         Node.__init__(self, "variable")
         self._identifier = value
 
+    def __str__(self):
+        return self._identifier
+
 class FieldType(Node):
     def __init__(self):
         Node.__init__(self, "field_type")
