@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class BoolValue : Value<bool>
+    public class BoolValue : Value<bool>
     {
         public BoolValue(bool value)
         {
@@ -36,6 +36,11 @@ namespace Questionnaires.Value
         public override IValue InequalTo(IValue value)
         {
             return InequalTo((dynamic)value);
+        }
+
+        public override IValue Bang()
+        {
+            return new BoolValue(!this.Val);
         }
 
         private IValue And(BoolValue value)

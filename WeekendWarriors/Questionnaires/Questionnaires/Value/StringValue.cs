@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class StringValue : Value<String>
+    public class StringValue : Value<String>
     {
         public StringValue(String value)
         {

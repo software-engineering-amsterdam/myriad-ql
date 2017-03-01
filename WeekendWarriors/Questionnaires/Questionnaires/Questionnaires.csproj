@@ -78,6 +78,7 @@
     <Compile Include="AST\Operators\Bang.cs" />
     <Compile Include="AST\Operators\Negative.cs" />
     <Compile Include="AST\Operators\Positive.cs" />
+    <Compile Include="ExpressionEvaluator\Evaluator.cs" />
     <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Question\Question.cs" />

@@ -38,6 +38,7 @@
     <Reference Include="Antlr4.Runtime.Standard">
       <HintPath>..\packages\Antlr4.Runtime.Standard.4.6.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
@@ -66,6 +67,9 @@
     <Compile Include="QL\SemanticAnalysis\Scoping.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticTestHarness.cs" />
     <Compile Include="QL\SemanticAnalysis\Ranges.cs" />
+    <Compile Include="QL\Value\UnitTest1.cs" />
+    <Compile Include="QL\Value\ValueCreator.cs" />
+    <Compile Include="QL\Value\ValueTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Questionnaires\Questionnaires.csproj">

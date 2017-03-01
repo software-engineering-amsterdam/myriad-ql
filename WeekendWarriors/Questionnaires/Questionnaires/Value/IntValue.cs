@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class IntValue : Value<int>
+    public class IntValue : Value<int>
     {
         public IntValue(int value)
         {

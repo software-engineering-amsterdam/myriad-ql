@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class DecimalValue : Value<decimal>
+    public class DecimalValue : Value<decimal>
     {
         public DecimalValue(decimal value)
         {

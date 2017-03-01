@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    interface IValue
+    public interface IValue
     {
         int AsInt();
         decimal AsDecimal();
         bool AsBool();
         String AsString();
 
+        // Unary operations
+        IValue Positive();
+        IValue Negative();
+        IValue Bang();
+
+        // Binary operations
         IValue Add(IValue value);
         IValue Subtract(IValue value);
         IValue Multiply(IValue value);

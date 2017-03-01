@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    class Value<T> : IValue
+    public class Value<T> : IValue
     {
         protected T Val = default(T);
 
@@ -91,6 +91,21 @@ namespace Questionnaires.Value
         }
 
         public virtual IValue InequalTo(IValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Positive()
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Negative()
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Bang()
         {
             throw new NotSupportedException();
         }
