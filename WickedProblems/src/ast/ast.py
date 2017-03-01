@@ -113,10 +113,16 @@ class BinaryOperation(Node):
         self.right_child = right_child
         return self
 
+    def __iter__(self):
+        return iter([self.left_child,self.right_child])
+
 class UnaryOperation(Node):
     def __init__(self, identifier, child):
         Node.__init__(self, identifier)
         self.right_child = child
+
+    def __iter__(self):
+        return iter([self.right_child])
 
 # Binary Operations
 class Inequality(BinaryOperation):
