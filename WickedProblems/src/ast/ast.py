@@ -202,32 +202,32 @@ class FieldType(Node):
         Node.__init__(self, "field_type")
 
 class Boolean(FieldType):
-    def __init__(self, value):
+    def __init__(self, value =  [False]):
         FieldType.__init__(self)
-        self._value = bool(value)
+        self._value = bool(value[0])
 
 class String(FieldType):
-    def __init__(self, value):
+    def __init__(self, value = [""]):
         FieldType.__init__(self)
-        self._value = str(value)
+        self._value = str(value[0])
 
 class Integer(FieldType):
-    def __init__(self, value):
+    def __init__(self, value = [0]):
         FieldType.__init__(self)
-        self._value = int(value)
+        self._value = int(value[0])
 
 class Date(FieldType):
     def __init__(self, value):
         FieldType.__init__(self)
         # TODO
-        self._value = value
+        self._value = value[0]
 
 class Decimal(FieldType):
-    def __init__(self, value):
+    def __init__(self, value = [float(0)]):
         FieldType.__init__(self)
-        self._value = float(value)
+        self._value = float(value[0])
 
 class Money(FieldType):
-    def __init__(self, value):
+    def __init__(self, value = [0]):
         FieldType.__init__(self)
-        self._value = Decimal(value).quantize(Decimal("0.00"))
+        self._value = Decimal(value[0]).quantize(Decimal("0.00"))
