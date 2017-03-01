@@ -3,7 +3,7 @@
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
 
-form                    -> "form" _ formName _ openBrace _ statement:* closedBrace                            {% FormPostProcessor.form %}
+form                    -> "form" _ formName _ "{" _ statement:* "}"                            {% FormPostProcessor.form %}
 formName                -> word
 
 statement               -> question                                                                           {% FormPostProcessor.statement %}
@@ -12,21 +12,21 @@ statement               -> question                                             
                         | ifelse_statement                                                                    {% FormPostProcessor.statement %}
                         | ifelseifelse_statement                                                              {% FormPostProcessor.statement %}
 
-question                -> "question" _ prime sentence prime _ propertyName ":" _ propertyType _              {% FormPostProcessor.question %}
+question                -> "question" _ "'" sentence "'" _ propertyName ":" _ propertyType _              {% FormPostProcessor.question %}
 
 ifelseifelse_statement  -> if_statement "else if" _ conditional if_body else_clause                           {% FormPostProcessor.ifElseIfElseStatement %}
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
 if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
-if_body                 -> _ openBrace _ statement:* closedBrace _
-conditional             -> parOpen bool_expression parClose
-else_clause             -> "else" _ openBrace _ statement:* closedBrace _
+if_body                 -> _ "{" _ statement:* "}" _
+conditional             -> "(" bool_expression ")"
+else_clause             -> "else" _ "{" _ statement:* "}" _
 
-answer                  -> "answer" _ prime sentence prime _ allocation _                                      {% FormPostProcessor.answer %}
+answer                  -> "answer" _ "'" sentence "'" _ allocation _                                      {% FormPostProcessor.answer %}
 allocation              -> propertyName ":" _ propertyType _ assignOp _ (arithmetic_expression|bool_expression)           {% FormPostProcessor.allocation %}
 
 arithmetic_expression   -> term | arithmetic_expression (min_op|plus_op) term                                             {% FormPostProcessor.expression %}
 term                    -> factor | term (divide_op | multiply_op) factor
-factor                  -> digits | propertyName | parOpen arithmetic_expression parClose
+factor                  -> digits | propertyName | "(" arithmetic_expression ")"
 digits                  -> [0-9]:+                                                                             {% (data)=> Number(data[0]) %}
 
 min_op                  -> "-"                                                                                 {% FormPostProcessor.minOp %}
@@ -43,8 +43,6 @@ not_test                -> comparison | "!" not_test | propertyName             
 comparison              -> propertyName _ comp_operator _ propertyName                                         {% FormPostProcessor.comparison %}
 comp_operator           -> "<" | ">" | ">=" | "<=" | "!=" | "=="
 
-
-
 propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
 propertyType            -> "boolean"                                                                          {% FormPostProcessor.boolean %}
                          | "string"                                                                           {% FormPostProcessor.string %}
@@ -54,13 +52,9 @@ propertyType            -> "boolean"                                            
                          | "money"                                                                            {% FormPostProcessor.money %}
 
 sentence                -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+                                     {% function(d) { return d[0].join("") } %}
-
-
 word                    -> [A-Za-z0-9]:+                                                                     {% function(d) { return d[0].join("") } %}
-prime                   -> "'"
-openBrace               -> "{"
-closedBrace             -> "}"
-parOpen                 -> "("
-parClose                -> ")"
+
+
+
 
 

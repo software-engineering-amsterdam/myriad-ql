@@ -1,6 +1,8 @@
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
-import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; var FormPostProcessor = new FP();
+import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; 
+var FormPostProcessor = new FP();
+
 (function () {
 function id(x) {return x[0]; }
 
@@ -20,8 +22,7 @@ function $(o) {
         return ret;
     };
 }
-
- var grammar = {
+var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["wschar", "_$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
@@ -146,7 +147,7 @@ function $(o) {
     {"name": "form$string$1", "symbols": [{"literal":"f"}, {"literal":"o"}, {"literal":"r"}, {"literal":"m"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "form$ebnf$1", "symbols": []},
     {"name": "form$ebnf$1", "symbols": ["statement", "form$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "form", "symbols": ["form$string$1", "_", "formName", "_", "openBrace", "_", "form$ebnf$1", "closedBrace"], "postprocess": FormPostProcessor.form},
+    {"name": "form", "symbols": ["form$string$1", "_", "formName", "_", {"literal":"{"}, "_", "form$ebnf$1", {"literal":"}"}], "postprocess": FormPostProcessor.form},
     {"name": "formName", "symbols": ["word"]},
     {"name": "statement", "symbols": ["question"], "postprocess": FormPostProcessor.statement},
     {"name": "statement", "symbols": ["answer"], "postprocess": FormPostProcessor.statement},
@@ -154,7 +155,7 @@ function $(o) {
     {"name": "statement", "symbols": ["ifelse_statement"], "postprocess": FormPostProcessor.statement},
     {"name": "statement", "symbols": ["ifelseifelse_statement"], "postprocess": FormPostProcessor.statement},
     {"name": "question$string$1", "symbols": [{"literal":"q"}, {"literal":"u"}, {"literal":"e"}, {"literal":"s"}, {"literal":"t"}, {"literal":"i"}, {"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "question", "symbols": ["question$string$1", "_", "prime", "sentence", "prime", "_", "propertyName", {"literal":":"}, "_", "propertyType", "_"], "postprocess": FormPostProcessor.question},
+    {"name": "question", "symbols": ["question$string$1", "_", {"literal":"'"}, "sentence", {"literal":"'"}, "_", "propertyName", {"literal":":"}, "_", "propertyType", "_"], "postprocess": FormPostProcessor.question},
     {"name": "ifelseifelse_statement$string$1", "symbols": [{"literal":"e"}, {"literal":"l"}, {"literal":"s"}, {"literal":"e"}, {"literal":" "}, {"literal":"i"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "ifelseifelse_statement", "symbols": ["if_statement", "ifelseifelse_statement$string$1", "_", "conditional", "if_body", "else_clause"], "postprocess": FormPostProcessor.ifElseIfElseStatement},
     {"name": "ifelse_statement", "symbols": ["if_statement", "else_clause"], "postprocess": FormPostProcessor.ifElseStatement},
@@ -162,14 +163,14 @@ function $(o) {
     {"name": "if_statement", "symbols": ["if_statement$string$1", "_", "conditional", "if_body"], "postprocess": FormPostProcessor.ifStatement},
     {"name": "if_body$ebnf$1", "symbols": []},
     {"name": "if_body$ebnf$1", "symbols": ["statement", "if_body$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "if_body", "symbols": ["_", "openBrace", "_", "if_body$ebnf$1", "closedBrace", "_"]},
-    {"name": "conditional", "symbols": ["parOpen", "bool_expression", "parClose"]},
+    {"name": "if_body", "symbols": ["_", {"literal":"{"}, "_", "if_body$ebnf$1", {"literal":"}"}, "_"]},
+    {"name": "conditional", "symbols": [{"literal":"("}, "bool_expression", {"literal":")"}]},
     {"name": "else_clause$string$1", "symbols": [{"literal":"e"}, {"literal":"l"}, {"literal":"s"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "else_clause$ebnf$1", "symbols": []},
     {"name": "else_clause$ebnf$1", "symbols": ["statement", "else_clause$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "else_clause", "symbols": ["else_clause$string$1", "_", "openBrace", "_", "else_clause$ebnf$1", "closedBrace", "_"]},
+    {"name": "else_clause", "symbols": ["else_clause$string$1", "_", {"literal":"{"}, "_", "else_clause$ebnf$1", {"literal":"}"}, "_"]},
     {"name": "answer$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"s"}, {"literal":"w"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "answer", "symbols": ["answer$string$1", "_", "prime", "sentence", "prime", "_", "allocation", "_"], "postprocess": FormPostProcessor.answer},
+    {"name": "answer", "symbols": ["answer$string$1", "_", {"literal":"'"}, "sentence", {"literal":"'"}, "_", "allocation", "_"], "postprocess": FormPostProcessor.answer},
     {"name": "allocation$subexpression$1", "symbols": ["arithmetic_expression"]},
     {"name": "allocation$subexpression$1", "symbols": ["bool_expression"]},
     {"name": "allocation", "symbols": ["propertyName", {"literal":":"}, "_", "propertyType", "_", "assignOp", "_", "allocation$subexpression$1"], "postprocess": FormPostProcessor.allocation},
@@ -183,7 +184,7 @@ function $(o) {
     {"name": "term", "symbols": ["term", "term$subexpression$1", "factor"]},
     {"name": "factor", "symbols": ["digits"]},
     {"name": "factor", "symbols": ["propertyName"]},
-    {"name": "factor", "symbols": ["parOpen", "arithmetic_expression", "parClose"]},
+    {"name": "factor", "symbols": [{"literal":"("}, "arithmetic_expression", {"literal":")"}]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/, "digits$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": (data)=> Number(data[0])},
@@ -236,12 +237,7 @@ function $(o) {
     {"name": "sentence", "symbols": ["sentence$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
     {"name": "word$ebnf$1", "symbols": [/[A-Za-z0-9]/]},
     {"name": "word$ebnf$1", "symbols": [/[A-Za-z0-9]/, "word$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "word", "symbols": ["word$ebnf$1"], "postprocess": function(d) { return d[0].join("") }},
-    {"name": "prime", "symbols": [{"literal":"'"}]},
-    {"name": "openBrace", "symbols": [{"literal":"{"}]},
-    {"name": "closedBrace", "symbols": [{"literal":"}"}]},
-    {"name": "parOpen", "symbols": [{"literal":"("}]},
-    {"name": "parClose", "symbols": [{"literal":")"}]}
+    {"name": "word", "symbols": ["word$ebnf$1"], "postprocess": function(d) { return d[0].join("") }}
 ]
   , ParserStart: "form"
 }
