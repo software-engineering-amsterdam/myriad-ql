@@ -145,8 +145,6 @@ class Substraction(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "substraction", left_child, right_child)
 
-    __call__ = __init__
-
 class Division(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "division", left_child, right_child)
