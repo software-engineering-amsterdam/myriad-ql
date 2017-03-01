@@ -1,3 +1,4 @@
+from decimal import Decimal
 '''
 1.  If the current token is a '(', add a new node as the left child of the
     current node, and descend to the left child.
@@ -201,25 +202,32 @@ class FieldType(Node):
         Node.__init__(self, "field_type")
 
 class Boolean(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        self._value = bool(value)
 
 class String(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        self._value = str(value)
 
 class Integer(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        self._value = int(value)
 
 class Date(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        # TODO
+        self._value = value
 
 class Decimal(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        self._value = float(value)
 
 class Money(FieldType):
-    def __init__(self):
+    def __init__(self, value):
         FieldType.__init__(self)
+        self._value = Decimal(value).quantize(Decimal("0.00"))
