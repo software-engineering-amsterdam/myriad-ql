@@ -18,7 +18,6 @@ questionText
     : STRING_LITERAL
     ;
 
-// TODO find better name
 value
     :   '=' expression
     ;

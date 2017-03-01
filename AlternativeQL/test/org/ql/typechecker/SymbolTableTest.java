@@ -1,9 +1,9 @@
-package org.ql.typechecker.expression;
+package org.ql.typechecker;
 
 import org.junit.Test;
 import org.ql.ast.Identifier;
 import org.ql.ast.type.StringType;
-import org.ql.symbol_table.SymbolTable;
+import org.ql.typechecker.SymbolTable;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;

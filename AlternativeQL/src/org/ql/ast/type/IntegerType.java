@@ -6,7 +6,13 @@ public class IntegerType extends NumberType {
         return "integer";
     }
 
-    public boolean equals(Type type) {
-        return this.toString().equals(type.toString());
+    @Override
+    public boolean isCompatibleWith(Type type) {
+        return type.isCompatibleWith(this);
+    }
+
+    @Override
+    public boolean isCompatibleWith(IntegerType type) {
+        return true;
     }
 }

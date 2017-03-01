@@ -21,6 +21,6 @@ public class GUIHandler extends Application {
         primaryStage.show();
         MainStage mainStage = new MainStage(primaryStage);
         GUIVisitor guiVisitor = new GUIVisitor(mainStage);
-        guiVisitor.visit(form);
+        guiVisitor.visit(form, null);
     }
 }

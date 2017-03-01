@@ -1,19 +1,19 @@
-package org.ql.typechecker.expression;
+package org.ql.typechecker.error;
 
 import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 
-public class TypeMismatchException extends TypeError {
+public class TypeMismatch implements TypeError {
     private final Type expected;
     private final Type actual;
 
-    public TypeMismatchException(Type expected, Type actual) {
+    public TypeMismatch(Type expected, Type actual) {
         this.expected = expected;
         this.actual = actual;
     }
 
     @Override
-    public Node getNode() {
+    public Type getNode() {
         return actual;
     }
 

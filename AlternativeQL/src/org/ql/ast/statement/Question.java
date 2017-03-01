@@ -31,7 +31,7 @@ public class Question extends Statement {
         return type;
     }
 
-    public Expression getDefaultValue() {
+    public Expression getValue() {
         return defaultValue;
     }
 

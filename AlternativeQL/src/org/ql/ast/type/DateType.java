@@ -7,12 +7,18 @@ public class DateType extends Type {
         return "date";
     }
 
-    public boolean equals(Type type) {
-        return this.toString().equals(type.toString());
+    @Override
+    public boolean isDate() {
+        return true;
     }
 
     @Override
-    public boolean isDate() {
+    public boolean isCompatibleWith(Type type) {
+        return type.isCompatibleWith(this);
+    }
+
+    @Override
+    public boolean isCompatibleWith(DateType type) {
         return true;
     }
 }

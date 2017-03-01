@@ -9,7 +9,7 @@ import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 
-public class GUIVisitor implements FormVisitor<Pane>, StatementVisitor<Pane> {
+public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Pane, Void> {
 
     private MainStage mainStage;
 
@@ -18,12 +18,12 @@ public class GUIVisitor implements FormVisitor<Pane>, StatementVisitor<Pane> {
     }
 
     @Override
-    public Pane visit(Form form) {
+    public Pane visit(Form form, Void ignore) {
         System.out.println(form.getName().toString());
         mainStage.getStage().setTitle(form.getName().toString());
 
         for (Statement statement : form.getStatements()) {
-            Pane pane = statement.accept(this);
+            Pane pane = statement.accept(this, null);
             mainStage.addPaneToScene(pane);
         }
 
@@ -31,17 +31,17 @@ public class GUIVisitor implements FormVisitor<Pane>, StatementVisitor<Pane> {
     }
 
     @Override
-    public Pane visit(IfThen ifThen) {
+    public Pane visit(IfThen ifThen, Void ignore) {
         return null;
     }
 
     @Override
-    public Pane visit(IfThenElse ifThenElse) {
+    public Pane visit(IfThenElse ifThenElse, Void ignore) {
         return null;
     }
 
     @Override
-    public Pane visit(Question question) {
+    public Pane visit(Question question, Void ignore) {
         return null;
     }
 }

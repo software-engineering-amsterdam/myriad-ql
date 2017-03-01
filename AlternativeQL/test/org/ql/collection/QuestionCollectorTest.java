@@ -1,4 +1,4 @@
-package org.ql.typechecker.statement;
+package org.ql.collection;
 
 import org.junit.Test;
 import org.ql.ast.Expression;
@@ -9,8 +9,6 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
-import org.ql.collection.collector.FormQuestionCollector;
-import org.ql.collection.QuestionCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
-public class FormQuestionCollectorTest {
+public class QuestionCollectorTest {
     @Test
     public void shouldCollectQuestionsFromForm() {
         List<Statement> statements = new ArrayList<>();
@@ -31,9 +29,8 @@ public class FormQuestionCollectorTest {
         thenStatements.add(thirdQuestion);
         statements.add(new IfThen(mock(Expression.class), thenStatements));
         Form form = new Form(mock(Identifier.class), statements);
-        org.ql.collection.collector.QuestionCollector collector = new FormQuestionCollector(new QuestionCollector());
 
-        List<Question> actualQuestionList = collector.collect(form);
+        List<Question> actualQuestionList = QuestionCollector.collect(form);
 
         assertSame(firstQuestion, actualQuestionList.get(0));
         assertSame(secondQuestion, actualQuestionList.get(1));

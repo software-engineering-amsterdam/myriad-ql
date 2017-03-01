@@ -7,7 +7,18 @@ public class FloatType extends NumberType {
         return "float";
     }
 
-    public boolean equals(Type type) {
-        return this.toString().equals(type.toString());
+    @Override
+    public boolean isCompatibleWith(Type type) {
+        return type.isCompatibleWith(this);
+    }
+
+    @Override
+    public boolean isCompatibleWith(FloatType type) {
+        return true;
+    }
+
+    @Override
+    public boolean isCompatibleWith(MoneyType type) {
+        return true;
     }
 }

@@ -2,12 +2,6 @@
 
 - StatementVisitor<LIst<Question>> = also no need to make it generic. It just gives back the questions. THe interface implies that there are multiple implementations of different sutff.
 
-THe FormQuestionCollector can be merged with the QuestionVisitor.
-
-- QUestionVisior should be renamed to QuestionCollector.
-
 - get rid of the proxy, just use hte visit name
-
-- TypeChecker visitor (ITypeChecker)
 
 - assoc=left division is currently stronger than *. need to make it equally

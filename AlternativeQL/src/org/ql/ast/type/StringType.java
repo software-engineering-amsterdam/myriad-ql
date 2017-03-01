@@ -14,4 +14,14 @@ public class StringType extends Type {
     public boolean isString() {
         return true;
     }
+
+    @Override
+    public boolean isCompatibleWith(Type type) {
+        return type.isCompatibleWith(this);
+    }
+
+    @Override
+    public boolean isCompatibleWith(StringType type) {
+        return true;
+    }
 }

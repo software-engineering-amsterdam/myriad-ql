@@ -17,7 +17,6 @@ public class DecimalLiteral extends Expression {
         return value.toPlainString();
     }
 
-    // TODO specific AST visitor exception OR skip (rely on RuntimeException)
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);

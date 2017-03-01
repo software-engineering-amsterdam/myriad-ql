@@ -5,8 +5,4 @@ public class MoneyType extends FloatType {
     public String toString() {
         return "money";
     }
-
-    public boolean equals(Type type) {
-        return this.toString().equals(type.toString());
-    }
 }

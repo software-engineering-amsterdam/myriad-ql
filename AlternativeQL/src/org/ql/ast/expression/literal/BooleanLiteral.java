@@ -18,4 +18,9 @@ public class BooleanLiteral extends Expression {
     public boolean getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

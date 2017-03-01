@@ -1,6 +1,5 @@
 package org.ql.ast.type;
 
-// TODO compatible (without
 public class BooleanType extends Type {
 
     @Override
@@ -8,12 +7,18 @@ public class BooleanType extends Type {
         return "boolean";
     }
 
-    public boolean equals(Type type) {
-        return this.toString().equals(type.toString());
+    @Override
+    public boolean isBoolean() {
+        return true;
     }
 
     @Override
-    public boolean isBoolean() {
+    public boolean isCompatibleWith(Type type) {
+        return type.isCompatibleWith(this);
+    }
+
+    @Override
+    public boolean isCompatibleWith(BooleanType type) {
         return true;
     }
 }

@@ -1,6 +1,5 @@
 package org.ql.ast;
 
-// TODO better name (like src location?? )
 public class SourceLocation {
     private int line;
     private int column;

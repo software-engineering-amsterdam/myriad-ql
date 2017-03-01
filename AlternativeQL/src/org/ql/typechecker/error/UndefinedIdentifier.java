@@ -1,18 +1,18 @@
-package org.ql.typechecker.expression;
+package org.ql.typechecker.error;
 
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
 
-public class UndefinedIdentifierException extends TypeError {
+public class UndefinedIdentifier implements TypeError {
     private final Identifier identifier;
 
-    public UndefinedIdentifierException(Identifier identifier) {
+    public UndefinedIdentifier(Identifier identifier) {
         this.identifier = identifier;
     }
 
     @Override
-    public Node getNode() {
+    public Identifier getNode() {
         return identifier;
     }
 

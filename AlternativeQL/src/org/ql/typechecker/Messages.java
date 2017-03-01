@@ -2,7 +2,7 @@ package org.ql.typechecker;
 
 import org.ql.ast.Node;
 import org.ql.ast.SourceLocation;
-import org.ql.typechecker.expression.TypeError;
+import org.ql.typechecker.error.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;

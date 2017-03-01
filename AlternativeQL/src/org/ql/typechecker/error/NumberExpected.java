@@ -1,17 +1,16 @@
-package org.ql.typechecker.expression;
+package org.ql.typechecker.error;
 
-import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 
-public class NumberExpectedException extends TypeError {
+public class NumberExpected implements TypeError {
     private final Type innerExpressionType;
 
-    public NumberExpectedException(Type innerExpressionType) {
+    public NumberExpected(Type innerExpressionType) {
         this.innerExpressionType = innerExpressionType;
     }
 
     @Override
-    public Node getNode() {
+    public Type getNode() {
         return innerExpressionType;
     }
 
