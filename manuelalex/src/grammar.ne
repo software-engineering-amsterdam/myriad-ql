@@ -20,18 +20,18 @@ conditional             -> "(" or_expression ")"
 else_clause             -> "else" _ "{" _ statement:* "}" _
 
 answer                  -> "answer" _ "'" sentence "'" _ allocation _                                         {% FormPostProcessor.answer %}
-allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}
-
-expression              -> term | expression ("-"|"+") term                                             {% FormPostProcessor.expression %}
-term                    -> factor | term ("/" | "*") factor
-factor                  -> digits | propertyName | "(" expression ")"
-digits                  -> [0-9]:+                                                                             {% (data)=> Number(data[0]) %}
+allocation              -> propertyName ":" _ propertyType _ "=" _ (or_expression)                               {% FormPostProcessor.allocation %}
 
 
-or_expression           -> and_expression | or_expression _ ("||") _ and_expression                                {% FormPostProcessor.booleanExpression %}
-and_expression          -> not_expression | and_expression _ ("&&") _ not_expression                                         {% FormPostProcessor.and_test %}
-not_expression          -> comparison | "!" not_expression | propertyName                                              {% FormPostProcessor.not_test %}
-comparison              -> propertyName _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ propertyName              {% FormPostProcessor.comparison %}
+or_expression               -> and_expression | or_expression _ ("||") _ and_expression                                                          {% FormPostProcessor.booleanExpression %}
+and_expression              -> not_expression | and_expression _ ("&&") _ not_expression                                                         {% FormPostProcessor.and_test %}
+not_expression              -> comparison | "!" not_expression | propertyName                                                                    {% FormPostProcessor.not_test %}
+comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ plus_minus_expression              {% FormPostProcessor.comparison %}
+plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") multiply_divide_expression                           {% FormPostProcessor.expression %}
+multiply_divide_expression  -> factor | multiply_divide_expression ("/" | "*") factor
+factor                      -> digits | propertyName | "(" or_expression ")"
+digits                      -> [0-9]:+                                                                                                           {% (data)=> Number(data[0]) %}
+
 
 
 propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
