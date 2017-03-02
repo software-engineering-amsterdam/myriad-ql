@@ -12,23 +12,49 @@ identifier.addCondition(lambda tokens: tokens[0] not in "stylesheet page "
 datatype = oneOf("boolean string integer decimal")
 datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
-widgettype = Literal("spinbox") ^ Literal("checkbox") ^ Literal("radio") ^ Literal("entry")
 
-# TODO: implement non-default values for radio, drop_down and slider
-# wrap constructor in lambda function to pass parameters to GUI
-widget_checkbox = Literal("checkbox").setParseAction(lambda _: CheckBoxWidget)
-widget_spinbox = Literal("spinbox").setParseAction(lambda _: SpinBoxWidget)
-widget_radio = Literal("radio").setParseAction(lambda _: RadioWidget)
-widget_entry = Literal("text").setParseAction(lambda _: EntryWidget)
-widget_drop_down = Literal("dropdown").setParseAction(lambda _: DropDownWidget)
-widget_slider = Literal("slider").setParseAction(lambda _: SliderWidget)
+integer = Regex("-?[0-9]+").addParseAction(lambda tokens: int(tokens[0]))
 
-widget = Suppress("widget") + widgettype
+integer_arguments = Suppress("(") + integer + Suppress(",") + \
+                    integer + Suppress(")")
+
+string_arguments = Suppress("(") + QuotedString("\"") + Suppress(",") +\
+            QuotedString("\"") + Suppress(")")
+
+
+widget_entry = Suppress("text").setParseAction(
+    lambda _: EntryWidget)
+
+widget_checkbox = Suppress("checkbox").setParseAction(
+    lambda _: CheckBoxWidget)
+
+widget_spinbox = Suppress("spinbox") + Optional(integer_arguments)
+widget_spinbox.setParseAction(
+    lambda _: SpinBoxWidget)
+
+widget_slider = Suppress("slider") + Optional(integer_arguments)
+widget_slider.setParseAction(
+    lambda tokens: lambda question: SliderWidget(question, *tokens))
+
+widget_radio = Suppress("radio") + Optional(string_arguments)
+widget_radio.setParseAction(
+    lambda tokens: lambda question: RadioWidget(question, *tokens))
+
+widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
+widget_drop_down.setParseAction(
+    lambda tokens: lambda question: DropDownWidget(question, *tokens))
+
+
+widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_entry ^\
+              widget_drop_down ^ widget_slider
+
+widget = Suppress("widget") + widget_type
 
 name = oneOf("width height font color fontsize fontcolor")
 
 hexadecimal = Regex("#[0-9a-f]{6}")
-literal = pyparsing_common.integer ^ pyparsing_common.real ^ QuotedString("\"") ^ hexadecimal
+literal = pyparsing_common.integer ^ pyparsing_common.real ^\
+          QuotedString("\"") ^ hexadecimal
 
 attribute = widget ^ (name + Suppress(":") + literal)
 
@@ -44,7 +70,8 @@ default = Suppress("default") + datatype + styling
 
 sectionbody = Forward()
 
-section = Suppress("section") + QuotedString("\"") + Suppress("{") + sectionbody + Suppress("}")
+section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
+          sectionbody + Suppress("}")
 section.setParseAction(lambda tokens: Section(*tokens))
 
 sectionbody <<= ZeroOrMore(section ^ question ^ default)
@@ -58,5 +85,57 @@ page.setParseAction(lambda tokens: Page(*tokens))
 
 stylebody = ZeroOrMore(page ^ default)
 stylebody.setParseAction(lambda tokens: [tokens.asList()])
-stylesheet = Suppress("stylesheet") + identifier + Suppress("{") + stylebody + Suppress("}")
+stylesheet = Suppress("stylesheet") + identifier + Suppress("{") + stylebody +\
+             Suppress("}")
 stylesheet.setParseAction(lambda tokens: StyleSheet(*tokens))
+
+
+def parse_file(filename):
+    return stylesheet.parseFile(filename)[0]
+
+
+def parse_string(string):
+    return stylesheet.parseString(string, parseAll=True)[0]
+
+
+if __name__ == "__main__":
+    parse_file("../examplestylesheet")
+    # print(parse_string("""
+    # stylesheet x {
+    #     page y {
+    #         section "1" {
+    #             question ques
+    #                 widget spinbox(0, 100)
+    #         }
+    #         section "2" {
+    #             question quess
+    #                 widget checkbox
+    #             section "22" {
+    #                 question quesinsec
+    #                     widget dropdown("a", "b")
+    #             }
+    #         }
+    #     }
+    #
+    #     page z {
+    #         section "Selling" {
+    #             question hasSoldHouse
+    #                 widget radio("Yes", "No")
+    #             section "You sold a house" {
+    #                 question sellingPrice
+    #                 widget spinbox(0, 10)
+    #                 question privateDebt
+    #                 widget spinbox(0, 10)
+    #                 question valueResidue
+    #                 default integer {
+    #                     width: 400
+    #                     font: "Arial"
+    #                     fontsize: 14
+    #                     color: #999999
+    #                     widget spinbox
+    #                 }
+    #             }
+    #         }
+    #     }
+    # }
+    # """))

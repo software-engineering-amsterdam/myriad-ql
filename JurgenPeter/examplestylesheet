@@ -1,10 +1,12 @@
 stylesheet taxOfficeExample {
   page Housing {
-    section "Buying"
+    section "Buying" {
       question hasBoughtHouse
         widget checkbox
-    section "Loaning"
+    }
+    section "Loaning" {
       question hasMaintLoan
+    }
   }
 
   page Selling {
@@ -17,7 +19,7 @@ stylesheet taxOfficeExample {
         question privateDebt
           widget spinbox
         question valueResidue
-        default money {
+        default integer {
           width: 400
           font: "Arial"
           fontsize: 14
