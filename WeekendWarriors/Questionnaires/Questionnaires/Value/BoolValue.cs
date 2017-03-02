@@ -43,22 +43,46 @@ namespace Questionnaires.Value
             return new BoolValue(!this.Val);
         }
 
-        private IValue And(BoolValue value)
+        public override IValue And(BoolValue value)
         {
             return new BoolValue(this.Val && value.GetValue());
         }
+        public override IValue And(StringValue value)
+        {
+            return base.And(value);
+        }
+        public override IValue And(IntValue value)
+        {
+            return base.And(value);
+        }
+        public override IValue And(DecimalValue value)
+        {
+            return base.And(value);
+        }
 
-        private IValue Or(BoolValue value)
+        public override IValue Or(BoolValue value)
         {
             return new BoolValue(this.Val || value.GetValue());
         }
+        public override IValue Or(StringValue value)
+        {
+            return base.Or(value);
+        }
+        public override IValue Or(IntValue value)
+        {
+            return base.And(value);
+        }
+        public override IValue Or(DecimalValue value)
+        {
+            return base.And(value);
+        }
 
-        private IValue EqualTo(BoolValue value)
+        public override IValue EqualTo(BoolValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        private IValue InequalTo(BoolValue value)
+        public override IValue InequalTo(BoolValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }

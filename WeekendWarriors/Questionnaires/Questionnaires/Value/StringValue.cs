@@ -28,12 +28,12 @@ namespace Questionnaires.Value
             return InequalTo((dynamic)value);
         }
 
-        public IValue EqualTo(StringValue value)
+        public override IValue EqualTo(StringValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        public IValue InequalTo(StringValue value)
+        public override IValue InequalTo(StringValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }
