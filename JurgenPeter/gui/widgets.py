@@ -48,6 +48,8 @@ class EntryWidget(Widget):
     def get_value(self):
         return self.app.getEntry(self.entry_id)
 
+    def set_properties(self, properties):
+        self.app.getEntryWidget(self.entry_id).config(**properties)
 
 class IntegerEntryWidget(EntryWidget):
 
