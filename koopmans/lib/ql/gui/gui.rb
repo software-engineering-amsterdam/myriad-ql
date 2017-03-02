@@ -5,13 +5,14 @@ module QL
     class GUI
       attr_accessor :questions
 
-      def initialize(ast, type_checker)
+      def initialize(ql_ast, qls_ast, type_checker)
         return if check(type_checker) == 'quit'
         @questions = Hash.new
-        Builder.new(ast, self)
+        FormBuilder.new(ql_ast, self)
+        StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        create_submit_button
-        Tk.mainloop
+        # create_submit_button
+        # Tk.mainloop
       end
 
       def value_changed

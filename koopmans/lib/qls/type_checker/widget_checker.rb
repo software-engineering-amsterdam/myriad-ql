@@ -10,11 +10,14 @@ module QLS
         @ql_types   = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
         qls_widgets = stylesheet.pages.map { |page| page.accept(self) }.flatten.compact
 
+        pp qls_widgets
+
+        #TODO cleanup
         errors = []
         qls_widgets.each do |widget_hash|
           widget_hash.each do |type, widget_object|
             type = 'undefined' unless type
-            errors.push("[ERROR] #{widget_object.first.class} can not be used with #{type}") unless widget_object.first.accept_types.include?(type)
+            errors.push("[ERROR] #{widget_object.class} can not be used with #{type}") unless widget_object.accept_types.include?(type)
           end
         end
         errors.uniq
@@ -29,11 +32,11 @@ module QLS
       end
 
       def visit_question(question)
-        { @ql_types[question.variable.name] => Array(question.properties).map { |property| property.accept(self) }.compact } if question.properties
+        { @ql_types[question.variable.name] => question.properties[:widget] } if question.properties
       end
 
       def visit_default(default)
-        { default.type => Array(default.properties).map { |property| property.accept(self) }.compact } if default.properties
+        { default.type => default.properties[:widget] } if default.properties
       end
 
       def visit_widget(widget)

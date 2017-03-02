@@ -31,11 +31,9 @@ module QLS
       def stylesheet_ast
         question  = Question.new(Variable.new('hasSoldHouse'), [SliderWidget.new(0, 10)])
         question2 = Question.new(Variable.new('valueResidue'), [CheckboxWidget.new])
+        page = Page.new('_', [Section.new('_', [question, question2, question2])])
 
-        section = Section.new('_', [question, question2, question2])
-        page = Page.new('_', [section])
-
-        StyleSheet.new('_', [page])
+        Stylesheet.new('_', [page])
       end
 
       # example ast for form
