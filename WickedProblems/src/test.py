@@ -8,9 +8,14 @@ if __name__ == '__main__':
     # eval_test = 'if (hasSoldHouse || (!hasSoldHouse && hasBoughtHouse)) { "What was the selling price?" sellingPrice: money "Private debts for the sold house:" privateDebt: money "Value residue:" valueResidue: money = (sellingPrice - privateDebt) }'
     # __parsed = QL.conditional.parseString(eval_test)
     # print(__parsed)
-    eval_test = '(hasSoldHouse || hasBoughtHouse)'
-    __parsed = QL.boolean_expression.parseString(eval_test)[0]
+    # eval_test = '(hasSoldHouse || hasBoughtHouse)'
+    # __parsed = QL.boolean_expression.parseString(eval_test)[0]
+    # print(__parsed.right_child)
+    # print(__parsed.right_child.right_child)
+    # print(__parsed.right_child.right_child.left_child)
+    # print(__parsed.right_child.right_child.right_child)
+    eval_test = '(sellingPrice - privateDebt)'
+    __parsed = QL.arithmic_expression.parseString(eval_test)[0]
+    print(__parsed.eval())
+    print(__parsed.left_child)
     print(__parsed.right_child)
-    print(__parsed.right_child.right_child)
-    print(__parsed.right_child.right_child.left_child)
-    print(__parsed.right_child.right_child.right_child)

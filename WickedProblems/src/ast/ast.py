@@ -164,7 +164,10 @@ class Variable(Node):
     def __init__(self, identifier):
         Node.__init__(self, "variable")
         self._identifier = identifier
-        self._value = Undefined
+        self._value = Undefined()
+
+    def eval(self):
+        return self._value
 
     def __add__(self, other):
         return self._value + other._value

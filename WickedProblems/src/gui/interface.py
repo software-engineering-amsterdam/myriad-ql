@@ -39,7 +39,7 @@ class Interface(Frame):
     def print_current_variables(self):
         __ret = ""
         for k,v in self.__variables.items():
-            print(k + ":" + str(v.get()))
+            print(str(k) + ":" + str(v.get()))
 
     def refresh(self):
         for widget in self.__root.winfo_children():
@@ -63,32 +63,32 @@ class Interface(Frame):
     def construct_from_node(self,node):
         # Get possible displayables
         if(isinstance(node,Question)):
-            if(node._field_type == Boolean):
-                if not self.variable_is_defined(node._identifier):
-                    self.__variables[node._identifier] = IntVar()
-                drawable = DrawableBoolean()
+            if(isinstance(node._field_type,Boolean)):
+                if not self.variable_is_defined(node._identifier._identifier):
+                    self.__variables[node._identifier._identifier] = IntVar()
+                drawable = DrawableBoolean(node._identifier)
                 drawable.draw(self.__root,
-                              self.__variables[node._identifier],
-                              node._text,
+                              self.__variables[node._identifier._identifier],
+                              node._text._value,
                               self.get_new_row(),
                               self.refresh)
-                print(drawable)
-            elif(node._field_type == "string"):
-                if not self.variable_is_defined(node.get_identifier()):
-                    self.__variables[node.get_identifier()] = StringVar()
+                # print(drawable)
+            elif(node._field_type == String):
+                if not self.variable_is_defined(node._identifier):
+                    self.__variables[node._identifier] = StringVar()
                 item = Entry(self.__root,
                              textvariable=self.__variables[
-                                 node.get_identifier()
+                                 node._identifier
                                  ]).grid(row=self.get_new_row(),
                                          columnspan=2,
                                          sticky=W)
-            elif(node._field_type == "integer"):
+            elif(node._field_type == Integer):
                 return
-            elif(node._field_type == "data"):
+            elif(node._field_type == Date):
                 return
-            elif(node._field_type == "decimal"):
+            elif(node._field_type == Decimal):
                 return
-            elif(node._field_type == "money"):
+            elif(node._field_type == Money):
                 # TODO: Improve Money Input Check
                 if not self.variable_is_defined(node.get_identifier()):
                     self.__variables[node.get_identifier()] = StringVar()
@@ -103,25 +103,23 @@ class Interface(Frame):
                 item.bind('<Leave>', (lambda _: self.refresh()))
                 label.grid(row=_row, column=0, sticky=W)
                 item.grid(row=_row, column=1, sticky=W)
-            elif(node._field_type == "currency"):
+            elif(node._field_type == Currency):
                 return
             else:
                 return
-        # elif(node.__class__ == Conditional):
-        #     # evaluate condition
-        #     # print(QL.match_evaluation.parseString(node._evaluation))
-        #     # print(node._evaluation)
-        #     # TODO: parse the evaluation [LINE BELOW IS TEMPORARY]
-        #     _var = QL.evaluation_unquoted.parseString(node._evaluation)[0]
-        #     # print(_var)
-        #     # print(self.__variables[_var].get())
-        #     # when evaluated as TRUE
-        #     if(self.__variables[_var].get() == 1):
-        #         # recursive
-        #         for child in node.get_children():
-        #             # print(child.__class__.__name__)
-        #             self.construct_from_node(child[0])
-        elif(node.__class__ == Statement):
+        elif(isinstance(node,Conditional)):
+            # print(node)
+            # evaluate condition
+            evaluation = node._evaluation
+            node.evaluate()
+            # print(evaluation.right_child.right_child._identifier)
+            return
+            if(self.__variables[_var].get() == 1):
+                # recursive
+                for child in node.get_children():
+                    # print(child.__class__.__name__)
+                    self.construct_from_node(child[0])
+        elif(isinstance(node,Statement)):
             # statement node
             Label(self.__root, text=node._text).grid(row=self.get_new_row(),
                                                      columnspan=2,
@@ -155,7 +153,7 @@ class Interface(Frame):
 
     def build_interface(self):
         # Title (based on identifier of root node)
-        self.__root.title(self.__ast._identifier)
+        self.__root.title(self.__ast._identifier._identifier)
 
         # construct widgets (frame content)
         self.construct_interface()

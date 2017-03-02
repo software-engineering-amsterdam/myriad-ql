@@ -4,6 +4,9 @@ class FieldType(Node):
     def __init__(self):
         Node.__init__(self, "field_type")
 
+    def eval(self):
+        return self._value
+
 class Boolean(FieldType):
     def __init__(self, identifier, value = [False]):
         FieldType.__init__(self)
@@ -13,6 +16,10 @@ class String(FieldType):
     def __init__(self, identifier, value = [""]):
         FieldType.__init__(self)
         self._value = str(value[0])
+
+    def __call__(self, identifier, value):
+        self._identifier = identifier
+        self.value = value
 
 class Integer(FieldType):
     def __init__(self, identifier, value = [0]):
