@@ -13,6 +13,28 @@ class Widget:
     def set_listener(self, listener):
         pass
 
+    def get_tkinter_label(self):
+        return self.app.getLabelWidget(self.label_id)
+
+    def set_font_familiy(self, family):
+        self.get_tkinter_widget().config(font="-family {}".format(family))
+        self.get_tkinter_label().config(font="-family {}".format(family))
+
+    def set_font_size(self, size):
+        self.get_tkinter_widget().config(font="-size {}".format(size))
+        self.get_tkinter_label().config(font="-size {}".format(size))
+
+    def set_font_weight(self, weight):
+        self.get_tkinter_widget().config(font="-weight {}".format(weight))
+        self.get_tkinter_label().config(font="-weight {}".format(weight))
+
+    def set_color(self, color):
+        self.get_tkinter_widget().config(fg=color)
+        self.get_tkinter_label().config(fg=color)
+
+    def set_width(self, width):
+        self.app.setLabelWidth(self.label_id, width)
+
 
 class EntryWidget(Widget):
 
@@ -48,8 +70,9 @@ class EntryWidget(Widget):
     def get_value(self):
         return self.app.getEntry(self.entry_id)
 
-    def set_properties(self, properties):
-        self.app.getEntryWidget(self.entry_id).config(**properties)
+    def get_tkinter_widget(self):
+        return self.app.getEntryWidget(self.entry_id)
+
 
 class IntegerEntryWidget(EntryWidget):
 
@@ -87,7 +110,7 @@ class CheckBoxWidget(Widget):
         super().__init__(app, question)
         self.app.addLabel(self.label_id, question.label)
         self.app.addCheckBox(self.entry_id)
-        self.app.getCheckBoxWidget(self.entry_id).config(text="")
+        self.get_tkinter_widget().config(text="")
 
     def set_listener(self, listener):
         self.app.setCheckBoxFunction(self.entry_id, listener)
@@ -108,6 +131,9 @@ class CheckBoxWidget(Widget):
 
     def get_value(self):
         return self.app.getCheckBox(self.entry_id)
+
+    def get_tkinter_widget(self):
+        return self.app.getCheckBoxWidget(self.entry_id)
 
 
 class SpinBoxWidget(Widget):
@@ -147,7 +173,10 @@ class SpinBoxWidget(Widget):
         except ValueError:
             return None
 
+    def get_tkinter_widget(self):
+        return self.app.getSpinBoxWidget(self.entry_id)
 
+    
 class RadioWidget(Widget):
     def __init__(self, app, question, true_text="Yes", false_text="No"):
         super().__init__(app, question)
@@ -163,12 +192,12 @@ class RadioWidget(Widget):
 
     def show(self):
         self.app.showLabel(self.label_id)
-        for widget in self.app.getRadioButtonWidget(self.entry_id):
+        for widget in self.get_tkinter_widget():
             widget.grid()
 
     def hide(self):
         self.app.hideLabel(self.label_id)
-        for widget in self.app.getRadioButtonWidget(self.entry_id):
+        for widget in self.get_tkinter_widget():
             widget.grid_remove()
 
     def disable(self):
@@ -182,6 +211,26 @@ class RadioWidget(Widget):
 
     def get_value(self):
         return self.app.getRadioButton(self.entry_id) == self.true_text
+
+    def get_tkinter_widget(self):
+        return self.app.getRadioButtonWidget(self.entry_id)
+
+    # TODO: overwrite super class property setters - Radio is a list
+    def set_font_familiy(self, family):
+        self.get_tkinter_widget().config(font="-family {}".format(family))
+        self.get_tkinter_label().config(font="-family {}".format(family))
+
+    def set_font_size(self, size):
+        self.get_tkinter_widget().config(font="-size {}".format(size))
+        self.get_tkinter_label().config(font="-size {}".format(size))
+
+    def set_font_weight(self, weight):
+        self.get_tkinter_widget().config(font="-weight {}".format(weight))
+        self.get_tkinter_label().config(font="-weight {}".format(weight))
+
+    def set_color(self, color):
+        self.get_tkinter_widget().config(fg=color)
+        self.get_tkinter_label().config(fg=color)
 
 
 class DropDownWidget(Widget):
@@ -215,6 +264,9 @@ class DropDownWidget(Widget):
 
     def get_value(self):
         return self.app.getOptionBox(self.entry_id) == self.true_text
+
+    def get_tkinter_widget(self):
+        return self.app.getOptionBoxWidget(self.entry_id)
 
 
 class SliderWidget(Widget):
@@ -250,7 +302,7 @@ class SliderWidget(Widget):
     def set_value(self, value):
         if value is not None:
             value = max(self.lower, min(self.upper, value))
-            self.app.getScaleWidget(self.entry_id).set(value)
+            self.app.setScale(self.entry_id, value)
         else:
             self.app.setScale(self.entry_id, self.lower)
 
@@ -259,3 +311,6 @@ class SliderWidget(Widget):
             return int(self.app.getScale(self.entry_id))
         except ValueError:
             return None
+
+    def get_tkinter_widget(self):
+        return self.app.getScaleWidget(self.entry_id)

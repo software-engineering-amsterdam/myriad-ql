@@ -13,7 +13,7 @@ class WidgetCreator:
         self.default_widgets = {
             Datatype.integer: SliderWidget,
             Datatype.decimal: DecimalEntryWidget,
-            Datatype.boolean: RadioWidget,
+            Datatype.boolean: CheckBoxWidget,
             Datatype.string:  EntryWidget}
 
     def visit(self, node):
