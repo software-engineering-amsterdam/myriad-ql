@@ -2,6 +2,7 @@
 # TODO create Undefined class
 # TODO create Error & Warning classes
 # TODO rubocop
+# TODO eval tests
 
 require 'require_all'
 require 'pp'

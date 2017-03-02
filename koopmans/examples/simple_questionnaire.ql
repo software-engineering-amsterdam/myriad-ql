@@ -15,7 +15,7 @@ form taxOfficeExample {
             aap: string
     "Value residue:"
       valueResidue: money =
-        (3 * 8 + 5 + sellingPrice / 10)
+        (sellingPrice)
         "Value res2idue:"
               xx: string =
                 (aap)

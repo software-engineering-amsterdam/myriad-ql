@@ -17,7 +17,7 @@ module QL
       end
 
       def calculate
-        @variable.value = eval(@calculation.eval) if @calculation
+        @variable.value = eval(@calculation.eval.to_s) if @calculation
       end
     end
   end
