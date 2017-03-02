@@ -20,7 +20,7 @@ module QL
 
     class BooleanNegation < Negation
       def eval
-        !expression.eval
+        "!#{expression.eval}"
       end
 
       def accept_types
@@ -30,7 +30,7 @@ module QL
 
     class IntegerNegation < Negation
       def eval
-        0 - expression.eval
+        "0 - #{expression.eval}"
       end
 
       def accept_types
@@ -56,13 +56,13 @@ module QL
 
     class And < BooleanExpression
       def eval
-        left.eval && right.eval
+        "#{left.eval} && #{right.eval}"
       end
     end
 
     class Or < BooleanExpression
       def eval
-        left.eval || right.eval
+        "#{left.eval} || #{right.eval}"
       end
     end
 
@@ -75,25 +75,25 @@ module QL
 
     class Subtract < ArithmeticExpression
       def eval
-        left.eval - right.eval
+        "#{left.eval} - #{right.eval}"
       end
     end
 
     class Add < ArithmeticExpression
       def eval
-        left.eval + right.eval
+        "#{left.eval} + #{right.eval}"
       end
     end
 
     class Multiply < ArithmeticExpression
       def eval
-        left.eval * right.eval
+        "#{left.eval} * #{right.eval}"
       end
     end
 
     class Divide < ArithmeticExpression
       def eval
-        left.eval / right.eval
+        "#{left.eval} / #{right.eval}"
       end
     end
 
@@ -106,13 +106,13 @@ module QL
 
     class Equal< ComparisonEqual
       def eval
-        left.eval == right.eval
+        "#{left.eval} == #{right.eval}"
       end
     end
 
     class NotEqual < ComparisonEqual
       def eval
-        left.eval != right.eval
+        "#{left.eval} != #{right.eval}"
       end
     end
 
@@ -125,25 +125,25 @@ module QL
 
     class Less < ComparisonOrdering
       def eval
-        left.eval < right.eval
+        "#{left.eval} < #{right.eval}"
       end
     end
 
     class Greater < ComparisonOrdering
       def eval
-        left.eval > right.eval
+        "#{left.eval} > #{right.eval}"
       end
     end
 
     class LessEqual < ComparisonOrdering
       def eval
-        left.eval <= right.eval
+        "#{left.eval} <= #{right.eval}"
       end
     end
 
     class GreaterEqual < ComparisonOrdering
       def eval
-        left.eval >= right.eval
+        "#{left.eval} >= #{right.eval}"
       end
     end
   end

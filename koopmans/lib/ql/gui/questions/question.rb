@@ -36,7 +36,7 @@ module QL
       end
 
       def check_condition
-        @condition.eval ? enable : disable if @condition
+        eval(@condition.eval.to_s) ? enable : disable if @condition
       end
 
       def disable

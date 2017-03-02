@@ -6,7 +6,7 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
-  if (hasSoldHouse) {
+  if (hasSoldHouse && hasBoughtHouse) {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"
@@ -15,7 +15,7 @@ form taxOfficeExample {
             aap: string
     "Value residue:"
       valueResidue: money =
-        (sellingPrice - privateDebt)
+        (3 * 8 + 5 + sellingPrice / 10)
         "Value res2idue:"
               xx: string =
                 (aap)
