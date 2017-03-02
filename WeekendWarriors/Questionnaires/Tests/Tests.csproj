@@ -71,7 +71,7 @@
     <Compile Include="QL\Value\InvalidLogicalOperations.cs" />
     <Compile Include="QL\Value\InvalidArithmaticOperations.cs" />
     <Compile Include="QL\Value\InvalidComparison.cs" />
-    <Compile Include="QL\Value\InvalidEqualityOperations.cs" />
+    <Compile Include="QL\Value\EqualityOperations.cs" />
     <Compile Include="QL\Value\BinaryOperationTestInput.cs" />
     <Compile Include="QL\Value\ValidOperations.cs" />
     <Compile Include="QL\Value\ValueCreator.cs" />
