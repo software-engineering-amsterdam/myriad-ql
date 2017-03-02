@@ -3,8 +3,8 @@ from .labeledcb import LabeledCheckbutton
 from tkinter import *
 
 class DrawableBoolean(Boolean):
-    def __init__(self):
-        Boolean.__init__(self)
+    def __init__(self, identifier):
+        Boolean.__init__(self, identifier)
 
     def draw(self, _root, _variable, _text, _row, _refresh):
         labeledcb = LabeledCheckbutton(_root)
