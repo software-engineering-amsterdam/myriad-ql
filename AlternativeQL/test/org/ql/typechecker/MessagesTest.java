@@ -7,6 +7,7 @@ import org.ql.ast.Statement;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.StringType;
 import org.ql.typechecker.Messages;
+import org.ql.typechecker.circular_dependencies.DependencyPair;
 import org.ql.typechecker.error.TypeMismatch;
 
 import static org.junit.Assert.assertEquals;

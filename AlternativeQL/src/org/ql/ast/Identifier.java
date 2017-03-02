@@ -12,6 +12,11 @@ public class Identifier extends Node {
     }
 
     @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
     public String toString() {
         return id;
     }
