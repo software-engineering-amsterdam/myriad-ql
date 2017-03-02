@@ -14,23 +14,20 @@ public class Parameter extends Expression implements Visitable {
 
     private String ID;
 
-    public Parameter(String s)
-    {
+    public Parameter(String s) {
         this.ID = s;
     }
 
-    public void setID(String s)
-    {
+    public void setID(String s) {
         this.ID = s;
     }
 
-    public String getID()
-    {
+    public String getID() {
         return this.ID;
     }
 
     @Override
     public <T> T accept(QLVisitor<T> visitor) {
-        return null;
+        return visitor.visit(this);
     }
 }

@@ -31,13 +31,11 @@ public class IfStatement extends Statement {
         this.expression = e;
     }
 
-    public ArrayList<Statement> getStatements()
-    {
+    public ArrayList<Statement> getStatements() {
         return this.statements;
     }
 
-    public Expression getExpression()
-    {
+    public Expression getExpression() {
         return this.expression;
     }
 

@@ -1,17 +1,22 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.validator.QLVisitor;
+import com.matthewchapman.ql.validator.Visitable;
 
 /**
  * Created by matt on 24/02/2017.
  */
-public class LessThan extends BinaryOperation {
+public class LessThan extends BinaryOperation implements Visitable {
 
     //TODO implement LessThan
 
-    public LessThan(Expression left, Expression right)
-    {
-        super (left, right);
+    public LessThan(Expression left, Expression right) {
+        super(left, right);
     }
 
+    @Override
+    public <T> T accept(QLVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
 }

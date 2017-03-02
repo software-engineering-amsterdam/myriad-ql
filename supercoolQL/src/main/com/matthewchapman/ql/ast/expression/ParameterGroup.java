@@ -10,28 +10,25 @@ import java.util.ArrayList;
  * Created by matt on 24/02/2017.
  */
 
-public class ParameterGroup extends Expression implements Visitable{
+public class ParameterGroup extends Expression implements Visitable {
 
     //TODO implement ParameterGroup
     private final ArrayList<Expression> expressions;
 
-    public ParameterGroup()
-    {
+    public ParameterGroup() {
         this.expressions = new ArrayList<>();
     }
 
-    public ArrayList<Expression> getParameters()
-    {
+    public ArrayList<Expression> getParameters() {
         return this.expressions;
     }
 
-    public void addExpression(Expression e)
-    {
+    public void addExpression(Expression e) {
         this.expressions.add(e);
     }
 
     @Override
     public <T> T accept(QLVisitor<T> visitor) {
-        return null;
+        return visitor.visit(this);
     }
 }

@@ -8,8 +8,7 @@ public abstract class Type<T> extends TreeNode {
     //TODO type should not be a string!
     private final T value;
 
-    public Type(T value)
-    {
+    public Type(T value) {
         this.value = value;
     }
 

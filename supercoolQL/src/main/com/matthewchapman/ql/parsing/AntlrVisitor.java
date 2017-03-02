@@ -41,7 +41,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         Type questionReturnType = (Type) visit(ctx.type());
         ParameterGroup parameterGroup;
 
-        if(ctx.calculatedValue() != null) {
+        if (ctx.calculatedValue() != null) {
             parameterGroup = (ParameterGroup) visit(ctx.calculatedValue());
         } else {
             parameterGroup = null;
@@ -67,21 +67,17 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         ArrayList<Statement> ifCaseStatements = new ArrayList<>();
         ArrayList<Statement> elseCaseStatements = new ArrayList<>();
 
-        for(QLParser.StatementContext statementContext : ctx.ifCase)
-        {
+        for (QLParser.StatementContext statementContext : ctx.ifCase) {
             ifCaseStatements.add((Statement) visit(statementContext));
         }
 
-        for(QLParser.StatementContext statementContext : ctx.elseCase)
-        {
+        for (QLParser.StatementContext statementContext : ctx.elseCase) {
             elseCaseStatements.add((Statement) visit(statementContext));
         }
 
         return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements);
 
     }
-
-
 
     @Override
     public TreeNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
@@ -130,7 +126,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     public TreeNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
         ParameterGroup parameterGroup = new ParameterGroup();
 
-        for (QLParser.ExpressionContext expressionContext: ctx.expression()) {
+        for (QLParser.ExpressionContext expressionContext : ctx.expression()) {
             parameterGroup.addExpression((Expression) visit(expressionContext));
         }
 

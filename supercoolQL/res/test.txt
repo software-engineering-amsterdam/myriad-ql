@@ -33,5 +33,4 @@ form exampleForm {
     duplicateQuestion : boolean;
    "Duplicate question 2"
     duplicateQuestion : boolean;
-
 }

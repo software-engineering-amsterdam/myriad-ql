@@ -7,8 +7,7 @@ import com.matthewchapman.ql.ast.Type;
  */
 public class StringLiteral extends Type<String> {
 
-    public StringLiteral(String s)
-    {
+    public StringLiteral(String s) {
         super(s);
     }
 

@@ -7,8 +7,7 @@ import com.matthewchapman.ql.ast.Type;
  */
 public class BooleanLiteral extends Type<String> {
 
-    public BooleanLiteral(String s)
-    {
+    public BooleanLiteral(String s) {
         super(s);
     }
 

@@ -11,13 +11,11 @@ public class CalculatedValue extends Expression implements Visitable {
 
     private final ParameterGroup parameterGroup;
 
-    public CalculatedValue(ParameterGroup e)
-    {
+    public CalculatedValue(ParameterGroup e) {
         this.parameterGroup = e;
     }
 
-    public ParameterGroup getParameterGroup()
-    {
+    public ParameterGroup getParameterGroup() {
         return this.parameterGroup;
     }
 

@@ -3,10 +3,9 @@ package com.matthewchapman.ql.core;
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validator.QLTreeVisitor;
+import com.matthewchapman.ql.validator.QLTreeChecker;
 import com.matthewchapman.ql.validator.QuestionStore;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -35,15 +34,10 @@ class CoreParser {
 
     }
 
-    void visitAST(Form form)
-    {
-        QLTreeVisitor visitor = new QLTreeVisitor();
+    void visitAST(Form form) {
+        QLTreeChecker checker = new QLTreeChecker();
+        checker.doCheck(form);
 
-        for (Statement statement:form.getStatements()) {
-            statement.accept(visitor);
-        }
-
-        QuestionStore store = visitor.getQuestionStore();
-        store.testAllQuestions();
+        QuestionStore store = checker.getQuestionStore();
     }
 }

@@ -28,14 +28,15 @@ public class IfElseStatement extends Statement {
         this.expression = e;
     }
 
-    public ArrayList<Statement> getIfCaseStatements()
-    {
+    public ArrayList<Statement> getIfCaseStatements() {
         return this.ifCaseStatements;
     }
-    public ArrayList<Statement> getElseCaseStatements() { return this.elseCaseStatements;}
 
-    public Expression getExpression()
-    {
+    public ArrayList<Statement> getElseCaseStatements() {
+        return this.elseCaseStatements;
+    }
+
+    public Expression getExpression() {
         return this.expression;
     }
 
