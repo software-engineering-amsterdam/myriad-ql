@@ -1,44 +1,38 @@
 package org.ql.typechecker.circular_dependencies;
 
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class CircularDependenciesResolver {
-    private final DependencySet dependencies;
-
-    public CircularDependenciesResolver(DependencySet dependencies) {
-        this.dependencies = dependencies;
-    }
-
-    public CircularDependenciesResolver() {
-        this.dependencies = new DependencySet();
-    }
+    private final DependencySet dependencies = new DependencySet();
 
     public void register(DependencyPair pair) {
         dependencies.add(pair);
     }
 
-    public DependencySet findTransitiveClosure() {
-        Queue<DependencyPair> pairsQueue = new LinkedList<>();
-        pairsQueue.addAll(dependencies);
+    public DependencySet circularDependencies() {
+        DependencySet closure = new DependencySet();
 
-        DependencySet transitiveClosure = dependencies.clone();
-
-        while (!pairsQueue.isEmpty()) {
-            DependencyPair pair = pairsQueue.remove();
-            if (pair.isReflexive()) {
-                continue;
-            }
-            DependencySet allTransitiveOf = transitiveClosure.allTransitiveOf(pair);
-            transitiveClosure.addAll(allTransitiveOf);
-            for (DependencyPair queuePair : allTransitiveOf) {
-                if (!pairsQueue.contains(queuePair)) {
-                    pairsQueue.add(queuePair);
-                }
-            }
+        for (DependencyPair pair : transitiveClosure()) {
+            if (pair.isReflexive())
+                closure.add(pair);
         }
 
-        return transitiveClosure;
+        return closure;
+    }
+
+    public DependencySet transitiveClosure() {
+        DependencySet closure = new DependencySet();
+        closure.addAll(dependencies);
+
+        while (true) {
+            DependencySet newRelations = closure.edges();
+            newRelations.addAll(closure);
+
+            if (newRelations.hashCode() == closure.hashCode())
+                break;
+
+            closure = newRelations;
+        }
+
+        return closure;
     }
 }

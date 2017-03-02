@@ -7,8 +7,8 @@ public class Identifier extends Node {
         this.id = id;
     }
 
-    public boolean equals(Identifier identifier) {
-        return id.equals(identifier.toString());
+    public boolean equals(Identifier another) {
+        return another.id.equals(id);
     }
 
     @Override

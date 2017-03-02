@@ -19,10 +19,6 @@ public class DependencyPair {
         return right;
     }
 
-    public boolean isReflexive() {
-        return left.equals(right);
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -30,14 +26,23 @@ public class DependencyPair {
         return prime * result + (right != null ? right.hashCode() : 0);
     }
 
-    public boolean equals(DependencyPair pair) {
-        if (this == pair) return true;
-        if (pair == null) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        return left.equals(pair.left) && right.equals(pair.right);
+        DependencyPair pair = (DependencyPair) o;
+
+        if (left != null ? !left.equals(pair.left) : pair.left != null) return false;
+        return right != null ? right.equals(pair.right) : pair.right == null;
+
     }
 
     public boolean isTransitiveWith(DependencyPair supposedPair) {
-        return right.equals(supposedPair.getLeft());
+        return right.equals(supposedPair.left);
+    }
+
+    public boolean isReflexive() {
+        return right.equals(left);
     }
 }

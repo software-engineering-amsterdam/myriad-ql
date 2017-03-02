@@ -14,6 +14,33 @@ public class CircularDependenciesResolverTest {
             register(new DependencyPair(new Identifier("3"), new Identifier("1")));
         }};
 
-        System.out.println(resolver.findTransitiveClosure().toString());
+        DependencySet actualClosure = resolver.transitiveClosure();
+
+        assertEquals(9, actualClosure.size());
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("1"), new Identifier("2"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("1"), new Identifier("3"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("1"), new Identifier("1"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("2"), new Identifier("1"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("2"), new Identifier("2"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("2"), new Identifier("3"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("3"), new Identifier("3"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("3"), new Identifier("2"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("3"), new Identifier("1"))));
+    }
+
+    @Test
+    public void shouldReturnCircularDependenciesOnly() {
+        CircularDependenciesResolver resolver = new CircularDependenciesResolver() {{
+            register(new DependencyPair(new Identifier("1"), new Identifier("2")));
+            register(new DependencyPair(new Identifier("2"), new Identifier("3")));
+            register(new DependencyPair(new Identifier("3"), new Identifier("1")));
+        }};
+
+        DependencySet actualClosure = resolver.circularDependencies();
+
+        assertEquals(3, actualClosure.size());
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("1"), new Identifier("1"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("3"), new Identifier("3"))));
+        assertTrue(actualClosure.contains(new DependencyPair(new Identifier("2"), new Identifier("2"))));
     }
 }
