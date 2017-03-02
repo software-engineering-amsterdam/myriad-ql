@@ -1,4 +1,5 @@
-from decimal import Decimal
+from .base_nodes import *
+from .field_types import *
 '''
 1.  If the current token is a '(', add a new node as the left child of the
     current node, and descend to the left child.
@@ -14,89 +15,7 @@ from decimal import Decimal
 4.  If the current token is a ')', go to the parent of the current node.
 '''
 
-class Node(object):
-    indent = 0
-    # Base class of all nodes
-    def __init__(self, identifier):
-        # variables are now internal (rather than private)
-        self._children = []
-        self._identifier = identifier
 
-    def add_child(self, child):
-        if child and not isinstance(child, Node):
-            raise TypeError("Child is not an instance of Node")
-        self._children.append(child)
-
-class Root(Node):
-    def __init__(self, identifier, children):
-        Node.__init__(self, "form")
-        self._identifier = identifier
-        self._children = children
-
-    def __str__(self):
-        __ret = "{}{} \"{}\"\n".format("\t" * Node.indent,
-                                       self.__class__.__name__,
-                                       self._identifier)
-        Node.indent += 1
-        for __child in self._children:
-            __ret += "{}{}".format("\t" * Node.indent,__child)
-        Node.indent -= 1
-        return __ret
-
-    __repr__ = __str__
-
-class Question(Node):
-    def __init__(self, text, identifier, field_type):
-        Node.__init__(self, "question")
-        self._text = text
-        self._identifier = identifier
-        self._field_type = field_type
-
-    def __str__(self):
-        return "{} \"{}\", {}, \"{}\"\n".format(
-            self.__class__,
-            self._identifier,
-            self._field_type,
-            self._text)
-    __repr__ = __str__
-
-class Conditional(Node):
-    def __init__(self, evaluation, children):
-        Node.__init__(self, "conditional")
-        self._evaluation = evaluation
-        self._children = children
-
-    def __str__(self):
-        __ret = "{} \"{}\"\n".format(
-            self.__class__,
-            self._evaluation)
-        Node.indent += 1
-        for __child in self._children:
-            __ret += "{}{}\n".format("\t" * Node.indent, __child)
-        Node.indent -= 1
-        return __ret
-
-    __repr__ = __str__
-
-class Statement(Node):
-    def __init__(self, text, identifier, field_type, children):
-        Node.__init__(self, "statement")
-        self._identifier = identifier
-        self._field_type = field_type
-        self._children = children
-
-    def __str__(self):
-        __ret = "{} \"{}\", {}\n".format(
-            self.__class__,
-            self._identifier,
-            self._field_type)
-        Node.indent += 1
-        for __child in self._children:
-            __ret += "{}{}\n".format("\t" * Node.indent, __child)
-        Node.indent -= 1
-        return __ret
-
-    __repr__ = __str__
 '''
 https://www.codingunit.com/unary-and-binary-operator-table
 '''
@@ -127,58 +46,100 @@ class Inequality(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "inequality", left_child, right_child)
 
+    def eval(self):
+        return bool(self.left_child != self.right_child)
+
 class LogicalAnd(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "logical_and", left_child, right_child)
+
+    def eval(self):
+        return bool(self.left_child and self.right_child)
 
 class Multiplication(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "multiplication", left_child, right_child)
 
+    def eval(self):
+        return (self.left_child * self.right_child)
+
 class Addition(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "addition", left_child, right_child)
+
+    def eval(self):
+        return (self.left_child + self.right_child)
 
 class Substraction(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "substraction", left_child, right_child)
 
+    def eval(self):
+        return (self.left_child - self.right_child)
+
 class Division(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "division", left_child, right_child)
+
+    def eval(self):
+        return (self.left_child / self.right_child)
 
 class LessThan(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "less_than", left_child, right_child)
 
+    def eval(self):
+        return bool(self.left_child < self.right_child)
+
 class LessThanEquals(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "less_than_equals", left_child, right_child)
+
+    def eval(self):
+        return bool(self.left_child <= self.right_child)
 
 class Assignment(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "assignment", left_child, right_child)
 
+    def eval(self):
+        return self.left_child
+
 class Equality(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "equality", left_child, right_child)
+
+    def eval(self):
+        return bool(self.left_child == self.right_child)
 
 class GreaterThan(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "greater_than", left_child, right_child)
 
+    def eval(self):
+        return bool(self.left_child > self.right_child)
+
 class GreaterThanEquals(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "greater_than_equals", left_child, right_child)
+
+    def eval(self):
+        return bool(self.left_child >= self.right_child)
 
 class LogicalOr(BinaryOperation):
     def __init__(self, left_child, right_child):
         BinaryOperation.__init__(self, "logical_or", left_child, right_child)
 
+    def eval(self):
+        return bool(self.left_child or self.right_child)
+
 # Unary Operations
 class LogicalNot(UnaryOperation):
     def __init__(self, child):
         UnaryOperation.__init__(self, "logical_not", child)
+
+    def eval(self):
+        return not child
 
 class UnaryPlus(UnaryOperation):
     def __init__(self, child):
@@ -188,49 +149,29 @@ class UnaryNegation(UnaryOperation):
     def __init__(self, child):
         UnaryOperation.__init__(self, "unary_negation", child)
 
+    def eval(self):
+        return -child
+
 class Evaluation(Node):
     def __init__(self, child):
         UnaryOperation.__init__(self, "evaluation", child[0]) # it really sorta is
+        self.right_child = child[0]
+
+    def eval(self):
+        return self.right_child
 
 class Variable(Node):
-    def __init__(self, value):
+    def __init__(self, identifier):
         Node.__init__(self, "variable")
-        self._identifier = value
+        self._identifier = identifier
+        self._value = Undefined
 
-    def __str__(self):
-        return self._identifier
+    def __add__(self, other):
+        return self._value + other._value
 
-class FieldType(Node):
-    def __init__(self):
-        Node.__init__(self, "field_type")
-
-class Boolean(FieldType):
-    def __init__(self, value =  [False]):
-        FieldType.__init__(self)
-        self._value = bool(value[0])
-
-class String(FieldType):
-    def __init__(self, value = [""]):
-        FieldType.__init__(self)
-        self._value = str(value[0])
-
-class Integer(FieldType):
-    def __init__(self, value = [0]):
-        FieldType.__init__(self)
-        self._value = int(value[0])
-
-class Date(FieldType):
-    def __init__(self, value):
-        FieldType.__init__(self)
-        # TODO
-        self._value = value[0]
-
-class Decimal(FieldType):
-    def __init__(self, value = [float(0)]):
-        FieldType.__init__(self)
-        self._value = float(value[0])
-
-class Money(FieldType):
-    def __init__(self, value = [0]):
-        FieldType.__init__(self)
-        self._value = Decimal(value[0]).quantize(Decimal("0.00"))
+    def __sub__(self, other):
+        print(self._value)
+        print(other._value)
+        return self._value - other._value
+    # def __str__(self):
+    #     return self._identifier
