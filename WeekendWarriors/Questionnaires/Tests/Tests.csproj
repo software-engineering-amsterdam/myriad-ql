@@ -67,13 +67,13 @@
     <Compile Include="QL\SemanticAnalysis\Scoping.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticTestHarness.cs" />
     <Compile Include="QL\SemanticAnalysis\Ranges.cs" />
-    <Compile Include="QL\Value\InvalidUnaryOperations.cs" />
-    <Compile Include="QL\Value\InvalidLogicalOperations.cs" />
-    <Compile Include="QL\Value\InvalidArithmaticOperations.cs" />
-    <Compile Include="QL\Value\InvalidComparison.cs" />
+    <Compile Include="QL\Value\UnaryOperations.cs" />
+    <Compile Include="QL\Value\LogicalOperations.cs" />
+    <Compile Include="QL\Value\ArithmaticOperations.cs" />
+    <Compile Include="QL\Value\ComparisonOperations.cs" />
     <Compile Include="QL\Value\EqualityOperations.cs" />
     <Compile Include="QL\Value\BinaryOperationTestInput.cs" />
-    <Compile Include="QL\Value\ValidOperations.cs" />
+    <Compile Include="QL\Value\OperationTestInput.cs" />
     <Compile Include="QL\Value\ValueCreator.cs" />
     <Compile Include="QL\Value\ValueTester.cs" />
   </ItemGroup>

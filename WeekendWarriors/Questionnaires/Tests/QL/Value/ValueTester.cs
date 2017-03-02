@@ -11,18 +11,18 @@ namespace Tests.QL.Value
 {
     class ValueTester
     {
-        public static void TestBinaryOperation(string operation, BinaryOperationTestInput[] testSet)
+        public static void TestBinaryOperation(string operation, OperationTestInput[] testSet)
         {            
             foreach (var testCase in testSet)
             {
                 try
                 {
-                    TestBinaryOperation(testCase, operation);
-                    Assert.IsTrue(testCase.ExpectedResult != null, string.Format("Operation {0} on operand types {1} and {2} is erroneously supported", operation, testCase.LeftHandSideOperand.GetType(), testCase.RightHandSideOperand.GetType()));
+                    TestBinaryOperation((dynamic)testCase, operation);
+                    Assert.IsTrue(testCase.ExpectedResult != null, string.Format("Operation {0} on operand type {1} is erroneously supported", operation, testCase.LeftHandSideOperand.GetType()));
                 }
                 catch (NotSupportedException)
                 {
-                    Assert.IsTrue(testCase.ExpectedResult == null, string.Format("Operation {0} on operand types {1} and {2} is not supported while it should be", operation, testCase.LeftHandSideOperand.GetType(), testCase.RightHandSideOperand.GetType()));
+                    Assert.IsTrue(testCase.ExpectedResult == null, string.Format("Operation {0} on operand type {1} is not supported while it should be", operation, testCase.LeftHandSideOperand.GetType()));
                 }
             }            
         }
@@ -36,6 +36,21 @@ namespace Tests.QL.Value
             try
             {
                 var result = operationMethod.Invoke(lhsValue, new object[] { (dynamic)rhsValue });
+                ValueTester.Test((dynamic)result, testInput.ExpectedResult);
+            }
+            catch (TargetInvocationException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        public static void TestBinaryOperation(OperationTestInput testInput, string op)
+        {
+            var lhsValue = ValueCreator.CreateValue(testInput.LeftHandSideOperand);
+            var operationMethod = lhsValue.GetType().GetMethod(op);
+            try
+            {
+                var result = operationMethod.Invoke(lhsValue, new object[] { });
                 ValueTester.Test((dynamic)result, testInput.ExpectedResult);
             }
             catch (TargetInvocationException ex)

@@ -18,6 +18,16 @@ namespace Questionnaires.Value
             return this.Val;
         }
 
+        public override IValue Positive()
+        {
+            return new DecimalValue(this.Val);
+        }
+
+        public override IValue Negative()
+        {
+            return new DecimalValue(-this.Val);
+        }
+
         public override IValue Add(IValue value)
         {
             return Add((dynamic)value);
