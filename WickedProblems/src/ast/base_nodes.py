@@ -32,6 +32,7 @@ class Root(Node):
 class Question(Node):
     def __init__(self, text, identifier, field_type):
         Node.__init__(self, "question")
+        text._identifier = identifier
         self._text = text
         self._identifier = identifier
         self._field_type = field_type(identifier)
@@ -63,11 +64,13 @@ class Conditional(Node):
     __repr__ = __str__
 
     def evaluate(self):
-        print(self._evaluation)
+        __evaluation = self._evaluation
+        print(__evaluation)
 
 class Statement(Node):
     def __init__(self, text, identifier, field_type, children):
         Node.__init__(self, "statement")
+        text._identifier = identifier
         self._identifier = identifier
         self._field_type = field_type(identifier)
         self._children = children
