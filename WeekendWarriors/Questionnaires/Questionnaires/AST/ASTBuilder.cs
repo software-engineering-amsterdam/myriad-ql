@@ -91,36 +91,32 @@ namespace Questionnaires.AST
             INode lhs = Visit(context.left);
             INode rhs = Visit(context.right);
 
-            switch (context.op.Type)
+            switch (context.op.Text)
             {
-                case QLLexer.OP_ADD:
-                   return new Addition((dynamic)lhs, (dynamic)rhs);                   
-                case QLLexer.OP_SUB: 
+                case "+":
+                   return new Addition((dynamic)lhs, (dynamic)rhs);
+                case "-": 
                     return new Subtraction((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_MUL: 
+                case "*":
                     return new Multiply((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_DIV: 
+                case "/":
                     return new Division((dynamic)lhs,(dynamic)rhs);
-
-                case QLLexer.OP_GT: 
+                case ">":
                     return new GreaterThan((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_GE: 
+                case ">=":
                     return new GreaterThanOrEqual((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_LT: 
+                case "<":
                     return new LessThan((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_LE: 
+                case "<=":
                     return new LessThanOrEqual((dynamic)lhs, (dynamic)rhs);
-
-                case QLLexer.OP_EQ: 
+                case "==":
                     return new Equal((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_NE: 
+                case "!=":
                     return new Inequal((dynamic)lhs, (dynamic)rhs);
-
-                case QLLexer.OP_OR: 
+                case "||":
                     return new Or((dynamic)lhs, (dynamic)rhs);
-                case QLLexer.OP_AND: 
+                case "&&":
                     return new And((dynamic)lhs, (dynamic)rhs);
-
                 default:
                     throw new InvalidEnumArgumentException();
             }
@@ -132,13 +128,13 @@ namespace Questionnaires.AST
         {
             INode operand = Visit(context.expression());
 
-            switch (context.op.Type)
+            switch (context.op.Text)
             {
-                case QLLexer.OP_BANG:
+                case "!":
                     return new Bang((dynamic)operand);
-                case QLLexer.OP_ADD:
+                case "+":
                     return VisitPositiveOperation((dynamic)operand);
-                case QLLexer.OP_SUB:
+                case "-":
                     return VisitNegativeOperation((dynamic)operand);
                 default:
                     throw new InvalidEnumArgumentException();
