@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.VariableStore
 {
-    class VariableStore : IVariableStore
+    public class VariableStore : IVariableStore
     {
         private Dictionary<string, Value.IValue> variables = new Dictionary<string, Value.IValue>();
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.VariableStore
 {
-    class VariableChangedEventArgs
+    public class VariableChangedEventArgs
     {
         public VariableChangedEventArgs(string name, IValue value)
         {
