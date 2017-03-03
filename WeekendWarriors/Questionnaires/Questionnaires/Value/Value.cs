@@ -289,5 +289,65 @@ namespace Questionnaires.Value
         {
             throw new NotSupportedException();
         }
+
+        public IValue Add(IValue value)
+        {
+            return Add((dynamic)value);
+        }
+
+        public IValue Subtract(IValue value)
+        {
+            return Subtract((dynamic)value);
+        }
+
+        public IValue Multiply(IValue value)
+        {
+            return Multiply((dynamic)value);
+        }
+
+        public IValue Divide(IValue value)
+        {
+            return Divide((dynamic)value);
+        }
+
+        public IValue And(IValue value)
+        {
+            return And((dynamic)value);
+        }
+
+        public IValue Or(IValue value)
+        {
+            return Or((dynamic)value);
+        }
+
+        public IValue LessThan(IValue value)
+        {
+            return LessThan((dynamic)value);
+        }
+
+        public IValue LessThanOrEqual(IValue value)
+        {
+            return LessThanOrEqual((dynamic)value);
+        }
+
+        public IValue GreaterThan(IValue value)
+        {
+            return GreaterThan((dynamic)value);
+        }
+
+        public IValue GreaterThanOrEqual(IValue value)
+        {
+            return GreaterThanOrEqual((dynamic)value);
+        }
+
+        public IValue EqualTo(IValue value)
+        {
+            return EqualTo((dynamic)value);
+        }
+
+        public IValue InequalTo(IValue value)
+        {
+            return InequalTo((dynamic)value);
+        }
     }
 }
