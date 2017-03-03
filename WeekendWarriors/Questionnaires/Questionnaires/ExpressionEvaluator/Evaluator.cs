@@ -22,7 +22,7 @@ namespace Questionnaires.ExpressionEvaluator
 
         public IValue Evaluate(IExpression expression)
         {
-            return Evaluate((dynamic)expression);
+            return Visit((dynamic)expression);
         }
 
         private IValue Visit(Operators.Positive node)
@@ -72,84 +72,84 @@ namespace Questionnaires.ExpressionEvaluator
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.And(rightHandSideValue));
+            return leftHandSideValue.And(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.Or node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.Or(rightHandSideValue));
+            return leftHandSideValue.Or(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.Addition node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.Add(rightHandSideValue));
+            return leftHandSideValue.Add(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.Subtraction node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.Subtract(rightHandSideValue));
+            return leftHandSideValue.Subtract(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.Division node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.Divide(rightHandSideValue));
+            return leftHandSideValue.Divide(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.Multiply node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.Multiply(rightHandSideValue));
+            return leftHandSideValue.Multiply(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.GreaterThan node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.GreaterThan(rightHandSideValue));
+            return leftHandSideValue.GreaterThan(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.GreaterThanOrEqual node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.GreaterThanOrEqual(rightHandSideValue));
+            return leftHandSideValue.GreaterThanOrEqual(rightHandSideValue);
         }
 
         public Value.IValue Visit(Operators.LessThan node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.LessThan(rightHandSideValue));
+            return leftHandSideValue.LessThan(rightHandSideValue);
         }
         
         public Value.IValue Visit(Operators.LessThanOrEqual node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.LessThanOrEqual(rightHandSideValue));
+            return leftHandSideValue.LessThanOrEqual(rightHandSideValue);
         }
         
         public Value.IValue Visit(Operators.Inequal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.InequalTo(rightHandSideValue));
+            return leftHandSideValue.InequalTo(rightHandSideValue);
         }
         
         public Value.IValue Visit(Operators.Equal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
-            return new BoolValue(leftHandSideValue.EqualTo(rightHandSideValue));
+            return leftHandSideValue.EqualTo(rightHandSideValue);
         }
     }
 }

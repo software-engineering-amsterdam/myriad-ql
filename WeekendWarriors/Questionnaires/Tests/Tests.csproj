@@ -61,6 +61,7 @@
     <Compile Include="QL\AST\Literals.cs" />
     <Compile Include="QL\DSL\LexerTest.cs" />
     <Compile Include="QL\DSL\LexerTestHarness.cs" />
+    <Compile Include="QL\ExpressionEvaluator\Arithmatic.cs" />
     <Compile Include="QL\SemanticAnalysis\ArithmaticOperations.cs" />
     <Compile Include="QL\SemanticAnalysis\LogicalOperations.cs" />
     <Compile Include="QL\SemanticAnalysis\QuestionDefinition.cs" />
@@ -74,8 +75,8 @@
     <Compile Include="QL\Value\EqualityOperations.cs" />
     <Compile Include="QL\Value\BinaryOperationTestInput.cs" />
     <Compile Include="QL\Value\OperationTestInput.cs" />
-    <Compile Include="QL\Value\ValueCreator.cs" />
-    <Compile Include="QL\Value\ValueTester.cs" />
+    <Compile Include="TestUtilities\ValueCreator.cs" />
+    <Compile Include="TestUtilities\ValueTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Questionnaires\Questionnaires.csproj">
