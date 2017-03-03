@@ -12,6 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by sotos on 13/2/2017.
  * Refactored by matt on 24/2/2017
+ *
+ * Provides methods for reading a QL file into a String, and generating a filepicker
  */
 
 

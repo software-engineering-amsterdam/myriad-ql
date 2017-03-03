@@ -1,13 +1,14 @@
 package com.matthewchapman.ql.ast.statement;
 
-import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
-import com.matthewchapman.ql.validator.QLVisitor;
+import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
  * Created by matt on 20/02/2017.
+ *
+ * Base question class, contains an identifier, type and a possibly calculated value.
  */
 public class Question extends Statement {
 
@@ -35,11 +36,13 @@ public class Question extends Statement {
         return this.name;
     }
 
+    public Type getType() { return this.type; }
+
     public boolean isCalculated() {
         return this.calculated;
     }
 
-    public Expression getCalculation() {
+    public ParameterGroup getCalculation() {
         return this.calculatedValue;
     }
 

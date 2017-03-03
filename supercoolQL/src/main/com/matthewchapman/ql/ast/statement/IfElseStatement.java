@@ -2,12 +2,14 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validator.QLVisitor;
+import com.matthewchapman.ql.validation.QLVisitor;
 
 import java.util.ArrayList;
 
 /**
  * Created by matt on 21/02/2017.
+ *
+ * If statement with additional storage for statements to be executed if the Expression returns false.
  */
 
 public class IfElseStatement extends Statement {

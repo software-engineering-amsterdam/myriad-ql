@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validator;
+package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
@@ -10,6 +10,9 @@ import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 02/03/2017.
+ *
+ * Provides base implementation for QLVisitor - avoids having to have full implementations in
+ * concrete classes
  */
 public abstract class AbstractQLVisitor<T> implements QLVisitor<T> {
 

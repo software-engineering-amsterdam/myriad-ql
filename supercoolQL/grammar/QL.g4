@@ -1,15 +1,20 @@
 grammar QL;
 
-//parser
+// parser
+
+// https://github.com/antlr/antlr4/blob/master/doc/parser-rules.md  --parser rule reference
 
 formDeclaration
     :   'form' id=ID OPEN_BRACKET statement+ CLOSE_BRACKET
     ;
 
 statement
-    :   text=STRING ID ':' type calculatedValue? ';'                                        #question
-    |   'if' OPEN_PARENTH expression CLOSE_PARENTH OPEN_BRACKET statement+ CLOSE_BRACKET    #ifStatement
-    |   'if' OPEN_PARENTH expression CLOSE_PARENTH OPEN_BRACKET ifCase+=statement CLOSE_BRACKET 'else' OPEN_BRACKET elseCase+=statement CLOSE_BRACKET #ifElseStatement
+    :   text=STRING ID ':' type calculatedValue? ';'                            #question
+    |   'if' OPEN_PARENTH expression CLOSE_PARENTH
+                OPEN_BRACKET statement+ CLOSE_BRACKET                           #ifStatement
+    |   'if' OPEN_PARENTH expression CLOSE_PARENTH
+                OPEN_BRACKET ifCase+=statement CLOSE_BRACKET
+                    'else' OPEN_BRACKET elseCase+=statement CLOSE_BRACKET       #ifElseStatement
     ;
 
 expression

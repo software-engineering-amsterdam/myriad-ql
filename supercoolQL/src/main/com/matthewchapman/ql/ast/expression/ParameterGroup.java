@@ -1,13 +1,15 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.validator.QLVisitor;
-import com.matthewchapman.ql.validator.Visitable;
+import com.matthewchapman.ql.validation.QLVisitor;
+import com.matthewchapman.ql.validation.Visitable;
 
 import java.util.ArrayList;
 
 /**
  * Created by matt on 24/02/2017.
+ *
+ * Contains multiple expressions to be evaluated in one block and return a single result
  */
 
 public class ParameterGroup extends Expression implements Visitable {

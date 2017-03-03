@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validator;
+package com.matthewchapman.ql.validation.typechecking;
 
 import com.matthewchapman.ql.ast.statement.Question;
 
