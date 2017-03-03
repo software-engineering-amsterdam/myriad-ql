@@ -82,7 +82,7 @@
             CheckTypes((FormStatement)tree);
             Console.WriteLine("Done!");
             var eval = new QlEvaluator();
-            eval.Visit((FormStatement)tree, new VisitorTypeEnv());
+            eval.Visit((FormStatement)tree, new VisitorTypeEnvironment());
         }
 
         private static void TestQlsGrammar()

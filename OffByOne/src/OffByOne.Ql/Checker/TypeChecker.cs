@@ -4,6 +4,7 @@
     using System.Linq;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors;
 
     public class TypeChecker
@@ -37,8 +38,8 @@
 
         public CheckerReport Check(FormStatement node)
         {
-            this.typeVisitor.Visit(node, new VisitorTypeEnv());
-            this.questionVisitor.Visit(node, new QuestionVisitorContext());
+            this.typeVisitor.Visit(node, new VisitorTypeEnvironment());
+            this.questionVisitor.Visit(node, new QuestionVisitorTypeEnvironment());
 
             var finalReport = new CheckerReport();
             finalReport.Add(this.typeVisitor.Report.AllMessages.ToList());

@@ -135,7 +135,7 @@
     <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
     <Compile Include="Visitors\Contracts\IVisitor.cs" />
     <Compile Include="Visitors\Contracts\IVisitorContext.cs" />
-    <Compile Include="Visitors\TypeVisitor.cs" />
+    <Compile Include="Evaluator\TypeVisitor.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Evaluator\Controls\Questions\BooleanControl.cs" />
     <Compile Include="Evaluator\Controls\Questions\DateControl.cs" />
@@ -155,9 +155,9 @@
     <Compile Include="Visitors\Contracts\IStatementVisitor.cs" />
     <Compile Include="Visitors\Contracts\IVisitableExpression.cs" />
     <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
-    <Compile Include="Visitors\QuestionVisitor.cs" />
-    <Compile Include="Visitors\QuestionVisitorContext.cs" />
-    <Compile Include="Visitors\VisitorContext.cs" />
+    <Compile Include="Evaluator\QuestionVisitor.cs" />
+    <Compile Include="Evaluator\QuestionVisitorTypeEnvironment.cs" />
+    <Compile Include="Evaluator\VisitorTypeEnvironment.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
   <ItemGroup>

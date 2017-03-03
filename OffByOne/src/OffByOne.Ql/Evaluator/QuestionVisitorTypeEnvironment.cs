@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors
+﻿namespace OffByOne.Ql.Evaluator
 {
     using System.Collections.Generic;
 

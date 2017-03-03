@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors
+﻿namespace OffByOne.Ql.Evaluator
 {
     using System.Collections.Generic;
 
@@ -7,11 +7,11 @@
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class VisitorContext : IVisitorContext
+    public class VisitorTypeEnvironment : IVisitorContext
     {
         private readonly IDictionary<string, ValueType> symbolMappings;
 
-        public VisitorContext()
+        public VisitorTypeEnvironment()
         {
             this.symbolMappings = new Dictionary<string, ValueType>();
         }
