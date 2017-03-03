@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffByOne.Ql.Tests", "test\O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffByOne.Qls.Tests", "test\OffByOne.Qls.Tests\OffByOne.Qls.Tests.csproj", "{4F7FE843-3D03-4F01-8BC0-2BAB98252949}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffByOne.Ql.UiExperiments", "src\OffByOne.Ql.UiExperiments\OffByOne.Ql.UiExperiments.csproj", "{4DF00316-8F4D-490C-92E1-02470BC09E05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{4F7FE843-3D03-4F01-8BC0-2BAB98252949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F7FE843-3D03-4F01-8BC0-2BAB98252949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F7FE843-3D03-4F01-8BC0-2BAB98252949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF00316-8F4D-490C-92E1-02470BC09E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF00316-8F4D-490C-92E1-02470BC09E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF00316-8F4D-490C-92E1-02470BC09E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF00316-8F4D-490C-92E1-02470BC09E05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +59,6 @@ Global
 		{BA5CBB6E-F479-45FA-A0C3-7662D56E3AA1} = {07120C3E-B0F1-4168-9F48-96481EF9C528}
 		{527BAAC4-1517-4D55-8C99-DE9B9896BB7C} = {F33AB80D-57F6-48AA-8549-9AFC88D4BC19}
 		{4F7FE843-3D03-4F01-8BC0-2BAB98252949} = {F33AB80D-57F6-48AA-8549-9AFC88D4BC19}
+		{4DF00316-8F4D-490C-92E1-02470BC09E05} = {07120C3E-B0F1-4168-9F48-96481EF9C528}
 	EndGlobalSection
 EndGlobal
