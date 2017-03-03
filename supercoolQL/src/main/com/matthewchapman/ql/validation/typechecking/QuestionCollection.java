@@ -2,6 +2,7 @@ package com.matthewchapman.ql.validation.typechecking;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.Type;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -14,14 +15,16 @@ import java.util.Set;
 
 /**
  * Created by matt on 03/03/2017.
+ *
+ * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
 public class QuestionCollection extends AbstractQLVisitor<Void> {
 
-    ArrayList<Question> questionList;
-    HashMap<String, Question> questionHashMap;
+    private ArrayList<Question> questionList;
+    private HashMap<String, Type> typeTable;
 
     public QuestionCollection() {
-        questionHashMap = new HashMap<>();
+        typeTable = new HashMap<>();
         questionList = new ArrayList<>();
     }
 
@@ -36,12 +39,13 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
         return this.questionList;
     }
 
+    // hooray for O(n) complexity!
     public void findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
 
         for(Question question : questionList) {
             if(!questionIDs.add(question.getName())) {
-                System.err.println("");
+                System.err.println("Error: Duplicate Question found");
             }
         }
     }
@@ -49,6 +53,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(Question question) {
         questionList.add(question);
+        typeTable.put(question.getName(), question.getType());
         return null;
     }
 
