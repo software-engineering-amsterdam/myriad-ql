@@ -18,7 +18,7 @@ namespace Questionnaires.AST
             List<INode> statements = new List<INode>();
             foreach (QLParser.StatementContext statement in context)
             {
-                statements.Add(Visit(statement));
+                statements.Add(statement.Accept(this));
             }
 
             return statements;
