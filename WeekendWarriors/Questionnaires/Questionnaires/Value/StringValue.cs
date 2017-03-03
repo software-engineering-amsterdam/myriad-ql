@@ -18,16 +18,6 @@ namespace Questionnaires.Value
             return this.Val;
         }
 
-        public override IValue EqualTo(IValue value)
-        {
-            return EqualTo((dynamic)value);
-        }
-
-        public override IValue InequalTo(IValue value)
-        {
-            return InequalTo((dynamic)value);
-        }
-
         public override IValue EqualTo(StringValue value)
         {
             return new BoolValue(this.Val == value.GetValue());

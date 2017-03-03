@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    public class Value<T> : IValue
+    public abstract class Value<T> : IValue
     {
         protected T Val = default(T);
 
@@ -35,258 +35,6 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue Divide(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Divide(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Divide(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Divide(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Divide(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue Add(IValue value)
-        {            
-            throw new NotSupportedException();
-        }
-        public virtual IValue Add(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Add(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Add(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Add(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue Subtract(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Subtract(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Subtract(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Subtract(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Subtract(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue Multiply(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Multiply(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Multiply(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Multiply(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Multiply(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue And(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue And(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue And(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue And(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue And(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue Or(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Or(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Or(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Or(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue Or(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue LessThan(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThan(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThan(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThan(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThan(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue LessThanOrEqual(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThanOrEqual(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThanOrEqual(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThanOrEqual(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue LessThanOrEqual(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue GreaterThan(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThan(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThan(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThan(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThan(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue GreaterThanOrEqual(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThanOrEqual(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThanOrEqual(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThanOrEqual(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue GreaterThanOrEqual(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue EqualTo(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue EqualTo(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue EqualTo(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue EqualTo(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue EqualTo(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual IValue InequalTo(IValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue InequalTo(IntValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue InequalTo(DecimalValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue InequalTo(StringValue value)
-        {
-            throw new NotSupportedException();
-        }
-        public virtual IValue InequalTo(BoolValue value)
-        {
-            throw new NotSupportedException();
-        }
-
         public virtual IValue Positive()
         {
             throw new NotSupportedException();
@@ -298,6 +46,246 @@ namespace Questionnaires.Value
         }
 
         public virtual IValue Bang()
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Add(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Subtract(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Multiply(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Divide(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue And(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Or(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThan(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThanOrEqual(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThan(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThanOrEqual(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue EqualTo(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue InequalTo(StringValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Add(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Subtract(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Multiply(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Divide(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue And(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Or(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThan(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThanOrEqual(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThan(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThanOrEqual(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue EqualTo(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue InequalTo(IntValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Add(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Subtract(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Multiply(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Divide(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue And(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Or(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThan(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThanOrEqual(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThan(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThanOrEqual(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue EqualTo(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue InequalTo(DecimalValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Add(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Subtract(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Multiply(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Divide(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue And(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue Or(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThan(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue LessThanOrEqual(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThan(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue GreaterThanOrEqual(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue EqualTo(BoolValue value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual IValue InequalTo(BoolValue value)
         {
             throw new NotSupportedException();
         }

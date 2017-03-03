@@ -18,56 +18,6 @@ namespace Questionnaires.Value
             return this.Val;
         }
 
-        public override IValue Add(IValue value)
-        {
-            return Add((dynamic)value);
-        }
-
-        public override IValue Subtract(IValue value)
-        {
-            return Subtract((dynamic)value);
-        }
-
-        public override IValue Multiply(IValue value)
-        {
-            return Multiply((dynamic)value);
-        }
-
-        public override IValue Divide(IValue value)
-        {
-            return Divide((dynamic)value);
-        }
-
-        public override IValue LessThan(IValue value)
-        {
-            return LessThan((dynamic)value);
-        }
-
-        public override IValue LessThanOrEqual(IValue value)
-        {
-            return LessThanOrEqual((dynamic)value);
-        }
-
-        public override IValue GreaterThan(IValue value)
-        {
-            return GreaterThan((dynamic)value);
-        }
-
-        public override IValue GreaterThanOrEqual(IValue value)
-        {
-            return GreaterThanOrEqual((dynamic)value);
-        }
-
-        public override IValue EqualTo(IValue value)
-        {
-            return EqualTo((dynamic)value);
-        }
-
-        public override IValue InequalTo(IValue value)
-        {
-            return InequalTo((dynamic)value);
-        }
-
         public override IValue Positive()
         {
             return new IntValue(this.Val);
