@@ -24,13 +24,13 @@ public class CircularDependenciesResolver {
         closure.addAll(dependencies);
 
         while (true) {
-            DependencySet newRelations = closure.edges();
-            newRelations.addAll(closure);
+            DependencySet newEdges = closure.edges();
+            newEdges.addAll(closure);
 
-            if (newRelations.hashCode() == closure.hashCode())
+            if (newEdges.equals(closure))
                 break;
 
-            closure = newRelations;
+            closure = newEdges;
         }
 
         return closure;
