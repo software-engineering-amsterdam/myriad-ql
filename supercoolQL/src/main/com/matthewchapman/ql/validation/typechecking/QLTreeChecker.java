@@ -11,17 +11,18 @@ import com.matthewchapman.ql.ast.Statement;
  */
 public class QLTreeChecker {
 
-    private StatementVisitor sVisitor;
+    private StatementVisitor statementVisitor;
+
     private Form astRoot;
 
     public QLTreeChecker(Form form) {
         this.astRoot = form;
-        this.sVisitor = new StatementVisitor();
+        this.statementVisitor = new StatementVisitor();
     }
 
     public void runChecks() {
         for (Statement statement : astRoot.getStatements()) {
-            statement.accept(sVisitor);
+            statement.accept(statementVisitor);
         }
     }
 
