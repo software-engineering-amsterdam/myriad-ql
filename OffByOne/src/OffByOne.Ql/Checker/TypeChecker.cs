@@ -37,7 +37,7 @@
 
         public CheckerReport Check(FormStatement node)
         {
-            this.typeVisitor.Visit(node, new VisitorContext());
+            this.typeVisitor.Visit(node, new VisitorTypeEnv());
             this.questionVisitor.Visit(node, new QuestionVisitorContext());
 
             var finalReport = new CheckerReport();

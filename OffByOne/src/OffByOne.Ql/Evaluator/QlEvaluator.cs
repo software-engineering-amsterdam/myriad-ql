@@ -8,12 +8,11 @@
     using OffByOne.Ql.Visitors;
     using OffByOne.Ql.Visitors.Base;
 
-    public class QlEvaluator : BaseQlVisitor<UIElement, VisitorContext>
+    public class QlEvaluator : BaseQlVisitor<UIElement, VisitorTypeEnvironment>
     {
-        public override UIElement Visit(FormStatement form, VisitorContext context)
+        public override UIElement Visit(FormStatement form, VisitorTypeEnvironment context)
         {
-            var questionnaire = new Window();
-            questionnaire.Title = form.Identifier;
+            var questionnaire = new Window { Title = form.Identifier };
             var list = new ListView();
             foreach (var statement in form.Statements)
             {
@@ -25,7 +24,7 @@
             return questionnaire;
         }
 
-        public override UIElement Visit(QuestionStatement statement, VisitorContext context)
+        public override UIElement Visit(QuestionStatement statement, VisitorTypeEnvironment context)
         {
             var factory = new ControlFactory();
             return factory.CreateControl(statement).Control;

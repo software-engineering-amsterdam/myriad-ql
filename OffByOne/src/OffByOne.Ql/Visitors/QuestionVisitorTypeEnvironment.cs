@@ -4,12 +4,12 @@
 
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class QuestionVisitorContext : IContext
+    public class QuestionVisitorTypeEnvironment : IContext
     {
         private readonly ISet<string> questionNames;
         private readonly ISet<string> questionLables;
 
-        public QuestionVisitorContext()
+        public QuestionVisitorTypeEnvironment()
         {
             this.questionLables = new HashSet<string>();
             this.questionNames = new HashSet<string>();

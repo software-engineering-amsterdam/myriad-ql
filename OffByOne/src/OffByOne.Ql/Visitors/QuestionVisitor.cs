@@ -5,7 +5,7 @@
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Base;
 
-    public class QuestionVisitor : BaseQlVisitor<object, QuestionVisitorContext>
+    public class QuestionVisitor : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>
     {
         public QuestionVisitor(CheckerReport report)
         {
@@ -19,7 +19,7 @@
 
         public CheckerReport Report { get; set; }
 
-        public override object Visit(QuestionStatement expression, QuestionVisitorContext context)
+        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment context)
         {
             if (context.IsNameDuplicate(expression.Label))
             {
