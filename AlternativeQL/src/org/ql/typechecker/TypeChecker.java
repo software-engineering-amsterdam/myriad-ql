@@ -22,19 +22,24 @@ import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.*;
 import org.ql.collection.QuestionCollector;
 import org.ql.collection.Questions;
+import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
+import org.ql.typechecker.circular_dependencies.DependencyPair;
+import org.ql.typechecker.circular_dependencies.DependencySet;
 import org.ql.typechecker.error.*;
 
 import java.util.List;
 
 public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Void, Void>,
-        ExpressionVisitor<Type, Void> {
+        ExpressionVisitor<Type, Identifier> {
 
     private final Messages messages;
     private final SymbolTable symbolTable;
+    private final CircularDependenciesResolver circularDependenciesResolver;
 
-    public TypeChecker(Messages messages, SymbolTable symbolTable) {
+    public TypeChecker(Messages messages, SymbolTable symbolTable, CircularDependenciesResolver circularDependenciesResolver) {
         this.messages = messages;
         this.symbolTable = symbolTable;
+        this.circularDependenciesResolver = circularDependenciesResolver;
     }
 
     @Override
@@ -45,6 +50,8 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
         checkQuestionDuplicates(questions);
         checkIdentifier(form.getName());
         checkStatements(form.getStatements());
+
+        checkCircularDependencies();
 
         return null;
     }
@@ -74,7 +81,7 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
         checkQuestionText(question.getQuestionText());
 
         if (question.getValue() != null) {
-            Type valueType = question.getValue().accept(this, null);
+            Type valueType = question.getValue().accept(this, question.getId());
 
             if (!question.getType().isCompatibleWith(valueType)) {
                 messages.addError(new TypeMismatch(question.getType(), valueType));
@@ -85,8 +92,8 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Negation node, Void ignore) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+    public Type visit(Negation node, Identifier questionId) {
+        Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!innerExpressionType.isBoolean()) {
             messages.addError(new TypeMismatch(new BooleanType(), innerExpressionType));
@@ -97,13 +104,13 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Product node, Void ignore) {
-        return checkTypeMismatch(node);
+    public Type visit(Product node, Identifier questionId) {
+        return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public Type visit(Increment node, Void ignore) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+    public Type visit(Increment node, Identifier questionId) {
+        Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!(innerExpressionType.isNumeric())) {
             messages.addError(new NumberExpected(innerExpressionType));
@@ -114,73 +121,75 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Subtraction node, Void ignore) {
-        return checkTypeMismatch(node);
+    public Type visit(Subtraction node, Identifier questionId) {
+        return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public BooleanType visit(NotEqual node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(NotEqual node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(LogicalAnd node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(LogicalAnd node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(LowerThan node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(LowerThan node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(GreaterThanOrEqual node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(GreaterThanOrEqual node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(Division node, Void ignore) {
-        return checkTypeMismatch(node);
+    public Type visit(Division node, Identifier questionId) {
+        return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public Type visit(Parameter node, Void ignore) {
-        if (!symbolTable.isDeclared(node.getId())) {
-            messages.addError(new UndefinedIdentifier(node.getId()));
+    public Type visit(Parameter parameter, Identifier questionId) {
+        if (!symbolTable.isDeclared(parameter.getId())) {
+            messages.addError(new UndefinedIdentifier(parameter.getId()));
             return new UnknownType();
         }
 
-        return symbolTable.lookup(node.getId());
+        circularDependenciesResolver.register(new DependencyPair(questionId, parameter.getId()));
+
+        return symbolTable.lookup(parameter.getId());
     }
 
     @Override
-    public Type visit(Group node, Void ignore) {
-        return node.getExpression().accept(this, null);
+    public Type visit(Group node, Identifier questionId) {
+        return node.getExpression().accept(this, questionId);
     }
 
     @Override
-    public Type visit(Addition node, Void ignore) {
-        return checkTypeMismatch(node);
+    public Type visit(Addition node, Identifier questionId) {
+        return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public BooleanType visit(GreaterThan node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(GreaterThan node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(Decrement node, Void ignore) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+    public Type visit(Decrement node, Identifier questionId) {
+        Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!(innerExpressionType.isNumeric())) {
             messages.addError(new NumberExpected(innerExpressionType));
@@ -191,49 +200,49 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public BooleanType visit(Equals node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(Equals node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(LowerThanOrEqual node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(LowerThanOrEqual node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(LogicalOr node, Void ignore) {
-        checkTypeMismatch(node);
+    public BooleanType visit(LogicalOr node, Identifier questionId) {
+        checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(BooleanLiteral node, Void ignore) {
+    public BooleanType visit(BooleanLiteral node, Identifier questionId) {
         return new BooleanType();
     }
 
     @Override
-    public FloatType visit(DecimalLiteral node, Void ignore) {
+    public FloatType visit(DecimalLiteral node, Identifier questionId) {
         return new FloatType();
     }
 
     @Override
-    public IntegerType visit(IntegerLiteral node, Void ignore) {
+    public IntegerType visit(IntegerLiteral node, Identifier questionId) {
         return new IntegerType();
     }
 
     @Override
-    public StringType visit(StringLiteral node, Void ignore) {
+    public StringType visit(StringLiteral node, Identifier questionId) {
         return new StringType();
     }
 
-    private Type checkTypeMismatch(BinaryExpression node) {
-        Type leftType = node.getLeft().accept(this, null);
-        Type rightType = node.getRight().accept(this, null);
+    private Type checkTypeMismatch(BinaryExpression node, Identifier questionId) {
+        Type leftType = node.getLeft().accept(this, questionId);
+        Type rightType = node.getRight().accept(this, questionId);
 
         if (!leftType.isCompatibleWith(rightType)) {
             messages.addError(new TypeMismatch(leftType, rightType));
@@ -284,6 +293,14 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     private void fillSymbolTable(List<Question> questions) {
         for (Question question : questions) {
             symbolTable.declare(question.getId(), question.getType());
+        }
+    }
+
+    private void checkCircularDependencies() {
+        DependencySet dependencies = circularDependenciesResolver.circularDependencies();
+
+        for (DependencyPair pair : dependencies) {
+            messages.addError(new CircularDependency(pair));
         }
     }
 }

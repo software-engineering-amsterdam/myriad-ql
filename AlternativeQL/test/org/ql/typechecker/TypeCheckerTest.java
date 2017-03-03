@@ -14,6 +14,7 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.*;
+import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldAddErrorWhenFormNameEmpty() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         typeChecker.visit(new Form(new Identifier(""), new ArrayList<>()), null);
 
         assertTrue(messages.getErrors().size() == 1);
@@ -37,7 +38,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldContainNoErrorsWhenQuestionAdded() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         typeChecker.visit(new Form(new Identifier("test"), new ArrayList<>()), null);
 
@@ -47,7 +48,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
 
@@ -64,7 +65,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldCheckStatementsAndGiveErrors() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         typeChecker.checkStatements(new ArrayList<Statement>() {{
             add(new Question(new Identifier("test"), new QuestionText("example question?"), new BooleanType(), new IntegerLiteral(12)));
@@ -77,7 +78,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldNotGiveErrorWhenQuestionTypeIsMoneyAndValueTypeIsFloat() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         typeChecker.visit(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new DecimalLiteral(new BigDecimal(23.4))), null);
 
@@ -87,7 +88,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveErrorWhenQuestionTypeIsMoneyAndValueTypeIsNonDecimal() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         typeChecker.visit(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new BooleanLiteral(true)), null);
 
@@ -97,7 +98,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldThrowExceptionWhenNegationAppliedOnNonBoolean() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Negation negation = new Negation(new StringLiteral("example string"));
 
         Type actualNegationType = typeChecker.visit(negation, null);
@@ -109,7 +110,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeWhenNegationHasABooleanLiteral() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Negation negation = new Negation(new BooleanLiteral(true));
 
         Type actualNegationType = typeChecker.visit(negation, null);
@@ -121,7 +122,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnLiteralTypes() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualStringType = typeChecker.visit(new StringLiteral("example"), null);
         Type actualFloatType = typeChecker.visit(new DecimalLiteral(new BigDecimal(4.5)), null);
@@ -138,7 +139,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnIntegerLiteralWhenIncrementAppliedOnInteger() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualIntegerType = typeChecker.visit(new Increment(new IntegerLiteral(3)), null);
 
@@ -149,7 +150,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnFloatWhenIncrementAppliedOnFloat() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualFloatType = typeChecker.visit(new Increment(new DecimalLiteral(new BigDecimal(10.40))), null);
 
@@ -160,7 +161,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveUnexpectedTypeErrorWhenIncrementAppliedOnNonIntegerOrFloat() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualIncrementType = typeChecker.visit(new Increment(new StringLiteral("example")), null);
 
@@ -171,7 +172,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnIntegerTypeWhenDecrementAppliedOnInteger() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualIntegerType = typeChecker.visit(new Decrement(new IntegerLiteral(3)), null);
 
@@ -182,7 +183,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnFloatTypeWhenDecrementAppliedOnFloat() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualFloatType = typeChecker.visit(new Decrement(new DecimalLiteral(new BigDecimal(10.40))), null);
 
@@ -193,7 +194,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveUnexpectedTypeErrorWhenDecrementAppliedOnNonIntegerOrFloat() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualType = typeChecker.visit(new Decrement(new StringLiteral("example")), null);
 
@@ -204,7 +205,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveUndefinedIdentifierErrorWhenIdentifierDoesNotExist() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualParameterType = typeChecker.visit(new Parameter(new Identifier("example")), null);
 
@@ -218,7 +219,7 @@ public class TypeCheckerTest {
         symbolTable.declare(new Identifier("example"), new StringType());
         Messages messages = new Messages();
 
-        TypeChecker typeChecker = new TypeChecker(messages, symbolTable);
+        TypeChecker typeChecker = new TypeChecker(messages, symbolTable, new CircularDependenciesResolver());
 
         Type actualParameterType = typeChecker.visit(new Parameter(new Identifier("example")), null);
 
@@ -229,7 +230,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForLogicalOr() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLogicalOrType = typeChecker.visit(actualLogicalOr, null);
@@ -241,7 +242,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInLogicalOr() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LogicalOr actualLogicalOr = new LogicalOr(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualLogicalOr, null);
@@ -252,7 +253,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForLowerThanOrEquals() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLowerThanOrEqualType = typeChecker.visit(actualLowerThanOrEqual, null);
@@ -264,7 +265,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInLowerThanOrEqual() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LowerThanOrEqual actualLowerThanOrEqual = new LowerThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualLowerThanOrEqual, null);
@@ -275,7 +276,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForEquals() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Equals actualEqual = new Equals(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualEqualType = typeChecker.visit(actualEqual, null);
@@ -287,7 +288,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInEquals() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Equals actualEquals = new Equals(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualEquals, null);
@@ -297,7 +298,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForGreaterThan() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualGreaterThanType = typeChecker.visit(actualGreaterThan, null);
@@ -309,7 +310,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInGreaterThan() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         GreaterThan actualGreaterThan = new GreaterThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualGreaterThan, null);
@@ -319,7 +320,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnIntegerTypeForAddition() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Addition actualAddition = new Addition(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualAdditionType = typeChecker.visit(actualAddition, null);
@@ -331,7 +332,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInAddition() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Addition actualAddition = new Addition(new BooleanLiteral(true), new IntegerLiteral(12));
 
         Type actualAdditionType = typeChecker.visit(actualAddition, null);
@@ -343,7 +344,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnIntegerTypeForDivision() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Division actualDivision = new Division(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualDivisionType = typeChecker.visit(actualDivision, null);
@@ -355,7 +356,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInDivision() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Division actualDivision = new Division(new BooleanLiteral(true), new IntegerLiteral(12));
 
         Type actualDivisionType = typeChecker.visit(actualDivision, null);
@@ -367,7 +368,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForGreaterThanOrEqual() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualGreaterThanOrEqualType = typeChecker.visit(actualGreaterThanOrEqual, null);
@@ -379,7 +380,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInGreaterThanOrEqual() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         GreaterThanOrEqual actualGreaterThanOrEqual = new GreaterThanOrEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualGreaterThanOrEqual, null);
@@ -389,7 +390,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForLowerThan() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLowerThanType = typeChecker.visit(actualLowerThan, null);
@@ -401,7 +402,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInLowerThan() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LowerThan actualLowerThan = new LowerThan(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualLowerThan, null);
@@ -411,7 +412,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForLogicalAnd() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualLogicalAndType = typeChecker.visit(actualLogicalAnd, null);
@@ -423,7 +424,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInLogicalAnd() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         LogicalAnd actualLogicalAnd = new LogicalAnd(new BooleanLiteral(true), new IntegerLiteral(12));
 
         typeChecker.visit(actualLogicalAnd, null);
@@ -433,7 +434,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeForNotEqual() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new BooleanLiteral(false));
 
         Type actualNotEqualType = typeChecker.visit(actualNotEqual, null);
@@ -445,7 +446,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInNotEqual() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         NotEqual actualNotEqual = new NotEqual(new BooleanLiteral(true), new IntegerLiteral(12));
 
@@ -456,7 +457,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnBooleanTypeOnGroupedRelationalExpression() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Group actualGroup = new Group(new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true)));
 
         Type actualGroupType = typeChecker.visit(actualGroup, null);
@@ -468,7 +469,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnIntegerTypeForProduct() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Product actualProduct = new Product(new IntegerLiteral(123), new IntegerLiteral(321));
 
         Type actualProductType = typeChecker.visit(actualProduct, null);
@@ -480,7 +481,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesAreUsedInProduct() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Product actualProduct = new Product(new BooleanLiteral(true), new IntegerLiteral(12));
 
         Type actualProductType = typeChecker.visit(actualProduct, null);
@@ -492,7 +493,7 @@ public class TypeCheckerTest {
     @Test
     public void shouldReturnWhenIntegerTypeForSubtraction() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
         Type actualSubtractionType = typeChecker.visit(new Subtraction(new IntegerLiteral(12), new IntegerLiteral(4)), null);
 
@@ -503,12 +504,28 @@ public class TypeCheckerTest {
     @Test
     public void shouldGiveTypeMismatchErrorWhenDifferentTypesUsedForSubtraction() {
         Messages messages = new Messages();
-        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable());
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
         Subtraction actualSubtraction = new Subtraction(new IntegerLiteral(12), new StringLiteral("example"));
 
         Type actualSubtractionType = typeChecker.visit(actualSubtraction, null);
 
         assertTrue(actualSubtractionType instanceof UnknownType);
         assertEquals(1, messages.getErrors().size());
+    }
+
+    @Test
+    public void shouldGiveCircularDependencyErrorWhenSuchAreThere() {
+        Messages messages = new Messages();
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
+
+        typeChecker.visit(new Form(new Identifier("Form"), new ArrayList<Statement>() {{
+            add(new Question(new Identifier("first"), new QuestionText("label1"), new BooleanType(), new Parameter(new Identifier("second"))));
+            add(new Question(new Identifier("second"), new QuestionText("label2"), new BooleanType(), new Parameter(new Identifier("first"))));
+            add(new Question(new Identifier("third"), new QuestionText("label2"), new BooleanType(), null));
+        }}), null);
+
+        assertEquals(2, messages.getErrors().size());
+        assertTrue(messages.getErrors().contains("Circular dependency detected for question 'second'"));
+        assertTrue(messages.getErrors().contains("Circular dependency detected for question 'first'"));
     }
 }
