@@ -14,7 +14,7 @@ namespace Questionnaires.AST
         }
 
         private List<INode> GetStatements(QLParser.StatementContext[] context)
-        {
+        {            
             List<INode> statements = new List<INode>();
             foreach (QLParser.StatementContext statement in context)
             {
@@ -25,7 +25,7 @@ namespace Questionnaires.AST
         }
 
         public override INode VisitForm([NotNull] QLParser.FormContext context)
-        {            
+        {                        
             string identifier = context.Identifier().GetText();
             List<INode> statements = GetStatements(context.statement());
             Form form = new Form(identifier, statements);
@@ -62,8 +62,8 @@ namespace Questionnaires.AST
         }
 
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)
-        {         
-            INode expression = Visit(context.condition);
+        {
+            INode expression = context.condition.Accept(this);
             List<INode> thenStatements = GetStatements(context.thenBlock.statement());
             List<INode> elseStatements = new List<INode>();
             if(context.elseBlock != null)
@@ -76,8 +76,8 @@ namespace Questionnaires.AST
 
         public override INode VisitComputedQuestion([NotNull] QLParser.ComputedQuestionContext context)
         {
-            INode question = Visit(context.question());
-            INode expression = Visit(context.expression());
+            INode question = context.question().Accept(this);
+            INode expression = context.expression().Accept(this);
             return new ComputedQuestion((dynamic)question, (dynamic)expression);
         }
 
@@ -88,8 +88,8 @@ namespace Questionnaires.AST
 
         public override INode VisitBinaryOp([NotNull] QLParser.BinaryOpContext context)
         {
-            INode lhs = Visit(context.left);
-            INode rhs = Visit(context.right);
+            INode lhs = context.left.Accept(this);
+            INode rhs = context.right.Accept(this);
 
             switch (context.op.Text)
             {
@@ -126,7 +126,7 @@ namespace Questionnaires.AST
 
         public override INode VisitUnaryOp([NotNull] QLParser.UnaryOpContext context)
         {
-            INode operand = Visit(context.expression());
+            INode operand = context.expression().Accept(this);
 
             switch (context.op.Text)
             {
@@ -194,7 +194,7 @@ namespace Questionnaires.AST
 
         public override INode VisitParens([NotNull] QLParser.ParensContext context)
         {
-            return Visit(context.expression());
+            return context.expression().Accept(this);
         }
     }
 }
