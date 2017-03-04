@@ -7,16 +7,15 @@ import value.Value;
 
 public abstract class Type extends Node {
 	
-	final private String type;
+	final private String keyWord;
 	
-	public Type(String type, int line) {
+	public Type(String keyWord, int line) {
 		super(line);
-		this.type = type;
+		this.keyWord = keyWord;
 	}
 	
-	// TODO remove
-	public String getType() {
-		return type;
+	public String getKeyWord() {
+		return keyWord;
 	}
 	
 	public abstract Field getField(String name);

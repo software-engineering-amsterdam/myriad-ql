@@ -260,18 +260,19 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	    System.out.println(expected);
 	    System.out.println(lhs);
 	    System.out.println(rhs);
-
-	    if (!expected.getType().equals(lhs.getType())) {
+	    
+	    // TODO write comparator for Type?
+	    if (!expected.getKeyWord().equals(lhs.getKeyWord())) {
 	        throw new RuntimeException("The type on line " + lhs.getLine() + " is not the expected type " + expected);
         }
 
-        if (!expected.getType().equals(rhs.getType())) {
+        if (!expected.getKeyWord().equals(rhs.getKeyWord())) {
             throw new RuntimeException("The type on line " + rhs.getLine() + " is not the expected type " + expected);
         }
 	}
 
     private void check(Type expected, Type lhs) {
-        if (!expected.getType().equals(lhs.getType())) {
+        if (!expected.getKeyWord().equals(lhs.getKeyWord())) {
             throw new RuntimeException("The type on line " + lhs.getLine() + " is not the expected type " + expected);
         }
     }
