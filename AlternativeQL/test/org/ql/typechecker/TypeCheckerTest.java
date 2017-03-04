@@ -251,6 +251,17 @@ public class TypeCheckerTest {
     }
 
     @Test
+    public void shouldGiveTypeMismatchErrorNonBooleanTypesAreUsedInLogicalOr() {
+        Messages messages = new Messages();
+        TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
+        LogicalOr actualLogicalOr = new LogicalOr(new IntegerLiteral(233), new IntegerLiteral(12));
+
+        typeChecker.visit(actualLogicalOr, null);
+
+        assertEquals(1, messages.getErrors().size());
+    }
+
+    @Test
     public void shouldReturnBooleanTypeForLowerThanOrEquals() {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());

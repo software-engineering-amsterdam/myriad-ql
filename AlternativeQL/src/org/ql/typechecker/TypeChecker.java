@@ -133,10 +133,8 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public BooleanType visit(LogicalAnd node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
+    public Type visit(LogicalAnd node, Identifier questionId) {
+        return checkLogicalExpression(node, questionId);
     }
 
     @Override
@@ -214,10 +212,8 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public BooleanType visit(LogicalOr node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
+    public Type visit(LogicalOr node, Identifier questionId) {
+        return checkLogicalExpression(node, questionId);
     }
 
     @Override
@@ -251,6 +247,25 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
         }
 
         return leftType;
+    }
+
+    private Type checkLogicalExpression(BinaryExpression node, Identifier questionId) {
+        Type leftType = node.getLeft().accept(this, questionId);
+        Type rightType = node.getRight().accept(this, questionId);
+
+        if (!leftType.isBoolean()) {
+            messages.addError(new TypeMismatch(new BooleanType(), leftType));
+
+            return new UnknownType();
+        }
+
+        if (!rightType.isBoolean()) {
+            messages.addError(new TypeMismatch(new BooleanType(), rightType));
+
+            return new UnknownType();
+        }
+
+        return new BooleanType();
     }
 
     private void checkIdentifier(Identifier identifier) {
