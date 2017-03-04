@@ -7,7 +7,7 @@ namespace Tests.QL.SemanticAnalysis
     [TestClass]
     public class LogicalOperations
     {
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Expression);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void TestValidLogicalOperation()

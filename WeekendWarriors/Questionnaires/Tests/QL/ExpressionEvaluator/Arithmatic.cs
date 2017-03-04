@@ -14,23 +14,22 @@ namespace Tests.QL.ExpressionEvaluator
     {
         public void TestExpression(Dictionary<string, object> context, string expression, object expectedResult)
         {
-            VariableStore store = new VariableStore();
+            var store = new VariableStore();
             foreach (var value in context)
                 store.SetValue(value.Key, (dynamic)value.Value);
 
-            ASTFactory astFactory = new ASTFactory();
-            var parser = astFactory.CreateParser(expression);
-            var AST = astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
+            var astFactory = new ASTFactory();
+            var AST = astFactory.CreateExpression(expression);
 
-            Evaluator evaluator = new Evaluator(store);
-            IValue result = evaluator.Evaluate((IExpression)AST);
+            var evaluator = new Evaluator(store);
+            var result = evaluator.Evaluate((IExpression)AST);
             Value.ValueTester.Test((dynamic)result, expectedResult);
         }
 
         [TestMethod]
         public void Integers()
         {
-            Dictionary<string, object> contex = new Dictionary<string, object> {
+            var contex = new Dictionary<string, object> {
                 { "a", 5 }, { "b", 10 }, { "c", 2 }, { "d", 3 } }
             ;
 
@@ -42,7 +41,7 @@ namespace Tests.QL.ExpressionEvaluator
         [TestMethod]
         public void MixedIntegerAndDecimal()
         {
-            Dictionary<string, object> contex = new Dictionary<string, object> {
+            var contex = new Dictionary<string, object> {
                 { "a", 5 }, { "b", 7.5m }, { "c", 2.5m }, { "d", 8 } }
             ;
 

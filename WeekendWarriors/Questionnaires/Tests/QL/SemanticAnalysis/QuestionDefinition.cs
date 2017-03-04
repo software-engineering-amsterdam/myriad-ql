@@ -7,7 +7,7 @@ namespace Tests.QL.SemanticAnalysis
     [TestClass]
     public class QuestionDefinition
     {
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Form);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void TestDoubleDefinition()
@@ -18,7 +18,7 @@ namespace Tests.QL.SemanticAnalysis
                     q1: ""This is the new q1"" boolean                    
                 }
                 ";
-            TestHarness.TestExpression(input, 1, "Defining a question with a name that already exists in the current context");
+            TestHarness.TestForm(input, 1, "Defining a question with a name that already exists in the current context");
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace Tests.QL.SemanticAnalysis
                     q1: ""This is the new q1"" money                    
                 }
                 ";
-            TestHarness.TestExpression(input, 1, "Defining a question with a name that already exists in the current context but with a different type");
+            TestHarness.TestForm(input, 1, "Defining a question with a name that already exists in the current context but with a different type");
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Tests.QL.SemanticAnalysis
                 }
                 ";
 
-            TestHarness.TestExpression(input, 1, "Referencing an undefined question");
+            TestHarness.TestForm(input, 1, "Referencing an undefined question");
         }
     }
 }

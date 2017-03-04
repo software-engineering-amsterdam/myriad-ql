@@ -22,7 +22,7 @@ namespace Tests.QL.SemanticAnalysis
          *} 
          */
 
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Form);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void TestScopingNormal()
@@ -36,7 +36,7 @@ namespace Tests.QL.SemanticAnalysis
                     }
                 }
                 ";
-            TestHarness.TestExpression(input, 0, "Normal conditional question");
+            TestHarness.TestForm(input, 0, "Normal conditional question");
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace Tests.QL.SemanticAnalysis
                     }
                 }
                 ";
-            TestHarness.TestExpression(input, 0, "Using a question outside of its scope");
+            TestHarness.TestForm(input, 0, "Using a question outside of its scope");
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace Tests.QL.SemanticAnalysis
                     q5: ""This is q5"" boolean(q2)
                 }
                 ";
-            TestHarness.TestExpression(input, 0, "Using a question outside of its scope");
+            TestHarness.TestForm(input, 0, "Using a question outside of its scope");
         }
     }
 }

@@ -32,9 +32,8 @@ namespace Questionnaires
         {
             Output.Text = "";
 
-            var formFactory = new AST.ASTFactory();
-            var parser = formFactory.CreateParser(Input.Text);
-            var form = formFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Form);            
+            var astFactory = new AST.ASTFactory();
+            var form = astFactory.CreateForm(Input.Text);
             var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
             var analysisResult = semanticAnalyzer.Analyze(form);
             foreach (var analysisEvent in analysisResult.Events)

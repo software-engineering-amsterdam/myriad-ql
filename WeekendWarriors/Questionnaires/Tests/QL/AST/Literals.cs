@@ -12,8 +12,7 @@ namespace Tests.QL.AST
 
         public T CreateASTNode<T>(string input) where T : INode
         {
-            var parser = astFactory.CreateParser(input);
-            return (T)astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
+            return (T)astFactory.CreateExpression(input);
         }
 
         [TestInitialize]
@@ -21,7 +20,7 @@ namespace Tests.QL.AST
         {
             astFactory = new ASTFactory();
         }
-        
+
         [TestMethod]
         public void StringLiteral()
         {
@@ -32,7 +31,7 @@ namespace Tests.QL.AST
                 { "\"Piece Of Text\"", "Test failure: Multi word string" },
                 { "\"\"\"\"", "Test failure: Escape characters" }
             };
-            
+
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(

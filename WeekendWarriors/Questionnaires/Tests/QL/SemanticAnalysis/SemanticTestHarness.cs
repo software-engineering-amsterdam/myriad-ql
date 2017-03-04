@@ -14,18 +14,29 @@ namespace Tests.QL.SemanticAnalysis
     {
         protected uint ErrorCount = 0;
         protected ASTFactory ASTFactory = new ASTFactory();
-        protected ASTFactory.QLObjectType Type;
-
-        public SemanticTestHarness(ASTFactory.QLObjectType type)
-        {
-            this.Type = type;
-        }
-
+        
         public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
             SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();            
-            var parser = ASTFactory.CreateParser(input);
-            var node = ASTFactory.CreateQLObject(parser, Type);
+            var node = ASTFactory.CreateExpression(input);
+            var result = SemanticAnalyzer.Analyze(node);
+
+            Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
+        }
+
+        public void TestForm(string input, int exprectedErrorCount, string failureMessage)
+        {
+            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
+            var node = ASTFactory.CreateForm(input);
+            var result = SemanticAnalyzer.Analyze(node);
+
+            Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
+        }
+
+        public void TestComputedQuestion(string input, int exprectedErrorCount, string failureMessage)
+        {
+            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
+            var node = ASTFactory.CreateComputedQuestion(input);
             var result = SemanticAnalyzer.Analyze(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);

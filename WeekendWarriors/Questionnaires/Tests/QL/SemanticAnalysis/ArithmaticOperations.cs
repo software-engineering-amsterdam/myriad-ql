@@ -8,7 +8,7 @@ namespace Tests.QL.SemanticAnalysis
     [TestClass]
     public class ArithmaticOperations
     {
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Expression);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void TestNumberAddition()
