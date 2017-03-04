@@ -16,11 +16,9 @@ public class Number implements Field {
 	
 	private Notifier listener;
 	private TextField field;
-	private String name;
 	
 	public Number(String name) {
 		this.field = new TextField();
-		this.name = name;
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
@@ -29,10 +27,7 @@ public class Number implements Field {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
-	        	  System.out.println(newValue);
-	        	  Integer tst = Integer.parseInt(newValue);
-	        	  listener.updateQuestionnaire(name, 
-	        			  new IntegerValue(name, tst));
+	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
 
 	          }
 	      }
@@ -45,7 +40,7 @@ public class Number implements Field {
 		if (str.isEmpty()) {
 			return new EmptyValue();
 		}
-		return new IntegerValue(name, Integer.valueOf(str));
+		return new IntegerValue(Integer.valueOf(str));
 	}
 
 	@Override

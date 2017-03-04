@@ -11,12 +11,12 @@ grammar QL;
 form returns [Form result] 
  : 'form' ID block { $result = new Form($ID.text, $block.result, $ctx.start.getLine()); };
 
-// TODO combine question and statement
 block returns [Block result]
  : '{' blockItems { $result = new Block($blockItems.result, $blockItems.start.getLine()); } '}'
  ;
 
 // TODO decide on maximum characters on one line
+// TODO these string have quotes
 blockItems returns [List<BlockItem> result]
 @ init {
 	$result = new ArrayList<BlockItem>();

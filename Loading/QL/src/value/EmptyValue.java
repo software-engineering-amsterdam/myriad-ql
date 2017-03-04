@@ -16,11 +16,4 @@ public class EmptyValue extends Value {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public QControl getField() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

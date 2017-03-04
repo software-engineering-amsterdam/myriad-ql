@@ -11,11 +11,9 @@ import ui.field.Number;
 public class IntegerValue extends Value {
 	
 	private IntegerAtom value;
-	private String name;
 	
-	public IntegerValue(String name, Integer value) {
+	public IntegerValue(Integer value) {
 		this.value = new IntegerAtom(value, 0); // TODO fix line numbers
-		this.name = name;
 	}
 	
 	@Override
@@ -26,11 +24,6 @@ public class IntegerValue extends Value {
 	@Override
 	public Type getType() {
 		return new IntegerType(0);
-	}
-
-	@Override
-	public QControl getField() {
-		return  new QControl(new Number(name));
 	}
 }
 

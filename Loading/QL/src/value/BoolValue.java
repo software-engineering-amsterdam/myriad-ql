@@ -8,13 +8,10 @@ import ui.field.Check;
 
 public class BoolValue extends Value {
 	
-	// private Boolean value;
 	private BoolAtom value;
-	private String name;
 	
-	public BoolValue(String name, boolean value) {
+	public BoolValue(boolean value) {
 		this.value = new BoolAtom(value, 0); 
-		this.name = name;
 	}
 
 
@@ -28,12 +25,4 @@ public class BoolValue extends Value {
 		return new BooleanType(0);
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public QControl getField() {
-		return new QControl(new Check(name));
-	}
 }
