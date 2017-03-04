@@ -15,22 +15,33 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
 
     @Override
     public Value visit(Product node, Void context) {
-        return null;
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getLeft().accept(this, context);
+
+        return left.product(right);
     }
 
     @Override
     public Value visit(Increment node, Void context) {
-        return null;
+        Value value = node.getExpression().accept(this, context);
+
+        return value.increment();
     }
 
     @Override
     public Value visit(Subtraction node, Void context) {
-        return null;
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getLeft().accept(this, context);
+
+        return left.subtraction(right);
     }
 
     @Override
     public Value visit(Division node, Void context) {
-        return null;
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getLeft().accept(this, context);
+
+        return left.division(right);
     }
 
     @Override
@@ -40,47 +51,69 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
 
     @Override
     public Value visit(Group node, Void context) {
-        return null;
+        return node.getExpression().accept(this, context);
     }
 
     @Override
     public Value visit(Addition node, Void context) {
-        return null;
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getLeft().accept(this, context);
+
+        return left.addition(right);
     }
 
     @Override
     public Value visit(Decrement node, Void context) {
-        return null;
+        Value value = node.getExpression().accept(this, context);
+
+        return value.decrement();
     }
 
     @Override
-    public BooleanValue visit(GreaterThan node, Void context) {
-        return null;
+    public Value visit(GreaterThan node, Void context) {
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getLeft().accept(this, context);
+
+        return left.greaterThan(right);
     }
 
     @Override
-    public BooleanValue visit(Negation node, Void context) {
-        return null;
+    public Value visit(Negation node, Void context) {
+        Value value = node.getExpression().accept(this, context);
+
+        return value.negation();
     }
 
     @Override
-    public BooleanValue visit(NotEqual node, Void context) {
-        return null;
+    public Value visit(NotEqual node, Void context) {
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
+
+        return left.notEqual(right);
     }
 
     @Override
-    public BooleanValue visit(LogicalAnd node, Void context) {
-        return null;
+    public Value visit(LogicalAnd node, Void context) {
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
+
+        return left.and(right);
     }
 
     @Override
-    public BooleanValue visit(LowerThan node, Void context) {
-        return null;
+    public Value visit(LowerThan node, Void context) {
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
+
+        return left.lowerThan(right);
     }
 
     @Override
-    public BooleanValue visit(GreaterThanOrEqual node, Void context) {
-        return null;
+    public Value visit(GreaterThanOrEqual node, Void context) {
+        Value left = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
+
+        return left.greaterThanOrEqual(right);
     }
 
     @Override
@@ -101,8 +134,8 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
 
     @Override
     public Value visit(LogicalOr logicalOr, Void context) {
-        Value left = logicalOr.getLeft().accept(this, null);
-        Value right = logicalOr.getRight().accept(this, null);
+        Value left = logicalOr.getLeft().accept(this, context);
+        Value right = logicalOr.getRight().accept(this, context);
 
         return left.or(right);
     }

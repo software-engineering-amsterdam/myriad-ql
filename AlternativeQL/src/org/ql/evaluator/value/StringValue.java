@@ -15,4 +15,9 @@ public class StringValue extends Value {
     public BooleanValue equal(Value comparable) {
         return new BooleanValue(value.equals(((StringValue) comparable).getPlainValue()));
     }
+
+    @Override
+    public BooleanValue notEqual(Value comparable) {
+        return new BooleanValue(!value.equals(((StringValue) comparable).getPlainValue()));
+    }
 }
