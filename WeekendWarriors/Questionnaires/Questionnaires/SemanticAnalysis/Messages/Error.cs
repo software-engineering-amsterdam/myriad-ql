@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
+namespace Questionnaires.SemanticAnalysis.Messages
 {
-    class SemanticAnalysisError : SemanticAnalysisEvent
+    class Error : Message
     {
-        public SemanticAnalysisError(string message) : base("Error: " + message)
+        public Error(string message) : base("Error: " + message)
         {
 
         }

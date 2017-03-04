@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
 
 namespace Questionnaires.AST
@@ -32,7 +32,7 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
             Trace.Assert(parameters.Count == 1);
             var conditionType = parameters[0];
@@ -40,7 +40,7 @@ namespace Questionnaires.AST
             // We only accept conditions of boolean types (this is not C)
             if(conditionType != QLType.Bool)
             {
-                events.Add(new SemanticAnalysisError("Condition for conditional statement cannot be resolved to boolean"));
+                events.Add(new Error("Condition for conditional statement cannot be resolved to boolean"));
             }
 
             // An if statement has no type to return

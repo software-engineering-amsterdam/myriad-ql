@@ -9,12 +9,12 @@ using Questionnaires.AST.Visitor;
 
 namespace Questionnaires.SemanticAnalysis.Run
 {
-    public class TypeChecker : ISemanticAnalyzerRun, IASTVisitor<QLType?>
+    public class TypeChecker : IASTVisitor<QLType?>
     {
         private QLContext Context;
         private Result result = new Result();
 
-        public IResult Analyze(AST.INode node, QLContext context)
+        public Result Analyze(AST.INode node, QLContext context)
         {
             this.Context = context;
 
@@ -32,9 +32,9 @@ namespace Questionnaires.SemanticAnalysis.Run
 
         public QLType? Visit(AST.Question node)
         {
-            List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
-            var type = node.CheckOperandTypes(new List<QLType>(), Context, events);
-            ReportEvents(events);
+            List<SemanticAnalysis.Messages.Message> messages = new List<SemanticAnalysis.Messages.Message>();
+            var type = node.CheckOperandTypes(new List<QLType>(), Context, messages);
+            ReportEvents(messages);
 
             return type;
         }
@@ -177,7 +177,7 @@ namespace Questionnaires.SemanticAnalysis.Run
 
             if (!hasInvalidChild)
             {
-                List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events = new List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent>();
+                List<SemanticAnalysis.Messages.Message> events = new List<SemanticAnalysis.Messages.Message>();
                 var parentType = parent.CheckOperandTypes(childTypes, Context, events);
                 ReportEvents(events);
                 return parentType;
@@ -186,7 +186,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return null;
         }
 
-        private void ReportEvents(List<SemenaticAnalysisEvents.ISemenaticAnalysisEvent> events)
+        private void ReportEvents(List<SemanticAnalysis.Messages.Message> events)
         {
             // Report any warnings/errors that occurred.
             foreach (var analysisEvent in events)

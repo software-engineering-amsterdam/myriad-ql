@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.AST
 {
@@ -32,7 +32,7 @@ namespace Questionnaires.AST
         }
         
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
             return Type;
         }

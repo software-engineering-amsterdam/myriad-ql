@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
 
 namespace Questionnaires.AST
@@ -20,13 +20,13 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
             Trace.Assert(parameters.Count == 0);
             
             if(!context.ContainsQuestion(Name))
             {
-                events.Add(new SemanticAnalysisError(string.Format("Invalid use of undefined identifier {0}", Name)));
+                events.Add(new Error(string.Format("Invalid use of undefined identifier {0}", Name)));
                 return null;
             }
 

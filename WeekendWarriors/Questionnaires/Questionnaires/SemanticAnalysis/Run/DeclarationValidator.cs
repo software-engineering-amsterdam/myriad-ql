@@ -9,12 +9,12 @@ using Questionnaires.AST.Visitor;
 
 namespace Questionnaires.SemanticAnalysis.Run
 {
-    class DeclarationValidator : ISemanticAnalyzerRun, IASTVisitor
+    class DeclarationValidator : IASTVisitor
     {
         private QLContext Context;
         private Result result = new Result();
 
-        public IResult Analyze(INode node, QLContext context)
+        public Result Analyze(INode node, QLContext context)
         {
             Context = context;
             Visit((dynamic)node);
@@ -56,9 +56,9 @@ namespace Questionnaires.SemanticAnalysis.Run
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType == node.Type)
-                result.AddEvent(new SemanticAnalysis.SemenaticAnalysisEvents.SemanticAnalysisWarning(string.Format("Redeclaration of question {0}", node.Identifier)));
+                result.AddEvent(new Messages.Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
             else
-                result.AddEvent(new SemanticAnalysis.SemenaticAnalysisEvents.SemanticAnalysisError(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
+                result.AddEvent(new Messages.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
         
         public void Visit(Or node)

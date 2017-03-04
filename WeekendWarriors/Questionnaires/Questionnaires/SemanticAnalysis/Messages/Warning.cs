@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents
+namespace Questionnaires.SemanticAnalysis.Messages
 {
-    public class SemanticAnalysisWarning : SemanticAnalysisEvent
+    public class Warning : Message
     {
-        public SemanticAnalysisWarning(string message) : base("Warning: " + message)
+        public Warning(string message) : base("Warning: " + message)
         {
            
         }

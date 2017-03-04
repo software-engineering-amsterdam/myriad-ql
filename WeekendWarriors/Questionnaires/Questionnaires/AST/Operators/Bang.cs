@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using Questionnaires.SemanticAnalysis.Messages
+;
 using System.Diagnostics;
 
 namespace Questionnaires.AST.Operators
@@ -15,7 +16,7 @@ namespace Questionnaires.AST.Operators
 
         }
 
-        public override QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
+        public override QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
             Debug.Assert(parameters.Count == 1);
 
@@ -25,7 +26,7 @@ namespace Questionnaires.AST.Operators
             if (operandType == QLType.Bool)
                 return operandType;
 
-            events.Add(new SemanticAnalysisError(string.Format("Cannot apply bang operator on type {0}", operandType)));
+            events.Add(new Error(string.Format("Cannot apply bang operator on type {0}", operandType)));
             return null;
         }
     }

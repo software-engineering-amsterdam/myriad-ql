@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
+using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.AST
 {
@@ -26,7 +26,7 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<ISemenaticAnalysisEvent> events)
+        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
             Trace.Assert(parameters.Count == 2);
             var leftHandSideType = parameters[0];
@@ -36,7 +36,7 @@ namespace Questionnaires.AST
             // equal to the expression type (we do not support (implicit) casts
             if(leftHandSideType != rightHandsSideType)
             {
-                events.Add(new SemanticAnalysisError(string.Format("Cannot assign expression with type {0} to question of type {1}", rightHandsSideType, leftHandSideType)));                
+                events.Add(new Error(string.Format("Cannot assign expression with type {0} to question of type {1}", rightHandsSideType, leftHandSideType)));                
             }
 
             // Question is our end stop so there is no type to return

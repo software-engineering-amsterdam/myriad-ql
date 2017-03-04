@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.SemenaticAnalysisEvents;
 
 namespace Questionnaires.SemanticAnalysis.Run
 {
-    public class Result : IResult
+    public class Result
     {
         public Result()
         {
-            Events = new List<ISemenaticAnalysisEvent>();
+            Events = new List<SemanticAnalysis.Messages.Message>();
         }
 
-        public List<ISemenaticAnalysisEvent> Events
+        public List<SemanticAnalysis.Messages.Message> Events
         {
             get;
         }
 
         bool Error;
 
-        public void AddEvent(ISemenaticAnalysisEvent analysisEvent)
+        public void AddEvent(Messages.Message analysisEvent)
         {
             if (analysisEvent.IsError())
                 Error = true;
@@ -34,7 +33,7 @@ namespace Questionnaires.SemanticAnalysis.Run
             return Error;
         }
 
-        public void Combine(IResult result)
+        public void Combine(Result result)
         {
             foreach (var analysisEvent in result.Events)
                 AddEvent(analysisEvent);

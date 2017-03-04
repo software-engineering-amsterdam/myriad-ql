@@ -8,30 +8,24 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class SemanticAnalyzer
     {
-        private List<Run.ISemanticAnalyzerRun> Runs = new List<Run.ISemanticAnalyzerRun>();
         private QLContext Context = new QLContext();
-        private Run.Result AnalysisResult = new Run.Result();
 
         public SemanticAnalyzer()
         {
-            Runs.Add(new Run.DeclarationValidator());
-            Runs.Add(new Run.TypeChecker());
+
         }
 
         public Run.Result Analyze(AST.INode node)
         {
-            foreach(var run in Runs)
+            // Get and check question declarations
+            var Results = new Run.DeclarationValidator().Analyze(node, Context);
+            if (!Results.IsError()) // Only apply type checking if the declaration validator passed
             {
-                var result = run.Analyze(node, Context);
-
-                AnalysisResult.Combine(result);
-
-                // Don't continue with the next run if we found an error
-                if (result.IsError())
-                    break;                
+                var TypeCheckerResult = new Run.TypeChecker().Analyze(node, Context);
+                Results.Combine(TypeCheckerResult);
             }
-
-            return AnalysisResult;
+            
+            return Results;
         }
     }
 }
