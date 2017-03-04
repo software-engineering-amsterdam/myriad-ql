@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Questionnaires.AST.Literals
 {
@@ -17,7 +18,7 @@ namespace Questionnaires.AST.Literals
 
         public string StringValue { get; }
 
-        public decimal Value { get { return decimal.Parse(StringValue); } }
+        public decimal Value { get { return decimal.Parse(StringValue, NumberStyles.Any, CultureInfo.InvariantCulture); } }
 
         public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
         {
