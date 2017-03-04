@@ -7,14 +7,6 @@ using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.AST
 {
-    public enum QLType
-    {
-        Number,
-        Money,
-        Bool,
-        String
-    };
-
     public interface INode
     {
         bool CheckSemantics(SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> messages);
