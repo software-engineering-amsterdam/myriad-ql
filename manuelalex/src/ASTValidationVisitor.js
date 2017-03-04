@@ -7,7 +7,7 @@ import {Question} from './Statements/Question.js'
 import {MemoryState} from './memory/MemoryState.js'
 
 
-export class Visitor {
+export class ASTValidationVisitor {
 
 
     constructor(options = {}) {
@@ -65,12 +65,12 @@ export class Visitor {
 
         condition = condition[0]; // fix ast
 
-        let typeLeftHand = this.memoryState.getType(condition.leftHand);
-        let typeRightHand = this.memoryState.getType(condition.rightHand);
-
-        if(!typeLeftHand.constructor == Boolean){
-            //throw exception
-        }
+        // let typeLeftHand = this.memoryState.getType(condition.leftHand);
+        // let typeRightHand = this.memoryState.getType(condition.rightHand);
+        //
+        // if(!typeLeftHand.constructor == Boolean){
+        //     //throw exception
+        // }
 
 
 

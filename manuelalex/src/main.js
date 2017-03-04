@@ -3,7 +3,7 @@
  */
 
 import {Parser} from './Parser.js';
-import {Visitor} from './Visitor.js';
+import {ASTValidationVisitor} from './ASTValidationVisitor.js';
 
 import {GUI}                                     from './gui/Gui.js';
 import {AST}                                     from './ast/AST.js';
@@ -14,7 +14,7 @@ let parser = new Parser();
 let result = parser.parse(test1);
 
 let ast = new AST(result[0]);
-let visitor = new Visitor();
+let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 let gui = new GUI(ast);
 gui.createGUI();
