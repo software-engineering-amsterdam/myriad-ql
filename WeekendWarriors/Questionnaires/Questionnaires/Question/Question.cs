@@ -13,6 +13,6 @@ namespace Questionnaires.Question
         public string Name { get; set; }
         public QuestionType Type { get; set; }
         public IValue Value { get; set; }
-        public Questionnaires.Question.Visibility Visibility { get; set; }
+        public bool Visible { get; set; }
     }
 }

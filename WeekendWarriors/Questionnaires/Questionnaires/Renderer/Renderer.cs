@@ -64,9 +64,9 @@ namespace Questionnaires.Renderer
             Questions[name].SetQuestionValue(value);
         }
 
-        public void SetVisibility(string name, Question.Visibility visibility)
+        public void SetVisibility(string name, bool visible)
         {
-            Questions[name].SetVisibility(visibility);
+            Questions[name].SetVisibility(visible);
         }
 
         public void SetWindowTitle(string title)

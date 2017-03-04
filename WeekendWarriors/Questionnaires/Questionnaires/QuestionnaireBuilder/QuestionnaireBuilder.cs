@@ -295,11 +295,11 @@ namespace Questionnaires.QuestionaireBuilder
                     {
                         if (conditionFunction().AsBool())
                         {
-                            renderer.SetVisibility(thenFunction().AsString(), Question.Visibility.Visible);
+                            renderer.SetVisibility(thenFunction().AsString(), true);
                         }
                         else
                         {
-                            renderer.SetVisibility(thenFunction().AsString(), Question.Visibility.Hidden);
+                            renderer.SetVisibility(thenFunction().AsString(), false);
                         }
                     })
                 );
@@ -316,11 +316,11 @@ namespace Questionnaires.QuestionaireBuilder
                     {
                         if (!conditionFunction().AsBool())
                         {
-                            renderer.SetVisibility(elseFunction().AsString(), Question.Visibility.Visible);
+                            renderer.SetVisibility(elseFunction().AsString(), true);
                         }
                         else
                         {
-                            renderer.SetVisibility(elseFunction().AsString(), Question.Visibility.Hidden);
+                            renderer.SetVisibility(elseFunction().AsString(), false);
                         }
                     })
                 );

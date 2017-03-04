@@ -33,9 +33,9 @@ namespace Questionnaires.Renderer.Widgets
             QuestionInputWidget.Text = value.AsInt().ToString();
         }
 
-        public override void SetVisibility(Question.Visibility visibility)
+        public override void SetVisibility(bool visible)
         {
-            if (visibility == Question.Visibility.Visible)
+            if (visible)
             {
                 Visibility = System.Windows.Visibility.Visible;
             }
@@ -44,6 +44,7 @@ namespace Questionnaires.Renderer.Widgets
                 Visibility = System.Windows.Visibility.Hidden;
             }
         }
+
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
             QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntValue(int.Parse(QuestionInputWidget.Text)));

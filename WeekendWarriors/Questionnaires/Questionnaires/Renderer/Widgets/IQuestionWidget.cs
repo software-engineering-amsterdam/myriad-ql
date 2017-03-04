@@ -12,7 +12,7 @@ namespace Questionnaires.Renderer.Widgets
     {
         void SetLabel(string text);
         void SetQuestionValue(Questionnaires.Value.IValue value);
-        void SetVisibility(Question.Visibility visibility);
+        void SetVisibility(bool visible);
 
         void SetOnInputChanged(InputChangedCallback inputChanged);
     }

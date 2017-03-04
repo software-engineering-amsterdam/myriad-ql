@@ -33,9 +33,9 @@ namespace Questionnaires.Renderer.Widgets
             QuestionInputWidget.Text = value.AsString();
         }
 
-        public override void SetVisibility(Question.Visibility visibility)
+        public override void SetVisibility(bool visible)
         {
-            if (visibility == Question.Visibility.Visible)
+            if (visible)
             {
                 Visibility = System.Windows.Visibility.Visible;
             }
