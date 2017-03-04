@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.AST;
 using Questionnaires.AST.Operators;
-using Questionnaires.Rule;
 using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Value;
@@ -60,7 +59,7 @@ namespace Questionnaires.QuestionaireBuilder
             }
 
             RuleContainer.AddRule(
-                new Rule.Rule((variableStore, renderer) =>
+                new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
                 {
                     variableStore.SetValue(node.Question.Identifier, expressionFunction());
                 }));
@@ -291,7 +290,7 @@ namespace Questionnaires.QuestionaireBuilder
                     continue;
 
                 RuleContainer.AddRule(
-                    new Rule.Rule((variableStore, renderer) =>
+                    new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
                     {
                         if (conditionFunction().AsBool())
                         {
@@ -312,7 +311,7 @@ namespace Questionnaires.QuestionaireBuilder
                     continue;
 
                 RuleContainer.AddRule(
-                    new Rule.Rule((variableStore, renderer) =>
+                    new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
                     {
                         if (!conditionFunction().AsBool())
                         {

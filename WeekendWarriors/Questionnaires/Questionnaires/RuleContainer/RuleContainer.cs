@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.Rule;
+using Questionnaires.VariableStore;
 
 namespace Questionnaires.RuleContainer
 {
     class RuleContainer : IRuleContainer
     {
-        private List<Rule.IRule> Rules = new List<Rule.IRule>();
+        private List<Action<IVariableStore, Renderer.Renderer>> Rules = new List<Action<IVariableStore, Renderer.Renderer>>();
          
-        public void AddRule(IRule rule)
+        public void AddRule(Action<IVariableStore, Renderer.Renderer> rule)
         {
             Rules.Add(rule);
         }
@@ -20,7 +20,7 @@ namespace Questionnaires.RuleContainer
         {
             foreach (var rule in Rules.ToList())
             {
-                rule.Apply(variableStore, renderer);
+                rule(variableStore, renderer);
             }
         }
     }

@@ -92,8 +92,6 @@
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
     <Compile Include="RuleContainer\IRuleContainer.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
-    <Compile Include="Rule\IRule.cs" />
-    <Compile Include="Rule\Rule.cs" />
     <Compile Include="SemanticAnalysis\QLContext.cs" />
     <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
     <Compile Include="SemanticAnalysis\Run\Result.cs" />

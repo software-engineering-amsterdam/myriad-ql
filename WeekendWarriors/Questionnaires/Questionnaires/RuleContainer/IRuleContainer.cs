@@ -1,4 +1,4 @@
-﻿using Questionnaires.Rule;
+﻿using Questionnaires.VariableStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Questionnaires.RuleContainer
 {
     interface IRuleContainer
     {
-        void AddRule(IRule rule);
+        void AddRule(Action<IVariableStore, Renderer.Renderer> rule);
         void ApplyRules(VariableStore.VariableStore variableStore, Renderer.Renderer renderer);
     }
 }
