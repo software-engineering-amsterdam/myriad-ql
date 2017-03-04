@@ -11,7 +11,6 @@
     {
         private readonly TextBox control;
         private readonly Window window;
-        private WidgetStyle style;
 
         public TextBoxWidget()
         {
