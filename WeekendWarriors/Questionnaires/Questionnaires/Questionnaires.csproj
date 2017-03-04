@@ -90,7 +90,6 @@
     <Compile Include="Renderer\Widgets\NumberQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\QuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
-    <Compile Include="RuleContainer\IRuleContainer.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
     <Compile Include="SemanticAnalysis\QLContext.cs" />
     <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
