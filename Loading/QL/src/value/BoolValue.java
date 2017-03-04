@@ -3,8 +3,6 @@ package value;
 import ast.atom.BoolAtom;
 import ast.type.BooleanType;
 import ast.type.Type;
-import ui.QControl;
-import ui.field.Check;
 
 public class BoolValue extends Value {
 	

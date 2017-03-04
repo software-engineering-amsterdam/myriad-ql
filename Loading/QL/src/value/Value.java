@@ -2,7 +2,6 @@ package value;
 
 import ast.atom.Atom;
 import ast.type.Type;
-import ui.QControl;
 
 public abstract class Value {
 		

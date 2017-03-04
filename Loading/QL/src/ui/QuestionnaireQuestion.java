@@ -1,6 +1,7 @@
 package ui;
 
 import ast.type.Type;
+import ui.field.Field;
 import value.Value;
 
 public class QuestionnaireQuestion {
@@ -8,13 +9,13 @@ public class QuestionnaireQuestion {
 	private String name;
 	private String label;
 	private Type type;
-	private QControl entryField;
+	private Field entryField;
 
 	public QuestionnaireQuestion(String name, String label, Type type) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
-		this.entryField = new QControl(type.getField(name));
+		this.entryField = type.getField(name);
 	}
 
 	// TODO move to type or add type visitor
@@ -52,7 +53,7 @@ public class QuestionnaireQuestion {
 		return type;
 	}
 
-	public QControl getEntryField() {
+	public Field getEntryField() {
 		return entryField;
 	}
 

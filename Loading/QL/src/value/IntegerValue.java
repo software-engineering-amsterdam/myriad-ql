@@ -1,12 +1,8 @@
 package value;
 
 import ast.atom.IntegerAtom;
-import ast.atom.StringAtom;
 import ast.type.IntegerType;
 import ast.type.Type;
-import ui.QControl;
-import ui.field.Text;
-import ui.field.Number;
 
 public class IntegerValue extends Value {
 	

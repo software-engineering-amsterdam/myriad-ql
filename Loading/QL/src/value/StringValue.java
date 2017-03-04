@@ -3,8 +3,6 @@ package value;
 import ast.atom.StringAtom;
 import ast.type.StringType;
 import ast.type.Type;
-import ui.QControl;
-import ui.field.Text;
 
 public class StringValue extends Value {
 	
