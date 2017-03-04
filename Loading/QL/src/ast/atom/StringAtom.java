@@ -25,16 +25,6 @@ public class StringAtom extends Atom {
 	public String getString() {
 		return str;
 	}
-	
-	@Override
-	public String getType() {
-		return "string";
-	}
-
-//	@Override
-//	public Atom evaluate(Environment env) {
-//		return this;
-//	}
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> v) {

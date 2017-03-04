@@ -1,8 +1,10 @@
 package ui;
 
 import ast.type.Type;
+import javafx.scene.control.Control;
 import ui.field.Field;
 import value.Value;
+import ui.Questionnaire.Notifier;
 
 public class QuestionnaireQuestion {
 
@@ -52,9 +54,13 @@ public class QuestionnaireQuestion {
 	public Type getType() {
 		return type;
 	}
+	
+	public void addListener(Notifier listener) {
+		entryField.addListener(listener);
+	}
 
-	public Field getEntryField() {
-		return entryField;
+	public Control getControl() {
+		return entryField.getField();
 	}
 
 }

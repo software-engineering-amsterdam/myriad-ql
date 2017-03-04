@@ -41,16 +41,6 @@ public class BoolAtom extends Atom {
     public Boolean getValue() {
         return this.value;
     }
-	
-	@Override
-	public String getType() {
-		return "boolean";
-	}
-
-//	@Override
-//	public Atom evaluate(semantic.Environment env) {
-//		return this;
-//	}
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> v) {

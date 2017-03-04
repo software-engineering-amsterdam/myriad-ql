@@ -97,16 +97,6 @@ public class IntegerAtom extends Atom {
     public Integer getNumber() {
         return this.number;
     }
-	
-    @Override
-    public String getType() {
-    	return "integer";
-    }
-
-//	@Override
-//	public Atom evaluate(semantic.Environment env) {
-//		return this;
-//	}
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> v) {

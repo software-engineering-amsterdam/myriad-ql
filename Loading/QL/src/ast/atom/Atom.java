@@ -30,16 +30,10 @@ public abstract class Atom extends Expression {
 	public Atom min() { return null; }
 	public BoolAtom not() { return null; }
 	
+	// TODO move to children?
 	public Integer getNumber() { return null; }
 	public Boolean getValue() { return null; }
 	public String getString() { return null; }
-	
-	public abstract String getType();
-	
-//	@Override
-//	public Atom evaluate() {
-//		return this;
-//	}
 
 	public abstract <T> T accept(ExpressionVisitor<T> v);
 }
