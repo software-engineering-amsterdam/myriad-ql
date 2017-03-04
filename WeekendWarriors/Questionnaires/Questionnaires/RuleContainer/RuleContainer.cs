@@ -7,7 +7,7 @@ using Questionnaires.VariableStore;
 
 namespace Questionnaires.RuleContainer
 {
-    class RuleContainer : IRuleContainer
+    class RuleContainer
     {
         private List<Action<IVariableStore, Renderer.Renderer>> Rules = new List<Action<IVariableStore, Renderer.Renderer>>();
          
