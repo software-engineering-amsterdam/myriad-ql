@@ -16,7 +16,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public Value visit(Product node, Void context) {
         Value left = node.getLeft().accept(this, context);
-        Value right = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
 
         return left.product(right);
     }
@@ -31,7 +31,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public Value visit(Subtraction node, Void context) {
         Value left = node.getLeft().accept(this, context);
-        Value right = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
 
         return left.subtraction(right);
     }
@@ -39,7 +39,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public Value visit(Division node, Void context) {
         Value left = node.getLeft().accept(this, context);
-        Value right = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
 
         return left.division(right);
     }
@@ -57,7 +57,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public Value visit(Addition node, Void context) {
         Value left = node.getLeft().accept(this, context);
-        Value right = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
 
         return left.addition(right);
     }
@@ -72,7 +72,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public Value visit(GreaterThan node, Void context) {
         Value left = node.getLeft().accept(this, context);
-        Value right = node.getLeft().accept(this, context);
+        Value right = node.getRight().accept(this, context);
 
         return left.greaterThan(right);
     }

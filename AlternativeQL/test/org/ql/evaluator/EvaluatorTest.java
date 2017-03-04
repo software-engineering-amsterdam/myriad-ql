@@ -1,6 +1,7 @@
 package org.ql.evaluator;
 
 import org.junit.Test;
+import org.ql.ast.expression.arithmetic.Product;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
@@ -8,6 +9,7 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.Equals;
 import org.ql.ast.expression.relational.LogicalOr;
 import org.ql.ast.expression.relational.LowerThanOrEqual;
+import org.ql.ast.expression.relational.NotEqual;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.DecimalValue;
 import org.ql.evaluator.value.IntegerValue;
@@ -202,4 +204,36 @@ public class EvaluatorTest {
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
+
+    @Test
+    public void shouldReturnBooleanTrueValueOnNotEqualsUsingStrings() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new StringLiteral("example"), new StringLiteral("exampl232e"));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueOnNotEqualsUsingStrings() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new StringLiteral("example"), new StringLiteral("example"));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnProductUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Product actualProduct = new Product(new IntegerLiteral(2), new IntegerLiteral(3));
+        IntegerValue actualProductValue = (IntegerValue) evaluator.visit(actualProduct, null);
+
+        assertSame(6, actualProductValue.getPlainValue());
+    }
+
+
 }
