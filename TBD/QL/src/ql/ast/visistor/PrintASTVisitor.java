@@ -26,7 +26,7 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
 
     @Override
     public Void visit(Statements node) {
-        List<Statement> statements = node.getStatements();
+        List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
             statement.accept(this);
             System.out.print("\n");

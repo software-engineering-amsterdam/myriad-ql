@@ -5,6 +5,8 @@ import ql.ast.environment.Environment;
 import ql.logger.ErrorHandler;
 import ql.logger.Error;
 
+import java.util.List;
+
 
 /**
  * Created by Erik on 27-2-2017.
@@ -19,6 +21,17 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
         node.accept(this);
         errorHandler.showErrors();
         return environment;
+    }
+
+
+    public Void visit(Statements node) {
+        environment.addScope(node);
+        environment.setScope(node);
+        List<Statement> statements = node.getItems();
+        for (Statement statement: statements) {
+            statement.accept(this);
+        }
+        return null;
     }
 
     public Void visit(Question node) {

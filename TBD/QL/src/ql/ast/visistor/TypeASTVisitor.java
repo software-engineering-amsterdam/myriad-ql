@@ -11,6 +11,8 @@ import ql.ast.environment.Environment;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 
+import java.util.List;
+
 /**
  * Created by Erik on 14-2-2017.
  */
@@ -26,6 +28,15 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     public Type startVisitor(ASTNode node) {
         node.accept(this);
         errorHandler.showErrors();
+        return null;
+    }
+
+    public Type visit(Statements node) {
+        env.setScope(node);
+        List<Statement> statements = node.getItems();
+        for (Statement statement: statements) {
+            statement.accept(this);
+        }
         return null;
     }
 

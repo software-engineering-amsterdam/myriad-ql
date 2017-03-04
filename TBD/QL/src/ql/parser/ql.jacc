@@ -1,7 +1,7 @@
 %package    ql.parser
 %class      QLParser
 %interface  QLTokens
-%start      form
+%start      forms
 
 %token <QLString>   STRING
 %token <QLInt>      INT
@@ -21,6 +21,7 @@
 %left '*' '/'
 %left UMIN UPLUS UNOT
 
+%type <Forms>       forms
 %type <Form>        form
 %type <Statements>  statements
 %type <Statement>   statement
@@ -42,8 +43,11 @@ import ql.ast.types.*;
 
 %%
 
+forms       : form forms                                        { result = new Forms($1, $2);   }
+            | form                                              { result = new Forms($1);       }
+            ;
 form
-            : FORM IDENT '{' statements '}'                     { result = new Form($2, $4);    }
+            : FORM IDENT '{' statements '}'                     { $$ = new Form($2, $4);    }
             ;
 
 statements
@@ -108,9 +112,9 @@ boolean
 
 %%
 private QLLexer lexer;
-private Form result;
+private Forms result;
 
-public Form getResult () {
+public Forms getResult () {
   return result;
 }
 
