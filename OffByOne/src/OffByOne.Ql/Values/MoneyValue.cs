@@ -44,6 +44,11 @@
             return new MoneyValue(this.Value + other.Value);
         }
 
+        public override IValue Add(StringValue other)
+        {
+            return new StringValue(other.Value + this.Value);
+        }
+
         public override IValue Substract(IValue other)
         {
             return other.Substract(this);

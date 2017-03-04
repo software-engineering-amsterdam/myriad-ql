@@ -46,7 +46,7 @@
 
         public override IValue Add(StringValue other)
         {
-            return new StringValue(this.Value + other.Value);
+            return new StringValue(other.Value + this.Value);
         }
 
         public override IValue Add(BooleanValue other)

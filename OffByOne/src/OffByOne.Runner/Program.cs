@@ -46,8 +46,10 @@
 
             ////Console.WriteLine("Type check done!");
 
+            var test = 3 + "Test";
+
             var evaluator = new Evaluator();
-            var expression = new DivideExpression(new IntegerLiteral(12), new IntegerLiteral(3));
+            var expression = new AddExpression(new StringLiteral("Test"), new StringLiteral("Hex"));
             Console.WriteLine(evaluator.Evaluate(expression, new TypeEnvironment()));
         }
 

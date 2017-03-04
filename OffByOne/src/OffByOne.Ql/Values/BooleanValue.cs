@@ -24,6 +24,16 @@
             return new BooleanValue(value);
         }
 
+        public override IValue Add(IValue other)
+        {
+            return other.Add(this);
+        }
+
+        public override IValue Add(StringValue other)
+        {
+            return new StringValue(other.Value + this.Value);
+        }
+
         public override BooleanValue Equals(IValue other)
         {
             return other.Equals(this);
@@ -34,9 +44,9 @@
             return new BooleanValue(other.Value == this.Value);
         }
 
-        public override IValue Add(IValue other)
+        public override BooleanValue And(IValue other)
         {
-            return other.Add(this);
+            return other.And(this);
         }
 
         public override BooleanValue And(BooleanValue other)

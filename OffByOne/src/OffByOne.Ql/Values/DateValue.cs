@@ -25,6 +25,16 @@
             return new DateValue(value);
         }
 
+        public override IValue Add(IValue other)
+        {
+            return other.Add(this);
+        }
+
+        public override IValue Add(StringValue other)
+        {
+            return new StringValue(other.Value + this.Value);
+        }
+
         public override BooleanValue Equals(IValue other)
         {
             return other.Equals(this);
