@@ -1,6 +1,7 @@
 package org.ql.evaluator;
 
-import org.ql.ast.Expression;
+import org.ql.ast.Form;
+import org.ql.ast.Statement;
 import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
@@ -9,9 +10,30 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
+import org.ql.ast.form.FormVisitor;
+import org.ql.ast.statement.IfThen;
+import org.ql.ast.statement.IfThenElse;
+import org.ql.ast.statement.Question;
+import org.ql.ast.statement.StatementVisitor;
 import org.ql.evaluator.value.*;
 
-public class Evaluator implements ExpressionVisitor<Value, Void> {
+import java.util.List;
+
+public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisitor<Void, Void>,
+        FormVisitor<Void, Void> {
+
+    private ValueTable valueTable;
+
+    public Evaluator(ValueTable valueTable) {
+        this.valueTable = valueTable;
+    }
+
+    @Override
+    public Void visit(Form form, Void context) {
+        checkStatements(form.getStatements(), context);
+
+        return null;
+    }
 
     @Override
     public Value visitProduct(Product node, Void context) {
@@ -46,7 +68,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
 
     @Override
     public Value visitParameter(Parameter node, Void context) {
-        return null;
+        return valueTable.lookup(node.getId());
     }
 
     @Override
@@ -158,5 +180,39 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     @Override
     public StringValue visitString(StringLiteral stringLiteral, Void context) {
         return new StringValue(stringLiteral.getValue());
+    }
+
+    @Override
+    public Void visit(IfThen ifThen, Void context) {
+        ifThen.getCondition().accept(this, context);
+
+        checkStatements(ifThen.getThenStatements(), context);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(IfThenElse ifThenElse, Void context) {
+        ifThenElse.getCondition().accept(this, context);
+
+        checkStatements(ifThenElse.getElseStatements(), context);
+        checkStatements(ifThenElse.getThenStatements(), context);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(Question question, Void context) {
+        if (question.getValue() != null) {
+            valueTable.declare(question.getId(), question.getValue().accept(this, context));
+        }
+
+        return null;
+    }
+
+    private void checkStatements(List<Statement> statements, Void context) {
+        for(Statement statement : statements) {
+            statement.accept(this, context);
+        }
     }
 }
