@@ -1,4 +1,5 @@
 ﻿using Questionnaires.AST;
+using Questionnaires.Value;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class QLContext
     {
-        private Dictionary<string, QLType> Context = new Dictionary<string, QLType>();
+        private Dictionary<string, IValue> Context = new Dictionary<string, IValue>();
 
-        public void AddQuestion(string name, QLType type)
+        public void AddQuestion(string name, IValue type)
         {
             Context.Add(name, type);
         }
 
-        public QLType GetQuestionType(string name)
+        public IValue GetQuestionType(string name)
         {            
             return Context[name];
         }

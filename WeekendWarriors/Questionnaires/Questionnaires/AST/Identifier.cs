@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
@@ -18,18 +20,21 @@ namespace Questionnaires.AST
         public string Name
         {
             get;
+        }        
+
+        public bool CheckSemantics(QLContext context, List<Message> messages)
+        {
+            if (!context.ContainsQuestion(Name))
+            {
+                messages.Add(new Error(string.Format("Invalid use of undefined identifier {0}", Name)));
+                return false;
+            }
+            
+            return true;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public IValue GetResultType(QLContext context)
         {
-            Trace.Assert(parameters.Count == 0);
-            
-            if(!context.ContainsQuestion(Name))
-            {
-                events.Add(new Error(string.Format("Invalid use of undefined identifier {0}", Name)));
-                return null;
-            }
-
             return context.GetQuestionType(Name);
         }
     }

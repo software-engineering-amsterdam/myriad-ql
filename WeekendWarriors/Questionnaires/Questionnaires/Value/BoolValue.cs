@@ -8,6 +8,10 @@ namespace Questionnaires.Value
 {
     public class BoolValue : Value<bool>
     {
+        public BoolValue()
+        {
+        }
+
         public BoolValue(bool value)
         {
             this.Val = value;

@@ -8,6 +8,10 @@ namespace Questionnaires.Value
 {
     public class StringValue : Value<String>
     {
+        public StringValue()
+        {
+        }
+
         public StringValue(String value)
         {
             this.Val = value;

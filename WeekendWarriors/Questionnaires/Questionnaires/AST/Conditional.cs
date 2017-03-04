@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
@@ -32,19 +34,51 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            Trace.Assert(parameters.Count == 1);
-            var conditionType = parameters[0];
+            // Check the child nodes in the then and else branches for semantic errors
+            if (!CheckChildNodeSemantics(context, messages))
+                return false;
 
             // We only accept conditions of boolean types (this is not C)
-            if(conditionType != QLType.Bool)
+            if(!ValidateConditionType((dynamic)Condition.GetResultType(context)))
             {
-                events.Add(new Error("Condition for conditional statement cannot be resolved to boolean"));
+                messages.Add(new Error("Condition for conditional statement cannot be resolved to boolean"));
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateConditionType(BoolValue val)
+        {
+            return true;
+        }
+
+        private bool ValidateConditionType(IValue val)
+        {
+            return false;
+        }
+
+        private bool CheckChildNodeSemantics(QLContext context, List<Message> messages)
+        {
+            bool semanticsInChildNdodesOk = true;
+
+            foreach (var statement in ThenStatements)
+            {
+                if (!statement.CheckSemantics(context, messages))
+                    semanticsInChildNdodesOk = false;
             }
 
-            // An if statement has no type to return
-            return null;
+            foreach (var statement in ElseStatements)
+            {
+                if (!statement.CheckSemantics(context, messages))
+                    semanticsInChildNdodesOk = false;
+            }
+
+            if (!Condition.CheckSemantics(context, messages))
+                semanticsInChildNdodesOk = false;
+
+            return semanticsInChildNdodesOk;
         }
     }
 }

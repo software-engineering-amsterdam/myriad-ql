@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis;
 using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.AST
@@ -26,10 +27,17 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            // No type validation to do here.
-            return null;
+            // Check all child nodes
+            bool childNodesSemanticallyOk = true;
+            foreach(var node in Statements)
+            {
+                if (!node.CheckSemantics(context, messages))
+                    childNodesSemanticallyOk = false;
+            }
+
+            return childNodesSemanticallyOk;
         }
     }
 }

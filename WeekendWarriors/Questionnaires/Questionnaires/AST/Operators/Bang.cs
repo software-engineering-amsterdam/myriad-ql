@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages
 ;
 using System.Diagnostics;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST.Operators
 {
@@ -13,21 +15,12 @@ namespace Questionnaires.AST.Operators
     {
         public Bang(IExpression operand) : base(operand)
         {
-
+            
         }
 
-        public override QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public override IValue GetResultType(QLContext context)
         {
-            Debug.Assert(parameters.Count == 1);
-
-            var operandType = parameters[0];
-
-            // The operator accepts number and money. The result type is equal to the operand type
-            if (operandType == QLType.Bool)
-                return operandType;
-
-            events.Add(new Error(string.Format("Cannot apply bang operator on type {0}", operandType)));
-            return null;
+            return Operand.GetResultType(context).Bang();
         }
     }
 }

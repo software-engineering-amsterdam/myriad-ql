@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST.Literals
 {
@@ -19,12 +21,16 @@ namespace Questionnaires.AST.Literals
         {
             get;
         }
-
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            Trace.Assert(parameters.Count == 0);
+            // Nothing to check for a string literal 
+            return true;
+        }
 
-            return QLType.String;
+        public IValue GetResultType(QLContext context)
+        {
+            return new StringValue();
         }
     }
 }

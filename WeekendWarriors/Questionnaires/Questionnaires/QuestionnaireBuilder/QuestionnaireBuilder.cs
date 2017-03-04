@@ -40,23 +40,7 @@ namespace Questionnaires.QuestionaireBuilder
             Func<IValue> questionFunction = Visit(node.Question);
             Func<IValue> expressionFunction = Visit((dynamic)node.Expression);
 
-            switch (node.Question.Type)
-            {
-                case QLType.Bool:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
-                    break;
-                case QLType.Money:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
-                    break;
-                case QLType.Number:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
-                    break;
-                case QLType.String:
-                    VariableStore.SetValue(node.Question.Identifier, expressionFunction());
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
+            VariableStore.SetValue(node.Question.Identifier, expressionFunction());            
 
             RuleContainer.AddRule(
                 new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
@@ -130,26 +114,11 @@ namespace Questionnaires.QuestionaireBuilder
             question.Name = node.Identifier;
 
             // We gotta convert the enums here, also we gotta assign default values
-            question.Type = (Question.QuestionType)node.Type; // This is a hack to cast because they have the same indexes
+            // TODO: I broke this!!!
+            //question.Type = (Question.QuestionType)node.Type; // This is a hack to cast because they have the same indexes
             Renderer.AddQuestion(question);
-
-            switch (node.Type)
-            {
-                case QLType.Bool:
-                    VariableStore.SetValue(question.Name, false);
-                    break;
-                case QLType.Money:
-                    VariableStore.SetValue(question.Name, 0.0m);
-                    break;
-                case QLType.Number:
-                    VariableStore.SetValue(question.Name, 0);
-                    break;
-                case QLType.String:
-                    VariableStore.SetValue(question.Name, "");
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException();
-            }            
+            VariableStore.SetValue(question.Name, node.Type);
+          
             return () => { return new StringValue(node.Identifier); };
         }
 

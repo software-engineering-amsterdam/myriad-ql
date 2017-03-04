@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis;
 using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.AST
@@ -26,21 +27,23 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            Trace.Assert(parameters.Count == 2);
-            var leftHandSideType = parameters[0];
-            var rightHandsSideType = parameters[1];
+            // Check both child nodes
+            var questionSemanticallyValid = Question.CheckSemantics(context, messages);
+            var expressionSemanticallyValid = Expression.CheckSemantics(context, messages);
+            if (!questionSemanticallyValid || !expressionSemanticallyValid)
+                return false;
 
             // Computed question is like an assignment. Only valid when question type is
-            // equal to the expression type (we do not support (implicit) casts
-            if(leftHandSideType != rightHandsSideType)
+            // equal to the expression type. We do not support (implicit) casts
+            if(Question.Type.GetType() != Expression.GetResultType(context).GetType())
             {
-                events.Add(new Error(string.Format("Cannot assign expression with type {0} to question of type {1}", rightHandsSideType, leftHandSideType)));                
+                messages.Add(new Error(string.Format("Cannot assign expression with type {0} to question of type {1}", Question.Type, Expression.GetResultType(context))));
+                return false;
             }
 
-            // Question is our end stop so there is no type to return
-            return null;
+            return true;
         }
     }
 }

@@ -4,6 +4,7 @@ using Questionnaires.AST.Operators;
 using System.ComponentModel;
 using System.Diagnostics;
 using Questionnaires.AST.Literals;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
@@ -38,21 +39,21 @@ namespace Questionnaires.AST
             string identifier = context.Identifier().GetText();
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
-            QLType parsedType;
+            IValue parsedType;
 
             switch (type)
             {
                 case "boolean":
-                    parsedType = QLType.Bool;
+                    parsedType = new BoolValue();
                     break;                   
                 case "money":
-                    parsedType = QLType.Money;
+                    parsedType = new DecimalValue();
                     break;
                 case "int":
-                    parsedType = QLType.Number;
+                    parsedType = new IntValue();
                     break;
                 case "string":
-                    parsedType = QLType.String;
+                    parsedType = new StringValue();
                     break;
                 default:
                     throw new InvalidEnumArgumentException();

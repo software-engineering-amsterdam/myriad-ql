@@ -8,6 +8,12 @@ namespace Questionnaires.Value
 {
     public class DecimalValue : Value<decimal>
     {
+        public DecimalValue()
+        {
+            // Todo remove hack
+            this.Val = 0.1m;
+        }
+
         public DecimalValue(decimal value)
         {
             this.Val = value;

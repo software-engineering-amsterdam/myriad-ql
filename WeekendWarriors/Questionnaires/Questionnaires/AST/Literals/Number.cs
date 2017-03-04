@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST.Literals
 {
@@ -19,26 +21,27 @@ namespace Questionnaires.AST.Literals
 
         public int Value { get { return int.Parse(StringValue); } }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            Trace.Assert(parameters.Count == 0);
-
             try
-            {
-                // Literal is invalid if we cannot parse it to an integer
+            {                
                 var val = Value;
-                return QLType.Number;
+                return true;
             }
             catch (FormatException)
             {
-                events.Add(new Error(string.Format("Cannot convert literal {0} to number", StringValue)));                
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to number", StringValue)));
             }
             catch (OverflowException)
             {
-                events.Add(new Error(string.Format("Value {0} is too large for number variable", StringValue)));                
+                messages.Add(new Error(string.Format("Value {0} is too large for number variable", StringValue)));
             }
+            return false;
+        }
 
-            return null;
+        public IValue GetResultType(QLContext context)
+        {
+            return new IntValue();
         }
     }
 }

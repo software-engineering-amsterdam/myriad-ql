@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.SemanticAnalysis;
 using Questionnaires.SemanticAnalysis.Messages;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
     public class Question : INode
     {
-        public Question(string identifier, string body, QLType type)
+        public Question(string identifier, string body, IValue type)
         {
             this.Identifier = identifier;
             this.Body = body;
@@ -26,15 +28,15 @@ namespace Questionnaires.AST
             get;
         }
 
-        public QLType Type
+        public IValue Type
         {
             get;
         }
         
-
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            return Type;
+            // Nothing to check for a qestion
+            return true;
         }
     }
 }

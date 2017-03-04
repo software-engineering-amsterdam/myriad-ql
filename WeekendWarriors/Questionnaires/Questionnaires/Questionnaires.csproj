@@ -124,11 +124,7 @@
   <ItemGroup>
     <Compile Include="AST\ASTFactory.cs" />
     <Compile Include="AST\Node.cs" />
-    <Compile Include="AST\Operators\Arithmetic.cs" />
     <Compile Include="AST\Operators\Binary.cs" />
-    <Compile Include="AST\Operators\Comparison.cs" />
-    <Compile Include="AST\Operators\Equality.cs" />
-    <Compile Include="AST\Operators\Logical.cs" />
     <Compile Include="AST\Operators\Unary.cs" />
     <Compile Include="AST\ComputedQuestion.cs" />
     <Compile Include="AST\Conditional.cs" />

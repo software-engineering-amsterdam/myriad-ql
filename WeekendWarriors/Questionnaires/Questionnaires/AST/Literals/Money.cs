@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
 using System.Globalization;
+using Questionnaires.SemanticAnalysis;
+using Questionnaires.Value;
 
 namespace Questionnaires.AST.Literals
 {
@@ -20,26 +22,29 @@ namespace Questionnaires.AST.Literals
 
         public decimal Value { get { return decimal.Parse(StringValue, NumberStyles.Any, CultureInfo.InvariantCulture); } }
 
-        public QLType? CheckOperandTypes(List<QLType> parameters, SemanticAnalysis.QLContext context, List<SemanticAnalysis.Messages.Message> events)
+        public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            Trace.Assert(parameters.Count == 0);
-
             try
             {
                 // Literal is invalid if we cannot parse it to a decimal
                 var val = Value;
-                return QLType.Money;
+                return true;
             }
             catch (FormatException)
             {
-                events.Add(new Error(string.Format("Cannot convert literal {0} to money", StringValue)));                
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to money", StringValue)));
             }
             catch (OverflowException)
             {
-                events.Add(new Error(string.Format("Value {0} is too large for decimal variable", StringValue)));                
+                messages.Add(new Error(string.Format("Value {0} is too large for decimal variable", StringValue)));
             }
 
-            return null;
+            return false;
+        }
+
+        public IValue GetResultType(QLContext context)
+        {
+            return new DecimalValue();
         }
     }
 }
