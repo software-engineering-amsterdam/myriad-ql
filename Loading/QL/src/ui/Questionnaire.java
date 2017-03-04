@@ -42,12 +42,25 @@ public class Questionnaire extends Application {
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
 	    	Value oldAnswer = answers.getAnswer(name); 
+	    	System.out.println(oldAnswer);
+	    	System.out.println(newValue);
+	    	//System.out.println(oldAnswer.getValue().getValue());
+	    	//System.out.println(newValue.getValue().get);
 	    	// TODO change the getValue().getString() construction
-			if (oldAnswer == null || !newValue.getValue().getString().equals(oldAnswer.getValue().getString())) {
+	    	System.out.println("ik ben in updateQuestionnaire" );
+	    	// TODO eq still does not work - compares ATOMS
+			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
+				System.out.println(newValue.getValue());
+				if (oldAnswer != null) { 
+					System.out.println(oldAnswer.getValue());
+					System.out.println((oldAnswer.getValue().eq(newValue.getValue()).getValue()));
+					System.out.println(oldAnswer.getValue().getString());
+					System.out.println(newValue.getValue().getString());
+				}
 				System.out.println("ik wil een waarde updaten");
-				answers.addAnswer(name, newValue);
-				System.out.println(name);
-				System.out.println(answers.getAnswer(name).getValue().getString());
+				answers.addAnswer(name, newValue); // TODO save value as integer
+				// System.out.println(name);
+				// System.out.println(answers.getAnswer(name).getValue().getString());
 				// Save the title
 				Node title = grid.getChildren().get(0);
 		    	grid.getChildren().clear();
@@ -107,7 +120,7 @@ public class Questionnaire extends Application {
     		if (value == null) {
     			continue;
     		}
-    		System.out.println(answers.getAnswer(question.getName()).getValue().getString());
+    		// System.out.println(answers.getAnswer(question.getName()).getValue().getString());
     		question.setAnswer(value);
     	}
     }

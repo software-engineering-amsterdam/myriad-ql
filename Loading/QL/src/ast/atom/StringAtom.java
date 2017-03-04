@@ -13,12 +13,12 @@ public class StringAtom extends Atom {
 
     @Override
 	public BoolAtom eq(Atom other) {
-		return new BoolAtom(str == other.getString(), getLine());
+		return new BoolAtom(str.equals(other.getString()), getLine());
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
-		return new BoolAtom(str != other.getString(), getLine());
+		return new BoolAtom(!str.equals(other.getString()), getLine());
 	}
 		
 	@Override

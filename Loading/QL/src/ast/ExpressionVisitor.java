@@ -1,6 +1,7 @@
 package ast;
 
 import ast.atom.BoolAtom;
+import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
 import ast.expression.*;
@@ -28,4 +29,5 @@ public interface ExpressionVisitor<T> {
     T visit(BoolAtom expr);
     T visit(IntegerAtom expr);
     T visit(StringAtom expr);
+    T visit(EmptyAtom expr);
 }

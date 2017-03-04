@@ -57,7 +57,7 @@ expr returns [Expression result]
 
 atom returns [Atom result]
  : INT    { $result = new IntegerAtom(Integer.parseInt($INT.text), $ctx.start.getLine()); }
- | STRING { $result = new StringAtom($STRING.text, $ctx.start.getLine()); }
+ | STRING { $result = new StringAtom($STRING.text.substring(1, $STRING.text.length()-1), $ctx.start.getLine()); }
  | BOOL   { $result = new BoolAtom(Boolean.valueOf($BOOL.text), $ctx.start.getLine()); }
  ;
 

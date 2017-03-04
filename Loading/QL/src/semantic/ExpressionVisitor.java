@@ -3,6 +3,7 @@ package semantic;
 
 import ast.*;
 import ast.atom.BoolAtom;
+import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
 import ast.expression.*;
@@ -63,7 +64,8 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	public Type visit(AddExpression expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
-
+        
+        // TODO look up type
         check(new IntegerType(1), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
@@ -75,7 +77,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new BooleanType(1), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -95,7 +97,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -105,7 +107,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -115,7 +117,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -150,7 +152,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -160,7 +162,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -189,7 +191,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -198,7 +200,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	public Type visit(NotExpression expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new IntegerType(1), type_lhs);
+        check(new BooleanType(1), type_lhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -208,7 +210,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new BooleanType(1), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -245,6 +247,12 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	@Override
 	public Type visit(StringAtom expr) {
         return new StringType(expr.getLine());
+	}
+	
+	@Override
+	public Type visit(EmptyAtom expr) {
+		System.out.println("Type of a empty atom");
+		return null; // TODO what to do here
 	}
 
 	// TODO do we want to add the throw after this function

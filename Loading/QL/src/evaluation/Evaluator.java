@@ -3,6 +3,7 @@ package evaluation;
 import ast.*;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
+import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
 import ast.expression.*;
@@ -97,9 +98,15 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 		if (!environment.isAnswered(id.getName())) {
 			// TODO throw
 			// System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
-			return null;
+			return new EmptyAtom(0);
 		}
-		return environment.getAnswer(id.getName()).getValue();	
+		// TODO change!
+		// System.out.println("Returns always true");
+		// TODO change getValueGetValue
+		// TODO change ID is not always a boolAtom!
+		// return new BoolAtom(true, 0);
+		// return new BoolAtom(environment.getAnswer(id.getName()).getValue().getValue(), 0);
+		return environment.getAnswer(id.getName()).getValue();
 	}
 
     @Override
@@ -161,6 +168,11 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
     public Atom visit(StringAtom expr) {
         return expr;
     }
+
+	@Override
+	public Atom visit(EmptyAtom expr) {
+		return expr;
+	}
 }
 
 

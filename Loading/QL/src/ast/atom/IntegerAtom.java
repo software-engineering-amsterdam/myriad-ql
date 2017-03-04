@@ -53,6 +53,8 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public BoolAtom eq(Atom other) {
+		System.out.println(other.getNumber());
+		System.out.println(this.getNumber());
 		return new BoolAtom(number.equals(other.getNumber()), getLine());
 	}
 

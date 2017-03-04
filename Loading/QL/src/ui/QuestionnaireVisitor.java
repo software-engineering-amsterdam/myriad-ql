@@ -63,7 +63,7 @@ public class QuestionnaireVisitor extends Evaluator {
     
     @Override
     public void visit(ComputedQuestion question) {
-        Atom value = question.getComputedQuestion().accept(this);
+        Atom atom = question.getComputedQuestion().accept(this);
         activeQuestions.add(new QuestionnaireQuestion(question.getVariable(),
         		question.getLabel(), question.getType()));
         // TODO what to do with the answer of a computed question?
@@ -71,8 +71,10 @@ public class QuestionnaireVisitor extends Evaluator {
 
     @Override
     public void visit(Statement statement) {
-        Atom value = statement.getExpression().accept(this);
-        if (value.equals(new BoolValue(true))) { // TODO check booltype?
+        Atom atom = statement.getExpression().accept(this);
+        // TODO nicer check for emptyAtom?
+        if (atom != null && atom.getValue()) { // TODO check booltype?
+            System.out.println("The value of atom: " + atom.getValue());
         	statement.getBlock().accept(this);
         }
     }

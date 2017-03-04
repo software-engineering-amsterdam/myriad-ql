@@ -1,6 +1,8 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ui.field.Check;
+import ui.field.Field;
 
 public class BooleanType extends Type {
 	
@@ -13,6 +15,12 @@ public class BooleanType extends Type {
 	public void accept(TypeVisitor v) {
 		v.visit(this);
 		
+	}
+
+	@Override
+	public Field getField(String name) {
+		// TODO Auto-generated method stub
+		return new Check(name);
 	}
 
 }

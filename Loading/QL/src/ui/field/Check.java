@@ -20,18 +20,27 @@ public class Check implements Field {
 
 	private Notifier listener;
 	private CheckBox field;
+	private String name;
+	private boolean value; // TODO value is not saved
+	// ad this CheckBox is created over and over again
 	
 	public Check(String name) {
 		
 		this.field = new CheckBox();
+		this.name = name;
+		this.value = false;
 		
 		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
 	           
 			@Override
            public void changed(ObservableValue<? extends Boolean> observable,
                                Boolean oldValue, Boolean newValue) {
-           	
-	       		listener.updateQuestionnaire(name, new BoolValue(newValue));
+				
+//				if (!newValue.equals(value)) {
+//					value = newValue;
+					listener.updateQuestionnaire(name, new BoolValue(name, newValue));
+				//}
+	       		
             }
 		});
 	}
@@ -43,7 +52,7 @@ public class Check implements Field {
 	
 	@Override
 	public Value getAnswer() {
-		return new BoolValue(field.isSelected());
+		return new BoolValue(name, field.isSelected());
 	}
 	
 	@Override

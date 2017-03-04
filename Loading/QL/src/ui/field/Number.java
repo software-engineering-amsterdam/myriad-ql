@@ -16,9 +16,11 @@ public class Number implements Field {
 	
 	private Notifier listener;
 	private TextField field;
+	private String name;
 	
 	public Number(String name) {
 		this.field = new TextField();
+		this.name = name;
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
@@ -26,8 +28,12 @@ public class Number implements Field {
 	      				    String oldValue, String newValue) {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
-	          } else {
-	        	  listener.updateQuestionnaire(name, new StringValue(newValue));
+	          } else if (!newValue.isEmpty()) {
+	        	  System.out.println(newValue);
+	        	  Integer tst = Integer.parseInt(newValue);
+	        	  listener.updateQuestionnaire(name, 
+	        			  new IntegerValue(name, tst));
+
 	          }
 	      }
     	});
@@ -39,14 +45,14 @@ public class Number implements Field {
 		if (str.isEmpty()) {
 			return new EmptyValue();
 		}
-		return new IntegerValue(Integer.valueOf(str));
+		return new IntegerValue(name, Integer.valueOf(str));
 	}
 
 	@Override
 	public void setAnswer(Value value) {
-		if (value.getValue().getString() != null) {
-			System.out.println(value.getValue().getString());
-			field.setText((String) value.getValue().getString()); // TODO improve strange that getString is used
+		if (value.getValue().getNumber() != null) {
+			field.setText(Integer.toString(value.getValue().getNumber())); // TODO getValue, getNumber : move number etc to value
+      	  	field.end();
 		}
 		
 	}

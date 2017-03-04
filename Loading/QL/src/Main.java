@@ -7,8 +7,8 @@ import ui.Questionnaire;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
-				 + "Name1: \"Question1\" boolean "
-				 + "if (1 + 3 == 3) {"
+				 + "Name1: \"Question1\" string "
+				 + "if (Name1 == \"dag\") {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
 				 + "Name3: \"Question3\" boolean "

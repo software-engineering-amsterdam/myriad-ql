@@ -12,16 +12,17 @@ public class Text implements Field {
 	
 	private Notifier listener;
 	private TextField field;
+	private String name;  // TODO should value not be a member instead?
 	
 	public Text(String name) {
 		this.field = new TextField();
+		this.name = name;
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	listener.updateQuestionnaire(name, new StringValue(newValue));
-            	field.requestFocus();
+            	listener.updateQuestionnaire(name, new StringValue(name, newValue));
             }
     	});
 	}
@@ -31,13 +32,14 @@ public class Text implements Field {
 		if (field.getText().isEmpty()) {
 			return new EmptyValue();
 		}	
-		return new StringValue(field.getText());
+		return new StringValue(name, field.getText());
 	}
 	
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setText(value.getValue().getString());	
+		field.setText(value.getValue().getString());
+  	  	field.end();
 	}
 
 
