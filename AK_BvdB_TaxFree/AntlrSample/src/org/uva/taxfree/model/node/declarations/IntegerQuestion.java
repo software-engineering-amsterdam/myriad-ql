@@ -1,26 +1,14 @@
 package org.uva.taxfree.model.node.declarations;
 
-import javax.swing.*;
-import java.awt.*;
+import java.text.NumberFormat;
 
-public class IntegerQuestion extends NamedNode {
-    private JFormattedTextField mTextField;
-
+public class IntegerQuestion extends TextFieldQuestion {
     public IntegerQuestion(String description, String id) {
         super(description, id);
-        mTextField = new JFormattedTextField();
-        mTextField.setValue(0);
-        mTextField.setPreferredSize(new Dimension(100, 25));
     }
 
     @Override
-    protected void fillPanel(JPanel parent) {
-        parent.add(mTextField);
+    protected Object getFormatObject() {
+        return new Integer(0);
     }
-
-    @Override
-    public String resolveValue() {
-        return mTextField.getValue().toString();
-    }
-
 }
