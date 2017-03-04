@@ -4,6 +4,7 @@ import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,9 +28,10 @@ public class QuestionForm {
         JFrame frame = new JFrame(mFormNode.toString());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(createComponents());
-        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setPreferredSize(new Dimension(640, 480));
+        frame.pack();
         return frame;
     }
 
