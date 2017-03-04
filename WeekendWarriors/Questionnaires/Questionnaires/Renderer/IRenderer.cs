@@ -11,7 +11,7 @@ namespace Questionnaires.Renderer
     {
         void AddQuestion(IQuestion question);
         void SetValue(string name, Questionnaires.Value.IValue value);
-        void SetVisibility(string name, Visibility visibility);
+        void SetVisibility(string name, bool visibile);
         void SetWindowTitle(string title);
     }
 }

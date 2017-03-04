@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Question
 {
-    public enum Visibility
-    {
-        Visible,
-        Hidden
-    }
 
     public enum QuestionType
     {
