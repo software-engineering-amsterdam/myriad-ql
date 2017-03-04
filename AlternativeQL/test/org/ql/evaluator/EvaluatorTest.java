@@ -1,15 +1,12 @@
 package org.ql.evaluator;
 
 import org.junit.Test;
-import org.ql.ast.expression.arithmetic.Product;
+import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
-import org.ql.ast.expression.relational.Equals;
-import org.ql.ast.expression.relational.LogicalOr;
-import org.ql.ast.expression.relational.LowerThanOrEqual;
-import org.ql.ast.expression.relational.NotEqual;
+import org.ql.ast.expression.relational.*;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.DecimalValue;
 import org.ql.evaluator.value.IntegerValue;
@@ -104,8 +101,6 @@ public class EvaluatorTest {
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(new IntegerLiteral(2), new IntegerLiteral(1));
         BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
-
-        System.out.println(actualBooleanValue.getPlainValue());
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -226,6 +221,46 @@ public class EvaluatorTest {
     }
 
     @Test
+    public void shouldReturnBooleanTrueValueOnNotEqualsUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(4)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueOnNotEqualsUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new DecimalLiteral(new BigDecimal(4)), new DecimalLiteral(new BigDecimal(4)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueOnNotEqualsUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new IntegerLiteral(4), new IntegerLiteral(3));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueOnNotEqualsUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        NotEqual actualNotEquals = new NotEqual(new IntegerLiteral(3), new IntegerLiteral(3));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
     public void shouldReturnIntegerOnProductUsingIntegers() {
         Evaluator evaluator = new Evaluator();
 
@@ -235,5 +270,253 @@ public class EvaluatorTest {
         assertSame(6, actualProductValue.getPlainValue());
     }
 
+    @Test
+    public void shouldReturnIntegerOnProductUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
 
+        Product actualProduct = new Product(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
+        DecimalValue actualProductValue = (DecimalValue) evaluator.visit(actualProduct, null);
+
+        assertEquals(new BigDecimal(15), actualProductValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnIncrementUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Increment actualIncrement = new Increment(new IntegerLiteral(5));
+        IntegerValue actualIncrementValue = (IntegerValue) evaluator.visit(actualIncrement, null);
+
+        assertSame(6, actualIncrementValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnDecimalOnIncrementUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        Increment actualIncrement = new Increment(new DecimalLiteral(new BigDecimal(5)));
+        DecimalValue actualIncrementValue = (DecimalValue) evaluator.visit(actualIncrement, null);
+
+        assertEquals(new BigDecimal(6), actualIncrementValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnDecrementUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Decrement actualDecrement = new Decrement(new IntegerLiteral(5));
+        IntegerValue actualDecrementValue = (IntegerValue) evaluator.visit(actualDecrement, null);
+
+        assertSame(4, actualDecrementValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnDecimalOnDecrementUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        Decrement actualDecrement = new Decrement(new DecimalLiteral(new BigDecimal(5)));
+        DecimalValue actualDecrementValue = (DecimalValue) evaluator.visit(actualDecrement, null);
+
+        assertEquals(new BigDecimal(4), actualDecrementValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnSubtractionUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Subtraction actualSubtraction = new Subtraction(new IntegerLiteral(5), new IntegerLiteral(3));
+        IntegerValue actualSubtractionValue = (IntegerValue) evaluator.visit(actualSubtraction, null);
+
+        assertSame(2, actualSubtractionValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnDecimalOnSubtractionUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        Subtraction actualSubtraction = new Subtraction(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
+        DecimalValue actualSubtractionValue = (DecimalValue) evaluator.visit(actualSubtraction, null);
+
+        assertEquals(new BigDecimal(2), actualSubtractionValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnAdditionUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Addition actualAddition = new Addition(new IntegerLiteral(5), new IntegerLiteral(3));
+        IntegerValue actualAdditionValue = (IntegerValue) evaluator.visit(actualAddition, null);
+
+        assertSame(8, actualAdditionValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnDecimalOnAdditionUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        Addition actualAddition = new Addition(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
+        DecimalValue actualAdditionValue = (DecimalValue) evaluator.visit(actualAddition, null);
+
+        assertEquals(new BigDecimal(8), actualAdditionValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerOnDivisionUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        Division actualDivision = new Division(new IntegerLiteral(11), new IntegerLiteral(2));
+        IntegerValue actualDivisionValue = (IntegerValue) evaluator.visit(actualDivision, null);
+
+        assertSame(5, actualDivisionValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnIntegerWhenEncapsulatedAsGroup() {
+        Evaluator evaluator = new Evaluator();
+
+        Group actualGroup = new Group(new IntegerLiteral(3));
+        IntegerValue actualIntegerValue = (IntegerValue) evaluator.visit(actualGroup, null);
+
+        assertSame(3, actualIntegerValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromGreaterThanUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThan greaterThan = new GreaterThan(new IntegerLiteral(5), new IntegerLiteral(8));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterThanUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThan greaterThan = new GreaterThan(new IntegerLiteral(5), new IntegerLiteral(2));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromGreaterThanUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThan greaterThan = new GreaterThan(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(8)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterThanUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThan greaterThan = new GreaterThan(new DecimalLiteral(new BigDecimal(10)), new DecimalLiteral(new BigDecimal(8)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromNegation() {
+        Evaluator evaluator = new Evaluator();
+
+        Negation greaterThan = new Negation(new BooleanLiteral(false));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromNegation() {
+        Evaluator evaluator = new Evaluator();
+
+        Negation greaterThan = new Negation(new BooleanLiteral(true));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromLogicalAnd() {
+        Evaluator evaluator = new Evaluator();
+
+        LogicalAnd logicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(false));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalAnd, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromLogicalAnd() {
+        Evaluator evaluator = new Evaluator();
+
+        LogicalAnd logicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalAnd, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromGreaterOrEqualThanUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(8));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterOrEqualThanUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(2));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanFalseValueFromGreaterThanOrEqualUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(8)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertFalse(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterThanOrEqualUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(10)), new DecimalLiteral(new BigDecimal(8)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterOrEqualOnEqualThanUsingIntegers() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(5));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
+
+    @Test
+    public void shouldReturnBooleanTrueValueFromGreaterThanOrEqualOnEqualUsingDecimals() {
+        Evaluator evaluator = new Evaluator();
+
+        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(3)));
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+
+        assertTrue(actualBooleanValue.getPlainValue());
+    }
 }
