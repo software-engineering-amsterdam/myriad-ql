@@ -20,20 +20,6 @@ public class QuestionnaireQuestion {
 		this.entryField = type.getField(name);
 	}
 
-	// TODO move to type or add type visitor
-//	private QControl deriveField(Type type) {
-//        if ("string" == type.getType()) {
-//        	return new QControl(new ui.field.Text(name));
-//        } else if ("boolean" == type.getType()) {
-//        	return new QControl(new ui.field.Check(name));
-//        } else if ("integer" == type.getType()) {
-//        	return new QControl(new ui.field.Number(name));
-//        } else {
-//        	System.out.println("unknown type!");
-//        	return null;
-//        }
-//	}
-
 	// TODO default return statement
 	public Value getAnswer() {
 		return entryField.getAnswer();
