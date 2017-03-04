@@ -27,10 +27,15 @@ public class FloatField extends TextField implements QLField{
                 }
             }
         });
+
+        if (environment.hasExpr(variableName)) {
+            environment.addEventListener(() -> {
+                update(environment.getVariableValue(variableName));
+            });
+        }
     }
 
-    @Override
-    public void update(Value value) {
+    private void update(Value value) {
         this.textProperty().setValue(String.valueOf(value.getValue()));
     }
 

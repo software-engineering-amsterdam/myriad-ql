@@ -24,7 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
-            reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
+            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
             //reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
@@ -48,6 +48,9 @@ public class Main extends Application {
             ViewASTVisitor viewASTVisitor = new ViewASTVisitor(env);
             primaryStage.setScene(viewASTVisitor.startVisitor(parser.getResult()));
             primaryStage.show();
+
+            /* On update resize form. */
+            env.addEventListener(primaryStage::sizeToScene);
 /*
 
             env.setVariableValue("hasBoughtHouse", new IntValue(6));

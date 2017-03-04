@@ -52,6 +52,10 @@ public class Environment {
         return null;
     }
 
+    public Value evalExpr(Expr expr) {
+        return evalASTVisitor.startVisitor(expr);
+    }
+
 
     public Type getVariableType(String key) {
         if (variables.containsKey(key)) {

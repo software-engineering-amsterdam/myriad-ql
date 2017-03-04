@@ -50,7 +50,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
         Type expr = node.getCondition().accept(this);
 
 
-        if (!expr.equals(new ErrorType())) {
+        if (expr.equals(new ErrorType())) {
             errorHandler.addError(new Error("Error in the expression", node.getCondition().getRowNumber()));
         }
 

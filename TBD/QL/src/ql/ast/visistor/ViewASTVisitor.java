@@ -4,9 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
 import ql.ast.environment.Environment;
-import ql.view.QLFormBox;
-import ql.view.QLQuestionBox;
-import ql.view.QLStatementsBox;
+import ql.view.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,35 +41,28 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
                 statementBoxes.add(stat);
         }
 
-        QLStatementsBox statementsBox = new QLStatementsBox();
-        statementsBox.addStatements(statementBoxes.toArray(new VBox[statementBoxes.size()]));
-        return statementsBox;
+        return new QLStatementsBox(statementBoxes.toArray(new VBox[statementBoxes.size()]));
     }
 
     public VBox visit(If node) {
-        node.getCondition().accept(this);
-        node.getIfBlock().accept(this);
-        return null;
+        Expr condition = node.getCondition();
+        VBox statements = node.getIfBlock().accept(this);
+        return new QLIfBox(environment, condition, statements);
     }
 
     public VBox visit(IfElse node) {
-        node.getCondition().accept(this);
-        node.getIfBlock().accept(this);
-        node.getElseBlock().accept(this);
-        return null;
+        Expr condition = node.getCondition();
+        VBox ifStatements = node.getIfBlock().accept(this);
+        VBox elseStatements = node.getElseBlock().accept(this);
+        return new QLIfElseBox(environment, condition, ifStatements, elseStatements);
     }
 
 
     public VBox visit(Question node) {
-        System.out.println("1:  " + node.getId());
         return new QLQuestionBox(environment, node.getQuestion(), node.getId());
-
     }
 
-
-
     public VBox visit(QuestionExpr node) {
-        System.out.println("2:  " + node.getId());
         return new QLQuestionBox(environment, node.getQuestion(), node.getId());
     }
 }

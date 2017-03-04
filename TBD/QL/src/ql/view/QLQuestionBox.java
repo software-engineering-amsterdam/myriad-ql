@@ -33,11 +33,6 @@ public class QLQuestionBox extends VBox {
             throw new RuntimeException();
         }
 
-        if (environment.hasExpr(variableName)) {
-            environment.addEventListener(() -> {
-                field.update(environment.getVariableValue(variableName));
-            });
-        }
         this.getChildren().addAll(new Text(question), field.getNode());
     }
 }

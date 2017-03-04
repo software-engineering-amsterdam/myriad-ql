@@ -26,6 +26,11 @@ public class BooleanField extends ToggleGroup implements QLField{
         this.selectedToggleProperty().addListener(new QLChangeListener<Toggle>(environment, variableName) {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (newValue == null) {
+                    this.setValueUndefined();
+                    return;
+                }
+
                 if (newValue.equals(rbYes)) {
                     this.setValue(true);
                 }else if (newValue.equals(rbNo)) {
@@ -35,10 +40,15 @@ public class BooleanField extends ToggleGroup implements QLField{
                 }
             }
         });
+
+        if (environment.hasExpr(variableName)) {
+            environment.addEventListener(() -> {
+                update(environment.getVariableValue(variableName));
+            });
+        }
     }
 
-    @Override
-    public void update(Value value) {
+    private void update(Value value) {
         if (value instanceof UndefinedValue) {
             rbYes.selectedProperty().setValue(false);
             rbNo.selectedProperty().setValue(false);
