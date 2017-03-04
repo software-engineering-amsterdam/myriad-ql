@@ -17,6 +17,11 @@
 
         public double Value { get; set; }
 
+        public override IValue Parse(string value)
+        {
+            return new DecimalValue(value);
+        }
+
         public override IValue Add(IValue other)
         {
             return other.Add(this);
@@ -55,6 +60,136 @@
         public override IValue Substract(IntegerValue other)
         {
             return new DecimalValue(this.Value - other.Value);
+        }
+
+        public override IValue Divide(IValue other)
+        {
+            return other.Divide(this);
+        }
+
+        public override IValue Divide(DecimalValue other)
+        {
+            return new DecimalValue(other.Value / this.Value);
+        }
+
+        public override IValue Divide(MoneyValue other)
+        {
+            return new MoneyValue(other.Value / (decimal)this.Value);
+        }
+
+        public override IValue Divide(IntegerValue other)
+        {
+            return new DecimalValue(other.Value / this.Value);
+        }
+
+        public override IValue Multiply(IValue other)
+        {
+            return other.Multiply(this);
+        }
+
+        public override IValue Multiply(DecimalValue other)
+        {
+            return new DecimalValue(this.Value * other.Value);
+        }
+
+        public override IValue Multiply(MoneyValue other)
+        {
+            return new MoneyValue(other.Value * (decimal)this.Value);
+        }
+
+        public override IValue Multiply(IntegerValue other)
+        {
+            return new DecimalValue(this.Value * other.Value);
+        }
+
+        public override BooleanValue LessThan(IValue other)
+        {
+            return other.LessThan(this);
+        }
+
+        public override BooleanValue LessThan(DecimalValue other)
+        {
+            return new BooleanValue(this.Value < other.Value);
+        }
+
+        public override BooleanValue LessThan(MoneyValue other)
+        {
+            return new BooleanValue((decimal)this.Value < other.Value);
+        }
+
+        public override BooleanValue LessThan(IntegerValue other)
+        {
+            return new BooleanValue(this.Value < other.Value);
+        }
+
+        public override BooleanValue GreaterThan(IValue other)
+        {
+            return other.GreaterThan(this);
+        }
+
+        public override BooleanValue GreaterThan(DecimalValue other)
+        {
+            return new BooleanValue(this.Value > other.Value);
+        }
+
+        public override BooleanValue GreaterThan(MoneyValue other)
+        {
+            return new BooleanValue((decimal)this.Value > other.Value);
+        }
+
+        public override BooleanValue GreaterThan(IntegerValue other)
+        {
+            return new BooleanValue(this.Value > other.Value);
+        }
+
+        public override BooleanValue GreaterThanOrEqualTo(IValue other)
+        {
+            return other.GreaterThanOrEqualTo(this);
+        }
+
+        public override BooleanValue GreaterThanOrEqualTo(MoneyValue other)
+        {
+            return new BooleanValue((decimal)this.Value >= other.Value);
+        }
+
+        public override BooleanValue GreaterThanOrEqualTo(IntegerValue other)
+        {
+            return new BooleanValue(this.Value >= other.Value);
+        }
+
+        public override BooleanValue GreaterThanOrEqualTo(DecimalValue other)
+        {
+            return new BooleanValue(this.Value >= other.Value);
+        }
+
+        public override BooleanValue LessThanOrEqualTo(IValue other)
+        {
+            return other.LessThanOrEqualTo(this);
+        }
+
+        public override BooleanValue LessThanOrEqualTo(DecimalValue other)
+        {
+            return new BooleanValue(this.Value <= other.Value);
+        }
+
+        public override BooleanValue LessThanOrEqualTo(MoneyValue other)
+        {
+            return new BooleanValue((decimal)this.Value <= other.Value);
+        }
+
+        public override BooleanValue LessThanOrEqualTo(IntegerValue other)
+        {
+            return new BooleanValue(this.Value <= other.Value);
+        }
+
+        public override IValue Negative()
+        {
+            return new DecimalValue(-this.Value);
+        }
+
+        public override IValue Positive()
+        {
+            return new DecimalValue(+this.Value);
         }
     }
 }
