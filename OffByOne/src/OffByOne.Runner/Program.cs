@@ -27,7 +27,7 @@
         public static void Main(string[] args)
         {
             ////TestQlGrammar();
-            TestQlsGrammar();
+            ////TestQlsGrammar();
 
             ////var typeChcker = new TypeChecker();
             ////var testCondition = new IfStatement(
@@ -47,6 +47,9 @@
             ////}
 
             ////Console.WriteLine("Type check done!");
+
+            var evaluator = new Evaluator();
+            ////var expression = new AddExpression();
         }
 
         private static void TestQlGrammar()

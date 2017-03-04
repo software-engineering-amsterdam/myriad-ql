@@ -83,15 +83,15 @@
                 .ToList();
 
             Assert.Equal(2, sectionsOnFirstPage.Count);
-            Assert.True(sectionsOnFirstPage.Any(x => x.Name.Value.Value == "Buying"));
-            Assert.True(sectionsOnFirstPage.Any(x => x.Name.Value.Value == "Loaning"));
+            Assert.True(sectionsOnFirstPage.Any(x => x.Name.Value == "Buying"));
+            Assert.True(sectionsOnFirstPage.Any(x => x.Name.Value == "Loaning"));
 
             var assumption = castAstTree.Pages
                 .Where(x => x.Id == "Selling")
                 .SelectMany(x => x.Sections)
-                .Where(x => x.Name.Value.Value == "Selling")
+                .Where(x => x.Name.Value == "Selling")
                 .SelectMany(x => x.Sections)
-                .Where(x => x.Name.Value.Value == "You sold a house")
+                .Where(x => x.Name.Value == "You sold a house")
                 .SelectMany(x => x.QuestionRules)
                 .Any(x => x.Name == "valueResidue");
 

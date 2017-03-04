@@ -2,9 +2,9 @@
 {
     using MoreDotNet.Extensions.Collections;
 
-    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
@@ -24,27 +24,12 @@
             return default(TResult);
         }
 
-        public virtual TResult Visit(MoneyLiteral literal, TContext context)
-        {
-            return default(TResult);
-        }
-
         public virtual TResult Visit(DecimalLiteral literal, TContext context)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(BooleanLiteral literal, TContext context)
-        {
-            return default(TResult);
-        }
-
         public virtual TResult Visit(StringLiteral literal, TContext context)
-        {
-            return default(TResult);
-        }
-
-        public virtual TResult Visit(DateLiteral literal, TContext context)
         {
             return default(TResult);
         }

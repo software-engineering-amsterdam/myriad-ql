@@ -27,7 +27,7 @@
         public DateValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
-            ILiteralVisitor<TResult, TContext> visitor,
+            IExpressionVisitor<TResult, TContext> visitor,
             TContext context)
         {
             return visitor.Visit(this, context);

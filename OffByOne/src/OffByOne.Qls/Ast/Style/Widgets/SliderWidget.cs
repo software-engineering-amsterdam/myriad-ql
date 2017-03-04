@@ -4,6 +4,8 @@
     using OffByOne.Qls.Ast.Style.Widgets.Base;
     using OffByOne.Qls.Visitors.Contracts;
 
+    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
+
     public class SliderWidget : ListWidget
     {
         public SliderWidget(

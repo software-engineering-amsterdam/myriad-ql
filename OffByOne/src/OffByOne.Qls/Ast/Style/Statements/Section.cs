@@ -7,6 +7,8 @@
     using OffByOne.Qls.Ast.Style.Statements.Base;
     using OffByOne.Qls.Visitors.Contracts;
 
+    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
+
     public class Section : Statement
     {
         public Section(

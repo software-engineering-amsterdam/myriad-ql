@@ -1,11 +1,9 @@
 ﻿namespace OffByOne.Ql.Ast.Literals.Base
 {
-    using OffByOne.Ql.Values.Contracts;
+    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public abstract class Literal : AstNode, IVisitableLiteral
+    public abstract class Literal : Expression
     {
-        public abstract TResult Accept<TResult, TContext>(ILiteralVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
     }
 }

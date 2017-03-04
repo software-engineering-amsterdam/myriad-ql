@@ -8,8 +8,7 @@
     using OffByOne.Ql.Visitors.Contracts;
 
     public class Evaluator
-        : IExpressionVisitor<IValue, TypeEnvironment>,
-        ILiteralVisitor<IValue, TypeEnvironment>
+        : IExpressionVisitor<IValue, TypeEnvironment>
     {
         public IValue Evaluate(Expression expression, TypeEnvironment environment)
         {

@@ -36,7 +36,7 @@
 
             for (int i = 1; i < 5; i++)
             {
-                Assert.Equal("Section" + i, sectionNodes[i - 1].Name.Value.Value.Trim('"'));
+                Assert.Equal("Section" + i, sectionNodes[i - 1].Name.Value.Trim('"'));
             }
         }
 

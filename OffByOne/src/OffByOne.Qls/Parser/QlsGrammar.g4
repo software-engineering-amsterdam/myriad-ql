@@ -60,13 +60,10 @@ type
 	;
 
 literal
-	: BooleanLieral     # booleanLiteralType
-	| IntegerLiteral    # integerLiteralType
+	: IntegerLiteral    # integerLiteralType
 	| StringLiteral     # stringLiteralType
     | HexColorLiteral   # hexLiteralType
-    | MoneyLiteral      # moneyLiteralType
     | DecimalLiteral    # decimalLiteralType
-    | DateLiteral       # dateLiteralType
 	;
 
 // Lexer tokens. Move to separate file?

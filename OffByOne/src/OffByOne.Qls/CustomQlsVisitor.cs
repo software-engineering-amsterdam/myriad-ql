@@ -3,8 +3,8 @@
     using System.Linq;
 
     using OffByOne.Ql.Ast;
-    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.ValueTypes.Base;
+    using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules;
@@ -144,11 +144,6 @@
             return new DropDownWidget(options);
         }
 
-        public override AstNode VisitBooleanLiteralType(QlsGrammarParser.BooleanLiteralTypeContext context)
-        {
-            return new BooleanLiteral(context.GetText());
-        }
-
         public override AstNode VisitIntegerLiteralType(QlsGrammarParser.IntegerLiteralTypeContext context)
         {
             return new IntegerLiteral(context.GetText());
@@ -164,19 +159,9 @@
             return new HexLiteral(context.GetText());
         }
 
-        public override AstNode VisitDateLiteralType(QlsGrammarParser.DateLiteralTypeContext context)
-        {
-            return new DateLiteral(context.GetText());
-        }
-
         public override AstNode VisitDecimalLiteralType(QlsGrammarParser.DecimalLiteralTypeContext context)
         {
             return new DecimalLiteral(context.GetText());
-        }
-
-        public override AstNode VisitMoneyLiteralType(QlsGrammarParser.MoneyLiteralTypeContext context)
-        {
-            return new MoneyLiteral(context.GetText());
         }
 
         public override AstNode VisitOptionsList(QlsGrammarParser.OptionsListContext context)

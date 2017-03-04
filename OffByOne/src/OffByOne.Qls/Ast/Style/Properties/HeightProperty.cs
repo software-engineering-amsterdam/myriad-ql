@@ -4,6 +4,8 @@
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Visitors.Contracts;
 
+    using IntegerLiteral = OffByOne.Qls.Ast.Style.Literals.IntegerLiteral;
+
     public class HeightProperty : Property
     {
         public HeightProperty(IntegerLiteral value)

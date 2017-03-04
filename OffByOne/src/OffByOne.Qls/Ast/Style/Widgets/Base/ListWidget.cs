@@ -2,6 +2,8 @@
 {
     using OffByOne.Ql.Ast.Literals;
 
+    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
+
     public abstract class ListWidget : Widget
     {
         protected ListWidget(

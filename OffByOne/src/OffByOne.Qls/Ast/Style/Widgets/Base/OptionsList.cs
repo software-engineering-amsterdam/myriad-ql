@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast;
-    using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Qls.Ast.Style.Literals.Base;
 
     public class OptionsList<T> : AstNode, IList<T>
         where T : Literal

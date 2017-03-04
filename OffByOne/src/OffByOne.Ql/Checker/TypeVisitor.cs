@@ -9,6 +9,7 @@
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
+    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.ValueTypes;
@@ -19,8 +20,7 @@
     using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeVisitor
-        : BaseTypeCheckerVisitor,
-        IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
+        : IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
         IStatementVisitor<ValueType, VisitorTypeEnvironment>
     {
         public TypeVisitor()
@@ -147,6 +147,41 @@
             expression.Statements.ForEach(x => x.Accept(this, context));
 
             return TypeConstants.VoidType;
+        }
+
+        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.IntegerType;
+        }
+
+        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.MoneyType;
+        }
+
+        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.DecimalType;
+        }
+
+        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.BooleanType;
+        }
+
+        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.StringType;
+        }
+
+        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.DateType;
+        }
+
+        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.StringType;
         }
 
         private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression, VisitorTypeEnvironment context)

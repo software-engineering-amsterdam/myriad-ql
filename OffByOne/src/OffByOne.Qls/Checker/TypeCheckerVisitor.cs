@@ -2,7 +2,7 @@
 {
     using OffByOne.Ql.Checker;
 
-    public class TypeCheckerVisitor : BaseTypeCheckerVisitor
+    public class TypeCheckerVisitor
     {
     }
 }

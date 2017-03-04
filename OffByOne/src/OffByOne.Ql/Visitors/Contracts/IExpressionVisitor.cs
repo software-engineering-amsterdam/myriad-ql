@@ -3,6 +3,7 @@
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
+    using OffByOne.Ql.Ast.Literals;
 
     public interface IExpressionVisitor<out TResult, in TContext> : IVisitor
         where TContext : IContext
@@ -40,5 +41,19 @@
         TResult Visit(VariableExpression expression, TContext context);
 
         TResult Visit(BracketExpression expression, TContext context);
+
+        TResult Visit(IntegerLiteral literal, TContext context);
+
+        TResult Visit(MoneyLiteral literal, TContext context);
+
+        TResult Visit(DecimalLiteral literal, TContext context);
+
+        TResult Visit(BooleanLiteral literal, TContext context);
+
+        TResult Visit(StringLiteral literal, TContext context);
+
+        TResult Visit(DateLiteral literal, TContext context);
+
+        TResult Visit(HexLiteral literal, TContext context);
     }
 }

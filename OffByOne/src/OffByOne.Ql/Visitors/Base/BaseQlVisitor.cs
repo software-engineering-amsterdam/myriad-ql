@@ -2,6 +2,7 @@
 {
     using MoreDotNet.Extensions.Collections;
 
+    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -11,11 +12,12 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.ValueTypes;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class BaseQlVisitor<TResult, TContext>
-        : ILiteralVisitor<TResult, TContext>,
-        IValueTypeVisitor<TResult, TContext>,
+        : IValueTypeVisitor<TResult, TContext>,
         IExpressionVisitor<TResult, TContext>,
         IStatementVisitor<TResult, TContext>
         where TContext : IContext
@@ -195,6 +197,41 @@
         {
             expression.Statements.ForEach(x => x.Accept(this, context));
             return default(TResult);
+        }
+
+        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.IntegerType;
+        }
+
+        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.MoneyType;
+        }
+
+        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.DecimalType;
+        }
+
+        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.BooleanType;
+        }
+
+        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.StringType;
+        }
+
+        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.DateType;
+        }
+
+        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
+        {
+            return TypeConstants.StringType;
         }
 
         private TResult Visit(BinaryExpression expression, TContext context)

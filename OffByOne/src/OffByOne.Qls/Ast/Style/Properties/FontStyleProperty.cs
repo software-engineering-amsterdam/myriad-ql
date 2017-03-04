@@ -4,6 +4,8 @@
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Visitors.Contracts;
 
+    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
+
     public class FontStyleProperty : Property
     {
         public FontStyleProperty(StringLiteral value)
