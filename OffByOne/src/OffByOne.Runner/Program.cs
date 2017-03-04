@@ -8,15 +8,13 @@
     using MoreDotNet.Extensions.Collections;
 
     using OffByOne.Ql.Ast;
-    using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
+    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Graphics;
-    using OffByOne.Ql.Visitors;
     using OffByOne.Qls;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker;
@@ -49,7 +47,8 @@
             ////Console.WriteLine("Type check done!");
 
             var evaluator = new Evaluator();
-            ////var expression = new AddExpression();
+            var expression = new DivideExpression(new IntegerLiteral(12), new IntegerLiteral(3));
+            Console.WriteLine(evaluator.Evaluate(expression, new TypeEnvironment()));
         }
 
         private static void TestQlGrammar()

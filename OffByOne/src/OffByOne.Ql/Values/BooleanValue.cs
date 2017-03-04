@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Values
 {
+    using System.Globalization;
+
     using OffByOne.Ql.Values.Base;
     using OffByOne.Ql.Values.Contracts;
 
@@ -55,6 +57,11 @@
         public override BooleanValue Not()
         {
             return new BooleanValue(!this.Value);
+        }
+
+        public override string ToString()
+        {
+            return this.Value.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Values
 {
+    using System.Globalization;
+
     using OffByOne.Ql.Values.Base;
     using OffByOne.Ql.Values.Contracts;
 
@@ -190,6 +192,11 @@
         public override IValue Positive()
         {
             return new DecimalValue(+this.Value);
+        }
+
+        public override string ToString()
+        {
+            return this.Value.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

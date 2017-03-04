@@ -74,5 +74,10 @@
         {
             return new BooleanValue(this.Value <= other.Value);
         }
+
+        public override string ToString()
+        {
+            return this.Value.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

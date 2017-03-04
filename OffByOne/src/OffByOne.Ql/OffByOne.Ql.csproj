@@ -67,6 +67,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="obj\Debug\QlLexer.tokens" />
     <None Include="OffByOne.Ql.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -133,6 +134,8 @@
     <Compile Include="Graphics\Widgets\LabelWidget.cs" />
     <Compile Include="Graphics\Widgets\TextBoxWidget.cs" />
     <Compile Include="Graphics\Widgets\WidgetStyle.cs" />
+    <Compile Include="obj\Debug\QlBaseVisitor.cs" />
+    <Compile Include="obj\Debug\QlParser.cs" />
     <Compile Include="Values\Base\BaseValue.cs" />
     <Compile Include="Values\BooleanValue.cs" />
     <Compile Include="Values\Contracts\IValue.cs" />
