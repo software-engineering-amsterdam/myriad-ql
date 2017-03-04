@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Questionnaires.AST.Literals;
 using Questionnaires.Value;
+using System;
 
 namespace Questionnaires.AST
 {
@@ -56,7 +57,7 @@ namespace Questionnaires.AST
                     parsedType = new StringValue();
                     break;
                 default:
-                    throw new InvalidEnumArgumentException();
+                    throw new ArgumentException();
             }
             
             return new Question(identifier, body, parsedType);
@@ -119,10 +120,8 @@ namespace Questionnaires.AST
                 case "&&":
                     return new And((dynamic)lhs, (dynamic)rhs);
                 default:
-                    throw new InvalidEnumArgumentException();
+                    throw new ArgumentException();
             }
-
-            throw new InvalidEnumArgumentException();
         }
 
         public override INode VisitUnaryOp([NotNull] QLParser.UnaryOpContext context)
@@ -138,7 +137,7 @@ namespace Questionnaires.AST
                 case "-":
                     return VisitNegativeOperation((dynamic)operand);
                 default:
-                    throw new InvalidEnumArgumentException();
+                    throw new ArgumentException();
             }          
         }
 
@@ -180,12 +179,12 @@ namespace Questionnaires.AST
         public override INode VisitBool([NotNull] QLParser.BoolContext context)
         {
             System.Diagnostics.Debug.Assert(context.GetText() == "true" || context.GetText() == "false");
-            return new Boolean(context.GetText() == "true");
+            return new Literals.Boolean(context.GetText() == "true");
         }
 
         public override INode VisitString([NotNull] QLParser.StringContext context)
         {
-            return new String(context.GetText());
+            return new Literals.String(context.GetText());
         }
 
         public override INode VisitNumber([NotNull] QLParser.NumberContext context)
