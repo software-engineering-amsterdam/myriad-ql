@@ -36,7 +36,7 @@ public class Text implements Field {
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setText(value.getValue().getString());
+		field.setText(value.getValue().getString()); // TODO implicit you have to know to ask for a string
   	  	field.end();
 	}
 
