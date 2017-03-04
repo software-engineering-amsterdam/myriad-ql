@@ -9,10 +9,9 @@ namespace Questionnaires.Question
 {
     class Question : IQuestion
     {
-        public string Body { get; set; }
         public string Name { get; set; }
-        public QuestionType Type { get; set; }
-        public IValue Value { get; set; }
+        public string Body { get; set; }
         public bool Visible { get; set; }
+        public IValue Value { get; set; }
     }
 }

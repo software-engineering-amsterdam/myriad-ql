@@ -112,12 +112,10 @@ namespace Questionnaires.QuestionaireBuilder
             var question = new Question.Question();
             question.Body = node.Body;
             question.Name = node.Identifier;
+            question.Value = node.Type;
 
-            // We gotta convert the enums here, also we gotta assign default values
-            // TODO: I broke this!!!
-            //question.Type = (Question.QuestionType)node.Type; // This is a hack to cast because they have the same indexes
             Renderer.AddQuestion(question);
-            VariableStore.SetValue(question.Name, node.Type);
+            VariableStore.SetValue(question.Name, question.Value);
           
             return () => { return new StringValue(node.Identifier); };
         }
@@ -132,9 +130,7 @@ namespace Questionnaires.QuestionaireBuilder
             // For a form all we want to do is just change the window title
             // you cannot change this later through user input
             Renderer.SetWindowTitle(node.Identifier);
-
             
-
             return null;
         }
 

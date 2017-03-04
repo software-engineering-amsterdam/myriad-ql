@@ -31,10 +31,12 @@ namespace Questionnaires.Renderer
         public void AddQuestion(IQuestion question)
         {
             // Render the question by adding it to the questionnaire stack
-            QuestionWidget questionWidget;
-
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-
+            QuestionWidget questionWidget;
+            
+            // Ok so this was broken due to the enum being gone.
+            // Alternatives: Double dispatch, try catch blocks, some other type deduction?
+            /*
             switch (question.Type) 
             {
                 case QuestionType.Bool:
@@ -51,12 +53,12 @@ namespace Questionnaires.Renderer
                     break;
                 default:
                     throw new System.ComponentModel.InvalidEnumArgumentException();
-            }
-
-            questionWidget.SetLabel(question.Body);
-            questionWidget.SetOnInputChanged(inputChangedDelegate);
-            Questions.Add(question.Name, questionWidget);
-            QuestionnaireStack.Children.Add(questionWidget);
+            }*/
+            
+            //questionWidget.SetLabel(question.Body);
+            //questionWidget.SetOnInputChanged(inputChangedDelegate);
+            //Questions.Add(question.Name, questionWidget);
+            //QuestionnaireStack.Children.Add(questionWidget);
         }
 
         public void SetValue(string name, Questionnaires.Value.IValue value)
