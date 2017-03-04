@@ -28,37 +28,48 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Show();
         }
 
-        public void AddQuestion(IQuestion question)
+        public void AddQuestion(BoolValue type, IQuestion question)
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-            QuestionWidget questionWidget;
-            
-            // Ok so this was broken due to the enum being gone.
-            // Alternatives: Double dispatch, try catch blocks, some other type deduction?
-            /*
-            switch (question.Type) 
-            {
-                case QuestionType.Bool:
-                    questionWidget = new BooleanQuestionWidget(question.Name);                    
-                    break;
-                case QuestionType.Money:
-                    questionWidget = new MoneyQuestionWidget(question.Name);
-                    break;
-                case QuestionType.Number:
-                    questionWidget = new NumberQuestionWidget(question.Name);
-                    break;
-                case QuestionType.String:
-                    questionWidget = new StringQuestionWidget(question.Name);
-                    break;
-                default:
-                    throw new System.ComponentModel.InvalidEnumArgumentException();
-            }*/
-            
-            //questionWidget.SetLabel(question.Body);
-            //questionWidget.SetOnInputChanged(inputChangedDelegate);
-            //Questions.Add(question.Name, questionWidget);
-            //QuestionnaireStack.Children.Add(questionWidget);
+            var questionWidget = new BooleanQuestionWidget(question.Name);
+            questionWidget.SetLabel(question.Body);
+            questionWidget.SetOnInputChanged(inputChangedDelegate);
+            Questions.Add(question.Name, questionWidget);
+            QuestionnaireStack.Children.Add(questionWidget);
+        }
+
+        public void AddQuestion(DecimalValue type, IQuestion question)
+        {
+            // Render the question by adding it to the questionnaire stack
+            var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
+            var questionWidget = new MoneyQuestionWidget(question.Name);
+            questionWidget.SetLabel(question.Body);
+            questionWidget.SetOnInputChanged(inputChangedDelegate);
+            Questions.Add(question.Name, questionWidget);
+            QuestionnaireStack.Children.Add(questionWidget);
+        }
+
+        public void AddQuestion(IntValue type, IQuestion question)
+        {
+            // Render the question by adding it to the questionnaire stack
+            var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
+            var questionWidget = new NumberQuestionWidget(question.Name);
+            questionWidget.SetLabel(question.Body);
+            questionWidget.SetOnInputChanged(inputChangedDelegate);
+            Questions.Add(question.Name, questionWidget);
+            QuestionnaireStack.Children.Add(questionWidget);
+        }
+
+        public void AddQuestion(StringValue type, IQuestion question)
+        {
+            // Render the question by adding it to the questionnaire stack
+            var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
+            var questionWidget = new StringQuestionWidget(question.Name);
+            questionWidget.SetLabel(question.Body);
+            questionWidget.SetOnInputChanged(inputChangedDelegate);
+            Questions.Add(question.Name, questionWidget);
+            QuestionnaireStack.Children.Add(questionWidget);
         }
 
         public void SetValue(string name, Questionnaires.Value.IValue value)
@@ -81,6 +92,5 @@ namespace Questionnaires.Renderer
         {
             VariableStore.SetValue(name, value);
         }
-         
     }
 }

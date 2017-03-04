@@ -114,7 +114,7 @@ namespace Questionnaires.QuestionaireBuilder
             question.Name = node.Identifier;
             question.Value = node.Type;
 
-            Renderer.AddQuestion(question);
+            Renderer.AddQuestion((dynamic)question.Value, question);
             VariableStore.SetValue(question.Name, question.Value);
           
             return () => { return new StringValue(node.Identifier); };
