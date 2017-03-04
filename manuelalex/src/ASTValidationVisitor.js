@@ -55,25 +55,23 @@ export class ASTValidationVisitor {
     visitIfStatement(ifstatement) {
         console.log("The question is:" + ifstatement.condition);
         console.log("The question type is :" + ifstatement.ifBody);
-        this.visitCondition(ifstatement.condition);
+
+        //ifstatement.condition.accept(this);
         // if(true){
         //     this.visitStatements(ifstatement.ifBody);
         // }
     }
 
     visitCondition(condition) {
+        //condition = condition[0]; // fix ast
 
-        condition = condition[0]; // fix ast
-
-        // let typeLeftHand = this.memoryState.getType(condition.leftHand);
-        // let typeRightHand = this.memoryState.getType(condition.rightHand);
-        //
-        // if(!typeLeftHand.constructor == Boolean){
-        //     //throw exception
-        // }
-
-
-
-
+        let typeLeftHand = this.memoryState.getType(condition.leftHand);
+        let typeRightHand = this.memoryState.getType(condition.rightHand);
+        console.log(typeLeftHand)
+        if(!typeLeftHand.constructor == Boolean){
+            //throw exception
+        }
     }
+
+    visit
 }

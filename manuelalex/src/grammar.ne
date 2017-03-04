@@ -14,25 +14,22 @@ statement               -> question                                             
 question                -> "question" _ "'" sentence "'" _ propertyName ":" _ propertyType _                  {% FormPostProcessor.question %}
 
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
-if_statement            -> "if" _ conditional if_body                                                         {% FormPostProcessor.ifStatement %}
+if_statement            -> "if" _ "(" expression ")" if_body                                                  {% FormPostProcessor.ifStatement %}
 if_body                 -> _ "{" _ statement:* "}" _
-conditional             -> "(" or_expression ")"
 else_clause             -> "else" _ "{" _ statement:* "}" _
 
 answer                  -> "answer" _ "'" sentence "'" _ allocation _                                         {% FormPostProcessor.answer %}
-allocation              -> propertyName ":" _ propertyType _ "=" _ (or_expression)                               {% FormPostProcessor.allocation %}
+allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}
 
 
-or_expression               -> and_expression | or_expression _ ("||") _ and_expression                                                          {% FormPostProcessor.booleanExpression %}
-and_expression              -> not_expression | and_expression _ ("&&") _ not_expression                                                         {% FormPostProcessor.and_test %}
-not_expression              -> comparison | "!" not_expression | propertyName                                                                    {% FormPostProcessor.not_test %}
-comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ plus_minus_expression              {% FormPostProcessor.comparison %}
-plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") multiply_divide_expression                           {% FormPostProcessor.expression %}
-multiply_divide_expression  -> factor | multiply_divide_expression ("/" | "*") factor
-factor                      -> digits | propertyName | "(" or_expression ")"
+expression                  -> and_expression | expression _ "||" _ expression                                                                   {% FormPostProcessor.booleanExpression %}
+and_expression              -> not_expression | and_expression _ "&&" _ and_expression                                                           {% FormPostProcessor.and_test %}
+not_expression              -> comparison | "!" not_expression                                                                                   {% FormPostProcessor.not_test %}
+comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison                         {% FormPostProcessor.comparison %}
+plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") plus_minus_expression                                {% FormPostProcessor.expression %}
+multiply_divide_expression  -> factor | multiply_divide_expression ("/" | "*") multiply_divide_expression
+factor                      -> digits | propertyName | "(" expression ")"
 digits                      -> [0-9]:+                                                                                                           {% (data)=> Number(data[0]) %}
-
-
 
 propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
 propertyType            -> "boolean"                                                                          {% FormPostProcessor.boolean %}

@@ -2,6 +2,7 @@
  * Created by Manuel on 13/02/2017.
  */
 
+//TODO rename to conditional
 export class Comparison {
 
     constructor(leftHand, comparisonOperator, rightHand, location) {
@@ -35,6 +36,10 @@ export class Comparison {
 
     _throwError(errorText = '') {
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
+    }
+
+    accept(visitor){
+        visitor.visitCondition(this);
     }
 }
 ;

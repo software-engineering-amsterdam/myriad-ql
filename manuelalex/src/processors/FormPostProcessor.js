@@ -33,7 +33,7 @@ export class FormPostProcessor {
     }
 
     ifStatement(data, location) {
-        return new IfStatement(_.flattenDeep(data[2][1]), data[3][3], location);
+        return new IfStatement(data[3][0][0][0], data[5][3], location);
     }
 
     ifElseStatement(data, location) {
