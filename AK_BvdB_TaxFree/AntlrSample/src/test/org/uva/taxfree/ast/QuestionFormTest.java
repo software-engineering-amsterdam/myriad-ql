@@ -10,11 +10,11 @@ import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
+import org.uva.taxfree.model.node.declarations.*;
 import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.declarations.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class QuestionFormTest {
     public void executeMain() {
 
         try {
-            testSimpleIfElseStatement();
+            testTextFields();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,22 +93,6 @@ public class QuestionFormTest {
         questions.add(new BooleanQuestion("Am I in the else?", "isInElse"));
         IfElseStatementNode ifElse = new IfElseStatementNode(createMultipleIfStatements(), questions);
         add(ifElse);
-    }
-
-    private void add(BlockNode blockNode) {
-        Set<NamedNode> declarations = new LinkedHashSet<>();
-        blockNode.retrieveDeclarations(declarations);
-        mCachedDeclarations.addAll(declarations);
-        addNode(blockNode);
-    }
-
-    private void add(NamedNode namedNode) {
-        mCachedDeclarations.add(namedNode);
-        addNode(namedNode);
-    }
-
-    private void addNode(Node n) {
-        mCachedNodes.add(n);
     }
 
     @Test
@@ -172,8 +156,31 @@ public class QuestionFormTest {
 
     @Test
     public void testIntFieldCalculation() throws Exception {
-        CalculatedField intField = new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive());
-        add(intField);
+        add(new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive()));
+    }
+
+    @Test
+    public void testTextFields() throws Exception {
+        add(new StringQuestion("What is your name?", "participantName"));
+        add(new IntegerQuestion("How many cars did you buy?", "textAmount"));
+        add(new MoneyQuestion("How much money do you want to receive?", "moneyAmount"));
+        add(new DateQuestion("What date did you buy your last car?", "lastBoughtCar"));
+    }
+
+    private void add(BlockNode blockNode) {
+        Set<NamedNode> declarations = new LinkedHashSet<>();
+        blockNode.retrieveDeclarations(declarations);
+        mCachedDeclarations.addAll(declarations);
+        addNode(blockNode);
+    }
+
+    private void add(NamedNode namedNode) {
+        mCachedDeclarations.add(namedNode);
+        addNode(namedNode);
+    }
+
+    private void addNode(Node n) {
+        mCachedNodes.add(n);
     }
 
     private ConditionNode CalcOnePlusFive() {
