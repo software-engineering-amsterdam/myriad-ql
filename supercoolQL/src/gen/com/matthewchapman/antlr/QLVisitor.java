@@ -1,4 +1,4 @@
-// Generated from /Users/matt/Documents/IntelliJ/mcql/grammar/QL.g4 by ANTLR 4.6
+// Generated from /Users/matt/Repos/myriad-ql/supercoolQL/grammar/QL.g4 by ANTLR 4.6
 package com.matthewchapman.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -30,6 +30,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIfStatement(QLParser.IfStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ifElseStatement}
+	 * labeled alternative in {@link QLParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseStatement(QLParser.IfElseStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code negation}
 	 * labeled alternative in {@link QLParser#expression}.

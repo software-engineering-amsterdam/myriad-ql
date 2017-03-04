@@ -1,20 +1,14 @@
 package com.matthewchapman.ql.ast.atomic;
 
+import com.matthewchapman.ql.ast.Type;
+
 /**
  * Created by matt on 24/02/2017.
  */
-public class StringLiteral extends Atomic {
+public class StringLiteral extends Type<String> {
 
-    private final String content;
-
-    public StringLiteral(String s)
-    {
-        this.content = s;
-    }
-
-    public String getContent()
-    {
-        return this.content;
+    public StringLiteral(String s) {
+        super(s);
     }
 
 }

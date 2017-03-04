@@ -13,7 +13,7 @@ form exampleForm {
       conditionalQuestion2: integer;
     "Math question 1:"
       mathQuestion1:integer =
-        (conditionalQuestion1 - conditionalQuestion2);
+        (conditionalQuestion1 - conditionalQuestion2 + conditionalQuestion1);
   }
 
   if (simpleCondition) {
@@ -21,4 +21,16 @@ form exampleForm {
       simpleConditionalQuestion: boolean;
   }
 
+  if (complexConditional) {
+    "if Question"
+        complexConditionalQuestion1: boolean;
+  } else {
+    "else Question"
+        complexConditionalQuestion2: boolean;
+  }
+
+  "Duplicate question 1"
+    duplicateQuestion : boolean;
+   "Duplicate question 2"
+    duplicateQuestion : boolean;
 }
