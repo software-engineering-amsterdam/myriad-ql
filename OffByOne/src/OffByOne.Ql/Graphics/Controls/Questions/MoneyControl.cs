@@ -1,11 +1,12 @@
-﻿namespace OffByOne.Ql.Evaluator.Controls.Questions
+﻿namespace OffByOne.Ql.Graphics.Controls.Questions
 {
     using System.Windows.Controls;
+
     using OffByOne.Ql.Ast.Statements;
 
-    internal class FloatControl : QuestionControl
+    internal class MoneyControl : QuestionControl
     {
-        public FloatControl(QuestionStatement statement)
+        public MoneyControl(QuestionStatement statement)
             : base(statement)
         {
             var input = new TextBox();

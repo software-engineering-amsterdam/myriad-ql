@@ -50,13 +50,13 @@
 
         public override object Visit(Section expression, FormCheckerContext context)
         {
-            if (context.SectionNames.Contains(expression.Name.Value))
+            if (context.SectionNames.Contains(expression.Name.Value.Value))
             {
                 this.Report.Add(new DuplicateSectionNameMessage(expression));
             }
             else
             {
-                context.SectionNames.Add(expression.Name.Value);
+                context.SectionNames.Add(expression.Name.Value.Value);
             }
 
             return base.Visit(expression, context);

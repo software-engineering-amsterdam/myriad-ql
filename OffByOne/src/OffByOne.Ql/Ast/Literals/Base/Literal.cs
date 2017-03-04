@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Ast.Literals.Base
 {
+    using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 
     public abstract class Literal : AstNode, IVisitableLiteral

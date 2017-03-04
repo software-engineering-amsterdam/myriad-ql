@@ -15,6 +15,7 @@
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
+    using OffByOne.Ql.Graphics;
     using OffByOne.Ql.Visitors;
     using OffByOne.Qls;
     using OffByOne.Qls.Ast.Style.Statements;
@@ -81,7 +82,7 @@
             var tree = v.Visit(parser.form());
             CheckTypes((FormStatement)tree);
             Console.WriteLine("Done!");
-            var eval = new QlEvaluator();
+            var eval = new Renderer();
             eval.Visit((FormStatement)tree, new VisitorTypeEnvironment());
         }
 

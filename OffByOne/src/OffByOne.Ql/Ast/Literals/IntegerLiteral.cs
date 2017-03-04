@@ -1,13 +1,14 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class IntegerLiteral : Literal
     {
         public IntegerLiteral(int value)
         {
-            this.Value = value;
+            this.Value = new IntegerValue(value);
         }
 
         public IntegerLiteral(string value)
@@ -15,7 +16,7 @@
         {
         }
 
-        public int Value { get; private set; }
+        public IntegerValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

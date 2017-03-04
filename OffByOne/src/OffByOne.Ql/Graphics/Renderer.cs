@@ -1,14 +1,14 @@
-﻿namespace OffByOne.Ql.Evaluator
+﻿namespace OffByOne.Ql.Graphics
 {
     using System.Windows;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Evaluator.Controls.Questions;
-    using OffByOne.Ql.Visitors;
+    using OffByOne.Ql.Evaluator;
+    using OffByOne.Ql.Graphics.Controls.Questions;
     using OffByOne.Ql.Visitors.Base;
 
-    public class QlEvaluator : BaseQlVisitor<UIElement, VisitorTypeEnvironment>
+    public class Renderer : BaseQlVisitor<UIElement, VisitorTypeEnvironment>
     {
         public override UIElement Visit(FormStatement form, VisitorTypeEnvironment context)
         {

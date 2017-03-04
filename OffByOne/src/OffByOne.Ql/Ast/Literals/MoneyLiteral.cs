@@ -1,13 +1,14 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class MoneyLiteral : Literal
     {
         public MoneyLiteral(decimal value)
         {
-            this.Value = value;
+            this.Value = new MoneyValue(value);
         }
 
         public MoneyLiteral(string value)
@@ -15,7 +16,7 @@
         {
         }
 
-        public decimal Value { get; private set; }
+        public MoneyValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

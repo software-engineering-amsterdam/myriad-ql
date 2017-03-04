@@ -1,21 +1,22 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class DecimalLiteral : Literal
     {
-        public DecimalLiteral(decimal value)
+        public DecimalLiteral(double value)
         {
-            this.Value = value;
+            this.Value = new DecimalValue(value);
         }
 
         public DecimalLiteral(string value)
-            : this(decimal.Parse(value))
+            : this(double.Parse(value))
         {
         }
 
-        public decimal Value { get; private set; }
+        public DecimalValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

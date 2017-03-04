@@ -4,6 +4,7 @@
     using System.Globalization;
 
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class DateLiteral : Literal
@@ -12,7 +13,7 @@
 
         public DateLiteral(DateTime value)
         {
-            this.Value = value;
+            this.Value = new DateValue(value);
         }
 
         public DateLiteral(string dateString)
@@ -23,7 +24,7 @@
         {
         }
 
-        public DateTime Value { get; private set; }
+        public DateValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

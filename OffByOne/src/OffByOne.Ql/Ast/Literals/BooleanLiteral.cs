@@ -1,21 +1,22 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class BooleanLiteral : Literal
     {
         public BooleanLiteral(bool value)
         {
-            this.Value = value;
+            this.Value = new BooleanValue(value);
         }
 
         public BooleanLiteral(string value)
-            : this(bool.Parse(value))
         {
+            this.Value = new BooleanValue(value);
         }
 
-        public bool Value { get; private set; }
+        public BooleanValue Value { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

@@ -1,6 +1,5 @@
-﻿namespace OffByOne.Ql.Evaluator.Controls.Questions
+﻿namespace OffByOne.Ql.Graphics.Controls.Questions
 {
-    using System.Windows;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
