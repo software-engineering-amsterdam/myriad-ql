@@ -23,7 +23,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         String exampleString = "example";
-        StringValue actualStringValue = evaluator.visit(new StringLiteral(exampleString), null);
+        StringValue actualStringValue = evaluator.visitString(new StringLiteral(exampleString), null);
 
         assertEquals(actualStringValue.getPlainValue(), exampleString);
     }
@@ -32,7 +32,7 @@ public class EvaluatorTest {
     public void shouldReturnBooleanValueFromBooleanLiteral() {
         Evaluator evaluator = new Evaluator();
 
-        BooleanValue actualBooleanValue = evaluator.visit(new BooleanLiteral(true), null);
+        BooleanValue actualBooleanValue = evaluator.visitBoolean(new BooleanLiteral(true), null);
 
         assertEquals(actualBooleanValue.getPlainValue(), true);
     }
@@ -41,7 +41,7 @@ public class EvaluatorTest {
     public void shouldReturnIntegerValueFromIntegerLiteral() {
         Evaluator evaluator = new Evaluator();
 
-        IntegerValue actualIntegerValue = evaluator.visit(new IntegerLiteral(1234), null);
+        IntegerValue actualIntegerValue = evaluator.visitInteger(new IntegerLiteral(1234), null);
 
         assertEquals(actualIntegerValue.getPlainValue().intValue(), 1234);
     }
@@ -50,7 +50,7 @@ public class EvaluatorTest {
     public void shouldReturnDecimalValueFromDecimalLiteral() {
         Evaluator evaluator = new Evaluator();
 
-        DecimalValue actualDecimalValue = evaluator.visit(new DecimalLiteral(new BigDecimal(12.33)), null);
+        DecimalValue actualDecimalValue = evaluator.visitDecimal(new DecimalLiteral(new BigDecimal(12.33)), null);
 
         assertEquals(actualDecimalValue.getPlainValue(), new BigDecimal(12.33));
     }
@@ -60,7 +60,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LogicalOr logicalOr = new LogicalOr(new BooleanLiteral(true), new BooleanLiteral(false));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalOr, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitOr(logicalOr, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -70,7 +70,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LogicalOr logicalOr = new LogicalOr(new BooleanLiteral(false), new BooleanLiteral(false));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalOr, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitOr(logicalOr, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -80,7 +80,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(new IntegerLiteral(1), new IntegerLiteral(2));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -90,7 +90,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(new IntegerLiteral(1), new IntegerLiteral(1));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -100,7 +100,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(new IntegerLiteral(2), new IntegerLiteral(1));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -111,7 +111,7 @@ public class EvaluatorTest {
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(
                 new DecimalLiteral(new BigDecimal(1.1)), new DecimalLiteral(new BigDecimal(2.0)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -122,7 +122,7 @@ public class EvaluatorTest {
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(
                 new DecimalLiteral(new BigDecimal(1.1)), new DecimalLiteral(new BigDecimal(1.1)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -133,7 +133,7 @@ public class EvaluatorTest {
 
         LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual(
                 new DecimalLiteral(new BigDecimal(3.4)), new DecimalLiteral(new BigDecimal(1.1)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(lowerThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitLowerThanOrEqual(lowerThanOrEqual, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -143,7 +143,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Equals equals = new Equals(new DecimalLiteral(new BigDecimal(3.4)), new DecimalLiteral(new BigDecimal(3.4)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(equals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(equals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -155,7 +155,7 @@ public class EvaluatorTest {
         Equals equals = new Equals(
                 new DecimalLiteral(new BigDecimal(3.4)), new DecimalLiteral(new BigDecimal(53.24))
         );
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(equals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(equals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -165,7 +165,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Equals actualEquals = new Equals(new IntegerLiteral(3), new IntegerLiteral(3));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(actualEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -175,7 +175,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Equals actualEquals = new Equals(new IntegerLiteral(3), new IntegerLiteral(23));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(actualEquals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -185,7 +185,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Equals actualEquals = new Equals(new StringLiteral("example"), new StringLiteral("example"));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(actualEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -195,7 +195,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Equals actualEquals = new Equals(new StringLiteral("example"), new StringLiteral("exampl232e"));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitEquals(actualEquals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -205,7 +205,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new StringLiteral("example"), new StringLiteral("exampl232e"));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -215,7 +215,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new StringLiteral("example"), new StringLiteral("example"));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -225,7 +225,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(4)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -235,7 +235,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new DecimalLiteral(new BigDecimal(4)), new DecimalLiteral(new BigDecimal(4)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -245,7 +245,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new IntegerLiteral(4), new IntegerLiteral(3));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -255,7 +255,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         NotEqual actualNotEquals = new NotEqual(new IntegerLiteral(3), new IntegerLiteral(3));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(actualNotEquals, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNotEqual(actualNotEquals, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -265,7 +265,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Product actualProduct = new Product(new IntegerLiteral(2), new IntegerLiteral(3));
-        IntegerValue actualProductValue = (IntegerValue) evaluator.visit(actualProduct, null);
+        IntegerValue actualProductValue = (IntegerValue) evaluator.visitProduct(actualProduct, null);
 
         assertSame(6, actualProductValue.getPlainValue());
     }
@@ -275,7 +275,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Product actualProduct = new Product(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
-        DecimalValue actualProductValue = (DecimalValue) evaluator.visit(actualProduct, null);
+        DecimalValue actualProductValue = (DecimalValue) evaluator.visitProduct(actualProduct, null);
 
         assertEquals(new BigDecimal(15), actualProductValue.getPlainValue());
     }
@@ -285,7 +285,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Increment actualIncrement = new Increment(new IntegerLiteral(5));
-        IntegerValue actualIncrementValue = (IntegerValue) evaluator.visit(actualIncrement, null);
+        IntegerValue actualIncrementValue = (IntegerValue) evaluator.visitIncrement(actualIncrement, null);
 
         assertSame(6, actualIncrementValue.getPlainValue());
     }
@@ -295,7 +295,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Increment actualIncrement = new Increment(new DecimalLiteral(new BigDecimal(5)));
-        DecimalValue actualIncrementValue = (DecimalValue) evaluator.visit(actualIncrement, null);
+        DecimalValue actualIncrementValue = (DecimalValue) evaluator.visitIncrement(actualIncrement, null);
 
         assertEquals(new BigDecimal(6), actualIncrementValue.getPlainValue());
     }
@@ -305,7 +305,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Decrement actualDecrement = new Decrement(new IntegerLiteral(5));
-        IntegerValue actualDecrementValue = (IntegerValue) evaluator.visit(actualDecrement, null);
+        IntegerValue actualDecrementValue = (IntegerValue) evaluator.visitDecrement(actualDecrement, null);
 
         assertSame(4, actualDecrementValue.getPlainValue());
     }
@@ -315,7 +315,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Decrement actualDecrement = new Decrement(new DecimalLiteral(new BigDecimal(5)));
-        DecimalValue actualDecrementValue = (DecimalValue) evaluator.visit(actualDecrement, null);
+        DecimalValue actualDecrementValue = (DecimalValue) evaluator.visitDecrement(actualDecrement, null);
 
         assertEquals(new BigDecimal(4), actualDecrementValue.getPlainValue());
     }
@@ -325,7 +325,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Subtraction actualSubtraction = new Subtraction(new IntegerLiteral(5), new IntegerLiteral(3));
-        IntegerValue actualSubtractionValue = (IntegerValue) evaluator.visit(actualSubtraction, null);
+        IntegerValue actualSubtractionValue = (IntegerValue) evaluator.visitSubtraction(actualSubtraction, null);
 
         assertSame(2, actualSubtractionValue.getPlainValue());
     }
@@ -335,7 +335,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Subtraction actualSubtraction = new Subtraction(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
-        DecimalValue actualSubtractionValue = (DecimalValue) evaluator.visit(actualSubtraction, null);
+        DecimalValue actualSubtractionValue = (DecimalValue) evaluator.visitSubtraction(actualSubtraction, null);
 
         assertEquals(new BigDecimal(2), actualSubtractionValue.getPlainValue());
     }
@@ -345,7 +345,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Addition actualAddition = new Addition(new IntegerLiteral(5), new IntegerLiteral(3));
-        IntegerValue actualAdditionValue = (IntegerValue) evaluator.visit(actualAddition, null);
+        IntegerValue actualAdditionValue = (IntegerValue) evaluator.visitAddition(actualAddition, null);
 
         assertSame(8, actualAdditionValue.getPlainValue());
     }
@@ -355,7 +355,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Addition actualAddition = new Addition(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(3)));
-        DecimalValue actualAdditionValue = (DecimalValue) evaluator.visit(actualAddition, null);
+        DecimalValue actualAdditionValue = (DecimalValue) evaluator.visitAddition(actualAddition, null);
 
         assertEquals(new BigDecimal(8), actualAdditionValue.getPlainValue());
     }
@@ -365,7 +365,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Division actualDivision = new Division(new IntegerLiteral(11), new IntegerLiteral(2));
-        IntegerValue actualDivisionValue = (IntegerValue) evaluator.visit(actualDivision, null);
+        IntegerValue actualDivisionValue = (IntegerValue) evaluator.visitDivision(actualDivision, null);
 
         assertSame(5, actualDivisionValue.getPlainValue());
     }
@@ -375,7 +375,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Group actualGroup = new Group(new IntegerLiteral(3));
-        IntegerValue actualIntegerValue = (IntegerValue) evaluator.visit(actualGroup, null);
+        IntegerValue actualIntegerValue = (IntegerValue) evaluator.visitGroup(actualGroup, null);
 
         assertSame(3, actualIntegerValue.getPlainValue());
     }
@@ -385,7 +385,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThan greaterThan = new GreaterThan(new IntegerLiteral(5), new IntegerLiteral(8));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThan(greaterThan, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -395,7 +395,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThan greaterThan = new GreaterThan(new IntegerLiteral(5), new IntegerLiteral(2));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThan(greaterThan, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -405,7 +405,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThan greaterThan = new GreaterThan(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(8)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThan(greaterThan, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -415,7 +415,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThan greaterThan = new GreaterThan(new DecimalLiteral(new BigDecimal(10)), new DecimalLiteral(new BigDecimal(8)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThan(greaterThan, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -425,7 +425,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Negation greaterThan = new Negation(new BooleanLiteral(false));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNegation(greaterThan, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -435,7 +435,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         Negation greaterThan = new Negation(new BooleanLiteral(true));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThan, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitNegation(greaterThan, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -445,7 +445,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LogicalAnd logicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(false));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalAnd, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitAnd(logicalAnd, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -455,7 +455,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         LogicalAnd logicalAnd = new LogicalAnd(new BooleanLiteral(true), new BooleanLiteral(true));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(logicalAnd, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitAnd(logicalAnd, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -465,7 +465,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(8));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -475,7 +475,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(2));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -485,7 +485,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(8)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertFalse(actualBooleanValue.getPlainValue());
     }
@@ -495,7 +495,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(10)), new DecimalLiteral(new BigDecimal(8)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -505,7 +505,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new IntegerLiteral(5), new IntegerLiteral(5));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }
@@ -515,7 +515,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
 
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(new DecimalLiteral(new BigDecimal(3)), new DecimalLiteral(new BigDecimal(3)));
-        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visit(greaterThanOrEqual, null);
+        BooleanValue actualBooleanValue = (BooleanValue) evaluator.visitGreaterThanOrEqual(greaterThanOrEqual, null);
 
         assertTrue(actualBooleanValue.getPlainValue());
     }

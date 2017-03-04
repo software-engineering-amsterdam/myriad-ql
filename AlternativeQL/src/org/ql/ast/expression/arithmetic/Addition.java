@@ -17,6 +17,6 @@ public class Addition extends BinaryExpression {
 
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
-        return visitor.visit(this, context);
+        return visitor.visitAddition(this, context);
     }
 }

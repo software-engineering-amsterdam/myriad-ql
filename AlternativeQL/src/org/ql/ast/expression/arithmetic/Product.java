@@ -17,6 +17,6 @@ public class Product extends BinaryExpression {
 
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
-        return visitor.visit(this, context);
+        return visitor.visitProduct(this, context);
     }
 }

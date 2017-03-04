@@ -14,7 +14,7 @@ import org.ql.evaluator.value.*;
 public class Evaluator implements ExpressionVisitor<Value, Void> {
 
     @Override
-    public Value visit(Product node, Void context) {
+    public Value visitProduct(Product node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -22,14 +22,14 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Increment node, Void context) {
+    public Value visitIncrement(Increment node, Void context) {
         Value value = node.getExpression().accept(this, context);
 
         return value.increment();
     }
 
     @Override
-    public Value visit(Subtraction node, Void context) {
+    public Value visitSubtraction(Subtraction node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -37,7 +37,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Division node, Void context) {
+    public Value visitDivision(Division node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -45,17 +45,17 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Parameter node, Void context) {
+    public Value visitParameter(Parameter node, Void context) {
         return null;
     }
 
     @Override
-    public Value visit(Group node, Void context) {
+    public Value visitGroup(Group node, Void context) {
         return node.getExpression().accept(this, context);
     }
 
     @Override
-    public Value visit(Addition node, Void context) {
+    public Value visitAddition(Addition node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -63,14 +63,14 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Decrement node, Void context) {
+    public Value visitDecrement(Decrement node, Void context) {
         Value value = node.getExpression().accept(this, context);
 
         return value.decrement();
     }
 
     @Override
-    public Value visit(GreaterThan node, Void context) {
+    public Value visitGreaterThan(GreaterThan node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -78,14 +78,14 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Negation node, Void context) {
+    public Value visitNegation(Negation node, Void context) {
         Value value = node.getExpression().accept(this, context);
 
         return value.negation();
     }
 
     @Override
-    public Value visit(NotEqual node, Void context) {
+    public Value visitNotEqual(NotEqual node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -93,7 +93,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(LogicalAnd node, Void context) {
+    public Value visitAnd(LogicalAnd node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -101,7 +101,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(LowerThan node, Void context) {
+    public Value visitLowerThan(LowerThan node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -109,7 +109,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(GreaterThanOrEqual node, Void context) {
+    public Value visitGreaterThanOrEqual(GreaterThanOrEqual node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -117,7 +117,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(Equals node, Void context) {
+    public Value visitEquals(Equals node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -125,7 +125,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(LowerThanOrEqual node, Void context) {
+    public Value visitLowerThanOrEqual(LowerThanOrEqual node, Void context) {
         Value left = node.getLeft().accept(this, context);
         Value right = node.getRight().accept(this, context);
 
@@ -133,7 +133,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public Value visit(LogicalOr logicalOr, Void context) {
+    public Value visitOr(LogicalOr logicalOr, Void context) {
         Value left = logicalOr.getLeft().accept(this, context);
         Value right = logicalOr.getRight().accept(this, context);
 
@@ -141,22 +141,22 @@ public class Evaluator implements ExpressionVisitor<Value, Void> {
     }
 
     @Override
-    public BooleanValue visit(BooleanLiteral booleanLiteral, Void context) {
+    public BooleanValue visitBoolean(BooleanLiteral booleanLiteral, Void context) {
         return new BooleanValue(booleanLiteral.getValue());
     }
 
     @Override
-    public DecimalValue visit(DecimalLiteral decimalLiteral, Void context) {
+    public DecimalValue visitDecimal(DecimalLiteral decimalLiteral, Void context) {
         return new DecimalValue(decimalLiteral.getValue());
     }
 
     @Override
-    public IntegerValue visit(IntegerLiteral integerLiteral, Void context) {
+    public IntegerValue visitInteger(IntegerLiteral integerLiteral, Void context) {
         return new IntegerValue(integerLiteral.getValue());
     }
 
     @Override
-    public StringValue visit(StringLiteral stringLiteral, Void context) {
+    public StringValue visitString(StringLiteral stringLiteral, Void context) {
         return new StringValue(stringLiteral.getValue());
     }
 }

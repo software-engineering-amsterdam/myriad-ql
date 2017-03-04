@@ -8,45 +8,45 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 
 public interface ExpressionVisitor<T, C> {
-    T visit(Negation node, C context);
+    T visitNegation(Negation node, C context);
 
-    T visit(Product node, C context);
+    T visitProduct(Product node, C context);
 
-    T visit(Increment node, C context);
+    T visitIncrement(Increment node, C context);
 
-    T visit(Subtraction node, C context);
+    T visitSubtraction(Subtraction node, C context);
 
-    T visit(NotEqual node, C context);
+    T visitNotEqual(NotEqual node, C context);
 
-    T visit(LogicalAnd node, C context);
+    T visitAnd(LogicalAnd node, C context);
 
-    T visit(LowerThan node, C context);
+    T visitLowerThan(LowerThan node, C context);
 
-    T visit(GreaterThanOrEqual node, C context);
+    T visitGreaterThanOrEqual(GreaterThanOrEqual node, C context);
 
-    T visit(Division node, C context);
+    T visitDivision(Division node, C context);
 
-    T visit(Parameter node, C context);
+    T visitParameter(Parameter node, C context);
 
-    T visit(Group node, C context);
+    T visitGroup(Group node, C context);
 
-    T visit(Addition node, C context);
+    T visitAddition(Addition node, C context);
 
-    T visit(GreaterThan node, C context);
+    T visitGreaterThan(GreaterThan node, C context);
 
-    T visit(Decrement node, C context);
+    T visitDecrement(Decrement node, C context);
 
-    T visit(Equals node, C context);
+    T visitEquals(Equals node, C context);
 
-    T visit(LowerThanOrEqual node, C context);
+    T visitLowerThanOrEqual(LowerThanOrEqual node, C context);
 
-    T visit(LogicalOr node, C context);
+    T visitOr(LogicalOr node, C context);
 
-    T visit(BooleanLiteral node, C context);
+    T visitBoolean(BooleanLiteral node, C context);
 
-    T visit(DecimalLiteral node, C context);
+    T visitDecimal(DecimalLiteral node, C context);
 
-    T visit(IntegerLiteral node, C context);
+    T visitInteger(IntegerLiteral node, C context);
 
-    T visit(StringLiteral node, C context);
+    T visitString(StringLiteral node, C context);
 }

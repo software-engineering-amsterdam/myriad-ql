@@ -12,7 +12,7 @@ public class StringLiteral extends Expression {
 
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
-        return visitor.visit(this, context);
+        return visitor.visitString(this, context);
     }
 
     public String getValue() {

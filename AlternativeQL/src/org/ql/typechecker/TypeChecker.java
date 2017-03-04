@@ -92,7 +92,7 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Negation node, Identifier questionId) {
+    public Type visitNegation(Negation node, Identifier questionId) {
         Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!innerExpressionType.isBoolean()) {
@@ -104,12 +104,12 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Product node, Identifier questionId) {
+    public Type visitProduct(Product node, Identifier questionId) {
         return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public Type visit(Increment node, Identifier questionId) {
+    public Type visitIncrement(Increment node, Identifier questionId) {
         Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!(innerExpressionType.isNumeric())) {
@@ -121,43 +121,43 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Subtraction node, Identifier questionId) {
+    public Type visitSubtraction(Subtraction node, Identifier questionId) {
         return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public BooleanType visit(NotEqual node, Identifier questionId) {
+    public BooleanType visitNotEqual(NotEqual node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(LogicalAnd node, Identifier questionId) {
+    public Type visitAnd(LogicalAnd node, Identifier questionId) {
         return checkLogicalExpression(node, questionId);
     }
 
     @Override
-    public BooleanType visit(LowerThan node, Identifier questionId) {
+    public BooleanType visitLowerThan(LowerThan node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(GreaterThanOrEqual node, Identifier questionId) {
+    public BooleanType visitGreaterThanOrEqual(GreaterThanOrEqual node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(Division node, Identifier questionId) {
+    public Type visitDivision(Division node, Identifier questionId) {
         return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public Type visit(Parameter parameter, Identifier questionId) {
+    public Type visitParameter(Parameter parameter, Identifier questionId) {
         if (!symbolTable.isDeclared(parameter.getId())) {
             messages.addError(new UndefinedIdentifier(parameter.getId()));
             return new UnknownType();
@@ -169,24 +169,24 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Type visit(Group node, Identifier questionId) {
+    public Type visitGroup(Group node, Identifier questionId) {
         return node.getExpression().accept(this, questionId);
     }
 
     @Override
-    public Type visit(Addition node, Identifier questionId) {
+    public Type visitAddition(Addition node, Identifier questionId) {
         return checkTypeMismatch(node, questionId);
     }
 
     @Override
-    public BooleanType visit(GreaterThan node, Identifier questionId) {
+    public BooleanType visitGreaterThan(GreaterThan node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(Decrement node, Identifier questionId) {
+    public Type visitDecrement(Decrement node, Identifier questionId) {
         Type innerExpressionType = node.getExpression().accept(this, questionId);
 
         if (!(innerExpressionType.isNumeric())) {
@@ -198,41 +198,41 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public BooleanType visit(Equals node, Identifier questionId) {
+    public BooleanType visitEquals(Equals node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visit(LowerThanOrEqual node, Identifier questionId) {
+    public BooleanType visitLowerThanOrEqual(LowerThanOrEqual node, Identifier questionId) {
         checkTypeMismatch(node, questionId);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visit(LogicalOr node, Identifier questionId) {
+    public Type visitOr(LogicalOr node, Identifier questionId) {
         return checkLogicalExpression(node, questionId);
     }
 
     @Override
-    public BooleanType visit(BooleanLiteral node, Identifier questionId) {
+    public BooleanType visitBoolean(BooleanLiteral node, Identifier questionId) {
         return new BooleanType();
     }
 
     @Override
-    public FloatType visit(DecimalLiteral node, Identifier questionId) {
+    public FloatType visitDecimal(DecimalLiteral node, Identifier questionId) {
         return new FloatType();
     }
 
     @Override
-    public IntegerType visit(IntegerLiteral node, Identifier questionId) {
+    public IntegerType visitInteger(IntegerLiteral node, Identifier questionId) {
         return new IntegerType();
     }
 
     @Override
-    public StringType visit(StringLiteral node, Identifier questionId) {
+    public StringType visitString(StringLiteral node, Identifier questionId) {
         return new StringType();
     }
 

@@ -17,7 +17,7 @@ public class Parameter extends Expression {
 
     @Override
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
-        return visitor.visit(this, context);
+        return visitor.visitParameter(this, context);
     }
 
     public Identifier getId() {
