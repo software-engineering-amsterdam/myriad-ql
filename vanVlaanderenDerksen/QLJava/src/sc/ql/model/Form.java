@@ -19,7 +19,5 @@ public class Form implements Node {
     }
 
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) {
-		return visitor.visit(this);
-	}
+	public <T> T accept(NodeVisitor<T> visitor) { return null; }
 }

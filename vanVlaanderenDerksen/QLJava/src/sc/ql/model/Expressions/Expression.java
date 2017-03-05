@@ -15,9 +15,7 @@ public class Expression implements Node {
 	public Integer getLineNumber() {
 		return this.line_number;
 	}
-	
+
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) {
-		return visitor.visit(this);
-	}
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception { return null; }
 }

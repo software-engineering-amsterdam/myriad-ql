@@ -1,28 +1,28 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
-import value.Value;
+import ast.type.Type;
 
 public class AddExpression extends BinaryExpression {
 
-	@Override
-	public Atom evaluate() {
 
-		System.out.println("getLhs: " + getLhs().getNumber());
-		System.out.println("getRhs: " + getRhs().getNumber());
-		System.out.println("getLhs().add(getRhs()): " + getLhs().add(getRhs()).getNumber());
-		return getLhs().add(getRhs());
+	public AddExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
 	}
 
-    @Override
-    public Atom evaluate(Value test) {
-        return null;
-    }
+//	@Override
+//	public Atom evaluate() {
+//
+////		System.out.println("getLhs: " + getLhs().getNumber());
+////		System.out.println("getRhs: " + getRhs().getNumber());
+////		System.out.println("getLhs().add(getRhs()): " + getLhs().add(getRhs()).getNumber());
+//
+//	}
 
-    @Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	@Override
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 }
 

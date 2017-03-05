@@ -24,7 +24,7 @@ public class Environment {
 		if (isAnswered(variable)) {
 			return variableAnswer.get(variable);
 		}
-		return null;
+		return null; // TODO throw here?
 	}
 	
 	public boolean isAnswered(String variable) {

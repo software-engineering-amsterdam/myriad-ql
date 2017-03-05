@@ -1,5 +1,9 @@
 grammar QL;
 
+@members{
+    String intID = "";
+}
+
 form: 'form'  ID  '{' (formItem)*  '}';
 
 formItem: question

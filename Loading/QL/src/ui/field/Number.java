@@ -1,8 +1,10 @@
 package ui.field;
 
 import javafx.scene.control.TextField;
+import ui.Questionnaire.Notifier;
 import value.EmptyValue;
 import value.IntegerValue;
+import value.StringValue;
 import value.Value;
 
 import java.util.function.Function;
@@ -10,16 +12,23 @@ import java.util.function.Function;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public class Number extends TextField implements Field {
+public class Number implements Field {
 	
-	public Number() {
-		// this.field = new TextField();
-    	textProperty().addListener(new ChangeListener<String>() {
+	private Notifier listener;
+	private TextField field;
+	
+	public Number(String name) {
+		this.field = new TextField();
+		
+    	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
 	          if (!newValue.matches("\\d*")) {
-	              setText(newValue.replaceAll("[^\\d]", ""));
+	              field.setText(newValue.replaceAll("[^\\d]", ""));
+	          } else if (!newValue.isEmpty()) {
+	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
+
 	          }
 	      }
     	});
@@ -27,7 +36,7 @@ public class Number extends TextField implements Field {
 
 	@Override
 	public Value getAnswer() {
-		String str = getText();
+		String str = field.getText();
 		if (str.isEmpty()) {
 			return new EmptyValue();
 		}
@@ -36,14 +45,21 @@ public class Number extends TextField implements Field {
 
 	@Override
 	public void setAnswer(Value value) {
-		setText((String) value.getValue());
+		if (value.getValue().getNumber() != null) {
+			field.setText(Integer.toString(value.getValue().getNumber())); // TODO getValue, getNumber : move number etc to value
+      	  	field.end();
+		}
 		
 	}
 
 	@Override
-	public Boolean isChanged() {
-		// TODO Auto-generated method stub
-		return false;
+	public void addListener(Notifier listener) {
+		this.listener = listener;	
+	}
+	
+	@Override 
+	public TextField getField() {
+		return field;
 	}
 	
 }

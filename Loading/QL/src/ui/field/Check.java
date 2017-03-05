@@ -1,58 +1,50 @@
 package ui.field;
 
-import java.util.function.Function;
-
-import ast.type.BooleanType;
-import ast.type.Type;
-// import javafx.scene.control.Control;
-import javafx.scene.control.Control;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
+import ui.Questionnaire.Notifier;
 import value.BoolValue;
-import value.StringValue;
 import value.Value;
 
-public class Check extends CheckBox implements Field {
+public class Check implements Field {
 
+	private Notifier listener;
+	private CheckBox field;
+	
+	public Check(String name) {
+		
+		this.field = new CheckBox();
+		
+		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
+	           
+			@Override
+           public void changed(ObservableValue<? extends Boolean> observable,
+                               Boolean oldValue, Boolean newValue) {
+				
+				listener.updateQuestionnaire(name, new BoolValue(newValue));
+            }
+		});
+	}
+	
+	@Override
+	public void addListener(Notifier listener) {
+		this.listener = listener;
+	}
+	
 	@Override
 	public Value getAnswer() {
-		return new BoolValue(isSelected());
+		return new BoolValue(field.isSelected());
 	}
 	
 	@Override
 	public void setAnswer(Value value) {
-		setSelected((boolean) value.getValue());	
-	}
-
-	@Override
-	public Boolean isChanged() {
-		// TODO Auto-generated method stub
-		return false;
+		field.setSelected(value.getValue().getValue()); // TODO two times getValue()??	
 	}
 	
-	// @Override
-//	public String setOnChange(Function<String, String> func) {
-//    	field.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable,
-//                                String oldValue, String newValue) {
-//            	func.apply(newValue);
-//            	return newValue;
-//            }
-//    	}); 		
-//	}
-
-////	@Override
-////	public Control getControl(BooleanType type) { 
-////		return new CheckBox(); 
-////	}
-//
-//	@Override
-//	<T = CheckBox>
-//	public CheckBox getControl(Type type) {
-//		// TODO Auto-generated method stub
-//		return new CheckBox();
-//	}
+	@Override
+	public CheckBox getField() {
+		return field;
+	}
 
 }

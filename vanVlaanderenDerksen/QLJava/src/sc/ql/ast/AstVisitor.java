@@ -6,7 +6,7 @@ import java.util.List;
 import sc.ql.antlr.QLBaseVisitor;
 import sc.ql.antlr.QLParser;
 import sc.ql.model.*;
-import sc.ql.model.Atom;
+import sc.ql.model.Atoms.*;
 import sc.ql.model.expressions.*;
 import sc.ql.model.form_elements.*;
 
@@ -22,9 +22,9 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	public Node visitQuestion(QLParser.QuestionContext ctx) {
 		String question 		= ctx.STR().toString();
 		question 				= question.substring(1, question.length()-1); // Remove the surrounding quotes
-		Atom<String> id 		= new Atom<String>(Atom.Type.ID, ctx.ID().toString());
-		Atom.Type type 			= Atom.Type.valueOf(ctx.TYPE().toString());
-		Expression expression	= ctx.expression() != null ? (Expression) visit(ctx.expression()) : null;
+		AtomId id 				= new AtomId(ctx.ID().toString());
+		Question.Type type 		= Question.Type.valueOf(ctx.TYPE().toString());		
+		Node expression			= ctx.expression() != null ? visit(ctx.expression()) : null;
 		Integer line_number 	= ctx.getStart().getLine();
 		
 		return new Question(question, id, type, expression, line_number);
@@ -44,10 +44,11 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitConditional_block(QLParser.Conditional_blockContext ctx) {
-		Expression expression 			= (Expression) visit(ctx.expression());
+		Node expression = visit(ctx.expression());
 		List<FormElement> form_elements = getFormElements(ctx.form_element());
+		Integer line_number = ctx.getStart().getLine();
 		
-		return new ConditionalBlock(expression, form_elements);
+		return new ConditionalBlock(expression, form_elements, line_number);
 	}
 	
 	@Override 
@@ -57,16 +58,16 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	
 	@Override 
 	public Node visitNotExpr(QLParser.NotExprContext ctx) {
-		Expression expression = (Expression) visit(ctx.expression());
-		Integer line_number   = ctx.getStart().getLine();
+		Node expression = visit(ctx.expression());
+		Integer line_number = ctx.getStart().getLine();
 		
 		return new NotExpression(expression, line_number);
 	}	
 	
 	@Override 
 	public Node visitOpExpr(QLParser.OpExprContext ctx) {
-		Expression left  = (Expression) visit(ctx.left);	
-		Expression right = (Expression) visit(ctx.right);
+		Node left  = visit(ctx.left);	
+		Node right = visit(ctx.right);
 		String operator  = ctx.op.getText();
 		Integer line_number = ctx.getStart().getLine();
 		
@@ -75,34 +76,22 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 
 	@Override 
 	public Node visitIdAtom(QLParser.IdAtomContext ctx) {
-		Atom.Type type = Atom.Type.ID;
-		String value = ctx.atom.getText();
-		
-		return new Atom<String>(type, value);
+		return new AtomId(ctx.atom.getText());
 	}
 
 	@Override 
 	public Node visitIntAtom(QLParser.IntAtomContext ctx) {
-		Atom.Type type = Atom.Type.INTEGER;
-		Integer value = Integer.parseInt(ctx.atom.getText());	
-		
-		return new Atom<Integer>(type, value);
+		return new AtomInteger(Integer.parseInt(ctx.atom.getText()));
 	}
 
 	@Override 
 	public Node visitStrAtom(QLParser.StrAtomContext ctx) {
-		Atom.Type type = Atom.Type.STRING;
-		String value = ctx.atom.getText();
-		
-		return new Atom<String>(type, value);
+		return new AtomString(ctx.atom.getText());
 	}
 
 	@Override 
 	public Node visitBoolAtom(QLParser.BoolAtomContext ctx) {
-		Atom.Type type = Atom.Type.BOOLEAN;
-		Boolean value = Boolean.valueOf(ctx.atom.getText());
-		
-		return new Atom<Boolean>(type, value);
+		return new AtomBoolean(Boolean.valueOf(ctx.atom.getText()));
 	}
 	
 	/*

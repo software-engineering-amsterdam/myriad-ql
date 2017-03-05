@@ -1,20 +1,22 @@
 package ui;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import ast.Form;
+import evaluation.Environment;
+import evaluation.Evaluator;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -22,45 +24,59 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import value.StringValue;
-import value.BoolValue;
-import value.Value;
+import semantic.TypeChecker;
 import ui.field.Field;
-
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import ast.Form;
-import ast.Question;
-import ast.Visitor;
-import ast.type.Type;
+import value.EmptyValue;
+import value.Value;
 
 public class Questionnaire extends Application {
+	// TODO make Notifier an inner class or add extra environment
 	
-	// TODO static variables??
+	// TODO do not make static
 	private static Form form;
-	private static Map<String, Value> answers;
+	private static evaluation.Environment answers;
+	private static GridPane grid;
 	
-    public static void main(Form f) {
+	public class Notifier {
+
+		// TODO change to already implemented observer pattern
+		public void updateQuestionnaire(String name, Value newValue) {
+	    	Value oldAnswer = answers.getAnswer(name); 
+			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
+
+				answers.addAnswer(name, newValue); 
+
+				// Save the title
+				Node title = grid.getChildren().get(0);
+		    	grid.getChildren().clear();
+		    	grid.add(title, 0, 0);
+		        renderQuestionnaire(grid);
+			}
+		}
+	}
+	
+    public void main(Form f) {
     	form = f;
-    	answers = new HashMap<>();
+    	answers = new Environment();
+
         launch();
     }
         
     @Override
     public void start(Stage primaryStage) {
+       
         primaryStage.setTitle(form.getId());
         
-        GridPane grid = initGrid();
+        grid = initGrid();
         
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
-        
+             
         renderTitle(grid, form.getId());
         
-        renderQuestionnaire(primaryStage, grid);
+        renderQuestionnaire(grid);
+        
+        primaryStage.show();
 
     }
     
@@ -81,18 +97,17 @@ public class Questionnaire extends Application {
     	// TODO change
     	for (QuestionnaireQuestion question : activeQuestions) {
     		
-    		Value value = answers.get(question.getName());
+    		Value value = answers.getAnswer(question.getName());
     		if (value == null) {
     			continue;
     		}
-    		
     		question.setAnswer(value);
     	}
     }
     
-    private void renderQuestionnaire(Stage primaryStage, GridPane grid) {
+    private void renderQuestionnaire(GridPane grid) {
         
-    	List<QuestionnaireQuestion> activeQuestions = renderQuestions(primaryStage, grid);
+    	List<QuestionnaireQuestion> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -114,15 +129,13 @@ public class Questionnaire extends Application {
                         actiontarget.setText("Please Fill in all Fields");
                         return;
             		}
-            		System.out.println(activeQuestion.getAnswer().getValue());
     
             	}  
                 actiontarget.setFill(Color.SPRINGGREEN);
                 actiontarget.setText("Thank you for filling\n in the questionnaire");
+                
             }
         });
-
-        primaryStage.show();
     }
     
     private void renderTitle(GridPane grid, String title) {
@@ -133,7 +146,7 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QuestionnaireQuestion> renderQuestions(Stage primaryStage, GridPane grid) {
+    private List<QuestionnaireQuestion> renderQuestions(GridPane grid) {
         
     	QuestionnaireVisitor qVisitor = new QuestionnaireVisitor(answers);
     	qVisitor.visit(form);
@@ -144,45 +157,9 @@ public class Questionnaire extends Application {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 
-           //  grid.add(question.getEntryField(), 1, 1 + rowIndex);
-            Field field = question.getEntryField().getField();
-            grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
+            grid.add(question.getControl(), 1, 1 + rowIndex); 
             
-//            if (question.getEntryField().getField().isChanged()) {
-//            	// answers.put(question.getName(), new BoolValue(true));
-//            	renderQuestionnaire(primaryStage, grid);
-//            }
-           
-       
-            // TODO use class Field
-            if (question.getType().getType() == "boolean") {
-            	((CheckBox) field).selectedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, 
-                    		Boolean oldValue, Boolean newValue) {
-                    	Value oldAnswer = answers.get(question.getName()); 
-                    	if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
-                    		answers.put(question.getName(), new BoolValue(newValue));
-                    		renderQuestionnaire(primaryStage, grid);
-                    		((CheckBox) field).requestFocus();
-                    	}
-                    }
-            	});  	
-            } else {
-            	((TextField) field).textProperty().addListener(new ChangeListener<String>()  {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable,
-                                        String oldValue, String newValue) {
-                		Value oldAnswer = answers.get(question.getName()); 
-                    	if (oldAnswer == null || !newValue.equals(oldAnswer.getValue())) {
-                    		answers.put(question.getName(), new StringValue(newValue));
-                    		renderQuestionnaire(primaryStage, grid); // Only render when something actually changes in the form
-                    		((TextField) field).requestFocus();
-                    	}
-                    	
-                    }
-            	});
-            }    
+            question.addListener(new Notifier());
             ++rowIndex;
         }
         
@@ -199,4 +176,5 @@ public class Questionnaire extends Application {
         
         return btn;
     }
+
 }

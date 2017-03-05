@@ -1,18 +1,22 @@
 package sc.ql.model.form_elements;
 
-import sc.ql.model.Atom;
 import sc.ql.model.FormElement;
+import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.expressions.Expression;
+import sc.ql.model.Atoms.AtomId;
 
 public class Question implements FormElement {
 	private final String question; 
-	private final Atom<String> id;
-	private final Atom.Type type;
-	private final Expression expression;
+	private final AtomId id;
+	private final Type type;
+	private final Node expression;
 	private final Integer line_number;
 	
-	public Question(String question, Atom<String> id, Atom.Type type, Expression expression, Integer line_number) {
+	public enum Type {
+		BOOLEAN, FLOAT, INTEGER, MONEY, STRING;
+	}
+	
+	public Question(String question, AtomId id, Type type, Node expression, Integer line_number) {
 		this.question = question;
 		this.id = id;
 		this.type = type;
@@ -24,15 +28,15 @@ public class Question implements FormElement {
 		return this.question;
 	}
 	
-	public Atom<String> getId() {
+	public AtomId getId() {
 		return this.id;
 	}
 	
-	public Atom.Type getType() {
+	public Type getType() {
 		return this.type;
 	}
 	
-	public Expression getExpression() {
+	public Node getExpression() {
 		return this.expression;
 	}
 	
@@ -40,12 +44,8 @@ public class Question implements FormElement {
 		return this.line_number;
 	}
 	
-	public Type getElementType() {
-		return Type.QUESTION;
-	}
-	
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) {
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
 		return visitor.visit(this);
 	}
 }

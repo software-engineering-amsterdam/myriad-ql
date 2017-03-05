@@ -3,12 +3,17 @@ package sc.ql.checkform;
 import java.util.ArrayList;
 import java.util.List;
 
-import sc.ql.model.Atom;
 import sc.ql.model.ConditionalBlock;
-import sc.ql.model.Form;
 import sc.ql.model.FormElement;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.expressions.Expression;
+import sc.ql.model.Atoms.AtomBoolean;
+import sc.ql.model.Atoms.AtomFloat;
+import sc.ql.model.Atoms.AtomId;
+import sc.ql.model.Atoms.AtomInteger;
+import sc.ql.model.Atoms.AtomMoney;
+import sc.ql.model.Atoms.AtomString;
+import sc.ql.model.expressions.NotExpression;
+import sc.ql.model.expressions.OpExpression;
 import sc.ql.model.form_elements.IfStatement;
 import sc.ql.model.form_elements.Question;
 
@@ -23,7 +28,7 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 	}
 
 	@Override
-	public List<Question> visit(ConditionalBlock conditional_block) {
+	public List<Question> visit(ConditionalBlock conditional_block) throws Exception {
 		List<Question> questions = new ArrayList<Question>();
 	
 		for (FormElement form_element : conditional_block.getFormElements()) {
@@ -34,7 +39,7 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 	}
 
 	@Override
-	public List<Question> visit(IfStatement if_statement) {
+	public List<Question> visit(IfStatement if_statement) throws Exception {
 		List<Question> questions = new ArrayList<Question>();
 		
 		for (ConditionalBlock conditional_block : if_statement.getConditionalBlocks()) {
@@ -47,13 +52,28 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 		
 		return questions;
 	}
-	
-	@Override
-	public List<Question> visit(Form form) { return null; }
 
 	@Override
-	public List<Question> visit(Expression espression) { return null; }
+	public List<Question> visit(NotExpression not_expression) { return null; }
 
 	@Override
-	public List<Question> visit(Atom<List<Question>> atom) { return null; }
+	public List<Question> visit(OpExpression op_expression) { return null; }
+
+	@Override
+	public List<Question> visit(AtomBoolean atom_boolean) { return null; }
+
+	@Override
+	public List<Question> visit(AtomFloat atom_float) { return null; }
+
+	@Override
+	public List<Question> visit(AtomId atom_id) { return null; }
+
+	@Override
+	public List<Question> visit(AtomInteger atom_integer) { return null; }
+
+	@Override
+	public List<Question> visit(AtomMoney atom_money) { return null; }
+
+	@Override
+	public List<Question> visit(AtomString atom_string) { return null; }
 }

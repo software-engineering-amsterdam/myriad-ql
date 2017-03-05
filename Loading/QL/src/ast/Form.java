@@ -12,15 +12,15 @@ public class Form extends Node {
 	public Block getBlock() {
 		return block;
 	}
-
+	
+	// TODO move line to Node
 	public Form(String id, Block block, int line) {
+		super(line);
 		this.id = id;
 		this.block = block;
-		this.setLine(line);
 	}
 
-	@Override
-	public void accept(Visitor v) {
+	public void accept(FormVisitor v) {
 		v.visit(this);
 	}
 	

@@ -1,32 +1,37 @@
 package values
 
 trait Value {
-  def EQ(other: Value): Value = BooleanValue(this == other)
+  def ==(other: Value): Value = BooleanValue(this.equals(other))
 
-  def NEQ(other: Value): Value = BooleanValue(this != other)
+  def !=(other: Value): Value = BooleanValue(!this.equals(other))
 
-  def ADD(other: Value): Value = UndefinedValue
+  def +(other: Value): Value = UndefinedValue
 
-  def SUB(other: Value): Value = UndefinedValue
+  def -(other: Value): Value = UndefinedValue
 
-  def MUL(other: Value): Value = UndefinedValue
+  def *(other: Value): Value = UndefinedValue
 
-  def DIV(other: Value): Value = UndefinedValue
+  def /(other: Value): Value = UndefinedValue
 
-  def GT(other: Value): Value = UndefinedValue
+  def >(other: Value): Value = UndefinedValue
 
-  def LT(other: Value): Value = UndefinedValue
+  def <(other: Value): Value = UndefinedValue
 
-  def GEQ(other: Value): Value = UndefinedValue
+  def >=(other: Value): Value = UndefinedValue
 
-  def LEQ(other: Value): Value = UndefinedValue
+  def <=(other: Value): Value = UndefinedValue
 
-  def AND(other: Value): Value = UndefinedValue
+  def &&(other: Value): Value = UndefinedValue
 
-  def OR(other: Value): Value = UndefinedValue
+  def ||(other: Value): Value = UndefinedValue
 
-  def NEG: Value = UndefinedValue
+  def ! = Not
 
-  def NOT: Value = UndefinedValue
+  private def Not: Value = UndefinedValue
+
+  def - = Neg
+
+  private def Neg: Value = UndefinedValue
+
+  def display: String
 }
-

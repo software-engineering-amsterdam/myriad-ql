@@ -3,8 +3,8 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.uva.taxfree.model.BooleanQuestion;
-import org.uva.taxfree.model.SymbolTable;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.declarations.BooleanQuestion;
 
 public class SymbolTableTest {
     SymbolTable mSymbolTable;
@@ -17,7 +17,7 @@ public class SymbolTableTest {
     @Test
     public void testEvaluate() throws Exception {
         BooleanQuestion boolQuestion = new BooleanQuestion("did you sell a house?", "hasSoldHouse");
-        mSymbolTable.addSymbol("hasSoldhouse", boolQuestion);
+        mSymbolTable.addSymbol(boolQuestion);
         Assert.assertEquals("false", mSymbolTable.resolve("hasSoldHouse"));
     }
 

@@ -2,6 +2,10 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.Validation.IdNotFoundException;
+import UvA.Gamma.Validation.IdRedeclaredException;
+import UvA.Gamma.Validation.IncompatibleTypesException;
+import UvA.Gamma.Validation.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,7 +15,7 @@ import javafx.beans.property.StringProperty;
 public class Question implements FormItem {
     private String question;
     private String id;
-    private Value type;
+    private Value value;
     private SimpleStringProperty stringValueProperty;
 
     public Question() {
@@ -26,21 +30,37 @@ public class Question implements FormItem {
         this.question = question;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setType(Value type) {
-        this.type = type;
+    public void setValue(Value value) {
+        this.value = value;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override
     public void idChanged(Form root, String id, String value) {
         // I don't care about that, I am an independent formitem and don't need your help
+    }
+
+    @Override
+    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
+        validator.validateRedeclaration(this);
+    }
+
+    @Override
+    public boolean conformsToType(Value.Type type) {
+        return value.conformsToType(type);
+    }
+
+    @Override
+    public boolean isDependentOn(String id) {
+        return false; // A question is never dependent on another item
     }
 
     @Override
@@ -59,17 +79,12 @@ public class Question implements FormItem {
     }
 
     @Override
-    public Value[] getValuesForIds() {
-        return new Value[]{type};
-    }
-
-    @Override
-    public String[] getReferencedIds() {
-        return new String[0];
-    }
-
-    @Override
     public String toString() {
-        return "<Question>: " + question + " " + id + ": " + type;
+        return "<Question>: " + question + " " + id + ": " + value.getType();
+    }
+
+    @Override
+    public Value.Type getType() {
+        return value.getType();
     }
 }

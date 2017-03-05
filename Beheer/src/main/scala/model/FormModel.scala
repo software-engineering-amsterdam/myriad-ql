@@ -43,7 +43,7 @@ class FormModel(form: Form) {
   private def extractIdentifiers(expressionNode: ExpressionNode): Set[String] = expressionNode match {
     case Identifier(value) => Set(value)
     case i: InfixNode => extractIdentifiers(i.lhs) ++ extractIdentifiers(i.rhs)
-    case p: PrefixNode => extractIdentifiers(p.rhs)
+    case p: PrefixNode => extractIdentifiers(p.operand)
     case _ => Set.empty
   }
 
