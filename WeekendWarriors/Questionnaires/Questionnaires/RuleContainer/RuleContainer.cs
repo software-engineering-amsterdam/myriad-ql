@@ -7,19 +7,13 @@ using Questionnaires.VariableStore;
 
 namespace Questionnaires.RuleContainer
 {
-    using Rule = Action<IVariableStore, Renderer.Renderer>;
+    using Rule = Action<VariableStore.VariableStore, Renderer.Renderer>;
 
     class RuleContainer
     {
-<<<<<<< HEAD
         private List<Rule> Rules = new List<Rule>();
          
         public void AddRule(Rule rule)
-=======
-        private List<Action<VariableStore.VariableStore, Renderer.Renderer>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer>>();
-         
-        public void AddRule(Action<VariableStore.VariableStore, Renderer.Renderer> rule)
->>>>>>> origin/WeekendWarriors
         {
             Rules.Add(rule);
         }
