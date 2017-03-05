@@ -103,8 +103,10 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setSpinBox(identifier, value)
-        self.questions[identifier] = (self.main.getSpinBox, self.main.setSpinBox,
-                                      self.main.showSpinBox, self.main.hideSpinBox)
+        self.questions[identifier] = (
+            self.main.getSpinBox, self.main.setSpinBox,
+            self.main.showSpinBox, self.main.hideSpinBox
+        )
 
         self.row += 1
 
@@ -117,8 +119,10 @@ class FormGUI(object):
 
         # Set the entry's value and save the retrieval method.
         self.main.setCheckBox(identifier, ticked=value)
-        self.questions[identifier] = (self.main.getCheckBox, self.main.setCheckBox,
-                                      self.main.showCheckBox, self.main.hideCheckBox)
+        self.questions[identifier] = (
+            self.main.getCheckBox, self.main.setCheckBox,
+            self.main.showCheckBox, self.main.hideCheckBox
+        )
         self.row += 1
 
     def add_radiobutton_question(self, identifier, question, value):
@@ -157,8 +161,6 @@ class FormGUI(object):
         # Request all form values, adjust the environment.
         question_values = self.get_question_values()
         self.redraw_function(question_values)
-
-        print "Oh, I'm so busy redrawing stuff!"
 
     def button_action(self, button_pressed):
         if button_pressed == "Save details":

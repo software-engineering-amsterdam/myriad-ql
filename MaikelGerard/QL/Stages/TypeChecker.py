@@ -62,8 +62,8 @@ class TypeChecker(object):
             self.handler.add_dup_label_warning(self.context, comp_question_node)
         self.labels.append(comp_question_node.question.val)
 
-        self.env.add_var(comp_question_node)
         comp_question_node.expression.accept(self)
+        self.env.add_var(comp_question_node)
 
     def if_node(self, if_node):
         """ :type if_node: AST.IfNode """

@@ -17,20 +17,11 @@ class Environment(object):
         if var_name in self.variables:
             self.error_handler.add_duplicate_error(self.context, question_node)
             return False
-        self.variables[var_name] = {"node": question_node, "value": Undefined, "hidden": False}
+        self.variables[var_name] = {"node": question_node, "value": Undefined}
         return True
 
     def get_node(self, identifier):
         return self.variables[identifier]["node"]
-
-    def is_hidden(self, identifier):
-        return self.variables[identifier]["hidden"]
-
-    def hide_var(self, identifier):
-        self.variables[identifier]["hidden"] = True
-
-    def show_var(self, identifier):
-        self.variables[identifier]["hidden"] = False
 
     def get_var_type(self, var_node):
         if var_node.val not in self.variables:

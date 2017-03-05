@@ -322,6 +322,9 @@ class LogicalExprNode(Node):
         return super(LogicalExprNode, self).__eq__(other) and \
                other.left == self.left and other.right == self.right
 
+    def __str__(self, indent=0):
+        return "({} {} {})".format(self.left, self.operator, self.right)
+
 
 class AndNode(LogicalExprNode):
     def __init__(self, left, right, line=0, col=0):
