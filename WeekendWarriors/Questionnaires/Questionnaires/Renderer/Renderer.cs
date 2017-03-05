@@ -42,7 +42,7 @@ namespace Questionnaires.Renderer
 
         public void SetValue(string name, Questionnaires.Value.IValue value)
         {
-            Questions[name].SetQuestionValue(value);
+            Questions[name].SetQuestionValue((dynamic)value);
         }
 
         public void SetVisibility(string name, bool visible)

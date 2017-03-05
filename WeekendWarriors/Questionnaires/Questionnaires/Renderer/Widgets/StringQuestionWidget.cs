@@ -30,7 +30,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IValue value)
         {
-            QuestionInputWidget.Text = value.AsString();
+            SetQuestionValue((dynamic)value);
+        }
+
+        public void SetQuestionValue(StringValue value)
+        {
+            QuestionInputWidget.Text = value.GetValue();
         }
 
         public override void SetVisibility(bool visible)

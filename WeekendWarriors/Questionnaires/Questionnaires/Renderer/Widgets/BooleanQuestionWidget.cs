@@ -33,7 +33,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IValue value)
         {
-            QuestionInputWidget.IsChecked = value.AsBool();
+            SetQuestionValue((dynamic)value);
+        }
+
+        public void SetQuestionValue(BoolValue value)
+        {
+            QuestionInputWidget.IsChecked = value.GetValue();
         }
 
         public override void SetVisibility(bool visible)
