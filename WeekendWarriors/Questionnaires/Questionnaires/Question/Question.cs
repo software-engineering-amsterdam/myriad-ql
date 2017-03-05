@@ -9,9 +9,14 @@ namespace Questionnaires.Question
 {
     class Question : IQuestion
     {
-        public string Name { get; set; }
-        public string Body { get; set; }
-        public bool Visible { get; set; }
-        public IValue Value { get; set; }
+        public Question(string name, string body, IValue value)
+        {
+            this.Name = name;
+            this.Body = body;
+            this.Value = value;
+        }
+        public string Name { get;  }
+        public string Body { get;  }
+        public IValue Value { get;  }
     }
 }

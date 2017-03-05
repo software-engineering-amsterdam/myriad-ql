@@ -11,7 +11,6 @@ namespace Questionnaires.Question
     {
         string Name { get; }
         string Body { get; }
-        bool Visible { get; }
         IValue Value { get; }
     };
 }
