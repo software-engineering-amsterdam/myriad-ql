@@ -76,7 +76,7 @@ namespace Questionnaires.QuestionaireBuilder
             // Build a question object from the information in the AST node
             var question = new Question.Question(node.Identifier, node.Body, node.Type);
             // Add the question to the renderer
-            Renderer.AddQuestion((dynamic)question.Value, question);
+            Renderer.AddQuestion(question);
             // And the variable store
             VariableStore.SetValue(question.Name, question.Value);
 
