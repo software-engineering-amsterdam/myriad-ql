@@ -48,6 +48,10 @@ namespace Questionnaires.AST
                 messages.Add(new Error(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this, Lhs.GetResultType(context), Rhs.GetResultType(context))));
                 return false;
             }
+            catch(DivideByZeroException)
+            {
+                return true;
+            }
         }
 
         public abstract IValue GetResultType(QLContext context);

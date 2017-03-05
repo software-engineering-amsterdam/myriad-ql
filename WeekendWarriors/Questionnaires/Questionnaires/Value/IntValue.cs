@@ -10,8 +10,6 @@ namespace Questionnaires.Value
     {
         public IntValue()
         {
-            // Todo remove hack
-            this.Val = 1;
         }
 
         public IntValue(int value)
