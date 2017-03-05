@@ -43,25 +43,34 @@ class TestParser(unittest.TestCase):
         name = "hasSoldHouse"
         q_type = AST.BoolTypeNode()
         q_str = format_question(question, name, q_type)
-        test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
+        test_node = AST.QuestionNode(AST.StringNode(question),
+                                     AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "Did you sell a house in 2010?"
         q_type = AST.MoneyTypeNode()
         q_str = format_question(question, name, q_type)
-        test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
+        test_node = AST.QuestionNode(AST.StringNode(question),
+                                     AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "question?"
         name = "moneyVar"
         q_type = AST.DecimalTypeNode()
         q_str = format_question(question, name, q_type)
-        test_node = AST.QuestionNode(AST.StringNode(question), AST.VarNode(name), q_type)
+        test_node = AST.QuestionNode(AST.StringNode(question),
+                                     AST.VarNode(name), q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
-        self.check_parse_exception(self.q_parser, "name: \"question?\" boolean ", pp.ParseException)
-        self.check_parse_exception(self.q_parser, "\"question\" name boolean ", pp.ParseException)
-        self.check_parse_exception(self.q_parser, "\"question?\" boolean: name", pp.ParseException)
+        question_str = "name: \"question?\" boolean "
+        self.check_parse_exception(self.q_parser, question_str,
+                                   pp.ParseException)
+        question_str = "\"question\" name boolean "
+        self.check_parse_exception(self.q_parser, question_str,
+                                   pp.ParseException)
+        question_str = "\"question?\" boolean: name"
+        self.check_parse_exception(self.q_parser, question_str,
+                                   pp.ParseException)
 
     def test_computed_questions(self):
         def format_question(q, n, var_type, expr):
@@ -71,10 +80,12 @@ class TestParser(unittest.TestCase):
         name = "hasSoldHouse"
         q_type = AST.BoolTypeNode()
         q_expr = "-var >= 600"
-        node_expr = AST.GTENode(AST.MinNode(AST.VarNode("var")), AST.IntNode(Decimal("600")))
+        node_expr = AST.GTENode(AST.MinNode(AST.VarNode("var")),
+                                AST.IntNode(Decimal("600")))
 
         q_str = format_question(question, name, q_type, q_expr)
-        test_node = AST.ComputedQuestionNode(AST.StringNode(question), AST.VarNode(name),
+        test_node = AST.ComputedQuestionNode(AST.StringNode(question),
+                                             AST.VarNode(name),
                                              q_type, node_expr)
         self.validate_node(self.q_parser, q_str, test_node)
 
@@ -153,7 +164,8 @@ class TestParser(unittest.TestCase):
 
     def test_binops(self):
         binop1 = ["1000", ">", "100.0"]
-        binop_node1 = AST.GTNode(AST.IntNode(Decimal(binop1[0])), AST.DecimalNode(Decimal(binop1[2])))
+        binop_node1 = AST.GTNode(AST.IntNode(Decimal(binop1[0])),
+                                 AST.DecimalNode(Decimal(binop1[2])))
         self.validate_node(self.exp_parser, "".join(binop1), binop_node1)
 
         binop2 = binop1 + ["==", "true"]
@@ -169,14 +181,18 @@ class TestParser(unittest.TestCase):
         binop_node3 = AST.AddNode(lit_int, lit_var)
         binop_node3 = AST.MulNode(binop_node3, lit_bool)
         binop_node3 = AST.AddNode(binop_node3, lit_string)
-        self.validate_node(self.exp_parser, "(100 + var) * true + \"String\"", binop_node3)
+        self.validate_node(self.exp_parser, "(100 + var) * true + \"String\"",
+                           binop_node3)
 
         self.check_parse_exception(self.exp_parser, '20 +', pp.ParseException)
-        self.check_parse_exception(self.exp_parser, '20 ** 30', pp.ParseException)
-        self.check_parse_exception(self.exp_parser, '30 // 40', pp.ParseException)
+        self.check_parse_exception(self.exp_parser, '20 ** 30',
+                                   pp.ParseException)
+        self.check_parse_exception(self.exp_parser, '30 // 40',
+                                   pp.ParseException)
 
     def test_expression_combinations(self):
-        # !(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false) = invalid eq but is parseable.
+        # !(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false)
+        # = invalid eq but is parseable.
         int1 = AST.IntNode(Decimal("10"))
         int2 = AST.IntNode(Decimal("2"))
         dec1 = AST.DecimalNode(Decimal("5.0"))
@@ -192,33 +208,40 @@ class TestParser(unittest.TestCase):
         # Secondly + and -
         expr = AST.AddNode(dec1, expr)
         expr = AST.SubNode(expr, AST.NegNode(var2))
-        # Third &&, last || and the very last !
+        # Thirdly &&, last || and the very last !
         expr = AST.AndNode(expr, AST.MulNode(dec2, dec3))
         expr = AST.NegNode(AST.OrNode(expr, bool1))
 
-        self.validate_node(self.exp_parser,
-                           "!(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false)", expr)
+        string_expr = "!(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false)"
+        self.validate_node(self.exp_parser, string_expr, expr)
 
     def test_conditionalIf(self):
         if_expr = AST.VarNode("var")
-        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), AST.BoolTypeNode())
+        if_block_question = AST.QuestionNode(AST.StringNode("q?"),
+                                             AST.VarNode("var"),
+                                             AST.BoolTypeNode())
         if_block = AST.BlockNode([if_block_question])
         if_cond = AST.IfNode(if_expr, if_block)
 
-        self.validate_node(self.cond_parser, 'if (var) { "q?" var : boolean }', if_cond)
+        cond_str = 'if (var) { "q?" var : boolean }'
+        self.validate_node(self.cond_parser, cond_str, if_cond)
 
-        self.check_parse_exception(self.cond_parser, 'if (var) {', pp.ParseException)
+        self.check_parse_exception(self.cond_parser, 'if (var) {',
+                                   pp.ParseException)
 
     def test_conditionalIfElse(self):
         if_expr = AST.VarNode("var")
-        if_block_question = AST.QuestionNode(AST.StringNode("q?"), AST.VarNode("var"), AST.BoolTypeNode())
+        if_block_question = AST.QuestionNode(AST.StringNode("q?"),
+                                             AST.VarNode("var"),
+                                             AST.BoolTypeNode())
         if_block = AST.BlockNode([if_block_question])
         if_else_cond = AST.IfElseNode(if_expr, if_block, if_block)
 
         parse_str = 'if (var) { "q?" var : boolean } else { "q?" var : boolean}'
         self.validate_node(self.cond_parser, parse_str, if_else_cond)
 
-        self.check_parse_exception(self.cond_parser, 'if (var) {', pp.ParseException)
+        self.check_parse_exception(self.cond_parser, 'if (var) {',
+                                   pp.ParseException)
 
     def test_parse_form(self):
         form1 = """
@@ -230,8 +253,10 @@ class TestParser(unittest.TestCase):
                 }
                 """
 
-        q1 = AST.QuestionNode(AST.StringNode("question1?"), AST.VarNode("var1"), AST.MoneyTypeNode())
-        q2 = AST.QuestionNode(AST.StringNode("question2?"), AST.VarNode("var2"), AST.StringTypeNode())
+        q1 = AST.QuestionNode(AST.StringNode("question1?"), AST.VarNode("var1"),
+                              AST.MoneyTypeNode())
+        q2 = AST.QuestionNode(AST.StringNode("question2?"), AST.VarNode("var2"),
+                              AST.StringTypeNode())
         expr = AST.GTNode(AST.VarNode("var1"), AST.IntNode(Decimal("200")))
         if_block = AST.IfNode(expr, AST.BlockNode([q2]))
         form_block = AST.BlockNode([q1, if_block])
@@ -252,7 +277,8 @@ class TestParser(unittest.TestCase):
                 }
                 """
 
-        if_else_block = AST.IfElseNode(expr, AST.BlockNode([q2]), AST.BlockNode([q1]))
+        if_else_block = AST.IfElseNode(expr, AST.BlockNode([q2]),
+                                       AST.BlockNode([q1]))
         form_block2 = AST.BlockNode([q1, if_else_block, q2])
         form_node = AST.FormNode(AST.VarNode("TestForm"), form_block2)
         form_node = AST.QuestionnaireAST(form_node)
