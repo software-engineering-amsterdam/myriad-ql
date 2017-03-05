@@ -24,8 +24,8 @@ public class Main extends Application {
 
 
         String test = "form test {" +
-                "\"First question\" first: boolean" +
-                "\"a computed one\" computed: integere = (computed2 - 5)" +
+                "\"First question\" first: date" +
+                "\"a computed one\" computed: integer = (computed2 - 5)" +
                 "if(first){ \"dependent\" computed2: integer = (computed + 5) }}";
 
         InputStream is = new ByteArrayInputStream(test.getBytes());

@@ -1,12 +1,10 @@
 package UvA.Gamma.AST.Values;
 
-import UvA.Gamma.AST.ASTNode;
-
 /**
  * Created by Tjarco, 14-02-17.
  */
 
-public class Boolean extends Value implements ASTNode {
+public class Boolean extends Value {
     private boolean value;
 
     public Boolean(boolean value) {
