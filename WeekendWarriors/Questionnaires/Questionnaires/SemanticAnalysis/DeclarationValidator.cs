@@ -7,9 +7,9 @@ using Questionnaires.AST;
 using Questionnaires.AST.Operators;
 using Questionnaires.AST.Visitor;
 
-namespace Questionnaires.SemanticAnalysis.Run
+namespace Questionnaires.SemanticAnalysis
 {
-    class DeclarationValidator : IASTVisitor
+    class DeclarationValidator
     {
         private QLContext Context;
         private Result result = new Result();
@@ -61,105 +61,9 @@ namespace Questionnaires.SemanticAnalysis.Run
                 result.AddEvent(new Messages.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
         
-        public void Visit(Or node)
+        public void Visit(INode node)
         {
             
-        }
-
-        public void Visit(Subtraction node)
-        {
-           
-        }
-
-        public void Visit(Multiply node)
-        {
-            
-        }
-
-        public void Visit(GreaterThanOrEqual node)
-        {
-            
-        }
-
-        public void Visit(LessThanOrEqual node)
-        {
-            
-        }
-
-        public void Visit(Inequal node)
-        {
-           
-        }
-
-        public void Visit(Equal node)
-        {
-            
-        }
-
-        public void Visit(LessThan node)
-        {
-            
-        }
-
-        public void Visit(GreaterThan node)
-        {
-           
-        }
-
-        public void Visit(Division node)
-        {
-           
-        }
-
-        public void Visit(Addition node)
-        {
-            
-        }
-
-        public void Visit(And node)
-        {
-            
-        }
-        
-        public void Visit(AST.Literals.Boolean node)
-        {
-           
-        }
-
-        public void Visit(AST.Literals.Number node)
-        {
-            
-        }
-
-        public void Visit(AST.Literals.String node)
-        {
-            
-        }
-
-        public void Visit(AST.Literals.Money node)
-        {
-            
-        }
-
-        public void Visit(Identifier node)
-        {
-
-        }
-
-        public void Visit(Negative node)
-        {
-            
-        }
-
-        public void Visit(Bang node)
-        {
-            
-        }
-
-        public void Visit(Positive node)
-        {
-            
-        }
-      
+        }      
     }
 }
