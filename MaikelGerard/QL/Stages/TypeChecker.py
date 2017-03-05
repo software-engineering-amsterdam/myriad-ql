@@ -50,17 +50,17 @@ class TypeChecker(object):
 
     def question_node(self, question_node):
         """ :type question_node: AST.QuestionNode """
-        if question_node.question.val in self.labels:
+        if question_node.get_question() in self.labels:
             self.handler.add_dup_label_warning(self.context, question_node)
-        self.labels.append(question_node.question.val)
+        self.labels.append(question_node.get_question())
 
         self.env.add_var(question_node)
 
     def comp_question_node(self, comp_question_node):
         """ :type comp_question_node: AST.CompQuestionNode """
-        if comp_question_node.question.val in self.labels:
+        if comp_question_node.get_question() in self.labels:
             self.handler.add_dup_label_warning(self.context, comp_question_node)
-        self.labels.append(comp_question_node.question.val)
+        self.labels.append(comp_question_node.get_question())
 
         comp_question_node.expression.accept(self)
         self.env.add_var(comp_question_node)

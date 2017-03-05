@@ -88,8 +88,8 @@ class QuestionNode(Node):
     def get_identifier(self):
         return self.name.val
 
-    def get_default_val(self):
-        return self.type.default
+    def get_question(self):
+        return self.question.val
 
     def accept(self, visitor):
         visitor.question_node(self)

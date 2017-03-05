@@ -22,20 +22,15 @@ class DrawGUI(object):
             question_node = self.env.variables[question]["node"]
 
             new_value = question_values[question]
-            if new_value == "@undefined":
-                continue
-            elif new_value == "":
+            if new_value == '':
                 self.env.set_var_value(question, Undefined)
-                question_node.is_defined = False
                 continue
 
             question_type = question_node.type
             new_value = question_type.convert_to_type(new_value)
 
             # Value is non default, update the environment.
-            if question_node.is_defined or new_value != question_node.get_default_val():
-                self.env.set_var_value(question, new_value)
-                question_node.is_defined = True
+            self.env.set_var_value(question, new_value)
 
     def start(self):
         self.evaluator.start_traversal()
