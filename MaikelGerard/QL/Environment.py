@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from Undefined import Undefined
+from .Undefined import Undefined
 
 
 class Environment(object):

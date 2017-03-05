@@ -61,14 +61,14 @@ class ErrorHandler(object):
 
     def print_errors(self):
         for error in self.error_list:
-            print error
+            print(error)
 
         if self.error_count:
-            print "Found {} error(s) and {} warning(s), stopping execution!"\
-                  .format(self.error_count, self.warn_count)
+            print("Found {} error(s) and {} warning(s), stopping execution!"
+                  .format(self.error_count, self.warn_count))
             sys.exit()
         elif self.warn_count:
-            print "Found {} warning(s), continuing.".format(self.warn_count)
+            print ("Found {} warning(s), continuing.".format(self.warn_count))
 
     def clear_errors(self):
         self.error_list = []
