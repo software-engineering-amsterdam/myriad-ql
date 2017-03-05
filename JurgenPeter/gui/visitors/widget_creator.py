@@ -4,20 +4,21 @@ from gui.widgets import *
 
 class WidgetCreator:
 
-    def __init__(self, app, widgets, listener):
+    def __init__(self, app, listener):
         self.app = app
-        self.widgets = widgets
         self.listener = listener
+        self.widgets = {}
 
         # TODO replace with QLS styling object
         self.default_widgets = {
-            Datatype.integer: SliderWidget,
+            Datatype.integer: IntegerEntryWidget,
             Datatype.decimal: DecimalEntryWidget,
             Datatype.boolean: CheckBoxWidget,
             Datatype.string:  EntryWidget}
 
     def visit(self, node):
         node.accept(self)
+        return self.widgets
 
     def visit_form(self, node):
         for element in node.body:

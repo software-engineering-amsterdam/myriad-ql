@@ -10,12 +10,11 @@ class FormApp:
     def __init__(self, form):
         self.form = form
         self.environment = {}
-        self.widgets = {}
 
         self.app = gui(form.name)
         self.app.bindKey("<KeyPress>", self.update)
 
-        WidgetCreator(self.app, self.widgets, self.update).visit(form)
+        self.widgets = WidgetCreator(self.app, self.update).visit(form)
 
     def start(self):
         self.update(None)

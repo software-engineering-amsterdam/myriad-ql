@@ -6,9 +6,11 @@ class Widget:
     ENTRYPREFIX = "entry_"
 
     def __init__(self, app, question):
-        self.app = app
         self.label_id = self.LABELPREFIX + question.name
         self.entry_id = self.ENTRYPREFIX + question.name
+
+        self.app = app
+        self.app.addLabel(self.label_id, question.label)
 
     def set_listener(self, listener):
         pass
@@ -40,11 +42,17 @@ class EntryWidget(Widget):
 
     def __init__(self, app, question):
         super().__init__(app, question)
-        self.app.addLabel(self.label_id, question.label)
         self.app.addEntry(self.entry_id)
+        self.register_validator(self.validate)
+
+    def register_validator(self, validate):
         widget = self.app.getEntryWidget(self.entry_id)
-        command = widget.register(self.validate)
+        command = widget.register(validate)
         widget.config(validate="key", validatecommand=(command, "%P"))
+
+    @staticmethod
+    def validate(text):
+        return True
 
     def show(self):
         self.app.showLabel(self.label_id)
@@ -56,10 +64,6 @@ class EntryWidget(Widget):
 
     def disable(self):
         self.app.disableEntry(self.entry_id)
-
-    @staticmethod
-    def validate(text):
-        return True
 
     def set_value(self, value):
         if value is not None:
@@ -78,9 +82,7 @@ class IntegerEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        if re.match("^(-|\+)?[0-9]*$", text):
-            return True
-        return False
+        return bool(re.match("^(-|\+)?[0-9]*$", text))
 
     def get_value(self):
         try:
@@ -93,9 +95,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        if re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text):
-            return True
-        return False
+        return bool(re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text))
 
     def get_value(self):
         try:
@@ -108,7 +108,6 @@ class CheckBoxWidget(Widget):
 
     def __init__(self, app, question):
         super().__init__(app, question)
-        self.app.addLabel(self.label_id, question.label)
         self.app.addCheckBox(self.entry_id)
         self.get_tkinter_widget().config(text="")
 
@@ -141,8 +140,6 @@ class SpinBoxWidget(Widget):
         super().__init__(app, question)
         self.lower = lower
         self.upper = upper
-
-        self.app.addLabel(self.label_id, question.label)
         self.app.addSpinBoxRange(self.entry_id, lower, upper)
         self.set_value(lower)
 
@@ -176,14 +173,12 @@ class SpinBoxWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getSpinBoxWidget(self.entry_id)
 
-    
+
 class RadioWidget(Widget):
     def __init__(self, app, question, true_text="Yes", false_text="No"):
         super().__init__(app, question)
         self.true_text = true_text
         self.false_text = false_text
-
-        self.app.addLabel(self.label_id, question.label)
         self.app.addRadioButton(self.entry_id, false_text)
         self.app.addRadioButton(self.entry_id, true_text)
 
@@ -215,21 +210,24 @@ class RadioWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getRadioButtonWidget(self.entry_id)
 
-    # TODO: overwrite super class property setters - Radio is a list
     def set_font_familiy(self, family):
-        self.get_tkinter_widget().config(font="-family {}".format(family))
+        for widget in self.get_tkinter_widget():
+            widget.config(font="-family {}".format(family))
         self.get_tkinter_label().config(font="-family {}".format(family))
 
     def set_font_size(self, size):
-        self.get_tkinter_widget().config(font="-size {}".format(size))
+        for widget in self.get_tkinter_widget():
+            widget.config(font="-size {}".format(size))
         self.get_tkinter_label().config(font="-size {}".format(size))
 
     def set_font_weight(self, weight):
-        self.get_tkinter_widget().config(font="-weight {}".format(weight))
+        for widget in self.get_tkinter_widget():
+            widget.config(font="-weight {}".format(weight))
         self.get_tkinter_label().config(font="-weight {}".format(weight))
 
     def set_color(self, color):
-        self.get_tkinter_widget().config(fg=color)
+        for widget in self.get_tkinter_widget():
+            widget.config(fg=color)
         self.get_tkinter_label().config(fg=color)
 
 
@@ -238,8 +236,6 @@ class DropDownWidget(Widget):
         super().__init__(app, question)
         self.true_text = true_text
         self.false_text = false_text
-
-        self.app.addLabel(self.label_id, question.label)
         self.app.addOptionBox(self.entry_id, [false_text, true_text])
 
     def set_listener(self, listener):
@@ -274,11 +270,9 @@ class SliderWidget(Widget):
         super().__init__(app, question)
         self.lower = lower
         self.upper = upper
-
-        self.app.addLabel(self.label_id, question.label)
         self.app.addScale(self.entry_id)
-        self.app.setScaleRange(self.entry_id, lower, upper)
         self.app.showScaleValue(self.entry_id)
+        self.app.setScaleRange(self.entry_id, lower, upper)
         self.set_value(lower)
 
     def set_listener(self, listener):
@@ -295,8 +289,9 @@ class SliderWidget(Widget):
     def disable(self):
         self.app.disableScale(self.entry_id)
 
-        # Due to Tkinter bug, the slider must be enabled again to allow it to
-        # be moved by set_value. The user will still be unable to move it.
+        """ Due to a Tkinter bug, the slider must be enabled again to allow it
+            to be moved by set_value. However, after being enabled, the user
+            will still be unable to move the slider manually. """
         self.app.enableScale(self.entry_id)
 
     def set_value(self, value):

@@ -33,13 +33,13 @@ class DependencyChecker:
             self.error("computed question \"{}\" has dependency on "
                        "itself".format(node.name))
 
-        # Find all (indirect) dependencies of this questions dependencies using
-        # breadth first search on the known dependencies.
+        """ Find all indirect dependencies of this questions by sequentially
+            expanding the found dependencies. """
         for dependency in dependencies:
-            dependencies += [implicit_dependency
-                             for implicit_dependency in
+            dependencies += [indirect_dependency
+                             for indirect_dependency in
                              self.dependencies.get(dependency, [])
-                             if implicit_dependency not in dependencies]
+                             if indirect_dependency not in dependencies]
 
         for dependency in dependencies:
             if node.name in self.dependencies.get(dependency, []):
@@ -51,31 +51,31 @@ class DependencyChecker:
         return [node.name]
 
     def visit_if_conditional(self, node):
-        requires = node.condition.accept(self)
+        dependencies = node.condition.accept(self)
         scope = sum([element.accept(self) for element in node.ifbody], [])
 
-        for variable in requires:
-            if variable in scope:
+        for dependency in dependencies:
+            if dependency in scope:
                 self.error("condition depends on question \"{}\" within "
-                           "own scope".format(variable))
-            if variable in self.constants:
+                           "own scope".format(dependency))
+            if dependency in self.constants:
                 self.warn("condition depends on constant computed "
-                          "question \"{}\"".format(variable))
+                          "question \"{}\"".format(dependency))
 
         return scope
 
     def visit_ifelse_conditional(self, node):
-        requires = node.condition.accept(self)
+        dependencies = node.condition.accept(self)
         scope = sum([element.accept(self) for element in node.ifbody +
                      node.elsebody], [])
 
-        for variable in requires:
-            if variable in scope:
+        for dependency in dependencies:
+            if dependency in scope:
                 self.error("condition depends on question \"{}\" within "
-                           "own scope".format(variable))
-            if variable in self.constants:
+                           "own scope".format(dependency))
+            if dependency in self.constants:
                 self.warn("condition depends on constant computed "
-                          "question \"{}\"".format(variable))
+                          "question \"{}\"".format(dependency))
 
         return scope
 

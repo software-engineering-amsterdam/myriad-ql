@@ -102,9 +102,9 @@ ifelse_conditional = Suppress("if") + expression + block + Suppress("else") +\
     block
 ifelse_conditional.setParseAction(lambda tokens: IfElseConditional(*tokens))
 
-conditional = ifelse_conditional ^ if_conditional
+conditional = if_conditional ^ ifelse_conditional
 
-statement = computed_question ^ question ^ conditional
+statement = question ^ computed_question ^ conditional
 
 block <<= Suppress("{") + ZeroOrMore(statement) + Suppress("}")
 block.addParseAction(lambda tokens: [tokens.asList()])

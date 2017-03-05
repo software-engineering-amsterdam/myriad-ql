@@ -29,8 +29,7 @@ class SymbolChecker:
         if node.name not in self.symboltable:
             self.symboltable[node.name] = node.datatype
         else:
-            self.error("question name \"{}\" is already "
-                       "used".format(node.name))
+            self.error("question name \"{}\" is already used".format(node.name))
 
     def visit_computed_question(self, node):
         if node.label not in self.labels:
@@ -41,8 +40,7 @@ class SymbolChecker:
         if node.name not in self.symboltable:
             self.symboltable[node.name] = node.datatype
         else:
-            self.error("question name \"{}\" is already "
-                       "used".format(node.name))
+            self.error("question name \"{}\" is already used".format(node.name))
 
     def visit_if_conditional(self, node):
         for element in node.ifbody:

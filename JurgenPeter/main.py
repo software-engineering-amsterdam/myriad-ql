@@ -1,9 +1,9 @@
-from gui.formapp import *
 from ql.grammar import parse_file
-from ql.visitors.dependency_checker import DependencyChecker
 from ql.visitors.printer import Printer
 from ql.visitors.symbol_checker import SymbolChecker
 from ql.visitors.type_checker import TypeChecker
+from ql.visitors.dependency_checker import DependencyChecker
+from gui.formapp import FormApp
 
 
 def report_error(message):
@@ -16,9 +16,9 @@ def report_warning(message):
 
 def main():
 
-    filename_inp = "exampleForm.txt"
+    filename = "exampleForm.txt"
 
-    form = parse_file(filename_inp)
+    form = parse_file(filename)
     Printer().visit(form)
 
     symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(form)
