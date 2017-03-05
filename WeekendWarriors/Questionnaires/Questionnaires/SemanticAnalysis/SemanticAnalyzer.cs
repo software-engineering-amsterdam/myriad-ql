@@ -15,7 +15,12 @@ namespace Questionnaires.SemanticAnalysis
 
         }
 
-        public Run.Result Analyze(AST.INode node)
+        public Run.Result AnalyzeForm(AST.Form form)
+        {
+            return AnalyzeAstNode(form);
+        }
+
+        protected Run.Result AnalyzeAstNode(AST.INode node)
         {
             // Get and check question declarations
             var Results = new Run.DeclarationValidator().Analyze(node, Context);

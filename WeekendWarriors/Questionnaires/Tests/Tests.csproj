@@ -63,6 +63,7 @@
     <Compile Include="QL\DSL\LexerTestHarness.cs" />
     <Compile Include="QL\ExpressionEvaluator\Arithmatic.cs" />
     <Compile Include="QL\SemanticAnalysis\ArithmaticOperations.cs" />
+    <Compile Include="QL\SemanticAnalysis\ExposedSemanticAnalyzer.cs" />
     <Compile Include="QL\SemanticAnalysis\LogicalOperations.cs" />
     <Compile Include="QL\SemanticAnalysis\QuestionDefinition.cs" />
     <Compile Include="QL\SemanticAnalysis\Scoping.cs" />

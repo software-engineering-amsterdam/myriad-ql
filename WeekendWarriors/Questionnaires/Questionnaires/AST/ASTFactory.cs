@@ -11,22 +11,22 @@ namespace Questionnaires.AST
 {
     public class ASTFactory
     {
-        public INode CreateForm(string input)
+        public AST.Form CreateForm(string input)
         {
             var parser = CreateParser(input);
-            return new ASTBuilder().Visit(parser.form());
+            return new ASTBuilder().Visit(parser.form()) as Form;
         }
 
-        public INode CreateExpression(string input)
+        public AST.IExpression CreateExpression(string input)
         {
             var parser = CreateParser(input);
-            return new ASTBuilder().Visit(parser.expression());
+            return new ASTBuilder().Visit(parser.expression()) as IExpression;
         }
 
-        public INode CreateComputedQuestion(string input)
+        public AST.ComputedQuestion CreateComputedQuestion(string input)
         {
             var parser = CreateParser(input);
-            return new ASTBuilder().Visit(parser.computedQuestion());
+            return new ASTBuilder().Visit(parser.computedQuestion()) as ComputedQuestion;
         }
 
         private QLParser CreateParser(string input)

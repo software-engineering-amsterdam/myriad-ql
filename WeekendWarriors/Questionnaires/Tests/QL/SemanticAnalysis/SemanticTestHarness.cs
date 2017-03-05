@@ -17,9 +17,9 @@ namespace Tests.QL.SemanticAnalysis
         
         public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
-            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();            
+            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer();            
             var node = ASTFactory.CreateExpression(input);
-            var result = SemanticAnalyzer.Analyze(node);
+            var result = SemanticAnalyzer.AnalyzeAstNode(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }
@@ -28,16 +28,16 @@ namespace Tests.QL.SemanticAnalysis
         {
             SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
             var node = ASTFactory.CreateForm(input);
-            var result = SemanticAnalyzer.Analyze(node);
+            var result = SemanticAnalyzer.AnalyzeForm(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }
 
         public void TestComputedQuestion(string input, int exprectedErrorCount, string failureMessage)
         {
-            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
+            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer();
             var node = ASTFactory.CreateComputedQuestion(input);
-            var result = SemanticAnalyzer.Analyze(node);
+            var result = SemanticAnalyzer.AnalyzeAstNode(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }

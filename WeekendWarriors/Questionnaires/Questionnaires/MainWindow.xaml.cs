@@ -35,7 +35,7 @@ namespace Questionnaires
             var astFactory = new AST.ASTFactory();
             var form = astFactory.CreateForm(Input.Text);
             var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
-            var analysisResult = semanticAnalyzer.Analyze(form);
+            var analysisResult = semanticAnalyzer.AnalyzeForm(form);
             foreach (var analysisEvent in analysisResult.Events)
                 Output.Text += analysisEvent.ToString() + '\n';
 
