@@ -100,6 +100,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
                 return new Money(0);
             case "string":
                 return new StringValue();
+            case "date":
+                return new DateValue("");
             default:
                 System.out.println("The type " + ctx.getText() + " is not valid");
                 return null;

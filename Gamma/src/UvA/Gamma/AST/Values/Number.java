@@ -1,13 +1,11 @@
 package UvA.Gamma.AST.Values;
 
-import UvA.Gamma.AST.ASTNode;
-
 import java.math.BigDecimal;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Number extends Value implements ASTNode {
+public class Number extends Value {
     protected BigDecimal value;
 
     public Number(double value) {
