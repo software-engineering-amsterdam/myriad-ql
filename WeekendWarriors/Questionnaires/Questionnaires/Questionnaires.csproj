@@ -93,10 +93,10 @@
     <Compile Include="Renderer\Widgets\WidgetFactory.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
     <Compile Include="SemanticAnalysis\QLContext.cs" />
-    <Compile Include="SemanticAnalysis\Run\DeclarationValidator.cs" />
-    <Compile Include="SemanticAnalysis\Run\Result.cs" />
+    <Compile Include="SemanticAnalysis\DeclarationValidator.cs" />
+    <Compile Include="SemanticAnalysis\Result.cs" />
     <Compile Include="SemanticAnalysis\SemanticAnalyzer.cs" />
-    <Compile Include="SemanticAnalysis\Run\TypeChecker.cs" />
+    <Compile Include="SemanticAnalysis\TypeChecker.cs" />
     <Compile Include="SemanticAnalysis\Messages\Error.cs" />
     <Compile Include="SemanticAnalysis\Messages\Message.cs" />
     <Compile Include="SemanticAnalysis\Messages\Warning.cs" />

@@ -7,7 +7,7 @@ using Questionnaires.AST;
 using Questionnaires.AST.Operators;
 using Questionnaires.AST.Visitor;
 
-namespace Questionnaires.SemanticAnalysis.Run
+namespace Questionnaires.SemanticAnalysis
 {
     public class TypeChecker
     {
