@@ -1,4 +1,4 @@
-// Define a grammar called Grammar
+// Define a grammar called QL
 grammar QL;
 
 // This removes the warning that is thrown by antlr making classes CLSCompliant by default

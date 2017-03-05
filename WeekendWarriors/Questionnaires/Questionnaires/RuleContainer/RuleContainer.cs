@@ -11,9 +11,15 @@ namespace Questionnaires.RuleContainer
 
     class RuleContainer
     {
+<<<<<<< HEAD
         private List<Rule> Rules = new List<Rule>();
          
         public void AddRule(Rule rule)
+=======
+        private List<Action<VariableStore.VariableStore, Renderer.Renderer>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer>>();
+         
+        public void AddRule(Action<VariableStore.VariableStore, Renderer.Renderer> rule)
+>>>>>>> origin/WeekendWarriors
         {
             Rules.Add(rule);
         }

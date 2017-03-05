@@ -57,7 +57,7 @@ namespace Questionnaires.QuestionaireBuilder
             VariableStore.SetValue(node.Question.Identifier, ExpressionEvaluator.Evaluate(node.Expression));            
 
             RuleContainer.AddRule(
-                new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
+                new Action<VariableStore.VariableStore, Renderer.Renderer>((variableStore, renderer) =>
                 {
                     if (visibilityCondition())
                     {
@@ -84,7 +84,7 @@ namespace Questionnaires.QuestionaireBuilder
             {
                 // Add a rule to the rule container that sets the visibility for this question
                 RuleContainer.AddRule(
-                    new Action<IVariableStore, Renderer.Renderer>((variableStore, renderer) =>
+                    new Action<VariableStore.VariableStore, Renderer.Renderer>((variableStore, renderer) =>
                     {
                         if (visibilityCondition())
                         {
