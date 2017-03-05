@@ -12,7 +12,7 @@ class Environment(object):
         self.variables = OrderedDict()
 
     def add_var(self, question_node):
-        var_name = question_node.name.val
+        var_name = question_node.get_identifier()
 
         if var_name in self.variables:
             self.error_handler.add_duplicate_error(self.context, question_node)
