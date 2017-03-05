@@ -8,49 +8,9 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.VariableStore
 {
-    public class VariableStore : IVariableStore
+    public class VariableStore
     {
         private Dictionary<string, Value.IValue> variables = new Dictionary<string, Value.IValue>();
-
-        public void SetValue(string name, decimal value)
-        {
-            var newValue = new Value.DecimalValue(value);
-            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
-            variables[name] = newValue;
-
-            if (changed)
-                OnVariableChanged(name, newValue);
-        }
-
-        public void SetValue(string name, bool value)
-        {
-            var newValue = new Value.BoolValue(value);
-            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
-            variables[name] = newValue;
-
-            if (changed)
-                OnVariableChanged(name, newValue);
-        }
-
-        public void SetValue(string name, int value)
-        {
-            var newValue = new Value.IntValue(value);
-            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
-            variables[name] = newValue;
-
-            if (changed)
-                OnVariableChanged(name, newValue);
-        }
-
-        public void SetValue(string name, string value)
-        {
-            var newValue = new Value.StringValue(value);
-            bool changed = (!variables.ContainsKey(name) || newValue != variables[name]);
-            variables[name] = newValue;
-
-            if (changed)
-                OnVariableChanged(name, newValue);
-        }
 
         public void SetValue(string name, IValue value)
         {            

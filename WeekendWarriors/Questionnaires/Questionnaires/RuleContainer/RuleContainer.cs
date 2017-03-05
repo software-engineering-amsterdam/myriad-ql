@@ -9,9 +9,9 @@ namespace Questionnaires.RuleContainer
 {
     class RuleContainer
     {
-        private List<Action<IVariableStore, Renderer.Renderer>> Rules = new List<Action<IVariableStore, Renderer.Renderer>>();
+        private List<Action<VariableStore.VariableStore, Renderer.Renderer>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer>>();
          
-        public void AddRule(Action<IVariableStore, Renderer.Renderer> rule)
+        public void AddRule(Action<VariableStore.VariableStore, Renderer.Renderer> rule)
         {
             Rules.Add(rule);
         }
