@@ -19,6 +19,6 @@ public interface Widget {
     void render(FormFrame form);
     void suppress(FormFrame form);
 
-    void setReadOnly(boolean _isReadonly);
+    void setReadOnly(boolean isReadonly);
 
 }

@@ -1,15 +1,15 @@
 grammar QLS;
 
 stylesheet
-    : 'stylesheet' Identifier '{' (default | section)* '}' ;
+    : 'stylesheet' Identifier '{' (defaultStyle | section)* '}' ;
 
-default
+defaultStyle
     : 'default' type widget                   # defaultWithoutStyleDeclaration
     | 'default' type '{' style+ widget '}'    # defaultWithStyleDeclaration
     ;
 
 section
-    : 'section' STRING '{' (question | section | default)* '}'
+    : 'section' STRING '{' (question | section | defaultStyle)* '}'
     ;
 
 question
