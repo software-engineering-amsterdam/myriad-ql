@@ -9,22 +9,6 @@ using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
-    public enum QLBinaryOperator
-    {
-        And,
-        Or,
-        Addition,
-        Subtraction,
-        Division,
-        Multiplication,
-        GreaterThan,
-        GreaterThanOrEqual,
-        LessThan,
-        LessThanOrEqual,
-        Equal,
-        Inequal
-    };
-
     public abstract class Binary : IExpression
     {
         protected Binary(IExpression lhs, IExpression rhs)

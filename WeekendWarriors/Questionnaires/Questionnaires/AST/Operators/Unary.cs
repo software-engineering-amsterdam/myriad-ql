@@ -9,13 +9,6 @@ using Questionnaires.Value;
 
 namespace Questionnaires.AST
 {
-    public enum QLUnaryOperator
-    {
-        Bang,
-        Plus,
-        Minus
-    }
-
     public abstract class Unary : IExpression
     {
         public Unary(IExpression operand)
