@@ -54,7 +54,7 @@ namespace Questionnaires.VariableStore
 
         public void SetValue(string name, IValue value)
         {            
-            bool changed = (!variables.ContainsKey(name) || value.InequalTo((dynamic)variables[name]).AsBool());
+            bool changed = (!variables.ContainsKey(name) || value.InequalTo((dynamic)variables[name]).GetValue());
             variables[name] = value;
 
             if (changed)

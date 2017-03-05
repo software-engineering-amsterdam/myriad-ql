@@ -15,12 +15,7 @@ namespace Questionnaires.Value
         public IntValue(int value)
         {
             this.Val = value;
-        }
-
-        public override int AsInt()
-        {
-            return this.Val;
-        }
+        }        
 
         public override IValue Positive()
         {
@@ -72,62 +67,62 @@ namespace Questionnaires.Value
             return new DecimalValue(this.Val / value.GetValue());
         }
 
-        public override IValue LessThan(IntValue value)
+        public override BoolValue LessThan(IntValue value)
         {
             return new BoolValue(this.Val < value.GetValue());
         }
 
-        public override IValue LessThan(DecimalValue value)
+        public override BoolValue LessThan(DecimalValue value)
         {
             return new BoolValue(this.Val < value.GetValue());
         }
 
-        public override IValue LessThanOrEqual(IntValue value)
+        public override BoolValue LessThanOrEqual(IntValue value)
         {
             return new BoolValue(this.Val <= value.GetValue());
         }
 
-        public override IValue LessThanOrEqual(DecimalValue value)
+        public override BoolValue LessThanOrEqual(DecimalValue value)
         {
             return new BoolValue(this.Val <= value.GetValue());
         }
 
-        public override IValue GreaterThan(IntValue value)
+        public override BoolValue GreaterThan(IntValue value)
         {
             return new BoolValue(this.Val > value.GetValue());
         }
 
-        public override IValue GreaterThan(DecimalValue value)
+        public override BoolValue GreaterThan(DecimalValue value)
         {
             return new BoolValue(this.Val > value.GetValue());
         }
 
-        public override IValue GreaterThanOrEqual(IntValue value)
+        public override BoolValue GreaterThanOrEqual(IntValue value)
         {
             return new BoolValue(this.Val >= value.GetValue());
         }
 
-        public override IValue GreaterThanOrEqual(DecimalValue value)
+        public override BoolValue GreaterThanOrEqual(DecimalValue value)
         {
             return new BoolValue(this.Val >= value.GetValue());
         }
 
-        public override IValue EqualTo(IntValue value)
+        public override BoolValue EqualTo(IntValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        public override IValue EqualTo(DecimalValue value)
+        public override BoolValue EqualTo(DecimalValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        public override IValue InequalTo(IntValue value)
+        public override BoolValue InequalTo(IntValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }
 
-        public override IValue InequalTo(DecimalValue value)
+        public override BoolValue InequalTo(DecimalValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }

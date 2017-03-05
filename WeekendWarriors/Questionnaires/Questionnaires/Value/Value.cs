@@ -15,26 +15,6 @@ namespace Questionnaires.Value
             return Val;
         }
 
-        public virtual int AsInt()
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual decimal AsDecimal()
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual bool AsBool()
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual String AsString()
-        {
-            throw new NotSupportedException();
-        }
-
         public virtual IValue Positive()
         {
             throw new NotSupportedException();
@@ -45,7 +25,7 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue Bang()
+        public virtual BoolValue Bang()
         {
             throw new NotSupportedException();
         }
@@ -70,42 +50,42 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue And(StringValue value)
+        public virtual BoolValue And(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Or(StringValue value)
+        public virtual BoolValue Or(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThan(StringValue value)
+        public virtual BoolValue LessThan(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThanOrEqual(StringValue value)
+        public virtual BoolValue LessThanOrEqual(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThan(StringValue value)
+        public virtual BoolValue GreaterThan(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThanOrEqual(StringValue value)
+        public virtual BoolValue GreaterThanOrEqual(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue EqualTo(StringValue value)
+        public virtual BoolValue EqualTo(StringValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue InequalTo(StringValue value)
+        public virtual BoolValue InequalTo(StringValue value)
         {
             throw new NotSupportedException();
         }
@@ -130,42 +110,42 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue And(IntValue value)
+        public virtual BoolValue And(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Or(IntValue value)
+        public virtual BoolValue Or(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThan(IntValue value)
+        public virtual BoolValue LessThan(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThanOrEqual(IntValue value)
+        public virtual BoolValue LessThanOrEqual(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThan(IntValue value)
+        public virtual BoolValue GreaterThan(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThanOrEqual(IntValue value)
+        public virtual BoolValue GreaterThanOrEqual(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue EqualTo(IntValue value)
+        public virtual BoolValue EqualTo(IntValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue InequalTo(IntValue value)
+        public virtual BoolValue InequalTo(IntValue value)
         {
             throw new NotSupportedException();
         }
@@ -190,42 +170,42 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue And(DecimalValue value)
+        public virtual BoolValue And(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Or(DecimalValue value)
+        public virtual BoolValue Or(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThan(DecimalValue value)
+        public virtual BoolValue LessThan(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThanOrEqual(DecimalValue value)
+        public virtual BoolValue LessThanOrEqual(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThan(DecimalValue value)
+        public virtual BoolValue GreaterThan(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThanOrEqual(DecimalValue value)
+        public virtual BoolValue GreaterThanOrEqual(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue EqualTo(DecimalValue value)
+        public virtual BoolValue EqualTo(DecimalValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue InequalTo(DecimalValue value)
+        public virtual BoolValue InequalTo(DecimalValue value)
         {
             throw new NotSupportedException();
         }
@@ -250,42 +230,42 @@ namespace Questionnaires.Value
             throw new NotSupportedException();
         }
 
-        public virtual IValue And(BoolValue value)
+        public virtual BoolValue And(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Or(BoolValue value)
+        public virtual BoolValue Or(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThan(BoolValue value)
+        public virtual BoolValue LessThan(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue LessThanOrEqual(BoolValue value)
+        public virtual BoolValue LessThanOrEqual(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThan(BoolValue value)
+        public virtual BoolValue GreaterThan(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue GreaterThanOrEqual(BoolValue value)
+        public virtual BoolValue GreaterThanOrEqual(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue EqualTo(BoolValue value)
+        public virtual BoolValue EqualTo(BoolValue value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue InequalTo(BoolValue value)
+        public virtual BoolValue InequalTo(BoolValue value)
         {
             throw new NotSupportedException();
         }
@@ -310,42 +290,42 @@ namespace Questionnaires.Value
             return Divide((dynamic)value);
         }
 
-        public IValue And(IValue value)
+        public BoolValue And(IValue value)
         {
             return And((dynamic)value);
         }
 
-        public IValue Or(IValue value)
+        public BoolValue Or(IValue value)
         {
             return Or((dynamic)value);
         }
 
-        public IValue LessThan(IValue value)
+        public BoolValue LessThan(IValue value)
         {
             return LessThan((dynamic)value);
         }
 
-        public IValue LessThanOrEqual(IValue value)
+        public BoolValue LessThanOrEqual(IValue value)
         {
             return LessThanOrEqual((dynamic)value);
         }
 
-        public IValue GreaterThan(IValue value)
+        public BoolValue GreaterThan(IValue value)
         {
             return GreaterThan((dynamic)value);
         }
 
-        public IValue GreaterThanOrEqual(IValue value)
+        public BoolValue GreaterThanOrEqual(IValue value)
         {
             return GreaterThanOrEqual((dynamic)value);
         }
 
-        public IValue EqualTo(IValue value)
+        public BoolValue EqualTo(IValue value)
         {
             return EqualTo((dynamic)value);
         }
 
-        public IValue InequalTo(IValue value)
+        public BoolValue InequalTo(IValue value)
         {
             return InequalTo((dynamic)value);
         }

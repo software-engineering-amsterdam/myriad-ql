@@ -17,17 +17,12 @@ namespace Questionnaires.Value
             this.Val = value;
         }
 
-        public override String AsString()
-        {
-            return this.Val;
-        }
-
-        public override IValue EqualTo(StringValue value)
+        public override BoolValue EqualTo(StringValue value)
         {
             return new BoolValue(this.Val == value.GetValue());
         }
 
-        public override IValue InequalTo(StringValue value)
+        public override BoolValue InequalTo(StringValue value)
         {
             return new BoolValue(this.Val != value.GetValue());
         }
