@@ -7,6 +7,7 @@ from QL import AST
 
 class QuestionnaireParser(object):
     # Define the tokens used for parsing the input.
+    # TODO: remove maps, make 'IS', 'R_BRACE', etc. class variables.
     LIT = {
         "IS": pp.Literal("=").suppress(),
         "COLON": pp.Literal(":").suppress(),
@@ -36,7 +37,7 @@ class QuestionnaireParser(object):
         self.grammar = self.define_grammar()
 
     def get_type_names(self):
-        def create_type_node(keyword, ast_class):
+        def parse_type_node(keyword, ast_class):
             """
             Use the 'create_node' function to create a certain AST type node.
             The type name token is not required, and therefore suppressed.
@@ -45,12 +46,12 @@ class QuestionnaireParser(object):
                    self.create_node(ast_class))
 
         return (
-            create_type_node("boolean", AST.BoolTypeNode) |
-            create_type_node("integer", AST.IntTypeNode) |
-            create_type_node("money", AST.MoneyTypeNode) |
-            create_type_node("decimal", AST.DecimalTypeNode) |
-            create_type_node("string", AST.StringTypeNode) |
-            create_type_node("date", AST.DateTypeNode)
+            parse_type_node("boolean", AST.BoolTypeNode) |
+            parse_type_node("integer", AST.IntTypeNode) |
+            parse_type_node("money", AST.MoneyTypeNode) |
+            parse_type_node("decimal", AST.DecimalTypeNode) |
+            parse_type_node("string", AST.StringTypeNode) |
+            parse_type_node("date", AST.DateTypeNode)
         )
 
     def get_var_types(self):
@@ -71,6 +72,8 @@ class QuestionnaireParser(object):
             "DATE": pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}"),
             "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
         }
+
+        # TODO: Create integer.
         types["INTEGER"].addParseAction(create_decimal)
         types["DECIMAL"].addParseAction(create_decimal)
 
@@ -140,7 +143,7 @@ class QuestionnaireParser(object):
         ).addParseAction(self.create_node(AST.BlockNode))
 
         form = self.KW["FORM"] + self.var_types["VARIABLE"] + \
-               self.curly_embrace(self.block)
+            self.curly_embrace(self.block)
         form.addParseAction(self.create_node(AST.FormNode))
 
         return form.addParseAction(self.create_node(AST.QuestionnaireAST))
@@ -173,6 +176,7 @@ class QuestionnaireParser(object):
         infix_or = create_operator('||', AST.OrNode)
 
         # Extend the parsing logic to convert the variables to AST nodes.
+        # TODO: merge with above.
         var_types = (
             self.var_types["BOOLEAN"].addParseAction(
                 self.create_node(AST.BoolNode)) |

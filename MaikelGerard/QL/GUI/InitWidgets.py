@@ -1,6 +1,9 @@
 from QL.GUI.DrawGUI import DrawGUI
 import QL.GUI.Widgets as Widgets
 
+# TODO: See if we can merge InitWidgets and DrawGUI.
+# TODO: Remove context
+
 
 class InitWidgets(object):
     def __init__(self, ast, env, evaluator, error_handler):

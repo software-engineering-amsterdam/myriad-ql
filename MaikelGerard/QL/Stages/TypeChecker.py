@@ -1,5 +1,8 @@
 from QL import AST
 
+# TODO: Double dispatch in AST --> make it work here.
+# TODO: Remove context, remove clear errors, clear env <-- dangerous.
+# TODO: Add a pass to collect variables --> out of order questions.
 
 class TypeChecker(object):
     def __init__(self, ast, env, error_handler):

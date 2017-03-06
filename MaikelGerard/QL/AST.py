@@ -1,6 +1,12 @@
 from decimal import Decimal
 from datetime import date
 
+# TODO: Improve hierarchy VarNodes should be separate, add expressionNode,
+# create LiteralNodes and VarNode separate --> both are ExpressionNode.
+# TODO: Remove print and eq, add to seperate traversal.
+# TODO: Remove QuestionnaireAST, just make form the root.
+# TODO: Replace 'is_boolean' etc. into double dispatch.
+# TODO: Do we want to pass state in the visitor?
 
 class QuestionnaireAST(object):
     def __init__(self, form, line=0, col=0):
@@ -386,7 +392,7 @@ class BoolTypeNode(TypeNode):
         super(BoolTypeNode, self).__init__("boolean", line, col)
         self.default = False
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return value
 
     def accept(self, visitor):
@@ -398,7 +404,7 @@ class IntTypeNode(TypeNode):
         super(IntTypeNode, self).__init__("integer", line, col)
         self.default = Decimal("0")
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return Decimal(value)
 
     def accept(self, visitor):
@@ -410,7 +416,7 @@ class MoneyTypeNode(TypeNode):
         super(MoneyTypeNode, self).__init__("money", line, col)
         self.default = Decimal("0.00")
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return Decimal(value)
 
     def accept(self, visitor):
@@ -422,7 +428,7 @@ class DecimalTypeNode(TypeNode):
         super(DecimalTypeNode, self).__init__("decimal", line, col)
         self.default = Decimal("0.00")
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return Decimal(value)
 
     def accept(self, visitor):
@@ -434,7 +440,7 @@ class StringTypeNode(TypeNode):
         super(StringTypeNode, self).__init__("string", line, col)
         self.default = ""
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return value
 
     def accept(self, visitor):
@@ -446,7 +452,7 @@ class DateTypeNode(TypeNode):
         super(DateTypeNode, self).__init__("date", line, col)
         self.default = date(day=1, month=1, year=2000)
 
-    def convert_to_type(self, value):
+    def parse_value(self, value):
         return value
 
     def accept(self, visitor):

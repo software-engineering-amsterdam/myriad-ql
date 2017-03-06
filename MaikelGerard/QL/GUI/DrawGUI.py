@@ -44,7 +44,7 @@ class DrawGUI(object):
                 continue
 
             question_type = question_node.type
-            new_value = question_type.convert_to_type(new_value)
+            new_value = question_type.parse_value(new_value)
             self.env.set_var_value(widget_id, new_value)
 
     def force_redraw(self, _):
