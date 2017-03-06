@@ -1,7 +1,8 @@
 module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
 
 import Html exposing (Html, textarea, div, pre, text)
-import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
+import Html.Keyed exposing (node)
+import Html.Attributes exposing (class, defaultValue, rows, cols, class, style, id)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
@@ -77,24 +78,29 @@ update msg (Model _ _ parsedForm) =
 
 view : Model -> Html Msg
 view (Model rawText parsedStyleSheet parsedForm) =
-    div []
-        [ div [ class "row" ]
-            [ div [ class "col-md-6" ]
-                [ Html.form [ class "form" ]
-                    [ textarea
-                        [ defaultValue rawText
-                        , rows 20
-                        , cols 45
-                        , class "form-control"
-                        , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
-                        , onInput OnInput
+    node "div"
+        []
+        [ ( "qlsInput"
+          , div []
+                [ div [ class "row" ]
+                    [ div [ class "col-md-6" ]
+                        [ Html.form [ class "form" ]
+                            [ textarea
+                                [ defaultValue rawText
+                                , rows 20
+                                , cols 45
+                                , class "form-control"
+                                , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
+                                , onInput OnInput
+                                ]
+                                []
+                            ]
                         ]
-                        []
+                    , div [ class "col-md-6" ]
+                        [ text <| toString <| Maybe.withDefault [] <| Maybe.map2 QLS.TypeChecker.check parsedForm parsedStyleSheet
+                        ]
                     ]
+                , pre [] [ text <| toString parsedStyleSheet ]
                 ]
-            , div [ class "col-md-6" ]
-                [ text <| toString <| Maybe.withDefault [] <| Maybe.map2 QLS.TypeChecker.check parsedForm parsedStyleSheet
-                ]
-            ]
-        , pre [] [ text <| toString parsedStyleSheet ]
+          )
         ]

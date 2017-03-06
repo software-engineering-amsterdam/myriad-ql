@@ -1,8 +1,9 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
 import Html exposing (Html, b, div, form, h3, pre, text, textarea)
-import Html.Attributes exposing (class, cols, defaultValue, rows, style)
+import Html.Attributes exposing (class, cols, defaultValue, rows, style, id)
 import Html.Events exposing (onInput)
+import Html.Keyed exposing (node)
 import QL.AST exposing (Form, Location, ValueType)
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
@@ -89,28 +90,32 @@ update msg model =
 
 view : Model -> Html Msg
 view { rawInput, parsedForm, messages } =
-    div []
-        [ div [ class "row" ]
-            [ div [ class "col-md-6" ]
-                [ form [ class "form" ]
-                    [ textarea
-                        [ defaultValue rawInput
-                        , rows 20
-                        , cols 45
-                        , class "form-control"
-                        , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
-                        , onInput OnDslInput
+    node "div"
+        []
+        [ ( "qlInput"
+          , div [ class "row" ]
+                [ div [ class "col-md-6" ]
+                    [ form [ class "form" ]
+                        [ textarea
+                            [ id "qlInput"
+                            , defaultValue rawInput
+                            , rows 20
+                            , cols 45
+                            , class "form-control"
+                            , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
+                            , onInput OnDslInput
+                            ]
+                            []
                         ]
-                        []
+                    ]
+                , div [ class "col-md-6" ]
+                    [ h3 [] [ text "TypeChecker" ]
+                    , div []
+                        (List.map renderMessage messages)
                     ]
                 ]
-            , div [ class "col-md-6" ]
-                [ h3 [] [ text "TypeChecker" ]
-                , div []
-                    (List.map renderMessage messages)
-                ]
-            ]
-        , pre [] [ text <| toString parsedForm ]
+          )
+        , ( "preview", pre [] [ text <| toString parsedForm ] )
         ]
 
 
