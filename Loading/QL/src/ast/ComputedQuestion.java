@@ -16,4 +16,9 @@ public class ComputedQuestion extends Question {
 	public Expression getComputedQuestion() {
 		return computedQuestion;
 	}
+
+	@Override
+	public void accept(FormVisitor v) {
+		v.visit(this);
+	}
 }

@@ -8,11 +8,13 @@ import ast.Statement;
 import ast.atom.Atom;
 import evaluation.Environment;
 import evaluation.Evaluator;
+import value.IntegerValue;
 
 
 public class QEvaluator extends Evaluator {
 
 	private List<QQuestion> activeQuestions; // TODO QQuestion String and type?
+    private static evaluation.Environment answers;
 
 	public QEvaluator(Environment answers) {
 		super(answers);
@@ -31,9 +33,21 @@ public class QEvaluator extends Evaluator {
     
     @Override
     public void visit(ComputedQuestion question) {
+        System.out.println("Evaluator: computed question");
         Atom atom = question.getComputedQuestion().accept(this);
-        activeQuestions.add(new QQuestion(question.getVariable(),
-        		question.getLabel(), question.getType()));
+        System.out.println(atom.getNumber());
+
+        QQuestion q = new QQuestion(question.getVariable(),
+                question.getLabel(), question.getType());
+
+        // TODO what to do with the answer of a computed question?
+        if (atom.getNumber() != null) {
+//            answers.addAnswer(question.getVariable(), new IntegerValue(atom.getNumber()));
+            q.setAnswer(new IntegerValue(atom.getNumber()));
+        }
+
+        activeQuestions.add(q);
+
         // TODO what to do with the answer of a computed question?
     }
 

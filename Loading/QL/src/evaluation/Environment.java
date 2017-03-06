@@ -16,7 +16,7 @@ public class Environment {
 	public void addAnswer(String variable, Value answer) {
 		variableAnswer.put(variable, answer);
 	}
-		
+
 	public Map<String, Value> getAnswers() {
 		return variableAnswer;
 	}
