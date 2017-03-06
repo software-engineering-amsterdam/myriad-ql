@@ -16,7 +16,7 @@ module QL
       end
 
       def callback
-        @question_frame.gui.value_changed
+        @question_frame.gui.reload_questions
       end
     end
 
@@ -107,7 +107,7 @@ module QL
       def initialize(args)
         super
         label      = TkLabel.new(frame).pack
-        label.text = @question_frame.question.label
+        label.text = @question_frame.label
       end
     end
 
@@ -119,6 +119,14 @@ module QL
 
       def position
         @question_frame.gui.questions.size
+      end
+    end
+
+    class SubmitButton
+      def initialize(gui)
+        button         = TkButton.new.grid(row: gui.questions.size + 1)
+        button.text    = 'Submit'
+        button.command = proc { gui.submit }
       end
     end
   end

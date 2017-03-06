@@ -11,22 +11,16 @@ module QL
         FormBuilder.new(ql_ast, self)
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        create_submit_button
+        SubmitButton.new(self)
         Tk.mainloop
       end
 
-      def value_changed
+      def reload_questions
         @questions.each_value(&:reload)
       end
 
       def submit
         p @questions.each_value.select { |question| question.enabled }.map(&:to_json)
-      end
-
-      def create_submit_button
-        button         = TkButton.new.grid(row: @questions.size + 1)
-        button.text    = 'Submit'
-        button.command = proc { submit }
       end
 
       def check(type_checker)

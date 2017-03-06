@@ -28,8 +28,12 @@ module QL
         @variable.eval
       end
 
+      def label
+        @question.label
+      end
+
       def to_json
-        { @label => value }
+        { label => value }
       end
 
       def reload
