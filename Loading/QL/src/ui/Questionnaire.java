@@ -7,7 +7,6 @@ import java.util.Map;
 import QL.Warning;
 import ast.Form;
 import evaluation.Environment;
-import evaluation.Evaluator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -27,10 +25,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import semantic.TypeChecker;
-import ui.field.Field;
-import value.EmptyValue;
 import value.Value;
+
+import java.util.List;
 
 public class Questionnaire extends Application {
 	// TODO make Notifier an inner class or add extra environment
@@ -40,12 +37,12 @@ public class Questionnaire extends Application {
 	private static evaluation.Environment answers;
 	private static GridPane grid;
 	private static List<Warning> warnings;
-	
+
 	public class Notifier {
 
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = answers.getAnswer(name); 
+	    	Value oldAnswer = answers.getAnswer(name);
 			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
 
 				answers.addAnswer(name, newValue); 
@@ -63,7 +60,7 @@ public class Questionnaire extends Application {
     	form = f;
     	answers = new Environment();
     	warnings = w;
-    	
+
         launch();
     }
         
@@ -75,7 +72,7 @@ public class Questionnaire extends Application {
     		dialog.show();
     		return;
     	}
-    	
+
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();

@@ -11,13 +11,14 @@ import ui.Questionnaire;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		String tmp = "form Testing { \n"
-				 + "Name1: \"Question1\" integer \n"
-				 + "if ( 2 + Name1 == 5) {\n"
- 		 		 + "Name2: \"Question2\" boolean\n"
-				 + "}\n"
-				 + "Name3: \"Question3\" boolean \n"
-				 + "}\n";
+		String tmp = "form Testing { "
+				 + "Name0: \"Question0\" integer "
+				 + "Name1: \"Question1\" integer (Name0 + 5) "
+				 + "if ((true)) {"
+ 		 		 + "Name2: \"Question2\" boolean"
+				 + "}"
+				 + "Name3: \"Question3\" boolean "
+				 + "}";
 //		String tmp = "form Testing { Name0: \"Question\" boolean\n"
 //				+ "Name1: \"Question1\" integer\n"
 //				+ "if (((1 + 5) * 3) == ((15+2) + 1)) {"

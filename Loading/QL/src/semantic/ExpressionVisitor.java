@@ -137,7 +137,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     public Type visit(StringType type) {
         return new StringType(type.getLine());
     }
-    
+
 	@Override
 	public Type visit(UnknownType type) {
 		return new UnknownType(type.getLine());
@@ -262,14 +262,14 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 		check(expected, rhs);
 	}
 
-    
+
     private void check(Type expected, Type current) {
     	// TODO is equal in Type or instance of?
         if (!expected.getKeyWord().equals(current.getKeyWord())) {
-        	environment.addWarning("The type " + current.getKeyWord() + " is not of the expected type: " 
+        	environment.addWarning("The type " + current.getKeyWord() + " is not of the expected type: "
     			+ expected.getKeyWord(), current.getLine());
         }
     }
 
-    
+
 }
