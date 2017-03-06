@@ -288,4 +288,4 @@ class TestParser(TestCase):
         with self.assertRaises(ParseException):
             parse(input_string)
             #TODO: Decide if this needs fixing
-            self.fail('Cannot have double positive declaration')
+            self.fail('Cannot have double positive/negative declaration')

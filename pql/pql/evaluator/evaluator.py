@@ -1,8 +1,9 @@
 # coding=utf-8
-from pql.visitor.visitor import Visitor
+from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.FormVisitor import FormVisitor
 
 
-class Evaluator(Visitor):
+class Evaluator(FormVisitor, ExpressionVisitor):
     def __init__(self, environment):
         self.environment = environment
 

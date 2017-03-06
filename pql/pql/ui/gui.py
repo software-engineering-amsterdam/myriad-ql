@@ -1,23 +1,23 @@
 # coding=utf-8
-import PyQt5
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QVBoxLayout
 
 from pql.gui.QuestionairWizard import QuestionairWizard, Page
+from pql.traversal.FormVisitor import FormVisitor
 
 
-class Gui(object):
+class Gui(FormVisitor):
     def __init__(self, environment, ql_ast):
         self.environment = environment
         self.ql_ast = ql_ast
 
-    def build(self):
+    def visit(self, pql_ast):
         wiz = QuestionairWizard()
-        [wiz.add_page(form.apply(self, wiz)) for form in self.ql_ast]
+        [wiz.add_page(form.apply(self)) for form in self.ql_ast]
         return wiz
 
-    def form(self, node, parent):
+    def form(self, node):
         page = Page(parent, node.name, "Temp subtitle")
         [statement.apply(self) for statement in node.children]
 
@@ -30,8 +30,11 @@ class Gui(object):
 
     def field(self, node):
         grid = QVBoxLayout()
-        title = QLabel(node.title)
-        answer_edit = QLineEdit()
-        grid.addWidget(title, 1, 0)
-        grid.addWidget(answer_edit, 1, 1)
+        label = QLabel(node.title)
+        value = QLineEdit()
+        label.setBuddy(value)
+        grid.addWidget(label, 1, 0)
+        grid.addWidget(value, 1, 1)
         return grid
+
+

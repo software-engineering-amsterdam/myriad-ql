@@ -1,17 +1,16 @@
 # coding=utf-8
-from sys import exit
-from sys import argv
 from io import open
 from os.path import join
+from sys import argv
+from sys import exit
 
 from PyQt5.QtWidgets import QApplication
 
-from pql.builder.gui import Gui
 from pql.evaluator.evaluator import Evaluator
+from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import TypeChecker
-from pql.identifierchecker.identifierchecker import IdentifierChecker
-from pql.gui.QuestionairWizard import QuestionairWizard
+from pql.ui.gui import Gui
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
@@ -99,6 +98,6 @@ if __name__ == '__main__':
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
     environment = strip_keys_from_dict(ql_identifier_check_result)
     app = QApplication(argv)
-    gui = Gui(environment, ql_ast)
-
+    gui = Gui(environment)
+    gui.visit(ql_ast)
     exit(app.exec_())

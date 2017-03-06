@@ -1,9 +1,10 @@
 # coding=utf-8
-from pql.visitor.visitor import Visitor
+from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.FormVisitor import FormVisitor
 from pql.typechecker.types import DataTypes
 
 
-class TypeChecker(Visitor):
+class TypeChecker(FormVisitor, ExpressionVisitor):
     def __init__(self, ql_identifier_check_result):
         self.identifier_dict = ql_identifier_check_result
         self.errors = list()

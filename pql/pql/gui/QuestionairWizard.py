@@ -29,7 +29,7 @@ class QuestionairWizard(QWizard):
 
 
 class Page(QWizardPage):
-    def __init__(self, parent, title, subtitle):
+    def __init__(self, title, subtitle, parent=None):
         super(Page, self).__init__(parent)
         self.setTitle(title)
         self.setSubTitle(subtitle)
