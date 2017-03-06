@@ -16,5 +16,9 @@ let result = parser.parse(test6);
 let ast = new AST(result[0]);
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
-let gui = new GUI(ast);
+
+
+/* Visitor has validated the AST */
+let memoryState = visitor.getMemoryState();
+let gui = new GUI(ast, memoryState);
 gui.createGUI();

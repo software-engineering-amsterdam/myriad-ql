@@ -2,12 +2,15 @@
  * Created by alexvanmanen on 27-02-17.
  */
 
+import eventemitter3   from 'eventemitter3';
 
-export class MemoryElement {
+export class MemoryElement extends eventemitter3{
 
-    constructor(options = {}) {
-        this.type = options.type;
-        this.value = options.value;
+    constructor(type, value) {
+        super();
+
+        this.type = type;
+        this.value = value;
     }
 
 }

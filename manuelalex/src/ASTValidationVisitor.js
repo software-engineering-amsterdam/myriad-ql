@@ -15,6 +15,10 @@ export class ASTValidationVisitor {
         this.output = options.output;
     }
 
+    getMemoryState(){
+        return this.memoryState;
+    }
+
 
     visitAST(ast){
         this.visitForm(ast.program.name);
