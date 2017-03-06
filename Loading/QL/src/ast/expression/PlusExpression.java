@@ -1,25 +1,23 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
-import value.Value;
+import ast.type.Type;
+import semantic.Environment;
 
 public class PlusExpression extends UnaryExpression {
 
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-		
+	public PlusExpression(Expression lhs, int line) {
+		super(lhs, line);
 	}
 
 	@Override
-	public Atom evaluate() {
-		return getLhs().plus();
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
-	@Override
-	public Atom evaluate(Value test) {
-		return null;
-	}
-
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().plus();
+//	}
 }

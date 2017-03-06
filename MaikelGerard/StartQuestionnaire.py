@@ -1,17 +1,18 @@
-from Parser import QuestionnaireParser
-from TypeChecker import TypeChecker
-from Environment import Environment
-from ErrorHandler import ErrorHandler
-from Evaluate import Evaluate
-from FindCycles import FindCycles
-from DrawGUI import DrawGUI
 import sys
 
+from QL.Environment import Environment
+from QL.ErrorHandler import ErrorHandler
+from QL.GUI.DrawGUI import DrawGUI
+from QL.GUI.InitGUI import InitGUI
+from QL.Stages.Evaluator import Evaluate
+from QL.Stages.FindCycles import FindCycles
+from QL.Stages.Parser import QuestionnaireParser
+from QL.Stages.TypeChecker import TypeChecker
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print "Invalid amount of parameters, usage:"
-        print "python StartQuestionnaire.py [QL FILEPATH]"
+        print("Invalid amount of parameters, usage:")
+        print("python StartQuestionnaire.py [QL FILEPATH]")
         sys.exit()
 
     # Read the contents of the questionnaire source file.
@@ -20,7 +21,7 @@ if __name__ == '__main__':
 
     # Parse the questionnaire into an AST.
     parsedAST = QuestionnaireParser().parse(file_contents)
-    print (parsedAST)
+    print(parsedAST)
 
     # Create an error handler and environment.
     error_handler = ErrorHandler()
@@ -32,4 +33,6 @@ if __name__ == '__main__':
     evaluator = Evaluate(parsedAST, environment, error_handler)
 
     # Finally, draw the GUI.
-    DrawGUI(parsedAST, environment, evaluator, error_handler).start_traversal()
+    built_gui = InitGUI(parsedAST, environment, evaluator, error_handler)
+    built_gui.start_traversal()
+    DrawGUI(built_gui, parsedAST, environment, evaluator, error_handler).start()

@@ -3,23 +3,23 @@ module QLS.Parser.Style exposing (style)
 import Combine exposing (Parser, choice, string, regex, (<$>), (*>))
 import Combine.Num exposing (int)
 import QLS.AST exposing (Style(Width, Font, FontSize, Color))
-import Parser.Token exposing (quotedString)
+import QL.Parser.Token exposing (quotedString)
 import Combine.Extra exposing (whitespace1)
 
 
 style : Parser state Style
 style =
     choice
-        [ stylePair Width "width" int
-        , stylePair Font "font" quotedString
-        , stylePair FontSize "fontsize" int
-        , stylePair Color "color" colorValueParser
+        [ property "width" (Width <$> int)
+        , property "font" (Font <$> quotedString)
+        , property "fontsize" (FontSize <$> int)
+        , property "color" (Color <$> colorValueParser)
         ]
 
 
-stylePair : (value -> Style) -> String -> Parser state value -> Parser state Style
-stylePair f name valueParser =
-    string name *> string ":" *> whitespace1 *> (f <$> valueParser)
+property : String -> Parser state Style -> Parser state Style
+property name valueParser =
+    string name *> string ":" *> whitespace1 *> valueParser
 
 
 colorValueParser : Parser s String

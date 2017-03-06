@@ -1,10 +1,9 @@
 package ast;
 
-public class Form implements Node {
+public class Form extends Node {
 	
 	private final String id;
 	private Block block;
-	private int line;
 
 	public String getId() {
 		return id;
@@ -13,19 +12,15 @@ public class Form implements Node {
 	public Block getBlock() {
 		return block;
 	}
-
-	public int getLine() {
-		return line;
-	}
-
+	
+	// TODO move line to Node
 	public Form(String id, Block block, int line) {
+		super(line);
 		this.id = id;
 		this.block = block;
-		this.line = line;
 	}
 
-	@Override
-	public void accept(Visitor v) {
+	public void accept(FormVisitor v) {
 		v.visit(this);
 	}
 	

@@ -1,16 +1,26 @@
 package value;
 
+import ast.atom.BoolAtom;
+import ast.type.BooleanType;
+import ast.type.Type;
 
 public class BoolValue extends Value {
 	
-	private boolean value;
+	private BoolAtom value;
 	
 	public BoolValue(boolean value) {
-		this.value = value;
+		this.value = new BoolAtom(value, 0); 
+	}
+
+
+	@Override
+	public BoolAtom getValue() {
+		return value;
 	}
 
 	@Override
-	public Object getValue() {
-		return value;
+	public Type getType() {
+		return new BooleanType(0);
 	}
+	
 }

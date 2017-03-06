@@ -2,6 +2,7 @@ package sc.ql.model.form_elements;
 
 import java.util.List;
 import sc.ql.model.FormElement;
+import sc.ql.model.NodeVisitor;
 import sc.ql.model.ConditionalBlock;
 
 public class IfStatement implements FormElement {
@@ -20,8 +21,9 @@ public class IfStatement implements FormElement {
 	public List<FormElement> getFormElements() {
 		return this.form_elements;
 	}
-	
-	public Type getElementType() {
-		return Type.IF_STATEMENT;
+
+	@Override
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
+		return visitor.visit(this);
 	}
 }

@@ -1,12 +1,10 @@
 package UvA.Gamma.AST.Values;
 
-import UvA.Gamma.AST.ASTNode;
-
 /**
  * Created by Tjarco, 14-02-17.
  */
 
-public class Boolean implements ASTNode, Value {
+public class Boolean extends Value {
     private boolean value;
 
     public Boolean(boolean value) {
@@ -22,6 +20,15 @@ public class Boolean implements ASTNode, Value {
         this.value = java.lang.Boolean.valueOf(value);
     }
 
+    @Override
+    public Type getType() {
+        return Type.BOOL;
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return type == Type.BOOL;
+    }
 
     public boolean getValue() {
         return value;

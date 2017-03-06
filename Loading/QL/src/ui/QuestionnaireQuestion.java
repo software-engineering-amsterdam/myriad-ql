@@ -1,83 +1,52 @@
 package ui;
 
 import ast.type.Type;
-import value.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
+import ui.field.Field;
+import value.Value;
+import ui.Questionnaire.Notifier;
 
 public class QuestionnaireQuestion {
-	
+
 	private String name;
 	private String label;
 	private Type type;
-	private Control entryField;
-	
+	private Field entryField;
+
 	public QuestionnaireQuestion(String name, String label, Type type) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
-		this.entryField = deriveField(type);
+		this.entryField = type.getField(name);
 	}
-	
-	// TODO move to field
-	private Control deriveField(Type type) {
-        if ("string" == type.getType()) {
-        	return new TextField();
-        } else if ("boolean" == type.getType()) {
-        	return new CheckBox();
-        } else if ("integer" == type.getType()) {
-        	TextField field = new TextField();
-        	field.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d*")) {
-                        (field).setText(newValue.replaceAll("[^\\d]", ""));
-                    }
-                }
-            });
-        	return field;
-        } else {
-        	// TODO error
-        	return null;
-        }        	
-	}
-	
-	
-	// TODO move to field
+
 	// TODO default return statement
 	public Value getAnswer() {
-		if ("boolean" == type.getType()) {
-			return new BoolValue(((CheckBox) entryField).isSelected());
-		} else {
-			String str = ((TextField) entryField).getText();
-			if (str.isEmpty()) {
-				return new EmptyValue();
-			} else if ("string" == type.getType()) {
-				return new StringValue(str);
-			} else {
-				return new IntegerValue(Integer.valueOf(str));
-			}
-		
-		}
+		return entryField.getAnswer();
 	}
-	
+
+	public void setAnswer(Value value) {
+		entryField.setAnswer(value);
+	}
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}
-	
+
 	public Type getType() {
 		return type;
 	}
 	
-	public Control getEntryField() {
-		return entryField;
+	public void addListener(Notifier listener) {
+		entryField.addListener(listener);
 	}
-	
+
+	public Control getControl() {
+		return entryField.getField();
+	}
+
 }

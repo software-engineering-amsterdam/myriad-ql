@@ -1,24 +1,26 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
-import value.Value;
+import ast.type.Type;
+import semantic.Environment;
 
 public class EqExpression extends BinaryExpression {
 
-	@Override
-	public Atom evaluate() {
-		return getLhs().eq(getRhs());
+	public EqExpression(Expression lhs, Expression rhs, int line) {
+		super(lhs, rhs, line);
 	}
 
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);		
-	}
+//	@Override
+//	public Atom evaluate() {
+//		System.out.println("EqExpression evaluate()");
+//		System.out.println(getLhs());
+//		System.out.println(getRhs());
+//		return getLhs().evaluate().eq(getRhs().evaluate());
+//	}
 
 	@Override
-	public Atom evaluate(Value test) {
-		return null;
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
-	
 }

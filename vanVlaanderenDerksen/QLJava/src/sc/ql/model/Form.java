@@ -17,4 +17,7 @@ public class Form implements Node {
 	public FormElement getFormElement(Integer index) {
         return this.form_elements.get(index);
     }
+
+	@Override
+	public <T> T accept(NodeVisitor<T> visitor) { return null; }
 }
