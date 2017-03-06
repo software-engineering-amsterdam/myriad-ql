@@ -14,7 +14,6 @@ INDEX VERSION 1.129+/Users/Nikki/Documents/workspace/myriad-ql/Loading/.metadata
 3827432217.index
 3447711133.index
 4274028564.index
-278575457.index
 3712507179.index
 1833648217.index
 156905802.index

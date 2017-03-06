@@ -5,7 +5,7 @@ import ast.type.Type;
 
 public class BoolAtom extends Atom {
     
-	private Boolean value;
+	private final Boolean value;
 
     public BoolAtom(Boolean value, int line) {
     	super(line);

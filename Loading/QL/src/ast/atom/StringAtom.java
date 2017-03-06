@@ -5,7 +5,7 @@ import ast.type.Type;
 
 public class StringAtom extends Atom {
     
-	private String str;
+	private final String str;
 
     public StringAtom(String str, int line) {
     	super(line);

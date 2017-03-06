@@ -8,13 +8,12 @@ import ast.Statement;
 import ast.atom.Atom;
 import evaluation.Environment;
 import evaluation.Evaluator;
-import value.IntegerValue;
+import value.Value;
 
 
 public class QEvaluator extends Evaluator {
 
 	private List<QQuestion> activeQuestions; // TODO QQuestion String and type?
-    private static evaluation.Environment answers;
 
 	public QEvaluator(Environment answers) {
 		super(answers);
@@ -41,7 +40,7 @@ public class QEvaluator extends Evaluator {
 
         // TODO what to do with the answer of a computed question?
         if (atom.isSet()) {
-            q.setAnswer(new IntegerValue(atom.getNumber()));
+            q.setAnswer(new Value(atom.getNumber()));
         }
 
         activeQuestions.add(q);

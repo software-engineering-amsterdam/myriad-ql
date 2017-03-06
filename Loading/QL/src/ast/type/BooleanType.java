@@ -21,7 +21,6 @@ public class BooleanType extends Type {
 
 	@Override
 	public Field getField(String name) {
-		// TODO Auto-generated method stub
 		return new Check(name);
 	}
 

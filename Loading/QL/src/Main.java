@@ -47,7 +47,6 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 		QLParser parser = new QLParser(tokens);
-//		System.out.println(parser.form().result.getBlock().getBlockItems().get(0));
 		Form form = parser.form().result;
 
 		System.out.println("----");
