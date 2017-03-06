@@ -166,6 +166,7 @@ class OrOp(BinOp):
         return visitor.visit_orop(self)
 
 
+# TODO: inheretence?
 class Variable:
 
     def __init__(self, name):

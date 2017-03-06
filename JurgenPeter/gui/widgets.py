@@ -1,6 +1,7 @@
 import re
 from ql.ast import Datatype
 from tkinter.font import Font
+from abc import abstractmethod
 
 
 class Widget:
@@ -20,6 +21,10 @@ class Widget:
 
     def get_tkinter_label(self):
         return self.app.getLabelWidget(self.label_id)
+
+    @abstractmethod
+    def get_tkinter_widget(self):
+        pass
 
     def set_font_family(self, family):
         self.font["family"] = family
@@ -47,6 +52,10 @@ class Widget:
         if styling.applicable(self.get_datatype()):
             for attribute in styling.attributes:
                 attribute.apply_on(self)
+
+    @staticmethod
+    def get_datatype():
+        pass
 
 
 class EntryWidget(Widget):
@@ -88,7 +97,8 @@ class EntryWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getEntryWidget(self.entry_id)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.string
 
 
@@ -104,7 +114,8 @@ class IntegerEntryWidget(EntryWidget):
         except ValueError:
             return None
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.integer
 
 
@@ -120,7 +131,8 @@ class DecimalEntryWidget(EntryWidget):
         except ValueError:
             return None
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.decimal
 
 
@@ -154,7 +166,8 @@ class CheckBoxWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getCheckBoxWidget(self.entry_id)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.boolean
 
 
@@ -196,7 +209,8 @@ class SpinBoxWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getSpinBoxWidget(self.entry_id)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.integer
 
 
@@ -259,7 +273,8 @@ class RadioWidget(Widget):
             widget.config(fg=color)
         self.get_tkinter_label().config(fg=color)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.boolean
 
 
@@ -296,7 +311,8 @@ class DropDownWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getOptionBoxWidget(self.entry_id)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.boolean
 
 
@@ -345,5 +361,6 @@ class SliderWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getScaleWidget(self.entry_id)
 
-    def get_datatype(self):
+    @staticmethod
+    def get_datatype():
         return Datatype.integer

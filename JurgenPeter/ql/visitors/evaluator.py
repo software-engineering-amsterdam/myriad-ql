@@ -6,7 +6,7 @@ class Evaluator:
     def visit(self, node):
         try:
             return node.accept(self)
-        except TypeError:
+        except TypeError: # TODO: custom None exception
             return None
 
     def visit_plusop(self, node):

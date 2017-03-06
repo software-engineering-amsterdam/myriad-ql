@@ -91,6 +91,13 @@ class Styling:
     def applicable(self, datatype):
         return True
 
+    def modify_widget_constructor(self, node, widget_constructor):
+        if self.applicable(node.datatype):
+            for attribute in self.attributes:
+                widget_constructor = attribute.modify_widget_constructor(
+                    widget_constructor)
+        return widget_constructor
+
 
 class DefaultStyling(Styling):
     def __init__(self, datatype, attributes):
@@ -102,7 +109,7 @@ class DefaultStyling(Styling):
 
 
 class Attribute:
-    def get_widget_constructor(self, widget):
+    def modify_widget_constructor(self, widget):
         return widget
 
 
@@ -171,5 +178,5 @@ class WidgetTypeAttribute(Attribute):
     def apply_on(self, _):
         pass
 
-    def get_widget_constructor(self, widget):
+    def modify_widget_constructor(self, widget):
         return self.widget_constructor

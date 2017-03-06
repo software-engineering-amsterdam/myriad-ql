@@ -7,6 +7,7 @@ class TypeChecker:
 
     def __init__(self, symboltable):
         self.symboltable = symboltable
+        # TODO: Error & warning classes
         self.errors = []
         self.warnings = []
 
@@ -16,6 +17,7 @@ class TypeChecker:
     def warn(self, message):
         self.warnings.append(message)
 
+    # TODO: rename
     def visit(self, node):
         node.accept(self)
         return self.errors, self.warnings
