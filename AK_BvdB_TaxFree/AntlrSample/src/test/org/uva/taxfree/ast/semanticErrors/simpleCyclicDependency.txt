@@ -1,0 +1,8 @@
+form houseForm {
+    if (hasSoldHouse) {
+        "Did you buy a house?" -> hasBoughtHouse : boolean
+    }
+    if (hasBoughtHouse) {
+        "Did you sell a house?" -> hasSoldHouse : boolean
+    }
+}
