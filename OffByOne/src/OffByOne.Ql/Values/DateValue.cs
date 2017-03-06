@@ -54,7 +54,7 @@
 
         public override BooleanValue GreaterThan(DateValue other)
         {
-            return new BooleanValue(this.Value > other.Value);
+            return new BooleanValue(other.Value > this.Value);
         }
 
         public override BooleanValue LessThan(IValue other)
@@ -64,7 +64,7 @@
 
         public override BooleanValue LessThan(DateValue other)
         {
-            return new BooleanValue(this.Value < other.Value);
+            return new BooleanValue(other.Value < this.Value);
         }
 
         public override BooleanValue GreaterThanOrEqualTo(IValue other)
@@ -74,7 +74,7 @@
 
         public override BooleanValue GreaterThanOrEqualTo(DateValue other)
         {
-            return new BooleanValue(this.Value >= other.Value);
+            return new BooleanValue(other.Value >= this.Value);
         }
 
         public override BooleanValue LessThanOrEqualTo(IValue other)
@@ -84,7 +84,7 @@
 
         public override BooleanValue LessThanOrEqualTo(DateValue other)
         {
-            return new BooleanValue(this.Value <= other.Value);
+            return new BooleanValue(other.Value <= this.Value);
         }
 
         public override string ToString()
