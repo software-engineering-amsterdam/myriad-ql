@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Tests.Evaluator
 {
+    using System;
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast.Expressions;
@@ -7,6 +8,8 @@
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Evaluator;
+    using OffByOne.Ql.Values;
+    using OffByOne.Ql.Values.Contracts;
 
     using Xunit;
 
@@ -16,51 +19,75 @@
         {
             new object[]
             {
-                new AndExpression(new BooleanLiteral(true), new BooleanLiteral(true)), "True"
+                new AndExpression(new BooleanLiteral(true), new BooleanLiteral(true)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new AndExpression(new BooleanLiteral(false), new BooleanLiteral(true)), "False"
+                new AndExpression(new BooleanLiteral(false), new BooleanLiteral(true)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
             new object[]
             {
-                new AndExpression(new BooleanLiteral(true), new BooleanLiteral(false)), "False"
+                new AndExpression(new BooleanLiteral(true), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
             new object[]
             {
-                new AndExpression(new BooleanLiteral(false), new BooleanLiteral(false)), "False"
+                new AndExpression(new BooleanLiteral(false), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
             new object[]
             {
-                new OrExpression(new BooleanLiteral(true), new BooleanLiteral(true)), "True"
+                new OrExpression(new BooleanLiteral(true), new BooleanLiteral(true)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new OrExpression(new BooleanLiteral(false), new BooleanLiteral(true)), "True"
+                new OrExpression(new BooleanLiteral(false), new BooleanLiteral(true)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new OrExpression(new BooleanLiteral(true), new BooleanLiteral(false)), "True"
+                new OrExpression(new BooleanLiteral(true), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new OrExpression(new BooleanLiteral(false), new BooleanLiteral(false)), "False"
+                new OrExpression(new BooleanLiteral(false), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
             new object[]
             {
-                new NotExpression(new BooleanLiteral(false)), "True"
+                new NotExpression(new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new NotExpression(new BooleanLiteral(true)), "False"
+                new NotExpression(new BooleanLiteral(true)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
             new object[]
             {
-                new EqualExpression(new BooleanLiteral(false), new BooleanLiteral(false)), "True"
+                new EqualExpression(new BooleanLiteral(false), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
             },
             new object[]
             {
-                new EqualExpression(new BooleanLiteral(true), new BooleanLiteral(false)), "False"
+                new EqualExpression(new BooleanLiteral(true), new BooleanLiteral(false)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
             },
         };
 
@@ -68,11 +95,13 @@
         [MemberData(nameof(SimpleBooleanExpressionData))]
         public void Evaluate_ShoudlReturnExpectedValueFromExpression(
             Expression expression,
-            string expected)
+            Type expectedResultType,
+            IValue expected)
         {
             var evaluator = new Evaluator();
             var environment = new TypeEnvironment();
-            var result = evaluator.Evaluate(expression, environment).ToString();
+            var result = evaluator.Evaluate(expression, environment);
+            Assert.IsType(expectedResultType, result);
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
