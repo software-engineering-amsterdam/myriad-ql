@@ -27,14 +27,10 @@ import java.util.Map;
 
 public class TypeChecker implements Visitor{
 
-    private Map<java.lang.String, ValueType> declarations;
-    private List<java.lang.String> questions;
+    private ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private List<java.lang.String> questions = new LinkedList<>();
+    private Map<java.lang.String, ValueType> declarations = new HashMap<>();
 
-    public TypeChecker()
-    {
-        declarations = new HashMap<>();
-        this.questions = new LinkedList<>();
-    }
     @Override
     public Form visit(Form node){
         for (Item item : node.getQuestions()) {
@@ -52,16 +48,15 @@ public class TypeChecker implements Visitor{
     @Override
     public Question visit(Question node){
         if (declarations.containsKey(node.getValue())) {
-            // to do: error -> Duplicate declaration
+            exceptionHandler.addError(new Error(ErrorType.DUPLICATE_DECLARATION, node.getLineNumber(), node.getValue()));
         }
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
-            // to do: warning -> duplicate question label
+            exceptionHandler.addError(new Error(ErrorType.DUPLICATE_LABEL, node.getLineNumber(), node.getQuestion()));
         }
 
         declarations.put(node.getValue(), node.getType());
         questions.add(node.getQuestion().toLowerCase());
-
         return null;
     }
 
@@ -114,7 +109,13 @@ public class TypeChecker implements Visitor{
     }
 
     @Override
-    public Identifier visit(Identifier identifier) {
+    public ValueType visit(Identifier identifier) {
+        if (declarations.keySet().contains(identifier.getId()))
+        {
+            return declarations.get(identifier.getId());
+        }
+
+        exceptionHandler.addError(new Error(ErrorType.UNDEFINED_REFERENCE, identifier.getLineNumber(), identifier.getId()));
         return null;
     }
 

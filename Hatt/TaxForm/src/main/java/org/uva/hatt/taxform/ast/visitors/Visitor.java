@@ -28,7 +28,7 @@ public interface Visitor {
     BooleanExpression visit(BooleanExpression node);
     ComputationExpression visit(ComputationExpression node);
     GroupedExpression visit(GroupedExpression node);
-    Identifier visit(Identifier identifier);
+    ValueType visit(Identifier identifier);
     StringerLiteral visit(StringerLiteral stringerLiteral);
     IntegerLiteral visit(IntegerLiteral integerLiteral);
     BooleanLiteral visit(BooleanLiteral booleanLiteral);
