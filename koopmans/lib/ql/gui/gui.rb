@@ -29,7 +29,7 @@ module QL
               type:    'ok',
               icon:    'error',
               title:   'Errors found!',
-              message: type_checker[:errors].join('\n')
+              message: type_checker[:errors].map(&:message).join('\n')
           )
           return 'quit'
         elsif !type_checker[:warnings].empty?
@@ -37,7 +37,7 @@ module QL
               type:    'ok',
               icon:    'warning',
               title:   'Warnings found!',
-              message: type_checker[:warnings].join('\n')
+              message: type_checker[:warnings].map(&:message).join('\n')
           )
           return 'continue'
         end

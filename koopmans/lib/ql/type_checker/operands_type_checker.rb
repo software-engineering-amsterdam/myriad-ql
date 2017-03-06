@@ -3,6 +3,7 @@ module QL
     class OperandsTypeChecker
       include Visitor
       include AST
+      include Notification
 
       def visit_form(form)
         # get all variables and their types as defined by the questions
@@ -69,7 +70,7 @@ module QL
       def error(left, right)
         left  = 'undefined' unless left
         right = 'undefined' unless right
-        "[ERROR]: #{left} can not be used with #{right}"
+        Notification.new("#{left} can not be used with #{right}")
       end
     end
   end

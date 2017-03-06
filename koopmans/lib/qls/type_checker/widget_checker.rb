@@ -17,7 +17,7 @@ module QLS
         qls_widgets.each do |widget_hash|
           widget_hash.each do |type, widget_object|
             type = 'undefined' unless type
-            errors.push("[ERROR] #{widget_object.class} can not be used with #{type}") unless widget_object.accept_types.include?(type)
+            errors.push(Notification.new("#{widget_object.class} can not be used with #{type}")) unless widget_object.accept_types.include?(type)
           end
         end
         errors.uniq

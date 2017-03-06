@@ -19,8 +19,8 @@ ql_parse_tree = QL::Parser::Parser.new.parse(ql_contents)
 pp ql_parse_tree
 ql_ast = QL::Parser::Transformer.new.apply(ql_parse_tree)
 pp ql_ast
-ql_errors = QL::TypeChecker::TypeChecker.check(ql_ast)
-pp ql_errors
+ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
+pp ql_notifications
 
 
 #
@@ -30,9 +30,9 @@ pp ql_errors
 # pp qls_parsed
 # qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
 # pp qls_ast
-# type_checker = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
-# pp type_checker
+# qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
+# pp qls_notifications
 
 qls_ast = nil
 
-QL::GUI::GUI.new(ql_ast, qls_ast, ql_errors)
+QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
