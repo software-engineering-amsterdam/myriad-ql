@@ -11,6 +11,7 @@ import sc.ql.model.atoms.AtomId;
 import sc.ql.model.atoms.AtomInteger;
 import sc.ql.model.atoms.AtomMoney;
 import sc.ql.model.atoms.AtomString;
+import sc.ql.model.expressions.CalcExpression;
 import sc.ql.model.expressions.NotExpression;
 import sc.ql.model.expressions.OpExpression;
 import sc.ql.model.form_elements.IfStatement;
@@ -65,6 +66,14 @@ public class DependenciesVisitor implements NodeVisitor<List<String>> {
 		return question_ids;
 	}
 
+	@Override
+	public List<String> visit(CalcExpression calc_expression) throws Exception {
+		calc_expression.getLeft().accept(this);
+		calc_expression.getRight().accept(this);
+		
+		return question_ids;
+	}
+	
 	@Override
 	public List<String> visit(AtomBoolean atom_boolean) throws Exception {
 		return question_ids;

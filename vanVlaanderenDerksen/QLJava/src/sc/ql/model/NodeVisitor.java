@@ -10,6 +10,7 @@ public interface NodeVisitor<T> {
 	public T visit(IfStatement if_statement) throws Exception;
 	public T visit(NotExpression not_expression) throws Exception;
 	public T visit(OpExpression op_expression) throws Exception;
+	public T visit(CalcExpression calc_expression) throws Exception;
 	public T visit(AtomBoolean atom_boolean) throws Exception;
 	public T visit(AtomId atom_id) throws Exception;
 	public T visit(AtomInteger atom_integer) throws Exception;

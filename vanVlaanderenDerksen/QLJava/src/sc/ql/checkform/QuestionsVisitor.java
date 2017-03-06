@@ -7,6 +7,7 @@ import sc.ql.model.ConditionalBlock;
 import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
 import sc.ql.model.atoms.*;
+import sc.ql.model.expressions.CalcExpression;
 import sc.ql.model.expressions.NotExpression;
 import sc.ql.model.expressions.OpExpression;
 import sc.ql.model.form_elements.IfStatement;
@@ -64,4 +65,7 @@ public class QuestionsVisitor implements NodeVisitor<List<Question>> {
 
 	@Override
 	public List<Question> visit(AtomString atom_string) { return null; }
+
+	@Override
+	public List<Question> visit(CalcExpression calc_expression) throws Exception { return null; }
 }
