@@ -23,9 +23,9 @@ module QL
       rule(:form) { spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form) }
 
       # literal
-      rule(:boolean_literal) { (str('true') | str('false')).as(:boolean) >> spaces? }
-      rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer) >> spaces? }
-      rule(:string_literal) { str('"') >> match('[^"]').repeat.as(:string) >> str('"') >> spaces? }
+      rule(:boolean_literal) { (str('true') | str('false')).as(:boolean_literal) >> spaces? }
+      rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer_literal) >> spaces? }
+      rule(:string_literal) { str('"') >> match('[^"]').repeat.as(:string_literal) >> str('"') >> spaces? }
 
       # statement
       rule(:assignment?) { (str('=') >> spaces? >> expression).maybe >> spaces? }

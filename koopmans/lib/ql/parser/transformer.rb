@@ -7,15 +7,22 @@ module QL
       # variable
       rule(variable: simple(:name)) { Variable.new(name) }
 
-      rule(type: 'boolean') { BooleanType.new }
+      # types
+      rule(type: 'boolean') { BooleanType.new}
       rule(type: 'integer') { IntegerType.new }
       rule(type: 'money') { MoneyType.new }
       rule(type: 'string') { StringType.new }
       rule(type: 'decimal') { DecimalType.new }
       rule(type: 'date') { DateType.new }
 
-      rule(question: { string: simple(:string), variable: simple(:variable), type: subtree(:type) }) { Question.new(string, Variable.new(variable), type) }
-      rule(question: subtree(:aap)) { p aap }
+      # literal
+      rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value) }
+      rule(integer_literal: simple(:value)) { IntegerLiteral.new(value) }
+      rule(string_literal: simple(:value)) { StringLiteral.new(value) }
+
+
+      rule(question: { label: subtree(:string_literal), variable: simple(:variable), type: subtree(:type) }) { Question.new(string_literal, Variable.new(variable), type) }
+      # rule(question: subtree(:aap)) { p aaps }
       # question
       # TODO: BooleanType.new -> BooleanType
       # rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean' }) { Question.new(string, Variable.new(variable), BooleanType) }
@@ -34,10 +41,6 @@ module QL
       # if statement
       rule(if_statement: { expression: subtree(:expression), block: subtree(:block) }) { IfStatement.new(expression, block) }
 
-      # literal
-      rule(boolean: simple(:value)) { BooleanLiteral.new(value) }
-      rule(integer: simple(:value)) { IntegerLiteral.new(value) }
-      rule(string: simple(:value)) { StringLiteral.new(value) }
 
       # form
       rule(form: { variable: simple(:variable), block: subtree(:block) }) { Form.new(Variable.new(variable), block) }
