@@ -94,7 +94,7 @@
     <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
     <Compile Include="Checker\StyleSheetAnalyzer.cs" />
     <Compile Include="Checker\TypeCheckerVisitor.cs" />
-    <Compile Include="CustomQlsVisitor.cs" />
+    <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
     <Compile Include="obj\Debug\QlsGrammarLexer.cs" />
     <Compile Include="obj\Debug\QlsGrammarParser.cs" />

@@ -21,6 +21,8 @@
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker;
 
+    using AstCreator = OffByOne.Qls.Ast.AstCreator;
+
     public class Program
     {
         [STAThread]
@@ -86,7 +88,7 @@
             ICharStream input2 = new AntlrInputStream("true or false");
             QlLexer lexer = new QlLexer(input);
             QlParser parser = new QlParser(new CommonTokenStream(lexer));
-            var v = new AstCreator();
+            var v = new Ql.Ast.AstCreator();
             var tree = v.Visit(parser.form());
             CheckTypes((FormStatement)tree);
             Console.WriteLine("Done!");
@@ -134,7 +136,7 @@
 
             var lexer = new QlsGrammarLexer(input);
             var parser = new QlsGrammarParser(new CommonTokenStream(lexer));
-            var visitor = new CustomQlsVisitor();
+            var visitor = new AstCreator();
             var astTree = visitor.Visit(parser.stylesheet());
             CheckTypes((StyleSheet)astTree);
             Console.WriteLine("QLS AST conversion done.");

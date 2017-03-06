@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Evaluator
 {
+    using System.Collections.Generic;
+
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;
 
@@ -20,8 +22,15 @@
 
     public class TypeVisitor
         : IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
-        IStatementVisitor<ValueType, VisitorTypeEnvironment>
+        IStatementVisitor<VoidValueType, VisitorTypeEnvironment>
     {
+        private static readonly IEnumerable<ValueType> NumericValueTypes = new List<ValueType>()
+        {
+            new IntegerValueType(),
+            new DecimalValueType(),
+            new MoneyValueType()
+        };
+
         public TypeVisitor()
             : this(new CheckerReport())
         {
@@ -115,7 +124,7 @@
             if (quetionType == null)
             {
                 this.Report.Add(new UndeclaredVariableMessage(expression));
-                return TypeConstants.VoidType;
+                return new VoidValueType();
             }
 
             return quetionType;
@@ -126,102 +135,109 @@
             return expression.Expression.Accept(this, context);
         }
 
-        public ValueType Visit(QuestionStatement expression, VisitorTypeEnvironment context)
+        public VoidValueType Visit(QuestionStatement expression, VisitorTypeEnvironment context)
         {
             context.AddSymbol(expression.Identifier, expression.Type);
-            return TypeConstants.VoidType;
+            return new VoidValueType();
         }
 
-        public ValueType Visit(IfStatement expression, VisitorTypeEnvironment context)
+        public VoidValueType Visit(IfStatement expression, VisitorTypeEnvironment context)
         {
             var result = this.CheckIfStatement(expression, context);
             expression.Statements.ForEach(x => x.Accept(this, context));
             expression.ElseStatements.ForEach(x => x.Accept(this, context));
 
-            return result;
+            return new VoidValueType();
         }
 
-        public ValueType Visit(FormStatement expression, VisitorTypeEnvironment context)
+        public VoidValueType Visit(FormStatement expression, VisitorTypeEnvironment context)
         {
             expression.Statements.ForEach(x => x.Accept(this, context));
 
-            return TypeConstants.VoidType;
+            return new VoidValueType();
         }
 
         public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.IntegerType;
+            return new IntegerValueType();
         }
 
         public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.MoneyType;
+            return new MoneyValueType();
         }
 
         public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.DecimalType;
+            return new DecimalValueType();
         }
 
         public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.StringType;
+            return new StringValueType();
         }
 
         public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.DateType;
+            return new DateValueType();
         }
 
         public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.StringType;
+            return new StringValueType();
         }
 
         private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression, VisitorTypeEnvironment context)
         {
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
-            var rightEpressionType = expression.RightExpression.Accept(this, context);
+            var rightExpressionType = expression.RightExpression.Accept(this, context);
 
-            if (leftExpressionType.IsNot<NumericalValueType>())
+            if (leftExpressionType != new IntegerValueType()
+                && leftExpressionType != new DecimalValueType()
+                && leftExpressionType != new MoneyValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression.LeftExpression,
-                    TypeConstants.NumericTypes,
+                    NumericValueTypes,
                     leftExpressionType));
 
-                return TypeConstants.VoidType;
+                return new VoidValueType();
             }
 
-            if (rightEpressionType.IsNot<NumericalValueType>())
+            if (leftExpressionType != new IntegerValueType()
+                && leftExpressionType != new DecimalValueType()
+                && leftExpressionType != new MoneyValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression.RightExpression,
-                    TypeConstants.NumericTypes,
-                    rightEpressionType));
+                    NumericValueTypes,
+                    rightExpressionType));
             }
 
-            if (leftExpressionType.Is<IntegerValueType>() && rightEpressionType.Is<IntegerValueType>())
+            if (leftExpressionType == new IntegerValueType()
+                && rightExpressionType == new IntegerValueType())
             {
-                return TypeConstants.IntegerType;
+                return new IntegerValueType();
             }
 
-            if (leftExpressionType.Is<DecimalValueType>() || rightEpressionType.Is<DecimalValueType>())
+            if (leftExpressionType == new DecimalValueType()
+                || rightExpressionType == new DecimalValueType())
             {
-                return TypeConstants.DecimalType;
+                return new DecimalValueType();
             }
 
-            if (leftExpressionType.Is<MoneyValueType>() || rightEpressionType.Is<MoneyValueType>())
+            if (leftExpressionType == new MoneyValueType()
+                || rightExpressionType == new MoneyValueType())
             {
-                return TypeConstants.MoneyType;
+                return new MoneyValueType();
             }
 
-            return TypeConstants.VoidType;
+            return new VoidValueType();
         }
 
         private ValueType CheckUnaryMatematicalExpression(UnaryExpression expression, VisitorTypeEnvironment context)
@@ -231,7 +247,7 @@
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression,
-                    TypeConstants.NumericTypes,
+                    NumericValueTypes,
                     subExpressionType));
             }
 
@@ -245,10 +261,13 @@
 
             if (leftExpressionType != rightExpressionType)
             {
-                this.Report.Add(new InvalidTypeMessage(expression, leftExpressionType, rightExpressionType));
+                this.Report.Add(new InvalidTypeMessage(
+                    expression,
+                    leftExpressionType,
+                    rightExpressionType));
             }
 
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         private ValueType CheckBinaryBooleanLogicExpression(BinaryExpression expression, VisitorTypeEnvironment context)
@@ -256,55 +275,55 @@
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightEpressionType = expression.RightExpression.Accept(this, context);
 
-            if (leftExpressionType.IsNot<BooleanValueType>())
+            if (leftExpressionType != new BooleanValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression.LeftExpression,
-                    TypeConstants.BooleanType,
+                    new BooleanValueType(),
                     leftExpressionType));
 
                 return leftExpressionType;
             }
 
-            if (rightEpressionType.IsNot<BooleanValueType>())
+            if (rightEpressionType != new BooleanValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression.RightExpression,
-                    TypeConstants.BooleanType,
+                    new BooleanValueType(),
                     rightEpressionType));
 
                 return rightEpressionType;
             }
 
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         private ValueType CheckUnaryBooleanLogicExpression(UnaryExpression expression, VisitorTypeEnvironment context)
         {
             var subExpressionType = expression.Expression.Accept(this, context);
 
-            if (subExpressionType.IsNot<BooleanValueType>())
+            if (subExpressionType != new BooleanValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression,
-                    TypeConstants.BooleanType,
+                    new BooleanValueType(),
                     subExpressionType));
 
                 return subExpressionType;
             }
 
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         private ValueType CheckIfStatement(IfStatement statement, VisitorTypeEnvironment context)
         {
             var conditionType = statement.Condition.Accept(this, context);
-            if (conditionType.IsNot<BooleanValueType>())
+            if (conditionType != new BooleanValueType())
             {
-                this.Report.Add(new InvalidTypeMessage(statement, TypeConstants.BooleanType, conditionType));
+                this.Report.Add(new InvalidTypeMessage(statement, new BooleanValueType(), conditionType));
             }
 
-            return TypeConstants.VoidType;
+            return new VoidValueType();
         }
     }
 }

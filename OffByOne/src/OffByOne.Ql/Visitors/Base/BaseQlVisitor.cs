@@ -201,37 +201,37 @@
 
         public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.IntegerType;
+            return new IntegerValueType();
         }
 
         public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.MoneyType;
+            return new MoneyValueType();
         }
 
         public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.DecimalType;
+            return new DecimalValueType();
         }
 
         public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.StringType;
+            return new StringValueType();
         }
 
         public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.DateType;
+            return new DateValueType();
         }
 
         public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
         {
-            return TypeConstants.StringType;
+            return new StringValueType();
         }
 
         private TResult Visit(BinaryExpression expression, TContext context)

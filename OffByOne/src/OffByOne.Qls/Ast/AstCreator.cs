@@ -1,8 +1,9 @@
-﻿namespace OffByOne.Qls
+﻿namespace OffByOne.Qls.Ast
 {
     using System.Linq;
 
     using OffByOne.Ql.Ast;
+    using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Properties;
@@ -12,7 +13,7 @@
     using OffByOne.Qls.Ast.Style.Widgets;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
 
-    public class CustomQlsVisitor : QlsGrammarBaseVisitor<AstNode>
+    public class AstCreator : QlsGrammarBaseVisitor<AstNode>
     {
         public override AstNode VisitStylesheet(QlsGrammarParser.StylesheetContext context)
         {
@@ -188,32 +189,32 @@
 
         public override AstNode VisitBooleanType(QlsGrammarParser.BooleanTypeContext context)
         {
-            return TypeConstants.BooleanType;
+            return new BooleanValueType();
         }
 
         public override AstNode VisitIntegerType(QlsGrammarParser.IntegerTypeContext context)
         {
-            return TypeConstants.IntegerType;
+            return new IntegerValueType();
         }
 
         public override AstNode VisitFloatType(QlsGrammarParser.FloatTypeContext context)
         {
-            return TypeConstants.DecimalType;
+            return new DecimalValueType();
         }
 
         public override AstNode VisitMoneyType(QlsGrammarParser.MoneyTypeContext context)
         {
-            return TypeConstants.MoneyType;
+            return new MoneyValueType();
         }
 
         public override AstNode VisitStringType(QlsGrammarParser.StringTypeContext context)
         {
-            return TypeConstants.StringType;
+            return new StringValueType();
         }
 
         public override AstNode VisitDateType(QlsGrammarParser.DateTypeContext context)
         {
-            return TypeConstants.DateType;
+            return new DateValueType();
         }
     }
 }

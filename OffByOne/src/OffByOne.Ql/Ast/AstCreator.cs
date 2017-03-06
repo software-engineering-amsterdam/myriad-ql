@@ -15,6 +15,7 @@
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Values;
 
@@ -65,17 +66,17 @@
             switch (type)
             {
                 case "boolean":
-                    return new QuestionStatement(id, TypeConstants.BooleanType, label, value);
+                    return new QuestionStatement(id, new BooleanValueType(), label, value);
                 case "integer":
-                    return new QuestionStatement(id, TypeConstants.IntegerType, label, value);
+                    return new QuestionStatement(id, new IntegerValueType(), label, value);
                 case "decimal":
-                    return new QuestionStatement(id, TypeConstants.DecimalType, label, value);
+                    return new QuestionStatement(id, new DecimalValueType(), label, value);
                 case "money":
-                    return new QuestionStatement(id, TypeConstants.MoneyType, label, value);
+                    return new QuestionStatement(id, new MoneyValueType(), label, value);
                 case "string":
-                    return new QuestionStatement(id, TypeConstants.StringType, label, value);
+                    return new QuestionStatement(id, new StringValueType(), label, value);
                 case "date":
-                    return new QuestionStatement(id, TypeConstants.DateType, label, value);
+                    return new QuestionStatement(id, new DateValueType(), label, value);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }

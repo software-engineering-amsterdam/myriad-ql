@@ -9,8 +9,11 @@
         protected QuestionControl(QuestionStatement statement)
         {
             this.Control = new ListView();
-            var label = new Label();
-            label.Content = statement.Label;
+            var label = new Label
+            {
+                Content = statement.Label
+            };
+
             this.Control.Items.Add(label);
         }
 

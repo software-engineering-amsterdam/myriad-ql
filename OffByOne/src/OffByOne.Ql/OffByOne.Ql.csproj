@@ -109,7 +109,6 @@
     <Compile Include="Ast\Statements\FormStatement.cs" />
     <Compile Include="Ast\Statements\QuestionStatement.cs" />
     <Compile Include="Ast\Statements\Statement.cs" />
-    <Compile Include="Ast\TypeConstants.cs" />
     <Compile Include="Ast\ValueTypes\Base\NumericalValueType.cs" />
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
