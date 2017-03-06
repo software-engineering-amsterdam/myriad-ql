@@ -15,7 +15,7 @@ module QL
         @question_frame.variable
       end
 
-      def callback
+      def reload_questions
         @question_frame.gui.reload_questions
       end
     end
@@ -27,13 +27,13 @@ module QL
         radio_button.text     = args[:true_value]
         radio_button.value    = true
         radio_button.variable = variable
-        radio_button.command  = proc { callback }
+        radio_button.command  = proc { reload_questions }
 
         radio_button          = TkRadioButton.new(frame).pack
         radio_button.text     = args[:false_value]
         radio_button.value    = false
         radio_button.variable = variable
-        radio_button.command  = proc { callback }
+        radio_button.command  = proc { reload_questions }
       end
     end
 
@@ -42,7 +42,7 @@ module QL
         super
         check_button          = TkCheckButton.new(frame).pack
         check_button.variable = variable
-        check_button.command  = proc { callback }
+        check_button.command  = proc { reload_questions }
       end
     end
 
@@ -55,7 +55,7 @@ module QL
         combobox.bind('<ComboboxSelected>') do
           variable.value = true if combobox.value == args[:true_value]
           variable.value = false if combobox.value == args[:false_value]
-          callback
+          reload_questions
         end
       end
     end
@@ -70,7 +70,7 @@ module QL
         # spinbox.increment  = 0.1
         # spinbox.format     = "%.2f"
         spinbox.textvariable = variable
-        spinbox.command      = proc { callback }
+        spinbox.command      = proc { reload_questions }
       end
     end
 
@@ -81,7 +81,7 @@ module QL
         scale.from     = args[:minimum]
         scale.to       = args[:maximum]
         scale.variable = variable
-        scale.command  = proc { callback }
+        scale.command  = proc { reload_questions }
       end
     end
 
@@ -90,7 +90,7 @@ module QL
         super
         entry              = TkEntry.new(frame).pack
         entry.textvariable = variable
-        entry.bind('KeyRelease') { callback }
+        entry.bind('KeyRelease') { reload_questions }
       end
     end
 
