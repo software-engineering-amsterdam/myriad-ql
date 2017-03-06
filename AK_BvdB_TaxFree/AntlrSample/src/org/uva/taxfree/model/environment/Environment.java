@@ -50,7 +50,6 @@ public class Environment {
     private boolean hasCyclicDependency(CalculatedField calculation) {
         String calculationDeclaration = calculation.getId();
         List<String> calculationDependencies = calculation.getUsedVariables();
-        System.out.println(calculationDependencies);
         return expandAndCheckUsedVariables(calculationDeclaration, calculationDependencies);
 
     }
@@ -76,15 +75,12 @@ public class Environment {
     }
 
     private List<String> replaceWithDeclarations(String usedVariable) {
-        List<String> declarations = new ArrayList<>();
-        declarations.add(usedVariable);
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
-                declarations = calc.getUsedVariables();
-                break;
+                return calc.getUsedVariables();
             }
         }
-        return declarations;
+        return new ArrayList<>();
     }
 }
 
