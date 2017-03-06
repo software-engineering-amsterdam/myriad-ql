@@ -4,6 +4,8 @@ import org.uva.taxfree.model.node.expression.ConditionNode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public abstract class CalculatedField extends NamedNode {
@@ -48,7 +50,9 @@ public abstract class CalculatedField extends NamedNode {
         set.add(this);
     }
 
-    public boolean hasCyclicDependency() {
-        return false;
+    public List<String> getUsedVariables() {
+        List<String> usedVariables = new ArrayList<>();
+        mCondition.addUsedVariables(usedVariables);
+        return usedVariables;
     }
 }

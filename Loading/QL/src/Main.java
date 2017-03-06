@@ -1,16 +1,15 @@
+import QL.Warning;
 import ast.Form;
-
-import java.util.List;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-
-import QL.Warning;
 import semantic.TypeChecker;
 import ui.Questionnaire;
 
+import java.util.List;
+
 public class Main {
 	public static void main(String[] args) throws Exception {
+
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" integer (Name0 + 5) "
