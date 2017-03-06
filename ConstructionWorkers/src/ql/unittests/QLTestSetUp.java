@@ -28,13 +28,11 @@ public abstract class QLTestSetUp {
 
     protected Form form;
     protected Context formContext;
-    protected IdentifierChecker idChecker;
+    protected IdentifierChecker identifierChecker;
     protected TypeChecker typeChecker;
-
     protected String inputFileName;
-    protected String inputFilePath;
 
-    private final String path = "./src/ql/unittests/qltestforms/";
+    private final String PATH = "./src/ql/unittests/qltestforms/";
 
     @Before
     public void setUp() throws IOException {
@@ -44,7 +42,7 @@ public abstract class QLTestSetUp {
             System.exit(-1);
         }
 
-        inputFilePath = path.concat(inputFileName);
+        String inputFilePath = PATH.concat(inputFileName);
 
         InputStream qlInputStream = new FileInputStream(inputFilePath);
 
@@ -63,7 +61,7 @@ public abstract class QLTestSetUp {
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
 
-        idChecker = new IdentifierChecker(form, identifierToTypeMap, messages);
+        identifierChecker = new IdentifierChecker(form, identifierToTypeMap, messages);
         typeChecker= new TypeChecker(form, identifierToTypeMap, messages);
     }
 }

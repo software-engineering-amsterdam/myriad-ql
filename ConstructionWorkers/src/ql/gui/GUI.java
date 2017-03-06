@@ -4,7 +4,7 @@ import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
-import ql.gui.evaluation.QuestionEvaluator;
+import ql.gui.evaluation.Evaluator;
 import ql.gui.components.fields.ComputerQuestionField;
 import ql.gui.components.fields.Field;
 import ql.gui.components.GUIManager;
@@ -27,7 +27,7 @@ public class GUI implements GUIInterface{
     private final Map<Field, List<IfStatement>> questionsWithConditions;
 
     private final Context context;
-    private final QuestionEvaluator evaluator;
+    private final Evaluator evaluator;
     private final GUIFieldFactory fieldFactory;
     private final QuestionData questionData;
     private final GUIManager manager;
@@ -36,7 +36,7 @@ public class GUI implements GUIInterface{
 
     public GUI(Form form, WidgetFactory widgetFactory, GUIManager manager, Context context) {
         this.context = context;
-        this.evaluator = new QuestionEvaluator(context);
+        this.evaluator = new Evaluator(context);
 
         this.manager = manager;
         this.fieldFactory = new GUIFieldFactory(this, context, widgetFactory);
@@ -84,7 +84,7 @@ public class GUI implements GUIInterface{
 
     private void evaluateComputedQuestion(List<ComputedQuestion> questions) {
         for (ComputedQuestion question : questions) {
-            Value result = this.evaluator.expressionEvaluation(question);
+            Value result = this.evaluator.getValueComputedQuestion(question);
             ComputerQuestionField cqField = (ComputerQuestionField) this.getFieldByID(
                     question.getIdentifier().getName(),
                     this.questionsWithConditions);
@@ -107,7 +107,7 @@ public class GUI implements GUIInterface{
     {
         boolean condition = true;
         for (IfStatement ifStatement : conditionsOfQuestions.get(field)) {
-            if (!this.evaluator.IfStatementEvaluation(ifStatement)) {
+            if (!(Boolean) this.evaluator.getValueIfStatement(ifStatement).getValue()) {
                 condition = false;
             }
         }

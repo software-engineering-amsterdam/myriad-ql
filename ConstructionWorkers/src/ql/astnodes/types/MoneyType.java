@@ -6,9 +6,6 @@ package ql.astnodes.types;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.visitors.TypeVisitor;
-import ql.gui.formenvironment.values.MoneyValue;
-
-import java.math.BigDecimal;
 
 public class MoneyType extends Type {
 

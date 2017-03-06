@@ -5,7 +5,6 @@
 package ql.astnodes.types;
 
 import ql.astnodes.visitors.TypeVisitor;
-import ql.gui.formenvironment.values.UndefinedValue;
 
 public class UndefinedType extends Type {
 

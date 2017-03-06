@@ -1,9 +1,9 @@
+/**
+ * Value.java.
+ */
+
 package ql.gui.formenvironment.values;
 
-
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public abstract class Value {
 
     public abstract Object getValue();
@@ -71,6 +71,4 @@ public abstract class Value {
     public Value positive() {
         return new UndefinedValue();
     }
-
-
 }

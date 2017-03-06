@@ -1,8 +1,9 @@
+/**
+ * UndefinedValue.java.
+ */
+
 package ql.gui.formenvironment.values;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class UndefinedValue extends Value {
 
     private final String value;
@@ -20,5 +21,4 @@ public class UndefinedValue extends Value {
     public String getValue() {
         return value;
     }
-
 }

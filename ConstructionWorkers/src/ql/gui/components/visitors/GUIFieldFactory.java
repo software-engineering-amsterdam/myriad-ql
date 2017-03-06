@@ -6,7 +6,7 @@ import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
 import ql.astnodes.visitors.FormAndStatementVisitor;
-import ql.gui.evaluation.QuestionEvaluator;
+import ql.gui.evaluation.Evaluator;
 import ql.gui.GUIInterface;
 import ql.gui.components.fields.ComputerQuestionField;
 import ql.gui.components.fields.Field;
@@ -21,14 +21,14 @@ import ql.gui.formenvironment.values.Value;
 public class GUIFieldFactory implements FormAndStatementVisitor<Field>{
 
     private final GUIInterface updates;
-    private final QuestionEvaluator evaluator;
+    private final Evaluator evaluator;
     private final WidgetFactory widgetFactory;
 
     public GUIFieldFactory(
             GUIInterface updates, Context context, WidgetFactory widgetFactory)
     {
         this.updates = updates;
-        this.evaluator = new QuestionEvaluator(context);
+        this.evaluator = new Evaluator(context);
         this.widgetFactory = widgetFactory;
     }
 
@@ -50,7 +50,7 @@ public class GUIFieldFactory implements FormAndStatementVisitor<Field>{
 
     @Override
     public Field visit(ComputedQuestion statement) {
-        Value result = evaluator.expressionEvaluation(statement);
+        Value result = evaluator.getValueComputedQuestion(statement);
         Widget widget = this.widgetFactory.getWidgetForQuestion(statement, result);
         return new ComputerQuestionField(updates, statement, widget, result);
     }

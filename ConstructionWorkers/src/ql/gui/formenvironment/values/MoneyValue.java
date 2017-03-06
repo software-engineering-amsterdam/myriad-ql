@@ -1,22 +1,18 @@
+/**
+ * MoneyType.java.
+ */
+
 package ql.gui.formenvironment.values;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class MoneyValue extends Value {
 
     private final BigDecimal value;
 
     public MoneyValue(BigDecimal value) {
         this.value = value.setScale(2, RoundingMode.HALF_UP);
-    }
-
-    @Override
-    public BigDecimal getValue() {
-        return value;
     }
 
     @Override
@@ -30,13 +26,23 @@ public class MoneyValue extends Value {
     }
 
     @Override
+    public Value division(Value valueArgument) {
+        return new MoneyValue(value.divide((BigDecimal) valueArgument.getValue(), RoundingMode.HALF_UP));
+    }
+
+    @Override
+    public Value multiplication(Value valueArgument) {
+        return new MoneyValue(value.multiply((BigDecimal) valueArgument.getValue()));
+    }
+
+    @Override
     public Value eq(Value valueArgument) {
-        return new BooleanValue(value.equals((BigDecimal) valueArgument.getValue()));
+        return new BooleanValue(value.equals(valueArgument.getValue()));
     }
 
     @Override
     public Value neq(Value valueArgument) {
-        return new BooleanValue(!value.equals((BigDecimal) valueArgument.getValue()));
+        return new BooleanValue(!value.equals(valueArgument.getValue()));
     }
 
     @Override
@@ -60,16 +66,6 @@ public class MoneyValue extends Value {
     }
 
     @Override
-    public Value division(Value valueArgument) {
-        return new MoneyValue(value.divide((BigDecimal) valueArgument.getValue()));
-    }
-
-    @Override
-    public Value multiplication(Value valueArgument) {
-        return new MoneyValue(value.multiply((BigDecimal) valueArgument.getValue()));
-    }
-
-    @Override
     public Value negative() {
         return new MoneyValue(value.negate());
     }
@@ -77,5 +73,10 @@ public class MoneyValue extends Value {
     @Override
     public Value positive() {
         return new MoneyValue(value.abs());
+    }
+
+    @Override
+    public BigDecimal getValue() {
+        return value;
     }
 }

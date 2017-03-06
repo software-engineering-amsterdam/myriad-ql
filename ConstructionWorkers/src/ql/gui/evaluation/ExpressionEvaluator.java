@@ -1,3 +1,7 @@
+/**
+ * ExpressionValueChecker.java.
+ */
+
 package ql.gui.evaluation;
 
 import ql.astnodes.expressions.binaries.equality.*;
@@ -16,21 +20,17 @@ import ql.astnodes.visitors.ExpressionVisitor;
 import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.*;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
-public class QuestionValueChecker implements ExpressionVisitor<Value>{
+public class ExpressionEvaluator implements ExpressionVisitor<Value>{
 
     private final Context context;
 
-    public QuestionValueChecker(Context values) {
+    public ExpressionEvaluator(Context values) {
         this.context = values;
     }
 
     @Override
     public Value visit(Parentheses expression) {
-        Value express = expression.getExpression().accept(this);
-        return express;
+        return expression.getExpression().accept(this);
     }
 
     @Override
@@ -55,7 +55,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(AND expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.and(right);
     }
 
@@ -63,7 +62,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(OR expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.or(right);
     }
 
@@ -71,7 +69,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(Addition expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.addition(right);
     }
 
@@ -79,7 +76,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(Subtraction expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.subtraction(right);
     }
 
@@ -87,7 +83,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(Multiplication expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.multiplication(right);
     }
 
@@ -95,7 +90,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(Division expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.division(right);
     }
 
@@ -103,7 +97,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(EQ expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.eq(right);
     }
 
@@ -111,7 +104,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(NEQ expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.neq(right);
     }
 
@@ -119,7 +111,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(GT expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.gt(right);
     }
 
@@ -127,7 +118,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(LT expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.lt(right);
     }
 
@@ -135,7 +125,6 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(GTEQ expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.gteq(right);
     }
 
@@ -143,13 +132,12 @@ public class QuestionValueChecker implements ExpressionVisitor<Value>{
     public Value visit(LTEQ expression) {
         Value left = expression.getLeft().accept(this);
         Value right = expression.getRight().accept(this);
-
         return left.lteq(right);
     }
 
     @Override
     public Value visit(Identifier literal) {
-        return this.context.getValue(literal.getName());
+        return context.getValue(literal.getName());
     }
 
     @Override

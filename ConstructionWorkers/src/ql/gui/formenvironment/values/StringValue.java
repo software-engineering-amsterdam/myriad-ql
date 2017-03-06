@@ -1,8 +1,9 @@
+/**
+ * StringValue.java.
+ */
+
 package ql.gui.formenvironment.values;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class StringValue extends Value {
 
     private final String value;
@@ -12,18 +13,13 @@ public class StringValue extends Value {
     }
 
     @Override
-    public String getValue() {
-        return value;
-    }
-
-    @Override
     public Value eq(Value valueArgument) {
-        return new BooleanValue(value.equals((String) valueArgument.getValue()));
+        return new BooleanValue(value.equals(valueArgument.getValue()));
     }
 
     @Override
     public Value neq(Value valueArgument) {
-        return new BooleanValue(!value.equals((String) valueArgument.getValue()));
+        return new BooleanValue(!value.equals(valueArgument.getValue()));
     }
 
     @Override
@@ -44,5 +40,10 @@ public class StringValue extends Value {
     @Override
     public Value lteq(Value valueArgument) {
         return new BooleanValue(value.length() <= ((String) valueArgument.getValue()).length());
+    }
+
+    @Override
+    public String getValue() {
+        return value;
     }
 }

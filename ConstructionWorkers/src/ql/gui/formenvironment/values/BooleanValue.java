@@ -1,8 +1,9 @@
+/**
+ * BooleanValue.java.
+ */
+
 package ql.gui.formenvironment.values;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class BooleanValue extends Value {
 
     private final Boolean value;
@@ -12,18 +13,13 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Boolean getValue() {
-        return value;
-    }
-
-    @Override
     public Value eq(Value valueArgument) {
-        return new BooleanValue(value == (Boolean) valueArgument.getValue());
+        return new BooleanValue(value == valueArgument.getValue());
     }
 
     @Override
     public Value neq(Value valueArgument) {
-        return new BooleanValue(value != (Boolean) valueArgument.getValue());
+        return new BooleanValue(value != valueArgument.getValue());
     }
 
     @Override
@@ -41,4 +37,8 @@ public class BooleanValue extends Value {
         return new BooleanValue(!value);
     }
 
+    @Override
+    public Boolean getValue() {
+        return value;
+    }
 }

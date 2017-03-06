@@ -1,14 +1,12 @@
+/**
+ * StyleType.java.
+ */
+
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import qls.astnodes.visitors.StyleSheetVisitor;
 
-import javax.sound.sampled.Line;
-
-/**
- * Created by LGGX on 03-Mar-17.
- */
 public abstract class StyleType extends Node{
 
     private final String name;
@@ -18,7 +16,6 @@ public abstract class StyleType extends Node{
         super(lineNumber);
         this.name = name;
         this.value = value;
-
     }
 
     public String getName() {
@@ -44,7 +41,4 @@ public abstract class StyleType extends Node{
         StyleType other = (StyleType) o;
         return this.name == other.name;
     }
-
-
-
 }

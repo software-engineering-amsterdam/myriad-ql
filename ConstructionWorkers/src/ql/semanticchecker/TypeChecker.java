@@ -52,12 +52,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeLogic(Type leftExpressionType, Type rightExpressionType) {
-
-        if (isEqual(leftExpressionType, rightExpressionType) &&
-                isEqual(leftExpressionType, new BooleanType())) {
+        if (isEqual(leftExpressionType, rightExpressionType) && isEqual(leftExpressionType, new BooleanType())) {
             return leftExpressionType;
         }
-
         return new UndefinedType();
     }
 
@@ -90,13 +87,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNumerical(Type leftExpressionType, Type rightExpressionType) {
-
-        if (isEqual(leftExpressionType,rightExpressionType)
-                && (isEqual(leftExpressionType, new MoneyType()) ||
-                isEqual(leftExpressionType, new IntegerType()))) {
+        if (isEqual(leftExpressionType,rightExpressionType) &&
+                (isEqual(leftExpressionType, new MoneyType()) || isEqual(leftExpressionType, new IntegerType()))) {
             return leftExpressionType;
         }
-
         return new UndefinedType();
     }
 
@@ -107,11 +101,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNegation(Type expressionType) {
-
         if (expressionType.equals(new BooleanType())) {
             return expressionType;
         }
-
         return new UndefinedType();
     }
 
@@ -122,12 +114,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeParentheses(Type expressionType) {
-
         if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType()) ||
                 isEqual(expressionType, new BooleanType()) || isEqual(expressionType, new StringType())) {
             return expressionType;
         }
-
         return new UndefinedType();
     }
 
@@ -144,11 +134,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypePositiveNegative(Type expressionType) {
-
         if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType())) {
             return expressionType;
         }
-
         return new UndefinedType();
     }
 
@@ -195,13 +183,11 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeEquality(Type leftExpressionType, Type rightExpressionType) {
-
         if (isEqual(leftExpressionType,rightExpressionType) &&
                 (isEqual(leftExpressionType,new MoneyType()) || isEqual(leftExpressionType, new IntegerType()) ||
                         isEqual(leftExpressionType, new StringType()))) {
             return new BooleanType();
         }
-
         return new UndefinedType();
     }
 
@@ -229,11 +215,9 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeIfStatement(Type expressionType) {
-
         if (isEqual(expressionType, new BooleanType())) {
             return expressionType;
         }
-
         return new UndefinedType();
     }
 

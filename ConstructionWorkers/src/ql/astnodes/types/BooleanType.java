@@ -7,7 +7,6 @@ package ql.astnodes.types;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.visitors.TypeVisitor;
-import ql.gui.formenvironment.values.BooleanValue;
 
 public class BooleanType extends Type {
 

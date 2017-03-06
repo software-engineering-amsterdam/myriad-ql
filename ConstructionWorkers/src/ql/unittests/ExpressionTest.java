@@ -23,8 +23,7 @@ import ql.astnodes.types.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ql.gui.evaluation.QuestionEvaluator;
-import ql.gui.evaluation.QuestionValueChecker;
+import ql.gui.evaluation.ExpressionEvaluator;
 import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.Value;
 
@@ -34,178 +33,238 @@ import java.math.RoundingMode;
 
 public class ExpressionTest extends QLTestSetUp {
 
-
     private Context context = new Context();
-    private QuestionValueChecker questionEvaluator;
-
-    private final MyInteger num4 = new MyInteger(4, null);
-    private final MyInteger num2 = new MyInteger(2, null);
-
-    private final Money dec4 = new Money (BigDecimal.valueOf(4.00), null);
-    private final Money dec2 = new Money (BigDecimal.valueOf(2.00), null);
+    private ExpressionEvaluator expressionEvaluator;
 
     private final MyInteger testInteger = new MyInteger(1, new LineNumber(1));
+    private final MyInteger testInteger2 = new MyInteger(2, null);
+    private final MyInteger testInteger4 = new MyInteger(4, null);
+
     private final Money testMoney = new Money (BigDecimal.valueOf(1.00), new LineNumber(1));
+    private final Money testMoney2 = new Money (BigDecimal.valueOf(2.00), null);
+    private final Money testMoney4 = new Money (BigDecimal.valueOf(4.00), null);
+
     private final MyBoolean testBoolean = new MyBoolean (true, new LineNumber(1));
+
     private final MyString testString = new MyString ("a", new LineNumber(1));
 
     @Before
     public void setUp() throws IOException{
         inputFileName = "CorrectForm.ql";
         super.setUp();
-
-        questionEvaluator = new QuestionValueChecker(context);
-
+        expressionEvaluator = new ExpressionEvaluator(context);
     }
 
     @Test
-    public void testAllLiterals() {
-
-        Type typeInteger = typeChecker.visit(testInteger);
-        Assert.assertEquals(typeInteger.equals(new IntegerType()), true);
-
-        Type typeMoney = typeChecker.visit(testMoney);
-        Assert.assertEquals(typeMoney.equals(new MoneyType()), true);
-
-        Type typeBoolean = typeChecker.visit(testBoolean);
-        Assert.assertEquals(typeBoolean.equals(new BooleanType()), true);
-
-        Type typeString = typeChecker.visit(testString);
-        Assert.assertEquals(typeString.equals(new StringType()), true);
-
+    public void testTypeCheckerIntegerType() {
+        Type integerType = typeChecker.visit(testInteger);
+        Assert.assertEquals(integerType.equals(new IntegerType()), true);
     }
 
     @Test
-    public void testAddition() {
-        Addition additionInteger = new Addition(testInteger, testInteger, null);
-        Type typeInteger = typeChecker.visit(additionInteger);
-        Assert.assertEquals(typeInteger.equals(new IntegerType()), true);
-
-        Addition integerExpression = new Addition(num4, num2,null);
-        Value valueInteger = integerExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueInteger.getValue(), 6);
-
-        Addition additionMoney = new Addition(testMoney, testMoney, null);
-        Type typeMoney = typeChecker.visit(additionMoney);
-        Assert.assertEquals(typeMoney.equals(new MoneyType()), true);
-
-        Addition moneyExpression = new Addition(dec4, dec2,null);
-        Value valueMoney = moneyExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueMoney.getValue(), BigDecimal.valueOf(6.00).setScale(2, RoundingMode.HALF_UP));
+    public void testTypeCheckerMoneyType() {
+        Type moneyType = typeChecker.visit(testMoney);
+        Assert.assertEquals(moneyType.equals(new MoneyType()), true);
     }
 
     @Test
-    public void testSubtraction() {
-        Subtraction subtractionInteger = new Subtraction(testInteger, testInteger, null);
-        Type typeInteger = typeChecker.visit(subtractionInteger);
-        Assert.assertEquals(typeInteger.equals(new IntegerType()), true);
-
-        Subtraction integerExpression = new Subtraction(num4, num2,null);
-        Value valueInteger = integerExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueInteger.getValue(), 2);
-
-        Subtraction subtractionMoney = new Subtraction(testMoney, testMoney, null);
-        Type typeMoney = typeChecker.visit(subtractionMoney);
-        Assert.assertEquals(typeMoney.equals(new MoneyType()), true);
-
-        Subtraction moneyExpression = new Subtraction(dec4, dec2,null);
-        Value valueMoney = moneyExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueMoney.getValue(), BigDecimal.valueOf(2.00).setScale(2, RoundingMode.HALF_UP));
-
+    public void testTypeCheckerBooleanType() {
+        Type booleanType = typeChecker.visit(testBoolean);
+        Assert.assertEquals(booleanType.equals(new BooleanType()), true);
     }
 
     @Test
-    public void testMultiplication() {
-        Multiplication multiInteger = new Multiplication(testInteger, testInteger, null);
-        Type typeInteger = typeChecker.visit(multiInteger);
-        Assert.assertEquals(typeInteger.equals(new IntegerType()), true);
-
-        Multiplication integerExpression = new Multiplication(num4, num2,null);
-        Value valueInteger = integerExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueInteger.getValue(), 8);
-
-        Multiplication multiMoney = new Multiplication(testMoney, testMoney, null);
-        Type typeMoney = typeChecker.visit(multiMoney);
-        Assert.assertEquals(typeMoney.equals(new MoneyType()), true);
-
-        Multiplication moneyExpression = new Multiplication(dec4, dec2,null);
-        Value valueMoney = moneyExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueMoney.getValue(), BigDecimal.valueOf(8.00).setScale(2, RoundingMode.HALF_UP));
+    public void testTypeCheckerStringType() {
+        Type stringType = typeChecker.visit(testString);
+        Assert.assertEquals(stringType.equals(new StringType()), true);
     }
 
     @Test
-    public void testDivision() {
-        Division divisionInteger = new Division(testInteger, testInteger, null);
-        Type typeInteger = typeChecker.visit(divisionInteger);
-        Assert.assertEquals(typeInteger.equals(new IntegerType()), true);
-
-        Division integerExpression = new Division(num4, num2,null);
-        Value valueInteger = integerExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueInteger.getValue(), 2);
-
-        Division divisionMoney = new Division(testMoney, testMoney, null);
-        Type typeMoney = typeChecker.visit(divisionMoney);
-        Assert.assertEquals(typeMoney.equals(new MoneyType()), true);
-
-        Division moneyExpression = new Division(dec4, dec2,null);
-        Value valueMoney = moneyExpression.accept(this.questionEvaluator);
-        Assert.assertEquals(valueMoney.getValue(), BigDecimal.valueOf(2.00).setScale(2, RoundingMode.HALF_UP));
-    }
-
-
-    @Test
-    public void testLogicExpressions() {
-        AND and = new AND(testBoolean, testBoolean, null);
-        Type typeAND = typeChecker.visit(and);
-        Assert.assertEquals(typeAND.equals(new BooleanType()), true);
-
-        OR or = new OR(testBoolean, testBoolean, null);
-        Type typeOR = typeChecker.visit(or);
-        Assert.assertEquals(typeOR.equals(new BooleanType()), true);
+    public void testTypeCheckerIntegerAddition() {
+        Addition integerAddition = new Addition(testInteger, testInteger, null);
+        Type integerAdditionType = typeChecker.visit(integerAddition);
+        Assert.assertEquals(integerAdditionType.equals(new IntegerType()), true);
     }
 
     @Test
-    public void testUnary() {
-        Negation negation = new Negation(testBoolean, null);
-        Type typeNegation = typeChecker.visit(negation);
-        Assert.assertEquals(typeNegation.equals(new BooleanType()), true);
-
-        Negative negative = new Negative(testInteger, null);
-        Type typeNegative = typeChecker.visit(negative);
-        Assert.assertEquals(typeNegative.equals(new IntegerType()), true);
-
-        Positive positive = new Positive(testInteger, null);
-        Type typePositive = typeChecker.visit(positive);
-        Assert.assertEquals(typePositive.equals(new IntegerType()), true);
-
+    public void testExpressionEvaluatorIntegerAddition() {
+        Addition integerAddition = new Addition(testInteger2, testInteger4, null);
+        Value integerAdditionValue = integerAddition.accept(expressionEvaluator);
+        Assert.assertEquals(integerAdditionValue.getValue(), 6);
     }
 
     @Test
-    public void testEquality() {
-        EQ equal = new EQ(testInteger, testInteger, null);
-        Type typeEQ = typeChecker.visit(equal);
-        Assert.assertEquals(typeEQ.equals(new BooleanType()), true);
-
-        NEQ notEqual = new NEQ(testInteger, testInteger, null);
-        Type typeNEQ = typeChecker.visit(notEqual);
-        Assert.assertEquals(typeNEQ.equals(new BooleanType()), true);
-
-        GT gt = new GT(testInteger, testInteger, null);
-        Type typeGT = typeChecker.visit(gt);
-        Assert.assertEquals(typeGT.equals(new BooleanType()), true);
-
-        LT lt = new LT(testInteger, testInteger, null);
-        Type typeLT = typeChecker.visit(lt);
-        Assert.assertEquals(typeLT.equals(new BooleanType()), true);
-
-        GTEQ gteq = new GTEQ(testInteger, testInteger, null);
-        Type typeGTEQ = typeChecker.visit(gteq);
-        Assert.assertEquals(typeGTEQ.equals(new BooleanType()), true);
-
-        LTEQ lteq = new LTEQ(testInteger, testInteger, null);
-        Type typeLTEQ = typeChecker.visit(lteq);
-        Assert.assertEquals(typeLTEQ.equals(new BooleanType()), true);
-
+    public void testTypeCheckerMoneyAddition() {
+        Addition moneyAddition = new Addition(testMoney, testMoney, null);
+        Type moneyAdditionType = typeChecker.visit(moneyAddition);
+        Assert.assertEquals(moneyAdditionType.equals(new MoneyType()), true);
     }
 
+    @Test
+    public void testExpressionEvaluatorMoneyAddition() {
+        Addition moneyAddition = new Addition(testMoney2, testMoney4,null);
+        Value moneyAdditionValue = moneyAddition.accept(expressionEvaluator);
+        Assert.assertEquals(moneyAdditionValue.getValue(), BigDecimal.valueOf(6.00).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    public void testTypeCheckerIntegerSubtraction() {
+        Subtraction integerSubtraction = new Subtraction(testInteger, testInteger, null);
+        Type integerSubtractionType = typeChecker.visit(integerSubtraction);
+        Assert.assertEquals(integerSubtractionType.equals(new IntegerType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorIntegerSubtraction() {
+        Subtraction integerSubtraction = new Subtraction(testInteger4, testInteger2, null);
+        Value integerSubtractionValue = integerSubtraction.accept(expressionEvaluator);
+        Assert.assertEquals(integerSubtractionValue.getValue(), 2);
+    }
+
+    @Test
+    public void testTypeCheckerMoneySubtraction() {
+        Subtraction moneySubtraction = new Subtraction(testMoney, testMoney, null);
+        Type moneySubtractionType = typeChecker.visit(moneySubtraction);
+        Assert.assertEquals(moneySubtractionType.equals(new MoneyType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorMoneySubtraction() {
+        Subtraction moneySubtraction = new Subtraction(testMoney4, testMoney2,null);
+        Value moneySubtractionValue = moneySubtraction.accept(expressionEvaluator);
+        Assert.assertEquals(moneySubtractionValue.getValue(), BigDecimal.valueOf(2.00).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    public void testTypeCheckerIntegerMultiplication() {
+        Multiplication integerMultiplication = new Multiplication(testInteger, testInteger, null);
+        Type integerMultiplicationType = typeChecker.visit(integerMultiplication);
+        Assert.assertEquals(integerMultiplicationType.equals(new IntegerType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorIntegerMultiplication() {
+        Multiplication integerMultiplication = new Multiplication(testInteger2, testInteger4, null);
+        Value integerMultiplicationValue = integerMultiplication.accept(expressionEvaluator);
+        Assert.assertEquals(integerMultiplicationValue.getValue(), 8);
+    }
+
+    @Test
+    public void testTypeCheckerMoneyMultiplication() {
+        Multiplication moneyMultiplication = new Multiplication(testMoney, testMoney, null);
+        Type moneyMultiplicationType = typeChecker.visit(moneyMultiplication);
+        Assert.assertEquals(moneyMultiplicationType.equals(new MoneyType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorMoneyMultiplication() {
+        Multiplication moneyMultiplication = new Multiplication(testMoney2, testMoney4,null);
+        Value moneyMultiplicationValue = moneyMultiplication.accept(expressionEvaluator);
+        Assert.assertEquals(moneyMultiplicationValue.getValue(), BigDecimal.valueOf(8.00).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    public void testTypeCheckerIntegerDivision() {
+        Division integerDivision = new Division(testInteger, testInteger, null);
+        Type integerDivisionType = typeChecker.visit(integerDivision);
+        Assert.assertEquals(integerDivisionType.equals(new IntegerType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorIntegerDivision() {
+        Division integerDivision = new Division(testInteger4, testInteger2, null);
+        Value integerDivisionValue = integerDivision.accept(expressionEvaluator);
+        Assert.assertEquals(integerDivisionValue.getValue(), 2);
+    }
+
+    @Test
+    public void testTypeCheckerMoneyDivision() {
+        Division moneyDivision = new Division(testMoney, testMoney, null);
+        Type moneyDivisionType = typeChecker.visit(moneyDivision);
+        Assert.assertEquals(moneyDivisionType.equals(new MoneyType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorMoneyDivision() {
+        Division moneyDivision = new Division(testMoney4, testMoney2,null);
+        Value moneyDivisionValue = moneyDivision.accept(expressionEvaluator);
+        Assert.assertEquals(moneyDivisionValue.getValue(), BigDecimal.valueOf(2.00).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    public void testTypeCheckerANDExpression() {
+        AND andExpression = new AND(testBoolean, testBoolean, null);
+        Type andExpressionType = typeChecker.visit(andExpression);
+        Assert.assertEquals(andExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerORExpression() {
+        OR orExpression = new OR(testBoolean, testBoolean, null);
+        Type orExpressionType = typeChecker.visit(orExpression);
+        Assert.assertEquals(orExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerNegationExpression() {
+        Negation negationExpression = new Negation(testBoolean, null);
+        Type negationExpressionType = typeChecker.visit(negationExpression);
+        Assert.assertEquals(negationExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerNegativeIntegerExpression() {
+        Negative negativeIntegerExpression = new Negative(testInteger, null);
+        Type negativeIntegerExpressionType = typeChecker.visit(negativeIntegerExpression);
+        Assert.assertEquals(negativeIntegerExpressionType.equals(new IntegerType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerPositiveIntegerExpression() {
+        Positive positiveIntegerExpression = new Positive(testInteger, null);
+        Type positiveIntegerExpressionType = typeChecker.visit(positiveIntegerExpression);
+        Assert.assertEquals(positiveIntegerExpressionType.equals(new IntegerType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerEQExpression() {
+        EQ integerEQExpression = new EQ(testInteger, testInteger, null);
+        Type integerEQExpressionType = typeChecker.visit(integerEQExpression);
+        Assert.assertEquals(integerEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerNEQExpression() {
+        NEQ integerNEQExpression = new NEQ(testInteger, testInteger, null);
+        Type integerNEQExpressionType = typeChecker.visit(integerNEQExpression);
+        Assert.assertEquals(integerNEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerGTExpression() {
+        GT integerGTExpression = new GT(testInteger, testInteger, null);
+        Type integerGTExpressionType = typeChecker.visit(integerGTExpression);
+        Assert.assertEquals(integerGTExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerLTExpression() {
+        LT integerLTExpression = new LT(testInteger, testInteger, null);
+        Type integerLTExpressionType = typeChecker.visit(integerLTExpression);
+        Assert.assertEquals(integerLTExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerGTEQExpression() {
+        GTEQ integerGTEQExpression = new GTEQ(testInteger, testInteger, null);
+        Type integerGTEQExpressionType = typeChecker.visit(integerGTEQExpression);
+        Assert.assertEquals(integerGTEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testTypeCheckerIntegerLTEQExpression() {
+        LTEQ integerLTEQExpression = new LTEQ(testInteger, testInteger, null);
+        Type integerLTEQExpressionType = typeChecker.visit(integerLTEQExpression);
+        Assert.assertEquals(integerLTEQExpressionType.equals(new BooleanType()), true);
+    }
 }

@@ -6,7 +6,6 @@ package ql.astnodes.types;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.visitors.TypeVisitor;
-import ql.gui.formenvironment.values.StringValue;
 
 public class StringType extends Type {
 
