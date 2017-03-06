@@ -1,8 +1,9 @@
 package sc.ql.model.atoms;
 
+import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
 
-public class AtomId extends Atom {
+public class AtomId implements Node {
 	private final String identifier;
 	
 	public AtomId(String identifier) {

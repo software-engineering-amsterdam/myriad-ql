@@ -13,7 +13,7 @@ public class Question implements FormElement {
 	private final Integer line_number;
 	
 	public enum Type {
-		BOOLEAN, FLOAT, INTEGER, MONEY, STRING;
+		BOOLEAN, INTEGER, MONEY, STRING;
 	}
 	
 	public Question(String question, AtomId id, Type type, Node expression, Integer line_number) {

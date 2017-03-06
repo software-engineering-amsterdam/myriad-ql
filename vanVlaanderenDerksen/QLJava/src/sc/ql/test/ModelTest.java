@@ -16,7 +16,6 @@ import sc.ql.antlr.QLLexer;
 import sc.ql.antlr.QLParser;
 import sc.ql.ast.AstVisitor;
 import sc.ql.checkform.CheckForm;
-import sc.ql.model.atoms.Atom;
 import sc.ql.model.atoms.AtomId;
 import sc.ql.model.Form;
 import sc.ql.model.form_elements.Question;
