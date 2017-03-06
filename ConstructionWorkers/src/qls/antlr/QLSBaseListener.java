@@ -239,6 +239,18 @@ public class QLSBaseListener implements QLSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringType(QLSParser.StringTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMoneyType(QLSParser.MoneyTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMoneyType(QLSParser.MoneyTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

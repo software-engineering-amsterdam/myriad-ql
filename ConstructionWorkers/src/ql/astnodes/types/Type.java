@@ -7,7 +7,6 @@ package ql.astnodes.types;
 import ql.astnodes.Node;
 import ql.astnodes.LineNumber;
 import ql.astnodes.visitors.TypeVisitor;
-import ql.gui.formenvironment.values.Value;
 
 public abstract class Type extends Node {
 
@@ -19,13 +18,19 @@ public abstract class Type extends Node {
         super(lineNumber);
     }
 
+    @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Type) ) {
+        if (!(object instanceof Type)) {
             return false;
         }
-        Type type = (Type) object;
 
+        Type type = (Type) object;
         return getClass().equals(type.getClass());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
     public String toString() {

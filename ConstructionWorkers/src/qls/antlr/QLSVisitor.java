@@ -141,4 +141,11 @@ public interface QLSVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStringType(QLSParser.StringTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code moneyType}
+	 * labeled alternative in {@link QLSParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyType(QLSParser.MoneyTypeContext ctx);
 }
