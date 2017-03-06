@@ -162,7 +162,9 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
             return new UnknownType();
         }
 
-        circularDependenciesResolver.register(new DependencyPair(questionId, parameter.getId()));
+        if(questionId != null && parameter.getId() != null) {
+            circularDependenciesResolver.register(new DependencyPair(questionId, parameter.getId()));
+        }
 
         return symbolTable.lookup(parameter.getId());
     }

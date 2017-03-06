@@ -23,7 +23,11 @@ public class GUIHandler extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parser parser = new Parser();
         Form form = parser.parseForm("form TestForm {" +
-                "boolean hasSoldHouse: \"Did you sell a house in 2010?\";" +
+                "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;" +
+                "boolean hasBoughtHouse: \"Did you buy a house in 2010?\" = true;" +
+                "if (hasSoldHouse) {" +
+                "money sellingPrice: \"What was the selling price?\";" +
+                "}" +
                 "}");
 
         Messages messages = new Messages();
