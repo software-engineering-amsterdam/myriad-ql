@@ -4,12 +4,14 @@ import ast.ExpressionVisitor;
 import ast.expression.Expression;
 import ast.type.Type;
 
-// TODO rename to Literal??
 public abstract class Atom extends Expression {
 	
 	public Atom(int line) {
 		super(line);
 	}
+	
+	public abstract boolean isSet();
+	
 	// Binary Operators
 	public Atom add(Atom other) { return null; }
 	public Atom sub(Atom other) { return null; }

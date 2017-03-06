@@ -11,14 +11,22 @@ public class IntegerAtom extends Atom {
     	super(line);
         this.number = number;
     }
-
+    
+    public IntegerAtom(int line) {
+    	super(line);
+    	this.number = null;
+    }
+    
+    @Override
+    public boolean isSet() {
+    	return number != null;
+    }
+    
 	@Override
 	public Atom add(Atom other) {
 		
-		if (other.getNumber() == null && other.add(this) != null) { 
-			return other.add(this);
-		} else if (other.getNumber() == null) {
-			return null;
+		if (!isSet() || !other.isSet()) {
+			return new IntegerAtom(0);
 		}
 		
 		return new IntegerAtom(number + other.getNumber(), getLine());
@@ -27,8 +35,8 @@ public class IntegerAtom extends Atom {
 	@Override
 	public Atom sub(Atom other) {
 		
-		if (other.getNumber() == null) {
-			return null;
+		if (!isSet() || !other.isSet()) {
+			return new IntegerAtom(0);
 		}
 		
 		return new IntegerAtom(number - other.getNumber(), getLine());
@@ -37,8 +45,8 @@ public class IntegerAtom extends Atom {
 	@Override
 	public Atom mul(Atom other) {
 		
-		if (other.getNumber() == null) {
-			return null;
+		if (!isSet() || !other.isSet()) {
+			return new IntegerAtom(0);
 		}
 		
 		return new IntegerAtom(number * other.getNumber(), getLine());
@@ -46,8 +54,10 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public Atom div(Atom other) {
-		if (other.getNumber() == 0 || other.getNumber() == null) {
-			return null;
+		
+		// TODO division by null
+		if (!isSet() || !other.isSet()) {
+			return new IntegerAtom(0);
 		}
 		
 		return new IntegerAtom(number / other.getNumber(), getLine());
@@ -55,41 +65,81 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public BoolAtom eq(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(number.equals(other.getNumber()), getLine());
 	}
 
 	@Override
 	public BoolAtom notEq(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(!number.equals(other.getNumber()), getLine());
 	}
 	
 	@Override
 	public BoolAtom greaterEq(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(number >= other.getNumber(), getLine());
 	}
 
 	@Override
 	public BoolAtom greater(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(number > other.getNumber(), getLine());
 	}
 
 	@Override
 	public BoolAtom lessEq(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(number <= other.getNumber(), getLine());
 	}
 
 	@Override
 	public BoolAtom less(Atom other) {
+		
+		if (!isSet() || !other.isSet()) {
+			return new BoolAtom(0);
+		}
+		
 		return new BoolAtom(number < other.getNumber(), getLine());
 	}
 	
 	@Override
 	public Atom plus() {
+		
+		if (!isSet()) {
+			return new IntegerAtom(0);
+		}
+		
 		return new IntegerAtom(+ number, getLine());
 	}
 
 	@Override
 	public Atom min() {
+		
+		if (!isSet()) {
+			return new IntegerAtom(0);
+		}
+		
 		return new IntegerAtom(- number, getLine());
 	}
 
@@ -97,6 +147,7 @@ public class IntegerAtom extends Atom {
     public Integer getNumber() {
         return this.number;
     }
+	
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> v) {

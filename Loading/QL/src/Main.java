@@ -1,6 +1,7 @@
 import ast.Form;
 
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -13,7 +14,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" integer (Name0 + 5) "
+				 + "Name1: \"Question1\" integer (Name0 - 5) "
 				 + "if ((true)) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
@@ -54,12 +55,12 @@ public class Main {
 		TypeChecker typeChecker = new TypeChecker();
 
 		List<Warning> warnings = typeChecker.analyze(form);
-
-//		Environment env = new Environment();
-////		Evaluator evaluator = new Evaluator(env);
-//
+		
+		
+		evaluation.Environment env = new evaluation.Environment(typeChecker.getVariableTypes());
+		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, warnings);
+		questionnaire.main(form, env, warnings);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 

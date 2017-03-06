@@ -30,11 +30,10 @@ import value.Value;
 import java.util.List;
 
 public class Questionnaire extends Application {
-	// TODO make Notifier an inner class or add extra environment
 	
 	// TODO do not make static
 	private static Form form;
-	private static evaluation.Environment answers;
+	private static evaluation.Environment env; // TODO rename
 	private static GridPane grid;
 	private static List<Warning> warnings;
 
@@ -42,10 +41,10 @@ public class Questionnaire extends Application {
 
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = answers.getAnswer(name);
+	    	Value oldAnswer = env.getAnswer(name);
 			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
 
-				answers.addAnswer(name, newValue); 
+				env.addAnswer(name, newValue); 
 
 				// Save the title
 				Node title = grid.getChildren().get(0);
@@ -56,9 +55,9 @@ public class Questionnaire extends Application {
 		}
 	}
 	
-    public void main(Form f, List<Warning> w) {
+    public void main(Form f, Environment environment, List<Warning> w) {
     	form = f;
-    	answers = new Environment();
+    	env = environment;
     	warnings = w;
 
         launch();
@@ -105,7 +104,7 @@ public class Questionnaire extends Application {
     	// TODO change
     	for (QQuestion question : activeQuestions) {
     		
-    		Value value = answers.getAnswer(question.getName());
+    		Value value = env.getAnswer(question.getName());
     		if (value == null) {
     			continue;
     		}
@@ -156,7 +155,7 @@ public class Questionnaire extends Application {
     
     private List<QQuestion> renderQuestions(GridPane grid) {
         
-    	QEvaluator qVisitor = new QEvaluator(answers);
+    	QEvaluator qVisitor = new QEvaluator(env);
     	qVisitor.visit(form);
     	List<QQuestion> activeQuestions = qVisitor.getActiveQuestions();
     	

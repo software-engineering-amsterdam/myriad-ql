@@ -35,20 +35,16 @@ public class QEvaluator extends Evaluator {
     public void visit(ComputedQuestion question) {
         System.out.println("Evaluator: computed question");
         Atom atom = question.getComputedQuestion().accept(this);
-        System.out.println(atom.getNumber());
 
         QQuestion q = new QQuestion(question.getVariable(),
                 question.getLabel(), question.getType());
 
         // TODO what to do with the answer of a computed question?
-        if (atom.getNumber() != null) {
-//            answers.addAnswer(question.getVariable(), new IntegerValue(atom.getNumber()));
+        if (atom.isSet()) {
             q.setAnswer(new IntegerValue(atom.getNumber()));
         }
 
         activeQuestions.add(q);
-
-        // TODO what to do with the answer of a computed question?
     }
 
     @Override

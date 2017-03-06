@@ -24,6 +24,10 @@ public class Environment {
 		return warnings;
 	}
 	
+	public Map<String, Type> getVariableTypes() {
+		return variableType;
+	}
+	
 	public void addLabel(String label, String variableName) {
 		labelVariable.put(label, variableName);
 	}
