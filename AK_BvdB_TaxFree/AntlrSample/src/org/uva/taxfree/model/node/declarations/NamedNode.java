@@ -29,7 +29,7 @@ public abstract class NamedNode extends Node {
     }
 
     @Override
-    public void setVisible(boolean isVisible){
+    public void setVisible(boolean isVisible) {
         mPanel.setVisible(isVisible);
     }
 
@@ -49,5 +49,9 @@ public abstract class NamedNode extends Node {
     @Override
     public void addDeclaration(Set<NamedNode> set) {
         set.add(this);
+    }
+
+    public String getLabel() {
+        return mPanel.getName();
     }
 }

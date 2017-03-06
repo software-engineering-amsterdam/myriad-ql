@@ -4,10 +4,10 @@ import java.util.List;
 
 public class ConditionalBlock implements Node {
 	private final Node expression;
-	private final List<FormElement> form_elements;
+	private final List<Node> form_elements;
 	private final Integer line_number;
 	
-	public ConditionalBlock(Node expression, List<FormElement> form_elements, Integer line_number) {
+	public ConditionalBlock(Node expression, List<Node> form_elements, Integer line_number) {
 		this.expression = expression;
 		this.form_elements = form_elements;
 		this.line_number = line_number;
@@ -17,7 +17,7 @@ public class ConditionalBlock implements Node {
 		return this.expression;
 	}
 	
-	public List<FormElement> getFormElements() {
+	public List<Node> getFormElements() {
 		return this.form_elements;
 	}
 	

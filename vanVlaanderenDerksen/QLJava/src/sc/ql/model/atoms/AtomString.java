@@ -1,12 +1,13 @@
 package sc.ql.model.atoms;
 
-import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
+import sc.ql.model.expressions.Expression;
 
-public class AtomString implements Node {
+public class AtomString extends Expression {
 	private final String value;
 	
-	public AtomString(String value) {
+	public AtomString(String value, Integer line_number) {
+		super(line_number);
 		this.value = value;
 	}
 	
@@ -15,7 +16,7 @@ public class AtomString implements Node {
 	}
 	
 	@Override
-	public <E> E accept(NodeVisitor<E> visitor) throws Exception {
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
 		return visitor.visit(this);
 	}
 }
