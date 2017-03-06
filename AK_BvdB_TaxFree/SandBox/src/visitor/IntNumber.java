@@ -8,8 +8,6 @@ public class IntNumber extends Value {
         v.visit(this);
     }
 
-    public void add(Number n){
 
-    }
 
 }
