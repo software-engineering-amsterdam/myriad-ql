@@ -38,7 +38,7 @@ init =
         { qlInput = formDslInput
         , qlsInput = QLSInput.init (QLInput.asForm formDslInput)
         , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
-        , activeTab = QLSTab
+        , activeTab = QLTab
         }
 
 
