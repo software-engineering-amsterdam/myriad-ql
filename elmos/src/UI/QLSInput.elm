@@ -64,7 +64,7 @@ exampleDsl =
     """stylesheet taxOfficeExample
   page Housing {
     section "Buying"
-      question hasBoughtHouse2
+      question hasBoughtHouse
         widget checkbox
     section "Loaning"
       question hasMaintLoan
@@ -91,6 +91,7 @@ exampleDsl =
     }
     default boolean widget radio("Yes", "No")
   }
+
 """
 
 

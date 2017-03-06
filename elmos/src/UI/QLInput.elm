@@ -34,35 +34,21 @@ init =
 exampleDsl : String
 exampleDsl =
     """form taxOfficeExample {
-  "Name?"
-  name : string
-
-  "Age?"
-  age : integer
-
-  "Age?"
-  age : integer
-
-  "Wallet"
-  wallet : money
-
   "Did you sell a house in 2010?"
-  hasSoldHouse: boolean
+    hasSoldHouse: boolean
   "Did you buy a house in 2010?"
-  hasBoughtHouse: boolean
+    hasBoughtHouse: boolean
   "Did you enter a loan?"
-  hasMaintLoan: boolean
+    hasMaintLoan: boolean
 
   if (hasSoldHouse) {
     "What was the selling price?"
-    sellingPrice: money
-
+      sellingPrice: money
     "Private debts for the sold house:"
-    privateDebt: money
-
+      privateDebt: money
     "Value residue:"
-    valueResidue: money =
-    (sellingPrice - privateDebt)
+      valueResidue: money =
+        (sellingPrice - privateDebt)
   }
 
 }"""
