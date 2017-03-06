@@ -12,8 +12,6 @@ import ql.antlr.QLParser;
 import ql.astnodes.ASTVisitor;
 import ql.astnodes.Form;
 import ql.astnodes.Node;
-import ql.astnodes.statements.SimpleQuestion;
-import ql.astnodes.statements.Statement;
 import ql.astnodes.types.Type;
 import ql.gui.GUI;
 import ql.gui.components.FormFrame;

@@ -52,7 +52,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeLogic(Type leftExpressionType, Type rightExpressionType) {
-        if (isEqual(leftExpressionType, rightExpressionType) && isEqual(leftExpressionType, new BooleanType())) {
+        if (isEqual(leftExpressionType, rightExpressionType) && new BooleanType().equals(leftExpressionType)) {
             return leftExpressionType;
         }
         return new UndefinedType();
@@ -87,8 +87,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNumerical(Type leftExpressionType, Type rightExpressionType) {
-        if (isEqual(leftExpressionType,rightExpressionType) &&
-                (isEqual(leftExpressionType, new MoneyType()) || isEqual(leftExpressionType, new IntegerType()))) {
+        if (isEqual(leftExpressionType,rightExpressionType) &&  (new MoneyType().equals(leftExpressionType) ||
+                new IntegerType().equals(leftExpressionType))) {
             return leftExpressionType;
         }
         return new UndefinedType();
@@ -101,7 +101,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeNegation(Type expressionType) {
-        if (expressionType.equals(new BooleanType())) {
+        if (new BooleanType().equals(expressionType)) {
             return expressionType;
         }
         return new UndefinedType();
@@ -114,8 +114,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeParentheses(Type expressionType) {
-        if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType()) ||
-                isEqual(expressionType, new BooleanType()) || isEqual(expressionType, new StringType())) {
+        if (new IntegerType().equals(expressionType) || new MoneyType().equals(expressionType) ||
+                new BooleanType().equals(expressionType) || new StringType().equals(expressionType)) {
             return expressionType;
         }
         return new UndefinedType();
@@ -134,7 +134,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypePositiveNegative(Type expressionType) {
-        if (isEqual(expressionType, new IntegerType()) || isEqual(expressionType, new MoneyType())) {
+        if (new IntegerType().equals(expressionType) || new MoneyType().equals(expressionType)) {
             return expressionType;
         }
         return new UndefinedType();
@@ -184,8 +184,8 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
 
     private Type getTypeEquality(Type leftExpressionType, Type rightExpressionType) {
         if (isEqual(leftExpressionType,rightExpressionType) &&
-                (isEqual(leftExpressionType,new MoneyType()) || isEqual(leftExpressionType, new IntegerType()) ||
-                        isEqual(leftExpressionType, new StringType()))) {
+                (new MoneyType().equals(leftExpressionType) || new IntegerType().equals(leftExpressionType) ||
+                        new StringType().equals(leftExpressionType))) {
             return new BooleanType();
         }
         return new UndefinedType();
@@ -204,7 +204,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         Type expressionType = statement.getExpression().accept(this);
 
         Type statementType = getTypeIfStatement(expressionType);
-        if (isEqual(statementType, new UndefinedType())) {
+        if (new UndefinedType().equals(statementType)) {
             messages.addError(new InvalidTypeError(statement.getLineNumber(), new BooleanType()));
         }
 
@@ -215,7 +215,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     private Type getTypeIfStatement(Type expressionType) {
-        if (isEqual(expressionType, new BooleanType())) {
+        if ( new BooleanType().equals(expressionType)) {
             return expressionType;
         }
         return new UndefinedType();

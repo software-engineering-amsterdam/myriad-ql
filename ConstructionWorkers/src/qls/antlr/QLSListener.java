@@ -231,4 +231,16 @@ public interface QLSListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStringType(QLSParser.StringTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code moneyType}
+	 * labeled alternative in {@link QLSParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterMoneyType(QLSParser.MoneyTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code moneyType}
+	 * labeled alternative in {@link QLSParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitMoneyType(QLSParser.MoneyTypeContext ctx);
 }

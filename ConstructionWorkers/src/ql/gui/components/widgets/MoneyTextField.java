@@ -4,9 +4,12 @@ import ql.gui.formenvironment.values.MoneyValue;
 import ql.gui.formenvironment.values.Value;
 
 import javax.swing.*;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.EventListener;
@@ -21,26 +24,21 @@ public class MoneyTextField extends AbstractWidget{
     private static int MAX_NUM = 1000000;
 
     private JFormattedTextField input;
-    private NumberFormatter numberFormatter;
+    private DefaultFormatter defaultFormatter;
 
     public MoneyTextField(String _label) {
         JLabel label = new JLabel(_label);
 
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator(',');
-        symbols.setDecimalSeparator('.');
-        String pattern = "#,##0.00";
-        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
-        decimalFormat.setParseBigDecimal(true);
+        defaultFormatter = new NumberFormatter(new DecimalFormat("#####0.00"));
+        defaultFormatter.setValueClass(BigDecimal.class);
+        defaultFormatter.setAllowsInvalid(false);
+        //defaultFormatter.setMinimum(MIN_NUM);
+        //defaultFormatter.setMaximum(MAX_NUM);
+        //defaultFormatter.setOverwriteMode(true);
+        DefaultFormatterFactory fmtFactory = new DefaultFormatterFactory(defaultFormatter, defaultFormatter, defaultFormatter);
 
-        numberFormatter = new NumberFormatter(decimalFormat);
-        numberFormatter.setValueClass(Integer.class);
-        numberFormatter.setAllowsInvalid(false);
-        numberFormatter.setMinimum(MIN_NUM);
-        numberFormatter.setMaximum(MAX_NUM);
-        numberFormatter.setOverwriteMode(true);
-
-        this.input = new JFormattedTextField(numberFormatter);
+        this.input = new JFormattedTextField(new BigDecimal("0.00"));
+        this.input.setFormatterFactory(fmtFactory);
 
         this.input.setColumns(COLUMNS);
 
@@ -69,6 +67,6 @@ public class MoneyTextField extends AbstractWidget{
     @Override
     public void setReadOnly(boolean _isReadonly) {
         this.input.setEditable(false);
-        numberFormatter.setAllowsInvalid(true);
+        defaultFormatter.setAllowsInvalid(true);
     }
 }

@@ -37,6 +37,7 @@ type
     : 'boolean'         # boolType
     | 'integer'         # intType
     | 'string'          # stringType
+    | 'money'           # moneyType
     ;
 
 STRING

@@ -4,8 +4,8 @@ form taxOfficeExample {
     boolean hasMaintLoan("Did you enter a loan?");
 
     if (hasSoldHouse) {
-        int sellingPrice("What was the selling price?");
-        int privateDebt("Private debts for the sold house:");
-        int valueResidue("Value residue:") : (sellingPrice - privateDebt);
+        money sellingPrice("What was the selling price?");
+        money privateDebt("Private debts for the sold house:");
+        money valueResidue("Value residue:") : (sellingPrice - privateDebt);
     }
 }
