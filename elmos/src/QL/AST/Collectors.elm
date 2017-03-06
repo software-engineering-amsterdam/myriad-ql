@@ -1,6 +1,7 @@
 module QL.AST.Collectors
     exposing
         ( QuestionTypes
+        , collectConditions
         , collectComputedFields
         , collectDeclaredIds
         , collectExpressions
@@ -10,12 +11,23 @@ module QL.AST.Collectors
         )
 
 import QL.AST exposing (..)
-import QL.FormVisitor as FormVisitor exposing (defaultConfig)
+import QL.FormVisitor as FormVisitor exposing (defaultConfig, post)
 import Dict exposing (Dict)
 
 
 type alias QuestionTypes =
     Dict String ValueType
+
+
+collectConditions : Form -> List Expression
+collectConditions form =
+    FormVisitor.inspect
+        { defaultConfig
+            | onIfThen = post (\( condition, _ ) result -> condition :: result)
+            , onIfThenElse = post (\( condition, _, _ ) result -> condition :: result)
+        }
+        form
+        []
 
 
 collectQuestionLabels : Form -> List ( Id, String )

@@ -1,15 +1,48 @@
 module QL.TypeChecker.Expressions exposing (..)
 
 import Dict exposing (Dict)
-import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
+import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
 import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
 
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
+    let
+        questionTypes =
+            Collectors.collectQuestionTypes form
+    in
+        operandTypeErrors form questionTypes
+            ++ conditionTypeErrors form questionTypes
+
+
+conditionTypeErrors : Form -> QuestionTypes -> List Message
+conditionTypeErrors form questionTypes =
+    Collectors.collectConditions form
+        |> List.filterMap (conditionWithType questionTypes)
+        |> List.filter (Tuple.second >> badConditional)
+        |> List.map (\( condition, conditionType ) -> (Messages.invalidConditionType (locationOf condition) conditionType))
+
+
+conditionWithType : QuestionTypes -> Expression -> Maybe ( Expression, ValueType )
+conditionWithType questionTypes condition =
+    case getType questionTypes condition of
+        Ok x ->
+            Just ( condition, x )
+
+        Err _ ->
+            Nothing
+
+
+badConditional : ValueType -> Bool
+badConditional =
+    (/=) BooleanType
+
+
+operandTypeErrors : Form -> QuestionTypes -> List Message
+operandTypeErrors form questionTypes =
     Collectors.collectExpressions form
-        |> List.concatMap (checkExpression (Collectors.collectQuestionTypes form))
+        |> List.concatMap (checkExpression questionTypes)
 
 
 checkExpression : QuestionTypes -> Expression -> List Message
@@ -109,3 +142,37 @@ combineResult err succ left right =
 
         _ ->
             Result.andThen succ (Result.map2 (,) left right)
+
+
+locationOf : Expression -> Location
+locationOf expression =
+    case expression of
+        Var ( _, location ) ->
+            location
+
+        Str location _ ->
+            location
+
+        Decimal location _ ->
+            location
+
+        Integer location _ ->
+            location
+
+        Boolean location _ ->
+            location
+
+        ParensExpression location _ ->
+            location
+
+        ArithmeticExpression _ location _ _ ->
+            location
+
+        RelationExpression _ location _ _ ->
+            location
+
+        LogicExpression _ location _ _ ->
+            location
+
+        ComparisonExpression _ location _ _ ->
+            location

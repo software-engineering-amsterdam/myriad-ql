@@ -175,6 +175,13 @@ renderErrorMessage message =
         RelationExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
+        InvalidConditionType loc conditionType ->
+            [ text "Condition at "
+            , UI.Messages.renderLocation loc
+            , text " has invalid type: "
+            , b [] [ text <| toString conditionType ]
+            ]
+
 
 operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> List (Html msg)
 operatorMismatchMessage operator loc leftType rightType =

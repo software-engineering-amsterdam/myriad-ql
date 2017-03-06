@@ -13,6 +13,7 @@ type ErrorMessage
     | LogicExpressionTypeMismatch Logic Location ValueType ValueType
     | ComparisonExpressionTypeMismatch Comparison Location ValueType ValueType
     | RelationExpressionTypeMismatch Relation Location ValueType ValueType
+    | InvalidConditionType Location ValueType
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
     | DependencyCycle (List String)
@@ -40,6 +41,11 @@ comparisonExpressionTypeMismatch comparison loc lhs rhs =
 relationExpressionTypeMismatch : Relation -> Location -> ValueType -> ValueType -> Message
 relationExpressionTypeMismatch relation loc lhs rhs =
     Error (RelationExpressionTypeMismatch relation loc lhs rhs)
+
+
+invalidConditionType : Location -> ValueType -> Message
+invalidConditionType location valueType =
+    Error (InvalidConditionType location valueType)
 
 
 duplicateQuestionDefinition : String -> List Location -> Message
