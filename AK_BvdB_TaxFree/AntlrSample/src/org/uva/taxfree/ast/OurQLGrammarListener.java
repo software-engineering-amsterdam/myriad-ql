@@ -85,7 +85,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     private void addDeclaration(NamedNode node) {
-        mSymbolTable.addSymbol(node);
+        mSymbolTable.addDeclaration(node);
         addToStack(node);
     }
 

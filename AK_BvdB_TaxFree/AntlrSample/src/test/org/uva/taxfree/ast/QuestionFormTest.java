@@ -42,7 +42,7 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
-        mSymbolTable.addSymbols(mCachedDeclarations);
+        mSymbolTable.addDeclarations(mCachedDeclarations);
         QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
         createRenderer(form);
         form.show();
@@ -166,6 +166,8 @@ public class QuestionFormTest {
         add(new MoneyQuestion("How much money do you want to receive?", "moneyAmount"));
         add(new DateQuestion("What date did you buy your last car?", "lastBoughtCar"));
     }
+
+
 
     private void add(BlockNode blockNode) {
         Set<NamedNode> declarations = new LinkedHashSet<>();
