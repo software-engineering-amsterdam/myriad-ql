@@ -76,7 +76,7 @@ class TestParser(unittest.TestCase):
         q_type = AST.BoolTypeNode()
         q_expr = "-var >= 600"
         node_expr = AST.GTENode(AST.MinNode(AST.VarNode("var")),
-                                AST.IntNode(Decimal("600")))
+                                AST.IntNode(int("600")))
 
         q_str = format_question(question, name, q_type, q_expr)
         test_node = AST.ComputedQuestionNode(AST.StringNode(question),
@@ -111,11 +111,11 @@ class TestParser(unittest.TestCase):
 
     def test_int_lit_in_expr(self):
         integer = "1000"
-        int_node1 = AST.IntNode(Decimal(integer))
+        int_node1 = AST.IntNode(int(integer))
         self.validate_node(self.exp_parser, integer, int_node1)
 
         integer = "10000000000000000"
-        int_node2 = AST.IntNode(Decimal(integer))
+        int_node2 = AST.IntNode(int(integer))
         self.validate_node(self.exp_parser, integer, int_node2)
 
         self.check_parse_exception(self.exp_parser, "0x900", pp.ParseException)
@@ -151,15 +151,15 @@ class TestParser(unittest.TestCase):
         monop_node2 = AST.NegNode(monop_node1)
         self.validate_node(self.exp_parser, "!!true", monop_node2)
 
-        monop_node3 = AST.MinNode(AST.IntNode(Decimal("30")))
+        monop_node3 = AST.MinNode(AST.IntNode(int("30")))
         self.validate_node(self.exp_parser, "-30", monop_node3)
 
-        monop_node4 = AST.PlusNode(AST.IntNode(Decimal("40")))
+        monop_node4 = AST.PlusNode(AST.IntNode(int("40")))
         self.validate_node(self.exp_parser, "+40", monop_node4)
 
     def test_binops(self):
         binop1 = ["1000", ">", "100.0"]
-        binop_node1 = AST.GTNode(AST.IntNode(Decimal(binop1[0])),
+        binop_node1 = AST.GTNode(AST.IntNode(int(binop1[0])),
                                  AST.DecimalNode(Decimal(binop1[2])))
         self.validate_node(self.exp_parser, "".join(binop1), binop_node1)
 
@@ -169,7 +169,7 @@ class TestParser(unittest.TestCase):
 
         # (100 + var) * (true) + "String"
         lit_bool = AST.BoolNode(True)
-        lit_int = AST.IntNode(Decimal("100"))
+        lit_int = AST.IntNode(int("100"))
         lit_var = AST.VarNode("var")
         lit_string = AST.StringNode("String")
 
@@ -188,8 +188,8 @@ class TestParser(unittest.TestCase):
     def test_expression_combinations(self):
         # !(5.0 + +10 / var1 / 2 - !var2 && (19. * .12) || false)
         # = invalid eq but is parseable.
-        int1 = AST.IntNode(Decimal("10"))
-        int2 = AST.IntNode(Decimal("2"))
+        int1 = AST.IntNode(int("10"))
+        int2 = AST.IntNode(int("2"))
         dec1 = AST.DecimalNode(Decimal("5.0"))
         dec2 = AST.DecimalNode(Decimal("19."))
         dec3 = AST.DecimalNode(Decimal(".12"))
@@ -252,7 +252,7 @@ class TestParser(unittest.TestCase):
                               AST.MoneyTypeNode())
         q2 = AST.QuestionNode(AST.StringNode("question2?"), AST.VarNode("var2"),
                               AST.StringTypeNode())
-        expr = AST.GTNode(AST.VarNode("var1"), AST.IntNode(Decimal("200")))
+        expr = AST.GTNode(AST.VarNode("var1"), AST.IntNode(int("200")))
         if_block = AST.IfNode(expr, AST.BlockNode([q2]))
         form_block = AST.BlockNode([q1, if_block])
         form_node = AST.FormNode(AST.VarNode("TestForm"), form_block)

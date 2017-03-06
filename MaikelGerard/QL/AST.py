@@ -7,6 +7,8 @@ from datetime import date
 # TODO: Remove QuestionnaireAST, just make form the root.
 # TODO: Replace 'is_boolean' etc. into double dispatch.
 # TODO: Do we want to pass state in the visitor?
+# TODO: question.name instead of question.name.val
+
 
 class QuestionnaireAST(object):
     def __init__(self, form, line=0, col=0):

@@ -18,11 +18,35 @@ class QuestionnaireParser(object):
     IF = pp.Keyword("if").suppress()
     ELSE = pp.Keyword("else").suppress()
 
+    BOOLEAN_TYPE = pp.Keyword("boolean").suppress()
+    INTEGER_TYPE = pp.Keyword("integer").suppress()
+    MONEY_TYPE = pp.Keyword("money").suppress()
+    DECIMAL_TYPE = pp.Keyword("decimal").suppress()
+    STRING_TYPE = pp.Keyword("string").suppress()
+    DATE_TYPE = pp.Keyword("date").suppress()
+
+    BOOLEAN = (pp.Keyword("true").setParseAction(lambda _: True) |
+               pp.Keyword("false").setParseAction(lambda _: False))
+    INTEGER = pp.Word(pp.nums)
+    VARIABLE = pp.Word(pp.alphas, pp.alphanums + "_")
+    DECIMAL = pp.Regex("(\d+\.\d*)|(\d*\.\d+)")
+    STRING = pp.quotedString
+    DATE = pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}")
+
     def __init__(self):
         # Enable caching of parsing logic.
         pp.ParserElement.enablePackrat()
-        self.type_names = self.get_type_names()
-        self.var_types = self.get_var_types()
+
+        # Add parse actions to create AST nodes from parse results.
+        self.add_parse_actions()
+        self.TYPE_NAMES = (
+            self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^ self.MONEY_TYPE ^
+            self.DECIMAL_TYPE ^ self.STRING_TYPE ^ self.DATE_TYPE
+        )
+        self.TYPES = (
+            self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
+            self.STRING ^ self.DATE ^ self.VARIABLE
+        )
 
         # Create the grammar incrementally to simplify unit test creation.
         self.expression = self.define_expression()
@@ -32,25 +56,11 @@ class QuestionnaireParser(object):
 
         self.grammar = self.define_grammar()
 
-    def get_type_names(self):
-        def parse_type_node(keyword, ast_class):
-            """
-            Use the 'create_node' function to create a certain AST type node.
-            The type name token is not required, and therefore suppressed.
-            """
-            return pp.Keyword(keyword).suppress().addParseAction(
-                   self.create_node(ast_class))
+    def add_parse_actions(self):
+        def create_int(src, loc, tokens):
+            del src, loc
+            return int(tokens[0])
 
-        return (
-            parse_type_node("boolean", AST.BoolTypeNode) |
-            parse_type_node("integer", AST.IntTypeNode) |
-            parse_type_node("money", AST.MoneyTypeNode) |
-            parse_type_node("decimal", AST.DecimalTypeNode) |
-            parse_type_node("string", AST.StringTypeNode) |
-            parse_type_node("date", AST.DateTypeNode)
-        )
-
-    def get_var_types(self):
         def create_decimal(src, loc, tokens):
             del src, loc
             return decimal.Decimal(tokens[0])
@@ -59,38 +69,21 @@ class QuestionnaireParser(object):
             del src, loc
             return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
-        types = {
-            "BOOLEAN": (pp.Keyword("true").setParseAction(lambda _: True) |
-                        pp.Keyword("false").setParseAction(lambda _: False)),
-            "INTEGER": pp.Word(pp.nums),
-            "VARIABLE": pp.Word(pp.alphas, pp.alphanums + "_"),
-            "DECIMAL": pp.Regex("(\d+\.\d*)|(\d*\.\d+)"),
-            "DATE": pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}"),
-            "STRING": pp.quotedString.setParseAction(pp.removeQuotes)
-        }
+        self.BOOLEAN_TYPE.setParseAction(self.create_node(AST.BoolTypeNode))
+        self.INTEGER_TYPE.setParseAction(self.create_node(AST.IntTypeNode))
+        self.MONEY_TYPE.setParseAction(self.create_node(AST.MoneyTypeNode))
+        self.DECIMAL_TYPE.setParseAction(self.create_node(AST.DecimalTypeNode))
+        self.STRING_TYPE.setParseAction(self.create_node(AST.StringTypeNode))
+        self.DATE_TYPE.setParseAction(self.create_node(AST.DateTypeNode))
 
-        # TODO: Create integer.
-        types["BOOLEAN"].setParseAction(self.create_node(AST.BoolNode))
-        types["INTEGER"].setParseAction(create_decimal)
-        types["DECIMAL"].addParseAction(create_decimal)
-        types["DATE"].addParseAction(create_date)
-
-        var_types = (
-            self.var_types["BOOLEAN"].addParseAction(
-                self.create_node(AST.BoolNode)) |
-            self.var_types["VARIABLE"].addParseAction(
-                self.create_node(AST.VarNode)) |
-            self.var_types["DATE"].addParseAction(
-                self.create_node(AST.DateNode)) |
-            self.var_types["DECIMAL"].addParseAction(
-                self.create_node(AST.DecimalNode)) |
-            self.var_types["INTEGER"].addParseAction(
-                self.create_node(AST.IntNode)) |
-            self.var_types["STRING"].addParseAction(
-                self.create_node(AST.StringNode))
-        )
-
-        return types
+        self.BOOLEAN.setParseAction(self.create_node(AST.BoolNode))
+        self.INTEGER.setParseAction(create_int, self.create_node(AST.IntNode))
+        self.VARIABLE.setParseAction(self.create_node(AST.VarNode))
+        self.DECIMAL.setParseAction(
+            create_decimal, self.create_node(AST.DecimalNode))
+        self.STRING.setParseAction(
+            pp.removeQuotes, self.create_node(AST.StringNode))
+        self.DATE.setParseAction(create_date, self.create_node(AST.DateNode))
 
     def create_node(self, ast_class):
         """
@@ -121,15 +114,14 @@ class QuestionnaireParser(object):
             Use this function to prevent double parseActions, as the question
             grammar is re-used in the comp_question grammar definition.
             """
-            return self.var_types["STRING"] + self.var_types["VARIABLE"] + \
-                   self.COLON + self.type_names
+            return self.STRING + self.VARIABLE + self.COLON + self.TYPE_NAMES
 
         question = create_question_grammar()
-        question.addParseAction(self.create_node(AST.QuestionNode))
+        question.setParseAction(self.create_node(AST.QuestionNode))
 
         comp_question = create_question_grammar() + self.IS + \
             self.round_embrace(self.expression)
-        comp_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
+        comp_question.setParseAction(self.create_node(AST.ComputedQuestionNode))
 
         return comp_question | question
 
@@ -140,20 +132,20 @@ class QuestionnaireParser(object):
                 self.curly_embrace(self.block)
 
         if_cond = create_if_grammar()
-        if_cond.addParseAction(self.create_node(AST.IfNode))
+        if_cond.setParseAction(self.create_node(AST.IfNode))
 
         if_else_cond = create_if_grammar() + self.ELSE + \
             self.curly_embrace(self.block)
-        if_else_cond.addParseAction(self.create_node(AST.IfElseNode))
+        if_else_cond.setParseAction(self.create_node(AST.IfElseNode))
 
         return if_else_cond | if_cond
 
     def define_grammar(self):
         self.block << pp.Group(
             pp.OneOrMore(self.question | self.conditional)
-        ).addParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(AST.BlockNode))
 
-        form = self.FORM + self.var_types["VARIABLE"] + \
+        form = self.FORM + self.VARIABLE + \
             self.curly_embrace(self.block)
         form.addParseAction(self.create_node(AST.FormNode))
 
@@ -164,11 +156,11 @@ class QuestionnaireParser(object):
             opp, ast_class = opp_list[0]
             operator = create_operator(opp, ast_class)
             for (opp, ast_class) in opp_list[1:]:
-                operator |= create_operator(opp, ast_class)
+                operator ^= create_operator(opp, ast_class)
             return operator
 
         def create_operator(opp, ast_class):
-            return pp.Literal(opp).addParseAction(lambda _: ast_class)
+            return pp.Literal(opp).setParseAction(lambda _: ast_class)
 
         # Define all expression operators and their corresponding AST node.
         unary_ops = create_operators([
@@ -186,25 +178,8 @@ class QuestionnaireParser(object):
         infix_and = create_operator('&&', AST.AndNode)
         infix_or = create_operator('||', AST.OrNode)
 
-        # Extend the parsing logic to convert the variables to AST nodes.
-        # TODO: merge with above.
-        var_types = (
-            self.var_types["BOOLEAN"].addParseAction(
-                self.create_node(AST.BoolNode)) |
-            self.var_types["VARIABLE"].addParseAction(
-                self.create_node(AST.VarNode)) |
-            self.var_types["DATE"].addParseAction(
-                self.create_node(AST.DateNode)) |
-            self.var_types["DECIMAL"].addParseAction(
-                self.create_node(AST.DecimalNode)) |
-            self.var_types["INTEGER"].addParseAction(
-                self.create_node(AST.IntNode)) |
-            self.var_types["STRING"].addParseAction(
-                self.create_node(AST.StringNode))
-        )
-
         # Define the expression parser, including precedence.
-        return pp.infixNotation(var_types, [
+        return pp.infixNotation(self.TYPES, [
             (unary_ops, 1, pp.opAssoc.RIGHT, self.create_monop_node),
             (arithmetic_level1, 2, pp.opAssoc.LEFT, self.create_binops),
             (arithmetic_level2, 2, pp.opAssoc.LEFT, self.create_binops),
