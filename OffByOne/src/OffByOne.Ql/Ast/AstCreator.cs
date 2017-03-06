@@ -16,6 +16,7 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Generated;
+    using OffByOne.Ql.Values;
 
     public class AstCreator : QlBaseVisitor<AstNode>
     {
@@ -50,7 +51,8 @@
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var question = context.label.Text;
+            var labelValue = new StringValue(context.label.Text);
+            var label = new StringLiteral(labelValue);
             var type = context.Type().GetText();
 
             var computedValue = context.expression();
@@ -63,17 +65,17 @@
             switch (type)
             {
                 case "boolean":
-                    return new QuestionStatement(id, TypeConstants.BooleanType, question, value);
+                    return new QuestionStatement(id, TypeConstants.BooleanType, label, value);
                 case "integer":
-                    return new QuestionStatement(id, TypeConstants.IntegerType, question, value);
+                    return new QuestionStatement(id, TypeConstants.IntegerType, label, value);
                 case "decimal":
-                    return new QuestionStatement(id, TypeConstants.DecimalType, question, value);
+                    return new QuestionStatement(id, TypeConstants.DecimalType, label, value);
                 case "money":
-                    return new QuestionStatement(id, TypeConstants.MoneyType, question, value);
+                    return new QuestionStatement(id, TypeConstants.MoneyType, label, value);
                 case "string":
-                    return new QuestionStatement(id, TypeConstants.StringType, question, value);
+                    return new QuestionStatement(id, TypeConstants.StringType, label, value);
                 case "date":
-                    return new QuestionStatement(id, TypeConstants.DateType, question, value);
+                    return new QuestionStatement(id, TypeConstants.DateType, label, value);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid question type.");
             }
@@ -240,7 +242,8 @@
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
         {
-            return new StringLiteral(context.GetText());
+            var value = new StringValue(context.GetText());
+            return new StringLiteral(value);
         }
         #endregion
     }

@@ -15,6 +15,7 @@
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Graphics;
+    using OffByOne.Ql.Values;
     using OffByOne.Qls;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker;
@@ -49,7 +50,9 @@
             var test = 3 + "Test";
 
             var evaluator = new Evaluator();
-            var expression = new AddExpression(new StringLiteral("Test"), new StringLiteral("Hex"));
+            var testValue = new StringValue("Test");
+            var hexValue = new StringValue("Hex");
+            var expression = new AddExpression(new StringLiteral(testValue), new StringLiteral(hexValue));
             Console.WriteLine(evaluator.Evaluate(expression, new TypeEnvironment()));
         }
 

@@ -1,6 +1,5 @@
 ﻿namespace OffByOne.Ql.Tests.ParserTests
 {
-    using System;
     using System.Linq;
 
     using OffByOne.Ql.Ast.Expressions;
@@ -9,6 +8,7 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Tests.ParserTests.Base;
+    using OffByOne.Ql.Values;
 
     using Xunit;
 
@@ -47,9 +47,10 @@
                 .OfType<QuestionStatement>()
                 .ToList();
 
-            // TODO: Fix processing of StringLiterals
-            Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Label == "What is your birth date?"));
-            Assert.True(questions.Any(x => x.Identifier == "continue" && x.Label == "Do you want to continue?"));
+            var birthString = new StringValue("What is your birth date?");
+            var continueString = new StringValue("Do you want to continue?");
+            Assert.True(questions.Any(x => x.Identifier == "birthDate" && x.Label.Value == birthString));
+            Assert.True(questions.Any(x => x.Identifier == "continue" && x.Label.Value == continueString));
 
             var ifStatement = castAstTree.Statements.OfType<IfStatement>().First();
             Assert.True(ifStatement.Condition is OrExpression);
@@ -62,12 +63,12 @@
             var variableExp = (VariableExpression)condition.RightExpression;
 
             Assert.IsType<VariableExpression>(lessThanExp.LeftExpression);
-            Assert.IsType<Expression>(lessThanExp.RightExpression);
+            Assert.IsAssignableFrom<Expression>(lessThanExp.RightExpression);
             Assert.Equal(variableExp.Identifier, "continue");
 
             var lhs = (VariableExpression)lessThanExp.LeftExpression;
             var rhs = (Expression)lessThanExp.RightExpression;
-            Assert.IsType<DateLiteral>(rhs);
+            Assert.IsAssignableFrom<DateLiteral>(rhs);
 
             Assert.Equal(lhs.Identifier, "birthDate");
             // Assert.Equal(((DateLiteral)rhs).Value, new DateTime(1999, 12, 31));
@@ -82,7 +83,7 @@
 
             var computedValue = (OrExpression)computedQuestion.ComputedValue;
             Assert.IsType<VariableExpression>(computedValue.LeftExpression);
-            Assert.IsType<Expression>(computedValue.RightExpression);
+            Assert.IsAssignableFrom<Expression>(computedValue.RightExpression);
 
             var computedRhs = (Expression)computedValue.RightExpression;
             Assert.IsType<BooleanLiteral>(computedRhs);

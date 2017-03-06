@@ -18,8 +18,8 @@ expression
 
     | op=('!'|'-') expression # Unary
 
-    | lhs=expression op=('*'|'/'<assoc=left>) rhs=expression         # Multiplication
-    | lhs=expression op=('+'|'-'<assoc=left>) rhs=expression         # Addition
+    | lhs=expression op=('*'|'/') rhs=expression         # Multiplication
+    | lhs=expression op=('+'|'-') rhs=expression         # Addition
 
     | lhs=expression op=('>'|'>='|'<'|'<='|'=='|'!=') rhs=expression # Compare
 

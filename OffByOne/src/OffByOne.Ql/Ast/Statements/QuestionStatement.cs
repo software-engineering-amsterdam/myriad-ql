@@ -3,6 +3,7 @@
     using MoreDotNet.Extensions.Common;
 
     using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
@@ -11,7 +12,7 @@
         public QuestionStatement(
             string identifier,
             ValueType type,
-            string label,
+            StringLiteral label,
             Expression value = null)
         {
             this.Identifier = identifier;
@@ -24,7 +25,7 @@
 
         public ValueType Type { get; private set; }
 
-        public string Label { get; private set; }
+        public StringLiteral Label { get; private set; }
 
         public Expression ComputedValue { get; private set; }
 

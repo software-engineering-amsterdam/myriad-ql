@@ -21,13 +21,16 @@
 
         public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment context)
         {
-            if (context.IsNameDuplicate(expression.Label))
+            // TODO: change string primitives to StringValue?
+            // [...].Value.Value is ugly. Since StringValues replace string primitives,
+            // maybe we should replace them in the code too?
+            if (context.IsNameDuplicate(expression.Label.Value.Value))
             {
                 this.Report.Add(new DuplicateQuestionNameMessage(expression));
             }
             else
             {
-                context.AddQuestionName(expression.Label);
+                context.AddQuestionName(expression.Label.Value.Value);
             }
 
             if (context.IsLableDuplicate(expression.Identifier))

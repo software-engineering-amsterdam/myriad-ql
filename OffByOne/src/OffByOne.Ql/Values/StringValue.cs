@@ -9,7 +9,7 @@
     {
         public StringValue(string value)
         {
-            this.Value = value;
+            this.Value = value.Trim('"');
         }
 
         public string Value { get; set; }
