@@ -3,7 +3,7 @@ package sc.ql.model.form_elements;
 import sc.ql.model.FormElement;
 import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.Atoms.AtomId;
+import sc.ql.model.atoms.AtomId;
 
 public class Question implements FormElement {
 	private final String question; 

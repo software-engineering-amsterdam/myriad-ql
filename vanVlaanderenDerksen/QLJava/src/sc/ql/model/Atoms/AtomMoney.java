@@ -1,4 +1,4 @@
-package sc.ql.model.Atoms;
+package sc.ql.model.atoms;
 
 import java.math.BigDecimal;
 

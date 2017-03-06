@@ -1,6 +1,6 @@
 package sc.ql.model;
 
-import sc.ql.model.Atoms.*;
+import sc.ql.model.atoms.*;
 import sc.ql.model.expressions.*;
 import sc.ql.model.form_elements.*;
 
