@@ -45,6 +45,7 @@
       "arva-kit": "github:manueloverdijk/arva-kit@develop",
       "babel-register": "npm:babel-register@^6.22.0",
       "css": "github:systemjs/plugin-css@^0.1.32",
+      "eventemitter3": "npm:eventemitter3@^2.0.2",
       "famous": "github:bizboard/famous@develop",
       "lodash": "npm:lodash@^4.17.4",
       "nearley": "npm:nearley@^2.7.12",

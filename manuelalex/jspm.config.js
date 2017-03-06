@@ -123,6 +123,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "eventemitter3": "npm:eventemitter3@2.0.2",
         "css": "github:systemjs/plugin-css@0.1.32",
         "arva-js": "github:manueloverdijk/arva-js@develop",
         "arva-kit": "github:manueloverdijk/arva-kit@develop",
