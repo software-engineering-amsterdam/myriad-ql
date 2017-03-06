@@ -34,7 +34,7 @@ public class Environment {
     getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
-            if (hasCyclicDependency(calculation)) {
+            if (hasCyclicDependency(calculation.getId(), calculation.getUsedVariables())) {
                 errors.add("Cyclic dependency found: " + calculation.getId());
             }
         }
@@ -47,15 +47,8 @@ public class Environment {
         return calculations;
     }
 
-    private boolean hasCyclicDependency(CalculatedField calculation) {
-        String calculationDeclaration = calculation.getId();
-        List<String> calculationDependencies = calculation.getUsedVariables();
-        return expandAndCheckUsedVariables(calculationDeclaration, calculationDependencies);
-
-    }
-
-    private boolean expandAndCheckUsedVariables(String calculationDeclaration, List<String> usedVariables) {
-        while (expandVariables(usedVariables)) {
+    private boolean hasCyclicDependency(String calculationDeclaration, List<String> usedVariables) {
+        while (substituteVariables(usedVariables)) {
             if (usedVariables.contains(calculationDeclaration)) {
                 return true;
             }
@@ -63,15 +56,15 @@ public class Environment {
         return false;
     }
 
-    private boolean expandVariables(List<String> usedVariables) {
+    private boolean substituteVariables(List<String> usedVariables) {
         List<String> dependencies = new ArrayList<>();
         for (String variableName : usedVariables) {
             dependencies.addAll(replaceWithDeclarations(variableName));
         }
-        boolean isChanged = dependencies != usedVariables;
+        boolean substituted = dependencies != usedVariables;
         usedVariables.clear();
         usedVariables.addAll(dependencies);
-        return isChanged;
+        return substituted;
     }
 
     private List<String> replaceWithDeclarations(String usedVariable) {
