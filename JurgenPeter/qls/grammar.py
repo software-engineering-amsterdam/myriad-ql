@@ -12,15 +12,16 @@ identifier.addCondition(lambda tokens: tokens[0] not in "stylesheet page "
 datatype = oneOf("boolean string integer decimal")
 datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
 
-
-integer = Regex("-?[0-9]+").addParseAction(lambda tokens: int(tokens[0]))
+""" pyparsing_common.integer does not support negative integers. """
+integer = Regex("-?[0-9]+")
+integer.addParseAction(lambda tokens: int(tokens[0]))
 
 integer_arguments = Suppress("(") + integer + Suppress(",") + \
                     integer + Suppress(")")
 
-string_arguments = Suppress("(") + QuotedString("\"") + Suppress(",") +\
-            QuotedString("\"") + Suppress(")")
+string = QuotedString("\"")
 
+string_arguments = Suppress("(") + string + Suppress(",") + string + Suppress(")")
 
 widget_entry = Suppress("text").setParseAction(
     lambda _: EntryWidget)
@@ -44,58 +45,102 @@ widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
 widget_drop_down.setParseAction(
     lambda tokens: lambda question: DropDownWidget(question, *tokens))
 
-
 widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_entry ^\
               widget_drop_down ^ widget_slider
 
-widget = Suppress("widget") + widget_type
-
-name = oneOf("width height font color fontsize fontcolor")
+widget_attribute = Suppress("widget") + widget_type
+widget_attribute.setParseAction(lambda tokens: WidgetTypeAttribute(*tokens))
 
 hexadecimal = Regex("#[0-9a-f]{6}")
-literal = pyparsing_common.integer ^ pyparsing_common.real ^\
-          QuotedString("\"") ^ hexadecimal
 
-attribute = widget ^ (name + Suppress(":") + literal)
+color_attribute = Suppress("color") + Suppress(":") + hexadecimal
+color_attribute.setParseAction(lambda tokens: ColorAttribute(*tokens))
+
+font_size_attribute  = Suppress("size") + Suppress(":") + integer
+font_size_attribute.setParseAction(lambda tokens: FontSizeAttribute(*tokens))
+
+weight = Literal("normal") ^ Literal("bold")
+
+font_weight_attribute = Suppress("weight") + Suppress(":") + weight
+font_weight_attribute.setParseAction(lambda tokens: FontWeightAttribute(*tokens))
+
+font_family_attribute = Suppress("family") + Suppress(":") + string
+font_family_attribute.setParseAction(lambda tokens: FontFamilyAttribute(*tokens))
+
+width_attribute = Suppress("width") + Suppress(":") + integer
+width_attribute.setParseAction(lambda tokens: WidthAttribute(*tokens))
+
+attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^ font_weight_attribute ^ font_family_attribute ^ width_attribute
 
 attributes = Suppress("{") + ZeroOrMore(attribute) + Suppress("}")
+attributes.setParseAction(lambda tokens: [tokens.asList()])
 
-styling = widget ^ attributes
+styling = widget_attribute ^ attributes
 
-question = Suppress("question") + identifier + Optional(styling)
+unstyled_question = Suppress("question") + identifier
+unstyled_question.setParseAction(lambda tokens: QuestionAnchor(*tokens))
 
+styled_question = Suppress("question") + identifier + styling
+styled_question.setParseAction(lambda tokens: StyledQuestionAnchor(*tokens))
+
+question = unstyled_question ^ styled_question
 
 default = Suppress("default") + datatype + styling
+default.setParseAction(lambda tokens: DefaultStyling(*tokens))
+
+defaults = OneOrMore(default)
+defaults.setParseAction(lambda tokens: [tokens.asList()])
+
+
+
+
+
 
 
 sectionbody = Forward()
 
-section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
+unstyled_section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
           sectionbody + Suppress("}")
-section.setParseAction(lambda tokens: Section(*tokens))
+unstyled_section.setParseAction(lambda tokens: Section(*tokens))
 
-sectionbody <<= ZeroOrMore(section ^ question ^ default)
+styled_section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
+          sectionbody + defaults + Suppress("}")
+styled_section.setParseAction(lambda tokens: StyledSection(*tokens))
+
+section = unstyled_section ^ styled_section
+
+sectionbody <<= ZeroOrMore(section ^ question)
 sectionbody.setParseAction(lambda tokens: [tokens.asList()])
 
 pagebody = sectionbody
-# pagebody.setParseAction(lambda tokens: [tokens.asList()])
 
-page = Suppress("page") + identifier + Suppress("{") + pagebody + Suppress("}")
-page.setParseAction(lambda tokens: Page(*tokens))
+unstyled_page = Suppress("page") + identifier + Suppress("{") + pagebody + Suppress("}")
+unstyled_page.setParseAction(lambda tokens: Page(*tokens))
 
-stylebody = ZeroOrMore(page ^ default)
-stylebody.setParseAction(lambda tokens: [tokens.asList()])
-stylesheet = Suppress("stylesheet") + identifier + Suppress("{") + stylebody +\
+styled_page = Suppress("page") + identifier + Suppress("{") + pagebody + defaults + Suppress("}")
+styled_page.setParseAction(lambda tokens: StyledPage(*tokens))
+
+page = unstyled_page ^ styled_page
+
+layoutbody = ZeroOrMore(page)
+layoutbody.setParseAction(lambda tokens: [tokens.asList()])
+
+unstyled_layout = Suppress("stylesheet") + identifier + Suppress("{") + layoutbody +\
              Suppress("}")
-stylesheet.setParseAction(lambda tokens: StyleSheet(*tokens))
+unstyled_layout.setParseAction(lambda tokens: Layout(*tokens))
 
+styled_layout = Suppress("stylesheet") + identifier + Suppress("{") + layoutbody + defaults +\
+             Suppress("}")
+styled_layout.setParseAction(lambda tokens: StyledLayout(*tokens))
+
+layout = unstyled_layout ^ styled_layout
 
 def parse_file(filename):
-    return stylesheet.parseFile(filename)[0]
+    return layout.parseFile(filename)[0]
 
 
 def parse_string(string):
-    return stylesheet.parseString(string, parseAll=True)[0]
+    return layout.parseString(string, parseAll=True)[0]
 
 
 if __name__ == "__main__":

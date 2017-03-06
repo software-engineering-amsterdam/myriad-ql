@@ -24,8 +24,8 @@ class TestGrammar(TestCase):
         (grammar.page, "page p {}"),
         (grammar.page, "page p {section \"x\" {section \"y\" {question z} question zz}}"),
         (grammar.page, "page p {section \"x\" {} default string widget text}"),
-        (grammar.stylesheet, "stylesheet s {page p {} page q {}}"),
-        (grammar.stylesheet, "stylesheet s {page p {} default integer widget slider}"),
+        (grammar.layout, "stylesheet s {page p {} page q {}}"),
+        (grammar.layout, "stylesheet s {page p {} default integer widget slider}"),
     ]
 
     def testCorrectSentences(self):
