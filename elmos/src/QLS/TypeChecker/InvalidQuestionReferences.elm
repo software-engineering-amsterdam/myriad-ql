@@ -15,7 +15,7 @@ check form styleSheet =
             QLCollectors.collectDeclaredIds form
                 |> List.map Tuple.first
     in
-        QLSCollectors.collectQuestionReferences styleSheet
+        QLSCollectors.collectQuestionReferencesAsDict styleSheet
             |> Dict.filter (\k _ -> not (List.member k declaredQuestions))
             |> Dict.toList
             |> List.map (uncurry undefinedQuestionReference)

@@ -6,6 +6,7 @@ import QL.AST exposing (ValueType, Operator, Comparison, Logic, Relation, Locati
 type Message
     = UndefinedQuestionReference String Location
     | UnplacedQuestion String
+    | DuplicatePlacedQuestion String (List Location)
 
 
 undefinedQuestionReference : String -> Location -> Message

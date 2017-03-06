@@ -8,7 +8,7 @@ import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
 import QLS.Parser as Parser
 import QLS.TypeChecker as TypeChecker
-import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion))
+import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion))
 import UI.Messages
 
 
@@ -160,4 +160,12 @@ renderMessage message =
             [ text <| "Question "
             , UI.Messages.renderVarName name
             , text " is not placed in the QLS program"
+            ]
+
+        DuplicatePlacedQuestion name locations ->
+            [ text "Question placed multiple times for variable "
+            , UI.Messages.renderVarName name
+            , text " at the following locations: [ "
+            , UI.Messages.renderLocations locations
+            , text "]"
             ]
