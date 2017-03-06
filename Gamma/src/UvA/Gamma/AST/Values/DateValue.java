@@ -1,6 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.Validation.TypeChecker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,12 +33,18 @@ public class DateValue extends Value implements ASTNode {
     public void setValue(String value) {
         try {
             this.value = format.parse(value);
-        } catch (ParseException e) {} //The date might be initialized empty
+        } catch (ParseException e) {
+        } //The date might be initialized empty
     }
 
     @Override
     public String computableString() {
         return this.toString();
+    }
+
+    @Override
+    public boolean validate(String value, TypeChecker typeChecker) {
+        return typeChecker.checkDate(value);
     }
 
     @Override

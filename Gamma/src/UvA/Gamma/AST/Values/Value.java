@@ -1,6 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.Validation.TypeChecker;
 
 /**
  * Created by Tjarco, 21-02-17.
@@ -22,6 +23,9 @@ public abstract class Value implements ASTNode {
     public abstract void setValue(String value);
 
     public abstract String computableString(); //Return a string which can be used in an expression
+
+    public abstract boolean validate(String value, TypeChecker typeChecker);
+
 
     public abstract String toString();
 }

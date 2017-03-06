@@ -11,34 +11,23 @@ import java.util.Date;
  */
 public class TypeChecker {
 
-    public boolean check(String value, Value.Type type) {
-        switch (type) {
-            case BOOL:
-                return checkBool(value);
-            case INTEGER:
-                return checkInteger(value);
-            case DECIMAL:
-                return checkDouble(value);
-            case DATE:
-                return checkDate(value);
-            default:
-                return true;
-        }
+    public boolean check(Value value, String newValue) {
+        return value.validate(newValue, this);
     }
 
-    private boolean checkBool(String value) {
+    public boolean checkBool(String value) {
         return value.matches("^(?i)true|false");
     }
 
-    private boolean checkInteger(String value) {
+    public boolean checkInteger(String value) {
         return value.matches("^[+-]?\\d+$");
     }
 
-    private boolean checkDouble(String value) {
+    public boolean checkDouble(String value) {
         return value.matches("^[+-]?\\d+.?\\d*$");
     }
 
-    private boolean checkDate(String value) {
+    public boolean checkDate(String value) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date d = format.parse(value);
@@ -46,6 +35,10 @@ public class TypeChecker {
         } catch (ParseException e) {
             return false;
         }
+    }
+
+    public boolean checkMoney(String value) {
+        return value.matches("^€\\d+((\\.\\d*)|(\\.-))?$");
     }
 
 }

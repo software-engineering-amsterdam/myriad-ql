@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.Validation.TypeChecker;
+
 /**
  * Created by Tjarco, 28-02-17.
  */
@@ -25,6 +27,11 @@ public class StringValue extends Value {
     @Override
     public boolean conformsToType(Type type) {
         return false; // No operations on Strings
+    }
+
+    @Override
+    public boolean validate(String value, TypeChecker typeChecker) {
+        return true; // String is always of a valid QL type String.
     }
 
     @Override

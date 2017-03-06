@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.Validation.TypeChecker;
+
 import java.math.RoundingMode;
 
 /**
@@ -16,8 +18,18 @@ public class Money extends Number {
     }
 
     @Override
+    public void setValue(String value) {
+        super.setValue(value.replaceAll("€|(\\.-)", ""));
+    }
+
+    @Override
     public Type getType() {
         return Type.MONEY;
+    }
+
+    @Override
+    public boolean validate(String value, TypeChecker typeChecker) {
+        return typeChecker.checkMoney(value);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.Validation.TypeChecker;
+
 import java.math.BigDecimal;
 
 /**
@@ -69,6 +71,11 @@ public class Number extends Value {
     public Number multiply(Number toMultiply) {
         this.value = this.value.multiply(toMultiply.value);
         return this;
+    }
+
+    @Override
+    public boolean validate(String value, TypeChecker typeChecker) {
+        return this.isInteger() ? typeChecker.checkInteger(value) : typeChecker.checkDouble(value);
     }
 
     @Override

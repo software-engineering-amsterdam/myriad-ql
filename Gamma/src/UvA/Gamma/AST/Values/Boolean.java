@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.Validation.TypeChecker;
+
 /**
  * Created by Tjarco, 14-02-17.
  */
@@ -44,6 +46,11 @@ public class Boolean extends Value {
 
     public boolean equals(Boolean other) {
         return this.value == other.getValue();
+    }
+
+    @Override
+    public boolean validate(String value, TypeChecker typeChecker) {
+        return typeChecker.checkBool(value);
     }
 
     @Override
