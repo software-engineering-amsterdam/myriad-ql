@@ -14,24 +14,24 @@ namespace Questionnaires.Renderer.Widgets
             return BuildWidget((dynamic)value, name);
         }
 
-        private BooleanQuestionWidget BuildWidget(BooleanType question, string name)
+        private CheckBoxWidget BuildWidget(BooleanType question, string name)
         {
-            return new BooleanQuestionWidget(name);
+            return new CheckBoxWidget(name);
         }
 
-        private NumberQuestionWidget BuildWidget(IntegerType question, string name)
+        private NumberPickerWidget BuildWidget(IntegerType question, string name)
         {
-            return new NumberQuestionWidget(name);
+            return new NumberPickerWidget(name);
         }
 
-        private MoneyQuestionWidget BuildWidget(MoneyType question, string name)
+        private DecimalPickerWidget BuildWidget(MoneyType question, string name)
         {
-            return new MoneyQuestionWidget(name);
+            return new DecimalPickerWidget(name);
         }
 
-        private StringQuestionWidget BuildWidget(StringType question, string name)
+        private TextBoxWidget BuildWidget(StringType question, string name)
         {
-            return new StringQuestionWidget(name);
+            return new TextBoxWidget(name);
         }
     }
 }

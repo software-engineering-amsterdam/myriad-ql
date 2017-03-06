@@ -8,13 +8,13 @@ using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class NumberQuestionWidget : QuestionWidget
+    class TextBoxWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private TextBox QuestionInputWidget = new TextBox();
 
-        public NumberQuestionWidget(string name)
+        public TextBoxWidget(string name)
             : base()
         {
             QuestionName = name;
@@ -33,9 +33,9 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(IntegerType value)
+        public void SetQuestionValue(StringType value)
         {
-            QuestionInputWidget.Text = value.GetValue().ToString();
+            QuestionInputWidget.Text = value.GetValue();
         }
 
         public override void SetVisibility(bool visible)
@@ -52,7 +52,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntegerType(int.Parse(QuestionInputWidget.Text)));
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new StringType(QuestionInputWidget.Text));
         }
     }
 }

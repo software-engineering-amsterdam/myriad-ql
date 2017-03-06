@@ -1,20 +1,22 @@
-﻿using Questionnaires.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.Types;
 using System.Windows.Controls;
+using System.Windows.Markup;
+using System.Windows;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class StringQuestionWidget : QuestionWidget
+    class CheckBoxWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private TextBox QuestionInputWidget = new TextBox();
+        private CheckBox QuestionInputWidget = new CheckBox();
 
-        public StringQuestionWidget(string name)
+        public CheckBoxWidget(string name)
             : base()
         {
             QuestionName = name;
@@ -33,9 +35,9 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(StringType value)
+        public void SetQuestionValue(BooleanType value)
         {
-            QuestionInputWidget.Text = value.GetValue();
+            QuestionInputWidget.IsChecked = value.GetValue();
         }
 
         public override void SetVisibility(bool visible)
@@ -52,7 +54,8 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new StringType(QuestionInputWidget.Text));
+            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
+            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
         }
     }
 }

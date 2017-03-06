@@ -1,22 +1,20 @@
-﻿using System;
+﻿using Questionnaires.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.Types;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Windows;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class BooleanQuestionWidget : QuestionWidget
+    class DecimalPickerWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private CheckBox QuestionInputWidget = new CheckBox();
+        private TextBox QuestionInputWidget = new TextBox();
 
-        public BooleanQuestionWidget(string name)
+        public DecimalPickerWidget(string name)
             : base()
         {
             QuestionName = name;
@@ -35,9 +33,9 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(BooleanType value)
+        public void SetQuestionValue(MoneyType value)
         {
-            QuestionInputWidget.IsChecked = value.GetValue();
+            QuestionInputWidget.Text = value.GetValue().ToString();
         }
 
         public override void SetVisibility(bool visible)
@@ -54,8 +52,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
-            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType(decimal.Parse(QuestionInputWidget.Text)));
         }
     }
 }
