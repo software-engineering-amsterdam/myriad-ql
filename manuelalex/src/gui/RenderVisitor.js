@@ -64,15 +64,29 @@ export class RenderVisitor {
         });
     }
 
-    renderBooleanInput(){
-        return new Checkbox({
-            state: false,
+    renderBooleanInput(qlBoolean){
+        let element = this.memoryState.getElement(qlBoolean);
+        let renderable = new Checkbox({
+            state: element.value || false,
             enabled: true
         });
+        renderable.on('unchecked', ()=>{
+            element.setValue(false);
+        });
+
+        renderable.on('checked', ()=>{
+            element.setValue(true)
+        });
+        return renderable;
     }
 
-    renderStringInput(){
-        return new SingleLineTextInput({});
+    renderStringInput(qlString){
+        let element = this.memoryState.getElement(qlString);
+        let renderable = new SingleLineTextInput({});
+        renderable.on('message', (message)=>{
+            element.setValue(message);
+        });
+        return renderable;
     }
 
     renderDateInput(type){

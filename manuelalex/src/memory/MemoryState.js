@@ -18,8 +18,10 @@ export class MemoryState extends eventemitter3 {
         this.memory.set(elementName, element);
 
         this._onSetterTriggered(elementName, {type: elementType, value: elementValue});
-    }
+        element.on('set', ()=> this._onSetterTriggered(elementName, {type: element.getType(), value: element.getValue()}));
 
+        return element;
+    }
 
     getType(elementName){
         let element = this.memory.get(elementName);
@@ -32,7 +34,15 @@ export class MemoryState extends eventemitter3 {
     }
 
     getElement(elementName){
-        return this.memory.get(elementName);
+        let element = this.memory.get(elementName);
+
+        // todo This should be removed when the ASTValidator creates a valid MemoryState
+        if(!element){
+            return this.set(elementName, 'todoRemove', 'todoRemove');
+        }
+
+        return element;
+
     }
 
     _onSetterTriggered(elementName = '', values = {}){
