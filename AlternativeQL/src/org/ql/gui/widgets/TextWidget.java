@@ -30,7 +30,9 @@ public class TextWidget extends Widget {
     @Override
     public void update(ValueTable valueTable) {
         Value value = valueTable.lookup(identifier);
-        textField.setText((String) value.getPlainValue());
+        if(value != null) {
+            textField.setText((String) value.getPlainValue());
+        }
         textField.requestLayout();
     }
 }

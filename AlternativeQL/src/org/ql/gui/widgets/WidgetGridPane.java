@@ -25,7 +25,9 @@ public class WidgetGridPane extends Widget {
     @Override
     public void update(ValueTable valueTable) {
         Value value = valueTable.lookup(identifier);
-        pane.setVisible((Boolean) value.getPlainValue());
+        if(value != null) {
+            pane.setVisible((Boolean) value.getPlainValue());
+        }
         pane.requestLayout();
     }
 }

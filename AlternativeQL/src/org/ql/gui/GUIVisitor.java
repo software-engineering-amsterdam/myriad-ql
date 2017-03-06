@@ -81,10 +81,22 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Gri
         // TODO: Dynamic dispatch (add type visitor)
         if (question.getType().isBoolean()) {
             CheckBoxWidget checkBoxWidget = new CheckBoxWidget(widgetEventHandler, question.getId());
-            Value val = valueTable.lookup(question.getId());
-            checkBoxWidget.getCheckBox().setSelected((Boolean) val.getPlainValue());
+            Value defaultValue = valueTable.lookup(question.getId());
+            if(defaultValue != null) {
+                checkBoxWidget.getCheckBox().setSelected((Boolean) defaultValue.getPlainValue());
+            }
             widgetEventHandler.addWidget(checkBoxWidget);
             pane.add(checkBoxWidget.getCheckBox(), 1, 0);
+        }
+
+        if (question.getType().isString()) {
+            TextWidget textWidget = new TextWidget(widgetEventHandler, question.getId());
+            Value defaultValue = valueTable.lookup(question.getId());
+            if(defaultValue != null) {
+                textWidget.getTextField().setText((String) defaultValue.getPlainValue());
+            }
+            widgetEventHandler.addWidget(textWidget);
+            pane.add(textWidget.getTextField(), 1, 0);
         }
 
         return pane;

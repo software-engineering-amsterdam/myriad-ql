@@ -30,7 +30,9 @@ public class CheckBoxWidget extends Widget {
     @Override
     public void update(ValueTable valueTable) {
         Value value = valueTable.lookup(identifier);
-        checkBox.setSelected((Boolean) value.getPlainValue());
+        if(value != null) {
+            checkBox.setSelected((Boolean) value.getPlainValue());
+        }
         checkBox.requestLayout();
     }
 }

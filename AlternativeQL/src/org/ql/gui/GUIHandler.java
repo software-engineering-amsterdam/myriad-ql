@@ -24,10 +24,10 @@ public class GUIHandler extends Application {
         Parser parser = new Parser();
         Form form = parser.parseForm("form TestForm {" +
                 "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;" +
-                "boolean hasBoughtHouse: \"Did you buy a house in 2010?\" = true;" +
+                "boolean hasBoughtHouse: \"Did you buy a house in 2010?\";" +
                 "if (hasSoldHouse) {" +
                 "boolean sellingPrice: \"What was the selling price?\" = true;" +
-                "boolean youDidWhat: \"You did whattt?\"= false;" +
+                "string youDidWhat: \"How are you doin?\" = \"I am fine\";" +
                 "}" +
                 "boolean everythingAlright: \"Is everything alright sir?\" = true;" +
                 "}");
