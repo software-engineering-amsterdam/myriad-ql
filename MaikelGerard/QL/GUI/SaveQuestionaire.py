@@ -5,19 +5,11 @@ from collections import OrderedDict
 
 
 class SaveQuestionaire(object):
-    def __init__(self, form_gui, ast, env, evaluator, error_handler):
-        """
-        :type ast: QL.AST.QuestionnaireAST
-        :type env: QL.Environment.Environment
-        :type error_handler: QL.ErrorHandler.ErrorHandler
-        :type evaluator: QL.Stages.Evaluator.Evaluate
-        :type form_gui: QL.GUI.DrawGUI.DrawGUI
-        """
+    def __init__(self, ast, env, evaluator, error_handler):
         self.ast = ast
         self.env = env
         self.evaluator = evaluator
         self.handler = error_handler
-        self.form_gui = form_gui
         self.show_stack = []
         self.form_output = OrderedDict()
 
