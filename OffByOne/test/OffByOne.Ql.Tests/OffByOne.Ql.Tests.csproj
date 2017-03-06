@@ -71,7 +71,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Evaluator\StringEvaluationTestes.cs" />
+    <Compile Include="Evaluator\BooleanValueTests.cs" />
+    <Compile Include="Evaluator\DateValueTests.cs" />
+    <Compile Include="Evaluator\DecimalValueTests.cs" />
+    <Compile Include="Evaluator\IntegerValueTests.cs" />
+    <Compile Include="Evaluator\MoneyValueTests.cs" />
+    <Compile Include="Evaluator\StringValueTestes.cs" />
     <Compile Include="Parser\FormTest.cs" />
     <Compile Include="Parser\Base\ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

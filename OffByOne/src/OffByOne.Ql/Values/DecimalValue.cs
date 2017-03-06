@@ -2,6 +2,8 @@
 {
     using System.Globalization;
 
+    using MoreDotNet.Extensions.Common;
+
     using OffByOne.Ql.Values.Base;
     using OffByOne.Ql.Values.Contracts;
 
@@ -17,7 +19,7 @@
             this.Value = value;
         }
 
-        public double Value { get; set; }
+        public double Value { get; }
 
         public override IValue Parse(string value)
         {
@@ -202,6 +204,16 @@
         public override string ToString()
         {
             return this.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj.Is<DecimalValue>() && obj.As<DecimalValue>().Value == this.Value;
         }
     }
 }

@@ -9,9 +9,9 @@
 
     using Xunit;
 
-    public class StringEvaluationTestes
+    public class StringValueTestes
     {
-        public static IEnumerable<object[]> SimpleSyntaxisData => new List<object[]>
+        public static IEnumerable<object[]> SimpleStringExpressionData => new List<object[]>
         {
             new object[]
             {
@@ -32,11 +32,27 @@
             new object[]
             {
                 new AddExpression(new StringLiteral("Hello"), new MoneyLiteral(2.1m)), "Hello2.1"
+            },
+            new object[]
+            {
+                new EqualExpression(new StringLiteral("Hello"), new StringLiteral("Hello")), "True"
+            },
+            new object[]
+            {
+                new NotEqualExpression(new StringLiteral("Hello"), new StringLiteral("Hello")), "False"
+            },
+            new object[]
+            {
+                new EqualExpression(new StringLiteral("Hello"), new StringLiteral("HelloX")), "False"
+            },
+            new object[]
+            {
+                new NotEqualExpression(new StringLiteral("Hello"), new StringLiteral("HelloX")), "True"
             }
         };
 
         [Theory]
-        [MemberData(nameof(SimpleSyntaxisData))]
+        [MemberData(nameof(SimpleStringExpressionData))]
         public void Evaluate_ShoudlReturnExpectedValueFromExpression(
             Expression expression,
             string expected)

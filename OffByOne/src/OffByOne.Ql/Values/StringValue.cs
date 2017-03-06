@@ -2,6 +2,8 @@
 {
     using System.Globalization;
 
+    using MoreDotNet.Extensions.Common;
+
     using OffByOne.Ql.Values.Base;
     using OffByOne.Ql.Values.Contracts;
 
@@ -12,7 +14,7 @@
             this.Value = value.Trim('"');
         }
 
-        public string Value { get; set; }
+        public string Value { get; }
 
         public override IValue Parse(string value)
         {
@@ -67,6 +69,16 @@
         public override string ToString()
         {
             return this.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj.Is<StringValue>() && obj.As<StringValue>().Value == this.Value;
         }
     }
 }
