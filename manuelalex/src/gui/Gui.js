@@ -18,30 +18,40 @@ import {QuestionView}   from './views/QuestionView.js';
 import {RenderVisitor}  from './RenderVisitor.js';
 
 import './famous.css!';
+import {Router}         from 'arva-js/core/Router.js';
 
 export class GUI {
 
     program;
     ast;
 
-    constructor(ast = {}) {
+    constructor(ast = {}, memoryState = {}) {
         this.ast = ast;
+        this.memoryState = memoryState;
     }
 
     async createGUI(ast = this.ast) {
         this.application = new Program(ast.getProgram());
         await this.application.start();
 
-        this.renderGUI(this.application, this.ast);
+        this.renderGUI(this.application, this.ast, this.memoryState);
+
+        this.memoryState.on('set', (values)=>{
+            console.log('set', values);
+        });
+
+        window.memoryState = this.memoryState;
     }
 
-    renderGUI(program = {}, ast = {}) {
+    renderGUI(program = {}, ast = {}, memoryState = {}) {
 
-        // Until we support QLS, just use the first view
-        let view = program.getView('QL', 'Index');
+        let view = program.createView();
+        program.setViewForControllerMethod('QL', 'Index', view);
 
-        let visitor = new RenderVisitor();
+        let visitor = new RenderVisitor(memoryState);
         visitor.visitProgram(ast.getProgram(), view);
 
+        let router = Injection.get(Router);
+        router.go('QL', 'Index');
     }
 }

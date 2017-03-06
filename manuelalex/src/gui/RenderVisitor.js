@@ -12,6 +12,11 @@ import {SingleLineTextInput} from 'arva-kit/input/SingleLineTextInput.js';
 export class RenderVisitor {
 
     _viewCount = 0;
+    memoryState;
+
+    constructor(memoryState){
+        this.memoryState = memoryState;
+    }
 
     async visitProgram(program, view){
         view = this._addMarginsToView(view);

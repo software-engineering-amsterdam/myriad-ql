@@ -10,6 +10,9 @@ import {DataSource}     from 'arva-js/data/DataSource.js';
 import {Controller}     from 'arva-js/core/Controller.js';
 import {View}           from 'arva-js/core/View.js';
 import {Router}         from 'arva-js/core/Router.js';
+
+import {QLController}   from './controllers/QLController.js';
+
 export class Program {
     constructor() {
 
@@ -18,14 +21,9 @@ export class Program {
         window.cordova = {};
     }
 
-    createController() {
-        let qlController = QLController;
-        return qlController;
-    }
 
     createView() {
-        return new (class QLView extends View {
-        });
+        return new (class QLView extends View {});
     }
 
     async start() {
@@ -33,8 +31,8 @@ export class Program {
         this.application.defaultDataSource = (path = '/', options = {}) => {
             return new DataSource(path, options);
         };
-        let controller = this.createController();
-        this.application.controllers = [controller];
+
+        this.application.controllers = [QLController];
 
         await this._initialize();
     }
@@ -55,6 +53,17 @@ export class Program {
         return Injection.getAll(...this.application.controllers);
     }
 
+    getController(controllerName){
+        let controllers = this.getControllers();
+        let currentController = find(controllers, (controller)=>{
+            let currentControllerName = Object.getPrototypeOf(controller).constructor.name;
+            currentControllerName = currentControllerName.replace('Controller', '');
+            return controllerName === currentControllerName;
+        });
+
+        return currentController;
+    }
+
     getViews() {
         let controllers = this.getControllers();
         return controllers.map((controller) => {
@@ -63,18 +72,17 @@ export class Program {
     }
 
     getView(controllerName, method){
-        let controllers = this.getControllers();
-        let currentController = find(controllers, (controller)=>{
-            let currentControllerName = Object.getPrototypeOf(controller).constructor.name;
-            currentControllerName = currentControllerName.replace('Controller', '');
-            return controllerName === currentControllerName;
-        });
-
+        let currentController = this.getController(controllerName);
         if(currentController){
             return currentController.getView(method);
         } else {
             throw new Error(`No controller found with controller name ${controllerName}`);
         }
+    }
+
+    setViewForControllerMethod(controllerName, method, view){
+        let currentController = this.getController(controllerName);
+        currentController.setViewForMethod(method, view);
     }
 
     _initialize() {
@@ -83,37 +91,5 @@ export class Program {
             this.application.loaded = this.loaded.bind(this);
             this.application.start();
         });
-    }
-}
-
-class QLController extends Controller {
-    constructor() {
-        super(...arguments);
-        this.views = {};
-    }
-
-    getViews() {
-        return this.views;
-    }
-
-    getView(method = ''){
-        return this.views[method];
-    }
-
-    getViewForMethod(method = '') {
-        return this.views[method];
-    }
-
-    createMethod(methodName = '', view) {
-        this[methodName] = () => {
-            return this.views[methodName];
-        };
-        if (view) {
-            this.setViewForMethod(methodName, view);
-        }
-    }
-
-    setViewForMethod(methodName = '', view = {}) {
-        this.views[methodName] = view;
     }
 }
