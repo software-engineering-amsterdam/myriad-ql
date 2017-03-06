@@ -35,28 +35,34 @@ module QL
         end
 
         if question.assignment
-          ComputedQuestion.new(gui:         gui,
-                               label:       question.label,
-                               id:          question.variable.name,
-                               type:        question.type.class,
-                               calculation: question.assignment.accept(self),
-                               condition:   condition)
-        elsif question.type == AST::BooleanType
-          BooleanQuestion.new(gui:       gui,
-                              label:     question.label,
-                              id:        question.variable.name,
-                              condition: condition)
-        elsif question.type == AST::MoneyType || question.type == AST::IntegerType
-          NumericQuestion.new(gui:       gui,
-                              label:     question.label,
-                              id:        question.variable.name,
-                              condition: condition)
-        elsif question.type == AST::StringType
-          StringQuestion.new(gui:       gui,
-                             label:     question.label,
-                             id:        question.variable.name,
-                             condition: condition)
+          question.assignment = question.assignment.accept(self)
         end
+
+        question.render(gui)
+
+        # if question.assignment
+        #   ComputedQuestion.new(gui:         gui,
+        #                        label:       question.label,
+        #                        id:          question.variable.name,
+        #                        type:        question.type.class,
+        #                        calculation: question.assignment.accept(self),
+        #                        condition:   condition)
+        # elsif question.type == AST::BooleanType
+        #   BooleanQuestion.new(gui:       gui,
+        #                       label:     question.label,
+        #                       id:        question.variable.name,
+        #                       condition: condition)
+        # elsif question.type == AST::MoneyType || question.type == AST::IntegerType
+        #   NumericQuestion.new(gui:       gui,
+        #                       label:     question.label,
+        #                       id:        question.variable.name,
+        #                       condition: condition)
+        # elsif question.type == AST::StringType
+        #   StringQuestion.new(gui:       gui,
+        #                      label:     question.label,
+        #                      id:        question.variable.name,
+        #                      condition: condition)
+        # end
       end
 
       # visit the calculations of both the left and right sides

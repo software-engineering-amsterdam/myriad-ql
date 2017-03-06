@@ -21,15 +21,15 @@ module QL
     class Question
       extend Parslet
 
-      attr_reader :label, :variable, :type, :assignment
-      attr_accessor :condition
+      attr_reader :label, :variable, :type
+      attr_accessor :condition, :assignment
 
       def initialize(label, variable, type, expression=nil, condition=nil)
         @label      = label.to_s
         @variable   = variable
         @type       = type
-        @assignment = expression if expression
-        @condition  = condition if condition
+        @assignment = expression
+        @condition  = condition
       end
 
       def accept(visitor)
@@ -41,9 +41,13 @@ module QL
         visitor.visit_question(self, condition)
       end
 
-      def render(args)
-
-
+      def render(gui)
+        if @assignment
+          # @assignment = @assignment.accept(@assignment)
+          QL::GUI::ComputedQuestion.new(gui: gui, question: self)
+        else
+          @type.gui_question.new(gui: gui, question: self)
+        end
       end
     end
   end
