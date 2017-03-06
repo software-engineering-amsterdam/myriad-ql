@@ -64,10 +64,5 @@ public interface ASTVisitor<T> {
     T visit(IdentifierValue identifierValue);
 
     T visit(QLType qlType);
-//    T visit(QLBooleanType qlBooleanType);
-//    T visit(QLDateType qlDateType);
-//    T visit(QLDecimalType qlDecimalType);
-//    T visit(QLIntegerType qlIntegerType);
-//    T visit(QLMoneyType qlMoneyType);
-//    T visit(QLStringType qlStringType);
+
 }

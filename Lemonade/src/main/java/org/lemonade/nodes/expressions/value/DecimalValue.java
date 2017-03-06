@@ -69,6 +69,30 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
     }
 
     @Override
+    public BooleanValue gT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DecimalValue) that) == 1);
+    }
+
+    @Override
+    public BooleanValue gTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DecimalValue) that) >= 0);
+    }
+
+    @Override
+    public BooleanValue lT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DecimalValue) that) == -1);
+    }
+
+    @Override
+    public BooleanValue lTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DecimalValue) that) <= 0);
+    }
+
+    @Override
     public DecimalValue neg() {
         return new DecimalValue(-this.getValue());
     }

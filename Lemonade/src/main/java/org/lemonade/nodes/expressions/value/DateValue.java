@@ -1,17 +1,40 @@
 package org.lemonade.nodes.expressions.value;
 
-import org.lemonade.nodes.expressions.Value;
-import org.lemonade.nodes.types.QLDateType;
+import java.time.LocalDate;
 
-import java.util.Calendar;
+import org.lemonade.nodes.types.QLDateType;
 
 /**
  *
  */
-public class DateValue extends Value<Calendar> implements Comparable<DateValue>{
+public class DateValue extends ComparableValue<LocalDate> implements Comparable<DateValue> {
 
-    public DateValue(Calendar value) {
+    public DateValue(LocalDate value) {
         super(new QLDateType(), value);
+    }
+
+    @Override
+    public BooleanValue gT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DateValue) that) >= 1);
+    }
+
+    @Override
+    public BooleanValue gTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DateValue) that) >= 0);
+    }
+
+    @Override
+    public BooleanValue lT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DateValue) that) <= -1);
+    }
+
+    @Override
+    public BooleanValue lTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((DateValue) that) <= 0);
     }
 
     @Override
@@ -24,7 +47,7 @@ public class DateValue extends Value<Calendar> implements Comparable<DateValue>{
         return this.getValue().compareTo(that.getValue());
     }
 
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (!(obj instanceof DateValue)) {
             return false;
         }
