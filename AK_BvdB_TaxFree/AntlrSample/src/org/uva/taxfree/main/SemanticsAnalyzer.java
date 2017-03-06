@@ -1,7 +1,7 @@
 package org.uva.taxfree.main;
 
 import org.uva.taxfree.model.environment.Environment;
-import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -43,6 +43,12 @@ public class SemanticsAnalyzer {
     }
 
     private List<String> getUndefinedQuestionErrors() {
+        Set<NamedNode> nodeSet = new LinkedHashSet<>();
+        mEnvironment.getAbstractSyntaxTree().retrieveDeclarations(nodeSet);
+        mEnvironment.getSymbolTable().resolve("");
+
+
+
         List<String> errorMessages = new ArrayList<>();
 
         List<String> questions = getQuestionIds();

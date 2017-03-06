@@ -36,7 +36,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     private ConditionNode popCachedCondition() {
-        return mCachedConditions.remove(mCachedConditions.size()-1);
+        return mCachedConditions.remove(mCachedConditions.size() - 1);
     }
 
     // Enters
@@ -198,7 +198,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     private BlockNode lastBlock() {
         // TODO: Fix static cast
-        return (BlockNode) mChildsStack.peek().remove(mChildsStack.peek().size()-1);
+        return (BlockNode) mChildsStack.peek().remove(mChildsStack.peek().size() - 1);
     }
 
     @Override

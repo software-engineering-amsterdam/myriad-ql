@@ -33,7 +33,7 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
-        Environment environment = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\validForms\\questionsWithQuestionsInIfAndElseForm.txt"));
+        Environment environment = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\validForms\\questionForm.txt"));
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
         semanticsAnalyzer.validSemantics();
     }
