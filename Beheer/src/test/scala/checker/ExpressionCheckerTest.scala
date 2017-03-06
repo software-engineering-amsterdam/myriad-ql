@@ -6,9 +6,6 @@ import ast._
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{ Matchers, PropSpec }
 
-class ExpressionGenerator {
-
-}
 
 class ExpressionCheckerTest extends PropSpec with Matchers with TableDrivenPropertyChecks {
   private val intLit = IntegerLiteral(BigDecimal(1))
