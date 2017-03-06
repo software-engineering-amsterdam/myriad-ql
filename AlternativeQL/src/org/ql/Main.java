@@ -33,11 +33,11 @@ public class Main extends Application {
         Parser parser = new Parser();
         Form form = parser.parseForm(
                 "form TestForm {" +
-                        "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = (false&&true);" +
-                        "if (hasSoldHouse) {" +
+                    "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = (false&&true);" +
+                    "if (hasSoldHouse) {" +
                         "boolean sellingPrice: \"What was the selling price?\" = true;" +
-                        "}" +
-                        "}");
+                    "}" +
+                "}");
 
         return form;
     }
