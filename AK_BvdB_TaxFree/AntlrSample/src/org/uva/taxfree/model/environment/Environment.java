@@ -30,11 +30,12 @@ public class Environment {
         return mSymbolTable.getUndefinedDeclarationErrros();
     }
 
-    public List<String> getCyclicDependencyErrors() {
+    public List<String>
+    getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
-            if (calculation.hasCyclicDependency()) {
-                errors.add("Cyclic dependency error: " + calculation.getId());
+            if (hasCyclicDependency(calculation)) {
+                errors.add("Cyclic dependency found: " + calculation.getId());
             }
         }
         return errors;
@@ -45,4 +46,42 @@ public class Environment {
         mAbstractSyntaxTree.retrieveCalculations(calculations);
         return calculations;
     }
+
+    private boolean hasCyclicDependency(CalculatedField calculation) {
+        String calculationDeclaration = calculation.getId();
+        List<String> calculationDependencies = calculation.getUsedVariables();
+        System.out.println(calculationDependencies);
+        return expandAndCheckUsedVariables(calculationDeclaration, calculationDependencies);
+
+    }
+
+    private boolean expandAndCheckUsedVariables(String calculationDeclaration, List<String> usedVariables) {
+
+        for (List<String> expandedVariables = new ArrayList<>(); usedVariables != expandedVariables; expandedVariables = expandedVariables(usedVariables)) {
+            if (expandedVariables.contains(calculationDeclaration)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<String> expandedVariables(List<String> usedVariables) {
+        List<String> dependencies = new ArrayList<>();
+        for (String variableName : usedVariables) {
+            dependencies.addAll(replaceWithDeclarations(variableName));
+        }
+        return dependencies;
+    }
+
+    private List<String> replaceWithDeclarations(String usedVariable) {
+        List<String> declarations = new ArrayList<>();
+        declarations.add(usedVariable);
+        for (CalculatedField calc : getCalculations()) {
+            if (calc.getId().equals(usedVariable)) {
+                declarations = calc.getUsedVariables();
+            }
+        }
+        return declarations;
+    }
 }
+
