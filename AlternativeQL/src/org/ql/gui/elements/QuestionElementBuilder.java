@@ -35,6 +35,7 @@ public class QuestionElementBuilder implements StatementVisitor<QuestionElement,
     public QuestionElement visitQuestion(Question question, Void context) {
         Value value = guiEval.evaluateExpression(question);
         Widget widget = widgetBuilder.getWidget(question);
+        widget.setValue(value);
 
         // TODO: Visitor
         QuestionElement questionElement = null;

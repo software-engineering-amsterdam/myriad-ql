@@ -10,7 +10,7 @@ public class CheckBoxWidget extends Widget {
 
     public CheckBoxWidget(String label) {
         this.checkBox = new CheckBox(label);
-        //addEventHandler(widgetEventHandler);
+        addToPane();
     }
 
     public CheckBox getCheckBox() {
@@ -23,7 +23,23 @@ public class CheckBoxWidget extends Widget {
         });
     }
 
+    @Override
     public void setVisible(Value value) {
         checkBox.setVisible((Boolean) value.getPlainValue());
+    }
+
+    @Override
+    public void setValue(Value value) {
+        checkBox.setSelected((Boolean) value.getPlainValue());
+    }
+
+    @Override
+    public Value getValue() {
+        return new BooleanValue(checkBox.isSelected());
+    }
+
+    @Override
+    public void addToPane() {
+        gridPane.getChildren().add(checkBox);
     }
 }
