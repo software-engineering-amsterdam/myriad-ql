@@ -1,17 +1,17 @@
 package org.lemonade.nodes.expressions.value;
 
 import org.lemonade.nodes.expressions.Value;
-import org.lemonade.nodes.types.QLType;
+import org.lemonade.nodes.types.QLDateType;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  *
  */
-public class DateValue extends Value<Date> implements Comparable<DateValue>{
+public class DateValue extends Value<Calendar> implements Comparable<DateValue>{
 
-    public DateValue(QLType type, Date value) {
-        super(type, value);
+    public DateValue(Calendar value) {
+        super(new QLDateType(), value);
     }
 
     @Override

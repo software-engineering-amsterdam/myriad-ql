@@ -11,12 +11,6 @@ import org.lemonade.nodes.expressions.value.DecimalValue;
 import org.lemonade.nodes.expressions.value.IntegerValue;
 import org.lemonade.nodes.expressions.value.MoneyValue;
 import org.lemonade.nodes.expressions.value.NumericValue;
-import org.lemonade.nodes.expressions.value.UndefinedValue;
-import org.lemonade.nodes.types.QLBooleanType;
-import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,6 +23,7 @@ public class EvaluateTest {
     private IntegerValue two;
     private IntegerValue one;
     private DecimalValue zeroPointFive;
+    private DecimalValue onePointZero;
     private DecimalValue onePointFive;
     private DecimalValue twoPointZero;
     private MoneyValue oneFifty;
@@ -40,25 +35,26 @@ public class EvaluateTest {
 
     @Before
     public void setUp() throws ParseException {
-        zero = new IntegerValue(new QLIntegerType(), 0);
-        two = new IntegerValue(new QLIntegerType(), 2);
-        one = new IntegerValue(new QLIntegerType(), 1);
-        zeroPointFive = new DecimalValue(new QLDecimalType(), 0.5);
-        onePointFive = new DecimalValue(new QLDecimalType(), 1.5);
-        twoPointZero = new DecimalValue(new QLDecimalType(), 2.0);
-        oneFifty = new MoneyValue(new QLMoneyType(), 1.50);
-        onePointTwo = new DecimalValue(new QLDecimalType(), 1.2);
+        zero = new IntegerValue(0);
+        two = new IntegerValue(2);
+        one = new IntegerValue(1);
+        zeroPointFive = new DecimalValue(0.5);
+        onePointFive = new DecimalValue(1.5);
+        onePointZero = new DecimalValue(1.0);
+        twoPointZero = new DecimalValue(2.0);
+        oneFifty = new MoneyValue(1.50);
+        onePointTwo = new DecimalValue(1.2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date = new DateValue(new QLDateType(), sdf.parse("21/12/2012"));
-        dateTwo = new DateValue(new QLDateType(), sdf.parse("22/07/1991"));
+        date = new DateValue(sdf.parse("21/12/2012"));
+        dateTwo = new DateValue(sdf.parse("22/07/1991"));
 
     }
 
     @Test
     public void testBooleanValue() {
-        BooleanValue boolTrue = new BooleanValue(new QLBooleanType(), true);
-        BooleanValue boolFalse = new BooleanValue(new QLBooleanType(), false);
+        BooleanValue boolTrue = new BooleanValue(true);
+        BooleanValue boolFalse = new BooleanValue(false);
 
         assertThat(boolTrue.getValue()).isInstanceOf(Boolean.class);
         assertThat(boolTrue.or(boolFalse).getValue()).isTrue();
@@ -133,5 +129,11 @@ public class EvaluateTest {
     public void testDivision() {
         assertThat(one.divide(two)).isEqualTo(zero);
         assertThat(one.divide(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
+        assertThat(onePointTwo.divide(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
+    }
+
+    @Test
+    public void testNeg(){
+        assertThat(one.neg().getValue()).isEqualTo(-1);
     }
 }

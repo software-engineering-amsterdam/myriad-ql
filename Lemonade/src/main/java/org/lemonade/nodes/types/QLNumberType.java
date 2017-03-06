@@ -22,4 +22,5 @@ public abstract class QLNumberType extends QLType {
     public boolean isComparable() {
         return true;
     }
+
 }

@@ -30,4 +30,14 @@ public class Question extends Body {
     public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
+
+    @Override
+    public boolean isQuestion() {
+        return true;
+    }
+
+    @Override
+    public boolean isConditional() {
+        return false;
+    }
 }

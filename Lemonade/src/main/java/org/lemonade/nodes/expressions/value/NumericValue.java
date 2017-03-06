@@ -32,12 +32,14 @@ public abstract class NumericValue<T> extends Value<T> {
     public abstract NumericValue<?> divide(DecimalValue that);
     public abstract NumericValue<?> divide(MoneyValue that);
 
-    public NumericValue<?> plus(NumericValue<?> that) {
-        if (that.getType().isOf(QLIntegerType.class)) {
+    public abstract NumericValue<?> neg();
+
+    public NumericValue<?> plus(final NumericValue<?> that) {
+        if (that.getType().isOf(new QLIntegerType().getClass())) {
             return this.plus((IntegerValue) that);
-        } else if (that.getType().isOf(QLDecimalType.class)) {
+        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
             return this.plus((DecimalValue) that);
-        } else if (that.getType().isOf(QLMoneyType.class)) {
+        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
             return this.plus((MoneyValue) that);
         } else {
             throw new IllegalArgumentException();
@@ -45,11 +47,11 @@ public abstract class NumericValue<T> extends Value<T> {
     }
 
     public NumericValue<?> product(final NumericValue<?> that) {
-        if (that.getType().isOf(QLIntegerType.class)) {
+        if (that.getType().isOf(new QLIntegerType().getClass())) {
             return this.product((IntegerValue) that);
-        } else if (that.getType().isOf(QLDecimalType.class)) {
+        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
             return this.product((DecimalValue) that);
-        } else if (that.getType().isOf(QLMoneyType.class)) {
+        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
             return this.product((MoneyValue) that);
         } else {
             throw new IllegalArgumentException();
@@ -59,9 +61,9 @@ public abstract class NumericValue<T> extends Value<T> {
     public NumericValue<?> minus(final NumericValue<?> that) {
         if (that.getType().isOf(QLIntegerType.class)) {
             return this.minus((IntegerValue) that);
-        } else if (that.getType().isOf(QLDecimalType.class)) {
+        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
             return this.minus((DecimalValue) that);
-        } else if (that.getType().isOf(QLMoneyType.class)) {
+        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
             return this.minus((MoneyValue) that);
         }
         else {
@@ -70,11 +72,11 @@ public abstract class NumericValue<T> extends Value<T> {
     }
 
     public NumericValue<?> divide(final NumericValue<?> that) {
-        if (that.getType().isOf(QLIntegerType.class)) {
+        if (that.getType().isOf(new QLIntegerType().getClass())) {
             return this.divide((IntegerValue) that);
-        } else if (that.getType().isOf(QLDecimalType.class)) {
+        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
             return this.divide((DecimalValue) that);
-        } else if (that.getType().isOf(QLMoneyType.class)) {
+        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
             return this.divide((MoneyValue) that);
 
         } else {

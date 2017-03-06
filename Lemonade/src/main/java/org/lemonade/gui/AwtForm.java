@@ -137,13 +137,13 @@ public class AwtForm {
             controlPanel.removeAll();
 
             for (Body body : root.getBodies()) {
-                if (body instanceof Question) {
+                if (body.isQuestion()) {
                     Question question = (Question) body;
 
                     Label label = new Label(question.getLabel());
                     contentPanel.add(label);
 
-                    if (question.getType() instanceof QLBooleanType) {
+                    if (question.getType().isBoolean()) {
                         Panel checkboxPanel = new Panel(new GridLayout(1, 2));
                         CheckboxGroup group = new CheckboxGroup();
                         Checkbox trueButton = new Checkbox("True", group, false);
@@ -155,7 +155,7 @@ public class AwtForm {
                         TextField field = new TextField();
                         contentPanel.add(field);
                     }
-                } else if (body instanceof Conditional) {
+                } else if (body.isConditional()) {
                     Conditional conditional = (Conditional) body;
                     if (conditional.getCondition() instanceof EqBinary) {
 

@@ -1,9 +1,6 @@
 package org.lemonade.nodes.expressions.value;
 
 import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -11,13 +8,12 @@ import org.lemonade.visitors.ASTVisitor;
  */
 public class DecimalValue extends NumericValue<Double> implements Comparable<DecimalValue> {
 
-    public DecimalValue(QLType type, String value) {
-        super(type, Double.parseDouble(value));
-        assert type instanceof QLDecimalType;
+    public DecimalValue(String value) {
+        super(new QLDecimalType(), Double.parseDouble(value));
     }
 
-    public DecimalValue(QLDecimalType type, double value) {
-        super(type, value);
+    public DecimalValue(double value) {
+        super(new QLDecimalType(), value);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {
@@ -25,51 +21,56 @@ public class DecimalValue extends NumericValue<Double> implements Comparable<Dec
     }
 
     public DecimalValue plus(IntegerValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
+        return new DecimalValue(this.getValue() + that.getValue());
     }
 
     public DecimalValue plus(DecimalValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() + that.getValue());
+        return new DecimalValue(this.getValue() + that.getValue());
     }
 
     public MoneyValue plus(MoneyValue that) {
-        return new MoneyValue(new QLMoneyType(), this.getValue() + that.getValue());
+        return new MoneyValue(this.getValue() + that.getValue());
     }
 
     public DecimalValue minus(IntegerValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
+        return new DecimalValue(this.getValue() - that.getValue());
     }
 
     public DecimalValue minus(final DecimalValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() - that.getValue());
+        return new DecimalValue(this.getValue() - that.getValue());
     }
 
     public MoneyValue minus(final MoneyValue that) {
-        return new MoneyValue(new QLMoneyType(), this.getValue() - that.getValue());
+        return new MoneyValue(this.getValue() - that.getValue());
     }
 
     public DecimalValue product(final IntegerValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
+        return new DecimalValue(this.getValue() * that.getValue());
     }
 
     public DecimalValue product(final DecimalValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() * that.getValue());
+        return new DecimalValue(this.getValue() * that.getValue());
     }
 
     public MoneyValue product(final MoneyValue that) {
-        return new MoneyValue(new QLMoneyType(), this.getValue() * that.getValue());
+        return new MoneyValue(this.getValue() * that.getValue());
     }
 
     public DecimalValue divide(final IntegerValue that) {
-        return new DecimalValue(new QLDecimalType(), (int) (this.getValue() / that.getValue()));
+        return new DecimalValue((int) (this.getValue() / that.getValue()));
     }
 
     public DecimalValue divide(final DecimalValue that) {
-        return new DecimalValue(new QLDecimalType(), this.getValue() / that.getValue());
+        return new DecimalValue(this.getValue() / that.getValue());
     }
 
     public MoneyValue divide(final MoneyValue that) {
-        return new MoneyValue(new QLMoneyType(), this.getValue() / that.getValue());
+        return new MoneyValue(this.getValue() / that.getValue());
+    }
+
+    @Override
+    public DecimalValue neg() {
+        return new DecimalValue(-this.getValue());
     }
 
     @Override

@@ -87,29 +87,29 @@ public class QLFormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        return new BooleanValue(new QLBooleanType(), ctx.BOOLEAN().getText());
+        return new BooleanValue(ctx.BOOLEAN().getText());
     }
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringValue(new QLStringType(), ctx.STR().getText());
+        return new StringValue(ctx.STR().getText());
     }
 
     @Override
     public ASTNode visitIdentifierLiteral(QLParser.IdentifierLiteralContext ctx) {
-        return new IdentifierValue(new QLStringType(), ctx.IDENT().getText());
+        return new IdentifierValue(ctx.IDENT().getText());
     }
 
     @Override
     public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
         System.err.println("integer");
-        return new IntegerValue(new QLIntegerType(), ctx.INT().getText());
+        return new IntegerValue(ctx.INT().getText());
     }
 
     @Override
     public ASTNode visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
         System.err.println("decimal");
-        return new DecimalValue(new QLDecimalType(), ctx.DECIMAL().getText());
+        return new DecimalValue(ctx.DECIMAL().getText());
     }
 
     @Override

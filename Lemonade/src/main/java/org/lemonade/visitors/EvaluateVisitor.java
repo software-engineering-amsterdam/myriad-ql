@@ -78,7 +78,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(DivideBinary divideBinary) {
-        return null;
+        NumericValue<?> left = (NumericValue<?>) divideBinary.getLeft().accept(this);
+        NumericValue<?> right = (NumericValue<?>) divideBinary.getRight().accept(this);
+        System.err.println(left.divide(right));
+        return left.divide(right);
     }
 
     @Override
@@ -113,12 +116,14 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(BangUnary bangUnary) {
-        return null;
+        BooleanValue expression = (BooleanValue) bangUnary.getExpression().accept(this);
+        return expression.bang();
+
     }
 
     @Override
     public Expression visit(NegUnary negUnary) {
-        BooleanValue expression = (BooleanValue) negUnary.getExpression().accept(this);
+        NumericValue<?> expression = (NumericValue<?>) negUnary.getExpression().accept(this);
         return expression.neg();
     }
 

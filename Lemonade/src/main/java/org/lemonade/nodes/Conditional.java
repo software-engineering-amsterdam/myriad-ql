@@ -29,5 +29,14 @@ public class Conditional extends Body {
         return visitor.visit(this);
     }
 
+    @Override
+    public boolean isQuestion() {
+        return false;
+    }
+
+    @Override
+    public boolean isConditional() {
+        return true;
+    }
     //Validate the org.lemonade.nodes.expressions and test whether it can be reduced to a bool.
 }

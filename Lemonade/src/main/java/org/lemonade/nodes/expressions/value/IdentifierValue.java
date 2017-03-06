@@ -2,7 +2,6 @@ package org.lemonade.nodes.expressions.value;
 
 import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLStringType;
-import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
@@ -10,9 +9,8 @@ import org.lemonade.visitors.ASTVisitor;
  */
 public class IdentifierValue extends Value<String> implements Comparable<IdentifierValue>{
 
-    public IdentifierValue(QLType type, String value) {
-        super(type, value);
-        assert type instanceof QLStringType;//TODO can we do this?
+    public IdentifierValue(String value) {
+        super(new QLStringType(), value);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

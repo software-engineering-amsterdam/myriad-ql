@@ -1,7 +1,6 @@
 package org.lemonade.nodes.expressions;
 
 import org.lemonade.nodes.expressions.value.BooleanValue;
-import org.lemonade.nodes.types.QLBooleanType;
 import org.lemonade.nodes.types.QLType;
 
 /**
@@ -34,11 +33,11 @@ public abstract class Value<T> extends Expression {
     }
 
     public Value<Boolean> eq(Value<?> that) {
-        return new BooleanValue(new QLBooleanType(), that.equals(this));
+        return new BooleanValue(that.equals(this));
     }
 
     public Value<Boolean> nEq(Value<?> that) {
-        return new BooleanValue(new QLBooleanType(), !that.equals(this));
+        return new BooleanValue(!that.equals(this));
     }
 
     public Value<Boolean> gT(Value<?> that) {
