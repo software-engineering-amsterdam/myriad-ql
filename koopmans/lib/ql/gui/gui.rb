@@ -25,6 +25,7 @@ module QL
         pp @questions.each_value.select { |question| question.enabled }.map(&:to_json)
       end
 
+      # TODO hier wat aan doen
       def check(type_checker)
         if !type_checker[:errors].empty?
           Tk.messageBox(
