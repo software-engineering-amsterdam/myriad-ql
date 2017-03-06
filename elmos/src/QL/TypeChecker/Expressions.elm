@@ -9,11 +9,11 @@ import QL.TypeChecker.Messages as Messages exposing (Message)
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
     Collectors.collectExpressions form
-        |> List.concatMap (typeCheckerErrorsFromExpression (Collectors.collectQuestionTypes form))
+        |> List.concatMap (checkExpression (Collectors.collectQuestionTypes form))
 
 
-typeCheckerErrorsFromExpression : QuestionTypes -> Expression -> List Message
-typeCheckerErrorsFromExpression questionTypes expression =
+checkExpression : QuestionTypes -> Expression -> List Message
+checkExpression questionTypes expression =
     case getType questionTypes expression of
         Ok _ ->
             []

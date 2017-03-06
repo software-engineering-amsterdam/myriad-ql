@@ -108,7 +108,7 @@ binaryForIntArithmitic op =
             (*)
 
 
-binaryForFloatArithmitic : Operator -> (Float -> Float -> Float)
+binaryForFloatArithmitic : Operator -> Float -> Float -> Float
 binaryForFloatArithmitic op =
     case op of
         Plus ->
