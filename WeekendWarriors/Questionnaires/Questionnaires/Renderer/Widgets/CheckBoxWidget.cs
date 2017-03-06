@@ -10,13 +10,13 @@ using System.Windows;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class BooleanQuestionWidget : QuestionWidget
+    class CheckBoxWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private CheckBox QuestionInputWidget = new CheckBox();
 
-        public BooleanQuestionWidget(string name)
+        public CheckBoxWidget(string name)
             : base()
         {
             QuestionName = name;

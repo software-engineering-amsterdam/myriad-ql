@@ -8,13 +8,13 @@ using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class MoneyQuestionWidget : QuestionWidget
+    class NumberPickerWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private TextBox QuestionInputWidget = new TextBox();
 
-        public MoneyQuestionWidget(string name)
+        public NumberPickerWidget(string name)
             : base()
         {
             QuestionName = name;
@@ -33,7 +33,7 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(DecimalValue value)
+        public void SetQuestionValue(IntValue value)
         {
             QuestionInputWidget.Text = value.GetValue().ToString();
         }
@@ -52,7 +52,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new DecimalValue(decimal.Parse(QuestionInputWidget.Text)));
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntValue(int.Parse(QuestionInputWidget.Text)));
         }
     }
 }
