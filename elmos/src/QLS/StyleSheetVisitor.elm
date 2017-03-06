@@ -1,17 +1,27 @@
-module QLS.StyleSheetVisitor exposing (..)
+module QLS.StyleSheetVisitor exposing (Config, defaultConfig, pre, post, inspect)
 
 import QLS.AST exposing (..)
-import VisitorUtil exposing (Order(Continue), actionLambda)
+import QL.FormVisitor as FormVisitor exposing (actionLambda)
+
+
+pre : (node -> context -> context) -> FormVisitor.Order context node
+pre =
+    FormVisitor.pre
+
+
+post : (node -> context -> context) -> FormVisitor.Order context node
+post =
+    FormVisitor.post
 
 
 type alias Config context =
-    { onQuestion : VisitorUtil.Order context Question
+    { onQuestion : FormVisitor.Order context Question
     }
 
 
 defaultConfig : Config x
 defaultConfig =
-    { onQuestion = Continue
+    { onQuestion = FormVisitor.continue
     }
 
 

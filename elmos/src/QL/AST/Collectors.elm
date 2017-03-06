@@ -10,8 +10,7 @@ module QL.AST.Collectors
         )
 
 import QL.AST exposing (..)
-import QL.FormVisitor exposing (defaultConfig)
-import VisitorUtil exposing (Order(Post))
+import QL.FormVisitor as FormVisitor exposing (defaultConfig)
 import Dict exposing (Dict)
 
 
@@ -21,10 +20,10 @@ type alias QuestionTypes =
 
 collectQuestionLabels : Form -> List ( Id, String )
 collectQuestionLabels form =
-    QL.FormVisitor.inspect
+    FormVisitor.inspect
         { defaultConfig
-            | onField = Post (\( label, id, _ ) result -> ( id, label ) :: result)
-            , onComputedField = Post (\( label, id, _, _ ) result -> ( id, label ) :: result)
+            | onField = FormVisitor.post (\( label, id, _ ) result -> ( id, label ) :: result)
+            , onComputedField = FormVisitor.post (\( label, id, _, _ ) result -> ( id, label ) :: result)
         }
         form
         []
@@ -32,9 +31,9 @@ collectQuestionLabels form =
 
 collectComputedFields : Form -> List ( String, Expression )
 collectComputedFields form =
-    QL.FormVisitor.inspect
+    FormVisitor.inspect
         { defaultConfig
-            | onComputedField = Post (\( _, ( name, _ ), _, computation ) result -> ( name, computation ) :: result)
+            | onComputedField = FormVisitor.post (\( _, ( name, _ ), _, computation ) result -> ( name, computation ) :: result)
         }
         form
         []
@@ -42,10 +41,10 @@ collectComputedFields form =
 
 collectDeclaredIds : Form -> List Id
 collectDeclaredIds form =
-    QL.FormVisitor.inspect
+    FormVisitor.inspect
         { defaultConfig
-            | onField = Post (\( _, id, _ ) result -> id :: result)
-            , onComputedField = Post (\( _, id, _, _ ) result -> id :: result)
+            | onField = FormVisitor.post (\( _, id, _ ) result -> id :: result)
+            , onComputedField = FormVisitor.post (\( _, id, _, _ ) result -> id :: result)
         }
         form
         []
@@ -53,8 +52,8 @@ collectDeclaredIds form =
 
 collectExpressions : Form -> List Expression
 collectExpressions form =
-    QL.FormVisitor.inspect
-        { defaultConfig | onExpression = Post (::) }
+    FormVisitor.inspect
+        { defaultConfig | onExpression = FormVisitor.post (::) }
         form
         []
 
@@ -95,10 +94,10 @@ collectQuestionReferences expression =
 
 collectQuestionTypes : Form -> QuestionTypes
 collectQuestionTypes form =
-    QL.FormVisitor.inspect
+    FormVisitor.inspect
         { defaultConfig
-            | onField = Post (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
-            , onComputedField = Post (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
+            | onField = FormVisitor.post (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
+            , onComputedField = FormVisitor.post (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
         }
         form
         Dict.empty

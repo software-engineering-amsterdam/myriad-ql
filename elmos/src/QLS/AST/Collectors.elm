@@ -3,7 +3,6 @@ module QLS.AST.Collectors exposing (collectQuestionReferences)
 import QL.AST exposing (Form, Location)
 import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
 import QLS.StyleSheetVisitor as StyleSheetVisitor exposing (defaultConfig)
-import VisitorUtil exposing (Order(Post))
 import Dict exposing (Dict)
 
 
@@ -20,6 +19,6 @@ collectQuestionReferences styleSheet =
                     Dict.insert name location context
     in
         StyleSheetVisitor.inspect
-            { defaultConfig | onQuestion = Post onQuestion }
+            { defaultConfig | onQuestion = StyleSheetVisitor.post onQuestion }
             styleSheet
             Dict.empty
