@@ -45,6 +45,7 @@ module QL
         @left  = left
         @right = right
       end
+
     end
 
     # booleans: && ||

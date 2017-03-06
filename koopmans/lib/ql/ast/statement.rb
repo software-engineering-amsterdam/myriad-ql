@@ -12,6 +12,10 @@ module QL
       def accept(visitor)
         visitor.visit_if_statement(self)
       end
+
+      def accept_two_vars(visitor, condition)
+        visitor.visit_if_statement(self, condition)
+      end
     end
 
     class Question
@@ -30,6 +34,16 @@ module QL
 
       def accept(visitor)
         visitor.visit_question(self)
+      end
+
+      # TODO is going to be removed
+      def accept_two_vars(visitor, condition)
+        visitor.visit_question(self, condition)
+      end
+
+      def render(args)
+
+
       end
     end
   end

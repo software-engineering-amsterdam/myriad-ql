@@ -17,6 +17,10 @@ module QL
             value
         end
       end
+
+      def accept(_)
+        self
+      end
     end
   end
 end

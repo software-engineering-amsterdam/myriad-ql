@@ -23,14 +23,16 @@ ql_errors = QL::TypeChecker::TypeChecker.check(ql_ast)
 pp ql_errors
 
 
+#
+# qls_contents = File.read('examples/example.qls')
+# pp qls_contents
+# qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
+# pp qls_parsed
+# qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
+# pp qls_ast
+# type_checker = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
+# pp type_checker
 
-qls_contents = File.read('examples/example.qls')
-pp qls_contents
-qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
-pp qls_parsed
-qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
-pp qls_ast
-type_checker = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
-pp type_checker
+qls_ast = nil
 
 QL::GUI::GUI.new(ql_ast, qls_ast, ql_errors)

@@ -9,10 +9,10 @@ module QL
         return if check(type_checker) == 'quit'
         @questions = Hash.new
         FormBuilder.new(ql_ast, self)
-        StylesheetBuilder.new(qls_ast, ql_ast, self)
+        # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        # create_submit_button
-        # Tk.mainloop
+        create_submit_button
+        Tk.mainloop
       end
 
       def value_changed
