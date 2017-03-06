@@ -37,15 +37,16 @@ public class SemanticsAnalyzer {
 
     public List<String> getSemanticErrors() {
         List<String> errorMessages = getUndefinedQuestionErrors();
-        errorMessages.addAll(getDuplicateQuestionErrors());
-        errorMessages.addAll(getDuplicateLabelErrors());
+        errorMessages.addAll(mEnvironment.getDuplicateDeclarationErrors());
+        errorMessages.addAll(mEnvironment.getDuplicateLabelErrors());
+        errorMessages.addAll(mEnvironment.getUndefinedDeclarationErrors());
         return errorMessages;
     }
 
     private List<String> getUndefinedQuestionErrors() {
         Set<NamedNode> nodeSet = new LinkedHashSet<>();
-        mEnvironment.getAbstractSyntaxTree().retrieveDeclarations(nodeSet);
-        mEnvironment.getSymbolTable().resolve("");
+//        mEnvironment.getAbstractSyntaxTree().retrieveDeclarations(nodeSet);
+//        mEnvironment.getSymbolTable().resolve("");
 
 
 
@@ -79,29 +80,6 @@ public class SemanticsAnalyzer {
 //        return errorMessages;
 //    }
 
-    private List<String> getDuplicateQuestionErrors() {
-        List<String> errorMessages = new ArrayList<>();
-        Set<String> processedQuestionIds = new LinkedHashSet<>();
-        for (String questionId : getQuestionIds()) {
-            if (!processedQuestionIds.add(questionId)) {
-                errorMessages.add("Duplicate question declaration found: " + questionId);
-            }
-        }
-        return errorMessages;
-    }
-
-    private List<String> getDuplicateLabelErrors() {
-        List<String> errorMessages = new ArrayList<>();
-        Set<String> processedQuestionLabels = new LinkedHashSet<>();
-//        for (NamedNode node : nmEnvironment.getDeclarations()) {
-//            String questionLabel = node.getLabel();
-//            if (!processedQuestionLabels.add(questionLabel)) {
-//                errorMessages.add("Duplicate question label found: " + questionLabel);
-//            }
-//        }
-        return errorMessages;
-    }
-
     private List<String> getQuestionIds() {
         List<String> ids = new ArrayList<>();
 //        for (Node node : mEnvironment.getDeclarations()) {
@@ -117,5 +95,4 @@ public class SemanticsAnalyzer {
 //        }
         return ids;
     }
-
 }

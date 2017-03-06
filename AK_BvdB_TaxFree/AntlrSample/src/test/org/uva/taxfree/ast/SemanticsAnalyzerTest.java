@@ -7,13 +7,10 @@ import org.uva.taxfree.main.SemanticsAnalyzer;
 import org.uva.taxfree.model.environment.Environment;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SemanticsAnalyzerTest {
     @Test
-    public File testFile(String name) {
-        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + name);
-    }
-
     public void testHasDuplicateQuestionLabels() throws Exception {
         Environment environment = Ast.generateAst(testFile("duplicateQuestionLabelForm.txt"));
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
@@ -30,27 +27,50 @@ public class SemanticsAnalyzerTest {
     }
 
     @Test
-    public void testHasDuplicateQuestionIds() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionIdForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
+    public void testHasDuplicateDeclarations() throws Exception {
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdForm.txt");
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
     }
 
     @Test
     public void testHasMultipleDuplicateQuestionIds() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionIdsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsForm.txt");
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
     }
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionIdsAndLabelsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabels.txt");
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
+    }
+
+    @Test
+    public void testUndefinedDeclaration() throws Exception {
+        assertSemantics("UndefinedDeclaration.txt", 1, "Undefined declaration");
+    }
+
+    @Test
+    public void testUndefinedDeclarations() throws Exception {
+        assertSemantics("UndefinedDeclarations.txt", 5, "Undefined declarations");
+    }
+
+
+    private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
+        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Expecting errors: " + description);
+        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
+    }
+
+    private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
+        Environment environment = Ast.generateAst(testFile(fileName));
+        return new SemanticsAnalyzer(environment);
+    }
+
+    private File testFile(String fileName) {
+        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
     }
 
 }
