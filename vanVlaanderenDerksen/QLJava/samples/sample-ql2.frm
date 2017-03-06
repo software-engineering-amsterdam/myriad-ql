@@ -4,7 +4,7 @@ form
 
 	if (buyingPrice1 || false)
 		"nog een vraag" vraag4 STRING
-	else if (vraag7 == buyingPrice1)
+	else if (true == buyingPrice1)
 		"dit is nog een vraag 7" vraag7 STRING
 	endif
 endform
