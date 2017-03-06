@@ -1,18 +1,14 @@
 package ast
 
-sealed trait FormNode
+case class Form(identifier: String, statements: Seq[Statement])
 
-case class Form(identifier: String, block: Block) extends FormNode
+sealed trait Statement
 
-case class Block(statements: Seq[Statement]) extends FormNode
-
-sealed trait Statement extends FormNode
-
-case class Conditional(condition: ExpressionNode, block: Block) extends Statement
+case class Conditional(condition: ExpressionNode, statements: Seq[Statement]) extends Statement
 
 case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode] = None) extends Statement
 
-sealed trait Type extends FormNode
+sealed trait Type
 
 case object BooleanType extends Type
 
@@ -27,4 +23,3 @@ case object IntegerType extends NumericType
 case object DecimalType extends NumericType
 
 case object MoneyType extends NumericType
-
