@@ -1,8 +1,9 @@
 package sc.ql.model.atoms;
 
+import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
 
-public class AtomInteger extends Atom {
+public class AtomInteger implements Node {
 	private final Integer value;
 	
 	public AtomInteger(Integer value) {

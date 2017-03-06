@@ -74,7 +74,6 @@ public class CheckForm {
 			try {
 				questions.addAll(form_element.accept(new GetFormQuestions()));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

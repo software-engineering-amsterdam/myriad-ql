@@ -75,11 +75,6 @@ public class CheckConditions implements NodeVisitor<Question.Type> {
 	}
 
 	@Override
-	public Question.Type visit(AtomFloat atom_float) {
-		return Type.FLOAT;
-	}
-
-	@Override
 	public Question.Type visit(AtomId atom_id) {
 		return this.identifier_types.get(atom_id.getValue());
 	}

@@ -58,9 +58,6 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 	public List<Question> visit(AtomBoolean atom_boolean) { return null; }
 
 	@Override
-	public List<Question> visit(AtomFloat atom_float) { return null; }
-
-	@Override
 	public List<Question> visit(AtomId atom_id) { return null; }
 
 	@Override

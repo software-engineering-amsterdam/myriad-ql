@@ -1,8 +1,9 @@
 package sc.ql.model.atoms;
 
+import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
 
-public class AtomBoolean extends Atom {
+public class AtomBoolean implements Node {
 	private final Boolean value;
 	
 	public AtomBoolean(Boolean value) {

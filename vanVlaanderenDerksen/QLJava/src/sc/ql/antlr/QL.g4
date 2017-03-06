@@ -34,8 +34,6 @@ BOOL
 	
 TYPE
 	: 'BOOLEAN'
-	| 'DATE'
-	| 'FLOAT'
 	| 'INTEGER'
 	| 'MONEY'
 	| 'STRING'
