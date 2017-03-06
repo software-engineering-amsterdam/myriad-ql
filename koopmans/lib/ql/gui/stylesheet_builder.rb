@@ -11,8 +11,8 @@ module QL
       # gather all widgets
       def visit_stylesheet(stylesheet, form)
         widgets = stylesheet.pages.map { |page| page.accept(self) }.flatten.compact
-        p '------------'
-        pp widgets
+        # p '------------'
+        # pp widgets
       end
 
       def visit_page(page)
@@ -28,7 +28,7 @@ module QL
       end
 
       def visit_default(default)
-        p default
+        # p default
         # { default.type => Array(default.properties).map { |property| property.accept(self) }.compact } if default.properties
       end
 

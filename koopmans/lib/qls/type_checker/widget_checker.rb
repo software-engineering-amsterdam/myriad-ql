@@ -11,8 +11,6 @@ module QLS
         @ql_types   = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
         qls_widgets = stylesheet.pages.map { |page| page.accept(self) }.flatten.compact
 
-        pp qls_widgets
-
         #TODO cleanup
         errors = []
         qls_widgets.each do |widget_hash|
