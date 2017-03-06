@@ -7,20 +7,16 @@ from QL import AST
 
 class QuestionnaireParser(object):
     # Define the tokens used for parsing the input.
-    # TODO: remove maps, make 'IS', 'R_BRACE', etc. class variables.
-    LIT = {
-        "IS": pp.Literal("=").suppress(),
-        "COLON": pp.Literal(":").suppress(),
-        "L_CURLY": pp.Literal("{").suppress(),
-        "R_CURLY": pp.Literal("}").suppress(),
-        "L_BRACE": pp.Literal("(").suppress(),
-        "R_BRACE": pp.Literal(")").suppress()
-    }
-    KW = {
-        "FORM": pp.Keyword("form").suppress(),
-        "IF": pp.Keyword("if").suppress(),
-        "ELSE": pp.Keyword("else").suppress()
-    }
+    IS = pp.Literal("=").suppress()
+    COLON = pp.Literal(":").suppress()
+    L_CURLY = pp.Literal("{").suppress()
+    R_CURLY = pp.Literal("}").suppress()
+    L_BRACE = pp.Literal("(").suppress()
+    R_BRACE = pp.Literal(")").suppress()
+
+    FORM = pp.Keyword("form").suppress()
+    IF = pp.Keyword("if").suppress()
+    ELSE = pp.Keyword("else").suppress()
 
     def __init__(self):
         # Enable caching of parsing logic.
@@ -114,10 +110,10 @@ class QuestionnaireParser(object):
         return line, col
 
     def round_embrace(self, arg):
-        return self.LIT["L_BRACE"] + arg + self.LIT["R_BRACE"]
+        return self.L_BRACE + arg + self.R_BRACE
 
     def curly_embrace(self, arg):
-        return self.LIT["L_CURLY"] + arg + self.LIT["R_CURLY"]
+        return self.L_CURLY + arg + self.R_CURLY
 
     def define_question(self):
         def create_question_grammar():
@@ -126,12 +122,12 @@ class QuestionnaireParser(object):
             grammar is re-used in the comp_question grammar definition.
             """
             return self.var_types["STRING"] + self.var_types["VARIABLE"] + \
-                   self.LIT["COLON"] + self.type_names
+                   self.COLON + self.type_names
 
         question = create_question_grammar()
         question.addParseAction(self.create_node(AST.QuestionNode))
 
-        comp_question = create_question_grammar() + self.LIT["IS"] + \
+        comp_question = create_question_grammar() + self.IS + \
             self.round_embrace(self.expression)
         comp_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
 
@@ -140,13 +136,13 @@ class QuestionnaireParser(object):
     def define_conditional(self):
         def create_if_grammar():
             """ Again used to prevent double parseActions. """
-            return self.KW["IF"] + self.round_embrace(self.expression) + \
+            return self.IF + self.round_embrace(self.expression) + \
                 self.curly_embrace(self.block)
 
         if_cond = create_if_grammar()
         if_cond.addParseAction(self.create_node(AST.IfNode))
 
-        if_else_cond = create_if_grammar() + self.KW["ELSE"] + \
+        if_else_cond = create_if_grammar() + self.ELSE + \
             self.curly_embrace(self.block)
         if_else_cond.addParseAction(self.create_node(AST.IfElseNode))
 
@@ -157,7 +153,7 @@ class QuestionnaireParser(object):
             pp.OneOrMore(self.question | self.conditional)
         ).addParseAction(self.create_node(AST.BlockNode))
 
-        form = self.KW["FORM"] + self.var_types["VARIABLE"] + \
+        form = self.FORM + self.var_types["VARIABLE"] + \
             self.curly_embrace(self.block)
         form.addParseAction(self.create_node(AST.FormNode))
 

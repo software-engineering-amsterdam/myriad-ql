@@ -90,6 +90,6 @@ class DrawGUI(object):
         return widget_values
 
     def save_data(self):
-        save_obj = SaveQuestionaire(self, self.ast, self.env,
+        save_obj = SaveQuestionaire(self.ast, self.env,
                                     self.evaluator, self.handler)
         save_obj.start_traversal()
