@@ -49,12 +49,22 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testUndefinedDeclaration() throws Exception {
-        assertSemantics("UndefinedDeclaration.txt", 1, "Undefined declaration");
+        assertSemantics("undefinedDeclaration.txt", 1, "Undefined declaration");
     }
 
     @Test
     public void testUndefinedDeclarations() throws Exception {
-        assertSemantics("UndefinedDeclarations.txt", 5, "Undefined declarations");
+        assertSemantics("undefinedDeclarations.txt", 5, "Undefined declarations");
+    }
+
+    @Test
+    public void testUnreferencedDeclaration() throws Exception {
+        assertSemantics("unreferencedDeclaration.txt", 1, "Unreferenced declaration");
+    }
+
+    @Test
+    public void testUnreferencedDeclarations() throws Exception {
+        assertSemantics("unreferencedDeclarations.txt", 7, "Unreferenced declarations");
     }
 
 
