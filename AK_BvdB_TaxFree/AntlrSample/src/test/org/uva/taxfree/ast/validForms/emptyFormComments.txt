@@ -1,0 +1,7 @@
+// This is the start of this empty form
+form emptyForm {
+    // This is an empty form
+    // Used for testing purposes
+    // It might just show an empty window
+}
+// A comment at the end of the file

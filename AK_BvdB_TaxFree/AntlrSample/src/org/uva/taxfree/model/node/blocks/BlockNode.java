@@ -1,6 +1,7 @@
 package org.uva.taxfree.model.node.blocks;
 
 import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.declarations.CalculatedField;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import java.util.Set;
@@ -35,6 +36,10 @@ public abstract class BlockNode extends Node {
         addCondition(set);
     }
 
+    public void retrieveCalculations(Set<CalculatedField> set) {
+        addCalculation(set);
+    }
+
     @Override
     public void addCondition(Set<Node> set) {
         for (Node child : mChildren) {
@@ -46,6 +51,13 @@ public abstract class BlockNode extends Node {
     public void addDeclaration(Set<NamedNode> set) {
         for (Node child : mChildren) {
             child.addDeclaration(set);
+        }
+    }
+
+    @Override
+    public void addCalculation(Set<CalculatedField> set) {
+        for (Node child : mChildren) {
+            child.addCalculation(set);
         }
     }
 
@@ -64,7 +76,7 @@ public abstract class BlockNode extends Node {
 
     @Override
     public void printId() {
-        for (Node child : mChildren){
+        for (Node child : mChildren) {
             child.printId();
         }
     }

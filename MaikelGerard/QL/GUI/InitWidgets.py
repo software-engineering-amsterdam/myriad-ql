@@ -1,27 +1,30 @@
-from QL.GUI.FormGUI import FormGUI
+from QL.GUI.DrawGUI import DrawGUI
 import QL.GUI.Widgets as Widgets
 
 
-class InitGUI(object):
+class InitWidgets(object):
     def __init__(self, ast, env, evaluator, error_handler):
         """
         :type env: Environment.Environment
         :type error_handler: ErrorHandler.ErrorHandler
         """
-        self.env = env
         self.ast = ast
-        self.error_handler = error_handler
+        self.env = env
         self.evaluator = evaluator
+        self.error_handler = error_handler
 
         # Create a GUI instance.
-        self.gui = FormGUI()
+        self.gui = DrawGUI(ast, env, evaluator, error_handler)
+
+    def get_initialized_gui(self):
+        return self.gui
 
     def start_traversal(self):
         self.error_handler.clear_errors()
 
         # Set context for outputting errors; start drawing.
         prev_context = self.env.context
-        self.env.context = "InitGUI"
+        self.env.context = "InitWidgets"
 
         # Add and build up all the questions in the environment.
         self.ast.root.accept(self)
@@ -68,5 +71,5 @@ class InitGUI(object):
     def string_type_node(self, _):
         return Widgets.EntryWidget
 
-#    def date_type_node(self, _):
-#        return self.gui.add_datepicker_question
+    def date_type_node(self, _):
+        return Widgets.DateWidget

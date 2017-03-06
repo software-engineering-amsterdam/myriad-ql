@@ -119,6 +119,29 @@ class CheckBoxWidget(Widget):
         self.main.showCheckBox(self.identifier)
 
 
+class DateWidget(Widget):
+    def __init__(self, form_gui, identifier, question, row=0):
+        super(DateWidget, self).__init__(form_gui, identifier,
+                                         question, row)
+
+        self.main.addDatePicker(identifier, row=row, column=1)
+        self.add_listener(self.main.getFrameWidget(identifier))
+
+    def get_entry(self):
+        return self.main.getDatePicker(self.identifier)
+
+    def set_entry(self, value):
+        self.main.setDatePicker(self.identifier, value)
+
+    def hide(self):
+        super(DateWidget, self).hide()
+        self.main.hideFrame(self.identifier)
+
+    def show(self):
+        super(DateWidget, self).show()
+        self.main.showFrame(self.identifier)
+
+
 class ComputedLabelWidget(Widget):
     def __init__(self, form_gui, identifier, question, row=0):
         super(ComputedLabelWidget, self).__init__(form_gui, identifier,

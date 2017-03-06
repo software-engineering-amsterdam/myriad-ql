@@ -41,11 +41,14 @@ varType : 'boolean' # booleanType
         ;
 
 // The whitespace layout
-WS : [ \t\r\n]+ -> skip ;
+WS : [ \t\r\n]+ -> skip;
+// Comment layout
+COMMENT : [/][/]~[\n]* -> skip;
 // Types
 QUESTION : '"'~[?]+'?"';
 DESCRIPTION : '"'~[:]+':"';
 BOOLEAN_LITERAL : ('true' | 'false');
 INTEGER_LITERAL : [0-9]+;
 STRING_LITERAL : '"'~["]+'"';
+//FORMID : [a-zA-Z]+;
 VARIABLE_LITERAL : [a-zA-Z]+;

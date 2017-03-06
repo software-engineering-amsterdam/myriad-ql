@@ -54,18 +54,19 @@ public class QuestionVisitor implements FormVisitor {
 	}
 
 	private void addVariableType(String variable, Type type, int line) {
+
 		if (environment.variableExists(variable)) {
-			throw new RuntimeException("The variable: " + variable + " on line " + line +
-					" cannot be added, because it is already defined");
+			environment.addWarning("The variable " + variable + " cannot be added, because it is "
+					+ "already defined", line);
 		}
 		environment.addVariableType(variable, type);
 	}
-
+	
+	// TODO better if it would print both line numbers
 	private void addLabel(String label, String variableName, int line) {
 		if (environment.labelExists(label)) {
-			// TODO WARNING not throw
-			System.out.println("The question \" "  + label
-					+ " \"on line " + line + " exists twice in the questionnaire.");
+			environment.addWarning("The question: " + label + 
+					" exists twice in the questionnaire", line);
 		}
 		environment.addLabel(label, variableName);
 	}

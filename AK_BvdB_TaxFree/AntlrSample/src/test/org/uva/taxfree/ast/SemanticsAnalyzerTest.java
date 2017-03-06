@@ -42,31 +42,30 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabels.txt");
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabelsForm.txt");
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
     }
 
     @Test
-    public void testUndefinedDeclaration() throws Exception {
-        assertSemantics("undefinedDeclaration.txt", 1, "Undefined declaration");
+    public void testUndefinedDeclarationSingle() throws Exception {
+        assertSemantics("undefinedDeclarationSingle.txt", 1, "Undefined declaration should throw an error");
+    }
+
+    @Test
+    public void testUndefinedDeclarationMultiple() throws Exception {
+        assertSemantics("undefinedDeclarationMultiple.txt", 1, "Multiple conditions with same variable trigger 1 error");
     }
 
     @Test
     public void testUndefinedDeclarations() throws Exception {
-        assertSemantics("undefinedDeclarations.txt", 5, "Undefined declarations");
+        assertSemantics("undefinedDeclarations.txt", 11, "Undefined declarations");
     }
 
     @Test
-    public void testUnreferencedDeclaration() throws Exception {
-        assertSemantics("unreferencedDeclaration.txt", 1, "Unreferenced declaration");
+    void testCyclicDependency() throws Exception {
+        assertSemantics("cyclicDependencyCalculations.txt", 1, "Cyclic dependency in calculation");
     }
-
-    @Test
-    public void testUnreferencedDeclarations() throws Exception {
-        assertSemantics("unreferencedDeclarations.txt", 7, "Unreferenced declarations");
-    }
-
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);

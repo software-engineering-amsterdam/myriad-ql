@@ -62,7 +62,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		Integer line_number = ctx.getStart().getLine();
 		
 		return new NotExpression(expression, line_number);
-	}	
+	}
 	
 	@Override 
 	public Node visitOpExpr(QLParser.OpExprContext ctx) {
@@ -71,7 +71,12 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		String operator  = ctx.op.getText();
 		Integer line_number = ctx.getStart().getLine();
 		
-		return new OpExpression(left, right, operator, line_number);
+		if (operator.matches("\\+|-|\\*|/")) {
+			return new CalcExpression(left, right, operator, line_number);
+		}
+		else {
+			return new OpExpression(left, right, operator, line_number);
+		}
 	}
 
 	@Override 

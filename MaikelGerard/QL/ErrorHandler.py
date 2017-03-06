@@ -24,7 +24,7 @@ class ErrorHandler(object):
         self.add_warning(context, node, message)
 
     def add_dup_label_warning(self, context, question_node):
-        message = "Duplicate label found: '{}'".format(question_node.question)
+        message = "Duplicate label found: {}".format(question_node.question)
         self.add_warning(context, question_node.question, message)
 
     def add_cycle_error(self, context, cycles):

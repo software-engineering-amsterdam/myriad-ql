@@ -1,6 +1,5 @@
 import datetime
 import decimal
-
 import pyparsing as pp
 
 from QL import AST
@@ -43,7 +42,7 @@ class QuestionnaireParser(object):
             The type name token is not required, and therefore suppressed.
             """
             return pp.Keyword(keyword).suppress().addParseAction(
-                self.create_node(ast_class))
+                   self.create_node(ast_class))
 
         return (
             create_type_node("boolean", AST.BoolTypeNode) |
@@ -61,7 +60,7 @@ class QuestionnaireParser(object):
 
         def create_date(src, loc, tokens):
             del src, loc
-            return datetime.datetime.strptime(tokens[0], "%d.%m.%Y").date()
+            return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
         types = {
             "BOOLEAN": (pp.Keyword("true").addParseAction(lambda _: True) |
@@ -70,7 +69,7 @@ class QuestionnaireParser(object):
             "VARIABLE": pp.Word(pp.alphas, pp.alphanums + "_"),
             "DECIMAL": pp.Regex("(\d+\.\d*)|(\d*\.\d+)"),
             "MONEY": pp.Regex("(\d+\.\d{0,2})|(\d*\.\d{1,2})"),
-            "DATE": pp.Regex("([0][1-9])|([1-3][0-9])\.[0-9]{2}\.[0-9]{4}"),
+            "DATE": pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}"),
             "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
         }
         types["INTEGER"].addParseAction(create_decimal)
@@ -183,6 +182,8 @@ class QuestionnaireParser(object):
                 self.create_node(AST.VarNode)) |
             self.var_types["DATE"].addParseAction(
                 self.create_node(AST.DateNode)) |
+            self.var_types["MONEY"].addParseAction(
+                self.create_node(AST.MoneyNode)) |
             self.var_types["DECIMAL"].addParseAction(
                 self.create_node(AST.DecimalNode)) |
             self.var_types["INTEGER"].addParseAction(
