@@ -10,14 +10,14 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class QLContext
     {
-        private Dictionary<string, IValue> Context = new Dictionary<string, IValue>();
+        private Dictionary<string, IType> Context = new Dictionary<string, IType>();
 
-        public void AddQuestion(string name, IValue type)
+        public void AddQuestion(string name, IType type)
         {
             Context.Add(name, type);
         }
 
-        public IValue GetQuestionType(string name)
+        public IType GetQuestionType(string name)
         {            
             return Context[name];
         }

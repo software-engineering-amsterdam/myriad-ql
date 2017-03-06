@@ -10,6 +10,6 @@ namespace Questionnaires.QL.AST
 {
     public interface IExpression : INode
     {
-        IValue GetResultType(QLContext context);
+        IType GetResultType(QLContext context);
     }
 }

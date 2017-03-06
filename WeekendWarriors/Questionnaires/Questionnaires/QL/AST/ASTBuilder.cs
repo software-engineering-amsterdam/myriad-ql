@@ -40,21 +40,21 @@ namespace Questionnaires.QL.AST
             string identifier = context.Identifier().GetText();
             string body = context.StringLiteral().GetText();
             string type = context.Type().GetText();
-            IValue parsedType;
+            IType parsedType;
 
             switch (type)
             {
                 case "boolean":
-                    parsedType = new BoolValue();
+                    parsedType = new BooleanType();
                     break;                   
                 case "money":
-                    parsedType = new DecimalValue();
+                    parsedType = new MoneyType();
                     break;
                 case "int":
-                    parsedType = new IntValue();
+                    parsedType = new IntegerType();
                     break;
                 case "string":
-                    parsedType = new StringValue();
+                    parsedType = new StringType();
                     break;
                 default:
                     throw new ArgumentException();
@@ -143,12 +143,12 @@ namespace Questionnaires.QL.AST
 
         public INode VisitPositiveOperation(Number number)
         {
-            return new Number("+" + number.StringValue);
+            return new Number("+" + number.StringType);
         }
 
         public INode VisitPositiveOperation(Money money)
         {
-            return new Money("+" + money.StringValue);
+            return new Money("+" + money.StringType);
         }
 
         public INode VisitPositiveOperation(IExpression expression)
@@ -158,12 +158,12 @@ namespace Questionnaires.QL.AST
 
         public INode VisitNegativeOperation(Number number)
         {
-            return new Number("-" + number.StringValue);            
+            return new Number("-" + number.StringType);            
         }       
 
         public INode VisitNegativeOperation(Money money)
         {
-            return new Money("-" + money.StringValue);
+            return new Money("-" + money.StringType);
         }
 
         public INode VisitNegativeOperation(IExpression expression)

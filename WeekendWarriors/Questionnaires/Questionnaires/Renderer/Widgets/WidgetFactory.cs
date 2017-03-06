@@ -9,27 +9,27 @@ namespace Questionnaires.Renderer.Widgets
 {
     class WidgetFactory
     {
-        public QuestionWidget BuildWidget(IValue value, string name)
+        public QuestionWidget BuildWidget(IType value, string name)
         {
             return BuildWidget((dynamic)value, name);
         }
 
-        private BooleanQuestionWidget BuildWidget(BoolValue question, string name)
+        private BooleanQuestionWidget BuildWidget(BooleanType question, string name)
         {
             return new BooleanQuestionWidget(name);
         }
 
-        private NumberQuestionWidget BuildWidget(IntValue question, string name)
+        private NumberQuestionWidget BuildWidget(IntegerType question, string name)
         {
             return new NumberQuestionWidget(name);
         }
 
-        private MoneyQuestionWidget BuildWidget(DecimalValue question, string name)
+        private MoneyQuestionWidget BuildWidget(MoneyType question, string name)
         {
             return new MoneyQuestionWidget(name);
         }
 
-        private StringQuestionWidget BuildWidget(StringValue question, string name)
+        private StringQuestionWidget BuildWidget(StringType question, string name)
         {
             return new StringQuestionWidget(name);
         }

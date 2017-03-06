@@ -11,12 +11,12 @@ namespace Questionnaires.QL.AST.Literals
     {
         public Money(string value)
         {
-            this.StringValue = value;
+            this.StringType = value;
         }
 
-        public string StringValue { get; }
+        public string StringType { get; }
 
-        public decimal Value { get { return decimal.Parse(StringValue, NumberStyles.Any, CultureInfo.InvariantCulture); } }
+        public decimal Value { get { return decimal.Parse(StringType, NumberStyles.Any, CultureInfo.InvariantCulture); } }
 
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
@@ -28,19 +28,19 @@ namespace Questionnaires.QL.AST.Literals
             }
             catch (FormatException)
             {
-                messages.Add(new Error(string.Format("Cannot convert literal {0} to money", StringValue)));
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to money", StringType)));
             }
             catch (OverflowException)
             {
-                messages.Add(new Error(string.Format("Value {0} is too large for decimal variable", StringValue)));
+                messages.Add(new Error(string.Format("Value {0} is too large for decimal variable", StringType)));
             }
 
             return false;
         }
 
-        public IValue GetResultType(QLContext context)
+        public IType GetResultType(QLContext context)
         {
-            return new DecimalValue();
+            return new MoneyType();
         }
     }
 }

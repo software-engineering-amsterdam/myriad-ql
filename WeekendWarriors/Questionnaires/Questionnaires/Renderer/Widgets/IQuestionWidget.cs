@@ -11,7 +11,7 @@ namespace Questionnaires.Renderer.Widgets
     interface IQuestionWidget
     {
         void SetLabel(string text);
-        void SetQuestionValue(Questionnaires.Value.IValue value);
+        void SetQuestionValue(Questionnaires.Value.IType value);
         void SetVisibility(bool visible);
 
         void SetOnInputChanged(InputChangedCallback inputChanged);

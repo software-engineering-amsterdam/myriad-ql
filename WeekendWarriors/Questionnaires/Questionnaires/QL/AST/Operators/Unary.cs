@@ -38,6 +38,6 @@ namespace Questionnaires.QL.AST
                 return false;
             }
         }
-        public abstract IValue GetResultType(QLContext context);
+        public abstract IType GetResultType(QLContext context);
     }
 }

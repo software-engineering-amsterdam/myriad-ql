@@ -11,7 +11,7 @@ namespace Questionnaires.QL.AST
 {
     public class Question : INode
     {
-        public Question(string identifier, string body, IValue type)
+        public Question(string identifier, string body, IType type)
         {
             this.Identifier = identifier;
             this.Body = body;
@@ -28,7 +28,7 @@ namespace Questionnaires.QL.AST
             get;
         }
 
-        public IValue Type
+        public IType Type
         {
             get;
         }

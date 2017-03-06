@@ -23,9 +23,9 @@ namespace Questionnaires.QL.AST.Literals
             return true;
         }
 
-        public IValue GetResultType(QLContext context)
+        public IType GetResultType(QLContext context)
         {
-            return new StringValue();
+            return new StringType();
         }
     }
 }

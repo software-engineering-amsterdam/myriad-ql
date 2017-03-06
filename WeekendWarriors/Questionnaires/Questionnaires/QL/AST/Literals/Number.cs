@@ -10,12 +10,12 @@ namespace Questionnaires.QL.AST.Literals
     {
         public Number(string value)
         {
-            this.StringValue = value;
+            this.StringType = value;
         }
 
-        public string StringValue { get; }        
+        public string StringType { get; }        
 
-        public int Value { get { return int.Parse(StringValue); } }
+        public int Value { get { return int.Parse(StringType); } }
 
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
@@ -26,18 +26,18 @@ namespace Questionnaires.QL.AST.Literals
             }
             catch (FormatException)
             {
-                messages.Add(new Error(string.Format("Cannot convert literal {0} to number", StringValue)));
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to number", StringType)));
             }
             catch (OverflowException)
             {
-                messages.Add(new Error(string.Format("Value {0} is too large for number variable", StringValue)));
+                messages.Add(new Error(string.Format("Value {0} is too large for number variable", StringType)));
             }
             return false;
         }
 
-        public IValue GetResultType(QLContext context)
+        public IType GetResultType(QLContext context)
         {
-            return new IntValue();
+            return new IntegerType();
         }
     }
 }

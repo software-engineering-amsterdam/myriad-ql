@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Value
 {
-    public abstract class Value<T> : IValue
+    public abstract class Value<T> : IType
     {
         protected T Val = default(T);
 
@@ -15,317 +15,317 @@ namespace Questionnaires.Value
             return Val;
         }
 
-        public virtual IValue Positive()
+        public virtual IType Positive()
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Negative()
+        public virtual IType Negative()
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue Bang()
+        public virtual BooleanType Bang()
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Add(StringValue value)
+        public virtual IType Add(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Subtract(StringValue value)
+        public virtual IType Subtract(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Multiply(StringValue value)
+        public virtual IType Multiply(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Divide(StringValue value)
+        public virtual IType Divide(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue And(StringValue value)
+        public virtual BooleanType And(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue Or(StringValue value)
+        public virtual BooleanType Or(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThan(StringValue value)
+        public virtual BooleanType LessThan(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThanOrEqual(StringValue value)
+        public virtual BooleanType LessThanOrEqual(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThan(StringValue value)
+        public virtual BooleanType GreaterThan(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThanOrEqual(StringValue value)
+        public virtual BooleanType GreaterThanOrEqual(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue EqualTo(StringValue value)
+        public virtual BooleanType EqualTo(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue InequalTo(StringValue value)
+        public virtual BooleanType InequalTo(StringType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Add(IntValue value)
+        public virtual IType Add(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Subtract(IntValue value)
+        public virtual IType Subtract(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Multiply(IntValue value)
+        public virtual IType Multiply(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Divide(IntValue value)
+        public virtual IType Divide(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue And(IntValue value)
+        public virtual BooleanType And(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue Or(IntValue value)
+        public virtual BooleanType Or(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThan(IntValue value)
+        public virtual BooleanType LessThan(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThanOrEqual(IntValue value)
+        public virtual BooleanType LessThanOrEqual(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThan(IntValue value)
+        public virtual BooleanType GreaterThan(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThanOrEqual(IntValue value)
+        public virtual BooleanType GreaterThanOrEqual(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue EqualTo(IntValue value)
+        public virtual BooleanType EqualTo(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue InequalTo(IntValue value)
+        public virtual BooleanType InequalTo(IntegerType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Add(DecimalValue value)
+        public virtual IType Add(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Subtract(DecimalValue value)
+        public virtual IType Subtract(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Multiply(DecimalValue value)
+        public virtual IType Multiply(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Divide(DecimalValue value)
+        public virtual IType Divide(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue And(DecimalValue value)
+        public virtual BooleanType And(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue Or(DecimalValue value)
+        public virtual BooleanType Or(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThan(DecimalValue value)
+        public virtual BooleanType LessThan(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThanOrEqual(DecimalValue value)
+        public virtual BooleanType LessThanOrEqual(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThan(DecimalValue value)
+        public virtual BooleanType GreaterThan(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThanOrEqual(DecimalValue value)
+        public virtual BooleanType GreaterThanOrEqual(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue EqualTo(DecimalValue value)
+        public virtual BooleanType EqualTo(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue InequalTo(DecimalValue value)
+        public virtual BooleanType InequalTo(MoneyType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Add(BoolValue value)
+        public virtual IType Add(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Subtract(BoolValue value)
+        public virtual IType Subtract(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Multiply(BoolValue value)
+        public virtual IType Multiply(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual IValue Divide(BoolValue value)
+        public virtual IType Divide(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue And(BoolValue value)
+        public virtual BooleanType And(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue Or(BoolValue value)
+        public virtual BooleanType Or(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThan(BoolValue value)
+        public virtual BooleanType LessThan(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue LessThanOrEqual(BoolValue value)
+        public virtual BooleanType LessThanOrEqual(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThan(BoolValue value)
+        public virtual BooleanType GreaterThan(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue GreaterThanOrEqual(BoolValue value)
+        public virtual BooleanType GreaterThanOrEqual(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue EqualTo(BoolValue value)
+        public virtual BooleanType EqualTo(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public virtual BoolValue InequalTo(BoolValue value)
+        public virtual BooleanType InequalTo(BooleanType value)
         {
             throw new NotSupportedException();
         }
 
-        public IValue Add(IValue value)
+        public IType Add(IType value)
         {
             return Add((dynamic)value);
         }
 
-        public IValue Subtract(IValue value)
+        public IType Subtract(IType value)
         {
             return Subtract((dynamic)value);
         }
 
-        public IValue Multiply(IValue value)
+        public IType Multiply(IType value)
         {
             return Multiply((dynamic)value);
         }
 
-        public IValue Divide(IValue value)
+        public IType Divide(IType value)
         {
             return Divide((dynamic)value);
         }
 
-        public BoolValue And(IValue value)
+        public BooleanType And(IType value)
         {
             return And((dynamic)value);
         }
 
-        public BoolValue Or(IValue value)
+        public BooleanType Or(IType value)
         {
             return Or((dynamic)value);
         }
 
-        public BoolValue LessThan(IValue value)
+        public BooleanType LessThan(IType value)
         {
             return LessThan((dynamic)value);
         }
 
-        public BoolValue LessThanOrEqual(IValue value)
+        public BooleanType LessThanOrEqual(IType value)
         {
             return LessThanOrEqual((dynamic)value);
         }
 
-        public BoolValue GreaterThan(IValue value)
+        public BooleanType GreaterThan(IType value)
         {
             return GreaterThan((dynamic)value);
         }
 
-        public BoolValue GreaterThanOrEqual(IValue value)
+        public BooleanType GreaterThanOrEqual(IType value)
         {
             return GreaterThanOrEqual((dynamic)value);
         }
 
-        public BoolValue EqualTo(IValue value)
+        public BooleanType EqualTo(IType value)
         {
             return EqualTo((dynamic)value);
         }
 
-        public BoolValue InequalTo(IValue value)
+        public BooleanType InequalTo(IType value)
         {
             return InequalTo((dynamic)value);
         }

@@ -10,9 +10,9 @@ namespace Questionnaires.VariableStore
 {
     public class VariableStore
     {
-        private Dictionary<string, Value.IValue> variables = new Dictionary<string, Value.IValue>();
+        private Dictionary<string, Value.IType> variables = new Dictionary<string, Value.IType>();
 
-        public void SetValue(string name, IValue value)
+        public void SetValue(string name, IType value)
         {            
             bool changed = (!variables.ContainsKey(name) || value.InequalTo((dynamic)variables[name]).GetValue());
             variables[name] = value;
@@ -26,14 +26,14 @@ namespace Questionnaires.VariableStore
             variables.Remove(name);
         }
 
-        public Questionnaires.Value.IValue GetValue(string name)
+        public Questionnaires.Value.IType GetValue(string name)
         {
             return variables[name];
         }
 
         public delegate void VariableChangedEventHandler(object sender, VariableChangedEventArgs arg);
         public event VariableChangedEventHandler VariableChanged;
-        public void OnVariableChanged(string name, IValue value)
+        public void OnVariableChanged(string name, IType value)
         {
             if (VariableChanged != null)
                 VariableChanged(this, new VariableChangedEventArgs(name, value));

@@ -49,12 +49,12 @@ namespace Questionnaires.QL.AST
             return true;
         }
 
-        private bool ValidateConditionType(BoolValue val)
+        private bool ValidateConditionType(BooleanType val)
         {
             return true;
         }
 
-        private bool ValidateConditionType(IValue val)
+        private bool ValidateConditionType(IType val)
         {
             return false;
         }
