@@ -242,11 +242,11 @@
         private ValueType CheckBinaryComparisonExpression(BinaryExpression expression, VisitorTypeEnvironment context)
         {
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
-            var rightEpressionType = expression.RightExpression.Accept(this, context);
+            var rightExpressionType = expression.RightExpression.Accept(this, context);
 
-            if (leftExpressionType != rightEpressionType)
+            if (leftExpressionType != rightExpressionType)
             {
-                this.Report.Add(new InvaildTypeMessage(expression, leftExpressionType, rightEpressionType, LogLevel.Error));
+                this.Report.Add(new InvaildTypeMessage(expression, leftExpressionType, rightExpressionType, LogLevel.Error));
             }
 
             return TypeConstants.BooleanType;

@@ -6,6 +6,46 @@
 
     public class BaseValue : IValue
     {
+        public static bool operator >(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return valueOne.GreaterThan(valueTwo).Value;
+        }
+
+        public static bool operator <(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return valueOne.LessThan(valueTwo).Value;
+        }
+
+        public static bool operator >=(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return valueOne.GreaterThanOrEqualTo(valueTwo).Value;
+        }
+
+        public static bool operator <=(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return valueOne.LessThanOrEqualTo(valueTwo).Value;
+        }
+
+        public static bool operator ==(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return valueOne.Equals(valueTwo).Value;
+        }
+
+        public static bool operator !=(BaseValue valueOne, BaseValue valueTwo)
+        {
+            return !(valueOne == valueTwo);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
         public virtual IValue Parse(string value)
         {
             throw new InvalidOperationException("Operation not supported");
