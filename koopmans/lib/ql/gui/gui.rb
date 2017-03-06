@@ -20,7 +20,7 @@ module QL
       end
 
       def submit
-        p @questions.each_value.select { |question| question.enabled }.map(&:to_json)
+        pp @questions.each_value.select { |question| question.enabled }.map(&:to_json)
       end
 
       def check(type_checker)

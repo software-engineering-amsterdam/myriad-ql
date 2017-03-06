@@ -1,7 +1,7 @@
 module QL
   module GUI
     class Widget
-      attr_accessor :question
+      # attr_accessor :question
 
       def initialize(args)
         @question_frame = args[:question_frame]

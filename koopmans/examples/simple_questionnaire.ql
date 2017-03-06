@@ -7,18 +7,22 @@ form taxOfficeExample {
     hasMaintLoan: boolean
 
   if (hasSoldHouse && hasBoughtHouse) {
-    "What was the selling price?"
-      sellingPrice: money
-    "Private debts for the sold house:"
-      privateDebt: money
-          "JOEHOE"
-            aap: string
-    "Value residue:"
-      valueResidue: money =
-        (sellingPrice)
-        "Value res2idue:"
-              xx: string =
-                (aap)
+    "weer een vraag"
+              xxx: money
+    if (hasMaintLoan) {
+        "What was the selling price?"
+          sellingPrice: money
+        "Private debts for the sold house:"
+          privateDebt: money
+              "JOEHOE"
+                aap: string
+        "Value residue:"
+          valueResidue: money =
+            (sellingPrice)
+            "Value res2idue:"
+                  xx: string =
+                    (aap)
+     }
   }
 
 }
