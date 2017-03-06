@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -48,7 +49,7 @@ public class Question implements FormItem {
     }
 
     @Override
-    public void show(MainScreen screen) {
+    public void show(FXMLExampleController screen) {
         screen.showQuestion(this);
     }
 

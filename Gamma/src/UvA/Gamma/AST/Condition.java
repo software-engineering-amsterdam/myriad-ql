@@ -1,6 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.BooleanExpression;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.GUI.MainScreen;
 import javafx.beans.property.StringProperty;
 
@@ -15,7 +16,7 @@ public class Condition implements FormItem {
     /* can be empty if no elseBlock is specified */
     private List<FormItem> elseBlockItems;
     private BooleanExpression expression;
-    private MainScreen screen;
+    private FXMLExampleController screen;
 
     public Condition() {
         this.formItems = new ArrayList<>();
@@ -61,7 +62,7 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public void show(MainScreen screen) {
+    public void show(FXMLExampleController screen) {
         this.screen = screen;
         screen.showCondition(this);
     }

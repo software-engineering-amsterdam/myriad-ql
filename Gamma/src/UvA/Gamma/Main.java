@@ -6,6 +6,7 @@ import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.GUI.FXMLExampleController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -39,13 +40,13 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(form);
         mainScreen.initUI(primaryStage);
 
-        for (FormItem item : form.getFormItems()) {
-            mainScreen.addFormItem(item);
-            System.out.println(item);
-            if (item instanceof Computed) {
-                System.out.println(((Computed) item).expression);
-            }
-        }
+//        for (FormItem item : form.getFormItems()) {
+//            mainScreen.addFormItem(item);
+//            //System.out.println(item);
+//            if (item instanceof Computed) {
+//                //System.out.println(((Computed) item).expression);
+//            }
+//        }
 
 
     }
