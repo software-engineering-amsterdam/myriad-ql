@@ -4,7 +4,6 @@ import ast._
 import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ Inside, Matchers, PropSpec }
-import ExpressionGenerator
 
 import scala.annotation.tailrec
 import scala.util.matching.Regex
