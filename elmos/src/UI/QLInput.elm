@@ -69,8 +69,11 @@ exampleDsl =
 
 
 asForm : Model -> Maybe Form
-asForm { parsedForm } =
-    parsedForm
+asForm model =
+    if List.isEmpty model.messages then
+        model.parsedForm
+    else
+        Nothing
 
 
 update : Msg -> Model -> Model

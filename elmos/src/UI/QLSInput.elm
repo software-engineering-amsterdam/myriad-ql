@@ -30,6 +30,14 @@ init form =
         |> update (OnInput exampleDsl)
 
 
+asStyleSheet : Model -> Maybe StyleSheet
+asStyleSheet model =
+    if List.isEmpty model.messages then
+        model.parsedStyleSheet
+    else
+        Nothing
+
+
 setForm : Maybe Form -> Model -> Model
 setForm form model =
     { model | parsedForm = form }
@@ -118,10 +126,20 @@ view { input, parsedStyleSheet, parsedForm, messages } =
                                 []
                             ]
                         ]
-                    , div [ class "col-md-6" ] <|
-                        List.map (UI.Messages.error << renderMessage) messages
+                    , div [ class "col-md-6" ]
+                        [ div [] <|
+                            if parsedForm == Nothing then
+                                [ UI.Messages.error
+                                    [ text "No valid Form" ]
+                                ]
+                            else if parsedStyleSheet == Nothing then
+                                [ UI.Messages.error
+                                    [ text "Could not parse the stylesheet" ]
+                                ]
+                            else
+                                List.map (UI.Messages.error << renderMessage) messages
+                        ]
                     ]
-                , pre [] [ text <| toString parsedStyleSheet ]
                 ]
           )
         ]

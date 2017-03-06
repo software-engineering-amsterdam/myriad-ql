@@ -55,15 +55,22 @@ update msg model =
 
                 maybeNewForm =
                     QLInput.asForm newQLInput
+
+                newQLSInput =
+                    QLSInput.setForm maybeNewForm model.qlsInput
             in
                 { model
                     | qlInput = newQLInput
-                    , qlsInput = QLSInput.setForm maybeNewForm model.qlsInput
+                    , qlsInput = newQLSInput
                     , formRenderer = Maybe.map FormRenderer.init maybeNewForm
                 }
 
         QLSInputMsg subMsg ->
-            { model | qlsInput = QLSInput.update subMsg model.qlsInput }
+            let
+                newQLSInput =
+                    QLSInput.update subMsg model.qlsInput
+            in
+                { model | qlsInput = QLSInput.update subMsg model.qlsInput }
 
         FormRendererMsg subMsg ->
             { model | formRenderer = Maybe.map (FormRenderer.update subMsg) model.formRenderer }
@@ -76,7 +83,7 @@ view model =
         , case model.activeTab of
             QLTab ->
                 div []
-                    [ h3 [] [ text "DSL Input" ]
+                    [ h3 [] [ text "QL Input" ]
                     , QLInput.view model.qlInput |> Html.map FormDslInputMsg
                     ]
 
