@@ -1,13 +1,12 @@
 ﻿namespace OffByOne.Qls.Checker.Messages
 {
     using OffByOne.Ql.Checker.Messages.Base;
-    using OffByOne.Ql.Checker.Models;
     using OffByOne.Qls.Ast.Style.Statements;
 
-    public class DuplicateSectionNameMessage : CheckerMessage
+    public class DuplicateSectionNameMessage : WarningMessage
     {
-        public DuplicateSectionNameMessage(Section section, LogLevel level = LogLevel.Warning)
-            : base($"Duplicate section name {section.Name.Value} at {section.SourceCode}", level)
+        public DuplicateSectionNameMessage(Section section)
+            : base($"Duplicate section name \"{section.Name.Value}\" at: {section.SourceCode}")
         {
         }
     }

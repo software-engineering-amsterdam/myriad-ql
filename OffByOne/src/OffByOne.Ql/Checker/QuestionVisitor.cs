@@ -26,7 +26,7 @@
             // maybe we should replace them in the code too?
             if (context.IsNameDuplicate(expression.Label.Value.Value))
             {
-                this.Report.Add(new DuplicateQuestionNameMessage(expression));
+                this.Report.Add(new DuplicateQuestionIdentifierMessage(expression));
             }
             else
             {

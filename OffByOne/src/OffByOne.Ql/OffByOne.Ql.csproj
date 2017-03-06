@@ -121,11 +121,13 @@
     <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
     <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
+    <Compile Include="Checker\Messages\Base\ErrorMessage.cs" />
+    <Compile Include="Checker\Messages\Base\InfoMessage.cs" />
+    <Compile Include="Checker\Messages\Base\WarningMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
-    <Compile Include="Checker\Messages\DuplicateQuestionNameMessage.cs" />
-    <Compile Include="Checker\Messages\InvaildTypeMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionIdentifierMessage.cs" />
+    <Compile Include="Checker\Messages\InvalidTypeMessage.cs" />
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
-    <Compile Include="Checker\Models\LogLevel.cs" />
     <Compile Include="Checker\TypeChecker.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />

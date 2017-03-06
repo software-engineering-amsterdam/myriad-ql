@@ -11,6 +11,7 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
@@ -28,24 +29,24 @@
             ////TestQlGrammar();
             ////TestQlsGrammar();
 
-            ////var typeChcker = new TypeChecker();
-            ////var testCondition = new IfStatement(
-            ////    new EqualExpression(
-            ////        new LiteralExpression(new BooleanLiteral(true)),
-            ////        new LiteralExpression(new IntegerLiteral(2))),
-            ////    new List<Statement>(),
-            ////    new List<Statement>());
+            var typeChcker = new TypeChecker();
+            var testCondition = new IfStatement(
+                new EqualExpression(
+                    new BooleanLiteral(true),
+                    new IntegerLiteral(2)),
+                new List<Statement>(),
+                new List<Statement>());
 
-            ////var report = typeChcker.Check(new FormStatement(
-            ////    "test",
-            ////    new List<Statement> { testCondition }));
+            var report = typeChcker.Check(new FormStatement(
+                "test",
+                new List<Statement> { testCondition }));
 
-            ////foreach (var message in report.AllMessages)
-            ////{
-            ////    Console.WriteLine(message);
-            ////}
+            foreach (var message in report.AllMessages)
+            {
+                Console.WriteLine(message);
+            }
 
-            ////Console.WriteLine("Type check done!");
+            Console.WriteLine("Type check done!");
 
             var test = 3 + "Test";
 

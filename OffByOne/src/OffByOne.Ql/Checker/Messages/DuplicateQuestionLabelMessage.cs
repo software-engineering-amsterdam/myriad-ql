@@ -2,12 +2,11 @@
 {
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker.Messages.Base;
-    using OffByOne.Ql.Checker.Models;
 
-    public class DuplicateQuestionLabelMessage : CheckerMessage
+    public class DuplicateQuestionLabelMessage : WarningMessage
     {
-        public DuplicateQuestionLabelMessage(QuestionStatement question, LogLevel level = LogLevel.Error)
-            : base($"Duplicate question label {question.Identifier} at: {question.SourceCode}", level)
+        public DuplicateQuestionLabelMessage(QuestionStatement question)
+            : base($"Duplicate question label \"{question.Label}\" at: {question.SourceCode}")
         {
         }
     }

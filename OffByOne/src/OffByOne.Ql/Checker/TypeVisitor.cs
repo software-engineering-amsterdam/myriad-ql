@@ -16,7 +16,6 @@
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Checker.Models;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeVisitor
@@ -191,7 +190,7 @@
 
             if (leftExpressionType.IsNot<NumericalValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression.LeftExpression,
                     TypeConstants.NumericTypes,
                     leftExpressionType));
@@ -201,7 +200,7 @@
 
             if (rightEpressionType.IsNot<NumericalValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression.RightExpression,
                     TypeConstants.NumericTypes,
                     rightEpressionType));
@@ -230,7 +229,7 @@
             var subExpressionType = expression.Expression.Accept(this, context);
             if (subExpressionType.IsNot<NumericalValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression,
                     TypeConstants.NumericTypes,
                     subExpressionType));
@@ -246,7 +245,7 @@
 
             if (leftExpressionType != rightExpressionType)
             {
-                this.Report.Add(new InvaildTypeMessage(expression, leftExpressionType, rightExpressionType, LogLevel.Error));
+                this.Report.Add(new InvalidTypeMessage(expression, leftExpressionType, rightExpressionType));
             }
 
             return TypeConstants.BooleanType;
@@ -259,7 +258,7 @@
 
             if (leftExpressionType.IsNot<BooleanValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression.LeftExpression,
                     TypeConstants.BooleanType,
                     leftExpressionType));
@@ -269,7 +268,7 @@
 
             if (rightEpressionType.IsNot<BooleanValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression.RightExpression,
                     TypeConstants.BooleanType,
                     rightEpressionType));
@@ -286,7 +285,7 @@
 
             if (subExpressionType.IsNot<BooleanValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(
+                this.Report.Add(new InvalidTypeMessage(
                     expression,
                     TypeConstants.BooleanType,
                     subExpressionType));
@@ -302,7 +301,7 @@
             var conditionType = statement.Condition.Accept(this, context);
             if (conditionType.IsNot<BooleanValueType>())
             {
-                this.Report.Add(new InvaildTypeMessage(statement, TypeConstants.BooleanType, conditionType));
+                this.Report.Add(new InvalidTypeMessage(statement, TypeConstants.BooleanType, conditionType));
             }
 
             return TypeConstants.VoidType;
