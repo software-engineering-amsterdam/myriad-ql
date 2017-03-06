@@ -135,6 +135,12 @@ class PrintAst(object):
     def var_node(self, var_node):
         return str(var_node.val)
 
+    def int_node(self, int_node):
+        return str(int_node.val)
+
+    def decimal_node(self, decimal_node):
+        return str(decimal_node.val)
+
     def string_node(self, string_node):
         return "'{}'".format(string_node.val)
 
