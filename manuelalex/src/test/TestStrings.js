@@ -62,7 +62,7 @@ export let test6 =
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'
-        privateDebt: money
+        privateDebt: date
         answer 'Value residue:'
         valueResidue: money = (sellingPrice-privateDebt)
     }

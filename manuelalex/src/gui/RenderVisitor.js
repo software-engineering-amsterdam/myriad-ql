@@ -108,19 +108,35 @@ export class RenderVisitor {
     }
 
     renderDateInput(qlData) {
-        return new Surface({
-            content: type.toString()
+        let renderable = new SingleLineTextInput({
+            inputOptions: {type: 'date'}
         });
+        renderable.on('message', (message) => {
+            renderable._eventOutput.emit('state', {value: message, type: qlData});
+        });
+        renderable.setState = (state)=>{
+            state !== undefined && renderable.setValue(state);
+        };
+        return renderable;
     }
 
     renderNumberInput(qlNumber) {
-        return new Surface({
-            content: type.toString()
+        let renderable = new SingleLineTextInput({
+            inputOptions: {type: 'number'}
         });
+        renderable.on('message', (message) => {
+            renderable._eventOutput.emit('state', {value: message, type: qlNumber});
+        });
+        renderable.setState = (state)=>{
+            state !== undefined && renderable.setValue(state);
+        };
+        return renderable;
     }
 
     renderMoneyInput(qlMoney) {
-        let renderable = new SingleLineTextInput({});
+        let renderable = new SingleLineTextInput({
+            inputOptions: {type: 'number'}
+        });
         renderable.on('message', (message) => {
             renderable._eventOutput.emit('state', {value: message, type: qlMoney});
         });
