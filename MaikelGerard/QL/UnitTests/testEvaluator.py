@@ -14,10 +14,6 @@ class TestEvaluator(unittest.TestCase):
     q_parser = parser.question
     exp_parser = parser.expression
     cond_parser = parser.conditional
-    handler = ErrorHandler()
-    env = Environment(handler)
-
-    evaluator = Evaluate(None, env, handler)
 
     def setUp(self):
         self.handler = ErrorHandler()
