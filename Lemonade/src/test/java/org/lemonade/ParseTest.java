@@ -22,7 +22,9 @@ public class ParseTest {
     @Before
     public void setUp() throws Exception {
 
-        simpleForm = "form name {if(((-2) + 4.0) * 8.0 > 4.0) {tmp: \"yu\" money}}";
+        simpleForm = "form name {" +
+                "tmp1: \"Hoe groot is jouw decimal?\" decimal " +
+                "if(((-2) + 4.0) * 8.0 >= tmp1) {tmp: \"yu\" money}}";
 
     }
 
@@ -39,7 +41,7 @@ public class ParseTest {
 
         if (errorListener.hasErrors()){
             System.err.printf("%s\n", errorListener);
-            throw new IllegalStateException();
+            throw new IllegalStateException();//TODO fix error type.
         }
 
         Form root = (Form) tree.accept(visitor);

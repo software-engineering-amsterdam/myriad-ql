@@ -17,32 +17,35 @@ import org.lemonade.nodes.expressions.binary.PlusBinary;
 import org.lemonade.nodes.expressions.binary.ProductBinary;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.expressions.value.BooleanValue;
-import org.lemonade.nodes.expressions.value.ComparableValue;
-import org.lemonade.nodes.expressions.value.DecimalValue;
-import org.lemonade.nodes.expressions.value.IdentifierValue;
-import org.lemonade.nodes.expressions.value.IntegerValue;
-import org.lemonade.nodes.expressions.value.MoneyValue;
-import org.lemonade.nodes.expressions.value.NumericValue;
-import org.lemonade.nodes.expressions.value.StringValue;
+import org.lemonade.nodes.expressions.value.*;
 import org.lemonade.nodes.types.QLType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  */
 public class EvaluateVisitor implements ASTVisitor<Expression> {
+    Map<String, Value<?>> environment;
 
     @Override
     public Expression visit(Form form) {
+        environment = new HashMap<>();
 
         for (Body body : form.getBodies()) {
             body.accept(this);
         }
-        return null;
+        return form.accept(this);
     }
 
     @Override
     public Expression visit(Question question) {
+        String identifier = question.getIdentifier();
+//        Value<?> value = question.getValue();
+
+//        assert !environment.containsKey(identifier);
+//        environment.put(identifier, new UndefinedValue(question.getType()));
         return null;
     }
 
@@ -191,7 +194,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(IdentifierValue identifierValue) {
-        return identifierValue;
+        if (!environment.containsKey(identifierValue.getValue())) {
+            throw new RuntimeException("Symbol not found!");
+        }
+        return environment.get(identifierValue.getValue());
     }
 
     @Override

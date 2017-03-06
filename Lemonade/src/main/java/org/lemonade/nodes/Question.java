@@ -1,5 +1,7 @@
 package org.lemonade.nodes;
 
+import org.lemonade.nodes.expressions.Value;
+import org.lemonade.nodes.expressions.value.UndefinedValue;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
@@ -40,4 +42,5 @@ public class Question extends Body {
     public boolean isConditional() {
         return false;
     }
+
 }

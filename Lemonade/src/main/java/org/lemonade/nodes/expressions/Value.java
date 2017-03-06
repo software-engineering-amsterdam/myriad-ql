@@ -2,22 +2,18 @@ package org.lemonade.nodes.expressions;
 
 import org.lemonade.nodes.Position;
 import org.lemonade.nodes.expressions.value.BooleanValue;
+import org.lemonade.nodes.expressions.value.UndefinedValue;
 import org.lemonade.nodes.types.QLType;
 
 /**
  *
  */
-public abstract class Value<T> extends Expression {
-    QLType type;
+public abstract class Value<T> extends UndefinedValue {
     T value;
 
     public Value(QLType type, T value) {
-        this.type = type;
+        super(type);
         this.value = value;
-    }
-
-    public QLType getType() {
-        return type;
     }
 
     public T getValue() {
