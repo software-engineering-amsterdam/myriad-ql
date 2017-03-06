@@ -15,12 +15,7 @@ class TestParser(unittest.TestCase):
 
     def validate_node(self, parse_method, parse_str, test_node):
         parse_res = self.parse(parse_method, parse_str)[0]
-        print "=========================="
-        print "Parse String: {}".format(parse_str)
-        print "Parse Result: {}".format(parse_res)
-        print "Test Node: {}".format(test_node)
         self.assertEqual(parse_res, test_node)
-        print "\n=========================="
 
     def invalidate_node(self, parse_method, parse_str, test_node):
         parse_res = self.parse(parse_method, parse_str)[0]

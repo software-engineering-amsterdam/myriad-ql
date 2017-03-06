@@ -68,13 +68,11 @@ class QuestionnaireParser(object):
             "INTEGER": pp.Word(pp.nums),
             "VARIABLE": pp.Word(pp.alphas, pp.alphanums + "_"),
             "DECIMAL": pp.Regex("(\d+\.\d*)|(\d*\.\d+)"),
-            "MONEY": pp.Regex("(\d+\.\d{0,2})|(\d*\.\d{1,2})"),
             "DATE": pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}"),
             "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
         }
         types["INTEGER"].addParseAction(create_decimal)
         types["DECIMAL"].addParseAction(create_decimal)
-        types["MONEY"].addParseAction(create_decimal)
 
         types["DATE"].addParseAction(create_date)
 
@@ -182,8 +180,6 @@ class QuestionnaireParser(object):
                 self.create_node(AST.VarNode)) |
             self.var_types["DATE"].addParseAction(
                 self.create_node(AST.DateNode)) |
-            self.var_types["MONEY"].addParseAction(
-                self.create_node(AST.MoneyNode)) |
             self.var_types["DECIMAL"].addParseAction(
                 self.create_node(AST.DecimalNode)) |
             self.var_types["INTEGER"].addParseAction(
