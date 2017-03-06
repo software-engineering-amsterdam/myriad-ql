@@ -25,6 +25,10 @@ export class QLMoney extends Type {
     render(visitor){
         return visitor.renderMoneyInput(this);
     }
+
+    renderValue(visitor){
+        return visitor.renderMoneyValue(this);
+    }
 }
 export class QLString extends Type {
     render(visitor){

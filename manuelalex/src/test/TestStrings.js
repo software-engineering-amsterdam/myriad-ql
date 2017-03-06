@@ -53,9 +53,9 @@ export let test5 = 'put it on the floor';
 export let test6 =
     `form taxOfficeExample{
     question 'Did you sell a house in 2010?'
-    hasSoldHouse: boolean
+    hasSoldHouse: money
     question 'Did you buy a house in 2010?'
-    hasBoughtHouse: boolean
+    hasBoughtHouse: money
     question 'Did you enter a loan?'
     hasMaintLoan: string
     if (hasSoldHouse || hasBoughtHouse) {
@@ -64,6 +64,6 @@ export let test6 =
         question 'What was the private debts for the sold house?'
         privateDebt: date
         answer 'Value residue:'
-        valueResidue: money = (sellingPrice-privateDebt)
+        valueResidue: money = (hasSoldHouse-hasMaintLoan)
     }
      }`;

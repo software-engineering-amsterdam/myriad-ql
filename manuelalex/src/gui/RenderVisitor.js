@@ -63,6 +63,35 @@ export class RenderVisitor {
 
     }
 
+    renderAnswer(answer = {}, view = {}) {
+
+        let allocation = answer.getAllocation();
+        let expression = allocation.getExpression();
+        let type = allocation.getType();
+
+        let evaluation = expression.evaluate(this.memoryState);
+
+        /* Do we have to check here if evaluation's type is the same as the allocation type? */
+        console.log(evaluation);
+
+        if (evaluation) {
+            let label = answer.getLabel();
+            let labelRenderable = label.render(this);
+            let typeRenderable = type.renderValue(this);
+
+            typeRenderable.setContent(evaluation);
+
+            let subView = new View();
+            subView.getSize = () => [undefined, 88];
+
+            subView.addRenderable(labelRenderable, 'label', layout.dock.left(~120, 0, 10), layout.stick.center());
+            subView.addRenderable(typeRenderable, 'type', layout.dock.right(~120, 0, 10));
+            view.addRenderable(subView, `subView${this._viewCount++}`, layout.dock.top(44, 0, 10));
+        }
+
+    }
+
+
     renderLabel(label) {
         return new Surface({
             content: label.getValue()
@@ -90,7 +119,7 @@ export class RenderVisitor {
             renderable._eventOutput.emit('state', { value: true, type: qlBoolean });
         });
         renderable.setState = (state) => {
-           state !== undefined && renderable.setChecked(state);
+            state !== undefined && renderable.setChecked(state);
         };
 
         return renderable;
@@ -99,9 +128,9 @@ export class RenderVisitor {
     renderStringInput(qlString) {
         let renderable = new SingleLineTextInput({});
         renderable.on('message', (message) => {
-            renderable._eventOutput.emit('state', {value: message, type: qlString});
+            renderable._eventOutput.emit('state', { value: message, type: qlString });
         });
-        renderable.setState = (state)=>{
+        renderable.setState = (state) => {
             state !== undefined && renderable.setValue(state);
         };
         return renderable;
@@ -109,12 +138,12 @@ export class RenderVisitor {
 
     renderDateInput(qlData) {
         let renderable = new SingleLineTextInput({
-            inputOptions: {type: 'date'}
+            inputOptions: { type: 'date' }
         });
         renderable.on('message', (message) => {
-            renderable._eventOutput.emit('state', {value: message, type: qlData});
+            renderable._eventOutput.emit('state', { value: message, type: qlData });
         });
-        renderable.setState = (state)=>{
+        renderable.setState = (state) => {
             state !== undefined && renderable.setValue(state);
         };
         return renderable;
@@ -122,12 +151,12 @@ export class RenderVisitor {
 
     renderNumberInput(qlNumber) {
         let renderable = new SingleLineTextInput({
-            inputOptions: {type: 'number'}
+            inputOptions: { type: 'number' }
         });
         renderable.on('message', (message) => {
-            renderable._eventOutput.emit('state', {value: message, type: qlNumber});
+            renderable._eventOutput.emit('state', { value: message, type: qlNumber });
         });
-        renderable.setState = (state)=>{
+        renderable.setState = (state) => {
             state !== undefined && renderable.setValue(state);
         };
         return renderable;
@@ -135,15 +164,19 @@ export class RenderVisitor {
 
     renderMoneyInput(qlMoney) {
         let renderable = new SingleLineTextInput({
-            inputOptions: {type: 'number'}
+            inputOptions: { type: 'number' }
         });
         renderable.on('message', (message) => {
-            renderable._eventOutput.emit('state', {value: message, type: qlMoney});
+            renderable._eventOutput.emit('state', { value: message, type: qlMoney });
         });
-        renderable.setState = (state)=>{
+        renderable.setState = (state) => {
             state !== undefined && renderable.setValue(state);
         };
         return renderable;
+    }
+
+    renderMoneyValue(qlMoney){
+        return new Surface();
     }
 
     _addMarginsToView(view) {

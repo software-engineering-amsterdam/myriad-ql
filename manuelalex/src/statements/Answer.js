@@ -3,16 +3,23 @@
  */
 
 import {Statement}   from './Statement.js';
+import {Label}       from '../Label.js';
 
 export class Answer extends Statement {
-
-    render = null;
 
     constructor(name = '', allocation = {}, location = null) {
         super(location);
 
-        this.name = name;
+        this.label = new Label(name);
         this.allocation = allocation;
+    }
+
+    getLabel(){
+        return this.label;
+    }
+
+    getAllocation(){
+        return this.allocation;
     }
 
     validate() {
@@ -25,6 +32,10 @@ export class Answer extends Statement {
 
     accept(visitor){
         visitor.visitAnswer(self);
+    }
+
+    render(visitor, view){
+        visitor.renderAnswer(this, view);
     }
 
 
