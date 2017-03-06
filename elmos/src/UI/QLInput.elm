@@ -119,58 +119,66 @@ view { rawInput, parsedForm, messages } =
         ]
 
 
-renderMessage : Message -> Html.Html msg
+renderMessage : Message -> Html msg
 renderMessage message =
     case message of
-        Error (DuplicateQuestionDefinition name locations) ->
-            UI.Messages.error
-                [ text "Duplicate question definitions for variable "
-                , UI.Messages.renderVarName name
-                , text " at the following locations: [ "
-                , UI.Messages.renderLocations locations
-                , text "]"
-                ]
+        Error errorMessage ->
+            UI.Messages.error (renderErrorMessage errorMessage)
 
-        Error (ReferenceToUndefinedQuestion ( name, loc )) ->
-            UI.Messages.error
-                [ text <| "Reference to undefined variable "
-                , UI.Messages.renderVarName name
-                , text " at "
-                , UI.Messages.renderLocation loc
-                ]
+        Warning warningMessage ->
+            UI.Messages.warning (renderWarningMessage warningMessage)
 
-        Error (DependencyCycle cycle) ->
-            UI.Messages.error
-                [ text <|
-                    "Found dependency cycle : "
-                        ++ String.join " -> " cycle
-                ]
 
-        Error (ArithmeticExpressionTypeMismatch operator loc leftType rightType) ->
+renderWarningMessage : WarningMessage -> List (Html msg)
+renderWarningMessage message =
+    case message of
+        DuplicateLabels label ids ->
+            [ text "label \""
+            , b [] [ text label ]
+            , text "\" is used for multiple questions : "
+            , UI.Messages.renderIds ids
+            ]
+
+
+renderErrorMessage : ErrorMessage -> List (Html msg)
+renderErrorMessage message =
+    case message of
+        DuplicateQuestionDefinition name locations ->
+            [ text "Duplicate question definitions for variable "
+            , UI.Messages.renderVarName name
+            , text " at the following locations: [ "
+            , UI.Messages.renderLocations locations
+            , text "]"
+            ]
+
+        ReferenceToUndefinedQuestion ( name, loc ) ->
+            [ text <| "Reference to undefined variable "
+            , UI.Messages.renderVarName name
+            , text " at "
+            , UI.Messages.renderLocation loc
+            ]
+
+        DependencyCycle cycle ->
+            [ text "Found dependency cycle : "
+            , text (String.join " -> " cycle)
+            ]
+
+        ArithmeticExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        Error (LogicExpressionTypeMismatch operator loc leftType rightType) ->
+        LogicExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        Error (ComparisonExpressionTypeMismatch operator loc leftType rightType) ->
+        ComparisonExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        Error (RelationExpressionTypeMismatch operator loc leftType rightType) ->
+        RelationExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        Warning (DuplicateLabels label ids) ->
-            UI.Messages.warning
-                [ text "label \""
-                , b [] [ text label ]
-                , text "\" is used for multiple questions : "
-                , UI.Messages.renderIds ids
-                ]
 
-
-operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> Html msg
+operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> List (Html msg)
 operatorMismatchMessage operator loc leftType rightType =
-    UI.Messages.error
-        [ b [] [ text <| toString operator ]
-        , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
-        , UI.Messages.renderLocation loc
-        ]
+    [ b [] [ text <| toString operator ]
+    , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
+    , UI.Messages.renderLocation loc
+    ]
