@@ -66,7 +66,7 @@ public class QLTest {
     @Test
     public void singleIfEqualityBlock() throws IOException {
         String form = "form fA { if (1 != 2) { \"qA?\" hasA: boolean } }";
-        String expected = "(form form fA { (items (conditional (ifBlock if ( (expression (expression 1) (operator  != ) (expression 2)) ) { (items (question \"qA?\" hasA : (valueType boolean))) }))) })";
+        String expected = "(form form fA { (items (conditional (ifBlock if ( (expression (expression 1) != (expression 2)) ) { (items (question \"qA?\" hasA : (valueType boolean))) }))) })";
         String tree = ASTGenerator.getParseStringTree(form);
 
         assertEquals(expected, tree);
