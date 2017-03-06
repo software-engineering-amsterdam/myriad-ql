@@ -10,6 +10,14 @@ module QL
       rule(:spaces) { match('\s').repeat(1) }
       rule(:spaces?) { spaces.maybe }
 
+      def spaced(character)
+        str(character) >> spaces?
+      end
+
+      def curly_bracketed(atom)
+        spaced('{') >> atom >> spaced('}')
+      end
+
       # expression
       rule(:negation?) { (str('!') | str('-')).as(:negation).maybe }
       rule(:variable_or_literal) { negation? >> (boolean_literal | integer_literal | string_literal | variable) >> spaces? }
@@ -28,8 +36,11 @@ module QL
       # statement
       rule(:assignment?) { (str('=') >> spaces? >> expression).maybe >> spaces? }
       rule(:question) { (string_literal.as(:label) >> variable_assignment >> type.as(:type) >> assignment?).as(:question) >> spaces? }
-      rule(:body) { str('{') >> spaces? >> (question | if_statement).repeat.as(:body) >> str('}') >> spaces? }
+      rule(:body) { curly_bracketed((question | if_statement).repeat.as(:body)) }
       rule(:if_statement) { (str('if') >> spaces? >> expression >> body).as(:if_statement) }
+
+
+
 
       # type
       rule(:boolean_type) { str('boolean').as(:type) }
