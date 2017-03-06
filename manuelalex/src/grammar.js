@@ -190,7 +190,7 @@ var grammar = {
     {"name": "plus_minus_expression", "symbols": ["multiply_divide_expression"]},
     {"name": "plus_minus_expression$subexpression$1", "symbols": [{"literal":"-"}]},
     {"name": "plus_minus_expression$subexpression$1", "symbols": [{"literal":"+"}]},
-    {"name": "plus_minus_expression", "symbols": ["plus_minus_expression", "plus_minus_expression$subexpression$1", "plus_minus_expression"]},
+    {"name": "plus_minus_expression", "symbols": ["plus_minus_expression", "plus_minus_expression$subexpression$1", "plus_minus_expression"], "postprocess": FormPostProcessor.plusMinExpression},
     {"name": "multiply_divide_expression", "symbols": ["factor"]},
     {"name": "multiply_divide_expression$subexpression$1", "symbols": [{"literal":"/"}]},
     {"name": "multiply_divide_expression$subexpression$1", "symbols": [{"literal":"*"}]},

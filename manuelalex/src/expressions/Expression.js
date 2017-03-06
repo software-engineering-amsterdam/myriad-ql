@@ -29,8 +29,8 @@ export class Expression {
     }
 
     evaluate(memoryState){
-        let leftHandValue = memoryState.getValue(this.leftHand);
-        let rightHandValue = memoryState.getValue(this.rightHand);
+        let leftHandValue = memoryState.getValue(this.leftHand) || undefined;
+        let rightHandValue = memoryState.getValue(this.rightHand) || undefined;
 
         return eval(`${leftHandValue} ${this.operator} ${rightHandValue}`);
     }

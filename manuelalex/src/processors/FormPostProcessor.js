@@ -52,7 +52,10 @@ export class FormPostProcessor {
 
     expression(data, location, reject) {
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
+    }
 
+    plusMinExpression(data, location, reject) {
+        return new Expression(_.flattenDeep(data[0])[0],_.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
     }
 
     booleanExpression(data) {
