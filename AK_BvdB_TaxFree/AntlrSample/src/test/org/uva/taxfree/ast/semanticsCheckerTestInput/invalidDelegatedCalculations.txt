@@ -1,0 +1,7 @@
+form houseForm {
+    "Calculated one:" -> valueA : integer = valueB
+    "Calculated one:" -> valueB : integer = valueC
+    "Calculated one:" -> valueC : integer = valueD
+    "Calculated one:" -> valueD : integer = valueE
+    "Calculated one:" -> valueE : integer = valueA
+}
