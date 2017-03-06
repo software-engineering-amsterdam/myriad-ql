@@ -24,13 +24,13 @@ public class QuestionCollector implements FormVisitor<Void, List<Question>>, Sta
     }
 
     @Override
-    public Void visit(Form form, List<Question> questions) {
+    public Void visitForm(Form form, List<Question> questions) {
         visitStatements(questions, form.getStatements());
         return null;
     }
 
     @Override
-    public Void visit(IfThen ifThen, List<Question> questions) {
+    public Void visitIfThen(IfThen ifThen, List<Question> questions) {
 
         visitStatements(questions, ifThen.getThenStatements());
 
@@ -38,7 +38,7 @@ public class QuestionCollector implements FormVisitor<Void, List<Question>>, Sta
     }
 
     @Override
-    public Void visit(IfThenElse ifThenElse, List<Question> questions) {
+    public Void visitIfThenElse(IfThenElse ifThenElse, List<Question> questions) {
         visitStatements(questions, ifThenElse.getThenStatements());
         visitStatements(questions, ifThenElse.getElseStatements());
 
@@ -46,7 +46,7 @@ public class QuestionCollector implements FormVisitor<Void, List<Question>>, Sta
     }
 
     @Override
-    public Void visit(Question question, List<Question> questions) {
+    public Void visitQuestion(Question question, List<Question> questions) {
         questions.add(question);
 
         return null;

@@ -1,7 +1,6 @@
 package org.ql.evaluator;
 
 import org.junit.Test;
-import org.ql.ast.Expression;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
@@ -16,7 +15,6 @@ import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.BooleanType;
-import org.ql.ast.type.Type;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.DecimalValue;
 import org.ql.evaluator.value.IntegerValue;
@@ -539,7 +537,7 @@ public class EvaluatorTest {
         Question question = new Question(new Identifier("example"), new QuestionText("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
 
-        evaluator.visit(question, null);
+        evaluator.visitQuestion(question, null);
 
         assertSame(1, valueTable.size());
         assertSame(7, valueTable.lookup(new Identifier("example")).getPlainValue());
@@ -559,7 +557,7 @@ public class EvaluatorTest {
 
         IfThen ifThen = new IfThen(new GreaterThan(new IntegerLiteral(3), new IntegerLiteral(5)), statements);
 
-        evaluator.visit(ifThen, null);
+        evaluator.visitIfThen(ifThen, null);
 
         assertSame(2, valueTable.size());
         assertSame(7, valueTable.lookup(new Identifier("firstExample")).getPlainValue());
@@ -583,7 +581,7 @@ public class EvaluatorTest {
 
         IfThenElse ifThen = new IfThenElse(new GreaterThan(new IntegerLiteral(3), new IntegerLiteral(5)), ifStatements, elseStatements);
 
-        evaluator.visit(ifThen, null);
+        evaluator.visitIfThenElse(ifThen, null);
 
         assertSame(2, valueTable.size());
         assertSame(7, valueTable.lookup(new Identifier("firstExample")).getPlainValue());
@@ -600,7 +598,7 @@ public class EvaluatorTest {
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
         statements.add(firstQuestion);
 
-        evaluator.visit(new Form(new Identifier("exampleForm"), statements), null);
+        evaluator.visitForm(new Form(new Identifier("exampleForm"), statements), null);
 
         assertSame(1, valueTable.size());
         assertSame(7, valueTable.lookup(new Identifier("example")).getPlainValue());

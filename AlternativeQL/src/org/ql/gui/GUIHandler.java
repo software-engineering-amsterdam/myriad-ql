@@ -28,19 +28,19 @@ public class GUIHandler extends Application {
 
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
-        typeChecker.visit(form, null);
+        typeChecker.visitForm(form, null);
 
         if(messages.hasErrors()) {
             System.out.println("An error was found!");
         } else {
             ValueTable valueTable = new ValueTable();
             Evaluator evaluator = new Evaluator(valueTable);
-            evaluator.visit(form, null);
+            evaluator.visitForm(form, null);
 
             primaryStage.show();
             MainStage mainStage = new MainStage(primaryStage);
             GUIVisitor guiVisitor = new GUIVisitor(mainStage, valueTable);
-            guiVisitor.visit(form, null);
+            guiVisitor.visitForm(form, null);
         }
     }
 }

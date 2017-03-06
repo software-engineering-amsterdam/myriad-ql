@@ -22,7 +22,7 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Pan
     }
 
     @Override
-    public Pane visit(Form form, Void ignore) {
+    public Pane visitForm(Form form, Void ignore) {
         mainStage.getStage().setTitle(form.getName().toString());
 
         for (Statement statement : form.getStatements()) {
@@ -34,21 +34,21 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Pan
     }
 
     @Override
-    public Pane visit(IfThen ifThen, Void ignore) {
+    public Pane visitIfThen(IfThen ifThen, Void ignore) {
         ifThen.accept(this, null);
 
         return null;
     }
 
     @Override
-    public Pane visit(IfThenElse ifThenElse, Void ignore) {
+    public Pane visitIfThenElse(IfThenElse ifThenElse, Void ignore) {
         ifThenElse.accept(this, null);
 
         return null;
     }
 
     @Override
-    public Pane visit(Question question, Void ignore) {
+    public Pane visitQuestion(Question question, Void ignore) {
         Pane pane = new Pane();
         pane.setVisible(true);
         pane.setMinWidth(600);

@@ -29,7 +29,7 @@ public class TypeCheckerTest {
     public void shouldAddErrorWhenFormNameEmpty() {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
-        typeChecker.visit(new Form(new Identifier(""), new ArrayList<>()), null);
+        typeChecker.visitForm(new Form(new Identifier(""), new ArrayList<>()), null);
 
         assertTrue(messages.getErrors().size() == 1);
         assertEquals("Identifier cannot be empty", messages.getErrors().get(0));
@@ -40,7 +40,7 @@ public class TypeCheckerTest {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
-        typeChecker.visit(new Form(new Identifier("test"), new ArrayList<>()), null);
+        typeChecker.visitForm(new Form(new Identifier("test"), new ArrayList<>()), null);
 
         assertEquals(0, messages.getErrors().size());
     }
@@ -52,7 +52,7 @@ public class TypeCheckerTest {
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
 
-        typeChecker.visit(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
+        typeChecker.visitForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
         }}), null);
@@ -80,7 +80,7 @@ public class TypeCheckerTest {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
-        typeChecker.visit(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new DecimalLiteral(new BigDecimal(23.4))), null);
+        typeChecker.visitQuestion(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new DecimalLiteral(new BigDecimal(23.4))), null);
 
         assertEquals(0, messages.getErrors().size());
     }
@@ -90,7 +90,7 @@ public class TypeCheckerTest {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
-        typeChecker.visit(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new BooleanLiteral(true)), null);
+        typeChecker.visitQuestion(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new BooleanLiteral(true)), null);
 
         assertEquals(1, messages.getErrors().size());
     }
@@ -529,7 +529,7 @@ public class TypeCheckerTest {
         Messages messages = new Messages();
         TypeChecker typeChecker = new TypeChecker(messages, new SymbolTable(), new CircularDependenciesResolver());
 
-        typeChecker.visit(new Form(new Identifier("Form"), new ArrayList<Statement>() {{
+        typeChecker.visitForm(new Form(new Identifier("Form"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionText("label1"), new BooleanType(), new Parameter(new Identifier("second"))));
             add(new Question(new Identifier("second"), new QuestionText("label2"), new BooleanType(), new Parameter(new Identifier("first"))));
             add(new Question(new Identifier("third"), new QuestionText("label2"), new BooleanType(), null));

@@ -43,21 +43,20 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Void visit(Form form, Void ignore) {
+    public Void visitForm(Form form, Void ignore) {
         Questions questions = QuestionCollector.collect(form);
 
         fillSymbolTable(questions);
         checkQuestionDuplicates(questions);
         checkIdentifier(form.getName());
         checkStatements(form.getStatements());
-
         checkCircularDependencies();
 
         return null;
     }
 
     @Override
-    public Void visit(IfThen ifThen, Void ignore) {
+    public Void visitIfThen(IfThen ifThen, Void ignore) {
         checkCondition(ifThen.getCondition());
         checkStatements(ifThen.getThenStatements());
 
@@ -65,7 +64,7 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Void visit(IfThenElse ifThenElse, Void ignore) {
+    public Void visitIfThenElse(IfThenElse ifThenElse, Void ignore) {
         checkCondition(ifThenElse.getCondition());
         checkStatements(ifThenElse.getThenStatements());
         checkStatements(ifThenElse.getElseStatements());
@@ -74,7 +73,7 @@ public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Vo
     }
 
     @Override
-    public Void visit(Question question, Void ignore) {
+    public Void visitQuestion(Question question, Void ignore) {
 
         checkIdentifier(question.getId());
 

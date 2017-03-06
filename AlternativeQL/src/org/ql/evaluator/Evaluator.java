@@ -22,14 +22,14 @@ import java.util.List;
 public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisitor<Void, Void>,
         FormVisitor<Void, Void> {
 
-    private ValueTable valueTable;
+    private final ValueTable valueTable;
 
     public Evaluator(ValueTable valueTable) {
         this.valueTable = valueTable;
     }
 
     @Override
-    public Void visit(Form form, Void context) {
+    public Void visitForm(Form form, Void context) {
         checkStatements(form.getStatements(), context);
 
         return null;
@@ -183,7 +183,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisit
     }
 
     @Override
-    public Void visit(IfThen ifThen, Void context) {
+    public Void visitIfThen(IfThen ifThen, Void context) {
         ifThen.getCondition().accept(this, context);
 
         checkStatements(ifThen.getThenStatements(), context);
@@ -192,7 +192,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisit
     }
 
     @Override
-    public Void visit(IfThenElse ifThenElse, Void context) {
+    public Void visitIfThenElse(IfThenElse ifThenElse, Void context) {
         ifThenElse.getCondition().accept(this, context);
 
         checkStatements(ifThenElse.getElseStatements(), context);
@@ -202,7 +202,7 @@ public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisit
     }
 
     @Override
-    public Void visit(Question question, Void context) {
+    public Void visitQuestion(Question question, Void context) {
         if (question.getValue() != null) {
             valueTable.declare(question.getId(), question.getValue().accept(this, context));
         }
