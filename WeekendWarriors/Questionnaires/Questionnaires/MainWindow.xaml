@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Questionnaires"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="768" Width="1024">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="Input" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
+        <TextBox x:Name="InputQL" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
 form Box1HouseOwning { 
     hasSoldHouse: "Did you sell a house in 2010?" boolean
     hasBoughtHouse: "Did you by a house in 2010?" boolean
@@ -21,7 +25,39 @@ boolean(true)
 
 }
         </TextBox>
-        <Button x:Name="Interpret" Grid.Row="1" Width="70" Content="Interpret!" Click="Interpret_Click"/>
-        <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2">output</TextBlock>
+        <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
+            stylesheet taxOfficeExample 
+  page Housing {
+    section "Buying"
+      question hasBoughtHouse  
+        widget checkbox 
+    section "Loaning"  
+      question hasMaintLoan
+  }
+
+  page Selling { 
+    section "Selling" {
+      question hasSoldHouse
+        widget radio("Yes", "No") 
+      section "You sold a house" {
+        question sellingPrice
+          widget spinbox
+        question privateDebt
+          widget spinbox 
+        question valueResidue
+        default money {
+          width: 400
+          font: "Arial" 
+          fontsize: 14
+          color: #999999
+          widget spinbox
+        }        
+      }
+    }
+    default boolean widget radio("Yes", "No")
+  }  
+        </TextBox>
+        <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>
+        <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">output</TextBlock>
     </Grid>
 </Window>

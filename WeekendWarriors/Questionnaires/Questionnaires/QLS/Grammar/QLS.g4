@@ -48,11 +48,18 @@ cssItem
 Whitespace: [ \t\r\n\u000C]+ -> skip;
 MultiLineComment: '/*' .*? '*/' -> skip;
 SingleLineComment: '//' ~('\r' | '\n')* -> skip;
+HexDigit: ('0'..'9''a'..'f''A'..'F');
 
 LiteralValue: 'money' | 'boolean' | 'string' | 'int';
 Type: 'spinbox' | 'slider' | 'text' | 'radio' | 'checkbox' | 'dropdown' ;
 Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 Property: 'width' | 'font' | 'fontsize' | 'color' ;
+
+StringLiteral: '"' (~'"')* '"';
+NumberLiteral: ('0'..'9')+;
+ColorLiteral: '#'HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
+
+
 /**
  * Parser rules
  */
@@ -63,4 +70,4 @@ widgetQuestion: question '{' widget '}';
 widget: 'widget' Type;
 question: 'question' Identifier;
 defaultStyle: 'default' LiteralValue '{' cssItem* widget '}';
-cssItem: Identifier ':' Identifier;
+cssItem: Property ':' (StringLiteral | NumberLiteral | ColorLiteral);
