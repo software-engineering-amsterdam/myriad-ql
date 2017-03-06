@@ -123,8 +123,7 @@
 
         public IValue Visit(VariableExpression expression, TypeEnvironment context)
         {
-            // TODO: Get value from type enviorment
-            throw new System.NotImplementedException();
+            return context.GetValueOf(expression.Identifier);
         }
 
         public IValue Visit(BracketExpression expression, TypeEnvironment context)
