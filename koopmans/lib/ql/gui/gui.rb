@@ -1,5 +1,7 @@
 require 'tk'
 
+
+# TODO move out of QL module
 module QL
   module GUI
     class GUI
@@ -9,7 +11,7 @@ module QL
         return if check(type_checker) == 'quit'
         @questions = Hash.new
         FormBuilder.new(ql_ast, self)
-        # StylesheetBuilder.new(qls_ast, ql_ast, self)
+        StylesheetBuilder.new(qls_ast, ql_ast, self)
 
         SubmitButton.new(self)
         Tk.mainloop

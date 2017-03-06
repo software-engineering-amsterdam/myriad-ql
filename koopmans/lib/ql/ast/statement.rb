@@ -43,7 +43,7 @@ module QL
         if @assignment
           QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
         else
-          @type.gui_question.new(gui: gui, question: self)
+          @type.question_frame.new(gui: gui, question: self)
         end
       end
     end
