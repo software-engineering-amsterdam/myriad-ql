@@ -17,7 +17,7 @@ public class SymbolTableTest {
     @Test
     public void testEvaluate() throws Exception {
         BooleanQuestion boolQuestion = new BooleanQuestion("did you sell a house?", "hasSoldHouse");
-        mSymbolTable.addSymbol(boolQuestion);
+        mSymbolTable.addDeclaration(boolQuestion);
         Assert.assertEquals("false", mSymbolTable.resolve("hasSoldHouse"));
     }
 
