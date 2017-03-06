@@ -1,0 +1,4 @@
+form houseForm {
+    "What's the price of the sold house?" -> soldHousePrice : integer
+    "Amount left:" -> amountLeft : integer = amountLeft + boughtHousePrice
+}

@@ -12,15 +12,13 @@ public class SemanticsAnalyzer {
     private final Environment mEnvironment;
 
     /*
-     * UNDEFINES - reference to undefined questions // TODO
+     * //UNDEFINES - reference to undefined questions
      *   if (nonExists) etc.
      * // DUPLICATE-QUESTIONS - duplicate question declarations with different types
-     *  "Question?" -> varName : boolean
-     *  "Question2?" -> varName : string
      * WRONGCONDITIONS - conditions that are not of the type boolean // TODO
      * WRONGCONDITIONS - operands of invalid type to operators // TODO
      * IFELSERECURSION - cyclic dependencies between questions // TODO
-     * // DUPLICATE-LABELS - duplicate labels (warning)
+     * // DUPLICATE-LABELS - duplicate labels (TODO: make it a warning)
      *
      * TODO:
      * - Check | if ("")
