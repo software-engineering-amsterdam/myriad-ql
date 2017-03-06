@@ -1,5 +1,5 @@
 form houseForm {
     "Calculated a:" -> valueA : integer = valueB
     "Calculated b:" -> valueB : integer = valueC
-    "Calculated c:" -> valueC : integer = ValueB
+    "Calculated c:" -> valueC : integer = valueB
 }
