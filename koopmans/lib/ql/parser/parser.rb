@@ -20,7 +20,7 @@ module QL
       rule(:expression) { str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal }
 
       # form
-      rule(:form) { spaces? >> (str('form') >> spaces? >> variable >> spaces? >> block).as(:form) }
+      rule(:form) { spaces? >> (str('form') >> spaces? >> variable.as(:id) >> spaces? >> block).as(:form) }
 
       # literal
       rule(:boolean_literal) { (str('true') | str('false')).as(:boolean_literal) >> spaces? }
@@ -29,7 +29,7 @@ module QL
 
       # statement
       rule(:assignment?) { (str('=') >> spaces? >> expression).maybe >> spaces? }
-      rule(:question) { (string_literal.as(:label) >> variable_assignment.as(:variable) >> type.as(:type) >> assignment?).as(:question) >> spaces? }
+      rule(:question) { (string_literal.as(:label) >> variable_assignment >> type.as(:type) >> assignment?).as(:question) >> spaces? }
       rule(:block) { str('{') >> spaces? >> (question | if_statement).repeat.as(:block) >> str('}') >> spaces? }
       rule(:if_statement) { (str('if') >> spaces? >> expression >> block).as(:if_statement) }
 
@@ -45,7 +45,7 @@ module QL
 
       # variable.as
       rule(:variable) { match('\w+').repeat(1).as(:variable) }
-      rule(:variable_assignment) { variable >> str(':') >> spaces? }
+      rule(:variable_assignment) { variable.as(:id) >> str(':') >> spaces? }
     end
   end
 end

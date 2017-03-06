@@ -21,7 +21,9 @@ module QL
       rule(string_literal: simple(:value)) { StringLiteral.new(value) }
 
 
-      rule(question: { label: subtree(:string_literal), variable: simple(:variable), type: subtree(:type) }) { Question.new(string_literal, Variable.new(variable), type) }
+      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
+      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), expression: subtree(:expression) }) { Question.new(string_literal, variable, type, expression) }
+
       # rule(question: subtree(:aap)) { p aaps }
       # question
       # TODO: BooleanType.new -> BooleanType
@@ -31,19 +33,19 @@ module QL
       # rule(question: { string: simple(:string), variable: simple(:variable), type: 'string' }) { Question.new(string, Variable.new(variable), StringType) }
       # rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal' }) { Question.new(string, Variable.new(variable), DecimalType) }
       # rule(question: { string: simple(:string), variable: simple(:variable), type: 'date' }) { Question.new(string, Variable.new(variable), DateType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), BooleanType, expression) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), IntegerType, expression) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'money', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), MoneyType, expression) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'string', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), StringType, expression) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DecimalType, expression) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'date', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DateType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), BooleanType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), IntegerType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'money', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), MoneyType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'string', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), StringType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DecimalType, expression) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'date', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DateType, expression) }
 
       # if statement
       rule(if_statement: { expression: subtree(:expression), block: subtree(:block) }) { IfStatement.new(expression, block) }
 
 
       # form
-      rule(form: { variable: simple(:variable), block: subtree(:block) }) { Form.new(Variable.new(variable), block) }
+      rule(form: { id: simple(:variable), block: subtree(:block) }) { Form.new(variable, block) }
 
       # negation: ! -
       rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(Variable.new(variable)) }
