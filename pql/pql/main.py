@@ -95,9 +95,14 @@ if __name__ == '__main__':
     ql_ast = parse(ql_str)
     if ql_ast is None:
         exit(4)
+
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
     environment = strip_keys_from_dict(ql_identifier_check_result)
     app = QApplication(argv)
-    gui = Gui(environment)
+
+    evaluator = Evaluator(environment)
+    gui = Gui(environment, evaluator)
     gui.visit(ql_ast)
+    gui.show()
+
     exit(app.exec_())

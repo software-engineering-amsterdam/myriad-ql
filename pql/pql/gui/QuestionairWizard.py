@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWizard
 from PyQt5.QtWidgets import QWizardPage
 
@@ -15,7 +17,6 @@ class QuestionairWizard(QWizard):
         self.resize(640, 480)
         self.setWindowTitle('Leuker kunnen we het niet maken')
         self.center()
-        self.show()
 
     def center(self):
         frameGm = self.frameGeometry()
@@ -31,11 +32,12 @@ class QuestionairWizard(QWizard):
 class Page(QWizardPage):
     def __init__(self, title, subtitle, parent=None):
         super(Page, self).__init__(parent)
-        self.setTitle(title)
+        self.setTitle(title.name)
         self.setSubTitle(subtitle)
+        self.layout = QVBoxLayout()
 
-    def set_layout(self, node):
-        self.setLayout(node)
-#         gui.build(ql_ast)
+    def add_layout(self, layout):
+        self.layout.addLayout(layout)
 
-
+    def set_layout(self):
+        self.setLayout(self.layout)

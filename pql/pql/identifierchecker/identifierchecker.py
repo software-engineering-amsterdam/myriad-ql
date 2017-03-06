@@ -1,8 +1,10 @@
 # coding=utf-8
 from collections import defaultdict
 
+from pql.traversal.FormVisitor import FormVisitor
 
-class IdentifierChecker(object):
+
+class IdentifierChecker(FormVisitor):
     def __init__(self):
         # TODO: Dictionary niet als instance variable
         self.identifier_dict = defaultdict(list)

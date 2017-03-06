@@ -23,11 +23,3 @@ class FormVisitor(metaclass=ABCMeta):
     @abstractmethod
     def conditional_if_else(self, node):
         pass
-
-    @abstractmethod
-    def identifier(self, node):
-        pass
-
-    @abstractmethod
-    def value(self, node):
-        pass
