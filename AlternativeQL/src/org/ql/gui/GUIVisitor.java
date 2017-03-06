@@ -1,6 +1,7 @@
 package org.ql.gui;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.ql.ast.Form;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
@@ -8,18 +9,20 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
+import org.ql.evaluator.ValueTable;
 
 public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Pane, Void> {
 
     private MainStage mainStage;
+    private ValueTable valueTable;
 
-    public GUIVisitor(MainStage mainStage) {
+    public GUIVisitor(MainStage mainStage, ValueTable valueTable) {
         this.mainStage = mainStage;
+        this.valueTable = valueTable;
     }
 
     @Override
     public Pane visit(Form form, Void ignore) {
-        System.out.println(form.getName().toString());
         mainStage.getStage().setTitle(form.getName().toString());
 
         for (Statement statement : form.getStatements()) {
@@ -32,16 +35,27 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Pan
 
     @Override
     public Pane visit(IfThen ifThen, Void ignore) {
+        ifThen.accept(this, null);
+
         return null;
     }
 
     @Override
     public Pane visit(IfThenElse ifThenElse, Void ignore) {
+        ifThenElse.accept(this, null);
+
         return null;
     }
 
     @Override
     public Pane visit(Question question, Void ignore) {
-        return null;
+        Pane pane = new Pane();
+        pane.setVisible(true);
+        pane.setMinWidth(600);
+        pane.setMinHeight(100);
+        Text questionText = new Text(question.getQuestionText().toString());
+        pane.getChildren().add(questionText);
+
+        return pane;
     }
 }
