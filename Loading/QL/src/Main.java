@@ -12,8 +12,8 @@ import ui.Questionnaire;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { \n"
-				 + "Name1: \"Question1\" string \n"
-				 + "if (Name1 == \"dag\") {\n"
+				 + "Name1: \"Question1\" integer \n"
+				 + "if ( 2 + Name1 == 5) {\n"
  		 		 + "Name2: \"Question2\" boolean\n"
 				 + "}\n"
 				 + "Name3: \"Question3\" boolean \n"

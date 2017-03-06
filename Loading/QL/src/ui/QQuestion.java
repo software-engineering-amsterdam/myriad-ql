@@ -6,14 +6,14 @@ import ui.field.Field;
 import value.Value;
 import ui.Questionnaire.Notifier;
 
-public class QuestionnaireQuestion {
+public class QQuestion {
 
 	private String name;
 	private String label;
 	private Type type;
 	private Field entryField;
 
-	public QuestionnaireQuestion(String name, String label, Type type) {
+	public QQuestion(String name, String label, Type type) {
 		this.name = name;
 		this.label = label;
 		this.type = type;

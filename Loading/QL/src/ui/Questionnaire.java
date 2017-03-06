@@ -103,10 +103,10 @@ public class Questionnaire extends Application {
     }
     
     
-    private void setAnswers(List<QuestionnaireQuestion> activeQuestions) {
+    private void setAnswers(List<QQuestion> activeQuestions) {
     	
     	// TODO change
-    	for (QuestionnaireQuestion question : activeQuestions) {
+    	for (QQuestion question : activeQuestions) {
     		
     		Value value = answers.getAnswer(question.getName());
     		if (value == null) {
@@ -118,7 +118,7 @@ public class Questionnaire extends Application {
     
     private void renderQuestionnaire(GridPane grid) {
         
-    	List<QuestionnaireQuestion> activeQuestions = renderQuestions(grid);
+    	List<QQuestion> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -132,7 +132,7 @@ public class Questionnaire extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (QuestionnaireQuestion activeQuestion : activeQuestions) {
+            	for (QQuestion activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
             		if (answer.getValue() == null) {
@@ -157,14 +157,14 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QuestionnaireQuestion> renderQuestions(GridPane grid) {
+    private List<QQuestion> renderQuestions(GridPane grid) {
         
-    	QuestionnaireVisitor qVisitor = new QuestionnaireVisitor(answers);
+    	QEvaluator qVisitor = new QEvaluator(answers);
     	qVisitor.visit(form);
-    	List<QuestionnaireQuestion> activeQuestions = qVisitor.getActiveQuestions();
+    	List<QQuestion> activeQuestions = qVisitor.getActiveQuestions();
     	
     	int rowIndex = 0;
-        for (QuestionnaireQuestion question : activeQuestions) {
+        for (QQuestion question : activeQuestions) {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 
