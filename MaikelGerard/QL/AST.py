@@ -83,7 +83,6 @@ class QuestionNode(Node):
         self.question = question
         self.name = name
         self.type = var_type
-        self.is_defined = False
 
     def get_identifier(self):
         return self.name.val
@@ -447,6 +446,9 @@ class DateTypeNode(TypeNode):
         super(DateTypeNode, self).__init__("date", line, col)
         self.default = date(day=1, month=1, year=2000)
 
+    def convert_to_type(self, value):
+        return value
+
     def accept(self, visitor):
         return visitor.date_type_node(self)
 
@@ -472,6 +474,9 @@ class StringNode(VarNode):
 
     def accept(self, visitor):
         return visitor.string_node(self)
+
+    def __str__(self, indent=0):
+        return "'{}'".format(self.val)
 
 
 class IntNode(VarNode):
@@ -512,3 +517,6 @@ class DateNode(VarNode):
 
     def accept(self, visitor):
         return visitor.date_node(self)
+
+    def __str__(self, indent=0):
+        return self.val.strftime("%d-%m-%Y")

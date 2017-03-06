@@ -118,7 +118,6 @@ class TypeChecker(object):
         different_types = left.is_numeric() ^ right.is_numeric()
 
         if not valid_types or different_types:
-            # TODO: case ("abc" + 1) + (1 + 1) gives additional errors.
             self.handler.add_binop_error(self.context, add_node, left, right)
             return AST.DecimalTypeNode()
         if left.is_numeric() and right.is_numeric():

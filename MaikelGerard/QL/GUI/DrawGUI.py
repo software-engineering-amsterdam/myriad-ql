@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-
 from appJar import gui
 from collections import OrderedDict
-import json
 
 from QL.Undefined import Undefined
 from QL.GUI.EvaluateDrawState import EvaluateDrawState
+from QL.GUI.SaveQuestionaire import SaveQuestionaire
 
 
 class DrawGUI(object):
     def __init__(self, ast, env, evaluator, error_handler):
-        # Random comment; the 'cget' function can be used to retrieve
-        # properties of the Tkinter object reference.
-        self.main = gui("QL Language Form - © 2017")
-        self.row = 0
-        self.add_header()
+        self.ast = ast
         self.env = env
         self.evaluator = evaluator
         self.handler = error_handler
 
+        self.main = gui("QL Language Form - © 2017")
+        self.row = 0
+        self.add_header()
+
         self.set_draw_state = EvaluateDrawState(self, ast, env,
                                                 evaluator, error_handler)
-
         self.widgets = OrderedDict()
 
     def start(self):
         self.evaluator.start_traversal()
+        self.adjust_env()
         self.set_draw_state.start_traversal()
         self.add_buttons()
         self.main.go()
@@ -90,6 +90,6 @@ class DrawGUI(object):
         return widget_values
 
     def save_data(self):
-        json_dict = self.get_question_values()
-        with open("./form_output.txt", "w+") as form_output:
-            json.dump(json_dict, form_output, indent=4)
+        save_obj = SaveQuestionaire(self, self.ast, self.env,
+                                    self.evaluator, self.handler)
+        save_obj.start_traversal()

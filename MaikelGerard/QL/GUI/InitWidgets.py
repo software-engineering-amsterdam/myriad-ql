@@ -71,5 +71,5 @@ class InitWidgets(object):
     def string_type_node(self, _):
         return Widgets.EntryWidget
 
-#    def date_type_node(self, _):
-#        return self.gui.add_datepicker_question
+    def date_type_node(self, _):
+        return Widgets.DateWidget
