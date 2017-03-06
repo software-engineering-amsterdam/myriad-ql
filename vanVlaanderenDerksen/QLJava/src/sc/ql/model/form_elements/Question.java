@@ -1,11 +1,10 @@
 package sc.ql.model.form_elements;
 
-import sc.ql.model.FormElement;
 import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
 import sc.ql.model.atoms.AtomId;
 
-public class Question implements FormElement {
+public class Question implements Node {
 	private final String question; 
 	private final AtomId id;
 	private final Type type;
@@ -13,7 +12,7 @@ public class Question implements FormElement {
 	private final Integer line_number;
 	
 	public enum Type {
-		BOOLEAN, INTEGER, MONEY, STRING;
+		BOOLEAN, INTEGER, MONEY, STRING, ID;
 	}
 	
 	public Question(String question, AtomId id, Type type, Node expression, Integer line_number) {

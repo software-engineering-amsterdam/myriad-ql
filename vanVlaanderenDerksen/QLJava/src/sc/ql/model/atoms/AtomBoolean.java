@@ -1,12 +1,13 @@
 package sc.ql.model.atoms;
 
-import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
+import sc.ql.model.expressions.Expression;
 
-public class AtomBoolean implements Node {
+public class AtomBoolean extends Expression {
 	private final Boolean value;
 	
-	public AtomBoolean(Boolean value) {
+	public AtomBoolean(Boolean value, Integer line_number) {
+		super(line_number);
 		this.value = value;
 	}
 	

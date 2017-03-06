@@ -1,10 +1,10 @@
 form
-	"dit is een test 2" buyingPrice2 BOOLEAN
-	"dit is een test 2" buyingPrice3 INTEGER
+	"dit is een test 2" buyingPrice1 BOOLEAN
+	"dit is een test" buyingPrice2 INTEGER
 
-	if (buyingPrice2 || false)
+	if (buyingPrice1 || false)
 		"nog een vraag" vraag4 STRING
-	else
-		"nog een vraag 7" vraag7 STRING
+	else if (vraag7 == buyingPrice1)
+		"dit is nog een vraag 7" vraag7 STRING
 	endif
 endform

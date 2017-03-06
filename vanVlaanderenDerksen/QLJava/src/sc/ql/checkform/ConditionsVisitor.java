@@ -76,7 +76,7 @@ public class ConditionsVisitor implements NodeVisitor<Question.Type> {
 
 	@Override
 	public Question.Type visit(AtomId atom_id) {
-		return this.identifier_types.get(atom_id.getValue());
+		return Type.ID; //this.identifier_types.get(atom_id.getValue());
 	}
 
 	@Override

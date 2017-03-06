@@ -1,12 +1,13 @@
 package sc.ql.model.atoms;
 
-import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
+import sc.ql.model.expressions.Expression;
 
-public class AtomId implements Node {
+public class AtomId extends Expression {
 	private final String identifier;
 	
-	public AtomId(String identifier) {
+	public AtomId(String identifier, Integer line_number) {
+		super(line_number);
 		this.identifier = identifier;
 	}
 	
