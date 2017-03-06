@@ -2,6 +2,7 @@ module QL
   module TypeChecker
     class UndefinedVariableChecker
       include Visitor
+      include Notification
 
       def visit_form(form)
         # get all question variables e.g. ["hasSoldHouse", "hasBoughtHouse", "hasMaintLoan"]

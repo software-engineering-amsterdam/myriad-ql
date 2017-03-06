@@ -11,38 +11,42 @@ module QL
     describe TypeChecker do
       describe DuplicateLabelChecker do
         it 'detects error' do
-          expect(form_ast.accept(DuplicateLabelChecker.new))
-            .to match(['[WARNING]: question with label \'Did you sell a house in 2010?\' is defined multiple times'])
+          expect(form_ast.accept(DuplicateLabelChecker.new).map(&:message))
+            .to include('question with label \'Did you sell a house in 2010?\' is defined multiple times')
         end
       end
 
       describe DuplicateVariableChecker do
         it 'detects error' do
-          expect(form_ast.accept(DuplicateVariableChecker.new))
-            .to match(['[ERROR]: variable \'hasSoldHouse\' is defined multiple times'])
+          expect(form_ast.accept(DuplicateVariableChecker.new).map(&:message))
+            .to include('variable \'hasSoldHouse\' is defined multiple times')
         end
       end
 
       describe UndefinedVariableChecker do
         it 'detects error' do
-          expect(form_ast.accept(UndefinedVariableChecker.new))
-            .to match(['[ERROR]: variable \'_\' is undefined'])
+          expect(form_ast.accept(UndefinedVariableChecker.new).map(&:message))
+            .to include('variable \'_\' is undefined')
         end
       end
 
       describe OperandsTypeChecker do
         it 'detects error' do
-          expect(form_ast.accept(OperandsTypeChecker.new))
-            .to match(['[ERROR]: QL::AST::BooleanType can not be used with QL::AST::Add',
-                       '[ERROR]: QL::AST::IntegerType can not be used with QL::AST::BooleanType'])
+          messages = form_ast.accept(OperandsTypeChecker.new).map(&:message)
+          expect(messages)
+            .to include('QL::AST::BooleanType can not be used with QL::AST::Add')
+          expect(messages)
+            .to include('QL::AST::IntegerType can not be used with QL::AST::BooleanType')
         end
       end
 
       describe CyclicChecker do
         it 'detects error' do
-          expect(form_ast.accept(CyclicChecker.new))
-            .to match(['[ERROR]: question with variable \'privateDebt\' has a cyclic dependency',
-                       '[ERROR]: question with variable \'sellingPrice\' has a cyclic dependency'])
+          messages = form_ast.accept(CyclicChecker.new).map(&:message)
+          expect(messages)
+            .to include('question with variable \'privateDebt\' has a cyclic dependency')
+          expect(messages)
+            .to include('question with variable \'sellingPrice\' has a cyclic dependency')
         end
       end
 
