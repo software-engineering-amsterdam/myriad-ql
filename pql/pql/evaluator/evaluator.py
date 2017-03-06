@@ -16,13 +16,14 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         [statement.apply(self) for statement in node.children]
 
     def conditional_if_else(self, node):
-        #TODO: Evaluate the condition first, then determine what to do
-        self.conditional_if(node)
-        [statement.apply(self) for statement in node.else_statement_list]
+        if node.condition.apply(self):
+            [statement.apply(self) for statement in node.statements]
+        else:
+            [statement.apply(self) for statement in node.else_statement_list]
 
     def conditional_if(self, node):
-        # TODO: Evaluate the condition first, then determine what to do
-        [statement.apply(self) for statement in node.statements]
+        if node.condition.apply(self):
+            [statement.apply(self) for statement in node.statements]
 
     def or_(self, node):
         return node.lhs.apply(self) or node.rhs.apply(self)

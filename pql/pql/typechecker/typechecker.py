@@ -106,7 +106,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return func(allowed_arithmetic_types, allowed_boolean_types, type_set)
 
     def identifier(self, node):
-        return self.identifier_dict[node.name]
+        return self.identifier_dict[node.name].data_type
 
     def value(self, node):
         return node.data_type

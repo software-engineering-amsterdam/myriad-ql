@@ -6,12 +6,6 @@ import pql.main as main
 
 
 class TestMain(unittest.TestCase):
-    def test_main_no_file(self):
-        with self.assertRaises(SystemExit) as cm:
-            main.main(("", ""))
-        the_exception = cm.exception
-        self.assertEqual(the_exception.code, 1)
-
     def test_open_file_invalid_path(self):
         with self.assertRaises(SystemExit):
             main.open_file("pql/examples/taxOfficeExample.ql")

@@ -1,4 +1,6 @@
 # coding=utf-8
+
+
 class Node(object):
     def __init__(self, var_type):
         self.var_type = var_type
@@ -210,3 +212,27 @@ class Identifier(Node):
 
     def apply(self, visitor):
         return visitor.identifier(self)
+
+
+class Integer(object):
+    def __init__(self, data):
+        self.data_type = data
+
+    def apply(self, visitor):
+        return visitor.integer(self)
+
+
+class Boolean(object):
+    def __init__(self, data):
+        self.data_type = data
+
+    def apply(self, visitor):
+        return visitor.boolean(self)
+
+
+class Money(object):
+    def __init__(self, data):
+        self.data_type = data
+
+    def apply(self, visitor):
+        return visitor.money(self)

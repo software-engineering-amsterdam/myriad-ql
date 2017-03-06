@@ -50,7 +50,10 @@ def parse(input_string):
     lit_op_and = Literal("&&").setParseAction(lambda _: ast.And)
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
-    data_types = oneOf([data_type.value for data_type in DataTypes])
+    type_money = Literal("money").setParseAction(lambda parsed_tokens: ast.Money(DataTypes.money))
+    type_integer = Literal("integer").setParseAction(lambda parsed_tokens: ast.Integer(DataTypes.integer))
+    type_boolean = Literal("boolean").setParseAction(lambda parsed_tokens: ast.Boolean(DataTypes.boolean))
+    data_types = type_money | type_integer | type_boolean
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
@@ -107,8 +110,7 @@ def parse(input_string):
 
     field_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
-        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type").setParseAction(
-            lambda data_type: DataTypes(data_type[0])) +
+        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type") +
         Optional(
             lit_assign_op +
             boolean_expression

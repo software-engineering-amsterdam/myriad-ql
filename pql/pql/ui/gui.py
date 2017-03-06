@@ -1,4 +1,6 @@
 # coding=utf-8
+from PyQt5.QtGui import QIntValidator
+from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
@@ -6,9 +8,10 @@ from PyQt5.QtWidgets import QTextEdit
 
 from pql.gui.QuestionairWizard import QuestionairWizard, Page
 from pql.traversal.FormVisitor import FormVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
 
 
-class Gui(FormVisitor):
+class Gui(FormVisitor, TypeVisitor):
     def __init__(self, environment, evaluator):
         self.environment = environment
         self.ql_wizard = QuestionairWizard()
@@ -33,12 +36,14 @@ class Gui(FormVisitor):
         return page
 
     def conditional_if_else(self, node):
-        self.conditional_if(node)
-        [statement.apply(self) for statement in node.else_statement_list]
+        if self.evaluator.conditional_if(node):
+            [statement.apply(self) for statement in node.statements]
+        else:
+            [statement.apply(self) for statement in node.else_statement_list]
 
     def conditional_if(self, node):
-
-        [statement.apply(self) for statement in node.statements]
+        if self.evaluator.conditional_if(node):
+            [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
         grid = QHBoxLayout()
@@ -52,15 +57,31 @@ class Gui(FormVisitor):
         # else if(typeIsBoolean)
         #     CheckBox ofzo
 
-        value = QLineEdit()
-        value.textChanged.connect(self.triggered)
-        value.setEnabled(node.expression is None)
-        label.setBuddy(value)
+        widget = node.data_type.apply(self)
+        widget.setEnabled(node.expression is None)
+
+        label.setBuddy(widget)
         grid.addWidget(label)
-        grid.addWidget(value)
+        grid.addWidget(widget)
         return grid
 
     def triggered(self, text):
         print(text+text)
+
+    def money(self, node):
+        pass
+
+    def boolean(self, node):
+        widget = QCheckBox("Button1")
+        widget.setChecked(False)
+        widget.stateChanged.connect(self.triggered)
+        return widget
+
+    def integer(self, node):
+        widget = QLineEdit()
+        widget.setValidator(QIntValidator())
+        widget.setMaxLength(8)
+        widget.textChanged.connect(self.triggered)
+        return widget
 
 
