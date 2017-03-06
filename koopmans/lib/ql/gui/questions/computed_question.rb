@@ -5,11 +5,11 @@ module QL
 
       def initialize(args)
         super
-        question = args[:question]
+        # question = args[:question]
         # @calculation   = args[:calculation]
         # @variable.type = args[:type]
-        @calculation   = question.assignment
-        @variable.type = question.type
+        @calculation   = @question.assignment
+        @variable.type = @question.type
         ComputedWidget.new(question: self)
         calculate
       end

@@ -9,18 +9,13 @@ module QL
       attr_accessor :condition
 
       def initialize(args)
-        question = args[:question]
-        # @gui       = args[:gui]
-        # @label     = args[:label]
-        # @condition = args[:condition]
-        @gui       = args[:gui]
-        @label     = question.label
-        @condition = question.condition
-        # p question.variable.name
-        @enabled  = true
-        @variable = QL::GUI::Variable.new
-        # @gui.questions[args[:id]] = self
-        @gui.questions[question.variable.name] = self
+        @question                               = args[:question]
+        @gui                                    = args[:gui]
+        @label                                  = @question.label
+        @condition                              = @question.condition
+        @enabled                                = true
+        @variable                               = QL::GUI::Variable.new
+        @gui.questions[@question.variable.name] = self
 
         Frame.new(question: self)
         Label.new(question: self)

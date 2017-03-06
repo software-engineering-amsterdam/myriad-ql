@@ -1,7 +1,6 @@
 module QL
   module AST
     class IfStatement
-      # extend Parslet
       attr_reader :expression, :block
 
       def initialize(expression, block)
@@ -19,8 +18,6 @@ module QL
     end
 
     class Question
-      extend Parslet
-
       attr_reader :label, :variable, :type
       attr_accessor :condition, :assignment
 
@@ -43,7 +40,6 @@ module QL
 
       def render(gui)
         if @assignment
-          # @assignment = @assignment.accept(@assignment)
           QL::GUI::ComputedQuestion.new(gui: gui, question: self)
         else
           @type.gui_question.new(gui: gui, question: self)
