@@ -56,16 +56,18 @@ public class Environment {
     }
 
     private boolean expandAndCheckUsedVariables(String calculationDeclaration, List<String> usedVariables) {
-
-        for (List<String> expandedVariables = new ArrayList<>(); usedVariables != expandedVariables; expandedVariables = expandedVariables(usedVariables)) {
+        List<String> expandedVariables = usedVariables;
+        do {
+            usedVariables = expandedVariables;
             if (expandedVariables.contains(calculationDeclaration)) {
                 return true;
             }
-        }
+            expandedVariables = expandVariables(usedVariables);
+        } while (expandedVariables != usedVariables);
         return false;
     }
 
-    private List<String> expandedVariables(List<String> usedVariables) {
+    private List<String> expandVariables(List<String> usedVariables) {
         List<String> dependencies = new ArrayList<>();
         for (String variableName : usedVariables) {
             dependencies.addAll(replaceWithDeclarations(variableName));
@@ -79,6 +81,7 @@ public class Environment {
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
                 declarations = calc.getUsedVariables();
+                break;
             }
         }
         return declarations;
