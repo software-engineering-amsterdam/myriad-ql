@@ -57,12 +57,11 @@ public class Environment {
     }
 
     private boolean substituteVariables(Set<String> usedVariables) {
-        Set<String> dependencies = new LinkedHashSet<>();
+        Set<String> dependencies = new LinkedHashSet<>(usedVariables);
         for (String variableName : usedVariables) {
             addDeclarations(variableName, dependencies);
         }
-        boolean substituted = dependencies != usedVariables;
-        usedVariables.clear();
+        boolean substituted = !usedVariables.equals(dependencies);
         usedVariables.addAll(dependencies);
         return substituted;
     }
