@@ -2,6 +2,7 @@ module QLS
   module TypeChecker
     class WidgetChecker
       include QL::Visitor
+      include Notification
 
       # gather all widgets with their variables and their associated types and check for errors
       # e.g. [{QL::AST::BooleanType=>[#<QLS::AST::CheckboxWidget:0x007fd5920c6970>]},

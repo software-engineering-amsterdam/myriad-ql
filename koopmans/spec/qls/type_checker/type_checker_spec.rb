@@ -12,25 +12,25 @@ module QLS
     describe TypeChecker do
       describe QuestionChecker do
         it 'detects error' do
-          expect(stylesheet_ast.accept(QuestionChecker.new, form_ast))
-            .to match(['[ERROR] undefined of the QL program is not placed by the QLS program.',
-                       '[ERROR] valueResidue is referenced to a question that is not in the QL program',
-                       '[ERROR] valueResidue is placed multiple times'])
+          messages = stylesheet_ast.accept(QuestionChecker.new, form_ast).map(&:message)
+          expect(messages).to include('undefined of the QL program is not placed by the QLS program.')
+          expect(messages).to include('valueResidue is referenced to a question that is not in the QL program')
+          expect(messages).to include('valueResidue is placed multiple times')
         end
       end
 
       describe WidgetChecker do
         it 'detects error' do
-          expect(stylesheet_ast.accept(WidgetChecker.new, form_ast))
-            .to match(['[ERROR] QLS::AST::SliderWidget can not be used with QL::AST::BooleanType',
-                       '[ERROR] QLS::AST::CheckboxWidget can not be used with undefined'])
+          messages = stylesheet_ast.accept(WidgetChecker.new, form_ast).map(&:message)
+          expect(messages).to include('QLS::AST::SliderWidget can not be used with QL::AST::BooleanType')
+          expect(messages).to include('QLS::AST::CheckboxWidget can not be used with undefined')
         end
       end
 
       # example ast for stylesheet
       def stylesheet_ast
-        question  = Question.new(Variable.new('hasSoldHouse'), [SliderWidget.new(0, 10)])
-        question2 = Question.new(Variable.new('valueResidue'), [CheckboxWidget.new])
+        question  = Question.new(Variable.new('hasSoldHouse'), [widget: SliderWidget.new(0, 10)])
+        question2 = Question.new(Variable.new('valueResidue'), [widget: CheckboxWidget.new])
         page = Page.new('_', [Section.new('_', [question, question2, question2])])
 
         Stylesheet.new('_', [page])

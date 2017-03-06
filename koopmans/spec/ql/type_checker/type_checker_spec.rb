@@ -33,20 +33,16 @@ module QL
       describe OperandsTypeChecker do
         it 'detects error' do
           messages = form_ast.accept(OperandsTypeChecker.new).map(&:message)
-          expect(messages)
-            .to include('QL::AST::BooleanType can not be used with QL::AST::Add')
-          expect(messages)
-            .to include('QL::AST::IntegerType can not be used with QL::AST::BooleanType')
+          expect(messages).to include('QL::AST::BooleanType can not be used with QL::AST::Add')
+          expect(messages).to include('QL::AST::IntegerType can not be used with QL::AST::BooleanType')
         end
       end
 
       describe CyclicChecker do
         it 'detects error' do
           messages = form_ast.accept(CyclicChecker.new).map(&:message)
-          expect(messages)
-            .to include('question with variable \'privateDebt\' has a cyclic dependency')
-          expect(messages)
-            .to include('question with variable \'sellingPrice\' has a cyclic dependency')
+          expect(messages).to include('question with variable \'privateDebt\' has a cyclic dependency')
+          expect(messages).to include('question with variable \'sellingPrice\' has a cyclic dependency')
         end
       end
 
