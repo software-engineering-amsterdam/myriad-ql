@@ -40,7 +40,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     }
 
     // hooray for O(n) complexity!
-    public void findDuplicates() {
+    void findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
 
         for(Question question : questionList) {

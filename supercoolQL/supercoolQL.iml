@@ -57,12 +57,19 @@
           <root url="jar://$MODULE_DIR$/lib/ST4-4.0.8.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/org.abego.treelayout.core-1.0.3.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/javax.json-1.0.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/antlr4-4.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/antlr4-runtime-4.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/antlr-runtime-3.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/ST4-4.0.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/org.abego.treelayout.core-1.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/javax.json-1.0.4.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/antlr4-4.6-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES />
