@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class StringQuestion < Question
+    class StringQuestionFrame < QuestionFrame
       include AST
 
       def initialize(args)
@@ -8,7 +8,7 @@ module QL
         @variable.value = ("")
         @variable.type  = StringType
 
-        TextWidget.new(question: self)
+        TextWidget.new(question_frame: self)
       end
     end
   end

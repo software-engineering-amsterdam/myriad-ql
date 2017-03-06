@@ -1,22 +1,22 @@
 module QL
   module GUI
     class Widget
-      attr_accessor :question
+      # attr_accessor :question
 
       def initialize(args)
-        @question = args[:question]
+        @question_frame = args[:question_frame]
       end
 
       def frame
-        @question.frame
+        @question_frame.frame
       end
 
       def variable
-        @question.variable
+        @question_frame.variable
       end
 
       def callback
-        @question.gui.value_changed
+        @question_frame.gui.reload_questions
       end
     end
 
@@ -107,18 +107,26 @@ module QL
       def initialize(args)
         super
         label      = TkLabel.new(frame).pack
-        label.text = @question.label
+        label.text = @question_frame.label
       end
     end
 
     class Frame < Widget
       def initialize(args)
         super
-        @question.frame = TkFrame.new.grid(row: position)
+        @question_frame.frame = TkFrame.new.grid(row: position)
       end
 
       def position
-        @question.gui.questions.size
+        @question_frame.gui.questions.size
+      end
+    end
+
+    class SubmitButton
+      def initialize(gui)
+        button         = TkButton.new.grid(row: gui.questions.size + 1)
+        button.text    = 'Submit'
+        button.command = proc { gui.submit }
       end
     end
   end

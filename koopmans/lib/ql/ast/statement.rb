@@ -1,8 +1,8 @@
 module QL
   module AST
     class IfStatement
-      # extend Parslet
-      attr_reader :expression, :block
+      attr_reader :block
+      attr_accessor :expression
 
       def initialize(expression, block)
         @expression = expression
@@ -13,14 +13,12 @@ module QL
         visitor.visit_if_statement(self)
       end
 
-      def accept_two_vars(visitor, condition)
+      def accept_with_condition(visitor, condition)
         visitor.visit_if_statement(self, condition)
       end
     end
 
     class Question
-      extend Parslet
-
       attr_reader :label, :variable, :type
       attr_accessor :condition, :assignment
 
@@ -36,15 +34,14 @@ module QL
         visitor.visit_question(self)
       end
 
-      # TODO is going to be removed
-      def accept_two_vars(visitor, condition)
+      # TODO gaan we hier wat aan doen?
+      def accept_with_condition(visitor, condition)
         visitor.visit_question(self, condition)
       end
 
       def render(gui)
         if @assignment
-          # @assignment = @assignment.accept(@assignment)
-          QL::GUI::ComputedQuestion.new(gui: gui, question: self)
+          QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
         else
           @type.gui_question.new(gui: gui, question: self)
         end

@@ -1,8 +1,6 @@
 module QL
   module GUI
     class FormBuilder
-      attr_accessor :gui
-
       def initialize(ast, gui)
         @gui = gui
         visit_form(ast)
@@ -10,59 +8,20 @@ module QL
 
       # gather all labels from all questions and check for duplicates
       def visit_form(subject)
-        subject.statements.map { |statement| statement.accept_two_vars(self, nil) }.flatten
+        subject.statements.map { |statement| statement.accept_with_condition(self, nil) }.flatten
       end
 
       # if there is an if in an if block create an And with both conditions
-      def visit_if_statement(subject, condition)
-        if condition
-          condition = AST::And.new(condition, subject.expression)
-        else
-          condition = subject.expression
-        end
-        subject.block.map { |statement| statement.accept_two_vars(self, condition) }
+      def visit_if_statement(if_statement, condition)
+        if_statement.expression = AST::And.new(condition, if_statement.expression) if condition
+        if_statement.block.map { |statement| statement.accept_with_condition(self, if_statement.expression) }
       end
 
       # create corresponding question for gui
       def visit_question(question, condition)
-        # set optional condition
-        question.condition = condition if condition
-
-        if question.condition
-          condition = question.condition.accept(self)
-        else
-          condition = nil
-        end
-
-        if question.assignment
-          question.assignment = question.assignment.accept(self)
-        end
-
-        question.render(gui)
-
-        # if question.assignment
-        #   ComputedQuestion.new(gui:         gui,
-        #                        label:       question.label,
-        #                        id:          question.variable.name,
-        #                        type:        question.type.class,
-        #                        calculation: question.assignment.accept(self),
-        #                        condition:   condition)
-        # elsif question.type == AST::BooleanType
-        #   BooleanQuestion.new(gui:       gui,
-        #                       label:     question.label,
-        #                       id:        question.variable.name,
-        #                       condition: condition)
-        # elsif question.type == AST::MoneyType || question.type == AST::IntegerType
-        #   NumericQuestion.new(gui:       gui,
-        #                       label:     question.label,
-        #                       id:        question.variable.name,
-        #                       condition: condition)
-        # elsif question.type == AST::StringType
-        #   StringQuestion.new(gui:       gui,
-        #                      label:     question.label,
-        #                      id:        question.variable.name,
-        #                      condition: condition)
-        # end
+        question.condition = condition.accept(self) if condition
+        question.assignment = question.assignment.accept(self) if question.assignment
+        question.render(@gui)
       end
 
       # visit the calculations of both the left and right sides
@@ -78,8 +37,8 @@ module QL
       end
 
       # change variable to tk variable for gui
-      def visit_variable(subject)
-        gui.questions[subject.name].variable
+      def visit_variable(variable)
+        @gui.questions[variable.name].variable
       end
     end
   end

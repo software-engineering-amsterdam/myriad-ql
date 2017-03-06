@@ -1,16 +1,13 @@
 module QL
   module GUI
-    class ComputedQuestion < Question
+    class ComputedQuestionFrame < QuestionFrame
       attr_accessor :calculation
 
       def initialize(args)
         super
-        question = args[:question]
-        # @calculation   = args[:calculation]
-        # @variable.type = args[:type]
-        @calculation   = question.assignment
-        @variable.type = question.type
-        ComputedWidget.new(question: self)
+        @calculation   = @question.assignment
+        @variable.type = @question.type
+        ComputedWidget.new(question_frame: self)
         calculate
       end
 

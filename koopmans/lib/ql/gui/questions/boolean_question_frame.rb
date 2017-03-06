@@ -1,6 +1,6 @@
 module QL
   module GUI
-    class BooleanQuestion < Question
+    class BooleanQuestionFrame < QuestionFrame
       include AST
 
       def initialize(args)
@@ -8,7 +8,7 @@ module QL
         @variable.value = true
         @variable.type  = BooleanType
 
-        RadioWidget.new(question: self, true_value: 'JAAAA', false_value: 'NEEEE')
+        RadioWidget.new(question_frame: self, true_value: 'JAAAA', false_value: 'NEEEE')
         # CheckboxWidget.new(question: self)
         # DropdownWidget.new(question: self, true_value: 'JAAA', false_value: 'NEEE')
       end
