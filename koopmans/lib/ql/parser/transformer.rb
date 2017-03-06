@@ -24,34 +24,17 @@ module QL
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), expression: subtree(:expression) }) { Question.new(string_literal, variable, type, expression) }
 
-      # rule(question: subtree(:aap)) { p aaps }
-      # question
-      # TODO: BooleanType.new -> BooleanType
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean' }) { Question.new(string, Variable.new(variable), BooleanType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer' }) { Question.new(string, Variable.new(variable), IntegerType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'money' }) { Question.new(string, Variable.new(variable), MoneyType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'string' }) { Question.new(string, Variable.new(variable), StringType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal' }) { Question.new(string, Variable.new(variable), DecimalType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'date' }) { Question.new(string, Variable.new(variable), DateType) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), BooleanType, expression) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), IntegerType, expression) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'money', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), MoneyType, expression) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'string', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), StringType, expression) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DecimalType, expression) }
-      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'date', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), DateType, expression) }
-
       # if statement
       rule(if_statement: { expression: subtree(:expression), block: subtree(:block) }) { IfStatement.new(expression, block) }
-
 
       # form
       rule(form: { id: simple(:variable), block: subtree(:block) }) { Form.new(variable, block) }
 
       # negation: ! -
-      rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(Variable.new(variable)) }
-      rule(negation: '-', variable: simple(:variable)) { IntegerNegation.new(Variable.new(variable)) }
-      rule(boolean_negation: simple(:boolean_negation), boolean: simple(:boolean)) { BooleanNegation.new(BooleanLiteral.new(boolean)) }
-      rule(integer_negation: simple(:integer_negation), integer: simple(:integer)) { IntegerNegation.new(IntegerLiteral.new(integer)) }
+      rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(variable) }
+      rule(negation: '-', variable: simple(:variable)) { IntegerNegation.new(variable) }
+      rule(negation: '!', boolean_literal: simple(:boolean_literal)) { BooleanNegation.new(boolean_literal) }
+      rule(negation: '-', integer_literal: simple(:integer_literal)) { IntegerNegation.new(integer_literal) }
 
       # boolean: && ||
       rule(left: subtree(:left), operator: '&&', right: subtree(:right)) { And.new(left, right) }

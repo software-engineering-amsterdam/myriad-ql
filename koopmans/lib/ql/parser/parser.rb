@@ -11,10 +11,8 @@ module QL
       rule(:spaces?) { spaces.maybe }
 
       # expression
-      rule(:integer_negation?) { str('-').as(:integer_negation).maybe }
-      rule(:boolean_negation?) { str('!').as(:boolean_negation).maybe }
       rule(:negation?) { (str('!') | str('-')).as(:negation).maybe }
-      rule(:variable_or_literal) { (boolean_negation? >> boolean_literal | integer_negation? >> integer_literal | string_literal | negation? >> variable) >> spaces? }
+      rule(:variable_or_literal) { negation? >> (boolean_literal | integer_literal | string_literal | variable) >> spaces? }
       rule(:calculation) { variable_or_literal.as(:left) >> operator >> expression.as(:right) }
       rule(:operator) { (str('-') | str('+') | str('*') | str('/') | str('<=') | str('>=') | str('==') | str('!=') | str('<') | str('>') | str('&&') | str('||') | str('!')).as(:operator) >> spaces? }
       rule(:expression) { str('(') >> spaces? >> expression.as(:expression) >> spaces? >> str(')') >> spaces? | calculation | variable_or_literal }
