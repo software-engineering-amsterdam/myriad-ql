@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QTextEdit
 
 from pql.gui.QuestionairWizard import QuestionairWizard, Page
 from pql.traversal.FormVisitor import FormVisitor
@@ -42,9 +43,24 @@ class Gui(FormVisitor):
     def field(self, node):
         grid = QHBoxLayout()
         label = QLabel(node.title)
+        #TODO : Find a way to dynamically determine widget for node
+        # if(typeIsInteger)
+        #     QLineEdit()
+
+        # else if (typeIsMoney)
+        # QLineEdit() maar met andere input, namelijk met .
+        # else if(typeIsBoolean)
+        #     CheckBox ofzo
+
         value = QLineEdit()
+        value.textChanged.connect(self.triggered)
+        value.setEnabled(node.expression is None)
         label.setBuddy(value)
         grid.addWidget(label)
         grid.addWidget(value)
         return grid
+
+    def triggered(self, text):
+        print(text+text)
+
 
