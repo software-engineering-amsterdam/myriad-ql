@@ -109,12 +109,24 @@ class QuestionnaireParser(object):
             return self.var_types["STRING"] + self.var_types["VARIABLE"] + \
                    self.COLON + self.type_names
 
+        def create_question_node(question_class):
+            def parse_question(src, loc, token):
+                line, col = self.get_line_loc_info(src, loc)
+                args = token.asList() + [line, col]
+                # Make from the question and identifier nodes strings as
+                # expected elsewhere in the program.
+                args[0] = args[0].val
+                args[1] = args[1].val
+                return question_class(*args)
+            return parse_question
+
         question = create_question_grammar()
-        question.addParseAction(self.create_node(AST.QuestionNode))
+        question.addParseAction(create_question_node(AST.QuestionNode))
 
         comp_question = create_question_grammar() + self.IS + \
             self.round_embrace(self.expression)
-        comp_question.addParseAction(self.create_node(AST.ComputedQuestionNode))
+        parse_function = create_question_node(AST.ComputedQuestionNode)
+        comp_question.addParseAction(parse_function)
 
         return comp_question | question
 
@@ -138,7 +150,8 @@ class QuestionnaireParser(object):
             pp.OneOrMore(self.question | self.conditional)
         ).addParseAction(self.create_node(AST.BlockNode))
 
-        form = self.FORM + self.var_types["VARIABLE"] + \
+        normal_var = pp.Word(pp.alphas, pp.alphanums + "_")
+        form = self.FORM + normal_var + \
             self.curly_embrace(self.block)
         form.addParseAction(self.create_node(AST.FormNode))
 

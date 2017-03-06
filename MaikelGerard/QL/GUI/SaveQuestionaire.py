@@ -14,18 +14,10 @@ class SaveQuestionaire(object):
         self.form_output = OrderedDict()
 
     def start_traversal(self):
-        self.handler.clear_errors()
         self.show_stack = []
 
-        # Set context for outputting errors; start traversal.
-        prev_context = self.env.context
-        self.env.context = "SaveQuestionaire"
         self.ast.root.accept(self)
         self.write_fields("./form_output.txt")
-
-        # Output errors afterwards.
-        self.handler.print_errors()
-        self.env.context = prev_context
 
     def write_fields(self, path):
         with open(path, "w+") as json_file:
@@ -53,7 +45,7 @@ class SaveQuestionaire(object):
         return all(self.show_stack)
 
     def set_question_val(self, question_node):
-        identifier = question_node.get_identifier()
+        identifier = question_node.name
         if self.is_shown():
             node = self.env.get_node(identifier)
             value = self.env.get_var_value(identifier)

@@ -18,7 +18,7 @@ class TestEvaluator(unittest.TestCase):
     def setUp(self):
         self.handler = ErrorHandler()
         self.env = Environment(self.handler)
-        self.evaluator = Evaluate(None, self.env, self.handler)
+        self.evaluator = Evaluate(None, self.env)
 
     def tearDown(self):
         pass
@@ -39,7 +39,6 @@ class TestEvaluator(unittest.TestCase):
 
         # Div through 0
         self.eval_binop_expr("5.0 / 0.0", Undefined)
-        self.assertEqual(self.handler.warn_count, 1)
 
     def testComparisonEvalutor(self):
         left = decimal.Decimal("5.0")

@@ -8,15 +8,13 @@ from datetime import date
 # TODO: Replace 'is_boolean' etc. into double dispatch.
 # TODO: Do we want to pass state in the visitor?
 
+
 class QuestionnaireAST(object):
     def __init__(self, form, line=0, col=0):
         self.root = form
 
     def __eq__(self, other):
         return other.root == self.root
-
-    def __str__(self):
-        return str(self.root.__str__(0))
 
 
 class Node(object):
@@ -47,11 +45,6 @@ class FormNode(Node):
                self.name == other.name and \
                self.form_block == other.form_block
 
-    def __str__(self, indent=0):
-        output = indent * "  " + "form:\n"
-        output += self.form_block.__str__(indent + 1)
-        return output
-
 
 class BlockNode(Node):
     def __init__(self, block_body, line=0, col=0):
@@ -75,13 +68,6 @@ class BlockNode(Node):
                 return False
         return True
 
-    def __str__(self, indent=0):
-        output = indent * "  " + "block:\n"
-
-        for child in self.children:
-            output += child.__str__(indent + 1)
-        return output
-
 
 class QuestionNode(Node):
     def __init__(self, question, name, var_type, line=0, col=0):
@@ -90,12 +76,6 @@ class QuestionNode(Node):
         self.name = name
         self.type = var_type
 
-    def get_identifier(self):
-        return self.name.val
-
-    def get_question(self):
-        return self.question.val
-
     def accept(self, visitor):
         visitor.question_node(self)
 
@@ -103,11 +83,6 @@ class QuestionNode(Node):
         return super(QuestionNode, self).__eq__(other) and \
                other.question == self.question and other.name == self.name and \
                other.type == self.type
-
-    def __str__(self, indent=0):
-        return indent * "  " + "question: \"{}\" {}: {}\n".format(
-            self.question, self.type, self.name
-        )
 
 
 class ComputedQuestionNode(QuestionNode):
@@ -124,12 +99,6 @@ class ComputedQuestionNode(QuestionNode):
         return super(ComputedQuestionNode, self).__eq__(other) and \
                other.expression == self.expression
 
-    def __str__(self, indent=0):
-        output = indent * "  " + "question: \"{}\" {}: {}".format(
-            self.question, self.name, self.type
-        )
-        return output + " = ({})\n".format(str(self.expression))
-
 
 class IfNode(Node):
     def __init__(self, condition, if_block, line=0, col=0):
@@ -145,10 +114,6 @@ class IfNode(Node):
                other.expression == self.expression and \
                other.if_block == self.if_block
 
-    def __str__(self, indent=0):
-        output = indent * "  " + "if ({}): \n".format(self.expression)
-        return output + self.if_block.__str__(indent + 1)
-
 
 class IfElseNode(IfNode):
     def __init__(self, condition, if_block, else_block, line=0, col=0):
@@ -162,11 +127,6 @@ class IfElseNode(IfNode):
         return super(IfElseNode, self).__eq__(other) and \
                other.else_block == self.else_block
 
-    def __str__(self, indent=0):
-        output = super(IfElseNode, self).__str__(indent)
-        output += indent * "  " + "else: \n"
-        return output + self.else_block.__str__(indent + 1)
-
 
 class MonOpNode(Node):
     def __init__(self, operator, expression, line, col):
@@ -177,9 +137,6 @@ class MonOpNode(Node):
     def __eq__(self, other):
         return super(MonOpNode, self).__eq__(other) and \
                other.expression == self.expression
-
-    def __str__(self, indent=0):
-        return "({}{})".format(self.operator, self.expression)
 
 
 class NegNode(MonOpNode):
@@ -216,9 +173,6 @@ class ArithmeticExprNode(Node):
     def __eq__(self, other):
         return super(ArithmeticExprNode, self).__eq__(other) and \
                other.left == self.left and other.right == self.right
-
-    def __str__(self, indent=0):
-        return "({} {} {})".format(self.left, self.operator, self.right)
 
 
 class AddNode(ArithmeticExprNode):
@@ -263,9 +217,6 @@ class ComparisonExprNode(Node):
     def __eq__(self, other):
         return super(ComparisonExprNode, self).__eq__(other) and \
                other.left == self.left and other.right == self.right
-
-    def __str__(self, indent=0):
-        return "({} {} {})".format(self.left, self.operator, self.right)
 
 
 class LTNode(ComparisonExprNode):
@@ -327,9 +278,6 @@ class LogicalExprNode(Node):
         return super(LogicalExprNode, self).__eq__(other) and \
                other.left == self.left and other.right == self.right
 
-    def __str__(self, indent=0):
-        return "({} {} {})".format(self.left, self.operator, self.right)
-
 
 class AndNode(LogicalExprNode):
     def __init__(self, left, right, line=0, col=0):
@@ -382,9 +330,6 @@ class TypeNode(Node):
     def __eq__(self, other):
         return super(TypeNode, self).__eq__(other) \
                and other.name == self.name
-
-    def __str__(self, indent=0):
-        return str(self.name)
 
 
 class BoolTypeNode(TypeNode):
@@ -470,9 +415,6 @@ class VarNode(Node):
     def __eq__(self, other):
         return super(VarNode, self).__eq__(other) and other.val == self.val
 
-    def __str__(self, indent=0):
-        return str(self.val)
-
 
 class StringNode(VarNode):
     def __init__(self, string, line=0, col=0):
@@ -480,9 +422,6 @@ class StringNode(VarNode):
 
     def accept(self, visitor):
         return visitor.string_node(self)
-
-    def __str__(self, indent=0):
-        return "'{}'".format(self.val)
 
 
 class IntNode(VarNode):
@@ -523,6 +462,3 @@ class DateNode(VarNode):
 
     def accept(self, visitor):
         return visitor.date_node(self)
-
-    def __str__(self, indent=0):
-        return self.val.strftime("%d-%m-%Y")
