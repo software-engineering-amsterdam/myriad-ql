@@ -13,13 +13,13 @@ module QLS
       describe 'widgets' do
         context 'spinbox' do
           it 'transforms' do
-            expect(transformer.apply(widget: 'spinbox')).to be_a SpinboxWidget
+            expect(transformer.apply(widget: 'spinbox')[:widget]).to be_a SpinboxWidget
           end
         end
 
         context 'radio' do
           it 'transforms' do
-            expect(transformer.apply(widget: { radio: { first_value: { string: 'Yes' }, second_value: { string: 'No' } } })).to be_a RadioWidget
+            expect(transformer.apply(widget: { radio: { first_value: { string: 'Yes' }, second_value: { string: 'No' } } })[:widget]).to be_a RadioWidget
           end
         end
       end
@@ -27,7 +27,7 @@ module QLS
       describe 'properties' do
         context 'width' do
           it 'transforms' do
-            expect(transformer.apply(width: { integer: '400' })).to be_a Width
+            expect(transformer.apply(width: { integer: '400' })[:width]).to eq '400'
           end
         end
       end
