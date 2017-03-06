@@ -1,26 +1,27 @@
 module QL
   module GUI
-    class Question
+    class QuestionFrame
       attr_accessor :gui
-      attr_accessor :label
+      attr_accessor :question
       attr_accessor :frame
       attr_accessor :enabled
-      attr_accessor :variable
-      attr_accessor :condition
+      attr_accessor :variable # TODO remove
 
       def initialize(args)
         @question                               = args[:question]
         @gui                                    = args[:gui]
-        @label                                  = @question.label
-        @condition                              = @question.condition
         @enabled                                = true
         @variable                               = QL::GUI::Variable.new
         @gui.questions[@question.variable.name] = self
 
-        Frame.new(question: self)
-        Label.new(question: self)
+        Frame.new(question_frame: self)
+        Label.new(question_frame: self)
 
         check_condition
+      end
+
+      def condition
+        @question.condition
       end
 
       def value
@@ -36,7 +37,7 @@ module QL
       end
 
       def check_condition
-        eval(@condition.eval.to_s) ? enable : disable if @condition
+        eval(condition.eval.to_s) ? enable : disable if condition
       end
 
       def disable

@@ -40,7 +40,7 @@ module QL
 
       def render(gui)
         if @assignment
-          QL::GUI::ComputedQuestion.new(gui: gui, question: self)
+          QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
         else
           @type.gui_question.new(gui: gui, question: self)
         end

@@ -9,7 +9,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::BooleanQuestion
+        QL::GUI::BooleanQuestionFrame
       end
     end
 
@@ -19,7 +19,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::NumericQuestion
+        QL::GUI::NumericQuestionFrame
       end
     end
 
@@ -29,7 +29,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::NumericQuestion
+        QL::GUI::NumericQuestionFrame
       end
     end
 
@@ -39,7 +39,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::NumericQuestion
+        QL::GUI::NumericQuestionFrame
       end
     end
 
@@ -49,7 +49,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::StringQuestion
+        QL::GUI::StringQuestionFrame
       end
     end
 
@@ -60,7 +60,7 @@ module QL
       end
 
       def self.gui_question
-        QL::GUI::NumericQuestion
+        QL::GUI::NumericQuestionFrame
       end
     end
   end

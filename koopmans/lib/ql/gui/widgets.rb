@@ -4,19 +4,19 @@ module QL
       attr_accessor :question
 
       def initialize(args)
-        @question = args[:question]
+        @question_frame = args[:question_frame]
       end
 
       def frame
-        @question.frame
+        @question_frame.frame
       end
 
       def variable
-        @question.variable
+        @question_frame.variable
       end
 
       def callback
-        @question.gui.value_changed
+        @question_frame.gui.value_changed
       end
     end
 
@@ -107,18 +107,18 @@ module QL
       def initialize(args)
         super
         label      = TkLabel.new(frame).pack
-        label.text = @question.label
+        label.text = @question_frame.question.label
       end
     end
 
     class Frame < Widget
       def initialize(args)
         super
-        @question.frame = TkFrame.new.grid(row: position)
+        @question_frame.frame = TkFrame.new.grid(row: position)
       end
 
       def position
-        @question.gui.questions.size
+        @question_frame.gui.questions.size
       end
     end
   end
