@@ -47,6 +47,8 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(form);
         mainScreen.initUI(primaryStage);
 
+        //hoi
+
 //        for (FormItem item : form.getFormItems()) {
 //            mainScreen.addFormItem(item);
 //            //System.out.println(item);
