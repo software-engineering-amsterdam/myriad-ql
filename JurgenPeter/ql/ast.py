@@ -13,7 +13,8 @@ class Form:
         return visitor.visit_form(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (type(self) == type(other) and self.name == other.name and
+                self.body == other.body)
 
 
 class Question:
@@ -27,7 +28,8 @@ class Question:
         return visitor.visit_question(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (type(self) == type(other) and self.name == other.name and
+                self.label == other.label and self.datatype == other.datatype)
 
 
 class ComputedQuestion(Question):
@@ -38,6 +40,9 @@ class ComputedQuestion(Question):
 
     def accept(self, visitor):
         return visitor.visit_computed_question(self)
+
+    def __eq__(self, other):
+        return super().__eq__(other) and self.computation == other.computation
 
 
 class IfConditional:
@@ -50,7 +55,9 @@ class IfConditional:
         return visitor.visit_if_conditional(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (type(self) == type(other) and
+                self.condition == other.condition and
+                self.ifbody == other.ifbody)
 
 
 class IfElseConditional(IfConditional):
@@ -62,13 +69,16 @@ class IfElseConditional(IfConditional):
     def accept(self, visitor):
         return visitor.visit_ifelse_conditional(self)
 
+    def __eq__(self, other):
+        return super().__eq__(other) and self.elsebody == other.elsebody
+
 
 class UnOp:
     def __init__(self, right):
         self.right = right
 
     def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
+        return type(self) == type(other) and self.right == other.right
 
 
 class PlusOp(UnOp):
@@ -92,7 +102,8 @@ class BinOp:
         self.right = right
 
     def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
+        return (type(self) == type(other) and self.left == other.left and
+                self.right == other.right)
 
 
 class MulOp(BinOp):
@@ -164,7 +175,7 @@ class Variable:
         return visitor.visit_variable(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return type(self) == type(other) and self.name == other.name
 
 
 class Constant:
@@ -177,4 +188,5 @@ class Constant:
         return visitor.visit_constant(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (type(self) == type(other) and self.value == other.value and
+                self.datatype == other.datatype)
