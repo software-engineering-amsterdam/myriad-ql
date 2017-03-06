@@ -4,8 +4,7 @@ import org.uva.taxfree.model.node.expression.ConditionNode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class CalculatedField extends NamedNode {
@@ -50,8 +49,8 @@ public abstract class CalculatedField extends NamedNode {
         set.add(this);
     }
 
-    public List<String> getUsedVariables() {
-        List<String> usedVariables = new ArrayList<>();
+    public Set<String> getUsedVariables() {
+        Set<String> usedVariables = new LinkedHashSet<>();
         mCondition.addUsedVariables(usedVariables);
         return usedVariables;
     }

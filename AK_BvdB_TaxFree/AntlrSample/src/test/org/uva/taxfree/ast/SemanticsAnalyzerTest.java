@@ -76,9 +76,15 @@ public class SemanticsAnalyzerTest {
     void testCyclicDependency() throws Exception {
         assertSemantics("invalidDelegatedCalculations.txt", 5, "Substitution of variables should not trigger errors");
     }
+
     @Test
     void testCyclicDependencyComposed() throws Exception {
         assertSemantics("invalidDelegatedComposedCalculations.txt", 5, "Composition should work");
+    }
+
+    @Test(timeOut = 2000)
+    void testCyclicDependencyDelegated() throws Exception {
+        assertSemantics("invalidDelegations.txt", 2, "Delegation leads to errors in any expression");
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
