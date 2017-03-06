@@ -47,7 +47,7 @@ public class Environment {
         return calculations;
     }
 
-    private boolean hasCyclicDependency(String calculationDeclaration, List<String> usedVariables) {
+    private boolean hasCyclicDependency(String calculationDeclaration, Set<String> usedVariables) {
         while (substituteVariables(usedVariables)) {
             if (usedVariables.contains(calculationDeclaration)) {
                 return true;
@@ -56,7 +56,7 @@ public class Environment {
         return false;
     }
 
-    private boolean substituteVariables(List<String> usedVariables) {
+    private boolean substituteVariables(Set<String> usedVariables) {
         List<String> dependencies = new ArrayList<>();
         for (String variableName : usedVariables) {
             dependencies.addAll(replaceWithDeclarations(variableName));
@@ -67,13 +67,13 @@ public class Environment {
         return substituted;
     }
 
-    private List<String> replaceWithDeclarations(String usedVariable) {
+    private Set<String> replaceWithDeclarations(String usedVariable) {
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
                 return calc.getUsedVariables();
             }
         }
-        return new ArrayList<>();
+        return new LinkedHashSet<>();
     }
 }
 
