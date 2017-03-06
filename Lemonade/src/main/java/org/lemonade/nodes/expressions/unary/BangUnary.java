@@ -1,5 +1,6 @@
 package org.lemonade.nodes.expressions.unary;
 
+import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.UnaryExpression;
 import org.lemonade.visitors.ASTVisitor;
 
@@ -8,7 +9,8 @@ import org.lemonade.visitors.ASTVisitor;
  */
 public class BangUnary extends UnaryExpression {
 
-    public BangUnary() {
+    public BangUnary(Expression expr) {
+        super(expr);
     }
 
     public <T> T accept(ASTVisitor<T> visitor) {

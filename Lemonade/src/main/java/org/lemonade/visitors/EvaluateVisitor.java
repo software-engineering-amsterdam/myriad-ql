@@ -65,7 +65,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(ProductBinary productBinary) {
-        return null;
+        NumericValue<?> left = (NumericValue<?>) productBinary.getLeft().accept(this);
+        NumericValue<?> right = (NumericValue<?>) productBinary.getRight().accept(this);
+        System.err.println(left.product(right));
+        return left.product(right);
     }
 
     @Override

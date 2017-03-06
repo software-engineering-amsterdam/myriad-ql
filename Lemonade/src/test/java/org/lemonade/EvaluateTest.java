@@ -45,9 +45,9 @@ public class EvaluateTest {
         oneFifty = new MoneyValue(1.50);
         onePointTwo = new DecimalValue(1.2);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date = new DateValue(sdf.parse("21/12/2012"));
-        dateTwo = new DateValue(sdf.parse("22/07/1991"));
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        date = new DateValue(sdf.parse("21/12/2012"));
+//        dateTwo = new DateValue(sdf.parse("22/07/1991"));
 
     }
 
@@ -118,12 +118,12 @@ public class EvaluateTest {
         assertThat(result2.getValue()).isEqualTo(4.8);
     }
 
-    @Test
-    public void testDateValue() {
-        assertThat(date.compareTo(dateTwo)).isEqualTo(1);
-        assertThat(date.compareTo(date)).isEqualTo(0);
-        assertThat(date.equals(dateTwo)).isEqualTo(false);
-    }
+//    @Test
+//    public void testDateValue() {
+//        assertThat(date.compareTo(dateTwo)).isEqualTo(1);
+//        assertThat(date.compareTo(date)).isEqualTo(0);
+//        assertThat(date.equals(dateTwo)).isEqualTo(false);
+//    }
 
     @Test
     public void testDivision() {

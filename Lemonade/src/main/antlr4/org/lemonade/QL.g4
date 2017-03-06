@@ -27,17 +27,23 @@ type_specifier
     ;
 
 expr
-    : unaryoperator expr            #unaryExpression
-    | expr binaryoperator expr      #binaryExpression
-    | literal                       #literalExpression
-    ;
+ : MINUS expr                           #unaryMinusExpr
+ | BANG expr                            #unaryBangExpr
+ | expr op=(PRODUCT | DIVIDE) expr      #productDivideExpr
+ | expr op=(PLUS | MINUS) expr          #plusMinExpr
+ | expr op=(LTEQ | GTEQ | LT | GT) expr #relationalExpr
+ | expr op=(EQ | NEQ) expr              #equalityExpr
+ | expr AND expr                        #andExpr
+ | expr OR expr                         #orExpr
+ | atom                                 #atomExpr
+ ;
 
-literal
-    : BOOLEAN                       #booleanLiteral
-    | STR                           #stringLiteral
-    | IDENT                         #identifierLiteral
-    | INT                           #integerLiteral
-    | DECIMAL                       #decimalLiteral
+atom
+    : BOOLEAN                       #booleanAtom
+    | STR                           #stringAtom
+    | IDENT                         #identifierAtom
+    | INT                           #integerAtom
+    | DECIMAL                       #decimalAtom
     ;
 
 label
@@ -48,26 +54,57 @@ identifier
     : IDENT
     ;
 
-unaryoperator
-    : '-'                           #negateUnary
-    | '!'                           #bangUnary
+MINUS
+    : '-'
     ;
 
-binaryoperator
-    : '*'                           #productBinary
-    | '/'                           #divideBinary
-    | '+'                           #plusBinary
-    | '-'                           #minusBinary
-    | '<'                           #lessThanBinary
-    | '<='                          #lessThanEqualBinary
-    | '>'                           #greaterThanBinary
-    | '>='                          #greaterThanEqualBinary
-    | '=='                          #equalBinary
-    | '!='                          #notEqualBinary
-    | '&&'                          #andBinary
-    | '||'                          #orBinary
+BANG
+    : '!'
     ;
 
+PRODUCT
+    : '*'
+    ;
+
+DIVIDE
+    : '/'
+    ;
+
+PLUS
+    : '+'
+    ;
+
+LTEQ
+    : '<='
+    ;
+
+GTEQ
+    : '>='
+    ;
+
+LT
+    : '<'
+    ;
+
+GT
+    : '>'
+    ;
+
+EQ
+    : '=='
+    ;
+
+NEQ
+    : '!='
+    ;
+
+AND
+    : '&&'
+    ;
+
+OR
+    : '||'
+    ;
 
 BOOLEAN
     : 'true' | 'false'

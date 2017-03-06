@@ -27,10 +27,10 @@ import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.binary.EqBinary;
-import org.lemonade.nodes.types.QLBooleanType;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.visitors.EvaluateVisitor;
-import org.lemonade.visitors.QLFormVisitor;
+import org.lemonade.visitors.FormVisitor;
+//import org.lemonade.visitors.QLFormVisitor;
 
 public class AwtForm {
 
@@ -128,7 +128,7 @@ public class AwtForm {
 
             QLParser parser = new QLParser(tokens);
             ParseTree tree = parser.form();
-            QLFormVisitor visitor = new QLFormVisitor();
+            FormVisitor visitor = new FormVisitor();
 
             Form root = (Form) tree.accept(visitor);
 

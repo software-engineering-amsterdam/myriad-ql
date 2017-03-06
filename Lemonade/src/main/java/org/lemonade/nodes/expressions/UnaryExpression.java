@@ -5,12 +5,9 @@ import org.lemonade.visitors.ASTVisitor;
 public abstract class UnaryExpression extends Expression {
     private Expression expression;
 
-    public UnaryExpression() {
+    public UnaryExpression(Expression expr) {
         super();
-    }
-
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+        this.expression = expr;
     }
 
     public Expression getExpression() {
