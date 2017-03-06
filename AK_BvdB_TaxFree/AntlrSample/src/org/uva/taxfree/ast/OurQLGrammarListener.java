@@ -25,7 +25,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     private final List<ConditionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
-    private boolean isInsideIfElse = false;
+    private boolean insideIfElse = false;
 
     public OurQLGrammarListener() {
         mSymbolTable = new SymbolTable();
@@ -121,9 +121,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        // TODO: Ignore when comming from a question!
         ConditionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
         addToStack(varNameLiteral);
+        mSymbolTable.addVariable(ctx.getText());
     }
 
     @Override
@@ -135,7 +135,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
-        isInsideIfElse = true;
+        insideIfElse = true;
     }
 
     private void createStack() {
@@ -176,9 +176,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         super.exitIfStatement(ctx);
         BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popStack());
         addToStack(ifStatementNode);
-        if (isInsideIfElse) {
+        if (insideIfElse) {
             createStack();
-            isInsideIfElse = false;
+            insideIfElse = false;
         }
     }
 
