@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Tests.ParserTests.Base
+﻿namespace OffByOne.Ql.Tests.Parser.Base
 {
     using Antlr4.Runtime;
 

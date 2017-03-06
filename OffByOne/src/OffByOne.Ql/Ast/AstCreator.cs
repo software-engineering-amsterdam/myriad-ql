@@ -52,8 +52,7 @@
         public override AstNode VisitQuestion([NotNull] QlParser.QuestionContext context)
         {
             var id = context.Identifier().GetText();
-            var labelValue = new StringValue(context.label.Text);
-            var label = new StringLiteral(labelValue);
+            var label = new StringLiteral(context.label.Text);
             var type = context.Type().GetText();
 
             var computedValue = context.expression();
@@ -243,8 +242,7 @@
 
         public override AstNode VisitStringLiteral([NotNull] QlParser.StringLiteralContext context)
         {
-            var value = new StringValue(context.GetText());
-            return new StringLiteral(value);
+            return new StringLiteral(context.GetText());
         }
         #endregion
     }

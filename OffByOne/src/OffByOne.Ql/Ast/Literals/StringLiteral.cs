@@ -6,9 +6,9 @@
 
     public class StringLiteral : Literal
     {
-        public StringLiteral(StringValue value)
+        public StringLiteral(string value)
         {
-            this.Value = value;
+            this.Value = new StringValue(value);
         }
 
         public StringValue Value { get; private set; }

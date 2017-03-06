@@ -53,9 +53,7 @@
             var test = 3 + "Test";
 
             var evaluator = new Evaluator();
-            var testValue = new StringValue("Test");
-            var hexValue = new StringValue("Hex");
-            var expression = new AddExpression(new StringLiteral(testValue), new StringLiteral(hexValue));
+            var expression = new AddExpression(new StringLiteral("Test"), new StringLiteral("Hex"));
             Console.WriteLine(evaluator.Evaluate(expression, new TypeEnvironment()));
         }
 

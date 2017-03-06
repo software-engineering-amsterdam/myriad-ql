@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Tests.ParserTests
+﻿namespace OffByOne.Ql.Tests.Parser
 {
     using System.Linq;
 
@@ -7,7 +7,7 @@
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Branch;
-    using OffByOne.Ql.Tests.ParserTests.Base;
+    using OffByOne.Ql.Tests.Parser.Base;
     using OffByOne.Ql.Values;
 
     using Xunit;

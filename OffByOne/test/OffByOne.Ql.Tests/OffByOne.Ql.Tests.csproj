@@ -71,9 +71,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParserTests\FormTest.cs" />
-    <Compile Include="ParserTests\Base\ParserTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Evaluator\StringEvaluationTestes.cs" />
+    <Compile Include="Parser\FormTest.cs" />
+    <Compile Include="Parser\Base\ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
