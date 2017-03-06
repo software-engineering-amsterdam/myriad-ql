@@ -39,7 +39,7 @@ module QL
 
       # only return the variable name if it is not existing
       def visit_variable(variable)
-        "[ERROR]: variable '#{variable.name}' is undefined" unless @question_variables.include?(variable.name)
+        Notification.new("variable '#{variable.name}' is undefined") unless @question_variables.include?(variable.name)
       end
     end
   end

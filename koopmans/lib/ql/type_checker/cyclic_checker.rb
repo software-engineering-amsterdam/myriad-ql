@@ -2,6 +2,7 @@ module QL
   module TypeChecker
     class CyclicChecker
       include Visitor
+      include Notification
 
       def visit_form(form)
         # get question variables with dependency variables as hash
@@ -50,7 +51,7 @@ module QL
             if @values.key? k.name
               @values[variable.name] = @values[variable.name] | @values[k.name]
               if @values[variable.name].map(&:name).include? variable.name
-                @errors.push("[ERROR]: question with variable '#{variable.name}' has a cyclic dependency")
+                @errors.push(Notification.new("question with variable '#{variable.name}' has a cyclic dependency"))
               else
                 visit_variable(k)
               end
