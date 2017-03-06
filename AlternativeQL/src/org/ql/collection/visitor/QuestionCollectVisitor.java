@@ -1,4 +1,4 @@
-package org.ql.collection;
+package org.ql.collection.visitor;
 
 import org.ql.ast.Form;
 import org.ql.ast.Statement;
@@ -7,18 +7,16 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
+import org.ql.collection.Questions;
 
 import java.util.List;
 
-public class QuestionCollector implements FormVisitor<Void, List<Question>>, StatementVisitor<Void, List<Question>> {
+public class QuestionCollectVisitor implements FormVisitor<Void, List<Question>>, StatementVisitor<Void, List<Question>> {
 
-    private QuestionCollector() {
-    }
-
-    public static Questions collect(Form form) {
+    public Questions collect(Form form) {
         Questions questions = new Questions();
 
-        form.accept(new QuestionCollector(), questions);
+        form.accept(new QuestionCollectVisitor(), questions);
 
         return questions;
     }

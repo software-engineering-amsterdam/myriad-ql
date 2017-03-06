@@ -1,8 +1,9 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
 import org.ql.ast.type.Type;
+import org.ql.typechecker.issues.Issue;
 
-public class NumberExpected implements TypeError {
+public class NumberExpected implements Issue {
     private final Type innerExpressionType;
 
     public NumberExpected(Type innerExpressionType) {

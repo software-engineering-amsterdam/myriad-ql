@@ -1,9 +1,9 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
 import org.ql.ast.Identifier;
-import org.ql.ast.Node;
+import org.ql.typechecker.issues.Issue;
 
-public class EmptyIdentifier implements TypeError {
+public class EmptyIdentifier implements Issue {
     private final Identifier identifier;
 
     public EmptyIdentifier(Identifier identifier) {

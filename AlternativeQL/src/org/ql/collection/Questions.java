@@ -5,7 +5,7 @@ import org.ql.ast.statement.Question;
 import java.util.ArrayList;
 
 public class Questions extends ArrayList<Question> {
-    public boolean hasDuplicates(Question question) {
+    public boolean hasDuplicatedDeclarations(Question question) {
         return stream().filter(q -> isQuestionDuplicate(question, q)).count() > 0;
     }
 
@@ -18,6 +18,6 @@ public class Questions extends ArrayList<Question> {
     }
 
     private boolean isQuestionLabelDuplicate(Question question, Question q) {
-        return q.getId().equals(question.getQuestionText());
+        return q.getQuestionText().equals(question.getQuestionText());
     }
 }

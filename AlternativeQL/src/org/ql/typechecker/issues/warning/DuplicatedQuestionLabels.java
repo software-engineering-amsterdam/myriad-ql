@@ -1,9 +1,9 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.warning;
 
-import org.ql.ast.Node;
 import org.ql.ast.statement.Question;
+import org.ql.typechecker.issues.Issue;
 
-public class DuplicatedQuestionLabels implements TypeError {
+public class DuplicatedQuestionLabels implements Issue {
     private final Question question;
 
     public DuplicatedQuestionLabels(Question question) {

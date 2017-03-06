@@ -1,13 +1,13 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
 
 import org.ql.ast.Identifier;
-import org.ql.ast.Node;
+import org.ql.typechecker.issues.Issue;
 
-public class UndefinedIdentifier implements TypeError {
+public class UndefinedSymbol implements Issue {
     private final Identifier identifier;
 
-    public UndefinedIdentifier(Identifier identifier) {
+    public UndefinedSymbol(Identifier identifier) {
         this.identifier = identifier;
     }
 

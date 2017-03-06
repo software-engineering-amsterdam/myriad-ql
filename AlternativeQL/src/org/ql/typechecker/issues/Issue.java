@@ -1,8 +1,8 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues;
 
 import org.ql.ast.Node;
 
-public abstract interface TypeError {
+public interface Issue {
     String getMessage();
     Node getNode();
 }

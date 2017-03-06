@@ -1,9 +1,10 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
 import org.ql.ast.Identifier;
 import org.ql.typechecker.circular_dependencies.DependencyPair;
+import org.ql.typechecker.issues.Issue;
 
-public class CircularDependency implements TypeError {
+public class CircularDependency implements Issue {
     private final DependencyPair pair;
 
     public CircularDependency(DependencyPair pair) {

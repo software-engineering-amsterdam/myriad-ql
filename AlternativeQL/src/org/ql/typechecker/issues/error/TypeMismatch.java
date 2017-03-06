@@ -1,9 +1,9 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
-import org.ql.ast.Node;
 import org.ql.ast.type.Type;
+import org.ql.typechecker.issues.Issue;
 
-public class TypeMismatch implements TypeError {
+public class TypeMismatch implements Issue {
     private final Type expected;
     private final Type actual;
 

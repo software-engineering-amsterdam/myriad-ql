@@ -1,320 +1,100 @@
 package org.ql.typechecker;
 
-import org.ql.ast.Expression;
 import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
-import org.ql.ast.expression.BinaryExpression;
-import org.ql.ast.expression.ExpressionVisitor;
-import org.ql.ast.expression.Parameter;
-import org.ql.ast.expression.arithmetic.*;
-import org.ql.ast.expression.literal.BooleanLiteral;
-import org.ql.ast.expression.literal.DecimalLiteral;
-import org.ql.ast.expression.literal.IntegerLiteral;
-import org.ql.ast.expression.literal.StringLiteral;
-import org.ql.ast.expression.relational.*;
-import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
-import org.ql.ast.statement.question.QuestionText;
-import org.ql.ast.type.*;
-import org.ql.collection.QuestionCollector;
+import org.ql.collection.QuestionStorage;
 import org.ql.collection.Questions;
-import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
-import org.ql.typechecker.circular_dependencies.DependencyPair;
-import org.ql.typechecker.circular_dependencies.DependencySet;
-import org.ql.typechecker.error.*;
+import org.ql.typechecker.issues.*;
+import org.ql.typechecker.issues.error.DuplicatedQuestionDeclarations;
+import org.ql.typechecker.issues.error.EmptyQuestionLabel;
+import org.ql.typechecker.issues.warning.DuplicatedQuestionLabels;
+import org.ql.typechecker.visitor.CircularDependencyVisitor;
+import org.ql.typechecker.visitor.TypeMismatchVisitor;
+import org.ql.typechecker.visitor.UndefinedSymbolVisitor;
 
 import java.util.List;
 
-public class TypeChecker implements FormVisitor<Void, Void>, StatementVisitor<Void, Void>,
-        ExpressionVisitor<Type, Identifier> {
+public class TypeChecker {
 
-    private final Messages messages;
-    private final SymbolTable symbolTable;
-    private final CircularDependenciesResolver circularDependenciesResolver;
+    private final Form form;
+    private final QuestionStorage questionStorage;
 
-    public TypeChecker(Messages messages, SymbolTable symbolTable, CircularDependenciesResolver circularDependenciesResolver) {
-        this.messages = messages;
-        this.symbolTable = symbolTable;
-        this.circularDependenciesResolver = circularDependenciesResolver;
+    private final TypeMismatchVisitor typeMismatchVisitor;
+    private final UndefinedSymbolVisitor undefinedSymbolVisitor;
+    private final CircularDependencyVisitor circularDependenciesVisitor;
+
+    private final IssuesStorage issuesStorage;
+
+    public TypeChecker(Form form) {
+        this.form = form;
+        questionStorage = new QuestionStorage();
+
+        SymbolTable symbolTable = questionStorage.createSymbolTable(form);
+        typeMismatchVisitor = new TypeMismatchVisitor(symbolTable);
+        undefinedSymbolVisitor = new UndefinedSymbolVisitor(symbolTable);
+        circularDependenciesVisitor = new CircularDependencyVisitor();
+
+        issuesStorage = new IssuesStorage();
     }
 
-    @Override
-    public Void visitForm(Form form, Void ignore) {
-        Questions questions = QuestionCollector.collect(form);
-
-        fillSymbolTable(questions);
-        checkQuestionDuplicates(questions);
-        checkIdentifier(form.getName());
-        checkStatements(form.getStatements());
-        checkCircularDependencies();
-
-        return null;
+    public void checkForm() {
+        checkForTypeMismatches();
+        checkForUndefinedSymbols();
+        checkForEmptyQuestionLabels();
+        checkForCircularDependency();
+        checkQuestionDeclarationDuplicates();
+        checkQuestionLabelDuplicates();
     }
 
-    @Override
-    public Void visitIfThen(IfThen ifThen, Void ignore) {
-        checkCondition(ifThen.getCondition());
-        checkStatements(ifThen.getThenStatements());
-
-        return null;
-    }
-
-    @Override
-    public Void visitIfThenElse(IfThenElse ifThenElse, Void ignore) {
-        checkCondition(ifThenElse.getCondition());
-        checkStatements(ifThenElse.getThenStatements());
-        checkStatements(ifThenElse.getElseStatements());
-
-        return null;
-    }
-
-    @Override
-    public Void visitQuestion(Question question, Void ignore) {
-
-        checkIdentifier(question.getId());
-
-        checkQuestionText(question.getQuestionText());
-
-        if (question.getValue() != null) {
-            Type valueType = question.getValue().accept(this, question.getId());
-
-            if (!question.getType().isCompatibleWith(valueType)) {
-                messages.addError(new TypeMismatch(question.getType(), valueType));
+    private void checkForEmptyQuestionLabels() {
+        for (Question question : questionStorage.collectQuestions(form)) {
+            if (question.getQuestionText().toString().isEmpty()) {
+                issuesStorage.addError(new EmptyQuestionLabel(question.getQuestionText()));
             }
         }
-
-        return null;
     }
 
-    @Override
-    public Type visitNegation(Negation node, Identifier questionId) {
-        Type innerExpressionType = node.getExpression().accept(this, questionId);
-
-        if (!innerExpressionType.isBoolean()) {
-            messages.addError(new TypeMismatch(new BooleanType(), innerExpressionType));
-            return new UnknownType();
-        }
-
-        return new BooleanType();
+    private void checkForCircularDependency() {
+        circularDependenciesVisitor.visitForm(form, null);
     }
 
-    @Override
-    public Type visitProduct(Product node, Identifier questionId) {
-        return checkTypeMismatch(node, questionId);
+    private void checkForUndefinedSymbols() {
+        undefinedSymbolVisitor.visitForm(form, null);
     }
 
-    @Override
-    public Type visitIncrement(Increment node, Identifier questionId) {
-        Type innerExpressionType = node.getExpression().accept(this, questionId);
-
-        if (!(innerExpressionType.isNumeric())) {
-            messages.addError(new NumberExpected(innerExpressionType));
-            return new UnknownType();
-        }
-
-        return innerExpressionType;
+    private void checkForTypeMismatches() {
+        typeMismatchVisitor.visitForm(form, null);
     }
 
-    @Override
-    public Type visitSubtraction(Subtraction node, Identifier questionId) {
-        return checkTypeMismatch(node, questionId);
-    }
+    private void checkQuestionLabelDuplicates() {
+        Questions questions = questionStorage.collectQuestions(form);
 
-    @Override
-    public BooleanType visitNotEqual(NotEqual node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public Type visitAnd(LogicalAnd node, Identifier questionId) {
-        return checkLogicalExpression(node, questionId);
-    }
-
-    @Override
-    public BooleanType visitLowerThan(LowerThan node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public BooleanType visitGreaterThanOrEqual(GreaterThanOrEqual node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public Type visitDivision(Division node, Identifier questionId) {
-        return checkTypeMismatch(node, questionId);
-    }
-
-    @Override
-    public Type visitParameter(Parameter parameter, Identifier questionId) {
-        if (!symbolTable.isDeclared(parameter.getId())) {
-            messages.addError(new UndefinedIdentifier(parameter.getId()));
-            return new UnknownType();
-        }
-
-        circularDependenciesResolver.register(new DependencyPair(questionId, parameter.getId()));
-
-        return symbolTable.lookup(parameter.getId());
-    }
-
-    @Override
-    public Type visitGroup(Group node, Identifier questionId) {
-        return node.getExpression().accept(this, questionId);
-    }
-
-    @Override
-    public Type visitAddition(Addition node, Identifier questionId) {
-        return checkTypeMismatch(node, questionId);
-    }
-
-    @Override
-    public BooleanType visitGreaterThan(GreaterThan node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public Type visitDecrement(Decrement node, Identifier questionId) {
-        Type innerExpressionType = node.getExpression().accept(this, questionId);
-
-        if (!(innerExpressionType.isNumeric())) {
-            messages.addError(new NumberExpected(innerExpressionType));
-            return new UnknownType();
-        }
-
-        return innerExpressionType;
-    }
-
-    @Override
-    public BooleanType visitEquals(Equals node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public BooleanType visitLowerThanOrEqual(LowerThanOrEqual node, Identifier questionId) {
-        checkTypeMismatch(node, questionId);
-
-        return new BooleanType();
-    }
-
-    @Override
-    public Type visitOr(LogicalOr node, Identifier questionId) {
-        return checkLogicalExpression(node, questionId);
-    }
-
-    @Override
-    public BooleanType visitBoolean(BooleanLiteral node, Identifier questionId) {
-        return new BooleanType();
-    }
-
-    @Override
-    public FloatType visitDecimal(DecimalLiteral node, Identifier questionId) {
-        return new FloatType();
-    }
-
-    @Override
-    public IntegerType visitInteger(IntegerLiteral node, Identifier questionId) {
-        return new IntegerType();
-    }
-
-    @Override
-    public StringType visitString(StringLiteral node, Identifier questionId) {
-        return new StringType();
-    }
-
-    private Type checkTypeMismatch(BinaryExpression node, Identifier questionId) {
-        Type leftType = node.getLeft().accept(this, questionId);
-        Type rightType = node.getRight().accept(this, questionId);
-
-        if (!leftType.isCompatibleWith(rightType)) {
-            messages.addError(new TypeMismatch(leftType, rightType));
-
-            return new UnknownType();
-        }
-
-        return leftType;
-    }
-
-    private Type checkLogicalExpression(BinaryExpression node, Identifier questionId) {
-        Type leftType = node.getLeft().accept(this, questionId);
-        Type rightType = node.getRight().accept(this, questionId);
-
-        if (!leftType.isBoolean()) {
-            messages.addError(new TypeMismatch(new BooleanType(), leftType));
-
-            return new UnknownType();
-        }
-
-        if (!rightType.isBoolean()) {
-            messages.addError(new TypeMismatch(new BooleanType(), rightType));
-
-            return new UnknownType();
-        }
-
-        return new BooleanType();
-    }
-
-    private void checkIdentifier(Identifier identifier) {
-        if (identifier.toString().isEmpty()) {
-            messages.addError(new EmptyIdentifier(identifier));
-        }
-    }
-
-    private void checkQuestionDuplicates(Questions questions) {
         for (Question question : questions) {
-            if (questions.hasDuplicates(question)) {
-                messages.addError(new DuplicatedQuestionDeclarations(question));
-            }
             if (questions.hasLabelDuplicates(question)) {
-                messages.addError(new DuplicatedQuestionLabels(question));
+                issuesStorage.addWarning(new DuplicatedQuestionLabels(question));
             }
         }
     }
 
-    public void checkStatements(List<Statement> statements) {
-        for (Statement statement : statements) {
-            statement.accept(this, null);
-        }
-    }
+    private void checkQuestionDeclarationDuplicates() {
+        Questions questions = questionStorage.collectQuestions(form);
 
-    private void checkCondition(Expression condition) {
-        Type conditionType = condition.accept(this, null);
-
-        if (!conditionType.isBoolean()) {
-            messages.addError(new TypeMismatch(new BooleanType(), conditionType));
-        }
-    }
-
-    private void checkQuestionText(QuestionText questionText) {
-        if (questionText.toString().isEmpty()) {
-            messages.addError(new EmptyQuestionLabel(questionText));
-        }
-    }
-
-    private void fillSymbolTable(List<Question> questions) {
         for (Question question : questions) {
-            symbolTable.declare(question.getId(), question.getType());
+            if (questions.hasDuplicatedDeclarations(question)) {
+                issuesStorage.addError(new DuplicatedQuestionDeclarations(question));
+            }
         }
     }
 
-    private void checkCircularDependencies() {
-        DependencySet dependencies = circularDependenciesResolver.circularDependencies();
+    public List<Issue> getErrors() {
+        List<Issue> errors = issuesStorage.getErrors();
+        errors.addAll(typeMismatchVisitor.getErrors());
+        errors.addAll(undefinedSymbolVisitor.getErrors());
+        errors.addAll(circularDependenciesVisitor.getErrors());
+        return errors;
+    }
 
-        for (DependencyPair pair : dependencies) {
-            messages.addError(new CircularDependency(pair));
-        }
+    public List<Issue> getWarnings() {
+        return issuesStorage.getWarnings();
     }
 }

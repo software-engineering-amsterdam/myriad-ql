@@ -1,9 +1,9 @@
-package org.ql.typechecker.error;
+package org.ql.typechecker.issues.error;
 
-import org.ql.ast.Node;
 import org.ql.ast.statement.question.QuestionText;
+import org.ql.typechecker.issues.Issue;
 
-public class EmptyQuestionLabel implements TypeError {
+public class EmptyQuestionLabel implements Issue {
     private final QuestionText questionText;
 
     public EmptyQuestionLabel(QuestionText questionText) {

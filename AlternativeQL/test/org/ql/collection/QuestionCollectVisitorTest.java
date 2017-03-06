@@ -9,6 +9,7 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.Type;
+import org.ql.collection.visitor.QuestionCollectVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
-public class QuestionCollectorTest {
+public class QuestionCollectVisitorTest {
     @Test
     public void shouldCollectQuestionsFromForm() {
         List<Statement> statements = new ArrayList<>();
@@ -30,7 +31,7 @@ public class QuestionCollectorTest {
         statements.add(new IfThen(mock(Expression.class), thenStatements));
         Form form = new Form(mock(Identifier.class), statements);
 
-        List<Question> actualQuestionList = QuestionCollector.collect(form);
+        List<Question> actualQuestionList = new QuestionCollectVisitor().collect(form);
 
         assertSame(firstQuestion, actualQuestionList.get(0));
         assertSame(secondQuestion, actualQuestionList.get(1));
