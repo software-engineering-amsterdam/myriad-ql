@@ -6,15 +6,15 @@ module QL
         super
         @variable.type = @question.type
         ComputedWidget.new(question_frame: self)
-        calculate
+        compute
       end
 
       def reload
         super
-        calculate
+        compute
       end
 
-      def calculate
+      def compute
         @variable.value = eval(@question.assignment.eval.to_s) if @question.assignment
       end
     end
