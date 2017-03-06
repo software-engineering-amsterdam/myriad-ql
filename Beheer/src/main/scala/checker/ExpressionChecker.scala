@@ -71,6 +71,7 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
       case _ => (None, Seq(Error(s"Duplicate identifier found in expression check: ${identifier.value}")))
     }
   }
+
   private def mostGeneric(left: NumericType, right: NumericType): NumericType =
     (left, right) match {
       case (MoneyType, _) => MoneyType
