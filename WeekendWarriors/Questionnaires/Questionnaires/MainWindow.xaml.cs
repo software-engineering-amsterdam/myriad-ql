@@ -38,6 +38,9 @@ namespace Questionnaires
             foreach (var analysisEvent in analysisResult.Events)
                 Output.Text += analysisEvent.ToString() + '\n';
 
+            var qlsFactory = new QLS.AST.ASTBuilder();
+            var Stylesheet = qlsFactory.Build(InputQLS.Text);
+
             // Testing from here
             var variableStore = new VariableStore.VariableStore();
             var renderer = new Renderer.Renderer(variableStore);

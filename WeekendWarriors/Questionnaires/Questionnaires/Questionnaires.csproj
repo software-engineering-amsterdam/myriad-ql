@@ -62,6 +62,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="QLS\AST\ASTBuilder.cs" />
+    <Compile Include="QLS\AST\INode.cs" />
+    <Compile Include="QLS\AST\Page.cs" />
+    <Compile Include="QLS\AST\Question.cs" />
+    <Compile Include="QLS\AST\QuestionWithWidget.cs" />
+    <Compile Include="QLS\AST\Section.cs" />
+    <Compile Include="QLS\AST\DefaultStyle.cs" />
+    <Compile Include="QLS\AST\Setting.cs" />
+    <Compile Include="QLS\AST\StyleSheet.cs" />
+    <Compile Include="QLS\AST\Widgets\CheckBox.cs" />
+    <Compile Include="QLS\AST\Widgets\DropDown.cs" />
+    <Compile Include="QLS\AST\Widgets\Radio.cs" />
+    <Compile Include="QLS\AST\Widgets\Slider.cs" />
+    <Compile Include="QLS\AST\Widgets\Spinbox.cs" />
+    <Compile Include="QLS\AST\Widgets\Text.cs" />
+    <Compile Include="QLS\AST\Widgets\Widget.cs" />
     <Compile Include="QLS\Generated\QLSBaseListener.cs" />
     <Compile Include="QLS\Generated\QLSBaseVisitor.cs" />
     <Compile Include="QLS\Generated\QLSLexer.cs" />

@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-#pragma warning disable 3021
 using Antlr4.Runtime.Misc;
 using IParseTreeListener = Antlr4.Runtime.Tree.IParseTreeListener;
 using IToken = Antlr4.Runtime.IToken;
@@ -62,16 +61,6 @@ public interface IQLSListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitSection([NotNull] QLSParser.SectionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QLSParser.widgetQuestion"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterWidgetQuestion([NotNull] QLSParser.WidgetQuestionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QLSParser.widgetQuestion"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitWidgetQuestion([NotNull] QLSParser.WidgetQuestionContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QLSParser.widget"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -102,13 +91,13 @@ public interface IQLSListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QLSParser.cssItem"/>.
+	/// Enter a parse tree produced by <see cref="QLSParser.setting"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterCssItem([NotNull] QLSParser.CssItemContext context);
+	void EnterSetting([NotNull] QLSParser.SettingContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QLSParser.cssItem"/>.
+	/// Exit a parse tree produced by <see cref="QLSParser.setting"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitCssItem([NotNull] QLSParser.CssItemContext context);
+	void ExitSetting([NotNull] QLSParser.SettingContext context);
 }

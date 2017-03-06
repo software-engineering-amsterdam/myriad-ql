@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-#pragma warning disable 3021
 
 using Antlr4.Runtime.Misc;
 using IErrorNode = Antlr4.Runtime.Tree.IErrorNode;
@@ -72,18 +71,6 @@ public partial class QLSBaseListener : IQLSListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSection([NotNull] QLSParser.SectionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QLSParser.widgetQuestion"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterWidgetQuestion([NotNull] QLSParser.WidgetQuestionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="QLSParser.widgetQuestion"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitWidgetQuestion([NotNull] QLSParser.WidgetQuestionContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="QLSParser.widget"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -120,17 +107,17 @@ public partial class QLSBaseListener : IQLSListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="QLSParser.cssItem"/>.
+	/// Enter a parse tree produced by <see cref="QLSParser.setting"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCssItem([NotNull] QLSParser.CssItemContext context) { }
+	public virtual void EnterSetting([NotNull] QLSParser.SettingContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="QLSParser.cssItem"/>.
+	/// Exit a parse tree produced by <see cref="QLSParser.setting"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCssItem([NotNull] QLSParser.CssItemContext context) { }
+	public virtual void ExitSetting([NotNull] QLSParser.SettingContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

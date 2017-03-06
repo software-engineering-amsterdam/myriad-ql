@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-#pragma warning disable 3021
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using IToken = Antlr4.Runtime.IToken;
@@ -51,12 +50,6 @@ public interface IQLSVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitSection([NotNull] QLSParser.SectionContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QLSParser.widgetQuestion"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitWidgetQuestion([NotNull] QLSParser.WidgetQuestionContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="QLSParser.widget"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -75,9 +68,9 @@ public interface IQLSVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="QLSParser.cssItem"/>.
+	/// Visit a parse tree produced by <see cref="QLSParser.setting"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitCssItem([NotNull] QLSParser.CssItemContext context);
+	Result VisitSetting([NotNull] QLSParser.SettingContext context);
 }

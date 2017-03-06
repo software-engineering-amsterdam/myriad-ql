@@ -2,8 +2,8 @@
 grammar QLS;
 
 // This removes the warning that is thrown by antlr making classes CLSCompliant by default
-@parser::header {#pragma warning disable 3021}
-@lexer::header {#pragma warning disable 3021}
+//@parser::header {#pragma warning disable 3021}
+//@lexer::header {#pragma warning disable 3021}
 
 /**
  Proposed grammar
@@ -19,6 +19,7 @@ stylesheet Identifier
 page Identifier
  - Parent: stylesheet
  - Children: Only sections can be children
+ - Nope, also: default
 
 section Identifier
  - Parent: page or section
@@ -48,26 +49,25 @@ cssItem
 Whitespace: [ \t\r\n\u000C]+ -> skip;
 MultiLineComment: '/*' .*? '*/' -> skip;
 SingleLineComment: '//' ~('\r' | '\n')* -> skip;
-HexDigit: ('0'..'9''a'..'f''A'..'F');
+HexDigit: ('0'..'9'|'a'..'f'|'A'..'F');
 
-LiteralValue: 'money' | 'boolean' | 'string' | 'int';
-Type: 'spinbox' | 'slider' | 'text' | 'radio' | 'checkbox' | 'dropdown' ;
-Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 Property: 'width' | 'font' | 'fontsize' | 'color' ;
+Type: 'money' | 'boolean' | 'string' | 'int';
+Widget: 'spinbox' | 'slider' | 'text' | 'radio' | 'checkbox' | 'dropdown' ;
+Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
+ColorLiteral: '#' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
 StringLiteral: '"' (~'"')* '"';
 NumberLiteral: ('0'..'9')+;
-ColorLiteral: '#'HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
 
 
 /**
  * Parser rules
  */
 stylesheet: 'stylesheet' Identifier '{' page* '}';
-page: 'page' Identifier '{' section* '}';
-section: 'section' Identifier '{' (question | defaultStyle | section)* '}';
-widgetQuestion: question '{' widget '}';
-widget: 'widget' Type;
-question: 'question' Identifier;
-defaultStyle: 'default' LiteralValue '{' cssItem* widget '}';
-cssItem: Property ':' (StringLiteral | NumberLiteral | ColorLiteral);
+page: 'page' Identifier '{' (section | defaultStyle)* '}';
+section: 'section' StringLiteral '{' (question | defaultStyle | section)* '}';
+widget: 'widget' Widget;
+question: 'question' Identifier ('{' widget '}')?;
+defaultStyle: 'default' Type '{' setting* widget '}';
+setting: Property ':' (StringLiteral | NumberLiteral | ColorLiteral);

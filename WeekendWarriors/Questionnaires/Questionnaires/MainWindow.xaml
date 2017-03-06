@@ -26,36 +26,59 @@ boolean(true)
 }
         </TextBox>
         <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
-            stylesheet taxOfficeExample 
-  page Housing {
-    section "Buying"
-      question hasBoughtHouse  
-        widget checkbox 
-    section "Loaning"  
-      question hasMaintLoan
-  }
 
-  page Selling { 
-    section "Selling" {
-      question hasSoldHouse
-        widget radio("Yes", "No") 
-      section "You sold a house" {
-        question sellingPrice
-          widget spinbox
-        question privateDebt
-          widget spinbox 
-        question valueResidue
-        default money {
-          width: 400
-          font: "Arial" 
-          fontsize: 14
-          color: #999999
-          widget spinbox
+stylesheet taxOfficeExample 
+{
+	page Housing 
+	{
+		section "Buying"
+		{      
+			question hasBoughtHouse 
+			{
+				widget checkbox
+			}
+		} 
+		section "Loaning" 
+		{
+			question hasMaintLoan
+		}
+	}
+	page Selling 
+	{
+		section "Selling" 
+		{
+			question hasSoldHouse
+			{
+				widget radio
+			}
+		}
+		section "You sold a house" 
+		{
+			question sellingPrice
+			{
+				widget spinbox
+			}
+			question privateDebt
+			{
+				widget spinbox 
+			}
+			question valueResidue
+			default money 
+			{
+				width: 400
+				font: "Arial" 
+				fontsize: 14
+				color: #999999
+				widget spinbox
+			}
         }        
-      }
-    }
-    default boolean widget radio("Yes", "No")
-  }  
+      
+		default boolean
+		{
+			widget radio
+		}
+	}
+}
         </TextBox>
         <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>
         <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">output</TextBlock>
