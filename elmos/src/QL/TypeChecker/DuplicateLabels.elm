@@ -3,13 +3,13 @@ module QL.TypeChecker.DuplicateLabels exposing (duplicateLabels)
 import Dict exposing (Dict)
 import Dict.Extra as Dict
 import QL.AST exposing (Form, Id)
-import QL.TypeChecker.CheckerUtil as CheckerUtil
+import QL.AST.Collectors as Collectors
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
 
 duplicateLabels : Form -> List Message
 duplicateLabels form =
-    CheckerUtil.collectQuestionLabels form
+    Collectors.collectQuestionLabels form
         |> groupByLabel
         |> Dict.filter hasMultipleDeclarations
         |> Dict.map toDuplicateLabelMessage

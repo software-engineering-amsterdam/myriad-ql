@@ -3,7 +3,7 @@ module QL.TypeChecker.CyclicDependencies exposing (cyclicDependencies)
 import DictList exposing (DictList)
 import List.Extra as List
 import QL.AST exposing (Expression, Form, Id)
-import QL.TypeChecker.CheckerUtil as CheckerUtil
+import QL.AST.Collectors as Collectors
 import QL.TypeChecker.Messages as Messages exposing (Message)
 import Set exposing (Set)
 
@@ -24,7 +24,7 @@ cyclicDependencies : Form -> List Message
 cyclicDependencies form =
     let
         dependencyTable =
-            CheckerUtil.collectComputedFields form
+            Collectors.collectComputedFields form
                 |> List.map extractDependencies
                 |> toDependencyTable
     in
@@ -52,7 +52,7 @@ dependenciesOf name table =
 
 extractDependencies : ( String, Expression ) -> DependencyEntry
 extractDependencies ( name, computation ) =
-    ( name, CheckerUtil.collectQuestionReferences computation |> uniqueVarNames )
+    ( name, Collectors.collectQuestionReferences computation |> uniqueVarNames )
 
 
 toDependencyTable : List DependencyEntry -> DependencyTable

@@ -1,8 +1,8 @@
-module UI.FormUtilTests exposing (all)
+module UI.FieldTests exposing (all)
 
 import Test exposing (Test, describe, test)
 import QL.AST exposing (..)
-import UI.FormUtil as FormUtil exposing (Field(Editable, Computed))
+import UI.Field as Field exposing (Field(Editable, Computed))
 import QL.Environment as Env
 import Expect
 
@@ -25,14 +25,14 @@ exampleForm =
 
 all : Test
 all =
-    describe "FormUtil"
+    describe "Field"
         [ test "should return all fields and else branches on empty env" <|
             \() ->
                 let
                     env =
                         Env.empty
                 in
-                    FormUtil.activeFields env exampleForm
+                    Field.activeFields env exampleForm
                         |> Expect.equal
                             [ Editable "Name" "name" StringType
                             , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))
@@ -46,7 +46,7 @@ all =
                         Env.empty
                             |> Env.withString "name" "John"
                 in
-                    FormUtil.activeFields env exampleForm
+                    Field.activeFields env exampleForm
                         |> Expect.equal
                             [ Editable "Name" "name" StringType
                             , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))
@@ -61,7 +61,7 @@ all =
                             |> Env.withString "name" "John"
                             |> Env.withBoolean "hasHouse" True
                 in
-                    FormUtil.activeFields env exampleForm
+                    Field.activeFields env exampleForm
                         |> Expect.equal
                             [ Editable "Name" "name" StringType
                             , Computed "Name with prefix" "nameWithPrefix" StringType (Var ( "name", Location 0 0 ))

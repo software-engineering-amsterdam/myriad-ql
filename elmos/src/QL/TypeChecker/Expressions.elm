@@ -2,18 +2,14 @@ module QL.TypeChecker.Expressions exposing (..)
 
 import Dict exposing (Dict)
 import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
-import QL.TypeChecker.CheckerUtil as CheckerUtil exposing (QuestionTypes)
+import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
 
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
-    let
-        questionTypes =
-            CheckerUtil.questionTypes form
-    in
-        CheckerUtil.collectExpressions form
-            |> List.concatMap (typeCheckerErrorsFromExpression questionTypes)
+    Collectors.collectExpressions form
+        |> List.concatMap (typeCheckerErrorsFromExpression (Collectors.collectQuestionTypes form))
 
 
 typeCheckerErrorsFromExpression : QuestionTypes -> Expression -> List Message
