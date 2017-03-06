@@ -26,6 +26,15 @@ export class MemoryState extends eventemitter3 {
         return element.type;
     }
 
+    getValue(elementName){
+        let element = this.memory.get(elementName);
+        return element.value;
+    }
+
+    getElement(elementName){
+        return this.memory.get(elementName);
+    }
+
     _onSetterTriggered(elementName = '', values = {}){
         this.emit('set', {elementName, ...values});
     }
