@@ -57,9 +57,9 @@ public class Environment {
     }
 
     private boolean substituteVariables(Set<String> usedVariables) {
-        List<String> dependencies = new ArrayList<>();
+        Set<String> dependencies = new LinkedHashSet<>();
         for (String variableName : usedVariables) {
-            dependencies.addAll(replaceWithDeclarations(variableName));
+            addDeclarations(variableName, dependencies);
         }
         boolean substituted = dependencies != usedVariables;
         usedVariables.clear();
@@ -67,13 +67,13 @@ public class Environment {
         return substituted;
     }
 
-    private Set<String> replaceWithDeclarations(String usedVariable) {
+
+    private void addDeclarations(String usedVariable, Set<String> usedVariables) {
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
-                return calc.getUsedVariables();
+                usedVariables.addAll(calc.getUsedVariables());
             }
         }
-        return new LinkedHashSet<>();
     }
 }
 

@@ -82,7 +82,7 @@ public class SemanticsAnalyzerTest {
         assertSemantics("invalidDelegatedComposedCalculations.txt", 5, "Composition should work");
     }
 
-    @Test(timeOut = 100)
+    @Test(timeOut = 2000)
     void testCyclicDependencyDelegated() throws Exception{
        assertSemantics("invalidDelegations.txt", 3, "Delegation leads to errors in any expression");
     }
