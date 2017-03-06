@@ -56,14 +56,14 @@ public class Environment {
     }
 
     private boolean expandAndCheckUsedVariables(String calculationDeclaration, List<String> usedVariables) {
-        List<String> expandedVariables = usedVariables;
-        do {
-            usedVariables = expandedVariables;
+        for (List<String> expandedVariables = new ArrayList<>();
+             usedVariables != expandedVariables;
+             usedVariables = expandVariables(expandedVariables)) {
+            expandedVariables = usedVariables;
             if (expandedVariables.contains(calculationDeclaration)) {
                 return true;
             }
-            expandedVariables = expandVariables(usedVariables);
-        } while (expandedVariables != usedVariables);
+        }
         return false;
     }
 
