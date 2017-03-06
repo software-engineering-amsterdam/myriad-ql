@@ -52,7 +52,13 @@ def parse(input_string):
 
     data_types = oneOf([data_type.value for data_type in DataTypes])
 
-    name = Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
+    true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
+    false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
+    boolean = (true | false)
+
+    reserved_words = (lit_form | lit_if | lit_else | boolean | data_types)
+
+    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
         lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     integer = Word(nums).setParseAction(
@@ -60,10 +66,6 @@ def parse(input_string):
     money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
         lambda parsed_tokens: ast.Value(Decimal(parsed_tokens[0]), DataTypes.money))
     number = (money | integer)
-
-    true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
-    false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
-    boolean = (true | false)
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
