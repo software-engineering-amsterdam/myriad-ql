@@ -52,7 +52,9 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Gri
         WidgetGridPane widgetGridPane = new WidgetGridPane(widgetEventHandler, ifThenCondition);
 
         Value value = valueTable.lookup(ifThenCondition);
-        widgetGridPane.getPane().setVisible((Boolean) value.getPlainValue());
+        if(value != null) {
+            widgetGridPane.getPane().setVisible((Boolean) value.getPlainValue());
+        }
 
         int i = 0;
         for(Statement statement : ifThen.getThenStatements()) {
