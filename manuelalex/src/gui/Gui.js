@@ -36,9 +36,7 @@ export class GUI {
 
         this.renderGUI(this.application, this.ast, this.memoryState);
 
-        this.memoryState.on('set', (values)=>{
-            console.log('set', values);
-        });
+        this.memoryState.on('set', this.renderGUI.bind(this, this.application, this.ast, this.memoryState));
 
         window.memoryState = this.memoryState;
     }

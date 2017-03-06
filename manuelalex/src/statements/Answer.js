@@ -6,6 +6,8 @@ import {Statement}   from './Statement.js';
 
 export class Answer extends Statement {
 
+    render = null;
+
     constructor(name = '', allocation = {}, location = null) {
         super(location);
 

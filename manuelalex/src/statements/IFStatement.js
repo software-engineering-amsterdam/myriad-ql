@@ -6,8 +6,6 @@ import {Statement}  from './Statement.js';
 
 export class IfStatement extends Statement {
 
-    render = null;
-
     constructor(condition, ifBody, location) {
         super(location);
 
@@ -30,5 +28,9 @@ export class IfStatement extends Statement {
 
     accept(visitor){
         visitor.visitIfStatement(this);
+    }
+
+    render(visitor, view){
+        visitor.renderIfStatement(this, view);
     }
 }

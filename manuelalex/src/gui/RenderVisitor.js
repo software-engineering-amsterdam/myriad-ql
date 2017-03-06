@@ -14,25 +14,25 @@ export class RenderVisitor {
     _viewCount = 0;
     memoryState;
 
-    constructor(memoryState){
+    constructor(memoryState) {
         this.memoryState = memoryState;
     }
 
-    async visitProgram(program, view){
+    async visitProgram(program, view) {
         view = this._addMarginsToView(view);
 
         program.renderTitle(this, view);
 
-       this.visitStatements(program.getStatements(), view);
+        this.visitStatements(program.getStatements(), view);
     }
 
-    visitStatements(statements = [], view = {}){
-        for(let statement of statements){
+    visitStatements(statements = [], view = {}) {
+        for (let statement of statements) {
             statement.render && statement.render(this, view);
         }
     }
 
-    renderProgamTitle(title = '', view){
+    renderProgamTitle(title = '', view) {
         let titleRenderable = new Surface({
             content: title
         });
@@ -40,79 +40,101 @@ export class RenderVisitor {
         view.addRenderable(titleRenderable, 'programTitle', layout.dock.top(~20, 0, 10))
     }
 
-    renderQuestion(question = {}, view = {}){
+    renderQuestion(question = {}, view = {}) {
         let type = question.getPropertyType();
         let label = question.getLabel();
         let propertyName = question.getPropertyName();
+        let propertyElement = this.memoryState.getElement(propertyName);
 
         let typeRenderable = type.render(this);
         let labelRenderable = label.render(this);
 
+        typeRenderable.setState(propertyElement.getValue() || undefined);
+        typeRenderable.on('state', ({ value }) => {
+            propertyElement.setValue(value);
+        });
+
         let subView = new View();
-        subView.getSize = ()=> [undefined, 88];
+        subView.getSize = () => [undefined, 88];
 
         subView.addRenderable(labelRenderable, 'label', layout.dock.left(~120, 0, 10), layout.stick.center());
         subView.addRenderable(typeRenderable, 'type', layout.dock.right(~120, 0, 10));
-
-        view.addRenderable(subView, `subView${this._viewCount++}`, layout.dock.top(44,0,10));
+        view.addRenderable(subView, `subView${this._viewCount++}`, layout.dock.top(44, 0, 10));
 
     }
 
-    renderLabel(label){
+    renderLabel(label) {
         return new Surface({
             content: label.getValue()
         });
     }
 
-    renderBooleanInput(qlBoolean){
-        let element = this.memoryState.getElement(qlBoolean);
+    renderIfStatement(ifStatement, view) {
+        let condition = ifStatement.getCondition();
+        let ifBody = ifStatement.getIfBody();
+        if (condition.evaluate(this.memoryState)) {
+            this.visitStatements(ifBody, view);
+        }
+    }
+
+    renderBooleanInput(qlBoolean) {
         let renderable = new Checkbox({
-            state: element.value || false,
+            state: false,
             enabled: true
         });
-        renderable.on('unchecked', ()=>{
-            element.setValue(false);
-        });
 
-        renderable.on('checked', ()=>{
-            element.setValue(true)
+        renderable.on('unchecked', () => {
+            renderable._eventOutput.emit('state', { value: false, type: qlBoolean });
         });
+        renderable.on('checked', () => {
+            renderable._eventOutput.emit('state', { value: true, type: qlBoolean });
+        });
+        renderable.setState = (state) => {
+           state !== undefined && renderable.setChecked(state);
+        };
+
         return renderable;
     }
 
-    renderStringInput(qlString){
-        let element = this.memoryState.getElement(qlString);
+    renderStringInput(qlString) {
         let renderable = new SingleLineTextInput({});
-        renderable.on('message', (message)=>{
-            element.setValue(message);
+        renderable.on('message', (message) => {
+            renderable._eventOutput.emit('state', {value: message, type: qlString});
         });
+        renderable.setState = (state)=>{
+            state !== undefined && renderable.setValue(state);
+        };
         return renderable;
     }
 
-    renderDateInput(type){
+    renderDateInput(qlData) {
         return new Surface({
             content: type.toString()
         });
     }
 
-    renderNumberInput(type){
+    renderNumberInput(qlNumber) {
         return new Surface({
             content: type.toString()
         });
     }
 
-    renderMoneyInput(type){
-        return new Surface({
-            content: type.toString()
+    renderMoneyInput(qlMoney) {
+        let renderable = new SingleLineTextInput({});
+        renderable.on('message', (message) => {
+            renderable._eventOutput.emit('state', {value: message, type: qlMoney});
         });
+        renderable.setState = (state)=>{
+            state !== undefined && renderable.setValue(state);
+        };
+        return renderable;
     }
 
-    // todo
-    _addMarginsToView(view){
+    _addMarginsToView(view) {
         return view;
     }
 
-    _showError(error){
+    _showError(error) {
         console.error(error.toString());
     }
 }
