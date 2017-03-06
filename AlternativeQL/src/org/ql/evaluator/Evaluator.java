@@ -68,11 +68,6 @@ public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisit
 
     @Override
     public Value visitParameter(Parameter node, Void context) {
-
-        if (!valueTable.isDeclared(node.getId())) {
-            return new UnknownValue();
-        }
-
         return valueTable.lookup(node.getId());
     }
 

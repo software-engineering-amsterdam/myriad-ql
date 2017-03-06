@@ -1,6 +1,7 @@
 package org.ql.evaluator;
 
 import org.ql.ast.Identifier;
+import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
 import java.util.HashMap;
@@ -14,6 +15,9 @@ public class ValueTable {
     }
 
     public Value lookup(Identifier id) {
+        if (!this.isDeclared(id)) {
+            return new UnknownValue();
+        }
         return values.get(id.toString());
     }
 
