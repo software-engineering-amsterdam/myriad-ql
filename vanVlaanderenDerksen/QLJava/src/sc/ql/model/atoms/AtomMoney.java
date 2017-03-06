@@ -17,7 +17,7 @@ public class AtomMoney implements Node {
 	}
 	
 	@Override
-	public <E> E accept(NodeVisitor<E> visitor) throws Exception {
+	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
 		return visitor.visit(this);
 	}
 }

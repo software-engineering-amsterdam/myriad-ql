@@ -12,11 +12,11 @@ import sc.ql.model.expressions.OpExpression;
 import sc.ql.model.form_elements.IfStatement;
 import sc.ql.model.form_elements.Question;
 
-public class GetFormQuestions implements NodeVisitor<List<Question>> {
+public class QuestionsVisitor implements NodeVisitor<List<Question>> {
+	private List<Question> questions = new ArrayList<Question>();
 	
 	@Override
 	public List<Question> visit(Question question) {
-		List<Question> questions = new ArrayList<Question>();
 		questions.add(question);
 		
 		return questions;
@@ -24,8 +24,6 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 
 	@Override
 	public List<Question> visit(ConditionalBlock conditional_block) throws Exception {
-		List<Question> questions = new ArrayList<Question>();
-	
 		for (FormElement form_element : conditional_block.getFormElements()) {
 			questions.addAll(form_element.accept(this));
         }
@@ -35,8 +33,6 @@ public class GetFormQuestions implements NodeVisitor<List<Question>> {
 
 	@Override
 	public List<Question> visit(IfStatement if_statement) throws Exception {
-		List<Question> questions = new ArrayList<Question>();
-		
 		for (ConditionalBlock conditional_block : if_statement.getConditionalBlocks()) {
 			questions.addAll(conditional_block.accept(this));
         }

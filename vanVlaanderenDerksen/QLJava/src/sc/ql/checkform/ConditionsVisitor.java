@@ -11,10 +11,10 @@ import sc.ql.model.form_elements.IfStatement;
 import sc.ql.model.form_elements.Question;
 import sc.ql.model.form_elements.Question.Type;
 
-public class CheckConditions implements NodeVisitor<Question.Type> {
+public class ConditionsVisitor implements NodeVisitor<Question.Type> {
 	public HashMap<String, Question.Type> identifier_types;
 	
-	public CheckConditions(HashMap<String, Question.Type> identifier_types) {
+	public ConditionsVisitor(HashMap<String, Question.Type> identifier_types) {
 		this.identifier_types = identifier_types;
 	}
 	
