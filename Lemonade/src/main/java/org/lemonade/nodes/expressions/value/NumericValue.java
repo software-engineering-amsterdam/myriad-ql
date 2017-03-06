@@ -1,6 +1,5 @@
 package org.lemonade.nodes.expressions.value;
 
-import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
@@ -10,26 +9,34 @@ import org.lemonade.nodes.types.QLType;
  *
  */
 
-public abstract class NumericValue<T> extends Value<T> {
+public abstract class NumericValue<T> extends ComparableValue<T> {
 
     public NumericValue(QLType type, T value) {
         super(type, value);
     }
 
     public abstract NumericValue<?> plus(IntegerValue that);
+
     public abstract NumericValue<?> plus(DecimalValue that);
+
     public abstract NumericValue<?> plus(MoneyValue that);
 
     public abstract NumericValue<?> minus(IntegerValue that);
+
     public abstract NumericValue<?> minus(DecimalValue that);
+
     public abstract NumericValue<?> minus(MoneyValue that);
 
     public abstract NumericValue<?> product(IntegerValue that);
+
     public abstract NumericValue<?> product(DecimalValue that);
+
     public abstract NumericValue<?> product(MoneyValue that);
 
     public abstract NumericValue<?> divide(IntegerValue that);
+
     public abstract NumericValue<?> divide(DecimalValue that);
+
     public abstract NumericValue<?> divide(MoneyValue that);
 
     public abstract NumericValue<?> neg();
@@ -65,8 +72,7 @@ public abstract class NumericValue<T> extends Value<T> {
             return this.minus((DecimalValue) that);
         } else if (that.getType().isOf(new QLMoneyType().getClass())) {
             return this.minus((MoneyValue) that);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
     }

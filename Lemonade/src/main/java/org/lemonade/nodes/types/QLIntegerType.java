@@ -9,6 +9,6 @@ public class QLIntegerType extends QLNumberType {
 
     @Override
     public String toString() {
-        return "string";
+        return "integer";
     }
 }

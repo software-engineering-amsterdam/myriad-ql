@@ -69,6 +69,30 @@ public class IntegerValue extends NumericValue<Integer> implements Comparable<In
     }
 
     @Override
+    public BooleanValue gT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((IntegerValue) that) == 1);
+    }
+
+    @Override
+    public BooleanValue gTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((IntegerValue) that) >= 0);
+    }
+
+    @Override
+    public BooleanValue lT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((IntegerValue) that) == -1);
+    }
+
+    @Override
+    public BooleanValue lTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((IntegerValue) that) <= 0);
+    }
+
+    @Override
     public IntegerValue neg() {
         return new IntegerValue(-this.getValue());
     }

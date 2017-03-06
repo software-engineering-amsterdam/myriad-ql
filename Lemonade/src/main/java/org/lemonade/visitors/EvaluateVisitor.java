@@ -5,10 +5,29 @@ import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.Value;
+import org.lemonade.nodes.expressions.binary.AndBinary;
+import org.lemonade.nodes.expressions.binary.DivideBinary;
+import org.lemonade.nodes.expressions.binary.EqBinary;
+import org.lemonade.nodes.expressions.binary.GTBinary;
+import org.lemonade.nodes.expressions.binary.GTEBinary;
+import org.lemonade.nodes.expressions.binary.LTBinary;
+import org.lemonade.nodes.expressions.binary.LTEBinary;
+import org.lemonade.nodes.expressions.binary.MinusBinary;
+import org.lemonade.nodes.expressions.binary.NEqBinary;
+import org.lemonade.nodes.expressions.binary.OrBinary;
+import org.lemonade.nodes.expressions.binary.PlusBinary;
+import org.lemonade.nodes.expressions.binary.ProductBinary;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.expressions.value.BooleanValue;
+import org.lemonade.nodes.expressions.value.ComparableValue;
+import org.lemonade.nodes.expressions.value.DecimalValue;
+import org.lemonade.nodes.expressions.value.IdentifierValue;
+import org.lemonade.nodes.expressions.value.IntegerValue;
+import org.lemonade.nodes.expressions.value.MoneyValue;
+import org.lemonade.nodes.expressions.value.NumericValue;
+import org.lemonade.nodes.expressions.value.StringValue;
 import org.lemonade.nodes.types.QLType;
 
 /**
@@ -89,32 +108,50 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(EqBinary eqBinary) {
-        return null;
+        Value<?> left = (Value<?>) eqBinary.getLeft().accept(this);
+        Value<?> right = (Value<?>) eqBinary.getRight().accept(this);
+        System.err.println(left.equals(right));
+        return left.eq(right);
     }
 
     @Override
     public Expression visit(NEqBinary nEqBinary) {
-        return null;
+        Value<?> left = (Value<?>) nEqBinary.getLeft().accept(this);
+        Value<?> right = (Value<?>) nEqBinary.getRight().accept(this);
+        System.err.println(left.nEq(right));
+        return left.nEq(right);
     }
 
     @Override
     public Expression visit(GTBinary gtBinary) {
-        return null;
+        ComparableValue<?> left = (ComparableValue<?>) gtBinary.getLeft().accept(this);
+        ComparableValue<?> right = (ComparableValue<?>) gtBinary.getRight().accept(this);
+        System.err.println(left.gT(right));
+        return left.gT(right);
     }
 
     @Override
     public Expression visit(GTEBinary gteBinary) {
-        return null;
+        ComparableValue<?> left = (ComparableValue<?>) gteBinary.getLeft().accept(this);
+        ComparableValue<?> right = (ComparableValue<?>) gteBinary.getRight().accept(this);
+        System.err.println(left.gTEq(right));
+        return left.gTEq(right);
     }
 
     @Override
     public Expression visit(LTBinary ltBinary) {
-        return null;
+        ComparableValue<?> left = (ComparableValue<?>) ltBinary.getLeft().accept(this);
+        ComparableValue<?> right = (ComparableValue<?>) ltBinary.getRight().accept(this);
+        System.err.println(left.lT(right));
+        return left.lT(right);
     }
 
     @Override
     public Expression visit(LTEBinary lteBinary) {
-        return null;
+        ComparableValue<?> left = (ComparableValue<?>) lteBinary.getLeft().accept(this);
+        ComparableValue<?> right = (ComparableValue<?>) lteBinary.getRight().accept(this);
+        System.err.println(left.lTEq(right));
+        return left.lTEq(right);
     }
 
     @Override

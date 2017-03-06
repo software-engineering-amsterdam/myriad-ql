@@ -69,6 +69,30 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
     }
 
     @Override
+    public BooleanValue gT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((MoneyValue) that) == 1);
+    }
+
+    @Override
+    public BooleanValue gTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((MoneyValue) that) >= 0);
+    }
+
+    @Override
+    public BooleanValue lT(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((MoneyValue) that) == -1);
+    }
+
+    @Override
+    public BooleanValue lTEq(final ComparableValue<?> that) {
+        evaluateType(that);
+        return new BooleanValue(this.compareTo((MoneyValue) that) <= 0);
+    }
+
+    @Override
     public MoneyValue neg() {
         return new MoneyValue(-this.getValue());
     }
@@ -80,7 +104,7 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof MoneyValue)){
+        if (!(obj instanceof MoneyValue)) {
             return false;
         }
         MoneyValue that = (MoneyValue) obj;
@@ -91,11 +115,9 @@ public class MoneyValue extends NumericValue<Double> implements Comparable<Money
     public int compareTo(MoneyValue that) {
         if (this.getValue() < that.getValue()) {
             return -1;
-        }
-        else if (this.getValue() > that.getValue()) {
+        } else if (this.getValue() > that.getValue()) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
