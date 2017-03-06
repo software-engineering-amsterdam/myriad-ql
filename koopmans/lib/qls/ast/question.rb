@@ -5,7 +5,6 @@ module QLS
 
       def initialize(variable, properties)
         @variable   = variable
-        p properties
         @properties = [properties].flatten.inject(:merge) if properties
       end
 
