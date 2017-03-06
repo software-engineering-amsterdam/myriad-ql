@@ -42,11 +42,7 @@ class ComputedQuestion(Question):
         return visitor.visit_computed_question(self)
 
     def __eq__(self, other):
-        return (type(self) == type(other) and
-                self.name == other.name and
-                self.label == other.label and
-                self.datatype == other.datatype and
-                self.computation == other.computation)
+        return super().__eq__(other) and self.computation == other.computation
 
 
 class IfConditional:
@@ -74,10 +70,7 @@ class IfElseConditional(IfConditional):
         return visitor.visit_ifelse_conditional(self)
 
     def __eq__(self, other):
-        return (type(self) == type(other) and
-                self.condition == other.condition and
-                self.ifbody == other.ifbody and
-                self.elsebody == other.elsebody)
+        return super().__eq__(other) and self.elsebody == other.elsebody
 
 
 class UnOp:
