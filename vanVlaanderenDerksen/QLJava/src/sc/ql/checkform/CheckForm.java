@@ -7,7 +7,7 @@ import java.util.List;
 import sc.ql.model.form_elements.*;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
-import sc.ql.model.Atoms.AtomId;
+import sc.ql.model.atoms.AtomId;
 
 public class CheckForm {
 	public CheckForm(Form form) throws Exception {
@@ -15,15 +15,7 @@ public class CheckForm {
 		List<Question> questions = createQuestionsList(form_elements);
 				
 		checkQuestions(questions);
-		
-		try {
-			CheckConditions condition_visitor = new CheckConditions(createIdTypeHashmap(questions));
-			for (FormElement form_element : form_elements) {
-				form_element.accept(condition_visitor);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		checkConditions(form_elements, questions);
 	}
 	
 	private HashMap<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
@@ -34,6 +26,17 @@ public class CheckForm {
 		}
 		
 		return identifier_types;
+	}
+	
+	private void checkConditions(List<FormElement> form_elements, List<Question> questions) {
+		try {
+			ConditionsVisitor condition_visitor = new ConditionsVisitor(createIdTypeHashmap(questions));
+			for (FormElement form_element : form_elements) {
+				form_element.accept(condition_visitor);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private void checkQuestions(List<Question> questions) throws Exception {
@@ -72,9 +75,8 @@ public class CheckForm {
 		
 		for (FormElement form_element : form_elements) {
 			try {
-				questions.addAll(form_element.accept(new GetFormQuestions()));
+				questions.addAll(form_element.accept(new QuestionsVisitor()));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

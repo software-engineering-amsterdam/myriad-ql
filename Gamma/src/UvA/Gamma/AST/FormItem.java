@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.*;
@@ -11,7 +12,7 @@ import javafx.beans.property.StringProperty;
 public interface FormItem extends ASTNode {
     StringProperty getStringValueProperty();
 
-    void show(MainScreen screen);
+    void show(FXMLExampleController screen);
 
     void idChanged(Form root, String id, String value);
 

@@ -1,7 +1,548 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7a9721b-2579-4d5a-ac24-c39a41e14c03" name="Default" comment="" />
+    <list default="true" id="56f4b792-d968-4cfb-b466-5e546855a743" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/ast/Expression.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/checker/ExpressionChecker.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/checker/FormChecker.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/model/FormModel.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/BooleanValue.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/DateValue.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/NumericValue.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/StringValue.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/UndefinedValue.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/values/Value.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/BooleanQuestion.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/DateQuestion.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/GUI.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/GUIQuestion.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/NumericQuestion.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/StringQuestion.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/view/package.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/test/scala/parser/ExpressionTest.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beheer/src/test/scala/parser/generators/ValueGenerator.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/DrawGUI.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/EvaluateDrawState.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/FormGUI.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/InitGUI.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/Widgets.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MaikelGerard/QL/UnitTests/testEvaluator.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Resources/StringControl.xaml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/ast/ast.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/ast/base_nodes.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/ast/field_types.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/gui/drawables.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/gui/labeledcb.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WickedProblems/src/test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/Environment.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/FormVisitor.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/Parser.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/Parser/Token.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/TypeChecker.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/TypeChecker/BadReferences.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/TypeChecker/CheckerUtil.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QL/TypeChecker/DuplicateQuestions.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/StyleSheetVisitor.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/TypeChecker.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/TypeChecker/CheckerUtil.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/TypeChecker/InvalidQuestionReferences.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/TypeChecker/Messages.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/QLS/TypeChecker/UnplacedQuestion.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/UI/Messages.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/UI/QLInput.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/src/VisitorUtil.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/tests/QL/Parser/Tests.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/tests/QL/Tests.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/tests/QL/TypeChecker/Tests.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/tests/QLS/Tests.elm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/environment/Environment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/environment/SymbolTable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/Node.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/blocks/BlockNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/blocks/FormNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/blocks/IfElseStatementNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/blocks/IfStatementNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/BooleanCalculatedField.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/CalculatedField.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/DateQuestion.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/IntegerCalculatedField.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/IntegerQuestion.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/MoneyQuestion.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/NamedNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/StringQuestion.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/declarations/TextFieldQuestion.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/expression/BooleanExpressionNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/expression/CalculationExpressionNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/expression/ExpressionNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/expression/ParenthesizedExpressionNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/expression/UniformExpressionNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/literal/LiteralNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/node/literal/VariableLiteralNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/test/org/uva/taxfree/ast/AstExpressionTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/test/org/uva/taxfree/ast/QuestionFormTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/test/org/uva/taxfree/ast/SymbolTableTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/gui/TextFieldSamples.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/inheritance/QuickCount.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/memberaccess/SimpleValue.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/memberaccess/SimpleValueTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/DateValue.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/StringValue.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/CyclicDependencyException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/IdNotFoundException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/IdRedeclaredException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/IncompatibleTypesException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/QLParseErrorListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/TypeChecker.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Validation/Validator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/BlockItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/BottomUpVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/ExpressionVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/FormVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/TypeVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/atom/EmptyAtom.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/test/atom/Integer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/test/atom/String.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/Notifier.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/field/Check.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/BooleanControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/ControlFactory.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/DateControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/FloatControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/IntegerControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/MoneyControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/QuestionControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/Controls/Questions/StringControl.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Evaluator/QlEvaluator.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Resources/StringControl.xaml.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/Base/Statement.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Checker/Messages/DuplicatePageMessage.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Checker/Messages/DuplicateQuestionLabelMessage.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Checker/Messages/DuplicateSectionNameMessage.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Checker/Messages/DuplicateStyleSheetMesssage.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Checker/StyleSheetAnalyzer.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Base/BaseQlsVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IPropertyVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IRuleVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IStatementVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IVisitableProperty.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IVisitableStatement.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IVisitableWidget.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IVisitibleRule.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/Contracts/IWidigetVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/FormCheckerContext.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Visitors/FormCheckerVisitor.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/elmos/elm-analyse.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/linkyndy/lib/ast.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/linkyndy/lib/transform.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Atomic.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Expression.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/QLTypes.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/BooleanLiteral.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/CalculatedValue.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/Addition.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/BinaryOperation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/Division.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/Equal.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/GreaterThan.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/GreaterThanEqualTo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/LessThan.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/LessThanEqualTo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/LogicalAnd.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/LogicalOr.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/Multiplication.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/NotEqual.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/binary/Subtraction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/unary/Negation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/unary/UnaryOperation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/statement/IfElseStatement.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/parsing/AntlrVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/validator/AbstractQLVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/validator/QLTreeChecker.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/validator/QLVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/validator/QuestionStore.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/validator/Visitable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/test/com/matthewchapman/ql/core/CoreParserTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/test/com/matthewchapman/ql/core/FileReaderTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/supercoolQL/src/test/com/matthewchapman/ql/validator/QuestionStoreTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/checkform/CheckConditions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/checkform/GetFormQuestions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/Atom.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomBoolean.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomFloat.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomId.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomInteger.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomMoney.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atoms/AtomString.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/NodeVisitor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/test/ModelTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/AstVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/Visitable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/gui/QuestionFormTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/BooleanExpressionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/BooleanLiteralNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/BooleanQuestion.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/CalculatedField.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/CalculationExpressionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/ConditionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/ExpressionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/FormNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IfElseStatementNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IfStatementNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IntOperator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IntegerField.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IntegerLiteralNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/IntegerQuestion.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/LiteralNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/NamedNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/Node.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/NumberNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/OperatorNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/ParenthesizedExpressionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/StringLiteralNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/StringQuestion.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/UniformExpressionNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/VariableLiteralNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/Count.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/FunctionPointerTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/ListFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/QuickCount.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/QuickCountTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/SetTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/sandbox/StringValue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/Checker.scala" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/ExpressionChecker.scala" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/FormChecker.scala" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/ast/Expression.scala" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/ast/Form.scala" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/BooleanExpression.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/MoneyExpression.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/MathExpr.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLForm.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLInput$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLInput.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLBool.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLDate.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLDecimal.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLInt.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLMoney.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLString.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLValue$Type.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Models/QLValues/QLValue.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Typetester.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/MathExpr.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLForm.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLInput.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLBool.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLDate.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLDecimal.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLInt.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLMoney.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLString.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Models/QLValues/QLValue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Typetester.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Variable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Visitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/DateAtom.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/DecimalAtom.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/MoneyAtom.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/DateType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/DecimalType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/MoneyType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/field/CheckBox.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/AST.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/DrawGUI.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/Environment.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/ErrorHandler.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/Evaluate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/FindCycles.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/FormGUI.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/Parser.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/TypeChecker.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/Undefined.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/UnitTests.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/UnitTests/testAST.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/UnitTests/testParsing.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MaikelGerard/test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/Ast/ValueTypes/FloatValueType.cs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Syntax/QlLexer.g4" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Syntax/QlParser.g4" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WickedProblems/src/ast/node.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WickedProblems/src/ast/tree.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/AST.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Environment.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Evaluator.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/FormUtil.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Parser/Expression.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Parser/Form.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Parser/Parser.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Parser/Token.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/QLS/Parser/Stylesheet.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/TypeChecker/BadReferences.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/TypeChecker/CheckerUtil.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/TypeChecker/DuplicateQuestions.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/TypeChecker/Expressions.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/TypeChecker/Messages.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/UI/FormDslInput.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/src/Values.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/ASTTestUtil.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/EnvironmentTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/EvaluatorTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/ExpressionFuzzer.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/FormUtilTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/Parser/ExpressionTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/Parser/FormTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/Parser/TokenTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/QLS/Parser/StylesheetTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/Samples/Form.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/Samples/TypeChecking.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/TypeChecker/BadReferencesTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/TypeChecker/CheckerUtilTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/TypeChecker/DuplicateQuestionsTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/TypeChecker/ExpressionsTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/elmos/tests/TypeChecker/TypeCheckerTests.elm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/ASTNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/Atomic.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Addition.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Division.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Equal.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Expression.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/GreaterThan.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/LessThan.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/LessThanEqualTo.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/LogicalAnd.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/LogicalOr.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Multiplication.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Negation.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/NotEqual.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/SingleOp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Subtraction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/core/QLFileReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/parsing/MCQLErrorListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/parsing/MCQLVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Atom.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/http-cache/write.lock" afterPath="$PROJECT_DIR$/MaikelGerard/QL/UnitTests/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Loading/.recommenders/index/http___download_eclipse_org_recommenders_models_neon_/write.lock" afterPath="$PROJECT_DIR$/MaikelGerard/QL/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/MaikelGerard/UnitTests/__init__.py" afterPath="$PROJECT_DIR$/MaikelGerard/QL/GUI/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/MaikelGerard/UnitTests/testUtils.py" afterPath="$PROJECT_DIR$/MaikelGerard/QL/UnitTests/testUtils.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/MaikelGerard/__init__.py" afterPath="$PROJECT_DIR$/MaikelGerard/QL/Stages/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/build.sbt" afterPath="$PROJECT_DIR$/Beheer/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/main/resources/example.ql" afterPath="$PROJECT_DIR$/Beheer/src/main/resources/example.ql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/Main.scala" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/Main.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/model/Form.scala" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/model/Form.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/ExpressionParser.scala" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/parser/ExpressionParser.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/main/scala/parser/FormParser.scala" afterPath="$PROJECT_DIR$/Beheer/src/main/scala/parser/FormParser.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/src/test/scala/parser/generators/ExpressionGenerator.scala" afterPath="$PROJECT_DIR$/Beheer/src/test/scala/parser/generators/ExpressionGenerator.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Computed.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Computed.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Condition.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Condition.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/Expression.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/Expression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/NumberExpression.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Expressions/NumberExpression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/FormItem.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/FormItem.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Question.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Question.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Boolean.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Boolean.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Money.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Money.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Number.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Number.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Value.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/AST/Values/Value.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLLexer.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLLexer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$BoolExprContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$BoolExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$BooleanExpressionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$BooleanExpressionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ComputedContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ComputedContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ConditionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ConditionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ElseblockContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ElseblockContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ExpressionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$ExpressionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$FormContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$FormContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$FormItemContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$FormItemContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$MoneyExpressionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$MoneyExpressionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$NumExprContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$NumExprContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$NumberExpressionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$NumberExpressionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$QuestionContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$QuestionContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$TypeContext.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser$TypeContext.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QLParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/GUI/MainScreen.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/GUI/MainScreen.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Main.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Main.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/QLVisitor.class" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/QLVisitor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.debug.core/.launches/Test.launch" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.debug.core/.launches/Test.launch" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MaikelGerard/StartQuestionnaire.py" afterPath="$PROJECT_DIR$/MaikelGerard/StartQuestionnaire.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/OffByOne.LanguageCore.csproj" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/OffByOne.LanguageCore.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/OffByOne.Ql.csproj" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/OffByOne.Ql.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/OffByOne.Qls.csproj" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/OffByOne.Qls.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Runner/OffByOne.Runner.csproj" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Runner/OffByOne.Runner.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WickedProblems/src/grammar/grammar.py" afterPath="$PROJECT_DIR$/WickedProblems/src/grammar/grammar.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WickedProblems/src/gui/interface.py" afterPath="$PROJECT_DIR$/WickedProblems/src/gui/interface.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WickedProblems/src/parser/ql.py" afterPath="$PROJECT_DIR$/WickedProblems/src/parser/ql.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WickedProblems/src/start.py" afterPath="$PROJECT_DIR$/WickedProblems/src/start.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/QLS/AST.elm" afterPath="$PROJECT_DIR$/elmos/src/QLS/AST.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/QLS/Parser.elm" afterPath="$PROJECT_DIR$/elmos/src/QLS/Parser.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/QLS/Parser/Configuration.elm" afterPath="$PROJECT_DIR$/elmos/src/QLS/Parser/Configuration.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/QLS/Parser/Style.elm" afterPath="$PROJECT_DIR$/elmos/src/QLS/Parser/Style.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/QLS/Parser/Widget.elm" afterPath="$PROJECT_DIR$/elmos/src/QLS/Parser/Widget.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/FormRenderer.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/FormRenderer.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/QLApp.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/QLApp.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/QLSInput.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/QLSInput.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/Widget/Base.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/Widget/Base.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/Widget/Boolean.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/Widget/Boolean.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/Widget/Float.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/Widget/Float.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/Widget/Integer.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/Widget/Integer.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/src/UI/Widget/String.elm" afterPath="$PROJECT_DIR$/elmos/src/UI/Widget/String.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/tests/QLS/Parser/WidgetTests.elm" afterPath="$PROJECT_DIR$/elmos/tests/QLS/Parser/WidgetTests.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/tests/Tests.elm" afterPath="$PROJECT_DIR$/elmos/tests/Tests.elm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/README.md" afterPath="$PROJECT_DIR$/supercoolQL/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QL.tokens" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QL.tokens" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLLexer.tokens" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLLexer.tokens" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/samples/sample-ql2.frm" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/samples/sample-ql2.frm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/Ast.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/Ast.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/OurQLGrammarListener.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/ast/OurQLGrammarListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/gui/QuestionForm.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/gui/QuestionForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/main/Main.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/main/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/main/SemanticsAnalyzer.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/main/SemanticsAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/FormRenderer.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/org/uva/taxfree/model/FormRenderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/test/org/uva/taxfree/ast/SemanticsAnalyzerTest.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/AntlrSample/src/test/org/uva/taxfree/ast/SemanticsAnalyzerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/Main.java" afterPath="$PROJECT_DIR$/AK_BvdB_TaxFree/SandBox/src/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beheer/.gitignore" afterPath="$PROJECT_DIR$/Beheer/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QL.g4" afterPath="$PROJECT_DIR$/Gamma/out/production/Gamma/UvA/Gamma/Antlr/QL/QL.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/ASTNode.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/ASTNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Computed.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Computed.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Condition.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Condition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/BooleanExpression.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/BooleanExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/Expression.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/Expression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/MoneyExpression.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/MoneyExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/NumberExpression.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Expressions/NumberExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/FormItem.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/FormItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Question.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Question.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Boolean.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Boolean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Money.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Money.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Number.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Number.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Value.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/AST/Values/Value.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QL.g4" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QL.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QLLexer.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QLLexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QLParser.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Antlr/QL/QLParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Main.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/QLVisitor.java" afterPath="$PROJECT_DIR$/Gamma/src/UvA/Gamma/QLVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.idea/workspace.xml" afterPath="$PROJECT_DIR$/Loading/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.debug.ui/dialog_settings.xml" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.debug.ui/dialog_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml" afterPath="$PROJECT_DIR$/Loading/.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/QL.g4" afterPath="$PROJECT_DIR$/Loading/QL/QL.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/Main.java" afterPath="$PROJECT_DIR$/Loading/QL/src/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Block.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/Block.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/ComputedQuestion.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/ComputedQuestion.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Form.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/Form.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Node.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/Node.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Question.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/Question.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/Statement.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/Statement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/Atom.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/atom/Atom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/BoolAtom.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/atom/BoolAtom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/IntegerAtom.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/atom/IntegerAtom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/atom/StringAtom.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/atom/StringAtom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/AddExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/AddExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/AndExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/AndExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/BinaryExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/BinaryExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/DivExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/DivExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/EqExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/EqExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/Expression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/Expression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/GEqExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/GEqExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/GExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/GExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/IdExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/IdExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/LEqExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/LEqExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/LExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/LExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/MinusExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/MinusExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/MulExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/MulExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/NEqExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/NEqExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/NotExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/NotExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/OrExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/OrExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/PlusExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/PlusExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/SubExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/SubExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/expression/UnaryExpression.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/expression/UnaryExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/BooleanType.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/type/BooleanType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/IntegerType.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/type/IntegerType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/StringType.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/type/StringType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ast/type/Type.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ast/type/Type.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/evaluation/Environment.java" afterPath="$PROJECT_DIR$/Loading/QL/src/evaluation/Environment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/evaluation/Evaluator.java" afterPath="$PROJECT_DIR$/Loading/QL/src/evaluation/Evaluator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/semantic/Environment.java" afterPath="$PROJECT_DIR$/Loading/QL/src/semantic/Environment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/semantic/ExpressionVisitor.java" afterPath="$PROJECT_DIR$/Loading/QL/src/semantic/ExpressionVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/semantic/QuestionVisitor.java" afterPath="$PROJECT_DIR$/Loading/QL/src/semantic/QuestionVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/semantic/TypeChecker.java" afterPath="$PROJECT_DIR$/Loading/QL/src/semantic/TypeChecker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/Questionnaire.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/Questionnaire.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/QuestionnaireQuestion.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/QuestionnaireQuestion.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/QuestionnaireVisitor.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/QuestionnaireVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/field/Field.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/field/Field.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/field/Number.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/field/Number.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/ui/field/Text.java" afterPath="$PROJECT_DIR$/Loading/QL/src/ui/field/Text.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/value/BoolValue.java" afterPath="$PROJECT_DIR$/Loading/QL/src/value/BoolValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/value/EmptyValue.java" afterPath="$PROJECT_DIR$/Loading/QL/src/value/EmptyValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/value/IntegerValue.java" afterPath="$PROJECT_DIR$/Loading/QL/src/value/IntegerValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/value/StringValue.java" afterPath="$PROJECT_DIR$/Loading/QL/src/value/StringValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loading/QL/src/value/Value.java" afterPath="$PROJECT_DIR$/Loading/QL/src/value/Value.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/Checker/BaseTypeCheckerVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/Checker/BaseTypeCheckerVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/TypeConstants.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/TypeConstants.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/Visitors/Contracts/IValueTypeVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.LanguageCore/Visitors/Contracts/IValueTypeVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/CustomQlVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/CustomQlVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/Base/BaseQlVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/Base/BaseQlVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/Contracts/IVisitableExpression.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/Contracts/IVisitableExpression.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/TypeVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Ql/Visitors/TypeVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/Base/Property.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/Base/Property.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/ColorProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/ColorProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontNameProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontNameProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontSizeProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontSizeProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontStyleProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/FontStyleProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/HeightProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/HeightProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/WidthProperty.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Properties/WidthProperty.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/Base/Rule.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/Base/Rule.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/QuestionRule.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/QuestionRule.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/ValueTypeRule.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Rules/ValueTypeRule.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/Page.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/Page.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/Section.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/Section.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/StyleSheet.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Statements/StyleSheet.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/Base/Widget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/Base/Widget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/CheckBoxWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/CheckBoxWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/DefaultWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/DefaultWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/DropDownWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/DropDownWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/RadioButtonWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/RadioButtonWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/SliderWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/SliderWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/SpinboxWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/SpinboxWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/TextFieldWidget.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/Ast/Style/Widgets/TextFieldWidget.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/CustomQlsVisitor.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Qls/CustomQlsVisitor.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/src/OffByOne.Runner/Program.cs" afterPath="$PROJECT_DIR$/OffByOne/src/OffByOne.Runner/Program.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/PageTests.cs" afterPath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/PageTests.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/SectionTests.cs" afterPath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/SectionTests.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/StyleSheetTests.cs" afterPath="$PROJECT_DIR$/OffByOne/test/OffByOne.Qls.Tests/ParserTests/StyleSheetTests.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/elm-package.json" afterPath="$PROJECT_DIR$/elmos/elm-package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elmos/tests/elm-package.json" afterPath="$PROJECT_DIR$/elmos/tests/elm-package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/linkyndy/lib/parser.rb" afterPath="$PROJECT_DIR$/linkyndy/lib/parser.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/grammar/QL.g4" afterPath="$PROJECT_DIR$/supercoolQL/grammar/QL.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/res/test.txt" afterPath="$PROJECT_DIR$/supercoolQL/res/test.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLBaseVisitor.java" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLBaseVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLLexer.java" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLLexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLParser.java" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLVisitor.java" afterPath="$PROJECT_DIR$/supercoolQL/src/gen/com/matthewchapman/antlr/QLVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Form.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Form.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Statement.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Statement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Type.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/Type.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/IntegerLiteral.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/IntegerLiteral.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/StringLiteral.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/atomic/StringLiteral.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Parameter.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/Parameter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/ParameterGroup.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/expression/ParameterGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/statement/IfStatement.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/statement/IfStatement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/statement/Question.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/ast/statement/Question.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/core/CoreParser.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/core/CoreParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/core/Launcher.java" afterPath="$PROJECT_DIR$/supercoolQL/src/main/com/matthewchapman/ql/core/Launcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/supercoolQL/supercoolQL.iml" afterPath="$PROJECT_DIR$/supercoolQL/supercoolQL.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/Main.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/ast/AstVisitor.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/ast/AstVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/checkform/CheckForm.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/checkform/CheckForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/ConditionalBlock.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/ConditionalBlock.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/Expression.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/Expression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/NotExpression.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/NotExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/OpExpression.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Expressions/OpExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Form.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Form.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/FormElement.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/FormElement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Node.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/Node.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/form_elements/IfStatement.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/form_elements/IfStatement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/form_elements/Question.java" afterPath="$PROJECT_DIR$/vanVlaanderenDerksen/QLJava/src/sc/ql/model/form_elements/Question.java" />
+    </list>
     <ignored path="Gamma.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,23 +559,12 @@
   <component name="FavoritesManager">
     <favorites_list name="Gamma" />
   </component>
-  <component name="FileEditorManager">
-    <leaf />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
-    </option>
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLParser.java" />
-        <option value="$PROJECT_DIR$/src/UvA/Gamma/QLVisitor.java" />
-      </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
@@ -85,158 +615,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gamma" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
-  </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Gamma" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="PsiViewer.ProjectComponent">
     <option name="HIGHLIGHT" value="false" />
@@ -497,11 +881,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b7a9721b-2579-4d5a-ac24-c39a41e14c03" name="Default" comment="" />
-      <created>1487069424226</created>
+      <changelist id="56f4b792-d968-4cfb-b466-5e546855a743" name="Default" comment="" />
+      <created>1488793762967</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1487069424226</updated>
+      <updated>1488793762967</updated>
     </task>
     <servers />
   </component>
@@ -512,10 +896,9 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -523,7 +906,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -552,179 +935,5 @@
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLLexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLLexer.tokens">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-945">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Models/QLForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Models/QLInput.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/QLVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QLBaseVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UvA/Gamma/Antlr/QL/QL.tokens">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>Gamma</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>antlr-4.6-complete</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

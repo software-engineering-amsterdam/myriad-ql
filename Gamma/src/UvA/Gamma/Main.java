@@ -5,6 +5,7 @@ import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.QLParseErrorListener;
 import UvA.Gamma.Validation.Validator;
 import javafx.application.Application;
@@ -46,10 +47,15 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(form);
         mainScreen.initUI(primaryStage);
 
-        for (FormItem item : form.getFormItems()) {
-            mainScreen.addFormItem(item);
-            System.out.println(item);
-        }
+//        for (FormItem item : form.getFormItems()) {
+//            mainScreen.addFormItem(item);
+//            //System.out.println(item);
+//            if (item instanceof Computed) {
+//                //System.out.println(((Computed) item).expression);
+//            }
+//        }
+
+
     }
 
     public static void main(String[] args) throws IOException {

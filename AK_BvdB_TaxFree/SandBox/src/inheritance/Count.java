@@ -1,5 +1,7 @@
 package inheritance;
 
+import visitor.CountVisitor;
+
 public class Count {
     private int mCount = 0;
 
@@ -14,4 +16,9 @@ public class Count {
     public int getCount() {
         return mCount;
     }
+
+    public void accept(CountVisitor visitor) {
+        visitor.visit(this);
+    }
+
 }
