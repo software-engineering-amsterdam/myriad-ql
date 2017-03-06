@@ -48,8 +48,13 @@ public class SemanticsAnalyzerTest {
     }
 
     @Test
-    public void testUndefinedDeclaration() throws Exception {
-        assertSemantics("undefinedDeclaration.txt", 1, "Undefined declaration");
+    public void testUndefinedDeclarationSingle() throws Exception {
+        assertSemantics("undefinedDeclarationSingle.txt", 1, "Undefined declaration should throw an error");
+    }
+
+    @Test
+    public void testUndefinedDeclarationMultiple() throws Exception {
+        assertSemantics("undefinedDeclarationMutliple.txt", 1, "Multiple conditions with same variable trigger 1 error");
     }
 
     @Test
@@ -58,15 +63,9 @@ public class SemanticsAnalyzerTest {
     }
 
     @Test
-    public void testUnreferencedDeclaration() throws Exception {
-        assertSemantics("unreferencedDeclaration.txt", 1, "Unreferenced declaration");
+    void testCyclicDependency() throws Exception {
+        assertSemantics("simpleCyclicDependency.txt", 1, "Cyclic dependencies should be caught");
     }
-
-    @Test
-    public void testUnreferencedDeclarations() throws Exception {
-        assertSemantics("unreferencedDeclarations.txt", 7, "Unreferenced declarations");
-    }
-
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);

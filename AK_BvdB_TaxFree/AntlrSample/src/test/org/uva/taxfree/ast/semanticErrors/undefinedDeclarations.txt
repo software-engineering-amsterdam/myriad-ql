@@ -13,4 +13,12 @@ form houseForm {
     }
     if (hasSoldHouse7) {
     }
+    if (hasBoughtHouse) {
+    }
+    if (hasDemolishedHouse) {
+    }
+    if (hasBoughtCar) {
+    }
+    if (hasDrivenCar) {
+    }
 }
