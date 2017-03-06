@@ -9,21 +9,25 @@ public class DoubleNumber extends Value {
 
     private void add(DoubleNumber b) {
         System.out.println("adding doubles");
-        myValue += b.getValue();
+        myValue += b.asDouble();
     }
 
     private void add(IntNumber b) {
         System.out.println("adding int to double");
-        myValue += (double) b.getValue();
-    }
-
-
-    public double getValue() {
-        return myValue;
+        myValue += (double) b.asDouble();
     }
 
     @Override
-    public int asInteger() {
-        return (int) getValue();
+    public double asDouble() {
+        return (double)myValue;
+    }
+
+    @Override
+    public int asIntgeger() {
+        return 0;
+    }
+
+    public double getValue() {
+        return myValue;
     }
 }

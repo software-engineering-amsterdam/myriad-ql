@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import QL.Warning;
 import ast.Form;
 import evaluation.Environment;
-import evaluation.Evaluator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,9 +14,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -24,10 +25,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import semantic.TypeChecker;
-import ui.field.Field;
-import value.EmptyValue;
 import value.Value;
+
+import java.util.List;
 
 public class Questionnaire extends Application {
 	// TODO make Notifier an inner class or add extra environment
@@ -36,12 +36,13 @@ public class Questionnaire extends Application {
 	private static Form form;
 	private static evaluation.Environment answers;
 	private static GridPane grid;
-	
+	private static List<Warning> warnings;
+
 	public class Notifier {
 
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = answers.getAnswer(name); 
+	    	Value oldAnswer = answers.getAnswer(name);
 			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
 
 				answers.addAnswer(name, newValue); 
@@ -55,9 +56,10 @@ public class Questionnaire extends Application {
 		}
 	}
 	
-    public void main(Form f) {
+    public void main(Form f, List<Warning> w) {
     	form = f;
     	answers = new Environment();
+    	warnings = w;
 
         launch();
     }
@@ -65,6 +67,12 @@ public class Questionnaire extends Application {
     @Override
     public void start(Stage primaryStage) {
        
+    	if (!warnings.isEmpty()) {
+    		WarningDialog dialog = new WarningDialog(warnings);
+    		dialog.show();
+    		return;
+    	}
+
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
@@ -92,10 +100,10 @@ public class Questionnaire extends Application {
     }
     
     
-    private void setAnswers(List<QuestionnaireQuestion> activeQuestions) {
+    private void setAnswers(List<QQuestion> activeQuestions) {
     	
     	// TODO change
-    	for (QuestionnaireQuestion question : activeQuestions) {
+    	for (QQuestion question : activeQuestions) {
     		
     		Value value = answers.getAnswer(question.getName());
     		if (value == null) {
@@ -107,7 +115,7 @@ public class Questionnaire extends Application {
     
     private void renderQuestionnaire(GridPane grid) {
         
-    	List<QuestionnaireQuestion> activeQuestions = renderQuestions(grid);
+    	List<QQuestion> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -121,7 +129,7 @@ public class Questionnaire extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (QuestionnaireQuestion activeQuestion : activeQuestions) {
+            	for (QQuestion activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
             		if (answer.getValue() == null) {
@@ -146,14 +154,14 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QuestionnaireQuestion> renderQuestions(GridPane grid) {
+    private List<QQuestion> renderQuestions(GridPane grid) {
         
-    	QuestionnaireVisitor qVisitor = new QuestionnaireVisitor(answers);
+    	QEvaluator qVisitor = new QEvaluator(answers);
     	qVisitor.visit(form);
-    	List<QuestionnaireQuestion> activeQuestions = qVisitor.getActiveQuestions();
+    	List<QQuestion> activeQuestions = qVisitor.getActiveQuestions();
     	
     	int rowIndex = 0;
-        for (QuestionnaireQuestion question : activeQuestions) {
+        for (QQuestion question : activeQuestions) {
             
         	Label questionLabel = new Label(question.getLabel());
             grid.add(questionLabel, 0, 1 + rowIndex); 

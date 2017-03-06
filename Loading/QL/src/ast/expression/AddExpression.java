@@ -11,15 +11,6 @@ public class AddExpression extends BinaryExpression {
 		super(lhs, rhs, line);
 	}
 
-//	@Override
-//	public Atom evaluate() {
-//
-////		System.out.println("getLhs: " + getLhs().getNumber());
-////		System.out.println("getRhs: " + getRhs().getNumber());
-////		System.out.println("getLhs().add(getRhs()): " + getLhs().add(getRhs()).getNumber());
-//
-//	}
-
 	@Override
 	public <T> T accept(ExpressionVisitor<T> v) {
 		return v.visit(this);

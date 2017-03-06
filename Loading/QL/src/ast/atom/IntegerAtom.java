@@ -15,7 +15,9 @@ public class IntegerAtom extends Atom {
 	@Override
 	public Atom add(Atom other) {
 		
-		if (other.getNumber() == null) {
+		if (other.getNumber() == null && other.add(this) != null) { 
+			return other.add(this);
+		} else if (other.getNumber() == null) {
 			return null;
 		}
 		
@@ -53,8 +55,6 @@ public class IntegerAtom extends Atom {
 
 	@Override
 	public BoolAtom eq(Atom other) {
-		System.out.println(other.getNumber());
-		System.out.println(this.getNumber());
 		return new BoolAtom(number.equals(other.getNumber()), getLine());
 	}
 

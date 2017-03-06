@@ -25,7 +25,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     private final List<ConditionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
-    private boolean isInsideIfElse = false;
+    private boolean insideIfElse = false;
 
     public OurQLGrammarListener() {
         mSymbolTable = new SymbolTable();
@@ -36,7 +36,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     private ConditionNode popCachedCondition() {
-        return mCachedConditions.remove(mCachedConditions.size()-1);
+        return mCachedConditions.remove(mCachedConditions.size() - 1);
     }
 
     // Enters
@@ -66,26 +66,8 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         addDeclaration(questionNode);
     }
 
-    @Override
-    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.enterCalculation(ctx);
-        NamedNode calculatedFieldNode;
-        String fieldDescription = ctx.DESCRIPTION().getText();
-        String fieldId = ctx.VARIABLE_LITERAL().getText();
-
-        if ("boolean".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
-        } else if ("integer".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
-        } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
-        }
-        addDeclaration(calculatedFieldNode);
-    }
-
     private void addDeclaration(NamedNode node) {
-        mSymbolTable.addSymbol(node);
+        mSymbolTable.addDeclaration(node);
         addToStack(node);
     }
 
@@ -121,9 +103,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        // TODO: Ignore when comming from a question!
         ConditionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
         addToStack(varNameLiteral);
+        mSymbolTable.addVariable(ctx.getText());
     }
 
     @Override
@@ -135,7 +117,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
-        isInsideIfElse = true;
+        insideIfElse = true;
     }
 
     private void createStack() {
@@ -143,6 +125,24 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     // Exits
+    @Override
+    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.exitCalculation(ctx);
+        NamedNode calculatedFieldNode;
+        String fieldDescription = ctx.DESCRIPTION().getText();
+        String fieldId = ctx.VARIABLE_LITERAL().getText();
+
+        if ("boolean".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else if ("integer".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else {
+            // TODO: Bail out!
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+        }
+        addDeclaration(calculatedFieldNode);
+    }
+
     @Override
     public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.exitBooleanExpression(ctx);
@@ -176,9 +176,9 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         super.exitIfStatement(ctx);
         BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popStack());
         addToStack(ifStatementNode);
-        if (isInsideIfElse) {
+        if (insideIfElse) {
             createStack();
-            isInsideIfElse = false;
+            insideIfElse = false;
         }
     }
 
@@ -198,7 +198,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
 
     private BlockNode lastBlock() {
         // TODO: Fix static cast
-        return (BlockNode) mChildsStack.peek().remove(mChildsStack.peek().size()-1);
+        return (BlockNode) mChildsStack.peek().remove(mChildsStack.peek().size() - 1);
     }
 
     @Override

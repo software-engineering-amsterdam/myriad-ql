@@ -1,0 +1,24 @@
+form houseForm {
+    if (hasSoldHouse) {
+    }
+    if (hasSoldHouseTwo) {
+    }
+    if (hasSoldHouseThree) {
+    }
+    if (hasSoldHouseFour) {
+    }
+    if (hasSoldHouseFive) {
+    }
+    if (hasSoldHouseSix) {
+    }
+    if (hasSoldHouseSeven) {
+    }
+    if (hasBoughtHouse) {
+    }
+    if (hasDemolishedHouse) {
+    }
+    if (hasBoughtCar) {
+    }
+    if (hasDrivenCar) {
+    }
+}

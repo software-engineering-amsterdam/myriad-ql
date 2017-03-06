@@ -1,19 +1,19 @@
 package semantic;
-import ast.Form;
-import ast.atom.Atom;
+import java.util.List;
 
-import java.util.Map;
+import QL.Warning;
+import ast.Form;
 
 public class TypeChecker {
 
-    public Environment analyze(Form form) {
+    public List<Warning> analyze(Form form) {
         Environment environment = new Environment();
         QuestionVisitor QVisitor = new QuestionVisitor(environment);
         QVisitor.visit(form);
 
         ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
         expressionVisitor.visit(form);
-        return environment;
+        return environment.getWarnings();
     }
 
 }

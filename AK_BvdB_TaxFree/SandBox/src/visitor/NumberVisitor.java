@@ -1,7 +1,7 @@
 package visitor;
 
 
-public class CountVisitor implements VisitorBase {
+public class NumberVisitor implements VisitorBase {
     @Override
     public void visit(Value a) {
 
