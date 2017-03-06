@@ -29,14 +29,21 @@ module QL
 
       # statement
       rule(:assignment?) { (str('=') >> spaces? >> expression).maybe >> spaces? }
-      rule(:question) { (string_literal >> variable_assignment >> type >> assignment?).as(:question) >> spaces? }
+      rule(:question) { (string_literal.as(:label) >> variable_assignment.as(:variable) >> type.as(:type) >> assignment?).as(:question) >> spaces? }
       rule(:block) { str('{') >> spaces? >> (question | if_statement).repeat.as(:block) >> str('}') >> spaces? }
       rule(:if_statement) { (str('if') >> spaces? >> expression >> block).as(:if_statement) }
 
       # type
-      rule(:type) { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> spaces? }
+      rule(:boolean_type) { str('boolean').as(:type) }
+      rule(:string_type) { str('string').as(:type) }
+      rule(:integer_type) { str('integer').as(:type) }
+      rule(:decimal_type) { str('decimal').as(:type) }
+      rule(:date_type) { str('date').as(:type) }
+      rule(:money_type) { str('money').as(:type) }
 
-      # variable
+      rule(:type) { (boolean_type | string_type | integer_type | decimal_type | date_type | money_type) >> spaces? }
+
+      # variable.as
       rule(:variable) { match('\w+').repeat(1).as(:variable) }
       rule(:variable_assignment) { variable >> str(':') >> spaces? }
     end

@@ -16,23 +16,23 @@ require_rel 'lib'
 ql_contents = File.read('examples/simple_questionnaire.ql')
 # pp ql_contents
 ql_parse_tree = QL::Parser::Parser.new.parse(ql_contents)
-# pp ql_parse_tree
+pp ql_parse_tree
 ql_ast = QL::Parser::Transformer.new.apply(ql_parse_tree)
-# pp ql_ast
-ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
+pp ql_ast
+# ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
 # pp ql_notifications
 
 
 
-qls_contents = File.read('examples/example.qls')
+# qls_contents = File.read('examples/example.qls')
 # pp qls_contents
-qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
+# qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
 # pp qls_parsed
-qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
+# qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
 # pp qls_ast
-qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
+# qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 
 # qls_ast = nil
 
-QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+# QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)

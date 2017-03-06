@@ -5,16 +5,25 @@ module QL
     class Transformer < Parslet::Transform
       include AST
       # variable
-      rule(variable: simple(:variable)) { Variable.new(variable) }
+      rule(variable: simple(:name)) { Variable.new(name) }
 
+      rule(type: 'boolean') { BooleanType.new }
+      rule(type: 'integer') { IntegerType.new }
+      rule(type: 'money') { MoneyType.new }
+      rule(type: 'string') { StringType.new }
+      rule(type: 'decimal') { DecimalType.new }
+      rule(type: 'date') { DateType.new }
+
+      rule(question: { string: simple(:string), variable: simple(:variable), type: subtree(:type) }) { Question.new(string, Variable.new(variable), type) }
+      rule(question: subtree(:aap)) { p aap }
       # question
       # TODO: BooleanType.new -> BooleanType
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean' }) { Question.new(string, Variable.new(variable), BooleanType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer' }) { Question.new(string, Variable.new(variable), IntegerType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'money' }) { Question.new(string, Variable.new(variable), MoneyType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'string' }) { Question.new(string, Variable.new(variable), StringType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal' }) { Question.new(string, Variable.new(variable), DecimalType) }
-      rule(question: { string: simple(:string), variable: simple(:variable), type: 'date' }) { Question.new(string, Variable.new(variable), DateType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean' }) { Question.new(string, Variable.new(variable), BooleanType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer' }) { Question.new(string, Variable.new(variable), IntegerType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'money' }) { Question.new(string, Variable.new(variable), MoneyType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'string' }) { Question.new(string, Variable.new(variable), StringType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'decimal' }) { Question.new(string, Variable.new(variable), DecimalType) }
+      # rule(question: { string: simple(:string), variable: simple(:variable), type: 'date' }) { Question.new(string, Variable.new(variable), DateType) }
       rule(question: { string: simple(:string), variable: simple(:variable), type: 'boolean', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), BooleanType, expression) }
       rule(question: { string: simple(:string), variable: simple(:variable), type: 'integer', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), IntegerType, expression) }
       rule(question: { string: simple(:string), variable: simple(:variable), type: 'money', expression: subtree(:expression) }) { Question.new(string, Variable.new(variable), MoneyType, expression) }
