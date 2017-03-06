@@ -64,20 +64,35 @@ class QuestionnaireParser(object):
             return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
         types = {
-            "BOOLEAN": (pp.Keyword("true").addParseAction(lambda _: True) |
-                        pp.Keyword("false").addParseAction(lambda _: False)),
+            "BOOLEAN": (pp.Keyword("true").setParseAction(lambda _: True) |
+                        pp.Keyword("false").setParseAction(lambda _: False)),
             "INTEGER": pp.Word(pp.nums),
             "VARIABLE": pp.Word(pp.alphas, pp.alphanums + "_"),
             "DECIMAL": pp.Regex("(\d+\.\d*)|(\d*\.\d+)"),
             "DATE": pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}"),
-            "STRING": pp.quotedString.addParseAction(pp.removeQuotes)
+            "STRING": pp.quotedString.setParseAction(pp.removeQuotes)
         }
 
         # TODO: Create integer.
-        types["INTEGER"].addParseAction(create_decimal)
+        types["BOOLEAN"].setParseAction(self.create_node(AST.BoolNode))
+        types["INTEGER"].setParseAction(create_decimal)
         types["DECIMAL"].addParseAction(create_decimal)
-
         types["DATE"].addParseAction(create_date)
+
+        var_types = (
+            self.var_types["BOOLEAN"].addParseAction(
+                self.create_node(AST.BoolNode)) |
+            self.var_types["VARIABLE"].addParseAction(
+                self.create_node(AST.VarNode)) |
+            self.var_types["DATE"].addParseAction(
+                self.create_node(AST.DateNode)) |
+            self.var_types["DECIMAL"].addParseAction(
+                self.create_node(AST.DecimalNode)) |
+            self.var_types["INTEGER"].addParseAction(
+                self.create_node(AST.IntNode)) |
+            self.var_types["STRING"].addParseAction(
+                self.create_node(AST.StringNode))
+        )
 
         return types
 
