@@ -3,6 +3,9 @@ class Layout:
         self.name = name
         self.body = body
 
+    def accept(self, visitor):
+        visitor.visit_layout(self)
+
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
 
@@ -12,11 +15,17 @@ class StyledLayout(Layout):
         super().__init__(name, body)
         self.styling = styling
 
+    def accept(self, visitor):
+        visitor.visit_styled_layout(self)
+
 
 class Page:
     def __init__(self, name, body):
         self.name = name
         self.body = body
+
+    def accept(self, visitor):
+        visitor.visit_page(self)
 
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
@@ -27,11 +36,17 @@ class StyledPage(Page):
         super().__init__(name, body)
         self.styling = styling
 
+    def accept(self, visitor):
+        visitor.visit_styled_page(self)
+
 
 class Section:
     def __init__(self, name, body):
         self.name = name
         self.body = body
+
+    def accept(self, visitor):
+        visitor.visit_section(self)
 
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
@@ -42,10 +57,16 @@ class StyledSection(Section):
         super().__init__(name, body)
         self.styling = styling
 
+    def accept(self, visitor):
+        visitor.visit_styled_section(self)
+
 
 class QuestionAnchor:
     def __init__(self, name):
         self.name = name
+
+    def accept(self, visitor):
+        visitor.visit_question_anchor(self)
 
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
@@ -55,6 +76,9 @@ class StyledQuestionAnchor(QuestionAnchor):
     def __init__(self, name, styling):
         super().__init__(name)
         self.styling = styling
+
+    def accept(self, visitor):
+        visitor.visit_styled_question_anchor(self)
 
 
 class DefaultStyling:

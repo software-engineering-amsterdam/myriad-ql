@@ -1,20 +1,28 @@
 from appJar import gui
 
-from gui.visitors.widget_creator import WidgetCreator
+from gui.visitors.gui_builder import GuiBuilder
 from gui.visitors.computation_updater import ComputationUpdater
 from gui.visitors.gui_updater import GuiUpdater
 
 
 class FormApp:
 
-    def __init__(self, form):
+    def __init__(self, form, layout=None):
         self.form = form
         self.environment = {}
 
         self.app = gui(form.name)
+        self.app.setResizable(False)
+        self.app.setSticky("new")
+        self.app.setBg("white")
         self.app.bindKey("<KeyPress>", self.update)
 
-        self.widgets = WidgetCreator(self.app, self.update).visit(form)
+        gui_builder = GuiBuilder(self.app, self.update, self.form)
+
+        if layout is not None:
+            self.widgets = gui_builder.visit(layout)
+        else:
+            self.widgets = gui_builder.visit(form)
 
     def start(self):
         self.update(None)

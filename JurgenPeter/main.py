@@ -1,8 +1,9 @@
-from ql.grammar import parse_file
+from ql.grammar import parse_file as parse_ql
 from ql.visitors.printer import Printer
 from ql.visitors.symbol_checker import SymbolChecker
 from ql.visitors.type_checker import TypeChecker
 from ql.visitors.dependency_checker import DependencyChecker
+from qls.grammar import parse_file as parse_qls
 from gui.formapp import FormApp
 
 
@@ -18,7 +19,7 @@ def main():
 
     filename = "exampleForm.txt"
 
-    form = parse_file(filename)
+    form = parse_ql(filename)
     Printer().visit(form)
 
     symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(form)
@@ -37,7 +38,9 @@ def main():
     if errors:
         return
 
-    app = FormApp(form)
+    layout = parse_qls("examplestylesheet")
+
+    app = FormApp(form, layout=layout)
     app.start()
 
 if __name__ == "__main__":
