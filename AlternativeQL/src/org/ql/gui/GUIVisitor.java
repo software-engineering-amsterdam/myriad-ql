@@ -19,12 +19,11 @@ import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.widgets.CheckBoxWidget;
+import org.ql.gui.widgets.TextWidget;
 import org.ql.gui.widgets.Widget;
 import org.ql.gui.widgets.WidgetGridPane;
 
 public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<GridPane, Void> {
-
-
     private MainStage mainStage;
     private ValueTable valueTable;
     private WidgetEventHandler widgetEventHandler;
@@ -58,9 +57,7 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Gri
         int i = 0;
         for(Statement statement : ifThen.getThenStatements()) {
             GridPane statementPane = statement.accept(this, null);
-            statementPane.setMinWidth(800);
-            statementPane.setMinHeight(200);
-            widgetGridPane.getPane().add(statementPane, 0, i);
+            widgetGridPane.getPane().add(statementPane, 0, i++);
         }
 
         widgetEventHandler.addWidget(widgetGridPane);
@@ -79,12 +76,13 @@ public class GUIVisitor implements FormVisitor<Pane, Void>, StatementVisitor<Gri
     public GridPane visitQuestion(Question question, Void ignore) {
         GridPane pane = new GridPane();
         Text questionText = new Text(question.getQuestionText().toString());
-        pane.add(questionText,0,0);
+        pane.add(questionText, 0, 0);
 
         // TODO: Dynamic dispatch (add type visitor)
         if (question.getType().isBoolean()) {
             CheckBoxWidget checkBoxWidget = new CheckBoxWidget(widgetEventHandler, question.getId());
-            checkBoxWidget.getCheckBox().setSelected(valueTable.isDeclared(question.getId()));
+            Value val = valueTable.lookup(question.getId());
+            checkBoxWidget.getCheckBox().setSelected((Boolean) val.getPlainValue());
             widgetEventHandler.addWidget(checkBoxWidget);
             pane.add(checkBoxWidget.getCheckBox(), 1, 0);
         }

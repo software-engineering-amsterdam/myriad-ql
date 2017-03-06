@@ -26,8 +26,10 @@ public class GUIHandler extends Application {
                 "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;" +
                 "boolean hasBoughtHouse: \"Did you buy a house in 2010?\" = true;" +
                 "if (hasSoldHouse) {" +
-                "money sellingPrice: \"What was the selling price?\";" +
+                "boolean sellingPrice: \"What was the selling price?\" = true;" +
+                "boolean youDidWhat: \"You did whattt?\"= false;" +
                 "}" +
+                "boolean everythingAlright: \"Is everything alright sir?\" = true;" +
                 "}");
 
         Messages messages = new Messages();
