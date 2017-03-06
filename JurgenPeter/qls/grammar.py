@@ -23,8 +23,14 @@ string = QuotedString("\"")
 
 string_arguments = Suppress("(") + string + Suppress(",") + string + Suppress(")")
 
-widget_entry = Suppress("text").setParseAction(
+widget_text = Suppress("text").setParseAction(
     lambda _: EntryWidget)
+
+widget_whole_number = Suppress("whole-number").setParseAction(
+    lambda _: IntegerEntryWidget)
+
+widget_real_number = Suppress("real-number").setParseAction(
+    lambda _: DecimalEntryWidget)
 
 widget_checkbox = Suppress("checkbox").setParseAction(
     lambda _: CheckBoxWidget)
@@ -45,8 +51,9 @@ widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
 widget_drop_down.setParseAction(
     lambda tokens: lambda question: DropDownWidget(question, *tokens))
 
-widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_entry ^\
-              widget_drop_down ^ widget_slider
+widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^\
+              widget_whole_number ^ widget_real_number ^ widget_drop_down ^\
+              widget_slider
 
 widget_attribute = Suppress("widget") + widget_type
 widget_attribute.setParseAction(lambda tokens: WidgetTypeAttribute(*tokens))
@@ -75,7 +82,10 @@ attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^ font_weig
 attributes = Suppress("{") + ZeroOrMore(attribute) + Suppress("}")
 attributes.setParseAction(lambda tokens: [tokens.asList()])
 
-styling = widget_attribute ^ attributes
+widget_styling = widget_attribute.copy()
+widget_styling.addParseAction(lambda tokens: [tokens.asList()])
+
+styling = widget_styling ^ attributes
 
 unstyled_question = Suppress("question") + identifier
 unstyled_question.setParseAction(lambda tokens: QuestionAnchor(*tokens))
