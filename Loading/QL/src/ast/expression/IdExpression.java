@@ -1,12 +1,6 @@
 package ast.expression;
 
 import ast.ExpressionVisitor;
-import ast.atom.Atom;
-import ast.atom.BoolAtom;
-import ast.atom.IntegerAtom;
-import ast.atom.StringAtom;
-import ast.type.Type;
-import semantic.Environment;
 
 public class IdExpression extends Expression {
 
@@ -26,9 +20,4 @@ public class IdExpression extends Expression {
 		return v.visit(this);
 	}
 	
-//	@Override
-//	public Atom evaluate() {
-//		System.out.println("idExpression evaluate();");
-//		return new BoolAtom(false, getLine());
-//	}
 }

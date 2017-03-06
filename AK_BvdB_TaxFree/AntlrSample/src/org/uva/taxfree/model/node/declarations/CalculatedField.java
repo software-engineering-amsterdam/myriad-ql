@@ -4,6 +4,7 @@ import org.uva.taxfree.model.node.expression.ConditionNode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 public abstract class CalculatedField extends NamedNode {
     private final ConditionNode mCondition;
@@ -18,11 +19,15 @@ public abstract class CalculatedField extends NamedNode {
     }
 
     @Override
+    public void addDeclaration(Set<NamedNode> set) {
+        mCondition.addDeclaration(set);
+    }
+
+    @Override
     protected void fillPanel(JPanel parent) {
         parent.add(mTextField);
     }
 
-    @Override
     public String toString() {
         return mCondition.toString();
     }
@@ -38,4 +43,12 @@ public abstract class CalculatedField extends NamedNode {
         return mCondition.evaluate();
     }
 
+    @Override
+    public void addCalculation(Set<CalculatedField> set) {
+        set.add(this);
+    }
+
+    public boolean hasCyclicDependency() {
+        return false;
+    }
 }

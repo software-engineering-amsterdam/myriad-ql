@@ -96,16 +96,10 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 	public Atom visit(IdExpression id) {
 
 		if (!environment.isAnswered(id.getName())) {
-			// TODO throw
-			// System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
+			System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
 			return new EmptyAtom(0);
 		}
-		// TODO change!
-		// System.out.println("Returns always true");
-		// TODO change getValueGetValue
-		// TODO change ID is not always a boolAtom!
-		// return new BoolAtom(true, 0);
-		// return new BoolAtom(environment.getAnswer(id.getName()).getValue().getValue(), 0);
+
 		return environment.getAnswer(id.getName()).getValue();
 	}
 

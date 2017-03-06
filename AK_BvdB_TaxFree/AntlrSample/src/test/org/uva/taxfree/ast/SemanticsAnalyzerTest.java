@@ -42,7 +42,7 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabels.txt");
+        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabelsForm.txt");
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
     }
@@ -54,17 +54,17 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testUndefinedDeclarationMultiple() throws Exception {
-        assertSemantics("undefinedDeclarationMutliple.txt", 1, "Multiple conditions with same variable trigger 1 error");
+        assertSemantics("undefinedDeclarationMultiple.txt", 1, "Multiple conditions with same variable trigger 1 error");
     }
 
     @Test
     public void testUndefinedDeclarations() throws Exception {
-        assertSemantics("undefinedDeclarations.txt", 5, "Undefined declarations");
+        assertSemantics("undefinedDeclarations.txt", 11, "Undefined declarations");
     }
 
     @Test
     void testCyclicDependency() throws Exception {
-        assertSemantics("simpleCyclicDependency.txt", 1, "Cyclic dependencies should be caught");
+        assertSemantics("cyclicDependencyCalculations.txt", 1, "Cyclic dependency in calculation");
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {

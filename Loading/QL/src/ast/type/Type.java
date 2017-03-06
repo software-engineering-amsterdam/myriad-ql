@@ -3,7 +3,6 @@ package ast.type;
 import ast.Node;
 import ast.TypeVisitor;
 import ui.field.Field;
-import value.Value;
 
 public abstract class Type extends Node {
 	

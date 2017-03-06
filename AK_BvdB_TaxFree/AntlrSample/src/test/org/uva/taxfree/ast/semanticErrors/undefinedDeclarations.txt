@@ -1,17 +1,17 @@
 form houseForm {
     if (hasSoldHouse) {
     }
-    if (hasSoldHouse2) {
+    if (hasSoldHouseTwo) {
     }
-    if (hasSoldHouse3) {
+    if (hasSoldHouseThree) {
     }
-    if (hasSoldHouse4) {
+    if (hasSoldHouseFour) {
     }
-    if (hasSoldHouse5) {
+    if (hasSoldHouseFive) {
     }
-    if (hasSoldHouse6) {
+    if (hasSoldHouseSix) {
     }
-    if (hasSoldHouse7) {
+    if (hasSoldHouseSeven) {
     }
     if (hasBoughtHouse) {
     }

@@ -1,14 +1,20 @@
 import ast.Form;
+
+import java.util.List;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import QL.Warning;
 import semantic.TypeChecker;
 import ui.Questionnaire;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
-				 + "Name1: \"Question1\" string "
-				 + "if (Name1 == \"dag\") {"
+				 + "Name0: \"Question0\" integer "
+				 + "Name1: \"Question1\" integer (Name0 + 5) "
+				 + "if ((true)) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
 				 + "Name3: \"Question3\" boolean "
@@ -47,13 +53,13 @@ public class Main {
 
 		TypeChecker typeChecker = new TypeChecker();
 
-		semantic.Environment semanticEv = typeChecker.analyze(form);
+		List<Warning> warnings = typeChecker.analyze(form);
 
 //		Environment env = new Environment();
 ////		Evaluator evaluator = new Evaluator(env);
 //
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form);
+		questionnaire.main(form, warnings);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 
