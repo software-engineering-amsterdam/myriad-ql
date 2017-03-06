@@ -1,45 +1,13 @@
 package ui;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import ast.Block;
-import ast.BlockItem;
 import ast.ComputedQuestion;
-import ast.ExpressionVisitor;
-import ast.Form;
-import ast.FormVisitor;
 import ast.Question;
 import ast.Statement;
 import ast.atom.Atom;
-import ast.atom.BoolAtom;
-import ast.atom.IntegerAtom;
-import ast.atom.StringAtom;
-import ast.expression.AddExpression;
-import ast.expression.AndExpression;
-import ast.expression.BinaryExpression;
-import ast.expression.DivExpression;
-import ast.expression.EqExpression;
-import ast.expression.GEqExpression;
-import ast.expression.GExpression;
-import ast.expression.IdExpression;
-import ast.expression.LEqExpression;
-import ast.expression.LExpression;
-import ast.expression.MinusExpression;
-import ast.expression.MulExpression;
-import ast.expression.NEqExpression;
-import ast.expression.NotExpression;
-import ast.expression.OrExpression;
-import ast.expression.PlusExpression;
-import ast.expression.SubExpression;
-import ast.expression.UnaryExpression;
-import ast.type.BooleanType;
-import ast.type.Type;
 import evaluation.Environment;
 import evaluation.Evaluator;
-import value.BoolValue;
-import value.Value;
 
 // Or Statement Visitor
 public class QuestionnaireVisitor extends Evaluator {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import value.Value;
 
+// TODO move one level higher
 public class Environment {
 
 	private Map<String, Value> variableAnswer;

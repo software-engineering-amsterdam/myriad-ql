@@ -11,6 +11,7 @@ import ast.type.BooleanType;
 import ast.type.IntegerType;
 import ast.type.StringType;
 import ast.type.Type;
+import ast.type.UnknownType;
 
 // Checks unreferenced variables
 // Checks whether condition returns a boolean
@@ -136,15 +137,16 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     public Type visit(StringType type) {
         return new StringType(type.getLine());
     }
+    
+	@Override
+	public Type visit(UnknownType type) {
+		return new UnknownType(type.getLine());
+	}
 
     @Override
 	public Type visit(IdExpression id) {
-        if (!environment.variableExists(id.getName())) {
-            throw new RuntimeException("The variable with name " + id.getName() +
-                    " on line "+ id.getLine() + " is not defined");
-        }
 
-        return environment.getType(id.getName());
+        return environment.getType(id.getName(), id.getLine());
 	}
 
 	@Override
@@ -251,29 +253,23 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	
 	@Override
 	public Type visit(EmptyAtom expr) {
-		System.out.println("Type of a empty atom");
 		return null; // TODO what to do here
 	}
 
-	// TODO do we want to add the throw after this function
 	private void check(Type expected, Type lhs, Type rhs) {
-	    System.out.println(expected);
-	    System.out.println(lhs);
-	    System.out.println(rhs);
 	    
-	    // TODO write comparator for Type?
-	    if (!expected.getKeyWord().equals(lhs.getKeyWord())) {
-	        throw new RuntimeException("The type on line " + lhs.getLine() + " is not the expected type " + expected);
-        }
-
-        if (!expected.getKeyWord().equals(rhs.getKeyWord())) {
-            throw new RuntimeException("The type on line " + rhs.getLine() + " is not the expected type " + expected);
-        }
+		check(expected, lhs);
+		check(expected, rhs);
 	}
 
-    private void check(Type expected, Type lhs) {
-        if (!expected.getKeyWord().equals(lhs.getKeyWord())) {
-            throw new RuntimeException("The type on line " + lhs.getLine() + " is not the expected type " + expected);
+    
+    private void check(Type expected, Type current) {
+    	// TODO is equal in Type or instance of?
+        if (!expected.getKeyWord().equals(current.getKeyWord())) {
+        	environment.addWarning("The type " + current.getKeyWord() + " is not of the expected type: " 
+    			+ expected.getKeyWord(), current.getLine());
         }
     }
+
+    
 }

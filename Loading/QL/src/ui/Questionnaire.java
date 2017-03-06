@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import QL.Warning;
 import ast.Form;
 import evaluation.Environment;
 import evaluation.Evaluator;
@@ -14,9 +15,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -36,6 +39,7 @@ public class Questionnaire extends Application {
 	private static Form form;
 	private static evaluation.Environment answers;
 	private static GridPane grid;
+	private static List<Warning> warnings;
 	
 	public class Notifier {
 
@@ -55,16 +59,23 @@ public class Questionnaire extends Application {
 		}
 	}
 	
-    public void main(Form f) {
+    public void main(Form f, List<Warning> w) {
     	form = f;
     	answers = new Environment();
-
+    	warnings = w;
+    	
         launch();
     }
         
     @Override
     public void start(Stage primaryStage) {
        
+    	if (!warnings.isEmpty()) {
+    		WarningDialog dialog = new WarningDialog(warnings);
+    		dialog.show();
+    		return;
+    	}
+    	
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
