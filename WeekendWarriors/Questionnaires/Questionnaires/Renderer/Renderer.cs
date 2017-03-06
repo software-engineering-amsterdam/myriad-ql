@@ -1,5 +1,5 @@
 ﻿using Questionnaires.Renderer.Widgets;
-using Questionnaires.Value;
+using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +39,7 @@ namespace Questionnaires.Renderer
             QuestionnaireStack.Children.Add(questionWidget);
         }
 
-        public void SetValue(string name, Questionnaires.Value.IType value)
+        public void SetValue(string name, Questionnaires.Types.IType value)
         {
             Questions[name].SetQuestionValue((dynamic)value);
         }

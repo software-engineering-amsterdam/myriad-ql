@@ -1,4 +1,4 @@
-﻿using Questionnaires.Value;
+﻿using Questionnaires.Types;
 using Questionnaires.QL.AST;
 using System;
 using System.Collections.Generic;
@@ -37,115 +37,115 @@ namespace Questionnaires.ExpressionEvaluator
             return operand.Negative();
         }
 
-        public Value.IType Visit(Operators.Bang node)
+        public IType Visit(Operators.Bang node)
         {
             IType operand = Visit((dynamic)node);
             return operand.Bang();
         }
 
-        public Value.IType Visit(Literals.Money node)
+        public IType Visit(Literals.Money node)
         {
             return new MoneyType(node.Value);
         }
 
-        public Value.IType Visit(Literals.String node)
+        public IType Visit(Literals.String node)
         {
             return new StringType(node.Value); 
         }
 
-        public Value.IType Visit(Literals.Number node)
+        public IType Visit(Literals.Number node)
         {
             return new IntegerType(node.Value);
         }
 
-        public Value.IType Visit(Literals.Boolean node)
+        public IType Visit(Literals.Boolean node)
         {
             return new BooleanType(node.Value);
         }
 
-        public Value.IType Visit(Identifier node)
+        public IType Visit(Identifier node)
         {
             return this.VarialbeStore.GetValue(node.Name);
         }
 
-        public Value.IType Visit(Operators.And node)
+        public IType Visit(Operators.And node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.And(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.Or node)
+        public IType Visit(Operators.Or node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.Or(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.Addition node)
+        public IType Visit(Operators.Addition node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.Add(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.Subtraction node)
+        public IType Visit(Operators.Subtraction node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.Subtract(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.Division node)
+        public IType Visit(Operators.Division node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.Divide(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.Multiply node)
+        public IType Visit(Operators.Multiply node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.Multiply(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.GreaterThan node)
+        public IType Visit(Operators.GreaterThan node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.GreaterThan(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.GreaterThanOrEqual node)
+        public IType Visit(Operators.GreaterThanOrEqual node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.GreaterThanOrEqual(rightHandSideValue);
         }
 
-        public Value.IType Visit(Operators.LessThan node)
+        public IType Visit(Operators.LessThan node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.LessThan(rightHandSideValue);
         }
         
-        public Value.IType Visit(Operators.LessThanOrEqual node)
+        public IType Visit(Operators.LessThanOrEqual node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.LessThanOrEqual(rightHandSideValue);
         }
         
-        public Value.IType Visit(Operators.Inequal node)
+        public IType Visit(Operators.Inequal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.InequalTo(rightHandSideValue);
         }
         
-        public Value.IType Visit(Operators.Equal node)
+        public IType Visit(Operators.Equal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);

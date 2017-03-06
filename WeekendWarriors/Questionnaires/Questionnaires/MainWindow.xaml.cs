@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Questionnaires.Value;
+using Questionnaires.Types;
 using Questionnaires.QL.QuestionaireBuilder;
 using System.Threading;
 

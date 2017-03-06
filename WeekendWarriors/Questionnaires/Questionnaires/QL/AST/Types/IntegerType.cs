@@ -4,32 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.Value
+namespace Questionnaires.Types
 {
-    public class MoneyType : Value<decimal>
+    public class IntegerType : Value<int>
     {
-        public MoneyType()
+        public IntegerType()
         {
         }
 
-        public MoneyType(decimal value)
+        public IntegerType(int value)
         {
             this.Val = value;
-        }
+        }        
 
         public override IType Positive()
         {
-            return new MoneyType(this.Val);
+            return new IntegerType(this.Val);
         }
 
         public override IType Negative()
         {
-            return new MoneyType(-this.Val);
+            return new IntegerType(-this.Val);
         }
 
         public override IType Add(IntegerType value)
         {
-            return new MoneyType(this.Val + value.GetValue());
+            return new IntegerType(this.Val + value.GetValue());
         }
 
         public override IType Add(MoneyType value)
@@ -39,7 +39,7 @@ namespace Questionnaires.Value
 
         public override IType Subtract(IntegerType value)
         {
-            return new MoneyType(this.Val - value.GetValue());
+            return new IntegerType(this.Val - value.GetValue());
         }
 
         public override IType Subtract(MoneyType value)
@@ -49,7 +49,7 @@ namespace Questionnaires.Value
 
         public override IType Multiply(IntegerType value)
         {
-            return new MoneyType(this.Val * value.GetValue());
+            return new IntegerType(this.Val * value.GetValue());
         }
 
         public override IType Multiply(MoneyType value)
@@ -59,7 +59,7 @@ namespace Questionnaires.Value
 
         public override IType Divide(IntegerType value)
         {
-            return new MoneyType(this.Val / value.GetValue());
+            return new IntegerType(this.Val / value.GetValue());
         }
 
         public override IType Divide(MoneyType value)

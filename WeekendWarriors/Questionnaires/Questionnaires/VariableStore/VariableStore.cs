@@ -1,4 +1,4 @@
-﻿using Questionnaires.Value;
+﻿using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Questionnaires.VariableStore
 {
     public class VariableStore
     {
-        private Dictionary<string, Value.IType> variables = new Dictionary<string, Value.IType>();
+        private Dictionary<string, Types.IType> variables = new Dictionary<string, Types.IType>();
 
         public void SetValue(string name, IType value)
         {            
@@ -26,7 +26,7 @@ namespace Questionnaires.VariableStore
             variables.Remove(name);
         }
 
-        public Questionnaires.Value.IType GetValue(string name)
+        public Questionnaires.Types.IType GetValue(string name)
         {
             return variables[name];
         }

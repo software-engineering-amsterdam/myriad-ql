@@ -8,7 +8,7 @@ using Questionnaires.QL.AST;
 using Questionnaires.QL.AST.Operators;
 using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
-using Questionnaires.Value;
+using Questionnaires.Types;
 using System.ComponentModel;
 
 namespace Questionnaires.QL.QuestionaireBuilder

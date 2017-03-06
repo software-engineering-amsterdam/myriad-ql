@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.Value
+namespace Questionnaires.Types
 {
     public class StringType : Value<String>
     {

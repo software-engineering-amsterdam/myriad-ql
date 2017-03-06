@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis.Messages;
 using System.Diagnostics;
 using Questionnaires.SemanticAnalysis;
-using Questionnaires.Value;
+using Questionnaires.Types;
 
 namespace Questionnaires.QL.AST.Operators
 {
