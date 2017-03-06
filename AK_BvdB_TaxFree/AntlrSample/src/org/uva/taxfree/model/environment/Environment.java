@@ -34,26 +34,17 @@ public class Environment {
     getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
-            if (hasCyclicDependency(calculation.getId(), calculation.getUsedVariables())) {
+            if (hasCyclicDependency(calculation)) {
                 errors.add("Cyclic dependency found: " + calculation.getId());
             }
         }
         return errors;
     }
 
-    private Set<CalculatedField> getCalculations() {
-        Set<CalculatedField> calculations = new LinkedHashSet<>();
-        mAbstractSyntaxTree.retrieveCalculations(calculations);
-        return calculations;
-    }
-
-    private boolean hasCyclicDependency(String calculationDeclaration, Set<String> usedVariables) {
-        while (substituteVariables(usedVariables)) {
-            if (usedVariables.contains(calculationDeclaration)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean hasCyclicDependency(CalculatedField calc) {
+        Set<String> dependencies = calc.getUsedVariables();
+        while (substituteVariables(dependencies)) ;
+        return dependencies.contains(calc.getId());
     }
 
     private boolean substituteVariables(Set<String> usedVariables) {
@@ -66,13 +57,18 @@ public class Environment {
         return substituted;
     }
 
-
     private void addDeclarations(String usedVariable, Set<String> usedVariables) {
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
                 usedVariables.addAll(calc.getUsedVariables());
             }
         }
+    }
+
+    private Set<CalculatedField> getCalculations() {
+        Set<CalculatedField> calculations = new LinkedHashSet<>();
+        mAbstractSyntaxTree.retrieveCalculations(calculations);
+        return calculations;
     }
 }
 
