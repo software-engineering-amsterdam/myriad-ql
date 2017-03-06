@@ -66,24 +66,6 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
         addDeclaration(questionNode);
     }
 
-    @Override
-    public void enterCalculation(QLGrammarParser.CalculationContext ctx) {
-        super.enterCalculation(ctx);
-        NamedNode calculatedFieldNode;
-        String fieldDescription = ctx.DESCRIPTION().getText();
-        String fieldId = ctx.VARIABLE_LITERAL().getText();
-
-        if ("boolean".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
-        } else if ("integer".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
-        } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
-        }
-        addDeclaration(calculatedFieldNode);
-    }
-
     private void addDeclaration(NamedNode node) {
         mSymbolTable.addDeclaration(node);
         addToStack(node);
@@ -143,6 +125,24 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     }
 
     // Exits
+    @Override
+    public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
+        super.exitCalculation(ctx);
+        NamedNode calculatedFieldNode;
+        String fieldDescription = ctx.DESCRIPTION().getText();
+        String fieldId = ctx.VARIABLE_LITERAL().getText();
+
+        if ("boolean".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else if ("integer".equals(ctx.varType().getText())) {
+            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
+        } else {
+            // TODO: Bail out!
+            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+        }
+        addDeclaration(calculatedFieldNode);
+    }
+
     @Override
     public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.exitBooleanExpression(ctx);
