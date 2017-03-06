@@ -6,24 +6,17 @@ import java.util.List;
 
 import sc.ql.model.form_elements.*;
 import sc.ql.model.Form;
-import sc.ql.model.FormElement;
-import sc.ql.model.Atoms.AtomId;
+import sc.ql.model.Node;
+import sc.ql.model.atoms.AtomId;
 
 public class CheckForm {
 	public CheckForm(Form form) throws Exception {
-		List<FormElement> form_elements = form.getFormElements();
+		List<Node> form_elements = form.getFormElements();
 		List<Question> questions = createQuestionsList(form_elements);
 				
 		checkQuestions(questions);
-		
-		try {
-			CheckConditions condition_visitor = new CheckConditions(createIdTypeHashmap(questions));
-			for (FormElement form_element : form_elements) {
-				form_element.accept(condition_visitor);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		checkConditions(form_elements, questions);
+		checkDependencies(form_elements);
 	}
 	
 	private HashMap<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
@@ -34,6 +27,28 @@ public class CheckForm {
 		}
 		
 		return identifier_types;
+	}
+	
+	private void checkDependencies(List<Node> form_elements) {
+		try {
+			DependenciesVisitor dependencies = new DependenciesVisitor();
+			for (Node form_element : form_elements) {
+				form_element.accept(dependencies);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private void checkConditions(List<Node> form_elements, List<Question> questions) {
+		try {
+			ConditionsVisitor condition_visitor = new ConditionsVisitor(createIdTypeHashmap(questions));
+			for (Node form_element : form_elements) {
+				form_element.accept(condition_visitor);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private void checkQuestions(List<Question> questions) throws Exception {
@@ -48,7 +63,7 @@ public class CheckForm {
 			// Check for duplicate identifiers
 			AtomId identifier = question.getId();
 			if (identifier_hm.containsKey(identifier)) {
-				throw new Exception("Question '"+question.getId().getValue()+"' already declared at line: "+identifier_hm.get(identifier).getLineNumber());
+				throw new Exception("Question '"+question.getId().getValue()+"' already declared at line "+identifier_hm.get(identifier).getLineNumber()+", duplicate at line "+question.getLineNumber());
 			}
 			else {
 				identifier_hm.put(identifier, question);
@@ -67,14 +82,13 @@ public class CheckForm {
 		}
 	}
 	
-	private List<Question> createQuestionsList(List<FormElement> form_elements) {
+	private List<Question> createQuestionsList(List<Node> form_elements) {
 		List<Question> questions = new ArrayList<Question>();
 		
-		for (FormElement form_element : form_elements) {
+		for (Node form_element : form_elements) {
 			try {
-				questions.addAll(form_element.accept(new GetFormQuestions()));
+				questions.addAll(form_element.accept(new QuestionsVisitor()));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

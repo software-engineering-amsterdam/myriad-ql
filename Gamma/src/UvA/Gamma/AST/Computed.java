@@ -1,6 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.Expression;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.*;
@@ -84,7 +85,7 @@ public class Computed implements FormItem {
     }
 
     @Override
-    public void show(MainScreen screen) {
+    public void show(FXMLExampleController screen) {
         screen.showComputed(this);
     }
 

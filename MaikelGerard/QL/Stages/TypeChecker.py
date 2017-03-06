@@ -33,7 +33,7 @@ class TypeChecker(object):
     @staticmethod
     def highest_number_type(left, right):
         """ :type left: AST.TypeNode """
-        if left.is_decimal() is right.is_decimal():
+        if left.is_decimal() or right.is_decimal():
             return AST.DecimalTypeNode()
         elif left.is_money() or right.is_money():
             return AST.MoneyTypeNode()

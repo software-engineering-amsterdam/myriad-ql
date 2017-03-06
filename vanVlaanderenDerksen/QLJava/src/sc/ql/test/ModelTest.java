@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -16,10 +18,12 @@ import sc.ql.antlr.QLLexer;
 import sc.ql.antlr.QLParser;
 import sc.ql.ast.AstVisitor;
 import sc.ql.checkform.CheckForm;
-import sc.ql.model.Atom;
+import sc.ql.checkform.QuestionsVisitor;
+import sc.ql.model.atoms.AtomId;
 import sc.ql.model.Form;
+import sc.ql.model.Node;
 import sc.ql.model.form_elements.Question;
-import sc.ql.model.Expressions.Expression;
+import sc.ql.model.expressions.Expression;
 
 public class ModelTest {
 
@@ -35,25 +39,35 @@ public class ModelTest {
 	}
 	
 	@Test
-	public void QuestionTest() throws Exception{
+	public void FormQuestionTest() throws Exception{
 		//setup
+		Form form = getModel("form \"This is a question\" buyingPrice MONEY endform");
+		//excution
+		List<Node> form_elements = form.getFormElements();
+		List<Question> questions = new ArrayList<Question>();
+		for (Node form_element : form_elements) {
+			questions.addAll(form_element.accept(new QuestionsVisitor()));
+        }
+		//result
+		//System.out.println("vraag: "+ questions.get(0).getQuestion());
+		Assert.assertEquals("This is a question", questions.get(0).getQuestion());
+		Assert.assertEquals("buyingPrice", questions.get(0).getId().getValue());
+		Assert.assertEquals(Question.Type.MONEY, questions.get(0).getType());
+		Assert.assertEquals((Integer) 1, questions.get(0).getLineNumber());
+	}
+	@Test
+	public void SingleQuestionTest() throws Exception{
 		String vraag			= "This is a question";
-		Atom<String> id 		= new Atom<String>(Atom.Type.ID, "buyingPrice");
-		Atom.Type type 			= Atom.Type.MONEY;
+		AtomId id 				= new AtomId("buyingPrice", 0);
+		Question.Type type 		= Question.Type.MONEY;
 		Expression expression	= (Expression) null;
 		Integer getal			= 1;
 		Question questoin = new Question(vraag, id, type, expression, getal);
-		//excution
-		Form form = getModel("form \"\" buyingPrice MONEY endform");
-
-		//result
-		//System.out.println("form info: "+ form.getFormElements());
-       	//new CheckForm(form);
 		
-       	System.out.println(questoin.getLineNumber());
+		
 		Assert.assertEquals("This is a question", questoin.getQuestion());
 		Assert.assertEquals("buyingPrice", questoin.getId().getValue());
-		Assert.assertEquals(Atom.Type.MONEY, questoin.getType());
+		Assert.assertEquals(Question.Type.MONEY, questoin.getType());
 		Assert.assertEquals((Integer) 1, questoin.getLineNumber());
 	}
 

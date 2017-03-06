@@ -1,0 +1,3 @@
+form emptyForm {
+    // This is an empty form
+}

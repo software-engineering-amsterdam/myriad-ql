@@ -1,5 +1,6 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.IdNotFoundException;
@@ -69,7 +70,7 @@ public class Question implements FormItem {
     }
 
     @Override
-    public void show(MainScreen screen) {
+    public void show(FXMLExampleController screen) {
         screen.showQuestion(this);
     }
 
