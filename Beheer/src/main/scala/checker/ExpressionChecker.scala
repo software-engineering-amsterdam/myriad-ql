@@ -40,14 +40,18 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
         case (_: Sub, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
         case (_: Mul, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
         case (_: Div, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
-        case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Geq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Leq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
-        case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Gt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Lt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: And, BooleanType, BooleanType) => (Some(BooleanType), errors)
         case (_: Or, BooleanType, BooleanType) => (Some(BooleanType), errors)
+
+        // Equality: Among different numbers, ok, otherwise: strict type match.
+        case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
+        case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
+        case (_: Neq, t1: Type, t2: Type) if (t1 == t2) => (Some(BooleanType), errors)
+        case (_: Eq, t1: Type, t2: Type) if (t1 == t2) => (Some(BooleanType), errors)
         case (n: InfixNode, l: Type, r: Type) => emitError(n, l, r, errors)
       }
     }
@@ -65,12 +69,11 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
     }
   }
 
-  private def identifierType(identifier: Identifier): (Option[Type], Issues) = {
+  private def identifierType(identifier: Identifier): (Option[Type], Issues) =
     identifiersWithType.filter { case (i, _) => identifier.value == i } match {
       case (_, identifierType) :: Nil => (Some(identifierType), Nil)
       case _ => (None, Seq(Error(s"Duplicate identifier found in expression check: ${identifier.value}")))
     }
-  }
 
   private def mostGeneric(left: NumericType, right: NumericType): NumericType =
     (left, right) match {
@@ -81,8 +84,8 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
       case _ => IntegerType
     }
 
-  private def isSubType(candidate: NumericType, expectedType: NumericType): Boolean =
-    mostGeneric(candidate, expectedType) == expectedType
+  private def isSubType(candidateChild: NumericType, candidateParent: NumericType): Boolean =
+    mostGeneric(candidateChild, candidateParent) == candidateParent
 
   private def emitError(expressionNode: ExpressionNode, left: Type, right: Type, errors: Issues) =
     (None, Error(s"Types $left, $right not supported by operation ${expressionNode.getClass.getName}") +: errors)
