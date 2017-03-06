@@ -17,7 +17,15 @@
 
         public override string ToString()
         {
-            return $"({this.Line}|{this.Column}) : {this.Text.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty)}";
+            return $"({this.Line}|{this.Column}) : {RemoveEmptyLines(this.Text)}";
+        }
+
+        private static string RemoveEmptyLines(string input)
+        {
+            return input
+                .Replace("\r\n", string.Empty)
+                .Replace("\n", string.Empty)
+                .Replace("\r", string.Empty);
         }
     }
 }
