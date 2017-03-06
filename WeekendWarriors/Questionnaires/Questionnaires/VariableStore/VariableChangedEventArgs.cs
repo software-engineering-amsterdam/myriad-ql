@@ -9,7 +9,7 @@ namespace Questionnaires.VariableStore
 {
     public class VariableChangedEventArgs
     {
-        public VariableChangedEventArgs(string name, IValue value)
+        public VariableChangedEventArgs(string name, IType value)
         {
             this.Name = name;
             this.Value = value;
@@ -21,7 +21,7 @@ namespace Questionnaires.VariableStore
             set;
         }
 
-        public IValue Value
+        public IType Value
         {
             get;
             set;

@@ -54,6 +54,6 @@ namespace Questionnaires.QL.AST
             }
         }
 
-        public abstract IValue GetResultType(QLContext context);
+        public abstract IType GetResultType(QLContext context);
     }
 }

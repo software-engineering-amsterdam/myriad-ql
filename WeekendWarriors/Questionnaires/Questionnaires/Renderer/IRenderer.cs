@@ -9,7 +9,7 @@ namespace Questionnaires.Renderer
     interface IRenderer
     {
         void AddQuestion(QL.AST.Question question);
-        void SetValue(string name, Questionnaires.Value.IValue value);
+        void SetValue(string name, Questionnaires.Value.IType value);
         void SetVisibility(string name, bool visibile);
         void SetWindowTitle(string title);
     }

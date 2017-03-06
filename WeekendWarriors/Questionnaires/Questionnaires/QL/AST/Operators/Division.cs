@@ -16,7 +16,7 @@ namespace Questionnaires.QL.AST.Operators
 
         }
 
-        public override IValue GetResultType(QLContext context)
+        public override IType GetResultType(QLContext context)
         {
             return Lhs.GetResultType(context).Divide(Rhs.GetResultType(context));
         }

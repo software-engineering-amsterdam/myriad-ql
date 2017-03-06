@@ -9,16 +9,16 @@ namespace Tests.QL.Value
 {
     class ValueCreator
     {
-        public static IValue CreateValue(object value)
+        public static IType CreateValue(object value)
         {
             if (value.GetType() == typeof(int))
-                return new IntValue((int)value);
+                return new IntegerType((int)value);
             else if (value.GetType() == typeof(decimal))
-                return new DecimalValue((decimal)value);
+                return new MoneyType((decimal)value);
             else if (value.GetType() == typeof(bool))
-                return new BoolValue((bool)value);
+                return new BooleanType((bool)value);
             else if (value.GetType() == typeof(string))
-                return new StringValue((string)value);
+                return new StringType((string)value);
 
             throw new NotSupportedException();
         }

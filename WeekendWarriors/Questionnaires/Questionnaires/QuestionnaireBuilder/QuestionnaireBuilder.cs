@@ -104,13 +104,13 @@ namespace Questionnaires.QL.QuestionaireBuilder
 
             Func<bool> conditionFunctionThen = new Func<bool>(() => 
             {
-                return visibilityCondition() && (ExpressionEvaluator.Evaluate(node.Condition) as BoolValue).GetValue();
+                return visibilityCondition() && (ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
             }
             );
 
             Func<bool> conditionFunctionElse = new Func<bool>(() =>
             {
-                return visibilityCondition() && !(ExpressionEvaluator.Evaluate(node.Condition) as BoolValue).GetValue();
+                return visibilityCondition() && !(ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
             }
             );
 

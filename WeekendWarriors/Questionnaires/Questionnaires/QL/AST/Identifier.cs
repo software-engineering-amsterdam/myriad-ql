@@ -33,7 +33,7 @@ namespace Questionnaires.QL.AST
             return true;
         }
 
-        public IValue GetResultType(QLContext context)
+        public IType GetResultType(QLContext context)
         {
             return context.GetQuestionType(Name);
         }

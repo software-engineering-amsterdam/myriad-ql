@@ -39,7 +39,7 @@ namespace Questionnaires.Renderer
             QuestionnaireStack.Children.Add(questionWidget);
         }
 
-        public void SetValue(string name, Questionnaires.Value.IValue value)
+        public void SetValue(string name, Questionnaires.Value.IType value)
         {
             Questions[name].SetQuestionValue((dynamic)value);
         }
@@ -54,8 +54,8 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Title = title;
         }
 
-        public delegate void InputChangedCallback(string name, IValue value);
-        public void InputChanged(string name, IValue value)
+        public delegate void InputChangedCallback(string name, IType value);
+        public void InputChanged(string name, IType value)
         {
             VariableStore.SetValue(name, value);
         }

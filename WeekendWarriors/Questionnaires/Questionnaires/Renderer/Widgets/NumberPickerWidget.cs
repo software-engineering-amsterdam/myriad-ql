@@ -28,12 +28,12 @@ namespace Questionnaires.Renderer.Widgets
             QuestionLabelWidget.Text = text;
         }
 
-        public override void SetQuestionValue(IValue value)
+        public override void SetQuestionValue(IType value)
         {
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(IntValue value)
+        public void SetQuestionValue(IntegerType value)
         {
             QuestionInputWidget.Text = value.GetValue().ToString();
         }
@@ -52,7 +52,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntValue(int.Parse(QuestionInputWidget.Text)));
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntegerType(int.Parse(QuestionInputWidget.Text)));
         }
     }
 }

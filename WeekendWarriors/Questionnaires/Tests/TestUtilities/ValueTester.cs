@@ -59,7 +59,7 @@ namespace Tests.QL.Value
             }
         }
 
-        public static void Test(IValue value, object expected)
+        public static void Test(IType value, object expected)
         {
             // We will only get here if none of the methods below match
             // That means that the types of the value and the expected value 
@@ -67,25 +67,25 @@ namespace Tests.QL.Value
             Assert.Fail();
         }
 
-        public static void Test(BoolValue value, object expected)
+        public static void Test(BooleanType value, object expected)
         {
             Assert.AreEqual(expected.GetType(), typeof(bool));
             Assert.AreEqual((bool)expected, value.GetValue());
         }
 
-        public static void Test(IntValue value, object expected)
+        public static void Test(IntegerType value, object expected)
         {
             Assert.AreEqual(expected.GetType(), typeof(int));
             Assert.AreEqual((int)expected, value.GetValue());
         }
 
-        public static void Test(DecimalValue value, object expected)
+        public static void Test(MoneyType value, object expected)
         {
             Assert.AreEqual(expected.GetType(), typeof(decimal));
             Assert.AreEqual((decimal)expected, value.GetValue());
         }
 
-        public static void Test(StringValue value, object expected)
+        public static void Test(StringType value, object expected)
         {
             Assert.AreEqual(expected.GetType(), typeof(string));
             Assert.AreEqual((string)expected, value.GetValue());
