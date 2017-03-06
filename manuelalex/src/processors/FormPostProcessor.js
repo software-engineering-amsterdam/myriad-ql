@@ -33,7 +33,7 @@ export class FormPostProcessor {
     }
 
     ifStatement(data, location) {
-        return new IfStatement(data[3][0][0][0], data[5][3], location);
+        return new IfStatement(data[3], _.flattenDeep(data[5][3]), location);
     }
 
     ifElseStatement(data, location) {
@@ -51,12 +51,8 @@ export class FormPostProcessor {
     }
 
     expression(data, location, reject) {
-        if (data.length === 3) {
-            return new Expression(_.flattenDeep(data[0])[0], _.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
-        } else {
-            console.error(`Retrieved different expression: ${JSON.stringify(data)} at location ${location}`);
-            return reject;
-        }
+        return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
+
     }
 
     booleanExpression(data) {
@@ -99,19 +95,19 @@ export class FormPostProcessor {
         return new QLMoney(location)
     }
 
-    string(data, location){
+    string(data, location) {
         return new QLString(location);
     }
 
-    number(data, location){
+    number(data, location) {
         return new QLNumber(location);
     }
 
-    date(data, location){
+    date(data, location) {
         return new QLDate(location)
     }
 
-    boolean(data, location){
+    boolean(data, location) {
         return new QLBoolean(location);
     }
 

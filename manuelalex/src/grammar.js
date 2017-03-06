@@ -1,8 +1,6 @@
+import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; var FormPostProcessor = new FP();
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
-import {FormPostProcessor as FP} from './processors/FormPostProcessor.js'; var FormPostProcessor = new FP();
-
-
 (function () {
 function id(x) {return x[0]; }
 
@@ -171,12 +169,12 @@ var grammar = {
     {"name": "allocation", "symbols": ["propertyName", {"literal":":"}, "_", "propertyType", "_", {"literal":"="}, "_", "allocation$subexpression$1"], "postprocess": FormPostProcessor.allocation},
     {"name": "expression", "symbols": ["and_expression"]},
     {"name": "expression$string$1", "symbols": [{"literal":"|"}, {"literal":"|"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "expression", "symbols": ["expression", "_", "expression$string$1", "_", "expression"], "postprocess": FormPostProcessor.booleanExpression},
+    {"name": "expression", "symbols": ["expression", "_", "expression$string$1", "_", "expression"], "postprocess": FormPostProcessor.expression},
     {"name": "and_expression", "symbols": ["not_expression"]},
     {"name": "and_expression$string$1", "symbols": [{"literal":"&"}, {"literal":"&"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "and_expression", "symbols": ["and_expression", "_", "and_expression$string$1", "_", "and_expression"], "postprocess": FormPostProcessor.and_test},
+    {"name": "and_expression", "symbols": ["and_expression", "_", "and_expression$string$1", "_", "and_expression"]},
     {"name": "not_expression", "symbols": ["comparison"]},
-    {"name": "not_expression", "symbols": [{"literal":"!"}, "not_expression"], "postprocess": FormPostProcessor.not_test},
+    {"name": "not_expression", "symbols": [{"literal":"!"}, "not_expression"]},
     {"name": "comparison", "symbols": ["plus_minus_expression"]},
     {"name": "comparison$subexpression$1", "symbols": [{"literal":"<"}]},
     {"name": "comparison$subexpression$1", "symbols": [{"literal":">"}]},
@@ -188,11 +186,11 @@ var grammar = {
     {"name": "comparison$subexpression$1", "symbols": ["comparison$subexpression$1$string$3"]},
     {"name": "comparison$subexpression$1$string$4", "symbols": [{"literal":"="}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "comparison$subexpression$1", "symbols": ["comparison$subexpression$1$string$4"]},
-    {"name": "comparison", "symbols": ["comparison", "_", "comparison$subexpression$1", "_", "comparison"], "postprocess": FormPostProcessor.comparison},
+    {"name": "comparison", "symbols": ["comparison", "_", "comparison$subexpression$1", "_", "comparison"]},
     {"name": "plus_minus_expression", "symbols": ["multiply_divide_expression"]},
     {"name": "plus_minus_expression$subexpression$1", "symbols": [{"literal":"-"}]},
     {"name": "plus_minus_expression$subexpression$1", "symbols": [{"literal":"+"}]},
-    {"name": "plus_minus_expression", "symbols": ["plus_minus_expression", "plus_minus_expression$subexpression$1", "plus_minus_expression"], "postprocess": FormPostProcessor.expression},
+    {"name": "plus_minus_expression", "symbols": ["plus_minus_expression", "plus_minus_expression$subexpression$1", "plus_minus_expression"]},
     {"name": "multiply_divide_expression", "symbols": ["factor"]},
     {"name": "multiply_divide_expression$subexpression$1", "symbols": [{"literal":"/"}]},
     {"name": "multiply_divide_expression$subexpression$1", "symbols": [{"literal":"*"}]},

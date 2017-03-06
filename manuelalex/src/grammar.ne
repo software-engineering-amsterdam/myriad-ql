@@ -3,7 +3,7 @@
 @builtin "number.ne"     # `int`, `decimal`, and `percentage` number primitives
 @builtin "string.ne"     # `string`, `char`, and `escape`
 
-form                    -> "form" _ formName _ "{" _ statement:* "}"                            {% FormPostProcessor.form %}
+form                    -> "form" _ formName _ "{" _ statement:* "}"                                          {% FormPostProcessor.form %}
 formName                -> word
 
 statement               -> question                                                                           {% FormPostProcessor.statement %}
@@ -22,11 +22,11 @@ answer                  -> "answer" _ "'" sentence "'" _ allocation _           
 allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}
 
 
-expression                  -> and_expression | expression _ "||" _ expression                                                                   {% FormPostProcessor.booleanExpression %}
-and_expression              -> not_expression | and_expression _ "&&" _ and_expression                                                           {% FormPostProcessor.and_test %}
-not_expression              -> comparison | "!" not_expression                                                                                   {% FormPostProcessor.not_test %}
-comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison                         {% FormPostProcessor.comparison %}
-plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") plus_minus_expression                                {% FormPostProcessor.expression %}
+expression                  -> and_expression | expression _ "||" _ expression                                                                   {% FormPostProcessor.expression %}
+and_expression              -> not_expression | and_expression _ "&&" _ and_expression
+not_expression              -> comparison | "!" not_expression
+comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison
+plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") plus_minus_expression
 multiply_divide_expression  -> factor | multiply_divide_expression ("/" | "*") multiply_divide_expression
 factor                      -> digits | propertyName | "(" expression ")"
 digits                      -> [0-9]:+                                                                                                           {% (data)=> Number(data[0]) %}
