@@ -1,11 +1,9 @@
 module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
-      attr_accessor :calculation
 
       def initialize(args)
         super
-        @calculation   = @question.assignment
         @variable.type = @question.type
         ComputedWidget.new(question_frame: self)
         calculate
@@ -17,7 +15,7 @@ module QL
       end
 
       def calculate
-        @variable.value = eval(@calculation.eval.to_s) if @calculation
+        @variable.value = eval(@question.assignment.eval.to_s) if @question.assignment
       end
     end
   end

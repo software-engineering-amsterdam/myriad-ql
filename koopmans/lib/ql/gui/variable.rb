@@ -8,7 +8,7 @@ module QL
           when type == AST::BooleanType
             bool
           when type == AST::StringType
-            string
+            "'" + value + "'"
           when type == AST::IntegerType
             numeric
           when type == AST::MoneyType
