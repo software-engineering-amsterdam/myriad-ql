@@ -56,16 +56,16 @@ def parse(input_string):
     false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
     boolean = (true | false)
 
-    reserved_words = (lit_form | lit_if | lit_else | boolean | data_types)
-
-    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
-        lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
-
     integer = Word(nums).setParseAction(
         lambda parsed_tokens: ast.Value(int(parsed_tokens[0]), DataTypes.integer))
     money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
         lambda parsed_tokens: ast.Value(Decimal(parsed_tokens[0]), DataTypes.money))
     number = (money | integer)
+
+    reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
+
+    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
+        lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
