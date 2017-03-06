@@ -3,7 +3,7 @@ import {FormPostProcessor}                       from './processors/FormPostProc
 import  './grammar.js';
 
 /**
- * To build the grammer: nearleyc grammar.ne -o grammar.js
+ * To build the grammar: npm run parse
  * (Building the grammar is not yet supported due to us requiring the PostProcessor inside the grammar, need to find a solution)
  * @type {Parser}
  */

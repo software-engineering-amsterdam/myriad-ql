@@ -32,13 +32,13 @@ export class GUI {
         this.application = new Program(ast.getProgram());
         await this.application.start();
 
-        this.renderGUI.bind(this, this.application, this.ast)
+        this.renderGUI(this.application, this.ast);
     }
 
     renderGUI(program = {}, ast = {}) {
 
-        let views = program.getViews();
-        let view = views[0]; // Until we support QLS, just use the first view
+        // Until we support QLS, just use the first view
+        let view = program.getView('QL', 'Index');
 
         let visitor = new RenderVisitor();
         visitor.visitProgram(ast.getProgram(), view);

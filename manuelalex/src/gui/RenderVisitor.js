@@ -16,7 +16,7 @@ export class RenderVisitor {
     async visitProgram(program, view){
         view = this._addMarginsToView(view);
 
-        program.renderTitle(this);
+        program.renderTitle(this, view);
 
        this.visitStatements(program.getStatements(), view);
     }
