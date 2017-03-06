@@ -1,4 +1,4 @@
-package parser.generators
+package parser
 
 import org.scalacheck.Gen
 

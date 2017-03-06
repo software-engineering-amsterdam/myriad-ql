@@ -34,46 +34,41 @@ public class Environment {
     getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
-            if (hasCyclicDependency(calculation.getId(), calculation.getUsedVariables())) {
+            if (hasCyclicDependency(calculation)) {
                 errors.add("Cyclic dependency found: " + calculation.getId());
             }
         }
         return errors;
     }
 
-    private Set<CalculatedField> getCalculations() {
-        Set<CalculatedField> calculations = new LinkedHashSet<>();
-        mAbstractSyntaxTree.retrieveCalculations(calculations);
-        return calculations;
+    private boolean hasCyclicDependency(CalculatedField calc) {
+        Set<String> dependencies = calc.getUsedVariables();
+        while (substituteVariables(dependencies)) ;
+        return dependencies.contains(calc.getId());
     }
 
-    private boolean hasCyclicDependency(String calculationDeclaration, List<String> usedVariables) {
-        while (substituteVariables(usedVariables)) {
-            if (usedVariables.contains(calculationDeclaration)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean substituteVariables(List<String> usedVariables) {
-        List<String> dependencies = new ArrayList<>();
+    private boolean substituteVariables(Set<String> usedVariables) {
+        Set<String> dependencies = new LinkedHashSet<>(usedVariables);
         for (String variableName : usedVariables) {
-            dependencies.addAll(replaceWithDeclarations(variableName));
+            addDeclarations(variableName, dependencies);
         }
-        boolean substituted = dependencies != usedVariables;
-        usedVariables.clear();
+        boolean substituted = !usedVariables.equals(dependencies);
         usedVariables.addAll(dependencies);
         return substituted;
     }
 
-    private List<String> replaceWithDeclarations(String usedVariable) {
+    private void addDeclarations(String usedVariable, Set<String> usedVariables) {
         for (CalculatedField calc : getCalculations()) {
             if (calc.getId().equals(usedVariable)) {
-                return calc.getUsedVariables();
+                usedVariables.addAll(calc.getUsedVariables());
             }
         }
-        return new ArrayList<>();
+    }
+
+    private Set<CalculatedField> getCalculations() {
+        Set<CalculatedField> calculations = new LinkedHashSet<>();
+        mAbstractSyntaxTree.retrieveCalculations(calculations);
+        return calculations;
     }
 }
 

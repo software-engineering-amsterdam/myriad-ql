@@ -1,6 +1,6 @@
 package org.uva.taxfree.model.node.expression;
 
-import java.util.List;
+import java.util.Set;
 
 public class ParenthesizedExpressionNode extends ConditionNode {
     private final ConditionNode mCondition;
@@ -16,7 +16,7 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     }
 
     @Override
-    public void addUsedVariables(List<String> list) {
-        mCondition.addUsedVariables(list);
+    public void addUsedVariables(Set<String> set) {
+        mCondition.addUsedVariables(set);
     }
 }
