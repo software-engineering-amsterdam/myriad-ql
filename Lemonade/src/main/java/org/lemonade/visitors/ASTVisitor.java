@@ -1,5 +1,7 @@
 package org.lemonade.visitors;
 
+import org.lemonade.exeptions.QLOperatorException;
+import org.lemonade.nodes.ASTNode;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
@@ -65,4 +67,5 @@ public interface ASTVisitor<T> {
 
     T visit(QLType qlType);
 
+    T visit(ASTNode astNode);
 }

@@ -3,7 +3,7 @@ package org.lemonade.nodes;
 /**
  *
  */
-public abstract class Body implements ASTNode {
+public abstract class Body extends ASTNode{
     public Body() {
 
     }

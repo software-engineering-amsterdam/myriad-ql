@@ -1,9 +1,8 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.Body;
-import org.lemonade.nodes.Conditional;
-import org.lemonade.nodes.Form;
-import org.lemonade.nodes.Question;
+import org.lemonade.exeptions.QLExpressionException;
+import org.lemonade.exeptions.QLOperatorException;
+import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
@@ -44,17 +43,18 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         return null;
     }
 
-    public QLType visit(Conditional conditional) {
+    public QLType visit(Conditional conditional){
 
         for (Body body : conditional.getBodies()) {
             body.accept(this);
         }
 
         QLType condition = conditional.getCondition().accept(this);
-        if (condition.isBoolean()) {
-            return condition;
+
+        if (!condition.isBoolean()) {
+            throw new RuntimeException("Condition cannot be resolved because of type mismatch.");
         }
-        throw new RuntimeException("Condition cannot be resolved because of type mismatch.");
+        return condition;
     }
 
     public QLType visit(Expression expression) {
@@ -111,18 +111,19 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(BangUnary bangUnary) {
         QLType expressionType = bangUnary.getExpression().accept(this);
-        if (expressionType.isBoolean()) {
-            return expressionType;
+
+        if (!expressionType.isBoolean()) {
+            throw new RuntimeException("QLBoolean type mismatch in unary expression.");
         }
-        throw new RuntimeException("QLBoolean type mismatch in unary expression.");
+        return expressionType;
     }
 
     public QLType visit(NegUnary negUnary) {
         QLType expressionType = negUnary.getExpression().accept(this);
-        if (expressionType.isNumeric()) {
-            return expressionType;
+        if (!expressionType.isNumeric()) {
+            throw new RuntimeException("QLNumeric type mismatch in unary expression.");
         }
-        throw new RuntimeException("QLNumeric type mismatch in unary expression.");
+        return expressionType;
     }
 
     public QLType visit(BooleanValue booleanValue) {
@@ -138,10 +139,10 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     public QLType visit(IdentifierValue identifierValue) {
-        if (symbolTable.containsKey(identifierValue.getValue())) {
-            return symbolTable.get(identifierValue.getValue());
+        if (!symbolTable.containsKey(identifierValue.getValue())) {
+            throw new RuntimeException("Symbol not found!");
         }
-        throw new RuntimeException("Symbol not found!");
+        return symbolTable.get(identifierValue.getValue());
     }
 
     public QLType visit(IntegerValue integerValue) {
@@ -157,14 +158,19 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         return type;
     }
 
+    @Override
+    public QLType visit(ASTNode astNode) {
+        return astNode.accept(this);
+    }
+
     private QLType checkBinaryNumeric(BinaryExpression binaryExpression) {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        if (leftType.isOf(rightType.getClass()) && leftType.isNumeric()) {
-            return leftType;
+        if (!(leftType.isNumeric() && rightType.isNumeric())) {
+            throw new RuntimeException("QLNumeric Type mismatch");
         }
-        throw new RuntimeException("QLNumeric Type mismatch");
+        return QLNumberType.precedence((QLNumberType) leftType, (QLNumberType) rightType);
     }
 
     private QLType checkBinaryComparable(BinaryExpression binaryExpression) {
@@ -172,19 +178,19 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType rightType = binaryExpression.getRight().accept(this);
 
         //Doesn't return it's own type because this can evaluate to a new type.
-        if (leftType.isOf(rightType.getClass()) && leftType.isComparable()) {
-            return new QLBooleanType();
+        if (!(leftType.isOf(rightType.getClass()) && leftType.isComparable())) {
+            throw new RuntimeException("QLComparable Type mismatch");
         }
-        throw new RuntimeException("QLComparable Type mismatch");
+        return new QLBooleanType();
     }
 
     private QLType checkBoolean(BinaryExpression binaryExpression) {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        if (leftType.isOf(rightType.getClass()) && leftType.isBoolean()) {
-            return leftType;
+        if (!(leftType.isOf(rightType.getClass()) && leftType.isBoolean())) {
+            throw new RuntimeException("QLBoolean Type mismatch");
         }
-        throw new RuntimeException("QLBoolean Type mismatch");
+        return leftType;
     }
 }

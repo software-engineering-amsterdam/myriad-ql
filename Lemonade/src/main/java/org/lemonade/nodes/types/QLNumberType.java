@@ -4,8 +4,10 @@ package org.lemonade.nodes.types;
  *
  */
 public abstract class QLNumberType extends QLType {
+    public int precedenceStrength;
 
-    public QLNumberType() {
+    public QLNumberType(int precedenceStrength) {
+        this.precedenceStrength = precedenceStrength;
     }
 
     @Override
@@ -23,4 +25,8 @@ public abstract class QLNumberType extends QLType {
         return true;
     }
 
+    public static QLNumberType precedence(QLNumberType left, QLNumberType right) {
+
+        return left.precedenceStrength >= right.precedenceStrength ? left : right;
+    }
 }

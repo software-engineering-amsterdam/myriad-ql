@@ -1,5 +1,6 @@
 package org.lemonade.nodes.expressions;
 
+import org.lemonade.nodes.Position;
 import org.lemonade.nodes.expressions.value.BooleanValue;
 import org.lemonade.nodes.types.QLType;
 
@@ -11,7 +12,6 @@ public abstract class Value<T> extends Expression {
     T value;
 
     public Value(QLType type, T value) {
-        super();
         this.type = type;
         this.value = value;
     }

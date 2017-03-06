@@ -14,7 +14,7 @@ question
     ;
 
 conditional
-    : 'if' '(' expr ')' '{' body+ '}'
+    : 'if' LPAREN expr RPAREN '{' body+ '}'
     ;
 
 type_specifier
@@ -27,7 +27,8 @@ type_specifier
     ;
 
 expr
- : MINUS expr                           #unaryMinusExpr
+ : LPAREN expr RPAREN                   #parenExpr
+ | MINUS expr                           #unaryMinusExpr
  | BANG expr                            #unaryBangExpr
  | expr op=(PRODUCT | DIVIDE) expr      #productDivideExpr
  | expr op=(PLUS | MINUS) expr          #plusMinExpr
@@ -126,6 +127,13 @@ STR
     : '"' .*? '"'
     ;
 
+LPAREN
+    : '('
+    ;
+
+RPAREN
+    : ')'
+    ;
 COMMENT
     : '/*' .*? '*/'  -> channel(HIDDEN)
     ;

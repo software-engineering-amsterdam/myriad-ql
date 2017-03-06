@@ -1,9 +1,6 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.Body;
-import org.lemonade.nodes.Conditional;
-import org.lemonade.nodes.Form;
-import org.lemonade.nodes.Question;
+import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.expressions.binary.AndBinary;
@@ -200,6 +197,11 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     @Override
     public Expression visit(QLType qlType) {
         return null;
+    }
+
+    @Override
+    public Expression visit(ASTNode astNode) {
+        return astNode.accept(this);
     }
 
 }

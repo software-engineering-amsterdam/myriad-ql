@@ -47,7 +47,7 @@ public class EvaluateTest {
 
         oneFifty = new MoneyValue(1.50);
         twoFifty = new MoneyValue(2.50);
-        
+
         onePointTwo = new DecimalValue(1.2);
 
         date = new DateValue(LocalDate.of(2010, 1, 1));

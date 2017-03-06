@@ -206,4 +206,9 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     public ASTNode visit(QLType type) {
         return type;
     }
+
+    @Override
+    public ASTNode visit(ASTNode astNode) {
+        return null;
+    }
 }

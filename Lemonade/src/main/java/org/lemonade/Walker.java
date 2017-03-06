@@ -17,7 +17,7 @@ public class Walker {
                 " if(tmp) { tmp2: \"ja?\"boolean}" +
                 "}";
 
-        String formExpression = "form name {if(2 + 4.0 * 8.0) {tmp: \"yu\" money}}";
+        String formExpression = "form name {if(((-2) + 4.0) * 8.0) {tmp: \"yu\" money}}";
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(formExpression));
 
         QLLexer lexer = new QLLexer(input);
