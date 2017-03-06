@@ -9,12 +9,12 @@ class Form:
         self.name = name
         self.body = body
 
-    def accept(self, visitor):
-        return visitor.visit_form(self)
-
     def __eq__(self, other):
         return (type(self) == type(other) and self.name == other.name and
                 self.body == other.body)
+
+    def accept(self, visitor):
+        return visitor.visit_form(self)
 
 
 class Question:
@@ -24,12 +24,12 @@ class Question:
         self.label = label
         self.datatype = datatype
 
-    def accept(self, visitor):
-        return visitor.visit_question(self)
-
     def __eq__(self, other):
         return (type(self) == type(other) and self.name == other.name and
                 self.label == other.label and self.datatype == other.datatype)
+
+    def accept(self, visitor):
+        return visitor.visit_question(self)
 
 
 class ComputedQuestion(Question):
@@ -38,11 +38,11 @@ class ComputedQuestion(Question):
         super().__init__(name, label, datatype)
         self.computation = computation
 
-    def accept(self, visitor):
-        return visitor.visit_computed_question(self)
-
     def __eq__(self, other):
         return super().__eq__(other) and self.computation == other.computation
+
+    def accept(self, visitor):
+        return visitor.visit_computed_question(self)
 
 
 class IfConditional:
@@ -51,13 +51,13 @@ class IfConditional:
         self.condition = condition
         self.ifbody = ifbody
 
-    def accept(self, visitor):
-        return visitor.visit_if_conditional(self)
-
     def __eq__(self, other):
         return (type(self) == type(other) and
                 self.condition == other.condition and
                 self.ifbody == other.ifbody)
+
+    def accept(self, visitor):
+        return visitor.visit_if_conditional(self)
 
 
 class IfElseConditional(IfConditional):
@@ -66,11 +66,11 @@ class IfElseConditional(IfConditional):
         super().__init__(condition, ifbody)
         self.elsebody = elsebody
 
-    def accept(self, visitor):
-        return visitor.visit_ifelse_conditional(self)
-
     def __eq__(self, other):
         return super().__eq__(other) and self.elsebody == other.elsebody
+
+    def accept(self, visitor):
+        return visitor.visit_ifelse_conditional(self)
 
 
 class UnOp:
@@ -171,11 +171,11 @@ class Variable:
     def __init__(self, name):
         self.name = name
 
-    def accept(self, visitor):
-        return visitor.visit_variable(self)
-
     def __eq__(self, other):
         return type(self) == type(other) and self.name == other.name
+
+    def accept(self, visitor):
+        return visitor.visit_variable(self)
 
 
 class Constant:
@@ -184,9 +184,9 @@ class Constant:
         self.value = value
         self.datatype = datatype
 
-    def accept(self, visitor):
-        return visitor.visit_constant(self)
-
     def __eq__(self, other):
         return (type(self) == type(other) and self.value == other.value and
                 self.datatype == other.datatype)
+
+    def accept(self, visitor):
+        return visitor.visit_constant(self)

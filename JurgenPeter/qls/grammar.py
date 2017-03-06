@@ -37,19 +37,19 @@ widget_checkbox = Suppress("checkbox").setParseAction(
 
 widget_spinbox = Suppress("spinbox") + Optional(integer_arguments)
 widget_spinbox.setParseAction(
-    lambda _: SpinBoxWidget)
+    lambda tokens: lambda question, app: SpinBoxWidget(question, app, *tokens))
 
 widget_slider = Suppress("slider") + Optional(integer_arguments)
 widget_slider.setParseAction(
-    lambda tokens: lambda question: SliderWidget(question, *tokens))
+    lambda tokens: lambda question, app: SliderWidget(question, app, *tokens))
 
 widget_radio = Suppress("radio") + Optional(string_arguments)
 widget_radio.setParseAction(
-    lambda tokens: lambda question: RadioWidget(question, *tokens))
+    lambda tokens: lambda question, app: RadioWidget(question, app, *tokens))
 
 widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
 widget_drop_down.setParseAction(
-    lambda tokens: lambda question: DropDownWidget(question, *tokens))
+    lambda tokens: lambda question, app: DropDownWidget(question, app, *tokens))
 
 widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^\
               widget_whole_number ^ widget_real_number ^ widget_drop_down ^\
@@ -63,7 +63,7 @@ hexadecimal = Regex("#[0-9a-f]{6}")
 color_attribute = Suppress("color") + Suppress(":") + hexadecimal
 color_attribute.setParseAction(lambda tokens: ColorAttribute(*tokens))
 
-font_size_attribute  = Suppress("size") + Suppress(":") + integer
+font_size_attribute = Suppress("size") + Suppress(":") + integer
 font_size_attribute.setParseAction(lambda tokens: FontSizeAttribute(*tokens))
 
 weight = Literal("normal") ^ Literal("bold")
@@ -77,7 +77,8 @@ font_family_attribute.setParseAction(lambda tokens: FontFamilyAttribute(*tokens)
 width_attribute = Suppress("width") + Suppress(":") + integer
 width_attribute.setParseAction(lambda tokens: WidthAttribute(*tokens))
 
-attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^ font_weight_attribute ^ font_family_attribute ^ width_attribute
+attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^\
+            font_weight_attribute ^ font_family_attribute ^ width_attribute
 
 attributes = Suppress("{") + ZeroOrMore(attribute) + Suppress("}")
 attributes.setParseAction(lambda tokens: [tokens.asList()])
@@ -100,12 +101,6 @@ default.setParseAction(lambda tokens: DefaultStyling(*tokens))
 
 defaults = OneOrMore(default)
 defaults.setParseAction(lambda tokens: [tokens.asList()])
-
-
-
-
-
-
 
 sectionbody = Forward()
 
@@ -135,12 +130,12 @@ page = unstyled_page ^ styled_page
 layoutbody = ZeroOrMore(page)
 layoutbody.setParseAction(lambda tokens: [tokens.asList()])
 
-unstyled_layout = Suppress("stylesheet") + identifier + Suppress("{") + layoutbody +\
-             Suppress("}")
+unstyled_layout = Suppress("stylesheet") + identifier + Suppress("{") +\
+                  layoutbody + Suppress("}")
 unstyled_layout.setParseAction(lambda tokens: Layout(*tokens))
 
-styled_layout = Suppress("stylesheet") + identifier + Suppress("{") + layoutbody + defaults +\
-             Suppress("}")
+styled_layout = Suppress("stylesheet") + identifier + Suppress("{") +\
+                layoutbody + defaults + Suppress("}")
 styled_layout.setParseAction(lambda tokens: StyledLayout(*tokens))
 
 layout = unstyled_layout ^ styled_layout
@@ -151,46 +146,3 @@ def parse_file(filename):
 
 def parse_string(string):
     return layout.parseString(string, parseAll=True)[0]
-
-
-if __name__ == "__main__":
-    parse_file("../examplestylesheet")
-    # print(parse_string("""
-    # stylesheet x {
-    #     page y {
-    #         section "1" {
-    #             question ques
-    #                 widget spinbox(0, 100)
-    #         }
-    #         section "2" {
-    #             question quess
-    #                 widget checkbox
-    #             section "22" {
-    #                 question quesinsec
-    #                     widget dropdown("a", "b")
-    #             }
-    #         }
-    #     }
-    #
-    #     page z {
-    #         section "Selling" {
-    #             question hasSoldHouse
-    #                 widget radio("Yes", "No")
-    #             section "You sold a house" {
-    #                 question sellingPrice
-    #                 widget spinbox(0, 10)
-    #                 question privateDebt
-    #                 widget spinbox(0, 10)
-    #                 question valueResidue
-    #                 default integer {
-    #                     width: 400
-    #                     font: "Arial"
-    #                     fontsize: 14
-    #                     color: #999999
-    #                     widget spinbox
-    #                 }
-    #             }
-    #         }
-    #     }
-    # }
-    # """))

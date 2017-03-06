@@ -1,4 +1,6 @@
 import re
+from ql.ast import Datatype
+from tkinter.font import Font
 
 
 class Widget:
@@ -11,6 +13,7 @@ class Widget:
 
         self.app = app
         self.app.addLabel(self.label_id, question.label)
+        self.font = Font()
 
     def set_listener(self, listener):
         pass
@@ -18,17 +21,20 @@ class Widget:
     def get_tkinter_label(self):
         return self.app.getLabelWidget(self.label_id)
 
-    def set_font_familiy(self, family):
-        self.get_tkinter_widget().config(font="-family {}".format(family))
-        self.get_tkinter_label().config(font="-family {}".format(family))
+    def set_font_family(self, family):
+        self.font["family"] = family
+        self.get_tkinter_widget().config(font=self.font)
+        self.get_tkinter_label().config(font=self.font)
 
     def set_font_size(self, size):
-        self.get_tkinter_widget().config(font="-size {}".format(size))
-        self.get_tkinter_label().config(font="-size {}".format(size))
+        self.font["size"] = size
+        self.get_tkinter_widget().config(font=self.font)
+        self.get_tkinter_label().config(font=self.font)
 
     def set_font_weight(self, weight):
-        self.get_tkinter_widget().config(font="-weight {}".format(weight))
-        self.get_tkinter_label().config(font="-weight {}".format(weight))
+        self.font["weight"] = weight
+        self.get_tkinter_widget().config(font=self.font)
+        self.get_tkinter_label().config(font=self.font)
 
     def set_color(self, color):
         self.get_tkinter_widget().config(fg=color)
@@ -36,6 +42,11 @@ class Widget:
 
     def set_width(self, width):
         self.app.setLabelWidth(self.label_id, width)
+
+    def apply(self, styling):
+        if styling.applicable(self.get_datatype()):
+            for attribute in styling.attributes:
+                attribute.apply_on(self)
 
 
 class EntryWidget(Widget):
@@ -77,6 +88,9 @@ class EntryWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getEntryWidget(self.entry_id)
 
+    def get_datatype(self):
+        return Datatype.string
+
 
 class IntegerEntryWidget(EntryWidget):
 
@@ -90,6 +104,9 @@ class IntegerEntryWidget(EntryWidget):
         except ValueError:
             return None
 
+    def get_datatype(self):
+        return Datatype.integer
+
 
 class DecimalEntryWidget(EntryWidget):
 
@@ -102,6 +119,9 @@ class DecimalEntryWidget(EntryWidget):
             return float(self.app.getEntry(self.entry_id))
         except ValueError:
             return None
+
+    def get_datatype(self):
+        return Datatype.decimal
 
 
 class CheckBoxWidget(Widget):
@@ -133,6 +153,9 @@ class CheckBoxWidget(Widget):
 
     def get_tkinter_widget(self):
         return self.app.getCheckBoxWidget(self.entry_id)
+
+    def get_datatype(self):
+        return Datatype.boolean
 
 
 class SpinBoxWidget(Widget):
@@ -173,6 +196,9 @@ class SpinBoxWidget(Widget):
     def get_tkinter_widget(self):
         return self.app.getSpinBoxWidget(self.entry_id)
 
+    def get_datatype(self):
+        return Datatype.integer
+
 
 class RadioWidget(Widget):
     def __init__(self, app, question, true_text="Yes", false_text="No"):
@@ -211,24 +237,30 @@ class RadioWidget(Widget):
         return self.app.getRadioButtonWidget(self.entry_id)
 
     def set_font_familiy(self, family):
+        self.font["family"] = family
+        self.get_tkinter_label().config(font=self.font)
         for widget in self.get_tkinter_widget():
-            widget.config(font="-family {}".format(family))
-        self.get_tkinter_label().config(font="-family {}".format(family))
+            widget.config(font=self.font)
 
     def set_font_size(self, size):
+        self.font["size"] = size
+        self.get_tkinter_label().config(font=self.font)
         for widget in self.get_tkinter_widget():
-            widget.config(font="-size {}".format(size))
-        self.get_tkinter_label().config(font="-size {}".format(size))
+            widget.config(font=self.font)
 
     def set_font_weight(self, weight):
+        self.font["weight"] = weight
+        self.get_tkinter_label().config(font=self.font)
         for widget in self.get_tkinter_widget():
-            widget.config(font="-weight {}".format(weight))
-        self.get_tkinter_label().config(font="-weight {}".format(weight))
+            widget.config(font=self.font)
 
     def set_color(self, color):
         for widget in self.get_tkinter_widget():
             widget.config(fg=color)
         self.get_tkinter_label().config(fg=color)
+
+    def get_datatype(self):
+        return Datatype.boolean
 
 
 class DropDownWidget(Widget):
@@ -263,6 +295,9 @@ class DropDownWidget(Widget):
 
     def get_tkinter_widget(self):
         return self.app.getOptionBoxWidget(self.entry_id)
+
+    def get_datatype(self):
+        return Datatype.boolean
 
 
 class SliderWidget(Widget):
@@ -309,3 +344,6 @@ class SliderWidget(Widget):
 
     def get_tkinter_widget(self):
         return self.app.getScaleWidget(self.entry_id)
+
+    def get_datatype(self):
+        return Datatype.integer

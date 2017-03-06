@@ -1,4 +1,3 @@
-from ql.ast import Datatype
 from ql.visitors.question_finder import QuestionFinder
 from gui.widgets import *
 
@@ -15,8 +14,23 @@ class GuiBuilder:
         self.default_widgets = {
             Datatype.integer: IntegerEntryWidget,
             Datatype.decimal: DecimalEntryWidget,
-            Datatype.boolean: RadioWidget,
+            Datatype.boolean: CheckBoxWidget,
             Datatype.string:  EntryWidget}
+
+        self.stylings = []
+
+    def push_styling(self, styling):
+        self.stylings.append(styling)
+
+    def push_stylings(self, stylings):
+        self.stylings += stylings
+
+    def pop_styling(self):
+        self.stylings.pop()
+
+    def pop_stylings(self, elements):
+        for _ in range(elements):
+            self.stylings.pop()
 
     def visit(self, node):
         node.accept(self)
@@ -30,7 +44,9 @@ class GuiBuilder:
         self.app.stopTabbedFrame()
 
     def visit_styled_layout(self, node):
+        self.push_stylings(node.stylings)
         self.visit_layout(node)
+        self.pop_stylings(len(node.stylings))
 
     def visit_page(self, node):
         self.app.startTab(node.name)
@@ -39,7 +55,9 @@ class GuiBuilder:
         self.app.stopTab()
 
     def visit_styled_page(self, node):
+        self.push_stylings(node.stylings)
         self.visit_page(node)
+        self.pop_stylings(len(node.stylings))
 
     def visit_section(self, node):
         self.app.startLabelFrame(node.name)
@@ -48,22 +66,41 @@ class GuiBuilder:
         self.app.stopLabelFrame()
 
     def visit_styled_section(self, node):
+        self.push_stylings(node.stylings)
         self.visit_section(node)
+        self.pop_stylings(len(node.stylings))
 
     def visit_question_anchor(self, node):
         question = QuestionFinder(node.name).visit(self.form)
         question.accept(self)
 
     def visit_styled_question_anchor(self, node):
+        self.push_styling(node.styling)
         self.visit_question_anchor(node)
+        self.pop_styling()
 
     def visit_form(self, node):
         for element in node.body:
             element.accept(self)
 
     def visit_question(self, node):
-        widget = self.default_widgets[node.datatype](self.app, node)
+
+        # TODO get widget from styling stack
+        widget_constructor = self.default_widgets[node.datatype]
+
+        for styling in self.stylings:
+            # TODO move to Styling class similar to applying attributes
+            if styling.applicable(node):
+                for attribute in styling.attributes:
+                    widget_constructor = attribute.get_widget_constructor(
+                        widget_constructor)
+
+        widget = widget_constructor(self.app, node)
         widget.set_listener(self.listener)
+
+        for styling in self.stylings:
+            widget.apply(styling)
+
         self.widgets[node.name] = widget
         return widget
 
