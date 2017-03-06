@@ -97,4 +97,8 @@ public class TypeChecker {
     public List<Issue> getWarnings() {
         return issuesStorage.getWarnings();
     }
+
+    public boolean hasErrors() {
+        return getErrors().size() > 0;
+    }
 }

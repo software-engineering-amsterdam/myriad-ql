@@ -148,7 +148,7 @@ public class CircularDependencyVisitor extends AbstractTypeCheckVisitor<Void, Id
     @Override
     public Void visitParameter(Parameter parameter, Identifier questionId) {
 
-        circularDependenciesResolver.register(new DependencyPair(questionId, parameter.getId()));
+        circularDependenciesResolver.register(new DependencyPair(parameter.getId(), questionId));
         return null;
     }
 

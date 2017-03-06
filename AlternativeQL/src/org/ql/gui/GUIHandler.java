@@ -23,14 +23,22 @@ public class GUIHandler extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parser parser = new Parser();
         Form form = parser.parseForm("form TestForm {" +
-                "boolean hasSoldHouse: \"Did you sell a house in 2010?\";" +
+                "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;" +
+                "boolean hasBoughtHouse: \"Did you buy a house in 2010?\";" +
+                    "if (hasSoldHouse) {" +
+                    "boolean sellingPrice: \"What was the selling price?\" = true;" +
+                    "string youDidWhat: \"How are you doin?\";" +
+                        "if (youDidWhat==\"fine\") {" +
+                            "boolean yay: \"Yay you're fine right?\";" +
+                        "}" +
+                    "}" +
+                "boolean everythingAlright: \"Is everything alright sir?\" = true;" +
                 "}");
 
-        IssuesStorage issuesStorage = new IssuesStorage();
-        TypeChecker typeChecker = new TypeChecker(issuesStorage, new SymbolTable(), new CircularDependenciesResolver());
-        typeChecker.visitForm(form, null);
+        TypeChecker typeChecker = new TypeChecker(form);
+        typeChecker.checkForm();
 
-        if(issuesStorage.hasErrors()) {
+        if(typeChecker.hasErrors()) {
             System.out.println("An issuesStorage was found!");
         } else {
             ValueTable valueTable = new ValueTable();

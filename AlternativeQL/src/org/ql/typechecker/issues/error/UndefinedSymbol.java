@@ -4,7 +4,7 @@ package org.ql.typechecker.issues.error;
 import org.ql.ast.Identifier;
 import org.ql.typechecker.issues.Issue;
 
-public class UndefinedSymbol implements Issue {
+public class UndefinedSymbol extends Issue {
     private final Identifier identifier;
 
     public UndefinedSymbol(Identifier identifier) {

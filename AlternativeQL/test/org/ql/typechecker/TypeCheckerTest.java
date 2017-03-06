@@ -21,15 +21,17 @@ public class TypeCheckerTest {
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
         String questionLabel = "example";
-        String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
+        String expectedError = "Question '" + questionLabel + "' label has duplicate(s)";
 
         TypeChecker typeChecker = new TypeChecker(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
         }}));
 
-        assertTrue(typeChecker.getWarnings().size() == 2);
-        assertEquals(expectedError, typeChecker.getWarnings().get(0));
-        assertEquals(expectedError, typeChecker.getWarnings().get(1));
+        typeChecker.checkForm();
+
+        assertTrue(typeChecker.getErrors().size() == 2);
+        assertEquals(expectedError, typeChecker.getWarnings().get(0).getMessage());
+        assertEquals(expectedError, typeChecker.getWarnings().get(1).getMessage());
     }
 }

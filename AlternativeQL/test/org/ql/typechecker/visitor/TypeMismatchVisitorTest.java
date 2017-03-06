@@ -45,7 +45,7 @@ public class TypeMismatchVisitorTest {
         Type actualNegationType = visitor.visitNegation(negation, null);
 
         assertTrue(actualNegationType instanceof UnknownType);
-        assertEquals("Type mismatch: expected boolean, but got string", visitor.getErrors().get(0));
+        assertEquals("Type mismatch: expected boolean, but got string", visitor.getErrors().get(0).getMessage());
     }
 
     @Test

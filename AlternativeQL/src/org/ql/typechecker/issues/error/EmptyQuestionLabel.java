@@ -3,7 +3,7 @@ package org.ql.typechecker.issues.error;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.typechecker.issues.Issue;
 
-public class EmptyQuestionLabel implements Issue {
+public class EmptyQuestionLabel extends Issue {
     private final QuestionText questionText;
 
     public EmptyQuestionLabel(QuestionText questionText) {

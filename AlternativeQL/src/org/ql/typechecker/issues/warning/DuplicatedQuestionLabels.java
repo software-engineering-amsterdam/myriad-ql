@@ -3,7 +3,7 @@ package org.ql.typechecker.issues.warning;
 import org.ql.ast.statement.Question;
 import org.ql.typechecker.issues.Issue;
 
-public class DuplicatedQuestionLabels implements Issue {
+public class DuplicatedQuestionLabels extends Issue {
     private final Question question;
 
     public DuplicatedQuestionLabels(Question question) {

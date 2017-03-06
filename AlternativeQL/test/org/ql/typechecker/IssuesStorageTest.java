@@ -19,11 +19,11 @@ public class IssuesStorageTest {
 
         assertEquals(1, issuesStorage.getErrors().size());
         assertTrue(issuesStorage.hasErrors());
-        assertEquals("Type mismatch: expected boolean, but got string", issuesStorage.getErrors().get(0));
+        assertEquals("Type mismatch: expected boolean, but got string", issuesStorage.getErrors().get(0).getMessage());
     }
 
     @Test
-    public void shouldAddTypeMismatchErrorWithMetadata() {
+    public void shouldAddTypeMismatchErrorWithLoc() {
         IssuesStorage issuesStorage = new IssuesStorage();
         StringType actualType = new StringType();
         actualType.setSourceLocation(new SourceLocation(12, 34));
@@ -31,6 +31,6 @@ public class IssuesStorageTest {
 
         assertEquals(1, issuesStorage.getErrors().size());
         assertTrue(issuesStorage.hasErrors());
-        assertEquals("Type mismatch: expected boolean, but got string on line 12:34", issuesStorage.getErrors().get(0));
+        assertEquals("Type mismatch: expected boolean, but got string on line 12:34", issuesStorage.getErrors().get(0).getFullMessage());
     }
 }

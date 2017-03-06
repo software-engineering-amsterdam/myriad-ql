@@ -3,7 +3,7 @@ package org.ql.typechecker.issues.error;
 import org.ql.ast.Identifier;
 import org.ql.typechecker.issues.Issue;
 
-public class EmptyIdentifier implements Issue {
+public class EmptyIdentifier extends Issue {
     private final Identifier identifier;
 
     public EmptyIdentifier(Identifier identifier) {

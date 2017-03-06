@@ -25,7 +25,7 @@ public class CircularDependencyVisitorTest {
         }}), null);
 
         assertEquals(2, visitor.getErrors().size());
-        assertTrue(visitor.getErrors().contains("Circular dependency detected for question 'second'"));
-        assertTrue(visitor.getErrors().contains("Circular dependency detected for question 'first'"));
+        assertEquals("Circular dependency detected for question 'first'", visitor.getErrors().get(1).getMessage());
+        assertEquals("Circular dependency detected for question 'second'", visitor.getErrors().get(0).getMessage());
     }
 }
