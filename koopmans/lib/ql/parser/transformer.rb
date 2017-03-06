@@ -25,10 +25,10 @@ module QL
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), expression: subtree(:expression) }) { Question.new(string_literal, variable, type, expression) }
 
       # if statement
-      rule(if_statement: { expression: subtree(:expression), block: subtree(:block) }) { IfStatement.new(expression, block) }
+      rule(if_statement: { expression: subtree(:expression), body: subtree(:body) }) { IfStatement.new(expression, body) }
 
       # form
-      rule(form: { id: simple(:variable), block: subtree(:block) }) { Form.new(variable, block) }
+      rule(form: { id: simple(:variable), body: subtree(:body) }) { Form.new(variable, body) }
 
       # negation: ! -
       rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(variable) }
