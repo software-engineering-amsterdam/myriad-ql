@@ -6,6 +6,7 @@ import org.uva.taxfree.ast.Ast;
 import org.uva.taxfree.main.SemanticsAnalyzer;
 import org.uva.taxfree.model.environment.Environment;
 
+import java.beans.Expression;
 import java.io.File;
 import java.io.IOException;
 
@@ -79,6 +80,11 @@ public class SemanticsAnalyzerTest {
     @Test
     void testCyclicDependencyComposed() throws Exception {
         assertSemantics("invalidDelegatedComposedCalculations.txt", 5, "Composition should work");
+    }
+
+    @Test
+    void testCyclicDependencyDelegated() throws Exception{
+       assertSemantics("invalidDelegations.txt", 3, "Delegation leads to errors in any expression");
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
