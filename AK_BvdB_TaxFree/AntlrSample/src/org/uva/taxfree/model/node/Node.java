@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node;
 
+import org.uva.taxfree.model.node.declarations.CalculatedField;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import java.util.Set;
@@ -22,7 +23,11 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    public void printId(){
+    public void addCalculation(Set<CalculatedField> set) {
+        // Intentionally left blank;
+    }
+
+    public void printId() {
         // Intentionally left blank;
     }
 }

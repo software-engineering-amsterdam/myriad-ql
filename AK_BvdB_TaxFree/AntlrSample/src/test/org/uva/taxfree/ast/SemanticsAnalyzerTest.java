@@ -64,7 +64,7 @@ public class SemanticsAnalyzerTest {
 
     @Test
     void testCyclicDependency() throws Exception {
-        assertSemantics("simpleCyclicDependency.txt", 1, "Cyclic dependencies should be caught");
+        assertSemantics("simpleCyclicDependency.txt", 1, "Cyclic dependency in calculation");
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
