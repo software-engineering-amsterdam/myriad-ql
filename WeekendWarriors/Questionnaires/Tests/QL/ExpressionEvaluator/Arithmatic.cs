@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Questionnaires.ExpressionEvaluator;
 using Questionnaires.VariableStore;
-using Questionnaires.AST;
+using Questionnaires.QL.AST;
 using Questionnaires.Value;
 using Tests.QL.Value;
 using System.Collections.Generic;

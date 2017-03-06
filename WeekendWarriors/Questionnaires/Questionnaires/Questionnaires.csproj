@@ -61,24 +61,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AST\Operators\Addition.cs" />
-    <Compile Include="AST\Operators\And.cs" />
-    <Compile Include="AST\Operators\Division.cs" />
-    <Compile Include="AST\Operators\Equal.cs" />
-    <Compile Include="AST\Operators\GreaterThan.cs" />
-    <Compile Include="AST\Operators\GreaterThanOrEqual.cs" />
-    <Compile Include="AST\Operators\Inequal.cs" />
-    <Compile Include="AST\Operators\LessThan.cs" />
-    <Compile Include="AST\Operators\LessThanOrEqual.cs" />
-    <Compile Include="AST\Operators\Multiply.cs" />
-    <Compile Include="AST\Operators\Or.cs" />
-    <Compile Include="AST\Operators\Subtraction.cs" />
-    <Compile Include="AST\Visitor\IASTVisitor.cs" />
-    <Compile Include="AST\IExpression.cs" />
-    <Compile Include="AST\Operators\Bang.cs" />
-    <Compile Include="AST\Operators\Negative.cs" />
-    <Compile Include="AST\Operators\Positive.cs" />
-    <Compile Include="ExpressionEvaluator\Evaluator.cs" />
+    <Compile Include="QLS\Generated\QLSBaseListener.cs" />
+    <Compile Include="QLS\Generated\QLSBaseVisitor.cs" />
+    <Compile Include="QLS\Generated\QLSLexer.cs" />
+    <Compile Include="QLS\Generated\QLSListener.cs" />
+    <Compile Include="QLS\Generated\QLSParser.cs" />
+    <Compile Include="QLS\Generated\QLSVisitor.cs" />
+    <Compile Include="QL\AST\Operators\Addition.cs" />
+    <Compile Include="QL\AST\Operators\And.cs" />
+    <Compile Include="QL\AST\Operators\Division.cs" />
+    <Compile Include="QL\AST\Operators\Equal.cs" />
+    <Compile Include="QL\AST\Operators\GreaterThan.cs" />
+    <Compile Include="QL\AST\Operators\GreaterThanOrEqual.cs" />
+    <Compile Include="QL\AST\Operators\Inequal.cs" />
+    <Compile Include="QL\AST\Operators\LessThan.cs" />
+    <Compile Include="QL\AST\Operators\LessThanOrEqual.cs" />
+    <Compile Include="QL\AST\Operators\Multiply.cs" />
+    <Compile Include="QL\AST\Operators\Or.cs" />
+    <Compile Include="QL\AST\Operators\Subtraction.cs" />
+    <Compile Include="QL\AST\Visitor\IASTVisitor.cs" />
+    <Compile Include="QL\AST\IExpression.cs" />
+    <Compile Include="QL\AST\Operators\Bang.cs" />
+    <Compile Include="QL\AST\Operators\Negative.cs" />
+    <Compile Include="QL\AST\Operators\Positive.cs" />
+    <Compile Include="QL\ExpressionEvaluator\Evaluator.cs" />
     <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Question\IQuestion.cs" />
     <Compile Include="Question\Question.cs" />
@@ -92,14 +98,14 @@
     <Compile Include="Renderer\Widgets\StringQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\WidgetFactory.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
-    <Compile Include="SemanticAnalysis\QLContext.cs" />
-    <Compile Include="SemanticAnalysis\DeclarationValidator.cs" />
-    <Compile Include="SemanticAnalysis\Result.cs" />
-    <Compile Include="SemanticAnalysis\SemanticAnalyzer.cs" />
-    <Compile Include="SemanticAnalysis\TypeChecker.cs" />
-    <Compile Include="SemanticAnalysis\Messages\Error.cs" />
-    <Compile Include="SemanticAnalysis\Messages\Message.cs" />
-    <Compile Include="SemanticAnalysis\Messages\Warning.cs" />
+    <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
+    <Compile Include="QL\SemanticAnalysis\DeclarationValidator.cs" />
+    <Compile Include="QL\SemanticAnalysis\Result.cs" />
+    <Compile Include="QL\SemanticAnalysis\SemanticAnalyzer.cs" />
+    <Compile Include="QL\SemanticAnalysis\TypeChecker.cs" />
+    <Compile Include="QL\SemanticAnalysis\Messages\Error.cs" />
+    <Compile Include="QL\SemanticAnalysis\Messages\Message.cs" />
+    <Compile Include="QL\SemanticAnalysis\Messages\Warning.cs" />
     <Compile Include="Value\BoolValue.cs" />
     <Compile Include="Value\DecimalValue.cs" />
     <Compile Include="Value\IntValue.cs" />
@@ -122,26 +128,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AST\ASTFactory.cs" />
-    <Compile Include="AST\Node.cs" />
-    <Compile Include="AST\Operators\Binary.cs" />
-    <Compile Include="AST\Operators\Unary.cs" />
-    <Compile Include="AST\ComputedQuestion.cs" />
-    <Compile Include="AST\Conditional.cs" />
-    <Compile Include="AST\Form.cs" />
-    <Compile Include="AST\Identifier.cs" />
-    <Compile Include="AST\Question.cs" />
-    <Compile Include="AST\ASTBuilder.cs" />
-    <Compile Include="AST\Literals\Boolean.cs" />
-    <Compile Include="AST\Literals\Money.cs" />
-    <Compile Include="AST\Literals\Number.cs" />
-    <Compile Include="AST\Literals\String.cs" />
-    <Compile Include="Generated\QLBaseListener.cs" />
-    <Compile Include="Generated\QLBaseVisitor.cs" />
-    <Compile Include="Generated\QLLexer.cs" />
-    <Compile Include="Generated\QLListener.cs" />
-    <Compile Include="Generated\QLParser.cs" />
-    <Compile Include="Generated\QLVisitor.cs" />
+    <Compile Include="QL\AST\ASTFactory.cs" />
+    <Compile Include="QL\AST\Node.cs" />
+    <Compile Include="QL\AST\Operators\Binary.cs" />
+    <Compile Include="QL\AST\Operators\Unary.cs" />
+    <Compile Include="QL\AST\ComputedQuestion.cs" />
+    <Compile Include="QL\AST\Conditional.cs" />
+    <Compile Include="QL\AST\Form.cs" />
+    <Compile Include="QL\AST\Identifier.cs" />
+    <Compile Include="QL\AST\Question.cs" />
+    <Compile Include="QL\AST\ASTBuilder.cs" />
+    <Compile Include="QL\AST\Literals\Boolean.cs" />
+    <Compile Include="QL\AST\Literals\Money.cs" />
+    <Compile Include="QL\AST\Literals\Number.cs" />
+    <Compile Include="QL\AST\Literals\String.cs" />
+    <Compile Include="QL\Generated\QLBaseListener.cs" />
+    <Compile Include="QL\Generated\QLBaseVisitor.cs" />
+    <Compile Include="QL\Generated\QLLexer.cs" />
+    <Compile Include="QL\Generated\QLListener.cs" />
+    <Compile Include="QL\Generated\QLParser.cs" />
+    <Compile Include="QL\Generated\QLVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,7 +165,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Antlr4 Include="Grammar\QL.g4">
+    <Antlr4 Include="QL\Grammar\QL.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>Questionnaires.Grammar</CustomToolNamespace>
     </Antlr4>
@@ -168,6 +174,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Antlr4 Include="QLS\Grammar\QLS.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>Questionnaires.QLS.Grammar</CustomToolNamespace>
+    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -175,7 +185,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\Grammar\QL.g4" -o "$(ProjectDir)\Generated"</PreBuildEvent>
+    <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\QL\Grammar\QL.g4" -o "$(ProjectDir)\QL\Generated"
+java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\QLS\Grammar\QLS.g4" -o "$(ProjectDir)\QLS\Generated"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

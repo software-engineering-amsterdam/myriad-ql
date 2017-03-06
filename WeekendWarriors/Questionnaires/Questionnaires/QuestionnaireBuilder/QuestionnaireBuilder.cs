@@ -1,17 +1,17 @@
-﻿using Questionnaires.AST.Visitor;
+﻿using Questionnaires.QL.AST.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.AST;
-using Questionnaires.AST.Operators;
+using Questionnaires.QL.AST;
+using Questionnaires.QL.AST.Operators;
 using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Value;
 using System.ComponentModel;
 
-namespace Questionnaires.QuestionaireBuilder
+namespace Questionnaires.QL.QuestionaireBuilder
 {
     class QuestionnaireBuilder 
     {        
@@ -73,12 +73,10 @@ namespace Questionnaires.QuestionaireBuilder
         
         public void Visit(AST.Question node, Func<bool> visibilityCondition)
         {
-            // Build a question object from the information in the AST node
-            var question = new Question.Question(node.Identifier, node.Body, node.Type);
             // Add the question to the renderer
-            Renderer.AddQuestion(question);
+            Renderer.AddQuestion(node);
             // And the variable store
-            VariableStore.SetValue(question.Name, question.Value);
+            VariableStore.SetValue(node.Identifier, node.Type);
 
             if(visibilityCondition != null)
             {
@@ -88,11 +86,11 @@ namespace Questionnaires.QuestionaireBuilder
                     {
                         if (visibilityCondition())
                         {
-                            renderer.SetVisibility(question.Name, true);
+                            renderer.SetVisibility(node.Identifier, true);
                         }
                         else
                         {
-                            renderer.SetVisibility(question.Name, false);
+                            renderer.SetVisibility(node.Identifier, false);
                         }
                     })
                 );

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.AST;
+using Questionnaires.QL.AST;
 
 namespace Tests.QL.AST
 {
@@ -35,7 +35,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<Questionnaires.AST.Literals.String>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.QL.AST.Literals.String>(testCase.Key).Value,
                     testCase.Key, testCase.Value
                 );
             }
@@ -53,7 +53,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<Questionnaires.AST.Literals.Boolean>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Boolean>(testCase.Key).Value,
                     Boolean.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -72,7 +72,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<Questionnaires.AST.Literals.Number>(testCase.Key).Value.ToString(),
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Number>(testCase.Key).Value.ToString(),
                     testCase.Key, testCase.Value
                 );
             }
@@ -91,7 +91,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<Questionnaires.AST.Literals.Money>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Money>(testCase.Key).Value,
                     Decimal.Parse(testCase.Key), testCase.Value
                 );
             }

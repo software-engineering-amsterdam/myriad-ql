@@ -1,4 +1,4 @@
-﻿using Questionnaires.AST;
+﻿using Questionnaires.QL.AST;
 using Questionnaires.Question;
 using Questionnaires.Renderer;
 using System;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Questionnaires.Value;
-using Questionnaires.QuestionaireBuilder;
+using Questionnaires.QL.QuestionaireBuilder;
 using System.Threading;
 
 namespace Questionnaires
@@ -32,7 +32,7 @@ namespace Questionnaires
         {
             Output.Text = "";
 
-            var astFactory = new AST.ASTFactory();
+            var astFactory = new QL.AST.ASTFactory();
             var form = astFactory.CreateForm(Input.Text);
             var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
             var analysisResult = semanticAnalyzer.AnalyzeForm(form);

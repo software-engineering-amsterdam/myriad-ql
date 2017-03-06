@@ -52,15 +52,15 @@ SingleLineComment: '//' ~('\r' | '\n')* -> skip;
 LiteralValue: 'money' | 'boolean' | 'string' | 'int';
 Type: 'spinbox' | 'slider' | 'text' | 'radio' | 'checkbox' | 'dropdown' ;
 Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
-
+Property: 'width' | 'font' | 'fontsize' | 'color' ;
 /**
  * Parser rules
  */
 stylesheet: 'stylesheet' Identifier '{' page* '}';
 page: 'page' Identifier '{' section* '}';
-section: 'section' Identifier '{' (question | default | section)* '}';
+section: 'section' Identifier '{' (question | defaultStyle | section)* '}';
 widgetQuestion: question '{' widget '}';
 widget: 'widget' Type;
 question: 'question' Identifier;
-default: 'default' LiteralValue '{' cssItem* widget '}';
+defaultStyle: 'default' LiteralValue '{' cssItem* widget '}';
 cssItem: Identifier ':' Identifier;

@@ -29,14 +29,14 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Show();
         }
 
-        public void AddQuestion(IQuestion question)
+        public void AddQuestion(QL.AST.Question question)
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-            var questionWidget = WidgetFactory.BuildWidget(question.Value, question.Name);
+            var questionWidget = WidgetFactory.BuildWidget(question.Type, question.Identifier);
             questionWidget.SetLabel(question.Body);
             questionWidget.SetOnInputChanged(inputChangedDelegate);
-            Questions.Add(question.Name, questionWidget);
+            Questions.Add(question.Identifier, questionWidget);
             QuestionnaireStack.Children.Add(questionWidget);
         }
 
