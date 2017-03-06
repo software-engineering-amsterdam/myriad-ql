@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -95,17 +95,6 @@ public partial class QLBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, I
 	/// <return>The visitor result.</return>
 	public virtual Result VisitComposite([NotNull] QLParser.CompositeContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Money</c>
-	/// labeled alternative in <see cref="QLParser.expression"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitMoney([NotNull] QLParser.MoneyContext context) { return VisitChildren(context); }
-	/// <summary>
 	/// Visit a parse tree produced by the <c>UnaryOp</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// <para>
@@ -117,7 +106,7 @@ public partial class QLBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, I
 	/// <return>The visitor result.</return>
 	public virtual Result VisitUnaryOp([NotNull] QLParser.UnaryOpContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Number</c>
+	/// Visit a parse tree produced by the <c>Parens</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -126,7 +115,7 @@ public partial class QLBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, I
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitNumber([NotNull] QLParser.NumberContext context) { return VisitChildren(context); }
+	public virtual Result VisitParens([NotNull] QLParser.ParensContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>Bool</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
@@ -139,7 +128,7 @@ public partial class QLBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, I
 	/// <return>The visitor result.</return>
 	public virtual Result VisitBool([NotNull] QLParser.BoolContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Parens</c>
+	/// Visit a parse tree produced by the <c>Money</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -148,7 +137,18 @@ public partial class QLBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, I
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitParens([NotNull] QLParser.ParensContext context) { return VisitChildren(context); }
+	public virtual Result VisitMoney([NotNull] QLParser.MoneyContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>Number</c>
+	/// labeled alternative in <see cref="QLParser.expression"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitNumber([NotNull] QLParser.NumberContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>String</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.

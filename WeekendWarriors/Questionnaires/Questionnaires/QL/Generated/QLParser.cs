@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -467,20 +467,23 @@ public partial class QLParser : Parser {
 			base.CopyFrom(context);
 		}
 	}
-	public partial class MoneyContext : ExpressionContext {
-		public ITerminalNode MoneyLiteral() { return GetToken(QLParser.MoneyLiteral, 0); }
-		public MoneyContext(ExpressionContext context) { CopyFrom(context); }
+	public partial class ParensContext : ExpressionContext {
+		public IToken op;
+		public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public ParensContext(ExpressionContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
 			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.EnterMoney(this);
+			if (typedListener != null) typedListener.EnterParens(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.ExitMoney(this);
+			if (typedListener != null) typedListener.ExitParens(this);
 		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQLVisitor<TResult> typedVisitor = visitor as IQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitMoney(this);
+			if (typedVisitor != null) return typedVisitor.VisitParens(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -504,23 +507,6 @@ public partial class QLParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
-	public partial class NumberContext : ExpressionContext {
-		public ITerminalNode NumberLiteral() { return GetToken(QLParser.NumberLiteral, 0); }
-		public NumberContext(ExpressionContext context) { CopyFrom(context); }
-		public override void EnterRule(IParseTreeListener listener) {
-			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.EnterNumber(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.ExitNumber(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IQLVisitor<TResult> typedVisitor = visitor as IQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitNumber(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 	public partial class BoolContext : ExpressionContext {
 		public ITerminalNode BooleanLiteral() { return GetToken(QLParser.BooleanLiteral, 0); }
 		public BoolContext(ExpressionContext context) { CopyFrom(context); }
@@ -538,23 +524,20 @@ public partial class QLParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
-	public partial class ParensContext : ExpressionContext {
-		public IToken op;
-		public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		public ParensContext(ExpressionContext context) { CopyFrom(context); }
+	public partial class MoneyContext : ExpressionContext {
+		public ITerminalNode MoneyLiteral() { return GetToken(QLParser.MoneyLiteral, 0); }
+		public MoneyContext(ExpressionContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
 			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.EnterParens(this);
+			if (typedListener != null) typedListener.EnterMoney(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IQLListener typedListener = listener as IQLListener;
-			if (typedListener != null) typedListener.ExitParens(this);
+			if (typedListener != null) typedListener.ExitMoney(this);
 		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQLVisitor<TResult> typedVisitor = visitor as IQLVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitParens(this);
+			if (typedVisitor != null) return typedVisitor.VisitMoney(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -572,6 +555,23 @@ public partial class QLParser : Parser {
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IQLVisitor<TResult> typedVisitor = visitor as IQLVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitString(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class NumberContext : ExpressionContext {
+		public ITerminalNode NumberLiteral() { return GetToken(QLParser.NumberLiteral, 0); }
+		public NumberContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IQLListener typedListener = listener as IQLListener;
+			if (typedListener != null) typedListener.EnterNumber(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IQLListener typedListener = listener as IQLListener;
+			if (typedListener != null) typedListener.ExitNumber(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IQLVisitor<TResult> typedVisitor = visitor as IQLVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNumber(this);
 			else return visitor.VisitChildren(this);
 		}
 	}

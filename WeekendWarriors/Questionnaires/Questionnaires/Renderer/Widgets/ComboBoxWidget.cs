@@ -5,23 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class NumberPickerWidget : QuestionWidget
+    class ComboBoxWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private IntegerUpDown QuestionInputWidget = new IntegerUpDown();
+        private ComboBox QuestionInputWidget = new ComboBox();
 
-        public NumberPickerWidget(string name)
+        public ComboBoxWidget(string name)
             : base()
         {
             QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
+
+            List<ComboBoxItem> ListData = new List<ComboBoxItem>();
+            ListData.Add(new ComboBoxItem() { Content = "Yes" });
+            ListData.Add(new ComboBoxItem() { Content = "No" });
+            
+            QuestionInputWidget.ItemsSource = ListData;
+            QuestionInputWidget.DisplayMemberPath = "Content";
+            QuestionInputWidget.SelectedValuePath = "Content";
+
+            QuestionInputWidget.SelectedValue = "No";
         }
 
         public override void SetLabel(string text)
@@ -34,9 +43,16 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(IntegerType value)
+        public void SetQuestionValue(BooleanType value)
         {
-            QuestionInputWidget.Text = value.GetValue().ToString();
+            if (value.GetValue())
+            {
+                QuestionInputWidget.SelectedValue = "Yes";
+            }
+            else
+            {
+                QuestionInputWidget.SelectedValue = "No";
+            }
         }
 
         public override void SetVisibility(bool visible)
@@ -53,7 +69,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntegerType(QuestionInputWidget.Value.Value));
+            QuestionInputWidget.SelectionChanged += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType((String)QuestionInputWidget.SelectedValue == "Yes" ? true : false));
         }
     }
 }

@@ -9,19 +9,22 @@ using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class NumberPickerWidget : QuestionWidget
+    class SliderWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private IntegerUpDown QuestionInputWidget = new IntegerUpDown();
+        private Slider QuestionInputWidget = new Slider();
 
-        public NumberPickerWidget(string name)
+        public SliderWidget(string name)
             : base()
         {
             QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
+
+            QuestionInputWidget.Maximum = Double.MaxValue;
+            QuestionInputWidget.Minimum = Double.MinValue;
         }
 
         public override void SetLabel(string text)
@@ -34,9 +37,9 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(IntegerType value)
+        public void SetQuestionValue(MoneyType value)
         {
-            QuestionInputWidget.Text = value.GetValue().ToString();
+            QuestionInputWidget.Value = (double)value.GetValue();
         }
 
         public override void SetVisibility(bool visible)
@@ -53,7 +56,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntegerType(QuestionInputWidget.Value.Value));
+            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType((decimal)QuestionInputWidget.Value));
         }
     }
 }

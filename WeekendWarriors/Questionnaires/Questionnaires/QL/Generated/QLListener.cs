@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -92,18 +92,6 @@ public interface IQLListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitComposite([NotNull] QLParser.CompositeContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>Money</c>
-	/// labeled alternative in <see cref="QLParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterMoney([NotNull] QLParser.MoneyContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>Money</c>
-	/// labeled alternative in <see cref="QLParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitMoney([NotNull] QLParser.MoneyContext context);
-	/// <summary>
 	/// Enter a parse tree produced by the <c>UnaryOp</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
@@ -116,17 +104,17 @@ public interface IQLListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitUnaryOp([NotNull] QLParser.UnaryOpContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>Number</c>
+	/// Enter a parse tree produced by the <c>Parens</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterNumber([NotNull] QLParser.NumberContext context);
+	void EnterParens([NotNull] QLParser.ParensContext context);
 	/// <summary>
-	/// Exit a parse tree produced by the <c>Number</c>
+	/// Exit a parse tree produced by the <c>Parens</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitNumber([NotNull] QLParser.NumberContext context);
+	void ExitParens([NotNull] QLParser.ParensContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>Bool</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
@@ -140,17 +128,29 @@ public interface IQLListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitBool([NotNull] QLParser.BoolContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>Parens</c>
+	/// Enter a parse tree produced by the <c>Money</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterParens([NotNull] QLParser.ParensContext context);
+	void EnterMoney([NotNull] QLParser.MoneyContext context);
 	/// <summary>
-	/// Exit a parse tree produced by the <c>Parens</c>
+	/// Exit a parse tree produced by the <c>Money</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitParens([NotNull] QLParser.ParensContext context);
+	void ExitMoney([NotNull] QLParser.MoneyContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>Number</c>
+	/// labeled alternative in <see cref="QLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNumber([NotNull] QLParser.NumberContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>Number</c>
+	/// labeled alternative in <see cref="QLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNumber([NotNull] QLParser.NumberContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>String</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.

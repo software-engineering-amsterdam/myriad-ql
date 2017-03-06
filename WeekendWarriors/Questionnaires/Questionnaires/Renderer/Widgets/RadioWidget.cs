@@ -5,23 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class NumberPickerWidget : QuestionWidget
+    class RadioWidget : QuestionWidget
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private IntegerUpDown QuestionInputWidget = new IntegerUpDown();
+        private RadioButton FirstQuestionInputWidget = new RadioButton();
+        private RadioButton SecondQuestionInputWidget = new RadioButton();
 
-        public NumberPickerWidget(string name)
+        public RadioWidget(string name)
             : base()
         {
             QuestionName = name;
             Orientation = Orientation.Horizontal;
+
+            FirstQuestionInputWidget.Content = "Yes";
+            SecondQuestionInputWidget.Content = "No";
+
             Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
+            Children.Add(FirstQuestionInputWidget);
+            Children.Add(SecondQuestionInputWidget);
+
+            SecondQuestionInputWidget.IsChecked = true;
         }
 
         public override void SetLabel(string text)
@@ -34,9 +41,16 @@ namespace Questionnaires.Renderer.Widgets
             SetQuestionValue((dynamic)value);
         }
 
-        public void SetQuestionValue(IntegerType value)
+        public void SetQuestionValue(BooleanType value)
         {
-            QuestionInputWidget.Text = value.GetValue().ToString();
+            if (value.GetValue())
+            {
+                FirstQuestionInputWidget.IsChecked = true;
+            }
+            else
+            {
+                SecondQuestionInputWidget.IsChecked = true;
+            }
         }
 
         public override void SetVisibility(bool visible)
@@ -53,7 +67,8 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new IntegerType(QuestionInputWidget.Value.Value));
+            FirstQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(true));
+            SecondQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(false));
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
 {
@@ -12,7 +13,7 @@ namespace Questionnaires.Renderer.Widgets
     {
         private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
-        private TextBox QuestionInputWidget = new TextBox();
+        private DecimalUpDown QuestionInputWidget = new DecimalUpDown();
 
         public DecimalPickerWidget(string name)
             : base()
@@ -52,7 +53,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType(decimal.Parse(QuestionInputWidget.Text)));
+            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType(QuestionInputWidget.Value.Value));
         }
     }
 }

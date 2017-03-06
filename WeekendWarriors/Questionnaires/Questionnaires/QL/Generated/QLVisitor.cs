@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:\Users\Boukr\Documents\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
+// Generated from F:\SoftwareConstruction\myriad-ql\WeekendWarriors\Questionnaires\Questionnaires\\QL\Grammar\QL.g4 by ANTLR 4.6
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -69,13 +69,6 @@ public interface IQLVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitComposite([NotNull] QLParser.CompositeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Money</c>
-	/// labeled alternative in <see cref="QLParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMoney([NotNull] QLParser.MoneyContext context);
-	/// <summary>
 	/// Visit a parse tree produced by the <c>UnaryOp</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
@@ -83,12 +76,12 @@ public interface IQLVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitUnaryOp([NotNull] QLParser.UnaryOpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Number</c>
+	/// Visit a parse tree produced by the <c>Parens</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitNumber([NotNull] QLParser.NumberContext context);
+	Result VisitParens([NotNull] QLParser.ParensContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>Bool</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
@@ -97,12 +90,19 @@ public interface IQLVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitBool([NotNull] QLParser.BoolContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Parens</c>
+	/// Visit a parse tree produced by the <c>Money</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitParens([NotNull] QLParser.ParensContext context);
+	Result VisitMoney([NotNull] QLParser.MoneyContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>Number</c>
+	/// labeled alternative in <see cref="QLParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNumber([NotNull] QLParser.NumberContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>String</c>
 	/// labeled alternative in <see cref="QLParser.expression"/>.
