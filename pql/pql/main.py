@@ -6,7 +6,7 @@ from os.path import join
 
 from PyQt5.QtWidgets import QApplication
 
-
+from pql.builder.gui import Gui
 from pql.evaluator.evaluator import Evaluator
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import TypeChecker
@@ -23,10 +23,6 @@ def open_file(path):
         print("The given file could not be found. Usage: python pql.py %s" % PATH_EXAMPLE)
         exit(1)
 
-
-def main(sys_args):
-    ql_str = acquire_text(sys_args)
-    ql(ql_str)
 
 
 def print_result(main_message, error_list, exit_code):
@@ -69,14 +65,15 @@ def check_type(ql_ast, ql_identifier_check_result):
 
 
 def evaluate(ql_ast, ql_identifier_check_result):
-    def strip_keys_from_dict(ql_identifier_check_result):
-        dict_ = dict()
-        for key in ql_identifier_check_result.keys():
-            dict_[key] = None
-        return dict_
-
     eval = Evaluator(strip_keys_from_dict(ql_identifier_check_result))
     return eval.visit(ql_ast)
+
+
+def strip_keys_from_dict(ql_identifier_check_result):
+    dict_ = dict()
+    for key in ql_identifier_check_result.keys():
+        dict_[key] = None
+    return dict_
 
 
 def ql(ql_str):
@@ -95,9 +92,13 @@ def ql(ql_str):
     return evaluate(ql_ast, ql_identifier_check_result)
 
 if __name__ == '__main__':
-    main(argv)
-
+    ql_str = acquire_text(argv)
+    ql_ast = parse(ql_str)
+    if ql_ast is None:
+        exit(4)
+    ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
+    environment = strip_keys_from_dict(ql_identifier_check_result)
     app = QApplication(argv)
-    wiz = QuestionairWizard()
+    gui = Gui(environment, ql_ast)
 
     exit(app.exec_())
