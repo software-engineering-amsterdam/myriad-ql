@@ -1,5 +1,7 @@
 package org.uva.taxfree.model.node.expression;
 
+import java.util.List;
+
 public abstract class ExpressionNode extends ConditionNode {
     private final ConditionNode mLeft;
     private final String mOperator;
@@ -16,4 +18,9 @@ public abstract class ExpressionNode extends ConditionNode {
         return "(" + mLeft.resolveValue() + mOperator + mRight.resolveValue() + ")";
     }
 
+    @Override
+    public void addUsedVariables(List<String> list) {
+        mLeft.addUsedVariables(list);
+        mRight.addUsedVariables(list);
+    }
 }

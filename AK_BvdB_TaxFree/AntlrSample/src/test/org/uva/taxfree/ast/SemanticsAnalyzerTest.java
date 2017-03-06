@@ -63,13 +63,28 @@ public class SemanticsAnalyzerTest {
     }
 
     @Test
+    void testCyclicDependencyCalculation() throws Exception {
+        assertSemantics("cyclicDependencyCalculation.txt", 1, "Cyclic dependency in calculation");
+    }
+
+    @Test
+    void testCyclicDependencyCalculations() throws Exception {
+        assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculations");
+    }
+
+    @Test
     void testCyclicDependency() throws Exception {
-        assertSemantics("cyclicDependencyCalculations.txt", 1, "Cyclic dependency in calculation");
+        assertSemantics("invalidDelegatedCalculations.txt", 5, "Substitution of variables should not trigger errors");
+    }
+    @Test
+    void testCyclicDependencyComposed() throws Exception {
+        assertSemantics("invalidDelegatedComposedCalculations.txt", 5, "Composition should work");
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
+        boolean expectedValid = 0 == expectedErrorAmount;
         SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Expecting errors: " + description);
+        Assert.assertEquals(semanticsAnalyzer.validSemantics(), expectedValid, "Expecting errors: " + description);
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
     }
 
@@ -79,7 +94,7 @@ public class SemanticsAnalyzerTest {
     }
 
     private File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticsCheckerTestInput\\" + fileName);
     }
 
 }

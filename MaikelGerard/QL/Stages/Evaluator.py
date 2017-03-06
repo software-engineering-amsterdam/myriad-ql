@@ -1,5 +1,10 @@
 from QL.Undefined import Undefined
 
+# TODO: Add lambda functions to prevent duplication Undefined code.
+# TODO: Split evaluator in multiple evaluators to split concerns.
+# TODO: Create expression evaluator to ensure correct order.
+# TODO: Remove context, remove error handler.
+
 
 class Evaluate(object):
     def __init__(self, ast, env, error_handler):
