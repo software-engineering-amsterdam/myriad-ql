@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from appJar import gui
 from collections import OrderedDict
-from QL.Undefined import Undefined
 import json
 
 
@@ -14,42 +13,7 @@ class FormGUI(object):
         self.add_header()
         self.redraw_function = None
 
-        self.questions = OrderedDict()
-
-    def get_question_functions(self, identifier):
-        return self.questions[identifier]
-
-    def show_question(self, identifier, value):
-        (get_func, set_func, show_func, hide_func) = \
-            self.get_question_functions(identifier)
-        self.main.showLabel(identifier)
-        show_func(identifier)
-        set_func(identifier, value)
-
-    def hide_question(self, identifier):
-        (get_func, set_func, show_func, hide_func) = \
-            self.get_question_functions(identifier)
-        self.main.hideLabel(identifier)
-        hide_func(identifier)
-
-    def show_computed(self, identifier, value):
-        self.main.showLabel(identifier)
-        self.main.showLabel("@computed_" + identifier)
-        self.main.setLabel(identifier, value)
-
-    def hide_computed(self, identifier):
-        self.main.hideLabel(identifier)
-        self.main.hideLabel("@computed_" + identifier)
-
-    def get_set_function(self, identifier):
-        (get_func, set_func, show_func, hide_func) = \
-            self.get_question_functions(identifier)
-        return set_func
-
-    def get_get_function(self, identifier):
-        (get_func, set_func, show_func, hide_func) = \
-            self.get_question_functions(identifier)
-        return get_func
+        self.widgets = OrderedDict()
 
     def start(self):
         self.add_buttons()
@@ -64,96 +28,28 @@ class FormGUI(object):
         self.main.addLabel("header", "Please fill in the form!", self.row, 0, 2)
         self.row += 1
 
-    def add_entry_question(self, identifier, question, value):
-        # Add the question fields and add a change listener.
-        self.main.addLabel(identifier, question, row=self.row, column=0)
-        self.main.addEntry(identifier, row=self.row, column=1)
-        self.add_listener(self.main.getEntryWidget(identifier))
-
-        # Set the entry's value and save the retrieval method.
-        self.main.setEntry(identifier, value)
-        self.questions[identifier] = (self.main.getEntry, self.main.setEntry,
-                                      self.main.showEntry, self.main.hideEntry)
+    def add_widget(self, widget_class, identifier, question):
+        new_widget = widget_class(self, identifier, question, self.row)
+        self.widgets[identifier] = new_widget
         self.row += 1
 
-    def add_numeric_entry_question(self, identifier, question, value):
-        # Add the question fields and add a change listener.
-        self.main.addLabel(identifier, question, row=self.row, column=0)
-        self.main.addNumericEntry(identifier, row=self.row, column=1)
-        self.add_listener(self.main.getEntryWidget(identifier))
+    def hide_widget(self, identifier):
+        self.widgets[identifier].hide()
 
-        # Unsupported by AppJar; do not return NumericEntry value as float.
-        entry = self.main._gui__verifyItem(self.main.n_entries, identifier)
-        entry.isNumeric = False
+    def show_widget(self, identifier):
+        self.widgets[identifier].show()
 
-        # Set the entry's value and save the retrieval method.
-        self.main.setEntry(identifier, value)
-        self.questions[identifier] = (self.main.getEntry, self.main.setEntry,
-                                      self.main.showEntry, self.main.hideEntry)
-        self.row += 1
+    def get_widget_val(self, identifier):
+        return self.widgets[identifier].get_entry()
 
-    def add_datepicker_question(self, identifier, question, value):
-        pass
-
-    def add_spinbox_question(self, identifier, question, value):
-        # Add the question fields and add a change listener.
-        self.main.addLabel(identifier, question, row=self.row, column=0)
-        self.main.addSpinBoxRange(identifier, 0, 100000, row=self.row, column=1)
-        self.add_listener(self.main.getSpinBoxWidget(identifier))
-
-        # Set the entry's value and save the retrieval method.
-        self.main.setSpinBox(identifier, value)
-        self.questions[identifier] = (
-            self.main.getSpinBox, self.main.setSpinBox,
-            self.main.showSpinBox, self.main.hideSpinBox
-        )
-
-        self.row += 1
-
-    def add_checkbox_question(self, identifier, question, value):
-        # Add the question fields; change the checkbox text to 'Yes'.
-        self.main.addLabel(identifier, question, row=self.row, column=0)
-        self.main.addCheckBox(identifier, row=self.row, column=1)
-        self.main.getCheckBoxWidget(identifier).config(text="Yes")
-        self.add_listener(self.main.getCheckBoxWidget(identifier))
-
-        # Set the entry's value and save the retrieval method.
-        self.main.setCheckBox(identifier, ticked=value)
-        self.questions[identifier] = (
-            self.main.getCheckBox, self.main.setCheckBox,
-            self.main.showCheckBox, self.main.hideCheckBox
-        )
-        self.row += 1
-
-    def add_radiobutton_question(self, identifier, question, value):
-        pass
-
-    def add_computed_question(self, identifier, question, value):
-        computed_id = "@computed_" + identifier
-        self.main.addLabel(computed_id, question, row=self.row, column=0)
-        self.main.addLabel(identifier, row=self.row, column=1)
-        self.add_listener(self.main.getLabelWidget(identifier))
-
-        # Set the entry's value and save the retrieval method.
-        if value == Undefined:
-            value = "@undefined"
-        self.main.setLabel(identifier, value)
-        self.questions[identifier] = (self.main.getLabel, self.main.setLabel,
-                                      self.main.showLabel, self.main.hideLabel)
-        self.row += 1
-
-    def add_listener(self, tkinter_obj):
-        tkinter_obj.bind("<FocusOut>", self.force_redraw)
-        # tkinter_obj.bind("<Key>", self.force_redraw)
-        tkinter_obj.bind("<ButtonRelease-1>", self.force_redraw)
+    def set_widget_val(self, identifier, value):
+        self.widgets[identifier].set_entry(value)
 
     def get_question_values(self):
-        question_values = OrderedDict()
-        for question in self.questions:
-            get_data_func = self.get_get_function(question)
-            question_value = get_data_func(question)
-            question_values[question] = question_value
-        return question_values
+        widget_values = OrderedDict()
+        for identifier in self.widgets:
+            widget_values[identifier] = self.get_widget_val(identifier)
+        return widget_values
 
     def force_redraw(self, _):
         assert self.redraw_function is not None, \
@@ -169,12 +65,6 @@ class FormGUI(object):
             self.main.stop()
 
     def save_data(self):
-        json_dict = OrderedDict()
-        for question in self.questions:
-            get_value = self.get_get_function(question)
-            value = get_value(question)
-            json_dict[question] = value
-
-        # TODO: Add flag where to save.
+        json_dict = self.get_question_values()
         with open("./form_output.txt", "w+") as form_output:
             json.dump(json_dict, form_output, indent=4)

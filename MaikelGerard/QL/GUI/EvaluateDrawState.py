@@ -54,20 +54,22 @@ class EvaluateDrawState(object):
     def question_node(self, question_node):
         identifier = question_node.get_identifier()
         if not self.is_shown():
-            self.form_gui.hide_question(identifier)
+            self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
             if value == Undefined:
-                value = question_node.get_default_val()
-            self.form_gui.show_question(identifier, value)
+                value = ''
+            self.form_gui.show_widget(identifier)
+            self.form_gui.set_widget_val(identifier, value)
 
     def comp_question_node(self, comp_question_node):
         identifier = comp_question_node.get_identifier()
         if not self.is_shown():
-            self.form_gui.hide_computed(identifier)
+            self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
             if value != Undefined:
-                self.form_gui.show_computed(identifier, value)
+                self.form_gui.set_widget_val(identifier, value)
+                self.form_gui.show_widget(identifier)
             else:
-                self.form_gui.hide_computed(identifier)
+                self.form_gui.hide_widget(identifier)

@@ -1,6 +1,5 @@
 from QL.GUI.FormGUI import FormGUI
-from QL.Undefined import Undefined
-from QL.AST import BoolTypeNode
+import QL.GUI.Widgets as Widgets
 
 
 class InitGUI(object):
@@ -39,41 +38,35 @@ class InitGUI(object):
         if_else_node.else_block.accept(self)
 
     def question_node(self, question_node):
-        identifier = question_node.name.val
-        question_str = question_node.question.val
-
-        # Value is always undefined, we evaluate the boolean question to False
-        # as it is not logical to expect a user to check a checkbox to un-check
-        # to get a defined checkbox value.
-        if question_node.type == BoolTypeNode():
-            question_node.is_defined = True
-        var_value = question_node.get_default_val()
+        identifier = question_node.get_identifier()
+        question_str = question_node.get_question()
 
         # Visit the type node to get the draw function to use.
-        draw_function = question_node.type.accept(self)
-        draw_function(identifier, question_str, var_value)
+        widget_class = question_node.type.accept(self)
+        self.gui.add_widget(widget_class, identifier, question_str)
 
     def comp_question_node(self, comp_question):
-        identifier = comp_question.name.val
-        question_str = comp_question.question.val
+        identifier = comp_question.get_identifier()
+        question_str = comp_question.get_question()
 
         # Draw the value of the computed question within a label.
-        self.gui.add_computed_question(identifier, question_str, Undefined)
+        widget_class = Widgets.ComputedLabelWidget
+        self.gui.add_widget(widget_class, identifier, question_str)
 
     def bool_type_node(self, _):
-        return self.gui.add_checkbox_question
+        return Widgets.CheckBoxWidget
 
     def int_type_node(self, _):
-        return self.gui.add_spinbox_question
+        return Widgets.SpinBoxWidget
 
     def money_type_node(self, _):
-        return self.gui.add_numeric_entry_question
+        return Widgets.NumericWidget
 
     def decimal_type_node(self, _):
-        return self.gui.add_numeric_entry_question
+        return Widgets.NumericWidget
 
     def string_type_node(self, _):
-        return self.gui.add_entry_question
+        return Widgets.EntryWidget
 
-    def date_type_node(self, _):
-        return self.gui.add_datepicker_question
+#    def date_type_node(self, _):
+#        return self.gui.add_datepicker_question

@@ -16,10 +16,11 @@ import sc.ql.antlr.QLLexer;
 import sc.ql.antlr.QLParser;
 import sc.ql.ast.AstVisitor;
 import sc.ql.checkform.CheckForm;
-import sc.ql.model.Atom;
+import sc.ql.model.atoms.Atom;
+import sc.ql.model.atoms.AtomId;
 import sc.ql.model.Form;
 import sc.ql.model.form_elements.Question;
-import sc.ql.model.Expressions.Expression;
+import sc.ql.model.expressions.Expression;
 
 public class ModelTest {
 
@@ -38,8 +39,8 @@ public class ModelTest {
 	public void QuestionTest() throws Exception{
 		//setup
 		String vraag			= "This is a question";
-		Atom<String> id 		= new Atom<String>(Atom.Type.ID, "buyingPrice");
-		Atom.Type type 			= Atom.Type.MONEY;
+		AtomId id 				= new AtomId("buyingPrice");
+		Question.Type type 		= Question.Type.MONEY;
 		Expression expression	= (Expression) null;
 		Integer getal			= 1;
 		Question questoin = new Question(vraag, id, type, expression, getal);
@@ -53,7 +54,7 @@ public class ModelTest {
        	System.out.println(questoin.getLineNumber());
 		Assert.assertEquals("This is a question", questoin.getQuestion());
 		Assert.assertEquals("buyingPrice", questoin.getId().getValue());
-		Assert.assertEquals(Atom.Type.MONEY, questoin.getType());
+		Assert.assertEquals(Question.Type.MONEY, questoin.getType());
 		Assert.assertEquals((Integer) 1, questoin.getLineNumber());
 	}
 

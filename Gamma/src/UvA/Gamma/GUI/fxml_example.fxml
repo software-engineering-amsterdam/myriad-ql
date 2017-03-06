@@ -1,0 +1,21 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane
+        fx:id="grid"
+        fx:controller="UvA.Gamma.GUI.FXMLExampleController"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="15" vgap="8"
+          styleClass="root">
+    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+    <Text id="welcome-text" text="Welcome"
+          GridPane.columnIndex="0" GridPane.rowIndex="0"
+          GridPane.columnSpan="2"/>
+    <TextField
+            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+</GridPane>

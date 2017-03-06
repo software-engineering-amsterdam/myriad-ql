@@ -7,7 +7,7 @@ import java.util.List;
 import sc.ql.model.form_elements.*;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
-import sc.ql.model.Atoms.AtomId;
+import sc.ql.model.atoms.AtomId;
 
 public class CheckForm {
 	public CheckForm(Form form) throws Exception {

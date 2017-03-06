@@ -11,8 +11,8 @@ from QL.Stages.TypeChecker import TypeChecker
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print "Invalid amount of parameters, usage:"
-        print "python StartQuestionnaire.py [QL FILEPATH]"
+        print("Invalid amount of parameters, usage:")
+        print("python StartQuestionnaire.py [QL FILEPATH]")
         sys.exit()
 
     # Read the contents of the questionnaire source file.
@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     # Parse the questionnaire into an AST.
     parsedAST = QuestionnaireParser().parse(file_contents)
-    print (parsedAST)
+    print(parsedAST)
 
     # Create an error handler and environment.
     error_handler = ErrorHandler()
