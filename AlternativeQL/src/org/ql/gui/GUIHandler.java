@@ -2,14 +2,12 @@ package org.ql.gui;
 
 import javafx.stage.Stage;
 import org.ql.ast.Form;
-import org.ql.evaluator.ValueTable;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.visitor.QuestionValueVisitor;
 import org.ql.gui.elements.visitor.BranchVisitor;
 
 import java.util.List;
 
-// TODO: Only the GUI related stuff should be here (extract main start/load application from this class)
 public class GUIHandler {
 
     private final MainStage mainstage;
@@ -28,17 +26,7 @@ public class GUIHandler {
     }
 
     public void runGUI(Form form) {
-        ValueTable valueTable = new ValueTable();
-
-        while (true) {
-            ValueTable currentVT = valueTable.copy();
-            questionValueVisitor.visitForm(form, valueTable);
-            if (currentVT.equals(valueTable)) {
-                break;
-            }
-        }
-
-        List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
+        List<QuestionElement> visibleElements = branchVisitor.visitForm(form, questionValueVisitor.makeValueTable(form));
 
         System.out.println(visibleElements.size());
         for(QuestionElement questionElement : visibleElements) {

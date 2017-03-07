@@ -21,6 +21,20 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
         evaluator = new Evaluator();
     }
 
+    public ValueTable makeValueTable(Form form) {
+        ValueTable valueTable = new ValueTable();
+
+        while (true) {
+            ValueTable oldValueTable = valueTable.copy();
+            this.visitForm(form, valueTable);
+            if (oldValueTable.equals(valueTable)) {
+                break;
+            }
+        }
+
+        return valueTable;
+    }
+
     @Override
     public Void visitForm(Form form, ValueTable valueTable) {
         for (Statement statement : form.getStatements()) {

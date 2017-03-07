@@ -1,6 +1,7 @@
 package org.ql.gui.elements;
 
 import org.ql.ast.statement.Question;
+import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.widgets.Widget;
 
@@ -11,8 +12,9 @@ public class QuestionElement {
     private Value value;
     private boolean isDirty = false;
 
-    public QuestionElement(Question question, Widget widget) {
+    public QuestionElement(Question question, Value value, Widget widget) {
         this.question = question;
+        this.value = value;
         this.widget = widget;
     }
 
