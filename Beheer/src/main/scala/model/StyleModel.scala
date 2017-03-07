@@ -10,11 +10,13 @@ class StyleModel(stylesheet: Stylesheet) {
   private def extractDefaultStyles(page: Page): Seq[DefaultStyle] = page match {
     case Page(_, sections, default) => default ++ extractDefaultStyles(sections)
   }
+
   private def extractDefaultStyles(blocks: Seq[Block]): Seq[DefaultStyle] =
     blocks.flatMap(b => extractDefaultStyles(b))
+
   private def extractDefaultStyles(block: Block): Seq[DefaultStyle] = block match {
     case Section(_, sections, default) => default ++ extractDefaultStyles(sections)
-    case _: Question => Nil
+    case _: QuestionStyle => Nil
   }
 
   private def extractQuestionStyles(blocks: Seq[Block]): Seq[QuestionStyle] =
