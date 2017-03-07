@@ -2,6 +2,7 @@ package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.types.Type;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -29,13 +30,17 @@ public class SymbolTable {
         mUsedVariables.add(variableName);
     }
 
-    public String resolve(String variableId) {
+    public String resolveValue(String variableId) {
         for (NamedNode n : mDeclarations) {
             if (variableId.equals(n.getId())) {
                 return (n.resolveValue());
             }
         }
         throw new RuntimeException("Unable to resolveValue id: " + variableId);
+    }
+
+    public Type resolveType(String varialbeId) {
+        return varialbeId.getType();
     }
 
     public void getDuplicateLabelErrors(MessageList messageList) {
