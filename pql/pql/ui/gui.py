@@ -39,6 +39,7 @@ class Gui(FormVisitor, TypeVisitor):
             page.setParent(self.ql_wizard)
             self.ql_wizard.add_page(page)
             del page
+        self.trigger_conditional_if()
         return self.ql_wizard
 
     def form(self, node):
