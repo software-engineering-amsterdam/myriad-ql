@@ -20,8 +20,7 @@ public class Form extends Node {
 		this.block = block;
 	}
 
-	@Override
-	public void accept(Visitor v) {
+	public void accept(FormVisitor v) {
 		v.visit(this);
 	}
 	

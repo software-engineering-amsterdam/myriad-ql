@@ -1,10 +1,10 @@
 package ui;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import QL.Warning;
 import ast.Form;
+import evaluation.Environment;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,50 +21,40 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import ui.field.Field;
 import value.Value;
 
-public class Questionnaire extends Application {
-	// TODO make Notifier an inner class or add extra environment
+public class Questionnaire extends Application implements Notifier {
 	
 	// TODO do not make static
 	private static Form form;
-	private static Map<String, Value> answers;
+	private static evaluation.Environment env; // TODO rename
 	private static GridPane grid;
-	
-	public class Notifier {
+	private static List<Warning> warnings;
 
-		// TODO change to already implemented observer pattern
-		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = answers.get(name); 
-			if (oldAnswer == null || !newValue.getValue().equals(oldAnswer.getValue())) {
-				answers.put(name, newValue);
-				// Save the title
-				Node title = grid.getChildren().get(0);
-		    	grid.getChildren().clear();
-		    	grid.add(title, 0, 0);
-		        renderQuestionnaire(grid);
-			}
-		}
-	}
 	
-    public void main(Form f) {
+    public void main(Form f, Environment environment, List<Warning> w) {
     	form = f;
-    	answers = new HashMap<>();
+    	env = environment;
+    	warnings = w;
+
         launch();
     }
         
     @Override
     public void start(Stage primaryStage) {
        
+    	if (!warnings.isEmpty()) {
+    		WarningDialog dialog = new WarningDialog(warnings);
+    		dialog.show();
+    		return;
+    	}
+
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
         
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
-             
-        renderTitle(grid, form.getId());
         
         renderQuestionnaire(grid);
         
@@ -85,23 +74,24 @@ public class Questionnaire extends Application {
     }
     
     
-    private void setAnswers(List<QuestionnaireQuestion> activeQuestions) {
+    private void setAnswers(List<Row> activeQuestions) {
     	
     	// TODO change
-    	for (QuestionnaireQuestion question : activeQuestions) {
+    	for (Row question : activeQuestions) {
     		
-    		Value value = answers.get(question.getName());
+    		Value value = env.getAnswer(question.getName());
     		if (value == null) {
     			continue;
     		}
-    		
     		question.setAnswer(value);
     	}
     }
     
     private void renderQuestionnaire(GridPane grid) {
+    	
+        renderTitle(grid, form.getId());
         
-    	List<QuestionnaireQuestion> activeQuestions = renderQuestions(grid);
+    	List<Row> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -115,15 +105,14 @@ public class Questionnaire extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (QuestionnaireQuestion activeQuestion : activeQuestions) {
+            	for (Row activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
-            		if (answer.getValue() == null) {
+            		if (!answer.isSet()) {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please Fill in all Fields");
                         return;
             		}
-            		System.out.println(activeQuestion.getAnswer().getValue());
     
             	}  
                 actiontarget.setFill(Color.SPRINGGREEN);
@@ -141,21 +130,20 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QuestionnaireQuestion> renderQuestions(GridPane grid) {
+    private List<Row> renderQuestions(GridPane grid) {
         
-    	QuestionnaireVisitor qVisitor = new QuestionnaireVisitor(answers);
+    	QEvaluator qVisitor = new QEvaluator(env);
     	qVisitor.visit(form);
-    	List<QuestionnaireQuestion> activeQuestions = qVisitor.getActiveQuestions();
+    	List<Row> activeQuestions = qVisitor.getActiveQuestions();
     	
-    	int rowIndex = 0;
-        for (QuestionnaireQuestion question : activeQuestions) {
+    	int rowIndex = 1;
+        for (Row question : activeQuestions) {
             
         	Label questionLabel = new Label(question.getLabel());
-            grid.add(questionLabel, 0, 1 + rowIndex); 
-            Field field = question.getEntryField().getField();
-            grid.add((Control) question.getEntryField().getField(), 1, 1 + rowIndex);
+            grid.add(questionLabel, 0, rowIndex);
+            grid.add(question.getControl(), 1, rowIndex);
             
-            field.addListener(new Notifier());
+            question.addListener(this);
             ++rowIndex;
         }
         
@@ -172,5 +160,18 @@ public class Questionnaire extends Application {
         
         return btn;
     }
+    
+	public void updateQuestionnaire(String name, Value newValue) {
+    	Value oldAnswer = env.getAnswer(name);
+    	// TODO .equals()?
+    	System.out.println(oldAnswer);
+    	System.out.println(newValue);
+		if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
+
+			env.addAnswer(name, newValue); 
+	    	grid.getChildren().clear();
+	        renderQuestionnaire(grid);
+		}
+	}
 
 }

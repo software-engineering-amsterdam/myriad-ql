@@ -17,21 +17,17 @@ class FindCycles(object):
         # Ensure the environment and error log are empty.
         self.directed_graph.clear()
         self.node_stack = [[]]
-        self.handler.clear_errors()
 
         self.ast.root.accept(self)
         cycle_list = list(nx.simple_cycles(self.directed_graph))
         if len(cycle_list) > 0:
-            self.handler.add_cycle_error(self.context, cycle_list)
-
-        # Print errors afterwards.
-        self.handler.print_errors()
+            self.handler.add_cycle_error(cycle_list)
 
     def question_node(self, question_node):
-        self.node_stack[-1].append(question_node.name.val)
+        self.node_stack[-1].append(question_node.name)
 
     def comp_question_node(self, comp_question_node):
-        self.node_stack[-1].append(comp_question_node.name.val)
+        self.node_stack[-1].append(comp_question_node.name)
 
     def add_edge_relations(self, from_vars, to_vars):
         for from_var in from_vars:

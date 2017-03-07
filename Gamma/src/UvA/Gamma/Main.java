@@ -5,6 +5,8 @@ import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.Validation.QLParseErrorListener;
 import UvA.Gamma.Validation.Validator;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,7 +25,7 @@ public class Main extends Application {
 
 
         String test = "form test {" +
-                "\"First question\" first: string" +
+                "\"First question\" first: date" +
                 "\"a computed one\" computed: integer = (computed2 - 5)" +
                 "if(first){ \"dependent\" computed2: integer = (computed + 5) }}";
 
@@ -32,6 +34,8 @@ public class Main extends Application {
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QLParser parser = new QLParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new QLParseErrorListener());
         ParseTree parseTree = parser.form();
         QLVisitor visitor = new QLVisitor();
         visitor.visit(parseTree);
@@ -43,10 +47,15 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(form);
         mainScreen.initUI(primaryStage);
 
-        for (FormItem item : form.getFormItems()) {
-            mainScreen.addFormItem(item);
-            System.out.println(item);
-        }
+//        for (FormItem item : form.getFormItems()) {
+//            mainScreen.addFormItem(item);
+//            //System.out.println(item);
+//            if (item instanceof Computed) {
+//                //System.out.println(((Computed) item).expression);
+//            }
+//        }
+
+
     }
 
     public static void main(String[] args) throws IOException {

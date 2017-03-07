@@ -11,28 +11,26 @@ grammar QL;
 form returns [Form result] 
  : 'form' ID block { $result = new Form($ID.text, $block.result, $ctx.start.getLine()); };
 
-// TODO combine question and statement
 block returns [Block result]
  : '{' blockItems { $result = new Block($blockItems.result, $blockItems.start.getLine()); } '}'
  ;
 
 // TODO decide on maximum characters on one line
+// TODO these string have quotes
 blockItems returns [List<BlockItem> result]
 @ init {
 	$result = new ArrayList<BlockItem>();
 }
  : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $ctx.start.getLine())); }
  |   ID ':' STRING type expr { $result.add(new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result, $ctx.start.getLine())); }
- |   'if' '(' expr ')' block ('else' block)? { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); } // TODO add else
+ |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); } // TODO add else
+ |   'if' '(' expr ')' block { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); }
    )*
  ;
 
 type returns [Type result]
  : 'boolean' { $result = new BooleanType($ctx.start.getLine()); }
- | 'date' 	 { $result = new DateType($ctx.start.getLine()); }
- | 'decimal' { $result = new DecimalType($ctx.start.getLine()); }
  | 'integer' { $result = new IntegerType($ctx.start.getLine()); }
- | 'money'   { $result = new MoneyType($ctx.start.getLine()); }
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
 
@@ -60,7 +58,7 @@ expr returns [Expression result]
 
 atom returns [Atom result]
  : INT    { $result = new IntegerAtom(Integer.parseInt($INT.text), $ctx.start.getLine()); }
- | STRING { $result = new StringAtom($STRING.text, $ctx.start.getLine()); }
+ | STRING { $result = new StringAtom($STRING.text.substring(1, $STRING.text.length()-1), $ctx.start.getLine()); }
  | BOOL   { $result = new BoolAtom(Boolean.valueOf($BOOL.text), $ctx.start.getLine()); }
  ;
 

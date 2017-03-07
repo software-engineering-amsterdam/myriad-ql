@@ -27,10 +27,7 @@ public class Question extends BlockItem {
 		return type;
 	}
 
-	@Override
-	public void accept(Visitor v) {
-		v.visit(this);
-		
+	public void accept(FormVisitor v) {
+		v.visit(this);		
 	}
-
 }

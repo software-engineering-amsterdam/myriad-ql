@@ -1,4 +1,3 @@
-from pyparsing import ParseException
 from parser.ql import QL
 from helpers import Helpers
 
@@ -22,13 +21,20 @@ class Grammar:
 		except Exception:
 			exit("Could not load QL File")
 
-		# Parse the form
-		try:
-			form = QL.form.parseString(self.__ql_content)
-		except ParseException:
-			form = None
-		finally:
-			if(self._verbose):
-				pprint(form)
+		if(self._verbose):
+			print("\n====================================")
+			print("========= RAW QL CONTENT ===========")
+			print("====================================")
+			print(self.__ql_content)
+			print("====================================\n")
 
-			return form
+		form = QL.form.parseString(self.__ql_content)
+
+		if(self._verbose):
+			print("\n====================================")
+			print("========= RAW PARSED FORM ==========")
+			print("====================================")
+			pprint(form)
+			print("====================================\n")
+
+		return form[0]

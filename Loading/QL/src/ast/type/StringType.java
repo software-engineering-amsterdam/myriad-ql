@@ -1,5 +1,11 @@
 package ast.type;
 
+import ast.TypeVisitor;
+import ui.field.Field;
+import ui.field.Text;
+import value.StringValue;
+import value.Value;
+
 public class StringType extends Type {
 
 	public StringType(int line) {
@@ -7,7 +13,18 @@ public class StringType extends Type {
 	}
 	
 	@Override
-	public void accept(ast.Visitor v) {
-		// TODO empty accept
+	public void accept(TypeVisitor v) {
+		v.visit(this);
 	}
+
+	@Override
+	public Field getField(String name) {
+		return new Text(name);
+	}
+
+	@Override
+	public Value getValue() {
+		return new StringValue();
+	}
+
 }

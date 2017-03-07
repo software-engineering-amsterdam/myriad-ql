@@ -1,7 +1,9 @@
-//package ui;
-//
-//import value.Value;
-//
-//public interface Notifier {
-//	void updateQuestionnaire(String name, Value value);
-//}
+package ui;
+
+import value.Value;
+
+public interface Notifier {
+	
+	public void updateQuestionnaire(String name, Value newValue);
+	
+}

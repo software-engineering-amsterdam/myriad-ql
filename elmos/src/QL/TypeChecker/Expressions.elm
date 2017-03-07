@@ -1,8 +1,8 @@
-module QL.TypeChecker.Expressions exposing (..)
+module QL.TypeChecker.Expressions exposing (typeCheckerErrors, computedFieldTypeErrors, conditionTypeErrors, getType)
 
 import Dict exposing (Dict)
-import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType))
-import QL.TypeChecker.CheckerUtil as CheckerUtil exposing (QuestionTypes)
+import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
+import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
 
@@ -10,14 +10,74 @@ typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
     let
         questionTypes =
-            CheckerUtil.questionTypes form
+            Collectors.collectQuestionTypes form
     in
-        CheckerUtil.collectExpressions form
-            |> List.concatMap (typeCheckerErrorsFromExpression questionTypes)
+        operandTypeErrors form questionTypes
+            ++ conditionTypeErrors form questionTypes
+            ++ computedFieldTypeErrors form questionTypes
 
 
-typeCheckerErrorsFromExpression : QuestionTypes -> Expression -> List Message
-typeCheckerErrorsFromExpression questionTypes expression =
+computedFieldTypeErrors : Form -> QuestionTypes -> List Message
+computedFieldTypeErrors form questionTypes =
+    Collectors.collectComputedFields form
+        |> List.filterMap (computationToType questionTypes)
+        |> List.filterMap (withExpectedType questionTypes)
+        |> List.filter badComputedField
+        |> List.map (\( id, actualType, expectedType ) -> Messages.invalidComputedFieldType id actualType expectedType)
+
+
+badComputedField : ( Id, ValueType, ValueType ) -> Bool
+badComputedField ( _, computedType, fieldType ) =
+    computedType /= fieldType
+
+
+withExpectedType : QuestionTypes -> ( Id, ValueType ) -> Maybe ( Id, ValueType, ValueType )
+withExpectedType questionTypes ( ( name, _ ) as id, actualType ) =
+    Dict.get name questionTypes
+        |> Maybe.map (\expectedType -> ( id, actualType, expectedType ))
+
+
+conditionTypeErrors : Form -> QuestionTypes -> List Message
+conditionTypeErrors form questionTypes =
+    Collectors.collectConditions form
+        |> List.filterMap (conditionWithType questionTypes)
+        |> List.filter (Tuple.second >> badConditional)
+        |> List.map (\( condition, conditionType ) -> (Messages.invalidConditionType (locationOf condition) conditionType))
+
+
+computationToType : QuestionTypes -> ( Id, Expression ) -> Maybe ( Id, ValueType )
+computationToType questionTypes ( name, computation ) =
+    case getType questionTypes computation of
+        Ok valueType ->
+            Just ( name, valueType )
+
+        Err _ ->
+            Nothing
+
+
+conditionWithType : QuestionTypes -> Expression -> Maybe ( Expression, ValueType )
+conditionWithType questionTypes condition =
+    case getType questionTypes condition of
+        Ok valueType ->
+            Just ( condition, valueType )
+
+        Err _ ->
+            Nothing
+
+
+badConditional : ValueType -> Bool
+badConditional =
+    (/=) BooleanType
+
+
+operandTypeErrors : Form -> QuestionTypes -> List Message
+operandTypeErrors form questionTypes =
+    Collectors.collectExpressions form
+        |> List.concatMap (checkExpression questionTypes)
+
+
+checkExpression : QuestionTypes -> Expression -> List Message
+checkExpression questionTypes expression =
     case getType questionTypes expression of
         Ok _ ->
             []
@@ -29,7 +89,7 @@ typeCheckerErrorsFromExpression questionTypes expression =
 getType : QuestionTypes -> Expression -> Result (List Message) ValueType
 getType variableTypes expression =
     case expression of
-        Var ( name, loc ) ->
+        Var ( name, _ ) ->
             Result.fromMaybe
                 []
                 (Dict.get name variableTypes)
@@ -113,3 +173,37 @@ combineResult err succ left right =
 
         _ ->
             Result.andThen succ (Result.map2 (,) left right)
+
+
+locationOf : Expression -> Location
+locationOf expression =
+    case expression of
+        Var ( _, location ) ->
+            location
+
+        Str location _ ->
+            location
+
+        Decimal location _ ->
+            location
+
+        Integer location _ ->
+            location
+
+        Boolean location _ ->
+            location
+
+        ParensExpression location _ ->
+            location
+
+        ArithmeticExpression _ location _ _ ->
+            location
+
+        RelationExpression _ location _ _ ->
+            location
+
+        LogicExpression _ location _ _ ->
+            location
+
+        ComparisonExpression _ location _ _ ->
+            location

@@ -1,23 +1,27 @@
 package semantic;
-import ast.Form;
-import ast.atom.Atom;
-
+import java.util.List;
 import java.util.Map;
 
-public class TypeChecker {
+import QL.Warning;
+import ast.Form;
+import ast.type.Type;
 
-    public Environment analyze(Form form) {
-        Environment environment = new Environment();
+public class TypeChecker {
+	
+	Environment environment;
+
+    public List<Warning> analyze(Form form) {
+        this.environment = new Environment();
         QuestionVisitor QVisitor = new QuestionVisitor(environment);
         QVisitor.visit(form);
-        // TODO if you forget this statement you continue working with the old environment
 
-        System.out.println("!!!!!!");
-        environment.variableExists("Name1");
         ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
         expressionVisitor.visit(form);
-        return expressionVisitor.getEnvironment();
-
+        return environment.getWarnings();
+    }
+    
+    public Map<String, Type> getVariableTypes() {
+    	return environment.getVariableTypes();
     }
 
 }

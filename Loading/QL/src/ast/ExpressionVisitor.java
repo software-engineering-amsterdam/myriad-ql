@@ -1,23 +1,45 @@
 package ast;
 
-import ast.expression.*;
+import ast.atom.BoolAtom;
+import ast.atom.IntegerAtom;
+import ast.atom.StringAtom;
+import ast.expression.AddExpression;
+import ast.expression.AndExpression;
+import ast.expression.DivExpression;
+import ast.expression.EqExpression;
+import ast.expression.GEqExpression;
+import ast.expression.GExpression;
+import ast.expression.IdExpression;
+import ast.expression.LEqExpression;
+import ast.expression.LExpression;
+import ast.expression.MinusExpression;
+import ast.expression.MulExpression;
+import ast.expression.NEqExpression;
+import ast.expression.NotExpression;
+import ast.expression.OrExpression;
+import ast.expression.PlusExpression;
+import ast.expression.SubExpression;
 
-public interface ExpressionVisitor {
+public interface ExpressionVisitor<T> {
 
-    void visit(AddExpression expr);
-    void visit(AndExpression expr);
-    void visit(DivExpression expr);
-    void visit(EqExpression expr);
-    void visit(GEqExpression expr);
-    void visit(GExpression expr);
-    void visit(IdExpression expr);
-    void visit(LEqExpression expr);
-    void visit(LExpression expr);
-    void visit(MinusExpression expr);
-    void visit(MulExpression expr);
-    void visit(NEqExpression expr);
-    void visit(NotExpression expr);
-    void visit(OrExpression expr);
-    void visit(PlusExpression expr);
-    void visit(SubExpression expr);
+    T visit(AddExpression expr);
+    T visit(AndExpression expr);
+    T visit(DivExpression expr);
+    T visit(EqExpression expr);
+    T visit(GEqExpression expr);
+    T visit(GExpression expr);
+    T visit(IdExpression expr);
+    T visit(LEqExpression expr);
+    T visit(LExpression expr);
+    T visit(MinusExpression expr);
+    T visit(MulExpression expr);
+    T visit(NEqExpression expr);
+    T visit(NotExpression expr);
+    T visit(OrExpression expr);
+    T visit(PlusExpression expr);
+    T visit(SubExpression expr);
+ 
+    T visit(BoolAtom expr);
+    T visit(IntegerAtom expr);
+    T visit(StringAtom expr);
 }

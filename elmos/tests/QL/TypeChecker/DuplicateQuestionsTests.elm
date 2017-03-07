@@ -1,4 +1,4 @@
-module QL.TypeChecker.DuplicateQuestionsTests exposing (..)
+module QL.TypeChecker.DuplicateQuestionsTests exposing (all)
 
 import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
@@ -11,13 +11,6 @@ import QL.TypeChecker.Messages as Messages exposing (..)
 all : Test
 all =
     describe "DuplicateQuestions"
-        [ duplicateQuestionsTest
-        ]
-
-
-duplicateQuestionsTest : Test
-duplicateQuestionsTest =
-    describe "duplicateQuestions"
         [ test "no duplicate question defintion for shared definition in ifthenelse block" <|
             \() ->
                 duplicateQuestions

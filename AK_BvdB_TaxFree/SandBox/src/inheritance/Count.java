@@ -14,4 +14,5 @@ public class Count {
     public int getCount() {
         return mCount;
     }
+
 }

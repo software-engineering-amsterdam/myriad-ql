@@ -2,13 +2,13 @@ from QL.Undefined import Undefined
 
 
 class EvaluateDrawState(object):
-    def __init__(self, ast, env, evaluator, form_gui, error_handler):
+    def __init__(self, form_gui, ast, env, evaluator, error_handler):
         """
-        :type ast: AST.QuestionnaireAST
-        :type env: Environment.Environment
-        :type error_handler: ErrorHandler.ErrorHandler
-        :type evaluator: Evaluate.Evaluate
-        :type form_gui: FormGUI.FormGUI
+        :type ast: QL.AST.QuestionnaireAST
+        :type env: QL.Environment.Environment
+        :type error_handler: QL.ErrorHandler.ErrorHandler
+        :type evaluator: QL.Stages.Evaluator.Evaluate
+        :type form_gui: QL.GUI.DrawGUI.DrawGUI
         """
         self.ast = ast
         self.env = env
@@ -18,17 +18,8 @@ class EvaluateDrawState(object):
         self.show_stack = []
 
     def start_traversal(self):
-        self.handler.clear_errors()
         self.show_stack = []
-
-        # Set context for outputting errors; start traversal.
-        prev_context = self.env.context
-        self.env.context = "EvaluateDrawState"
         self.ast.root.accept(self)
-
-        # Output errors afterwards.
-        self.handler.print_errors()
-        self.env.context = prev_context
 
     def traverse_branch(self, node_branch, condition):
         self.show_stack.append(condition)
@@ -52,22 +43,24 @@ class EvaluateDrawState(object):
         return all(self.show_stack)
 
     def question_node(self, question_node):
-        identifier = question_node.get_identifier()
+        identifier = question_node.name
         if not self.is_shown():
-            self.form_gui.hide_question(identifier)
+            self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
             if value == Undefined:
-                value = question_node.get_default_val()
-            self.form_gui.show_question(identifier, value)
+                value = ''
+            self.form_gui.show_widget(identifier)
+            self.form_gui.set_widget_val(identifier, value)
 
     def comp_question_node(self, comp_question_node):
-        identifier = comp_question_node.get_identifier()
+        identifier = comp_question_node.name
         if not self.is_shown():
-            self.form_gui.hide_computed(identifier)
+            self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
             if value != Undefined:
-                self.form_gui.show_computed(identifier, value)
+                self.form_gui.set_widget_val(identifier, value)
+                self.form_gui.show_widget(identifier)
             else:
-                self.form_gui.hide_computed(identifier)
+                self.form_gui.hide_widget(identifier)

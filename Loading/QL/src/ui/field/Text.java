@@ -3,26 +3,22 @@ package ui.field;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import ui.Questionnaire.Notifier;
-import value.EmptyValue;
+import ui.Notifier;
 import value.StringValue;
 import value.Value;
 
-// TODO do not extend the standard library
-public class Text extends TextField implements Field {
+public class Text implements Field {
 	
 	private Notifier listener;
-	private String name;
+	private TextField field;
 	
 	public Text(String name) {
-		super();
-		this.name = name;
+		this.field = new TextField();
 		
-		textProperty().addListener(new ChangeListener<String>()  {
+		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	
             	listener.updateQuestionnaire(name, new StringValue(newValue));
             }
     	});
@@ -30,22 +26,28 @@ public class Text extends TextField implements Field {
 	
 	@Override
 	public Value getAnswer() {
-		if (getText().isEmpty()) {
-			return new EmptyValue();
+		if (field.getText().isEmpty()) {
+			return new StringValue();
 		}	
-		return new StringValue(getText());
+		return new StringValue(field.getText());
 	}
 	
 	
 	@Override
 	public void setAnswer(Value value) {
-		setText((String) value.getValue());	
+		field.setText(((StringValue) value).getValue()); // TODO implicit you have to know to ask for a string
+  	  	field.end();
 	}
 
 
 	@Override
 	public void addListener(Notifier listener) {
 		this.listener = listener;	
+	}
+	
+	@Override
+	public TextField getField() {
+		return field;
 	}
 
 }

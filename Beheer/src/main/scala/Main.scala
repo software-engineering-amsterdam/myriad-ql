@@ -1,7 +1,7 @@
 import java.io.FileReader
 
-import parser._
 import checker.{ Error, FormChecker, Issue, Warning }
+import parser._
 
 object Main extends App {
   val filename = "src/main/resources/example.ql"
@@ -14,5 +14,9 @@ object Main extends App {
     case Warning(message) => println(s"${Console.YELLOW}[WARNING] ${Console.RESET}$message")
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
-  printIssues(formModel)
+
+  printIssues(formModel)*/
+  val filename = "src/main/resources/example.qls"
+  val stylesheet = StylesheetParser(new FileReader(filename))
+  println(stylesheet)
 }

@@ -1,7 +1,8 @@
 package com.matthewchapman.ql.ast.statement;
 
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.expression.Expression;
+import com.matthewchapman.ql.validator.QLVisitor;
 
 import java.util.ArrayList;
 
@@ -30,14 +31,17 @@ public class IfStatement extends Statement {
         this.expression = e;
     }
 
-    public ArrayList<Statement> getStatements()
-    {
+    public ArrayList<Statement> getStatements() {
         return this.statements;
     }
 
-    public Expression getExpression()
-    {
+    public Expression getExpression() {
         return this.expression;
+    }
+
+    @Override
+    public <T> T accept(QLVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
 }

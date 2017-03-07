@@ -37,9 +37,7 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
       case "(" ~ expression ~ ")" ~ block => Conditional(expression, block)
     }
 
-  private def statement: Parser[Statement] = conditional | question
-
-  private def block: Parser[Block] = "{" ~> rep(statement) <~ "}" ^^ (xs => Block(xs))
+  private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))
 
   private def form: Parser[Form] =
     "form" ~> ident ~ block ^^ {

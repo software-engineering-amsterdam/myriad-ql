@@ -1,7 +1,8 @@
 package ast.expression;
 
-import ast.Visitor;
+import ast.ExpressionVisitor;
 import ast.atom.Atom;
+import ast.type.Type;
 import semantic.Environment;
 
 public class AndExpression extends BinaryExpression {
@@ -10,19 +11,19 @@ public class AndExpression extends BinaryExpression {
 		super(lhs, rhs, line);
 	}
 
+//	@Override
+//	public Atom evaluate() {
+//		return getLhs().evaluate().and(getRhs().evaluate());
+//	}
+//
+//    @Override
+//    public Atom evaluate(Environment env) {
+//        return null;
+//    }
+
 	@Override
-	public Atom evaluate() {
-		return getLhs().evaluate().and(getRhs().evaluate());
-	}
-
-    @Override
-    public Atom evaluate(Environment env) {
-        return null;
-    }
-
-    @Override
-	public void accept(Visitor v) {
-		v.visit(this);
+	public <T> T accept(ExpressionVisitor<T> v) {
+		return v.visit(this);
 	}
 
 

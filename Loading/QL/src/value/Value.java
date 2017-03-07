@@ -1,11 +1,30 @@
 package value;
 
-import ast.type.Type;
+import value.Value;
+import value.BoolValue;
 
 public abstract class Value {
+		
+	public abstract boolean isSet();
 	
+	// Binary Operators
+	public Value add(Value other) { return null; }
+	public Value sub(Value other) { return null; }
+	public Value mul(Value other) { return null; }
+	public Value div(Value other) { return null; }
+
+	public BoolValue and(Value other) { return null; }
+	public BoolValue or(Value other) { return null; }
+	public BoolValue eq(Value other) { return null; }
+	public BoolValue notEq(Value other) { return null; }
+	public BoolValue greaterEq(Value other) { return null; }
+	public BoolValue greater(Value other) { return null; }
+	public BoolValue lessEq(Value other) { return null; }
+	public BoolValue less(Value other) { return null; }
 	
-	// TODO change object !!
-	public abstract Object getValue();
-	public abstract Type getType();
+	// Unary Operators
+	public Value plus() { return null; }
+	public Value min() { return null; }
+	public BoolValue not() { return null; }
+
 }

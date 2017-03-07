@@ -1,23 +1,23 @@
-import java.util.Map;
+import java.util.List;
 
-import ast.type.Type;
-import evaluation.Environment;
-import evaluation.Evaluator;
-import semantic.TypeChecker;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
-import org.antlr.v4.runtime.*;
-
+import QL.Warning;
 import ast.Form;
-import ast.atom.Atom;
+import semantic.TypeChecker;
 import ui.Questionnaire;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
-				 + "Name1: \"Question1\" boolean "
-				 + "if (Name1) {"
+				 + "Name0: \"Question0\" integer "
+				 + "Name1: \"Question1\" integer (Name0 + 2)"
+				 + "if (Name0 < 5) {"
+				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
-				 + "}"
+				 + "} else { "
+				 + "Name9: \"Question9\" boolean } } "
 				 + "Name3: \"Question3\" boolean "
 				 + "}";
 //		String tmp = "form Testing { Name0: \"Question\" boolean\n"
@@ -47,20 +47,19 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 		QLParser parser = new QLParser(tokens);
-		// System.out.println(parser.form().result.getBlock().getStatements().get(0).getExpression().print());
 		Form form = parser.form().result;
 
 		System.out.println("----");
 
 		TypeChecker typeChecker = new TypeChecker();
 
-		semantic.Environment semanticEv = typeChecker.analyze(form);
-
-		Environment env = new Environment();
-//		Evaluator evaluator = new Evaluator(env);
+		List<Warning> warnings = typeChecker.analyze(form);
+		
+		
+		evaluation.Environment env = new evaluation.Environment(typeChecker.getVariableTypes());
 		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form);
+		questionnaire.main(form, env, warnings);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 

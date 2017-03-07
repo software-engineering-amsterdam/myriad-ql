@@ -1,6 +1,7 @@
 package ui.field;
 
-import ui.Questionnaire.Notifier;
+import javafx.scene.control.Control;
+import ui.Notifier;
 import value.Value;
 
 
@@ -11,5 +12,7 @@ public interface Field {
 	public void setAnswer(Value value);
 	
 	public void addListener(Notifier listener);
+	
+	public Control getField();
 	
 }
