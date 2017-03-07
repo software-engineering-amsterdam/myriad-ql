@@ -7,10 +7,10 @@ public abstract class ExpressionNode extends ConditionNode {
     private final String mOperator;
     private final ConditionNode mRight;
 
-    public ExpressionNode(ConditionNode left, String operator, ConditionNode right) {
-        mLeft = left;
-        mOperator = operator;
+    public ExpressionNode(ConditionNode right, String operator, ConditionNode left) {
         mRight = right;
+        mOperator = operator;
+        mLeft = left;
     }
 
     @Override
@@ -22,5 +22,10 @@ public abstract class ExpressionNode extends ConditionNode {
     public void addUsedVariables(Set<String> set) {
         mLeft.addUsedVariables(set);
         mRight.addUsedVariables(set);
+    }
+
+//    @Override
+    public boolean isSameType() {
+        return mLeft.getClass().equals(mRight.getClass());
     }
 }

@@ -24,9 +24,9 @@ public abstract class ConditionNode extends Node {
 
     public abstract String resolveValue();
 
-    public boolean isSameType(ConditionNode node) {
-        return this.getClass().equals(node.getClass());
-    }
+//    public boolean isSameType(ConditionNode node) {
+//        return this.getClass().equals(node.getClass());
+//    }
 
     public abstract void addUsedVariables(Set<String> set);
 
