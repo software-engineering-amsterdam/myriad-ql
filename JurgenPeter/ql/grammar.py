@@ -1,5 +1,6 @@
 from pyparsing import *
 from ql.ast import *
+from ql.datatypes import Datatypes
 
 
 ParserElement.enablePackrat()
@@ -12,19 +13,19 @@ variable = identifier.copy()
 variable.addParseAction(lambda tokens: Variable(tokens[0]))
 
 integer = pyparsing_common.integer
-integer.addParseAction(lambda tokens: Constant(tokens[0], Datatype.integer))
+integer.addParseAction(lambda tokens: Constant(tokens[0], Datatypes.integer))
 
 decimal = pyparsing_common.real
-decimal.addParseAction(lambda tokens: Constant(tokens[0], Datatype.decimal))
+decimal.addParseAction(lambda tokens: Constant(tokens[0], Datatypes.decimal))
 
 true = Literal("true")
-true.setParseAction(lambda _: Constant(True, Datatype.boolean))
+true.setParseAction(lambda _: Constant(True, Datatypes.boolean))
 false = Literal("false")
-false.setParseAction(lambda _: Constant(False, Datatype.boolean))
+false.setParseAction(lambda _: Constant(False, Datatypes.boolean))
 boolean = true ^ false
 
 string = QuotedString("\"")
-string.setParseAction(lambda tokens: Constant(tokens[0], Datatype.string))
+string.setParseAction(lambda tokens: Constant(tokens[0], Datatypes.string))
 
 literal = integer ^ decimal ^ boolean ^ string
 
@@ -86,7 +87,7 @@ expression = infixNotation(
 block = Forward()
 
 datatype = oneOf("boolean string integer decimal")
-datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
+datatype.setParseAction(lambda tokens: Datatypes[tokens[0]])
 
 question = identifier + Suppress(":") + QuotedString("\"") + datatype
 question.setParseAction(lambda tokens: Question(*tokens))

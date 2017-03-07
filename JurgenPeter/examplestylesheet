@@ -1,17 +1,22 @@
 stylesheet taxOfficeExample {
   page Housing {
     section "Selling B" {
-      question hasBoughtHouse { color: #ff6633 }
+
       question sellingPrice { weight: bold size :20 family: "Times New Roman"}
     }
     section "Selling A" {
+
+      section "YOLO" {
+          question hasBoughtHouse { color: #ff3333 }
+          question y
+          question valueResidue
+          default boolean widget radio("ja", "nee")
+      }
       question x
-      question y widget radio("ja", "nee")
-      question valueResidue
-      question hasSoldHouse { color: #449944 }
+      question hasSoldHouse { color: #228822 }
       question privateDebt
 
-      default boolean { color: #115599 }
+      default boolean { color: #000088 }
     }
   }
 

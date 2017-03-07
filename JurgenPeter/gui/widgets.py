@@ -1,5 +1,5 @@
 import re
-from ql.ast import Datatype
+from ql.datatypes import Datatypes
 from tkinter.font import Font
 from abc import abstractmethod
 
@@ -99,7 +99,7 @@ class EntryWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.string
+        return Datatypes.string
 
 
 class IntegerEntryWidget(EntryWidget):
@@ -116,7 +116,7 @@ class IntegerEntryWidget(EntryWidget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.integer
+        return Datatypes.integer
 
 
 class DecimalEntryWidget(EntryWidget):
@@ -133,7 +133,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.decimal
+        return Datatypes.decimal
 
 
 class CheckBoxWidget(Widget):
@@ -168,7 +168,7 @@ class CheckBoxWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.boolean
+        return Datatypes.boolean
 
 
 class SpinBoxWidget(Widget):
@@ -211,7 +211,7 @@ class SpinBoxWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.integer
+        return Datatypes.integer
 
 
 class RadioWidget(Widget):
@@ -275,7 +275,7 @@ class RadioWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.boolean
+        return Datatypes.boolean
 
 
 class DropDownWidget(Widget):
@@ -313,7 +313,7 @@ class DropDownWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.boolean
+        return Datatypes.boolean
 
 
 class SliderWidget(Widget):
@@ -363,4 +363,4 @@ class SliderWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatype.integer
+        return Datatypes.integer

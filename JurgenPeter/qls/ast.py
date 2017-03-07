@@ -1,13 +1,15 @@
-class Layout:
+class Node:
+    def __eq__(self, other):
+        return type(self) == type(other) and self.__dict__ == other.__dict__
+
+
+class Layout(Node):
     def __init__(self, name, body):
         self.name = name
         self.body = body
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
-    def accept(self, visitor):
-        visitor.visit_layout(self)
+    def accept(self, visitor, *args):
+        visitor.visit_layout(self, *args)
 
 
 class StyledLayout(Layout):
@@ -15,20 +17,17 @@ class StyledLayout(Layout):
         super().__init__(name, body)
         self.stylings = stylings
 
-    def accept(self, visitor):
-        visitor.visit_styled_layout(self)
+    def accept(self, visitor, *args):
+        visitor.visit_styled_layout(self, *args)
 
 
-class Page:
+class Page(Node):
     def __init__(self, name, body):
         self.name = name
         self.body = body
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
-    def accept(self, visitor):
-        visitor.visit_page(self)
+    def accept(self, visitor, *args):
+        visitor.visit_page(self, *args)
 
 
 class StyledPage(Page):
@@ -36,20 +35,17 @@ class StyledPage(Page):
         super().__init__(name, body)
         self.stylings = stylings
 
-    def accept(self, visitor):
-        visitor.visit_styled_page(self)
+    def accept(self, visitor, *args):
+        visitor.visit_styled_page(self, *args)
 
 
-class Section:
+class Section(Node):
     def __init__(self, name, body):
         self.name = name
         self.body = body
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
-    def accept(self, visitor):
-        visitor.visit_section(self)
+    def accept(self, visitor, *args):
+        visitor.visit_section(self, *args)
 
 
 class StyledSection(Section):
@@ -57,19 +53,16 @@ class StyledSection(Section):
         super().__init__(name, body)
         self.stylings = stylings
 
-    def accept(self, visitor):
-        visitor.visit_styled_section(self)
+    def accept(self, visitor, *args):
+        visitor.visit_styled_section(self, *args)
 
 
-class QuestionAnchor:
+class QuestionAnchor(Node):
     def __init__(self, name):
         self.name = name
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
-    def accept(self, visitor):
-        visitor.visit_question_anchor(self)
+    def accept(self, visitor, *args):
+        visitor.visit_question_anchor(self, *args)
 
 
 class StyledQuestionAnchor(QuestionAnchor):
@@ -77,16 +70,13 @@ class StyledQuestionAnchor(QuestionAnchor):
         super().__init__(name)
         self.styling = Styling(attributes)
 
-    def accept(self, visitor):
-        visitor.visit_styled_question_anchor(self)
+    def accept(self, visitor, *args):
+        visitor.visit_styled_question_anchor(self, *args)
 
 
-class Styling:
+class Styling(Node):
     def __init__(self, attributes):
         self.attributes = attributes
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
 
     def applicable(self, datatype):
         return True
@@ -108,7 +98,7 @@ class DefaultStyling(Styling):
         return self.datatype == datatype
 
 
-class Attribute:
+class Attribute(Node):
     def modify_widget_constructor(self, widget):
         return widget
 
@@ -116,9 +106,6 @@ class Attribute:
 class ColorAttribute(Attribute):
     def __init__(self, color):
         self.color = color
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
 
     def apply_on(self, widget):
         widget.set_color(self.color)
@@ -128,9 +115,6 @@ class FontSizeAttribute(Attribute):
     def __init__(self, size):
         self.size = size
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
     def apply_on(self, widget):
         widget.set_font_size(self.size)
 
@@ -138,9 +122,6 @@ class FontSizeAttribute(Attribute):
 class FontWeightAttribute(Attribute):
     def __init__(self, weight):
         self.weight = weight
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
 
     def apply_on(self, widget):
         widget.set_font_weight(self.weight)
@@ -150,9 +131,6 @@ class FontFamilyAttribute(Attribute):
     def __init__(self, family):
         self.family = family
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
     def apply_on(self, widget):
         widget.set_font_family(self.family)
 
@@ -161,9 +139,6 @@ class WidthAttribute(Attribute):
     def __init__(self, width):
         self.width = width
 
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
-
     def apply_on(self, widget):
         widget.set_width(self.width)
 
@@ -171,9 +146,6 @@ class WidthAttribute(Attribute):
 class WidgetTypeAttribute(Attribute):
     def __init__(self, widget_constructor):
         self.widget_constructor = widget_constructor
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.__dict__ == other.__dict__
 
     def apply_on(self, _):
         pass

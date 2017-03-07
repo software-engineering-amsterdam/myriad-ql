@@ -1,7 +1,7 @@
 from unittest import TestCase, main
 
 from ql.grammar import parse_string
-from ql.ast import Datatype
+from ql.datatypes import Datatypes
 from ql.visitors.symbol_checker import SymbolChecker
 from ql.visitors.type_checker import TypeChecker
 from ql.visitors.dependency_checker import DependencyChecker
@@ -13,18 +13,18 @@ class TestSymbolChecker(TestCase):
         ("form Name {}", {}),
         ("form Name {"
          "  a: \"label\" integer }",
-         {"a": Datatype.integer}),
+         {"a": Datatypes.integer}),
         ("form Name {"
          "  a: \"label\" integer"
          "  b: \"label\" boolean }",
-         {"a": Datatype.integer, "b": Datatype.boolean}),
+         {"a": Datatypes.integer, "b": Datatypes.boolean}),
         ("form Name {"
          "  a: \"label\" integer"
          "  if a > 10 {"
          "    b: \"label\" boolean }"
          "  else {"
          "    c: \"label\" decimal } }",
-         {"a": Datatype.integer, "b": Datatype.boolean, "c": Datatype.decimal})
+         {"a": Datatypes.integer, "b": Datatypes.boolean, "c": Datatypes.decimal})
     ]
 
     def testSymbolTables(self):

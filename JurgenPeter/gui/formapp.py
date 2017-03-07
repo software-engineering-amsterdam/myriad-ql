@@ -1,6 +1,7 @@
 from appJar import gui
 
-from gui.visitors.gui_builder import GuiBuilder
+from gui.visitors.ql_gui_builder import QlGuiBuilder
+from gui.visitors.qls_gui_builder import QlsGuiBuilder
 from gui.visitors.computation_updater import ComputationUpdater
 from gui.visitors.gui_updater import GuiUpdater
 
@@ -10,6 +11,7 @@ class FormApp:
     def __init__(self, form, layout=None):
         self.form = form
         self.environment = {}
+        self.widgets = {}
 
         self.app = gui(form.name)
         self.app.setResizable(False)
@@ -17,12 +19,10 @@ class FormApp:
         self.app.setBg("white")
         self.app.bindKey("<KeyPress>", self.update)
 
-        gui_builder = GuiBuilder(self.app, self.update, self.form)
-
-        if layout is not None:
-            self.widgets = gui_builder.visit(layout)
+        if layout is None:
+            QlGuiBuilder(self.app, self.update, self.widgets).build(form)
         else:
-            self.widgets = gui_builder.visit(form)
+            QlsGuiBuilder(self.app, self.update, self.widgets, self.form).build(layout)
 
     def start(self):
         self.update(None)

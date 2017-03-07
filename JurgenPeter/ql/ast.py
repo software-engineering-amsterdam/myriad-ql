@@ -1,8 +1,3 @@
-from enum import Enum
-
-Datatype = Enum("Datatype", "boolean string integer decimal")
-
-
 class Node:
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
@@ -14,8 +9,8 @@ class Form(Node):
         self.name = name
         self.body = body
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_form(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_form(self, *args)
 
 
 class Question(Node):
@@ -25,8 +20,8 @@ class Question(Node):
         self.label = label
         self.datatype = datatype
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_question(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_question(self, *args)
 
 
 class ComputedQuestion(Question):
@@ -35,8 +30,8 @@ class ComputedQuestion(Question):
         super().__init__(name, label, datatype)
         self.computation = computation
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_computed_question(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_computed_question(self, *args)
 
 
 class IfConditional(Node):
@@ -45,8 +40,8 @@ class IfConditional(Node):
         self.condition = condition
         self.ifbody = ifbody
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_if_conditional(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_if_conditional(self, *args)
 
 
 class IfElseConditional(IfConditional):
@@ -55,8 +50,8 @@ class IfElseConditional(IfConditional):
         super().__init__(condition, ifbody)
         self.elsebody = elsebody
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_ifelse_conditional(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_ifelse_conditional(self, *args)
 
 
 class Expression(Node):
@@ -69,18 +64,18 @@ class UnOp(Expression):
 
 
 class PlusOp(UnOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_plusop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_plusop(self, *args)
 
 
 class MinOp(UnOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_minop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_minop(self, *args)
 
 
 class NotOp(UnOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_notop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_notop(self, *args)
 
 
 class BinOp(Expression):
@@ -90,63 +85,63 @@ class BinOp(Expression):
 
 
 class MulOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_mulop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_mulop(self, *args)
 
 
 class DivOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_divop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_divop(self, *args)
 
 
 class AddOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_addop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_addop(self, *args)
 
 
 class SubOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_subop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_subop(self, *args)
 
 
 class LtOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_ltop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_ltop(self, *args)
 
 
 class LeOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_leop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_leop(self, *args)
 
 
 class GtOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_gtop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_gtop(self, *args)
 
 
 class GeOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_geop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_geop(self, *args)
 
 
 class EqOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_eqop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_eqop(self, *args)
 
 
 class NeOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_neop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_neop(self, *args)
 
 
 class AndOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_andop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_andop(self, *args)
 
 
 class OrOp(BinOp):
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_orop(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_orop(self, *args)
 
 
 class Variable(Expression):
@@ -154,8 +149,8 @@ class Variable(Expression):
     def __init__(self, name):
         self.name = name
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_variable(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_variable(self, *args)
 
 
 class Constant(Expression):
@@ -164,5 +159,5 @@ class Constant(Expression):
         self.value = value
         self.datatype = datatype
 
-    def accept(self, visitor, **kwargs):
-        return visitor.visit_constant(self, **kwargs)
+    def accept(self, visitor, *args):
+        return visitor.visit_constant(self, *args)

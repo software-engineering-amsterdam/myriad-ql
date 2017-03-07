@@ -1,6 +1,6 @@
 from pyparsing import *
 from qls.ast import *
-from ql.ast import Datatype
+from ql.datatypes import Datatypes
 from gui.widgets import *
 
 ParserElement.enablePackrat()
@@ -10,7 +10,7 @@ identifier.addCondition(lambda tokens: tokens[0] not in "stylesheet page "
                         "section question default widget ".split())
 
 datatype = oneOf("boolean string integer decimal")
-datatype.setParseAction(lambda tokens: Datatype[tokens[0]])
+datatype.setParseAction(lambda tokens: Datatypes[tokens[0]])
 
 """ pyparsing_common.integer does not support negative integers. """
 integer = Regex("-?[0-9]+")

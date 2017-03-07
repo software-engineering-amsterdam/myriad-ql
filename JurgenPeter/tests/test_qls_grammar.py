@@ -1,7 +1,7 @@
 from unittest import TestCase, main
 from pyparsing import ParseException
 
-from ql.ast import Datatype
+from ql.datatypes import Datatypes
 import qls.grammar as grammar
 from qls.ast import *
 from gui.widgets import *
@@ -95,10 +95,10 @@ class TestGrammar(TestCase):
         (grammar.default, "default boolean {"
                           "     color: #663311"
                           "}",
-                          DefaultStyling(Datatype.boolean,
+                          DefaultStyling(Datatypes.boolean,
                                          [ColorAttribute("#663311")])),
         (grammar.default, "default boolean widget checkbox",
-                          DefaultStyling(Datatype.boolean,
+                          DefaultStyling(Datatypes.boolean,
                                          [WidgetTypeAttribute(
                                              CheckBoxWidget)])),
         (grammar.section, "section \"x\" {"
@@ -116,10 +116,10 @@ class TestGrammar(TestCase):
             StyledSection("x",
                           [QuestionAnchor("y"),
                            QuestionAnchor("z")],
-                          [DefaultStyling(Datatype.boolean,
+                          [DefaultStyling(Datatypes.boolean,
                                           [WidgetTypeAttribute(
                                               CheckBoxWidget)]),
-                           DefaultStyling(Datatype.integer,
+                           DefaultStyling(Datatypes.integer,
                                           [WidgetTypeAttribute(
                                              IntegerEntryWidget)])])),
         (grammar.section, "section \"x\" {"
@@ -150,10 +150,10 @@ class TestGrammar(TestCase):
                        StyledPage("x",
                                   [QuestionAnchor("y"),
                                    QuestionAnchor("z")],
-                                  [DefaultStyling(Datatype.boolean,
+                                  [DefaultStyling(Datatypes.boolean,
                                                   [WidgetTypeAttribute(
                                                       CheckBoxWidget)]),
-                                   DefaultStyling(Datatype.integer,
+                                   DefaultStyling(Datatypes.integer,
                                                   [WidgetTypeAttribute(
                                                       IntegerEntryWidget)])])),
         (grammar.layout, "stylesheet x {"
@@ -169,7 +169,7 @@ class TestGrammar(TestCase):
                          "}",
                          StyledLayout("x",
                                       [Page("y", [])],
-                                      [DefaultStyling(Datatype.decimal,
+                                      [DefaultStyling(Datatypes.decimal,
                                                       [WidgetTypeAttribute(
                                                           DecimalEntryWidget)
                                                        ])]))

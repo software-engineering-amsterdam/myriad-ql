@@ -1,10 +1,10 @@
-from ql.ast import Datatype
+from ql.datatypes import Datatypes
 from ql.messages import *
 
 
 class TypeChecker:
 
-    computable_datatypes = [Datatype.integer, Datatype.decimal]
+    computable_datatypes = [Datatypes.integer, Datatypes.decimal]
 
     def __init__(self, symboltable, errors=[]):
         self.symboltable = symboltable
@@ -34,7 +34,7 @@ class TypeChecker:
 
     def visit_if_conditional(self, node):
         conditiontype = self.visit(node.condition)
-        if conditiontype is not None and conditiontype != Datatype.boolean:
+        if conditiontype is not None and conditiontype != Datatypes.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
@@ -42,7 +42,7 @@ class TypeChecker:
 
     def visit_ifelse_conditional(self, node):
         conditiontype = self.visit(node.condition)
-        if conditiontype is not None and conditiontype != Datatype.boolean:
+        if conditiontype is not None and conditiontype != Datatypes.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
@@ -72,8 +72,8 @@ class TypeChecker:
         right_type = self.visit(node.right)
         if right_type is None:
             return None
-        if right_type == Datatype.boolean:
-            return Datatype.boolean
+        if right_type == Datatypes.boolean:
+            return Datatypes.boolean
         self.error("! operator has incompatible datatype")
         return None
 
@@ -95,7 +95,7 @@ class TypeChecker:
             return None
         if (left_type in self.computable_datatypes and
                 right_type in self.computable_datatypes):
-            return Datatype.boolean
+            return Datatypes.boolean
         self.error("{} operator has incompatible datatypes".format(op))
         return None
 
@@ -114,8 +114,8 @@ class TypeChecker:
         right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
-        if left_type == right_type == Datatype.boolean:
-            return Datatype.boolean
+        if left_type == right_type == Datatypes.boolean:
+            return Datatypes.boolean
         self.error("{} operator has incompatible datatypes".format(op))
         return None
 
@@ -129,7 +129,7 @@ class TypeChecker:
             return None
         if (left_type in self.computable_datatypes and
                 right_type in self.computable_datatypes):
-            return Datatype.decimal
+            return Datatypes.decimal
         self.error("/ operator has incompatible datatypes")
         return None
 
@@ -175,6 +175,6 @@ class TypeChecker:
 
     @staticmethod
     def dominant_datatype(left_type, right_type):
-        if left_type == Datatype.decimal or right_type == Datatype.decimal:
-            return Datatype.decimal
-        return Datatype.integer
+        if left_type == Datatypes.decimal or right_type == Datatypes.decimal:
+            return Datatypes.decimal
+        return Datatypes.integer
