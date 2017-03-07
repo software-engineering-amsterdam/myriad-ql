@@ -1,61 +1,64 @@
 class DependencyFinder:
 
+    def find(self, node):
+        return self.visit(node)
+
     def visit(self, node):
         return node.accept(self)
 
     def visit_computed_question(self, node):
-        return node.computation.accept(self)
+        return self.visit(node.computation)
 
     def visit_if_conditional(self, node):
-        return node.condition.accept(self)
+        return self.visit(node.condition)
 
     def visit_ifelse_conditional(self, node):
-        return node.condition.accept(self)
+        return self.visit(node.condition)
 
     def visit_plusop(self, node):
-        return node.right.accept(self)
+        return self.visit(node.right)
 
     def visit_minop(self, node):
-        return node.right.accept(self)
+        return self.visit(node.right)
 
     def visit_notop(self, node):
-        return node.right.accept(self)
+        return self.visit(node.right)
 
     def visit_mulop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_divop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_addop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_subop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_ltop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_leop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_gtop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_geop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_eqop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_neop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_andop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_orop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_variable(self, node):
         return [node.name]

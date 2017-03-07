@@ -13,7 +13,7 @@ class QuestionFinder:
 
     def visit_form(self, node):
         for element in node.body:
-            element.accept(self)
+            self.visit(element)
 
     def visit_question(self, node):
         if self.name == node.name:
@@ -24,10 +24,10 @@ class QuestionFinder:
 
     def visit_if_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
 
     def visit_ifelse_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
         for element in node.elsebody:
-            element.accept(self)
+            self.visit(element)

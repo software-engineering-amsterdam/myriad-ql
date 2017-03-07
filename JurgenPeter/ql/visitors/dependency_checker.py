@@ -14,18 +14,21 @@ class DependencyChecker:
     def warn(self, message):
         self.errors.append(WarningMessage(message))
 
+    def check(self, node):
+        self.visit(node)
+
     def visit(self, node):
-        node.accept(self)
+        return node.accept(self)
 
     def visit_form(self, node):
         for element in node.body:
-            element.accept(self)
+            self.visit(element)
 
     def visit_question(self, node):
         return [node.name]
 
     def visit_computed_question(self, node):
-        dependencies = DependencyFinder().visit(node)
+        dependencies = DependencyFinder().find(node)
 
         if node.name in dependencies:
             self.error("computed question \"{}\" has dependency on "
@@ -49,8 +52,8 @@ class DependencyChecker:
         return [node.name]
 
     def visit_if_conditional(self, node):
-        dependencies = DependencyFinder().visit(node)
-        scope = sum([element.accept(self) for element in node.ifbody], [])
+        dependencies = DependencyFinder().find(node)
+        scope = sum([self.visit(element) for element in node.ifbody], [])
 
         for dependency in dependencies:
             if dependency in scope:
@@ -59,8 +62,8 @@ class DependencyChecker:
         return scope
 
     def visit_ifelse_conditional(self, node):
-        dependencies = DependencyFinder().visit(node)
-        scope = sum([element.accept(self) for element in node.ifbody +
+        dependencies = DependencyFinder().find(node)
+        scope = sum([self.visit(element) for element in node.ifbody +
                      node.elsebody], [])
 
         for dependency in dependencies:

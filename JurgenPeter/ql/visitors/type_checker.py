@@ -16,40 +16,42 @@ class TypeChecker:
     def warn(self, message):
         self.errors.append(WarningMessage(message))
 
-    # TODO: rename
+    def check(self, node):
+        self.visit(node)
+
     def visit(self, node):
-        node.accept(self)
+        return node.accept(self)
 
     def visit_form(self, node):
         for element in node.body:
-            element.accept(self)
+            self.visit(element)
 
     def visit_question(self, node):
         pass
 
     def visit_computed_question(self, node):
-        node.computation.accept(self)
+        self.visit(node.computation)
 
     def visit_if_conditional(self, node):
-        conditiontype = node.condition.accept(self)
+        conditiontype = self.visit(node.condition)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
 
     def visit_ifelse_conditional(self, node):
-        conditiontype = node.condition.accept(self)
+        conditiontype = self.visit(node.condition)
         if conditiontype is not None and conditiontype != Datatype.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
         for element in node.elsebody:
-            element.accept(self)
+            self.visit(element)
 
     def visit_plusop(self, node):
-        right_type = node.right.accept(self)
+        right_type = self.visit(node.right)
         if right_type is None:
             return None
         if right_type in self.arithmetic_datatypes:
@@ -58,7 +60,7 @@ class TypeChecker:
         return None
 
     def visit_minop(self, node):
-        right_type = node.right.accept(self)
+        right_type = self.visit(node.right)
         if right_type is None:
             return None
         if right_type in self.arithmetic_datatypes:
@@ -67,7 +69,7 @@ class TypeChecker:
         return None
 
     def visit_notop(self, node):
-        right_type = node.right.accept(self)
+        right_type = self.visit(node.right)
         if right_type is None:
             return None
         if right_type == Datatype.boolean:
@@ -76,8 +78,8 @@ class TypeChecker:
         return None
 
     def visit_arithmetic_binop(self, node, op):
-        left_type = node.left.accept(self)
-        right_type = node.right.accept(self)
+        left_type = self.visit(node.left)
+        right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
         if (left_type in self.arithmetic_datatypes and
@@ -87,8 +89,8 @@ class TypeChecker:
         return None
 
     def visit_comparison_binop(self, node, op):
-        left_type = node.left.accept(self)
-        right_type = node.right.accept(self)
+        left_type = self.visit(node.left)
+        right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
         if (left_type in self.arithmetic_datatypes and
@@ -98,8 +100,8 @@ class TypeChecker:
         return None
 
     def visit_equality_binop(self, node, op):
-        left_type = node.left.accept(self)
-        right_type = node.right.accept(self)
+        left_type = self.visit(node.left)
+        right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
         if left_type == right_type:
@@ -108,8 +110,8 @@ class TypeChecker:
         return None
 
     def visit_logical_binop(self, node, op):
-        left_type = node.left.accept(self)
-        right_type = node.right.accept(self)
+        left_type = self.visit(node.left)
+        right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
         if left_type == right_type == Datatype.boolean:
@@ -121,7 +123,15 @@ class TypeChecker:
         return self.visit_arithmetic_binop(node, "*")
 
     def visit_divop(self, node):
-        return self.visit_arithmetic_binop(node, "/")
+        left_type = self.visit(node.left)
+        right_type = self.visit(node.right)
+        if left_type is None or right_type is None:
+            return None
+        if (left_type in self.arithmetic_datatypes and
+                right_type in self.arithmetic_datatypes):
+            return Datatype.decimal
+        self.error("/ operator has incompatible datatypes")
+        return None
 
     def visit_addop(self, node):
         return self.visit_arithmetic_binop(node, "+")

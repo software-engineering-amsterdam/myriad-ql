@@ -17,9 +17,9 @@ def main():
     errors = []
     symboltable = {}
 
-    SymbolChecker(symboltable, errors).visit(form)
-    TypeChecker(symboltable, errors).visit(form)
-    DependencyChecker(errors).visit(form)
+    SymbolChecker(symboltable, errors).check(form)
+    TypeChecker(symboltable, errors).check(form)
+    DependencyChecker(errors).check(form)
 
     for error in errors:
         print(error)

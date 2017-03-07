@@ -14,12 +14,15 @@ class SymbolChecker:
     def warn(self, message):
         self.errors.append(WarningMessage(message))
 
+    def check(self, node):
+        self.visit(node)
+
     def visit(self, node):
         node.accept(self)
 
     def visit_form(self, node):
         for element in node.body:
-            element.accept(self)
+            self.visit(element)
 
     def visit_question(self, node):
         if node.label not in self.labels:
@@ -45,10 +48,10 @@ class SymbolChecker:
 
     def visit_if_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
 
     def visit_ifelse_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
         for element in node.elsebody:
-            element.accept(self)
+            self.visit(element)

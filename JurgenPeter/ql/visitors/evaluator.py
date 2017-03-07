@@ -17,49 +17,49 @@ class Evaluator:
         return node.accept(self)
 
     def visit_plusop(self, node):
-        return + node.right.accept(self)
+        return + self.visit(node.right)
 
     def visit_minop(self, node):
-        return - node.right.accept(self)
+        return - self.visit(node.right)
 
     def visit_notop(self, node):
-        return not node.right.accept(self)
+        return not self.visit(node.right)
 
     def visit_mulop(self, node):
-        return node.left.accept(self) * node.right.accept(self)
+        return self.visit(node.left) * self.visit(node.right)
 
     def visit_divop(self, node):
-        return node.left.accept(self) / node.right.accept(self)
+        return self.visit(node.left) / self.visit(node.right)
 
     def visit_addop(self, node):
-        return node.left.accept(self) + node.right.accept(self)
+        return self.visit(node.left) + self.visit(node.right)
 
     def visit_subop(self, node):
-        return node.left.accept(self) - node.right.accept(self)
+        return self.visit(node.left) - self.visit(node.right)
 
     def visit_ltop(self, node):
-        return node.left.accept(self) < node.right.accept(self)
+        return self.visit(node.left) < self.visit(node.right)
 
     def visit_leop(self, node):
-        return node.left.accept(self) <= node.right.accept(self)
+        return self.visit(node.left) <= self.visit(node.right)
 
     def visit_gtop(self, node):
-        return node.left.accept(self) > node.right.accept(self)
+        return self.visit(node.left) > self.visit(node.right)
 
     def visit_geop(self, node):
-        return node.left.accept(self) >= node.right.accept(self)
+        return self.visit(node.left) >= self.visit(node.right)
 
     def visit_eqop(self, node):
-        return node.left.accept(self) == node.right.accept(self)
+        return self.visit(node.left) == self.visit(node.right)
 
     def visit_neop(self, node):
-        return node.left.accept(self) != node.right.accept(self)
+        return self.visit(node.left) != self.visit(node.right)
 
     def visit_andop(self, node):
-        return node.left.accept(self) and node.right.accept(self)
+        return self.visit(node.left) and self.visit(node.right)
 
     def visit_orop(self, node):
-        return node.left.accept(self) or node.right.accept(self)
+        return self.visit(node.left) or self.visit(node.right)
 
     def visit_variable(self, node):
         value = self.environment.get(node.name, None)
