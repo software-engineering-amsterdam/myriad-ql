@@ -15,17 +15,12 @@ type Page
 
 type Section
     = SingleChildSection String SectionChild
-    | MultiChildSection String (List SectionChild)
-
-
-
---  TODO: Rename Question to QuestionRef
+    | MultiChildSection String (List SectionChild) (List DefaultValueConfig)
 
 
 type SectionChild
     = SubSection Section
     | Field Question
-    | Config DefaultValueConfig
 
 
 type Question

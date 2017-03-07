@@ -41,7 +41,8 @@ section =
                     <*> (whitespace1 *> sectionChild)
                 , MultiChildSection
                     <$> (string "section" *> whitespace1 *> quotedString)
-                    <*> (whitespace1 *> braces (trimmed (sepBy whitespace1 sectionChild)))
+                    <*> (whitespace1 *> string "{" *> whitespace *> (sepBy whitespace1 sectionChild))
+                    <*> (whitespace *> sepBy whitespace1 defaultValueConfig <* whitespace <* string "}")
                 ]
 
 
@@ -52,7 +53,6 @@ sectionChild =
             choice
                 [ SubSection <$> section
                 , Field <$> question
-                , Config <$> defaultValueConfig
                 ]
 
 
