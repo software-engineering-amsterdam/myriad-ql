@@ -21,7 +21,7 @@ module QL
         [BooleanType]
       end
 
-      def eval
+      def to_value
         return true if value == 'true'
         return false if value == 'false'
       end
@@ -32,7 +32,7 @@ module QL
         [IntegerType]
       end
 
-      def to_i
+      def to_value
         value.to_i
       end
     end
@@ -42,7 +42,7 @@ module QL
         [StringType]
       end
 
-      def eval
+      def to_value
         value.to_s
       end
     end

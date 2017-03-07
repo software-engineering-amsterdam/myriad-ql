@@ -19,7 +19,7 @@ ql_parse_tree = QL::Parser::Parser.new.parse(ql_contents)
 pp ql_parse_tree
 ql_ast = QL::Parser::Transformer.new.apply(ql_parse_tree)
 pp ql_ast
-pp ql_ast.eval
+pp ql_ast
 # ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
 # pp ql_notifications
 

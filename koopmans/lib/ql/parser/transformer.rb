@@ -31,13 +31,7 @@ module QL
     #   end
     # }
 
-    Seq    = Struct.new(:sequence) {
-      def eval
-        sequence.reduce { |left, operation|
-          pp "calculation: #{left}#{left.eval} #{operation} #{operation.right}#{operation.right.eval}"
-          operation.call(left) }
-      end
-    }
+
     # LeftOp = Struct.new(:operation, :right) {
     #   def call(left)
     #     left = left.eval
@@ -50,34 +44,6 @@ module QL
 
     class Transformer < Parslet::Transform
       include AST
-      # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
-      # rule(operator: simple(:operator), right: simple(:integer_literal)) { LeftOp.new(operator, integer_literal) }
-
-      # # arithmetic: + - / *
-      rule(operator: '*', right: simple(:right)) { Multiply.new(right) }
-      rule(operator: '/', right: simple(:right)) { Divide.new(right) }
-      rule(operator: '+', right: simple(:right)) { Add.new(right) }
-      rule(operator: '-', right: simple(:right)) { Subtract.new(right) }
-
-      # comparison: == != < > <= >=
-      rule(operator: '==', right: simple(:right)) { Equal.new(right) }
-      rule(operator: '!=', right: simple(:right)) { NotEqual.new(right) }
-      rule(operator: '<', right: simple(:right)) { Less.new(right) }
-      rule(operator: '>', right: simple(:right)) { Greater.new(right) }
-      rule(operator: '<=', right: simple(:right)) { LessEqual.new(right) }
-      rule(operator: '>=', right: simple(:right)) { GreaterEqual.new(right) }
-
-      # boolean: && ||
-      rule(operator: '&&', right: simple(:right)) { And.new(right) }
-      rule(operator: '||', right: simple(:right)) { Or.new(right) }
-      #
-      # rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Add.new(left, right) }
-
-
-
-      rule(left: simple(:integer_literal)) { integer_literal }
-      rule(sequence(:sequence)) { Seq.new(sequence) }
-
       # variable
       rule(variable: simple(:name)) { Variable.new(name) }
 
@@ -96,7 +62,7 @@ module QL
       # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
 
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
-      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), expression: subtree(:expression) }) { Question.new(string_literal, variable, type, expression) }
+      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) { Question.new(string_literal, variable, type, assignment) }
 
       # if statement
       rule(if_statement: { expression: subtree(:expression), body: subtree(:body) }) { IfStatement.new(expression, body) }
@@ -110,23 +76,27 @@ module QL
       rule(negation: '!', boolean_literal: simple(:boolean_literal)) { BooleanNegation.new(boolean_literal) }
       rule(negation: '-', integer_literal: simple(:integer_literal)) { IntegerNegation.new(integer_literal) }
 
-      # boolean: && ||
-      rule(left: subtree(:left), operator: '&&', right: subtree(:right)) { And.new(left, right) }
-      rule(left: subtree(:left), operator: '||', right: subtree(:right)) { Or.new(left, right) }
-
       # arithmetic: + - / *
-      rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Add.new(left, right) }
-      rule(left: subtree(:left), operator: '-', right: subtree(:right)) { Subtract.new(left, right) }
-      rule(left: subtree(:left), operator: '/', right: subtree(:right)) { Divide.new(left, right) }
-      rule(left: subtree(:left), operator: '*', right: subtree(:right)) { Multiply.new(left, right) }
+      rule(operator: '*', right: simple(:right)) { Multiply.new(right) }
+      rule(operator: '/', right: simple(:right)) { Divide.new(right) }
+      rule(operator: '+', right: simple(:right)) { Add.new(right) }
+      rule(operator: '-', right: simple(:right)) { Subtract.new(right) }
 
       # comparison: == != < > <= >=
-      rule(left: subtree(:left), operator: '==', right: subtree(:right)) { Equal.new(left, right) }
-      rule(left: subtree(:left), operator: '!=', right: subtree(:right)) { NotEqual.new(left, right) }
-      rule(left: subtree(:left), operator: '<', right: subtree(:right)) { Less.new(left, right) }
-      rule(left: subtree(:left), operator: '>', right: subtree(:right)) { Greater.new(left, right) }
-      rule(left: subtree(:left), operator: '<=', right: subtree(:right)) { LessEqual.new(left, right) }
-      rule(left: subtree(:left), operator: '>=', right: subtree(:right)) { GreaterEqual.new(left, right) }
+      rule(operator: '==', right: simple(:right)) { Equal.new(right) }
+      rule(operator: '!=', right: simple(:right)) { NotEqual.new(right) }
+      rule(operator: '<', right: simple(:right)) { Less.new(right) }
+      rule(operator: '>', right: simple(:right)) { Greater.new(right) }
+      rule(operator: '<=', right: simple(:right)) { LessEqual.new(right) }
+      rule(operator: '>=', right: simple(:right)) { GreaterEqual.new(right) }
+
+      # boolean: && ||
+      rule(operator: '&&', right: simple(:right)) { And.new(right) }
+      rule(operator: '||', right: simple(:right)) { Or.new(right) }
+
+      # expression
+      rule(left: simple(:integer_literal)) { integer_literal }
+      rule(sequence(:sequence)) { Sequence.new(sequence) }
     end
   end
 end

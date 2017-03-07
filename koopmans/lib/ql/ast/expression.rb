@@ -6,6 +6,19 @@ module QL
       end
     end
 
+    class Sequence
+      attr_reader :sequence
+
+      def initialize(sequence)
+        @sequence = sequence
+      end
+
+      # makes sure all sequences are calculated in correct order
+      def eval
+        sequence.reduce { |left, operation| operation.call(left) }
+      end
+    end
+
     class Negation < Expression
       attr_accessor :expression
 
@@ -46,9 +59,9 @@ module QL
       end
 
       def call(left)
-        left = left.eval
+        left  = left.eval
         right = self.right.eval
-        IntegerLiteral.new(self.eval(left.to_i, right.to_i))
+        self.eval(left.to_value, right.to_value)
       end
     end
 
@@ -57,17 +70,21 @@ module QL
       def accept_types
         [BooleanType]
       end
+
+      def call(left)
+        BooleanLiteral.new(super)
+      end
     end
 
     class And < BooleanExpression
-      def eval
-        "#{left.eval} && #{right.eval}"
+      def eval(left, right)
+        left && right
       end
     end
 
     class Or < BooleanExpression
-      def eval
-        "#{left.eval} || #{right.eval}"
+      def eval(left, right)
+        left || right
       end
     end
 
@@ -76,12 +93,13 @@ module QL
       def accept_types
         [IntegerType, MoneyType]
       end
+
+      def call(left)
+        IntegerLiteral.new(super)
+      end
     end
 
     class Subtract < ArithmeticExpression
-      def to_operator
-        '-'
-      end
       def eval(left, right)
         left - right
       end
@@ -91,25 +109,17 @@ module QL
       def eval(left, right)
         left + right
       end
-
-      def to_operator
-        '+'
-      end
     end
 
     class Multiply < ArithmeticExpression
       def eval(left, right)
         left * right
       end
-
-      def to_operator
-        '*'
-      end
     end
 
     class Divide < ArithmeticExpression
-      def eval
-        "#{left.eval} / #{right.eval}"
+      def eval(left, right)
+        left / right
       end
     end
 
@@ -118,17 +128,21 @@ module QL
       def accept_types
         [BooleanType, IntegerType, StringType, MoneyType]
       end
+
+      def call(left)
+        BooleanLiteral.new(super)
+      end
     end
 
     class Equal< ComparisonEqual
-      def eval
-        "#{left.eval} == #{right.eval}"
+      def eval(left, right)
+        left == right
       end
     end
 
     class NotEqual < ComparisonEqual
-      def eval
-        "#{left.eval} != #{right.eval}"
+      def eval(left, right)
+        left != right
       end
     end
 
@@ -137,29 +151,33 @@ module QL
       def accept_types
         [IntegerType, MoneyType]
       end
+
+      def call(left)
+        BooleanLiteral.new(super)
+      end
     end
 
     class Less < ComparisonOrdering
-      def eval
-        "#{left.eval} < #{right.eval}"
+      def eval(left, right)
+        left < right
       end
     end
 
     class Greater < ComparisonOrdering
-      def eval
-        "#{left.eval} > #{right.eval}"
+      def eval(left, right)
+        left > right
       end
     end
 
     class LessEqual < ComparisonOrdering
-      def eval
-        "#{left.eval} <= #{right.eval}"
+      def eval(left, right)
+        left <= right
       end
     end
 
     class GreaterEqual < ComparisonOrdering
-      def eval
-        "#{left.eval} >= #{right.eval}"
+      def eval(left, right)
+        left >= right
       end
     end
   end

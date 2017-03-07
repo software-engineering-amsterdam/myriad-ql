@@ -4,7 +4,7 @@ module QL
   module Parser
     # parser for forms
     class Parser < Parslet::Parser
-      root(:expression)
+      root(:form)
 
       # spaces, breaks, tabs
       rule(:_) { match('\s').repeat(1).maybe }
