@@ -18,7 +18,6 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    // Why can't we access this when it's protected and it's a child
     public void addDeclaration(Set<NamedNode> set) {
         // Intentionally left blank
     }

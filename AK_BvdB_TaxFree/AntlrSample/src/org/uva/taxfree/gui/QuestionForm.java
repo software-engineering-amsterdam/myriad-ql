@@ -24,7 +24,7 @@ public class QuestionForm {
         mFormNode.printDeclarations();
     }
 
-    private JFrame generateForm() {
+    private void generateForm() {
         JFrame frame = new JFrame(mFormNode.toString());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(createComponents());
@@ -32,7 +32,6 @@ public class QuestionForm {
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(640, 480));
         frame.pack();
-        return frame;
     }
 
     private JPanel createComponents() {
