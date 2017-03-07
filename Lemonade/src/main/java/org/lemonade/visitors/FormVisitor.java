@@ -14,6 +14,9 @@ import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.types.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,6 +266,15 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitDecimalAtom(QLParser.DecimalAtomContext ctx) {
         return new DecimalLiteral(ctx.DECIMAL().getText());
+    }
+
+    @Override
+    public ASTNode visitDateAtom(QLParser.DateAtomContext ctx) {
+        int day = Integer.parseInt(ctx.date().DOUBLEDIGIT(0).getText());
+        int month = Integer.parseInt(ctx.date().DOUBLEDIGIT(1).getText());
+        int year = Integer.parseInt(ctx.date().QUADDIGIT().getText());
+        System.err.println(String.format("%d %d %d", day, month,year));
+        return new DateLiteral(LocalDate.of(year, month, day));
     }
 
     private Position constructPosition(ParserRuleContext ctx) {

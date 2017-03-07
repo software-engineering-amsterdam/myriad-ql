@@ -24,6 +24,7 @@ import org.lemonade.nodes.expressions.binary.PlusBinary;
 import org.lemonade.nodes.expressions.binary.ProductBinary;
 import org.lemonade.nodes.expressions.literal.BooleanLiteral;
 import org.lemonade.nodes.expressions.literal.ComparableLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
 import org.lemonade.nodes.expressions.literal.DecimalLiteral;
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
 import org.lemonade.nodes.expressions.literal.IntegerLiteral;
@@ -53,10 +54,10 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     @Override
     public Expression visit(Question question) {
         String identifier = question.getIdentifier();
-        Literal<?> literal = question.getValue();
-
-        assert !environment.containsKey(identifier);
-        environment.put(identifier, new UndefinedValue(question.getType()));
+//        Literal<?> literal = question.getValue();
+//
+//        assert !environment.containsKey(identifier);
+//        environment.put(identifier, new UndefinedValue(question.getType()));
         return null;
     }
 
@@ -201,6 +202,11 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     @Override
     public Expression visit(StringLiteral stringValue) {
         return stringValue;
+    }
+
+    @Override
+    public Expression visit(DateLiteral dateLiteral) {
+        return null;
     }
 
     @Override

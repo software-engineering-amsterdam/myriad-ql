@@ -41,10 +41,15 @@ expr
 
 atom
     : BOOLEAN                       #booleanAtom
+    | date                          #dateAtom
     | STR                           #stringAtom
     | IDENT                         #identifierAtom
     | INT                           #integerAtom
     | DECIMAL                       #decimalAtom
+    ;
+
+date
+    : DOUBLEDIGIT '/' DOUBLEDIGIT '/' QUADDIGIT
     ;
 
 label
@@ -111,16 +116,27 @@ BOOLEAN
     : 'true' | 'false'
     ;
 
+DOUBLEDIGIT
+    : DIGIT DIGIT
+    ;
+
+QUADDIGIT
+    : DIGIT DIGIT DIGIT DIGIT
+    ;
 INT
-    : ('0'..'9')+
+    : DIGIT+
     ;
 
 DECIMAL
-    : ('0'..'9')+ '.' ('0'..'9')+ 
+    : DIGIT+ '.' DIGIT+
     ;
 
 IDENT
     : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
+
+DIGIT
+    : [0-9]
     ;
 
 STR

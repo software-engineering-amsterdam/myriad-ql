@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ParseTest {
 
     private String simpleForm;
-    private String simpleForm2;
+    private String dateForm;
+
     private FormVisitor visitor = new FormVisitor();
 
     @Before
@@ -28,20 +29,15 @@ public class ParseTest {
                 "if(((-2) + 4.0) * 8.0 >= tmp1) \n{tmp: \"yu\" money}" +
                 "\ntmp1: \"ben dubbel\" money}";
 
-        simpleForm2 = "form Blader {\n"
-                + "    test : \"Doet dit werken?\" boolean\n"
-                + "    if (test == true) {\n"
-                + "        testNest : \"Blijkbaar?\" boolean\n"
-                + "    }\n"
-                + "    testUnnest : \"Unnest?\" boolean\n"
-                + "    testString : \"Typ eens wat\" string\n"
-                + " }\n";
+        dateForm = "form name {\n" +
+                "tmp1: \"Wanneer?\" date \n" +
+                "if (11/12/2001 > tmp1) {tmp: \"oke?\" boolean}}";
 
     }
 
     @Test
     public void astTest() throws IOException{
-        ANTLRInputStream input = new ANTLRInputStream(new StringReader(simpleForm2));
+        ANTLRInputStream input = new ANTLRInputStream(new StringReader(dateForm));
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QLParser parser = new QLParser(tokens);
