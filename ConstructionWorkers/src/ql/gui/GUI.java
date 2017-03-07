@@ -1,9 +1,14 @@
+/**
+ * GUI.java.
+ */
+
 package ql.gui;
 
 import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
+import ql.gui.components.FormFrame;
 import ql.gui.evaluation.Evaluator;
 import ql.gui.components.fields.ComputerQuestionField;
 import ql.gui.components.fields.Field;
@@ -19,35 +24,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by LGGX on 22-Feb-17.
- */
 public class GUI implements GUIInterface{
 
-    private final Map<Field, List<IfStatement>> questionsWithConditions;
-
+    private final GUIManager manager;
     private final Context context;
     private final Evaluator evaluator;
     private final GUIFieldFactory fieldFactory;
     private final QuestionData questionData;
-    private final GUIManager manager;
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
+    private final Map<Field, List<IfStatement>> questionsWithConditions;
 
-    public GUI(Form form, WidgetFactory widgetFactory, GUIManager manager, Context context) {
+    public GUI(Form form, Context context) {
+        manager = new GUIManager(new FormFrame(form.getIdentifier().getName()));
         this.context = context;
-        this.evaluator = new Evaluator(context);
+        evaluator = new Evaluator(context);
+        WidgetFactory widgetFactory = new WidgetFactory();
+        fieldFactory = new GUIFieldFactory(this, context, widgetFactory);
 
-        this.manager = manager;
-        this.fieldFactory = new GUIFieldFactory(this, context, widgetFactory);
-
-        this.questionData = new QuestionData(form);
-
-        this.questionsWithConditions = new OptionalQuestions(this.questionData, context, this.fieldFactory).getMap();
-
-        this.computedQuestions = this.questionData.getComputedQuestions();
+        questionData = new QuestionData(form);
+        computedQuestions = questionData.getComputedQuestions();
+        questionsWithConditions = new OptionalQuestions(questionData, context, fieldFactory).getMap();
     }
-
 
     @Override
     public void getGUIChanges(GUIAbstractComponent mediator) {

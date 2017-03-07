@@ -90,6 +90,8 @@ public class QL {
         return fileExtension.equals(ALLOWED_EXTENSION);
     }
 
+    // TODO: duplicate code; refactor!
+
     private Form getAST(InputStream inputStream) throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
         QLLexer lexer = new QLLexer(input);
@@ -119,8 +121,7 @@ public class QL {
     }
 
     private void buildGUI(Form ast, Context context) {
-        GUI gui = new GUI (ast, new WidgetFactory(), new GUIManager(new FormFrame(ast.getIdentifier().getName())),
-                context);
+        GUI gui = new GUI (ast, context);
         gui.showUI();
     }
 }
