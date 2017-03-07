@@ -57,19 +57,8 @@ class Gui(FormVisitor, TypeVisitor):
         if_else_container = QGroupBox(node.parent)
         if_else_layout = QVBoxLayout()
 
-        if_container = QGroupBox(if_else_container)
-        if_layout = QVBoxLayout()
-        for statement in node.statements:
-            statement.parent = node.parent
-            if_layout.addWidget(statement.apply(self))
-        if_container.setLayout(if_layout)
-
-        else_container = QGroupBox(if_else_container)
-        else_layout = QVBoxLayout()
-        for statement in node.else_statement_list:
-            statement.parent = node.parent
-            else_layout.addWidget(statement.apply(self))
-        else_container.setLayout(else_layout)
+        if_container = self.create_conditional_container(node, node.statements)
+        else_container = self.create_conditional_container(node, node.else_statement_list)
 
         if_else_layout.addWidget(if_container)
         if_else_layout.addWidget(else_container)
@@ -78,13 +67,17 @@ class Gui(FormVisitor, TypeVisitor):
         return if_else_container
 
     def conditional_if(self, node):
+        container = self.create_conditional_container(node, node.statements)
+        self.conditional_if_list.append((container, node))
+        return container
+
+    def create_conditional_container(self, node, statements):
         container = QGroupBox(node.parent)
         layout = QVBoxLayout()
-        for statement in node.statements:
+        for statement in statements:
             statement.parent = node.parent
             layout.addWidget(statement.apply(self))
         container.setLayout(layout)
-        self.conditional_if_list.append((container, node))
         return container
 
     def trigger_conditional_if(self):
