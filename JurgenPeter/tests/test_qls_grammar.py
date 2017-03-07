@@ -21,13 +21,35 @@ class TestGrammar(TestCase):
         (grammar.section, "section \"x\" {}"),
         (grammar.section, "section \"x\" {question y}"),
         (grammar.section, "section \"x\" {question y question z}"),
-        (grammar.section, "section \"x\" {section \"y\" {question z} question zz}"),
-        (grammar.section, "section \"x\" {question y default string widget text}"),
+        (grammar.section, "section \"x\" {"
+                          "     section \"y\" {"
+                          "         question z"
+                          "     }"
+                          "     question zz"
+                          "}"),
+        (grammar.section, "section \"x\" {"
+                          "     question y"
+                          "     default string widget text"
+                          "}"),
         (grammar.page, "page p {}"),
-        (grammar.page, "page p {section \"x\" {section \"y\" {question z} question zz}}"),
-        (grammar.page, "page p {section \"x\" {} default string widget text}"),
-        (grammar.layout, "stylesheet s {page p {} page q {}}"),
-        (grammar.layout, "stylesheet s {page p {} default integer widget slider}"),
+        (grammar.page, "page p {"
+                       "    section \"x\" {"
+                       "        section \"y\" {"
+                       "            question z"
+                       "        }"
+                       "        question zz"
+                       "    }"
+                       "}"),
+        (grammar.page, "page p {"
+                       "    section \"x\" {}"
+                       "    default string widget text"
+                       "}"),
+        (grammar.layout, "stylesheet s {page p {}"
+                         "              page q {}}"),
+        (grammar.layout, "stylesheet s {"
+                         "  page p {}"
+                         "  default integer widget slider"
+                         "}"),
     ]
 
     def testCorrectSentences(self):
@@ -95,7 +117,8 @@ class TestGrammar(TestCase):
                           [QuestionAnchor("y"),
                            QuestionAnchor("z")],
                           [DefaultStyling(Datatype.boolean,
-                                          [WidgetTypeAttribute(CheckBoxWidget)]),
+                                          [WidgetTypeAttribute(
+                                              CheckBoxWidget)]),
                            DefaultStyling(Datatype.integer,
                                           [WidgetTypeAttribute(
                                              IntegerEntryWidget)])])),

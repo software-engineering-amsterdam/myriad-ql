@@ -21,7 +21,8 @@ integer_arguments = Suppress("(") + integer + Suppress(",") + \
 
 string = QuotedString("\"")
 
-string_arguments = Suppress("(") + string + Suppress(",") + string + Suppress(")")
+string_arguments = Suppress("(") + string + Suppress(",") + string +\
+                   Suppress(")")
 
 widget_text = Suppress("text").setParseAction(
     lambda _: EntryWidget)
@@ -69,10 +70,12 @@ font_size_attribute.setParseAction(lambda tokens: FontSizeAttribute(*tokens))
 weight = Literal("normal") ^ Literal("bold")
 
 font_weight_attribute = Suppress("weight") + Suppress(":") + weight
-font_weight_attribute.setParseAction(lambda tokens: FontWeightAttribute(*tokens))
+font_weight_attribute.setParseAction(
+    lambda tokens: FontWeightAttribute(*tokens))
 
 font_family_attribute = Suppress("family") + Suppress(":") + string
-font_family_attribute.setParseAction(lambda tokens: FontFamilyAttribute(*tokens))
+font_family_attribute.setParseAction(
+    lambda tokens: FontFamilyAttribute(*tokens))
 
 width_attribute = Suppress("width") + Suppress(":") + integer
 width_attribute.setParseAction(lambda tokens: WidthAttribute(*tokens))
@@ -119,10 +122,12 @@ sectionbody.setParseAction(lambda tokens: [tokens.asList()])
 
 pagebody = sectionbody
 
-unstyled_page = Suppress("page") + identifier + Suppress("{") + pagebody + Suppress("}")
+unstyled_page = Suppress("page") + identifier + Suppress("{") + pagebody +\
+                Suppress("}")
 unstyled_page.setParseAction(lambda tokens: Page(*tokens))
 
-styled_page = Suppress("page") + identifier + Suppress("{") + pagebody + defaults + Suppress("}")
+styled_page = Suppress("page") + identifier + Suppress("{") + pagebody +\
+              defaults + Suppress("}")
 styled_page.setParseAction(lambda tokens: StyledPage(*tokens))
 
 page = unstyled_page ^ styled_page
@@ -139,6 +144,7 @@ styled_layout = Suppress("stylesheet") + identifier + Suppress("{") +\
 styled_layout.setParseAction(lambda tokens: StyledLayout(*tokens))
 
 layout = unstyled_layout ^ styled_layout
+
 
 def parse_file(filename):
     return layout.parseFile(filename)[0]

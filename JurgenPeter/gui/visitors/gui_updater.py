@@ -15,6 +15,7 @@ class GuiUpdater:
     def pop_condition(self):
         self.conditions.pop()
 
+    # TODO: remove 'runtime stack'
     def visit(self, node):
         node.accept(self)
 
