@@ -24,8 +24,8 @@ public abstract class ExpressionNode extends ConditionNode {
         mRight.addUsedVariables(set);
     }
 
-//    @Override
-    public boolean isSameType() {
+    @Override
+    public boolean isValid() {
         return mLeft.getClass().equals(mRight.getClass());
     }
 }

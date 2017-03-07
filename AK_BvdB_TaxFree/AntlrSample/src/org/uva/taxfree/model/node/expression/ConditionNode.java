@@ -24,6 +24,8 @@ public abstract class ConditionNode extends Node {
 
     public abstract String resolveValue();
 
+    public abstract boolean isValid();
+
 //    public boolean isSameType(ConditionNode node) {
 //        return this.getClass().equals(node.getClass());
 //    }
@@ -33,7 +35,7 @@ public abstract class ConditionNode extends Node {
     public boolean isBoolean() {
         boolean isTrue = "true".equals(evaluate());
         boolean isFalse = "false".equals(evaluate());
-        return (isTrue || isFalse);
+        return isTrue || isFalse;
     }
 
 }
