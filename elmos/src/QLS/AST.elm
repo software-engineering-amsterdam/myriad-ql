@@ -48,3 +48,5 @@ type Widget
     = Radio (List String)
     | Spinbox
     | Checkbox
+    | Text
+    | Slider (List Int)

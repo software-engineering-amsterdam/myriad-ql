@@ -117,24 +117,42 @@ renderField env visibleFields defaultValueConfigs name =
             div [] [ text "field not visible" ]
 
         Just field ->
-            viewField env field
+            viewField env field ( Nothing, [] )
 
 
-viewField : Environment -> Field -> Html Msg
-viewField env field =
-    BaseWidget.container (visibleFieldWidgetConfig env [] field) <|
-        case Field.fieldValueType field of
-            StringType ->
-                StringWidget.view
+viewField : Environment -> Field -> ( Maybe Widget, List Style ) -> Html Msg
+viewField env field ( maybeWidget, styles ) =
+    BaseWidget.container (visibleFieldWidgetConfig env styles field) <|
+        case maybeWidget of
+            Just w ->
+                asRenderable w
 
-            BooleanType ->
-                BooleanWidget.view
+            Nothing ->
+                case Field.fieldValueType field of
+                    StringType ->
+                        StringWidget.view
 
-            IntegerType ->
-                IntegerWidget.view
+                    BooleanType ->
+                        BooleanWidget.view
 
-            MoneyType ->
-                FloatWidget.view
+                    IntegerType ->
+                        IntegerWidget.view
+
+                    MoneyType ->
+                        FloatWidget.view
+
+
+asRenderable : Widget -> (WidgetContext Msg -> Html Msg)
+asRenderable w =
+    case w of
+        Spinbox ->
+            always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
+
+        Radio _ ->
+            always (div [] [ text "TODO IMPLEMENT RADIO" ])
+
+        Checkbox ->
+            BooleanWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg
@@ -146,7 +164,7 @@ visibleFieldWidgetConfig env styles field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = True
-            , style = []
+            , style = (List.map styleAsPair styles)
             }
 
         Computed label identifier _ _ ->
@@ -155,5 +173,21 @@ visibleFieldWidgetConfig env styles field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = False
-            , style = []
+            , style = (List.map styleAsPair styles)
             }
+
+
+styleAsPair : Style -> ( String, String )
+styleAsPair x =
+    case x of
+        Width n ->
+            ( "width", toString n ++ "px" )
+
+        Font font ->
+            ( "font", font )
+
+        FontSize fontSize ->
+            ( "size", toString fontSize ++ "px" )
+
+        Color c ->
+            ( "color", c )
