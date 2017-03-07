@@ -30,25 +30,27 @@ class TestSymbolChecker(TestCase):
     def testSymbolTables(self):
         for form, table in self.symboltables:
             ast = parse_string(form)
-            _, _, symboltable = SymbolChecker().visit(ast)
+            symboltable = {}
+            SymbolChecker(symboltable).visit(ast)
             self.assertEqual(symboltable, table)
 
     forms = [
         ("form Name {}", 0, 0),
         ("form Name {"
          "  a: \"label 1\" integer"
-         "  a: \"label 2\" integer }", 1, 0),
+         "  a: \"label 2\" integer }", 1),
         ("form Name {"
          "  a: \"label 1\" integer"
-         "  b: \"label 1\" integer }", 0, 1),
+         "  b: \"label 1\" integer }", 1),
     ]
 
     def testSymbolErrors(self):
-        for form, e, w in self.forms:
+        for form, e in self.forms:
             ast = parse_string(form)
-            errors, warnings, _ = SymbolChecker().visit(ast)
+            symboltable = {}
+            errors = []
+            SymbolChecker(symboltable, errors).visit(ast)
             self.assertEqual(len(errors), e)
-            self.assertEqual(len(warnings), w)
 
 
 class TestTypeChecker(TestCase):
@@ -70,64 +72,57 @@ class TestTypeChecker(TestCase):
     def testTypeErrors(self):
         for form, e, in self.forms:
             ast = parse_string(form)
-            _, _, symboltable = SymbolChecker().visit(ast)
-            errors, _ = TypeChecker(symboltable).visit(ast)
+            symboltable = {}
+            SymbolChecker(symboltable).visit(ast)
+            errors = []
+            TypeChecker(symboltable, errors).visit(ast)
             self.assertEqual(len(errors), e)
 
 
 class TestDependencyChecker(TestCase):
 
     forms = [
-        ("form Name {}", 0, 0),
+        ("form Name {}", 0),
         ("form Name {"
          "  a: \"label 1\" integer = b"
-         "  b: \"label 2\" integer = a }", 1, 0),
+         "  b: \"label 2\" integer = a }", 1),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  b: \"label 2\" integer = c"
-         "  c: \"label 3\" integer = a }", 1, 0),
+         "  c: \"label 3\" integer = a }", 1),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  if true {"
          "    b: \"label 2\" integer = c"
          "    c: \"label 3\" integer = d"
-         "    d: \"label 4\" integer = a } }", 1, 0),
+         "    d: \"label 4\" integer = a } }", 1),
         ("form Name {"
          "  a: \"label 1\" integer = b"
          "  b: \"label 2\" integer = a"
-         "  c: \"label 3\" integer = a }", 1, 0),
+         "  c: \"label 3\" integer = a }", 1),
         ("form Name {"
          "  a: \"label 1\" integer = b + c"
          "  b: \"label 2\" integer = a"
-         "  c: \"label 3\" integer = a }", 3, 0),
+         "  c: \"label 3\" integer = a }", 3),
         ("form Name {"
          "  if a > 0 {"
-         "    a: \"label 1\" integer } }", 1, 0),
+         "    a: \"label 1\" integer } }", 1),
         ("form Name {"
          "  if a > 0 { }"
-         " else {"
-         "    a: \"label 1\" integer } }", 1, 0),
+         "  else {"
+         "    a: \"label 1\" integer } }", 1),
         ("form Name {"
          "  if a > 0 {"
          "    a: \"label 1\" integer }"
-         " else { } }", 1, 0),
-        ("form Name {"
-         "a: \"label 1\" integer = 0"
-         "  if a > 0 { } }", 0, 1),
-        ("form Name {"
-         "a: \"label 1\" integer"
-         "b: \"label 2\" integer = 2 * a"
-         "  if b > 0 { } }", 0, 0),
-        ("form Name {"
-         "a: \"label 1\" integer = 2 * a }", 1, 0),
+         "  else { } }", 1),
     ]
 
     def testDependencyErrors(self):
-        for form, e, w, in self.forms:
+        for form, e in self.forms:
             ast = parse_string(form)
-            errors, warnings = DependencyChecker().visit(ast)
+            errors = []
+            DependencyChecker(errors).visit(ast)
             self.assertEqual(len(errors), e)
-            self.assertEqual(len(warnings), w)
 
 if __name__ == "__main__":
     main()

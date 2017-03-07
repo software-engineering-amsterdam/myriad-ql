@@ -1,26 +1,24 @@
 from ql.ast import Datatype
+from ql.messages import *
 
 
 class TypeChecker:
 
     arithmetic_datatypes = [Datatype.integer, Datatype.decimal]
 
-    def __init__(self, symboltable):
+    def __init__(self, symboltable, errors=[]):
         self.symboltable = symboltable
-        # TODO: Error & warning classes
-        self.errors = []
-        self.warnings = []
+        self.errors = errors
 
     def error(self, message):
-        self.errors.append(message)
+        self.errors.append(ErrorMessage(message))
 
     def warn(self, message):
-        self.warnings.append(message)
+        self.errors.append(WarningMessage(message))
 
     # TODO: rename
     def visit(self, node):
         node.accept(self)
-        return self.errors, self.warnings
 
     def visit_form(self, node):
         for element in node.body:

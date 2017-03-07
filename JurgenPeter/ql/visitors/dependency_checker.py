@@ -1,23 +1,21 @@
 from ql.visitors.dependency_finder import DependencyFinder
+from ql.messages import *
 
 
 class DependencyChecker:
 
-    def __init__(self):
+    def __init__(self, errors=[]):
         self.known_dependencies = {}
-        self.constants = []
-        self.errors = []
-        self.warnings = []
+        self.errors = errors
 
     def error(self, message):
-        self.errors.append(message)
+        self.errors.append(ErrorMessage(message))
 
     def warn(self, message):
-        self.warnings.append(message)
+        self.errors.append(WarningMessage(message))
 
     def visit(self, node):
         node.accept(self)
-        return self.errors, self.warnings
 
     def visit_form(self, node):
         for element in node.body:
@@ -28,9 +26,6 @@ class DependencyChecker:
 
     def visit_computed_question(self, node):
         dependencies = DependencyFinder().visit(node)
-
-        if not dependencies:
-            self.constants.append(node.name)
 
         if node.name in dependencies:
             self.error("computed question \"{}\" has dependency on "
@@ -61,10 +56,6 @@ class DependencyChecker:
             if dependency in scope:
                 self.error("condition depends on question \"{}\" within "
                            "own scope".format(dependency))
-            if dependency in self.constants:
-                self.warn("condition depends on constant computed "
-                          "question \"{}\"".format(dependency))
-
         return scope
 
     def visit_ifelse_conditional(self, node):
@@ -76,8 +67,4 @@ class DependencyChecker:
             if dependency in scope:
                 self.error("condition depends on question \"{}\" within "
                            "own scope".format(dependency))
-            if dependency in self.constants:
-                self.warn("condition depends on constant computed "
-                          "question \"{}\"".format(dependency))
-
         return scope

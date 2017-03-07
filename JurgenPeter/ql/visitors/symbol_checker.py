@@ -1,20 +1,21 @@
+from ql.messages import *
+
+
 class SymbolChecker:
 
-    def __init__(self):
-        self.symboltable = {}
+    def __init__(self, symboltable, errors=[]):
+        self.symboltable = symboltable
         self.labels = []
-        self.errors = []
-        self.warnings = []
+        self.errors = errors
 
     def error(self, message):
-        self.errors.append(message)
+        self.errors.append(ErrorMessage(message))
 
     def warn(self, message):
-        self.warnings.append(message)
+        self.errors.append(WarningMessage(message))
 
     def visit(self, node):
         node.accept(self)
-        return self.errors, self.warnings, self.symboltable
 
     def visit_form(self, node):
         for element in node.body:

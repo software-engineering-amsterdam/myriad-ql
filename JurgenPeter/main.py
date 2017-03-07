@@ -7,14 +7,6 @@ from qls.grammar import parse_file as parse_qls
 from gui.formapp import FormApp
 
 
-def report_error(message):
-    print("\33[31mError: {}\33[39m".format(message))
-
-
-def report_warning(message):
-    print("\33[33mWarning: {}\33[39m".format(message))
-
-
 def main():
 
     filename = "exampleForm.txt"
@@ -22,20 +14,17 @@ def main():
     form = parse_ql(filename)
     Printer().visit(form)
 
-    symbol_errors, symbol_warnings, symboltable = SymbolChecker().visit(form)
-    type_errors, type_warnings = TypeChecker(symboltable).visit(form)
-    dependency_errors, dependency_warnings = DependencyChecker().visit(form)
+    errors = []
+    symboltable = {}
 
-    errors = symbol_errors + type_errors + dependency_errors
-    warnings = symbol_warnings + type_warnings + dependency_warnings
+    SymbolChecker(symboltable, errors).visit(form)
+    TypeChecker(symboltable, errors).visit(form)
+    DependencyChecker(errors).visit(form)
 
-    for e in errors:
-        report_error(e)
+    for error in errors:
+        print(error)
 
-    for w in warnings:
-        report_warning(w)
-
-    if errors:
+    if any(error.critical for error in errors):
         return
 
     layout = parse_qls("examplestylesheet")
