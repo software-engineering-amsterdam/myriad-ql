@@ -1,4 +1,5 @@
 from json import dump
+from sys import argv
 from os.path import isfile, splitext
 
 from gui.formapp import FormApp
@@ -22,22 +23,21 @@ def qls_filename(ql_filename):
 
 
 def main():
-    # if len(argv) < 3:
-    #     print(ErrorMessage("insufficient arguments given, requires input and"
-    #                        "output file names"))
-    #     return
-    #
-    # filename_inp = argv[1]
-    # filename_out = argv[2]
-    #
-    # if not isfile(filename_inp):
-    #     print(ErrorMessage("file {} does not exist".format(filename_inp)))
-    #     return
+    if len(argv) < 3:
+        print(ErrorMessage("insufficient arguments given, requires input and"
+                           "output file names"))
+        return
 
-    filename = "exampleForm.ql"
-    # filename = "wrongForm.ql"
+    form_file = argv[1]
+    dump_file = argv[2]
 
-    form = parse_ql(filename)
+    if not isfile(form_file):
+        print(ErrorMessage("file {} does not exist".format(form_file)))
+        return
+
+    # form_file = "wrongForm.ql"
+
+    form = parse_ql(form_file)
     Printer().print(form)
 
     errors = []
@@ -53,16 +53,16 @@ def main():
     if any(error.critical for error in errors):
         return
 
-    filename_layout = qls_filename(filename)
-    if not isfile(filename_layout):
+    layout_file = qls_filename(form_file)
+    if not isfile(layout_file):
         layout = None
         print(WarningMessage(
-            "qls filename \"{}\" does not exist".format(filename_layout)))
+            "qls filename \"{}\" does not exist".format(layout_file)))
     else:
-        layout = parse_qls(filename_layout)
+        layout = parse_qls(layout_file)
     # TODO: typechecking
 
-    app = FormApp(form, layout=layout, on_exit=lambda form_app: export("output.json", form_app.environment))
+    app = FormApp(form, layout=layout, on_exit=lambda form_app: export(dump_file, form_app.environment))
     app.start()
 
 if __name__ == "__main__":
