@@ -12,6 +12,8 @@ public abstract class QuestionElement {
 
     public abstract void setValue(Value value);
 
+    public abstract boolean isDirty();
+
     public QuestionElement(Question question, Widget widget) {
         this.question = question;
         this.widget = widget;

@@ -23,12 +23,10 @@ public class BooleanQuestionElement extends QuestionElement {
     }
 
     public void addEventActionToListener() {
-        widget.addEventListener(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Checkbox ticked to: " + widget.getValue().getPlainValue());
-                setValue(widget.getValue());
-            }
+        widget.addEventListener(event -> {
+            // flag question as dirty (isDirty returns true)
+            System.out.println("Checkbox ticked to: " + widget.getValue().getPlainValue());
+            setValue(widget.getValue());
         });
     }
 

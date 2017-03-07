@@ -8,10 +8,10 @@ import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 
-public class GUIEval {
+public class GUIEvaluator {
     private Evaluator evaluator;
 
-    public GUIEval(ValueTable valueTable) {
+    public GUIEvaluator(ValueTable valueTable) {
         this.evaluator = new Evaluator(valueTable);
     }
 
