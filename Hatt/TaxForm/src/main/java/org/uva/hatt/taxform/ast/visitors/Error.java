@@ -7,7 +7,7 @@ public class Error {
     private String message;
 
     public Error(ErrorType errorType, int lineNumber, String message) {
-        message = MessageFormat.format(ErrorType.valueOf(errorType.toString()).toString(), Integer.toString(lineNumber), message);
+        this.message = MessageFormat.format(ErrorType.valueOf(errorType.toString()).toString(), Integer.toString(lineNumber), message);
     }
 
     public String getMessage() {
