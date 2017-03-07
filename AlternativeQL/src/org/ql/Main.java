@@ -31,10 +31,6 @@ public class Main extends Application {
         Parser parser = new Parser();
         Form form = parser.parseForm(
                 "form TestForm {" +
-                    "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = false;" +
-                    "if (hasSoldHouse) {" +
-                        "boolean sellingPrice: \"What was the selling price?\" = true;" +
-                    "}" +
                 "}");
 
         return form;
@@ -48,6 +44,7 @@ public class Main extends Application {
     }
 
     public void runGUI(Stage primaryStage, Form form) {
-        GUIHandler guiHandler = new GUIHandler(primaryStage, form);
+        GUIHandler guiHandler = new GUIHandler(primaryStage);
+        guiHandler.runGUI(form);
     }
 }

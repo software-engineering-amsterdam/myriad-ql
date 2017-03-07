@@ -33,11 +33,13 @@ public class GUIHandler {
         while (valueTable.size() == 0 || valueTable.hasUnknownValues()) {
             ValueTable currentVT = valueTable.copy();
             questionValueVisitor.visitForm(form, valueTable);
-            if (currentVT.equals(valueTable)) {
+            if (currentVT.equals(valueTable) || (valueTable.size()+currentVT.size()) == 0) {
                 break;
             }
         }
 
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
+        System.out.println(visibleElements.size());
     }
+
 }

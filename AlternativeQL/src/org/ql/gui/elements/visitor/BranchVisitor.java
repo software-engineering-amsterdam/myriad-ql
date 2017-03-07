@@ -11,6 +11,7 @@ import org.ql.ast.statement.StatementVisitor;
 import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.BooleanValue;
+import org.ql.evaluator.value.UnknownValue;
 import org.ql.gui.QuestionElementContainer;
 import org.ql.gui.elements.QuestionElement;
 
@@ -68,6 +69,10 @@ public class BranchVisitor implements FormVisitor<List<QuestionElement>, ValueTa
     }
 
     public boolean evaluateIfCondition(Expression expression, ValueTable valueTable) {
+        if (evaluator.evaluate(expression, valueTable) instanceof UnknownValue) {
+            return false;
+        }
+
         return ((BooleanValue) evaluator.evaluate(expression, valueTable)).getPlainValue();
     }
 
