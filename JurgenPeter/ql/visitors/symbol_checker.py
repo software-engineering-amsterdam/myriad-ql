@@ -1,4 +1,4 @@
-from ql.messages import *
+from misc.messages import *
 
 
 class SymbolChecker:

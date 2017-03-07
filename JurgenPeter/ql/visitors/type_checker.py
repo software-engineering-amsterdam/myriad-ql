@@ -1,5 +1,5 @@
+from misc.messages import *
 from ql.datatypes import Datatypes
-from ql.messages import *
 
 
 class TypeChecker:

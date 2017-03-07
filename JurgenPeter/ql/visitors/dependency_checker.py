@@ -1,5 +1,5 @@
+from misc.messages import *
 from ql.visitors.dependency_finder import DependencyFinder
-from ql.messages import *
 
 
 class DependencyChecker:
