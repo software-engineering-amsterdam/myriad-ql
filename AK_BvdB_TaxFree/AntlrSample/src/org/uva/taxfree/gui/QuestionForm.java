@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+
 public class QuestionForm {
     private final BlockNode mFormNode;
 
@@ -22,6 +23,7 @@ public class QuestionForm {
 
     public void show() {
         generateForm();
+        new FormRenderer(this);
         mFormNode.setVisible(true);
     }
 
