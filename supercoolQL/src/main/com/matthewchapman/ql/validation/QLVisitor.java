@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validator;
+package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
@@ -10,6 +10,8 @@ import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 27/02/2017.
+ *
+ * Visitor interface for the QL AST, provides methods for visiting all QL types, expressions, statements, etc.
  */
 public interface QLVisitor<T> {
 

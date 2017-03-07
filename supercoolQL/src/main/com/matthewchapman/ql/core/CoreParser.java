@@ -5,13 +5,15 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validator.QLTreeChecker;
-import com.matthewchapman.ql.validator.QuestionStore;
+import com.matthewchapman.ql.validation.typechecking.QLTreeChecker;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 /**
  * Created by matt on 24/02/2017.
+ *
+ * Contains core parsing logic, including building the QL AST from Antlr and handling type checking
+ * before UI generation.
  */
 class CoreParser {
 
@@ -35,9 +37,7 @@ class CoreParser {
     }
 
     void visitAST(Form form) {
-        QLTreeChecker checker = new QLTreeChecker();
-        checker.doCheck(form);
-
-        QuestionStore store = checker.getQuestionStore();
+        QLTreeChecker checker = new QLTreeChecker(form);
+        checker.runChecks();
     }
 }

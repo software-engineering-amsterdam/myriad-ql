@@ -15,6 +15,7 @@ import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 24/02/2017.
@@ -24,7 +25,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     @Override
     public TreeNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
         String ID = ctx.ID().getText();
-        ArrayList<Statement> statements = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
@@ -39,33 +40,85 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         String questionContent = ctx.STRING().getText();
 
         Type questionReturnType = (Type) visit(ctx.type());
-        ParameterGroup parameterGroup;
+        Expression calculation;
 
         if (ctx.calculatedValue() != null) {
-            parameterGroup = (ParameterGroup) visit(ctx.calculatedValue());
+            calculation = (Expression) visit(ctx.calculatedValue());
         } else {
-            parameterGroup = null;
+            calculation = null;
         }
 
-        return new Question(questionID, questionContent, questionReturnType, parameterGroup);
+        return new Question(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+    }
+
+    @Override
+    public TreeNode visitAddSub(QLParser.AddSubContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+
+        if (ctx.op.getText().equals("+")) {
+            return new Addition(left, right);
+        } else {
+            return new Subtraction(left, right);
+        }
+    }
+
+    @Override
+    public TreeNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
+        ParameterGroup parameterGroup = new ParameterGroup();
+        parameterGroup.addExpression((Expression) visit(ctx.expression()));
+        return parameterGroup;
+    }
+
+    @Override
+    public TreeNode visitMulDiv(QLParser.MulDivContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+
+        if (ctx.op.getText().equals("*")) {
+            return new Multiplication(left, right);
+        } else {
+            return new Division(left, right);
+        }
+    }
+
+    @Override
+    public TreeNode visitComparation(QLParser.ComparationContext ctx) {
+        Expression left = (Expression) visit(ctx.left);
+        Expression right = (Expression) visit(ctx.right);
+
+        if (ctx.op.getText().equals("<")) {
+            return new LessThan(left, right);
+        } else if (ctx.op.getText().equals(">")) {
+            return new GreaterThan(left, right);
+        } else if (ctx.op.getText().equals("<=")) {
+            return new LessThanEqualTo(left, right);
+        } else if (ctx.op.getText().equals(">=")) {
+            return new GreaterThanEqualTo(left, right);
+        } else if (ctx.op.getText().equals("!=")) {
+            return new NotEqual(left, right);
+        } else {
+            return new Equal(left, right);
+        }
+
     }
 
     @Override
     public TreeNode visitIfStatement(QLParser.IfStatementContext ctx) {
-        ArrayList<Statement> statements = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
         }
 
-        return new IfStatement((Expression) visit(ctx.expression()), statements);
+        return new IfStatement((Expression) visit(ctx.expression()), statements, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
     public TreeNode visitIfElseStatement(QLParser.IfElseStatementContext ctx) {
 
-        ArrayList<Statement> ifCaseStatements = new ArrayList<>();
-        ArrayList<Statement> elseCaseStatements = new ArrayList<>();
+        List<Statement> ifCaseStatements = new ArrayList<>();
+        List<Statement> elseCaseStatements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.ifCase) {
             ifCaseStatements.add((Statement) visit(statementContext));
@@ -75,13 +128,13 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
             elseCaseStatements.add((Statement) visit(statementContext));
         }
 
-        return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements);
+        return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements, ctx.start.getLine(), ctx.start.getCharPositionInLine());
 
     }
 
     @Override
     public TreeNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringLiteral(ctx.STRING().getText());
+        return new StringLiteral();
     }
 
     @Override
@@ -109,89 +162,8 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     }
 
     @Override
-    public TreeNode visitSubtraction(QLParser.SubtractionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new Subtraction(left, right);
-    }
-
-    @Override
-    public TreeNode visitNotEqual(QLParser.NotEqualContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new NotEqual(left, right);
-    }
-
-    @Override
-    public TreeNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
-        ParameterGroup parameterGroup = new ParameterGroup();
-
-        for (QLParser.ExpressionContext expressionContext : ctx.expression()) {
-            parameterGroup.addExpression((Expression) visit(expressionContext));
-        }
-
-        return parameterGroup;
-    }
-
-    @Override
-    public TreeNode visitDivision(QLParser.DivisionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new Division(left, right);
-    }
-
-    @Override
-    public TreeNode visitEqual(QLParser.EqualContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new Equal(left, right);
-    }
-
-    @Override
-    public TreeNode visitLessThan(QLParser.LessThanContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new LessThan(left, right);
-    }
-
-    @Override
-    public TreeNode visitGreaterThanEqualTo(QLParser.GreaterThanEqualToContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new GreaterThanEqualTo(left, right);
-    }
-
-    @Override
     public TreeNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
-        return new IntegerLiteral(ctx.NUMBER().getText());
-    }
-
-    @Override
-    public TreeNode visitMultiplication(QLParser.MultiplicationContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new Multiplication(left, right);
-    }
-
-    @Override
-    public TreeNode visitAddition(QLParser.AdditionContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new Addition(left, right);
-    }
-
-    @Override
-    public TreeNode visitGreaterThan(QLParser.GreaterThanContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new GreaterThan(left, right);
-    }
-
-    @Override
-    public TreeNode visitLessThanEqualTo(QLParser.LessThanEqualToContext ctx) {
-        Expression left = (Expression) visit(ctx.left);
-        Expression right = (Expression) visit(ctx.right);
-        return new LessThanEqualTo(left, right);
+        return new IntegerLiteral();
     }
 
     @Override
@@ -201,16 +173,16 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitBooleanType(QLParser.BooleanTypeContext ctx) {
-        return new BooleanLiteral(ctx.getText());
+        return new BooleanLiteral();
     }
 
     @Override
     public TreeNode visitIntegerType(QLParser.IntegerTypeContext ctx) {
-        return new IntegerLiteral(ctx.getText());
+        return new IntegerLiteral();
     }
 
     @Override
     public TreeNode visitStringType(QLParser.StringTypeContext ctx) {
-        return new StringLiteral(ctx.getText());
+        return new StringLiteral();
     }
 }

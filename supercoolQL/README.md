@@ -46,7 +46,7 @@ form exampleForm {
 - [x] QLVisitor implementation
 - [x] Replacement error listener for parser
 - [x] Application launcher
-- [ ] AST
+- [x] AST
   - [x] Form, Statement, Question classes
   - [x] IfStatement, IfElseStatement classes
   - [x] Classes for Operations
@@ -61,7 +61,7 @@ form exampleForm {
     - [ ] conditions that are not of the type boolean
     - [ ] operands of invalid type to operators
     - [ ] cyclic dependencies between questions
-    - [ ] duplicate labels
+    - [x] duplicate labels
   - [ ] Error output in GUI
 - [ ] GUI generation
 - [ ] Unit tests

@@ -2,47 +2,26 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validator.QLVisitor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 21/02/2017.
+ *
+ * If statement with additional storage for statements to be executed if the Expression returns false.
  */
 
-public class IfElseStatement extends Statement {
+public class IfElseStatement extends IfStatement {
 
-    private final ArrayList<Statement> ifCaseStatements;
-    private final ArrayList<Statement> elseCaseStatements;
-    private Expression expression;
+    private final List<Statement> elseCaseStatements;
 
-    public IfElseStatement(Expression e, ArrayList<Statement> ifCases, ArrayList<Statement> elseCases) {
+    public IfElseStatement(Expression e, List<Statement> ifCases, List<Statement> elseCases, int line, int column) {
 
-        this.ifCaseStatements = ifCases;
+        super(e, ifCases, line, column);
         this.elseCaseStatements = elseCases;
-        this.expression = e;
     }
 
-
-    public void setExpression(Expression e) {
-        this.expression = e;
-    }
-
-    public ArrayList<Statement> getIfCaseStatements() {
-        return this.ifCaseStatements;
-    }
-
-    public ArrayList<Statement> getElseCaseStatements() {
+    public List<Statement> getElseCaseStatements() {
         return this.elseCaseStatements;
     }
-
-    public Expression getExpression() {
-        return this.expression;
-    }
-
-    @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
-    }
-
 }

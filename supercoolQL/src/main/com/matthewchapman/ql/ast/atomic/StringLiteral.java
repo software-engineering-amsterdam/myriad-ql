@@ -4,11 +4,24 @@ import com.matthewchapman.ql.ast.Type;
 
 /**
  * Created by matt on 24/02/2017.
+ *
+ * String literal type implementation.
  */
-public class StringLiteral extends Type<String> {
+public class StringLiteral extends Type {
 
-    public StringLiteral(String s) {
-        super(s);
+    private String value;
+
+    public StringLiteral() {
+        this.value = "string";
+    }
+
+    public String getType() {
+        return this.value;
+    }
+
+    @Override
+    public boolean isCompatible(Type type) {
+        return type.getType() == "boolean";
     }
 
 }

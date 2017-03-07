@@ -1,22 +1,24 @@
 package com.matthewchapman.ql.ast;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 20/02/2017.
+ *
+ * Base Form class. Acts as root note for the QL AST, contains all statements and a string identifier.
  */
 public class Form extends TreeNode {
 
-    private final ArrayList<Statement> statements;
+    private final List<Statement> statements;
     private final String formName;
 
-    public Form(String name, ArrayList<Statement> statements) {
+    public Form(String name, List<Statement> statements) {
         this.formName = name;
         this.statements = statements;
     }
 
-    public ArrayList<Statement> getStatements() {
+    public List<Statement> getStatements() {
         return this.statements;
     }
 

@@ -2,41 +2,42 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validator.QLVisitor;
+import com.matthewchapman.ql.validation.QLVisitor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 21/02/2017.
+ *
+ * Contains ifCaseStatements to be evaluated if the condition contained evaluates to true.
  */
 
 public class IfStatement extends Statement {
 
-    private final ArrayList<Statement> statements;
-    private Expression expression;
+    private final List<Statement> ifCaseStatements;
+    private Expression condition;
 
-    public IfStatement(Expression e, ArrayList<Statement> s) {
-        this.statements = new ArrayList<>();
+    public IfStatement(Expression e, List<Statement> s, int line, int column) {
+        this.ifCaseStatements = new ArrayList<>();
         this.addStatements(s);
-        this.expression = e;
+        this.condition = e;
+        this.setLine(line);
+        this.setColumn(column);
     }
 
-    public void addStatements(ArrayList<Statement> statements) {
+    public void addStatements(List<Statement> statements) {
         for (Statement s : statements) {
-            this.statements.add(s);
+            this.ifCaseStatements.add(s);
         }
     }
 
-    public void setExpression(Expression e) {
-        this.expression = e;
+    public List<Statement> getIfCaseStatements() {
+        return this.ifCaseStatements;
     }
 
-    public ArrayList<Statement> getStatements() {
-        return this.statements;
-    }
-
-    public Expression getExpression() {
-        return this.expression;
+    public Expression getCondition() {
+        return this.condition;
     }
 
     @Override

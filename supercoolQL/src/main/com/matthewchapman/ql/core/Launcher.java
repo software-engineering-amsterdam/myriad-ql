@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by matt on 20/02/2017.
+ *
+ * Main "Launcher" class for the application. Provides entry point & debug logic.
  */
 public class Launcher {
 

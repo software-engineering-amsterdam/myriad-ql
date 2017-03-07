@@ -2,14 +2,13 @@ package com.matthewchapman.ql.ast;
 
 /**
  * Created by matt on 21/02/2017.
+ * Abstract Type, provides base class for all Type objects to derive from
  */
-public abstract class Type<T> extends TreeNode {
+public abstract class Type extends TreeNode {
 
-    //TODO type should not be a string!
-    private final T value;
+    public abstract boolean isCompatible(Type type);
 
-    public Type(T value) {
-        this.value = value;
-    }
+    public abstract String getType();
+
 
 }
