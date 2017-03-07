@@ -9,10 +9,9 @@ import value.Value;
 
 public class Check implements Field {
 
-	private Notifier listener;
 	private CheckBox field;
 	
-	public Check(String name) {
+	public Check(String name, Notifier notifier) {
 		
 		this.field = new CheckBox();
 		
@@ -22,14 +21,9 @@ public class Check implements Field {
            public void changed(ObservableValue<? extends Boolean> observable,
                                Boolean oldValue, Boolean newValue) {
 				
-				listener.updateQuestionnaire(name, new BoolValue(newValue));
+				notifier.updateQuestionnaire(name, new BoolValue(newValue));
             }
 		});
-	}
-	
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;
 	}
 	
 	@Override

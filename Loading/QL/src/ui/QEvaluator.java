@@ -15,11 +15,13 @@ public class QEvaluator extends Evaluator {
 
 	private List<Row> activeQuestions; // TODO Row String and type?
     private evaluation.Environment answers;
+    private Notifier notifier;
 
-	public QEvaluator(Environment answers) {
+	public QEvaluator(Environment answers, Notifier notifier) {
 		super(answers);
 		this.answers = answers;
 		this.activeQuestions = new ArrayList<>();
+		this.notifier = notifier;
 	}
 	
 	public List<Row> getActiveQuestions() {
@@ -29,7 +31,7 @@ public class QEvaluator extends Evaluator {
     @Override
     public void visit(Question question) {
         activeQuestions.add(new Row(question.getVariable(),
-        		question.getLabel(), question.getType()));
+        		question.getLabel(), question.getType(), notifier));
     }
     
     @Override
@@ -38,7 +40,7 @@ public class QEvaluator extends Evaluator {
         Value value = question.getComputedQuestion().accept(this);
 
         Row q = new Row(question.getVariable(),
-                question.getLabel(), question.getType());
+                question.getLabel(), question.getType(), notifier);
 
         // TODO only works with integers...
         if (value.isSet()) {

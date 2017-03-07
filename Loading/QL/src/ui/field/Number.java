@@ -9,10 +9,9 @@ import value.Value;
 
 public class Number implements Field {
 	
-	private Notifier listener;
 	private TextField field;
 	
-	public Number(String name) {
+	public Number(String name, Notifier notifier) {
 		this.field = new TextField();
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
@@ -22,7 +21,7 @@ public class Number implements Field {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
-	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
+	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
 
 	          }
 	      }
@@ -45,11 +44,6 @@ public class Number implements Field {
       	  	field.end();
 		}
 		
-	}
-
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;	
 	}
 	
 	@Override 

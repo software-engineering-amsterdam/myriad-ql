@@ -9,17 +9,16 @@ import value.Value;
 
 public class Text implements Field {
 	
-	private Notifier listener;
 	private TextField field;
 	
-	public Text(String name) {
+	public Text(String name, Notifier notifier) {
 		this.field = new TextField();
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	listener.updateQuestionnaire(name, new StringValue(newValue));
+            	notifier.updateQuestionnaire(name, new StringValue(newValue));
             }
     	});
 	}
@@ -37,12 +36,6 @@ public class Text implements Field {
 	public void setAnswer(Value value) {
 		field.setText(((StringValue) value).getValue()); // TODO implicit you have to know to ask for a string
   	  	field.end();
-	}
-
-
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;	
 	}
 	
 	@Override

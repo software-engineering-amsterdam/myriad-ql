@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ui.Notifier;
 import ui.field.Check;
 import ui.field.Field;
 import value.BoolValue;
@@ -20,8 +21,8 @@ public class BooleanType extends Type {
 	}
 
 	@Override
-	public Field getField(String name) {
-		return new Check(name);
+	public Field getField(String name, Notifier notifier) {
+		return new Check(name, notifier);
 	}
 
 	@Override

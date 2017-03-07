@@ -91,7 +91,9 @@ public class Questionnaire extends Application implements Notifier {
     	
         renderTitle(grid, form.getId());
         
-    	List<Row> activeQuestions = renderQuestions(grid);
+        List<Row> activeQuestions = createQuestions();
+        
+    	renderQuestions(activeQuestions);
         
     	setAnswers(activeQuestions);
     	
@@ -130,12 +132,16 @@ public class Questionnaire extends Application implements Notifier {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<Row> renderQuestions(GridPane grid) {
+    private List<Row> createQuestions() {
         
-    	QEvaluator qVisitor = new QEvaluator(env);
+    	QEvaluator qVisitor = new QEvaluator(env, this);
     	qVisitor.visit(form);
-    	List<Row> activeQuestions = qVisitor.getActiveQuestions();
+    	return qVisitor.getActiveQuestions();
     	
+    }
+    
+    private void renderQuestions(List<Row> activeQuestions) {
+
     	int rowIndex = 1;
         for (Row question : activeQuestions) {
             
@@ -143,11 +149,10 @@ public class Questionnaire extends Application implements Notifier {
             grid.add(questionLabel, 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
-            question.addListener(this);
+            // question.addListener(this);
             ++rowIndex;
         }
         
-        return activeQuestions;
     }
     
     private Button renderButton(GridPane grid, int rowIndex) {

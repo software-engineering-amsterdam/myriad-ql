@@ -13,11 +13,11 @@ public class Row {
 	private Type type;
 	private Field entryField;
 
-	public Row(String name, String label, Type type) {
+	public Row(String name, String label, Type type, Notifier notifier) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
-		this.entryField = type.getField(name);
+		this.entryField = type.getField(name, notifier);
 	}
 
 	// TODO default return statement
@@ -39,10 +39,6 @@ public class Row {
 
 	public Type getType() {
 		return type;
-	}
-	
-	public void addListener(Notifier listener) {
-		entryField.addListener(listener);
 	}
 
 	public Control getControl() {

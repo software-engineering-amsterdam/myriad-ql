@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ui.Notifier;
 import ui.field.Field;
 import ui.field.Number;
 import value.IntegerValue;
@@ -19,8 +20,8 @@ public class IntegerType extends Type {
 	}
 
 	@Override
-	public Field getField(String name) {
-		return new Number(name);
+	public Field getField(String name, Notifier notifier) {
+		return new Number(name, notifier);
 	}
 
 	@Override
