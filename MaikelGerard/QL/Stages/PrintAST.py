@@ -11,7 +11,7 @@ class PrintAst(object):
     def start_traversal(self):
         self.indent = 0
         self.output = ""
-        self.form_block(self.ast)
+        self.form_block(self.ast.root)
         print(self.output)
 
     def form_block(self, form_node):

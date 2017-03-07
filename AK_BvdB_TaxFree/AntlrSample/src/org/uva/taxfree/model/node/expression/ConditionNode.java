@@ -4,7 +4,6 @@ import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;
-import java.util.Set;
 
 public abstract class ConditionNode extends Node {
 
@@ -27,7 +26,4 @@ public abstract class ConditionNode extends Node {
     public boolean isSameType(ConditionNode node) {
         return this.getClass().equals(node.getClass());
     }
-
-    public abstract void addUsedVariables(Set<String> set);
-
 }

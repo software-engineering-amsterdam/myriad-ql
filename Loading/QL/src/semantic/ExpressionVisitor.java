@@ -1,12 +1,33 @@
 package semantic;
 
 
-import ast.*;
+import ast.Block;
+import ast.BlockItem;
+import ast.ComputedQuestion;
+import ast.Form;
+import ast.FormVisitor;
+import ast.Question;
+import ast.Statement;
+import ast.TypeVisitor;
 import ast.atom.BoolAtom;
-import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
-import ast.expression.*;
+import ast.expression.AddExpression;
+import ast.expression.AndExpression;
+import ast.expression.DivExpression;
+import ast.expression.EqExpression;
+import ast.expression.GEqExpression;
+import ast.expression.GExpression;
+import ast.expression.IdExpression;
+import ast.expression.LEqExpression;
+import ast.expression.LExpression;
+import ast.expression.MinusExpression;
+import ast.expression.MulExpression;
+import ast.expression.NEqExpression;
+import ast.expression.NotExpression;
+import ast.expression.OrExpression;
+import ast.expression.PlusExpression;
+import ast.expression.SubExpression;
 import ast.type.BooleanType;
 import ast.type.IntegerType;
 import ast.type.StringType;
@@ -249,11 +270,6 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	@Override
 	public Type visit(StringAtom expr) {
         return new StringType(expr.getLine());
-	}
-	
-	@Override
-	public Type visit(EmptyAtom expr) {
-		return null; // TODO what to do here
 	}
 
 	private void check(Type expected, Type lhs, Type rhs) {

@@ -1,16 +1,10 @@
 package ui.field;
 
-import javafx.scene.control.TextField;
-import ui.Questionnaire.Notifier;
-import value.EmptyValue;
-import value.IntegerValue;
-import value.StringValue;
-import value.Value;
-
-import java.util.function.Function;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TextField;
+import ui.Questionnaire.Notifier;
+import value.Value;
 
 public class Number implements Field {
 	
@@ -27,7 +21,7 @@ public class Number implements Field {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
-	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
+	        	  listener.updateQuestionnaire(name, new Value(Integer.parseInt(newValue)));
 
 	          }
 	      }
@@ -38,9 +32,9 @@ public class Number implements Field {
 	public Value getAnswer() {
 		String str = field.getText();
 		if (str.isEmpty()) {
-			return new EmptyValue();
+			return new Value();
 		}
-		return new IntegerValue(Integer.valueOf(str));
+		return new Value(Integer.valueOf(str));
 	}
 
 	@Override
@@ -50,6 +44,11 @@ public class Number implements Field {
       	  	field.end();
 		}
 		
+	}
+	
+	@Override 
+	public void setField(Atom atom) {
+		field.setText(atom.);
 	}
 
 	@Override

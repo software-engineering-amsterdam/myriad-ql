@@ -4,7 +4,7 @@ import CssFrameworks
 import CssFrameworks.Bootstrap exposing (bootstrap)
 import Html exposing (Html, beginnerProgram, div)
 import Html.Attributes exposing (style)
-import UI.QLApp as App exposing (Model, Msg)
+import UI.QLSApp as App exposing (Model, Msg)
 
 
 main : Program Never Model Msg

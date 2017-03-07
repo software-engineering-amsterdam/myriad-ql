@@ -6,6 +6,17 @@ from datetime import date
 # TODO: Remove print and eq, add to seperate traversal.
 # TODO: Remove QuestionnaireAST, just make form the root.
 # TODO: Replace 'is_boolean' etc. into double dispatch.
+# TODO: Do we want to pass state in the visitor?
+# TODO: question.name instead of question.name.val
+
+
+
+class QuestionnaireAST(object):
+    def __init__(self, form, line=0, col=0):
+        self.root = form
+
+    def __eq__(self, other):
+        return other.root == self.root
 
 
 class Node(object):
@@ -28,7 +39,7 @@ class FormNode(Node):
         self.name = name
         self.form_block = form_body
 
-    def accept(self, visitor, *args):
+    def accept(self, visitor):
         self.form_block.accept(visitor)
 
     def __eq__(self, other):
@@ -45,7 +56,7 @@ class BlockNode(Node):
         for statement in block_body:
             self.children.append(statement)
 
-    def accept(self, visitor, *args):
+    def accept(self, visitor):
         for child in self.children:
             child.accept(visitor)
 
@@ -67,8 +78,8 @@ class QuestionNode(Node):
         self.name = name
         self.type = var_type
 
-    def accept(self, visitor, *args):
-        visitor.question_node(self, *args)
+    def accept(self, visitor):
+        visitor.question_node(self)
 
     def __eq__(self, other):
         return super(QuestionNode, self).__eq__(other) and \
@@ -83,8 +94,8 @@ class ComputedQuestionNode(QuestionNode):
         )
         self.expression = expression
 
-    def accept(self, visitor, *args):
-        visitor.comp_question_node(self, *args)
+    def accept(self, visitor):
+        visitor.comp_question_node(self)
 
     def __eq__(self, other):
         return super(ComputedQuestionNode, self).__eq__(other) and \
@@ -97,8 +108,8 @@ class IfNode(Node):
         self.expression = condition
         self.if_block = if_block
 
-    def accept(self, visitor, *args):
-        visitor.if_node(self, *args)
+    def accept(self, visitor):
+        visitor.if_node(self)
 
     def __eq__(self, other):
         return super(IfNode, self).__eq__(other) and \
@@ -111,8 +122,8 @@ class IfElseNode(IfNode):
         super(IfElseNode, self).__init__(condition, if_block, line, col)
         self.else_block = else_block
 
-    def accept(self, visitor, *args):
-        visitor.if_else_node(self, *args)
+    def accept(self, visitor):
+        visitor.if_else_node(self)
 
     def __eq__(self, other):
         return super(IfElseNode, self).__eq__(other) and \
@@ -134,24 +145,24 @@ class NegNode(MonOpNode):
     def __init__(self, expression, line=0, col=0):
         super(NegNode, self).__init__("!", expression, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.neg_node(self, *args)
+    def accept(self, visitor):
+        return visitor.neg_node(self)
 
 
 class MinNode(MonOpNode):
     def __init__(self, expression, line=0, col=0):
         super(MinNode, self).__init__("-", expression, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.min_node(self, *args)
+    def accept(self, visitor):
+        return visitor.min_node(self)
 
 
 class PlusNode(MonOpNode):
     def __init__(self, expression, line=0, col=0):
         super(PlusNode, self).__init__("+", expression, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.plus_node(self, *args)
+    def accept(self, visitor):
+        return visitor.plus_node(self)
 
 
 class ArithmeticExprNode(Node):
@@ -170,32 +181,32 @@ class AddNode(ArithmeticExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(AddNode, self).__init__("+", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.add_node(self, *args)
+    def accept(self, visitor):
+        return visitor.add_node(self)
 
 
 class SubNode(ArithmeticExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(SubNode, self).__init__("-", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.sub_node(self, *args)
+    def accept(self, visitor):
+        return visitor.sub_node(self)
 
 
 class MulNode(ArithmeticExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(MulNode, self).__init__("*", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.mul_node(self, *args)
+    def accept(self, visitor):
+        return visitor.mul_node(self)
 
 
 class DivNode(ArithmeticExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(DivNode, self).__init__("/", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.div_node(self, *args)
+    def accept(self, visitor):
+        return visitor.div_node(self)
 
 
 class ComparisonExprNode(Node):
@@ -214,48 +225,48 @@ class LTNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(LTNode, self).__init__("<", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.lt_node(self, *args)
+    def accept(self, visitor):
+        return visitor.lt_node(self)
 
 
 class LTENode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(LTENode, self).__init__("<=", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.lte_node(self, *args)
+    def accept(self, visitor):
+        return visitor.lte_node(self)
 
 
 class GTNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(GTNode, self).__init__(">", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.gt_node(self, *args)
+    def accept(self, visitor):
+        return visitor.gt_node(self)
 
 
 class GTENode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(GTENode, self).__init__(">=", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.gte_node(self, *args)
+    def accept(self, visitor):
+        return visitor.gte_node(self)
 
 
 class EqNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(EqNode, self).__init__("==", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.eq_node(self, *args)
+    def accept(self, visitor):
+        return visitor.eq_node(self)
 
 
 class NeqNode(ComparisonExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(NeqNode, self).__init__("!=", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.neq_node(self, *args)
+    def accept(self, visitor):
+        return visitor.neq_node(self)
 
 
 class LogicalExprNode(Node):
@@ -274,16 +285,16 @@ class AndNode(LogicalExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(AndNode, self).__init__("&&", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.and_node(self, *args)
+    def accept(self, visitor):
+        return visitor.and_node(self)
 
 
 class OrNode(LogicalExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(OrNode, self).__init__("||", left, right, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.or_node(self, *args)
+    def accept(self, visitor):
+        return visitor.or_node(self)
 
 
 class TypeNode(Node):
@@ -331,8 +342,8 @@ class BoolTypeNode(TypeNode):
     def parse_value(self, value):
         return value
 
-    def accept(self, visitor, *args):
-        return visitor.bool_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.bool_type_node(self)
 
 
 class IntTypeNode(TypeNode):
@@ -343,8 +354,8 @@ class IntTypeNode(TypeNode):
     def parse_value(self, value):
         return Decimal(value)
 
-    def accept(self, visitor, *args):
-        return visitor.int_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.int_type_node(self)
 
 
 class MoneyTypeNode(TypeNode):
@@ -355,8 +366,8 @@ class MoneyTypeNode(TypeNode):
     def parse_value(self, value):
         return Decimal(value)
 
-    def accept(self, visitor, *args):
-        return visitor.money_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.money_type_node(self)
 
 
 class DecimalTypeNode(TypeNode):
@@ -367,8 +378,8 @@ class DecimalTypeNode(TypeNode):
     def parse_value(self, value):
         return Decimal(value)
 
-    def accept(self, visitor, *args):
-        return visitor.decimal_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.decimal_type_node(self)
 
 
 class StringTypeNode(TypeNode):
@@ -379,8 +390,8 @@ class StringTypeNode(TypeNode):
     def parse_value(self, value):
         return value
 
-    def accept(self, visitor, *args):
-        return visitor.string_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.string_type_node(self)
 
 
 class DateTypeNode(TypeNode):
@@ -391,8 +402,8 @@ class DateTypeNode(TypeNode):
     def parse_value(self, value):
         return value
 
-    def accept(self, visitor, *args):
-        return visitor.date_type_node(self, *args)
+    def accept(self, visitor):
+        return visitor.date_type_node(self)
 
 
 class VarNode(Node):
@@ -400,8 +411,8 @@ class VarNode(Node):
         super(VarNode, self).__init__(line, col)
         self.val = value
 
-    def accept(self, visitor, *args):
-        return visitor.var_node(self, *args)
+    def accept(self, visitor):
+        return visitor.var_node(self)
 
     def __eq__(self, other):
         return super(VarNode, self).__eq__(other) and other.val == self.val
@@ -411,45 +422,45 @@ class StringNode(VarNode):
     def __init__(self, string, line=0, col=0):
         super(StringNode, self).__init__(string, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.string_node(self, *args)
+    def accept(self, visitor):
+        return visitor.string_node(self)
 
 
 class IntNode(VarNode):
     def __init__(self, integer, line=0, col=0):
         super(IntNode, self).__init__(integer, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.int_node(self, *args)
+    def accept(self, visitor):
+        return visitor.int_node(self)
 
 
 class BoolNode(VarNode):
     def __init__(self, boolean, line=0, col=0):
         super(BoolNode, self).__init__(boolean, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.bool_node(self, *args)
+    def accept(self, visitor):
+        return visitor.bool_node(self)
 
 
 class MoneyNode(VarNode):
     def __init__(self, money, line=0, col=0):
         super(MoneyNode, self).__init__(money, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.decimal_node(self, *args)
+    def accept(self, visitor):
+        return visitor.decimal_node(self)
 
 
 class DecimalNode(VarNode):
     def __init__(self, decimal, line=0, col=0):
         super(DecimalNode, self).__init__(decimal, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.decimal_node(self, *args)
+    def accept(self, visitor):
+        return visitor.decimal_node(self)
 
 
 class DateNode(VarNode):
     def __init__(self, date_val, line=0, col=0):
         super(DateNode, self).__init__(date_val, line, col)
 
-    def accept(self, visitor, *args):
-        return visitor.date_node(self, *args)
+    def accept(self, visitor):
+        return visitor.date_node(self)

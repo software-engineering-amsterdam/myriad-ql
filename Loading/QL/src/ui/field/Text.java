@@ -4,8 +4,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import ui.Questionnaire.Notifier;
-import value.EmptyValue;
-import value.StringValue;
 import value.Value;
 
 public class Text implements Field {
@@ -20,7 +18,7 @@ public class Text implements Field {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	listener.updateQuestionnaire(name, new StringValue(newValue));
+            	listener.updateQuestionnaire(name, new Value(newValue));
             }
     	});
 	}
@@ -28,9 +26,9 @@ public class Text implements Field {
 	@Override
 	public Value getAnswer() {
 		if (field.getText().isEmpty()) {
-			return new EmptyValue();
+			return new Value();
 		}	
-		return new StringValue(field.getText());
+		return new Value(field.getText());
 	}
 	
 	

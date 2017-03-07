@@ -245,6 +245,7 @@ class TestParser(unittest.TestCase):
         if_block = AST.IfNode(expr, AST.BlockNode([q2]))
         form_block = AST.BlockNode([q1, if_block])
         form_node = AST.FormNode("TestForm", form_block)
+        form_node = AST.QuestionnaireAST(form_node)
         self.validate_node(self.parser.grammar, form1, form_node)
 
         form2 = """
@@ -264,6 +265,7 @@ class TestParser(unittest.TestCase):
                                        AST.BlockNode([q1]))
         form_block2 = AST.BlockNode([q1, if_else_block, q2])
         form_node = AST.FormNode("TestForm", form_block2)
+        form_node = AST.QuestionnaireAST(form_node)
         self.validate_node(self.parser.grammar, form2, form_node)
 
 if __name__ == '__main__':

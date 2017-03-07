@@ -1,18 +1,18 @@
-import QL.Warning;
-import ast.Form;
+import java.util.List;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import QL.Warning;
+import ast.Form;
 import semantic.TypeChecker;
 import ui.Questionnaire;
 
-import java.util.List;
-
 public class Main {
 	public static void main(String[] args) throws Exception {
-
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" integer (Name0 + 5) "
+				 + "Name1: \"Question1\" integer (Name0 - 5) "
 				 + "if ((true)) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"
@@ -45,7 +45,6 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 		QLParser parser = new QLParser(tokens);
-//		System.out.println(parser.form().result.getBlock().getBlockItems().get(0));
 		Form form = parser.form().result;
 
 		System.out.println("----");
@@ -53,12 +52,12 @@ public class Main {
 		TypeChecker typeChecker = new TypeChecker();
 
 		List<Warning> warnings = typeChecker.analyze(form);
-
-//		Environment env = new Environment();
-////		Evaluator evaluator = new Evaluator(env);
-//
+		
+		
+		evaluation.Environment env = new evaluation.Environment(typeChecker.getVariableTypes());
+		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, warnings);
+		questionnaire.main(form, env, warnings);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 

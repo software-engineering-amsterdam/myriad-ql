@@ -1,3 +1,0 @@
-form houseForm {
-    "Calculated one:" -> valueA : integer = valueA + valueA
-}

@@ -1,7 +1,0 @@
-form houseForm {
-    "Calculated a:" -> valueA : integer = valueB + valueA + valueD
-    "Calculated b:" -> valueB : integer = valueC
-    "Calculated c:" -> valueC : integer = valueD + valueC
-    "Calculated d:" -> valueD : integer = valueE - valueA
-    "Calculated e:" -> valueE : integer = valueA
-}

@@ -14,7 +14,7 @@ class Evaluate(object):
         self.env = env
 
     def start_traversal(self):
-        self.ast.accept(self)
+        self.ast.root.accept(self)
 
     def if_node(self, if_node):
         if_node.if_block.accept(self)

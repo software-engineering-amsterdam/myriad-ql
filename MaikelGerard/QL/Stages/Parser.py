@@ -160,7 +160,9 @@ class QuestionnaireParser(object):
         normal_var = pp.Word(pp.alphas, pp.alphanums + "_")
         form = self.FORM + normal_var + \
             self.curly_embrace(self.block)
-        return form.addParseAction(self.create_node(AST.FormNode))
+        form.addParseAction(self.create_node(AST.FormNode))
+
+        return form.addParseAction(self.create_node(AST.QuestionnaireAST))
 
     def define_expression(self):
         def create_operators(opp_list):

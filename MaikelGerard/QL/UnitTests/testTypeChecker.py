@@ -30,7 +30,7 @@ class TestTypeChecker(unittest.TestCase):
 
     def check_bad_form(self, example, num_warnings, num_errors):
         ast = self.parser.parse(example)
-        ast.accept(self.typechecker)
+        ast.root.accept(self.typechecker)
 
         # Determine whether the typechecker result is as expected.
         correct_warnings = self.handler.warn_count == num_warnings

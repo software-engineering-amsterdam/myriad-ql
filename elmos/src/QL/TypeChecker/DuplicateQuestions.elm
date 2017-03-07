@@ -3,8 +3,9 @@ module QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 import QL.AST exposing (..)
 import Dict exposing (Dict)
 import List.Extra as List
-import QL.TypeChecker.CheckerUtil as CheckerUtil exposing (QuestionIndex)
+import QL.AST.Collectors as Collectors
 import QL.TypeChecker.Messages as Messages exposing (Message)
+import QL.TypeChecker.QuestionIndex as QuestionIndex exposing (QuestionIndex)
 
 
 type alias Duplicate =
@@ -19,10 +20,10 @@ duplicateQuestions : Form -> List Message
 duplicateQuestions form =
     let
         questionIds =
-            CheckerUtil.questionIndexFromForm form
+            QuestionIndex.questionIndexFromForm form
 
         itemIds =
-            CheckerUtil.collectDeclaredIds form
+            Collectors.collectDeclaredIds form
     in
         List.filterMap (duplicateQuestionDeclarations questionIds) itemIds
             |> mergeOverlappingDuplicates
@@ -37,11 +38,11 @@ mergeOverlappingDuplicates duplicates =
 
 updateDuplicateIndex : Duplicate -> DuplicateIndex -> DuplicateIndex
 updateDuplicateIndex ( id, locations ) duplicateIndex =
-    Dict.update id (Maybe.withDefault [] >> updateLocations locations >> Just) duplicateIndex
+    Dict.update id (Maybe.withDefault [] >> mergeLocations locations >> Just) duplicateIndex
 
 
-updateLocations : List Location -> List Location -> List Location
-updateLocations newLocations existingLocations =
+mergeLocations : List Location -> List Location -> List Location
+mergeLocations newLocations existingLocations =
     (existingLocations ++ newLocations)
         |> List.uniqueBy (\(Location line col) -> ( line, col ))
 

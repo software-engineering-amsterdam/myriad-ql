@@ -16,7 +16,7 @@ class SaveQuestionaire(object):
     def start_traversal(self):
         self.show_stack = []
 
-        self.ast.accept(self)
+        self.ast.root.accept(self)
         self.write_fields("./form_output.txt")
 
     def write_fields(self, path):

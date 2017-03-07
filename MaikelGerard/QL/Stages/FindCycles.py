@@ -18,7 +18,7 @@ class FindCycles(object):
         self.directed_graph.clear()
         self.node_stack = [[]]
 
-        self.ast.accept(self)
+        self.ast.root.accept(self)
         cycle_list = list(nx.simple_cycles(self.directed_graph))
         if len(cycle_list) > 0:
             self.handler.add_cycle_error(cycle_list)
