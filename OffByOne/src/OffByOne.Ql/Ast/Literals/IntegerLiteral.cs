@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
+    using System;
+
     using OffByOne.Ql.Ast.Literals.Base;
     using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
@@ -12,8 +14,13 @@
         }
 
         public IntegerLiteral(string value)
-            : this(int.Parse(value))
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+            }
+
+            this.Value = new IntegerValue(value);
         }
 
         public IntegerValue Value { get; private set; }

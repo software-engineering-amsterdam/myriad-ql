@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
+    using System;
+
     using OffByOne.Ql.Ast.Literals.Base;
     using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
@@ -12,8 +14,13 @@
         }
 
         public DecimalLiteral(string value)
-            : this(double.Parse(value))
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+            }
+
+            this.Value = new DecimalValue(value);
         }
 
         public DecimalValue Value { get; private set; }
