@@ -45,20 +45,6 @@ public class Questionnaire extends Application implements Notifier {
 
         launch();
     }
-        
-    private boolean checkFaults() {
-    	if (faults.hasErrors()) {
-    		ErrorDialog dialog = new ErrorDialog(faults.getErrors());
-    		dialog.show();
-    		return true;
-    	}   	
-    	if (faults.hasWarnings()) {
-        	WarningDialog dialog = new WarningDialog(faults.getWarnings());
-        	dialog.show();
-    	}
-    	
-    	return false;
-    }
     
     @Override
     public void start(Stage primaryStage) {
@@ -80,6 +66,20 @@ public class Questionnaire extends Application implements Notifier {
         
         primaryStage.show();
 
+    }
+    
+    private boolean checkFaults() {
+    	if (faults.hasErrors()) {
+    		ErrorDialog dialog = new ErrorDialog(faults.getErrors());
+    		dialog.show();
+    		return true;
+    	}   	
+    	if (faults.hasWarnings()) {
+        	WarningDialog dialog = new WarningDialog(faults.getWarnings());
+        	dialog.show();
+    	}
+    	
+    	return false;
     }
     
     private GridPane initGrid() {
