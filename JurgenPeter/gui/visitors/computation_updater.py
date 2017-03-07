@@ -18,7 +18,7 @@ class ComputationUpdater:
         pass
 
     def visit_computed_question(self, node):
-        self.environment[node.name] = self.evaluator.visit(node.computation)
+        self.environment[node.name] = self.evaluator.evaluate(node.computation)
 
     def visit_if_conditional(self, node):
         for element in node.ifbody:

@@ -4,9 +4,12 @@ class QuestionFinder:
         self.name = name
         self.question = None
 
+    def find(self, node):
+        self.visit(node)
+        return self.question
+
     def visit(self, node):
         node.accept(self)
-        return self.question
 
     def visit_form(self, node):
         for element in node.body:

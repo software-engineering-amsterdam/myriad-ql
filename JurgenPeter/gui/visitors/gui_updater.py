@@ -23,14 +23,14 @@ class GuiUpdater:
             element.accept(self)
 
     def visit_if_conditional(self, node):
-        condition = self.evaluator.visit(node.condition)
+        condition = self.evaluator.evaluate(node.condition)
         self.push_condition(condition)
         for element in node.ifbody:
             element.accept(self)
         self.pop_condition()
 
     def visit_ifelse_conditional(self, node):
-        condition = self.evaluator.visit(node.condition)
+        condition = self.evaluator.evaluate(node.condition)
         self.push_condition(condition)
         for element in node.ifbody:
             element.accept(self)

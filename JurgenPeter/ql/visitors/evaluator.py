@@ -1,13 +1,20 @@
+class UndefinedVariableException(Exception):
+    pass
+
+
 class Evaluator:
 
     def __init__(self, environment):
         self.environment = environment
 
-    def visit(self, node):
+    def evaluate(self, node):
         try:
-            return node.accept(self)
-        except TypeError: # TODO: custom None exception
+            return self.visit(node)
+        except UndefinedVariableException:
             return None
+
+    def visit(self, node):
+        return node.accept(self)
 
     def visit_plusop(self, node):
         return + node.right.accept(self)
@@ -55,7 +62,10 @@ class Evaluator:
         return node.left.accept(self) or node.right.accept(self)
 
     def visit_variable(self, node):
-        return self.environment.get(node.name, None)
+        value = self.environment.get(node.name, None)
+        if value is None:
+            raise UndefinedVariableException
+        return value
 
     def visit_constant(self, node):
         return node.value

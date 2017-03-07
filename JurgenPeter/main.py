@@ -12,7 +12,7 @@ def main():
     filename = "exampleForm.txt"
 
     form = parse_ql(filename)
-    Printer().visit(form)
+    Printer().print(form)
 
     errors = []
     symboltable = {}

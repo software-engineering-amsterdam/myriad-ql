@@ -71,7 +71,7 @@ class GuiBuilder:
         self.pop_stylings(len(node.stylings))
 
     def visit_question_anchor(self, node):
-        question = QuestionFinder(node.name).visit(self.form)
+        question = QuestionFinder(node.name).find(self.form)
         question.accept(self)
 
     def visit_styled_question_anchor(self, node):

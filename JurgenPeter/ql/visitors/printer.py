@@ -1,7 +1,10 @@
 class Printer:
 
+    def print(self, node):
+        print(self.visit(node))
+
     def visit(self, node):
-        print(node.accept(self))
+        node.accept(self)
 
     def visit_form(self, node):
         return "form {} [\n{}\n]".format(
