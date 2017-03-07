@@ -19,15 +19,5 @@
         {
             return $"{this.Message} - {this.Description}";
         }
-
-        public void AppendTo(ISet<CheckerMessage> checerMessages)
-        {
-            if (checerMessages == null)
-            {
-                throw new ArgumentNullException(nameof(checerMessages));
-            }
-
-            checerMessages.Add(this);
-        }
     }
 }

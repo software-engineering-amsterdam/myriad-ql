@@ -35,7 +35,7 @@
                 throw new ArgumentNullException(nameof(message));
             }
 
-            message.AppendTo(this.checkerMessages);
+            this.checkerMessages.Add(message);
         }
 
         public void Add(IList<CheckerMessage> messages)
