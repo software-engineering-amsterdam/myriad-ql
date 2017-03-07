@@ -6,14 +6,19 @@ module QL
     class Parser < Parslet::Parser
       root(:form)
 
-      root :addition
+      root :equals
 
       # rule(:root) {
       #   ((exp | addition)).repeat
       # }
 
-      rule(:exp){
-        str('(') >> addition >> str(')')
+      rule(:exp) {
+        str('(') >> equals >> str(')')
+      }
+
+      rule(:equals) {
+        addition.as(:left) >> (equal_op >> addition.as(:right)).repeat(1) |
+          addition
       }
 
       rule(:addition) {
@@ -25,13 +30,14 @@ module QL
         i_or_exp.as(:left) >> (mult_op >> i_or_exp.as(:right)).repeat(1) |
           i_or_exp }
 
-      rule(:i_or_exp){
+
+      rule(:i_or_exp) {
         (integer_literal | exp)
       }
 
-      rule(:mult_op) { match['*/'].as(:operator) >> _ }
+      rule(:mult_op) { (str('*') | str('/')).as(:operator) >> _ }
       rule(:add_op) { (str('+') | str('-')).as(:operator) >> _ }
-      # rule(:equal_op) { match['+-'].as(:operator) >> _ }
+      rule(:equal_op) { (str('==') | str('!=')).as(:operator) >> _ }
 
 
       # spaces, breaks
