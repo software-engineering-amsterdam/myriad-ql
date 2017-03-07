@@ -1,5 +1,5 @@
-from QL.Stages.parser import QuestionnaireParser as Parser
-from QL.Stages.typeChecker import TypeChecker
+from QL.stages.parser import QuestionnaireParser as Parser
+from QL.stages.typeChecker import TypeChecker
 from QL.environment import Environment
 from QL.errorHandler import ErrorHandler
 

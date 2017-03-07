@@ -1,5 +1,5 @@
-from QL.Stages.parser import QuestionnaireParser as Parser
-from QL.Stages.evaluator import Evaluate
+from QL.stages.parser import QuestionnaireParser as Parser
+from QL.stages.evaluator import Evaluate
 from QL.environment import Environment
 from QL.errorHandler import ErrorHandler
 from QL.undefined import Undefined

@@ -4,7 +4,7 @@ from decimal import Decimal
 import pyparsing as pp
 
 from QL import AST
-from QL.Stages import parser
+from QL.stages import parser
 
 
 class TestParser(unittest.TestCase):
