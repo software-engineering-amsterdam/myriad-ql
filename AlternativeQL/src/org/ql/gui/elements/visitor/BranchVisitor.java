@@ -21,18 +21,19 @@ import java.util.List;
 public class BranchVisitor implements FormVisitor<List<QuestionElement>, ValueTable>,
         StatementVisitor<Void, ValueTable> {
 
-    private final List<QuestionElement> elements;
     private final Evaluator evaluator;
     private final QuestionElementContainer elementContainer;
 
+    private List<QuestionElement> elements;
+
     public BranchVisitor(QuestionElementContainer elementContainer) {
-        elements = new ArrayList<>();
         this.elementContainer = elementContainer;
         evaluator = new Evaluator();
     }
 
     @Override
     public List<QuestionElement> visitForm(Form form, ValueTable valueTable) {
+        elements = new ArrayList<>();
 
         for (Statement statement : form.getStatements())
             statement.accept(this, valueTable);
