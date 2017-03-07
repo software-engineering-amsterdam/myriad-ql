@@ -6,6 +6,7 @@ import org.lemonade.gui.elements.GuiDecimalValue;
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiIdentifierValue;
 import org.lemonade.gui.elements.GuiIntegerValue;
+import org.lemonade.gui.elements.GuiLabelValue;
 import org.lemonade.gui.elements.GuiMoneyValue;
 import org.lemonade.gui.elements.GuiQuestion;
 import org.lemonade.gui.elements.GuiStringValue;
@@ -57,8 +58,13 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final Question question) {
-        GuiValue<String> identifier = (GuiValue<String>) question.getIdentifier().accept(this);
+        GuiIdentifierValue identifier = (GuiIdentifierValue) question.getIdentifier().accept(this);
         GuiValue<?> value = (GuiValue<?>) question.getType().accept(this);
+        GuiLabelValue labelValue = new GuiLabelValue(question.getLabel());
+        GuiQuestion guiQuestion = new GuiQuestion(identifier, labelValue, value);
+
+        pane.getChildren().addAll(guiQuestion.getLabelValue().getWidget(), guiQuestion.getValue().getWidget());
+
         return null;
     }
 

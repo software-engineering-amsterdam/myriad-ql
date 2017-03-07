@@ -1,5 +1,6 @@
 package org.lemonade.gui.elements;
 
+import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
 public class GuiIntegerValue extends GuiValue<Integer> {
@@ -30,5 +31,10 @@ public class GuiIntegerValue extends GuiValue<Integer> {
             return 0;
         }
         return Integer.valueOf(text);
+    }
+
+    @Override
+    public TextField getWidget() {
+        return textField;
     }
 }

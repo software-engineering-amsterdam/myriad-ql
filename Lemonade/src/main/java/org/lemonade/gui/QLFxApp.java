@@ -14,6 +14,7 @@ import org.lemonade.QLParserErrorListener;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 import javafx.application.Application;
@@ -21,7 +22,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -80,6 +80,20 @@ public class QLFxApp extends Application {
         String contents = null;
 
         try {
+            //            final Button backButton = new Button("Select new questionnaire");
+            //            backButton.setOnAction(e -> stage.setScene(selectionScene));
+
+            final GridPane gridPane = new GridPane();
+            GridPane.setColumnSpan(gridPane, 2);
+            gridPane.setHgap(6);
+            gridPane.setVgap(6);
+
+            //            final Pane rootGroup = new VBox(12);
+            //            rootGroup.getChildren().addAll(gridPane, backButton);
+            //            rootGroup.setPadding(new Insets(12, 12, 12, 12));
+
+            questionnaireScene = new Scene(gridPane, 600, 400);
+
             contents = String.join("\n", Files.readAllLines(Paths.get(file.getPath())));
             System.out.println(contents);
 
@@ -97,26 +111,11 @@ public class QLFxApp extends Application {
 
             TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
+            GuiVisitor guiVisitor = new GuiVisitor(gridPane);
 
             root.accept(typeCheckVisitor);
-//            root.accept(evaluateVisitor);
-
-            final TextArea textArea = new TextArea(contents);
-            final Button backButton = new Button("Select new questionnaire");
-            backButton.setOnAction(e -> stage.setScene(selectionScene));
-
-            final GridPane gridPane = new GridPane();
-            GridPane.setConstraints(textArea, 0, 0);
-            GridPane.setConstraints(backButton, 0, 1);
-            gridPane.setHgap(6);
-            gridPane.setVgap(6);
-            gridPane.getChildren().addAll(textArea);
-
-            final Pane rootGroup = new VBox(12);
-            rootGroup.getChildren().addAll(gridPane, backButton);
-            rootGroup.setPadding(new Insets(12, 12, 12, 12));
-
-            questionnaireScene = new Scene(rootGroup, 600, 400);
+            root.accept(guiVisitor);
+            //            root.accept(evaluateVisitor);
 
             stage.setScene(questionnaireScene);
 

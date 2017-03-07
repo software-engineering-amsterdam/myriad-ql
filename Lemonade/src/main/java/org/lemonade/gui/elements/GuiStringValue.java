@@ -24,4 +24,9 @@ public class GuiStringValue extends GuiValue<String> {
     @Override public void update() {
         setValue(textField.getText());
     }
+
+    @Override
+    public TextField getWidget() {
+        return textField;
+    }
 }

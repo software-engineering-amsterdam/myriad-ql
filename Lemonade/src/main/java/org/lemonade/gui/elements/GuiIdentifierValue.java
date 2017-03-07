@@ -1,5 +1,7 @@
 package org.lemonade.gui.elements;
 
+import javafx.scene.control.Control;
+
 public class GuiIdentifierValue extends GuiValue<String> {
 
     private String value;
@@ -15,4 +17,8 @@ public class GuiIdentifierValue extends GuiValue<String> {
     @Override void setValue(final String value) {}
 
     @Override public void update() {}
+
+    @Override public Control getWidget() {
+        return null;
+    }
 }
