@@ -4,7 +4,7 @@ import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.widgets.Widget;
 
-public abstract class QuestionElement {
+public class QuestionElement {
     private Question question;
     private Widget widget;
     private boolean isDirty;
@@ -20,15 +20,12 @@ public abstract class QuestionElement {
     }
 
     public void setValue(Value value) {
+        widget.setValue(value);
         this.value = value;
     }
 
     public boolean isDirty() {
         return isDirty;
-    }
-
-    public void setDirty(boolean dirty) {
-        this.isDirty = dirty;
     }
 
     public Question getQuestion() {

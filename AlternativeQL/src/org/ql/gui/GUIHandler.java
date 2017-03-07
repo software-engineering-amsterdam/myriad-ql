@@ -5,7 +5,7 @@ import org.ql.ast.Form;
 import org.ql.evaluator.ValueTable;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.visitor.QuestionValueVisitor;
-import org.ql.gui.elements.visitor.VisibleQuestionsVisitor;
+import org.ql.gui.elements.visitor.BranchVisitor;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class GUIHandler {
 
     private final MainStage mainstage;
-    private final VisibleQuestionsVisitor visibleQuestionsVisitor;
+    private final BranchVisitor branchVisitor;
     private final QuestionValueVisitor questionValueVisitor;
 
     public GUIHandler(Stage primaryStage) {
@@ -21,7 +21,7 @@ public class GUIHandler {
 
         QuestionElementContainer questionElementContainer = new QuestionElementContainer();
 
-        visibleQuestionsVisitor = new VisibleQuestionsVisitor(questionElementContainer);
+        branchVisitor = new BranchVisitor(questionElementContainer);
         questionValueVisitor = new QuestionValueVisitor(questionElementContainer);
 
         primaryStage.show();
@@ -29,10 +29,11 @@ public class GUIHandler {
 
     public void runGUI(Form form) {
         ValueTable valueTable = new ValueTable();
+
         while (valueTable.hasUnknownValues()) {
             questionValueVisitor.visitForm(form, valueTable);
         }
 
-        List<QuestionElement> visibleElements = visibleQuestionsVisitor.visitForm(form, valueTable);
+        List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
     }
 }

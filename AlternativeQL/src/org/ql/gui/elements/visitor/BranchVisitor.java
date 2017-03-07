@@ -17,14 +17,14 @@ import org.ql.gui.elements.QuestionElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VisibleQuestionsVisitor implements FormVisitor<List<QuestionElement>, ValueTable>,
+public class BranchVisitor implements FormVisitor<List<QuestionElement>, ValueTable>,
         StatementVisitor<Void, ValueTable> {
 
     private final List<QuestionElement> elements;
     private final Evaluator evaluator;
     private final QuestionElementContainer elementContainer;
 
-    public VisibleQuestionsVisitor(QuestionElementContainer elementContainer) {
+    public BranchVisitor(QuestionElementContainer elementContainer) {
         elements = new ArrayList<>();
         this.elementContainer = elementContainer;
         evaluator = new Evaluator();

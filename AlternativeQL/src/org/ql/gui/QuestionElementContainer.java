@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuestionElementContainer {
-    // TODO think about the key
+
     private final Map<Identifier, QuestionElement> elementsMap = new HashMap<>();
     private final WidgetBuilder widgetBuilder;
 
@@ -26,6 +26,6 @@ public class QuestionElementContainer {
     }
 
     private QuestionElement createQuestionElement(Question question) {
-        return null;
+        return new QuestionElement(question, widgetBuilder.getWidget(question));
     }
 }
