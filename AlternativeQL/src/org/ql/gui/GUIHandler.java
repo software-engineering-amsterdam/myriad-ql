@@ -31,7 +31,11 @@ public class GUIHandler {
         ValueTable valueTable = new ValueTable();
 
         while (valueTable.hasUnknownValues()) {
+            ValueTable currentVT = valueTable.copy();
             questionValueVisitor.visitForm(form, valueTable);
+            if (currentVT.equals(valueTable)) {
+                break;
+            }
         }
 
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);

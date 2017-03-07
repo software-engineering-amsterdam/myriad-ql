@@ -37,4 +37,10 @@ public class ValueTable {
         }
         return false;
     }
+
+    public ValueTable copy() {
+        ValueTable valueTable = new ValueTable();
+        valueTable.values.putAll(values);
+        return valueTable;
+    }
 }
