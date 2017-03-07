@@ -34,6 +34,7 @@ class InitEnvironment(object):
 
     def comp_question_node(self, comp_question_node):
         self.add_var_to_env(comp_question_node)
+        comp_question_node.expression.accept(self)
 
     def if_node(self, if_node):
         if_node.condition.accept(self)
