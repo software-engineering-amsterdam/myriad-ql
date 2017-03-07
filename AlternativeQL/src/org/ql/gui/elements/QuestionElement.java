@@ -7,8 +7,9 @@ import org.ql.gui.widgets.Widget;
 public class QuestionElement {
     private Question question;
     private Widget widget;
-    private boolean isDirty;
+
     private Value value;
+    private boolean isDirty = false;
 
     public QuestionElement(Question question, Widget widget) {
         this.question = question;
@@ -28,6 +29,10 @@ public class QuestionElement {
         return isDirty;
     }
 
+    public void setDirty(boolean dirty) {
+        isDirty = dirty;
+    }
+
     public Question getQuestion() {
         return question;
     }
@@ -35,4 +40,5 @@ public class QuestionElement {
     public Widget getWidget() {
         return widget;
     }
+
 }
