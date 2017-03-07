@@ -32,9 +32,9 @@ import ast.type.UnknownType;
 // operands of invalid type to operators
 // TODO rename
 public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Type>, TypeVisitor {
-	
+
 	private final Environment environment;
-	
+
 	public ExpressionVisitor(Environment environment) {
 		this.environment = environment;
 	}
@@ -86,7 +86,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	public Type visit(AddExpression expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
-        
+
         // TODO look up type
         check(new IntegerType(1), type_lhs, type_rhs);
 
@@ -273,7 +273,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
 	}
 
 	private void check(Type expected, Type lhs, Type rhs) {
-	    
+
 		check(expected, lhs);
 		check(expected, rhs);
 	}
