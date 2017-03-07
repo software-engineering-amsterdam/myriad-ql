@@ -81,7 +81,7 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
       case (_, MoneyType) => MoneyType
       case (DecimalType, _) => DecimalType
       case (_, DecimalType) => DecimalType
-      case _ => IntegerType
+      case (IntegerType, IntegerType) => IntegerType
     }
 
   private def isSubType(candidateChild: NumericType, candidateParent: NumericType): Boolean =
