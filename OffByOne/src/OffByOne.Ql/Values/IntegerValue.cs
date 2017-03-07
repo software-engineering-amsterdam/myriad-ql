@@ -10,7 +10,7 @@
     public class IntegerValue : BaseValue
     {
         public IntegerValue(string value)
-            : this(int.Parse(value))
+            : this(int.Parse(value, CultureInfo.InvariantCulture))
         {
         }
 

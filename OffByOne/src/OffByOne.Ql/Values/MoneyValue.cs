@@ -10,7 +10,7 @@
     public class MoneyValue : BaseValue
     {
         public MoneyValue(string value)
-            : this(decimal.Parse(value))
+            : this(decimal.Parse(value, CultureInfo.InvariantCulture))
         {
         }
 

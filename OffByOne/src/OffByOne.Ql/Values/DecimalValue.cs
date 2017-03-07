@@ -10,7 +10,7 @@
     public class DecimalValue : BaseValue
     {
         public DecimalValue(string value)
-            : this(double.Parse(value))
+            : this(double.Parse(value, CultureInfo.InvariantCulture))
         {
         }
 
