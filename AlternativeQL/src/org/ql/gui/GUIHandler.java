@@ -30,7 +30,7 @@ public class GUIHandler {
     public void runGUI(Form form) {
         ValueTable valueTable = new ValueTable();
 
-        while (valueTable.hasUnknownValues()) {
+        while (valueTable.size() == 0 || valueTable.hasUnknownValues()) {
             ValueTable currentVT = valueTable.copy();
             questionValueVisitor.visitForm(form, valueTable);
             if (currentVT.equals(valueTable)) {
