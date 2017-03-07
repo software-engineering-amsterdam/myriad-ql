@@ -40,6 +40,7 @@ class Gui(FormVisitor, TypeVisitor):
             self.ql_wizard.add_page(page)
             del page
         self.trigger_conditional_if()
+        self.trigger_conditional_if_else()
         return self.ql_wizard
 
     def form(self, node):
@@ -53,11 +54,28 @@ class Gui(FormVisitor, TypeVisitor):
         return page
 
     def conditional_if_else(self, node):
-        # TODO Implement like conditional_if
-        if self.evaluator.conditional_if(node):
-            [statement.apply(self) for statement in node.statements]
-        else:
-            [statement.apply(self) for statement in node.else_statement_list]
+        if_else_container = QGroupBox(node.parent)
+        if_else_layout = QVBoxLayout()
+
+        if_container = QGroupBox(if_else_container)
+        if_layout = QVBoxLayout()
+        for statement in node.statements:
+            statement.parent = node.parent
+            if_layout.addWidget(statement.apply(self))
+        if_container.setLayout(if_layout)
+
+        else_container = QGroupBox(if_else_container)
+        else_layout = QVBoxLayout()
+        for statement in node.else_statement_list:
+            statement.parent = node.parent
+            else_layout.addWidget(statement.apply(self))
+        else_container.setLayout(else_layout)
+
+        if_else_layout.addWidget(if_container)
+        if_else_layout.addWidget(else_container)
+        if_else_container.setLayout(if_else_layout)
+        self.conditional_if_else_list.append((if_container, else_container, node))
+        return if_else_container
 
     def conditional_if(self, node):
         container = QGroupBox(node.parent)
@@ -70,14 +88,26 @@ class Gui(FormVisitor, TypeVisitor):
         return container
 
     def trigger_conditional_if(self):
-        for container, node in self.conditional_if_list:
+        for if_block_container, node in self.conditional_if_list:
             result = self.evaluator.expression(node.condition)
             cond = (result is not None and result)
-            container.setEnabled(cond)
+            if_block_container.setEnabled(cond)
             if cond:
-                container.show()
+                if_block_container.show()
             else:
-                container.hide()
+                if_block_container.hide()
+
+    def trigger_conditional_if_else(self):
+        for if_container, else_container, node in self.conditional_if_else_list:
+            result = self.evaluator.expression(node.condition)
+            cond = (result is not None and result)
+            if_container.setEnabled(cond)
+            if cond:
+                if_container.show()
+                else_container.hide()
+            else:
+                if_container.hide()
+                else_container.show()
 
     def field(self, node):
         container = QGroupBox(node.parent)
@@ -103,6 +133,7 @@ class Gui(FormVisitor, TypeVisitor):
         widget.setMinimum(-(10**10))
         widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
         widget.valueChanged.connect(self.trigger_conditional_if)
+        widget.valueChanged.connect(self.trigger_conditional_if_else)
         return widget
 
     def integer(self, node):
@@ -112,6 +143,7 @@ class Gui(FormVisitor, TypeVisitor):
         widget.setMaxLength(8)
         widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
         widget.valueChanged.connect(self.trigger_conditional_if)
+        widget.valueChanged.connect(self.trigger_conditional_if_else)
         return widget
 
     def boolean(self, node):
@@ -119,6 +151,7 @@ class Gui(FormVisitor, TypeVisitor):
         widget.setChecked(False)
         widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
         widget.stateChanged.connect(self.trigger_conditional_if)
+        widget.stateChanged.connect(self.trigger_conditional_if_else)
         return widget
 
     def update_trigger_numeric(self, widget, value, type):
