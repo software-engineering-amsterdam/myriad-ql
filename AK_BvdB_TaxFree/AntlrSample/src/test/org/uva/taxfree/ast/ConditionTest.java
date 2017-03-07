@@ -15,6 +15,10 @@ public class ConditionTest {
     public void testLiteralExpression() throws Exception {
         assertSemantics("conditionLiteralForm.txt", 0, "A valid literal condition");
     }
+    @Test
+    public void testVariableLiteralExpression() throws Exception {
+        assertSemantics("conditionVariableLiteralForm.txt", 0, "A valid variable literal condition");
+    }
 
     @Test
     public void testSimpleBooleanExpression() throws Exception {
