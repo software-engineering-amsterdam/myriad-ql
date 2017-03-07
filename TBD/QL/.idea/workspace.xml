@@ -1,55 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="jacc and beginning of ASt">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/ASTNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/Default.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/DefaultAttribute.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/DefaultAttributes.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/DefaultWithAttributes.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/Page.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/PageStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/PageStatements.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/Question.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/Section.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/SectionStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/SectionStatements.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/Stylesheet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/StylesheetStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/StylesheetStatements.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Color.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Font.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Height.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Width.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSHex.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSIdent.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSInt.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSLiteral.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSString.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/BooleanType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/ErrorType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/FloatType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/IntType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/NumType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/StringType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/types/Type.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Checkbox.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Radio.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Slider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Spinbox.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Text.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Widget.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/parser/Parser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/parser/QLSLexer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/parser/QLSParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/parser/QLSTokens.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/parser/qls.jacc" />
+    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLParser.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -861,7 +814,7 @@
       <workItem from="1488883430085" duration="222000" />
       <workItem from="1488883758184" duration="94000" />
       <workItem from="1488883949686" duration="4772000" />
-      <workItem from="1488888750721" duration="15461000" />
+      <workItem from="1488888750721" duration="15544000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -870,11 +823,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486468125187</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="jacc and beginning of ASt">
+      <created>1488909730043</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1488909730043</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32803000" />
+    <option name="totallyTimeSpent" value="32886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="21" width="1309" height="747" extended-state="6" />
