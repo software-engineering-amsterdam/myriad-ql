@@ -4,8 +4,8 @@ form BoxHouseOwning {
     sellingPrice: "How much did you sell the house for?" integer
 
     if sellingPriceB >= 10 {
-        privateDebt: "Private debts for the sold house:" decimal
-        valueResidue: "Value residue:" decimal
+        privateDebt: "Private debts for the sold house:" integer
+        valueResidue: "Value residue:" integer
     }
     else {
         x: "in de else?" boolean

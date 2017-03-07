@@ -3,18 +3,19 @@ stylesheet taxOfficeExample {
     section "Selling B" {
 
       question sellingPrice { weight: bold size :20 family: "Times New Roman" width: 50}
+      question sellingPriceB widget spinbox
+
     }
     section "Selling A" {
 
       section "YOLO" {
           question hasBoughtHouse { color: #ff3333 }
           question y
-          question valueResidue
-          default boolean widget radio("ja", "nee")
+          default boolean widget radio
       }
       question x
       question hasSoldHouse { color: #228822 }
-      question privateDebt
+      question privateDebt widget spinbox(0, 10)
 
       default boolean { color: #000088 }
     }
@@ -22,7 +23,7 @@ stylesheet taxOfficeExample {
 
   page Testing {
     section "Test" {
-      question sellingPriceB
+        question valueResidue widget slider(5, 20)
     }
   }
 }

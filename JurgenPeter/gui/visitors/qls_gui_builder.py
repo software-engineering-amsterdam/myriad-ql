@@ -1,14 +1,13 @@
 from ql.visitors.question_finder import QuestionFinder
 from gui.visitors.widget_creator import WidgetCreator
+from gui.visitors.gui_builder import GuiBuilder
 
 
-class QlsGuiBuilder:
+class QlsGuiBuilder(GuiBuilder):
     
-    def __init__(self, app, listener, widgets, form):
-        self.app = app
-        self.listener = listener
+    def __init__(self, app, listener, exit, widgets, form):
+        super().__init__(app, listener, exit, widgets)
         self.form = form
-        self.widgets = widgets
 
     def build(self, node):
         self.visit(node, [])
@@ -22,6 +21,7 @@ class QlsGuiBuilder:
         for element in node.body:
             self.visit(element, stylings)
         self.app.stopTabbedFrame()
+        self.create_exit_button()
 
     def visit_styled_layout(self, node, stylings):
         stylings += node.stylings

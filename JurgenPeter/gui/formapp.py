@@ -8,10 +8,11 @@ from gui.visitors.gui_updater import GuiUpdater
 
 class FormApp:
 
-    def __init__(self, form, layout=None):
+    def __init__(self, form, layout=None, on_exit=None):
         self.form = form
         self.environment = {}
         self.widgets = {}
+        self.on_exit = on_exit
 
         self.app = gui(form.name)
         self.app.setResizable(False)
@@ -20,9 +21,9 @@ class FormApp:
         self.app.bindKey("<KeyPress>", self.update)
 
         if layout is None:
-            QlGuiBuilder(self.app, self.update, self.widgets).build(form)
+            QlGuiBuilder(self.app, self.update, self.exit, self.widgets).build(form)
         else:
-            QlsGuiBuilder(self.app, self.update, self.widgets, self.form).build(layout)
+            QlsGuiBuilder(self.app, self.update, self.exit, self.widgets, self.form).build(layout)
 
     def start(self):
         self.update(None)
@@ -37,6 +38,11 @@ class FormApp:
         while ComputationUpdater(self.environment).update(self.form):
             pass
         GuiUpdater(self, self.environment).update(self.form)
+
+    def exit(self, _):
+        self.app.stop()
+        if self.on_exit is not None:
+            self.on_exit(self)
 
     def show_widget(self, name):
         self.widgets[name].show()
