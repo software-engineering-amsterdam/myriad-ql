@@ -15,7 +15,7 @@ check form styleSheet =
             QLCollectors.collectDeclaredIds form
 
         questionReferences =
-            QLSCollectors.collectQuestionReferences styleSheet
+            QLSCollectors.collectQuestionReferencesAsDict styleSheet
     in
         declaredQuestions
             |> List.filter (\( name, _ ) -> not (Dict.member name questionReferences))

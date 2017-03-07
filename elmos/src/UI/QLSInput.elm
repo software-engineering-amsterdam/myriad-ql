@@ -7,11 +7,17 @@ import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
 import QLS.Parser as Parser
-import QLS.TypeChecker
+import QLS.TypeChecker as TypeChecker
+import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion))
+import UI.Messages
 
 
-type Model
-    = Model String (Maybe StyleSheet) (Maybe Form)
+type alias Model =
+    { input : String
+    , parsedStyleSheet : Maybe StyleSheet
+    , parsedForm : Maybe Form
+    , messages : List Message
+    }
 
 
 type Msg
@@ -20,13 +26,37 @@ type Msg
 
 init : Maybe Form -> Model
 init form =
-    Model "" Nothing form
+    { input = "", parsedStyleSheet = Nothing, parsedForm = form, messages = [] }
         |> update (OnInput exampleDsl)
 
 
+asStyleSheet : Model -> Maybe StyleSheet
+asStyleSheet model =
+    if List.isEmpty model.messages then
+        model.parsedStyleSheet
+    else
+        Nothing
+
+
 setForm : Maybe Form -> Model -> Model
-setForm form (Model input styleSheet _) =
-    Model input styleSheet form
+setForm form model =
+    { model | parsedForm = form }
+        |> updateMessages
+
+
+setInput : String -> Model -> Model
+setInput input model =
+    { model | input = input, parsedStyleSheet = Parser.parse input }
+        |> updateMessages
+
+
+updateMessages : Model -> Model
+updateMessages model =
+    { model
+        | messages =
+            Maybe.map2 TypeChecker.check model.parsedForm model.parsedStyleSheet
+                |> Maybe.withDefault []
+    }
 
 
 exampleDsl : String
@@ -34,7 +64,7 @@ exampleDsl =
     """stylesheet taxOfficeExample
   page Housing {
     section "Buying"
-      question hasBoughtHouse2
+      question hasBoughtHouse
         widget checkbox
     section "Loaning"
       question hasMaintLoan
@@ -61,23 +91,24 @@ exampleDsl =
     }
     default boolean widget radio("Yes", "No")
   }
+
 """
 
 
 asStylesheet : Model -> Maybe StyleSheet
-asStylesheet (Model _ maybeStylesheet _) =
-    maybeStylesheet
+asStylesheet { parsedStyleSheet } =
+    parsedStyleSheet
 
 
 update : Msg -> Model -> Model
-update msg (Model _ _ parsedForm) =
+update msg model =
     case msg of
         OnInput newInput ->
-            Model newInput (Parser.parse newInput) parsedForm
+            setInput newInput model
 
 
 view : Model -> Html Msg
-view (Model rawText parsedStyleSheet parsedForm) =
+view { input, parsedStyleSheet, parsedForm, messages } =
     node "div"
         []
         [ ( "qlsInput"
@@ -86,7 +117,7 @@ view (Model rawText parsedStyleSheet parsedForm) =
                     [ div [ class "col-md-6" ]
                         [ Html.form [ class "form" ]
                             [ textarea
-                                [ defaultValue rawText
+                                [ defaultValue input
                                 , rows 20
                                 , cols 45
                                 , class "form-control"
@@ -97,10 +128,44 @@ view (Model rawText parsedStyleSheet parsedForm) =
                             ]
                         ]
                     , div [ class "col-md-6" ]
-                        [ text <| toString <| Maybe.withDefault [] <| Maybe.map2 QLS.TypeChecker.check parsedForm parsedStyleSheet
+                        [ div [] <|
+                            if parsedForm == Nothing then
+                                [ UI.Messages.error
+                                    [ text "No valid Form" ]
+                                ]
+                            else if parsedStyleSheet == Nothing then
+                                [ UI.Messages.error
+                                    [ text "Could not parse the stylesheet" ]
+                                ]
+                            else
+                                List.map (UI.Messages.error << renderMessage) messages
                         ]
                     ]
-                , pre [] [ text <| toString parsedStyleSheet ]
                 ]
           )
         ]
+
+
+renderMessage : Message -> List (Html msg)
+renderMessage message =
+    case message of
+        UndefinedQuestionReference name loc ->
+            [ text <| "Reference to undefined question "
+            , UI.Messages.renderVarName name
+            , text " at "
+            , UI.Messages.renderLocation loc
+            ]
+
+        UnplacedQuestion name ->
+            [ text <| "Question "
+            , UI.Messages.renderVarName name
+            , text " is not placed in the QLS program"
+            ]
+
+        DuplicatePlacedQuestion name locations ->
+            [ text "Question placed multiple times for variable "
+            , UI.Messages.renderVarName name
+            , text " at the following locations: [ "
+            , UI.Messages.renderLocations locations
+            , text "]"
+            ]
