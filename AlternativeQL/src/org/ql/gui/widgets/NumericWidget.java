@@ -12,17 +12,10 @@ public class NumericWidget extends Widget {
     public NumericWidget(String text) {
         numericField = new TextField(text);
         addToPane();
-        addEventHandler();
     }
 
     public TextField getNumericField() {
         return numericField;
-    }
-
-    public void addEventHandler() {
-        numericField.setOnAction((event) -> {
-            System.out.println("Value: " + numericField.getText());
-        });
     }
 
     @Override
@@ -43,5 +36,10 @@ public class NumericWidget extends Widget {
     @Override
     public Value getValue() {
         return new StringValue(numericField.getText());
+    }
+
+    @Override
+    public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
+        numericField.setOnAction(eventHandler);
     }
 }

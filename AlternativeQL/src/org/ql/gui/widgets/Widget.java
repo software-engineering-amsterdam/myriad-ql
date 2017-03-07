@@ -16,7 +16,7 @@ public abstract class Widget {
 
     public abstract Value getValue();
 
-    public abstract void addEventHandler();
+    public abstract void addEventHandler(EventHandler<ActionEvent> eventHandler);
 
     public GridPane getGridPane() {
         return gridPane;

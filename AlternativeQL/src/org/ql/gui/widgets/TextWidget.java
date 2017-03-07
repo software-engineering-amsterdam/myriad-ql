@@ -3,7 +3,6 @@ package org.ql.gui.widgets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
-import org.ql.ast.Identifier;
 import org.ql.evaluator.value.StringValue;
 import org.ql.evaluator.value.Value;
 
@@ -13,17 +12,10 @@ public class TextWidget extends Widget {
     public TextWidget(String text) {
         textField = new TextField(text);
         addToPane();
-        addEventHandler();
     }
 
     public TextField getTextField() {
         return textField;
-    }
-
-    public void addEventHandler() {
-        textField.setOnAction((event) -> {
-            System.out.println(textField.getText());
-        });
     }
 
     @Override
@@ -44,5 +36,10 @@ public class TextWidget extends Widget {
     @Override
     public Value getValue() {
         return new StringValue(textField.getText());
+    }
+
+    @Override
+    public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
+        textField.setOnAction(eventHandler);
     }
 }

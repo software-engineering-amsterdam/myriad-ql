@@ -5,27 +5,19 @@ import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.widgets.Widget;
 
-public class QuestionElement {
+public abstract class QuestionElement {
     private Question question;
     private Widget widget;
-
-    private Value value;
     private boolean isDirty = false;
 
-    public QuestionElement(Question question, Value value, Widget widget) {
+    public QuestionElement(Question question, Widget widget) {
         this.question = question;
-        this.value = value;
         this.widget = widget;
     }
 
-    public Value getValue() {
-        return value;
-    }
+    public abstract Value getValue();
 
-    public void setValue(Value value) {
-        widget.setValue(value);
-        this.value = value;
-    }
+    public abstract void setValue(Value value);
 
     public boolean isDirty() {
         return isDirty;
