@@ -65,7 +65,7 @@ module QL
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) { Question.new(string_literal, variable, type, assignment) }
 
       # if statement
-      rule(if_statement: { expression: subtree(:expression), body: subtree(:body) }) { IfStatement.new(expression, body) }
+      rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(condition, body) }
 
       # form
       rule(form: { id: simple(:variable), body: subtree(:body) }) { Form.new(variable, body) }
