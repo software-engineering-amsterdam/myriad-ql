@@ -27,10 +27,14 @@ import java.util.Map;
 
 public class TypeChecker implements Visitor{
 
-    private ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private ExceptionHandler exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();
     private Map<java.lang.String, ValueType> declarations = new HashMap<>();
 
+    public TypeChecker(ExceptionHandler exceptionHandler)
+    {
+        this.exceptionHandler = exceptionHandler;
+    }
     @Override
     public Form visit(Form node){
         for (Item item : node.getQuestions()) {
@@ -53,6 +57,8 @@ public class TypeChecker implements Visitor{
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
             exceptionHandler.addError(new Error(ErrorType.DUPLICATE_LABEL, node.getLineNumber(), node.getQuestion()));
+            java.lang.String test = exceptionHandler.getErrors().get(0).getMessage();
+            java.lang.String test1 = test;
         }
 
         declarations.put(node.getValue(), node.getType());
@@ -62,6 +68,7 @@ public class TypeChecker implements Visitor{
 
     @Override
     public Conditional visit(Conditional node){
+        node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));
         node.getElseStatements().forEach(item -> item.accept(this));
@@ -110,8 +117,7 @@ public class TypeChecker implements Visitor{
 
     @Override
     public ValueType visit(Identifier identifier) {
-        if (declarations.keySet().contains(identifier.getId()))
-        {
+        if (declarations.keySet().contains(identifier.getId())) {
             return declarations.get(identifier.getId());
         }
 
