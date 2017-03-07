@@ -2,10 +2,10 @@ grammar QL;
 
 @parser::header
 {
-    import ast.atom.*;
-    import ast.*;
-    import ast.type.*;
-    import ast.expression.*;
+    import QL.ast.atom.*;
+    import QL.ast.*;
+    import QL.ast.type.*;
+    import QL.ast.expression.*;
 }
 
 form returns [Form result] 

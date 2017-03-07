@@ -1,6 +1,6 @@
-import value.BoolValue;
-import value.IntegerValue;
-import value.StringValue;
+import QL.value.BoolValue;
+import QL.value.IntegerValue;
+import QL.value.StringValue;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
