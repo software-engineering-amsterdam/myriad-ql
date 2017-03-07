@@ -9,9 +9,10 @@ public class BoolValue extends Value {
     public BoolValue(Boolean value) {
     	this.value = value;
     }
-    
+
+    // TODO default false ?
     public BoolValue() {
-    	this.value = null;
+    	this.value = false;
     }
     
     @Override

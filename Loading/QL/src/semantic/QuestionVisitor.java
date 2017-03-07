@@ -46,6 +46,11 @@ public class QuestionVisitor implements FormVisitor {
 		statement.getBlock().accept(this); // TODO circulair dependencies?
 	}
 
+	@Override
+	public void visit(IfElseStatement statement) {
+		statement.getBlock().accept(this); // TODO circulair dependencies?
+	}
+
 	// TODO computed question
 	@Override
 	public void visit(ComputedQuestion question) {

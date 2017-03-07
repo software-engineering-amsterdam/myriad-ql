@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ast.ComputedQuestion;
+import ast.IfElseStatement;
 import ast.Question;
 import ast.Statement;
 import evaluation.Environment;
@@ -59,9 +60,29 @@ public class QEvaluator extends Evaluator {
         }
         
         // TODO nicer check for emptyAtom?
-        if (((BoolValue) value).getValue()) { // TODO check booltype?
+        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
             System.out.println("Evaluator: statement, value = " + ((BoolValue) value).getValue());
         	statement.getBlock().accept(this);
+        }
+    }
+
+    @Override
+    public void visit(IfElseStatement statement) {
+        Value value = statement.getExpression().accept(this);
+
+        // TODO assert atom != null
+        if (value == null) {
+        	throw new AssertionError("The operation " + statement.getExpression().getClass()
+        			+ " ");
+        }
+
+        // TODO nicer check for emptyAtom?
+        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
+            System.out.println("Evaluator: statement, value = " + ((BoolValue) value).getValue());
+        	statement.getBlock().accept(this);
+        } else {
+            System.out.println("Evaluator: visit elseblock");
+            statement.getElseBlock().accept(this);
         }
     }
 }
