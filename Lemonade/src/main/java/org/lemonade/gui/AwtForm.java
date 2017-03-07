@@ -133,7 +133,7 @@ public class AwtForm {
             Form root = (Form) tree.accept(visitor);
 
             // Set title of form
-            headerLabel.setText(root.getIdentifier());
+            headerLabel.setText(root.getIdentifier().getValue());
             controlPanel.removeAll();
 
             for (Body body : root.getBodies()) {

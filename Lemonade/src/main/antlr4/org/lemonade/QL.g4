@@ -57,7 +57,7 @@ label
     ;
 
 identifier
-    : IDENT
+    : IDENT                         #identifierValue
     ;
 
 MINUS
