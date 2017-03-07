@@ -6,14 +6,20 @@ module QL
     class Parser < Parslet::Parser
       root(:form)
 
-      root :equals
+      root :comparison_order
 
       # rule(:root) {
       #   ((exp | addition)).repeat
       # }
 
       rule(:exp) {
-        str('(') >> equals >> str(')')
+        str('(') >> comparison_order >> str(')')
+      }
+
+
+      rule(:comparison_order) {
+        equals.as(:left) >> (comparison_order_op >> equals.as(:right)).repeat(1) |
+          equals
       }
 
       rule(:equals) {
@@ -38,6 +44,7 @@ module QL
       rule(:mult_op) { (str('*') | str('/')).as(:operator) >> _ }
       rule(:add_op) { (str('+') | str('-')).as(:operator) >> _ }
       rule(:equal_op) { (str('==') | str('!=')).as(:operator) >> _ }
+      rule(:comparison_order_op) { (str('<=') | str('>=') | str('<') | str('>')).as(:operator) >> _ }
 
 
       # spaces, breaks
