@@ -41,10 +41,10 @@ module QL
       rule(:literal_or_variable_or_expression) { negation? >> (boolean_literal | integer_literal | string_literal | variable | expression_with_parenthesis) >> _ }
 
       # statement
-      rule(:assignment?) { (str('=') >> _ >> expression.as(:assignment)).maybe >> _ }
+      rule(:assignment?) { (str('=') >> _ >> expression.as(:expression).repeat(1)).maybe >> _ }
       rule(:question) { (string_literal.as(:label) >> variable_assignment >> type.as(:type) >> assignment?).as(:question) >> _ }
-      rule(:body) { _ >> (question | if_statement).repeat.as(:body) }
-      rule(:if_statement) { (str('if') >> _ >> expression.as(:condition) >> str('{') >> body >> str('}')).as(:if_statement) >> _ }
+      rule(:body) { _ >> (question.repeat(1) | if_statement.repeat(1)).repeat.as(:body) }
+      rule(:if_statement) { (str('if') >> _ >> expression.as(:expression).repeat(1) >> str('{') >> body >> str('}')).as(:if_statement) >> _ }
 
       # form
       rule(:form) { _ >> (str('form') >> _ >> variable.as(:id) >> _ >> str('{') >> body >> str('}')).as(:form) }

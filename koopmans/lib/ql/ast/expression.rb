@@ -61,7 +61,7 @@ module QL
       def call(left)
         left  = left.eval
         right = self.right.eval
-        self.eval(left.to_value, right.to_value)
+        to_corresponding_literal(self.eval(left.to_value, right.to_value))
       end
     end
 
@@ -94,8 +94,8 @@ module QL
         [IntegerType, MoneyType]
       end
 
-      def call(left)
-        IntegerLiteral.new(super)
+      def to_corresponding_literal(result)
+        IntegerLiteral.new(result)
       end
     end
 
@@ -129,8 +129,8 @@ module QL
         [BooleanType, IntegerType, StringType, MoneyType]
       end
 
-      def call(left)
-        BooleanLiteral.new(super)
+      def to_corresponding_literal(result)
+        BooleanLiteral.new(result)
       end
     end
 
@@ -152,8 +152,8 @@ module QL
         [IntegerType, MoneyType]
       end
 
-      def call(left)
-        BooleanLiteral.new(super)
+      def to_corresponding_literal(result)
+        BooleanLiteral.new(result)
       end
     end
 
