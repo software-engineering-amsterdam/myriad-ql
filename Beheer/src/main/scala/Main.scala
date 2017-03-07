@@ -18,5 +18,5 @@ object Main extends App {
   printIssues(formModel)*/
   val filename = "src/main/resources/example.qls"
   val stylesheet = StylesheetParser(new FileReader(filename))
-  println(stylesheet.pages.mkString("\n"))
+  println(stylesheet)
 }

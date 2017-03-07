@@ -24,7 +24,7 @@ class FormParser extends QLParser with ExpressionParser {
       case expression ~ block => Conditional(expression, block)
     }
 
-  private def statements: Parser[Seq[Statement]] = block(rep(conditional | question))
+  private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))
 
   private def form: Parser[Form] =
     "form" ~> ident ~ statements ^^ {
