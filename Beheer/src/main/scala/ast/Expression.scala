@@ -8,36 +8,6 @@ import scala.language.postfixOps
 
 sealed trait ExpressionNode
 
-object ExpressionNode {
-  type Env = Map[String, Value]
-
-  def calculate(env: Env, expressionNode: ExpressionNode): Value = {
-    expressionNode match {
-      case Identifier(value) => env.getOrElse(value, UndefinedValue)
-      case Mul(lhs, rhs) => calculate(env, lhs) * calculate(env, rhs)
-      case Div(lhs, rhs) => calculate(env, lhs) / calculate(env, rhs)
-      case Add(lhs, rhs) => calculate(env, lhs) + calculate(env, rhs)
-      case Sub(lhs, rhs) => calculate(env, lhs) - calculate(env, rhs)
-      case And(lhs, rhs) => calculate(env, lhs) && calculate(env, rhs)
-      case Or(lhs, rhs) => calculate(env, lhs) || calculate(env, rhs)
-      case Eq(lhs, rhs) => calculate(env, lhs) == calculate(env, rhs)
-      case Neq(lhs, rhs) => calculate(env, lhs) != calculate(env, rhs)
-      case Gt(lhs, rhs) => calculate(env, lhs) > calculate(env, rhs)
-      case Lt(lhs, rhs) => calculate(env, lhs) < calculate(env, rhs)
-      case Geq(lhs, rhs) => calculate(env, lhs) >= calculate(env, rhs)
-      case Leq(lhs, rhs) => calculate(env, lhs) <= calculate(env, rhs)
-      case Not(operand) => calculate(env, operand) !
-      case Neg(operand) => calculate(env, operand) -
-      case IntegerLiteral(value) => IntegerValue(value)
-      case DecimalLiteral(value) => DecimalValue(value)
-      case MoneyLiteral(value) => MoneyValue(value)
-      case BooleanLiteral(value) => BooleanValue(value)
-      case StringLiteral(value) => StringValue(value)
-      case DateLiteral(value) => DateValue(value)
-    }
-  }
-}
-
 sealed trait InfixNode extends ExpressionNode {
   val lhs: ExpressionNode
   val rhs: ExpressionNode

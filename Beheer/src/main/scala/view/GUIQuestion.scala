@@ -2,8 +2,8 @@ package view
 
 import javafx.beans.binding.{ BooleanBinding, StringBinding }
 
-import ast.ExpressionNode
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
+import values.Evaluator
 
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
@@ -22,7 +22,7 @@ trait GUIQuestion {
   def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
     bind(env)
 
-    override def computeValue = ExpressionNode.calculate(env.toMap, question.value).display
+    override def computeValue: String = Evaluator(env.toMap, question.value).display
   }
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {

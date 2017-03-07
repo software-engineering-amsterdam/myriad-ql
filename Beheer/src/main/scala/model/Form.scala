@@ -1,7 +1,7 @@
 package model
 
 import ast.{ ExpressionNode, Type }
-import values.{ BooleanValue, Value }
+import values.{ BooleanValue, Evaluator, Value }
 
 sealed trait DisplayQuestion {
   val identifier: String
@@ -14,7 +14,7 @@ sealed trait DisplayQuestion {
       conditions match {
         case Nil => true
         case head :: tail =>
-          val headValue = ExpressionNode.calculate(env, head) match {
+          val headValue = Evaluator(env, head) match {
             case BooleanValue(b) => b
             case _ => false
           }
