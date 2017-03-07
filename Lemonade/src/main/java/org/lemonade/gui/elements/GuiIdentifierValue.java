@@ -4,6 +4,10 @@ public class GuiIdentifierValue extends GuiValue<String> {
 
     private String value;
 
+    public GuiIdentifierValue(String value) {
+        this.value = value;
+    }
+
     @Override String getValue() {
         return value;
     }

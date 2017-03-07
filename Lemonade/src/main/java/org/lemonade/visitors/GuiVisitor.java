@@ -1,6 +1,17 @@
 package org.lemonade.visitors;
 
+import org.lemonade.gui.elements.GuiBooleanValue;
+import org.lemonade.gui.elements.GuiDateValue;
+import org.lemonade.gui.elements.GuiDecimalValue;
+import org.lemonade.gui.elements.GuiElement;
+import org.lemonade.gui.elements.GuiIdentifierValue;
+import org.lemonade.gui.elements.GuiIntegerValue;
+import org.lemonade.gui.elements.GuiMoneyValue;
+import org.lemonade.gui.elements.GuiQuestion;
+import org.lemonade.gui.elements.GuiStringValue;
+import org.lemonade.gui.elements.GuiValue;
 import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
@@ -30,7 +41,7 @@ import org.lemonade.nodes.types.QLType;
 
 import javafx.scene.layout.Pane;
 
-public class GuiVisitor implements ASTVisitor<Expression> {
+public class GuiVisitor implements ASTVisitor<GuiElement> {
 
     private Pane pane;
 
@@ -38,111 +49,122 @@ public class GuiVisitor implements ASTVisitor<Expression> {
         this.pane = pane;
     }
 
-    @Override public Expression visit(final Form form) {
+    @Override public GuiElement visit(final Form form) {
+        for (Body body : form.getBodies()) {
+            body.accept(this);
+        }
+        return form.accept(this);
+    }
+
+    @Override public GuiElement visit(final Question question) {
+        question.getType().accept(this);
         return null;
     }
 
-    @Override public Expression visit(final Question question) {
+    @Override public GuiElement visit(final Conditional conditional) {
         return null;
     }
 
-    @Override public Expression visit(final Conditional conditional) {
+    @Override public GuiElement visit(final Expression expression) {
         return null;
     }
 
-    @Override public Expression visit(final Expression expression) {
+    @Override public GuiElement visit(final AndBinary andBinary) {
         return null;
     }
 
-    @Override public Expression visit(final AndBinary andBinary) {
+    @Override public GuiElement visit(final OrBinary orBinary) {
         return null;
     }
 
-    @Override public Expression visit(final OrBinary orBinary) {
+    @Override public GuiElement visit(final PlusBinary plusBinary) {
         return null;
     }
 
-    @Override public Expression visit(final PlusBinary plusBinary) {
+    @Override public GuiElement visit(final ProductBinary productBinary) {
         return null;
     }
 
-    @Override public Expression visit(final ProductBinary productBinary) {
+    @Override public GuiElement visit(final MinusBinary minusBinary) {
         return null;
     }
 
-    @Override public Expression visit(final MinusBinary minusBinary) {
+    @Override public GuiElement visit(final DivideBinary divideBinary) {
         return null;
     }
 
-    @Override public Expression visit(final DivideBinary divideBinary) {
+    @Override public GuiElement visit(final EqBinary eqBinary) {
         return null;
     }
 
-    @Override public Expression visit(final EqBinary eqBinary) {
+    @Override public GuiElement visit(final NEqBinary nEqBinary) {
         return null;
     }
 
-    @Override public Expression visit(final NEqBinary nEqBinary) {
+    @Override public GuiElement visit(final GTBinary gtBinary) {
         return null;
     }
 
-    @Override public Expression visit(final GTBinary gtBinary) {
+    @Override public GuiElement visit(final GTEBinary gteBinary) {
         return null;
     }
 
-    @Override public Expression visit(final GTEBinary gteBinary) {
+    @Override public GuiElement visit(final LTBinary ltBinary) {
         return null;
     }
 
-    @Override public Expression visit(final LTBinary ltBinary) {
+    @Override public GuiElement visit(final LTEBinary lteBinary) {
         return null;
     }
 
-    @Override public Expression visit(final LTEBinary lteBinary) {
+    @Override public GuiElement visit(final BangUnary bangUnary) {
         return null;
     }
 
-    @Override public Expression visit(final BangUnary bangUnary) {
+    @Override public GuiElement visit(final NegUnary negUnary) {
         return null;
     }
 
-    @Override public Expression visit(final NegUnary negUnary) {
+    @Override public GuiElement visit(final BooleanLiteral booleanValue) {
+        final GuiBooleanValue value = new GuiBooleanValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final DecimalLiteral decimalValue) {
+        final GuiDecimalValue value = new GuiDecimalValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final DateLiteral dateLiteral) {
+        final GuiDateValue value = new GuiDateValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final MoneyLiteral moneyValue) {
+        final GuiMoneyValue value = new GuiMoneyValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final IntegerLiteral integerValue) {
+        final GuiIntegerValue value = new GuiIntegerValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final StringLiteral stringValue) {
+        final GuiStringValue value = new GuiStringValue();
+        return value;
+    }
+
+    @Override public GuiElement visit(final IdentifierLiteral identifierValue) {
+        final GuiIdentifierValue value = new GuiIdentifierValue(identifierValue.getValue());
+        return value;
+    }
+
+    @Override public GuiElement visit(final QLType qlType) {
         return null;
     }
 
-    @Override public Expression visit(final BooleanLiteral booleanValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final DecimalLiteral decimalValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final MoneyLiteral moneyValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final IntegerLiteral integerValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final StringLiteral stringValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final IdentifierLiteral identifierValue) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLType qlType) {
-        return null;
-    }
-
-    @Override public Expression visit(final ASTNode astNode) {
-        return null;
-    }
-
-    @Override public Expression visit(final DateLiteral dateLiteral) {
+    @Override public GuiElement visit(final ASTNode astNode) {
         return null;
     }
 }

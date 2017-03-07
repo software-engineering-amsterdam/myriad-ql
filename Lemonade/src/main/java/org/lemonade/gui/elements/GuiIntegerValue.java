@@ -7,6 +7,10 @@ public class GuiIntegerValue extends GuiValue<Integer> {
     private Integer value;
     private TextField textField;
 
+    public GuiIntegerValue() {
+        textField = new TextField();
+    }
+
     @Override Integer getValue() {
         return value;
     }

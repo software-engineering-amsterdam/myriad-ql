@@ -7,6 +7,10 @@ public class GuiStringValue extends GuiValue<String> {
     private String value;
     private TextField textField;
 
+    public GuiStringValue() {
+        textField = new TextField();
+    }
+
     @Override
     public String getValue() {
         return value;

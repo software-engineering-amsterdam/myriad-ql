@@ -9,6 +9,10 @@ public class GuiDateValue extends GuiValue<LocalDate> {
     private LocalDate value;
     private DatePicker picker;
 
+    public GuiDateValue() {
+        picker = new DatePicker();
+    }
+
     @Override
     public LocalDate getValue() {
         return null;

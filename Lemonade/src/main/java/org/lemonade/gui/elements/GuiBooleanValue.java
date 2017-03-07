@@ -7,6 +7,10 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
     private Boolean value;
     private CheckBox checkBox;
 
+    public GuiBooleanValue() {
+        checkBox = new CheckBox();
+    }
+
     @Override
     public Boolean getValue() {
         return value;

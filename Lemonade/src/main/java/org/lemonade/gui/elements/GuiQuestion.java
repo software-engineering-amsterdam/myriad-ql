@@ -1,20 +1,18 @@
 package org.lemonade.gui.elements;
 
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.nodes.types.QLType;
 
 /**
  *
  */
-public abstract class GuiQuestion implements GuiElement {
+public class GuiQuestion implements GuiElement {
 
     private IdentifierLiteral identifier;
-    private QLType type;
-    private GuiValue value;
+    private GuiValue<?> value;
 
-    public GuiQuestion(IdentifierLiteral identifier, QLType type) {
+    public GuiQuestion(IdentifierLiteral identifier, GuiValue<?> value) {
         this.identifier = identifier;
-        this.type = type;
+        this.value = value;
     }
 
     @Override
