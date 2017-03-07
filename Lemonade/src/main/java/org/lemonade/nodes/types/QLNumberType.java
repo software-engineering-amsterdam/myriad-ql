@@ -4,7 +4,7 @@ package org.lemonade.nodes.types;
  *
  */
 public abstract class QLNumberType extends QLType {
-    public int precedenceStrength;
+    private int precedenceStrength;
 
     public QLNumberType(int precedenceStrength) {
         this.precedenceStrength = precedenceStrength;
@@ -26,7 +26,6 @@ public abstract class QLNumberType extends QLType {
     }
 
     public static QLNumberType precedence(QLNumberType left, QLNumberType right) {
-
         return left.precedenceStrength >= right.precedenceStrength ? left : right;
     }
 }

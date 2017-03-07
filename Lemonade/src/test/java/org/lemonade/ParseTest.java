@@ -18,6 +18,7 @@ public class ParseTest {
 
     private String simpleForm;
     private String dateForm;
+
     private FormVisitor visitor = new FormVisitor();
 
     @Before
@@ -27,9 +28,11 @@ public class ParseTest {
                 "tmp1: \"Hoe groot is jouw decimal?\" decimal \n" +
                 "if(((-2) + 4.0) * 8.0 >= tmp1) \n{tmp: \"yu\" money}" +
                 "\ntmp1: \"ben dubbel\" money}";
+
         dateForm = "form name {\n" +
                 "tmp1: \"Wanneer?\" date \n" +
                 "if (11/12/2001 > tmp1) {tmp: \"oke?\" boolean}}";
+
     }
 
     @Test

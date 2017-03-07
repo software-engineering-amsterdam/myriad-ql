@@ -69,4 +69,5 @@ public interface ASTVisitor<T> {
     T visit(QLType qlType);
 
     T visit(ASTNode astNode);
+
 }

@@ -1,6 +1,13 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Body;
+import org.lemonade.nodes.Conditional;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.expressions.binary.AndBinary;
@@ -15,13 +22,18 @@ import org.lemonade.nodes.expressions.binary.NEqBinary;
 import org.lemonade.nodes.expressions.binary.OrBinary;
 import org.lemonade.nodes.expressions.binary.PlusBinary;
 import org.lemonade.nodes.expressions.binary.ProductBinary;
+import org.lemonade.nodes.expressions.literal.BooleanLiteral;
+import org.lemonade.nodes.expressions.literal.ComparableLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
+import org.lemonade.nodes.expressions.literal.DecimalLiteral;
+import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
+import org.lemonade.nodes.expressions.literal.IntegerLiteral;
+import org.lemonade.nodes.expressions.literal.MoneyLiteral;
+import org.lemonade.nodes.expressions.literal.NumericLiteral;
+import org.lemonade.nodes.expressions.literal.StringLiteral;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.types.QLType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -43,7 +55,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     public Expression visit(Question question) {
         String identifier = question.getIdentifier();
 //        Literal<?> literal = question.getValue();
-
+//
 //        assert !environment.containsKey(identifier);
 //        environment.put(identifier, new UndefinedValue(question.getType()));
         return null;

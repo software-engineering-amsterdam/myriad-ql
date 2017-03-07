@@ -196,6 +196,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType rightType = binaryExpression.getRight().accept(this);
 
         //Doesn't return it's own type because this can evaluate to a new type.
+        // TODO!
         if (!(leftType.isOf(rightType.getClass()) && leftType.isComparable())) {
             errors.add("QLComparable type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
         }
