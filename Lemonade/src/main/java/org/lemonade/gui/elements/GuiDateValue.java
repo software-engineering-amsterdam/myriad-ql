@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javafx.scene.control.DatePicker;
 
-public class GuiDateValue extends GuiValue<LocalDate> implements GuiElement {
+public class GuiDateValue extends GuiValue<LocalDate> {
 
     private LocalDate value;
     private DatePicker picker;

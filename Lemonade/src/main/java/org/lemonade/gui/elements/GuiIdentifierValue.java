@@ -9,4 +9,6 @@ public class GuiIdentifierValue extends GuiValue<String> {
     }
 
     @Override void setValue(final String value) {}
+
+    @Override public void update() {}
 }

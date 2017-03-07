@@ -2,7 +2,7 @@ package org.lemonade.gui.elements;
 
 import javafx.scene.control.TextField;
 
-public class GuiStringValue extends GuiValue<String> implements GuiElement {
+public class GuiStringValue extends GuiValue<String> {
 
     private String value;
     private TextField textField;
