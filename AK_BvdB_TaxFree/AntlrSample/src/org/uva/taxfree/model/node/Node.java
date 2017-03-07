@@ -11,10 +11,6 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    public void printValue() {
-        // Intentionally left blank
-    }
-
     public void addCondition(Set<ExpressionNode> set) {
         // Intentionally left blank
     }
@@ -28,7 +24,4 @@ public abstract class Node {
         // Intentionally left blank;
     }
 
-    public void printId() {
-        // Intentionally left blank;
-    }
 }

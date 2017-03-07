@@ -6,6 +6,7 @@ import org.uva.taxfree.gui.FileSelector;
 import org.uva.taxfree.gui.MessageWindow;
 import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.Environment;
+import org.uva.taxfree.model.node.blocks.BlockNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,9 @@ public class Main {
         // checker check(symbolTable, errorList)
         // if isEmpty () {
         // etc.
+
+        AbstractSyntaxTreeBuilder builder = new AbstractSyntaxTreeBuilder(inputFile);
+        BlockNode ast = builder.generateTree();
 
         Environment environment = AbstractSyntaxTreeBuilder.generate(inputFile); // , symboltable); // in main
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);

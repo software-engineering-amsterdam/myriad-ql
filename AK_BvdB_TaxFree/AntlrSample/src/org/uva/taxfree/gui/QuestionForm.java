@@ -27,10 +27,6 @@ public class QuestionForm {
         mFormNode.setVisible(true);
     }
 
-    public void printDeclarations() {
-        mFormNode.printDeclarations();
-    }
-
     private void generateForm() {
         JFrame frame = new JFrame(mFormNode.toString());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +62,4 @@ public class QuestionForm {
         mFormNode.setVisible(true);
     }
 
-    public void printValues() {
-        mFormNode.printValue();
-    }
 }

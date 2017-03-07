@@ -14,13 +14,6 @@ public abstract class BlockNode extends Node {
         mChildren = children; ///< preserves the order in which the items were inserted
     }
 
-    public void printData() {
-        printValue();
-        for (Node child : mChildren) {
-            child.printValue();
-        }
-    }
-
     public void setVisible(boolean isVisible) {
         for (Node child : mChildren) {
             child.setVisible(isVisible);
@@ -59,26 +52,6 @@ public abstract class BlockNode extends Node {
     public void addCalculation(Set<CalculatedField> set) {
         for (Node child : mChildren) {
             child.addCalculation(set);
-        }
-    }
-
-    public void printDeclarations() {
-        for (Node child : mChildren) {
-            child.printId();
-        }
-    }
-
-    @Override
-    public void printValue() {
-        for (Node child : mChildren) {
-            child.printValue();
-        }
-    }
-
-    @Override
-    public void printId() {
-        for (Node child : mChildren) {
-            child.printId();
         }
     }
 }
