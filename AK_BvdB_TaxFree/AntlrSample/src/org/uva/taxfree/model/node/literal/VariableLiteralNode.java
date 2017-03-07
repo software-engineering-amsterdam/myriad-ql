@@ -13,7 +13,7 @@ public class VariableLiteralNode extends LiteralNode {
 
     @Override
     public String resolveValue() {
-        return mSymbolTable.resolve(super.resolveValue());
+        return mSymbolTable.resolveValue(super.resolveValue());
     }
 
     @Override
