@@ -11,7 +11,8 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.items.Conditional;
+import org.uva.hatt.taxform.ast.nodes.items.IfThen;
+import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
 import org.uva.hatt.taxform.ast.nodes.types.*;
@@ -65,7 +66,15 @@ public class TypeChecker implements Visitor{
     }
 
     @Override
-    public Conditional visit(Conditional node){
+    public IfThen visit(IfThen node) {
+        node.getCondition().accept(this);
+
+        node.getThenStatements().forEach(item -> item.accept(this));
+        return null;
+    }
+
+    @Override
+    public IfThenElse visit(IfThenElse node){
         node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));

@@ -19,7 +19,8 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.items.Conditional;
+import org.uva.hatt.taxform.ast.nodes.items.IfThen;
+import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
@@ -74,7 +75,25 @@ public class UIVisitor implements Visitor<Pane> {
     }
 
     @Override
-    public Pane visit(Conditional node) {
+    public Pane visit(IfThen node) {
+        VBox vBox = new VBox();
+        java.lang.Boolean condition = null;
+        try {
+            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate());
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+
+        if (condition) {
+            List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
+            vBox.getChildren().addAll(thenStatements);
+        }
+
+        return vBox;
+    }
+
+    @Override
+    public Pane visit(IfThenElse node) {
         VBox vBox = new VBox();
         java.lang.Boolean condition = null;
         try {

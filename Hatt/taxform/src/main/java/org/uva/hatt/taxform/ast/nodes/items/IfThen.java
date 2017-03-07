@@ -6,13 +6,12 @@ import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 import java.util.List;
 
-public class Conditional extends ASTNode implements Item{
+public class IfThen extends ASTNode implements Item{
 
     private Expression condition;
     private List<Item> thenStatements;
-    private List<Item> elseStatements;
 
-    public Conditional(int lineNumber) {
+    public IfThen(int lineNumber) {
         super(lineNumber);
     }
 
@@ -30,14 +29,6 @@ public class Conditional extends ASTNode implements Item{
 
     public void setThenStatements(List<Item> thenStatements) {
         this.thenStatements = thenStatements;
-    }
-
-    public List<Item> getElseStatements() {
-        return elseStatements;
-    }
-
-    public void setElseStatements(List<Item> elseStatements) {
-        this.elseStatements = elseStatements;
     }
 
     public <T> T accept(Visitor<T> visitor){

@@ -5,7 +5,8 @@ import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
-import org.uva.hatt.taxform.ast.nodes.items.Conditional;
+import org.uva.hatt.taxform.ast.nodes.items.IfThen;
+import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
@@ -19,11 +20,10 @@ import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.grammars.QLBaseVisitor;
 import org.uva.hatt.taxform.grammars.QLParser;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QLVisitor extends QLBaseVisitor<ASTNode>{
+public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     private Form form;
 
@@ -56,14 +56,24 @@ public class QLVisitor extends QLBaseVisitor<ASTNode>{
     }
 
     @Override
-    public ASTNode visitConditional(QLParser.ConditionalContext ctx) {
-        Conditional conditional = new Conditional(ctx.start.getLine());
+    public ASTNode visitIfThen(QLParser.IfThenContext ctx) {
+        IfThen ifThen = new IfThen(ctx.start.getLine());
 
-        conditional.setCondition((Expression) visit(ctx.ifBlock().expression()));
-        conditional.setThenStatements(getStatements(ctx.ifBlock().items()));
-        conditional.setElseStatements(ctx.elseBlock() == null ? new ArrayList<>() : getStatements(ctx.elseBlock().items()));
+        ifThen.setCondition((Expression) visit(ctx.ifBlock().expression()));
+        ifThen.setThenStatements(getStatements(ctx.ifBlock().items()));
 
-        return conditional;
+        return ifThen;
+    }
+
+    @Override
+    public ASTNode visitIfThenElse(QLParser.IfThenElseContext ctx) {
+        IfThenElse ifThenElse = new IfThenElse(ctx.start.getLine());
+
+        ifThenElse.setCondition((Expression) visit(ctx.ifBlock().expression()));
+        ifThenElse.setThenStatements(getStatements(ctx.ifBlock().items()));
+        ifThenElse.setElseStatements(getStatements(ctx.elseBlock().items()));
+
+        return ifThenElse;
     }
 
     @Override

@@ -19,7 +19,8 @@ public interface Visitor<T> {
     T visit(Form node);
     T visit(FormId node);
     T visit(Question node);
-    T visit(Conditional node);
+    T visit(IfThen node);
+    T visit(IfThenElse node);
     T visit(Boolean node);
     T visit(Integer node);
     T visit(Money node);
