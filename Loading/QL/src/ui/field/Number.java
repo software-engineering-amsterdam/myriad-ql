@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import ui.Questionnaire.Notifier;
+import value.IntegerValue;
 import value.Value;
 
 public class Number implements Field {
@@ -21,7 +22,7 @@ public class Number implements Field {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
-	        	  listener.updateQuestionnaire(name, new Value(Integer.parseInt(newValue)));
+	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
 
 	          }
 	      }
@@ -32,15 +33,15 @@ public class Number implements Field {
 	public Value getAnswer() {
 		String str = field.getText();
 		if (str.isEmpty()) {
-			return new Value();
+			return new IntegerValue();
 		}
-		return new Value(Integer.valueOf(str));
+		return new IntegerValue(Integer.valueOf(str));
 	}
 
 	@Override
 	public void setAnswer(Value value) {
-		if (value.getValue().getNumber() != null) {
-			field.setText(Integer.toString(value.getValue().getNumber())); // TODO getValue, getNumber : move number etc to value
+		if (value.isSet()) {
+			field.setText(Integer.toString(((IntegerValue) value).getValue()));
       	  	field.end();
 		}
 		

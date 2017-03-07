@@ -10,7 +10,7 @@ public class BoolValue extends Value {
     	this.value = value;
     }
     
-    public BoolValue(int line) {
+    public BoolValue() {
     	this.value = null;
     }
     
@@ -23,7 +23,7 @@ public class BoolValue extends Value {
     public BoolValue and(Value other) {
 		
     	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    		return new BoolValue();
     	}
 		
     	return new BoolValue(value && ((BoolValue) other).getValue());
@@ -33,7 +33,7 @@ public class BoolValue extends Value {
 	public BoolValue or(Value other) {
 		
     	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    		return new BoolValue();
     	}
 		
 		return new BoolValue(value || ((BoolValue) other).getValue());
@@ -43,29 +43,29 @@ public class BoolValue extends Value {
 	public BoolValue eq(Value other) {
 		
     	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    		return new BoolValue();
     	}
 		System.out.println("TODO Does this work?");
-		return new BoolValue(this.equals(other));
-		// return new BoolValue(value == ((BoolValue) other).getValue());
+//		return new BoolValue(this.equals(other));
+		 return new BoolValue(value == ((BoolValue) other).getValue());
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
 		
     	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    		return new BoolValue();
     	}
 		System.out.println("TODO Does this work?");
-		return new BoolValue(this.equals(other));
-		// return new BoolValue(value != ((BoolValue) other).getValue());
+//		return new BoolValue(this.equals(other));
+		 return new BoolValue(value != ((BoolValue) other).getValue());
 	}
 
 	@Override
 	public BoolValue not() {
 		
     	if (isSet()) {
-    		return new BoolValue(0);
+    		return new BoolValue();
     	}
 		
 		return new BoolValue(!value);

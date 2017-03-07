@@ -6,8 +6,12 @@ import ast.ComputedQuestion;
 import ast.Question;
 import ast.Statement;
 import ast.atom.Atom;
+import ast.type.BooleanType;
 import evaluation.Environment;
 import evaluation.Evaluator;
+import javafx.beans.value.ObservableBooleanValue;
+import value.BoolValue;
+import value.IntegerValue;
 import value.Value;
 
 
@@ -33,14 +37,14 @@ public class QEvaluator extends Evaluator {
     @Override
     public void visit(ComputedQuestion question) {
         System.out.println("Evaluator: computed question");
-        Atom atom = question.getComputedQuestion().accept(this);
+        Value value = question.getComputedQuestion().accept(this);
 
         QQuestion q = new QQuestion(question.getVariable(),
                 question.getLabel(), question.getType());
 
-        // TODO what to do with the answer of a computed question?
-        if (atom.isSet()) {
-            q.setAnswer(new Value(atom.getNumber()));
+        // TODO only works with integers...
+        if (value.isSet()) {
+            q.setAnswer(value);
         }
 
         activeQuestions.add(q);
@@ -48,17 +52,17 @@ public class QEvaluator extends Evaluator {
 
     @Override
     public void visit(Statement statement) {
-        Atom atom = statement.getExpression().accept(this);
+        Value value = statement.getExpression().accept(this);
         
-        // TODO
-        if (atom == null) {
+        // TODO assert atom != null
+        if (value == null) {
 //        	throw new AssertionError("The operation " + statement.getExpression().getClass() 
 //        			+ " ")
         }
         
         // TODO nicer check for emptyAtom?
-        if (atom != null && atom.getValue()) { // TODO check booltype?
-            System.out.println("The value of atom: " + atom.getValue());
+        if (((BoolValue) value).getValue()) { // TODO check booltype?
+            System.out.println("Evaluator: statement, value = " + ((BoolValue) value).getValue());
         	statement.getBlock().accept(this);
         }
     }

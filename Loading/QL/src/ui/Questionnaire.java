@@ -42,7 +42,8 @@ public class Questionnaire extends Application {
 		// TODO change to already implemented observer pattern
 		public void updateQuestionnaire(String name, Value newValue) {
 	    	Value oldAnswer = env.getAnswer(name);
-			if (oldAnswer == null || !(oldAnswer.getValue().eq(newValue.getValue()).getValue())) {
+	    	// TODO .equals()?
+			if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
 
 				env.addAnswer(name, newValue); 
 
@@ -131,7 +132,7 @@ public class Questionnaire extends Application {
             	for (QQuestion activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
-            		if (answer.getValue() == null) {
+            		if (!answer.isSet()) {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Please Fill in all Fields");
                         return;

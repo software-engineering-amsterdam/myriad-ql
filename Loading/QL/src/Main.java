@@ -12,7 +12,6 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" integer (Name0 - 5) "
 				 + "if ((true)) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "}"

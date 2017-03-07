@@ -1,10 +1,10 @@
 package ast.type;
 
 import ast.TypeVisitor;
-import ast.atom.Atom;
-import ast.atom.BoolAtom;
 import ui.field.Check;
 import ui.field.Field;
+import value.BoolValue;
+import value.Value;
 
 public class BooleanType extends Type {
 	
@@ -25,8 +25,8 @@ public class BooleanType extends Type {
 	}
 
 	@Override
-	public Atom getAtom() {
-		return new BoolAtom(0);
+	public Value getValue() {
+		return new BoolValue();
 	}
 
 }
