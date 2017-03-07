@@ -49,7 +49,7 @@ public class QuestionFormTest {
     }
 
     private static final int START_DELAY_MS = 1000;
-    private static final int INTERVAL_MS = 1000;
+    private static final int INTERVAL_MS = 500;
 
     private void createRenderer(QuestionForm form) {
         FormRenderer renderer = new FormRenderer(form);
