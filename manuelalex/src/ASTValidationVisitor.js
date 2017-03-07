@@ -60,22 +60,31 @@ export class ASTValidationVisitor {
         console.log("The question is:" + ifstatement.condition);
         console.log("The question type is :" + ifstatement.ifBody);
 
-        //ifstatement.condition.accept(this);
+        ifstatement.condition.accept(this);
         // if(true){
         //     this.visitStatements(ifstatement.ifBody);
         // }
     }
 
-    visitCondition(condition) {
-        //condition = condition[0]; // fix ast
+    visitExpression(condition) {
+        if(condition.operator == undefined){
+            this.visitExpression(condition.leftHand);
+        } else {
+
+
+
 
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
         let typeRightHand = this.memoryState.getType(condition.rightHand);
+
         console.log(typeLeftHand)
-        if(!typeLeftHand.constructor == Boolean){
+        if(condition.operator =="||" && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
+            console.log("Expression invalid: " + condition.leftHand +"["+typeLeftHand+"]" + condition.operator + condition.rightHand+"["+typeRightHand+"]");
             //throw exception
+        }
+
         }
     }
 
-    visit
+
 }

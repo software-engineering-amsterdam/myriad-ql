@@ -42,4 +42,8 @@ export class Expression {
     _throwError(errorText = ''){
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }
+
+    accept(visitor){
+        visitor.visitExpression(this);
+    }
 }
