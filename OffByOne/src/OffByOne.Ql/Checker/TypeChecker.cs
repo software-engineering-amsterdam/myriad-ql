@@ -5,7 +5,6 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Evaluator;
-    using OffByOne.Ql.Visitors;
 
     public class TypeChecker
     {

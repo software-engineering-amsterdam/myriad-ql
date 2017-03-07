@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Evaluator
+﻿namespace OffByOne.Ql.Checker
 {
     using System.Collections.Generic;
 

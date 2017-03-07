@@ -1,11 +1,10 @@
-﻿namespace OffByOne.Ql.Evaluator
+﻿namespace OffByOne.Ql.Checker
 {
     using System.Collections.Generic;
 
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Extensions.Common;
 
-    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -16,8 +15,8 @@
     using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
-    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Messages;
+    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeVisitor
