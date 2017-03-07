@@ -1,9 +1,8 @@
 package org.ql.gui.elements.visitor;
 
-import javafx.application.Application;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.ql.Main;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
@@ -19,24 +18,15 @@ import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.gui.elements.QuestionElementContainer;
+import org.ql.gui.widgets.Widget;
 import org.ql.gui.widgets.WidgetBuilder;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class QuestionValueVisitorTest {
-    @BeforeClass
-    public static void setUpClass() throws InterruptedException {
-        Thread t = new Thread("JavaFX Init Thread for unit tests") {
-            public void run() {
-                Application.launch(Main.class);
-            }
-        };
-        t.setDaemon(true);
-        t.start();
-        Thread.sleep(500);
-    }
 
     @Test
     public void shouldMakeValueTableWithFlatQuestionsAndNoReferences() {
@@ -44,7 +34,7 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(15));
 
-        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(new WidgetBuilder()));
+        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockWidgetBuilder()));
         ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new IntegerLiteral(15)));
@@ -59,7 +49,7 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new UnknownValue());
 
-        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(new WidgetBuilder()));
+        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockWidgetBuilder()));
         ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), null));
@@ -75,7 +65,7 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(new WidgetBuilder()));
+        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockWidgetBuilder()));
         ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new Parameter(new Identifier("third"))));
@@ -94,7 +84,7 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(new WidgetBuilder()));
+        QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockWidgetBuilder()));
         ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
                 add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
@@ -107,5 +97,17 @@ public class QuestionValueVisitorTest {
         }}));
 
         assertTrue(expectedValueTable.equals(actualValueTable));
+    }
+
+    private WidgetBuilder mockWidgetBuilder() {
+        WidgetBuilder widgetBuilder = mock(WidgetBuilder.class);
+        when(widgetBuilder.getWidget(any(Question.class))).thenAnswer(new Answer<Widget>() {
+            @Override
+            public Widget answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return mock(Widget.class);
+            }
+        });
+
+        return widgetBuilder;
     }
 }

@@ -14,13 +14,12 @@ import static org.mockito.Mockito.*;
 public class QuestionElementContainerTest {
     @Test
     public void shouldPersistQuestionElementInMap() {
-        Widget expectedWidget = mock(Widget.class);
 
         WidgetBuilder widgetBuilder = mock(WidgetBuilder.class);
         when(widgetBuilder.getWidget(any(Question.class))).thenAnswer(new Answer<Widget>() {
             @Override
             public Widget answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return expectedWidget;
+                return mock(Widget.class);
             }
         });
 
