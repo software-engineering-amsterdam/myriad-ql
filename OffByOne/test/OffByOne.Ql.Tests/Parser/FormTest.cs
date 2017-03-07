@@ -71,7 +71,6 @@
             Assert.IsAssignableFrom<DateLiteral>(rhs);
 
             Assert.Equal(lhs.Identifier, "birthDate");
-            // Assert.Equal(((DateLiteral)rhs).Value, new DateTime(1999, 12, 31));
 
             var elseStatements = ifStatement.ElseStatements;
             Assert.Equal(1, elseStatements.Count());

@@ -16,7 +16,6 @@
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeVisitor
