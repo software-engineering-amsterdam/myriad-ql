@@ -5,18 +5,16 @@ import java.util.Date
 
 import scala.math.BigDecimal.RoundingMode
 
-trait Value {
-  def display: String
-}
+sealed trait Value
 
 case class BooleanValue(value: Boolean) extends Value {
-  override def display = value.toString
+  override def toString = value.toString
 }
 
 case class DateValue(value: Date) extends Value {
   private val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
 
-  override def display = dateFormat.format(value)
+  override def toString = dateFormat.format(value)
 }
 
 sealed trait NumericValue extends Value {
@@ -24,21 +22,21 @@ sealed trait NumericValue extends Value {
 }
 
 case class IntegerValue(value: BigDecimal) extends NumericValue {
-  override def display = value.toString
+  override def toString = value.toString
 }
 
 case class DecimalValue(value: BigDecimal) extends NumericValue {
-  override def display = value.toString
+  override def toString = value.toString
 }
 
 case class MoneyValue(value: BigDecimal) extends NumericValue {
-  override def display = s"€${value.setScale(2, RoundingMode.HALF_EVEN)}"
+  override def toString = s"€${value.setScale(2, RoundingMode.HALF_EVEN)}"
 }
 
 case class StringValue(value: String) extends Value {
-  override def display = value
+  override def toString = value
 }
 
 case object UndefinedValue extends Value {
-  override def display = "Value not defined"
+  override def toString = "Value not defined"
 }

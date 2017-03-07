@@ -4,7 +4,7 @@ import ast._
 import values.Evaluator.Env
 
 class Evaluator(env: Env) {
-  def calculate(expressionNode: ExpressionNode): Value = {
+  def calculate(expressionNode: ExpressionNode): Value =
     expressionNode match {
       case Identifier(value) => env.getOrElse(value, UndefinedValue)
       case IntegerLiteral(value) => IntegerValue(value)
@@ -13,11 +13,9 @@ class Evaluator(env: Env) {
       case BooleanLiteral(value) => BooleanValue(value)
       case StringLiteral(value) => StringValue(value)
       case DateLiteral(value) => DateValue(value)
-
       case i: InfixNode => calculate(i)
       case p: PrefixNode => calculate(p)
     }
-  }
 
   private def calculate(prefixNode: PrefixNode): Value =
     calculate(prefixNode.operand) match {
@@ -66,5 +64,6 @@ class Evaluator(env: Env) {
 
 object Evaluator {
   type Env = Map[String, Value]
+
   def apply(env: Env, expressionNode: ExpressionNode): Value = new Evaluator(env).calculate(expressionNode)
 }

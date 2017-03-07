@@ -26,5 +26,4 @@ class StyleModel(stylesheet: Stylesheet) {
     case Section(_, blocks, _) => extractQuestionStyles(blocks)
     case q: QuestionStyle => Seq(q)
   }
-
 }

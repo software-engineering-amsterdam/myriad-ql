@@ -22,7 +22,7 @@ trait GUIQuestion {
   def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
     bind(env)
 
-    override def computeValue: String = Evaluator(env.toMap, question.value).display
+    override def computeValue: String = Evaluator(env.toMap, question.value).toString
   }
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {

@@ -44,5 +44,4 @@ class StyleChecker(style: StyleModel, definedQuestionsWithType: Map[String, Type
         case None => Some(Error(s"Unable to determine type of $ident for style type checking."))
       }
   }
-
 }

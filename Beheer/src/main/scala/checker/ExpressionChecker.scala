@@ -50,8 +50,8 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
         // Equality: Among different numbers, ok, otherwise: strict type match.
         case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
-        case (_: Neq, t1: Type, t2: Type) if (t1 == t2) => (Some(BooleanType), errors)
-        case (_: Eq, t1: Type, t2: Type) if (t1 == t2) => (Some(BooleanType), errors)
+        case (_: Neq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
+        case (_: Eq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
         case (n: InfixNode, l: Type, r: Type) => emitError(n, l, r, errors)
       }
     }
