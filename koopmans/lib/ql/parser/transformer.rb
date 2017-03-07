@@ -2,46 +2,6 @@ require 'parslet'
 
 module QL
   module Parser
-    # Int    = Struct.new(:int) {
-    #   def eval; self end
-    #   def op(operation, other)
-    #     left = int
-    #     right = other.int
-    #
-    #     Int.new(
-    #       case operation
-    #         when '+'
-    #           left + right
-    #         when '-'
-    #           left - right
-    #         when '*'
-    #           left * right
-    #         when '/'
-    #           left / right
-    #         when '=='
-    #           left == right
-    #         when '>'
-    #           left > right
-    #         when '!'
-    #           !left
-    #       end)
-    #   end
-    #   def to_i
-    #     int
-    #   end
-    # }
-
-
-    # LeftOp = Struct.new(:operation, :right) {
-    #   def call(left)
-    #     left = left.eval
-    #
-    #     right = self.right.eval
-    #     pp operation
-    #     left.op(operation, right)
-    #   end
-    # }
-
     class Transformer < Parslet::Transform
       include AST
       # variable
@@ -59,24 +19,20 @@ module QL
       rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value) }
       rule(integer_literal: simple(:value)) { IntegerLiteral.new(value) }
       rule(string_literal: simple(:value)) { StringLiteral.new(value) }
-      # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
 
+      # question
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
-      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) do
-        x = ExpressionTransformer.new.apply(assignment)
-        Question.new(string_literal, variable, type, x)
-      end
+      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) { Question.new(string_literal, variable, type, assignment) }
+
 
       # if statement
-      rule(if_statement: [{expression: subtree(:expression)}, {body: subtree(:body)}]) { IfStatement.new(expression, body) }
-      # rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(Sequence.new(condition), body) }
-      # rule(if_statement: subtree(:things)) { p things }
-      # Sequence.new(condition), body
+      rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(condition, body) }
 
       # form
       rule(form: { id: simple(:variable), body: subtree(:body) }) { Form.new(variable, body) }
 
-      rule(expression: subtree(:expression)) { {expression: ExpressionTransformer.new.apply(expression)} }
+      # expression
+      rule(expression: subtree(:expression)) { ExpressionTransformer.new.apply(expression) }
     end
 
     class ExpressionTransformer < Parslet::Transform
@@ -106,7 +62,7 @@ module QL
       rule(operator: '||', right: simple(:right)) { Or.new(right) }
       rule(left: simple(:integer_literal)) { integer_literal }
 
-      rule(sequence(:sequence)) { Sequence.new(sequence).eval }
+      rule(sequence(:sequence)) { Sequence.new(sequence) }
     end
   end
 end
