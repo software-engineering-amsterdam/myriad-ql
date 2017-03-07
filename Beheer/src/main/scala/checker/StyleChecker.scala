@@ -1,6 +1,6 @@
 package checker
 
-import ast.Type
+import ast._
 import checker.Issue.Issues
 import model.StyleModel
 
@@ -15,5 +15,19 @@ class StyleChecker(style: StyleModel, definedQuestionsWithType: Map[String, Type
   private val incompatibleStyles: Issues = Nil
 
   def check: Issues = doubleReferences ++ undefinedQuestions ++ incompatibleStyles ++ unreferencedQuestions
+
+  private def checkWidgetType(widgetType: WidgetType, questionType: Type): Option[Error] =
+    (widgetType, questionType) match {
+      case (Textfield, _: NumericType) => None
+      case (Textfield, StringType) => None
+      case (Textfield, DateType) => None
+      case (DatePicker, DateType) => None
+      case (Checkbox, BooleanType) => None
+      case (Spinbox, _: NumericType) => None
+      case (_: Dropdown, BooleanType) => None
+      case (_: Slider, _: NumericType) => None
+      case (_: Radio, BooleanType) => None
+      case (w, q) => Some(Error(s"Invalid widget $w for type $q"))
+    }
 
 }
