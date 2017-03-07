@@ -1,18 +1,18 @@
 from QL.undefined import Undefined
+from QL.stages.expressionEvaluator import ExpressionEvaluator
 
 
 class EvaluateDrawState(object):
-    def __init__(self, form_gui, ast, env, evaluator, error_handler):
+    def __init__(self, form_gui, ast, env, error_handler):
         """
         :type ast: QL.AST.FormNode
         :type env: QL.environment.Environment
         :type error_handler: QL.errorHandler.ErrorHandler
-        :type evaluator: QL.Stages.evaluator.Evaluate
         :type form_gui: QL.GUI.drawGUI.DrawGUI
         """
         self.ast = ast
         self.env = env
-        self.evaluator = evaluator
+        self.evaluator = ExpressionEvaluator(env)
         self.handler = error_handler
         self.form_gui = form_gui
 

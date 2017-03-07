@@ -4,34 +4,12 @@ from QL.undefined import Undefined
 # TODO: Create expression evaluator to ensure correct order.
 
 
-class Evaluate(object):
-    def __init__(self, ast, env):
-        """
-        :type ast: AST.FormNode
-        :type env: Environment.Environment
-        """
-        self.ast = ast
+class ExpressionEvaluator(object):
+    def __init__(self, env):
         self.env = env
 
-    def start_traversal(self):
-        self.ast.accept(self)
-
-    def if_node(self, if_node):
-        if_node.if_block.accept(self)
-
-    def if_else_node(self, if_else_node):
-        if_else_node.else_block.accept(self)
-        if_else_node.if_block.accept(self)
-
-    def question_node(self, question_node):
-        pass
-
-    def comp_question_node(self, comp_question_node):
-        identifier = comp_question_node.name
-        new_value = comp_question_node.expression.accept(self)
-        self.env.set_var_value(identifier, new_value)
-
-    def eval_monop(self, result, lambda_expr):
+    @staticmethod
+    def eval_monop(result, lambda_expr):
         if result == Undefined:
             return Undefined
         return lambda_expr(result)
@@ -48,7 +26,8 @@ class Evaluate(object):
         result = plus_node.expression.accept(self)
         return self.eval_monop(result, lambda x: +x)
 
-    def eval_binop(self, left, right, lambda_expr):
+    @staticmethod
+    def eval_binop(left, right, lambda_expr):
         if left == Undefined or right == Undefined:
             return Undefined
         return lambda_expr(left, right)

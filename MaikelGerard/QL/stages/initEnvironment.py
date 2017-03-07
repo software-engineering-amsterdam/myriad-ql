@@ -1,20 +1,15 @@
 class InitEnvironment(object):
     def __init__(self, ast, env, error_handler):
-        """ First create a directed graph from all edges, then check on cycles.
-            :type ast: AST.FormNode
-        """
         self.ast = ast
         self.env = env
         self.handler = error_handler
 
         self.conditional_vars = {}
-        self.question_vars = []
         self.labels = []
 
     def start_traversal(self):
         # Ensure the environment and error log are empty.
         self.conditional_vars = {}
-        self.question_vars = []
         self.labels = []
 
         self.ast.accept(self)
@@ -23,12 +18,11 @@ class InitEnvironment(object):
         # question, if not, report the first occurrence of the undeclared
         # variable in the program to the error handler.
         for identifier in self.conditional_vars:
-            if identifier not in self.question_vars:
+            if identifier not in self.env.variables:
                 var_node = self.conditional_vars[identifier]
                 self.handler.add_undecl_var_error(var_node)
 
-    def add_question_to_env(self, question_node, identifier):
-        self.question_vars.append(identifier)
+    def add_var_to_env(self, question_node):
         self.env.add_var(question_node)
         if question_node.question in self.labels:
             self.handler.add_dup_label_warning(question_node)
@@ -36,10 +30,10 @@ class InitEnvironment(object):
             self.labels.append(question_node.question)
 
     def question_node(self, question_node):
-        self.add_question_to_env(question_node, question_node.name)
+        self.add_var_to_env(question_node)
 
     def comp_question_node(self, comp_question_node):
-        self.add_question_to_env(comp_question_node, comp_question_node.name)
+        self.add_var_to_env(comp_question_node)
 
     def if_node(self, if_node):
         if_node.condition.accept(self)
@@ -51,17 +45,14 @@ class InitEnvironment(object):
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
 
-    def mon_op_node(self, node):
-        return node.expression.accept(self)
-
     def neg_node(self, neg_node):
-        return self.mon_op_node(neg_node)
+        neg_node.expression.accept(self)
 
     def min_node(self, min_node):
-        return self.mon_op_node(min_node)
+        min_node.expression.accept(self)
 
     def plus_node(self, plus_node):
-        return self.mon_op_node(plus_node)
+        plus_node.expression.accept(self)
 
     def traverse_expr(self, node):
         node.left.accept(self)

@@ -5,37 +5,38 @@ from collections import OrderedDict
 from QL.undefined import Undefined
 from QL.GUI.evaluateDrawState import EvaluateDrawState
 from QL.GUI.saveQuestionaire import SaveQuestionaire
+from QL.stages.updateComputedVariables import UpdateComputedVariables
 
 
 class DrawGUI(object):
-    def __init__(self, ast, env, evaluator, error_handler):
+    def __init__(self, ast, env, error_handler):
         self.ast = ast
         self.env = env
-        self.evaluator = evaluator
         self.handler = error_handler
+
+        self.update_computed_variables = UpdateComputedVariables(ast, env)
+        self.set_draw_state = EvaluateDrawState(self, ast, env, error_handler)
 
         self.main = gui("QL Language Form - © 2017")
         self.row = 0
         self.add_header()
 
-        self.set_draw_state = EvaluateDrawState(self, ast, env,
-                                                evaluator, error_handler)
         self.widgets = OrderedDict()
 
     def start(self):
-        self.adjust_env()
-        self.evaluator.start_traversal()
+        self.ast.accept(self.update_computed_variables)
+        self.update_variables()
 
         self.set_draw_state.start_traversal()
         self.add_buttons()
         self.main.go()
 
     def redraw(self):
-        self.adjust_env()
-        self.evaluator.start_traversal()
+        self.update_variables()
+        self.ast.accept(self.update_computed_variables)
         self.set_draw_state.start_traversal()
 
-    def adjust_env(self):
+    def update_variables(self):
         for widget_id in self.widgets:
             question_node = self.env.variables[widget_id]["node"]
 
