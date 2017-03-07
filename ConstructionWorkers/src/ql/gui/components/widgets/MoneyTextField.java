@@ -22,7 +22,7 @@ public class MoneyTextField extends AbstractWidget{
     private static int COLUMNS = 7;
 
     private JTextField input;
-    
+
     public MoneyTextField(String _label) {
         JLabel label = new JLabel(_label);
 

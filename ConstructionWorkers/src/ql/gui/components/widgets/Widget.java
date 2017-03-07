@@ -17,6 +17,7 @@ public interface Widget {
     void addListener(EventListener listener);
 
     void render(FormFrame form);
+
     void suppress(FormFrame form);
 
     void setReadOnly(boolean isReadonly);

@@ -32,8 +32,8 @@ public class FormFrame {
         this.formFrame.setVisible(true);
     }
 
-    public void addWidget(JComponent _component) {
-        this.panel.add(_component);
+    public void addWidget(JComponent component) {
+        this.panel.add(component);
         this.formFrame.revalidate();
     }
 

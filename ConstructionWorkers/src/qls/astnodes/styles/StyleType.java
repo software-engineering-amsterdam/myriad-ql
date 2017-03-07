@@ -6,6 +6,7 @@ package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
+import qls.astnodes.visitors.StyleSheetVisitor;
 
 public abstract class StyleType extends Node{
 

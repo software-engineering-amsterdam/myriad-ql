@@ -8,15 +8,12 @@ import ql.astnodes.expressions.literals.Identifier;
  */
 public class IfExpressionUndefinedError extends Error {
 
-    private final Identifier identifier;
-
-    public IfExpressionUndefinedError(LineNumber lineNumber, Identifier identifier) {
+    public IfExpressionUndefinedError(LineNumber lineNumber) {
         super(lineNumber);
-        this.identifier = identifier;
     }
 
     public String getMessage() {
-        return "ERROR: Identifier " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
+        return "ERROR: Identifier at line " + getLineNumber().getStartingLine() +
                 " in IF statement condition is undefined.";
     }
 }

@@ -1,6 +1,5 @@
 package qls.astnodes;
 
-import com.sun.istack.internal.NotNull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import ql.astnodes.LineNumber;
@@ -19,6 +18,7 @@ import java.util.List;
 /**
  * Created by LGGX on 04-Mar-17.
  */
+
 public class QLSASTVisitor extends QLSBaseVisitor<Node> {
 
     private final StyleSheet abstractSyntaxTree;

@@ -5,6 +5,7 @@
 package ql.semanticchecker;
 
 import ql.astnodes.Form;
+import ql.astnodes.expressions.Expression;
 import ql.astnodes.expressions.binaries.equality.*;
 import ql.astnodes.expressions.binaries.logic.AND;
 import ql.astnodes.expressions.binaries.logic.OR;
@@ -35,12 +36,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, ExpressionVisitor<Void>{
+public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
 
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
     private Set<String> questionLabels;
-
 
     public IdentifierChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages) {
         this.identifierToTypeMap = identifierToTypeMap;
@@ -60,7 +60,12 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
 
     @Override
     public Identifier visit(IfStatement statement) {
-        statement.getExpression().accept(this);
+        IfStatementVisitor visitor = new IfStatementVisitor(statement, statement.getExpression());
+
+        if(visitor.getUndefinedIdentifier()) {
+            messages.addError(new IfExpressionUndefinedError(statement.getLineNumber()));
+        }
+
         for (Statement subStatement : statement.getStatements()) {
             subStatement.accept(this);
         }
@@ -121,113 +126,6 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier>, E
             }
         }
         return false;
-    }
-
-    @Override
-    public Void visit(MyBoolean literal) {
-        return null;
-    }
-
-    @Override
-    public Void visit(MyInteger literal) {
-        return null;
-    }
-
-    @Override
-    public Void visit(MyString literal) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Identifier literal) {
-        if(identifierToTypeMap.get(literal.getName()) == null)
-            messages.addError(new IfExpressionUndefinedError(literal.getLineNumber(), literal));
-        return null;
-    }
-
-    @Override
-    public Void visit(Money literal) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Parentheses expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Negation expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Negative expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Positive expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(AND expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(OR expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(EQ expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(NEQ expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(GT expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LT expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(GTEQ expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LTEQ expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Addition expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Subtraction expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Multiplication expression) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Division expression) {
-        return null;
     }
 
     private static boolean isEqual(Object o1, Object o2) {
