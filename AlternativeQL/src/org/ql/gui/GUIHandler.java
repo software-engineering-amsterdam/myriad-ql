@@ -39,7 +39,12 @@ public class GUIHandler {
         }
 
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
+
         System.out.println(visibleElements.size());
+        for(QuestionElement questionElement : visibleElements) {
+            System.out.println(questionElement.getQuestion().getQuestionLabel());
+        }
+
     }
 
 }
