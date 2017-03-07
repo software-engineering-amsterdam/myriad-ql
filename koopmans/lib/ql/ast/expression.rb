@@ -42,21 +42,13 @@ module QL
       attr_accessor :right
 
       def initialize(right)
-        # @left  = left
         @right = right
       end
 
       def call(left)
-        pp 'aap'
-        pp left
         left = left.eval
-        pp left
-        pp 'schaap'
-        pp right
         right = self.right.eval
-        pp right
-        pp 'results in:'
-        IntegerLiteral.new(self.eval(left.value, right.value))
+        IntegerLiteral.new(self.eval(left.to_i, right.to_i))
       end
     end
 

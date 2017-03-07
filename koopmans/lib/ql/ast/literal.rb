@@ -10,6 +10,10 @@ module QL
       def accept(visitor)
         visitor.visit_literal(self)
       end
+
+      def eval
+        self
+      end
     end
 
     class BooleanLiteral < Literal
@@ -28,28 +32,8 @@ module QL
         [IntegerType]
       end
 
-      def eval; self end
-      def op(operation, other)
-        left = value
-        right = other.value
-
-        IntegerLiteral.new(
-          case operation
-            when '+'
-              left + right
-            when '-'
-              left - right
-            when '*'
-              left * right
-            when '/'
-              left / right
-            when '=='
-              left == right
-            when '>'
-              left > right
-            when '!'
-              !left
-          end)
+      def to_i
+        value.to_i
       end
     end
 

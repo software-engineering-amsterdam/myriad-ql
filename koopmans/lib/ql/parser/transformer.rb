@@ -91,7 +91,7 @@ module QL
 
       # literal
       rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value) }
-      rule(integer_literal: simple(:value)) { IntegerLiteral.new(value.to_i) }
+      rule(integer_literal: simple(:value)) { IntegerLiteral.new(value) }
       rule(string_literal: simple(:value)) { StringLiteral.new(value) }
       # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
 
