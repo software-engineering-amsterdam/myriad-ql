@@ -1,6 +1,9 @@
 ﻿namespace OffByOne.Ql.Ast.Literals
 {
+    using System;
     using System.Drawing;
+
+    using MoreDotNet.Extensions.Common;
 
     using OffByOne.Ql.Ast.Literals.Base;
     using OffByOne.Ql.Values;
@@ -10,12 +13,17 @@
     {
         public HexLiteral(Color value)
         {
-            this.Value = new StringValue(value.ToString());
+            this.Value = new StringValue(value.ToHexString());
         }
 
         public HexLiteral(string value)
-            : this(ColorTranslator.FromHtml(value))
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+            }
+
+            this.Value = new StringValue(value);
         }
 
         public StringValue Value { get; private set; }

@@ -16,12 +16,17 @@
             this.Value = new DateValue(value);
         }
 
-        public DateLiteral(string dateString)
-            : this(DateTime.ParseExact(
-                dateString.Trim('\''),
-                DateLiteral.Format,
-                CultureInfo.InvariantCulture))
+        public DateLiteral(string value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+            }
+
+            this.Value = new DateValue(DateTime.ParseExact(
+                value.Trim('\''),
+                DateLiteral.Format,
+                CultureInfo.InvariantCulture));
         }
 
         public DateValue Value { get; private set; }

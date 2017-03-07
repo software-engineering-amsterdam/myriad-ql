@@ -84,5 +84,14 @@
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CreatingNewObject_ShouldTrimUnwantedSymbols()
+        {
+            var expected = "HelloWorld";
+            var actual = new StringValue("\"HelloWorld\"");
+
+            Assert.Equal(expected, actual.Value);
+        }
     }
 }

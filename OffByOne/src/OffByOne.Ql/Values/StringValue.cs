@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Values
 {
+    using System;
     using System.Globalization;
 
     using MoreDotNet.Extensions.Common;
@@ -11,6 +12,11 @@
     {
         public StringValue(string value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "String value must not be null");
+            }
+
             this.Value = value.Trim('"');
         }
 

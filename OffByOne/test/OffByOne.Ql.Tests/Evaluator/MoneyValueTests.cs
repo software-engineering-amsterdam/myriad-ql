@@ -34,6 +34,126 @@
                 new AddExpression(new NegativeExpression(new MoneyLiteral(4)), new MoneyLiteral(4)),
                 typeof(MoneyValue),
                 new MoneyValue(0)
+            },
+            new object[]
+            {
+                new SubtractExpression(new NegativeExpression(new MoneyLiteral(4)), new MoneyLiteral(4)),
+                typeof(MoneyValue),
+                new MoneyValue(-8)
+            },
+            new object[]
+            {
+                new SubtractExpression(new MoneyLiteral(4), new MoneyLiteral(4)),
+                typeof(MoneyValue),
+                new MoneyValue(0)
+            },
+            new object[]
+            {
+                new SubtractExpression(new MoneyLiteral(0), new MoneyLiteral(4)),
+                typeof(MoneyValue),
+                new MoneyValue(-4)
+            },
+            new object[]
+            {
+                new DivideExpression(new MoneyLiteral(0), new MoneyLiteral(4)),
+                typeof(MoneyValue),
+                new MoneyValue(0)
+            },
+            new object[]
+            {
+                new DivideExpression(new MoneyLiteral(2), new MoneyLiteral(2)),
+                typeof(MoneyValue),
+                new MoneyValue(1)
+            },
+            new object[]
+            {
+                new DivideExpression(new MoneyLiteral(3), new MoneyLiteral(2)),
+                typeof(MoneyValue),
+                new MoneyValue(1.5m)
+            },
+            new object[]
+            {
+                new GreaterThanExpression(new MoneyLiteral(3), new MoneyLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanExpression(new MoneyLiteral(2), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanExpression(new MoneyLiteral(3), new MoneyLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanExpression(new MoneyLiteral(2), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new MoneyLiteral(3), new MoneyLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new MoneyLiteral(3), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new MoneyLiteral(2), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new MoneyLiteral(3), new MoneyLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new MoneyLiteral(2), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new MoneyLiteral(3), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new EqualExpression(new MoneyLiteral(3), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new EqualExpression(new MoneyLiteral(2), new MoneyLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new NegativeExpression(new NegativeExpression(new MoneyLiteral(2))),
+                typeof(MoneyValue),
+                new MoneyValue(2)
+            },
+            new object[]
+            {
+                new NegativeExpression(new PositiveExpression(new MoneyLiteral(2))),
+                typeof(MoneyValue),
+                new MoneyValue(-2)
             }
         };
 

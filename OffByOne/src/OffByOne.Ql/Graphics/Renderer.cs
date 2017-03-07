@@ -4,6 +4,7 @@
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Graphics.Controls.Questions;
     using OffByOne.Ql.Visitors.Base;
