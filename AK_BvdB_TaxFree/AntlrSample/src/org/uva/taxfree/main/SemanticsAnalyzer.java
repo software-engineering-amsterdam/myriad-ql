@@ -24,6 +24,8 @@ public class SemanticsAnalyzer {
         mEnvironment = environment;
     }
 
+    // showMessages()
+
     public boolean validSemantics() {
         return !getSemanticErrors().fatalError();
     }
@@ -32,6 +34,7 @@ public class SemanticsAnalyzer {
         return !getSemanticErrors().isEmpty();
     }
 
+    // kan naar main
     public MessageList getSemanticErrors() {
         MessageList semanticsMessages = new MessageList();
         mEnvironment.getDuplicateDeclarationErrors(semanticsMessages);

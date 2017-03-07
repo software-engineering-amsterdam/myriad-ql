@@ -4,7 +4,6 @@ import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 
 import javax.swing.*;
-import java.util.Set;
 
 public abstract class NamedNode extends Node {
     private final JPanel mPanel;
@@ -29,7 +28,6 @@ public abstract class NamedNode extends Node {
         return mPanel;
     }
 
-    @Override
     public void setVisible(boolean isVisible) {
         mPanel.setVisible(isVisible);
     }
@@ -40,16 +38,6 @@ public abstract class NamedNode extends Node {
 
     public String getId() {
         return mId;
-    }
-
-    @Override
-    public void printId() {
-        System.out.println("My name is: " + getId());
-    }
-
-    @Override
-    public void addDeclaration(Set<NamedNode> set) {
-        set.add(this);
     }
 
     public String getLabel() {

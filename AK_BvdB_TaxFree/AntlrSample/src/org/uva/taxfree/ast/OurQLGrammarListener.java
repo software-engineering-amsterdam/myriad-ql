@@ -205,6 +205,8 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
         mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popStack());
-        assert mChildsStack.isEmpty();
+        if (!mChildsStack.isEmpty()) {
+            throw new AssertionError("Stack should be empty when we finished creating our AST.");
+        }
     }
 }

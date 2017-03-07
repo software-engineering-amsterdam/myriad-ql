@@ -42,9 +42,7 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabelsForm.txt");
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
+        assertSemantics("duplicateQuestionIdsAndLabelsForm.txt", 4, "Duplicated questions and labels");
     }
 
     @Test

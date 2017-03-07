@@ -41,10 +41,10 @@ public class Environment {
             if (!conditionNode.isValid()) {
                 messageList.addError("Condition found with invalid types: " + conditionNode.resolveValue());
             }
-            // isboolen
         }
     }
 
+    // checkcyclicdependencies
     public void getCyclicDependencyErrors(MessageList messageList) {
         for (CalculatedField calculation : getCalculations()) {
             if (hasCyclicDependency(calculation)) {

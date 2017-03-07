@@ -20,8 +20,18 @@ public class Main {
             }
             return;
         }
-        Environment environment = Ast.generateAst(inputFile);
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
+     // parse
+        // AST =
+        // Symboltable = new symboltable
+        // checker
+        // errors = new errors
+        // checker check(symbolTable, errorList)
+        // if isEmpty () {
+        // etc.
+
+        Environment environment = Ast.generateAst(inputFile); // , symboltable); // in main
+        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
+        // sematicsAnalyzer.check();
         if (semanticsAnalyzer.hasMessages()) {
             MessageWindow.showMessages(semanticsAnalyzer.getSemanticErrors());
         }
