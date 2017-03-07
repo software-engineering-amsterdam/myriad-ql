@@ -15,12 +15,6 @@ import java.util.List;
 
 public abstract class AbstractTypeCheckVisitor<T, C> implements ASTVisitor<T, C> {
 
-    protected final IssuesStorage issuesStorage;
-
-    protected AbstractTypeCheckVisitor() {
-        issuesStorage = new IssuesStorage();
-    }
-
     protected T visitExpression(Expression condition, C context) {
         return condition.accept(this, context);
     }
@@ -31,9 +25,5 @@ public abstract class AbstractTypeCheckVisitor<T, C> implements ASTVisitor<T, C>
         }
 
         return null;
-    }
-
-    public List<Issue> getErrors() {
-        return issuesStorage.getErrors();
     }
 }

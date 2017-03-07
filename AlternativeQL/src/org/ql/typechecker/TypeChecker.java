@@ -10,7 +10,6 @@ import org.ql.typechecker.issues.error.EmptyQuestionLabel;
 import org.ql.typechecker.issues.warning.DuplicatedQuestionLabels;
 import org.ql.typechecker.visitor.CircularDependencyVisitor;
 import org.ql.typechecker.visitor.TypeMismatchVisitor;
-import org.ql.typechecker.visitor.UndefinedSymbolVisitor;
 
 import java.util.List;
 
@@ -19,27 +18,23 @@ public class TypeChecker {
     private final Form form;
     private final QuestionStorage questionStorage;
 
-    private final TypeMismatchVisitor typeMismatchVisitor;
-    private final UndefinedSymbolVisitor undefinedSymbolVisitor;
-    private final CircularDependencyVisitor circularDependenciesVisitor;
-
     private final IssuesStorage issuesStorage;
 
-    public TypeChecker(Form form) {
+    private final TypeMismatchVisitor typeMismatchVisitor;
+    private final CircularDependencyVisitor circularDependenciesVisitor;
+
+    public TypeChecker(Form form, IssuesStorage issuesStorage) {
         this.form = form;
+        this.issuesStorage = issuesStorage;
+
         questionStorage = new QuestionStorage();
 
-        SymbolTable symbolTable = questionStorage.createSymbolTable(form);
-        typeMismatchVisitor = new TypeMismatchVisitor(symbolTable);
-        undefinedSymbolVisitor = new UndefinedSymbolVisitor(symbolTable);
-        circularDependenciesVisitor = new CircularDependencyVisitor();
-
-        issuesStorage = new IssuesStorage();
+        typeMismatchVisitor = new TypeMismatchVisitor(issuesStorage);
+        circularDependenciesVisitor = new CircularDependencyVisitor(issuesStorage);
     }
 
     public void checkForm() {
         checkForTypeMismatches();
-        checkForUndefinedSymbols();
         checkForEmptyQuestionLabels();
         checkForCircularDependency();
         checkQuestionDeclarationDuplicates();
@@ -58,12 +53,8 @@ public class TypeChecker {
         circularDependenciesVisitor.visitForm(form, null);
     }
 
-    private void checkForUndefinedSymbols() {
-        undefinedSymbolVisitor.visitForm(form, null);
-    }
-
     private void checkForTypeMismatches() {
-        typeMismatchVisitor.visitForm(form, null);
+        typeMismatchVisitor.visitForm(form, questionStorage.createSymbolTable(form));
     }
 
     private void checkQuestionLabelDuplicates() {
@@ -84,21 +75,5 @@ public class TypeChecker {
                 issuesStorage.addError(new DuplicatedQuestionDeclarations(question));
             }
         }
-    }
-
-    public List<Issue> getErrors() {
-        List<Issue> errors = issuesStorage.getErrors();
-        errors.addAll(typeMismatchVisitor.getErrors());
-        errors.addAll(undefinedSymbolVisitor.getErrors());
-        errors.addAll(circularDependenciesVisitor.getErrors());
-        return errors;
-    }
-
-    public List<Issue> getWarnings() {
-        return issuesStorage.getWarnings();
-    }
-
-    public boolean hasErrors() {
-        return getErrors().size() > 0;
     }
 }

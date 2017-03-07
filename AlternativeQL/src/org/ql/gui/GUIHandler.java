@@ -6,10 +6,8 @@ import org.ql.ast.Form;
 import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.parser.Parser;
-import org.ql.typechecker.issues.IssuesStorage;
-import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.TypeChecker;
-import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
+import org.ql.typechecker.issues.IssuesStorage;
 
 public class GUIHandler extends Application {
 
@@ -35,10 +33,11 @@ public class GUIHandler extends Application {
                 "boolean everythingAlright: \"Is everything alright sir?\" = true;" +
                 "}");
 
-        TypeChecker typeChecker = new TypeChecker(form);
+        IssuesStorage issuesStorage = new IssuesStorage();
+        TypeChecker typeChecker = new TypeChecker(form, issuesStorage);
         typeChecker.checkForm();
 
-        if(typeChecker.hasErrors()) {
+        if(issuesStorage.hasErrors()) {
             System.out.println("An issuesStorage was found!");
         } else {
             ValueTable valueTable = new ValueTable();

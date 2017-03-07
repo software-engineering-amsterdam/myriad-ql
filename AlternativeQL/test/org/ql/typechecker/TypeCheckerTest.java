@@ -7,7 +7,6 @@ import org.ql.ast.Statement;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionText;
 import org.ql.ast.type.*;
-import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
 import org.ql.typechecker.issues.IssuesStorage;
 
 import java.util.ArrayList;
@@ -23,15 +22,16 @@ public class TypeCheckerTest {
         String questionLabel = "example";
         String expectedError = "Question '" + questionLabel + "' label has duplicate(s)";
 
+        IssuesStorage issuesStorage = new IssuesStorage();
         TypeChecker typeChecker = new TypeChecker(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
             add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
-        }}));
+        }}), issuesStorage);
 
         typeChecker.checkForm();
 
-        assertTrue(typeChecker.getErrors().size() == 2);
-        assertEquals(expectedError, typeChecker.getWarnings().get(0).getMessage());
-        assertEquals(expectedError, typeChecker.getWarnings().get(1).getMessage());
+        assertTrue(issuesStorage.getErrors().size() == 2);
+        assertEquals(expectedError, issuesStorage.getWarnings().get(0).getMessage());
+        assertEquals(expectedError, issuesStorage.getWarnings().get(1).getMessage());
     }
 }
