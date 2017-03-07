@@ -1,13 +1,20 @@
 package org.uva.taxfree.gui;
 
-import java.awt.*;
-
 public abstract class Message {
     private final String mMessage;
-    private final Color mColor;
 
-    public Message(String message, Color color) {
+    public Message(String message) {
         mMessage = message;
-        mColor = color;
     }
+
+    public String toString() {
+        return messagePrefix() + ": " + mMessage + "\n";
+    }
+
+    public boolean isFatal() {
+        return false;
+    }
+
+    protected abstract String messagePrefix();
 }
+
