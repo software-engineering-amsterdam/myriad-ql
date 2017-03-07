@@ -11,8 +11,12 @@ public class Text implements Field {
 	
 	private TextField field;
 	
-	public Text(String name, Notifier notifier) {
+	public Text(String name, Notifier notifier, StringValue value) {
 		this.field = new TextField();
+		
+		if (value.isSet()) {
+			field.setText(value.getValue());
+		}
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
@@ -31,12 +35,6 @@ public class Text implements Field {
 		return new StringValue(field.getText());
 	}
 	
-	
-	@Override
-	public void setAnswer(Value value) {
-		field.setText(((StringValue) value).getValue()); // TODO implicit you have to know to ask for a string
-  	  	field.end();
-	}
 	
 	@Override
 	public TextField getField() {

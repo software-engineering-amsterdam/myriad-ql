@@ -20,8 +20,8 @@ public class IntegerType extends Type {
 	}
 
 	@Override
-	public Field getField(String name, Notifier notifier) {
-		return new Number(name, notifier);
+	public Field getField(String name, Notifier notifier, Value value) {
+		return new Number(name, notifier, (IntegerValue) value);
 	}
 
 	@Override

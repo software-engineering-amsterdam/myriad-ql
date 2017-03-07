@@ -31,17 +31,22 @@ public class QEvaluator extends Evaluator {
 	
     @Override
     public void visit(Question question) {
+    	
+    	Value answer = answers.getAnswer(question.getVariable());
+    	
         activeQuestions.add(new Row(question.getVariable(),
-        		question.getLabel(), question.getType(), notifier));
+        		question.getLabel(), question.getType(), notifier, answer));
     }
     
     @Override
     public void visit(ComputedQuestion question) {
         System.out.println("Evaluator: computed question");
         Value value = question.getComputedQuestion().accept(this);
-
+        
+        Value answer = answers.getAnswer(question.getVariable());
+        
         Row q = new Row(question.getVariable(),
-                question.getLabel(), question.getType(), notifier);
+                question.getLabel(), question.getType(), notifier, answer);
 
         // TODO only works with integers...
         if (value.isSet()) {

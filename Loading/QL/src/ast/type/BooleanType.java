@@ -21,8 +21,8 @@ public class BooleanType extends Type {
 	}
 
 	@Override
-	public Field getField(String name, Notifier notifier) {
-		return new Check(name, notifier);
+	public Field getField(String name, Notifier notifier, Value value) {
+		return new Check(name, notifier, (BoolValue) value);
 	}
 
 	@Override

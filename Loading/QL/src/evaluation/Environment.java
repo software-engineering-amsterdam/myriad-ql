@@ -29,7 +29,8 @@ public class Environment {
 		if (isAnswered(variable)) {
 			return variableAnswer.get(variable);
 		}
-		return null; // TODO throw here?
+		System.out.println("TODO an unset variable is returned");
+		return getType(variable).getValue(); // TODO throw here?
 	}
 	
 	public Type getType(String variable) {

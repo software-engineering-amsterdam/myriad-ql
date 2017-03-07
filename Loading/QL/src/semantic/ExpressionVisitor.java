@@ -61,7 +61,6 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     public void visit(Question question) {
     }
 
-    // TODO computed question
     @Override
     public void visit(ComputedQuestion question) {
         question.getComputedQuestion().accept(this);
@@ -70,7 +69,7 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     @Override
     public void visit(Statement statement) {
         Type type = statement.getExpression().accept(this);
-        check(new BooleanType(1), type);
+        check(new BooleanType(1), type); // TODO Type without a line number??
         statement.getBlock().accept(this); // TODO circulair dependencies?
     }
 

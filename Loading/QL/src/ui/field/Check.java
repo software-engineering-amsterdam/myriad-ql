@@ -11,9 +11,10 @@ public class Check implements Field {
 
 	private CheckBox field;
 	
-	public Check(String name, Notifier notifier) {
+	public Check(String name, Notifier notifier, BoolValue value) {
 		
 		this.field = new CheckBox();
+		field.setSelected(value.getValue());
 		
 		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
 	           
@@ -31,10 +32,6 @@ public class Check implements Field {
 		return new BoolValue(field.isSelected());
 	}
 	
-	@Override
-	public void setAnswer(Value value) {
-		field.setSelected(((BoolValue) value).getValue());
-	}
 	
 	@Override
 	public CheckBox getField() {

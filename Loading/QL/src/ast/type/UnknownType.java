@@ -13,7 +13,7 @@ public class UnknownType extends Type {
 	}
 
 	@Override
-	public Field getField(String name, Notifier notifier) {
+	public Field getField(String name, Notifier notifier, Value value) {
 		return null;
 	}
 

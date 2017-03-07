@@ -13,20 +13,17 @@ public class Row {
 	private Type type;
 	private Field entryField;
 
-	public Row(String name, String label, Type type, Notifier notifier) {
+	public Row(String name, String label, Type type, Notifier notifier, Value answer) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
-		this.entryField = type.getField(name, notifier);
+		// TODO move one level up?
+		this.entryField = type.getField(name, notifier, answer);
 	}
 
 	// TODO default return statement
 	public Value getAnswer() {
 		return entryField.getAnswer();
-	}
-
-	public void setAnswer(Value value) {
-		entryField.setAnswer(value);
 	}
 
 	public String getName() {

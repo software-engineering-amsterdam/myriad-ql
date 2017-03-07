@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -74,19 +73,6 @@ public class Questionnaire extends Application implements Notifier {
     }
     
     
-    private void setAnswers(List<Row> activeQuestions) {
-    	
-    	// TODO change
-    	for (Row question : activeQuestions) {
-    		
-    		Value value = env.getAnswer(question.getName());
-    		if (value == null) {
-    			continue;
-    		}
-    		question.setAnswer(value);
-    	}
-    }
-    
     private void renderQuestionnaire(GridPane grid) {
     	
         renderTitle(grid, form.getId());
@@ -94,8 +80,6 @@ public class Questionnaire extends Application implements Notifier {
         List<Row> activeQuestions = createQuestions();
         
     	renderQuestions(activeQuestions);
-        
-    	setAnswers(activeQuestions);
     	
         Button btn = renderButton(grid, activeQuestions.size() + 2);
          

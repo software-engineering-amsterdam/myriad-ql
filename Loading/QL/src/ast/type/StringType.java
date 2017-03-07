@@ -19,8 +19,8 @@ public class StringType extends Type {
 	}
 
 	@Override
-	public Field getField(String name, Notifier notifier) {
-		return new Text(name, notifier);
+	public Field getField(String name, Notifier notifier, Value value) {
+		return new Text(name, notifier, (StringValue) value);
 	}
 
 	@Override

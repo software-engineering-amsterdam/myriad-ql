@@ -10,9 +10,14 @@ import value.Value;
 public class Number implements Field {
 	
 	private TextField field;
+	// private IntegerValue value;
 	
-	public Number(String name, Notifier notifier) {
+	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
+		
+		if (value.isSet()) {
+			field.setText(Integer.toString(value.getValue()));
+		}
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
@@ -35,15 +40,6 @@ public class Number implements Field {
 			return new IntegerValue();
 		}
 		return new IntegerValue(Integer.valueOf(str));
-	}
-
-	@Override
-	public void setAnswer(Value value) {
-		if (value.isSet()) {
-			field.setText(Integer.toString(((IntegerValue) value).getValue()));
-      	  	field.end();
-		}
-		
 	}
 	
 	@Override 

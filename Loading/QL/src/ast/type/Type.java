@@ -20,7 +20,7 @@ public abstract class Type extends Node {
 	}
 
 	// TODO field and value in here?
-	public abstract Field getField(String name, Notifier notifier);
+	public abstract Field getField(String name, Notifier notifier, Value value);
 	
 	public abstract Value getValue();
 

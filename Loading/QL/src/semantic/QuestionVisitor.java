@@ -36,12 +36,6 @@ public class QuestionVisitor implements FormVisitor {
 	}
 
 	@Override
-	public void visit(Question question) {
-		addVariableType(question.getVariable(), question.getType(), question.getLine());
-		addLabel(question.getLabel(), question.getVariable(), question.getLine());
-	}
-
-	@Override
 	public void visit(Statement statement) {
 		statement.getBlock().accept(this); // TODO circulair dependencies?
 	}
@@ -49,6 +43,13 @@ public class QuestionVisitor implements FormVisitor {
 	@Override
 	public void visit(IfElseStatement statement) {
 		statement.getBlock().accept(this); // TODO circulair dependencies?
+		statement.getElseBlock().accept(this);
+	}
+	
+	@Override
+	public void visit(Question question) {
+		addVariableType(question.getVariable(), question.getType(), question.getLine());
+		addLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
 	// TODO computed question
