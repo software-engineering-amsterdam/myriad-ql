@@ -3,30 +3,27 @@ from enum import Enum
 Datatype = Enum("Datatype", "boolean string integer decimal")
 
 
-class Form:
+class Node:
+    def __eq__(self, other):
+        return type(self) == type(other) and self.__dict__ == other.__dict__
+
+
+class Form(Node):
 
     def __init__(self, name, body):
         self.name = name
         self.body = body
 
-    def __eq__(self, other):
-        return (type(self) == type(other) and self.name == other.name and
-                self.body == other.body)
-
     def accept(self, visitor):
         return visitor.visit_form(self)
 
 
-class Question:
+class Question(Node):
 
     def __init__(self, name, label, datatype):
         self.name = name
         self.label = label
         self.datatype = datatype
-
-    def __eq__(self, other):
-        return (type(self) == type(other) and self.name == other.name and
-                self.label == other.label and self.datatype == other.datatype)
 
     def accept(self, visitor):
         return visitor.visit_question(self)
@@ -38,23 +35,15 @@ class ComputedQuestion(Question):
         super().__init__(name, label, datatype)
         self.computation = computation
 
-    def __eq__(self, other):
-        return super().__eq__(other) and self.computation == other.computation
-
     def accept(self, visitor):
         return visitor.visit_computed_question(self)
 
 
-class IfConditional:
+class IfConditional(Node):
 
     def __init__(self, condition, ifbody):
         self.condition = condition
         self.ifbody = ifbody
-
-    def __eq__(self, other):
-        return (type(self) == type(other) and
-                self.condition == other.condition and
-                self.ifbody == other.ifbody)
 
     def accept(self, visitor):
         return visitor.visit_if_conditional(self)
@@ -66,19 +55,17 @@ class IfElseConditional(IfConditional):
         super().__init__(condition, ifbody)
         self.elsebody = elsebody
 
-    def __eq__(self, other):
-        return super().__eq__(other) and self.elsebody == other.elsebody
-
     def accept(self, visitor):
         return visitor.visit_ifelse_conditional(self)
 
 
-class UnOp:
+class Expression(Node):
+    pass
+
+
+class UnOp(Expression):
     def __init__(self, right):
         self.right = right
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.right == other.right
 
 
 class PlusOp(UnOp):
@@ -96,14 +83,10 @@ class NotOp(UnOp):
         return visitor.visit_notop(self)
 
 
-class BinOp:
+class BinOp(Expression):
     def __init__(self, left, right):
         self.left = left
         self.right = right
-
-    def __eq__(self, other):
-        return (type(self) == type(other) and self.left == other.left and
-                self.right == other.right)
 
 
 class MulOp(BinOp):
@@ -166,28 +149,20 @@ class OrOp(BinOp):
         return visitor.visit_orop(self)
 
 
-# TODO: inheretence?
-class Variable:
+class Variable(Expression):
 
     def __init__(self, name):
         self.name = name
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self.name == other.name
 
     def accept(self, visitor):
         return visitor.visit_variable(self)
 
 
-class Constant:
+class Constant(Expression):
 
     def __init__(self, value, datatype):
         self.value = value
         self.datatype = datatype
-
-    def __eq__(self, other):
-        return (type(self) == type(other) and self.value == other.value and
-                self.datatype == other.datatype)
 
     def accept(self, visitor):
         return visitor.visit_constant(self)
