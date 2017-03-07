@@ -17,31 +17,25 @@
             this.values = new Dictionary<string, IValue>();
         }
 
-        public void AddValue(string key, IValue value)
+        public bool AddOrUpdateValue(string key, IValue value)
         {
+            bool updated = !(this.values.ContainsKey(key) && this.values[key] == value);
+
             if (this.values.ContainsKey(key))
             {
-                var oldValue = this.values[key];
-
-                if (oldValue == value)
-                {
-                    return;
-                }
-
-                this.values[key] = value;
+                updated = this.values[key] != value;
             }
-            else
-            {
-                this.values[key] = value;
-            }
+
+            this.values[key] = value;
+            return updated;
         }
 
-        public void AddValue(string key, Expression value)
+        public bool AddOrUpdateValue(string key, Expression value)
         {
             var evaluator = new Evaluator();
             var computedValue = evaluator.Evaluate(value, this);
 
-            this.AddValue(key, computedValue);
+            return this.AddOrUpdateValue(key, computedValue);
         }
 
         public IValue GetValueOf(string key)

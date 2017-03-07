@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>OffByOne.Ql.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MoreDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MoreDotNet.0.6\lib\MoreDotNet.dll</HintPath>
@@ -135,6 +138,13 @@
     <Compile Include="Graphics\Widgets\LabelWidget.cs" />
     <Compile Include="Graphics\Widgets\TextBoxWidget.cs" />
     <Compile Include="Graphics\Widgets\WidgetStyle.cs" />
+    <Compile Include="Interpreter\Controls\Base\IObservable.cs" />
+    <Compile Include="Interpreter\Controls\Base\IObserver.cs" />
+    <Compile Include="Interpreter\Controls\Base\QuestionControl.cs" />
+    <Compile Include="Interpreter\Controls\StringControl.cs" />
+    <Compile Include="Interpreter\GuiChange.cs" />
+    <Compile Include="Interpreter\GuiEnvironment.cs" />
+    <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="obj\Debug\QlBaseVisitor.cs" />
     <Compile Include="obj\Debug\QlParser.cs" />
     <Compile Include="Values\Base\BaseValue.cs" />
