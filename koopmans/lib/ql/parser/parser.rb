@@ -6,6 +6,20 @@ module QL
     class Parser < Parslet::Parser
       root(:form)
 
+      root :addition
+
+      rule(:addition) {
+        multiplication.as(:left) >> (add_op >> multiplication.as(:right)).repeat(1) |
+          multiplication
+      }
+
+      rule(:multiplication) {
+        integer_literal.as(:left) >> (mult_op >> integer_literal.as(:right)).repeat(1) |
+          integer_literal }
+
+      rule(:mult_op) { match['*/'].as(:operator) >> _ }
+      rule(:add_op) { match['+-'].as(:operator) >> _ }
+
       # spaces, breaks
       rule(:_) { match('\s').repeat(1).maybe }
 
