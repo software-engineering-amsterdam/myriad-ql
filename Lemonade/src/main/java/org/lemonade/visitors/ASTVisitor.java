@@ -56,6 +56,8 @@ public interface ASTVisitor<T> {
 
     T visit(DecimalLiteral decimalValue);
 
+    T visit(DateLiteral dateLiteral);
+
     T visit(MoneyLiteral moneyValue);
 
     T visit(IntegerLiteral integerValue);

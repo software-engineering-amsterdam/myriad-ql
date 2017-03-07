@@ -197,6 +197,11 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visit(DateLiteral dateLiteral) {
+        return null;
+    }
+
+    @Override
     public ASTNode visit(MoneyLiteral moneyValue) {
         System.err.print(moneyValue);
         return moneyValue;

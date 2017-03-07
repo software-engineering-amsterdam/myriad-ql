@@ -193,6 +193,11 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     }
 
     @Override
+    public Expression visit(DateLiteral dateLiteral) {
+        return null;
+    }
+
+    @Override
     public Expression visit(IdentifierLiteral identifierValue) {
         if (!environment.containsKey(identifierValue.getValue())) {
             throw new RuntimeException("Symbol not found!");

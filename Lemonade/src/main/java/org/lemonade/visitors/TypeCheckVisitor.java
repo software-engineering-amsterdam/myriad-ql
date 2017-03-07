@@ -66,7 +66,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType condition = conditional.getCondition().accept(this);
 
         if (!condition.isBoolean()) {
-            errors.add("Condition cannot be resolved because of type mismatch.");
+            errors.add("Condition at " + conditional.getPosition() + " cannot be resolved because conditional resolves to: " + condition + ", Boolean expected.");
         }
         return condition;
     }
@@ -127,7 +127,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType expressionType = bangUnary.getExpression().accept(this);
 
         if (!expressionType.isBoolean()) {
-            errors.add("QLBoolean type mismatch in unary expression.");
+            errors.add("QLBoolean expected at " + bangUnary.getPosition() + ", got " + expressionType + ".");
         }
         return expressionType;
     }
@@ -135,7 +135,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     public QLType visit(NegUnary negUnary) {
         QLType expressionType = negUnary.getExpression().accept(this);
         if (!expressionType.isNumeric()) {
-            errors.add("QLNumeric type mismatch in unary expression.");
+            errors.add("QLNumeric expected at " + negUnary.getPosition() + ", got " + expressionType + ".");
         }
         return expressionType;
     }
@@ -154,7 +154,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(IdentifierLiteral identifierValue) {
         if (!symbolTable.containsKey(identifierValue.getValue())) {
-            errors.add("Symbol not found!");
+            errors.add("Identifier "+ identifierValue.getValue() + " at " + identifierValue.getPosition() + " not found!");
         }
         return symbolTable.get(identifierValue.getValue());
     }
@@ -165,6 +165,10 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
     public QLType visit(StringLiteral stringValue) {
         return stringValue.getType();
+    }
+
+    public QLType visit(DateLiteral dateLiteral) {
+        return dateLiteral.getType();
     }
 
     @Override
@@ -182,7 +186,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType rightType = binaryExpression.getRight().accept(this);
 
         if (!(leftType.isNumeric() && rightType.isNumeric())) {
-            errors.add("QLNumeric Type mismatch");
+            errors.add("QLNumeric type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
         }
         return QLNumberType.precedence((QLNumberType) leftType, (QLNumberType) rightType);
     }
@@ -193,7 +197,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
 
         //Doesn't return it's own type because this can evaluate to a new type.
         if (!(leftType.isOf(rightType.getClass()) && leftType.isComparable())) {
-            errors.add("QLComparable Type mismatch");
+            errors.add("QLComparable type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
         }
         return new QLBooleanType();
     }
@@ -203,7 +207,7 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         QLType rightType = binaryExpression.getRight().accept(this);
 
         if (!(leftType.isOf(rightType.getClass()) && leftType.isBoolean())) {
-            errors.add("QLBoolean Type mismatch");
+            errors.add("QLBooleans expected at " + binaryExpression.getPosition() + ", got " + leftType + " and " + rightType);
         }
         return leftType;
     }

@@ -1,8 +1,12 @@
 package org.lemonade.nodes.expressions.literal;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
+import org.assertj.core.internal.cglib.core.Local;
 import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.visitors.ASTVisitor;
 
 /**
  *
@@ -11,6 +15,10 @@ public class DateLiteral extends ComparableLiteral<LocalDate> implements Compara
 
     public DateLiteral(LocalDate value) {
         super(new QLDateType(), value);
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override
