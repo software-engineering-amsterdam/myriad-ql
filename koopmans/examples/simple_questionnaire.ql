@@ -6,14 +6,14 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
-  if (true == !false) {
+  if (!false && !false ) {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"
       privateDebt: money
     "Value residue:"
       valueResidue: money =
-        (-5 * (2 + 10))
+        (-5*5+5)
   }
 
 }

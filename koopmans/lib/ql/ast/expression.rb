@@ -41,7 +41,10 @@ module QL
 
     class BooleanNegation < Negation
       def eval
-        BooleanLiteral.new(!single.to_value)
+        # BooleanLiteral.new('true')
+        # [BooleanLiteral.new('true'),
+        #                               NotEqual.new(single)]
+        BooleanLiteral.new((!single.eval.to_value).to_s)
       end
 
       def accept_types
@@ -51,7 +54,7 @@ module QL
 
     class IntegerNegation < Negation
       def eval
-        IntegerLiteral.new(-single.to_value)
+        IntegerLiteral.new(-single.eval.to_value)
       end
 
       def accept_types
@@ -79,8 +82,8 @@ module QL
         [BooleanType]
       end
 
-      def call(left)
-        BooleanLiteral.new(super)
+      def to_corresponding_literal(result)
+        BooleanLiteral.new(result)
       end
     end
 
@@ -142,7 +145,7 @@ module QL
       end
     end
 
-    class Equal< ComparisonEqual
+    class Equal < ComparisonEqual
       def eval(left, right)
         left == right
       end
