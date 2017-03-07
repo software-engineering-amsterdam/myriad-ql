@@ -35,6 +35,7 @@ public class SemanticsAnalyzer {
         errorMessages.addAll(mEnvironment.getDuplicateDeclarationErrors());
         errorMessages.addAll(mEnvironment.getDuplicateLabelErrors());
         errorMessages.addAll(mEnvironment.getUndefinedDeclarationErrors());
+        errorMessages.addAll(mEnvironment.getConditionErrors());
         errorMessages.addAll(mEnvironment.getCyclicDependencyErrors());
         return errorMessages;
     }

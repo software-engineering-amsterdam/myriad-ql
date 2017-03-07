@@ -25,7 +25,7 @@ public class IfStatementNode extends BlockNode {
     }
 
     @Override
-    public void addCondition(Set<Node> set) {
+    public void addCondition(Set<ConditionNode> set) {
         set.add(mCondition);
     }
 }

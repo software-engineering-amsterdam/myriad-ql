@@ -1,8 +1,10 @@
 package org.uva.taxfree.model.environment;
 
+import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.declarations.CalculatedField;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -30,8 +32,21 @@ public class Environment {
         return mSymbolTable.getUndefinedDeclarationErrros();
     }
 
-    public List<String>
-    getCyclicDependencyErrors() {
+    public List<String> getConditionErrors() {
+        List<String> errors = new ArrayList<>();
+        Set<ConditionNode> conditions = new LinkedHashSet<>();
+        mAbstractSyntaxTree.retrieveConditions(conditions);
+        for (Node node : conditions) {
+            ConditionNode conditionNode = (ConditionNode) node; // TODO static cast..
+            if (!conditionNode.isBoolean()) {
+                errors.add("Condition found with invalid types: " + conditionNode.resolveValue());
+            }
+            // TODO: Check operator isValid
+        }
+        return errors;
+    }
+
+    public List<String> getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
             if (hasCyclicDependency(calculation)) {

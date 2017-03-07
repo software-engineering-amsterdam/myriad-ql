@@ -19,4 +19,14 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     public void addUsedVariables(Set<String> set) {
         mCondition.addUsedVariables(set);
     }
+
+//    @Override
+//    public boolean isSameType() {
+//        return true; // TODO: do we want this?
+//    }
+
+//    @Override
+//    public boolean isValidCondition() {
+//        return true;
+//    }
 }
