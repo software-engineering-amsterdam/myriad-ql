@@ -1,4 +1,4 @@
-module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields)
+module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields, name)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import QL.Environment as Env exposing (Environment)
@@ -9,6 +9,20 @@ import QL.Evaluator as Evaluator
 type Field
     = Editable Label String ValueType
     | Computed Label String ValueType Expression
+
+
+name : Field -> String
+name field =
+    case field of
+        Editable _ name _ ->
+            name
+
+        Computed _ name _ _ ->
+            name
+
+
+
+-- TODO: rename to valueType
 
 
 fieldValueType : Field -> ValueType

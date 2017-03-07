@@ -1,4 +1,4 @@
-module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
+module UI.QLSInput exposing (Model, Msg, init, asStyleSheet, setForm, update, view)
 
 import Html exposing (Html, textarea, div, pre, text)
 import Html.Keyed exposing (node)
@@ -93,11 +93,6 @@ exampleDsl =
   }
 
 """
-
-
-asStylesheet : Model -> Maybe StyleSheet
-asStylesheet { parsedStyleSheet } =
-    parsedStyleSheet
 
 
 update : Msg -> Model -> Model
