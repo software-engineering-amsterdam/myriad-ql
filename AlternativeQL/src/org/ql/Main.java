@@ -22,7 +22,6 @@ public class Main extends Application {
         if(hasFormTypeErrors(form)) {
             System.out.println("TypeChecker: An issue was found!");
         } else {
-            runEvaluator(form);
             runGUI(primaryStage, form);
         }
     }
@@ -46,12 +45,6 @@ public class Main extends Application {
         IssuesStorage issues = typeChecker.checkForm(form);
 
         return issues.hasErrors();
-    }
-
-    public void runEvaluator(Form form) {
-        ValueTable valueTable = new ValueTable();
-        Evaluator evaluator = new Evaluator(valueTable);
-        evaluator.visitForm(form, null);
     }
 
     public void runGUI(Stage primaryStage, Form form) {

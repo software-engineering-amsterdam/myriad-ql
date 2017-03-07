@@ -28,4 +28,13 @@ public class ValueTable {
     public int size() {
         return values.size();
     }
+
+    public boolean hasUnknownValues() {
+        for (Value value : values.values()) {
+            if (value instanceof UnknownValue) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
