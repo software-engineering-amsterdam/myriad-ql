@@ -1,6 +1,6 @@
 package parser
 
-import java.io.{Reader, StringReader}
+import java.io.{ Reader, StringReader }
 
 import ast._
 import model.StyleModel

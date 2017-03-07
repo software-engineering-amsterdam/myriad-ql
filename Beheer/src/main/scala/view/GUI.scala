@@ -3,13 +3,13 @@ package view
 import java.io.FileReader
 
 import ast._
-import checker.{Error, FormChecker, StyleChecker, Warning}
-import parser.{FormParser, StylesheetParser}
+import checker.{ Error, FormChecker, StyleChecker, Warning }
+import parser.{ FormParser, StylesheetParser }
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.layout.{HBox, TilePane, VBox}
+import scalafx.scene.layout.{ HBox, TilePane, VBox }
 import scalafx.scene.text.Text
 
 object GUI extends JFXApp {

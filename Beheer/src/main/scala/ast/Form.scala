@@ -6,7 +6,7 @@ sealed trait Statement
 
 case class Conditional(condition: ExpressionNode, statements: Seq[Statement]) extends Statement
 
-case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode] = None) extends Statement
+case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode]) extends Statement
 
 sealed trait Type
 

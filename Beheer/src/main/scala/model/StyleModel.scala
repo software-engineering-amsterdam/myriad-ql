@@ -1,6 +1,6 @@
 package model
 
-import ast.Stylesheet.{Blocks, DefaultStyles, QuestionStyles}
+import ast.Stylesheet.{ Blocks, DefaultStyles, QuestionStyles }
 import ast._
 
 class StyleModel(stylesheet: Stylesheet) {
