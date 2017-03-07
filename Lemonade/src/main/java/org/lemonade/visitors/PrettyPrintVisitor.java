@@ -3,7 +3,7 @@ package org.lemonade.visitors;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLType;
@@ -167,37 +167,37 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visit(BooleanValue booleanValue) {
+    public ASTNode visit(BooleanLiteral booleanValue) {
         System.err.print(booleanValue);
         return booleanValue;
     }
 
     @Override
-    public ASTNode visit(DecimalValue decimalValue) {
+    public ASTNode visit(DecimalLiteral decimalValue) {
         System.err.print(decimalValue);
         return decimalValue;
     }
 
     @Override
-    public ASTNode visit(IntegerValue integerValue) {
+    public ASTNode visit(IntegerLiteral integerValue) {
         System.err.print(integerValue);
         return integerValue;
     }
 
     @Override
-    public ASTNode visit(StringValue stringValue) {
+    public ASTNode visit(StringLiteral stringValue) {
         System.err.print(stringValue);
         return stringValue;
     }
 
     @Override
-    public ASTNode visit(IdentifierValue identifierValue) {
+    public ASTNode visit(IdentifierLiteral identifierValue) {
         System.err.print(identifierValue);
         return identifierValue;
     }
 
     @Override
-    public ASTNode visit(MoneyValue moneyValue) {
+    public ASTNode visit(MoneyLiteral moneyValue) {
         System.err.print(moneyValue);
         return moneyValue;
     }

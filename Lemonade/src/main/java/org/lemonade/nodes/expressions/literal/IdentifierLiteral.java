@@ -1,15 +1,15 @@
-package org.lemonade.nodes.expressions.value;
+package org.lemonade.nodes.expressions.literal;
 
-import org.lemonade.nodes.expressions.Value;
+import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.visitors.ASTVisitor;
 
 /**
  *
  */
-public class IdentifierValue extends Value<String> implements Comparable<IdentifierValue>{
+public class IdentifierLiteral extends Literal<String> implements Comparable<IdentifierLiteral>{
 
-    public IdentifierValue(String value) {
+    public IdentifierLiteral(String value) {
         super(new QLStringType(), value);
     }
 
@@ -24,14 +24,14 @@ public class IdentifierValue extends Value<String> implements Comparable<Identif
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof IdentifierValue)){
+        if (!(obj instanceof IdentifierLiteral)){
             return false;
         }
-        IdentifierValue that = (IdentifierValue) obj;
+        IdentifierLiteral that = (IdentifierLiteral) obj;
         return this.getValue() == that.getValue();
     }
 
-    public int compareTo(IdentifierValue that) {
+    public int compareTo(IdentifierLiteral that) {
         return this.getValue().compareTo(that.getValue());
     }
 }

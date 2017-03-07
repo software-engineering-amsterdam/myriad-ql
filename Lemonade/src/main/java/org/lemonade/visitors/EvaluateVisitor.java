@@ -2,7 +2,7 @@ package org.lemonade.visitors;
 
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.Value;
+import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.expressions.binary.AndBinary;
 import org.lemonade.nodes.expressions.binary.DivideBinary;
 import org.lemonade.nodes.expressions.binary.EqBinary;
@@ -17,7 +17,7 @@ import org.lemonade.nodes.expressions.binary.PlusBinary;
 import org.lemonade.nodes.expressions.binary.ProductBinary;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.types.QLType;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
  *
  */
 public class EvaluateVisitor implements ASTVisitor<Expression> {
-    Map<String, Value<?>> environment;
+    Map<String, Literal<?>> environment;
 
     @Override
     public Expression visit(Form form) {
@@ -42,7 +42,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     @Override
     public Expression visit(Question question) {
         String identifier = question.getIdentifier();
-//        Value<?> value = question.getValue();
+//        Literal<?> literal = question.getValue();
 
 //        assert !environment.containsKey(identifier);
 //        environment.put(identifier, new UndefinedValue(question.getType()));
@@ -62,138 +62,138 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(AndBinary andBinary) {
-        BooleanValue left = (BooleanValue) andBinary.getLeft().accept(this);
-        BooleanValue right = (BooleanValue) andBinary.getRight().accept(this);
+        BooleanLiteral left = (BooleanLiteral) andBinary.getLeft().accept(this);
+        BooleanLiteral right = (BooleanLiteral) andBinary.getRight().accept(this);
         return left.and(right);
     }
 
     @Override
     public Expression visit(OrBinary orBinary) {
-        BooleanValue left = (BooleanValue) orBinary.getLeft().accept(this);
-        BooleanValue right = (BooleanValue) orBinary.getRight().accept(this);
+        BooleanLiteral left = (BooleanLiteral) orBinary.getLeft().accept(this);
+        BooleanLiteral right = (BooleanLiteral) orBinary.getRight().accept(this);
         return left.or(right);
     }
 
     @Override
     public Expression visit(PlusBinary plusBinary) {
-        NumericValue<?> left = (NumericValue<?>) plusBinary.getLeft().accept(this);
-        NumericValue<?> right = (NumericValue<?>) plusBinary.getRight().accept(this);
+        NumericLiteral<?> left = (NumericLiteral<?>) plusBinary.getLeft().accept(this);
+        NumericLiteral<?> right = (NumericLiteral<?>) plusBinary.getRight().accept(this);
         System.err.println(left.plus(right));
         return left.plus(right);
     }
 
     @Override
     public Expression visit(ProductBinary productBinary) {
-        NumericValue<?> left = (NumericValue<?>) productBinary.getLeft().accept(this);
-        NumericValue<?> right = (NumericValue<?>) productBinary.getRight().accept(this);
+        NumericLiteral<?> left = (NumericLiteral<?>) productBinary.getLeft().accept(this);
+        NumericLiteral<?> right = (NumericLiteral<?>) productBinary.getRight().accept(this);
         System.err.println(left.product(right));
         return left.product(right);
     }
 
     @Override
     public Expression visit(MinusBinary minusBinary) {
-        NumericValue<?> left = (NumericValue<?>) minusBinary.getLeft().accept(this);
-        NumericValue<?> right = (NumericValue<?>) minusBinary.getRight().accept(this);
+        NumericLiteral<?> left = (NumericLiteral<?>) minusBinary.getLeft().accept(this);
+        NumericLiteral<?> right = (NumericLiteral<?>) minusBinary.getRight().accept(this);
         System.err.println(left.minus(right));
         return left.minus(right);
     }
 
     @Override
     public Expression visit(DivideBinary divideBinary) {
-        NumericValue<?> left = (NumericValue<?>) divideBinary.getLeft().accept(this);
-        NumericValue<?> right = (NumericValue<?>) divideBinary.getRight().accept(this);
+        NumericLiteral<?> left = (NumericLiteral<?>) divideBinary.getLeft().accept(this);
+        NumericLiteral<?> right = (NumericLiteral<?>) divideBinary.getRight().accept(this);
         System.err.println(left.divide(right));
         return left.divide(right);
     }
 
     @Override
     public Expression visit(EqBinary eqBinary) {
-        Value<?> left = (Value<?>) eqBinary.getLeft().accept(this);
-        Value<?> right = (Value<?>) eqBinary.getRight().accept(this);
+        Literal<?> left = (Literal<?>) eqBinary.getLeft().accept(this);
+        Literal<?> right = (Literal<?>) eqBinary.getRight().accept(this);
         System.err.println(left.equals(right));
         return left.eq(right);
     }
 
     @Override
     public Expression visit(NEqBinary nEqBinary) {
-        Value<?> left = (Value<?>) nEqBinary.getLeft().accept(this);
-        Value<?> right = (Value<?>) nEqBinary.getRight().accept(this);
+        Literal<?> left = (Literal<?>) nEqBinary.getLeft().accept(this);
+        Literal<?> right = (Literal<?>) nEqBinary.getRight().accept(this);
         System.err.println(left.nEq(right));
         return left.nEq(right);
     }
 
     @Override
     public Expression visit(GTBinary gtBinary) {
-        ComparableValue<?> left = (ComparableValue<?>) gtBinary.getLeft().accept(this);
-        ComparableValue<?> right = (ComparableValue<?>) gtBinary.getRight().accept(this);
+        ComparableLiteral<?> left = (ComparableLiteral<?>) gtBinary.getLeft().accept(this);
+        ComparableLiteral<?> right = (ComparableLiteral<?>) gtBinary.getRight().accept(this);
         System.err.println(left.gT(right));
         return left.gT(right);
     }
 
     @Override
     public Expression visit(GTEBinary gteBinary) {
-        ComparableValue<?> left = (ComparableValue<?>) gteBinary.getLeft().accept(this);
-        ComparableValue<?> right = (ComparableValue<?>) gteBinary.getRight().accept(this);
+        ComparableLiteral<?> left = (ComparableLiteral<?>) gteBinary.getLeft().accept(this);
+        ComparableLiteral<?> right = (ComparableLiteral<?>) gteBinary.getRight().accept(this);
         System.err.println(left.gTEq(right));
         return left.gTEq(right);
     }
 
     @Override
     public Expression visit(LTBinary ltBinary) {
-        ComparableValue<?> left = (ComparableValue<?>) ltBinary.getLeft().accept(this);
-        ComparableValue<?> right = (ComparableValue<?>) ltBinary.getRight().accept(this);
+        ComparableLiteral<?> left = (ComparableLiteral<?>) ltBinary.getLeft().accept(this);
+        ComparableLiteral<?> right = (ComparableLiteral<?>) ltBinary.getRight().accept(this);
         System.err.println(left.lT(right));
         return left.lT(right);
     }
 
     @Override
     public Expression visit(LTEBinary lteBinary) {
-        ComparableValue<?> left = (ComparableValue<?>) lteBinary.getLeft().accept(this);
-        ComparableValue<?> right = (ComparableValue<?>) lteBinary.getRight().accept(this);
+        ComparableLiteral<?> left = (ComparableLiteral<?>) lteBinary.getLeft().accept(this);
+        ComparableLiteral<?> right = (ComparableLiteral<?>) lteBinary.getRight().accept(this);
         System.err.println(left.lTEq(right));
         return left.lTEq(right);
     }
 
     @Override
     public Expression visit(BangUnary bangUnary) {
-        BooleanValue expression = (BooleanValue) bangUnary.getExpression().accept(this);
+        BooleanLiteral expression = (BooleanLiteral) bangUnary.getExpression().accept(this);
         return expression.bang();
 
     }
 
     @Override
     public Expression visit(NegUnary negUnary) {
-        NumericValue<?> expression = (NumericValue<?>) negUnary.getExpression().accept(this);
+        NumericLiteral<?> expression = (NumericLiteral<?>) negUnary.getExpression().accept(this);
         return expression.neg();
     }
 
     @Override
-    public Expression visit(BooleanValue booleanValue) {
+    public Expression visit(BooleanLiteral booleanValue) {
         return booleanValue;
     }
 
     @Override
-    public Expression visit(DecimalValue decimalValue) {
+    public Expression visit(DecimalLiteral decimalValue) {
         return decimalValue;
     }
 
     @Override
-    public Expression visit(MoneyValue moneyValue) {
+    public Expression visit(MoneyLiteral moneyValue) {
         return moneyValue;
     }
 
     @Override
-    public Expression visit(IntegerValue integerValue) {
+    public Expression visit(IntegerLiteral integerValue) {
         return integerValue;
     }
 
     @Override
-    public Expression visit(StringValue stringValue) {
+    public Expression visit(StringLiteral stringValue) {
         return stringValue;
     }
 
     @Override
-    public Expression visit(IdentifierValue identifierValue) {
+    public Expression visit(IdentifierLiteral identifierValue) {
         if (!environment.containsKey(identifierValue.getValue())) {
             throw new RuntimeException("Symbol not found!");
         }
