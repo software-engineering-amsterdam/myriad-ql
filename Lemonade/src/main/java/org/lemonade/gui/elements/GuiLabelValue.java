@@ -8,7 +8,9 @@ public class GuiLabelValue extends GuiValue<String> {
     private Label label;
 
     public GuiLabelValue(String labelText) {
+        this.value = labelText;
         this.label = new Label(labelText);
+        label.setMinWidth(200);
     }
 
     @Override public void update() {

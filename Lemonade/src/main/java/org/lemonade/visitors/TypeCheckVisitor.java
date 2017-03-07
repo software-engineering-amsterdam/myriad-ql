@@ -8,7 +8,12 @@ import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLNumberType;
+import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
 
 import java.util.ArrayList;
@@ -172,11 +177,6 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     @Override
-    public QLType visit(QLType type) {
-        return type;
-    }
-
-    @Override
     public QLType visit(ASTNode astNode) {
         return astNode.accept(this);
     }
@@ -212,4 +212,34 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         }
         return leftType;
     }
+
+    @Override public QLType visit(final QLIntegerType qlIntegerType) {
+        return qlIntegerType;
+    }
+
+    @Override public QLType visit(final QLBooleanType qlBooleanType) {
+        return qlBooleanType;
+    }
+
+    @Override public QLType visit(final QLDateType qlDateType) {
+        return qlDateType;
+    }
+
+    @Override public QLType visit(final QLDecimalType qlDecimalType) {
+        return qlDecimalType;
+    }
+
+    @Override public QLType visit(final QLMoneyType qlMoneyType) {
+        return qlMoneyType;
+    }
+
+    @Override public QLType visit(final QLStringType qlStringType) {
+        return qlStringType;
+    }
+
+    @Override
+    public QLType visit(QLType type) {
+        return type;
+    }
+
 }

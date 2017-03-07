@@ -9,6 +9,12 @@ import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
 
 /**
@@ -65,6 +71,18 @@ public interface ASTVisitor<T> {
     T visit(StringLiteral stringValue);
 
     T visit(IdentifierLiteral identifierValue);
+
+    T visit(QLIntegerType qlIntegerType);
+
+    T visit(QLBooleanType qlBooleanType);
+
+    T visit(QLDateType qlDateType);
+
+    T visit(QLDecimalType qlDecimalType);
+
+    T visit(QLMoneyType qlMoneyType);
+
+    T visit(QLStringType qlStringType);
 
     T visit(QLType qlType);
 

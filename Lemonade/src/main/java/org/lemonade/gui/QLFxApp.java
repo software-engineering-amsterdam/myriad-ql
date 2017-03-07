@@ -22,9 +22,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -58,21 +58,22 @@ public class QLFxApp extends Application {
             }
         });
 
-        final GridPane gridPane = new GridPane();
-        GridPane.setConstraints(openButton, 0, 0);
-        GridPane.setConstraints(fileLabel, 1, 0);
-        GridPane.setConstraints(submitButton, 0, 1, 2, 1);
-        gridPane.setHgap(6);
-        gridPane.setVgap(6);
-        gridPane.getChildren().addAll(openButton, fileLabel, submitButton);
+        AnchorPane anchorPane = new AnchorPane();
+        HBox hBox = new HBox();
+//        hBox.setPadding(new Insets(0, 10, 10, 10));
+        hBox.setSpacing(10);
+        hBox.getChildren().addAll(openButton, submitButton, fileLabel);
+        AnchorPane.setBottomAnchor(hBox, 10.0);
+        AnchorPane.setLeftAnchor(hBox, 5.0);
+        anchorPane.getChildren().add(hBox);
+        anchorPane.setPadding(new Insets(10, 10, 10, 10));
 
-        final Pane rootGroup = new VBox(12);
-        rootGroup.getChildren().addAll(gridPane);
-        rootGroup.setPadding(new Insets(12, 12, 12, 12));
-
-        selectionScene = new Scene(rootGroup, 400, 300);
+        selectionScene = new Scene(anchorPane);
 
         primaryStage.setScene(selectionScene);
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(500);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -80,19 +81,23 @@ public class QLFxApp extends Application {
         String contents = null;
 
         try {
-            //            final Button backButton = new Button("Select new questionnaire");
-            //            backButton.setOnAction(e -> stage.setScene(selectionScene));
+            final Button backButton = new Button("Select new questionnaire");
+            backButton.setOnAction(e -> stage.setScene(selectionScene));
 
             final GridPane gridPane = new GridPane();
-            GridPane.setColumnSpan(gridPane, 2);
             gridPane.setHgap(6);
             gridPane.setVgap(6);
 
-            //            final Pane rootGroup = new VBox(12);
-            //            rootGroup.getChildren().addAll(gridPane, backButton);
-            //            rootGroup.setPadding(new Insets(12, 12, 12, 12));
+            final AnchorPane rootGroup = new AnchorPane();
+            AnchorPane.setBottomAnchor(backButton, 10.0);
+            AnchorPane.setLeftAnchor(backButton, 5.0);
+            AnchorPane.setTopAnchor(gridPane, 10.0);
+            AnchorPane.setLeftAnchor(gridPane, 5.0);
 
-            questionnaireScene = new Scene(gridPane, 600, 400);
+            rootGroup.getChildren().addAll(gridPane, backButton);
+            rootGroup.setPadding(new Insets(10, 10, 10, 10));
+
+            questionnaireScene = new Scene(rootGroup);
 
             contents = String.join("\n", Files.readAllLines(Paths.get(file.getPath())));
             System.out.println(contents);
@@ -120,7 +125,7 @@ public class QLFxApp extends Application {
             stage.setScene(questionnaireScene);
 
         } catch (Exception e) {
-            System.err.println("Error" + e.getMessage());
+            System.err.println("Error " + e.getMessage());
         }
     }
 }

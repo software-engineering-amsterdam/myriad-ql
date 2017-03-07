@@ -1,10 +1,16 @@
 package org.lemonade.nodes.types;
 
+import org.lemonade.visitors.ASTVisitor;
+
 /**
  *
  */
 public class QLDateType extends QLType {
     public QLDateType() {
+    }
+
+    public <T> T accept(ASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

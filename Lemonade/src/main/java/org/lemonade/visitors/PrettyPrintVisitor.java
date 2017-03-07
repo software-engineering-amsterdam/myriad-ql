@@ -6,6 +6,12 @@ import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
 
 /**
@@ -214,6 +220,30 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
 
     @Override
     public ASTNode visit(ASTNode astNode) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLIntegerType qlIntegerType) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLBooleanType qlBooleanType) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLDateType qlDateType) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLDecimalType qlDecimalType) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLMoneyType qlMoneyType) {
+        return null;
+    }
+
+    @Override public ASTNode visit(final QLStringType qlStringType) {
         return null;
     }
 }

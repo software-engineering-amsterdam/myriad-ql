@@ -38,23 +38,32 @@ import org.lemonade.nodes.expressions.literal.MoneyLiteral;
 import org.lemonade.nodes.expressions.literal.StringLiteral;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.GridPane;
 
 public class GuiVisitor implements ASTVisitor<GuiElement> {
 
-    private Pane pane;
+    private GridPane pane;
+    private int rowCount;
 
-    public GuiVisitor(Pane pane) {
+    public GuiVisitor(GridPane pane) {
         this.pane = pane;
+        this.rowCount = 0;
     }
 
     @Override public GuiElement visit(final Form form) {
         for (Body body : form.getBodies()) {
             body.accept(this);
+            rowCount++;
         }
-        return form.accept(this);
+        return null;
     }
 
     @Override public GuiElement visit(final Question question) {
@@ -63,9 +72,16 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
         GuiLabelValue labelValue = new GuiLabelValue(question.getLabel());
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelValue, value);
 
-        pane.getChildren().addAll(guiQuestion.getLabelValue().getWidget(), guiQuestion.getValue().getWidget());
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(6);
+        gridPane.setVgap(6);
+        GridPane.setConstraints(guiQuestion.getLabelValue().getWidget(), 0, 0);
+        GridPane.setConstraints(guiQuestion.getValue().getWidget(), 1, 0);
+        gridPane.getChildren().addAll(guiQuestion.getLabelValue().getWidget(), guiQuestion.getValue().getWidget());
 
-        return null;
+        pane.addRow(rowCount, gridPane);
+
+        return guiQuestion;
     }
 
     @Override public GuiElement visit(final Conditional conditional) {
@@ -133,38 +149,55 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final BooleanLiteral booleanValue) {
-        final GuiBooleanValue value = new GuiBooleanValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final DecimalLiteral decimalValue) {
-        final GuiDecimalValue value = new GuiDecimalValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final DateLiteral dateLiteral) {
-        final GuiDateValue value = new GuiDateValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final MoneyLiteral moneyValue) {
-        final GuiMoneyValue value = new GuiMoneyValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final IntegerLiteral integerValue) {
-        final GuiIntegerValue value = new GuiIntegerValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final StringLiteral stringValue) {
-        final GuiStringValue value = new GuiStringValue();
-        return value;
+        return null;
     }
 
     @Override public GuiElement visit(final IdentifierLiteral identifierValue) {
-        final GuiIdentifierValue value = new GuiIdentifierValue(identifierValue.getValue());
-        return value;
+        return new GuiIdentifierValue(identifierValue.getValue());
+    }
+
+    @Override public GuiElement visit(final QLIntegerType qlIntegerType) {
+        return new GuiIntegerValue();
+    }
+
+    @Override public GuiElement visit(final QLBooleanType qlBooleanType) {
+        return new GuiBooleanValue();
+    }
+
+    @Override public GuiElement visit(final QLDateType qlDateType) {
+        return new GuiDateValue();
+    }
+
+    @Override public GuiElement visit(final QLDecimalType qlDecimalType) {
+        return new GuiDecimalValue();
+    }
+
+    @Override public GuiElement visit(final QLMoneyType qlMoneyType) {
+        return new GuiMoneyValue();
+    }
+
+    @Override public GuiElement visit(final QLStringType qlStringType) {
+        return new GuiStringValue();
     }
 
     @Override public GuiElement visit(final QLType qlType) {
