@@ -15,16 +15,16 @@ namespace Questionnaires.Renderer.Widgets
         private TextBlock QuestionLabelWidget = new TextBlock();
         private Slider QuestionInputWidget = new Slider();
 
-        public SliderWidget(string name)
+        public SliderWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
-
-            QuestionInputWidget.Maximum = Double.MaxValue;
-            QuestionInputWidget.Minimum = Double.MinValue;
+            
+            QuestionInputWidget.Maximum = 1E6;
+            QuestionInputWidget.Minimum = 0;
+            QuestionInputWidget.Width = 100;
         }
 
         public override void SetLabel(string text)
@@ -56,7 +56,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType((decimal)QuestionInputWidget.Value));
+            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType((decimal)QuestionInputWidget.Value));
         }
     }
 }
