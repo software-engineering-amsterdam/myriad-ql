@@ -1,7 +1,7 @@
 package ui.field;
 
 import javafx.scene.control.Control;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 import value.Value;
 
 

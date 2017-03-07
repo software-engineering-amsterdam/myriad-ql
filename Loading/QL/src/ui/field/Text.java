@@ -3,7 +3,7 @@ package ui.field;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 import value.StringValue;
 import value.Value;
 

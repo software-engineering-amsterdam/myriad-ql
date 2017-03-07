@@ -4,7 +4,7 @@ import ast.type.Type;
 import javafx.scene.control.Control;
 import ui.field.Field;
 import value.Value;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 
 public class QQuestion {
 
