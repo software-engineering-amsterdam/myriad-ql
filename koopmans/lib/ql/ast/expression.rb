@@ -1,9 +1,17 @@
 module QL
   module AST
     class Expression
+      attr_accessor :right
+
       def accept(visitor)
         visitor.visit_expression(self)
       end
+
+      # def call(left)
+      #   left  = left.eval
+      #   right = self.right.eval
+      #   to_corresponding_literal(self.eval(left.to_value, right.to_value))
+      # end
     end
 
     class Sequence
@@ -15,15 +23,15 @@ module QL
 
       # makes sure all sequences are calculated in correct order
       def eval
-        sequence.reduce { |left, operation| operation.call(left) }
+        sequence.reduce { |left, operation| operation.call(left) }.eval
       end
     end
 
     class Negation < Expression
-      attr_accessor :expression
+      attr_accessor :single
 
-      def initialize(expression)
-        @expression = expression
+      def initialize(single)
+        @single = single
       end
 
       def accept(visitor)
@@ -33,7 +41,7 @@ module QL
 
     class BooleanNegation < Negation
       def eval
-        "!#{expression.eval}"
+        BooleanLiteral.new(!single.to_value)
       end
 
       def accept_types
@@ -43,7 +51,7 @@ module QL
 
     class IntegerNegation < Negation
       def eval
-        "0 - #{expression.eval}"
+        IntegerLiteral.new(-single.to_value)
       end
 
       def accept_types

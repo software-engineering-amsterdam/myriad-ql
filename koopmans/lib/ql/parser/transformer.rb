@@ -8,7 +8,7 @@ module QL
       rule(variable: simple(:name)) { Variable.new(name) }
 
       # types
-      rule(type: 'boolean') { BooleanType.new}
+      rule(type: 'boolean') { BooleanType.new }
       rule(type: 'integer') { IntegerType.new }
       rule(type: 'money') { MoneyType.new }
       rule(type: 'string') { StringType.new }
@@ -16,16 +16,16 @@ module QL
       rule(type: 'date') { DateType.new }
 
       # literal
-      rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value) }
+      rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value.to_s) }
       rule(integer_literal: simple(:value)) { IntegerLiteral.new(value) }
       rule(string_literal: simple(:value)) { StringLiteral.new(value) }
 
       # question
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
-      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) { Question.new(string_literal, variable, type, assignment) }
+      rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), assignment: subtree(:assignment) }) { Question.new(string_literal, variable, type, assignment.eval) }
 
       # if statement
-      rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(condition, body) }
+      rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(condition.eval, body) }
 
       # form
       rule(form: { id: simple(:variable), body: subtree(:body) }) { Form.new(variable, body) }
@@ -37,10 +37,12 @@ module QL
     class ExpressionTransformer < Parslet::Transform
       include AST
       # negation: ! -
-      rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(variable) }
-      rule(negation: '-', variable: simple(:variable)) { IntegerNegation.new(variable) }
-      rule(negation: '!', boolean_literal: simple(:boolean_literal)) { BooleanNegation.new(boolean_literal) }
-      rule(negation: '-', integer_literal: simple(:integer_literal)) { IntegerNegation.new(integer_literal) }
+      # rule(negation: '!', variable: simple(:variable)) { BooleanNegation.new(variable) }
+      # rule(negation: '-', variable: simple(:variable)) { IntegerNegation.new(variable) }
+      # rule(negation: '!', boolean_literal: simple(:boolean_literal)) { BooleanNegation.new(boolean_literal) }
+      # rule(negation: '-', integer_literal: simple(:integer_literal)) { IntegerNegation.new(integer_literal) }
+      rule(operator: '-', single: simple(:single)) { IntegerNegation.new(single) }
+      rule(operator: '!', single: simple(:single)) { BooleanNegation.new(single) }
 
       # arithmetic: + - / *
       rule(operator: '*', right: simple(:right)) { Multiply.new(right) }
