@@ -46,6 +46,20 @@ module QL
         @right = right
       end
 
+      def call(left)
+        pp 'aap'
+        pp left
+        left = left
+        pp left
+        pp right
+        right = self.right
+        pp right
+        # left.operation(self.to_operator, right)
+        self.eval(left, right)
+        # operation(left, self, right)
+        # left self.to_operator right
+        # left.op(operation, right)
+      end
     end
 
     # booleans: && ||
@@ -81,14 +95,22 @@ module QL
     end
 
     class Add < ArithmeticExpression
-      def eval
-        "#{left.eval} + #{right.eval}"
+      def eval(left, right)
+        left.eval + right.eval
+      end
+
+      def to_operator
+        '+'
       end
     end
 
     class Multiply < ArithmeticExpression
-      def eval
-        "#{left.eval} * #{right.eval}"
+      def eval(left, right)
+        left.eval * right.eval
+      end
+
+      def to_operator
+        '*'
       end
     end
 
