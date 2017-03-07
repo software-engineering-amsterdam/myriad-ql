@@ -45,48 +45,6 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNegation(QLParser.NegationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code subtraction}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSubtraction(QLParser.SubtractionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code notEqual}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotEqual(QLParser.NotEqualContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code logicalAnd}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalAnd(QLParser.LogicalAndContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parameterGroup}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParameterGroup(QLParser.ParameterGroupContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code division}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDivision(QLParser.DivisionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code equal}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEqual(QLParser.EqualContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code stringLiteral}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -101,19 +59,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParameter(QLParser.ParameterContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code lessThan}
+	 * Visit a parse tree produced by the {@code comparation}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLessThan(QLParser.LessThanContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code greaterThanEqualTo}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGreaterThanEqualTo(QLParser.GreaterThanEqualToContext ctx);
+	T visitComparation(QLParser.ComparationContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code integerLiteral}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -122,12 +73,26 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIntegerLiteral(QLParser.IntegerLiteralContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code multiplication}
+	 * Visit a parse tree produced by the {@code logicalAnd}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMultiplication(QLParser.MultiplicationContext ctx);
+	T visitLogicalAnd(QLParser.LogicalAndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code addSub}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSub(QLParser.AddSubContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parameterGroup}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterGroup(QLParser.ParameterGroupContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code logicalOr}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -136,26 +101,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLogicalOr(QLParser.LogicalOrContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code addition}
+	 * Visit a parse tree produced by the {@code mulDiv}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAddition(QLParser.AdditionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code greaterThan}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGreaterThan(QLParser.GreaterThanContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code lessThanEqualTo}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLessThanEqualTo(QLParser.LessThanEqualToContext ctx);
+	T visitMulDiv(QLParser.MulDivContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#calculatedValue}.
 	 * @param ctx the parse tree

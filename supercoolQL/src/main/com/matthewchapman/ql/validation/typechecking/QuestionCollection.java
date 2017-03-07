@@ -29,8 +29,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     }
 
     public void gatherQuestions(Form form) {
-        for(Statement statement : form.getStatements())
-        {
+        for(Statement statement : form.getStatements()) {
             statement.accept(this);
         }
     }

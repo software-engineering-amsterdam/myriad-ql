@@ -29,9 +29,6 @@ public class IfStatement extends Statement {
         }
     }
 
-    public void setExpression(Expression e) {
-        this.expression = e;
-    }
 
     public ArrayList<Statement> getStatements() {
         return this.statements;

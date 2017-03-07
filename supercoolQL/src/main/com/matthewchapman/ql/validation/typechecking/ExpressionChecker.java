@@ -7,7 +7,9 @@ import com.matthewchapman.ql.ast.expression.binary.Subtraction;
 import com.matthewchapman.ql.validation.AbstractQLVisitor;
 
 /**
- * Created by matt on 03/03/2017.
+ * Created by matt on 03/03/2017. 222
+ *
+ * Visitor to check expressions for validity (circular dependency, types, etc).
  */
 public class ExpressionChecker extends AbstractQLVisitor<Type> {
 

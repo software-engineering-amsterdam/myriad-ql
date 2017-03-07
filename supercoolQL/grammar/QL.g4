@@ -9,32 +9,25 @@ formDeclaration
     ;
 
 statement
-    :   text=STRING ID ':' type calculatedValue? ';'                            #question
-    |   'if' OPEN_PARENTH expression CLOSE_PARENTH
-                OPEN_BRACKET statement+ CLOSE_BRACKET                           #ifStatement
-    |   'if' OPEN_PARENTH expression CLOSE_PARENTH
-                OPEN_BRACKET ifCase+=statement CLOSE_BRACKET
-                    'else' OPEN_BRACKET elseCase+=statement CLOSE_BRACKET       #ifElseStatement
+    :   text=STRING ID ':' type calculatedValue? ';'    #question
+    |   'if' '(' expression ')'
+                '{' statement+ '}'                      #ifStatement
+    |   'if' '(' expression ')'
+                '{' ifCase+=statement '}'
+                'else' '{' elseCase+=statement '}'      #ifElseStatement
     ;
 
 expression
-    :   STRING                                  #stringLiteral
-    |   NUMBER                                  #integerLiteral
-    |   ID                                      #parameter
-    |   '(' expression+ ')'                     #parameterGroup
-    |   '!' expression                          #negation
-    |   left=expression '/' right=expression    #division
-    |   left=expression '*' right=expression    #multiplication
-    |   left=expression '-' right=expression    #subtraction
-    |   left=expression '+' right=expression    #addition
-    |   left=expression '>' right=expression    #greaterThan
-    |   left=expression '<' right=expression    #lessThan
-    |   left=expression '==' right=expression   #equal
-    |   left=expression '!=' right=expression   #notEqual
-    |   left=expression '<=' right=expression   #lessThanEqualTo
-    |   left=expression '>=' right=expression   #greaterThanEqualTo
-    |   left=expression 'AND' right=expression  #logicalAnd
-    |   left=expression 'OR' right=expression   #logicalOr
+    :   STRING                                          #stringLiteral
+    |   NUMBER                                          #integerLiteral
+    |   ID                                              #parameter
+    |   '(' expression ')'                              #parameterGroup
+    |   '!' expression                                                       #negation
+    |   left=expression op=('/'|'*') right=expression                        #mulDiv
+    |   left=expression op=('-'|'+') right=expression                        #addSub
+    |   left=expression op=('>'|'<'|'=='|'!='|'<='|'>=') right=expression    #comparation
+    |   left=expression '&&' right=expression           #logicalAnd
+    |   left=expression '||' right=expression           #logicalOr
     ;
 
 calculatedValue

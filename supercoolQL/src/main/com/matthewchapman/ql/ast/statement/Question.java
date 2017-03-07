@@ -1,8 +1,8 @@
 package com.matthewchapman.ql.ast.statement;
 
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
@@ -15,10 +15,10 @@ public class Question extends Statement {
     private final String name;
     private final Type type;
     private final String text;
-    private final ParameterGroup calculatedValue;
+    private final Expression calculatedValue;
     private final boolean calculated;
 
-    public Question(String name, String text, Type type, ParameterGroup calculatedValue) {
+    public Question(String name, String text, Type type, Expression calculatedValue) {
         this.name = name;
         this.text = text;
         this.type = type;
@@ -42,7 +42,7 @@ public class Question extends Statement {
         return this.calculated;
     }
 
-    public ParameterGroup getCalculation() {
+    public Expression getCalculation() {
         return this.calculatedValue;
     }
 
