@@ -30,7 +30,7 @@ module QL
       rule(:boolean_operator) { (str('&&') | str('||')).as(:operator) >> _ }
 
       # expression
-      # precedence oder: booolean, order, equals, addition, multiplication, literal
+      # precedence order: booolean, order, equals, addition, multiplication, literal
       rule(:expression) { boolean_expression }
       rule(:expression_with_parenthesis) { str('(') >> boolean_expression >> str(')') }
       rule(:boolean_expression) { comparison_order_expression.as(:left) >> (boolean_operator >> comparison_order_expression.as(:right)).repeat(1) | comparison_order_expression }
