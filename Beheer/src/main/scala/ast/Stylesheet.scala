@@ -22,9 +22,13 @@ case object Spinbox extends WidgetType
 
 case object DatePicker extends WidgetType
 
+case object Textfield extends WidgetType
+
 case class Radio(trueText: String, falseText: String) extends WidgetType
 
-case class Dropdown(elements: Seq[String]) extends WidgetType
+case class Dropdown(trueText: String, falseText: String) extends WidgetType
+
+case class Slider(min: BigDecimal, max: BigDecimal) extends WidgetType
 
 sealed trait Style
 

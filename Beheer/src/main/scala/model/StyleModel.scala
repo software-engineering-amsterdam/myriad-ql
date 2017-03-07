@@ -1,6 +1,6 @@
 package model
 
-import ast.{Block, QuestionStyle, Section, Stylesheet}
+import ast.{ Block, QuestionStyle, Section, Stylesheet }
 
 class StyleModel(stylesheet: Stylesheet) {
   val questionStyles: Seq[QuestionStyle] = extractQuestionStyles(stylesheet.pages.flatMap(_.sections))

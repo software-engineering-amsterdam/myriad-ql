@@ -6,7 +6,9 @@ stylesheet taxOfficeExample {
             }
         }
         section "Loaning" {
-            question hasMaintLoan
+            question hasMaintLoan {
+                widget slider(1, 100)
+            }
         }
     }
 
@@ -20,7 +22,7 @@ stylesheet taxOfficeExample {
                 widget spinbox
             }
             question privateDebt {
-                widget dropdown("A", "B", "C", "D")
+                widget dropdown("A", "B")
             }
             question valueResidue
             default money {
@@ -32,7 +34,7 @@ stylesheet taxOfficeExample {
         }
 
         default boolean {
-            widget radio("Yes", "No")
+            widget textfield
         }
     }
     }

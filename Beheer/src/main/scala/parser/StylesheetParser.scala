@@ -46,8 +46,10 @@ class StylesheetParser extends QLParser {
     "checkbox" ^^^ Checkbox
     | "spinbox" ^^^ Spinbox
     | "datepicker" ^^^ DatePicker
+    | "textfield" ^^^ Textfield
     | radio
     | dropdown
+    | slider
   )
 
   private def radio: Parser[Radio] =
@@ -55,7 +57,15 @@ class StylesheetParser extends QLParser {
       case trueText ~ _ ~ falseText => Radio(trueText, falseText)
     }
 
-  private def dropdown: Parser[Dropdown] = "dropdown" ~> parentheses(repsep(label, ",")) ^^ (elements => Dropdown(elements))
+  private def dropdown: Parser[Dropdown] =
+    "dropdown" ~> parentheses(label ~ "," ~ label) ^^ {
+      case trueText ~ _ ~ falseText => Dropdown(trueText, falseText)
+    }
+
+  private def slider: Parser[Slider] =
+    "slider" ~> parentheses(number ~ "," ~ number) ^^ {
+      case min ~ _ ~ max => Slider(min, max)
+    }
 
   private def style: Parser[(String, Style)] =
     ident ~ ":" ~ (colorStyle | numericStyle | stringStyle) ^^ {
