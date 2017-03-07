@@ -1,7 +1,6 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.declarations.CalculatedField;
@@ -38,11 +37,11 @@ public class Environment {
     public void getConditionErrors(MessageList messageList) {
         Set<ConditionNode> conditions = new LinkedHashSet<>();
         mAbstractSyntaxTree.retrieveConditions(conditions);
-        for (Node node : conditions) {
-            ConditionNode conditionNode = (ConditionNode) node; // TODO static cast..
-            if (!conditionNode.isBoolean()) {
+        for (ConditionNode conditionNode : conditions) {
+            if (!conditionNode.isValid()) {
                 messageList.addError("Condition found with invalid types: " + conditionNode.resolveValue());
             }
+            // isboolen
         }
     }
 
