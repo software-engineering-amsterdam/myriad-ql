@@ -20,26 +20,13 @@ import java.util.EventListener;
 public class MoneyTextField extends AbstractWidget{
 
     private static int COLUMNS = 7;
-    private static int MIN_NUM = -1000000;
-    private static int MAX_NUM = 1000000;
 
-    private JFormattedTextField input;
-    private DefaultFormatter defaultFormatter;
-
+    private JTextField input;
+    
     public MoneyTextField(String _label) {
         JLabel label = new JLabel(_label);
 
-        defaultFormatter = new NumberFormatter(new DecimalFormat("#####0.00"));
-        defaultFormatter.setValueClass(BigDecimal.class);
-        defaultFormatter.setAllowsInvalid(false);
-        //defaultFormatter.setMinimum(MIN_NUM);
-        //defaultFormatter.setMaximum(MAX_NUM);
-        //defaultFormatter.setOverwriteMode(true);
-        DefaultFormatterFactory fmtFactory = new DefaultFormatterFactory(defaultFormatter, defaultFormatter, defaultFormatter);
-
-        this.input = new JFormattedTextField(new BigDecimal("0.00"));
-        this.input.setFormatterFactory(fmtFactory);
-
+        this.input = new JTextField();
         this.input.setColumns(COLUMNS);
 
         this.component.add(label);
@@ -52,10 +39,9 @@ public class MoneyTextField extends AbstractWidget{
     }
 
     @Override
-    public MoneyValue getValue() {
-        String value = this.input.getText().replaceAll(",","");
-        BigDecimal bd = new BigDecimal(value);
-        return new MoneyValue(bd);
+    public String getValue() {
+        String value = this.input.getText();
+        return value;
     }
 
     @Override
@@ -67,6 +53,6 @@ public class MoneyTextField extends AbstractWidget{
     @Override
     public void setReadOnly(boolean _isReadonly) {
         this.input.setEditable(false);
-        defaultFormatter.setAllowsInvalid(true);
+        //defaultFormatter.setAllowsInvalid(true);
     }
 }

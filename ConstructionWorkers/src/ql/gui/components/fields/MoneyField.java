@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 public class MoneyField extends Field {
 
     private MoneyValue value;
-    private Widget feedback;
 
     public MoneyField(GUIInterface updates, SimpleQuestion question, Widget widget) {
         super(updates, question, widget);
@@ -33,11 +32,32 @@ public class MoneyField extends Field {
             @Override
             public void keyReleased(KeyEvent e) {
 
+                boolean wasParsed = true;
+
                 MoneyValue newValue = new MoneyValue(BigDecimal.valueOf(0.00));
 
-                newValue = (MoneyValue) widget.getValue();
-                setState(newValue);
+                BigDecimal decimal = new BigDecimal(0.00);
 
+                if (!widget.getValue().equals("")) {
+                    try {
+                        decimal = BigDecimal.valueOf(Double.parseDouble((String) widget.getValue()));
+                        new MoneyValue(decimal);
+                    } catch (Exception ex) {
+                        System.out.println("Incorrect input value for Money field!");
+                        wasParsed = false;
+                    }
+
+                    if (wasParsed) {
+                        if (Math.max(0, decimal.stripTrailingZeros().scale()) > 2) {
+                            System.out.println("Only two decimals are allowed!");
+                        } else {
+                            String value = (String) widget.getValue();
+                            BigDecimal bd = new BigDecimal(value);
+                            newValue = new MoneyValue(bd);
+                            setState(newValue);
+                        }
+                    }
+                }
 
             }
 
