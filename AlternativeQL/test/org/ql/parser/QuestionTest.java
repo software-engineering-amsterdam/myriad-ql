@@ -18,7 +18,7 @@ public class QuestionTest {
         Question actualQuestion = (Question) new Parser().parseStatement(inputCode);
 
         assertEquals(expectedId, actualQuestion.getId().toString());
-        assertEquals(expectedQuestion, actualQuestion.getQuestionText().toString());
+        assertEquals(expectedQuestion, actualQuestion.getQuestionLabel().toString());
         assertNull(actualQuestion.getValue());
         assertTrue(actualQuestion.getType() instanceof BooleanType);
     }

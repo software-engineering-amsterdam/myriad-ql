@@ -13,7 +13,7 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.BooleanType;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.DecimalValue;
@@ -534,7 +534,7 @@ public class EvaluatorTest {
     public void shouldDeclareQuestionDefaultValueInValueTable() {
         ValueTable valueTable = new ValueTable();
         Evaluator evaluator = new Evaluator(valueTable);
-        Question question = new Question(new Identifier("example"), new QuestionText("example question?"),
+        Question question = new Question(new Identifier("example"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
 
         evaluator.visitQuestion(question, null);
@@ -548,9 +548,9 @@ public class EvaluatorTest {
         ValueTable valueTable = new ValueTable();
         Evaluator evaluator = new Evaluator(valueTable);
         List<Statement> statements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionText("example question?"),
+        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
-        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionText("example question?"),
+        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(2), new IntegerLiteral(3)));
         statements.add(firstQuestion);
         statements.add(secondQuestion);
@@ -570,12 +570,12 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator(valueTable);
 
         List<Statement> ifStatements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionText("example question?"),
+        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
         ifStatements.add(firstQuestion);
 
         List<Statement> elseStatements = new ArrayList<>();
-        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionText("example question?"),
+        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(2), new IntegerLiteral(3)));
         elseStatements.add(secondQuestion);
 
@@ -594,7 +594,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator(valueTable);
 
         List<Statement> statements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("example"), new QuestionText("example question?"),
+        Question firstQuestion = new Question(new Identifier("example"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
         statements.add(firstQuestion);
 

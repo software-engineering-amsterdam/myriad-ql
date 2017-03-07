@@ -6,7 +6,7 @@ import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.BooleanType;
 import org.ql.typechecker.issues.IssuesStorage;
 
@@ -21,9 +21,9 @@ public class CircularDependencyVisitorTest {
         CircularDependencyVisitor visitor = new CircularDependencyVisitor(issuesStorage);
 
         visitor.visitForm(new Form(new Identifier("Form"), new ArrayList<Statement>() {{
-            add(new Question(new Identifier("first"), new QuestionText("label1"), new BooleanType(), new Parameter(new Identifier("second"))));
-            add(new Question(new Identifier("second"), new QuestionText("label2"), new BooleanType(), new Parameter(new Identifier("first"))));
-            add(new Question(new Identifier("third"), new QuestionText("label2"), new BooleanType(), null));
+            add(new Question(new Identifier("first"), new QuestionLabel("label1"), new BooleanType(), new Parameter(new Identifier("second"))));
+            add(new Question(new Identifier("second"), new QuestionLabel("label2"), new BooleanType(), new Parameter(new Identifier("first"))));
+            add(new Question(new Identifier("third"), new QuestionLabel("label2"), new BooleanType(), null));
         }}), null);
 
         assertEquals(2, issuesStorage.getErrors().size());

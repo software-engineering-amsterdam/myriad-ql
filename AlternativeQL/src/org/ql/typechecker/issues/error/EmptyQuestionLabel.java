@@ -1,13 +1,13 @@
 package org.ql.typechecker.issues.error;
 
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.typechecker.issues.Issue;
 
 public class EmptyQuestionLabel extends Issue {
-    private final QuestionText questionText;
+    private final QuestionLabel questionLabel;
 
-    public EmptyQuestionLabel(QuestionText questionText) {
-        this.questionText = questionText;
+    public EmptyQuestionLabel(QuestionLabel questionLabel) {
+        this.questionLabel = questionLabel;
     }
 
     @Override
@@ -16,7 +16,7 @@ public class EmptyQuestionLabel extends Issue {
     }
 
     @Override
-    public QuestionText getNode() {
-        return questionText;
+    public QuestionLabel getNode() {
+        return questionLabel;
     }
 }

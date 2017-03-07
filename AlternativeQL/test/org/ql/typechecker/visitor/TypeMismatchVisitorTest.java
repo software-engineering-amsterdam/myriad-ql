@@ -10,7 +10,7 @@ import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.*;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -25,7 +25,7 @@ public class TypeMismatchVisitorTest {
         IssuesStorage issuesStorage = new IssuesStorage();
         TypeMismatchVisitor visitor = new TypeMismatchVisitor(issuesStorage);
 
-        visitor.visitQuestion(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new DecimalLiteral(new BigDecimal(23.4))), null);
+        visitor.visitQuestion(new Question(new Identifier("test"), new QuestionLabel("example question?"), new MoneyType(), new DecimalLiteral(new BigDecimal(23.4))), null);
 
         assertEquals(0, issuesStorage.getErrors().size());
     }
@@ -35,7 +35,7 @@ public class TypeMismatchVisitorTest {
         IssuesStorage issuesStorage = new IssuesStorage();
         TypeMismatchVisitor visitor = new TypeMismatchVisitor(issuesStorage);
 
-        visitor.visitQuestion(new Question(new Identifier("test"), new QuestionText("example question?"), new MoneyType(), new BooleanLiteral(true)), null);
+        visitor.visitQuestion(new Question(new Identifier("test"), new QuestionLabel("example question?"), new MoneyType(), new BooleanLiteral(true)), null);
 
         assertEquals(1, issuesStorage.getErrors().size());
     }

@@ -5,7 +5,7 @@ form
     ;
 
 statement
-    :   type id=identifier ':' text=questionText value? ';'      #question
+    :   type id=identifier ':' text=questionLabel value? ';'     #question
     |   'if' '(' expression ')' '{'
                 (thenStatements+=statement)* '}'                 #ifThen
     |   'if' '(' expression ')' '{'
@@ -14,7 +14,7 @@ statement
             (elseStatements+=statement)* '}')?                   #ifThenElse
     ;
 
-questionText
+questionLabel
     : STRING_LITERAL
     ;
 

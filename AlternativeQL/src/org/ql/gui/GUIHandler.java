@@ -33,9 +33,8 @@ public class GUIHandler extends Application {
                 "boolean everythingAlright: \"Is everything alright sir?\" = true;" +
                 "}");
 
-        IssuesStorage issuesStorage = new IssuesStorage();
-        TypeChecker typeChecker = new TypeChecker(form, issuesStorage);
-        typeChecker.checkForm();
+        TypeChecker typeChecker = new TypeChecker(form);
+        IssuesStorage issuesStorage = typeChecker.checkForm();
 
         if(issuesStorage.hasErrors()) {
             System.out.println("An issuesStorage was found!");

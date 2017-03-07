@@ -18,6 +18,6 @@ public class Questions extends ArrayList<Question> {
     }
 
     private boolean isQuestionLabelDuplicate(Question question, Question q) {
-        return q.getQuestionText().equals(question.getQuestionText());
+        return q.getQuestionLabel().equals(question.getQuestionLabel());
     }
 }

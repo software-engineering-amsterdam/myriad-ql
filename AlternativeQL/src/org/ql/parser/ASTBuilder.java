@@ -13,7 +13,7 @@ import org.ql.ast.expression.relational.*;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.*;
 import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
@@ -42,7 +42,7 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisi
     public Question visitQuestion(QLParser.QuestionContext ctx) {
         Question question = new Question(
                 (Identifier) visit(ctx.id),
-                (QuestionText) visit(ctx.text),
+                (QuestionLabel) visit(ctx.text),
                 (Type) visit(ctx.type()),
                 ctx.value() == null ? null : (Expression) visit(ctx.value())
         );
@@ -87,12 +87,12 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisi
     }
 
     @Override
-    public QuestionText visitQuestionText(QLParser.QuestionTextContext ctx) {
-        QuestionText questionText = new QuestionText(removeQuotes(ctx.getText()));
+    public QuestionLabel visitQuestionLabel(QLParser.QuestionLabelContext ctx) {
+        QuestionLabel questionLabel = new QuestionLabel(removeQuotes(ctx.getText()));
 
-        questionText.setSourceLocation(extractSourceLocation(ctx));
+        questionLabel.setSourceLocation(extractSourceLocation(ctx));
 
-        return questionText;
+        return questionLabel;
     }
 
     private String removeQuotes(String text) {
