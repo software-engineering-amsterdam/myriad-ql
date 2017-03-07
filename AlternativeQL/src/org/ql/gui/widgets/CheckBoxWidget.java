@@ -1,11 +1,8 @@
 package org.ql.gui.widgets;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.CheckBox;
-import org.ql.ast.Identifier;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 

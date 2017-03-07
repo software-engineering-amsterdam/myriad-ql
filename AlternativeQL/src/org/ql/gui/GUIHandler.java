@@ -1,6 +1,5 @@
 package org.ql.gui;
 
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.ql.ast.Form;
 import org.ql.ast.statement.Question;
@@ -9,7 +8,6 @@ import org.ql.evaluator.ValueTable;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.QuestionElementBuilder;
 
-import java.util.Hashtable;
 import java.util.List;
 
 // TODO: Only the GUI related stuff should be here (extract main start/load application from this class)
@@ -18,7 +16,6 @@ public class GUIHandler {
     private MainStage mainstage;
     private ValueTable valueTable;
     private GUIEval guiEval;
-   // private Hashtable<QuestionElement, List<IfThen>>
 
     public GUIHandler(Stage primaryStage, Form form) {
         this.mainstage = new MainStage(primaryStage);
