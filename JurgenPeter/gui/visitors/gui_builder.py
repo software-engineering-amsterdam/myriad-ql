@@ -89,7 +89,8 @@ class GuiBuilder:
         widget_constructor = self.default_widgets[node.datatype]
 
         for styling in self.stylings:
-            widget_constructor = styling.modify_widget_constructor(node, widget_constructor)
+            widget_constructor = styling.modify_widget_constructor(
+                node, widget_constructor)
 
         widget = widget_constructor(self.app, node)
         widget.set_listener(self.listener)
