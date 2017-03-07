@@ -102,6 +102,7 @@ class Gui(FormVisitor, TypeVisitor):
             result = self.evaluator.expression(node.condition)
             cond = (result is not None and result)
             if_container.setEnabled(cond)
+            else_container.setEnabled(not cond)
             if cond:
                 if_container.show()
                 else_container.hide()
