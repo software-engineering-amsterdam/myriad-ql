@@ -3,6 +3,7 @@ package org.uva.hatt.taxform.gui;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -96,9 +97,13 @@ public class UIVisitor implements Visitor<Pane> {
     @Override
     public Pane visit(Boolean node) {
         HBox pane = new HBox();
+        ToggleGroup group = new ToggleGroup();
 
         RadioButton yes = new RadioButton("Yes");
+        yes.setToggleGroup(group);
+
         RadioButton no = new RadioButton("No");
+        no.setToggleGroup(group);
 
         pane.getChildren().addAll(yes, no);
 
