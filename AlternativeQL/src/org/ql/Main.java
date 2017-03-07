@@ -44,8 +44,8 @@ public class Main extends Application {
     }
 
     public boolean hasFormTypeErrors(Form form) {
-        TypeChecker typeChecker = new TypeChecker(form);
-        IssuesStorage issues = typeChecker.checkForm();
+        TypeChecker typeChecker = new TypeChecker();
+        IssuesStorage issues = typeChecker.checkForm(form);
 
         return issues.hasErrors();
     }
