@@ -35,7 +35,7 @@ class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
     bind(env)
 
     override def computeValue: LocalDate = {
-      ExpressionNode.calculate(env.toMap, question.value) match {
+      Evaluator(env.toMap, question.value) match {
         case DateValue(d) => d
         case _ => LocalDate.now()
       }

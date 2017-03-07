@@ -48,6 +48,11 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
         case (_: Lt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: And, BooleanType, BooleanType) => (Some(BooleanType), errors)
         case (_: Or, BooleanType, BooleanType) => (Some(BooleanType), errors)
+        // Equality: Among different numbers, ok, otherwise: strict type match.
+        case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
+        case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
+        case (_: Neq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
+        case (_: Eq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
         case (n: InfixNode, l: Type, r: Type) => emitError(n, l, r, errors)
       }
     }
@@ -77,7 +82,7 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
       case (_, MoneyType) => MoneyType
       case (DecimalType, _) => DecimalType
       case (_, DecimalType) => DecimalType
-      case _ => IntegerType
+      case (IntegerType, IntegerType) => IntegerType
     }
 
   private def isSubType(candidate: NumericType, expectedType: NumericType): Boolean =
