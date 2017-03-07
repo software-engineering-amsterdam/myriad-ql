@@ -7,12 +7,17 @@ class ComputationUpdater:
         self.environment = environment
         self.evaluator = Evaluator(environment)
 
+    def update(self, node):
+        original = self.hash_dictionary(self.environment)
+        self.visit(node)
+        return original != self.hash_dictionary(self.environment)
+
     def visit(self, node):
         node.accept(self)
 
     def visit_form(self, node):
         for element in node.body:
-            element.accept(self)
+            self.visit(element)
 
     def visit_question(self, node):
         pass
@@ -22,11 +27,14 @@ class ComputationUpdater:
 
     def visit_if_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
 
     def visit_ifelse_conditional(self, node):
         for element in node.ifbody:
-            element.accept(self)
+            self.visit(element)
         for element in node.elsebody:
-            element.accept(self)
-# TODO: fixpoint
+            self.visit(element)
+
+    @staticmethod
+    def hash_dictionary(dictionary):
+        return hash(frozenset(dictionary.items()))

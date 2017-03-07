@@ -34,8 +34,9 @@ class FormApp:
     def update(self, _):
         for name, widget in self.widgets.items():
             self.environment[name] = widget.get_value()
-        ComputationUpdater(self.environment).visit(self.form)
-        GuiUpdater(self, self.environment).visit(self.form)
+        while ComputationUpdater(self.environment).update(self.form):
+            pass
+        GuiUpdater(self, self.environment).update(self.form)
 
     def show_widget(self, name):
         self.widgets[name].show()

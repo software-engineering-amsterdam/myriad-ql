@@ -7,47 +7,35 @@ class GuiUpdater:
         self.form_app = form_app
         self.environment = environment
         self.evaluator = Evaluator(environment)
-        self.conditions = []
 
-    def push_condition(self, element):
-        self.conditions.append(element)
+    def update(self, node):
+        self.visit(node)
 
-    def pop_condition(self):
-        self.conditions.pop()
+    def visit(self, node, visible=True):
+        node.accept(self, visible=visible)
 
-    # TODO: remove 'runtime stack'
-    def visit(self, node):
-        node.accept(self)
-
-    def visit_form(self, node):
+    def visit_form(self, node, visible=True):
         for element in node.body:
-            element.accept(self)
+            self.visit(element, visible=visible)
 
-    def visit_if_conditional(self, node):
+    def visit_if_conditional(self, node, visible=True):
         condition = self.evaluator.evaluate(node.condition)
-        self.push_condition(condition)
         for element in node.ifbody:
-            element.accept(self)
-        self.pop_condition()
+            self.visit(element, visible=(visible and condition))
 
-    def visit_ifelse_conditional(self, node):
+    def visit_ifelse_conditional(self, node, visible=True):
         condition = self.evaluator.evaluate(node.condition)
-        self.push_condition(condition)
         for element in node.ifbody:
-            element.accept(self)
-        self.pop_condition()
-
-        self.push_condition(not condition)
+            self.visit(element, visible=(visible and condition))
         for element in node.elsebody:
-            element.accept(self)
-        self.pop_condition()
+            self.visit(element, visible=not(visible and condition))
 
-    def visit_question(self, node):
-        if all(self.conditions):
+    def visit_question(self, node, visible=True):
+        if visible:
             self.form_app.show_widget(node.name)
         else:
             self.form_app.hide_widget(node.name)
 
-    def visit_computed_question(self, node):
-        self.visit_question(node)
+    def visit_computed_question(self, node, visible=True):
+        self.visit_question(node, visible=visible)
         self.form_app.set_widget(node.name, self.environment[node.name])
