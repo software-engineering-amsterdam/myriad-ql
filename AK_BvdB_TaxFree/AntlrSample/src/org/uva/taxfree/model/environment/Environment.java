@@ -1,12 +1,12 @@
 package org.uva.taxfree.model.environment;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.declarations.CalculatedField;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Environment {
@@ -18,27 +18,39 @@ public class Environment {
         mAbstractSyntaxTree = abstractSyntaxTree;
     }
 
-    public List<String> getDuplicateLabelErrors() {
-        return mSymbolTable.getDuplicateLabelErrors();
+    public BlockNode getRootNode() {
+        return mAbstractSyntaxTree;
     }
 
-    public List<String> getDuplicateDeclarationErrors() {
-        return mSymbolTable.getDuplicateDeclarationErrors();
+    public void getDuplicateLabelErrors(MessageList messageList) {
+        mSymbolTable.getDuplicateLabelErrors(messageList);
     }
 
-    public List<String> getUndefinedDeclarationErrors() {
-        return mSymbolTable.getUndefinedDeclarationErrros();
+    public void getDuplicateDeclarationErrors(MessageList messageList) {
+        mSymbolTable.getDuplicateDeclarationErrors(messageList);
     }
 
-    public List<String>
-    getCyclicDependencyErrors() {
-        List<String> errors = new ArrayList<>();
+    public void getUndefinedDeclarationErrors(MessageList messageList) {
+        mSymbolTable.getUndefinedDeclarationErrros(messageList);
+    }
+
+    public void getConditionErrors(MessageList messageList) {
+        Set<ConditionNode> conditions = new LinkedHashSet<>();
+        mAbstractSyntaxTree.retrieveConditions(conditions);
+        for (ConditionNode conditionNode : conditions) {
+            if (!conditionNode.isValid()) {
+                messageList.addError("Condition found with invalid types: " + conditionNode.resolveValue());
+            }
+            // isboolen
+        }
+    }
+
+    public void getCyclicDependencyErrors(MessageList messageList) {
         for (CalculatedField calculation : getCalculations()) {
             if (hasCyclicDependency(calculation)) {
-                errors.add("Cyclic dependency found: " + calculation.getId());
+                messageList.addError("Cyclic dependency found: " + calculation.getId());
             }
         }
-        return errors;
     }
 
     private boolean hasCyclicDependency(CalculatedField calc) {

@@ -1,10 +1,10 @@
 package org.uva.taxfree.model.environment;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.types.Type;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SymbolTable {
@@ -30,48 +30,50 @@ public class SymbolTable {
         mUsedVariables.add(variableName);
     }
 
-    public String resolve(String variableId) {
-        for (NamedNode n : mDeclarations) {
-            if (variableId.equals(n.getId())) {
-                return (n.resolveValue());
-            }
-        }
-        throw new RuntimeException("Unable to resolveValue id: " + variableId);
+    public String resolveValue(String variableId) {
+        return findNode(variableId).resolveValue();
     }
 
-    public List<String> getDuplicateLabelErrors() {
-        List<String> errors = new ArrayList<>();
+    public Type resolveType(String variableId) {
+        return findNode(variableId).getType();
+    }
+
+    private NamedNode findNode(String variableId) {
+        for (NamedNode n : mDeclarations) {
+            if (variableId.equals(n.getId())) {
+                return n;
+            }
+        }
+        throw new RuntimeException("Unresolvable identifier queried");
+    }
+
+    public void getDuplicateLabelErrors(MessageList messageList) {
         Set<String> processedLabels = new LinkedHashSet<>();
         for (NamedNode node : mDeclarations) {
             String questionLabel = node.getLabel();
             if (!processedLabels.add(questionLabel)) {
-                errors.add("Duplicate question label found: " + questionLabel);
+                messageList.addWarning("Duplicate question label found: " + questionLabel);
             }
         }
-        return errors;
     }
 
-    public List<String> getDuplicateDeclarationErrors() {
-        List<String> errors = new ArrayList<>();
+    public void getDuplicateDeclarationErrors(MessageList messageList) {
         Set<String> processedDeclarations = new LinkedHashSet<>();
         for (NamedNode node : mDeclarations) {
             String declaration = node.getId();
             if (!processedDeclarations.add(declaration)) {
-                errors.add("Duplicate declaration found: " + declaration);
+                messageList.addError("Duplicate declaration found: " + declaration);
             }
         }
-        return errors;
     }
 
 
-    public List<String> getUndefinedDeclarationErrros() {
-        List<String> errors = new ArrayList<>();
+    public void getUndefinedDeclarationErrros(MessageList messageList) {
         for (String identifier : mUsedVariables) {
             if (!validDeclaration(identifier)) {
-                errors.add("No declaration found: " + identifier);
+                messageList.addError("No declaration found: " + identifier);
             }
         }
-        return errors;
     }
 
     private boolean validDeclaration(String identifier) {

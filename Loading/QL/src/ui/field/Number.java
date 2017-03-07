@@ -3,17 +3,21 @@ package ui.field;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 import value.IntegerValue;
 import value.Value;
 
 public class Number implements Field {
 	
-	private Notifier listener;
 	private TextField field;
+	// private IntegerValue value;
 	
-	public Number(String name) {
+	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
+		
+		if (value.isSet()) {
+			field.setText(Integer.toString(value.getValue()));
+		}
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
@@ -22,7 +26,7 @@ public class Number implements Field {
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
-	        	  listener.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
+	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
 
 	          }
 	      }
@@ -36,20 +40,6 @@ public class Number implements Field {
 			return new IntegerValue();
 		}
 		return new IntegerValue(Integer.valueOf(str));
-	}
-
-	@Override
-	public void setAnswer(Value value) {
-		if (value.isSet()) {
-			field.setText(Integer.toString(((IntegerValue) value).getValue()));
-      	  	field.end();
-		}
-		
-	}
-
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;	
 	}
 	
 	@Override 

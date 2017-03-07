@@ -21,4 +21,8 @@ public abstract class LiteralNode extends ConditionNode {
         set.add(mId);
     }
 
+    @Override
+    public boolean isValid() {
+        return false;
+    }
 }

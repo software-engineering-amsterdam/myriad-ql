@@ -3,23 +3,26 @@ package ui.field;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 import value.StringValue;
 import value.Value;
 
 public class Text implements Field {
 	
-	private Notifier listener;
 	private TextField field;
 	
-	public Text(String name) {
+	public Text(String name, Notifier notifier, StringValue value) {
 		this.field = new TextField();
+		
+		if (value.isSet()) {
+			field.setText(value.getValue());
+		}
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	listener.updateQuestionnaire(name, new StringValue(newValue));
+            	notifier.updateQuestionnaire(name, new StringValue(newValue));
             }
     	});
 	}
@@ -32,18 +35,6 @@ public class Text implements Field {
 		return new StringValue(field.getText());
 	}
 	
-	
-	@Override
-	public void setAnswer(Value value) {
-		field.setText(((StringValue) value).getValue()); // TODO implicit you have to know to ask for a string
-  	  	field.end();
-	}
-
-
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;	
-	}
 	
 	@Override
 	public TextField getField() {

@@ -2,6 +2,7 @@ package ast.type;
 
 import ast.TypeVisitor;
 import ast.atom.Atom;
+import ui.Notifier;
 import ui.field.Field;
 import value.Value;
 
@@ -12,7 +13,7 @@ public class UnknownType extends Type {
 	}
 
 	@Override
-	public Field getField(String name) {
+	public Field getField(String name, Notifier notifier, Value value) {
 		return null;
 	}
 

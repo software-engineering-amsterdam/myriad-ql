@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ui.Notifier;
 import ui.field.Field;
 import ui.field.Text;
 import value.StringValue;
@@ -18,8 +19,8 @@ public class StringType extends Type {
 	}
 
 	@Override
-	public Field getField(String name) {
-		return new Text(name);
+	public Field getField(String name, Notifier notifier, Value value) {
+		return new Text(name, notifier, (StringValue) value);
 	}
 
 	@Override

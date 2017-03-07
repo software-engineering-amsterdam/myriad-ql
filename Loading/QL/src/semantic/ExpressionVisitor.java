@@ -1,14 +1,7 @@
 package semantic;
 
 
-import ast.Block;
-import ast.BlockItem;
-import ast.ComputedQuestion;
-import ast.Form;
-import ast.FormVisitor;
-import ast.Question;
-import ast.Statement;
-import ast.TypeVisitor;
+import ast.*;
 import ast.atom.BoolAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
@@ -68,7 +61,6 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     public void visit(Question question) {
     }
 
-    // TODO computed question
     @Override
     public void visit(ComputedQuestion question) {
         question.getComputedQuestion().accept(this);
@@ -77,8 +69,16 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     @Override
     public void visit(Statement statement) {
         Type type = statement.getExpression().accept(this);
+        check(new BooleanType(1), type); // TODO Type without a line number??
+        statement.getBlock().accept(this); // TODO circulair dependencies?
+    }
+
+    @Override
+    public void visit(IfElseStatement statement) {
+        Type type = statement.getExpression().accept(this);
         check(new BooleanType(1), type);
         statement.getBlock().accept(this); // TODO circulair dependencies?
+        statement.getElseBlock().accept(this); // TODO circulair dependencies?
     }
 
 
