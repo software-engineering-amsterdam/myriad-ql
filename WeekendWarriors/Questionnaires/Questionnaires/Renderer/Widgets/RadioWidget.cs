@@ -15,10 +15,9 @@ namespace Questionnaires.Renderer.Widgets
         private RadioButton FirstQuestionInputWidget = new RadioButton();
         private RadioButton SecondQuestionInputWidget = new RadioButton();
 
-        public RadioWidget(string name)
+        public RadioWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
 
             FirstQuestionInputWidget.Content = "Yes";
@@ -67,8 +66,8 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            FirstQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(true));
-            SecondQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(false));
+            FirstQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(true));
+            SecondQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(false));
         }
     }
 }

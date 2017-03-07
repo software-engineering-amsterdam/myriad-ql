@@ -14,21 +14,15 @@ namespace Questionnaires.Renderer.Widgets
         private TextBlock QuestionLabelWidget = new TextBlock();
         private ComboBox QuestionInputWidget = new ComboBox();
 
-        public ComboBoxWidget(string name)
+        public ComboBoxWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
 
-            List<ComboBoxItem> ListData = new List<ComboBoxItem>();
-            ListData.Add(new ComboBoxItem() { Content = "Yes" });
-            ListData.Add(new ComboBoxItem() { Content = "No" });
-            
-            QuestionInputWidget.ItemsSource = ListData;
-            QuestionInputWidget.DisplayMemberPath = "Content";
-            QuestionInputWidget.SelectedValuePath = "Content";
+            QuestionInputWidget.Items.Add("Yes");
+            QuestionInputWidget.Items.Add("No");
 
             QuestionInputWidget.SelectedValue = "No";
         }
@@ -69,7 +63,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.SelectionChanged += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType((String)QuestionInputWidget.SelectedValue == "Yes" ? true : false));
+            // string text = (sender as ComboBox).SelectedItem as string;
+            QuestionInputWidget.SelectionChanged += (sender, args) =>
+            {
+                bool value = (sender as ComboBox).SelectedItem as string == "Yes";
+                inputChanged.Invoke(this, new BooleanType(value));
+            };
         }
     }
 }
