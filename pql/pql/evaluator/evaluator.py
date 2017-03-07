@@ -28,6 +28,9 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if node.condition.apply(self):
             [statement.apply(self) for statement in node.statements]
 
+    def expression(self, node):
+        return node.apply(self)
+
     def field(self, node):
         if node.expression is not None:
             self.environment[node.name.name] = node.expression.apply(self)

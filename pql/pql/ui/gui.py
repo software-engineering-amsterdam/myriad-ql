@@ -26,6 +26,8 @@ class Gui(FormVisitor, TypeVisitor):
         self.ql_wizard = QuestionairWizard()
         self.evaluator = Evaluator(environment)
         self.pql_ast = None
+        self.conditional_if_list = list(tuple())
+        self.conditional_if_else_list = list(tuple())
 
     def show(self):
         self.ql_wizard.show()
@@ -63,16 +65,18 @@ class Gui(FormVisitor, TypeVisitor):
             statement.parent = node.parent
             layout.addWidget(statement.apply(self))
         container.setLayout(layout)
+        self.conditional_if_list.append((container, node))
         return container
 
-    def trigger_conditional_if(self, node, container):
-        result = self.evaluator.conditional_if(node)
-        cond = (result is not None and result)
-        container.setEnabled(cond)
-        if cond:
-            container.show()
-        else:
-            container.hide()
+    def trigger_conditional_if(self):
+        for container, node in self.conditional_if_list:
+            result = self.evaluator.expression(node.condition)
+            cond = (result is not None and result)
+            container.setEnabled(cond)
+            if cond:
+                container.show()
+            else:
+                container.hide()
 
     def field(self, node):
         container = QGroupBox(node.parent)
@@ -97,6 +101,7 @@ class Gui(FormVisitor, TypeVisitor):
         widget.setMaximum(10**10)
         widget.setMinimum(-(10**10))
         widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
+        widget.valueChanged.connect(self.trigger_conditional_if)
         return widget
 
     def integer(self, node):
@@ -105,12 +110,14 @@ class Gui(FormVisitor, TypeVisitor):
         widget.setMaximum(10**10)
         widget.setMaxLength(8)
         widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
+        widget.valueChanged.connect(self.trigger_conditional_if)
         return widget
 
     def boolean(self, node):
         widget = QCheckBox()
         widget.setChecked(False)
         widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
+        widget.stateChanged.connect(self.trigger_conditional_if)
         return widget
 
     def update_trigger_numeric(self, widget, value, type):
