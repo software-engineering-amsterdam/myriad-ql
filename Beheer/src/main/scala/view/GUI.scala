@@ -3,17 +3,17 @@ package view
 import java.io.FileReader
 
 import ast._
-import checker.{ Error, FormChecker, Warning }
-import parser.FormParser
+import checker.{Error, FormChecker, StyleChecker, Warning}
+import parser.{FormParser, StylesheetParser}
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.layout.{ HBox, TilePane, VBox }
+import scalafx.scene.layout.{HBox, TilePane, VBox}
 import scalafx.scene.text.Text
 
 object GUI extends JFXApp {
-  private lazy val questions = parsedForm.displayQuestions.map { question =>
+  private lazy val displayBoxes = formModel.displayQuestions.map { question =>
     question.`type` match {
       case BooleanType => new BooleanQuestion(question).element
       case DateType => new DateQuestion(question).element
@@ -22,7 +22,7 @@ object GUI extends JFXApp {
     }
   }
   private lazy val issues = {
-    val issueMessages = formModel.map {
+    val issueMessages = (formIssues ++ styleIssues).map {
       case Warning(message) => new HBox(new Text(message))
       case Error(message) => new HBox(new Text(message))
     }
@@ -31,9 +31,13 @@ object GUI extends JFXApp {
     }
   }
 
-  private val filename = "src/main/resources/example.ql"
-  private val parsedForm = FormParser(new FileReader(filename))
-  private val formModel = FormChecker(parsedForm)
+  private val formFile = "src/main/resources/example.ql"
+  private val formModel = FormParser(new FileReader(formFile))
+  private val formIssues = FormChecker(formModel)
+
+  private val styleFile = "src/main/resources/example.qls"
+  private val styleModel = StylesheetParser(new FileReader(styleFile))
+  private val styleIssues = StyleChecker(styleModel, formModel.identifiersWithType.toMap)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Beheer QL Form"
@@ -45,7 +49,7 @@ object GUI extends JFXApp {
         vgap = 10
         padding = Insets(10)
         prefColumns = 1
-        children = issues +: questions
+        children = issues +: displayBoxes
       }
     }
   }

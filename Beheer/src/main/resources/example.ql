@@ -9,8 +9,4 @@ form Box1HouseOwning {
             valueResidue: "Value residue:" money(sellingPrice - privateDebt)
         }
     }
-    text1: "Text1" string
-    text2: "Text2" string(text1)
-    date1: "Date1" date
-    date2: "Date2" date(date1)
 }
