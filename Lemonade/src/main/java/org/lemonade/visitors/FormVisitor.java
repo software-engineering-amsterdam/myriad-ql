@@ -41,21 +41,28 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         String identifier = ctx.identifier().getText();
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
+        Position position = constructPosition(ctx);
 
-        return new Question(identifier, label, type);
+        Question question = new Question(identifier, label, type);
+        question.setPosition(position);
+
+        return question;
     }
 
     @Override
     public ASTNode visitConditional(QLParser.ConditionalContext ctx) {
         System.err.println("entering conditional");
         Expression expression = (Expression) ctx.expr().accept(this);
+        Position position = constructPosition(ctx);
 
         List<Body> bodies = new ArrayList<Body>();
         for (QLParser.BodyContext body: ctx.body()) {
             bodies.add((Body) body.accept(this));
         }
+        Conditional conditional = new Conditional(expression, bodies);
+        conditional.setPosition(position);
 
-        return new Conditional(expression, bodies);
+        return conditional;
     }
 
     @Override
