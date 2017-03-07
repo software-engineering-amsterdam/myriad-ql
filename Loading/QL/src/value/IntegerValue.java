@@ -25,7 +25,7 @@ public class IntegerValue extends Value {
 	public Value add(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value + ((IntegerValue) other).getValue() );
@@ -35,7 +35,7 @@ public class IntegerValue extends Value {
 	public Value sub(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value - ((IntegerValue) other).getValue() );
@@ -45,7 +45,7 @@ public class IntegerValue extends Value {
 	public Value mul(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value * ((IntegerValue) other).getValue() );

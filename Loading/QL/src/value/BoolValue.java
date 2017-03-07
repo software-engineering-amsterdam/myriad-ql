@@ -45,7 +45,7 @@ public class BoolValue extends Value {
 		if (!isSet() || !other.isSet()) {
     		return new BoolValue();
     	}
-		System.out.println("TODO Does this work?");
+		System.out.println("TODO bool eq Does this work?");
 //		return new BoolValue(this.equals(other));
 		 return new BoolValue(value == ((BoolValue) other).getValue());
 	}

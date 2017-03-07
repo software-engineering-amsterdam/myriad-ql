@@ -6,6 +6,7 @@ import java.util.Map;
 
 import QL.Warning;
 import ast.Form;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import evaluation.Environment;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -25,6 +26,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import value.BoolValue;
+import value.IntegerValue;
+import value.StringValue;
 import value.Value;
 
 import java.util.List;

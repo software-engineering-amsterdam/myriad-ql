@@ -44,6 +44,8 @@ public class QEvaluator extends Evaluator {
 
         // TODO only works with integers...
         if (value.isSet()) {
+            System.out.println("isSet()");
+            System.out.println(value.isSet());
             q.setAnswer(value);
         }
 
