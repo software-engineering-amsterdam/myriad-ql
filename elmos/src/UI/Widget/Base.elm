@@ -12,6 +12,7 @@ type alias WidgetContext msg =
     , env : Environment
     , onChange : Value -> msg
     , editable : Bool
+    , style : List ( String, String )
     }
 
 

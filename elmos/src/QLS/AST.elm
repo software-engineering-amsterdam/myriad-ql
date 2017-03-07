@@ -33,13 +33,8 @@ type DefaultValueConfig
 
 
 type Configuration
-    = SingleConfig ConfigItem
-    | MultiConfig (List ConfigItem)
-
-
-type ConfigItem
-    = StyleConfig Style
-    | WidgetConfig Widget
+    = SingleConfig Widget
+    | MultiConfig (List Style) (Maybe Widget)
 
 
 type Style

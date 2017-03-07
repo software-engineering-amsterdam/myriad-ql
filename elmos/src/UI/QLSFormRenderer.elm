@@ -73,10 +73,10 @@ view { form, styleSheet, pagination, env } =
 
 
 renderPage : Environment -> List Field -> Page -> Html Msg
-renderPage env visibleFields (Page title sections defaultValueConfig) =
+renderPage env visibleFields (Page title sections defaultValueConfigs) =
     div []
         [ h3 [] [ text title ]
-        , div [] (List.map (renderSection env visibleFields defaultValueConfig) sections)
+        , div [] (List.map (renderSection env visibleFields defaultValueConfigs) sections)
         ]
 
 
@@ -89,10 +89,10 @@ renderSection env visibleFields defaultValueConfigs section =
                 , renderSectionChild env visibleFields defaultValueConfigs sectionChild
                 ]
 
-        MultiChildSection title sectionChilds ->
+        MultiChildSection title sectionChilds configs ->
             div []
                 [ h3 [] [ text title ]
-                , div [] (List.map (renderSectionChild env visibleFields defaultValueConfigs) sectionChilds)
+                , div [] (List.map (renderSectionChild env visibleFields (configs ++ defaultValueConfigs)) sectionChilds)
                 ]
 
 
@@ -109,9 +109,6 @@ renderSectionChild env visibleFields defaultValueConfigs sectionChild =
             -- TODO use the fieldConfig for rendering
             renderField env visibleFields defaultValueConfigs name
 
-        Config _ ->
-            h3 [] [ text "TODO fix config" ]
-
 
 renderField : Environment -> List Field -> List DefaultValueConfig -> String -> Html Msg
 renderField env visibleFields defaultValueConfigs name =
@@ -125,7 +122,7 @@ renderField env visibleFields defaultValueConfigs name =
 
 viewField : Environment -> Field -> Html Msg
 viewField env field =
-    BaseWidget.container (visibleFieldWidgetConfig env field) <|
+    BaseWidget.container (visibleFieldWidgetConfig env [] field) <|
         case Field.fieldValueType field of
             StringType ->
                 StringWidget.view
@@ -140,8 +137,8 @@ viewField env field =
                 FloatWidget.view
 
 
-visibleFieldWidgetConfig : Environment -> Field -> WidgetContext Msg
-visibleFieldWidgetConfig env field =
+visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg
+visibleFieldWidgetConfig env styles field =
     case field of
         Editable label identifier _ ->
             { identifier = identifier
@@ -149,6 +146,7 @@ visibleFieldWidgetConfig env field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = True
+            , style = []
             }
 
         Computed label identifier _ _ ->
@@ -157,4 +155,5 @@ visibleFieldWidgetConfig env field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = False
+            , style = []
             }
