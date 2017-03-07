@@ -30,10 +30,10 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     @Override
     public ASTNode visit(Question question) {
         tabLevel += "\t";
-        String identifier = question.getIdentifier();
+        IdentifierLiteral identifier = question.getIdentifier();
         String label = question.getLabel();
         QLType type = question.getType();
-        String questionStr = String.format("%s%s: \"%s\" %s", tabLevel, identifier, label, type);
+        String questionStr = String.format("%s%s: \"%s\" %s", tabLevel, identifier.getValue(), label, type);
         System.err.print(questionStr);
         tabLevel.replaceFirst("\t", "");
         return question;

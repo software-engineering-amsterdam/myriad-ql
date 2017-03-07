@@ -259,6 +259,11 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitIdentifierValue(QLParser.IdentifierValueContext ctx) {
+        return new IdentifierLiteral(ctx.IDENT().getText());
+    }
+
+    @Override
     public ASTNode visitIntegerAtom(QLParser.IntegerAtomContext ctx) {
         return new IntegerLiteral(ctx.INT().getText());
     }
@@ -273,7 +278,6 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         int day = Integer.parseInt(ctx.date().DOUBLEDIGIT(0).getText());
         int month = Integer.parseInt(ctx.date().DOUBLEDIGIT(1).getText());
         int year = Integer.parseInt(ctx.date().QUADDIGIT().getText());
-        System.err.println(String.format("%d %d %d", day, month,year));
         return new DateLiteral(LocalDate.of(year, month, day));
     }
 
