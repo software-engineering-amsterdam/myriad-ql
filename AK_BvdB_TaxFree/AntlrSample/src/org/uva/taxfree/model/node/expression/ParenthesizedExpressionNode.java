@@ -1,5 +1,7 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.types.Type;
+
 import java.util.Set;
 
 public class ParenthesizedExpressionNode extends ConditionNode {
@@ -23,5 +25,10 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     @Override
     public boolean isValid() {
         return true;
+    }
+
+    @Override
+    public Type getType() {
+        return mCondition.getType();
     }
 }

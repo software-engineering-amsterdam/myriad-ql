@@ -7,8 +7,6 @@ public class CalculationExpressionNode extends ExpressionNode {
         mOperator = operator;
     }
 
-
-
     @Override
     public boolean isBoolean() {
         return mOperator.equals(">") ||
