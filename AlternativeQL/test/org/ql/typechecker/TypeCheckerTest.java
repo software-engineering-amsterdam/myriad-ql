@@ -5,9 +5,8 @@ import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.*;
-import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
 import org.ql.typechecker.issues.IssuesStorage;
 
 import java.util.ArrayList;
@@ -21,17 +20,19 @@ public class TypeCheckerTest {
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
         String questionLabel = "example";
-        String expectedError = "Question '" + questionLabel + "' label has duplicate(s)";
+        String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
+        String expectedWarning = "Question '" + questionLabel + "' label has duplicate(s)";
 
         TypeChecker typeChecker = new TypeChecker(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
-            add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
-            add(new Question(new Identifier(questionLabel), new QuestionText("example question?"), new BooleanType(), null));
+            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
+            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
         }}));
 
-        typeChecker.checkForm();
+        IssuesStorage issuesStorage = typeChecker.checkForm();
 
-        assertTrue(typeChecker.getErrors().size() == 2);
-        assertEquals(expectedError, typeChecker.getWarnings().get(0).getMessage());
-        assertEquals(expectedError, typeChecker.getWarnings().get(1).getMessage());
+        assertEquals(1, issuesStorage.getErrors().size());
+        assertEquals(1, issuesStorage.getWarnings().size());
+        assertEquals(expectedError, issuesStorage.getErrors().get(0).getMessage());
+        assertEquals(expectedWarning, issuesStorage.getWarnings().get(0).getMessage());
     }
 }

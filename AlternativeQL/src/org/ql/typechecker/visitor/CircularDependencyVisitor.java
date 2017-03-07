@@ -18,14 +18,13 @@ import org.ql.typechecker.circular_dependencies.CircularDependenciesResolver;
 import org.ql.typechecker.circular_dependencies.DependencyPair;
 import org.ql.typechecker.issues.error.CircularDependency;
 
-import java.util.List;
-
 public class CircularDependencyVisitor extends AbstractTypeCheckVisitor<Void, Identifier> {
 
     private final CircularDependenciesResolver circularDependenciesResolver;
+    private final IssuesStorage issuesStorage;
 
-    public CircularDependencyVisitor() {
-        super();
+    public CircularDependencyVisitor(IssuesStorage issuesStorage) {
+        this.issuesStorage = issuesStorage;
         circularDependenciesResolver = new CircularDependenciesResolver();
     }
 

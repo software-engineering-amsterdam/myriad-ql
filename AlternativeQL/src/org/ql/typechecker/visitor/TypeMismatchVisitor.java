@@ -13,37 +13,35 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;
-import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.error.NumberExpected;
 import org.ql.typechecker.issues.error.TypeMismatch;
+import org.ql.typechecker.issues.error.UndefinedSymbol;
 
-import java.util.List;
+public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTable> {
 
-public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
-    private final SymbolTable symbolTable;
+    private final IssuesStorage issuesStorage;
 
-    public TypeMismatchVisitor(SymbolTable symbolTable) {
-        super();
-        this.symbolTable = symbolTable;
+    public TypeMismatchVisitor(IssuesStorage issuesStorage) {
+        this.issuesStorage = issuesStorage;
     }
 
     @Override
-    public Type visitForm(Form form, Void ignore) {
+    public Type visitForm(Form form, SymbolTable symbolTable) {
         visitStatements(form.getStatements(), null);
         return null;
     }
 
     @Override
-    public Type visitIfThen(IfThen ifThen, Void ignore) {
+    public Type visitIfThen(IfThen ifThen, SymbolTable symbolTable) {
         visitExpression(ifThen.getCondition(), null);
         visitStatements(ifThen.getThenStatements(), null);
         return null;
     }
 
     @Override
-    public Type visitIfThenElse(IfThenElse ifThenElse, Void ignore) {
+    public Type visitIfThenElse(IfThenElse ifThenElse, SymbolTable symbolTable) {
         visitExpression(ifThenElse.getCondition(), null);
         visitStatements(ifThenElse.getThenStatements(), null);
         visitStatements(ifThenElse.getElseStatements(), null);
@@ -51,7 +49,7 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public Type visitQuestion(Question question, Void ignore) {
+    public Type visitQuestion(Question question, SymbolTable symbolTable) {
         if (question.getValue() != null) {
             Type valueType = question.getValue().accept(this, null);
 
@@ -63,7 +61,7 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public Type visitNegation(Negation node, Void ignore) {
+    public Type visitNegation(Negation node, SymbolTable symbolTable) {
         Type innerExpressionType = node.getExpression().accept(this, null);
 
         if (!innerExpressionType.isBoolean()) {
@@ -75,12 +73,12 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public Type visitProduct(Product node, Void ignore) {
+    public Type visitProduct(Product node, SymbolTable symbolTable) {
         return checkTypeMismatch(node);
     }
 
     @Override
-    public Type visitIncrement(Increment node, Void ignore) {
+    public Type visitIncrement(Increment node, SymbolTable symbolTable) {
         Type innerExpressionType = node.getExpression().accept(this, null);
 
         if (!(innerExpressionType.isNumeric())) {
@@ -92,44 +90,45 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public Type visitSubtraction(Subtraction node, Void ignore) {
+    public Type visitSubtraction(Subtraction node, SymbolTable symbolTable) {
         return checkTypeMismatch(node);
     }
 
     @Override
-    public BooleanType visitNotEqual(NotEqual node, Void ignore) {
+    public BooleanType visitNotEqual(NotEqual node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visitAnd(LogicalAnd node, Void ignore) {
+    public Type visitAnd(LogicalAnd node, SymbolTable symbolTable) {
         return checkLogicalExpression(node);
     }
 
     @Override
-    public BooleanType visitLowerThan(LowerThan node, Void ignore) {
+    public BooleanType visitLowerThan(LowerThan node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visitGreaterThanOrEqual(GreaterThanOrEqual node, Void ignore) {
+    public BooleanType visitGreaterThanOrEqual(GreaterThanOrEqual node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visitDivision(Division node, Void ignore) {
+    public Type visitDivision(Division node, SymbolTable symbolTable) {
         return checkTypeMismatch(node);
     }
 
     @Override
-    public Type visitParameter(Parameter parameter, Void ignore) {
+    public Type visitParameter(Parameter parameter, SymbolTable symbolTable) {
         if (!symbolTable.isDeclared(parameter.getId())) {
+            issuesStorage.addError(new UndefinedSymbol(parameter.getId()));
             return new UnknownType();
         }
 
@@ -137,24 +136,24 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public Type visitGroup(Group node, Void ignore) {
+    public Type visitGroup(Group node, SymbolTable symbolTable) {
         return node.getExpression().accept(this, null);
     }
 
     @Override
-    public Type visitAddition(Addition node, Void ignore) {
+    public Type visitAddition(Addition node, SymbolTable symbolTable) {
         return checkTypeMismatch(node);
     }
 
     @Override
-    public BooleanType visitGreaterThan(GreaterThan node, Void ignore) {
+    public BooleanType visitGreaterThan(GreaterThan node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visitDecrement(Decrement node, Void ignore) {
+    public Type visitDecrement(Decrement node, SymbolTable symbolTable) {
         Type innerExpressionType = node.getExpression().accept(this, null);
 
         if (!(innerExpressionType.isNumeric())) {
@@ -166,41 +165,41 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, Void> {
     }
 
     @Override
-    public BooleanType visitEquals(Equals node, Void ignore) {
+    public BooleanType visitEquals(Equals node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public BooleanType visitLowerThanOrEqual(LowerThanOrEqual node, Void ignore) {
+    public BooleanType visitLowerThanOrEqual(LowerThanOrEqual node, SymbolTable symbolTable) {
         checkTypeMismatch(node);
 
         return new BooleanType();
     }
 
     @Override
-    public Type visitOr(LogicalOr node, Void ignore) {
+    public Type visitOr(LogicalOr node, SymbolTable symbolTable) {
         return checkLogicalExpression(node);
     }
 
     @Override
-    public BooleanType visitBoolean(BooleanLiteral node, Void ignore) {
+    public BooleanType visitBoolean(BooleanLiteral node, SymbolTable symbolTable) {
         return new BooleanType();
     }
 
     @Override
-    public FloatType visitDecimal(DecimalLiteral node, Void ignore) {
+    public FloatType visitDecimal(DecimalLiteral node, SymbolTable symbolTable) {
         return new FloatType();
     }
 
     @Override
-    public IntegerType visitInteger(IntegerLiteral node, Void ignore) {
+    public IntegerType visitInteger(IntegerLiteral node, SymbolTable symbolTable) {
         return new IntegerType();
     }
 
     @Override
-    public StringType visitString(StringLiteral node, Void ignore) {
+    public StringType visitString(StringLiteral node, SymbolTable symbolTable) {
         return new StringType();
     }
 

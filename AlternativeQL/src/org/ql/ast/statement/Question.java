@@ -3,18 +3,18 @@ package org.ql.ast.statement;
 import org.ql.ast.Expression;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.Type;
 
 public class Question extends Statement {
     private final Identifier id;
-    private final QuestionText questionText;
+    private final QuestionLabel questionLabel;
     private final Type type;
     private final Expression defaultValue;
 
-    public Question(Identifier id, QuestionText questionText, Type type, Expression defaultValue) {
+    public Question(Identifier id, QuestionLabel questionLabel, Type type, Expression defaultValue) {
         this.id = id;
-        this.questionText = questionText;
+        this.questionLabel = questionLabel;
         this.type = type;
         this.defaultValue = defaultValue;
     }
@@ -23,8 +23,8 @@ public class Question extends Statement {
         return id;
     }
 
-    public QuestionText getQuestionText() {
-        return questionText;
+    public QuestionLabel getQuestionLabel() {
+        return questionLabel;
     }
 
     public Type getType() {

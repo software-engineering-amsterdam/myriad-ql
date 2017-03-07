@@ -7,7 +7,7 @@ import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.Type;
 import org.ql.collection.visitor.QuestionCollectVisitor;
 
@@ -39,6 +39,6 @@ public class QuestionCollectVisitorTest {
     }
 
     private Question createQuestion() {
-        return new Question(mock(Identifier.class), mock(QuestionText.class), mock(Type.class), mock(Expression.class));
+        return new Question(mock(Identifier.class), mock(QuestionLabel.class), mock(Type.class), mock(Expression.class));
     }
 }
