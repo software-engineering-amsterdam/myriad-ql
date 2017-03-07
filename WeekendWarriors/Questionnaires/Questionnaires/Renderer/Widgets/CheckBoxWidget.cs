@@ -12,14 +12,12 @@ namespace Questionnaires.Renderer.Widgets
 {
     class CheckBoxWidget : QuestionWidget
     {
-        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private CheckBox QuestionInputWidget = new CheckBox();
 
-        public CheckBoxWidget(string name)
+        public CheckBoxWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
@@ -54,8 +52,8 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
-            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType(QuestionInputWidget.IsChecked.Value));
+            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
+            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
         }
     }
 }

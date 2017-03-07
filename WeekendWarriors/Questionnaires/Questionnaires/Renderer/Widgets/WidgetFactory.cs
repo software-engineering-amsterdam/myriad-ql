@@ -9,29 +9,29 @@ namespace Questionnaires.Renderer.Widgets
 {
     class WidgetFactory
     {
-        public QuestionWidget BuildWidget(IType value, string name)
+        public QuestionWidget BuildWidget(IType value)
         {
-            return BuildWidget((dynamic)value, name);
+            return BuildWidget((dynamic)value);
         }
 
-        private CheckBoxWidget BuildWidget(BooleanType question, string name)
+        private CheckBoxWidget BuildWidget(BooleanType question)
         {
-            return new CheckBoxWidget(name);
+            return new CheckBoxWidget();
         }
 
-        private NumberPickerWidget BuildWidget(IntegerType question, string name)
+        private NumberPickerWidget BuildWidget(IntegerType question)
         {
-            return new NumberPickerWidget(name);
+            return new NumberPickerWidget();
         }
 
-        private DecimalPickerWidget BuildWidget(MoneyType question, string name)
+        private DecimalPickerWidget BuildWidget(MoneyType question)
         {
-            return new DecimalPickerWidget(name);
+            return new DecimalPickerWidget();
         }
 
-        private TextBoxWidget BuildWidget(StringType question, string name)
+        private TextBoxWidget BuildWidget(StringType question)
         {
-            return new TextBoxWidget(name);
+            return new TextBoxWidget();
         }
     }
 }

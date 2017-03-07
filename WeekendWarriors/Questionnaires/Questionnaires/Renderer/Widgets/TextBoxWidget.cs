@@ -10,14 +10,12 @@ namespace Questionnaires.Renderer.Widgets
 {
     class TextBoxWidget : QuestionWidget
     {
-        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private TextBox QuestionInputWidget = new TextBox();
 
-        public TextBoxWidget(string name)
+        public TextBoxWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
@@ -52,7 +50,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(QuestionName, new StringType(QuestionInputWidget.Text));
+            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(this, new StringType(QuestionInputWidget.Text));
         }
     }
 }

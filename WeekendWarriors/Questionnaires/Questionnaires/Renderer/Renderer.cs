@@ -2,6 +2,7 @@
 using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,9 @@ using System.Windows.Controls;
 
 namespace Questionnaires.Renderer
 {
-    class Renderer
+    public class Renderer
     {
+        private Dictionary<Widgets.QuestionWidget, string> WidgetNames;
         private Window QuestionnaireWindow = new Window();
         private StackPanel QuestionnaireStack = new StackPanel();
         private Dictionary<string, IQuestionWidget> Questions = new Dictionary<string, IQuestionWidget>();
@@ -20,6 +22,7 @@ namespace Questionnaires.Renderer
 
         public Renderer(VariableStore.VariableStore variableStore)
         {
+            WidgetNames = new Dictionary<QuestionWidget, string>();
             VariableStore = variableStore;
 
             QuestionnaireStack.Orientation = Orientation.Vertical;
@@ -32,11 +35,12 @@ namespace Questionnaires.Renderer
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-            var questionWidget = WidgetFactory.BuildWidget(question.Type, question.Identifier);
+            var questionWidget = WidgetFactory.BuildWidget(question.Type);
             questionWidget.SetLabel(question.Body);
             questionWidget.SetOnInputChanged(inputChangedDelegate);
             Questions.Add(question.Identifier, questionWidget);
             QuestionnaireStack.Children.Add(questionWidget);
+            WidgetNames[questionWidget] = question.Identifier;
         }
 
         public void SetValue(string name, Questionnaires.Types.IType value)
@@ -54,10 +58,11 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Title = title;
         }
 
-        public delegate void InputChangedCallback(string name, IType value);
-        public void InputChanged(string name, IType value)
+        public delegate void InputChangedCallback(Widgets.QuestionWidget source, IType value);
+        public void InputChanged(Widgets.QuestionWidget source, IType value)
         {
-            VariableStore.SetValue(name, value);
+            Debug.Assert(WidgetNames.ContainsKey(source));
+            VariableStore.SetValue(WidgetNames[source], value);
         }
     }
 }

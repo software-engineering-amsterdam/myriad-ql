@@ -8,7 +8,7 @@ using Questionnaires.Types;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    abstract class QuestionWidget : StackPanel, IQuestionWidget
+    public abstract class QuestionWidget : StackPanel, IQuestionWidget
     {
         public abstract void SetLabel(string text);
         public abstract void SetOnInputChanged(Renderer.InputChangedCallback inputChanged);

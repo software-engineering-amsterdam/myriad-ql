@@ -11,14 +11,12 @@ namespace Questionnaires.Renderer.Widgets
 {
     class DecimalPickerWidget : QuestionWidget
     {
-        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private DecimalUpDown QuestionInputWidget = new DecimalUpDown();
 
-        public DecimalPickerWidget(string name)
+        public DecimalPickerWidget()
             : base()
         {
-            QuestionName = name;
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
@@ -53,7 +51,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(QuestionName, new MoneyType(QuestionInputWidget.Value.Value));
+            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType(QuestionInputWidget.Value.Value));
         }
     }
 }
