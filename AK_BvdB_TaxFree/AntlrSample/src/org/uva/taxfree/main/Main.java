@@ -20,7 +20,7 @@ public class Main {
             }
             return;
         }
-     // parse
+        // parse
         // AST =
         // Symboltable = new symboltable
         // checker
@@ -29,7 +29,7 @@ public class Main {
         // if isEmpty () {
         // etc.
 
-        Environment environment = AbstractSyntaxTreeBuilder.generateAst(inputFile); // , symboltable); // in main
+        Environment environment = AbstractSyntaxTreeBuilder.generate(inputFile); // , symboltable); // in main
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
         // sematicsAnalyzer.check();
         if (semanticsAnalyzer.hasMessages()) {
@@ -39,6 +39,7 @@ public class Main {
             QuestionForm taxForm = new QuestionForm(environment);
             taxForm.show();
         }
+
     }
 
 }

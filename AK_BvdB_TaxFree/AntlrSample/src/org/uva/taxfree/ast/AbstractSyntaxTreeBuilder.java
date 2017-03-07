@@ -8,39 +8,41 @@ import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.declarations.NamedNode;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.BitSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 public class AbstractSyntaxTreeBuilder {
+    private final GrammarListener mListener;
+    private final QLGrammarParser mGrammarParser;
 
-    private AbstractSyntaxTreeBuilder() {
-        // Private to prevent empty initialization
+    public AbstractSyntaxTreeBuilder(File input) throws IOException {
+        mListener = new GrammarListener();
+        mGrammarParser = createGrammarParser(input);
     }
 
-    private BlockNode mRootNode;
-
-    public AbstractSyntaxTreeBuilder(BlockNode rootNode) {
-        mRootNode = rootNode;
+    // TODO: Fix this, backwards compatibility only
+    public static Environment generate(File input) throws IOException {
+        AbstractSyntaxTreeBuilder builder = new AbstractSyntaxTreeBuilder(input);
+        return builder.generateEnvironment();
     }
 
-    public static Environment generateAst(File input) throws IOException {
-        return generateAst(new FileReader(input));
-    }
-
-    public static Environment generateAst(String input) throws IOException {
-        return generateAst(new StringReader(input));
-    }
-
-    private static Environment generateAst(Reader reader) throws IOException {
+    private QLGrammarParser createGrammarParser(File inputFile) throws IOException {
+        FileReader reader = new FileReader(inputFile);
         ANTLRInputStream inputStream = new ANTLRInputStream(reader);
         QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
-        QLGrammarParser qlGrammarParser = new QLGrammarParser(commonTokenStream);
+        return new QLGrammarParser(commonTokenStream);
+    }
 
+    public BlockNode generateTree() throws IOException {
+        return generateEnvironment().getRootNode();
+
+    }
+
+    private Environment generateEnvironment() throws IOException {
         ANTLRErrorListener errorListener = new ANTLRErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
@@ -63,22 +65,15 @@ public class AbstractSyntaxTreeBuilder {
             }
         };
 
-        qlGrammarParser.addErrorListener(errorListener);
-        qlGrammarLexer.addErrorListener(errorListener);
+        mGrammarParser.addErrorListener(errorListener);
+        mGrammarParser.addErrorListener(errorListener);
 
-        QLGrammarParser.FormContext formContext = qlGrammarParser.form();
+        QLGrammarParser.FormContext formContext = mGrammarParser.form();
 
-        // Walk it and attach our listener
         ParseTreeWalker walker = new ParseTreeWalker();
         GrammarListener listener = new GrammarListener();
         walker.walk(listener, formContext);
-        return listener.getEnvironment();
-    }
-
-    public Set<NamedNode> getDeclarations() {
-        Set<NamedNode> questions = new LinkedHashSet<>();
-        mRootNode.retrieveDeclarations(questions);
-        return questions;
+        return listener.getEnvironment(); //TODO => replace environment by BlockNode only
     }
 }
 

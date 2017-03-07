@@ -53,7 +53,7 @@ public class ConditionTest {
     }
 
     private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        Environment environment = AbstractSyntaxTreeBuilder.generateAst(testFile(fileName));
+        Environment environment = AbstractSyntaxTreeBuilder.generate(testFile(fileName));
         return new SemanticsAnalyzer(environment);
     }
 

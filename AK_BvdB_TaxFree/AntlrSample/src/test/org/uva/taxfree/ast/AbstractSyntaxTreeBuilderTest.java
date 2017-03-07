@@ -16,7 +16,7 @@ public class AbstractSyntaxTreeBuilderTest {
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
             try {
-                AbstractSyntaxTreeBuilder.generateAst(file);
+                AbstractSyntaxTreeBuilder.generate(file);
             } catch (UnsupportedOperationException e) {
 //                e.printStackTrace();
                 passedAllTests = false;
@@ -38,7 +38,7 @@ public class AbstractSyntaxTreeBuilderTest {
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
             try {
-                AbstractSyntaxTreeBuilder.generateAst(file);
+                AbstractSyntaxTreeBuilder.generate(file);
                 createdAst = true;
             } catch (UnsupportedOperationException e) {
 //                e.printStackTrace();
