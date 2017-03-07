@@ -20,7 +20,6 @@ public class MoneyTextField extends AbstractWidget{
     
     public MoneyTextField(String questionLabel) {
         JLabel label = new JLabel(questionLabel);
-
         input = new JTextField();
         input.setColumns(COLUMNS);
 

@@ -24,7 +24,6 @@ public class OptionalQuestions {
 
         this.context = context;
         this.fieldFactory = fieldFactory;
-
         this.conditionQuestionMap = getQuestionsWithConditions(questionData);
     }
 
@@ -68,9 +67,7 @@ public class OptionalQuestions {
         }
     }
 
-    private Field getField(
-            String idName, HashMap<Field, List<IfStatement>> conditionsOfQuestions)
-    {
+    private Field getField(String idName, HashMap<Field, List<IfStatement>> conditionsOfQuestions) {
         for (Field field : conditionsOfQuestions.keySet()) {
             if (idName.equals(field.getId())) {
                 return field;

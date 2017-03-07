@@ -146,10 +146,4 @@ public class QLS {
         return messages.containsErrors();
     }
 
-    private void buildGUI(Form ast, Context context) {
-        GUI gui = new GUI (ast, new WidgetFactory(), new GUIManager(new FormFrame(ast.getIdentifier().getName())),
-                context);
-        gui.showUI();
-    }
-
 }
