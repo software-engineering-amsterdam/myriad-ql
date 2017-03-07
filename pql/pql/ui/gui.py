@@ -5,10 +5,12 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QCheckBox
+from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
@@ -72,26 +74,28 @@ class Gui(FormVisitor, TypeVisitor):
         else:
             container.hide()
 
-    def update_trigger_numeric(self, widget, value):
+    def update_trigger_numeric(self, widget, value, type):
         self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(self.update_value_numeric)
+        self.update_visible_values(type, self.update_value_numeric)
 
     def update_trigger_boolean(self, widget, value):
-        self.evaluator.update_value(widget.objectName(), bool(value))
-        self.update_visible_values(self.update_value_boolean)
+        self.evaluator.update_value(widget.objectName(), value)
+        self.update_visible_values(QCheckBox, self.update_value_boolean)
 
-    def update_visible_values(self, function):
+    def update_visible_values(self, widget_type, function):
         environment = self.evaluator.visit(self.pql_ast)
         for key, value in environment.items():
-            widget = self.ql_wizard.findChild(QWidget, key)
-            function(widget, value)
+            widget = self.ql_wizard.findChild(widget_type, key)
+            if widget is not None:
+                function(widget, value)
 
     def update_value_boolean(self, widget, value):
         if value is not None:
             widget.setChecked(value)
 
     def update_value_numeric(self, widget, value):
-        widget.setText(value)
+        if value is not None:
+            widget.setValue(value)
 
     def field(self, node):
         container = QGroupBox(node.parent)
@@ -111,23 +115,20 @@ class Gui(FormVisitor, TypeVisitor):
         return container
 
     def money(self, node):
-        widget = QLineEdit()
-        validator = QDoubleValidator()
-        validator.setDecimals(2)
-        widget.setValidator(validator)
-        widget.setMaxLength(10)
-        widget.textChanged.connect(lambda value: self.update_trigger_numeric(widget, value))
+        widget = QDoubleSpinBox()
+        widget.setDecimals(2)
+        widget.setMaximum(10**10)
+        widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
         return widget
 
     def integer(self, node):
-        widget = QLineEdit()
-        widget.setValidator(QIntValidator())
+        widget = QSpinBox()
         widget.setMaxLength(8)
-        widget.textChanged.connect(lambda value: self.update_trigger_numeric(widget, value))
+        widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
         return widget
 
     def boolean(self, node):
         widget = QCheckBox()
         widget.setChecked(False)
-        widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, value))
+        widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
         return widget
