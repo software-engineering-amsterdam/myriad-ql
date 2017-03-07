@@ -13,10 +13,13 @@ package org.uva.hatt.taxform.grammars;
 form            : 'form' Identifier '{' items* '}';
 
 items           : question
-                | conditional;
+                | ifThen
+                | ifThenElse;
 
 question        : StringLiteral Identifier ':' valueType computedValue?;
-conditional     : ifBlock elseBlock?;
+
+ifThen          : ifBlock;
+ifThenElse      : ifBlock elseBlock;
 
 ifBlock         : 'if (' expression ') {' items* '}';
 elseBlock       : 'else {' items* '}';
