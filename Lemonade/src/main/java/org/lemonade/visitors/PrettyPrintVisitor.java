@@ -15,7 +15,7 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     private String tabLevel = "";
 
     public ASTNode visit(Form form) {
-        String identifier = form.getIdentifier();
+        String identifier = form.getIdentifier().getValue();
         String formStr = String.format("form %s {\n", identifier);
         System.err.print(formStr);
         for (Body body : form.getBodies()) {
