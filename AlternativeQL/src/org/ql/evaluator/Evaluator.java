@@ -1,5 +1,6 @@
 package org.ql.evaluator;
 
+import org.ql.ast.Expression;
 import org.ql.ast.Form;
 import org.ql.ast.Statement;
 import org.ql.ast.expression.ExpressionVisitor;
@@ -184,16 +185,20 @@ public class Evaluator implements ExpressionVisitor<Value, Void>, StatementVisit
 
     @Override
     public Void visitIfThen(IfThen ifThen, Void context) {
-        ifThen.getCondition().accept(this, context);
+        visitExpression(ifThen.getCondition(), context);
 
         checkStatements(ifThen.getThenStatements(), context);
 
         return null;
     }
 
+    public Value visitExpression(Expression expression, Void context) {
+        return expression.accept(this, context);
+    }
+
     @Override
     public Void visitIfThenElse(IfThenElse ifThenElse, Void context) {
-        ifThenElse.getCondition().accept(this, context);
+        visitExpression(ifThenElse.getCondition(), context);
 
         checkStatements(ifThenElse.getElseStatements(), context);
         checkStatements(ifThenElse.getThenStatements(), context);

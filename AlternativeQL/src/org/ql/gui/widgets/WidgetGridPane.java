@@ -1,20 +1,14 @@
 package org.ql.gui.widgets;
 
 import javafx.scene.layout.GridPane;
-import org.ql.ast.Identifier;
-import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.WidgetEventHandler;
 
+// TODO: Remove (not really required right?)
 public class WidgetGridPane extends Widget {
 
-    private WidgetEventHandler widgetEventHandler;
-    private Identifier identifier;
     private GridPane pane;
 
-    public WidgetGridPane(WidgetEventHandler widgetEventHandler, Identifier identifier) {
-        this.widgetEventHandler = widgetEventHandler;
-        this.identifier = identifier;
+    public WidgetGridPane() {
         this.pane = new GridPane();
     }
 
@@ -23,11 +17,23 @@ public class WidgetGridPane extends Widget {
     }
 
     @Override
-    public void update(ValueTable valueTable) {
-        Value value = valueTable.lookup(identifier);
-        if(value != null) {
-            pane.setVisible((Boolean) value.getPlainValue());
-        }
-        pane.requestLayout();
+    public void addToPane() {
+        gridPane.getChildren().add(pane);
     }
+
+    @Override
+    public void setVisible(Value value) {
+        pane.setVisible((Boolean) value.getPlainValue());
+    }
+
+    @Override
+    public void setValue(Value value) {
+    }
+
+    @Override
+    public Value getValue() {
+        return null;
+    }
+
+
 }
