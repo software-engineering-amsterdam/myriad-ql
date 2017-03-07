@@ -6,24 +6,28 @@ module QL
     class Parser < Parslet::Parser
       root(:form)
 
-      root :comparison_order
+      root :boolean
 
       # rule(:root) {
       #   ((exp | addition)).repeat
       # }
 
       rule(:exp) {
-        str('(') >> comparison_order >> str(')')
+        str('(') >> boolean >> str(')')
       }
 
+      rule(:boolean) {
+        comparison_order.as(:left) >> (boolean_op >> comparison_order.as(:right)).repeat(1) |
+          comparison_order
+      }
 
       rule(:comparison_order) {
-        equals.as(:left) >> (comparison_order_op >> equals.as(:right)).repeat(1) |
-          equals
+        comparison_equals.as(:left) >> (comparison_order_op >> comparison_equals.as(:right)).repeat(1) |
+          comparison_equals
       }
 
-      rule(:equals) {
-        addition.as(:left) >> (equal_op >> addition.as(:right)).repeat(1) |
+      rule(:comparison_equals) {
+        addition.as(:left) >> (comparison_equals_op >> addition.as(:right)).repeat(1) |
           addition
       }
 
@@ -43,8 +47,10 @@ module QL
 
       rule(:mult_op) { (str('*') | str('/')).as(:operator) >> _ }
       rule(:add_op) { (str('+') | str('-')).as(:operator) >> _ }
-      rule(:equal_op) { (str('==') | str('!=')).as(:operator) >> _ }
+      rule(:comparison_equals_op) { (str('==') | str('!=')).as(:operator) >> _ }
       rule(:comparison_order_op) { (str('<=') | str('>=') | str('<') | str('>')).as(:operator) >> _ }
+      rule(:boolean_op) { (str('&&') | str('||')).as(:operator) >> _ }
+
 
 
       # spaces, breaks
