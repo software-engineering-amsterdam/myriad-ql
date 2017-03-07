@@ -90,7 +90,9 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Checker\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\OffByOne.Ql\OffByOne.Ql.csproj">
       <Project>{2c16acf6-fcc1-4513-bc05-646e7dbbecaa}</Project>

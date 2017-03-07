@@ -58,17 +58,17 @@
 
         public override IValue Substract(DecimalValue other)
         {
-            return new DecimalValue(this.Value - other.Value);
+            return new DecimalValue(other.Value - this.Value);
         }
 
         public override IValue Substract(MoneyValue other)
         {
-            return new MoneyValue((decimal)this.Value - other.Value);
+            return new MoneyValue(other.Value - (decimal)this.Value);
         }
 
         public override IValue Substract(IntegerValue other)
         {
-            return new DecimalValue(this.Value - other.Value);
+            return new DecimalValue(other.Value - this.Value);
         }
 
         public override IValue Divide(IValue other)
@@ -118,17 +118,17 @@
 
         public override BooleanValue LessThan(DecimalValue other)
         {
-            return new BooleanValue(this.Value < other.Value);
+            return new BooleanValue(other.Value < this.Value);
         }
 
         public override BooleanValue LessThan(MoneyValue other)
         {
-            return new BooleanValue((decimal)this.Value < other.Value);
+            return new BooleanValue(other.Value < (decimal)this.Value);
         }
 
         public override BooleanValue LessThan(IntegerValue other)
         {
-            return new BooleanValue(this.Value < other.Value);
+            return new BooleanValue(other.Value < this.Value);
         }
 
         public override BooleanValue GreaterThan(IValue other)
@@ -138,17 +138,17 @@
 
         public override BooleanValue GreaterThan(DecimalValue other)
         {
-            return new BooleanValue(this.Value > other.Value);
+            return new BooleanValue(other.Value > this.Value);
         }
 
         public override BooleanValue GreaterThan(MoneyValue other)
         {
-            return new BooleanValue((decimal)this.Value > other.Value);
+            return new BooleanValue(other.Value > (decimal)this.Value);
         }
 
         public override BooleanValue GreaterThan(IntegerValue other)
         {
-            return new BooleanValue(this.Value > other.Value);
+            return new BooleanValue(other.Value > this.Value);
         }
 
         public override BooleanValue GreaterThanOrEqualTo(IValue other)
@@ -158,17 +158,17 @@
 
         public override BooleanValue GreaterThanOrEqualTo(MoneyValue other)
         {
-            return new BooleanValue((decimal)this.Value >= other.Value);
+            return new BooleanValue(other.Value >= (decimal)this.Value);
         }
 
         public override BooleanValue GreaterThanOrEqualTo(IntegerValue other)
         {
-            return new BooleanValue(this.Value >= other.Value);
+            return new BooleanValue(other.Value >= this.Value);
         }
 
         public override BooleanValue GreaterThanOrEqualTo(DecimalValue other)
         {
-            return new BooleanValue(this.Value >= other.Value);
+            return new BooleanValue(other.Value >= this.Value);
         }
 
         public override BooleanValue LessThanOrEqualTo(IValue other)
@@ -178,17 +178,37 @@
 
         public override BooleanValue LessThanOrEqualTo(DecimalValue other)
         {
-            return new BooleanValue(this.Value <= other.Value);
+            return new BooleanValue(other.Value <= this.Value);
         }
 
         public override BooleanValue LessThanOrEqualTo(MoneyValue other)
         {
-            return new BooleanValue((decimal)this.Value <= other.Value);
+            return new BooleanValue(other.Value <= (decimal)this.Value);
         }
 
         public override BooleanValue LessThanOrEqualTo(IntegerValue other)
         {
-            return new BooleanValue(this.Value <= other.Value);
+            return new BooleanValue(other.Value <= this.Value);
+        }
+
+        public override BooleanValue Equals(IValue other)
+        {
+            return other.Equals(this);
+        }
+
+        public override BooleanValue Equals(IntegerValue other)
+        {
+            return new BooleanValue(other.Value == this.Value);
+        }
+
+        public override BooleanValue Equals(MoneyValue other)
+        {
+            return new BooleanValue(other.Value == (decimal)this.Value);
+        }
+
+        public override BooleanValue Equals(DecimalValue other)
+        {
+            return new BooleanValue(other.Value == this.Value);
         }
 
         public override IValue Negative()
