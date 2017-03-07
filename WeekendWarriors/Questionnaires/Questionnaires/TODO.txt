@@ -1,0 +1,13 @@
+Review AST code
+- Naming conventions (capitalization)
+
+Improve AST
+- Think about if we want specified node types for operations instead of the generalized unaryOperation and binaryOperation
+- If we keep generalized classes, store operator type as enumeration instead of string
+
+Unit tests
+- Add unit tests to validate AST based on input string
+
+Create visitor for AST similar to antlr visitor
+
+Create a design for the complete QL system (e.g wellformedness checker, expression evaluator, renderer, ...)

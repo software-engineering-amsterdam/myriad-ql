@@ -1,0 +1,2 @@
+class Undefined(object):
+    pass

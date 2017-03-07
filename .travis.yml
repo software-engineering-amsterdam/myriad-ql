@@ -1,0 +1,16 @@
+# I want to make sure that Paco does not break the build. If you also want to use travis, please ping me (@stil4m).
+
+sudo: false
+
+language: node_js
+node_js:
+  - "5"
+
+install:
+  - npm install -g elm
+  - npm install -g elm-test
+  - pushd elmos && elm-package install -y && popd
+
+script:
+  - pushd elmos && elm-test && popd
+

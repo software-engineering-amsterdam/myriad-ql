@@ -1,0 +1,13 @@
+package ast;
+
+public class Statement {
+	
+	private boolean evaluate; // TODO change name
+	private Block block;
+	
+	public Statement(boolean evaluate) {
+		this.evaluate = evaluate;
+		this.block = block;
+	}
+	
+}

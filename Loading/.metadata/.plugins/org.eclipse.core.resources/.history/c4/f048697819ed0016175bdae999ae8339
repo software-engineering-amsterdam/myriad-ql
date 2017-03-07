@@ -1,0 +1,77 @@
+/**
+ * Define a grammar called Hello
+ */
+
+grammar Hello;
+
+//@parser::header
+//{
+//	package org.uva.sea.ql.parser.antlr;
+//}
+//
+//@lexer::header
+//{
+//	package org.uva.sea.ql.parser.antlr;
+//}
+
+
+root: 'form' ID block;
+
+block: '{' question* '}';
+
+question : ( ID':' STRING type computed_question* );
+
+type: ( 'boolean' | 'date' | 'decimal' | 'integer' | 'money' | 'string' ) ;
+
+computed_question: '(' addExpr | mulExpr ')' ;
+
+statement
+ : 'if' relExpr block ('else if' relExpr block)* ('else' block)? ;
+
+expression: expression orExpr expression 
+		  | expression andExpr expression 
+		  | expression relExpr expression 
+		  | primary;
+		    
+andExpr: '&&';
+
+orExpr: '||';
+
+relExpr: '<' | '<=' | '>' | '>=' | '==' | '!=';
+
+addExpr: '+' | '-';
+
+mulExpr: '*' | '/';
+
+unExpr: '+' | '-' | '!';
+
+primary: booleanExpr 
+	   | decimalExpr 
+	   | integerExpr 
+	   | moneyExpr;
+	   //| ('"' .*? '"'); // TODO replace by stringExpr
+
+booleanExpr: 'true' 
+           | 'false';
+decimalExpr: INT '.' INT 
+           | '.' INT;
+integerExpr: INT;
+moneyExpr: INT '.' ('0'..'9'){2};
+//stringExpr: ('"' .*? '"'); 
+
+
+// TODO look up conventions tokens/names capital letters
+ID:  ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+
+INT: ('0'..'9')+;
+
+STRING: ('"' .*? '"');
+
+WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+
+// http://stackoverflow.com/questions/14778570/antlr-4-channel-hidden-and-options
+COMMENT 
+    :   ( '//' ~[\r\n]* '\r'? '\n'
+        | '/*' .*? '*/'
+        ) -> skip
+    ;

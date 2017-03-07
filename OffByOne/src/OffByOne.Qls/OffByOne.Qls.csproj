@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.props" Condition="Exists('..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BA5CBB6E-F479-45FA-A0C3-7662D56E3AA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OffByOne.Qls</RootNamespace>
+    <AssemblyName>OffByOne.Qls</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>OffByOne.Qls.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>OffByOne.Qls.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=e9931a4108ef2354, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr4.Runtime.4.5.4-beta001\lib\net45\Antlr4.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MoreDotNet.0.6\lib\MoreDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ast\Style\Statements\Base\Statement.cs" />
+    <Compile Include="Ast\Style\Statements\Page.cs" />
+    <Compile Include="Ast\Style\Properties\Base\Property.cs" />
+    <Compile Include="Ast\Style\Properties\ColorProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontNameProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizeProperty.cs" />
+    <Compile Include="Ast\Style\Properties\FontStyleProperty.cs" />
+    <Compile Include="Ast\Style\Properties\HeightProperty.cs" />
+    <Compile Include="Ast\Style\Properties\WidthProperty.cs" />
+    <Compile Include="Ast\Style\Rules\Base\Rule.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRule.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRule.cs" />
+    <Compile Include="Ast\Style\Statements\Section.cs" />
+    <Compile Include="Ast\Style\Statements\StyleSheet.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\ListWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\OptionsList.cs" />
+    <Compile Include="Ast\Style\Widgets\Base\Widget.cs" />
+    <Compile Include="Ast\Style\Widgets\CheckBoxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DefaultWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\RadioButtonWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SliderWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
+    <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
+    <Compile Include="Checker\Messages\DuplicatePageMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
+    <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
+    <Compile Include="Checker\StyleSheetAnalyzer.cs" />
+    <Compile Include="Checker\TypeCheckerVisitor.cs" />
+    <Compile Include="CustomQlsVisitor.cs" />
+    <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
+    <Compile Include="obj\Debug\QlsGrammarLexer.cs" />
+    <Compile Include="obj\Debug\QlsGrammarParser.cs" />
+    <Compile Include="obj\Debug\QlsGrammarVisitor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visitors\Base\BaseQlsVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IPropertyVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IRuleVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IStatementVisitor.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableProperty.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
+    <Compile Include="Visitors\Contracts\IVisitableWidget.cs" />
+    <Compile Include="Visitors\Contracts\IVisitibleRule.cs" />
+    <Compile Include="Visitors\Contracts\IWidigetVisitor.cs" />
+    <Compile Include="Visitors\FormCheckerContext.cs" />
+    <Compile Include="Visitors\FormCheckerVisitor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Antlr4 Include="Parser\QlsGrammar.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>OffByOne.Qls</CustomToolNamespace>
+    </Antlr4>
+    <None Include="OffByOne.Qls.ruleset" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OffByOne.LanguageCore\OffByOne.LanguageCore.csproj">
+      <Project>{b3fd3dbf-5a24-4d04-89e2-890197bbe323}</Project>
+      <Name>OffByOne.LanguageCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.props'))" />
+    <Error Condition="!Exists('..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
+  <Import Project="..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.targets" Condition="Exists('..\..\packages\Antlr4.CodeGenerator.4.5.4-beta001\build\Antlr4.CodeGenerator.targets')" />
+</Project>

@@ -1,0 +1,10 @@
+/**
+ * Define a grammar called Hello
+ */
+
+grammar Hello;
+
+root: 'form' ID block;
+
+block: '{' .* '}';
+

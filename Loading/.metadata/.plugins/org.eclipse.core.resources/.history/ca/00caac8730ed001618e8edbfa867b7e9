@@ -1,0 +1,15 @@
+package ast;
+
+abstract class ExpressionNode
+{
+}
+
+internal abstract class InfixExpressionNode : ExpressionNode
+{
+    public ExpressionNode Left { get; set; }
+    public ExpressionNode Right { get; set; }
+}
+
+public class Expression {
+
+}
