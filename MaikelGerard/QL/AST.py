@@ -1,7 +1,6 @@
 from decimal import Decimal
 from datetime import date
 
-# TODO: Improve hierarchy VarNodes should be separate, add expressionNode,
 # create LiteralNodes and VarNode separate --> both are ExpressionNode.
 # TODO: Remove print and eq, add to seperate traversal.
 # TODO: Remove QuestionnaireAST, just make form the root.
@@ -105,7 +104,7 @@ class ComputedQuestionNode(QuestionNode):
 class IfNode(Node):
     def __init__(self, condition, if_block, line=0, col=0):
         super(IfNode, self).__init__(line, col)
-        self.expression = condition
+        self.condition = condition
         self.if_block = if_block
 
     def accept(self, visitor):
@@ -113,7 +112,7 @@ class IfNode(Node):
 
     def __eq__(self, other):
         return super(IfNode, self).__eq__(other) and \
-               other.expression == self.expression and \
+               other.expression == self.condition and \
                other.if_block == self.if_block
 
 
@@ -130,7 +129,15 @@ class IfElseNode(IfNode):
                other.else_block == self.else_block
 
 
-class MonOpNode(Node):
+class ExpressionNode(Node):
+    def __init__(self, line=0, col=0):
+        super(ExpressionNode, self).__init__(line, col)
+
+    def accept(self, visitor, *args):
+        return visitor.expr_node(self, *args)
+
+
+class MonOpNode(ExpressionNode):
     def __init__(self, operator, expression, line, col):
         super(MonOpNode, self).__init__(line, col)
         self.operator = operator
@@ -165,7 +172,7 @@ class PlusNode(MonOpNode):
         return visitor.plus_node(self)
 
 
-class ArithmeticExprNode(Node):
+class ArithmeticExprNode(ExpressionNode):
     def __init__(self, operator, left, right, line=0, col=0):
         super(ArithmeticExprNode, self).__init__(line, col)
         self.left = left
@@ -269,7 +276,7 @@ class NeqNode(ComparisonExprNode):
         return visitor.neq_node(self)
 
 
-class LogicalExprNode(Node):
+class LogicalExprNode(ExpressionNode):
     def __init__(self, operator, left, right, line=0, col=0):
         super(LogicalExprNode, self).__init__(line, col)
         self.left = left
@@ -406,19 +413,31 @@ class DateTypeNode(TypeNode):
         return visitor.date_type_node(self)
 
 
-class VarNode(Node):
+class LiteralNode(ExpressionNode):
     def __init__(self, value, line=0, col=0):
-        super(VarNode, self).__init__(line, col)
+        super(LiteralNode, self).__init__(line, col)
         self.val = value
 
-    def accept(self, visitor):
-        return visitor.var_node(self)
+    def accept(self, visitor, *args):
+        return visitor.literal_node(self, *args)
 
     def __eq__(self, other):
-        return super(VarNode, self).__eq__(other) and other.val == self.val
+        return super(LiteralNode, self).__eq__(other) and other.val == self.val
 
 
-class StringNode(VarNode):
+class VarNode(ExpressionNode):
+    def __init__(self, name, line=0, col=0):
+        super(ExpressionNode, self).__init__(line, col)
+        self.name = name
+
+    def accept(self, visitor, *args):
+        return visitor.var_node(self, *args)
+
+    def __eq__(self, other):
+        return super(ExpressionNode, self).__eq__(other) and other.name == self.name
+
+
+class StringNode(LiteralNode):
     def __init__(self, string, line=0, col=0):
         super(StringNode, self).__init__(string, line, col)
 
@@ -426,7 +445,7 @@ class StringNode(VarNode):
         return visitor.string_node(self)
 
 
-class IntNode(VarNode):
+class IntNode(LiteralNode):
     def __init__(self, integer, line=0, col=0):
         super(IntNode, self).__init__(integer, line, col)
 
@@ -434,7 +453,7 @@ class IntNode(VarNode):
         return visitor.int_node(self)
 
 
-class BoolNode(VarNode):
+class BoolNode(LiteralNode):
     def __init__(self, boolean, line=0, col=0):
         super(BoolNode, self).__init__(boolean, line, col)
 
@@ -442,7 +461,7 @@ class BoolNode(VarNode):
         return visitor.bool_node(self)
 
 
-class MoneyNode(VarNode):
+class MoneyNode(LiteralNode):
     def __init__(self, money, line=0, col=0):
         super(MoneyNode, self).__init__(money, line, col)
 
@@ -450,7 +469,7 @@ class MoneyNode(VarNode):
         return visitor.decimal_node(self)
 
 
-class DecimalNode(VarNode):
+class DecimalNode(LiteralNode):
     def __init__(self, decimal, line=0, col=0):
         super(DecimalNode, self).__init__(decimal, line, col)
 
@@ -458,7 +477,7 @@ class DecimalNode(VarNode):
         return visitor.decimal_node(self)
 
 
-class DateNode(VarNode):
+class DateNode(LiteralNode):
     def __init__(self, date_val, line=0, col=0):
         super(DateNode, self).__init__(date_val, line, col)
 

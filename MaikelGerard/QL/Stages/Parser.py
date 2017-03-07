@@ -58,15 +58,12 @@ class QuestionnaireParser(object):
 
     def add_parse_actions(self):
         def create_int(src, loc, tokens):
-            del src, loc
             return int(tokens[0])
 
         def create_decimal(src, loc, tokens):
-            del src, loc
             return decimal.Decimal(tokens[0])
 
         def create_date(src, loc, tokens):
-            del src, loc
             return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
         self.BOOLEAN_TYPE.setParseAction(self.create_node(AST.BoolTypeNode))
@@ -107,6 +104,44 @@ class QuestionnaireParser(object):
 
     def curly_embrace(self, arg):
         return self.L_CURLY + arg + self.R_CURLY
+
+    def define_expression(self):
+        def create_operators(opp_list):
+            opp, ast_class = opp_list[0]
+            operator = create_operator(opp, ast_class)
+            for (opp, ast_class) in opp_list[1:]:
+                operator ^= create_operator(opp, ast_class)
+            return operator
+
+        def create_operator(opp, ast_class):
+            return pp.Literal(opp).setParseAction(lambda _: ast_class)
+
+        # Define all expression operators and their corresponding AST node.
+        unary_ops = create_operators([
+            ('!', AST.NegNode), ('-', AST.MinNode), ('+', AST.PlusNode)])
+        arithmetic_level1 = create_operators([
+            ('*', AST.MulNode), ('/', AST.DivNode)])
+        arithmetic_level2 = create_operators([
+            ('+', AST.AddNode), ('-', AST.SubNode)])
+        logical_level1 = create_operators([
+            ('<=', AST.LTENode), ('<', AST.LTNode),
+            ('>=', AST.GTENode), ('>', AST.GTNode)
+        ])
+        logical_level2 = create_operators([
+            ('==', AST.EqNode), ('!=', AST.NeqNode)])
+        infix_and = create_operator('&&', AST.AndNode)
+        infix_or = create_operator('||', AST.OrNode)
+
+        # Define the expression parser, including precedence.
+        return pp.infixNotation(self.TYPES, [
+            (unary_ops, 1, pp.opAssoc.RIGHT, self.create_monop_node),
+            (arithmetic_level1, 2, pp.opAssoc.LEFT, self.create_binops),
+            (arithmetic_level2, 2, pp.opAssoc.LEFT, self.create_binops),
+            (logical_level1, 2, pp.opAssoc.LEFT, self.create_binops),
+            (logical_level2, 2, pp.opAssoc.LEFT, self.create_binops),
+            (infix_and, 2, pp.opAssoc.LEFT, self.create_binops),
+            (infix_or, 2, pp.opAssoc.LEFT, self.create_binops),
+        ])
 
     def define_question(self):
         def create_question_grammar():
@@ -163,44 +198,6 @@ class QuestionnaireParser(object):
         form.addParseAction(self.create_node(AST.FormNode))
 
         return form.addParseAction(self.create_node(AST.QuestionnaireAST))
-
-    def define_expression(self):
-        def create_operators(opp_list):
-            opp, ast_class = opp_list[0]
-            operator = create_operator(opp, ast_class)
-            for (opp, ast_class) in opp_list[1:]:
-                operator ^= create_operator(opp, ast_class)
-            return operator
-
-        def create_operator(opp, ast_class):
-            return pp.Literal(opp).setParseAction(lambda _: ast_class)
-
-        # Define all expression operators and their corresponding AST node.
-        unary_ops = create_operators([
-            ('!', AST.NegNode), ('-', AST.MinNode), ('+', AST.PlusNode)])
-        arithmetic_level1 = create_operators([
-            ('*', AST.MulNode), ('/', AST.DivNode)])
-        arithmetic_level2 = create_operators([
-            ('+', AST.AddNode), ('-', AST.SubNode)])
-        logical_level1 = create_operators([
-            ('<=', AST.LTENode), ('<', AST.LTNode),
-            ('>=', AST.GTENode), ('>', AST.GTNode)
-        ])
-        logical_level2 = create_operators([
-            ('==', AST.EqNode), ('!=', AST.NeqNode)])
-        infix_and = create_operator('&&', AST.AndNode)
-        infix_or = create_operator('||', AST.OrNode)
-
-        # Define the expression parser, including precedence.
-        return pp.infixNotation(self.TYPES, [
-            (unary_ops, 1, pp.opAssoc.RIGHT, self.create_monop_node),
-            (arithmetic_level1, 2, pp.opAssoc.LEFT, self.create_binops),
-            (arithmetic_level2, 2, pp.opAssoc.LEFT, self.create_binops),
-            (logical_level1, 2, pp.opAssoc.LEFT, self.create_binops),
-            (logical_level2, 2, pp.opAssoc.LEFT, self.create_binops),
-            (infix_and, 2, pp.opAssoc.LEFT, self.create_binops),
-            (infix_or, 2, pp.opAssoc.LEFT, self.create_binops),
-        ])
 
     def create_monop_node(self, src, loc, token):
         monop = token[0]
