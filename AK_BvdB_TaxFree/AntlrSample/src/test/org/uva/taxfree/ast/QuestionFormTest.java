@@ -3,7 +3,6 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.uva.taxfree.gui.QuestionForm;
-import org.uva.taxfree.model.FormRenderer;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
@@ -18,7 +17,6 @@ import org.uva.taxfree.model.node.literal.VariableLiteralNode;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.Timer;
 
 public class QuestionFormTest {
     private final Set<Node> mCachedNodes = new LinkedHashSet<>();
@@ -44,19 +42,9 @@ public class QuestionFormTest {
     private void showForm() {
         mSymbolTable.addDeclarations(mCachedDeclarations);
         QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
-        createRenderer(form);
         form.show();
     }
 
-    private static final int START_DELAY_MS = 1000;
-    private static final int INTERVAL_MS = 500;
-
-    private void createRenderer(QuestionForm form) {
-        FormRenderer renderer = new FormRenderer(form);
-        Timer timer = new Timer();
-        timer.schedule(renderer, START_DELAY_MS, INTERVAL_MS);
-
-    }
 
     @Test
     public void testSimpleQuestions() throws Exception {
