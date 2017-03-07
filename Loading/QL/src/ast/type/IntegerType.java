@@ -1,6 +1,8 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ast.atom.Atom;
+import ast.atom.IntegerAtom;
 import ui.field.Field;
 import ui.field.Number;
 
@@ -18,8 +20,12 @@ public class IntegerType extends Type {
 
 	@Override
 	public Field getField(String name) {
-		// TODO Auto-generated method stub
 		return new Number(name);
+	}
+
+	@Override
+	public Atom getAtom() {
+		return new IntegerAtom(0);
 	}
 	
 }

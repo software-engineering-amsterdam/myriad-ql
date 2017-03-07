@@ -44,7 +44,7 @@ class DrawGUI(object):
                 continue
 
             question_type = question_node.type
-            new_value = question_type.parse_value(new_value)
+            new_value = question_type.convert_to_type(new_value)
             self.env.set_var_value(widget_id, new_value)
 
     def force_redraw(self, _):
@@ -90,6 +90,6 @@ class DrawGUI(object):
         return widget_values
 
     def save_data(self):
-        save_obj = SaveQuestionaire(self.ast, self.env,
+        save_obj = SaveQuestionaire(self, self.ast, self.env,
                                     self.evaluator, self.handler)
         save_obj.start_traversal()

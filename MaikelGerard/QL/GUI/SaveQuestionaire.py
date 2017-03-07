@@ -5,19 +5,35 @@ from collections import OrderedDict
 
 
 class SaveQuestionaire(object):
-    def __init__(self, ast, env, evaluator, error_handler):
+    def __init__(self, form_gui, ast, env, evaluator, error_handler):
+        """
+        :type ast: QL.AST.QuestionnaireAST
+        :type env: QL.Environment.Environment
+        :type error_handler: QL.ErrorHandler.ErrorHandler
+        :type evaluator: QL.Stages.Evaluator.Evaluate
+        :type form_gui: QL.GUI.DrawGUI.DrawGUI
+        """
         self.ast = ast
         self.env = env
         self.evaluator = evaluator
         self.handler = error_handler
+        self.form_gui = form_gui
         self.show_stack = []
         self.form_output = OrderedDict()
 
     def start_traversal(self):
+        self.handler.clear_errors()
         self.show_stack = []
 
+        # Set context for outputting errors; start traversal.
+        prev_context = self.env.context
+        self.env.context = "SaveQuestionaire"
         self.ast.root.accept(self)
         self.write_fields("./form_output.txt")
+
+        # Output errors afterwards.
+        self.handler.print_errors()
+        self.env.context = prev_context
 
     def write_fields(self, path):
         with open(path, "w+") as json_file:
@@ -45,7 +61,7 @@ class SaveQuestionaire(object):
         return all(self.show_stack)
 
     def set_question_val(self, question_node):
-        identifier = question_node.name
+        identifier = question_node.get_identifier()
         if self.is_shown():
             node = self.env.get_node(identifier)
             value = self.env.get_var_value(identifier)

@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ast.atom.Atom;
 import ui.field.Field;
 
 public class UnknownType extends Type {
@@ -18,6 +19,11 @@ public class UnknownType extends Type {
 	public void accept(TypeVisitor v) {
 		v.visit(this);
 		
+	}
+
+	@Override
+	public Atom getAtom() {
+		return null;
 	}
 
 }

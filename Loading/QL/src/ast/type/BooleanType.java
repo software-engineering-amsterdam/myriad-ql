@@ -1,6 +1,8 @@
 package ast.type;
 
 import ast.TypeVisitor;
+import ast.atom.Atom;
+import ast.atom.BoolAtom;
 import ui.field.Check;
 import ui.field.Field;
 
@@ -19,8 +21,12 @@ public class BooleanType extends Type {
 
 	@Override
 	public Field getField(String name) {
-		// TODO Auto-generated method stub
 		return new Check(name);
+	}
+
+	@Override
+	public Atom getAtom() {
+		return new BoolAtom(0);
 	}
 
 }

@@ -18,8 +18,17 @@ class EvaluateDrawState(object):
         self.show_stack = []
 
     def start_traversal(self):
+        self.handler.clear_errors()
         self.show_stack = []
+
+        # Set context for outputting errors; start traversal.
+        prev_context = self.env.context
+        self.env.context = "EvaluateDrawState"
         self.ast.root.accept(self)
+
+        # Output errors afterwards.
+        self.handler.print_errors()
+        self.env.context = prev_context
 
     def traverse_branch(self, node_branch, condition):
         self.show_stack.append(condition)
@@ -43,7 +52,7 @@ class EvaluateDrawState(object):
         return all(self.show_stack)
 
     def question_node(self, question_node):
-        identifier = question_node.name
+        identifier = question_node.get_identifier()
         if not self.is_shown():
             self.form_gui.hide_widget(identifier)
         else:
@@ -54,7 +63,7 @@ class EvaluateDrawState(object):
             self.form_gui.set_widget_val(identifier, value)
 
     def comp_question_node(self, comp_question_node):
-        identifier = comp_question_node.name
+        identifier = comp_question_node.get_identifier()
         if not self.is_shown():
             self.form_gui.hide_widget(identifier)
         else:

@@ -12,10 +12,10 @@ class Environment(object):
         self.variables = OrderedDict()
 
     def add_var(self, question_node):
-        var_name = question_node.name
+        var_name = question_node.get_identifier()
 
         if var_name in self.variables:
-            self.error_handler.add_duplicate_error(question_node)
+            self.error_handler.add_duplicate_error(self.context, question_node)
             return False
         self.variables[var_name] = {"node": question_node, "value": Undefined}
         return True
@@ -25,7 +25,7 @@ class Environment(object):
 
     def get_var_type(self, var_node):
         if var_node.val not in self.variables:
-            self.error_handler.add_undecl_var_error(var_node)
+            self.error_handler.add_undecl_var_error(self.context, var_node)
             return None
         return self.variables[var_node.val]["node"].type
 
