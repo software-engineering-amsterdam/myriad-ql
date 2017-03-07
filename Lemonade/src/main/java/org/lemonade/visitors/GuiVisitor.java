@@ -1,6 +1,7 @@
 package org.lemonade.visitors;
 
 import org.lemonade.gui.elements.GuiBooleanValue;
+import org.lemonade.gui.elements.GuiConditional;
 import org.lemonade.gui.elements.GuiDateValue;
 import org.lemonade.gui.elements.GuiDecimalValue;
 import org.lemonade.gui.elements.GuiElement;
@@ -85,7 +86,7 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final Conditional conditional) {
-        return null;
+        return new GuiConditional((GuiIdentifierValue) conditional.getCondition().accept(this));
     }
 
     @Override public GuiElement visit(final Expression expression) {
@@ -117,7 +118,7 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final EqBinary eqBinary) {
-        return null;
+        return (GuiIdentifierValue) eqBinary.getLeft().accept(this);
     }
 
     @Override public GuiElement visit(final NEqBinary nEqBinary) {

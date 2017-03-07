@@ -1,7 +1,6 @@
 package org.lemonade.gui.elements;
 
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Control;
 
 public class GuiBooleanValue extends GuiValue<Boolean> {
 
@@ -10,6 +9,7 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
 
     public GuiBooleanValue() {
         checkBox = new CheckBox();
+        checkBox.setOnAction(e -> update());
     }
 
     @Override
@@ -19,12 +19,13 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
 
     @Override
     public void setValue(Boolean value) {
-        this.value =  value;
+        this.value = value;
     }
 
     @Override
     public void update() {
         setValue(checkBox.isSelected());
+        System.err.println("new value = " + value);
     }
 
     @Override

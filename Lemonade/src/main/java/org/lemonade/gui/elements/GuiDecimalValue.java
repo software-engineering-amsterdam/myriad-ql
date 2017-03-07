@@ -1,6 +1,5 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
 public class GuiDecimalValue extends GuiValue<Double> {
@@ -10,24 +9,28 @@ public class GuiDecimalValue extends GuiValue<Double> {
 
     public GuiDecimalValue() {
         textField = new TextField();
+        textField.setOnAction(e -> update());
     }
 
-    @Override Double getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
-    @Override void setValue(final Double value) {
+    @Override
+    public void setValue(final Double value) {
         this.value = value;
     }
 
     //TODO: verify legal double value
-    @Override public void update() {
+    @Override
+    public void update() {
         double value = validate(textField.getText());
         setValue(value);
     }
 
     private double validate(String text) {
-        if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")){
+        if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")) {
             return 0.0;
         }
         return Double.valueOf(text);

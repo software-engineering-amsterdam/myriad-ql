@@ -1,6 +1,5 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
 public class GuiIntegerValue extends GuiValue<Integer> {
@@ -10,6 +9,7 @@ public class GuiIntegerValue extends GuiValue<Integer> {
 
     public GuiIntegerValue() {
         textField = new TextField();
+        textField.setOnAction(e -> update());
     }
 
     @Override Integer getValue() {
@@ -27,7 +27,7 @@ public class GuiIntegerValue extends GuiValue<Integer> {
     }
 
     private int validate(String text) {
-        if (!text.matches("[-+]?[0-9]*")){
+        if (!text.matches("[-+]?[0-9]*")) {
             return 0;
         }
         return Integer.valueOf(text);

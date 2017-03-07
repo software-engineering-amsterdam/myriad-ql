@@ -9,6 +9,7 @@ public class GuiStringValue extends GuiValue<String> {
 
     public GuiStringValue() {
         textField = new TextField();
+        textField.setOnKeyReleased(e -> update());
     }
 
     @Override
@@ -21,8 +22,10 @@ public class GuiStringValue extends GuiValue<String> {
         this.value = value;
     }
 
-    @Override public void update() {
+    @Override
+    public void update() {
         setValue(textField.getText());
+        System.err.println("new value = " + value);
     }
 
     @Override

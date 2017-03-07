@@ -2,7 +2,6 @@ package org.lemonade.gui.elements;
 
 import java.time.LocalDate;
 
-import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 
 public class GuiDateValue extends GuiValue<LocalDate> {
@@ -12,11 +11,12 @@ public class GuiDateValue extends GuiValue<LocalDate> {
 
     public GuiDateValue() {
         picker = new DatePicker();
+        picker.setOnAction(e -> update());
     }
 
     @Override
     public LocalDate getValue() {
-        return null;
+        return value;
     }
 
     @Override

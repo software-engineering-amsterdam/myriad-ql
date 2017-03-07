@@ -5,7 +5,7 @@ import javafx.scene.control.Control;
 /**
  *
  */
-public class GuiQuestion implements GuiElement {
+public class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
     private GuiLabelValue labelValue;
@@ -30,7 +30,8 @@ public class GuiQuestion implements GuiElement {
         value.update();
     }
 
-    @Override public Control getWidget() {
-        return null;
+    @Override
+    public Control getWidget() {
+        return value.getWidget();
     }
 }
