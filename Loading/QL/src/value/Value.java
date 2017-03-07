@@ -1,33 +1,30 @@
 package value;
 
-import ast.atom.Atom;
-import ast.atom.BoolAtom;
-import ast.atom.IntegerAtom;
-import ast.atom.StringAtom;
+import value.Value;
+import value.BoolValue;
 
-public class Value {
+public abstract class Value {
 		
-	private Atom atom;
+	public abstract boolean isSet();
 	
-	// TODO change!
-	public Value() {
-		this.atom = null;
-	}
+	// Binary Operators
+	public Value add(Value other) { return null; }
+	public Value sub(Value other) { return null; }
+	public Value mul(Value other) { return null; }
+	public Value div(Value other) { return null; }
+
+	public BoolValue and(Value other) { return null; }
+	public BoolValue or(Value other) { return null; }
+	public BoolValue eq(Value other) { return null; }
+	public BoolValue notEq(Value other) { return null; }
+	public BoolValue greaterEq(Value other) { return null; }
+	public BoolValue greater(Value other) { return null; }
+	public BoolValue lessEq(Value other) { return null; }
+	public BoolValue less(Value other) { return null; }
 	
-	public Value(String value) {
-		this.atom = new StringAtom(value, 0);
-	}
-	
-	public Value(Integer value) {
-		this.atom = new IntegerAtom(value, 0);
-	}
-	
-	public Value(Boolean value) {
-		this.atom = new BoolAtom(value, 0);
-	}
-	
-	public Atom getValue() {
-		return atom;
-	}
+	// Unary Operators
+	public Value plus() { return null; }
+	public Value min() { return null; }
+	public BoolValue not() { return null; }
 
 }
