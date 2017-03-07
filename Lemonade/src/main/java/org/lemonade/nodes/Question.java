@@ -1,14 +1,15 @@
 package org.lemonade.nodes;
 
+import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.ASTVisitor;
 
 public class Question extends Body {
-    private String identifier;
+    private IdentifierLiteral identifier;
     private String label;
     private QLType type;
 
-    public Question(String identifier, String label, QLType type) {
+    public Question(IdentifierLiteral identifier, String label, QLType type) {
         super();
         this.identifier = identifier;
         this.label = label;
@@ -19,7 +20,7 @@ public class Question extends Body {
         return label;
     }
 
-    public String getIdentifier() {
+    public IdentifierLiteral getIdentifier() {
         return identifier;
     }
 

@@ -20,6 +20,14 @@ public class GuiMoneyValue extends GuiValue<Double> {
     }
 
     @Override public void update() {
-        setValue(Double.valueOf(textField.getText()));
+        double value = validate(textField.getText());
+        setValue(value);
+    }
+
+    private double validate(String text) {
+        if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")){
+            return 0.0;
+        }
+        return Double.valueOf(text);
     }
 }

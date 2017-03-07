@@ -21,6 +21,14 @@ public class GuiIntegerValue extends GuiValue<Integer> {
 
     //TODO: verify legal int value
     @Override public void update() {
-        setValue(Integer.valueOf(textField.getText()));
+        int value = validate(textField.getText());
+        setValue(value);
+    }
+
+    private int validate(String text) {
+        if (!text.matches("[-+]?[0-9]*")){
+            return 0;
+        }
+        return Integer.valueOf(text);
     }
 }

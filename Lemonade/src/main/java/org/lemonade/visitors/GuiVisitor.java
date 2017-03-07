@@ -57,7 +57,8 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final Question question) {
-        question.getType().accept(this);
+        GuiValue<String> identifier = (GuiValue<String>) question.getIdentifier().accept(this);
+        GuiValue<?> value = (GuiValue<?>) question.getType().accept(this);
         return null;
     }
 

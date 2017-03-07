@@ -47,13 +47,13 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     }
 
     public QLType visit(Question question) {
-        String identifier = question.getIdentifier();
+        IdentifierLiteral identifier = question.getIdentifier();
         QLType type = question.getType();
 
         if (symbolTable.containsKey(identifier)){
             errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
-        symbolTable.put(identifier, type);
+        symbolTable.put(identifier.getValue(), type);
         return null;
     }
 

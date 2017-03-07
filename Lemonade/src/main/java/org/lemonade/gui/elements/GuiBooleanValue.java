@@ -25,4 +25,5 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
     public void update() {
         setValue(checkBox.isSelected());
     }
+
 }

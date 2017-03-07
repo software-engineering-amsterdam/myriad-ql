@@ -53,7 +53,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
 
     @Override
     public Expression visit(Question question) {
-        String identifier = question.getIdentifier();
+        IdentifierLiteral identifier = question.getIdentifier();
 //        Literal<?> literal = question.getValue();
 //
 //        assert !environment.containsKey(identifier);

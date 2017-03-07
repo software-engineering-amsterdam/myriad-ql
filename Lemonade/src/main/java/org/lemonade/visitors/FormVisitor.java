@@ -41,7 +41,7 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
         System.err.println("entering question");
-        String identifier = ctx.identifier().getText();
+        IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
         Position position = constructPosition(ctx);
