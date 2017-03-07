@@ -1,12 +1,9 @@
 package ui;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import QL.Warning;
 import ast.Form;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import evaluation.Environment;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -15,10 +12,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -26,12 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import value.BoolValue;
-import value.IntegerValue;
-import value.StringValue;
 import value.Value;
-
-import java.util.List;
 
 public class Questionnaire extends Application {
 	
@@ -106,10 +96,10 @@ public class Questionnaire extends Application {
     }
     
     
-    private void setAnswers(List<QQuestion> activeQuestions) {
+    private void setAnswers(List<Row> activeQuestions) {
     	
     	// TODO change
-    	for (QQuestion question : activeQuestions) {
+    	for (Row question : activeQuestions) {
     		
     		Value value = env.getAnswer(question.getName());
     		if (value == null) {
@@ -121,7 +111,7 @@ public class Questionnaire extends Application {
     
     private void renderQuestionnaire(GridPane grid) {
         
-    	List<QQuestion> activeQuestions = renderQuestions(grid);
+    	List<Row> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -135,7 +125,7 @@ public class Questionnaire extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (QQuestion activeQuestion : activeQuestions) {
+            	for (Row activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
             		if (!answer.isSet()) {
@@ -160,18 +150,18 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QQuestion> renderQuestions(GridPane grid) {
+    private List<Row> renderQuestions(GridPane grid) {
         
     	QEvaluator qVisitor = new QEvaluator(env);
     	qVisitor.visit(form);
-    	List<QQuestion> activeQuestions = qVisitor.getActiveQuestions();
+    	List<Row> activeQuestions = qVisitor.getActiveQuestions();
     	
-    	int rowIndex = 0;
-        for (QQuestion question : activeQuestions) {
+    	int rowIndex = 1;
+        for (Row question : activeQuestions) {
             
         	Label questionLabel = new Label(question.getLabel());
-            grid.add(questionLabel, 0, 1 + rowIndex); 
-            grid.add(question.getControl(), 1, 1 + rowIndex); 
+            grid.add(questionLabel, 0, rowIndex);
+            grid.add(question.getControl(), 1, rowIndex);
             
             question.addListener(new Notifier());
             ++rowIndex;

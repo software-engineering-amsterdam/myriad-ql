@@ -5,19 +5,15 @@ import java.util.List;
 import ast.ComputedQuestion;
 import ast.Question;
 import ast.Statement;
-import ast.atom.Atom;
-import ast.type.BooleanType;
 import evaluation.Environment;
 import evaluation.Evaluator;
-import javafx.beans.value.ObservableBooleanValue;
 import value.BoolValue;
-import value.IntegerValue;
 import value.Value;
 
 
 public class QEvaluator extends Evaluator {
 
-	private List<QQuestion> activeQuestions; // TODO QQuestion String and type?
+	private List<Row> activeQuestions; // TODO Row String and type?
     private evaluation.Environment answers;
 
 	public QEvaluator(Environment answers) {
@@ -26,13 +22,13 @@ public class QEvaluator extends Evaluator {
 		this.activeQuestions = new ArrayList<>();
 	}
 	
-	public List<QQuestion> getActiveQuestions() {
+	public List<Row> getActiveQuestions() {
 		return activeQuestions;
 	}
 	
     @Override
     public void visit(Question question) {
-        activeQuestions.add(new QQuestion(question.getVariable(),
+        activeQuestions.add(new Row(question.getVariable(),
         		question.getLabel(), question.getType()));
     }
     
@@ -41,7 +37,7 @@ public class QEvaluator extends Evaluator {
         System.out.println("Evaluator: computed question");
         Value value = question.getComputedQuestion().accept(this);
 
-        QQuestion q = new QQuestion(question.getVariable(),
+        Row q = new Row(question.getVariable(),
                 question.getLabel(), question.getType());
 
         // TODO only works with integers...
