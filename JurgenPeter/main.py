@@ -9,8 +9,8 @@ from gui.formapp import FormApp
 
 def main():
 
-    # filename = "exampleForm.txt"
-    filename = "wrongForm"
+    filename = "exampleForm.ql"
+    # filename = "wrongForm.ql"
 
     form = parse_ql(filename)
     Printer().print(form)
@@ -28,8 +28,8 @@ def main():
     if any(error.critical for error in errors):
         return
 
-    # layout = parse_qls("examplestylesheet")
-    layout = None
+    layout = parse_qls("examplestylesheet.qls")
+    # layout = None
 
     app = FormApp(form, layout=layout)
     app.start()
