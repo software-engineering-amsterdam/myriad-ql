@@ -4,10 +4,11 @@ from QL import AST
 # TODO: Remove context, remove clear errors, clear env <-- dangerous.
 # TODO: Add a pass to collect variables --> out of order questions.
 
+
 class TypeChecker(object):
     def __init__(self, ast, env, error_handler):
         """
-        :type ast: AST.QuestionnaireAST
+        :type ast: AST.FormNode
         :type env: Environment.Environment
         :type error_handler: ErrorHandler.ErrorHandler
         """
@@ -18,7 +19,7 @@ class TypeChecker(object):
         self.handler = error_handler
 
     def start_traversal(self):
-        self.ast.root.accept(self)
+        self.ast.accept(self)
 
     @staticmethod
     def highest_number_type(left, right):
@@ -48,7 +49,7 @@ class TypeChecker(object):
 
     def if_node(self, if_node):
         """ :type if_node: AST.IfNode """
-        expr_type = if_node.expression.accept(self)
+        expr_type = if_node.condition.accept(self)
 
         if not expr_type.is_boolean():
             self.handler.add_if_cond_error(if_node)
@@ -56,7 +57,7 @@ class TypeChecker(object):
 
     def if_else_node(self, if_else_node):
         """ :type if_else_node: AST.IfElseNode """
-        expr_type = if_else_node.expression.accept(self)
+        expr_type = if_else_node.condition.accept(self)
 
         if not expr_type.is_boolean():
             self.handler.add_if_cond_error(if_else_node)

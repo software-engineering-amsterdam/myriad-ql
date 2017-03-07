@@ -2,7 +2,7 @@
 class PrintAst(object):
     def __init__(self, ast):
         """
-        :type ast: AST.QuestionnaireAST
+        :type ast: AST.FormNode
         """
         self.ast = ast
         self.indent = 0
@@ -11,7 +11,7 @@ class PrintAst(object):
     def start_traversal(self):
         self.indent = 0
         self.output = ""
-        self.form_block(self.ast.root)
+        self.ast.accept(self)
         print(self.output)
 
     def form_block(self, form_node):

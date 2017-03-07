@@ -7,14 +7,14 @@ from QL.Undefined import Undefined
 class Evaluate(object):
     def __init__(self, ast, env):
         """
-        :type ast: AST.QuestionnaireAST
+        :type ast: AST.FormNode
         :type env: Environment.Environment
         """
         self.ast = ast
         self.env = env
 
     def start_traversal(self):
-        self.ast.root.accept(self)
+        self.ast.accept(self)
 
     def if_node(self, if_node):
         if_node.if_block.accept(self)

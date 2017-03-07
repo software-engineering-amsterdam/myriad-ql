@@ -4,7 +4,7 @@ import networkx as nx
 class FindCycles(object):
     def __init__(self, ast, error_handler):
         """ First create a directed graph from all edges, then check on cycles.
-            :type ast: AST.QuestionnaireAST
+            :type ast: AST.FormNode
             :type error_handler: ErrorHandler.ErrorHandler
         """
         self.ast = ast
@@ -18,7 +18,7 @@ class FindCycles(object):
         self.directed_graph.clear()
         self.node_stack = [[]]
 
-        self.ast.root.accept(self)
+        self.ast.accept(self)
         cycle_list = list(nx.simple_cycles(self.directed_graph))
         if len(cycle_list) > 0:
             self.handler.add_cycle_error(cycle_list)
@@ -41,7 +41,7 @@ class FindCycles(object):
 
     def if_node(self, if_node):
         """ :type if_node: AST.IfNode """
-        from_vars = if_node.expression.accept(self)
+        from_vars = if_node.condition.accept(self)
         if from_vars is None:
             return
 
@@ -50,7 +50,7 @@ class FindCycles(object):
 
     def if_else_node(self, if_else_node):
         """ :type if_else_node: AST.IfElseNode """
-        from_vars = if_else_node.expression.accept(self)
+        from_vars = if_else_node.condition.accept(self)
         if from_vars is None:
             return
 

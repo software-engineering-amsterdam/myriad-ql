@@ -1,7 +1,7 @@
 class InitEnvironment(object):
     def __init__(self, ast, env, error_handler):
         """ First create a directed graph from all edges, then check on cycles.
-            :type ast: AST.QuestionnaireAST
+            :type ast: AST.FormNode
         """
         self.ast = ast
         self.env = env
@@ -17,7 +17,7 @@ class InitEnvironment(object):
         self.question_vars = []
         self.labels = []
 
-        self.ast.root.accept(self)
+        self.ast.accept(self)
 
         # Check if all variables found in the if statements are defined as
         # question, if not, report the first occurrence of the undeclared

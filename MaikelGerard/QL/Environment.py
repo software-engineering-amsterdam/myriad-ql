@@ -24,10 +24,10 @@ class Environment(object):
         return self.variables[identifier]["node"]
 
     def get_var_type(self, var_node):
-        if var_node.val not in self.variables:
+        if var_node.name not in self.variables:
             self.error_handler.add_undecl_var_error(var_node)
             return None
-        return self.variables[var_node.val]["node"].type
+        return self.variables[var_node.name]["node"].type
 
     def get_var_value(self, var_name):
         assert var_name in self.variables, \

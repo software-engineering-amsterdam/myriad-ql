@@ -50,7 +50,7 @@ class ErrorHandler(object):
         self.add_error(if_node.expression, error_message)
 
     def add_undecl_var_error(self, var_node):
-        error_message = "Variable '{}' is not defined!".format(var_node.val)
+        error_message = "Variable '{}' is not defined!".format(var_node.name)
         self.add_error(var_node, error_message)
 
     def add_duplicate_error(self, node):

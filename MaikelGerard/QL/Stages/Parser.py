@@ -158,7 +158,7 @@ class QuestionnaireParser(object):
                 # Make from the question and identifier nodes strings as
                 # expected elsewhere in the program.
                 args[0] = args[0].val
-                args[1] = args[1].val
+                args[1] = args[1].name
                 return question_class(*args)
             return parse_question
 
@@ -195,9 +195,7 @@ class QuestionnaireParser(object):
         normal_var = pp.Word(pp.alphas, pp.alphanums + "_")
         form = self.FORM + normal_var + \
             self.curly_embrace(self.block)
-        form.addParseAction(self.create_node(AST.FormNode))
-
-        return form.addParseAction(self.create_node(AST.QuestionnaireAST))
+        return form.addParseAction(self.create_node(AST.FormNode))
 
     def create_monop_node(self, src, loc, token):
         monop = token[0]
