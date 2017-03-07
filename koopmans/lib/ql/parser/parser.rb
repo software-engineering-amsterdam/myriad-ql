@@ -30,7 +30,9 @@ module QL
       }
 
       rule(:mult_op) { match['*/'].as(:operator) >> _ }
-      rule(:add_op) { match['+-'].as(:operator) >> _ }
+      rule(:add_op) { (str('+') | str('-')).as(:operator) >> _ }
+      # rule(:equal_op) { match['+-'].as(:operator) >> _ }
+
 
       # spaces, breaks
       rule(:_) { match('\s').repeat(1).maybe }
