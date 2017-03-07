@@ -20,12 +20,11 @@ public class IfStatementNode extends BlockNode {
 
     @Override
     public void setVisible(boolean isVisible) {
-        System.out.println("I evaluate to " + isVisible());
         super.setVisible(isVisible() && isVisible);
     }
 
     @Override
-    public void addCondition(Set<Node> set) {
+    public void addCondition(Set<ConditionNode> set) {
         set.add(mCondition);
     }
 }

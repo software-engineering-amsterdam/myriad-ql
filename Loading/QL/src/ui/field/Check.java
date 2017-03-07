@@ -3,18 +3,18 @@ package ui.field;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
-import ui.Questionnaire.Notifier;
+import ui.Notifier;
 import value.BoolValue;
 import value.Value;
 
 public class Check implements Field {
 
-	private Notifier listener;
 	private CheckBox field;
 	
-	public Check(String name) {
+	public Check(String name, Notifier notifier, BoolValue value) {
 		
 		this.field = new CheckBox();
+		field.setSelected(value.getValue());
 		
 		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
 	           
@@ -22,14 +22,9 @@ public class Check implements Field {
            public void changed(ObservableValue<? extends Boolean> observable,
                                Boolean oldValue, Boolean newValue) {
 				
-				listener.updateQuestionnaire(name, new BoolValue(newValue));
+				notifier.updateQuestionnaire(name, new BoolValue(newValue));
             }
 		});
-	}
-	
-	@Override
-	public void addListener(Notifier listener) {
-		this.listener = listener;
 	}
 	
 	@Override
@@ -37,10 +32,6 @@ public class Check implements Field {
 		return new BoolValue(field.isSelected());
 	}
 	
-	@Override
-	public void setAnswer(Value value) {
-		field.setSelected(((BoolValue) value).getValue());
-	}
 	
 	@Override
 	public CheckBox getField() {

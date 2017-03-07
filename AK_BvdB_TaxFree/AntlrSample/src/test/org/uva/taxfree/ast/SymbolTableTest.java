@@ -18,11 +18,11 @@ public class SymbolTableTest {
     public void testEvaluate() throws Exception {
         BooleanQuestion boolQuestion = new BooleanQuestion("did you sell a house?", "hasSoldHouse");
         mSymbolTable.addDeclaration(boolQuestion);
-        Assert.assertEquals("false", mSymbolTable.resolve("hasSoldHouse"));
+        Assert.assertEquals("false", mSymbolTable.resolveValue("hasSoldHouse"));
     }
 
     @Test(expectedExceptions = RuntimeException.class)
     public void testUnknownVariable() throws Exception {
-        mSymbolTable.resolve("giveMeARuntimeException!");
+        mSymbolTable.resolveValue("giveMeARuntimeException!");
     }
 }

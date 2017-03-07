@@ -151,5 +151,9 @@ public class IntegerValue extends Value {
     public Integer getValue() {
         return this.value;
     }
+
+    public String convertToString() {
+    	return this.value.toString();
+	}
 	
 }

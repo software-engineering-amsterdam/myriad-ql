@@ -2,7 +2,7 @@ package ast.type;
 
 import ast.Node;
 import ast.TypeVisitor;
-import ast.atom.Atom;
+import ui.Notifier;
 import ui.field.Field;
 import value.Value;
 
@@ -20,7 +20,7 @@ public abstract class Type extends Node {
 	}
 
 	// TODO field and value in here?
-	public abstract Field getField(String name);
+	public abstract Field getField(String name, Notifier notifier, Value value);
 	
 	public abstract Value getValue();
 

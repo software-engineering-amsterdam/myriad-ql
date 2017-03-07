@@ -27,9 +27,9 @@ public class StringValue extends Value {
     		return new BoolValue();
     	}
     	System.out.println("TODO does this work?");
-    	return new BoolValue (this.equals(other));
+    	// return new BoolValue (this.equals(other));
     	
-		// return new BoolValue(value.equals(other.getValue()) );
+		return new BoolValue(value.equals(((StringValue) other).getValue()) );
 	}
 
 	@Override
@@ -41,12 +41,16 @@ public class StringValue extends Value {
     	}
     	
     	System.out.println("TODO does this work?");
-    	return new BoolValue (!this.equals(other));
+    	// return new BoolValue (!this.equals(other));
 		
-		// return new BoolValue(!value.equals(other.getValue()) );
+		return new BoolValue(!value.equals(((StringValue) other).getValue()) );
 	}
 		
 	public String getValue() {
-		return value;
+		return this.value;
 	}
+
+	public String convertToString() {
+    	return this.value;
+    }
 }

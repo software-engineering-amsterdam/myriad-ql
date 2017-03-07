@@ -1,5 +1,7 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.types.Type;
+
 import java.util.Set;
 
 public abstract class ExpressionNode extends ConditionNode {
@@ -7,10 +9,10 @@ public abstract class ExpressionNode extends ConditionNode {
     private final String mOperator;
     private final ConditionNode mRight;
 
-    public ExpressionNode(ConditionNode left, String operator, ConditionNode right) {
-        mLeft = left;
-        mOperator = operator;
+    public ExpressionNode(ConditionNode right, String operator, ConditionNode left) {
         mRight = right;
+        mOperator = operator;
+        mLeft = left;
     }
 
     @Override
@@ -22,5 +24,18 @@ public abstract class ExpressionNode extends ConditionNode {
     public void addUsedVariables(Set<String> set) {
         mLeft.addUsedVariables(set);
         mRight.addUsedVariables(set);
+    }
+
+    @Override
+    public boolean isValid() {
+        return mLeft.isSameType(mRight);
+    }
+
+    @Override
+    public Type getType() {
+        if (!isValid()) {
+            throw new AssertionError("Either side works since the expression isn't valid anyway.");
+        }
+        return mLeft.getType();
     }
 }

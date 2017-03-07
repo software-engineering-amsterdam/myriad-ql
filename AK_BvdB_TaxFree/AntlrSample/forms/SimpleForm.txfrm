@@ -1,0 +1,6 @@
+form OurTaxFreeSolution {
+  "Do you like paying taxes?" -> likesToPayTaxes : boolean
+  if (likesToPayTaxes) {
+    "How many tax would you like to pay?" -> amountOfTax : integer
+  }
+}

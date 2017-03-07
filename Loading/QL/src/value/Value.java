@@ -6,6 +6,7 @@ import value.BoolValue;
 public abstract class Value {
 		
 	public abstract boolean isSet();
+	public abstract String convertToString();
 	
 	// Binary Operators
 	public Value add(Value other) { return null; }

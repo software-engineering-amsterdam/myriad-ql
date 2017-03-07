@@ -1,6 +1,7 @@
 package ui;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import QL.Warning;
 import ast.Form;
@@ -10,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,37 +20,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import value.Value;
 
-public class Questionnaire extends Application {
+import javax.json.*;
+
+public class Questionnaire extends Application implements Notifier {
 	
 	// TODO do not make static
 	private static Form form;
 	private static evaluation.Environment env; // TODO rename
 	private static GridPane grid;
 	private static List<Warning> warnings;
+	private static Stage pStage; // TODO
 
-	public class Notifier {
-
-		// TODO change to already implemented observer pattern
-		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = env.getAnswer(name);
-	    	// TODO .equals()?
-	    	System.out.println(oldAnswer);
-	    	System.out.println(newValue);
-			if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
-
-				env.addAnswer(name, newValue); 
-
-				// Save the title
-				Node title = grid.getChildren().get(0);
-		    	grid.getChildren().clear();
-		    	grid.add(title, 0, 0);
-		        renderQuestionnaire(grid);
-			}
-		}
-	}
 	
     public void main(Form f, Environment environment, List<Warning> w) {
     	form = f;
@@ -62,6 +46,8 @@ public class Questionnaire extends Application {
         
     @Override
     public void start(Stage primaryStage) {
+
+        pStage = primaryStage;
        
     	if (!warnings.isEmpty()) {
     		WarningDialog dialog = new WarningDialog(warnings);
@@ -75,8 +61,6 @@ public class Questionnaire extends Application {
         
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
-             
-        renderTitle(grid, form.getId());
         
         renderQuestionnaire(grid);
         
@@ -96,31 +80,20 @@ public class Questionnaire extends Application {
     }
     
     
-    private void setAnswers(List<Row> activeQuestions) {
-    	
-    	// TODO change
-    	for (Row question : activeQuestions) {
-    		
-    		Value value = env.getAnswer(question.getName());
-    		if (value == null) {
-    			continue;
-    		}
-    		question.setAnswer(value);
-    	}
-    }
-    
     private void renderQuestionnaire(GridPane grid) {
+    	
+        renderTitle(grid, form.getId());
         
-    	List<Row> activeQuestions = renderQuestions(grid);
+        List<Row> activeQuestions = createQuestions();
         
-    	setAnswers(activeQuestions);
+    	renderQuestions(activeQuestions);
     	
         Button btn = renderButton(grid, activeQuestions.size() + 2);
-         
+
         // TODO move to function submit
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, activeQuestions.size() + 2);
-                
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -133,11 +106,11 @@ public class Questionnaire extends Application {
                         actiontarget.setText("Please Fill in all Fields");
                         return;
             		}
-    
             	}  
                 actiontarget.setFill(Color.SPRINGGREEN);
                 actiontarget.setText("Thank you for filling\n in the questionnaire");
-                
+
+                exportQuestionnaire(activeQuestions);
             }
         });
     }
@@ -150,12 +123,16 @@ public class Questionnaire extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<Row> renderQuestions(GridPane grid) {
+    private List<Row> createQuestions() {
         
-    	QEvaluator qVisitor = new QEvaluator(env);
+    	QEvaluator qVisitor = new QEvaluator(env, this);
     	qVisitor.visit(form);
-    	List<Row> activeQuestions = qVisitor.getActiveQuestions();
+    	return qVisitor.getActiveQuestions();
     	
+    }
+    
+    private void renderQuestions(List<Row> activeQuestions) {
+
     	int rowIndex = 1;
         for (Row question : activeQuestions) {
             
@@ -163,11 +140,10 @@ public class Questionnaire extends Application {
             grid.add(questionLabel, 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
-            question.addListener(new Notifier());
+            // question.addListener(this);
             ++rowIndex;
         }
         
-        return activeQuestions;
     }
     
     private Button renderButton(GridPane grid, int rowIndex) {
@@ -179,6 +155,45 @@ public class Questionnaire extends Application {
         grid.add(hbBtn, 3, rowIndex);
         
         return btn;
+    }
+    
+	public void updateQuestionnaire(String name, Value newValue) {
+    	Value oldAnswer = env.getAnswer(name);
+    	// TODO .equals()?
+    	System.out.println(oldAnswer);
+    	System.out.println(newValue);
+		if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
+
+			env.addAnswer(name, newValue); 
+	    	grid.getChildren().clear();
+	        renderQuestionnaire(grid);
+		}
+	}
+
+	private void exportQuestionnaire(List<Row> activeQuestions) {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(pStage);
+
+        if (file != null) {
+
+            try {
+                JsonObjectBuilder questionnaire = Json.createObjectBuilder();
+
+                for (Row question : activeQuestions) {
+                    questionnaire.add(question.getName(), question.getAnswer().convertToString());
+                }
+
+                OutputStream os = new FileOutputStream(file);
+                JsonWriter jsonWriter = Json.createWriter(os);
+                jsonWriter.writeObject(questionnaire.build());
+                jsonWriter.close();
+            } catch (IOException ex) {
+                System.out.println("IOException save questionnaire..."); // TODO
+            }
+        }
     }
 
 }

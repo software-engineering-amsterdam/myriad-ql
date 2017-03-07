@@ -3,6 +3,7 @@ package org.uva.taxfree.model.node.blocks;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.declarations.CalculatedField;
 import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.node.expression.ConditionNode;
 
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public abstract class BlockNode extends Node {
         addDeclaration(set);
     }
 
-    public void retrieveConditions(Set<Node> set) {
+    public void retrieveConditions(Set<ConditionNode> set) {
         addCondition(set);
     }
 
@@ -41,7 +42,7 @@ public abstract class BlockNode extends Node {
     }
 
     @Override
-    public void addCondition(Set<Node> set) {
+    public void addCondition(Set<ConditionNode> set) {
         for (Node child : mChildren) {
             child.addCondition(set);
         }

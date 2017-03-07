@@ -23,7 +23,8 @@ blockItems returns [List<BlockItem> result]
 }
  : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $ctx.start.getLine())); }
  |   ID ':' STRING type expr { $result.add(new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result, $ctx.start.getLine())); }
- |   'if' '(' expr ')' block ('else' block)? { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); } // TODO add else
+ |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); } // TODO add else
+ |   'if' '(' expr ')' block { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); }
    )*
  ;
 
