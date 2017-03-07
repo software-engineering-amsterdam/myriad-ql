@@ -10,7 +10,7 @@ import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class AstExpressionTest {
+public class AbstractSyntaxTreeBuilderExpressionTest {
     @Test
     public void testLiteralExpression() throws Exception {
         // if (true)

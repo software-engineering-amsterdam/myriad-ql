@@ -2,7 +2,7 @@ package test.org.uva.taxfree.ast;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.ast.AbstractSyntaxTreeBuilder;
 import org.uva.taxfree.main.SemanticsAnalyzer;
 import org.uva.taxfree.model.environment.Environment;
 
@@ -12,7 +12,7 @@ import java.io.IOException;
 public class SemanticsAnalyzerTest {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionLabelForm.txt"));
+        Environment environment = AbstractSyntaxTreeBuilder.generateAst(testFile("duplicateQuestionLabelForm.txt"));
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
@@ -20,7 +20,7 @@ public class SemanticsAnalyzerTest {
 
     @Test
     public void testHasMultipleDuplicateQuestionLabels() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionLabelsForm.txt"));
+        Environment environment = AbstractSyntaxTreeBuilder.generateAst(testFile("duplicateQuestionLabelsForm.txt"));
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
         Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
@@ -73,7 +73,7 @@ public class SemanticsAnalyzerTest {
     }
 
     private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        Environment environment = Ast.generateAst(testFile(fileName));
+        Environment environment = AbstractSyntaxTreeBuilder.generateAst(testFile(fileName));
         return new SemanticsAnalyzer(environment);
     }
 

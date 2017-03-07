@@ -18,7 +18,7 @@ import org.uva.taxfree.model.node.declarations.*;
 
 import java.util.*;
 
-public class OurQLGrammarListener extends QLGrammarBaseListener {
+public class GrammarListener extends QLGrammarBaseListener {
 
     private SymbolTable mSymbolTable;
     private FormNode mRootNode;
@@ -27,7 +27,7 @@ public class OurQLGrammarListener extends QLGrammarBaseListener {
     private final Stack<List<Node>> mChildsStack = new Stack<>();
     private boolean insideIfElse = false;
 
-    public OurQLGrammarListener() {
+    public GrammarListener() {
         mSymbolTable = new SymbolTable();
     }
 

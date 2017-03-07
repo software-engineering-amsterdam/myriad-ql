@@ -1,6 +1,6 @@
 package org.uva.taxfree.main;//package main;
 
-import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.ast.AbstractSyntaxTreeBuilder;
 import org.uva.taxfree.gui.ErrorMessage;
 import org.uva.taxfree.gui.FileSelector;
 import org.uva.taxfree.gui.MessageWindow;
@@ -29,7 +29,7 @@ public class Main {
         // if isEmpty () {
         // etc.
 
-        Environment environment = Ast.generateAst(inputFile); // , symboltable); // in main
+        Environment environment = AbstractSyntaxTreeBuilder.generateAst(inputFile); // , symboltable); // in main
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
         // sematicsAnalyzer.check();
         if (semanticsAnalyzer.hasMessages()) {

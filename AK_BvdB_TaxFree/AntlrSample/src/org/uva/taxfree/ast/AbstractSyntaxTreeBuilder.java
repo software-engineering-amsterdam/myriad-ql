@@ -15,15 +15,15 @@ import java.util.BitSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Ast {
+public class AbstractSyntaxTreeBuilder {
 
-    private Ast() {
+    private AbstractSyntaxTreeBuilder() {
         // Private to prevent empty initialization
     }
 
     private BlockNode mRootNode;
 
-    public Ast(BlockNode rootNode) {
+    public AbstractSyntaxTreeBuilder(BlockNode rootNode) {
         mRootNode = rootNode;
     }
 
@@ -70,7 +70,7 @@ public class Ast {
 
         // Walk it and attach our listener
         ParseTreeWalker walker = new ParseTreeWalker();
-        OurQLGrammarListener listener = new OurQLGrammarListener();
+        GrammarListener listener = new GrammarListener();
         walker.walk(listener, formContext);
         return listener.getEnvironment();
     }

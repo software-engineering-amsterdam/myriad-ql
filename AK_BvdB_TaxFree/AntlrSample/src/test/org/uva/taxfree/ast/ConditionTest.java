@@ -2,7 +2,7 @@ package test.org.uva.taxfree.ast;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.ast.AbstractSyntaxTreeBuilder;
 import org.uva.taxfree.main.SemanticsAnalyzer;
 import org.uva.taxfree.model.environment.Environment;
 
@@ -53,7 +53,7 @@ public class ConditionTest {
     }
 
     private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        Environment environment = Ast.generateAst(testFile(fileName));
+        Environment environment = AbstractSyntaxTreeBuilder.generateAst(testFile(fileName));
         return new SemanticsAnalyzer(environment);
     }
 

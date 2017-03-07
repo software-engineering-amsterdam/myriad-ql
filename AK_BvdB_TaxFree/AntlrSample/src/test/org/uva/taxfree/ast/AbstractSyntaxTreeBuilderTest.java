@@ -2,11 +2,11 @@ package test.org.uva.taxfree.ast;
 
 import org.testng.TestException;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.ast.AbstractSyntaxTreeBuilder;
 
 import java.io.File;
 
-public class AstTest {
+public class AbstractSyntaxTreeBuilderTest {
     @Test
     public void testValidForms() throws Exception {
         File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ast\\validForms");
@@ -16,7 +16,7 @@ public class AstTest {
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
             try {
-                Ast.generateAst(file);
+                AbstractSyntaxTreeBuilder.generateAst(file);
             } catch (UnsupportedOperationException e) {
 //                e.printStackTrace();
                 passedAllTests = false;
@@ -38,7 +38,7 @@ public class AstTest {
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
             try {
-                Ast.generateAst(file);
+                AbstractSyntaxTreeBuilder.generateAst(file);
                 createdAst = true;
             } catch (UnsupportedOperationException e) {
 //                e.printStackTrace();
