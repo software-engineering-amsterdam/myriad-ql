@@ -14,4 +14,9 @@ public class VariableLiteralNode extends LiteralNode {
     public String resolveValue() {
         return mSymbolTable.resolve(super.resolveValue());
     }
+
+    @Override
+    public boolean isValid() {
+        return super.isBoolean();
+    }
 }

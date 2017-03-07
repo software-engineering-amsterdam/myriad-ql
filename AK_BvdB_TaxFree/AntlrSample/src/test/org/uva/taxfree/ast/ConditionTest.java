@@ -33,13 +33,11 @@ public class ConditionTest {
 
     @Test
     public void testNestedExpression() throws Exception {
-        // TODO
         assertSemantics("calculationNestedExpressionForm.txt", 0, "A valid nested condition");
     }
 
     @Test
     public void testInvalidConditionExpression() throws Exception {
-        // TODO: Next step, check types with in combination with operator
         assertSemantics("invalidConditionForm.txt", 1, "An invalid condition due to it's types");
     }
 
