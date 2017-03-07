@@ -1,5 +1,7 @@
 package org.ql.gui.widgets;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import org.ql.ast.Identifier;
 import org.ql.evaluator.value.StringValue;
@@ -35,6 +37,11 @@ public class TextWidget extends Widget {
     @Override
     public void setValue(Value value) {
         textField.setText((String) value.getPlainValue());
+    }
+
+    @Override
+    public void addEventListener(EventHandler<ActionEvent> eventHandler) {
+
     }
 
     @Override

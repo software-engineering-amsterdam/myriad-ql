@@ -5,10 +5,11 @@ import org.ql.evaluator.value.Value;
 import org.ql.gui.widgets.Widget;
 
 public abstract class QuestionElement {
-    private Question question;
-    private Widget widget;
+    protected Question question;
+    protected Widget widget;
 
     public abstract Value getValue();
+
     public abstract void setValue(Value value);
 
     public QuestionElement(Question question, Widget widget) {
