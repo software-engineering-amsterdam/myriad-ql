@@ -7,6 +7,10 @@ public class GuiDecimalValue extends GuiValue<Double> {
     private Double value;
     private TextField textField;
 
+    public GuiDecimalValue() {
+        textField = new TextField();
+    }
+
     @Override Double getValue() {
         return value;
     }
