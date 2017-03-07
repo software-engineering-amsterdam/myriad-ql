@@ -45,10 +45,15 @@ namespace Questionnaires
             var variableStore = new VariableStore.VariableStore();
             var renderer = new Renderer.Renderer(variableStore);
             var ruleContainer = new RuleContainer.RuleContainer();
-
-            var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer);
+            var questions = new Dictionary<string, Question>();
+            var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer, questions);
             questionBuilder.Build((Form)form); // Can casting to form here cause problems?
-            
+            QLS.Processing.SomeClass something = new QLS.Processing.SomeClass(questions);
+            something.Process((dynamic)Stylesheet);
+
+            foreach (var question in questions.Values)
+                renderer.AddQuestion(question);
+
             ruleContainer.ApplyRules(variableStore, renderer);
         }
     }

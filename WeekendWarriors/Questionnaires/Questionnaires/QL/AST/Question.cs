@@ -11,7 +11,7 @@ namespace Questionnaires.QL.AST
 {
     public class Question : INode
     {
-        public Questionnaires.Renderer.Widgets.QuestionWidget Widget;
+        public Questionnaires.Renderer.Widgets.QuestionWidget Widget { get; set; }
 
         public Question(string identifier, string body, IType type)
         {

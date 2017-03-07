@@ -24,6 +24,7 @@ form Box1HouseOwning {
     moneyQ2: "Money question 2" money(moneyQ1)
     boolQ1: "Boolean question 1" boolean
     boolQ2: "Boolean question 2" boolean(boolQ1)
+    boolQ3: "Boolean question 3" boolean(boolQ2)
     stringQ1: "Stringquestion 1" string
     stringQ2: "Stringquestion 2" string(stringQ1)
 }      
@@ -32,55 +33,24 @@ form Box1HouseOwning {
 
 stylesheet taxOfficeExample 
 {
-	page Housing 
-	{
-		section "Buying"
-		{      
-			question hasBoughtHouse 
-			{
-				widget checkbox
-			}
-		} 
-		section "Loaning" 
-		{
-			question hasMaintLoan
-		}
-	}
-	page Selling 
-	{
-		section "Selling" 
-		{
-			question hasSoldHouse
-			{
-				widget radio
-			}
-		}
-		section "You sold a house" 
-		{
-			question sellingPrice
-			{
-				widget spinbox
-			}
-			question privateDebt
-			{
-				widget spinbox 
-			}
-			question valueResidue
-			default money 
-			{
-				width: 400
-				font: "Arial" 
-				fontsize: 14
-				color: #999999
-				widget spinbox
-			}
-        }        
-      
-		default boolean
-		{
-			widget radio
-		}
-	}
+ page Housing 
+ {
+  section "Buying"
+  {      
+   question boolQ2
+   {
+    widget dropdown
+   }
+   question boolQ3
+   {
+    widget radio
+   }
+   question moneyQ1
+   {
+    widget slider
+   }   
+  } 
+ }
 }
         </TextBox>
         <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>

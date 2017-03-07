@@ -9,9 +9,15 @@ namespace Questionnaires.QLS.Processing
 {   
     class SomeClass
     {
-        Dictionary<string, QL.AST.Question> questions;
+        Dictionary<string, QL.AST.Question> Questions;
 
-        void Process(StyleSheet styleSheet)
+        public SomeClass(Dictionary<string, QL.AST.Question> questions)
+        {
+            Questions = questions;
+        }
+
+
+        public void Process(StyleSheet styleSheet)
         {
             foreach(var page in styleSheet.Pages)
             {
@@ -31,8 +37,9 @@ namespace Questionnaires.QLS.Processing
         {
             foreach(var question in section.Questions)
             {
+                Visit((dynamic)question);
                 // Option 1 a widget has been specified specifically for this question
-
+                
                 // Option 2 a widget has been specified for this type of question in this section
 
                 // Option 3 a widget has been specified for this type of question in one of the upwards sections
@@ -40,6 +47,16 @@ namespace Questionnaires.QLS.Processing
                 // Option 4 no widget has been specified for this type of question in QLS
             }
             
+        }
+
+        void Visit(QuestionWithWidget question)
+        {
+            this.Questions[question.Name].Widget = question.Widget.CreateWidget();
+        }
+
+        void Visit(Question question)
+        {
+
         }
     }
 }

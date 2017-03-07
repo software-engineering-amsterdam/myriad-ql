@@ -10,9 +10,9 @@ namespace Questionnaires.QLS.AST
     {
         public Questionnaires.Types.IType Type { get; }
         public Dictionary<string, string> Properties { get; }
-        public Widgets.Widget Widget { get; }
+        public Questionnaires.Renderer.Widgets.QuestionWidget Widget { get; }
 
-        public DefaultStyle(Questionnaires.Types.IType type, Widgets.Widget widget)
+        public DefaultStyle(Questionnaires.Types.IType type, Questionnaires.Renderer.Widgets.QuestionWidget widget)
         {
             this.Properties = new Dictionary<string, string>();
             this.Type = type;
