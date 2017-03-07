@@ -8,15 +8,13 @@ import org.ql.typechecker.visitor.TypeMismatchVisitor;
 
 public class TypeChecker {
 
-    private final Form form;
-
     private final QuestionsVisitor questionsVisitor;
     private final TypeMismatchVisitor typeMismatchVisitor;
     private final CircularDependencyVisitor circularDependenciesVisitor;
+
     private final IssuesStorage issuesStorage;
 
-    public TypeChecker(Form form) {
-        this.form = form;
+    public TypeChecker() {
         this.issuesStorage = new IssuesStorage();
 
         questionsVisitor = new QuestionsVisitor(issuesStorage);
@@ -24,7 +22,7 @@ public class TypeChecker {
         circularDependenciesVisitor = new CircularDependencyVisitor(issuesStorage);
     }
 
-    public IssuesStorage checkForm() {
+    public IssuesStorage checkForm(Form form) {
         SymbolTable symbolTable = new SymbolTable();
         questionsVisitor.visitForm(form, symbolTable);
         typeMismatchVisitor.visitForm(form, symbolTable);

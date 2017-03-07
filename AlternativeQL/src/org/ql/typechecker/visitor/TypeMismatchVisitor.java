@@ -29,29 +29,29 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public Type visitForm(Form form, SymbolTable symbolTable) {
-        visitStatements(form.getStatements(), null);
+        visitStatements(form.getStatements(), symbolTable);
         return null;
     }
 
     @Override
     public Type visitIfThen(IfThen ifThen, SymbolTable symbolTable) {
-        visitExpression(ifThen.getCondition(), null);
-        visitStatements(ifThen.getThenStatements(), null);
+        visitExpression(ifThen.getCondition(), symbolTable);
+        visitStatements(ifThen.getThenStatements(), symbolTable);
         return null;
     }
 
     @Override
     public Type visitIfThenElse(IfThenElse ifThenElse, SymbolTable symbolTable) {
-        visitExpression(ifThenElse.getCondition(), null);
-        visitStatements(ifThenElse.getThenStatements(), null);
-        visitStatements(ifThenElse.getElseStatements(), null);
+        visitExpression(ifThenElse.getCondition(), symbolTable);
+        visitStatements(ifThenElse.getThenStatements(), symbolTable);
+        visitStatements(ifThenElse.getElseStatements(), symbolTable);
         return null;
     }
 
     @Override
     public Type visitQuestion(Question question, SymbolTable symbolTable) {
         if (question.getValue() != null) {
-            Type valueType = question.getValue().accept(this, null);
+            Type valueType = question.getValue().accept(this, symbolTable);
 
             if (!question.getType().isCompatibleWith(valueType)) {
                 issuesStorage.addError(new TypeMismatch(question.getType(), valueType));
@@ -62,7 +62,7 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public Type visitNegation(Negation node, SymbolTable symbolTable) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+        Type innerExpressionType = node.getExpression().accept(this, symbolTable);
 
         if (!innerExpressionType.isBoolean()) {
             issuesStorage.addError(new TypeMismatch(new BooleanType(), innerExpressionType));
@@ -74,12 +74,12 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public Type visitProduct(Product node, SymbolTable symbolTable) {
-        return checkTypeMismatch(node);
+        return checkTypeMismatch(node, symbolTable);
     }
 
     @Override
     public Type visitIncrement(Increment node, SymbolTable symbolTable) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+        Type innerExpressionType = node.getExpression().accept(this, symbolTable);
 
         if (!(innerExpressionType.isNumeric())) {
             issuesStorage.addError(new NumberExpected(innerExpressionType));
@@ -91,38 +91,38 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public Type visitSubtraction(Subtraction node, SymbolTable symbolTable) {
-        return checkTypeMismatch(node);
+        return checkTypeMismatch(node, symbolTable);
     }
 
     @Override
     public BooleanType visitNotEqual(NotEqual node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public Type visitAnd(LogicalAnd node, SymbolTable symbolTable) {
-        return checkLogicalExpression(node);
+        return checkLogicalExpression(node, symbolTable);
     }
 
     @Override
     public BooleanType visitLowerThan(LowerThan node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public BooleanType visitGreaterThanOrEqual(GreaterThanOrEqual node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public Type visitDivision(Division node, SymbolTable symbolTable) {
-        return checkTypeMismatch(node);
+        return checkTypeMismatch(node, symbolTable);
     }
 
     @Override
@@ -137,24 +137,24 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public Type visitGroup(Group node, SymbolTable symbolTable) {
-        return node.getExpression().accept(this, null);
+        return node.getExpression().accept(this, symbolTable);
     }
 
     @Override
     public Type visitAddition(Addition node, SymbolTable symbolTable) {
-        return checkTypeMismatch(node);
+        return checkTypeMismatch(node, symbolTable);
     }
 
     @Override
     public BooleanType visitGreaterThan(GreaterThan node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public Type visitDecrement(Decrement node, SymbolTable symbolTable) {
-        Type innerExpressionType = node.getExpression().accept(this, null);
+        Type innerExpressionType = node.getExpression().accept(this, symbolTable);
 
         if (!(innerExpressionType.isNumeric())) {
             issuesStorage.addError(new NumberExpected(innerExpressionType));
@@ -166,21 +166,21 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
 
     @Override
     public BooleanType visitEquals(Equals node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public BooleanType visitLowerThanOrEqual(LowerThanOrEqual node, SymbolTable symbolTable) {
-        checkTypeMismatch(node);
+        checkTypeMismatch(node, symbolTable);
 
         return new BooleanType();
     }
 
     @Override
     public Type visitOr(LogicalOr node, SymbolTable symbolTable) {
-        return checkLogicalExpression(node);
+        return checkLogicalExpression(node, symbolTable);
     }
 
     @Override
@@ -203,9 +203,9 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
         return new StringType();
     }
 
-    private Type checkTypeMismatch(BinaryExpression node) {
-        Type leftType = node.getLeft().accept(this, null);
-        Type rightType = node.getRight().accept(this, null);
+    private Type checkTypeMismatch(BinaryExpression node, SymbolTable symbolTable) {
+        Type leftType = node.getLeft().accept(this, symbolTable);
+        Type rightType = node.getRight().accept(this, symbolTable);
 
         if (!leftType.isCompatibleWith(rightType)) {
             issuesStorage.addError(new TypeMismatch(leftType, rightType));
@@ -216,9 +216,9 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
         return leftType;
     }
 
-    private Type checkLogicalExpression(BinaryExpression node) {
-        Type leftType = node.getLeft().accept(this, null);
-        Type rightType = node.getRight().accept(this, null);
+    private Type checkLogicalExpression(BinaryExpression node, SymbolTable symbolTable) {
+        Type leftType = node.getLeft().accept(this, symbolTable);
+        Type rightType = node.getRight().accept(this, symbolTable);
 
         if (!leftType.isBoolean()) {
             issuesStorage.addError(new TypeMismatch(new BooleanType(), leftType));

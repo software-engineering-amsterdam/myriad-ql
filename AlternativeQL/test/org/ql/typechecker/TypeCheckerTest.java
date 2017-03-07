@@ -23,12 +23,12 @@ public class TypeCheckerTest {
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
         String expectedWarning = "Question '" + questionLabel + "' label has duplicate(s)";
 
-        TypeChecker typeChecker = new TypeChecker(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
+        TypeChecker typeChecker = new TypeChecker();
+
+        IssuesStorage issuesStorage = typeChecker.checkForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
             add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
         }}));
-
-        IssuesStorage issuesStorage = typeChecker.checkForm();
 
         assertEquals(1, issuesStorage.getErrors().size());
         assertEquals(1, issuesStorage.getWarnings().size());
