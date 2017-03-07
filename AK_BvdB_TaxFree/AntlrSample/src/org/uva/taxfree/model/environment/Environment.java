@@ -18,6 +18,10 @@ public class Environment {
         mAbstractSyntaxTree = abstractSyntaxTree;
     }
 
+    public BlockNode getRootNode() {
+        return mAbstractSyntaxTree;
+    }
+
     public List<String> getDuplicateLabelErrors() {
         return mSymbolTable.getDuplicateLabelErrors();
     }
