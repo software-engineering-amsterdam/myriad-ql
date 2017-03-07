@@ -12,6 +12,7 @@ public class CheckBoxWidget extends Widget {
     public CheckBoxWidget(String label) {
         this.checkBox = new CheckBox(label);
         addToPane();
+        addEventHandler();
     }
 
     public CheckBox getCheckBox() {
@@ -34,8 +35,14 @@ public class CheckBoxWidget extends Widget {
     }
 
     @Override
-    public void addEventListener(EventHandler<ActionEvent> eventHandler) {
-        checkBox.setOnAction(eventHandler);
+    public void addEventHandler() {
+        checkBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Value: " + checkBox.isSelected());
+                setValue(new BooleanValue(checkBox.isSelected()));
+            }
+        });
     }
 
     @Override

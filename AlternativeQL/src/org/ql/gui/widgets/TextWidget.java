@@ -13,6 +13,7 @@ public class TextWidget extends Widget {
     public TextWidget(String text) {
         textField = new TextField(text);
         addToPane();
+        addEventHandler();
     }
 
     public TextField getTextField() {
@@ -21,7 +22,7 @@ public class TextWidget extends Widget {
 
     public void addEventHandler() {
         textField.setOnAction((event) -> {
-            String value = textField.getText();
+            System.out.println(textField.getText());
         });
     }
 
@@ -38,11 +39,6 @@ public class TextWidget extends Widget {
     @Override
     public void setValue(Value value) {
         textField.setText((String) value.getPlainValue());
-    }
-
-    @Override
-    public void addEventListener(EventHandler<ActionEvent> eventHandler) {
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.ql.gui;
 
 import javafx.stage.Stage;
 import org.ql.ast.Form;
+import org.ql.evaluator.ValueTable;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.visitor.QuestionValueVisitor;
 import org.ql.gui.elements.visitor.BranchVisitor;
@@ -26,11 +27,13 @@ public class GUIHandler {
     }
 
     public void runGUI(Form form) {
+        ValueTable valueTable = questionValueVisitor.makeValueTable(form);
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, questionValueVisitor.makeValueTable(form));
 
-        System.out.println(visibleElements.size());
         for(QuestionElement questionElement : visibleElements) {
-            System.out.println(questionElement.getQuestion().getQuestionLabel());
+            questionElement.getWidget().setValue(valueTable.lookup(questionElement.getQuestion().getId()));
+
+            mainstage.addPaneToRootPane(questionElement.getWidget().getGridPane());
         }
 
     }

@@ -73,7 +73,13 @@ public class BranchVisitor implements FormVisitor<List<QuestionElement>, ValueTa
             return false;
         }
 
-        return ((BooleanValue) evaluator.evaluate(expression, valueTable)).getPlainValue();
+        BooleanValue value = ((BooleanValue) evaluator.evaluate(expression, valueTable));
+
+        if(value == null) {
+            return false;
+        }
+
+        return value.getPlainValue();
     }
 
 }
