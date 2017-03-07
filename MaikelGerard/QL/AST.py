@@ -337,7 +337,8 @@ class BoolTypeNode(TypeNode):
         super(BoolTypeNode, self).__init__("boolean", line, col)
         self.default = False
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return value
 
     def accept(self, visitor, *args):
@@ -349,7 +350,8 @@ class IntTypeNode(TypeNode):
         super(IntTypeNode, self).__init__("integer", line, col)
         self.default = Decimal("0")
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return Decimal(value)
 
     def accept(self, visitor, *args):
@@ -361,7 +363,8 @@ class MoneyTypeNode(TypeNode):
         super(MoneyTypeNode, self).__init__("money", line, col)
         self.default = Decimal("0.00")
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return Decimal(value)
 
     def accept(self, visitor, *args):
@@ -373,7 +376,8 @@ class DecimalTypeNode(TypeNode):
         super(DecimalTypeNode, self).__init__("decimal", line, col)
         self.default = Decimal("0.00")
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return Decimal(value)
 
     def accept(self, visitor, *args):
@@ -385,7 +389,8 @@ class StringTypeNode(TypeNode):
         super(StringTypeNode, self).__init__("string", line, col)
         self.default = ""
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return value
 
     def accept(self, visitor, *args):
@@ -397,11 +402,25 @@ class DateTypeNode(TypeNode):
         super(DateTypeNode, self).__init__("date", line, col)
         self.default = date(day=1, month=1, year=2000)
 
-    def parse_value(self, value):
+    @staticmethod
+    def parse_value(value):
         return value
 
     def accept(self, visitor, *args):
         return visitor.date_type_node(self, *args)
+
+
+class VarNode(ExpressionNode):
+    def __init__(self, name, line=0, col=0):
+        super(ExpressionNode, self).__init__(line, col)
+        self.name = name
+
+    def accept(self, visitor, *args):
+        return visitor.var_node(self, *args)
+
+    def __eq__(self, other):
+        return super(ExpressionNode, self).__eq__(other) \
+               and other.name == self.name
 
 
 class LiteralNode(ExpressionNode):
@@ -416,61 +435,49 @@ class LiteralNode(ExpressionNode):
         return super(LiteralNode, self).__eq__(other) and other.val == self.val
 
 
-class VarNode(ExpressionNode):
-    def __init__(self, name, line=0, col=0):
-        super(ExpressionNode, self).__init__(line, col)
-        self.name = name
-
-    def accept(self, visitor, *args):
-        return visitor.var_node(self, *args)
-
-    def __eq__(self, other):
-        return super(ExpressionNode, self).__eq__(other) and other.name == self.name
-
-
 class StringNode(LiteralNode):
-    def __init__(self, string, line=0, col=0):
-        super(StringNode, self).__init__(string, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(StringNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.string_node(self, *args)
 
 
 class IntNode(LiteralNode):
-    def __init__(self, integer, line=0, col=0):
-        super(IntNode, self).__init__(integer, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(IntNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.int_node(self, *args)
 
 
 class BoolNode(LiteralNode):
-    def __init__(self, boolean, line=0, col=0):
-        super(BoolNode, self).__init__(boolean, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(BoolNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.bool_node(self, *args)
 
 
 class MoneyNode(LiteralNode):
-    def __init__(self, money, line=0, col=0):
-        super(MoneyNode, self).__init__(money, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(MoneyNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.decimal_node(self, *args)
 
 
 class DecimalNode(LiteralNode):
-    def __init__(self, decimal, line=0, col=0):
-        super(DecimalNode, self).__init__(decimal, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(DecimalNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.decimal_node(self, *args)
 
 
 class DateNode(LiteralNode):
-    def __init__(self, date_val, line=0, col=0):
-        super(DateNode, self).__init__(date_val, line, col)
+    def __init__(self, value, line=0, col=0):
+        super(DateNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
         return visitor.date_node(self, *args)

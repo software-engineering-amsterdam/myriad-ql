@@ -3,7 +3,6 @@ import sys
 from QL.environment import Environment
 from QL.errorHandler import ErrorHandler
 from QL.GUI.initWidgets import InitWidgets
-from QL.stages.evaluator import Evaluate
 from QL.stages.findCycles import FindCycles
 from QL.stages.parser import QuestionnaireParser
 from QL.stages.typeChecker import TypeChecker
@@ -32,10 +31,9 @@ if __name__ == '__main__':
     # Type-check and evaluate the AST.
     FindCycles(parsedAST, error_handler).start_traversal()
     TypeChecker(parsedAST, environment, error_handler).start_traversal()
-    evaluator = Evaluate(parsedAST, environment)
 
     # Finally, draw the GUI.
-    built_gui = InitWidgets(parsedAST, environment, evaluator, error_handler)
+    built_gui = InitWidgets(parsedAST, environment, error_handler)
     built_gui.start_traversal()
     gui = built_gui.get_initialized_gui()
     gui.start()

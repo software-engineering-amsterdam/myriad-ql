@@ -1,14 +1,15 @@
 import json
 
-from QL.undefined import Undefined
 from collections import OrderedDict
+from QL.undefined import Undefined
+from QL.stages.updateComputedVariables import UpdateComputedVariables
 
 
 class SaveQuestionaire(object):
-    def __init__(self, ast, env, evaluator, error_handler):
+    def __init__(self, ast, env, error_handler):
         self.ast = ast
         self.env = env
-        self.evaluator = evaluator
+        self.update_computed_variables = UpdateComputedVariables(ast, env)
         self.handler = error_handler
         self.show_stack = []
         self.form_output = OrderedDict()
@@ -16,7 +17,7 @@ class SaveQuestionaire(object):
     def start_traversal(self):
         self.show_stack = []
 
-        self.ast.accept(self)
+        self.ast.accept(self.update_computed_variables)
         self.write_fields("./form_output.txt")
 
     def write_fields(self, path):
@@ -29,13 +30,13 @@ class SaveQuestionaire(object):
         self.show_stack.pop()
 
     def if_node(self, if_node):
-        condition = if_node.expression.accept(self.evaluator)
+        condition = if_node.condition.accept(self.update_computed_variables)
         condition = condition if condition != Undefined else False
 
         self.traverse_branch(if_node.if_block, condition)
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self.evaluator)
+        condition = if_else_node.condition.accept(self.update_computed_variables)
         condition = condition if condition != Undefined else False
 
         self.traverse_branch(if_else_node.if_block, condition)

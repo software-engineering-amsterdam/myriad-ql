@@ -1,5 +1,5 @@
 from QL.stages.parser import QuestionnaireParser as Parser
-from QL.stages.evaluator import Evaluate
+from QL.stages.expressionEvaluator import ExpressionEvaluator
 from QL.environment import Environment
 from QL.errorHandler import ErrorHandler
 from QL.undefined import Undefined
@@ -18,7 +18,7 @@ class TestEvaluator(unittest.TestCase):
     def setUp(self):
         self.handler = ErrorHandler()
         self.env = Environment(self.handler)
-        self.evaluator = Evaluate(None, self.env)
+        self.evaluator = ExpressionEvaluator(self.env)
 
     def tearDown(self):
         pass
