@@ -7,7 +7,7 @@ from QL.stages.evaluator import Evaluate
 from QL.stages.findCycles import FindCycles
 from QL.stages.parser import QuestionnaireParser
 from QL.stages.typeChecker import TypeChecker
-from QL.stages.PrintAST import PrintAst
+from QL.stages.printAST import PrintAst
 from QL.stages.initEnvironment import InitEnvironment
 
 if __name__ == '__main__':
