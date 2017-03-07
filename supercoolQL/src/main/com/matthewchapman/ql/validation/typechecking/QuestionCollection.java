@@ -58,7 +58,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(IfStatement ifStatement) {
-        for(Statement statement : ifStatement.getStatements()) {
+        for(Statement statement : ifStatement.getIfCaseStatements()) {
             statement.accept(this);
         }
 

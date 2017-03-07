@@ -48,7 +48,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
             calculation = null;
         }
 
-        return new Question(questionID, questionContent, questionReturnType, calculation);
+        return new Question(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
@@ -111,7 +111,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
             statements.add((Statement) visit(statementContext));
         }
 
-        return new IfStatement((Expression) visit(ctx.expression()), statements);
+        return new IfStatement((Expression) visit(ctx.expression()), statements, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
@@ -128,7 +128,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
             elseCaseStatements.add((Statement) visit(statementContext));
         }
 
-        return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements);
+        return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements, ctx.start.getLine(), ctx.start.getCharPositionInLine());
 
     }
 

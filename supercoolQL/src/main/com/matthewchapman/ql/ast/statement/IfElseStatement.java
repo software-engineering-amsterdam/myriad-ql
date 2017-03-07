@@ -2,7 +2,6 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validation.QLVisitor;
 
 import java.util.List;
 
@@ -12,39 +11,17 @@ import java.util.List;
  * If statement with additional storage for statements to be executed if the Expression returns false.
  */
 
-public class IfElseStatement extends Statement {
+public class IfElseStatement extends IfStatement {
 
-    private final List<Statement> ifCaseStatements;
     private final List<Statement> elseCaseStatements;
-    private Expression condition;
 
-    public IfElseStatement(Expression e, List<Statement> ifCases, List<Statement> elseCases) {
+    public IfElseStatement(Expression e, List<Statement> ifCases, List<Statement> elseCases, int line, int column) {
 
-        this.ifCaseStatements = ifCases;
+        super(e, ifCases, line, column);
         this.elseCaseStatements = elseCases;
-        this.condition = e;
-    }
-
-
-    public void setCondition(Expression e) {
-        this.condition = e;
-    }
-
-    public List<Statement> getIfCaseStatements() {
-        return this.ifCaseStatements;
     }
 
     public List<Statement> getElseCaseStatements() {
         return this.elseCaseStatements;
     }
-
-    public Expression getCondition() {
-        return this.condition;
-    }
-
-    @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
-    }
-
 }

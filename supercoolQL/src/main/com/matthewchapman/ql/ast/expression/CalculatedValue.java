@@ -8,18 +8,18 @@ import com.matthewchapman.ql.validation.Visitable;
  * Created by matt on 27/02/2017.
  *
  * Calculated value class, exists in a question that is not user answerable.
- * parameterGroup contains expressions to be evaluated to provide a result.
+ * calculation contains expressions to be evaluated to provide a result.
  */
 public class CalculatedValue extends Expression implements Visitable {
 
-    private final ParameterGroup parameterGroup;
+    private final Expression calculation;
 
-    public CalculatedValue(ParameterGroup e) {
-        this.parameterGroup = e;
+    public CalculatedValue(Expression e) {
+        this.calculation = e;
     }
 
-    public ParameterGroup getParameterGroup() {
-        return this.parameterGroup;
+    public Expression getCalculation() {
+        return this.calculation;
     }
 
     @Override

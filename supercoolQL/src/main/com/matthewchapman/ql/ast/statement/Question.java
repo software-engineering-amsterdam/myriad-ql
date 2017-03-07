@@ -18,11 +18,13 @@ public class Question extends Statement {
     private final Expression calculatedValue;
     private final boolean calculated;
 
-    public Question(String name, String text, Type type, Expression calculatedValue) {
+    public Question(String name, String text, Type type, Expression calculatedValue, int line, int column) {
         this.name = name;
         this.text = text;
         this.type = type;
         this.calculatedValue = calculatedValue;
+        this.setColumn(column);
+        this.setLine(line);
 
         if (calculatedValue != null) {
             calculated = true;
@@ -50,4 +52,5 @@ public class Question extends Statement {
     public <T> T accept(QLVisitor<T> visitor) {
         return visitor.visit(this);
     }
+
 }

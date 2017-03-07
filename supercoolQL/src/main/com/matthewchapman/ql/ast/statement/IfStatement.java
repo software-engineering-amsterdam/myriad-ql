@@ -10,29 +10,30 @@ import java.util.List;
 /**
  * Created by matt on 21/02/2017.
  *
- * Contains statements to be evaluated if the condition contained evaluates to true.
+ * Contains ifCaseStatements to be evaluated if the condition contained evaluates to true.
  */
 
 public class IfStatement extends Statement {
 
-    private final List<Statement> statements;
+    private final List<Statement> ifCaseStatements;
     private Expression condition;
 
-    public IfStatement(Expression e, List<Statement> s) {
-        this.statements = new ArrayList<>();
+    public IfStatement(Expression e, List<Statement> s, int line, int column) {
+        this.ifCaseStatements = new ArrayList<>();
         this.addStatements(s);
         this.condition = e;
+        this.setLine(line);
+        this.setColumn(column);
     }
 
     public void addStatements(List<Statement> statements) {
         for (Statement s : statements) {
-            this.statements.add(s);
+            this.ifCaseStatements.add(s);
         }
     }
 
-
-    public List<Statement> getStatements() {
-        return this.statements;
+    public List<Statement> getIfCaseStatements() {
+        return this.ifCaseStatements;
     }
 
     public Expression getCondition() {
