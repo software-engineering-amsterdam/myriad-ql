@@ -21,7 +21,7 @@ public abstract class CalculatedField extends NamedNode {
 
     @Override
     public void addDeclaration(Set<NamedNode> set) {
-        mCondition.addDeclaration(set);
+        set.add(this);
     }
 
     @Override
@@ -43,6 +43,7 @@ public abstract class CalculatedField extends NamedNode {
     public String resolveValue() {
         return mCondition.evaluate();
     }
+
 
     @Override
     public void addCalculation(Set<CalculatedField> set) {

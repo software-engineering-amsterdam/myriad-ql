@@ -39,6 +39,7 @@ public class QuestionForm {
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(640, 480));
         frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     private JPanel createComponents() {
