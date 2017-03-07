@@ -8,11 +8,10 @@ import org.lemonade.exeptions.QLOperatorException;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.Value;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.types.*;
 
 import java.util.ArrayList;
@@ -236,27 +235,27 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitBooleanAtom(QLParser.BooleanAtomContext ctx) {
-        return new BooleanValue(ctx.BOOLEAN().getText());
+        return new BooleanLiteral(ctx.BOOLEAN().getText());
     }
 
     @Override
     public ASTNode visitStringAtom(QLParser.StringAtomContext ctx) {
-        return new StringValue(ctx.STR().getText());
+        return new StringLiteral(ctx.STR().getText());
     }
 
     @Override
     public ASTNode visitIdentifierAtom(QLParser.IdentifierAtomContext ctx) {
-        return new IdentifierValue(ctx.IDENT().getText());
+        return new IdentifierLiteral(ctx.IDENT().getText());
     }
 
     @Override
     public ASTNode visitIntegerAtom(QLParser.IntegerAtomContext ctx) {
-        return new IntegerValue(ctx.INT().getText());
+        return new IntegerLiteral(ctx.INT().getText());
     }
 
     @Override
     public ASTNode visitDecimalAtom(QLParser.DecimalAtomContext ctx) {
-        return new DecimalValue(ctx.DECIMAL().getText());
+        return new DecimalLiteral(ctx.DECIMAL().getText());
     }
 
     private Position constructPosition(ParserRuleContext ctx) {

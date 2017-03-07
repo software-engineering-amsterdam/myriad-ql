@@ -1,12 +1,10 @@
 package org.lemonade.visitors;
 
-import org.lemonade.exeptions.QLExpressionException;
-import org.lemonade.exeptions.QLOperatorException;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLBooleanType;
@@ -126,30 +124,30 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         return expressionType;
     }
 
-    public QLType visit(BooleanValue booleanValue) {
+    public QLType visit(BooleanLiteral booleanValue) {
         return booleanValue.getType();
     }
 
-    public QLType visit(DecimalValue decimalValue) {
+    public QLType visit(DecimalLiteral decimalValue) {
         return decimalValue.getType();
     }
 
-    public QLType visit(MoneyValue moneyValue) {
+    public QLType visit(MoneyLiteral moneyValue) {
         return moneyValue.getType();
     }
 
-    public QLType visit(IdentifierValue identifierValue) {
+    public QLType visit(IdentifierLiteral identifierValue) {
         if (!symbolTable.containsKey(identifierValue.getValue())) {
             throw new RuntimeException("Symbol not found!");
         }
         return symbolTable.get(identifierValue.getValue());
     }
 
-    public QLType visit(IntegerValue integerValue) {
+    public QLType visit(IntegerLiteral integerValue) {
         return integerValue.getType();
     }
 
-    public QLType visit(StringValue stringValue) {
+    public QLType visit(StringLiteral stringValue) {
         return stringValue.getType();
     }
 

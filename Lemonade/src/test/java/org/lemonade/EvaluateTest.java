@@ -5,12 +5,8 @@ import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lemonade.nodes.expressions.value.BooleanValue;
-import org.lemonade.nodes.expressions.value.DateValue;
-import org.lemonade.nodes.expressions.value.DecimalValue;
-import org.lemonade.nodes.expressions.value.IntegerValue;
-import org.lemonade.nodes.expressions.value.MoneyValue;
-import org.lemonade.nodes.expressions.value.NumericValue;
+import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.literal.NumericLiteral;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,44 +16,44 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  */
 public class EvaluateTest {
 
-    private IntegerValue zero;
-    private IntegerValue two;
-    private IntegerValue one;
-    private DecimalValue zeroPointFive;
-    private DecimalValue onePointZero;
-    private DecimalValue onePointFive;
-    private DecimalValue twoPointZero;
-    private MoneyValue oneFifty;
-    private MoneyValue twoFifty;
-    private NumericValue<?> onePointTwo;
+    private IntegerLiteral zero;
+    private IntegerLiteral two;
+    private IntegerLiteral one;
+    private DecimalLiteral zeroPointFive;
+    private DecimalLiteral onePointZero;
+    private DecimalLiteral onePointFive;
+    private DecimalLiteral twoPointZero;
+    private MoneyLiteral oneFifty;
+    private MoneyLiteral twoFifty;
+    private NumericLiteral<?> onePointTwo;
 
-    private DateValue date;
-    private DateValue dateTwo;
+    private DateLiteral date;
+    private DateLiteral dateTwo;
 
     @Before
     public void setUp() throws ParseException {
-        zero = new IntegerValue(0);
-        two = new IntegerValue(2);
-        one = new IntegerValue(1);
+        zero = new IntegerLiteral(0);
+        two = new IntegerLiteral(2);
+        one = new IntegerLiteral(1);
 
-        zeroPointFive = new DecimalValue(0.5);
-        onePointFive = new DecimalValue(1.5);
-        onePointZero = new DecimalValue(1.0);
-        twoPointZero = new DecimalValue(2.0);
+        zeroPointFive = new DecimalLiteral(0.5);
+        onePointFive = new DecimalLiteral(1.5);
+        onePointZero = new DecimalLiteral(1.0);
+        twoPointZero = new DecimalLiteral(2.0);
 
-        oneFifty = new MoneyValue(1.50);
-        twoFifty = new MoneyValue(2.50);
+        oneFifty = new MoneyLiteral(1.50);
+        twoFifty = new MoneyLiteral(2.50);
 
-        onePointTwo = new DecimalValue(1.2);
+        onePointTwo = new DecimalLiteral(1.2);
 
-        date = new DateValue(LocalDate.of(2010, 1, 1));
-        dateTwo = new DateValue(LocalDate.of(2012, 1, 1));
+        date = new DateLiteral(LocalDate.of(2010, 1, 1));
+        dateTwo = new DateLiteral(LocalDate.of(2012, 1, 1));
     }
 
     @Test
     public void testBooleanValue() {
-        BooleanValue boolTrue = new BooleanValue(true);
-        BooleanValue boolFalse = new BooleanValue(false);
+        BooleanLiteral boolTrue = new BooleanLiteral(true);
+        BooleanLiteral boolFalse = new BooleanLiteral(false);
 
         assertThat(boolTrue.getValue()).isInstanceOf(Boolean.class);
         assertThat(boolTrue.or(boolFalse).getValue()).isTrue();
@@ -73,51 +69,51 @@ public class EvaluateTest {
 
     @Test
     public void testNumericPlus() {
-        IntegerValue onePlusTwo = one.plus(two);
-        DecimalValue onePlusOnePointFive = one.plus(onePointFive);
-        MoneyValue onePlusOneFifty = one.plus(oneFifty);
-        NumericValue<?> onePlusOnePointTwo = one.plus(onePointTwo);
+        IntegerLiteral onePlusTwo = one.plus(two);
+        DecimalLiteral onePlusOnePointFive = one.plus(onePointFive);
+        MoneyLiteral onePlusOneFifty = one.plus(oneFifty);
+        NumericLiteral<?> onePlusOnePointTwo = one.plus(onePointTwo);
 
         assertThat(onePlusTwo.getValue()).isEqualTo(3);
-        assertThat(onePlusTwo).isInstanceOf(IntegerValue.class);
+        assertThat(onePlusTwo).isInstanceOf(IntegerLiteral.class);
 
         assertThat(onePlusOnePointFive.getValue()).isEqualTo(2.5);
-        assertThat(onePlusOnePointFive).isInstanceOf(DecimalValue.class);
+        assertThat(onePlusOnePointFive).isInstanceOf(DecimalLiteral.class);
 
         assertThat(onePlusOneFifty.getValue()).isEqualTo(2.50);
-        assertThat(onePlusOneFifty).isInstanceOf(MoneyValue.class);
+        assertThat(onePlusOneFifty).isInstanceOf(MoneyLiteral.class);
 
         assertThat(onePlusOnePointTwo.getValue()).isEqualTo(2.2);
-        assertThat(onePlusOnePointTwo).isInstanceOf(DecimalValue.class);
+        assertThat(onePlusOnePointTwo).isInstanceOf(DecimalLiteral.class);
     }
 
     @Test
     public void testNumericMinus() {
-        IntegerValue twoMinusOne = two.minus(one);
-        DecimalValue twoMinusOnePointFive = two.minus(onePointFive);
-        MoneyValue twoMinusOneFifty = two.minus(oneFifty);
-        NumericValue<?> twoMinusOnePointTwo = two.minus(onePointTwo);
+        IntegerLiteral twoMinusOne = two.minus(one);
+        DecimalLiteral twoMinusOnePointFive = two.minus(onePointFive);
+        MoneyLiteral twoMinusOneFifty = two.minus(oneFifty);
+        NumericLiteral<?> twoMinusOnePointTwo = two.minus(onePointTwo);
 
         assertThat(twoMinusOne.getValue()).isEqualTo(1);
-        assertThat(twoMinusOne).isInstanceOf(IntegerValue.class);
+        assertThat(twoMinusOne).isInstanceOf(IntegerLiteral.class);
 
         assertThat(twoMinusOnePointFive.getValue()).isEqualTo(0.5);
-        assertThat(twoMinusOnePointFive).isInstanceOf(DecimalValue.class);
+        assertThat(twoMinusOnePointFive).isInstanceOf(DecimalLiteral.class);
 
         assertThat(twoMinusOneFifty.getValue()).isEqualTo(0.5);
-        assertThat(twoMinusOneFifty).isInstanceOf(MoneyValue.class);
+        assertThat(twoMinusOneFifty).isInstanceOf(MoneyLiteral.class);
 
         assertThat(twoMinusOnePointTwo.getValue()).isEqualTo(0.8);
-        assertThat(twoMinusOnePointTwo).isInstanceOf(DecimalValue.class);
+        assertThat(twoMinusOnePointTwo).isInstanceOf(DecimalLiteral.class);
     }
 
     @Test
     public void testNumericProduct() {
-        NumericValue<?> result = two.product(onePointTwo);
-        assertThat(result).isInstanceOf(DecimalValue.class);
+        NumericLiteral<?> result = two.product(onePointTwo);
+        assertThat(result).isInstanceOf(DecimalLiteral.class);
 
-        NumericValue<?> result2 = result.product(two);
-        assertThat(result2).isInstanceOf(DecimalValue.class);
+        NumericLiteral<?> result2 = result.product(two);
+        assertThat(result2).isInstanceOf(DecimalLiteral.class);
         assertThat(result2.getValue()).isEqualTo(4.8);
     }
 

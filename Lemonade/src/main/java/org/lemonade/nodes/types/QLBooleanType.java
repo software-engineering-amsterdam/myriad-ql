@@ -17,4 +17,9 @@ public class QLBooleanType extends QLType {
     public boolean isBoolean() {
         return true;
     }
+
+    @Override
+    public boolean isComparable() {
+        return true;
+    }
 }

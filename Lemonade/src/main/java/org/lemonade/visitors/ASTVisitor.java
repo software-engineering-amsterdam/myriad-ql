@@ -1,13 +1,12 @@
 package org.lemonade.visitors;
 
-import org.lemonade.exeptions.QLOperatorException;
 import org.lemonade.nodes.ASTNode;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.value.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.nodes.types.QLType;
@@ -53,17 +52,17 @@ public interface ASTVisitor<T> {
 
     T visit(NegUnary negUnary);
 
-    T visit(BooleanValue booleanValue);
+    T visit(BooleanLiteral booleanValue);
 
-    T visit(DecimalValue decimalValue);
+    T visit(DecimalLiteral decimalValue);
 
-    T visit(MoneyValue moneyValue);
+    T visit(MoneyLiteral moneyValue);
 
-    T visit(IntegerValue integerValue);
+    T visit(IntegerLiteral integerValue);
 
-    T visit(StringValue stringValue);
+    T visit(StringLiteral stringValue);
 
-    T visit(IdentifierValue identifierValue);
+    T visit(IdentifierLiteral identifierValue);
 
     T visit(QLType qlType);
 
