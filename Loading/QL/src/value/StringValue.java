@@ -23,8 +23,8 @@ public class StringValue extends Value {
     @Override
 	public BoolValue eq(Value other) {
     	
-    	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    	if (!isSet() || !other.isSet()) {
+    		return new BoolValue();
     	}
     	System.out.println("TODO does this work?");
     	return new BoolValue (this.equals(other));
@@ -36,8 +36,8 @@ public class StringValue extends Value {
 	public BoolValue notEq(Value other) {
 		
 		
-    	if (isSet() || other.isSet()) {
-    		return new BoolValue(0);
+    	if (!isSet() || !other.isSet()) {
+    		return new BoolValue();
     	}
     	
     	System.out.println("TODO does this work?");

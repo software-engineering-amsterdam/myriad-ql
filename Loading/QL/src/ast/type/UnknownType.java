@@ -3,6 +3,7 @@ package ast.type;
 import ast.TypeVisitor;
 import ast.atom.Atom;
 import ui.field.Field;
+import value.Value;
 
 public class UnknownType extends Type {
 
@@ -22,7 +23,7 @@ public class UnknownType extends Type {
 	}
 
 	@Override
-	public Atom getAtom() {
+	public Value getValue() {
 		return null;
 	}
 

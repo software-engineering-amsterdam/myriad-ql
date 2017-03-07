@@ -3,9 +3,16 @@ package ast.atom;
 import ast.ExpressionVisitor;
 
 public class StringAtom extends Atom {
+
+	private String atom;
     
-	public StringAtom(int line) {
+	public StringAtom(String atom, int line) {
 		super(line);
+		this.atom = atom;
+	}
+
+	public String getAtom() {
+		return atom;
 	}
 
 	@Override

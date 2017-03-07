@@ -4,7 +4,7 @@
 //
 //import org.junit.Test;
 //
-//import ast.atom.StringAtom;
+//import ast.atom.StraingAtom;
 //import static org.hamcrest.CoreMatchers.*;
 //
 //

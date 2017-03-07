@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 import ui.Questionnaire.Notifier;
+import value.BoolValue;
 import value.Value;
 
 public class Check implements Field {
@@ -21,7 +22,7 @@ public class Check implements Field {
            public void changed(ObservableValue<? extends Boolean> observable,
                                Boolean oldValue, Boolean newValue) {
 				
-				listener.updateQuestionnaire(name, new Value(newValue));
+				listener.updateQuestionnaire(name, new BoolValue(newValue));
             }
 		});
 	}
@@ -33,12 +34,12 @@ public class Check implements Field {
 	
 	@Override
 	public Value getAnswer() {
-		return new Value(field.isSelected());
+		return new BoolValue(field.isSelected());
 	}
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setSelected(value.getValue().getValue()); // TODO two times getValue()??	
+		field.setSelected(((BoolValue) value).getValue());
 	}
 	
 	@Override

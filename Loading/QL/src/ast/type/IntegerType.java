@@ -1,10 +1,10 @@
 package ast.type;
 
 import ast.TypeVisitor;
-import ast.atom.Atom;
-import ast.atom.IntegerAtom;
 import ui.field.Field;
 import ui.field.Number;
+import value.IntegerValue;
+import value.Value;
 
 public class IntegerType extends Type {
 
@@ -24,8 +24,8 @@ public class IntegerType extends Type {
 	}
 
 	@Override
-	public Atom getAtom() {
-		return new IntegerAtom(0);
+	public Value getValue() {
+		return new IntegerValue();
 	}
 	
 }

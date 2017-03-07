@@ -1,10 +1,10 @@
 package ast.type;
 
 import ast.TypeVisitor;
-import ast.atom.Atom;
-import ast.atom.StringAtom;
 import ui.field.Field;
 import ui.field.Text;
+import value.StringValue;
+import value.Value;
 
 public class StringType extends Type {
 
@@ -23,8 +23,8 @@ public class StringType extends Type {
 	}
 
 	@Override
-	public Atom getAtom() {
-		return new StringAtom(0);
+	public Value getValue() {
+		return new StringValue();
 	}
 
 }

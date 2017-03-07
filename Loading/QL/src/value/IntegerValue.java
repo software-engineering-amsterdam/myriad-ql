@@ -25,7 +25,7 @@ public class IntegerValue extends Value {
 	public Value add(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value + ((IntegerValue) other).getValue() );
@@ -35,7 +35,7 @@ public class IntegerValue extends Value {
 	public Value sub(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value - ((IntegerValue) other).getValue() );
@@ -45,7 +45,7 @@ public class IntegerValue extends Value {
 	public Value mul(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value * ((IntegerValue) other).getValue() );
@@ -56,7 +56,7 @@ public class IntegerValue extends Value {
 		
 		// TODO division by null
 		if (!isSet() || !other.isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(value / ((IntegerValue) other).getValue() );
@@ -66,33 +66,33 @@ public class IntegerValue extends Value {
 	public BoolValue eq(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
-		System.out.println("TODO Does this work?");
-		return new BoolValue(this.equals(other));
+		System.out.println("TODO int eq Does this work?");
+//		return new BoolValue(this.equals(other));
 		
-		// return new BoolValue(value.equals(((IntegerValue) other).getValue()) );
+		 return new BoolValue(value.equals(((IntegerValue) other).getValue()) );
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
 		System.out.println("TODO Does this work?");
-		return new BoolValue(this.equals(other));
+//		return new BoolValue(this.equals(other));
 		
-		// return new BoolValue(!value.equals(((IntegerValue) other).getValue()) );
+		 return new BoolValue(!value.equals(((IntegerValue) other).getValue()) );
 	}
 	
 	@Override
 	public BoolValue greaterEq(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
 		return new BoolValue(value >= ((IntegerValue) other).getValue() );
@@ -102,7 +102,7 @@ public class IntegerValue extends Value {
 	public BoolValue greater(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
 		return new BoolValue(value > ((IntegerValue) other).getValue() );
@@ -112,7 +112,7 @@ public class IntegerValue extends Value {
 	public BoolValue lessEq(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
 		return new BoolValue(value <= ((IntegerValue) other).getValue() );
@@ -122,7 +122,7 @@ public class IntegerValue extends Value {
 	public BoolValue less(Value other) {
 		
 		if (!isSet() || !other.isSet()) {
-			return new BoolValue(0);
+			return new BoolValue();
 		}
 		
 		return new BoolValue(value < ((IntegerValue) other).getValue() );
@@ -132,7 +132,7 @@ public class IntegerValue extends Value {
 	public Value plus() {
 		
 		if (!isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(+ value );
@@ -142,7 +142,7 @@ public class IntegerValue extends Value {
 	public Value min() {
 		
 		if (!isSet()) {
-			return new IntegerValue(0);
+			return new IntegerValue();
 		}
 		
 		return new IntegerValue(- value );

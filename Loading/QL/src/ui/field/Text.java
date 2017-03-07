@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import ui.Questionnaire.Notifier;
+import value.StringValue;
 import value.Value;
 
 public class Text implements Field {
@@ -18,7 +19,7 @@ public class Text implements Field {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {
-            	listener.updateQuestionnaire(name, new Value(newValue));
+            	listener.updateQuestionnaire(name, new StringValue(newValue));
             }
     	});
 	}
@@ -26,15 +27,15 @@ public class Text implements Field {
 	@Override
 	public Value getAnswer() {
 		if (field.getText().isEmpty()) {
-			return new Value();
+			return new StringValue();
 		}	
-		return new Value(field.getText());
+		return new StringValue(field.getText());
 	}
 	
 	
 	@Override
 	public void setAnswer(Value value) {
-		field.setText(value.getValue().getString()); // TODO implicit you have to know to ask for a string
+		field.setText(((StringValue) value).getValue()); // TODO implicit you have to know to ask for a string
   	  	field.end();
 	}
 

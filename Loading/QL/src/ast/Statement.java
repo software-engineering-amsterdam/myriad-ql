@@ -27,7 +27,4 @@ public class Statement extends BlockItem {
 		v.visit(this);
 		
 	}
-
-	// TODO end each class with overrides?
-
 }

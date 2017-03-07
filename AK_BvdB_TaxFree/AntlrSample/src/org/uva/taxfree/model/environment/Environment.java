@@ -30,14 +30,43 @@ public class Environment {
         return mSymbolTable.getUndefinedDeclarationErrros();
     }
 
-    public List<String> getCyclicDependencyErrors() {
+    public List<String>
+    getCyclicDependencyErrors() {
         List<String> errors = new ArrayList<>();
         for (CalculatedField calculation : getCalculations()) {
-            if (calculation.hasCyclicDependency()) {
-                errors.add("Cyclic dependency error: " + calculation.getId());
+            if (hasCyclicDependency(calculation)) {
+                errors.add("Cyclic dependency found: " + calculation.getId());
             }
         }
         return errors;
+    }
+
+    private boolean hasCyclicDependency(CalculatedField calc) {
+        Set<String> dependencies = calc.getUsedVariables();
+        substituteVariables(dependencies);
+        return dependencies.contains(calc.getId());
+    }
+
+    private void substituteVariables(Set<String> usedVariables) {
+
+        Set<String> dependencies = new LinkedHashSet<>(usedVariables);
+        for (String variableName : usedVariables) {
+            addDeclarations(variableName, dependencies);
+        }
+
+        if (!usedVariables.equals(dependencies)) {
+            usedVariables.addAll(dependencies);
+            substituteVariables(usedVariables);
+        }
+    }
+
+
+    private void addDeclarations(String usedVariable, Set<String> usedVariables) {
+        for (CalculatedField calc : getCalculations()) {
+            if (calc.getId().equals(usedVariable)) {
+                usedVariables.addAll(calc.getUsedVariables());
+            }
+        }
     }
 
     private Set<CalculatedField> getCalculations() {
@@ -46,3 +75,4 @@ public class Environment {
         return calculations;
     }
 }
+

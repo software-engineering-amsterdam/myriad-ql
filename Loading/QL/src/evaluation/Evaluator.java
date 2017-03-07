@@ -27,8 +27,12 @@ import ast.expression.NotExpression;
 import ast.expression.OrExpression;
 import ast.expression.PlusExpression;
 import ast.expression.SubExpression;
+import value.BoolValue;
+import value.IntegerValue;
+import value.StringValue;
+import value.Value;
 
-public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
+public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Value> {
 
 	private final Environment environment;
 
@@ -55,127 +59,118 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
     }
 
     @Override
-    public void visit(Question question) {
-    	// TODO default value when question is not answered
-//    	if (!environment.isAnswered(question.getVariable())) {
-//    		environment.addAnswer(question.getVariable(), new EmptyValue());
-//    	}
-    }
+    public void visit(Question question) {}
 
     @Override
     public void visit(ComputedQuestion question) {
-        Atom atom = question.getComputedQuestion().accept(this);
-        // TODO add computed answer to environment
-//        if (!environment.isAnswered(question.getVariable())) {
-//        	environment.addAnswer(question.getVariable(), new EmptyValue());
-//        }// Add to environment
+        Value value = question.getComputedQuestion().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
-        Atom atom = statement.getExpression().accept(this);
+        Value value = statement.getExpression().accept(this);
         // Add to environment
         statement.getBlock().accept(this); // TODO circulair dependencies?
     }
 
     @Override
-    public Atom visit(AddExpression expr) {
+    public Value visit(AddExpression expr) {
         return expr.getLhs().accept(this).add(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(AndExpression expr) {
+    public Value visit(AndExpression expr) {
         return expr.getLhs().accept(this).and(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(DivExpression expr) {
+    public Value visit(DivExpression expr) {
         return expr.getLhs().accept(this).div(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(EqExpression expr) {
+    public Value visit(EqExpression expr) {
         return expr.getLhs().accept(this).eq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(GEqExpression expr) {
+    public Value visit(GEqExpression expr) {
         return expr.getLhs().accept(this).greaterEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(GExpression expr) {
+    public Value visit(GExpression expr) {
         return expr.getLhs().accept(this).greater(expr.getRhs().accept(this));
     }
 
     @Override
-	public Atom visit(IdExpression id) {
+	public Value visit(IdExpression id) {
 
 		if (!environment.isAnswered(id.getName())) {
-			return environment.getType(id.getName()).getAtom();
+			return environment.getType(id.getName()).getValue();
 		}
 
-		return environment.getAnswer(id.getName()).getValue();
+		return environment.getAnswer(id.getName());
 	}
 
     @Override
-    public Atom visit(LEqExpression expr) {
+    public Value visit(LEqExpression expr) {
         return expr.getLhs().accept(this).lessEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(LExpression expr) {
+    public Value visit(LExpression expr) {
         return expr.getLhs().accept(this).less(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(MinusExpression expr) {
+    public Value visit(MinusExpression expr) {
         return expr.getLhs().accept(this).min();
     }
 
     @Override
-    public Atom visit(MulExpression expr) {
+    public Value visit(MulExpression expr) {
         return expr.getLhs().accept(this).mul(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(NEqExpression expr) {
+    public Value visit(NEqExpression expr) {
         return expr.getLhs().accept(this).notEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(NotExpression expr) {
+    public Value visit(NotExpression expr) {
         return expr.getLhs().accept(this).not();
     }
 
     @Override
-    public Atom visit(OrExpression expr) {
+    public Value visit(OrExpression expr) {
         return expr.getLhs().accept(this).or(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(PlusExpression expr) {
+    public Value visit(PlusExpression expr) {
         return expr.getLhs().accept(this).plus();
     }
 
     @Override
-    public Atom visit(SubExpression expr) {
+    public Value visit(SubExpression expr) {
         return expr.getLhs().accept(this).sub(expr.getRhs().accept(this));
     }
 
     @Override
-    public Atom visit(BoolAtom expr) {
-        return expr; // TODO
+    public Value visit(BoolAtom expr) {
+        return new BoolValue(expr.getAtom());
     }
 
     @Override
-    public Atom visit(IntegerAtom expr) {
-        return expr;
+    public Value visit(IntegerAtom expr) {
+        return new IntegerValue(expr.getAtom());
     }
 
     @Override
-    public Atom visit(StringAtom expr) {
-        return expr;
+    public Value visit(StringAtom expr) {
+	    return new StringValue(expr.getAtom());
     }
 }
 
