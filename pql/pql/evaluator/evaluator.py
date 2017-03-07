@@ -1,4 +1,6 @@
 # coding=utf-8
+import operator
+
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -9,6 +11,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.environment = environment
 
     def visit(self, pql_ast):
+        # TODO Investigate whether environment can be passed as argument
         [form.apply(self) for form in pql_ast]
         return self.environment
 
@@ -25,33 +28,6 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if node.condition.apply(self):
             [statement.apply(self) for statement in node.statements]
 
-    def or_(self, node):
-        return node.lhs.apply(self) or node.rhs.apply(self)
-
-    def value(self, node):
-        return node.value
-
-    def greater_inclusive(self, node):
-        return node.lhs.apply(self) >= node.rhs.apply(self)
-
-    def lower_exclusive(self, node):
-        return node.lhs.apply(self) < node.rhs.apply(self)
-
-    def and_(self, node):
-        return node.lhs.apply(self) and node.rhs.apply(self)
-
-    def greater_exclusive(self, node):
-        return node.lhs.apply(self) > node.rhs.apply(self)
-
-    def division(self, node):
-        return node.lhs.apply(self) / node.rhs.apply(self)
-
-    def subtraction(self, node):
-        return node.lhs.apply(self) - node.rhs.apply(self)
-
-    def lower_inclusive(self, node):
-        return node.lhs.apply(self) <= node.rhs.apply(self)
-
     def field(self, node):
         if node.expression is not None:
             self.environment[node.name.name] = node.expression.apply(self)
@@ -62,14 +38,59 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         else:
             return None
 
+    def value(self, node):
+        return node.value
+
+    def or_(self, node):
+        lhs_result = node.lhs.apply(self)
+        rhs_result = node.rhs.apply(self)
+        if lhs_result is True or rhs_result is True:
+            return True
+        else:
+            return self.apply_operator(node, (lambda lhs, rhs: lhs or rhs), False)
+
+    def greater_inclusive(self, node):
+        return self.apply_operator(node, operator.ge)
+
+    def lower_exclusive(self, node):
+        return self.apply_operator(node, operator.lt)
+
+    def and_(self, node):
+        return self.apply_operator(node, (lambda lhs, rhs: lhs and rhs), default_value=False)
+
+    def greater_exclusive(self, node):
+        return self.apply_operator(node, operator.gt)
+
+    def division(self, node):
+        return self.apply_operator(node, operator.truediv)
+
+    def subtraction(self, node):
+        return self.apply_operator(node, operator.sub)
+
+    def lower_inclusive(self, node):
+        return self.apply_operator(node, operator.le)
+
     def equality(self, node):
-        return node.lhs.apply(self) == node.rhs.apply(self)
+        return self.apply_operator(node, operator.eq)
 
     def addition(self, node):
-        return node.lhs.apply(self) + node.rhs.apply(self)
+        return self.apply_operator(node, operator.add)
 
     def multiplication(self, node):
-        return node.lhs.apply(self) * node.rhs.apply(self)
+        return self.apply_operator(node, operator.mul)
 
     def inequality(self, node):
-        return node.lhs.apply(self) != node.rhs.apply(self)
+        return self.apply_operator(node, operator.ne)
+
+    def apply_operator(self, node, operator_function, default_value=None):
+        lhs_result = node.lhs.apply(self)
+        rhs_result = node.rhs.apply(self)
+        if lhs_result is None or rhs_result is None:
+            return default_value
+        else:
+            return operator_function(lhs_result, rhs_result)
+
+    def update_value(self, key, value):
+        #TODO If environment is passed, this can be removed
+        self.environment[key] = value
+        print(self.environment)

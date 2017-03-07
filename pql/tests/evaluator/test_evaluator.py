@@ -98,14 +98,10 @@ class TestEvaluator(TestCase):
         input_string = """
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: integer = inflationPrice + 5
-            "Price with inflation" inflationPrice: integer = hasSoldHouse
+            "Price with inflation" inflationPrice: integer = 10
         }
         """
         environment = ql(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(12, environment[expected_identifier_1], "Evaluation should result in 12")
-
-        expected_identifier_2 = 'inflationPrice'
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key inflationPrice")
-        self.assertEqual(Decimal('13.2'), environment[expected_identifier_2], "Evaluation should result in 13.2")
+        self.assertEqual(15, environment[expected_identifier_1], "Evaluation should result in 12")
