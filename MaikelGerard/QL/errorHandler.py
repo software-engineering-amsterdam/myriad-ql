@@ -53,7 +53,7 @@ class ErrorHandler(object):
 
     def add_if_cond_error(self, if_node):
         error_message = "Condition not of type boolean"
-        self.add_error(if_node.expression, error_message)
+        self.add_error(if_node.condition, error_message)
 
     def add_undecl_var_error(self, var_node):
         error_message = "Variable '{}' is not defined!".format(var_node.name)
