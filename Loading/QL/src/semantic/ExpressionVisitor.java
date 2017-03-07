@@ -1,6 +1,7 @@
 package semantic;
 
 
+import QL.Error;
 import ast.*;
 import ast.atom.BoolAtom;
 import ast.atom.IntegerAtom;
@@ -282,8 +283,8 @@ public class ExpressionVisitor implements FormVisitor, ast.ExpressionVisitor<Typ
     private void check(Type expected, Type current) {
     	// TODO is equal in Type or instance of?
         if (!expected.getKeyWord().equals(current.getKeyWord())) {
-        	environment.addWarning("The type " + current.getKeyWord() + " is not of the expected type: "
-    			+ expected.getKeyWord(), current.getLine());
+        	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
+    			+ expected.getKeyWord(), current.getLine()));
         }
     }
 

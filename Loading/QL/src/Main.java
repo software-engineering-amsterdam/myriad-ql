@@ -1,9 +1,7 @@
-import java.util.List;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import QL.Warning;
+import QL.Faults;
 import ast.Form;
 import semantic.TypeChecker;
 import ui.Questionnaire;
@@ -53,13 +51,13 @@ public class Main {
 
 		TypeChecker typeChecker = new TypeChecker();
 
-		List<Warning> warnings = typeChecker.analyze(form);
+		Faults faults = typeChecker.analyze(form);
 		
 		
 		evaluation.Environment env = new evaluation.Environment(typeChecker.getVariableTypes());
 		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, env, warnings);
+		questionnaire.main(form, env, faults);
 
 		System.out.println("LINE NUMBER: " + form.getLine());
 

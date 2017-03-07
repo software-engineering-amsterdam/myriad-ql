@@ -2,7 +2,8 @@ package ui;
 
 import java.util.List;
 
-import QL.Warning;
+import QL.Fault;
+import QL.Faults;
 import ast.Form;
 import evaluation.Environment;
 import javafx.application.Application;
@@ -20,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.error.ErrorDialog;
+import ui.error.WarningDialog;
 import value.Value;
 
 public class Questionnaire extends Application implements Notifier {
@@ -28,23 +31,35 @@ public class Questionnaire extends Application implements Notifier {
 	private static Form form;
 	private static evaluation.Environment env; // TODO rename
 	private static GridPane grid;
-	private static List<Warning> warnings;
+	private static Faults faults;
 
 	
-    public void main(Form f, Environment environment, List<Warning> w) {
+    public void main(Form f, Environment environment, Faults flts) {
     	form = f;
     	env = environment;
-    	warnings = w;
+    	faults = flts;
 
         launch();
     }
         
+    private boolean checkFaults() {
+    	if (faults.hasErrors()) {
+    		ErrorDialog dialog = new ErrorDialog(faults.getErrors());
+    		dialog.show();
+    		return true;
+    	}   	
+    	if (faults.hasWarnings()) {
+        	WarningDialog dialog = new WarningDialog(faults.getWarnings());
+        	dialog.show();
+    	}
+    	
+    	return false;
+    }
+    
     @Override
     public void start(Stage primaryStage) {
        
-    	if (!warnings.isEmpty()) {
-    		WarningDialog dialog = new WarningDialog(warnings);
-    		dialog.show();
+    	if (checkFaults()) {
     		return;
     	}
 

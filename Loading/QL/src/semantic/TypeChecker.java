@@ -2,7 +2,8 @@ package semantic;
 import java.util.List;
 import java.util.Map;
 
-import QL.Warning;
+import QL.Fault;
+import QL.Faults;
 import ast.Form;
 import ast.type.Type;
 
@@ -10,14 +11,14 @@ public class TypeChecker {
 	
 	Environment environment;
 
-    public List<Warning> analyze(Form form) {
+    public Faults analyze(Form form) {
         this.environment = new Environment();
         QuestionVisitor QVisitor = new QuestionVisitor(environment);
         QVisitor.visit(form);
 
         ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
         expressionVisitor.visit(form);
-        return environment.getWarnings();
+        return environment.getFaults();
     }
     
     public Map<String, Type> getVariableTypes() {

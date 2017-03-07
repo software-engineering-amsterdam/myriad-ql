@@ -1,10 +1,9 @@
 package semantic;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import QL.Warning;
+import QL.Error;
+import QL.Faults;
 import ast.type.Type;
 import ast.type.UnknownType;
 
@@ -12,16 +11,16 @@ public class Environment {
 
 	private Map<String, Type> variableType; // Should these two be combined to label - variable/type
 	private Map<String, String> labelVariable;
-	private List<Warning> warnings;
+	private Faults faults;
 	
 	public Environment() {
 		variableType = new HashMap<>(); 
 		labelVariable = new HashMap<>();
-		warnings = new ArrayList<>();
+		faults = new Faults();
 	}
 	
-	public List<Warning> getWarnings() {
-		return warnings;
+	public Faults getFaults() {
+		return faults;
 	}
 	
 	public Map<String, Type> getVariableTypes() {
@@ -36,14 +35,10 @@ public class Environment {
 		variableType.put(variable, type);
 	}
 	
-	public void addWarning(String message, int lineNumber) {
-		Warning warning = new Warning(message, lineNumber);
-		warnings.add(warning);
-	}
-	
 	public Type getType(String variable, int line) {
+		
 		if (!variableExists(variable)) {
-	        addWarning("The variable: " + variable + " is not defined", line);
+	        faults.add(new Error("The variable: " + variable + " is not defined", line));
 	        return new UnknownType(line);
 		}
 		return variableType.get(variable);

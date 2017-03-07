@@ -1,5 +1,7 @@
 package semantic;
 
+import QL.Warning;
+import QL.Error;
 import ast.*;
 import ast.type.Type;
 import ast.FormVisitor;
@@ -62,8 +64,8 @@ public class QuestionVisitor implements FormVisitor {
 	private void addVariableType(String variable, Type type, int line) {
 
 		if (environment.variableExists(variable)) {
-			environment.addWarning("The variable " + variable + " cannot be added, because it is "
-					+ "already defined", line);
+			environment.getFaults().add(new Error("The variable " + variable + " cannot be added, because it is "
+					+ "already defined", line));
 		}
 		environment.addVariableType(variable, type);
 	}
@@ -71,8 +73,8 @@ public class QuestionVisitor implements FormVisitor {
 	// TODO better if it would print both line numbers
 	private void addLabel(String label, String variableName, int line) {
 		if (environment.labelExists(label)) {
-			environment.addWarning("The question: " + label + 
-					" exists twice in the questionnaire", line);
+			environment.getFaults().add(new Warning("The question: " + label + 
+					" exists twice in the questionnaire", line));
 		}
 		environment.addLabel(label, variableName);
 	}
