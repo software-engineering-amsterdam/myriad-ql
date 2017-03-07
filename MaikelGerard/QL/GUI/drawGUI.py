@@ -23,8 +23,9 @@ class DrawGUI(object):
         self.widgets = OrderedDict()
 
     def start(self):
-        self.evaluator.start_traversal()
         self.adjust_env()
+        self.evaluator.start_traversal()
+
         self.set_draw_state.start_traversal()
         self.add_buttons()
         self.main.go()
@@ -90,6 +91,5 @@ class DrawGUI(object):
         return widget_values
 
     def save_data(self):
-        save_obj = SaveQuestionaire(self.ast, self.env,
-                                    self.evaluator, self.handler)
+        save_obj = SaveQuestionaire(self.ast, self.widgets)
         save_obj.start_traversal()
