@@ -43,6 +43,8 @@ public class Questionnaire extends Application {
 		public void updateQuestionnaire(String name, Value newValue) {
 	    	Value oldAnswer = env.getAnswer(name);
 	    	// TODO .equals()?
+	    	System.out.println(oldAnswer);
+	    	System.out.println(newValue);
 			if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
 
 				env.addAnswer(name, newValue); 

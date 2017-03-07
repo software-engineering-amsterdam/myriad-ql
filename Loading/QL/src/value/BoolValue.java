@@ -22,7 +22,7 @@ public class BoolValue extends Value {
 	@Override
     public BoolValue and(Value other) {
 		
-    	if (isSet() || other.isSet()) {
+    	if (!isSet() || !other.isSet()) {
     		return new BoolValue();
     	}
 		
@@ -32,7 +32,7 @@ public class BoolValue extends Value {
 	@Override
 	public BoolValue or(Value other) {
 		
-    	if (isSet() || other.isSet()) {
+    	if (!isSet() || !other.isSet()) {
     		return new BoolValue();
     	}
 		
@@ -42,7 +42,7 @@ public class BoolValue extends Value {
 	@Override
 	public BoolValue eq(Value other) {
 		
-    	if (isSet() || other.isSet()) {
+		if (!isSet() || !other.isSet()) {
     		return new BoolValue();
     	}
 		System.out.println("TODO Does this work?");
@@ -53,7 +53,7 @@ public class BoolValue extends Value {
 	@Override
 	public BoolValue notEq(Value other) {
 		
-    	if (isSet() || other.isSet()) {
+		if (!isSet() || !other.isSet()) {
     		return new BoolValue();
     	}
 		System.out.println("TODO Does this work?");
