@@ -10,7 +10,7 @@ public class Question extends ASTNode implements Item{
     private String question;
     private String value;
     private ValueType type;
-    private Expression expression;
+    private Expression computedValue;
 
     public Question(int lineNumber) {
         super(lineNumber);
@@ -40,12 +40,12 @@ public class Question extends ASTNode implements Item{
         this.type = type;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getComputedValue() {
+        return computedValue;
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+    public void setComputedValue(Expression computedValue) {
+        this.computedValue = computedValue;
     }
 
     @Override
