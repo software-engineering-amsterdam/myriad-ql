@@ -9,25 +9,24 @@ module QL
     describe Parser do
       let(:parser) { Parser.new }
 
+      describe 'negations' do
+        it 'parses' do
+          expect(parser.negation?).to parse('!')
+          expect(parser.negation?).to parse('-')
+        end
+      end
+
       describe 'literals and their negations' do
         context 'boolean' do
           it 'parses' do
             expect(parser.boolean_literal).to parse('true')
             expect(parser.boolean_literal).to_not parse('True')
           end
-
-          it 'parses negation' do
-            expect(parser.boolean_negation?).to parse('!')
-          end
         end
 
         context 'integer' do
           it 'parses' do
             expect(parser.integer_literal).to parse('42')
-          end
-
-          it 'parses negation' do
-            expect(parser.integer_negation?).to parse('-')
           end
         end
 
@@ -112,11 +111,11 @@ module QL
                 sellingPrice: money
             }')
           end
-          it 'parses block' do
-            expect(parser.block).to parse('{
+          it 'parses body' do
+            expect(parser.body).to parse('
             "What was the selling price?"
               sellingPrice: money
-            }')
+            ')
           end
         end
       end
