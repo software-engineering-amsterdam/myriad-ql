@@ -1,6 +1,8 @@
 form OurTaxFreeSolution {
   "Do you like paying taxes?" -> likesToPayTaxes : boolean
   if (likesToPayTaxes) {
-    "How many tax would you like to pay?" -> amountOfTax : integer
+    "How many tax would you like to pay?" -> amountOfTaxPay : integer
+    "How many tax would you like to receive?" -> amountOfTaxReceived : integer
+    "Total tax difference:" -> totalTax : integer = amountOfTaxPay + amountOfTaxReceived
   }
 }
