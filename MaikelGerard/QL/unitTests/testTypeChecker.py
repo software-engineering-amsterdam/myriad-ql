@@ -41,16 +41,6 @@ class TestTypeChecker(unittest.TestCase):
         self.clear_variables()
 
     def test_form(self):
-        form_duplicate = """
-            form taxOfficeExample {
-                "Did you sell a house in 2010?"
-                    hasBoughtHouse: boolean
-                "Did you sell a house in 2010?"
-                    hasBoughtHouse: boolean = (true)
-            }
-        """
-        self.check_bad_form(form_duplicate, 1, 1)
-
         form_wrong_if = """
             form taxOfficeExample {
                 if (8) {
