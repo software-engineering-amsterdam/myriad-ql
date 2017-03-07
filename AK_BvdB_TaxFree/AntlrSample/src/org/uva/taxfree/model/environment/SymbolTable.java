@@ -31,16 +31,20 @@ public class SymbolTable {
     }
 
     public String resolveValue(String variableId) {
-        for (NamedNode n : mDeclarations) {
-            if (variableId.equals(n.getId())) {
-                return (n.resolveValue());
-            }
-        }
-        throw new RuntimeException("Unable to resolveValue id: " + variableId);
+        return findNode(variableId).resolveValue();
     }
 
-    public Type resolveType(String varialbeId) {
-        return varialbeId.getType();
+    public Type resolveType(String variableId) {
+        return findNode(variableId).getType();
+    }
+
+    private NamedNode findNode(String variableId) {
+        for (NamedNode n : mDeclarations) {
+            if (variableId.equals(n.getId())) {
+                return n;
+            }
+        }
+        throw new RuntimeException("Unresolvable identifier queried");
     }
 
     public void getDuplicateLabelErrors(MessageList messageList) {
