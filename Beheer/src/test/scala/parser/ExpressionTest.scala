@@ -1,24 +1,19 @@
 package parser
 
 import ast._
-import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ Inside, Matchers, PropSpec }
 
 import scala.annotation.tailrec
 import scala.util.matching.Regex
 
-class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers with PropertyChecks {
+class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionGenerator with ValueGenerator {
   type NodePair = (ExpressionNode, ExpressionNode)
   type NodeRel = Set[NodePair]
   private val parser = ConcreteExpressionParser
 
-  private def fullExpressions: Gen[String] = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
-
-  private def infixExpressions: Gen[String] = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
-
   property("Integer literal scale should be 0") {
-    forAll(Gen.numStr suchThat (_.nonEmpty)) {
+    forAll(integer) {
       num =>
         inside(parser.parseExpression(num)) {
           case IntegerLiteral(decimal) => {
@@ -27,14 +22,18 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
         }
     }
   }
-  property("decimal literal scale should be equal to length of fractional") {
-    forAll(Gen.numStr, Gen.numStr suchThat (_.nonEmpty)) {
-      (num, fractional) =>
-        inside(parser.parseExpression(s"$num.$fractional")) {
-          case DecimalLiteral(decimal) => {
-            decimal.scale should be(fractional.length)
-          }
+  property("decimal literal scale should be greater than 0") {
+    forAll(decimal) {
+      (num) =>
+        inside(parser.parseExpression(num)) {
+          case DecimalLiteral(decimal) => assert(decimal.scale > 0)
         }
+    }
+  }
+
+  property("A single literal value should result in a single AST node") {
+    forAll(literalValue) {
+      (lit) => nodeCount(parser.parseExpression(lit), { _: ExpressionNode => 1 }) == 1
     }
   }
 
@@ -94,7 +93,7 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
   }
 
   property("Operator precedence given infixExpression without parentheses.") {
-    forAll(infixExpressions) {
+    forAll(genInfixExpression) {
       e: String =>
         {
           val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
@@ -175,7 +174,7 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
 
   private def operatorCountProperty(operator: Regex)(nodesToCountMatcher: PartialFunction[ExpressionNode, Int]) = {
     val fullMatcher = nodesToCountMatcher orElse { case _ => 0 }: PartialFunction[ExpressionNode, Int]
-    forAll(fullExpressions) {
+    forAll(genExpression) {
       e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), fullMatcher)
     }
   }

@@ -5,9 +5,12 @@ import org.scalacheck.Gen
 /**
  * Created by jasper on 13/02/17.
  */
-object ExpressionGenerator extends ValueGenerator {
-  def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size))
-  def genInfixExpression: Gen[String] = Gen.sized(size => sizedInfixExpression(size))
+trait ExpressionGenerator extends ValueGenerator {
+  def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size)) suchThat (_.nonEmpty)
+
+  def genInfixExpression: Gen[String] = Gen.sized(size => sizedInfixExpression(size)) suchThat (_.nonEmpty)
+
+  def literalValue: Gen[String] = Gen.oneOf(identifier, integer, decimal, money, date, stringLiteral, boolean)
 
   private def sizedInfixExpression(maxDepth: Int): Gen[String] = maxDepth match {
     case 0 => literalValue
@@ -33,6 +36,7 @@ object ExpressionGenerator extends ValueGenerator {
 
   private def infixExpression(childGenerator: Int => Gen[String], maxDepth: Int): Gen[String] = {
     val operators = Seq(" + ", " - ", " / ", " * ", " || ", " && ", " == ", " != ", " >= ", " > ", " < ", " <= ")
+
     def infixExpressionTail(length: Int, depth: Int): Gen[String] = length match {
       case 0 => ""
       case l => for {
@@ -49,7 +53,5 @@ object ExpressionGenerator extends ValueGenerator {
       tail <- infixExpressionTail(numOperators, newDepth)
     } yield expression + tail
   }
-
-  private def literalValue: Gen[String] = Gen.oneOf(identifier, integer, decimal, money, date, stringLiteral, boolean)
 }
 
