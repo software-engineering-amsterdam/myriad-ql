@@ -12,7 +12,7 @@ public class Question implements Node {
 	private final Integer line_number;
 	
 	public enum Type {
-		BOOLEAN, INTEGER, MONEY, STRING, ID;
+		BOOLEAN, INTEGER, MONEY, STRING;
 	}
 	
 	public Question(String question, AtomId id, Type type, Node expression, Integer line_number) {

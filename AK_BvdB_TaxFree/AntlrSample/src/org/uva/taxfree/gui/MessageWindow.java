@@ -10,9 +10,9 @@ public class MessageWindow {
         return (JOptionPane.YES_OPTION == choice);
     }
 
-    public static void showMessages(List<Message> messages) {
+    public static void showMessages(MessageList messageList) {
         JOptionPane.showMessageDialog(null,
-                generateMessage(messages), "Semantic analyzer report", messageType(messages));
+                messageList.toString(), "Semantic analyzer report", messageType(messageList));
     }
 
     private static String generateMessage(List<Message> messages) {
@@ -23,11 +23,9 @@ public class MessageWindow {
         return messageText;
     }
 
-    private static int messageType(List<Message> messages) {
-        for (Message m : messages) {
-            if (m.isFatal()) {
-                return JOptionPane.ERROR_MESSAGE;
-            }
+    private static int messageType(MessageList messageList) {
+        if (messageList.fatalError()) {
+            return JOptionPane.ERROR_MESSAGE;
         }
         return JOptionPane.WARNING_MESSAGE;
     }

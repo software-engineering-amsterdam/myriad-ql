@@ -1,10 +1,15 @@
 package sc.ql.checkform;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import sc.ql.model.ConditionalBlock;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.atoms.*;
+import sc.ql.model.atoms.AtomBoolean;
+import sc.ql.model.atoms.AtomId;
+import sc.ql.model.atoms.AtomInteger;
+import sc.ql.model.atoms.AtomMoney;
+import sc.ql.model.atoms.AtomString;
 import sc.ql.model.expressions.CalcExpression;
 import sc.ql.model.expressions.NotExpression;
 import sc.ql.model.expressions.OpExpression;
@@ -13,9 +18,9 @@ import sc.ql.model.form_elements.Question;
 import sc.ql.model.form_elements.Question.Type;
 
 public class ConditionsVisitor implements NodeVisitor<Question.Type> {
-	public HashMap<String, Question.Type> identifier_types;
+	public Map<String, Question.Type> identifier_types;
 	
-	public ConditionsVisitor(HashMap<String, Question.Type> identifier_types) {
+	public ConditionsVisitor(Map<String, Question.Type> identifier_types) {
 		this.identifier_types = identifier_types;
 	}
 	

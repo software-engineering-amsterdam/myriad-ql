@@ -1,5 +1,6 @@
 package org.uva.taxfree.gui;
 
+import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
@@ -13,6 +14,10 @@ public class QuestionForm {
 
     public QuestionForm(BlockNode formNode) {
         mFormNode = formNode;
+    }
+
+    public QuestionForm(Environment environment) {
+        mFormNode = environment.getRootNode();
     }
 
     public void show() {
