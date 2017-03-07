@@ -45,6 +45,11 @@ public class Number implements Field {
 		}
 		
 	}
+	
+	@Override 
+	public void setField(Atom atom) {
+		field.setText(atom.);
+	}
 
 	@Override
 	public void addListener(Notifier listener) {

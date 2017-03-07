@@ -2,7 +2,6 @@ package ast.atom;
 
 import ast.ExpressionVisitor;
 import ast.expression.Expression;
-import ast.type.Type;
 
 public abstract class Atom extends Expression {
 	

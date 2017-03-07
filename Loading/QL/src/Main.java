@@ -1,12 +1,10 @@
-import ast.Form;
-
 import java.util.List;
-import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import QL.Warning;
+import ast.Form;
 import semantic.TypeChecker;
 import ui.Questionnaire;
 
