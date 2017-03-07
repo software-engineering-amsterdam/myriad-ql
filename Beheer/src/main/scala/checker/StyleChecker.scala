@@ -11,10 +11,16 @@ class StyleChecker(style: StyleModel, definedQuestionsWithType: Map[String, Type
   private val undefinedQuestions: Issues =
     (style.referencedQuestions.toSet -- definedQuestionsWithType.keySet).map(q => Error(s"Style references undefined question: $q")).toSeq
   private val unreferencedQuestions: Issues =
-    (definedQuestionsWithType.keySet -- style.referencedQuestions.toSet).map(q => Warning(s"Question not placed in stylesheet: $q")).toSeq
-  private val incompatibleStyles: Issues = Nil
+    (definedQuestionsWithType.keySet -- style.referencedQuestions.toSet).map(q => Error(s"Question not placed in stylesheet: $q")).toSeq
+  private val incompatibleStyles: Issues =
+    style.questionStyles.flatMap(q => checkWidgetType(q)) ++ style.defaultStyles.flatMap(d => checkWidgetType(d))
 
   def check: Issues = doubleReferences ++ undefinedQuestions ++ incompatibleStyles ++ unreferencedQuestions
+
+  private def checkWidgetType(defaultStyle: DefaultStyle): Option[Error] = defaultStyle match {
+    case DefaultStyle(_, _, None) => None
+    case DefaultStyle(questionType, _, Some(widget)) => checkWidgetType(widget.widgetType, questionType)
+  }
 
   private def checkWidgetType(widgetType: WidgetType, questionType: Type): Option[Error] =
     (widgetType, questionType) match {
@@ -29,5 +35,14 @@ class StyleChecker(style: StyleModel, definedQuestionsWithType: Map[String, Type
       case (_: Radio, BooleanType) => None
       case (w, q) => Some(Error(s"Invalid widget $w for type $q"))
     }
+
+  private def checkWidgetType(questionStyle: QuestionStyle): Option[Error] = questionStyle match {
+    case QuestionStyle(_, _, None) => None
+    case QuestionStyle(ident, _, Some(widget)) =>
+      definedQuestionsWithType.get(ident) match {
+        case Some(qt) => checkWidgetType(widget.widgetType, qt)
+        case None => Some(Error(s"Unable to determine type of $ident for style type checking."))
+      }
+  }
 
 }
