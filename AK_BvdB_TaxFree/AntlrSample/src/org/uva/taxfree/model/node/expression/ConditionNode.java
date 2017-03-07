@@ -31,7 +31,7 @@ public abstract class ConditionNode extends Node {
     public abstract void addUsedVariables(Set<String> set);
 
     public boolean isBoolean() {
-        boolean isTrue = "true".equals(evaluate();
+        boolean isTrue = "true".equals(evaluate());
         boolean isFalse = "false".equals(evaluate());
         return (isTrue || isFalse);
     }
