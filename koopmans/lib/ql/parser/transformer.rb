@@ -2,53 +2,51 @@ require 'parslet'
 
 module QL
   module Parser
-    Int    = Struct.new(:int) {
-      def eval; self end
-      def op(operation, other)
-        left = int
-        right = other.int
-
-        Int.new(
-          case operation
-            when '+'
-              left + right
-            when '-'
-              left - right
-            when '*'
-              left * right
-            when '/'
-              left / right
-            when '=='
-              left == right
-            when '>'
-              left > right
-            when '!'
-              !left
-          end)
-      end
-      def to_i
-        int
-      end
-    }
+    # Int    = Struct.new(:int) {
+    #   def eval; self end
+    #   def op(operation, other)
+    #     left = int
+    #     right = other.int
+    #
+    #     Int.new(
+    #       case operation
+    #         when '+'
+    #           left + right
+    #         when '-'
+    #           left - right
+    #         when '*'
+    #           left * right
+    #         when '/'
+    #           left / right
+    #         when '=='
+    #           left == right
+    #         when '>'
+    #           left > right
+    #         when '!'
+    #           !left
+    #       end)
+    #   end
+    #   def to_i
+    #     int
+    #   end
+    # }
 
     Seq    = Struct.new(:sequence) {
       def eval
-        sequence.reduce { |accum, operation|
-          p accum
-          p operation
-          p 'jeofjeojeo'
-          operation.call(accum) }
+        sequence.reduce { |left, operation|
+          pp "calculation: #{left}#{left.eval} #{operation} #{operation.right}#{operation.right.eval}"
+          operation.call(left) }
       end
     }
-    LeftOp = Struct.new(:operation, :right) {
-      def call(left)
-        left = left.eval
-
-        right = self.right.eval
-        pp operation
-        left.op(operation, right)
-      end
-    }
+    # LeftOp = Struct.new(:operation, :right) {
+    #   def call(left)
+    #     left = left.eval
+    #
+    #     right = self.right.eval
+    #     pp operation
+    #     left.op(operation, right)
+    #   end
+    # }
 
     class Transformer < Parslet::Transform
       include AST
@@ -93,9 +91,9 @@ module QL
 
       # literal
       rule(boolean_literal: simple(:value)) { BooleanLiteral.new(value) }
-      rule(integer_literal: simple(:value)) { IntegerLiteral.new(value) }
+      rule(integer_literal: simple(:value)) { IntegerLiteral.new(value.to_i) }
       rule(string_literal: simple(:value)) { StringLiteral.new(value) }
-
+      # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
 
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type) }) { Question.new(string_literal, variable, type) }
       rule(question: { label: simple(:string_literal), id: simple(:variable), type: simple(:type), expression: subtree(:expression) }) { Question.new(string_literal, variable, type, expression) }

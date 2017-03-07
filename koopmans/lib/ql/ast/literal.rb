@@ -4,7 +4,7 @@ module QL
       attr_reader :value
 
       def initialize(value)
-        @value = value.to_s
+        @value = value
       end
 
       def accept(visitor)
@@ -28,8 +28,28 @@ module QL
         [IntegerType]
       end
 
-      def eval
-        value.to_i
+      def eval; self end
+      def op(operation, other)
+        left = value
+        right = other.value
+
+        IntegerLiteral.new(
+          case operation
+            when '+'
+              left + right
+            when '-'
+              left - right
+            when '*'
+              left * right
+            when '/'
+              left / right
+            when '=='
+              left == right
+            when '>'
+              left > right
+            when '!'
+              !left
+          end)
       end
     end
 

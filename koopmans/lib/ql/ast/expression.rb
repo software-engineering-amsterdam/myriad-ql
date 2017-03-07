@@ -49,16 +49,14 @@ module QL
       def call(left)
         pp 'aap'
         pp left
-        left = left
+        left = left.eval
         pp left
+        pp 'schaap'
         pp right
-        right = self.right
+        right = self.right.eval
         pp right
-        # left.operation(self.to_operator, right)
-        self.eval(left, right)
-        # operation(left, self, right)
-        # left self.to_operator right
-        # left.op(operation, right)
+        pp 'results in:'
+        left.op(self.to_operator, right)
       end
     end
 
@@ -89,14 +87,17 @@ module QL
     end
 
     class Subtract < ArithmeticExpression
-      def eval
-        "#{left.eval} - #{right.eval}"
+      def to_operator
+        '-'
+      end
+      def eval(left, right)
+        IntegerLiteral.new(left - right)
       end
     end
 
     class Add < ArithmeticExpression
       def eval(left, right)
-        left.eval + right.eval
+        IntegerLiteral.new(left + right)
       end
 
       def to_operator
@@ -106,7 +107,7 @@ module QL
 
     class Multiply < ArithmeticExpression
       def eval(left, right)
-        left.eval * right.eval
+        IntegerLiteral.new(left * right)
       end
 
       def to_operator
