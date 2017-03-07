@@ -1,5 +1,7 @@
 package org.ql.gui.elements;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
@@ -11,6 +13,8 @@ public class BooleanQuestionElement extends QuestionElement {
 
     public BooleanQuestionElement(Question question, Widget widget) {
         super(question, widget);
+
+        addEventActionToListener();
     }
 
     @Override
@@ -18,8 +22,20 @@ public class BooleanQuestionElement extends QuestionElement {
         return booleanValue;
     }
 
+    public void addEventActionToListener() {
+        widget.addEventListener(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Checkbox ticked to: " + widget.getValue().getPlainValue());
+                setValue(widget.getValue());
+            }
+        });
+    }
+
     @Override
     public void setValue(Value value) {
         booleanValue = (BooleanValue) value;
     }
+
+
 }

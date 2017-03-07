@@ -1,5 +1,9 @@
 package org.ql.gui.widgets;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.CheckBox;
 import org.ql.ast.Identifier;
 import org.ql.evaluator.value.BooleanValue;
@@ -17,12 +21,6 @@ public class CheckBoxWidget extends Widget {
         return checkBox;
     }
 
-    public void addEventHandler() {
-        checkBox.setOnAction((event) -> {
-            boolean selected = checkBox.isSelected();
-        });
-    }
-
     @Override
     public void setVisible(Value value) {
         checkBox.setVisible((Boolean) value.getPlainValue());
@@ -36,6 +34,11 @@ public class CheckBoxWidget extends Widget {
     @Override
     public Value getValue() {
         return new BooleanValue(checkBox.isSelected());
+    }
+
+    @Override
+    public void addEventListener(EventHandler<ActionEvent> eventHandler) {
+        checkBox.setOnAction(eventHandler);
     }
 
     @Override
