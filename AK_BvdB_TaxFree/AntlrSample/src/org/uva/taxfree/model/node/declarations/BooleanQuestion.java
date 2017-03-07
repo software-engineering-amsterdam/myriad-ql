@@ -1,5 +1,8 @@
 package org.uva.taxfree.model.node.declarations;
 
+import org.uva.taxfree.model.types.BooleanType;
+import org.uva.taxfree.model.types.Type;
+
 import javax.swing.*;
 
 public class BooleanQuestion extends NamedNode {
@@ -27,6 +30,11 @@ public class BooleanQuestion extends NamedNode {
 
     protected boolean isTrue() {
         return mCheckbox.isSelected();
+    }
+
+    @Override
+    public Type getType() {
+        return new BooleanType();
     }
 }
 
