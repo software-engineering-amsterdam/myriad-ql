@@ -1,12 +1,6 @@
 package evaluation;
 
-import ast.Block;
-import ast.BlockItem;
-import ast.ComputedQuestion;
-import ast.Form;
-import ast.FormVisitor;
-import ast.Question;
-import ast.Statement;
+import ast.*;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
 import ast.atom.IntegerAtom;
@@ -71,6 +65,14 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Value> {
         Value value = statement.getExpression().accept(this);
         // Add to environment
         statement.getBlock().accept(this); // TODO circulair dependencies?
+    }
+
+    @Override
+    public void visit(IfElseStatement statement) {
+        Value value = statement.getExpression().accept(this);
+        // Add to environment
+        statement.getBlock().accept(this); // TODO circulair dependencies?
+        statement.getElseBlock().accept(this); // TODO circulair dependencies?
     }
 
     @Override
