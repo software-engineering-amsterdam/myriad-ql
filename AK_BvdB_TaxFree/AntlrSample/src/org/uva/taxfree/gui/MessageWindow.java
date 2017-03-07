@@ -13,8 +13,6 @@ public class MessageWindow {
     public static void showMessages(List<Message> messages) {
         JOptionPane.showMessageDialog(null,
                 generateMessage(messages), "Semantic analyzer report", messageType(messages));
-
-
     }
 
     private static String generateMessage(List<Message> messages) {
@@ -26,7 +24,6 @@ public class MessageWindow {
     }
 
     private static int messageType(List<Message> messages) {
-        boolean fatalError = false;
         for (Message m : messages) {
             if (m.isFatal()) {
                 return JOptionPane.ERROR_MESSAGE;

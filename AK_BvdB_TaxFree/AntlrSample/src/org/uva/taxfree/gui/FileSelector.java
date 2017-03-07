@@ -15,7 +15,7 @@ public class FileSelector {
         chooser.setFileFilter(filter);
         String fileName = "";
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            fileName = chooser.getSelectedFile().getName();
+            fileName = chooser.getSelectedFile().getAbsolutePath();
         }
         return new File(fileName);
     }
