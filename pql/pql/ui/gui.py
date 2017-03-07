@@ -74,6 +74,45 @@ class Gui(FormVisitor, TypeVisitor):
         else:
             container.hide()
 
+    def field(self, node):
+        container = QGroupBox(node.parent)
+        layout = QHBoxLayout()
+        label = QLabel(node.title)
+
+        widget = node.data_type.apply(self)
+        widget.setParent(node.parent)
+        widget.setEnabled(node.expression is None)
+        widget.setObjectName(node.name.name)
+        node.parent.registerField(node.name.name, widget)
+
+        label.setBuddy(widget)
+        layout.addWidget(label)
+        layout.addWidget(widget)
+        container.setLayout(layout)
+        return container
+
+    def money(self, node):
+        widget = QDoubleSpinBox()
+        widget.setDecimals(2)
+        widget.setMaximum(10**10)
+        widget.setMinimum(-(10**10))
+        widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
+        return widget
+
+    def integer(self, node):
+        widget = QSpinBox()
+        widget.setMinimum(-(10**10))
+        widget.setMaximum(10**10)
+        widget.setMaxLength(8)
+        widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
+        return widget
+
+    def boolean(self, node):
+        widget = QCheckBox()
+        widget.setChecked(False)
+        widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
+        return widget
+
     def update_trigger_numeric(self, widget, value, type):
         self.evaluator.update_value(widget.objectName(), value)
         self.update_visible_values(type, self.update_value_numeric)
@@ -96,39 +135,3 @@ class Gui(FormVisitor, TypeVisitor):
     def update_value_numeric(self, widget, value):
         if value is not None:
             widget.setValue(value)
-
-    def field(self, node):
-        container = QGroupBox(node.parent)
-        layout = QHBoxLayout()
-        label = QLabel(node.title)
-
-        widget = node.data_type.apply(self)
-        widget.setParent(node.parent)
-        widget.setEnabled(node.expression is None)
-        widget.setObjectName(node.name.name)
-        node.parent.registerField(node.name.name, widget)
-
-        label.setBuddy(widget)
-        layout.addWidget(label)
-        layout.addWidget(widget)
-        container.setLayout(layout)
-        return container
-
-    def money(self, node):
-        widget = QDoubleSpinBox()
-        widget.setDecimals(2)
-        widget.setMaximum(10**10)
-        widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
-        return widget
-
-    def integer(self, node):
-        widget = QSpinBox()
-        widget.setMaxLength(8)
-        widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
-        return widget
-
-    def boolean(self, node):
-        widget = QCheckBox()
-        widget.setChecked(False)
-        widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
-        return widget
