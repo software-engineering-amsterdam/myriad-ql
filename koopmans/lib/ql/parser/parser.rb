@@ -8,14 +8,26 @@ module QL
 
       root :addition
 
+      # rule(:root) {
+      #   ((exp | addition)).repeat
+      # }
+
+      rule(:exp){
+        str('(') >> addition >> str(')')
+      }
+
       rule(:addition) {
         multiplication.as(:left) >> (add_op >> multiplication.as(:right)).repeat(1) |
           multiplication
       }
 
       rule(:multiplication) {
-        integer_literal.as(:left) >> (mult_op >> integer_literal.as(:right)).repeat(1) |
-          integer_literal }
+        i_or_exp.as(:left) >> (mult_op >> i_or_exp.as(:right)).repeat(1) |
+          i_or_exp }
+
+      rule(:i_or_exp){
+        (integer_literal | exp)
+      }
 
       rule(:mult_op) { match['*/'].as(:operator) >> _ }
       rule(:add_op) { match['+-'].as(:operator) >> _ }
