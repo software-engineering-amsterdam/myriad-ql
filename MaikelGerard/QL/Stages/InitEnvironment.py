@@ -42,11 +42,11 @@ class InitEnvironment(object):
         self.add_question_to_env(comp_question_node, comp_question_node.name)
 
     def if_node(self, if_node):
-        if_node.expression.accept(self)
+        if_node.condition.accept(self)
         if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
-        if_else_node.expression.accept(self)
+        if_else_node.condition.accept(self)
 
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
@@ -110,9 +110,9 @@ class InitEnvironment(object):
         pass
 
     def var_node(self, var_node):
-        if var_node.val in self.conditional_vars:
+        if var_node.name in self.conditional_vars:
             return
-        self.conditional_vars[var_node.val] = var_node
+        self.conditional_vars[var_node.name] = var_node
 
     def decimal_node(self, _):
         pass

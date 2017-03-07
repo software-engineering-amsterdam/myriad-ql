@@ -103,7 +103,7 @@ class IfNode(Node):
 
     def __eq__(self, other):
         return super(IfNode, self).__eq__(other) and \
-               other.expression == self.condition and \
+               other.condition == self.condition and \
                other.if_block == self.if_block
 
 

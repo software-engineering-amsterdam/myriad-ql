@@ -11,7 +11,7 @@ class PrintAst(object):
     def start_traversal(self):
         self.indent = 0
         self.output = ""
-        self.ast.accept(self)
+        self.form_block(self.ast)
         print(self.output)
 
     def form_block(self, form_node):
@@ -21,14 +21,14 @@ class PrintAst(object):
         self.indent -= 1
 
     def if_node(self, if_node):
-        condition = if_node.expression.accept(self)
+        condition = if_node.condition.accept(self)
         self.output += self.indent * "    " + "if ({}):\n".format(condition)
         self.indent += 1
         if_node.if_block.accept(self)
         self.indent -= 1
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self)
+        condition = if_else_node.condition.accept(self)
         self.output += self.indent * "    " + "if ({}):\n".format(condition)
         self.indent += 1
         if_else_node.if_block.accept(self)
@@ -133,7 +133,7 @@ class PrintAst(object):
         return "date"
 
     def var_node(self, var_node):
-        return str(var_node.val)
+        return str(var_node.name)
 
     def int_node(self, int_node):
         return str(int_node.val)

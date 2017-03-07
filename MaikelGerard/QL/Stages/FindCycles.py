@@ -132,7 +132,7 @@ class FindCycles(object):
 
     @staticmethod
     def var_node(var_node):
-        return [var_node.val]
+        return [var_node.name]
 
     @staticmethod
     def decimal_node(_):

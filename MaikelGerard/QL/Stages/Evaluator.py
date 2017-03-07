@@ -122,7 +122,7 @@ class Evaluate(object):
 
     def var_node(self, var_node):
         """ :type var_node: AST.VarNode """
-        return self.env.get_var_value(var_node.val)
+        return self.env.get_var_value(var_node.name)
 
     @staticmethod
     def decimal_node(decimal_node):

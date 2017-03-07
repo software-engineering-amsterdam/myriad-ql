@@ -27,13 +27,13 @@ class EvaluateDrawState(object):
         self.show_stack.pop()
 
     def if_node(self, if_node):
-        condition = if_node.expression.accept(self.evaluator)
+        condition = if_node.condition.accept(self.evaluator)
         condition = condition if condition != Undefined else False
 
         self.traverse_branch(if_node.if_block, condition)
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.expression.accept(self.evaluator)
+        condition = if_else_node.condition.accept(self.evaluator)
         condition = condition if condition != Undefined else False
 
         self.traverse_branch(if_else_node.if_block, condition)
