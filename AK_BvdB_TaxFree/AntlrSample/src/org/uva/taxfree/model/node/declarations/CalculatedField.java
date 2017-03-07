@@ -1,21 +1,24 @@
 package org.uva.taxfree.model.node.declarations;
 
 import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.types.Type;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public abstract class CalculatedField extends NamedNode {
+public class CalculatedField extends NamedNode {
     private final ExpressionNode mCondition;
     private final JTextField mTextField;
+    private final Type mType;
 
-    public CalculatedField(String label, String id, ExpressionNode condition) {
+    public CalculatedField(String label, String id, Type type, ExpressionNode condition) {
         super(label, id);
         mTextField = new JTextField();
         mTextField.setEditable(false);
         mTextField.setPreferredSize(new Dimension(100, 25));
+        mType = type;
         mCondition = condition;
     }
 
@@ -42,6 +45,11 @@ public abstract class CalculatedField extends NamedNode {
     @Override
     public String resolveValue() {
         return mCondition.evaluate();
+    }
+
+    @Override
+    public Type getType() {
+        return mType;
     }
 
 

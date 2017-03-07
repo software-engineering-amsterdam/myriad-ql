@@ -14,6 +14,7 @@ import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.types.IntegerType;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class QuestionFormTest {
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
 
         BinaryExpressionNode expCalc = new CalculationBinaryExpressionNode(variableSold, "-", variableBought);
-        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
+        CalculatedField intCalc = new CalculatedField("Money balance:", "moneyBalance", new IntegerType(), expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
@@ -138,13 +139,13 @@ public class QuestionFormTest {
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
-        CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two", new IntegerLiteralNode("2"));
+        CalculatedField intField = new CalculatedField("I'm showing two:", "two", new IntegerType(), new IntegerLiteralNode("2"));
         add(intField);
     }
 
     @Test
     public void testIntFieldCalculation() throws Exception {
-        add(new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive()));
+        add(new CalculatedField("The result of 1 + 5:", "six", new IntegerType(), CalcOnePlusFive()));
     }
 
     @Test
@@ -154,7 +155,6 @@ public class QuestionFormTest {
         add(new MoneyQuestion("How much money do you want to receive?", "moneyAmount"));
         add(new DateQuestion("What date did you buy your last car?", "lastBoughtCar"));
     }
-
 
 
     private void add(BlockNode blockNode) {

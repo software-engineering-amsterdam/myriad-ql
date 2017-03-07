@@ -9,12 +9,14 @@ import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
+import org.uva.taxfree.model.node.declarations.*;
 import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.declarations.*;
+import org.uva.taxfree.model.types.BooleanType;
+import org.uva.taxfree.model.types.IntegerType;
 
 import java.util.*;
 
@@ -133,9 +135,9 @@ public class GrammarListener extends QLGrammarBaseListener {
         String fieldId = ctx.VARIABLE_LITERAL().getText();
 
         if ("boolean".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new BooleanCalculatedField(fieldDescription, fieldId, popCachedCondition());
+            calculatedFieldNode = new CalculatedField(fieldDescription, fieldId, new BooleanType(), popCachedCondition());
         } else if ("integer".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new IntegerCalculatedField(fieldDescription, fieldId, popCachedCondition());
+            calculatedFieldNode = new CalculatedField(fieldDescription, fieldId, new IntegerType(), popCachedCondition());
         } else {
             // TODO: Bail out!
             throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
