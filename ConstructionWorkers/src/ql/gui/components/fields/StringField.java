@@ -2,7 +2,7 @@ package ql.gui.components.fields;
 
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.GUIInterface;
-import ql.gui.components.widgets.Widget;
+import ql.gui.components.widgets.WidgetInterface;
 import ql.gui.formenvironment.values.Value;
 import ql.gui.formenvironment.values.StringValue;
 
@@ -17,7 +17,7 @@ public class StringField extends Field {
 
     private StringValue value;
 
-    public StringField(GUIInterface updates, SimpleQuestion question, Widget widget) {
+    public StringField(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
         super(updates, question, widget);
 
         this.resetState();
@@ -45,7 +45,7 @@ public class StringField extends Field {
         return value.equals(this.value);
     }
 
-    public Widget getField() {
+    public WidgetInterface getField() {
         return this.widget;
     }
 

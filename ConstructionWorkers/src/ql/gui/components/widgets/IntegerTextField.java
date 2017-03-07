@@ -1,3 +1,7 @@
+/**
+ * IntegerTextField.java.
+ */
+
 package ql.gui.components.widgets;
 
 import ql.gui.formenvironment.values.IntegerValue;
@@ -9,59 +13,48 @@ import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.EventListener;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
 public class IntegerTextField extends AbstractWidget{
 
-    private static int COLUMNS = 7;
-    private static int MIN_NUM = -1000000;
-    private static int MAX_NUM = 1000000;
-
     private JFormattedTextField input;
-    private NumberFormatter numberFormatter;
 
-    public IntegerTextField(String _label) {
-        JLabel label = new JLabel(_label);
+    private static final int COLUMNS = 7;
+
+    public IntegerTextField(String label) {
+        JLabel questionLabel = new JLabel(label);
 
         NumberFormat intFormat = NumberFormat.getIntegerInstance();
         intFormat.setGroupingUsed(false);
         intFormat.setParseIntegerOnly(true);
 
-        numberFormatter = new NumberFormatter(intFormat);
+        NumberFormatter numberFormatter = new NumberFormatter(intFormat);
         numberFormatter.setValueClass(Integer.class);
         numberFormatter.setAllowsInvalid(false);
-        numberFormatter.setMinimum(MIN_NUM);
-        numberFormatter.setMaximum(MAX_NUM);
         numberFormatter.setOverwriteMode(true);
 
-        this.input = new JFormattedTextField(numberFormatter);
+        input = new JFormattedTextField(numberFormatter);
+        input.setColumns(COLUMNS);
 
-        this.input.setColumns(COLUMNS);
+        component.add(questionLabel);
+        component.add(input);
+    }
 
-        this.component.add(label);
-        this.component.add(input);
+    @Override
+    public IntegerValue getValue() {
+        return new IntegerValue(Integer.parseInt(input.getText()));
+    }
+
+    @Override
+    public void setValue(Value value) {
+        input.setText(Integer.toString(((IntegerValue) value).getValue()));
+    }
+
+    @Override
+    public void setReadOnly(boolean isReadonly) {
+        input.setEditable(!isReadonly);
     }
 
     @Override
     public void addListener(EventListener listener) {
         input.addKeyListener((KeyListener) listener);
-    }
-
-    @Override
-    public IntegerValue getValue() {
-        return new IntegerValue(Integer.parseInt(this.input.getText()));
-    }
-
-    @Override
-    public void setValue(Value value) {
-        IntegerValue nvalue = (IntegerValue) value;
-        this.input.setText(Integer.toString(nvalue.getValue()));
-    }
-
-    @Override
-    public void setReadOnly(boolean _isReadonly) {
-        this.input.setEditable(false);
-        numberFormatter.setAllowsInvalid(true);
     }
 }

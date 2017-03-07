@@ -1,3 +1,7 @@
+/**
+ * TextField.java.
+ */
+
 package ql.gui.components.widgets;
 
 import ql.gui.formenvironment.values.StringValue;
@@ -7,45 +11,39 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.util.EventListener;
 
-/**
- * Created by LGGX on 23-Feb-17.
- */
-
 public class TextField extends AbstractWidget {
 
     private JTextField input;
 
-    public TextField(String _label) {
-        JLabel label = new JLabel(_label);
-        this.input = new JTextField();
+    private static final int COLUMNS = 7;
 
-        this.input.setColumns(7);
+    public TextField(String questionLabel) {
+        JLabel label = new JLabel(questionLabel);
 
-        this.component.add(label);
-        this.component.add(input);
+        input = new JTextField();
+        input.setColumns(COLUMNS);
+
+        component.add(label);
+        component.add(input);
+    }
+
+    @Override
+    public StringValue getValue() {
+        return new StringValue(input.getText());
+    }
+
+    @Override
+    public void setValue(Value value) {
+        input.setText(((StringValue) value).getValue());
+    }
+
+    @Override
+    public void setReadOnly(boolean isReadOnly) {
+        input.setEditable(!isReadOnly);
     }
 
     @Override
     public void addListener(EventListener listener) {
         input.addKeyListener((KeyListener) listener);
     }
-
-    @Override
-    public StringValue getValue() {
-        return new StringValue(this.input.getText());
-    }
-
-    @Override
-    public void setValue(Value value) {
-        StringValue nvalue = (StringValue) value;
-        this.input.setText(nvalue.getValue());
-    }
-
-    @Override
-    public void setReadOnly(boolean _isReadonly) {
-        this.input.setEditable(false);
-        this.input.setEditable(false);
-    }
-
-
 }

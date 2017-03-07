@@ -1,3 +1,7 @@
+/**
+ * GUIManager.java.
+ */
+
 package ql.gui.components;
 
 import ql.gui.components.fields.Field;
@@ -5,33 +9,31 @@ import ql.gui.components.fields.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
 public class GUIManager {
+
     protected FormFrame form;
     private List<Field> formFields;
 
-    public GUIManager(FormFrame form) {
-        this.form = form;
+    public GUIManager(String formTitle) {
+        form = new FormFrame(formTitle);
         this.formFields = new ArrayList<>();
     }
 
     public void render() {
-        this.form.showForm();
+        form.showForm();
     }
 
-    public void addQuestion(Field field) {
-        if (!this.formFields.contains(field)) {
-            this.formFields.add(field);
-            field.addToForm(this.form);
+    public void addField(Field field) {
+        if (!formFields.contains(field)) {
+            formFields.add(field);
+            field.addToForm(form);
         }
     }
 
-    public void removeQuestion(Field field) {
-        if (this.formFields.contains(field)) {
-            this.formFields.remove(field);
-            field.removeFromForm(this.form);
+    public void removeField(Field field) {
+        if (formFields.contains(field)) {
+            formFields.remove(field);
+            field.removeFromForm(form);
         }
     }
 }

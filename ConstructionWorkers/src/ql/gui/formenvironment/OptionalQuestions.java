@@ -3,7 +3,7 @@ package ql.gui.formenvironment;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.components.fields.Field;
-import ql.gui.components.visitors.GUIFieldFactory;
+import ql.gui.components.fields.FieldFactory;
 import ql.gui.formenvironment.values.Value;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ public class OptionalQuestions {
 
     private final Map<Field, List<IfStatement>> conditionQuestionMap;
     private final Context context;
-    private final GUIFieldFactory fieldFactory;
+    private final FieldFactory fieldFactory;
 
-    public OptionalQuestions(QuestionData questionData, Context context, GUIFieldFactory fieldFactory) {
+    public OptionalQuestions(QuestionData questionData, Context context, FieldFactory fieldFactory) {
 
         this.context = context;
         this.fieldFactory = fieldFactory;

@@ -4,7 +4,7 @@ import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
 import ql.gui.components.FormFrame;
-import ql.gui.components.widgets.Widget;
+import ql.gui.components.widgets.WidgetInterface;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.*;
 import qls.astnodes.visitors.StyleSheetVisitor;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by LGGX on 03-Mar-17.
  */
-public abstract class QLSWidget extends Node implements Widget {
+public abstract class QLSWidget extends Node implements WidgetInterface {
 
     protected final static String DEFAULT_FONT = "Arial";
     protected final static int DEFAULT_FONT_SIZE = 14;

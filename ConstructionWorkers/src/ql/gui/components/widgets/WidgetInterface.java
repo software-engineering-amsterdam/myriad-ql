@@ -1,3 +1,7 @@
+/**
+ * WidgetInterface.java.
+ */
+
 package ql.gui.components.widgets;
 
 import ql.gui.components.FormFrame;
@@ -5,20 +9,17 @@ import ql.gui.formenvironment.values.Value;
 
 import java.util.EventListener;
 
-/**
- * Created by LGGX on 23-Feb-17.
- */
-public interface Widget {
+public interface WidgetInterface {
+
+    Value getValue();
 
     void setValue(Value value);
 
-    Object getValue();
+    void setReadOnly(boolean isReadonly);
 
     void addListener(EventListener listener);
 
     void render(FormFrame form);
+
     void suppress(FormFrame form);
-
-    void setReadOnly(boolean isReadonly);
-
 }

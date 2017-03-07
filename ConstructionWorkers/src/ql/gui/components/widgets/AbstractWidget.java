@@ -1,27 +1,28 @@
+/**
+ * AbstractWidget.java.
+ */
+
 package ql.gui.components.widgets;
 
 import ql.gui.components.FormFrame;
 
 import javax.swing.*;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
-public abstract class AbstractWidget implements Widget {
+public abstract class AbstractWidget implements WidgetInterface {
 
     protected JComponent component;
 
     public AbstractWidget() {
-        this.component = new JPanel();
+        component = new JPanel();
     }
 
     @Override
     public void render(FormFrame form) {
-        form.addWidget(this.component);
+        form.addWidget(component);
     }
 
     @Override
     public void suppress(FormFrame form) {
-        form.removeWidget(this.component);
+        form.removeWidget(component);
     }
 }

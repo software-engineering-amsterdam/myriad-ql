@@ -2,7 +2,7 @@ package ql.gui.components.fields;
 
 import ql.astnodes.statements.ComputedQuestion;
 import ql.gui.GUIInterface;
-import ql.gui.components.widgets.Widget;
+import ql.gui.components.widgets.WidgetInterface;
 import ql.gui.formenvironment.values.UndefinedValue;
 import ql.gui.formenvironment.values.Value;
 
@@ -16,7 +16,7 @@ public class ComputerQuestionField extends Field {
     public ComputerQuestionField(
             GUIInterface updates,
             ComputedQuestion question,
-            Widget widget,
+            WidgetInterface widget,
             Value value)
     {
         super(updates, question, widget);

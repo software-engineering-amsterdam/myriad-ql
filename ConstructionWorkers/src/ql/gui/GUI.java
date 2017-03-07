@@ -8,12 +8,11 @@ import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
-import ql.gui.components.FormFrame;
 import ql.gui.evaluation.Evaluator;
 import ql.gui.components.fields.ComputerQuestionField;
 import ql.gui.components.fields.Field;
 import ql.gui.components.GUIManager;
-import ql.gui.components.visitors.GUIFieldFactory;
+import ql.gui.components.fields.FieldFactory;
 import ql.gui.components.widgets.WidgetFactory;
 import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.OptionalQuestions;
@@ -29,18 +28,18 @@ public class GUI implements GUIInterface{
     private final GUIManager manager;
     private final Context context;
     private final Evaluator evaluator;
-    private final GUIFieldFactory fieldFactory;
+//    private final FieldFactory fieldFactory;
     private final QuestionData questionData;
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
     private final Map<Field, List<IfStatement>> questionsWithConditions;
 
     public GUI(Form form, Context context) {
-        manager = new GUIManager(new FormFrame(form.getIdentifier().getName()));
+        manager = new GUIManager(form.getIdentifier().getName());
         this.context = context;
         evaluator = new Evaluator(context);
-        WidgetFactory widgetFactory = new WidgetFactory();
-        fieldFactory = new GUIFieldFactory(this, context, widgetFactory);
+
+        FieldFactory fieldFactory = new FieldFactory(this, context);
 
         questionData = new QuestionData(form);
         computedQuestions = questionData.getComputedQuestions();
@@ -64,9 +63,9 @@ public class GUI implements GUIInterface{
             for (Field field : conditionsOfQuestions.keySet()) {
                 if (question.getIdentifier().getName() == field.getId()) {
                     if (this.isConditionTrue(conditionsOfQuestions, field)) {
-                        this.manager.addQuestion(field);
+                        this.manager.addField(field);
                     } else {
-                        this.manager.removeQuestion(field);
+                        this.manager.removeField(field);
                     }
                 }
             }

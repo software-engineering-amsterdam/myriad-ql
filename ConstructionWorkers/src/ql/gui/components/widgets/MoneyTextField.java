@@ -1,58 +1,54 @@
+/**
+ * MoneyTextField.java.
+ */
+
 package ql.gui.components.widgets;
 
 import ql.gui.formenvironment.values.MoneyValue;
 import ql.gui.formenvironment.values.Value;
 
 import javax.swing.*;
-import javax.swing.text.DefaultFormatter;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.EventListener;
 
-/**
- * Created by LGGX on 24-Feb-17.
- */
 public class MoneyTextField extends AbstractWidget{
 
-    private static int COLUMNS = 7;
-
     private JTextField input;
+
+    private static final int COLUMNS = 7;
     
-    public MoneyTextField(String _label) {
-        JLabel label = new JLabel(_label);
+    public MoneyTextField(String questionLabel) {
+        JLabel label = new JLabel(questionLabel);
 
-        this.input = new JTextField();
-        this.input.setColumns(COLUMNS);
+        input = new JTextField();
+        input.setColumns(COLUMNS);
 
-        this.component.add(label);
-        this.component.add(input);
+        component.add(label);
+        component.add(input);
+    }
+
+    public String getInputText() {
+        return input.getText();
+    }
+
+    @Override
+    public Value getValue() {
+        return new MoneyValue(new BigDecimal(input.getText()));
+    }
+
+    @Override
+    public void setValue(Value value) {
+        input.setText(((MoneyValue) value).getValue().toString());
+    }
+
+    @Override
+    public void setReadOnly(boolean isReadOnly) {
+        input.setEditable(!isReadOnly);
     }
 
     @Override
     public void addListener(EventListener listener) {
         input.addKeyListener((KeyListener) listener);
-    }
-
-    @Override
-    public String getValue() {
-        String value = this.input.getText();
-        return value;
-    }
-
-    @Override
-    public void setValue(Value value) {
-        MoneyValue nvalue = (MoneyValue) value;
-        this.input.setText(nvalue.getValue().toString());
-    }
-
-    @Override
-    public void setReadOnly(boolean _isReadonly) {
-        this.input.setEditable(false);
-        //defaultFormatter.setAllowsInvalid(true);
     }
 }

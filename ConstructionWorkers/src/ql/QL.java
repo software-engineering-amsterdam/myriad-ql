@@ -60,9 +60,7 @@ public class QL {
 
         InputStream qlInputStream = new FileInputStream(inputFile);
         Form qlAST = getAST(qlInputStream);
-
         MessageData messages = new MessageData();
-
         Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, messages);
 
         if(!semanticallyCorrect) {
@@ -73,11 +71,11 @@ public class QL {
             }
 
             System.exit(1);
-        } else {
-            System.out.println("Create GUI...");
-            Context questionStates =  new Context();
-            buildGUI(qlAST, questionStates);
         }
+
+        System.out.println("Create GUI...");
+        Context context =  new Context();
+        buildGUI(qlAST, context);
     }
 
     private boolean fileExists() {
