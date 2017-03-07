@@ -131,9 +131,8 @@
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Renderer\Widgets\CheckBoxWidget.cs" />
     <Compile Include="Renderer\Widgets\ComboBoxWidget.cs" />
-    <Compile Include="Renderer\Widgets\IQuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\DecimalPickerWidget.cs" />
-    <Compile Include="Renderer\Widgets\NumberPickerWidget.cs" />
+    <Compile Include="Renderer\Widgets\IntegerPickerWidget.cs" />
     <Compile Include="Renderer\Widgets\QuestionWidget.cs" />
     <Compile Include="Renderer\Widgets\RadioWidget.cs" />
     <Compile Include="Renderer\Widgets\SliderWidget.cs" />

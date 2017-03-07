@@ -20,6 +20,8 @@ namespace Questionnaires.Renderer.Widgets
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
+            
+            QuestionInputWidget.AllowTextInput = false;
         }
 
         public override void SetLabel(string text)

@@ -16,7 +16,7 @@ namespace Questionnaires.Renderer
         private Dictionary<Widgets.QuestionWidget, string> WidgetNames;
         private Window QuestionnaireWindow = new Window();
         private StackPanel QuestionnaireStack = new StackPanel();
-        private Dictionary<string, IQuestionWidget> Questions = new Dictionary<string, IQuestionWidget>();
+        private Dictionary<string, QuestionWidget> Questions = new Dictionary<string, QuestionWidget>();
         private VariableStore.VariableStore VariableStore;
         private WidgetFactory WidgetFactory = new WidgetFactory();
 

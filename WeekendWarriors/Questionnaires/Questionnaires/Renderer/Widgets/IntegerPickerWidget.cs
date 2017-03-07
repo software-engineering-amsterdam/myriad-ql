@@ -9,17 +9,19 @@ using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
 {
-    class NumberPickerWidget : QuestionWidget
+    class IntegerPickerWidget : QuestionWidget
     {
         private TextBlock QuestionLabelWidget = new TextBlock();
         private IntegerUpDown QuestionInputWidget = new IntegerUpDown();
 
-        public NumberPickerWidget()
+        public IntegerPickerWidget()
             : base()
         {
             Orientation = Orientation.Horizontal;
             Children.Add(QuestionLabelWidget);
             Children.Add(QuestionInputWidget);
+            
+            QuestionInputWidget.AllowTextInput = false;
         }
 
         public override void SetLabel(string text)

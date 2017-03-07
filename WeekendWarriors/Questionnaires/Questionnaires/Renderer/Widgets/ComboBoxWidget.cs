@@ -69,7 +69,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.SelectionChanged += (sender, args) => inputChanged.Invoke(QuestionName, new BooleanType((String)QuestionInputWidget.SelectedValue == "Yes" ? true : false));
+            QuestionInputWidget.SelectionChanged += (sender, args) => inputChanged.Invoke(this, new BooleanType((String)QuestionInputWidget.SelectedValue == "Yes"));
         }
     }
 }

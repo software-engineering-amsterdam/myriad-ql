@@ -19,9 +19,9 @@ namespace Questionnaires.Renderer.Widgets
             return new CheckBoxWidget();
         }
 
-        private NumberPickerWidget BuildWidget(IntegerType question)
+        private IntegerPickerWidget BuildWidget(IntegerType question)
         {
-            return new NumberPickerWidget();
+            return new IntegerPickerWidget();
         }
 
         private DecimalPickerWidget BuildWidget(MoneyType question)
