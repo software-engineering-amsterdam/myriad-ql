@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Types
 {
-    public class MoneyType : Value<decimal>
+    public class MoneyType : Type<decimal>
     {
         public MoneyType()
         {

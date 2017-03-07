@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Types
 {
-    public class BooleanType : Value<bool>
+    public class BooleanType : Type<bool>
     {
         public BooleanType()
         {

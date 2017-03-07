@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Types
 {
-    public abstract class Value<T> : IType
+    public abstract class Type<T> : IType
     {
         protected T Val = default(T);
 

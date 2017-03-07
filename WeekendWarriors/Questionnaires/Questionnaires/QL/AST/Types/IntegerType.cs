@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.Types
 {
-    public class IntegerType : Value<int>
+    public class IntegerType : Type<int>
     {
         public IntegerType()
         {
