@@ -18,7 +18,6 @@ namespace Questionnaires.Renderer
         private StackPanel QuestionnaireStack = new StackPanel();
         private Dictionary<string, IQuestionWidget> Questions = new Dictionary<string, IQuestionWidget>();
         private VariableStore.VariableStore VariableStore;
-        private WidgetFactory WidgetFactory = new WidgetFactory();
 
         public Renderer(VariableStore.VariableStore variableStore)
         {
@@ -35,7 +34,7 @@ namespace Questionnaires.Renderer
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-            var questionWidget = WidgetFactory.BuildWidget(question.Type);
+            var questionWidget = question.Widget;
             questionWidget.SetLabel(question.Body);
             questionWidget.SetOnInputChanged(inputChangedDelegate);
             Questions.Add(question.Identifier, questionWidget);

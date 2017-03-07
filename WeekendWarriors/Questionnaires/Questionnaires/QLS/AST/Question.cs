@@ -13,5 +13,6 @@ namespace Questionnaires.QLS.AST
         {
             this.Name = name;
         }
+
     }
 }

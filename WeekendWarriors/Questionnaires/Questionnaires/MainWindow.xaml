@@ -18,12 +18,15 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="InputQL" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
 form Box1HouseOwning { 
-    hasSoldHouse: "Did you sell a house in 2010?" boolean
-    hasBoughtHouse: "Did you by a house in 2010?" boolean
-    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?"
-boolean(true)
-
-}
+    intQ1: "Int question 1" int
+    intQ2: "Int question 2" int(intQ1)
+    moneyQ1: "Money question 1" money
+    moneyQ2: "Money question 2" money(moneyQ1)
+    boolQ1: "Boolean question 1" boolean
+    boolQ2: "Boolean question 2" boolean(boolQ1)
+    stringQ1: "Stringquestion 1" string
+    stringQ2: "Stringquestion 2" string(stringQ1)
+}      
         </TextBox>
         <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
 

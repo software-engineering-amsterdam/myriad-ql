@@ -26,5 +26,7 @@ namespace Questionnaires.Types
         BooleanType GreaterThanOrEqual(IType value);
         BooleanType EqualTo(IType value);
         BooleanType InequalTo(IType value);
+
+        Questionnaires.Renderer.Widgets.QuestionWidget GetWidget();
     }
 }
