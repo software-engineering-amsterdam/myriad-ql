@@ -5,37 +5,38 @@ import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.validation.QLVisitor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 21/02/2017.
  *
- * Contains statements to be evaluated if the expression contained evaluates to true.
+ * Contains statements to be evaluated if the condition contained evaluates to true.
  */
 
 public class IfStatement extends Statement {
 
-    private final ArrayList<Statement> statements;
-    private Expression expression;
+    private final List<Statement> statements;
+    private Expression condition;
 
-    public IfStatement(Expression e, ArrayList<Statement> s) {
+    public IfStatement(Expression e, List<Statement> s) {
         this.statements = new ArrayList<>();
         this.addStatements(s);
-        this.expression = e;
+        this.condition = e;
     }
 
-    public void addStatements(ArrayList<Statement> statements) {
+    public void addStatements(List<Statement> statements) {
         for (Statement s : statements) {
             this.statements.add(s);
         }
     }
 
 
-    public ArrayList<Statement> getStatements() {
+    public List<Statement> getStatements() {
         return this.statements;
     }
 
-    public Expression getExpression() {
-        return this.expression;
+    public Expression getCondition() {
+        return this.condition;
     }
 
     @Override

@@ -10,6 +10,5 @@ public abstract class Type extends TreeNode {
 
     public abstract String getType();
 
-    public boolean isLeaf = true;
 
 }

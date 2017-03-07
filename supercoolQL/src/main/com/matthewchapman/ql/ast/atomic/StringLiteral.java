@@ -11,8 +11,6 @@ public class StringLiteral extends Type {
 
     private String value;
 
-    public boolean isLeaf = true;
-
     public StringLiteral() {
         this.value = "string";
     }

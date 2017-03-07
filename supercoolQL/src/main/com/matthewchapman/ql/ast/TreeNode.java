@@ -9,6 +9,4 @@ package com.matthewchapman.ql.ast;
 
 public abstract class TreeNode {
 
-    public boolean isLeaf = false;
-
 }

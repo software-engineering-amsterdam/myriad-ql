@@ -5,6 +5,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
 import com.matthewchapman.ql.validation.Visitable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 24/02/2017.
@@ -15,13 +16,13 @@ import java.util.ArrayList;
 public class ParameterGroup extends Expression implements Visitable {
 
     //TODO implement ParameterGroup
-    private final ArrayList<Expression> expressions;
+    private final List<Expression> expressions;
 
     public ParameterGroup() {
         this.expressions = new ArrayList<>();
     }
 
-    public ArrayList<Expression> getParameters() {
+    public List<Expression> getParameters() {
         return this.expressions;
     }
 

@@ -11,8 +11,6 @@ public class BooleanLiteral extends Type {
 
     private String value;
 
-    public boolean isLeaf = true;
-
     public BooleanLiteral() {
         this.value = "boolean";
     }

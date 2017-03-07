@@ -11,8 +11,6 @@ public class IntegerLiteral extends Type {
 
     private String value;
 
-    public boolean isLeaf = true;
-
     public IntegerLiteral() {
         this.value = "integer";
     }

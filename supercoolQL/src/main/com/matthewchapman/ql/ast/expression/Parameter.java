@@ -15,8 +15,6 @@ public class Parameter extends Expression implements Visitable {
 
     private String ID;
 
-    public boolean isLeaf = true;
-
     public Parameter(String s) {
         this.ID = s;
     }

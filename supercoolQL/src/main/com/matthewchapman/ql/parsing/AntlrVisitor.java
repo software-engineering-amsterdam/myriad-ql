@@ -15,6 +15,7 @@ import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by matt on 24/02/2017.
@@ -23,9 +24,8 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
-        //TODO Change ArrayList to List<>
         String ID = ctx.ID().getText();
-        ArrayList<Statement> statements = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
@@ -105,7 +105,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitIfStatement(QLParser.IfStatementContext ctx) {
-        ArrayList<Statement> statements = new ArrayList<>();
+        List<Statement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
@@ -117,8 +117,8 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     @Override
     public TreeNode visitIfElseStatement(QLParser.IfElseStatementContext ctx) {
 
-        ArrayList<Statement> ifCaseStatements = new ArrayList<>();
-        ArrayList<Statement> elseCaseStatements = new ArrayList<>();
+        List<Statement> ifCaseStatements = new ArrayList<>();
+        List<Statement> elseCaseStatements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.ifCase) {
             ifCaseStatements.add((Statement) visit(statementContext));
