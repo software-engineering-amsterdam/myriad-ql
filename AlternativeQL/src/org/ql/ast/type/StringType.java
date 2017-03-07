@@ -24,4 +24,9 @@ public class StringType extends Type {
     public boolean isCompatibleWith(StringType type) {
         return true;
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitStringType(this, context);
+    }
 }

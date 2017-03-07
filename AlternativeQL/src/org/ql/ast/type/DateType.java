@@ -21,4 +21,9 @@ public class DateType extends Type {
     public boolean isCompatibleWith(DateType type) {
         return true;
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitDateType(this, context);
+    }
 }

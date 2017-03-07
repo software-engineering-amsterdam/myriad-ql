@@ -10,11 +10,9 @@ import org.ql.gui.GUIHandlerSingleton;
 import org.ql.gui.widgets.Widget;
 
 public class NumericQuestionElement extends QuestionElement {
-    private DecimalValue value;
 
-    public NumericQuestionElement(Question question, Widget widget) {
-        super(question, widget);
-
+    public NumericQuestionElement(Question question, Value value, Widget widget) {
+        super(question, value, widget);
         widget.addEventHandler(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -25,15 +23,5 @@ public class NumericQuestionElement extends QuestionElement {
                 guiHandler.runGUI();
             }
         });
-    }
-
-    @Override
-    public Value getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Value value) {
-        this.value = (DecimalValue) value;
     }
 }

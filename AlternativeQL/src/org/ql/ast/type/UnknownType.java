@@ -10,4 +10,9 @@ public class UnknownType extends Type {
     public String toString() {
         return "UnknownType";
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitUnknownType(this, context);
+    }
 }

@@ -21,4 +21,9 @@ public class FloatType extends NumberType {
     public boolean isCompatibleWith(MoneyType type) {
         return true;
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitFloatType(this, context);
+    }
 }

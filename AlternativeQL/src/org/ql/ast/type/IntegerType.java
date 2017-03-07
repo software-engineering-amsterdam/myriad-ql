@@ -15,4 +15,9 @@ public class IntegerType extends NumberType {
     public boolean isCompatibleWith(IntegerType type) {
         return true;
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitIntegerType(this, context);
+    }
 }

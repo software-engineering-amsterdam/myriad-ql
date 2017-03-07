@@ -9,15 +9,13 @@ public abstract class QuestionElement {
     private Question question;
     private Widget widget;
     private boolean isDirty = false;
+    private Value value;
 
-    public QuestionElement(Question question, Widget widget) {
+    public QuestionElement(Question question, Value value, Widget widget) {
         this.question = question;
+        this.value = value;
         this.widget = widget;
     }
-
-    public abstract Value getValue();
-
-    public abstract void setValue(Value value);
 
     public boolean isDirty() {
         return isDirty;
@@ -35,4 +33,11 @@ public abstract class QuestionElement {
         return widget;
     }
 
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
+    }
 }

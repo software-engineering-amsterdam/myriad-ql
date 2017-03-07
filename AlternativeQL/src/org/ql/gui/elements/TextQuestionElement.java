@@ -10,11 +10,8 @@ import org.ql.gui.GUIHandlerSingleton;
 import org.ql.gui.widgets.Widget;
 
 public class TextQuestionElement extends QuestionElement {
-    private StringValue value;
-
-    public TextQuestionElement(Question question, Widget widget) {
-        super(question, widget);
-
+    public TextQuestionElement(Question question, Value value, Widget widget) {
+        super(question, value, widget);
         widget.addEventHandler(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -25,15 +22,5 @@ public class TextQuestionElement extends QuestionElement {
                 guiHandler.runGUI();
             }
         });
-    }
-
-    @Override
-    public Value getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Value value) {
-        this.value = (StringValue) value;
     }
 }

@@ -5,8 +5,13 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
+import org.ql.ast.statement.question.QuestionLabel;
+import org.ql.ast.type.BooleanType;
+import org.ql.ast.type.IntegerType;
+import org.ql.ast.type.Type;
+import org.ql.evaluator.value.UnknownValue;
+import org.ql.gui.elements.visitor.QuestionElementBuilder;
 import org.ql.gui.widgets.Widget;
-import org.ql.gui.widgets.WidgetBuilder;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -15,26 +20,47 @@ public class QuestionElementContainerTest {
     @Test
     public void shouldPersistQuestionElementInMap() {
 
-        WidgetBuilder widgetBuilder = mock(WidgetBuilder.class);
-        when(widgetBuilder.getWidget(any(Question.class))).thenAnswer(new Answer<Widget>() {
+        QuestionElementBuilder aQuestionElementBuilder = mockQuestionElementBuilder();
+        Question aQuestion = questionMock();
+
+        QuestionElementContainer container = new QuestionElementContainer(aQuestionElementBuilder);
+        QuestionElement actualQuestionElement =  container.getQuestionElement(aQuestion);
+        QuestionElement actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
+
+        assertSame(actualQuestionElement, actualRetrievedQuestionElement);
+    }
+
+    private QuestionElementBuilder mockQuestionElementBuilder() {
+        QuestionElementBuilder elementBuilder = mock(QuestionElementBuilder.class);
+        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
             @Override
-            public Widget answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return mock(Widget.class);
+            public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new NumericQuestionElement(mock(Question.class), new UnknownValue(), mock(Widget.class));
             }
         });
+        return elementBuilder;
+    }
 
+    private Question questionMock() {
         Question aQuestion = mock(Question.class);
+        when(aQuestion.getType()).thenAnswer(new Answer<Type>() {
+            @Override
+            public Type answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new BooleanType();
+            }
+        });
         when(aQuestion.getId()).thenAnswer(new Answer<Identifier>() {
             @Override
             public Identifier answer(InvocationOnMock invocationOnMock) throws Throwable {
                 return new Identifier("example");
             }
         });
-
-        QuestionElementContainer container = new QuestionElementContainer(widgetBuilder);
-        QuestionElement actualQuestionElement =  container.getQuestionElement(aQuestion);
-        QuestionElement actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
-
-        assertSame(actualQuestionElement, actualRetrievedQuestionElement);
+        when(aQuestion.getQuestionLabel()).thenAnswer(new Answer<QuestionLabel>() {
+            @Override
+            public QuestionLabel answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new QuestionLabel("a label");
+            }
+        });
+        return aQuestion;
     }
 }

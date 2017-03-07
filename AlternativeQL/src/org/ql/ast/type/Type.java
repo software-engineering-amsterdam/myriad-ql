@@ -49,4 +49,6 @@ public abstract class Type extends Node {
     public boolean isCompatibleWith(UnknownType type) {
         return true;
     }
+
+    public abstract <T, C> T accept(TypeVisitor<T, C> visitor, C context);
 }

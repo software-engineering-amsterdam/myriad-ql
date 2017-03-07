@@ -4,10 +4,10 @@ import javafx.stage.Stage;
 import org.ql.ast.Form;
 import org.ql.evaluator.ValueTable;
 import org.ql.gui.elements.QuestionElement;
+import org.ql.gui.elements.visitor.QuestionElementBuilder;
 import org.ql.gui.elements.QuestionElementContainer;
 import org.ql.gui.elements.visitor.QuestionValueVisitor;
 import org.ql.gui.elements.visitor.BranchVisitor;
-import org.ql.gui.widgets.WidgetBuilder;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ public class GUIHandler {
     private final MainStage mainstage;
     private final BranchVisitor branchVisitor;
     private final QuestionValueVisitor questionValueVisitor;
-    private Form form;
+    private final Form form;
 
     public GUIHandler(Stage primaryStage, Form form) {
         this.mainstage = new MainStage(primaryStage);
         this.form = form;
 
-        QuestionElementContainer questionElementContainer = new QuestionElementContainer(new WidgetBuilder());
+        QuestionElementContainer questionElementContainer = new QuestionElementContainer(new QuestionElementBuilder());
 
         branchVisitor = new BranchVisitor(questionElementContainer);
         questionValueVisitor = new QuestionValueVisitor(questionElementContainer);

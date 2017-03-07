@@ -10,10 +10,9 @@ import org.ql.gui.GUIHandlerSingleton;
 import org.ql.gui.widgets.Widget;
 
 public class BooleanQuestionElement extends QuestionElement {
-    private BooleanValue value;
 
-    public BooleanQuestionElement(Question question, Widget widget) {
-        super(question, widget);
+    public BooleanQuestionElement(Question question, Value value, Widget widget) {
+        super(question, value, widget);
 
         widget.addEventHandler(new EventHandler<ActionEvent>() {
             @Override
@@ -25,15 +24,5 @@ public class BooleanQuestionElement extends QuestionElement {
                 guiHandler.runGUI();
             }
         });
-    }
-
-    @Override
-    public Value getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Value value) {
-        this.value = (BooleanValue) value;
     }
 }

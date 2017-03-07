@@ -21,4 +21,9 @@ public class BooleanType extends Type {
     public boolean isCompatibleWith(BooleanType type) {
         return true;
     }
+
+    @Override
+    public <T, C> T accept(TypeVisitor<T, C> visitor, C context) {
+        return visitor.visitBooleanType(this, context);
+    }
 }
