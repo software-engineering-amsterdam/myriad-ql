@@ -39,4 +39,20 @@ public class Question extends Statement {
     public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
         return visitor.visitQuestion(this, context);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        return id != null ? id.equals(question.id) : question.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

@@ -29,13 +29,12 @@ public class ValueTable {
         return values.size();
     }
 
-    public boolean hasUnknownValues() {
-        for (Value value : values.values()) {
-            if (value instanceof UnknownValue) {
-                return true;
-            }
+    public boolean equals(ValueTable obj) {
+        if (size() + obj.size() == 0) {
+            return true;
         }
-        return false;
+
+        return values.equals(obj.values);
     }
 
     public ValueTable copy() {

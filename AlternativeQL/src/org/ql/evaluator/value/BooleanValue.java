@@ -35,4 +35,20 @@ public class BooleanValue extends Value {
     public Boolean getPlainValue() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BooleanValue that = (BooleanValue) o;
+
+        return value == that.value;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (value ? 1 : 0);
+    }
 }
