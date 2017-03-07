@@ -52,20 +52,17 @@ class DependencyChecker:
         return [node.name]
 
     def visit_if_conditional(self, node):
-        dependencies = DependencyFinder().find(node)
         scope = sum([self.visit(element) for element in node.ifbody], [])
+        return self.visit_conditional(node, scope)
 
-        for dependency in dependencies:
-            if dependency in scope:
-                self.error("condition depends on question \"{}\" within "
-                           "own scope".format(dependency))
-        return scope
 
     def visit_ifelse_conditional(self, node):
-        dependencies = DependencyFinder().find(node)
         scope = sum([self.visit(element) for element in node.ifbody +
                      node.elsebody], [])
+        return self.visit_conditional(node, scope)
 
+    def visit_conditional(self, node, scope):
+        dependencies = DependencyFinder().find(node)
         for dependency in dependencies:
             if dependency in scope:
                 self.error("condition depends on question \"{}\" within "
