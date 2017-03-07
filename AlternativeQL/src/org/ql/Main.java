@@ -10,6 +10,7 @@ import org.ql.gui.GUIHandler;
 import org.ql.gui.elements.QuestionElementBuilder;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
+import org.ql.typechecker.issues.IssuesStorage;
 
 public class Main extends Application {
     public static void main(String args[]) {
@@ -44,9 +45,9 @@ public class Main extends Application {
 
     public boolean hasFormTypeErrors(Form form) {
         TypeChecker typeChecker = new TypeChecker(form);
-        typeChecker.checkForm();
+        IssuesStorage issues = typeChecker.checkForm();
 
-        return typeChecker.hasErrors();
+        return issues.hasErrors();
     }
 
     public void runEvaluator(Form form) {
