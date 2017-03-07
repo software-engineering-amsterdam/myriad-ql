@@ -47,6 +47,10 @@ public class StringValue extends Value {
 	}
 		
 	public String getValue() {
-		return value;
+		return this.value;
 	}
+
+	public String convertToString() {
+    	return this.value;
+    }
 }

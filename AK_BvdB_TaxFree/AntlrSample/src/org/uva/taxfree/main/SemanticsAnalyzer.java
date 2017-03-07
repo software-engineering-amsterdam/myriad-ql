@@ -25,7 +25,11 @@ public class SemanticsAnalyzer {
     }
 
     public boolean validSemantics() {
-        return getSemanticErrors().isEmpty();
+        return !getSemanticErrors().fatalError();
+    }
+
+    public boolean hasMessages() {
+        return !getSemanticErrors().isEmpty();
     }
 
     public MessageList getSemanticErrors() {
@@ -33,8 +37,10 @@ public class SemanticsAnalyzer {
         mEnvironment.getDuplicateDeclarationErrors(semanticsMessages);
         mEnvironment.getDuplicateLabelErrors(semanticsMessages);
         mEnvironment.getUndefinedDeclarationErrors(semanticsMessages);
-        mEnvironment.getConditionErrors(semanticsMessages);
         mEnvironment.getCyclicDependencyErrors(semanticsMessages);
+        if (!semanticsMessages.fatalError()) {
+            mEnvironment.getConditionErrors(semanticsMessages);
+        }
         return semanticsMessages;
     }
 }

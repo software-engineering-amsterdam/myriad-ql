@@ -74,5 +74,8 @@ public class BoolValue extends Value {
     public Boolean getValue() {
         return this.value;
     }
-	
+
+    public String convertToString() {
+    	return this.value.toString();
+	}
 }
