@@ -1,14 +1,14 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
+import org.uva.taxfree.gui.ErrorMessage;
+import org.uva.taxfree.gui.FileSelector;
+import org.uva.taxfree.gui.MessageWindow;
 import org.uva.taxfree.model.environment.Environment;
 
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Alex on 7-2-2017.
- */
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -33,7 +33,16 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
-        Environment environment = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\validForms\\questionForm.txt"));
+
+        File inputFile = FileSelector.select();
+        if (!inputFile.exists()) {
+            if (MessageWindow.retryDialog(new ErrorMessage("No file selected...\n retry?"))) {
+                main(args);
+            }
+            return;
+        }
+
+        Environment environment = Ast.generateAst(inputFile);
         SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
         semanticsAnalyzer.validSemantics();
     }
