@@ -12,7 +12,8 @@ view : WidgetContext msg -> Html msg
 view { identifier, env, onChange } =
     let
         isChecked =
-            Environment.getBoolean identifier env
+            Environment.getFormValue identifier env
+                |> Maybe.andThen Values.asBool
                 |> Maybe.withDefault False
     in
         div [ class "checkbox" ]
