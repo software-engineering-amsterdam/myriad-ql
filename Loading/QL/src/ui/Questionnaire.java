@@ -74,10 +74,10 @@ public class Questionnaire extends Application implements Notifier {
     }
     
     
-    private void setAnswers(List<QQuestion> activeQuestions) {
+    private void setAnswers(List<Row> activeQuestions) {
     	
     	// TODO change
-    	for (QQuestion question : activeQuestions) {
+    	for (Row question : activeQuestions) {
     		
     		Value value = env.getAnswer(question.getName());
     		if (value == null) {
@@ -91,7 +91,7 @@ public class Questionnaire extends Application implements Notifier {
     	
         renderTitle(grid, form.getId());
         
-    	List<QQuestion> activeQuestions = renderQuestions(grid);
+    	List<Row> activeQuestions = renderQuestions(grid);
         
     	setAnswers(activeQuestions);
     	
@@ -105,7 +105,7 @@ public class Questionnaire extends Application implements Notifier {
 
             @Override
             public void handle(ActionEvent e) {
-            	for (QQuestion activeQuestion : activeQuestions) {
+            	for (Row activeQuestion : activeQuestions) {
             		
             		Value answer = activeQuestion.getAnswer();
             		if (!answer.isSet()) {
@@ -130,18 +130,18 @@ public class Questionnaire extends Application implements Notifier {
         grid.add(scenetitle, 0, 0, 2, 1);
     }
     
-    private List<QQuestion> renderQuestions(GridPane grid) {
+    private List<Row> renderQuestions(GridPane grid) {
         
     	QEvaluator qVisitor = new QEvaluator(env);
     	qVisitor.visit(form);
-    	List<QQuestion> activeQuestions = qVisitor.getActiveQuestions();
+    	List<Row> activeQuestions = qVisitor.getActiveQuestions();
     	
-    	int rowIndex = 0;
-        for (QQuestion question : activeQuestions) {
+    	int rowIndex = 1;
+        for (Row question : activeQuestions) {
             
         	Label questionLabel = new Label(question.getLabel());
-            grid.add(questionLabel, 0, 1 + rowIndex); 
-            grid.add(question.getControl(), 1, 1 + rowIndex); 
+            grid.add(questionLabel, 0, rowIndex);
+            grid.add(question.getControl(), 1, rowIndex);
             
             question.addListener(this);
             ++rowIndex;

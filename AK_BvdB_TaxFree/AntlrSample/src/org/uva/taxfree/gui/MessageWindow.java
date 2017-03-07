@@ -4,9 +4,15 @@ import javax.swing.*;
 import java.util.List;
 
 public class MessageWindow {
-    public static void showMessageDialog(List<Message> messages) {
+
+    public static boolean retryDialog(Message message) {
+        int choice = JOptionPane.showConfirmDialog(null, message.toString(), "Do you want to continue?", JOptionPane.YES_NO_OPTION);
+        return (JOptionPane.YES_OPTION == choice);
+    }
+
+    public static void showMessages(List<Message> messages) {
         JOptionPane.showMessageDialog(null,
-                generateMessage(messages), "Sematic analyzer report", messageType(messages));
+                generateMessage(messages), "Semantic analyzer report", messageType(messages));
 
 
     }

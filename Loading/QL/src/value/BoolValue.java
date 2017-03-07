@@ -46,8 +46,7 @@ public class BoolValue extends Value {
     		return new BoolValue();
     	}
 		System.out.println("TODO bool eq Does this work?");
-//		return new BoolValue(this.equals(other));
-		 return new BoolValue(value == ((BoolValue) other).getValue());
+		 return new BoolValue(value.equals(((BoolValue) other).getValue()));
 	}
 
 	@Override
