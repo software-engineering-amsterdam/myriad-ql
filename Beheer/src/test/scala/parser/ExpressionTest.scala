@@ -1,21 +1,47 @@
 package parser
 
 import ast._
-import org.scalatest.PropSpec
 import org.scalatest.prop.PropertyChecks
 import parser.generators.ExpressionGenerator
 
-class ExpressionParserTest extends PropSpec with PropertyChecks {
+import scala.annotation.tailrec
+import scala.util.matching.Regex
+
+class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionGenerator with ValueGenerator {
   type NodePair = (ExpressionNode, ExpressionNode)
   type NodeRel = Set[NodePair]
   private val fullExpressions = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
   private val infixExpressions = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
   private val parser = ConcreteExpressionParser
 
-  property("Add operator match") {
-    operatorCountProperty("\\+") {
-      case Add(_, _) => true
-      case _ => false
+  property("Integer literal scale should be 0") {
+    forAll(integer) {
+      num =>
+        inside(parser.parseExpression(num)) {
+          case IntegerLiteral(decimal) => {
+            decimal.scale should be(0)
+          }
+        }
+    }
+  }
+  property("decimal literal scale should be greater than 0") {
+    forAll(decimal) {
+      (num) =>
+        inside(parser.parseExpression(num)) {
+          case DecimalLiteral(decimal) => assert(decimal.scale > 0)
+        }
+    }
+  }
+
+  property("A single literal value should result in a single AST node") {
+    forAll(literalValue) {
+      (lit) => nodeCount(parser.parseExpression(lit), { _: ExpressionNode => 1 }) == 1
+    }
+  }
+
+  property("Add operator count match") {
+    operatorCountProperty("\\+".r) {
+      case Add(_, _) => 1
     }
   }
   property("Minus operator match") {
@@ -77,8 +103,8 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     }
   }
 
-  property("Operator precedence.") {
-    forAll(infixExpressions) {
+  property("Operator precedence given infixExpression without parentheses.") {
+    forAll(genInfixExpression) {
       e: String =>
         {
           val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
@@ -148,9 +174,10 @@ class ExpressionParserTest extends PropSpec with PropertyChecks {
     case _ => Set.empty
   }
 
-  private def operatorCountProperty(operator: String)(matcher: ExpressionNode => Boolean) =
-    forAll(fullExpressions) {
-      e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), matcher)
+  private def operatorCountProperty(operator: Regex)(nodesToCountMatcher: PartialFunction[ExpressionNode, Int]) = {
+    val fullMatcher = nodesToCountMatcher orElse { case _ => 0 }: PartialFunction[ExpressionNode, Int]
+    forAll(genExpression) {
+      e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), fullMatcher)
     }
 
   private def operatorCount(input: String, operator: String): Int = operator.r.findAllIn(input).length
