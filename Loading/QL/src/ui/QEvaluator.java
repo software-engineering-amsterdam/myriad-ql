@@ -18,9 +18,11 @@ import value.Value;
 public class QEvaluator extends Evaluator {
 
 	private List<QQuestion> activeQuestions; // TODO QQuestion String and type?
+    private evaluation.Environment answers;
 
 	public QEvaluator(Environment answers) {
 		super(answers);
+		this.answers = answers;
 		this.activeQuestions = new ArrayList<>();
 	}
 	
@@ -44,9 +46,7 @@ public class QEvaluator extends Evaluator {
 
         // TODO only works with integers...
         if (value.isSet()) {
-            System.out.println("isSet()");
-            System.out.println(value.isSet());
-            q.setAnswer(value);
+            answers.addAnswer(question.getVariable(), value);
         }
 
         activeQuestions.add(q);
