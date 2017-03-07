@@ -1,9 +1,8 @@
-package org.ql.gui;
+package org.ql.gui.elements;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.UnknownValue;
-import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.widgets.WidgetBuilder;
 
 import java.util.HashMap;
@@ -14,8 +13,8 @@ public class QuestionElementContainer {
     private final Map<Identifier, QuestionElement> elementsMap = new HashMap<>();
     private final WidgetBuilder widgetBuilder;
 
-    public QuestionElementContainer() {
-        widgetBuilder = new WidgetBuilder();
+    public QuestionElementContainer(WidgetBuilder widgetBuilder) {
+        this.widgetBuilder = widgetBuilder;
     }
 
     public QuestionElement getQuestionElement(Question question) {

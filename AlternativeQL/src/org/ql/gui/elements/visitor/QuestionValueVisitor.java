@@ -9,7 +9,7 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
-import org.ql.gui.QuestionElementContainer;
+import org.ql.gui.elements.QuestionElementContainer;
 import org.ql.gui.elements.QuestionElement;
 
 public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {

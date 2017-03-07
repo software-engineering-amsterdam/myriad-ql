@@ -12,7 +12,7 @@ import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.UnknownValue;
-import org.ql.gui.QuestionElementContainer;
+import org.ql.gui.elements.QuestionElementContainer;
 import org.ql.gui.elements.QuestionElement;
 
 import java.util.ArrayList;
