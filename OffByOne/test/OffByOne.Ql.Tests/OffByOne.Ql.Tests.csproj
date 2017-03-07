@@ -91,6 +91,7 @@
     <Compile Include="Evaluator\IntegerValueTests.cs" />
     <Compile Include="Evaluator\MoneyValueTests.cs" />
     <Compile Include="Evaluator\StringValueTestes.cs" />
+    <Compile Include="Evaluator\TypeEnvironmentTests.cs" />
     <Compile Include="Parser\FormTest.cs" />
     <Compile Include="Parser\Base\ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
