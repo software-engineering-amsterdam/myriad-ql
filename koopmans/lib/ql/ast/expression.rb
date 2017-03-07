@@ -56,7 +56,7 @@ module QL
         right = self.right.eval
         pp right
         pp 'results in:'
-        left.op(self.to_operator, right)
+        IntegerLiteral.new(self.eval(left.value, right.value))
       end
     end
 
@@ -91,13 +91,13 @@ module QL
         '-'
       end
       def eval(left, right)
-        IntegerLiteral.new(left - right)
+        left - right
       end
     end
 
     class Add < ArithmeticExpression
       def eval(left, right)
-        IntegerLiteral.new(left + right)
+        left + right
       end
 
       def to_operator
@@ -107,7 +107,7 @@ module QL
 
     class Multiply < ArithmeticExpression
       def eval(left, right)
-        IntegerLiteral.new(left * right)
+        left * right
       end
 
       def to_operator
