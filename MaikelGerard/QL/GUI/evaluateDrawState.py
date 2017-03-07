@@ -15,36 +15,26 @@ class EvaluateDrawState(object):
         self.evaluator = ExpressionEvaluator(env)
         self.handler = error_handler
         self.form_gui = form_gui
-        self.show_stack = []
 
     def start_traversal(self):
-        self.show_stack = []
-        self.ast.accept(self)
+        self.ast.accept(self, True)
 
-    def traverse_branch(self, node_branch, condition):
-        self.show_stack.append(condition)
-        node_branch.accept(self)
-        self.show_stack.pop()
-
-    def if_node(self, if_node):
+    def if_node(self, if_node, widget_visible):
         condition = if_node.condition.accept(self.evaluator)
         condition = condition if condition != Undefined else False
 
-        self.traverse_branch(if_node.if_block, condition)
+        if_node.if_block.accept(self, condition and widget_visible)
 
-    def if_else_node(self, if_else_node):
+    def if_else_node(self, if_else_node, widget_visible):
         condition = if_else_node.condition.accept(self.evaluator)
         condition = condition if condition != Undefined else False
 
-        self.traverse_branch(if_else_node.if_block, condition)
-        self.traverse_branch(if_else_node.else_block, not condition)
+        if_else_node.if_block.accept(self, widget_visible and condition)
+        if_else_node.else_block.accept(self, widget_visible and not condition)
 
-    def is_shown(self):
-        return all(self.show_stack)
-
-    def question_node(self, question_node):
+    def question_node(self, question_node, widget_visible):
         identifier = question_node.name
-        if not self.is_shown():
+        if not widget_visible:
             self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
@@ -53,9 +43,9 @@ class EvaluateDrawState(object):
             self.form_gui.show_widget(identifier)
             self.form_gui.set_widget_val(identifier, value)
 
-    def comp_question_node(self, comp_question_node):
+    def comp_question_node(self, comp_question_node, widget_visible):
         identifier = comp_question_node.name
-        if not self.is_shown():
+        if not widget_visible:
             self.form_gui.hide_widget(identifier)
         else:
             value = self.env.get_var_value(identifier)
