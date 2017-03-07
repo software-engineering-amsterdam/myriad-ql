@@ -15,5 +15,8 @@ object Main extends App {
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
 
-  printIssues(formModel)
+  printIssues(formModel)*/
+  val filename = "src/main/resources/example.qls"
+  val stylesheet = StylesheetParser(new FileReader(filename))
+  println(stylesheet)
 }
