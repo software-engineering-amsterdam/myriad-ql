@@ -19,4 +19,8 @@ public class Position {
     public int getColumn() {
         return column;
     }
+
+    public String toString(){
+        return Integer.toString(line) + ":" + Integer.toString(column);
+    }
 }

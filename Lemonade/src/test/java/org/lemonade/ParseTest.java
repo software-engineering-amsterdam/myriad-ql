@@ -24,8 +24,9 @@ public class ParseTest {
     public void setUp() throws Exception {
 
         simpleForm = "form name {" +
-                "tmp1: \"Hoe groot is jouw decimal?\" decimal " +
-                "if(((-2) + 4.0) * 8.0 >= tmp1) {tmp: \"yu\" money}}";
+                "tmp1: \"Hoe groot is jouw decimal?\" decimal \n" +
+                "if(((-2) + 4.0) * 8.0 >= tmp1) \n{tmp: \"yu\" money}" +
+                "\ntmp1: \"ben dubbel\" money}";
 
         simpleForm2 = "form Blader {\n"
                 + "    test : \"Doet dit werken?\" boolean\n"
@@ -56,9 +57,12 @@ public class ParseTest {
 
         Form root = (Form) tree.accept(visitor);
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
-        EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
         root.accept(typeCheckVisitor);
-        root.accept(evaluateVisitor);
+        if (typeCheckVisitor.hasErrors()){
+            for (String error : typeCheckVisitor.getErrors()){
+                System.err.println(error);
+            }
+        }
     }
 }
 
