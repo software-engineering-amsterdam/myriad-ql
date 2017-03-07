@@ -5,18 +5,15 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
 import UI.FormRenderer as FormRenderer
 import UI.QLInput as QLInput
-import UI.QLSInput as QLSInput
 
 
 type Tab
     = QLTab
-    | QLSTab
     | Preview
 
 
 type alias Model =
     { qlInput : QLInput.Model
-    , qlsInput : QLSInput.Model
     , formRenderer : Maybe FormRenderer.Model
     , activeTab : Tab
     }
@@ -24,7 +21,6 @@ type alias Model =
 
 type Msg
     = FormDslInputMsg QLInput.Msg
-    | QLSInputMsg QLSInput.Msg
     | FormRendererMsg FormRenderer.Msg
     | ChangeTab Tab
 
@@ -36,9 +32,8 @@ init =
             QLInput.init
     in
         { qlInput = formDslInput
-        , qlsInput = QLSInput.init (QLInput.asForm formDslInput)
         , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
-        , activeTab = QLSTab
+        , activeTab = QLTab
         }
 
 
@@ -58,12 +53,8 @@ update msg model =
             in
                 { model
                     | qlInput = newQLInput
-                    , qlsInput = QLSInput.setForm maybeNewForm model.qlsInput
                     , formRenderer = Maybe.map FormRenderer.init maybeNewForm
                 }
-
-        QLSInputMsg subMsg ->
-            { model | qlsInput = QLSInput.update subMsg model.qlsInput }
 
         FormRendererMsg subMsg ->
             { model | formRenderer = Maybe.map (FormRenderer.update subMsg) model.formRenderer }
@@ -76,14 +67,8 @@ view model =
         , case model.activeTab of
             QLTab ->
                 div []
-                    [ h3 [] [ text "DSL Input" ]
+                    [ h3 [] [ text "QL Input" ]
                     , QLInput.view model.qlInput |> Html.map FormDslInputMsg
-                    ]
-
-            QLSTab ->
-                div []
-                    [ h3 [] [ text "QLS Input" ]
-                    , QLSInput.view model.qlsInput |> Html.map QLSInputMsg
                     ]
 
             Preview ->
@@ -107,8 +92,7 @@ tabMenu currentlyActive =
 
 availableTabItems : List ( Tab, String )
 availableTabItems =
-    [ ( QLTab, "Dsl Input" )
-    , ( QLSTab, "QLS" )
+    [ ( QLTab, "QL" )
     , ( Preview, "Preview" )
     ]
 

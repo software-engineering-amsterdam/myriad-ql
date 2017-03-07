@@ -1,16 +1,49 @@
-module QL.FormVisitor exposing (..)
+module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, post, pre)
 
 import QL.AST exposing (..)
-import VisitorUtil exposing (Order(Continue), actionLambda)
 
 
 type alias Config context =
-    { onIfThen : VisitorUtil.Order context ( Expression, Block )
-    , onIfThenElse : VisitorUtil.Order context ( Expression, Block, Block )
-    , onField : VisitorUtil.Order context ( Label, Id, ValueType )
-    , onComputedField : VisitorUtil.Order context ( Label, Id, ValueType, Expression )
-    , onExpression : VisitorUtil.Order context Expression
+    { onIfThen : Order context ( Expression, Block )
+    , onIfThenElse : Order context ( Expression, Block, Block )
+    , onField : Order context ( Label, Id, ValueType )
+    , onComputedField : Order context ( Label, Id, ValueType, Expression )
+    , onExpression : Order context Expression
     }
+
+
+type Order context node
+    = Continue
+    | Pre (node -> context -> context)
+    | Post (node -> context -> context)
+
+
+continue : Order context node
+continue =
+    Continue
+
+
+post : (node -> context -> context) -> Order context node
+post =
+    Post
+
+
+pre : (node -> context -> context) -> Order context node
+pre =
+    Pre
+
+
+actionLambda : Order context node -> (context -> context) -> node -> context -> context
+actionLambda action =
+    case action of
+        Continue ->
+            (\f _ context -> f context)
+
+        Pre g ->
+            (\f node context -> g node context |> f)
+
+        Post g ->
+            (\f node context -> f context |> g node)
 
 
 defaultConfig : Config x

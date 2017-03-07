@@ -7,8 +7,6 @@ from QL.Stages.Evaluator import Evaluate
 from QL.Stages.FindCycles import FindCycles
 from QL.Stages.Parser import QuestionnaireParser
 from QL.Stages.TypeChecker import TypeChecker
-from QL.Stages.PrintAST import PrintAst
-from QL.Stages.InitEnvironment import InitEnvironment
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -22,23 +20,16 @@ if __name__ == '__main__':
 
     # Parse the questionnaire into an AST.
     parsedAST = QuestionnaireParser().parse(file_contents)
-    PrintAst(parsedAST).start_traversal()
+    print(parsedAST)
 
     # Create an error handler and environment.
     error_handler = ErrorHandler()
     environment = Environment(error_handler)
 
     # Type-check and evaluate the AST.
-    InitEnvironment(parsedAST, environment, error_handler).start_traversal()
     FindCycles(parsedAST, error_handler).start_traversal()
-    error_handler.check_and_print_errors()
-    error_handler.clear_errors()
-
     TypeChecker(parsedAST, environment, error_handler).start_traversal()
-    error_handler.check_and_print_errors()
-    error_handler.clear_errors()
-
-    evaluator = Evaluate(parsedAST, environment)
+    evaluator = Evaluate(parsedAST, environment, error_handler)
 
     # Finally, draw the GUI.
     built_gui = InitWidgets(parsedAST, environment, evaluator, error_handler)

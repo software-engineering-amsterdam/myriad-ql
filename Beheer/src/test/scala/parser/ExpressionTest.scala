@@ -1,24 +1,21 @@
 package parser
 
 import ast._
-import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{ Inside, Matchers, PropSpec }
+import parser.generators.ExpressionGenerator
 
 import scala.annotation.tailrec
 import scala.util.matching.Regex
 
-class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers with PropertyChecks {
+class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionGenerator with ValueGenerator {
   type NodePair = (ExpressionNode, ExpressionNode)
   type NodeRel = Set[NodePair]
+  private val fullExpressions = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
+  private val infixExpressions = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
   private val parser = ConcreteExpressionParser
 
-  private def fullExpressions: Gen[String] = ExpressionGenerator.genExpression suchThat (_.nonEmpty)
-
-  private def infixExpressions: Gen[String] = ExpressionGenerator.genInfixExpression suchThat (_.nonEmpty)
-
   property("Integer literal scale should be 0") {
-    forAll(Gen.numStr suchThat (_.nonEmpty)) {
+    forAll(integer) {
       num =>
         inside(parser.parseExpression(num)) {
           case IntegerLiteral(decimal) => {
@@ -27,14 +24,18 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
         }
     }
   }
-  property("decimal literal scale should be equal to length of fractional") {
-    forAll(Gen.numStr, Gen.numStr suchThat (_.nonEmpty)) {
-      (num, fractional) =>
-        inside(parser.parseExpression(s"$num.$fractional")) {
-          case DecimalLiteral(decimal) => {
-            decimal.scale should be(fractional.length)
-          }
+  property("decimal literal scale should be greater than 0") {
+    forAll(decimal) {
+      (num) =>
+        inside(parser.parseExpression(num)) {
+          case DecimalLiteral(decimal) => assert(decimal.scale > 0)
         }
+    }
+  }
+
+  property("A single literal value should result in a single AST node") {
+    forAll(literalValue) {
+      (lit) => nodeCount(parser.parseExpression(lit), { _: ExpressionNode => 1 }) == 1
     }
   }
 
@@ -43,58 +44,67 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
       case Add(_, _) => 1
     }
   }
-  property("Minus operator count match") {
-    operatorCountProperty("-".r) {
-      case Neg(_) => 1
-      case Sub(_, _) => 1
+  property("Minus operator match") {
+    operatorCountProperty("-") {
+      case Neg(_) => true
+      case Sub(_, _) => true
+      case _ => false
     }
   }
-  property("Div operator count match") {
-    operatorCountProperty("/".r) {
-      case Div(_, _) => 1
+  property("Div operator match") {
+    operatorCountProperty("/") {
+      case Div(_, _) => true
+      case _ => false
     }
   }
-  property("Mul operator count match") {
-    operatorCountProperty("\\*".r) {
-      case Mul(_, _) => 1
+  property("Mul operator match)") {
+    operatorCountProperty("\\*") {
+      case Mul(_, _) => true
+      case _ => false
     }
   }
-  property("Not operator count match") {
-    operatorCountProperty("!".r) {
-      case Not(_) => 1
-      case Neq(_, _) => 1
+  property("Not operator match") {
+    operatorCountProperty("!") {
+      case Not(_) => true
+      case Neq(_, _) => true
+      case _ => false
     }
   }
-  property("And operator count match") {
-    operatorCountProperty("&&".r) {
-      case And(_, _) => 1
+  property("And operator match") {
+    operatorCountProperty("&&") {
+      case And(_, _) => true
+      case _ => false
     }
   }
-  property("Or operator count match") {
-    operatorCountProperty("\\|\\|".r) {
-      case Or(_, _) => 1
+  property("Or operator match") {
+    operatorCountProperty("\\|\\|") {
+      case Or(_, _) => true
+      case _ => false
     }
   }
-  property("G/GE operator count match") {
-    operatorCountProperty(">".r) {
-      case Gt(_, _) => 1
-      case Geq(_, _) => 1
+  property("G/GE operator match") {
+    operatorCountProperty(">") {
+      case Gt(_, _) => true
+      case Geq(_, _) => true
+      case _ => false
     }
   }
-  property("L/LE operator count match") {
-    operatorCountProperty("<".r) {
-      case Lt(_, _) => 1
-      case Leq(_, _) => 1
+  property("L/LE operator match") {
+    operatorCountProperty("<") {
+      case Lt(_, _) => true
+      case Leq(_, _) => true
+      case _ => false
     }
   }
-  property("Equals operator count match") {
-    operatorCountProperty("==".r) {
-      case Eq(_, _) => 1
+  property("Equals operator match") {
+    operatorCountProperty("==") {
+      case Eq(_, _) => true
+      case _ => false
     }
   }
 
   property("Operator precedence given infixExpression without parentheses.") {
-    forAll(infixExpressions) {
+    forAll(genInfixExpression) {
       e: String =>
         {
           val nodeRelations = trCls(flattenExpressionRelations(parser.parseExpression(e)))
@@ -104,20 +114,20 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
   }
 
   private def isValidNodeRelation(nodePair: NodePair): Boolean = {
-    def arithmeticChildAllowed(child: ExpressionNode): Boolean = child match {
+    def arithmeticChildAllowed(n: ExpressionNode): Boolean = n match {
       case Add(_, _) => true
       case Sub(_, _) => true
       case _: InfixNode => false
       case _ => true
     }
 
-    def mulDivChildAllowed(child: ExpressionNode): Boolean = child match {
+    def mulDivChildAllowed(n: ExpressionNode): Boolean = n match {
       case Mul(_, _) => true
       case Div(_, _) => true
       case e => arithmeticChildAllowed(e)
     }
 
-    def comparisonChildAllowed(child: ExpressionNode): Boolean = child match {
+    def comparisonChildAllowed(n: ExpressionNode): Boolean = n match {
       case Neq(_, _) => true
       case Geq(_, _) => true
       case Leq(_, _) => true
@@ -127,44 +137,35 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
       case e => mulDivChildAllowed(e)
     }
 
-    def logicalChildAllowed(child: ExpressionNode): Boolean = child match {
+    def logicalChildAllowed(n: ExpressionNode): Boolean = n match {
       case And(_, _) => true
       case Or(_, _) => true
       case e => comparisonChildAllowed(e)
     }
 
-    val (parentNode, child) = nodePair
-    parentNode match {
-      case Add(_, _) => arithmeticChildAllowed(child)
-      case Sub(_, _) => arithmeticChildAllowed(child)
-      case Mul(_, _) => mulDivChildAllowed(child)
-      case Div(_, _) => mulDivChildAllowed(child)
-      case Neq(_, _) => comparisonChildAllowed(child)
-      case Geq(_, _) => comparisonChildAllowed(child)
-      case Leq(_, _) => comparisonChildAllowed(child)
-      case Eq(_, _) => comparisonChildAllowed(child)
-      case Gt(_, _) => comparisonChildAllowed(child)
-      case Lt(_, _) => comparisonChildAllowed(child)
-      case And(_, _) => logicalChildAllowed(child)
-      case Or(_, _) => logicalChildAllowed(child)
-      case _ => true //non infix, not relevant for the property, so always 'valid'.
+    nodePair match {
+      case (Add(_, _), child) => arithmeticChildAllowed(child)
+      case (Sub(_, _), child) => arithmeticChildAllowed(child)
+      case (Mul(_, _), child) => mulDivChildAllowed(child)
+      case (Div(_, _), child) => mulDivChildAllowed(child)
+      case (Neq(_, _), child) => comparisonChildAllowed(child)
+      case (Geq(_, _), child) => comparisonChildAllowed(child)
+      case (Leq(_, _), child) => comparisonChildAllowed(child)
+      case (Eq(_, _), child) => comparisonChildAllowed(child)
+      case (Gt(_, _), child) => comparisonChildAllowed(child)
+      case (Lt(_, _), child) => comparisonChildAllowed(child)
+      case (And(_, _), child) => logicalChildAllowed(child)
+      case (Or(_, _), child) => logicalChildAllowed(child)
+      case _ => true //non infix, not relevant for the test, so always 'valid'.
     }
   }
 
   private def trCls(input: NodeRel): NodeRel = {
-    def expandRelations(orig: NodeRel, rel: NodeRel): NodeRel =
-      for {
-        (x, y) <- rel
-        (a, b) <- orig if a == y
-      } yield (x, b)
-
-    @tailrec
-    def trClsHelper(orig: NodeRel, rel: NodeRel): NodeRel = {
-      val res = rel ++ expandRelations(orig, rel)
-      if (res == rel) res else trClsHelper(orig, res)
+    def trClsHelper(rel: NodeRel): NodeRel = {
+      val res = rel ++ (for ((x, y) <- rel; (a, b) <- input if a == y) yield (x, b))
+      if (res == rel) res else trClsHelper(res)
     }
-
-    trClsHelper(input, input)
+    trClsHelper(input)
   }
 
   private def flattenExpressionRelations(expressionNode: ExpressionNode): NodeRel = expressionNode match {
@@ -175,20 +176,19 @@ class ExpressionParserPropertyTest extends PropSpec with Inside with Matchers wi
 
   private def operatorCountProperty(operator: Regex)(nodesToCountMatcher: PartialFunction[ExpressionNode, Int]) = {
     val fullMatcher = nodesToCountMatcher orElse { case _ => 0 }: PartialFunction[ExpressionNode, Int]
-    forAll(fullExpressions) {
+    forAll(genExpression) {
       e: String => operatorCount(e, operator) == nodeCount(parser.parseExpression(e), fullMatcher)
     }
-  }
 
-  private def operatorCount(input: String, operatorPattern: Regex): Int = operatorPattern.findAllIn(input).length
+  private def operatorCount(input: String, operator: String): Int = operator.r.findAllIn(input).length
 
-  private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Int): Int = {
+  private def nodeCount(expressionNode: ExpressionNode, matcher: ExpressionNode => Boolean): Int = {
     val childResult = expressionNode match {
       case i: InfixNode => nodeCount(i.lhs, matcher) + nodeCount(i.rhs, matcher)
       case p: PrefixNode => nodeCount(p.operand, matcher)
       case _ => 0
     }
-    matcher(expressionNode) + childResult
+    (if (matcher(expressionNode)) 1 else 0) + childResult
   }
 }
 

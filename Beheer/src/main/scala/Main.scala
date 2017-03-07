@@ -4,7 +4,7 @@ import checker.{ Error, FormChecker, Issue, Warning }
 import parser._
 
 object Main extends App {
-  /*val filename = "src/main/resources/example.ql"
+  val filename = "src/main/resources/example.ql"
   val parsedForm = FormParser(new FileReader(filename))
   val formModel = FormChecker(parsedForm)
 
@@ -18,5 +18,5 @@ object Main extends App {
   printIssues(formModel)*/
   val filename = "src/main/resources/example.qls"
   val stylesheet = StylesheetParser(new FileReader(filename))
-  println(stylesheet.pages.mkString("\n"))
+  println(stylesheet)
 }

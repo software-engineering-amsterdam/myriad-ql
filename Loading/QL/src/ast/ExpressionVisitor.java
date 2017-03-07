@@ -1,11 +1,24 @@
 package ast;
 
 import ast.atom.BoolAtom;
-import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
-import ast.expression.*;
-import ast.type.Type;
+import ast.expression.AddExpression;
+import ast.expression.AndExpression;
+import ast.expression.DivExpression;
+import ast.expression.EqExpression;
+import ast.expression.GEqExpression;
+import ast.expression.GExpression;
+import ast.expression.IdExpression;
+import ast.expression.LEqExpression;
+import ast.expression.LExpression;
+import ast.expression.MinusExpression;
+import ast.expression.MulExpression;
+import ast.expression.NEqExpression;
+import ast.expression.NotExpression;
+import ast.expression.OrExpression;
+import ast.expression.PlusExpression;
+import ast.expression.SubExpression;
 
 public interface ExpressionVisitor<T> {
 
@@ -29,5 +42,4 @@ public interface ExpressionVisitor<T> {
     T visit(BoolAtom expr);
     T visit(IntegerAtom expr);
     T visit(StringAtom expr);
-    T visit(EmptyAtom expr);
 }

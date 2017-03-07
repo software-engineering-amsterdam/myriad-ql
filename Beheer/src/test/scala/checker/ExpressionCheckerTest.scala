@@ -12,7 +12,7 @@ class ExpressionCheckerTest extends PropSpec with Matchers with TableDrivenPrope
   private val moneyLit = MoneyLiteral(BigDecimal(1.1))
   private val booleanLit = BooleanLiteral(true)
   private val stringLit = StringLiteral("foo")
-  private val dateLit = DateLiteral(new GregorianCalendar(2017, 4, 24).getTime) //java dates... ew.
+  private val dateLit = DateLiteral(new GregorianCalendar(2017, 4, 24).getTime) //java dates... this seems to be the shortest non-deprecated way to get a specific date.
 
   private val typeEnv: Seq[(String, Type)] = Seq(
     ("intRef", IntegerType),
@@ -68,9 +68,9 @@ class ExpressionCheckerTest extends PropSpec with Matchers with TableDrivenPrope
     }
   }
 
-  property("Invalid expressions should have 1 or more errors") {
+  property("Invalid expressions should have at least 1 error") {
     forAll(invalidExpressions) {
-      (expr, expectedType) => ExpressionChecker(typeEnv, expr, expectedType) should not be (Nil)
+      (expr, expectedType) => ExpressionChecker(typeEnv, expr, expectedType) should not be Nil
     }
   }
 }

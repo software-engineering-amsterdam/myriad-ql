@@ -1,16 +1,32 @@
 package evaluation;
 
-import ast.*;
+import ast.Block;
+import ast.BlockItem;
+import ast.ComputedQuestion;
+import ast.Form;
+import ast.FormVisitor;
+import ast.Question;
+import ast.Statement;
 import ast.atom.Atom;
 import ast.atom.BoolAtom;
-import ast.atom.EmptyAtom;
 import ast.atom.IntegerAtom;
 import ast.atom.StringAtom;
-import ast.expression.*;
-import ast.type.BooleanType;
-import ast.type.Type;
-import value.EmptyValue;
-import value.Value;
+import ast.expression.AddExpression;
+import ast.expression.AndExpression;
+import ast.expression.DivExpression;
+import ast.expression.EqExpression;
+import ast.expression.GEqExpression;
+import ast.expression.GExpression;
+import ast.expression.IdExpression;
+import ast.expression.LEqExpression;
+import ast.expression.LExpression;
+import ast.expression.MinusExpression;
+import ast.expression.MulExpression;
+import ast.expression.NEqExpression;
+import ast.expression.NotExpression;
+import ast.expression.OrExpression;
+import ast.expression.PlusExpression;
+import ast.expression.SubExpression;
 
 public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 
@@ -96,8 +112,7 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
 	public Atom visit(IdExpression id) {
 
 		if (!environment.isAnswered(id.getName())) {
-			System.out.println("The variable: " + id.getName() + " is not defined before use.\n");
-			return new EmptyAtom(0);
+			return environment.getType(id.getName()).getAtom();
 		}
 
 		return environment.getAnswer(id.getName()).getValue();
@@ -162,11 +177,6 @@ public class Evaluator implements FormVisitor, ast.ExpressionVisitor<Atom> {
     public Atom visit(StringAtom expr) {
         return expr;
     }
-
-	@Override
-	public Atom visit(EmptyAtom expr) {
-		return expr;
-	}
 }
 
 
