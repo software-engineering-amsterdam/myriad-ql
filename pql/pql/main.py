@@ -99,8 +99,8 @@ if __name__ == '__main__':
     environment = strip_keys_from_dict(ql_identifier_check_result)
     app = QApplication(argv)
 
-    evaluator = Evaluator(environment)
-    gui = Gui(environment, evaluator)
+
+    gui = Gui(environment)
     gui.visit(ql_ast)
     gui.show()
 

@@ -59,6 +59,8 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def identifier(self, node):
         if node.name in self.environment:
             return self.environment[node.name]
+        else:
+            return None
 
     def equality(self, node):
         return node.lhs.apply(self) == node.rhs.apply(self)
@@ -71,4 +73,3 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def inequality(self, node):
         return node.lhs.apply(self) != node.rhs.apply(self)
-

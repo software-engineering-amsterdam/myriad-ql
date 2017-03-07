@@ -3,8 +3,8 @@ form taxOfficeExample {
 		hasSoldHouse: boolean
 	"Did you buy a house in 2010?"
 		hasBoughtHouse: boolean
-	"Did you enter a loan?"
-		hasMaintLoan: boolean
+	"How big of a loan did you request?"
+		hasMaintLoan: money
 
 	if (hasSoldHouse) {
 		"What was the selling price?"
