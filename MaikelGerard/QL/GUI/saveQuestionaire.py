@@ -6,79 +6,57 @@ from QL.stages.updateComputedVariables import UpdateComputedVariables
 
 
 class SaveQuestionaire(object):
-    def __init__(self, ast, env, error_handler):
+    def __init__(self, ast, widgets):
         self.ast = ast
-        self.env = env
-        self.update_computed_variables = UpdateComputedVariables(ast, env)
-        self.handler = error_handler
-        self.show_stack = []
+        self.widgets = widgets
         self.form_output = OrderedDict()
 
     def start_traversal(self):
-        self.show_stack = []
-
-        self.ast.accept(self.update_computed_variables)
+        self.ast.accept(self)
         self.write_fields("./form_output.txt")
 
     def write_fields(self, path):
         with open(path, "w+") as json_file:
             json.dump(self.form_output, json_file, indent=4)
 
-    def traverse_branch(self, node_branch, condition):
-        self.show_stack.append(condition)
-        node_branch.accept(self)
-        self.show_stack.pop()
-
     def if_node(self, if_node):
-        condition = if_node.condition.accept(self.update_computed_variables)
-        condition = condition if condition != Undefined else False
-
-        self.traverse_branch(if_node.if_block, condition)
+        if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
-        condition = if_else_node.condition.accept(self.update_computed_variables)
-        condition = condition if condition != Undefined else False
+        if_else_node.if_block.accept(self)
+        if_else_node.else_block.accept(self)
 
-        self.traverse_branch(if_else_node.if_block, condition)
-        self.traverse_branch(if_else_node.else_block, not condition)
-
-    def is_shown(self):
-        return all(self.show_stack)
-
-    def set_question_val(self, question_node):
+    def store_question_val(self, question_node):
         identifier = question_node.name
-        if self.is_shown():
-            node = self.env.get_node(identifier)
-            value = self.env.get_var_value(identifier)
+        widget = self.widgets[identifier]
 
-            if value == Undefined:
+        if not widget.hidden:
+            value = widget.get_entry()
+            if value == "":
                 return
-
-            # Retrieve the correct conversion function by accepting the
-            # type node. You do not have
-            conversion_func = node.type.accept(self)
-            self.form_output[identifier] = conversion_func(value)
+            self.form_output[identifier] = \
+                question_node.type.accept(self, value)
 
     def question_node(self, question_node):
-        self.set_question_val(question_node)
+        self.store_question_val(question_node)
 
     def comp_question_node(self, comp_question_node):
-        self.set_question_val(comp_question_node)
+        self.store_question_val(comp_question_node)
 
-    def string_type_node(self, _):
-        return lambda x: x
+    def string_type_node(self, _, value):
+        return value
 
-    def date_type_node(self, _):
-        return lambda x: x.strftime("%d-%m-%Y")
+    def date_type_node(self, _, date_value):
+        return date_value.strftime("%d-%m-%Y")
 
-    def int_type_node(self, _):
-        return lambda x: int(x)
+    def int_type_node(self, _, value):
+        return int(value)
 
-    def decimal_type_node(self, _):
-        return lambda x: float(x)
+    def decimal_type_node(self, _, value):
+        return float(value)
 
-    def money_type_node(self, _):
-        return lambda x: float(x)
+    def money_type_node(self, _, value):
+        return float(value)
 
-    def bool_type_node(self, _):
-        return lambda x: x
+    def bool_type_node(self, _, value):
+        return value

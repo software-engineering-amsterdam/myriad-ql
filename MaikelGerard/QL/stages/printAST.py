@@ -1,4 +1,3 @@
-# TODO: Again, remove fake runtime stack with self.indent += 1 etc.
 class PrintAst(object):
     def __init__(self, ast):
         """

@@ -26,6 +26,7 @@ class DrawGUI(object):
     def start(self):
         self.ast.accept(self.update_computed_variables)
         self.update_variables()
+
         self.set_draw_state.start_traversal()
         self.add_buttons()
         self.main.go()
@@ -91,5 +92,5 @@ class DrawGUI(object):
         return widget_values
 
     def save_data(self):
-        save_obj = SaveQuestionaire(self.ast, self.env, self.handler)
+        save_obj = SaveQuestionaire(self.ast, self.widgets)
         save_obj.start_traversal()

@@ -4,12 +4,15 @@ class Widget(object):
         self.main = form_gui.main
         self.main.addLabel(identifier, question, row=row, column=0)
         self.identifier = identifier
+        self.hidden = False
 
     def hide(self):
         self.main.hideLabel(self.identifier)
+        self.hidden = True
 
     def show(self):
         self.main.showLabel(self.identifier)
+        self.hidden = False
 
     def add_listener(self, tkinter_obj):
         tkinter_obj.bind("<FocusOut>", self.form_gui.force_redraw)
