@@ -8,6 +8,8 @@ class StyleModel(stylesheet: Stylesheet) {
   val questionStyles: QuestionStyles = extractQuestionStyles(stylesheet.pages.flatMap(_.sections))
   val referencedQuestions: Seq[String] = questionStyles.map(_.identifier)
 
+  //TODO: Flatten hierarchy into list of 'blocks' with associated style & widget.
+
   private def extractDefaultStyles(page: Page): DefaultStyles = page match {
     case Page(_, sections, default) => default ++ extractDefaultStyles(sections)
   }
