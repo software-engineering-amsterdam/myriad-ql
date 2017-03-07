@@ -19,6 +19,10 @@ class Widget:
     def set_listener(self, listener):
         pass
 
+    @staticmethod
+    def get_datatype():
+        pass
+
     def get_tkinter_label(self):
         return self.app.getLabelWidget(self.label_id)
 
@@ -28,34 +32,31 @@ class Widget:
 
     def set_font_family(self, family):
         self.font["family"] = family
-        self.get_tkinter_widget().config(font=self.font)
         self.get_tkinter_label().config(font=self.font)
+        self.get_tkinter_widget().config(font=self.font)
 
     def set_font_size(self, size):
         self.font["size"] = size
-        self.get_tkinter_widget().config(font=self.font)
         self.get_tkinter_label().config(font=self.font)
+        self.get_tkinter_widget().config(font=self.font)
 
     def set_font_weight(self, weight):
         self.font["weight"] = weight
-        self.get_tkinter_widget().config(font=self.font)
         self.get_tkinter_label().config(font=self.font)
+        self.get_tkinter_widget().config(font=self.font)
 
     def set_color(self, color):
-        self.get_tkinter_widget().config(fg=color)
         self.get_tkinter_label().config(fg=color)
+        self.get_tkinter_widget().config(fg=color)
 
     def set_width(self, width):
-        self.app.setLabelWidth(self.label_id, width)
+        self.get_tkinter_label().config(width=width)
+        self.get_tkinter_widget().config(width=width)
 
     def apply(self, styling):
         if styling.applicable(self.get_datatype()):
             for attribute in styling.attributes:
                 attribute.apply_on(self)
-
-    @staticmethod
-    def get_datatype():
-        pass
 
 
 class EntryWidget(Widget):
@@ -94,12 +95,12 @@ class EntryWidget(Widget):
     def get_value(self):
         return self.app.getEntry(self.entry_id)
 
-    def get_tkinter_widget(self):
-        return self.app.getEntryWidget(self.entry_id)
-
     @staticmethod
     def get_datatype():
         return Datatypes.string
+
+    def get_tkinter_widget(self):
+        return self.app.getEntryWidget(self.entry_id)
 
 
 class IntegerEntryWidget(EntryWidget):
@@ -163,12 +164,12 @@ class CheckBoxWidget(Widget):
     def get_value(self):
         return self.app.getCheckBox(self.entry_id)
 
-    def get_tkinter_widget(self):
-        return self.app.getCheckBoxWidget(self.entry_id)
-
     @staticmethod
     def get_datatype():
         return Datatypes.boolean
+
+    def get_tkinter_widget(self):
+        return self.app.getCheckBoxWidget(self.entry_id)
 
 
 class SpinBoxWidget(Widget):
@@ -206,12 +207,12 @@ class SpinBoxWidget(Widget):
         except ValueError:
             return None
 
-    def get_tkinter_widget(self):
-        return self.app.getSpinBoxWidget(self.entry_id)
-
     @staticmethod
     def get_datatype():
         return Datatypes.integer
+
+    def get_tkinter_widget(self):
+        return self.app.getSpinBoxWidget(self.entry_id)
 
 
 class RadioWidget(Widget):
@@ -247,6 +248,10 @@ class RadioWidget(Widget):
     def get_value(self):
         return self.app.getRadioButton(self.entry_id) == self.true_text
 
+    @staticmethod
+    def get_datatype():
+        return Datatypes.boolean
+
     def get_tkinter_widget(self):
         return self.app.getRadioButtonWidget(self.entry_id)
 
@@ -272,10 +277,6 @@ class RadioWidget(Widget):
         for widget in self.get_tkinter_widget():
             widget.config(fg=color)
         self.get_tkinter_label().config(fg=color)
-
-    @staticmethod
-    def get_datatype():
-        return Datatypes.boolean
 
 
 class DropDownWidget(Widget):
@@ -308,12 +309,12 @@ class DropDownWidget(Widget):
     def get_value(self):
         return self.app.getOptionBox(self.entry_id) == self.true_text
 
-    def get_tkinter_widget(self):
-        return self.app.getOptionBoxWidget(self.entry_id)
-
     @staticmethod
     def get_datatype():
         return Datatypes.boolean
+
+    def get_tkinter_widget(self):
+        return self.app.getOptionBoxWidget(self.entry_id)
 
 
 class SliderWidget(Widget):
@@ -358,9 +359,9 @@ class SliderWidget(Widget):
         except ValueError:
             return None
 
-    def get_tkinter_widget(self):
-        return self.app.getScaleWidget(self.entry_id)
-
     @staticmethod
     def get_datatype():
         return Datatypes.integer
+
+    def get_tkinter_widget(self):
+        return self.app.getScaleWidget(self.entry_id)

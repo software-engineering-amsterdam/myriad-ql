@@ -2,7 +2,7 @@ stylesheet taxOfficeExample {
   page Housing {
     section "Selling B" {
 
-      question sellingPrice { weight: bold size :20 family: "Times New Roman"}
+      question sellingPrice { weight: bold size :20 family: "Times New Roman" width: 50}
     }
     section "Selling A" {
 

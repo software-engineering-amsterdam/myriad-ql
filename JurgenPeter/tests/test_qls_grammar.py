@@ -1,7 +1,6 @@
 from unittest import TestCase, main
 from pyparsing import ParseException
 
-from ql.datatypes import Datatypes
 import qls.grammar as grammar
 from qls.ast import *
 from gui.widgets import *
