@@ -4,19 +4,16 @@ import QL.AST exposing (ValueType, Operator, Comparison, Logic, Relation, Locati
 
 
 type Message
-    = Error ErrorMessage
-
-
-type ErrorMessage
     = UndefinedQuestionReference String Location
     | UnplacedQuestion String
+    | DuplicatePlacedQuestion String (List Location)
 
 
 undefinedQuestionReference : String -> Location -> Message
 undefinedQuestionReference name location =
-    Error (UndefinedQuestionReference name location)
+    (UndefinedQuestionReference name location)
 
 
 unplacedQuestion : String -> Message
 unplacedQuestion name =
-    Error (UnplacedQuestion name)
+    (UnplacedQuestion name)

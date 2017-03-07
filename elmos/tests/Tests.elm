@@ -4,7 +4,7 @@ import Test exposing (Test, concat)
 import Combine.ExtraTests
 import QL.Tests
 import QLS.Tests
-import UI.FormUtilTests
+import UI.FieldTests
 
 
 all : Test
@@ -13,5 +13,5 @@ all =
         [ Combine.ExtraTests.all
         , QL.Tests.all
         , QLS.Tests.all
-        , UI.FormUtilTests.all
+        , UI.FieldTests.all
         ]

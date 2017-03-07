@@ -1,12 +1,13 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
 import Html exposing (Html, b, div, form, h3, pre, text, textarea)
-import Html.Attributes exposing (class, cols, defaultValue, rows, style)
+import Html.Attributes exposing (class, cols, defaultValue, rows, style, id)
 import Html.Events exposing (onInput)
-import QL.AST exposing (Form, Location(Location), ValueType)
+import Html.Keyed exposing (node)
+import QL.AST exposing (Form, Location, ValueType)
 import QL.Parser as Parser
 import QL.TypeChecker as TypeChecker
-import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(..))
+import QL.TypeChecker.Messages exposing (Message(Error, Warning), ErrorMessage(..), WarningMessage(..))
 import UI.Messages
 
 
@@ -33,43 +34,32 @@ init =
 exampleDsl : String
 exampleDsl =
     """form taxOfficeExample {
-  "Name?"
-  name : string
-
-  "Age?"
-  age : integer
-
-  "Age?"
-  age : integer
-
-  "Wallet"
-  wallet : money
-
   "Did you sell a house in 2010?"
-  hasSoldHouse: boolean
+    hasSoldHouse: boolean
   "Did you buy a house in 2010?"
-  hasBoughtHouse: boolean
+    hasBoughtHouse: boolean
   "Did you enter a loan?"
-  hasMaintLoan: boolean
+    hasMaintLoan: boolean
 
   if (hasSoldHouse) {
     "What was the selling price?"
-    sellingPrice: money
-
+      sellingPrice: money
     "Private debts for the sold house:"
-    privateDebt: money
-
+      privateDebt: money
     "Value residue:"
-    valueResidue: money =
-    (sellingPrice - privateDebt)
+      valueResidue: money =
+        (sellingPrice - privateDebt)
   }
 
 }"""
 
 
 asForm : Model -> Maybe Form
-asForm { parsedForm } =
-    parsedForm
+asForm model =
+    if List.isEmpty model.messages then
+        model.parsedForm
+    else
+        Nothing
 
 
 update : Msg -> Model -> Model
@@ -89,69 +79,111 @@ update msg model =
 
 view : Model -> Html Msg
 view { rawInput, parsedForm, messages } =
-    div []
-        [ div [ class "row" ]
-            [ div [ class "col-md-6" ]
-                [ form [ class "form" ]
-                    [ textarea
-                        [ defaultValue rawInput
-                        , rows 20
-                        , cols 45
-                        , class "form-control"
-                        , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
-                        , onInput OnDslInput
+    node "div"
+        []
+        [ ( "qlInput"
+          , div [ class "row" ]
+                [ div [ class "col-md-6" ]
+                    [ form [ class "form" ]
+                        [ textarea
+                            [ id "qlInput"
+                            , defaultValue rawInput
+                            , rows 20
+                            , cols 45
+                            , class "form-control"
+                            , style [ ( "width", "100%" ), ( "resize", "none" ), ( "font-family", "courier" ) ]
+                            , onInput OnDslInput
+                            ]
+                            []
                         ]
-                        []
+                    ]
+                , div [ class "col-md-6" ]
+                    [ h3 [] [ text "TypeChecker" ]
+                    , div []
+                        (List.map renderMessage messages)
                     ]
                 ]
-            , div [ class "col-md-6" ]
-                [ h3 [] [ text "TypeChecker" ]
-                , div []
-                    (List.map renderMessage messages)
-                ]
-            ]
-        , pre [] [ text <| toString parsedForm ]
+          )
+        , ( "preview", pre [] [ text <| toString parsedForm ] )
         ]
 
 
-renderMessage : Message -> Html.Html Msg
+renderMessage : Message -> Html msg
 renderMessage message =
     case message of
-        Error (DuplicateQuestionDefinition name locations) ->
-            UI.Messages.error
-                ([ text "Duplicate question definitions for variable "
-                 , UI.Messages.varName name
-                 , text " at the following locations: [ "
-                 , UI.Messages.locations locations
-                 , text "]"
-                 ]
-                )
+        Error errorMessage ->
+            UI.Messages.error (renderErrorMessage errorMessage)
 
-        Error (ReferenceToUndefinedQuestion ( name, loc )) ->
-            UI.Messages.error
-                [ text <| "Reference to undefined variable "
-                , UI.Messages.varName name
-                , text " at "
-                , UI.Messages.location loc
-                ]
+        Warning warningMessage ->
+            UI.Messages.warning (renderWarningMessage warningMessage)
 
-        (Error (ArithmeticExpressionTypeMismatch operator loc leftType rightType)) as error ->
+
+renderWarningMessage : WarningMessage -> List (Html msg)
+renderWarningMessage message =
+    case message of
+        DuplicateLabels label ids ->
+            [ text "label \""
+            , b [] [ text label ]
+            , text "\" is used for multiple questions : "
+            , UI.Messages.renderIds ids
+            ]
+
+
+renderErrorMessage : ErrorMessage -> List (Html msg)
+renderErrorMessage message =
+    case message of
+        DuplicateQuestionDefinition name locations ->
+            [ text "Duplicate question definitions for variable "
+            , UI.Messages.renderVarName name
+            , text " at the following locations: [ "
+            , UI.Messages.renderLocations locations
+            , text "]"
+            ]
+
+        ReferenceToUndefinedQuestion ( name, loc ) ->
+            [ text <| "Reference to undefined variable "
+            , UI.Messages.renderVarName name
+            , text " at "
+            , UI.Messages.renderLocation loc
+            ]
+
+        DependencyCycle cycle ->
+            [ text "Found dependency cycle : "
+            , text (String.join " -> " cycle)
+            ]
+
+        ArithmeticExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (LogicExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        LogicExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (ComparisonExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        ComparisonExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
-        (Error (RelationExpressionTypeMismatch operator loc leftType rightType)) as error ->
+        RelationExpressionTypeMismatch operator loc leftType rightType ->
             operatorMismatchMessage operator loc leftType rightType
 
+        InvalidConditionType loc conditionType ->
+            [ text "Condition at "
+            , UI.Messages.renderLocation loc
+            , text " has invalid type: "
+            , UI.Messages.renderType conditionType
+            ]
 
-operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> Html msg
+        InvalidComputedFieldType id computedType fieldType ->
+            [ text "Question "
+            , UI.Messages.renderId id
+            , text " is defined as "
+            , UI.Messages.renderType computedType
+            , text " but it's computation is of type "
+            , UI.Messages.renderType fieldType
+            ]
+
+
+operatorMismatchMessage : a -> Location -> ValueType -> ValueType -> List (Html msg)
 operatorMismatchMessage operator loc leftType rightType =
-    UI.Messages.error
-        [ b [] [ text <| toString operator ]
-        , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
-        , UI.Messages.location loc
-        ]
+    [ b [] [ text <| toString operator ]
+    , text <| " is not supported for " ++ toString leftType ++ " and " ++ toString rightType ++ " at "
+    , UI.Messages.renderLocation loc
+    ]
