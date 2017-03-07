@@ -2,18 +2,13 @@ package org.uva.hatt.taxform.gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-
-import org.uva.hatt.taxform.ast.nodes.Form;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.ASTGenerator;
-import javafx.geometry.Insets;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import org.uva.hatt.taxform.ast.nodes.items.Item;
+import org.uva.hatt.taxform.ast.nodes.Form;
+import org.uva.hatt.taxform.ast.visitors.QLVisitor;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Taxform extends Application {
 
@@ -23,30 +18,17 @@ public class Taxform extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        GridPane root = new GridPane();
-        root.setHgap(15);
-        root.setVgap(8);
-        root.setPadding(new Insets(20));
+    public void start(Stage stage) throws IOException {
+        String input = "form taxOfficeExample { \"Did you sell a house in 2010?\" hasSoldHouse: boolean }";
+        ParseTree tree = ASTGenerator.getParseTree(input);
+        QLVisitor visitor = new QLVisitor();
+        visitor.visit(tree);
 
-        Form form;
-        List<Item> questions = new ArrayList<>();
-        String qlForm = "form taxOfficeExample { \"q1?\" val1: boolean \"q2?\" val2: string }";
-        try {
-            form = ASTGenerator.getForm(qlForm);
-            questions = form.getQuestions();
-        }catch (IOException e){};
+        Form form = visitor.getForm();
 
-        int rowcounter = 0;
-        for (Item question: questions) {
-            root.add(new Text(question.toString()), 0, ++rowcounter, 2, 1);
-        }
+        Visitor uiVisitor = new UIVisitor(stage);
+        uiVisitor.visit(form);
 
-        Scene scene = new Scene(root, 400, 200);
-
-        stage.setTitle("Tax form");
-        stage.setScene(scene);
-        stage.sizeToScene();
         stage.show();
     }
 }
