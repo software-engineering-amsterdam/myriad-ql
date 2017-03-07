@@ -62,7 +62,7 @@ class StylesheetParser extends QLParser {
       case identifier ~ _ ~ style => identifier -> style
     }
 
-  private def colorStyle: Parser[ColorStyle] = "#" ~> wholeNumber ^^ (n => ColorStyle(s"#$n"))
+  private def colorStyle: Parser[ColorStyle] = """#\p{XDigit}{6}""" ^^ (c => ColorStyle(c))
 
   private def numericStyle: Parser[NumericStyle] = number ^^ (n => NumericStyle(n))
 
