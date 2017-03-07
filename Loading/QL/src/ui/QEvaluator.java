@@ -8,6 +8,7 @@ import ast.Question;
 import ast.Statement;
 import evaluation.Environment;
 import evaluation.Evaluator;
+import ui.field.Field;
 import value.BoolValue;
 import value.Value;
 
@@ -31,29 +32,29 @@ public class QEvaluator extends Evaluator {
 	
     @Override
     public void visit(Question question) {
-    	
-    	Value answer = answers.getAnswer(question.getVariable());
-    	
-        activeQuestions.add(new Row(question.getVariable(),
-        		question.getLabel(), question.getType(), notifier, answer));
+    	    	
+        activeQuestions.add(createRow(question));
     }
     
     @Override
     public void visit(ComputedQuestion question) {
+    	
         System.out.println("Evaluator: computed question");
         Value value = question.getComputedQuestion().accept(this);
-        
-        Value answer = answers.getAnswer(question.getVariable());
-        
-        Row q = new Row(question.getVariable(),
-                question.getLabel(), question.getType(), notifier, answer);
 
         // TODO only works with integers...
         if (value.isSet()) {
             answers.addAnswer(question.getVariable(), value);
         }
 
-        activeQuestions.add(q);
+        activeQuestions.add(createRow(question));
+    }
+    
+    private Row createRow(Question question) {
+        Value answer = answers.getAnswer(question.getVariable());
+        Field field = question.getType().getField(question.getVariable(), notifier, answer);
+        
+        return new Row(question.getVariable(), question.getLabel(), question.getType(), field);
     }
 
     @Override

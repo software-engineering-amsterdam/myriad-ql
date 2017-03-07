@@ -4,26 +4,24 @@ import ast.type.Type;
 import javafx.scene.control.Control;
 import ui.field.Field;
 import value.Value;
-import ui.Notifier;
 
 public class Row {
 
 	private String name;
 	private String label;
 	private Type type;
-	private Field entryField;
+	private Field field;
 
-	public Row(String name, String label, Type type, Notifier notifier, Value answer) {
+	public Row(String name, String label, Type type, Field field) {
 		this.name = name;
 		this.label = label;
 		this.type = type;
-		// TODO move one level up?
-		this.entryField = type.getField(name, notifier, answer);
+		this.field = field;
 	}
 
 	// TODO default return statement
 	public Value getAnswer() {
-		return entryField.getAnswer();
+		return field.getAnswer();
 	}
 
 	public String getName() {
@@ -39,7 +37,7 @@ public class Row {
 	}
 
 	public Control getControl() {
-		return entryField.getField();
+		return field.getField();
 	}
 
 }
