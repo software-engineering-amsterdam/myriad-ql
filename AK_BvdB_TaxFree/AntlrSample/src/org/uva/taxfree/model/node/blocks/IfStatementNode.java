@@ -1,14 +1,14 @@
 package org.uva.taxfree.model.node.blocks;
 
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 import java.util.Set;
 
 public class IfStatementNode extends BlockNode {
-    private final ConditionNode mCondition;
+    private final ExpressionNode mCondition;
 
-    public IfStatementNode(ConditionNode condition, Set<Node> children) {
+    public IfStatementNode(ExpressionNode condition, Set<Node> children) {
         super(children);
         mCondition = condition;
     }
@@ -24,7 +24,7 @@ public class IfStatementNode extends BlockNode {
     }
 
     @Override
-    public void addCondition(Set<ConditionNode> set) {
+    public void addCondition(Set<ExpressionNode> set) {
         set.add(mCondition);
     }
 }

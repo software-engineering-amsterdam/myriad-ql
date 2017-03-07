@@ -4,10 +4,10 @@ import org.uva.taxfree.model.types.Type;
 
 import java.util.Set;
 
-public class ParenthesizedExpressionNode extends ConditionNode {
-    private final ConditionNode mCondition;
+public class ParenthesizedExpressionNode extends ExpressionNode {
+    private final ExpressionNode mCondition;
 
-    public ParenthesizedExpressionNode(ConditionNode condition) {
+    public ParenthesizedExpressionNode(ExpressionNode condition) {
         super();
         mCondition = condition;
     }

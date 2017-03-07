@@ -66,7 +66,7 @@ public class QuestionFormTest {
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mSymbolTable);
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
 
-        ExpressionNode expCalc = new CalculationExpressionNode(variableSold, "-", variableBought);
+        BinaryExpressionNode expCalc = new CalculationBinaryExpressionNode(variableSold, "-", variableBought);
         IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
@@ -110,7 +110,7 @@ public class QuestionFormTest {
 
     @Test
     public void testBooleanIf() throws Exception {
-        ConditionNode condition = new BooleanLiteralNode("true");
+        ExpressionNode condition = new BooleanLiteralNode("true");
         Set<Node> questions = new LinkedHashSet<Node>() {{
             add(new BooleanQuestion("Hello, do you have a name?", "hasName"));
         }};
@@ -127,8 +127,8 @@ public class QuestionFormTest {
     @Test
     public void testConstantCondition() throws Exception {
 
-        ConditionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-        ConditionNode cond = new BooleanExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
+        ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
+        ExpressionNode cond = new BooleanBinaryExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
         Set<Node> questions = new LinkedHashSet<>();
         questions.add(cond);
         questions.add(new BooleanQuestion("Do you see me?", "amIVisible?"));
@@ -173,8 +173,8 @@ public class QuestionFormTest {
         mCachedNodes.add(n);
     }
 
-    private ConditionNode CalcOnePlusFive() {
-        ConditionNode calc = new CalculationExpressionNode(new IntegerLiteralNode("1"), "+", new IntegerLiteralNode("5"));
+    private ExpressionNode CalcOnePlusFive() {
+        ExpressionNode calc = new CalculationBinaryExpressionNode(new IntegerLiteralNode("1"), "+", new IntegerLiteralNode("5"));
         return calc;
     }
 }

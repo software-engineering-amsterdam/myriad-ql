@@ -1,6 +1,6 @@
 package org.uva.taxfree.model.node.declarations;
 
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +8,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class CalculatedField extends NamedNode {
-    private final ConditionNode mCondition;
+    private final ExpressionNode mCondition;
     private final JTextField mTextField;
 
-    public CalculatedField(String label, String id, ConditionNode condition) {
+    public CalculatedField(String label, String id, ExpressionNode condition) {
         super(label, id);
         mTextField = new JTextField();
         mTextField.setEditable(false);

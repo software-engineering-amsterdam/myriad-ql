@@ -23,7 +23,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     private SymbolTable mSymbolTable;
     private FormNode mRootNode;
 
-    private final List<ConditionNode> mCachedConditions = new ArrayList<>();
+    private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
     private boolean insideIfElse = false;
 
@@ -35,7 +35,7 @@ public class GrammarListener extends QLGrammarBaseListener {
         return new Environment(mSymbolTable, mRootNode);
     }
 
-    private ConditionNode popCachedCondition() {
+    private ExpressionNode popCachedCondition() {
         return mCachedConditions.remove(mCachedConditions.size() - 1);
     }
 
@@ -75,35 +75,35 @@ public class GrammarListener extends QLGrammarBaseListener {
         mChildsStack.peek().add(node);
     }
 
-    private void addToStack(ConditionNode node) {
+    private void addToStack(ExpressionNode node) {
         mCachedConditions.add(node);
     }
 
     @Override
     public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
         super.enterBooleanLiteral(ctx);
-        ConditionNode booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
+        ExpressionNode booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
         addToStack(booleanLiteralNode);
     }
 
     @Override
     public void enterStringLiteral(QLGrammarParser.StringLiteralContext ctx) {
         super.enterStringLiteral(ctx);
-        ConditionNode stringLiteralNode = new StringLiteralNode(ctx.getText());
+        ExpressionNode stringLiteralNode = new StringLiteralNode(ctx.getText());
         addToStack(stringLiteralNode);
     }
 
     @Override
     public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
         super.enterIntegerLiteral(ctx);
-        ConditionNode integerLiteralNode = new IntegerLiteralNode(ctx.getText());
+        ExpressionNode integerLiteralNode = new IntegerLiteralNode(ctx.getText());
         addToStack(integerLiteralNode);
     }
 
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        ConditionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
+        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
         addToStack(varNameLiteral);
         mSymbolTable.addVariable(ctx.getText());
     }
@@ -146,28 +146,28 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
         super.exitBooleanExpression(ctx);
-        ConditionNode booleanExpressionNode = new BooleanExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
         addToStack(booleanExpressionNode);
     }
 
     @Override
     public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.exitCalculationExpression(ctx);
-        ConditionNode calculationExpressionNode = new CalculationExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        ExpressionNode calculationExpressionNode = new CalculationBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
         addToStack(calculationExpressionNode);
     }
 
     @Override
     public void exitUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
         super.exitUniformExpression(ctx);
-        ConditionNode uniformExpressionNode = new UniformExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        ExpressionNode uniformExpressionNode = new UniformBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
         addToStack(uniformExpressionNode);
     }
 
     @Override
     public void exitParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
         super.exitParenthesizedExpression(ctx);
-        ConditionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition());
+        ExpressionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition());
         addToStack(parenthesizedExpressionNode);
     }
 

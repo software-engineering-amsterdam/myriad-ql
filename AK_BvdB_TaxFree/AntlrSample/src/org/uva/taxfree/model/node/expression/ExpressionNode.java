@@ -1,41 +1,43 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
+import org.uva.taxfree.util.Evaluator;
 
+import javax.script.ScriptException;
 import java.util.Set;
 
-public abstract class ExpressionNode extends ConditionNode {
-    private final ConditionNode mLeft;
-    private final String mOperator;
-    private final ConditionNode mRight;
+public abstract class ExpressionNode extends Node {
 
-    public ExpressionNode(ConditionNode right, String operator, ConditionNode left) {
-        mRight = right;
-        mOperator = operator;
-        mLeft = left;
-    }
-
-    @Override
-    public String resolveValue() {
-        return "(" + mLeft.resolveValue() + mOperator + mRight.resolveValue() + ")";
-    }
-
-    @Override
-    public void addUsedVariables(Set<String> set) {
-        mLeft.addUsedVariables(set);
-        mRight.addUsedVariables(set);
-    }
-
-    @Override
-    public boolean isValid() {
-        return mLeft.isSameType(mRight);
-    }
-
-    @Override
-    public Type getType() {
-        if (!isValid()) {
-            throw new AssertionError("Either side works since the expression isn't valid anyway.");
+    public String evaluate() {
+        try {
+            return tryEvaluate();
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            throw new RuntimeException("An error occurred whilst evaluating " + toString());
         }
-        return mLeft.getType();
     }
+
+    // Allows the typeChecker to perform a test run on all expressions.
+    public String tryEvaluate() throws ScriptException {
+        return Evaluator.calculate(resolveValue());
+    }
+
+    public abstract String resolveValue();
+
+    public abstract boolean isValid();
+
+    public abstract void addUsedVariables(Set<String> set);
+
+    public boolean isBoolean() {
+        boolean isTrue = "true".equals(evaluate());
+        boolean isFalse = "false".equals(evaluate());
+        return isTrue || isFalse;
+    }
+
+    public boolean isSameType(ExpressionNode other) {
+        return getType().equals(other.getType());
+    }
+
+    public abstract Type getType();
 }

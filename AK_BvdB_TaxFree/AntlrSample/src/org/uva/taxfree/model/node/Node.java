@@ -2,7 +2,7 @@ package org.uva.taxfree.model.node;
 
 import org.uva.taxfree.model.node.declarations.CalculatedField;
 import org.uva.taxfree.model.node.declarations.NamedNode;
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 import java.util.Set;
 
@@ -15,7 +15,7 @@ public abstract class Node {
         // Intentionally left blank
     }
 
-    public void addCondition(Set<ConditionNode> set) {
+    public void addCondition(Set<ExpressionNode> set) {
         // Intentionally left blank
     }
 

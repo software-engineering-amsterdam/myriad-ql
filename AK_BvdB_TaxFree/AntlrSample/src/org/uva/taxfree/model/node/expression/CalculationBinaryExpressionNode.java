@@ -1,8 +1,8 @@
 package org.uva.taxfree.model.node.expression;
 
-public class CalculationExpressionNode extends ExpressionNode {
+public class CalculationBinaryExpressionNode extends BinaryExpressionNode {
     private String mOperator;
-    public CalculationExpressionNode(ConditionNode left, String operator, ConditionNode right) {
+    public CalculationBinaryExpressionNode(ExpressionNode left, String operator, ExpressionNode right) {
         super(left, operator, right);
         mOperator = operator;
     }

@@ -3,8 +3,8 @@ package test.org.uva.taxfree.ast;
 import org.testng.annotations.Test;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
-import org.uva.taxfree.model.node.expression.BooleanExpressionNode;
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.node.expression.BooleanBinaryExpressionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 
 import java.util.LinkedHashSet;
@@ -14,7 +14,7 @@ public class AbstractSyntaxTreeBuilderExpressionTest {
     @Test
     public void testLiteralExpression() throws Exception {
         // if (true)
-        ConditionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
+        ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
         Set<Node> childNodes = new LinkedHashSet<>();
 
         Node ifStatementNode = new IfStatementNode(booleanLiteralNodeTrue, childNodes);
@@ -23,9 +23,9 @@ public class AbstractSyntaxTreeBuilderExpressionTest {
     @Test
     public void testSimpleBooleanExpression() throws Exception {
         // if (true || false)
-        ConditionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
-        ConditionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
-        ConditionNode booleanExpressionNode = new BooleanExpressionNode(booleanLiteralNodeTrue, "||", booleanLiteralNodeFalse);
+        ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
+        ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
+        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanLiteralNodeFalse);
         Set<Node> childNodes = new LinkedHashSet<>();
 
         Node ifStatementNode = new IfStatementNode(booleanExpressionNode, childNodes);
@@ -34,10 +34,10 @@ public class AbstractSyntaxTreeBuilderExpressionTest {
     @Test
     public void testNestedBooleanExpression() throws Exception {
         // if (true || false && true)
-        ConditionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
-        ConditionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
-        ConditionNode booleanExpressionNodeAnd = new BooleanExpressionNode(booleanLiteralNodeFalse, "&&", booleanLiteralNodeTrue);
-        ConditionNode booleanExpressionNodeOr = new BooleanExpressionNode(booleanLiteralNodeTrue, "||", booleanExpressionNodeAnd);
+        ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
+        ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
+        ExpressionNode booleanExpressionNodeAnd = new BooleanBinaryExpressionNode(booleanLiteralNodeFalse, "&&", booleanLiteralNodeTrue);
+        ExpressionNode booleanExpressionNodeOr = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanExpressionNodeAnd);
         Set<Node> childNodes = new LinkedHashSet<>();
 
         Node ifStatementNode = new IfStatementNode(booleanExpressionNodeOr, childNodes);
