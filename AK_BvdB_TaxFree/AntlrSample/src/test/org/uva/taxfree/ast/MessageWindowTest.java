@@ -15,7 +15,7 @@ public class MessageWindowTest {
         List<Message> errors = new ArrayList<>();
         errors.add(new ErrorMessage("Big error!"));
         errors.add(new WarningMessage("Small warning!"));
-        MessageWindow.showMessageDialog(errors);
+        MessageWindow.showMessages(errors);
     }
 
     @Test
@@ -23,6 +23,6 @@ public class MessageWindowTest {
         List<Message> warnings = new ArrayList<>();
         warnings.add(new WarningMessage("This is a warning"));
         warnings.add(new WarningMessage("This is another warning"));
-        MessageWindow.showMessageDialog(warnings);
+        MessageWindow.showMessages(warnings);
     }
 }

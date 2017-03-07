@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import value.Value;
 
-public class Questionnaire extends Application {
+public class Questionnaire extends Application implements Notifier {
 	
 	// TODO do not make static
 	private static Form form;
@@ -31,26 +31,6 @@ public class Questionnaire extends Application {
 	private static GridPane grid;
 	private static List<Warning> warnings;
 
-	public class Notifier {
-
-		// TODO change to already implemented observer pattern
-		public void updateQuestionnaire(String name, Value newValue) {
-	    	Value oldAnswer = env.getAnswer(name);
-	    	// TODO .equals()?
-	    	System.out.println(oldAnswer);
-	    	System.out.println(newValue);
-			if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
-
-				env.addAnswer(name, newValue); 
-
-				// Save the title
-				Node title = grid.getChildren().get(0);
-		    	grid.getChildren().clear();
-		    	grid.add(title, 0, 0);
-		        renderQuestionnaire(grid);
-			}
-		}
-	}
 	
     public void main(Form f, Environment environment, List<Warning> w) {
     	form = f;
@@ -75,8 +55,6 @@ public class Questionnaire extends Application {
         
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
-             
-        renderTitle(grid, form.getId());
         
         renderQuestionnaire(grid);
         
@@ -110,6 +88,8 @@ public class Questionnaire extends Application {
     }
     
     private void renderQuestionnaire(GridPane grid) {
+    	
+        renderTitle(grid, form.getId());
         
     	List<Row> activeQuestions = renderQuestions(grid);
         
@@ -163,7 +143,7 @@ public class Questionnaire extends Application {
             grid.add(questionLabel, 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
-            question.addListener(new Notifier());
+            question.addListener(this);
             ++rowIndex;
         }
         
@@ -180,5 +160,18 @@ public class Questionnaire extends Application {
         
         return btn;
     }
+    
+	public void updateQuestionnaire(String name, Value newValue) {
+    	Value oldAnswer = env.getAnswer(name);
+    	// TODO .equals()?
+    	System.out.println(oldAnswer);
+    	System.out.println(newValue);
+		if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
+
+			env.addAnswer(name, newValue); 
+	    	grid.getChildren().clear();
+	        renderQuestionnaire(grid);
+		}
+	}
 
 }
