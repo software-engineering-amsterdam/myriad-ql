@@ -57,8 +57,6 @@ public class TypeChecker implements Visitor{
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
             exceptionHandler.addError(new Error(ErrorType.DUPLICATE_LABEL, node.getLineNumber(), node.getQuestion()));
-            java.lang.String test = exceptionHandler.getErrors().get(0).getMessage();
-            java.lang.String test1 = test;
         }
 
         declarations.put(node.getValue(), node.getType());
@@ -141,7 +139,5 @@ public class TypeChecker implements Visitor{
     }
 
     @Override
-    public Expression visit(Expression expression) {
-        return null;
-    }
+    public Expression visit(Expression expression) { return null; }
 }
