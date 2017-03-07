@@ -12,6 +12,10 @@ import java.util.Set;
 public class QuestionForm {
     private final BlockNode mFormNode;
 
+    public QuestionForm(BlockNode formNode) {
+        mFormNode = formNode;
+    }
+
     public QuestionForm(Environment environment) {
         mFormNode = environment.getRootNode();
     }

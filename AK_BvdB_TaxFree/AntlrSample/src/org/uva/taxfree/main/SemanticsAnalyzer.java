@@ -1,9 +1,7 @@
 package org.uva.taxfree.main;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.Environment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SemanticsAnalyzer {
     private final Environment mEnvironment;
@@ -30,13 +28,13 @@ public class SemanticsAnalyzer {
         return getSemanticErrors().isEmpty();
     }
 
-    public List<String> getSemanticErrors() {
-        List<String> errorMessages = new ArrayList<>();
-        errorMessages.addAll(mEnvironment.getDuplicateDeclarationErrors());
-        errorMessages.addAll(mEnvironment.getDuplicateLabelErrors());
-        errorMessages.addAll(mEnvironment.getUndefinedDeclarationErrors());
-        errorMessages.addAll(mEnvironment.getConditionErrors());
-        errorMessages.addAll(mEnvironment.getCyclicDependencyErrors());
-        return errorMessages;
+    public MessageList getSemanticErrors() {
+        MessageList semanticsMessages = new MessageList();
+        mEnvironment.getDuplicateDeclarationErrors(semanticsMessages);
+        mEnvironment.getDuplicateLabelErrors(semanticsMessages);
+        mEnvironment.getUndefinedDeclarationErrors(semanticsMessages);
+        mEnvironment.getConditionErrors(semanticsMessages);
+        mEnvironment.getCyclicDependencyErrors(semanticsMessages);
+        return semanticsMessages;
     }
 }
