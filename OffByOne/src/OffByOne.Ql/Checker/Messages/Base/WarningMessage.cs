@@ -1,10 +1,15 @@
 ﻿namespace OffByOne.Ql.Checker.Messages.Base
 {
-    public class WarningMessage : CheckerMessage
+    public abstract class WarningMessage : CheckerMessage
     {
-        public WarningMessage(string message, string description = "")
-            : base("Warning", message, description)
+        protected WarningMessage(string message, string description = "")
+            : base(message, description)
         {
+        }
+
+        public override string ToString()
+        {
+            return "WARNING: " + base.ToString();
         }
     }
 }

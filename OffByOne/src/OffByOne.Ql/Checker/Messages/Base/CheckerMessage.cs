@@ -5,14 +5,11 @@
 
     public abstract class CheckerMessage
     {
-        protected CheckerMessage(string level, string message, string description = "")
+        protected CheckerMessage(string message, string description = "")
         {
-            this.Level = level;
             this.Message = message;
             this.Description = description;
         }
-
-        public string Level { get; }
 
         public string Message { get; }
 
@@ -20,19 +17,17 @@
 
         public override string ToString()
         {
-            return $"{this.Level.ToUpper()}: {this.Message} - {this.Description}";
+            return $"{this.Message} - {this.Description}";
         }
 
-        public void AppendTo(IDictionary<string, IList<CheckerMessage>> messageCategories)
+        public void AppendTo(ISet<CheckerMessage> checerMessages)
         {
-            if (messageCategories.ContainsKey(this.Level))
+            if (checerMessages == null)
             {
-                messageCategories[this.Level].Add(this);
+                throw new ArgumentNullException(nameof(checerMessages));
             }
-            else
-            {
-                messageCategories[this.Level] = new List<CheckerMessage> { this };
-            }
+
+            checerMessages.Add(this);
         }
     }
 }

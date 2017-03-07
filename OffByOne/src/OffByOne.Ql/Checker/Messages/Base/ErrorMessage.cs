@@ -1,15 +1,15 @@
 ﻿namespace OffByOne.Ql.Checker.Messages.Base
 {
-    public class ErrorMessage : CheckerMessage
+    public abstract class ErrorMessage : CheckerMessage
     {
-        public ErrorMessage(string message, string description = "")
+        protected ErrorMessage(string message, string description = "")
             : base(message, description)
         {
         }
 
         public override string ToString()
         {
-            return $"{this.Level.ToUpper()}: {this.Message} - {this.Description}";
+            return $"ERROR: {this.Message} - {this.Description}";
         }
     }
 }
