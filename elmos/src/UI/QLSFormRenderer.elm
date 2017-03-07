@@ -2,7 +2,6 @@ module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, div, text, h3, pre, b)
 import Html.Attributes exposing (class)
-import List.Extra as List
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -15,6 +14,7 @@ import QLS.AST exposing (..)
 import UI.FormUpdater as FormUpdater
 import UI.Field as Field exposing (Field(Editable, Computed))
 import UI.QLS.Pagination as Pagination exposing (Pagination)
+import UI.StyleContext as StyleContext exposing (StyleContext)
 
 
 type alias Model =
@@ -76,59 +76,67 @@ renderPage : Environment -> List Field -> Page -> Html Msg
 renderPage env visibleFields (Page title sections defaultValueConfigs) =
     div []
         [ h3 [] [ text title ]
-        , div [] (List.map (renderSection env visibleFields defaultValueConfigs) sections)
+        , div [] (List.map (renderSection env visibleFields (StyleContext.init defaultValueConfigs)) sections)
         ]
 
 
-renderSection : Environment -> List Field -> List DefaultValueConfig -> Section -> Html Msg
-renderSection env visibleFields defaultValueConfigs section =
+renderSection : Environment -> List Field -> StyleContext -> Section -> Html Msg
+renderSection env visibleFields styleContext section =
     case section of
         SingleChildSection title sectionChild ->
             div []
                 [ h3 [] [ text title ]
-                , renderSectionChild env visibleFields defaultValueConfigs sectionChild
+                , renderSectionChild env visibleFields styleContext sectionChild
                 ]
 
         MultiChildSection title sectionChilds configs ->
             div []
                 [ h3 [] [ text title ]
-                , div [] (List.map (renderSectionChild env visibleFields (configs ++ defaultValueConfigs)) sectionChilds)
+                , div [] (List.map (renderSectionChild env visibleFields (StyleContext.addDefaultConfigs configs styleContext)) sectionChilds)
                 ]
 
 
-renderSectionChild : Environment -> List Field -> List DefaultValueConfig -> SectionChild -> Html Msg
-renderSectionChild env visibleFields defaultValueConfigs sectionChild =
+renderSectionChild : Environment -> List Field -> StyleContext -> SectionChild -> Html Msg
+renderSectionChild env visibleFields styleContext sectionChild =
     case sectionChild of
         SubSection subSection ->
-            renderSection env visibleFields defaultValueConfigs subSection
+            renderSection env visibleFields styleContext subSection
 
         Field (Question ( name, _ )) ->
-            renderField env visibleFields defaultValueConfigs name
+            Field.visibleFieldForName name visibleFields
+                |> Maybe.map (renderField env styleContext)
+                |> Maybe.withDefault (div [] [])
 
         Field (ConfiguredQuestion ( name, _ ) fieldConfig) ->
-            -- TODO use the fieldConfig for rendering
-            renderField env visibleFields defaultValueConfigs name
+            Field.visibleFieldForName name visibleFields
+                |> Maybe.map
+                    (\field ->
+                        renderField env (StyleContext.addValueTypeConfig (Field.fieldValueType field) fieldConfig styleContext) field
+                    )
+                |> Maybe.withDefault (div [] [])
 
 
-renderField : Environment -> List Field -> List DefaultValueConfig -> String -> Html Msg
-renderField env visibleFields defaultValueConfigs name =
-    case List.find (\field -> name == Field.name field) visibleFields of
-        Nothing ->
-            div [] [ text "field not visible" ]
+renderField : Environment -> StyleContext -> Field -> Html Msg
+renderField env styleContext field =
+    let
+        valueType =
+            Field.fieldValueType field
 
-        Just field ->
-            viewField env field ( Nothing, [] )
+        pair =
+            StyleContext.getForValueType valueType styleContext
+    in
+        viewField valueType env field pair
 
 
-viewField : Environment -> Field -> ( Maybe Widget, List Style ) -> Html Msg
-viewField env field ( maybeWidget, styles ) =
+viewField : ValueType -> Environment -> Field -> ( Maybe Widget, List Style ) -> Html Msg
+viewField valueType env field ( maybeWidget, styles ) =
     BaseWidget.container (visibleFieldWidgetConfig env styles field) <|
         case maybeWidget of
             Just w ->
-                asRenderable w
+                asRenderable w valueType
 
             Nothing ->
-                case Field.fieldValueType field of
+                case valueType of
                     StringType ->
                         StringWidget.view
 
@@ -142,9 +150,9 @@ viewField env field ( maybeWidget, styles ) =
                         FloatWidget.view
 
 
-asRenderable : Widget -> (WidgetContext Msg -> Html Msg)
-asRenderable w =
-    case w of
+asRenderable : Widget -> ValueType -> (WidgetContext Msg -> Html Msg)
+asRenderable widget valueType =
+    case widget of
         Spinbox ->
             always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
 
@@ -153,6 +161,29 @@ asRenderable w =
 
         Checkbox ->
             BooleanWidget.view
+
+        Text ->
+            (textWidgetRendererForValueType valueType)
+                |> Maybe.withDefault StringWidget.view
+
+        Slider _ ->
+            always (div [] [ text "TODO IMPLEMENT SLIDER" ])
+
+
+textWidgetRendererForValueType : ValueType -> Maybe (WidgetContext Msg -> Html Msg)
+textWidgetRendererForValueType valueType =
+    case valueType of
+        StringType ->
+            Just StringWidget.view
+
+        BooleanType ->
+            Nothing
+
+        IntegerType ->
+            Just IntegerWidget.view
+
+        MoneyType ->
+            Just FloatWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg

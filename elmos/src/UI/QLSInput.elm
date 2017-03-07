@@ -68,9 +68,7 @@ exampleDsl =
         widget checkbox
     section "Loaning"
       question hasMaintLoan
-  }
 
-  page Selling {
     section "Selling" {
       question hasSoldHouse
         widget radio("Yes", "No")
