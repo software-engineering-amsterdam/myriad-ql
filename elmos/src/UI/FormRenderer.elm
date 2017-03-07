@@ -10,7 +10,8 @@ import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import QL.Environment as Env exposing (Environment)
 import QL.Values exposing (Value)
 import QL.AST exposing (Id, Label, Expression, ValueType(StringType, IntegerType, BooleanType, MoneyType), Form, FormItem)
-import UI.FormUtil as FormUtil exposing (Field(Editable, Computed))
+import UI.FormUpdater as FormUpdater
+import UI.Field as Field exposing (Field(Editable, Computed))
 
 
 type alias Model =
@@ -34,17 +35,14 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         OnFieldChange fieldId newValue ->
-            { model
-                | env =
-                    FormUtil.updateValue fieldId newValue model.env model.form
-            }
+            { model | env = FormUpdater.updateValue fieldId newValue model.env model.form }
 
 
 view : Model -> Html Msg
 view { env, form } =
     let
         visibleFields =
-            FormUtil.activeFields env form
+            Field.activeFields env form
     in
         div
             [ class "row" ]
@@ -63,7 +61,7 @@ view { env, form } =
 viewField : Environment -> Field -> Html Msg
 viewField env field =
     BaseWidget.container (visibleFieldWidgetConfig env field) <|
-        case FormUtil.fieldValueType field of
+        case Field.fieldValueType field of
             StringType ->
                 StringWidget.view
 

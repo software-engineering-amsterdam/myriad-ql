@@ -1,47 +1,11 @@
-module QL.TypeChecker.CheckerUtil exposing (QuestionIndex, QuestionTypes, collectDeclaredIds, collectExpressions, questionIndexFromForm, questionIndexFromBlock, questionTypes)
+module QL.TypeChecker.QuestionIndex exposing (QuestionIndex, questionIndexFromForm)
 
-import QL.AST exposing (..)
-import QL.FormVisitor exposing (defaultConfig)
-import VisitorUtil exposing (Order(Post))
+import QL.AST exposing (Form, Block, Location, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import Dict exposing (Dict)
 
 
 type alias QuestionIndex =
     Dict String (List Location)
-
-
-type alias QuestionTypes =
-    Dict String ValueType
-
-
-collectDeclaredIds : Form -> List Id
-collectDeclaredIds form =
-    QL.FormVisitor.inspect
-        { defaultConfig
-            | onField = Post (\( _, id, _ ) result -> id :: result)
-            , onComputedField = Post (\( _, id, _, _ ) result -> id :: result)
-        }
-        form
-        []
-
-
-collectExpressions : Form -> List Expression
-collectExpressions form =
-    QL.FormVisitor.inspect
-        { defaultConfig | onExpression = Post (::) }
-        form
-        []
-
-
-questionTypes : Form -> QuestionTypes
-questionTypes form =
-    QL.FormVisitor.inspect
-        { defaultConfig
-            | onField = Post (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
-            , onComputedField = Post (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
-        }
-        form
-        Dict.empty
 
 
 questionIndexFromForm : Form -> QuestionIndex
