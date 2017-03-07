@@ -41,7 +41,7 @@ inspectSection config section context =
         SingleChildSection _ child ->
             (inspectSectionChild config child context)
 
-        MultiChildSection _ children ->
+        MultiChildSection _ children _ ->
             List.foldl (inspectSectionChild config) context children
 
 
@@ -53,9 +53,6 @@ inspectSectionChild config sectionChild context =
 
         Field question ->
             inspectQuestion config question context
-
-        QLS.AST.Config _ ->
-            context
 
 
 inspectQuestion : Config a -> Question -> a -> a
