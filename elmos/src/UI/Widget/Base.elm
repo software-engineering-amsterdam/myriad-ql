@@ -1,7 +1,7 @@
 module UI.Widget.Base exposing (WidgetContext, container)
 
 import Html exposing (Html, div, label, text)
-import Html.Attributes exposing (class, for)
+import Html.Attributes exposing (class, for, style)
 import QL.Environment exposing (Environment)
 import QL.Values exposing (Value)
 
@@ -22,7 +22,7 @@ type alias Widget msg =
 
 container : WidgetContext msg -> Widget msg -> Html msg
 container context widget =
-    div [ class "form-group" ]
+    div [ class "form-group", style context.style ]
         [ label [ for context.identifier ]
             [ text context.label ]
         , widget context
