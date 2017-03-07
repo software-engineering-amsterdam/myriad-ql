@@ -31,5 +31,5 @@ class FormChecker(db: FormModel) extends Checker {
 }
 
 object FormChecker {
-  def apply(formModel: FormModel): Seq[Issue] = new FormChecker(formModel).check
+  def apply(model: FormModel): Issues = new FormChecker(model).check
 }
