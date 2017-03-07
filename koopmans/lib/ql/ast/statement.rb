@@ -4,9 +4,9 @@ module QL
       attr_reader :block
       attr_accessor :expression
 
-      def initialize(expression, block)
+      def initialize(expression, body)
         @expression = expression
-        @block      = block
+        @body      = body
       end
 
       def accept(visitor)
