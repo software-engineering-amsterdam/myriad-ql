@@ -32,7 +32,7 @@ module QL
       # expression
       # precedence order: booolean, order, equals, addition, multiplication, literal
       rule(:expression) { boolean_expression }
-      rule(:expression_with_parenthesis) { str('(') >> boolean_expression >> str(')') }
+      rule(:expression_with_parenthesis) { str('(') >> expression >> str(')') }
       rule(:boolean_expression) { comparison_order_expression.as(:left) >> (boolean_operator >> comparison_order_expression.as(:right)).repeat(1) | comparison_order_expression }
       rule(:comparison_order_expression) { comparison_equals_expression.as(:left) >> (comparison_order_operator >> comparison_equals_expression.as(:right)).repeat(1) | comparison_equals_expression }
       rule(:comparison_equals_expression) { addition_expression.as(:left) >> (comparison_equals_operator >> addition_expression.as(:right)).repeat(1) | addition_expression }
