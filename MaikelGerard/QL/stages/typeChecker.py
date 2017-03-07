@@ -24,11 +24,11 @@ class TypeChecker(object):
     @staticmethod
     def highest_number_type(left, right):
         """ :type left: AST.TypeNode """
-        if left.is_decimal() or right.is_decimal():
+        if left == AST.DecimalTypeNode() or right == AST.DecimalTypeNode():
             return AST.DecimalTypeNode()
-        elif left.is_money() or right.is_money():
+        elif left == AST.MoneyTypeNode() or right == AST.MoneyTypeNode():
             return AST.MoneyTypeNode()
-        elif left.is_integer() and right.is_integer():
+        elif left == AST.IntTypeNode() and right == AST.IntTypeNode():
             return AST.IntTypeNode()
         else:
             assert False, "Not both operands are of number type!"
@@ -51,7 +51,7 @@ class TypeChecker(object):
         """ :type if_node: AST.IfNode """
         expr_type = if_node.condition.accept(self)
 
-        if not expr_type.is_boolean():
+        if not expr_type == AST.BoolTypeNode():
             self.handler.add_if_cond_error(if_node)
         if_node.if_block.accept(self)
 
@@ -59,7 +59,7 @@ class TypeChecker(object):
         """ :type if_else_node: AST.IfElseNode """
         expr_type = if_else_node.condition.accept(self)
 
-        if not expr_type.is_boolean():
+        if not expr_type == AST.BoolTypeNode():
             self.handler.add_if_cond_error(if_else_node)
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
@@ -75,7 +75,7 @@ class TypeChecker(object):
     def neg_node(self, neg_node):
         """ '!' has different behavior than the other monOps."""
         var_type = self.get_monop_type(neg_node)
-        if not var_type.is_boolean():
+        if not var_type == AST.BoolTypeNode():
             self.handler.add_monop_error(neg_node, var_type)
         return AST.BoolTypeNode()
 
@@ -118,7 +118,8 @@ class TypeChecker(object):
     def comparison_expr_node(self, expr_node):
         """ Default behavior for comparison binOps. """
         left, right = self.get_binop_types(expr_node)
-        valid_types = not (left.is_boolean() or right.is_boolean())
+        valid_types = not (left == AST.BoolTypeNode() or
+                           right == AST.BoolTypeNode())
         same_types = left == right or left.is_numeric() and right.is_numeric()
 
         if not valid_types or not same_types:
@@ -145,7 +146,7 @@ class TypeChecker(object):
 
     def logical_expr_node(self, expr_node):
         left, right = self.get_binop_types(expr_node)
-        if not (left.is_boolean() and right.is_boolean()):
+        if not (left == AST.BoolTypeNode() and right == AST.BoolTypeNode()):
             self.handler.add_binop_error(expr_node, left, right)
         return AST.BoolTypeNode()
 

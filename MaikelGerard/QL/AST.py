@@ -296,45 +296,23 @@ class OrNode(LogicalExprNode):
 
 
 class TypeNode(Node):
-    def __init__(self, type_name, line=0, col=0):
+    def __init__(self, line=0, col=0):
         super(TypeNode, self).__init__(line, col)
-        self.name = type_name
-
-        self.numeric = ["integer", "money", "decimal"]
-        self.alphanumeric = self.numeric + ["string"]
 
     def is_numeric(self):
-        return self.name in self.numeric
+        return self in [IntTypeNode(), MoneyTypeNode(), DecimalTypeNode()]
 
     def is_alphanumeric(self):
-        return self.name in self.alphanumeric
-
-    def is_boolean(self):
-        return self.name == "boolean"
-
-    def is_integer(self):
-        return self.name == "integer"
-
-    def is_money(self):
-        return self.name == "money"
-
-    def is_decimal(self):
-        return self.name == "decimal"
-
-    def is_string(self):
-        return self.name == "string"
-
-    def is_date(self):
-        return self.name == "date"
+        return self in [IntTypeNode(), MoneyTypeNode(),
+                        DecimalTypeNode(), StringTypeNode()]
 
     def __eq__(self, other):
-        return super(TypeNode, self).__eq__(other) \
-               and other.name == self.name
+        return super(TypeNode, self).__eq__(other)
 
 
 class BoolTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(BoolTypeNode, self).__init__("boolean", line, col)
+        super(BoolTypeNode, self).__init__(line, col)
         self.default = False
 
     @staticmethod
@@ -347,7 +325,7 @@ class BoolTypeNode(TypeNode):
 
 class IntTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(IntTypeNode, self).__init__("integer", line, col)
+        super(IntTypeNode, self).__init__(line, col)
         self.default = Decimal("0")
 
     @staticmethod
@@ -360,7 +338,7 @@ class IntTypeNode(TypeNode):
 
 class MoneyTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(MoneyTypeNode, self).__init__("money", line, col)
+        super(MoneyTypeNode, self).__init__(line, col)
         self.default = Decimal("0.00")
 
     @staticmethod
@@ -373,7 +351,7 @@ class MoneyTypeNode(TypeNode):
 
 class DecimalTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(DecimalTypeNode, self).__init__("decimal", line, col)
+        super(DecimalTypeNode, self).__init__(line, col)
         self.default = Decimal("0.00")
 
     @staticmethod
@@ -386,7 +364,7 @@ class DecimalTypeNode(TypeNode):
 
 class StringTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(StringTypeNode, self).__init__("string", line, col)
+        super(StringTypeNode, self).__init__(line, col)
         self.default = ""
 
     @staticmethod
@@ -399,7 +377,7 @@ class StringTypeNode(TypeNode):
 
 class DateTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
-        super(DateTypeNode, self).__init__("date", line, col)
+        super(DateTypeNode, self).__init__(line, col)
         self.default = date(day=1, month=1, year=2000)
 
     @staticmethod
