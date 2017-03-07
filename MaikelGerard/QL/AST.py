@@ -30,7 +30,7 @@ class FormNode(Node):
         self.form_block = form_body
 
     def accept(self, visitor, *args):
-        self.form_block.accept(visitor)
+        self.form_block.accept(visitor, *args)
 
     def __eq__(self, other):
         return super(FormNode, self).__eq__(other) and \
@@ -48,7 +48,7 @@ class BlockNode(Node):
 
     def accept(self, visitor, *args):
         for child in self.children:
-            child.accept(visitor)
+            child.accept(visitor, *args)
 
     def __eq__(self, other):
         if not super(BlockNode, self).__eq__(other):

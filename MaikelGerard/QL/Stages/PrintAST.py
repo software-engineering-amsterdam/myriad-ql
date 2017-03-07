@@ -5,48 +5,36 @@ class PrintAst(object):
         :type ast: AST.FormNode
         """
         self.ast = ast
-        self.indent = 0
         self.output = ""
 
-    def start_traversal(self):
-        self.indent = 0
-        self.output = ""
         self.form_block(self.ast)
         print(self.output)
 
     def form_block(self, form_node):
         self.output += "form {}: \n".format(form_node.name)
-        self.indent += 1
-        form_node.form_block.accept(self)
-        self.indent -= 1
+        form_node.form_block.accept(self, 1)
 
-    def if_node(self, if_node):
+    def if_node(self, if_node, indent):
         condition = if_node.condition.accept(self)
-        self.output += self.indent * "    " + "if ({}):\n".format(condition)
-        self.indent += 1
-        if_node.if_block.accept(self)
-        self.indent -= 1
+        self.output += indent * "    " + "if ({}):\n".format(condition)
+        if_node.if_block.accept(self, indent + 1)
 
-    def if_else_node(self, if_else_node):
+    def if_else_node(self, if_else_node, indent):
         condition = if_else_node.condition.accept(self)
-        self.output += self.indent * "    " + "if ({}):\n".format(condition)
-        self.indent += 1
-        if_else_node.if_block.accept(self)
-        self.indent -= 1
-        self.output += self.indent * "    " + "else:\n"
-        self.indent += 1
-        if_else_node.else_block.accept(self)
-        self.indent -= 1
+        self.output += indent * "    " + "if ({}):\n".format(condition)
+        if_else_node.if_block.accept(self, indent + 1)
+        self.output += indent * "    " + "else:\n"
+        if_else_node.else_block.accept(self, indent + 1)
 
-    def question_node(self, question_node):
-        self.output += self.indent * "    " + "question: {} {}: {}\n".format(
+    def question_node(self, question_node, indent):
+        self.output += indent * "    " + "question: {} {}: {}\n".format(
             question_node.question,
             question_node.name,
             question_node.type.accept(self)
         )
 
-    def comp_question_node(self, comp_question_node):
-        self.output += self.indent * "    " + "question: {} {}: {}".format(
+    def comp_question_node(self, comp_question_node, indent):
+        self.output += indent * "    " + "question: {} {}: {}".format(
             comp_question_node.question,
             comp_question_node.name,
             comp_question_node.type.accept(self)

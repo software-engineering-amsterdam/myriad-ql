@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     # Parse the questionnaire into an AST.
     parsedAST = QuestionnaireParser().parse(file_contents)
-    PrintAst(parsedAST).start_traversal()
+    PrintAst(parsedAST)
 
     # Create an error handler and environment.
     error_handler = ErrorHandler()
