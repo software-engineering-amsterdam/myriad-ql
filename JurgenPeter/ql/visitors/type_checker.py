@@ -30,19 +30,23 @@ class TypeChecker:
         pass
 
     def visit_computed_question(self, node):
-        self.visit(node.computation)
+        computation_type = self.visit(node.computation)
+        if (computation_type is not None and
+                computation_type != self.symboltable[node.name]):
+            self.error("computed question \"{}\" "
+                       "has incompatable datatype".format(node.name))
 
     def visit_if_conditional(self, node):
-        conditiontype = self.visit(node.condition)
-        if conditiontype is not None and conditiontype != Datatypes.boolean:
+        condition_type = self.visit(node.condition)
+        if condition_type is not None and condition_type != Datatypes.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
             self.visit(element)
 
     def visit_ifelse_conditional(self, node):
-        conditiontype = self.visit(node.condition)
-        if conditiontype is not None and conditiontype != Datatypes.boolean:
+        condition_type = self.visit(node.condition)
+        if condition_type is not None and condition_type != Datatypes.boolean:
             self.error("condition does not evaluate to boolean value")
 
         for element in node.ifbody:
