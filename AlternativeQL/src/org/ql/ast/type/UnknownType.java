@@ -5,4 +5,9 @@ public class UnknownType extends Type {
     public boolean isCompatibleWith(Type type) {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "UnknownType";
+    }
 }

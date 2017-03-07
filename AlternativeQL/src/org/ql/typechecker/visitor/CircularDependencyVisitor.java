@@ -36,7 +36,7 @@ public class CircularDependencyVisitor extends AbstractTypeCheckVisitor<Void, Id
 
     @Override
     public Void visitIncrement(Increment node, Identifier questionId) {
-        visitExpression(node, questionId);
+        visitExpression(node.getExpression(), questionId);
         return null;
     }
 
