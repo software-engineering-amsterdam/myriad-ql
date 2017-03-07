@@ -7,7 +7,7 @@ from QL.stages.evaluator import Evaluate
 from QL.stages.findCycles import FindCycles
 from QL.stages.parser import QuestionnaireParser
 from QL.stages.typeChecker import TypeChecker
-from QL.stages.printAST import PrintAst
+from QL.stages.printHandler import PrintHandler
 from QL.stages.initEnvironment import InitEnvironment
 
 if __name__ == '__main__':
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     # Parse the questionnaire into an AST.
     parsedAST = QuestionnaireParser().parse(file_contents)
-    PrintAst(parsedAST)
+    PrintHandler().print_ast(parsedAST)
 
     # Create an error handler and environment.
     error_handler = ErrorHandler()

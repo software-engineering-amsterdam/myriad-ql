@@ -1,12 +1,10 @@
-class PrintAst(object):
-    def __init__(self, ast):
-        """
-        :type ast: AST.FormNode
-        """
-        self.ast = ast
+class PrintHandler(object):
+    def __init__(self):
         self.output = ""
 
-        self.form_block(self.ast)
+    def print_ast(self, ast):
+        self.output = ""
+        self.form_block(ast)
         print(self.output)
 
     def form_block(self, form_node):

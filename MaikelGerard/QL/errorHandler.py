@@ -1,11 +1,14 @@
 import sys
 
+from QL.stages.printHandler import PrintHandler
+
 
 class ErrorHandler(object):
     def __init__(self):
         self.error_list = []
         self.error_count = 0
         self.warn_count = 0
+        self.print_handler = PrintHandler()
 
     def add_warning(self, node, message):
         self.warn_count += 1
@@ -36,13 +39,16 @@ class ErrorHandler(object):
             self.error_count += 1
 
     def add_binop_error(self, node, left, right):
+        left_str = left.accept(self.print_handler)
+        right_str = right.accept(self.print_handler)
         error_message = "Invalid types for binop '{}': {}, {}"\
-                        .format(node.operator, left, right)
+                        .format(node.operator, left_str, right_str)
         self.add_error(node, error_message)
 
     def add_monop_error(self, node, var_type):
+        var_type_str = var_type.accept(self.print_handler)
         error_message = "Invalid type for unary op '{}': {}"\
-                        .format(node.operator, var_type)
+                        .format(node.operator, var_type_str)
         self.add_error(node, error_message)
 
     def add_if_cond_error(self, if_node):
