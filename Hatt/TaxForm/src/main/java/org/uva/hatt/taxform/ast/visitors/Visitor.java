@@ -15,22 +15,22 @@ import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 
-public interface Visitor {
-    Form visit(Form node);
-    FormId visit(FormId node);
-    Question visit(Question node);
-    Conditional visit(Conditional node);
-    Boolean visit(Boolean node);
-    Integer visit(Integer node);
-    Money visit(Money node);
-    String visit(String node);
-    ValueType visit(ValueType node);
-    BooleanExpression visit(BooleanExpression node);
-    ComputationExpression visit(ComputationExpression node);
-    GroupedExpression visit(GroupedExpression node);
-    ValueType visit(Identifier identifier);
-    StringerLiteral visit(StringerLiteral stringerLiteral);
-    IntegerLiteral visit(IntegerLiteral integerLiteral);
-    BooleanLiteral visit(BooleanLiteral booleanLiteral);
-    Expression visit(Expression expression);
+public interface Visitor<T> {
+    T visit(Form node);
+    T visit(FormId node);
+    T visit(Question node);
+    T visit(Conditional node);
+    T visit(Boolean node);
+    T visit(Integer node);
+    T visit(Money node);
+    T visit(String node);
+    T visit(ValueType node);
+    T visit(BooleanExpression node);
+    T visit(ComputationExpression node);
+    T visit(GroupedExpression node);
+    T visit(Identifier identifier);
+    T visit(StringerLiteral stringerLiteral);
+    T visit(IntegerLiteral integerLiteral);
+    T visit(BooleanLiteral booleanLiteral);
+    T visit(Expression expression);
 }
