@@ -1,10 +1,7 @@
 from QL.stages.expressionEvaluator import ExpressionEvaluator
 
-# TODO: Split evaluator in multiple evaluators to split concerns.
-# TODO: Create expression evaluator to ensure correct order.
 
-
-class UpdateComputedVariables(object):
+class UpdateComputedVars(object):
     def __init__(self, ast, env):
         """
         :type ast: AST.FormNode

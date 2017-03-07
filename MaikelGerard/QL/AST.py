@@ -1,8 +1,6 @@
 from decimal import Decimal
 from datetime import date
 
-# TODO: Replace 'is_boolean' etc. into double dispatch.
-
 
 class Node(object):
     def __init__(self, line=0, col=0):

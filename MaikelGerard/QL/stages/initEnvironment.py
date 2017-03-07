@@ -68,6 +68,9 @@ class InitEnvironment(object):
     def mul_node(self, mul_node):
         self.traverse_expr(mul_node)
 
+    def div_node(self, mul_node):
+        self.traverse_expr(mul_node)
+
     def lt_node(self, lt_node):
         self.traverse_expr(lt_node)
 

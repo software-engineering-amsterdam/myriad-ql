@@ -1,8 +1,5 @@
 import json
-
 from collections import OrderedDict
-from QL.undefined import Undefined
-from QL.stages.updateComputedVariables import UpdateComputedVariables
 
 
 class SaveQuestionaire(object):

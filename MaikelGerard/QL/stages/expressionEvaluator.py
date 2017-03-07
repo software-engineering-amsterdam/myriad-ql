@@ -1,8 +1,5 @@
 from QL.undefined import Undefined
 
-# TODO: Split evaluator in multiple evaluators to split concerns.
-# TODO: Create expression evaluator to ensure correct order.
-
 
 class ExpressionEvaluator(object):
     def __init__(self, env):

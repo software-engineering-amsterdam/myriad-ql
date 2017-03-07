@@ -3,18 +3,11 @@ from QL.stages.expressionEvaluator import ExpressionEvaluator
 
 
 class EvaluateDrawState(object):
-    def __init__(self, form_gui, ast, env, error_handler):
-        """
-        :type ast: QL.AST.FormNode
-        :type env: QL.environment.Environment
-        :type error_handler: QL.errorHandler.ErrorHandler
-        :type form_gui: QL.GUI.drawGUI.DrawGUI
-        """
+    def __init__(self, widgets, ast, env):
         self.ast = ast
         self.env = env
         self.evaluator = ExpressionEvaluator(env)
-        self.handler = error_handler
-        self.form_gui = form_gui
+        self.widgets = widgets
 
     def start_traversal(self):
         self.ast.accept(self, True)
@@ -34,23 +27,25 @@ class EvaluateDrawState(object):
 
     def question_node(self, question_node, widget_visible):
         identifier = question_node.name
+        widget = self.widgets[question_node.name]
         if not widget_visible:
-            self.form_gui.hide_widget(identifier)
+            widget.hide()
         else:
             value = self.env.get_var_value(identifier)
             if value == Undefined:
                 value = ''
-            self.form_gui.show_widget(identifier)
-            self.form_gui.set_widget_val(identifier, value)
+            widget.show()
+            widget.set_entry(value)
 
     def comp_question_node(self, comp_question_node, widget_visible):
         identifier = comp_question_node.name
+        widget = self.widgets[identifier]
         if not widget_visible:
-            self.form_gui.hide_widget(identifier)
+            widget.hide()
         else:
             value = self.env.get_var_value(identifier)
             if value != Undefined:
-                self.form_gui.set_widget_val(identifier, value)
-                self.form_gui.show_widget(identifier)
+                widget.set_entry(value)
+                widget.show()
             else:
-                self.form_gui.hide_widget(identifier)
+                widget.hide()
