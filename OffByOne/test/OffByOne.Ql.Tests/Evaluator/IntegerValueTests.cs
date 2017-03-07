@@ -34,6 +34,126 @@
                 new AddExpression(new NegativeExpression(new IntegerLiteral(4)), new IntegerLiteral(4)),
                 typeof(IntegerValue),
                 new IntegerValue(0)
+            },
+            new object[]
+            {
+                new SubtractExpression(new NegativeExpression(new IntegerLiteral(4)), new IntegerLiteral(4)),
+                typeof(IntegerValue),
+                new IntegerValue(-8)
+            },
+            new object[]
+            {
+                new SubtractExpression(new IntegerLiteral(4), new IntegerLiteral(4)),
+                typeof(IntegerValue),
+                new IntegerValue(0)
+            },
+            new object[]
+            {
+                new SubtractExpression(new IntegerLiteral(0), new IntegerLiteral(4)),
+                typeof(IntegerValue),
+                new IntegerValue(-4)
+            },
+            new object[]
+            {
+                new DivideExpression(new IntegerLiteral(0), new IntegerLiteral(4)),
+                typeof(IntegerValue),
+                new IntegerValue(0)
+            },
+            new object[]
+            {
+                new DivideExpression(new IntegerLiteral(2), new IntegerLiteral(2)),
+                typeof(IntegerValue),
+                new IntegerValue(1)
+            },
+            new object[]
+            {
+                new DivideExpression(new IntegerLiteral(3), new IntegerLiteral(2)),
+                typeof(IntegerValue),
+                new IntegerValue(1)
+            },
+            new object[]
+            {
+                new GreaterThanExpression(new IntegerLiteral(3), new IntegerLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanExpression(new IntegerLiteral(2), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanExpression(new IntegerLiteral(3), new IntegerLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanExpression(new IntegerLiteral(2), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new IntegerLiteral(3), new IntegerLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new IntegerLiteral(3), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new GreaterThanOrEqualExpression(new IntegerLiteral(2), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new IntegerLiteral(3), new IntegerLiteral(2)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new IntegerLiteral(2), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new LessThanOrEqualExpression(new IntegerLiteral(3), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new EqualExpression(new IntegerLiteral(3), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(true)
+            },
+            new object[]
+            {
+                new EqualExpression(new IntegerLiteral(2), new IntegerLiteral(3)),
+                typeof(BooleanValue),
+                new BooleanValue(false)
+            },
+            new object[]
+            {
+                new NegativeExpression(new NegativeExpression(new IntegerLiteral(2))),
+                typeof(IntegerValue),
+                new IntegerValue(2)
+            },
+            new object[]
+            {
+                new NegativeExpression(new PositiveExpression(new IntegerLiteral(2))),
+                typeof(IntegerValue),
+                new IntegerValue(-2)
             }
         };
 

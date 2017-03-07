@@ -160,7 +160,7 @@
                 new NegativeExpression(new PositiveExpression(new DecimalLiteral(2))),
                 typeof(DecimalValue),
                 new DecimalValue(-2)
-            },
+            }
         };
 
         [Theory]
