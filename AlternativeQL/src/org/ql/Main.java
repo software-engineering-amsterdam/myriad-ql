@@ -6,6 +6,7 @@ import org.ql.ast.Form;
 import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.gui.GUIHandler;
+import org.ql.gui.GUIHandlerSingleton;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -49,7 +50,7 @@ public class Main extends Application {
     }
 
     public void runGUI(Stage primaryStage, Form form) {
-        GUIHandler guiHandler = new GUIHandler(primaryStage);
-        guiHandler.runGUI(form);
+        GUIHandlerSingleton guiHandler = new GUIHandlerSingleton(primaryStage, form);
+        guiHandler.guiHandler.runGUI();
     }
 }

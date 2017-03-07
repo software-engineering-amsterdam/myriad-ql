@@ -16,9 +16,11 @@ public class GUIHandler {
     private final MainStage mainstage;
     private final BranchVisitor branchVisitor;
     private final QuestionValueVisitor questionValueVisitor;
+    private Form form;
 
-    public GUIHandler(Stage primaryStage) {
+    public GUIHandler(Stage primaryStage, Form form) {
         this.mainstage = new MainStage(primaryStage);
+        this.form = form;
 
         QuestionElementContainer questionElementContainer = new QuestionElementContainer(new WidgetBuilder());
 
@@ -28,14 +30,15 @@ public class GUIHandler {
         primaryStage.show();
     }
 
-    public void runGUI(Form form) {
+    public void runGUI() {
         ValueTable valueTable = questionValueVisitor.makeValueTable(form);
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, questionValueVisitor.makeValueTable(form));
 
+        mainstage.cleanRootPane();
+
         for(QuestionElement questionElement : visibleElements) {
             questionElement.getWidget().setValue(valueTable.lookup(questionElement.getQuestion().getId()));
-
-            mainstage.addPaneToRootPane(questionElement.getWidget().getGridPane());
+            mainstage.addWidgetToRootPane(questionElement.getWidget());
         }
 
     }

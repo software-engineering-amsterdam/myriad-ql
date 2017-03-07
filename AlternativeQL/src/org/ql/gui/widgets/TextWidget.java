@@ -19,8 +19,8 @@ public class TextWidget extends Widget {
     }
 
     @Override
-    public void setVisible(Value value) {
-        textField.setVisible((Boolean) value.getPlainValue());
+    public void setVisible() {
+        textField.setVisible(true);
     }
 
     @Override

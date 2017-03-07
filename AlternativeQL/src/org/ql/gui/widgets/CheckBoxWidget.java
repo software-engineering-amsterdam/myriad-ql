@@ -20,8 +20,8 @@ public class CheckBoxWidget extends Widget {
     }
 
     @Override
-    public void setVisible(Value value) {
-        checkBox.setVisible((Boolean) value.getPlainValue());
+    public void setVisible() {
+        checkBox.setVisible(true);
     }
 
     @Override

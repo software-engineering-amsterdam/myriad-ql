@@ -10,7 +10,7 @@ public abstract class Widget {
 
     public abstract void addToPane();
 
-    public abstract void setVisible(Value value);
+    public abstract void setVisible();
 
     public abstract void setValue(Value value);
 

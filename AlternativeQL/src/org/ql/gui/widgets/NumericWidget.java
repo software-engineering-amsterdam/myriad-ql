@@ -19,8 +19,8 @@ public class NumericWidget extends Widget {
     }
 
     @Override
-    public void setVisible(Value value) {
-        numericField.setVisible((Boolean) value.getPlainValue());
+    public void setVisible() {
+        numericField.setVisible(true);
     }
 
     @Override

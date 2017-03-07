@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import org.ql.gui.widgets.Widget;
 
 import java.util.List;
 
@@ -33,8 +34,12 @@ public class MainStage extends Stage {
         stage.setScene(scene);
     }
 
-    public void addPaneToRootPane(GridPane pane) {
-        rootPane.add(pane, 0, currentRow++);
+    public void cleanRootPane() {
+        rootPane.getChildren().clear();
+    }
+
+    public void addWidgetToRootPane(Widget widget) {
+        rootPane.add(widget.getGridPane(), 0, currentRow++);
     }
 
     public Stage getStage() {
