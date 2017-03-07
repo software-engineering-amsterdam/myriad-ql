@@ -23,7 +23,6 @@ def open_file(path):
         exit(1)
 
 
-
 def print_result(main_message, error_list, exit_code):
     print(main_message)
     print('\n'.join(map(str, error_list)))
@@ -64,8 +63,8 @@ def check_type(ql_ast, ql_identifier_check_result):
 
 
 def evaluate(ql_ast, ql_identifier_check_result):
-    eval = Evaluator(strip_keys_from_dict(ql_identifier_check_result))
-    return eval.visit(ql_ast)
+    evaluator = Evaluator(strip_keys_from_dict(ql_identifier_check_result))
+    return evaluator.visit(ql_ast)
 
 
 def strip_keys_from_dict(ql_identifier_check_result):
