@@ -1,8 +1,8 @@
-from QL.Stages.Parser import QuestionnaireParser as Parser
-from QL.Stages.Evaluator import Evaluate
-from QL.Environment import Environment
-from QL.ErrorHandler import ErrorHandler
-from QL.Undefined import Undefined
+from QL.Stages.parser import QuestionnaireParser as Parser
+from QL.Stages.evaluator import Evaluate
+from QL.environment import Environment
+from QL.errorHandler import ErrorHandler
+from QL.undefined import Undefined
 import QL.AST as AST
 
 import unittest

@@ -1,14 +1,14 @@
-from QL.Undefined import Undefined
+from QL.undefined import Undefined
 
 
 class EvaluateDrawState(object):
     def __init__(self, form_gui, ast, env, evaluator, error_handler):
         """
         :type ast: QL.AST.FormNode
-        :type env: QL.Environment.Environment
-        :type error_handler: QL.ErrorHandler.ErrorHandler
-        :type evaluator: QL.Stages.Evaluator.Evaluate
-        :type form_gui: QL.GUI.DrawGUI.DrawGUI
+        :type env: QL.environment.Environment
+        :type error_handler: QL.errorHandler.ErrorHandler
+        :type evaluator: QL.Stages.evaluator.Evaluate
+        :type form_gui: QL.GUI.drawGUI.DrawGUI
         """
         self.ast = ast
         self.env = env

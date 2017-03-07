@@ -1,6 +1,6 @@
 import json
 
-from QL.Undefined import Undefined
+from QL.undefined import Undefined
 from collections import OrderedDict
 
 

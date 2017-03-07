@@ -1,6 +1,6 @@
-from QL.Stages.Parser import QuestionnaireParser as Parser
-from QL.ErrorHandler import ErrorHandler
-from QL.Stages.FindCycles import FindCycles
+from QL.Stages.parser import QuestionnaireParser as Parser
+from QL.errorHandler import ErrorHandler
+from QL.Stages.findCycles import FindCycles
 
 import unittest
 
