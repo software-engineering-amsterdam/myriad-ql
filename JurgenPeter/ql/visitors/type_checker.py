@@ -4,7 +4,7 @@ from ql.messages import *
 
 class TypeChecker:
 
-    arithmetic_datatypes = [Datatype.integer, Datatype.decimal]
+    computable_datatypes = [Datatype.integer, Datatype.decimal]
 
     def __init__(self, symboltable, errors=[]):
         self.symboltable = symboltable
@@ -54,7 +54,7 @@ class TypeChecker:
         right_type = self.visit(node.right)
         if right_type is None:
             return None
-        if right_type in self.arithmetic_datatypes:
+        if right_type in self.computable_datatypes:
             return right_type
         self.error("unary + operator has incompatible datatype")
         return None
@@ -63,7 +63,7 @@ class TypeChecker:
         right_type = self.visit(node.right)
         if right_type is None:
             return None
-        if right_type in self.arithmetic_datatypes:
+        if right_type in self.computable_datatypes:
             return right_type
         self.error("unary - operator has incompatible datatype")
         return None
@@ -77,13 +77,13 @@ class TypeChecker:
         self.error("! operator has incompatible datatype")
         return None
 
-    def visit_arithmetic_binop(self, node, op):
+    def visit_computation_binop(self, node, op):
         left_type = self.visit(node.left)
         right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
-        if (left_type in self.arithmetic_datatypes and
-                right_type in self.arithmetic_datatypes):
+        if (left_type in self.computable_datatypes and
+                right_type in self.computable_datatypes):
             return self.dominant_datatype(left_type, right_type)
         self.error("{} operator has incompatible datatypes".format(op))
         return None
@@ -93,8 +93,8 @@ class TypeChecker:
         right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
-        if (left_type in self.arithmetic_datatypes and
-                right_type in self.arithmetic_datatypes):
+        if (left_type in self.computable_datatypes and
+                right_type in self.computable_datatypes):
             return Datatype.boolean
         self.error("{} operator has incompatible datatypes".format(op))
         return None
@@ -120,24 +120,24 @@ class TypeChecker:
         return None
 
     def visit_mulop(self, node):
-        return self.visit_arithmetic_binop(node, "*")
+        return self.visit_computation_binop(node, "*")
 
     def visit_divop(self, node):
         left_type = self.visit(node.left)
         right_type = self.visit(node.right)
         if left_type is None or right_type is None:
             return None
-        if (left_type in self.arithmetic_datatypes and
-                right_type in self.arithmetic_datatypes):
+        if (left_type in self.computable_datatypes and
+                right_type in self.computable_datatypes):
             return Datatype.decimal
         self.error("/ operator has incompatible datatypes")
         return None
 
     def visit_addop(self, node):
-        return self.visit_arithmetic_binop(node, "+")
+        return self.visit_computation_binop(node, "+")
 
     def visit_subop(self, node):
-        return self.visit_arithmetic_binop(node, "-")
+        return self.visit_computation_binop(node, "-")
 
     def visit_ltop(self, node):
         return self.visit_comparison_binop(node, "<")
