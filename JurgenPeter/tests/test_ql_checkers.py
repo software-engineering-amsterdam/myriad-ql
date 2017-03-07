@@ -67,6 +67,10 @@ class TestTypeChecker(TestCase):
         ("form Name {"
          "  if 2 + 2 {}"
          "  if \"hello\" {} else {} }", 2),
+        ("form Name {"
+         "  a: \"a\" integer = false"
+         "  b: \"b\" integer = false + false"
+         "}", 2)
     ]
 
     def testTypeErrors(self):
