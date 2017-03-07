@@ -1,16 +1,18 @@
 package ast
 
-case class Stylesheet(identifier: String, pages: Seq[Page])
+import ast.Stylesheet._
 
-case class Page(identifier: String, sections: Seq[Section], defaults: Seq[DefaultStyle])
+case class Stylesheet(identifier: String, pages: Pages)
+
+case class Page(identifier: String, sections: Sections, defaults: DefaultStyles)
 
 sealed trait Block
 
-case class Section(label: String, blocks: Seq[Block], defaults: Seq[DefaultStyle]) extends Block
+case class Section(label: String, blocks: Blocks, defaults: DefaultStyles) extends Block
 
-case class QuestionStyle(identifier: String, styling: Map[String, Style], widget: Option[Widget]) extends Block
+case class QuestionStyle(identifier: String, styling: Styling, widget: Option[Widget]) extends Block
 
-case class DefaultStyle(typeName: Type, styling: Map[String, Style], widget: Option[Widget])
+case class DefaultStyle(typeName: Type, styling: Styling, widget: Option[Widget])
 
 case class Widget(widgetType: WidgetType)
 
@@ -37,3 +39,12 @@ case class NumericStyle(value: BigDecimal) extends Style
 case class ColorStyle(value: String) extends Style
 
 case class StringStyle(value: String) extends Style
+
+object Stylesheet {
+  type Blocks = Seq[Block]
+  type Styling = Map[String, Style]
+  type DefaultStyles = Seq[DefaultStyle]
+  type QuestionStyles = Seq[QuestionStyle]
+  type Sections = Seq[Section]
+  type Pages = Seq[Page]
+}
