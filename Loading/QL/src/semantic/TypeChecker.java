@@ -17,6 +17,10 @@ public class TypeChecker {
 
         ExpressionVisitor expressionVisitor = new ExpressionVisitor(environment);
         expressionVisitor.visit(form);
+
+        CyclicDependenciesVisitor cyclicDependenciesVisitor = new CyclicDependenciesVisitor(environment);
+        cyclicDependenciesVisitor.visit(form);
+
         return environment.getWarnings();
     }
     

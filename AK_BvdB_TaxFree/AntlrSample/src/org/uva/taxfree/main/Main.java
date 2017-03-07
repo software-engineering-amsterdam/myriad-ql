@@ -1,7 +1,10 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.gui.*;
+import org.uva.taxfree.gui.ErrorMessage;
+import org.uva.taxfree.gui.FileSelector;
+import org.uva.taxfree.gui.MessageWindow;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.Environment;
 
 import java.io.File;
@@ -25,10 +28,7 @@ public class Main {
         if (semanticsAnalyzer.validSemantics()) {
             QuestionForm taxForm = new QuestionForm(environment);
             taxForm.show();
-            new FormRenderer(taxForm);
-            return;
         }
-
     }
 
 }
