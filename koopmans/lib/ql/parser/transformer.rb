@@ -2,8 +2,61 @@ require 'parslet'
 
 module QL
   module Parser
+    # Int    = Struct.new(:int) {
+    #   def eval; self end
+    #   def op(operation, other)
+    #     left = int
+    #     right = other.int
+    #
+    #     Int.new(
+    #       case operation
+    #         when '+'
+    #           left + right
+    #         when '-'
+    #           left - right
+    #         when '*'
+    #           left * right
+    #         when '/'
+    #           left / right
+    #       end)
+    #   end
+    #   def to_i
+    #     int
+    #   end
+    # }
+
+    Seq    = Struct.new(:sequence) {
+      def eval
+        sequence.reduce { |accum, operation|
+          p accum
+          p operation
+          operation.call(accum) }
+      end
+    }
+    LeftOp = Struct.new(:operation, :right) {
+      def call(left)
+        left = left.eval
+
+        right = self.right.eval
+
+        left.op(operation, right)
+      end
+    }
+
     class Transformer < Parslet::Transform
       include AST
+      # rule(integer_literal: simple(:integer_literal)) { Int.new(Integer(integer_literal)) }
+      # rule(operator: simple(:operator), right: simple(:integer_literal)) { LeftOp.new(operator, integer_literal) }
+      rule(operator: '+', right: simple(:integer_literal)) { Add.new(integer_literal) }
+      rule(operator: '*', right: simple(:integer_literal)) { Multiply.new(integer_literal) }
+
+      # rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Add.new(left, right) }
+
+
+
+      rule(left: simple(:integer_literal)) { integer_literal }
+      rule(sequence(:sequence)) { Seq.new(sequence) }
+
       # variable
       rule(variable: simple(:name)) { Variable.new(name) }
 

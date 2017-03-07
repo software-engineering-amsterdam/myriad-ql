@@ -4,11 +4,9 @@ module QL
   module Parser
     # parser for forms
     class Parser < Parslet::Parser
-      root(:form)
+      # root(:form)
 
-      # spaces
-      rule(:spaces) { match('\s').repeat(1) }
-      rule(:spaces?) { spaces.maybe }
+
 
       def spaced(character)
         str(character) >> spaces?

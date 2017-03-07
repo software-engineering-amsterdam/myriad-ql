@@ -39,10 +39,10 @@ module QL
     end
 
     class BinaryExpression < Expression
-      attr_accessor :left, :right
+      attr_accessor :right
 
-      def initialize(left, right)
-        @left  = left
+      def initialize(right)
+        # @left  = left
         @right = right
       end
 
