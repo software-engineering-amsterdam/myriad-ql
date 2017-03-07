@@ -1,6 +1,6 @@
-module UI.Messages exposing (error, warning, renderLocation, renderLocations, renderVarName, renderIds)
+module UI.Messages exposing (error, warning, renderLocation, renderLocations, renderVarName, renderId, renderIds, renderType)
 
-import QL.AST exposing (Location(Location), Id)
+import QL.AST exposing (Id, Location(Location), ValueType)
 import Html exposing (Html, div, text, b, span)
 import Html.Attributes exposing (class)
 
@@ -43,3 +43,8 @@ renderId ( name, loc ) =
 renderIds : List Id -> Html msg
 renderIds idList =
     span [] (List.map renderId idList |> List.intersperse (text ", "))
+
+
+renderType : ValueType -> Html msg
+renderType valueType =
+    b [] [ text <| toString valueType ]

@@ -1,7 +1,7 @@
-module QL.TypeChecker.Expressions exposing (..)
+module QL.TypeChecker.Expressions exposing (typeCheckerErrors, computedFieldTypeErrors, conditionTypeErrors, getType)
 
 import Dict exposing (Dict)
-import QL.AST exposing (Form, FormItem(..), Expression(..), ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
+import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
 import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
 
@@ -14,6 +14,27 @@ typeCheckerErrors form =
     in
         operandTypeErrors form questionTypes
             ++ conditionTypeErrors form questionTypes
+            ++ computedFieldTypeErrors form questionTypes
+
+
+computedFieldTypeErrors : Form -> QuestionTypes -> List Message
+computedFieldTypeErrors form questionTypes =
+    Collectors.collectComputedFields form
+        |> List.filterMap (computationToType questionTypes)
+        |> List.filterMap (withExpectedType questionTypes)
+        |> List.filter badComputedField
+        |> List.map (\( id, actualType, expectedType ) -> Messages.invalidComputedFieldType id actualType expectedType)
+
+
+badComputedField : ( Id, ValueType, ValueType ) -> Bool
+badComputedField ( _, computedType, fieldType ) =
+    computedType /= fieldType
+
+
+withExpectedType : QuestionTypes -> ( Id, ValueType ) -> Maybe ( Id, ValueType, ValueType )
+withExpectedType questionTypes ( ( name, _ ) as id, actualType ) =
+    Dict.get name questionTypes
+        |> Maybe.map (\expectedType -> ( id, actualType, expectedType ))
 
 
 conditionTypeErrors : Form -> QuestionTypes -> List Message
@@ -24,11 +45,21 @@ conditionTypeErrors form questionTypes =
         |> List.map (\( condition, conditionType ) -> (Messages.invalidConditionType (locationOf condition) conditionType))
 
 
+computationToType : QuestionTypes -> ( Id, Expression ) -> Maybe ( Id, ValueType )
+computationToType questionTypes ( name, computation ) =
+    case getType questionTypes computation of
+        Ok valueType ->
+            Just ( name, valueType )
+
+        Err _ ->
+            Nothing
+
+
 conditionWithType : QuestionTypes -> Expression -> Maybe ( Expression, ValueType )
 conditionWithType questionTypes condition =
     case getType questionTypes condition of
-        Ok x ->
-            Just ( condition, x )
+        Ok valueType ->
+            Just ( condition, valueType )
 
         Err _ ->
             Nothing

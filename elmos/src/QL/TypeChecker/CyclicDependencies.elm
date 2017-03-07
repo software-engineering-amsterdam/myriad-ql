@@ -50,8 +50,8 @@ dependenciesOf name table =
     DictList.get name table |> Maybe.withDefault Set.empty
 
 
-extractDependencies : ( String, Expression ) -> DependencyEntry
-extractDependencies ( name, computation ) =
+extractDependencies : ( Id, Expression ) -> DependencyEntry
+extractDependencies ( ( name, _ ), computation ) =
     ( name, Collectors.collectQuestionReferences computation |> uniqueVarNames )
 
 

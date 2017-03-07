@@ -41,11 +41,11 @@ collectQuestionLabels form =
         []
 
 
-collectComputedFields : Form -> List ( String, Expression )
+collectComputedFields : Form -> List ( Id, Expression )
 collectComputedFields form =
     FormVisitor.inspect
         { defaultConfig
-            | onComputedField = FormVisitor.post (\( _, ( name, _ ), _, computation ) result -> ( name, computation ) :: result)
+            | onComputedField = FormVisitor.post (\( _, id, _, computation ) result -> ( id, computation ) :: result)
         }
         form
         []

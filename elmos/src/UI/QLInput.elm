@@ -179,7 +179,16 @@ renderErrorMessage message =
             [ text "Condition at "
             , UI.Messages.renderLocation loc
             , text " has invalid type: "
-            , b [] [ text <| toString conditionType ]
+            , UI.Messages.renderType conditionType
+            ]
+
+        InvalidComputedFieldType id computedType fieldType ->
+            [ text "Question "
+            , UI.Messages.renderId id
+            , text " is defined as "
+            , UI.Messages.renderType computedType
+            , text " but it's computation is of type "
+            , UI.Messages.renderType fieldType
             ]
 
 
