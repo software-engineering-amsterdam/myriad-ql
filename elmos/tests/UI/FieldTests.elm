@@ -4,6 +4,7 @@ import Test exposing (Test, describe, test)
 import QL.AST exposing (..)
 import UI.Field as Field exposing (Field(Editable, Computed))
 import QL.Environment as Env
+import QL.Values as Values
 import Expect
 
 
@@ -44,7 +45,7 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withString "name" "John"
+                            |> Env.withFormValue "name" (Values.string "John")
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
@@ -58,8 +59,8 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withString "name" "John"
-                            |> Env.withBoolean "hasHouse" True
+                            |> Env.withFormValue "name" (Values.string "John")
+                            |> Env.withFormValue "hasHouse" (Values.bool True)
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal

@@ -12,7 +12,8 @@ view : WidgetContext msg -> Html msg
 view { identifier, env, onChange, editable } =
     let
         textValue =
-            Environment.getInteger identifier env
+            Environment.getFormValue identifier env
+                |> Maybe.andThen Values.asInt
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in
