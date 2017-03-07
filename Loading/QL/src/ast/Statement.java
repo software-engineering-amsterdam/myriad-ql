@@ -4,7 +4,7 @@ import ast.expression.Expression;
 
 public class Statement extends BlockItem {
 
-	private Expression expression; // TODO change name
+	private Expression expression;
 	private Block block;
 	
 	public Statement(Expression expression, Block block, int line) {
@@ -21,7 +21,6 @@ public class Statement extends BlockItem {
 		return block;
 	}
 
-	// TODO end each class with overrides?
 	@Override
 	public void accept(FormVisitor v) {
 		v.visit(this);

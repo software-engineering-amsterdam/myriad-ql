@@ -13,9 +13,11 @@ public class Main {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" integer (Name0 + 2)"
-				 + "if ((true)) {"
+				 + "if (Name0 < 5) {"
+				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
-				 + "}"
+				 + "} else { "
+				 + "Name9: \"Question9\" boolean } } "
 				 + "Name3: \"Question3\" boolean "
 				 + "}";
 //		String tmp = "form Testing { Name0: \"Question\" boolean\n"

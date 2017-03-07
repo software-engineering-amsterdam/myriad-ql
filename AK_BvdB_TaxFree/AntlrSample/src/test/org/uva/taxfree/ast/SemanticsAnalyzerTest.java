@@ -68,8 +68,9 @@ public class SemanticsAnalyzerTest {
     }
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
+        boolean expectedValid = 0 == expectedErrorAmount;
         SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Expecting errors: " + description);
+        Assert.assertEquals(semanticsAnalyzer.validSemantics(), expectedValid, "Expecting errors: " + description);
         Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
     }
 

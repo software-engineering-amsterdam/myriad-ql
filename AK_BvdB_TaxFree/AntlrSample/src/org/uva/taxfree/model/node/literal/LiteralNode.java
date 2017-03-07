@@ -21,4 +21,13 @@ public abstract class LiteralNode extends ConditionNode {
         set.add(mId);
     }
 
+//    @Override
+//    public boolean isSameType() {
+//        return true;
+//    }
+
+//    @Override
+//    public boolean isValidCondition() {
+//        return true;
+//    }
 }

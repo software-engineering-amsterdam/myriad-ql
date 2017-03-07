@@ -4,10 +4,9 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
@@ -80,17 +79,6 @@ public class Ast {
         Set<NamedNode> questions = new LinkedHashSet<>();
         mRootNode.retrieveDeclarations(questions);
         return questions;
-    }
-
-    // By implicitely modifying the list
-    public Set<Node> getConditions() {
-        Set<Node> conditions = new LinkedHashSet<>();
-        mRootNode.retrieveConditions(conditions);
-        return conditions;
-    }
-
-    public String getFormName() {
-        return mRootNode.toString();
     }
 }
 
