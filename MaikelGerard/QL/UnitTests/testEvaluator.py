@@ -72,7 +72,7 @@ class TestEvaluator(unittest.TestCase):
 
     def testUndefinedExpr(self):
         expr = "var * 10"
-        self.env.add_var(AST.QuestionNode("q", AST.VarNode("var"), "money"))
+        self.env.add_var(AST.QuestionNode("q", "var", "money"))
         parse_res = self.exp_parser.parseString(expr, parseAll=True)[0]
         self.assertEqual(parse_res.accept(self.evaluator), Undefined)
 

@@ -4,7 +4,7 @@ from QL.Undefined import Undefined
 class EvaluateDrawState(object):
     def __init__(self, form_gui, ast, env, evaluator, error_handler):
         """
-        :type ast: QL.AST.QuestionnaireAST
+        :type ast: QL.AST.FormNode
         :type env: QL.Environment.Environment
         :type error_handler: QL.ErrorHandler.ErrorHandler
         :type evaluator: QL.Stages.Evaluator.Evaluate
@@ -19,7 +19,7 @@ class EvaluateDrawState(object):
 
     def start_traversal(self):
         self.show_stack = []
-        self.ast.root.accept(self)
+        self.ast.accept(self)
 
     def traverse_branch(self, node_branch, condition):
         self.show_stack.append(condition)

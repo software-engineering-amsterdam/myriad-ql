@@ -17,7 +17,7 @@ class InitEnvironment(object):
         self.question_vars = []
         self.labels = []
 
-        self.ast.root.accept(self)
+        self.ast.accept(self)
 
         # Check if all variables found in the if statements are defined as
         # question, if not, report the first occurrence of the undeclared

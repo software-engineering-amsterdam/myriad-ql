@@ -26,7 +26,7 @@ class TestEvaluator(unittest.TestCase):
         """
         parsed_form = self.parser.parse(form)
         find_cycles = FindCycles(parsed_form, self.handler)
-        parsed_form.root.accept(find_cycles)
+        parsed_form.accept(find_cycles)
 
         self.assertEqual(self.handler.error_count, 1)
 
@@ -39,7 +39,7 @@ class TestEvaluator(unittest.TestCase):
         """
         parsed_form = self.parser.parse(form)
         find_cycles = FindCycles(parsed_form, self.handler)
-        parsed_form.root.accept(find_cycles)
+        parsed_form.accept(find_cycles)
 
         self.assertEqual(self.handler.error_count, 1)
 
