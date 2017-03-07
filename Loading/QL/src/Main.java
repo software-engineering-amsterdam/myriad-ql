@@ -18,7 +18,7 @@ public class Main {
  		 		 + "Name2: \"Question2\" boolean"
 				 + "} else { "
 				 + "Name9: \"Question9\" boolean } } "
-				 + "Name3: \"Question3\" boolean "
+				 + "Name3: \"Question3\" string "
 				 + "}";
 //		String tmp = "form Testing { Name0: \"Question\" boolean\n"
 //				+ "Name1: \"Question1\" integer\n"

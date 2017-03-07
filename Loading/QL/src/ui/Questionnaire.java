@@ -1,6 +1,7 @@
 package ui;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import QL.Warning;
 import ast.Form;
@@ -19,8 +20,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import value.Value;
+
+import javax.json.*;
 
 public class Questionnaire extends Application implements Notifier {
 	
@@ -29,6 +33,7 @@ public class Questionnaire extends Application implements Notifier {
 	private static evaluation.Environment env; // TODO rename
 	private static GridPane grid;
 	private static List<Warning> warnings;
+	private static Stage pStage; // TODO
 
 	
     public void main(Form f, Environment environment, List<Warning> w) {
@@ -41,6 +46,8 @@ public class Questionnaire extends Application implements Notifier {
         
     @Override
     public void start(Stage primaryStage) {
+
+        pStage = primaryStage;
        
     	if (!warnings.isEmpty()) {
     		WarningDialog dialog = new WarningDialog(warnings);
@@ -82,11 +89,11 @@ public class Questionnaire extends Application implements Notifier {
     	renderQuestions(activeQuestions);
     	
         Button btn = renderButton(grid, activeQuestions.size() + 2);
-         
+
         // TODO move to function submit
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, activeQuestions.size() + 2);
-                
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -99,11 +106,11 @@ public class Questionnaire extends Application implements Notifier {
                         actiontarget.setText("Please Fill in all Fields");
                         return;
             		}
-    
             	}  
                 actiontarget.setFill(Color.SPRINGGREEN);
                 actiontarget.setText("Thank you for filling\n in the questionnaire");
-                
+
+                exportQuestionnaire(activeQuestions);
             }
         });
     }
@@ -162,5 +169,31 @@ public class Questionnaire extends Application implements Notifier {
 	        renderQuestionnaire(grid);
 		}
 	}
+
+	private void exportQuestionnaire(List<Row> activeQuestions) {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(pStage);
+
+        if (file != null) {
+
+            try {
+                JsonObjectBuilder questionnaire = Json.createObjectBuilder();
+
+                for (Row question : activeQuestions) {
+                    questionnaire.add(question.getName(), question.getAnswer().convertToString());
+                }
+
+                OutputStream os = new FileOutputStream(file);
+                JsonWriter jsonWriter = Json.createWriter(os);
+                jsonWriter.writeObject(questionnaire.build());
+                jsonWriter.close();
+            } catch (IOException ex) {
+                System.out.println("IOException save questionnaire..."); // TODO
+            }
+        }
+    }
 
 }
