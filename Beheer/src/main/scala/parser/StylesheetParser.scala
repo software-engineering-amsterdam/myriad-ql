@@ -14,28 +14,28 @@ class StylesheetParser extends QLParser {
   }
 
   def stylesheet: Parser[Stylesheet] =
-    "stylesheet" ~> ident ~ block(rep(page)) ^^ {
+    "stylesheet" ~> ident ~ curlyBrackets(rep(page)) ^^ {
       case identifier ~ pages => Stylesheet(identifier, pages)
     }
 
   private def page: Parser[Page] =
-    "page" ~> ident ~ block(rep(section) ~ rep(default)) ^^ {
+    "page" ~> ident ~ curlyBrackets(rep(section) ~ rep(default)) ^^ {
       case identifier ~ (sections ~ default) => Page(identifier, sections, default)
     }
 
   private def section: Parser[Section] =
-    "section" ~> label ~ block(rep(question) ~ rep(default)) ^^ {
-      case label ~ (questions ~ default) => Section(label, questions, default)
+    "section" ~> label ~ curlyBrackets(rep(question | section) ~ rep(default)) ^^ {
+      case label ~ (blocks ~ default) => Section(label, blocks, default)
     }
 
   private def question: Parser[QuestionStyle] =
-    "question" ~> ident ~ opt(block(rep(style) ~ opt(widget))) ^^ {
+    "question" ~> ident ~ opt(curlyBrackets(rep(style) ~ opt(widget))) ^^ {
       case identifier ~ Some(styling ~ widget) => QuestionStyle(identifier, styling.toMap, widget)
       case identifier ~ None => QuestionStyle(identifier, Map.empty, None)
     }
 
   private def default: Parser[DefaultStyle] =
-    "default" ~> typeName ~ block(rep(style) ~ opt(widget)) ^^ {
+    "default" ~> typeName ~ curlyBrackets(rep(style) ~ opt(widget)) ^^ {
       case typeName ~ (styling ~ widget) => DefaultStyle(typeName, styling.toMap, widget)
     }
 
@@ -62,11 +62,11 @@ class StylesheetParser extends QLParser {
       case identifier ~ _ ~ style => identifier -> style
     }
 
-  private def stringStyle: Parser[StringStyle] = label ^^ (s => StringStyle(s))
+  private def colorStyle: Parser[ColorStyle] = "#" ~> wholeNumber ^^ (n => ColorStyle(s"#$n"))
 
-  private def colorStyle: Parser[ColorStyle] = """#\p{XDigit}{6}""".r ^^ (c => ColorStyle(c))
+  private def numericStyle: Parser[NumericStyle] = number ^^ (n => NumericStyle(n))
 
-  private def numericStyle: Parser[NumericStyle] = wholeNumber ^^ (n => NumericStyle(BigDecimal(n).setScale(0)))
+  private def stringStyle: Parser[StringStyle] = label ^^ (l => StringStyle(l))
 
 }
 

@@ -66,7 +66,7 @@ trait ExpressionParser extends QLParser {
 
   private def decimal: Parser[DecimalLiteral] = """\d*\.\d+""".r ^^ (x => DecimalLiteral(BigDecimal(x)))
 
-  private def integer: Parser[IntegerLiteral] = """\d+""".r ^^ (x => IntegerLiteral(BigDecimal(x).setScale(0)))
+  private def integer: Parser[IntegerLiteral] = number ^^ (x => IntegerLiteral(x))
 
   private def infixOperationParser(child: Parser[ExpressionNode], operators: Regex)(f: InfixMatcher): Parser[ExpressionNode] = {
     child ~ rep(operators ~ child) ^^ { case head ~ tail => tail.foldLeft(head)(f) }
