@@ -1,19 +1,19 @@
 import sys
 
-from QL.Environment import Environment
-from QL.ErrorHandler import ErrorHandler
-from QL.GUI.InitWidgets import InitWidgets
-from QL.Stages.Evaluator import Evaluate
-from QL.Stages.FindCycles import FindCycles
-from QL.Stages.Parser import QuestionnaireParser
-from QL.Stages.TypeChecker import TypeChecker
-from QL.Stages.PrintAST import PrintAst
-from QL.Stages.InitEnvironment import InitEnvironment
+from QL.environment import Environment
+from QL.errorHandler import ErrorHandler
+from QL.GUI.initWidgets import InitWidgets
+from QL.stages.evaluator import Evaluate
+from QL.stages.findCycles import FindCycles
+from QL.stages.parser import QuestionnaireParser
+from QL.stages.typeChecker import TypeChecker
+from QL.stages.printAST import PrintAst
+from QL.stages.initEnvironment import InitEnvironment
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print("Invalid amount of parameters, usage:")
-        print("python StartQuestionnaire.py [QL FILEPATH]")
+        print("python startQuestionnaire.py [QL FILEPATH]")
         sys.exit()
 
     # Read the contents of the questionnaire source file.

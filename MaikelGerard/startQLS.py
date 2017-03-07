@@ -1,4 +1,4 @@
-from QLS.Stages.Parser import Parser
+from QLS.Stages.parser import Parser
 
 if __name__ == '__main__':
     example = """

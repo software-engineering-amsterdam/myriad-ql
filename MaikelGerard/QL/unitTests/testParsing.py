@@ -4,11 +4,11 @@ from decimal import Decimal
 import pyparsing as pp
 
 from QL import AST
-from QL.Stages import Parser
+from QL.stages import parser
 
 
 class TestParser(unittest.TestCase):
-    parser = Parser.QuestionnaireParser()
+    parser = parser.QuestionnaireParser()
     q_parser = parser.question
     exp_parser = parser.expression
     cond_parser = parser.conditional

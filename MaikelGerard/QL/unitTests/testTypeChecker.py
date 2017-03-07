@@ -1,7 +1,7 @@
-from QL.Stages.Parser import QuestionnaireParser as Parser
-from QL.Stages.TypeChecker import TypeChecker
-from QL.Environment import Environment
-from QL.ErrorHandler import ErrorHandler
+from QL.stages.parser import QuestionnaireParser as Parser
+from QL.stages.typeChecker import TypeChecker
+from QL.environment import Environment
+from QL.errorHandler import ErrorHandler
 
 import QL.AST as AST
 import unittest

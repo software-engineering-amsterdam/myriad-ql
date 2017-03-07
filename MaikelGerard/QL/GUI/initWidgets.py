@@ -1,5 +1,5 @@
-from QL.GUI.DrawGUI import DrawGUI
-import QL.GUI.Widgets as Widgets
+from QL.GUI.drawGUI import DrawGUI
+import QL.GUI.widgets as Widgets
 
 # TODO: See if we can merge InitWidgets and DrawGUI.
 

@@ -2,9 +2,9 @@
 from appJar import gui
 from collections import OrderedDict
 
-from QL.Undefined import Undefined
-from QL.GUI.EvaluateDrawState import EvaluateDrawState
-from QL.GUI.SaveQuestionaire import SaveQuestionaire
+from QL.undefined import Undefined
+from QL.GUI.evaluateDrawState import EvaluateDrawState
+from QL.GUI.saveQuestionaire import SaveQuestionaire
 
 
 class DrawGUI(object):
