@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QVBoxLayout
 
+from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.Wizard import Wizard, Page
 from pql.traversal.FormVisitor import FormVisitor
@@ -14,17 +15,16 @@ from pql.traversal.TypeVisitor import TypeVisitor
 
 
 class Gui(FormVisitor, TypeVisitor):
-    def __init__(self, environment):
+    def __init__(self, ):
         self.wizard = Wizard()
-        self.evaluator = Evaluator(environment)
+        self.evaluator = None
         self.ast = None
         self.conditional_if_list = list(tuple())
         self.conditional_if_else_list = list(tuple())
 
-    def show(self):
-        self.wizard.show()
-
     def visit(self, ql_ast):
+        environment_creator = EnvironmentCreator()
+        self.evaluator = Evaluator(environment_creator.visit(ql_ast))
         self.ast = ql_ast
         for form in self.ast:
             self.wizard.add_page(form.apply(self))
