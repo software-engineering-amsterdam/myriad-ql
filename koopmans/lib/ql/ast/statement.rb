@@ -44,7 +44,8 @@ module QL
       # end
 
       def render(gui, condition)
-        @type.question_frame.new(gui, self, condition)
+        # @type.question_frame.new(gui, self, condition)
+        QL::GUI::QuestionFrame.new(gui, self, condition)
       end
     end
 

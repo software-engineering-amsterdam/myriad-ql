@@ -22,7 +22,6 @@ module QL
 
       # render question in gui
       def visit_question(question, condition=nil)
-        p condition
         question.render(@gui, condition)
       end
     end

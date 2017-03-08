@@ -4,13 +4,13 @@
 # TODO rubocop
 # TODO eval tests
 
+
 require 'require_all'
 require 'pp'
 
 require_rel 'lib'
 
 # read file
-
 
 # parse content
 ql_contents = File.read('examples/simple_questionnaire.ql')
