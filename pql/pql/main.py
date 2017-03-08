@@ -104,3 +104,11 @@ if __name__ == '__main__':
     gui.show()
 
     exit(app.exec_())
+
+
+#TODO : UI zo bouwen dat er een scherm komt waar een file ingeladen kan worden, dit zodat, we de errors kunnen tonen van het parsen/checken
+#TODO: Dit eerste schem is vrij leeg buiten een knop met een eventueel overzicht van errors, als het goed gaat maak een QuestionairreWizard aan
+#TODO: UI Resizeable
+#TODO: Line numbers in het Node object stoppen en deze in error messages gebruiken
+#TODO: Unary operators limiten tot 1
+
