@@ -1,53 +1,50 @@
 package org.ql.gui;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import org.ql.gui.widgets.Widget;
-
-import java.util.List;
 
 public class MainStage extends Stage {
 
     private Stage stage;
-    private GridPane rootPane;
+    private GridPane mainPane;
     private int currentRow = 0;
+    private final int WINDOW_WIDTH = 800;
+    private final int WINDOW_HEIGHT = 600;
 
-    public MainStage(Stage stage) {
+    public MainStage(Stage stage, String title) {
         this.stage = stage;
-
+        stage.setTitle(title);
         createScene();
     }
 
     public void createScene() {
-        rootPane = new GridPane();
-        rootPane.setAlignment(Pos.TOP_CENTER);
-        rootPane.setMinHeight(600);
-        rootPane.setMinWidth(800);
-        rootPane.setVgap(10);
-        Scene scene = new Scene(rootPane, 800, 600);
+        mainPane = new GridPane();
+        mainPane.setAlignment(Pos.TOP_CENTER);
+        mainPane.setMinWidth(WINDOW_WIDTH);
+        mainPane.setMinHeight(WINDOW_HEIGHT);
+        mainPane.setVgap(10);
+        stage.setResizable(false);
+        Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
     }
 
-    public void cleanRootPane() {
-        rootPane.getChildren().clear();
+    public void cleanMainPane() {
+        mainPane.getChildren().clear();
     }
 
-    public void addWidgetToRootPane(Widget widget) {
-        rootPane.add(widget.getGridPane(), 0, currentRow++);
+    public void resetStage() {
+        currentRow = 0;
+        cleanMainPane();
     }
 
-    public Stage getStage() {
-        return stage;
+    public void addWidgetToMainPane(Widget widget) {
+        mainPane.add(widget.getGridPane(), 0, getNewRow());
     }
 
-    public GridPane getRootPane() {
-        return rootPane;
+    public int getNewRow() {
+        return currentRow++;
     }
-
 }

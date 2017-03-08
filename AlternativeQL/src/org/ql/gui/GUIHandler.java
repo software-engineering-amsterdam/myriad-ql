@@ -20,7 +20,7 @@ public class GUIHandler {
     public ValueTable valueTable;
 
     public GUIHandler(Stage primaryStage, Form form) {
-        this.mainstage = new MainStage(primaryStage);
+        this.mainstage = new MainStage(primaryStage, form.getName().toString());
         this.form = form;
 
         QuestionElementContainer questionElementContainer = new QuestionElementContainer(new QuestionElementBuilder());
@@ -37,7 +37,7 @@ public class GUIHandler {
     }
 
     public void updateGUI() {;
-        mainstage.cleanRootPane();
+        mainstage.resetStage();
         addWidgets(valueTable);
     }
 
@@ -46,7 +46,7 @@ public class GUIHandler {
 
         for(QuestionElement questionElement : visibleElements) {
             questionElement.setValue(valueTable.lookup(questionElement.getQuestion().getId()));
-            mainstage.addWidgetToRootPane(questionElement.getWidget());
+            mainstage.addWidgetToMainPane(questionElement.getWidget());
         }
     }
 

@@ -32,7 +32,10 @@ public class Main extends Application {
                     "string yourName: \"What's your name?\" = \"testname\";" +
                     "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = false;" +
                     "if (hasSoldHouse) {" +
-                        "boolean sellingPrice: \"What was the selling price?\" = true;" +
+                        "boolean sellingPrice: \"What was the selling price?\" = false;" +
+                        "if (sellingPrice) {" +
+                            "boolean anotherExample: \"Just another question hmm?\" = true;" +
+                        "}" +
                     "}" +
                 "}");
 
