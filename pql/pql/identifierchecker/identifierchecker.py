@@ -15,7 +15,7 @@ class IdentifierChecker(FormVisitor):
         return self.__compute_result(self.identifier_dict)
 
     def form(self, node):
-        [statement.apply(self) for statement in node.children]
+        [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
         self.conditional_if(node)
