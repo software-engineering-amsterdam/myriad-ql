@@ -46,7 +46,6 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         return this.allQuestions;
     }
 
-
     public List<SimpleQuestion> setAllQuestions(){
         List<SimpleQuestion> allQuestions = this.getSimpleQuestions();
 

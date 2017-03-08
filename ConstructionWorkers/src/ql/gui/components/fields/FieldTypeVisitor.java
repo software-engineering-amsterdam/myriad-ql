@@ -12,29 +12,29 @@ import ql.gui.components.widgets.WidgetInterface;
 
 public class FieldTypeVisitor implements TypeVisitor<Field>{
 
-    private final GUIInterface updates;
+    private final GUIInterface guiInterface;
     private final SimpleQuestion question;
     private final WidgetInterface widget;
 
-    public FieldTypeVisitor(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
-        this.updates = updates;
+    public FieldTypeVisitor(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+        this.guiInterface = guiInterface;
         this.question = question;
         this.widget = widget;
     }
 
     public Field visit(BooleanType type) {
-        return new BooleanField(updates, question, widget);
+        return new BooleanField(guiInterface, question, widget);
     }
 
     public Field visit(IntegerType type) {
-        return new IntegerField(updates, question, widget);
+        return new IntegerField(guiInterface, question, widget);
     }
 
     public Field visit(MoneyType type) {
-        return new MoneyField(updates, question, widget);
+        return new MoneyField(guiInterface, question, widget);
     }
 
     public Field visit(StringType type) {
-        return new StringField(updates, question, widget);
+        return new StringField(guiInterface, question, widget);
     }
 }

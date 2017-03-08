@@ -19,8 +19,8 @@ public class MoneyField extends Field {
 
     private MoneyValue value;
 
-    public MoneyField(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
-        super(updates, question, widget);
+    public MoneyField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+        super(guiInterface, question, widget);
         resetState();
         addListenerToField();
     }

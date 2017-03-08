@@ -17,8 +17,8 @@ public class StringField extends Field {
 
     private StringValue value;
 
-    public StringField(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
-        super(updates, question, widget);
+    public StringField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+        super(guiInterface, question, widget);
 
         this.resetState();
 

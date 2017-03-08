@@ -31,7 +31,7 @@ public class QuestionConditions {
         return this.conditionQuestionMap;
     }
 
-    public Map<Field, List<IfStatement>> getQuestionsWithConditions(QuestionData questionData,
+    private Map<Field, List<IfStatement>> getQuestionsWithConditions(QuestionData questionData,
     Map<Field, List<IfStatement>> fieldMap) {
 
         for (SimpleQuestion question : questionData.getAllQuestions()) {

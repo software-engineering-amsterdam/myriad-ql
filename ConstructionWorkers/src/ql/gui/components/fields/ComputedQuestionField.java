@@ -13,13 +13,9 @@ public class ComputedQuestionField extends Field {
 
     private Value value;
 
-    public ComputedQuestionField(
-            GUIInterface updates,
-            ComputedQuestion question,
-            WidgetInterface widget,
-            Value value)
-    {
-        super(updates, question, widget);
+    public ComputedQuestionField(GUIInterface guiInterface, ComputedQuestion question, WidgetInterface widget,
+            Value value) {
+        super(guiInterface, question, widget);
         this.value = value;
     }
 

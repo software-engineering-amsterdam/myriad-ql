@@ -18,8 +18,8 @@ public class IntegerField extends Field {
 
     private IntegerValue value;
 
-    public IntegerField(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
-        super(updates, question, widget);
+    public IntegerField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+        super(guiInterface, question, widget);
         resetState();
         addListenerToField();
     }

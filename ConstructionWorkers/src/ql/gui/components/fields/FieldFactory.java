@@ -19,12 +19,12 @@ import ql.gui.formenvironment.values.Value;
 
 public class FieldFactory implements FormAndStatementVisitor<Field>{
 
-    private final GUIInterface updates;
+    private final GUIInterface guiInterface;
     private final Evaluator evaluator;
     private final WidgetFactory widgetFactory;
 
-    public FieldFactory(GUIInterface updates, Context context) {
-        this.updates = updates;
+    public FieldFactory(GUIInterface guiInterface, Context context) {
+        this.guiInterface = guiInterface;
         evaluator = new Evaluator(context);
         widgetFactory = new WidgetFactory();
     }
@@ -40,7 +40,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
     @Override
     public Field visit(SimpleQuestion question) {
         WidgetInterface widget = widgetFactory.getWidgetForSimpleQuestion(question);
-        FieldTypeVisitor typeVisitor = new FieldTypeVisitor(updates, question, widget);
+        FieldTypeVisitor typeVisitor = new FieldTypeVisitor(guiInterface, question, widget);
         return question.getType().accept(typeVisitor);
     }
 
@@ -48,7 +48,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
     public Field visit(ComputedQuestion statement) {
         Value result = evaluator.getValueComputedQuestion(statement);
         WidgetInterface widget = this.widgetFactory.getWidgetForComputedQuestion(statement, result);
-        return new ComputedQuestionField(updates, statement, widget, result);
+        return new ComputedQuestionField(guiInterface, statement, widget, result);
     }
 
     @Override

@@ -17,8 +17,8 @@ public class BooleanField extends Field {
 
     private BooleanValue value;
 
-    public BooleanField(GUIInterface updates, SimpleQuestion question, WidgetInterface widget) {
-        super(updates, question, widget);
+    public BooleanField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+        super(guiInterface, question, widget);
         resetState();
         addListenerToField();
     }
@@ -31,18 +31,14 @@ public class BooleanField extends Field {
     }
 
     private void addListenerToField() {
-        widget.addListener(new ItemListener() {
+        widget.addListener((ItemListener) event -> {
+            BooleanValue newValue = new BooleanValue(false);
 
-            @Override
-            public void itemStateChanged(ItemEvent event) {
-                BooleanValue newValue = new BooleanValue(false);
-
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    newValue = new BooleanValue(true);
-                }
-
-                setState(newValue);
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                newValue = new BooleanValue(true);
             }
+
+            setState(newValue);
         });
     }
 
