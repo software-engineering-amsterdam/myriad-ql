@@ -9,7 +9,7 @@ module QL
 
       def initialize(ql_ast, qls_ast, type_checker)
         # return if check(type_checker) == 'quit'
-        @questions = Hash.new
+        @questions = []
         FormBuilder.new(ql_ast, self)
         pp @questions
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
@@ -19,11 +19,11 @@ module QL
       end
 
       def reload_questions
-        @questions.each_value(&:reload)
+        @questions.each(&:reload)
       end
 
       def submit
-        pp @questions.each_value.select { |question| question.enabled }.map(&:to_json)
+        pp @questions.each.select { |question| question.enabled }.map(&:to_json)
       end
 
       # TODO hier wat aan doen

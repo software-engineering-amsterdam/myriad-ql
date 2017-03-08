@@ -38,8 +38,8 @@ module QL
         radio_button.variable = shared_variable
         radio_button.command  = proc do
           @value = shared_variable.bool
-          question_frame.store
-          # @question_frame.store_in_question_table(shared_variable.bool)
+          question_frame.store_value
+          # @question_frame.store_value_in_question_table(shared_variable.bool)
           # reload_questions
         end
 
@@ -49,12 +49,12 @@ module QL
         radio_button.variable = shared_variable
         radio_button.command  = proc do
           @value = shared_variable.bool
-          question_frame.store
-          # @question_frame.store_in_question_table(shared_variable.bool)
+          question_frame.store_value
+          # @question_frame.store_value_in_question_table(shared_variable.bool)
           # reload_questions
         end
 
-        # @question_frame.store_in_question_table(shared_variable.bool)
+        # @question_frame.store_value_in_question_table(shared_variable.bool)
 
       end
 
@@ -96,9 +96,9 @@ module QL
         # spinbox.textvariable = variable
         spinbox.command      = proc do
           @value = spinbox.value
-          question_frame.store
+          question_frame.store_value
         end
-        # @question_frame.store_in_question_table(spinbox.value)
+        # @question_frame.store_value_in_question_table(spinbox.value)
       end
     end
 

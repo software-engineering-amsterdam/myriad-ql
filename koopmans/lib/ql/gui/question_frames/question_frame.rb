@@ -11,25 +11,30 @@ module QL
       # attr_accessor :variable # TODO remove
 
       def initialize(gui, question, condition=nil)
-        @question                               = question
-        @gui                                    = gui
-        @condition                              = condition
-        @enabled                                = true
-        @gui.questions[@question.variable.name] = self
+        @question  = question
+        @gui       = gui
+        @condition = condition
+        @enabled   = true
+
+        gui.questions << self
 
         Frame.new(self)
         Label.new(self)
 
-        set_widget
-        store
+        create_widget
+        store_value
       end
 
-      def set_widget
+      def create_widget
         @widget = @question.type.widget.new(self)
       end
 
       def label
-        @question.label.to_value
+        question.label.to_value
+      end
+
+      def value
+        @widget.value
       end
 
       def to_json
@@ -56,7 +61,7 @@ module QL
         @enabled = true
       end
 
-      def store
+      def store_value
         literal_type = question.type.literal_type
         QuestionTable.store(question.variable.name, literal_type.new(@widget.value))
         gui.reload_questions

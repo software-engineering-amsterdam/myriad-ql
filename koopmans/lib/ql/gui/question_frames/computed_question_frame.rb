@@ -8,7 +8,7 @@ module QL
         compute
       end
 
-      def set_widget
+      def create_widget
         @widget = ComputedWidget.new(self)
       end
 
@@ -20,7 +20,6 @@ module QL
       def compute
         value = @question.assignment.eval.to_value
         @widget.set_value(value)
-        # store
         QuestionTable.store(question.variable.name, IntegerLiteral.new(value))
       end
     end
