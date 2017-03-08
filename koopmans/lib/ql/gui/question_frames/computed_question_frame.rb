@@ -1,12 +1,15 @@
 module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
+      include AST
 
       def initialize(gui, question, condition=nil)
         super
-        @variable.type = @question.type
-        ComputedWidget.new(question_frame: self)
         compute
+      end
+
+      def set_widget
+        @widget = ComputedWidget.new(self)
       end
 
       def reload
@@ -15,7 +18,10 @@ module QL
       end
 
       def compute
-        @variable.value = eval(@question.assignment.eval.to_s) if @question.assignment
+        value = @question.assignment.eval.to_value
+        @widget.set_value(value)
+        # store
+        QuestionTable.store(question.variable.name, IntegerLiteral.new(value))
       end
     end
   end

@@ -6,9 +6,9 @@ module QL
       def initialize(args)
         super
         @variable.value = ("")
-        @variable.type  = StringType
+        # @variable.type  = StringType
 
-        TextWidget.new(question_frame: self)
+        @widget = TextWidget.new(question_frame: self)
       end
     end
   end

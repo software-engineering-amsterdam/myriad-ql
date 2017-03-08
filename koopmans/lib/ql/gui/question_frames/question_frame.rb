@@ -1,3 +1,4 @@
+@aap = 'as'
 module QL
   module GUI
     class QuestionFrame
@@ -6,28 +7,29 @@ module QL
       attr_accessor :frame
       attr_accessor :enabled
       attr_accessor :condition
-      attr_accessor :variable # TODO remove
+      attr_accessor :widget
+      # attr_accessor :variable # TODO remove
 
       def initialize(gui, question, condition=nil)
         @question                               = question
         @gui                                    = gui
         @condition                              = condition
         @enabled                                = true
-        @variable                               = QL::GUI::Variable.new
         @gui.questions[@question.variable.name] = self
 
-        Frame.new(question_frame: self)
-        Label.new(question_frame: self)
+        Frame.new(self)
+        Label.new(self)
 
-        check_condition
+        set_widget
+        store
       end
 
-      def value
-        @variable.eval
+      def set_widget
+        @widget = @question.type.widget.new(self)
       end
 
       def label
-        @question.label
+        @question.label.to_value
       end
 
       def to_json
@@ -39,17 +41,25 @@ module QL
       end
 
       def check_condition
-        eval(condition.eval.to_s) ? enable : disable if condition
+        if condition
+          condition.eval.to_value ? enable : disable
+        end
       end
 
       def disable
-        @frame.grid_remove
+        frame.grid_remove
         @enabled = false
       end
 
       def enable
-        @frame.grid
+        frame.grid
         @enabled = true
+      end
+
+      def store
+        literal_type = question.type.literal_type
+        QuestionTable.store(question.variable.name, literal_type.new(@widget.value))
+        gui.reload_questions
       end
     end
   end

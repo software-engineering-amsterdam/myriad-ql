@@ -10,6 +10,11 @@ module QL
       def accept(visitor)
         visitor.visit_variable(self)
       end
+
+      def eval
+        QuestionTable.find(name)
+        # IntegerLiteral.new('1')
+      end
     end
   end
 end

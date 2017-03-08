@@ -1,5 +1,5 @@
 require 'tk'
-
+@aap = 'asdsd'
 
 # TODO move out of QL module
 module QL

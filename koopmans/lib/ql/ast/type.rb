@@ -8,8 +8,22 @@ module QL
         [BooleanType]
       end
 
-      def question_frame
-        QL::GUI::BooleanQuestionFrame
+      def literal_type
+        BooleanLiteral
+      end
+
+      # def question_frame
+      #   QL::GUI::BooleanQuestionFrame
+      # end
+
+      def render_widget(question_frame)
+        QL::GUI::RadioWidget.new(question_frame: question_frame, true_value: 'JAAAA', false_value: 'NEEEE')
+        # CheckboxWidget.new(question: self)
+        # DropdownWidget.new(question: self, true_value: 'JAAA', false_value: 'NEEE')
+      end
+
+      def widget
+        QL::GUI::RadioWidget
       end
     end
 
@@ -18,8 +32,18 @@ module QL
         [IntegerType, MoneyType]
       end
 
-      def question_frame
-        QL::GUI::NumericQuestionFrame
+      def literal_type
+        IntegerLiteral
+      end
+
+      def render_widget(question_frame)
+        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
+        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
+        # TextWidget.new(question_frame: self)
+      end
+
+      def widget
+        QL::GUI::SpinboxWidget
       end
     end
 
@@ -28,8 +52,14 @@ module QL
         [DateType]
       end
 
-      def question_frame
-        QL::GUI::NumericQuestionFrame
+      def literal_type
+        IntegerLiteral
+      end
+
+      def render_widget(question_frame)
+        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
+        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
+        # TextWidget.new(question_frame: self)
       end
     end
 
@@ -38,8 +68,14 @@ module QL
         [DecimalType]
       end
 
-      def question_frame
-        QL::GUI::NumericQuestionFrame
+      def literal_type
+        IntegerLiteral
+      end
+
+      def render_widget(question_frame)
+        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
+        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
+        # TextWidget.new(question_frame: self)
       end
     end
 
@@ -48,8 +84,12 @@ module QL
         [StringType]
       end
 
-      def question_frame
-        QL::GUI::StringQuestionFrame
+      def literal_type
+        StringLiteral
+      end
+
+      def render_widget(question_frame)
+        QL::GUI::TextWidget.new(question_frame: question_frame)
       end
     end
 
@@ -59,8 +99,18 @@ module QL
         [MoneyType, IntegerType]
       end
 
-      def question_frame
-        QL::GUI::NumericQuestionFrame
+      def literal_type
+        IntegerLiteral
+      end
+
+      def render_widget(question_frame)
+        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
+        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
+        # TextWidget.new(question_frame: self)
+      end
+
+      def widget
+        QL::GUI::SpinboxWidget
       end
     end
   end

@@ -5,13 +5,15 @@ module QL
 
       def initialize(gui, question, condition=nil)
         super
-        @variable.value = 0
-        @variable.type  = IntegerType
-
         # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-        SpinboxWidget.new(question_frame: self)
+        @widget = SpinboxWidget.new(question_frame: self)
         # TextWidget.new(question_frame: self)
       end
+
+      def store_in_question_table(value)
+        QuestionTable.store(question.variable.name, IntegerLiteral.new(value))
+      end
+
     end
   end
 end
