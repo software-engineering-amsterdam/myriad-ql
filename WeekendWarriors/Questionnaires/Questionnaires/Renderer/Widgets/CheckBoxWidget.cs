@@ -7,6 +7,8 @@ using Questionnaires.Types;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows;
+using Questionnaires.Renderer.Style;
+using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
@@ -54,6 +56,14 @@ namespace Questionnaires.Renderer.Widgets
         {
             QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
             QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
+        }
+
+        public override void SetStyle(WidgetStyle style)
+        {
+            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color.ToString()));
+            QuestionInputWidget.Width = style.Width;
+            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
+            QuestionLabelWidget.FontSize = style.FontSize;
         }
     }
 }

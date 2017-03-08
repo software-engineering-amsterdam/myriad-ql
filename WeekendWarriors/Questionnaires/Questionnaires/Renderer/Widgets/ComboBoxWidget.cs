@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Questionnaires.Renderer.Style;
+using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
     class ComboBoxWidget : QuestionWidget
     {
-        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private ComboBox QuestionInputWidget = new ComboBox();
 
@@ -69,6 +70,14 @@ namespace Questionnaires.Renderer.Widgets
                 bool value = (sender as ComboBox).SelectedItem as string == "Yes";
                 inputChanged.Invoke(this, new BooleanType(value));
             };
+        }
+
+        public override void SetStyle(WidgetStyle style)
+        {
+            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color.ToString()));
+            QuestionInputWidget.Width = style.Width;
+            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
+            QuestionLabelWidget.FontSize = style.FontSize;
         }
     }
 }

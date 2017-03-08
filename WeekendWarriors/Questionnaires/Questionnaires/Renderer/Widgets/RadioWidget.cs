@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Questionnaires.Renderer.Style;
+using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
     class RadioWidget : QuestionWidget
     {
-        private String QuestionName;
         private TextBlock QuestionLabelWidget = new TextBlock();
         private RadioButton FirstQuestionInputWidget = new RadioButton();
         private RadioButton SecondQuestionInputWidget = new RadioButton();
@@ -68,6 +69,15 @@ namespace Questionnaires.Renderer.Widgets
         {
             FirstQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(true));
             SecondQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(false));
+        }
+        
+        public override void SetStyle(WidgetStyle style)
+        {
+            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color.ToString()));
+            FirstQuestionInputWidget.Width = style.Width;
+            SecondQuestionInputWidget.Width = style.Width;
+            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
+            QuestionLabelWidget.FontSize = style.FontSize;
         }
     }
 }

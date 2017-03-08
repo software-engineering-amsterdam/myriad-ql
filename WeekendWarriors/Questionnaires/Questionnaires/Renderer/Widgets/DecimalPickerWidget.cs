@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
+using Questionnaires.Renderer.Style;
+using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
@@ -54,6 +56,14 @@ namespace Questionnaires.Renderer.Widgets
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
             QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType(QuestionInputWidget.Value.Value));
+        }
+
+        public override void SetStyle(WidgetStyle style)
+        {
+            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color.ToString()));
+            QuestionInputWidget.Width = style.Width;
+            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
+            QuestionLabelWidget.FontSize = style.FontSize;
         }
     }
 }
