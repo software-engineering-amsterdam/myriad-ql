@@ -36,19 +36,8 @@ module QL
 
     class ExpressionTransformer < Parslet::Transform
       include AST
+
       # negation: ! -
-
-
-      # rule([operator: '-', single: simple(:single)]) {
-      #   Sequence.new([IntegerLiteral.new('0'),
-      #   Subtract.new(single)])
-      # }
-      #
-      # rule([operator: '!', single: simple(:single)]) {
-      #   Sequence.new([BooleanLiteral.new('true'),
-      #                 NotEqual.new(single)])
-      # }
-
       rule(operator: '-', single: simple(:single)) { IntegerNegation.new(single) }
       rule(operator: '!', single: simple(:single)) { BooleanNegation.new(single) }
 
@@ -70,7 +59,6 @@ module QL
       rule(operator: '&&', right: simple(:right)) { And.new(right) }
       rule(operator: '||', right: simple(:right)) { Or.new(right) }
       rule(left: simple(:integer_literal)) { integer_literal }
-      # rule(left: simple(:boolean_literal)) { boolean_literal }
 
       rule(sequence(:sequence)) { Sequence.new(sequence) }
     end

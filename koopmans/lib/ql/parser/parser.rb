@@ -22,7 +22,6 @@ module QL
       rule(:type) { (str('boolean') | str('integer') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
 
       # operators
-      # rule(:negation?) { (str('!') | str('-')).as(:negation).maybe }
       rule(:multiplication_operator) { (str('*') | str('/')).as(:operator) >> _ }
       rule(:addition_operator) { (str('+') | str('-')).as(:operator) >> _ }
       rule(:comparison_equals_operator) { (str('==') | str('!=')).as(:operator) >> _ }
@@ -41,7 +40,6 @@ module QL
       rule(:addition_expression) { multiplication_expression.as(:left) >> (addition_operator >> multiplication_expression.as(:right)).repeat(1) | multiplication_expression }
       rule(:multiplication_expression) { negation_expression.as(:left) >> (multiplication_operator >> negation_expression.as(:right)).repeat(1) | negation_expression }
       rule(:negation_expression) { (negation_operator >> literal_or_variable_or_expression.as(:single)).repeat(1) | literal_or_variable_or_expression }
-
       rule(:literal_or_variable_or_expression) { (boolean_literal | integer_literal | string_literal | variable | sequence_with_parenthesis) >> _ }
 
       # statement
