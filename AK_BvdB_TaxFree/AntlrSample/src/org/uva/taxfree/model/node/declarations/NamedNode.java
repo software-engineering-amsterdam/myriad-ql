@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.declarations;
 
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 
@@ -26,6 +27,11 @@ public abstract class NamedNode extends Node {
     public JPanel getWidget() {
         fillPanel(mPanel);
         return mPanel;
+    }
+
+    @Override
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addDeclaration(this);
     }
 
     public void setVisible(boolean isVisible) {

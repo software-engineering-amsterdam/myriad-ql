@@ -1,27 +1,18 @@
 package org.uva.taxfree.model.node;
 
-import org.uva.taxfree.model.node.declarations.CalculatedField;
-import org.uva.taxfree.model.node.declarations.NamedNode;
-import org.uva.taxfree.model.node.expression.ExpressionNode;
-
-import java.util.Set;
+import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 public abstract class Node {
     public void setVisible(boolean isVisible) {
         // Intentionally left blank
     }
 
-    public void addCondition(Set<ExpressionNode> set) {
-        // Intentionally left blank
-    }
+    public abstract void fillSymbolTable(SymbolTable symbolTable);
 
-    // Why can't we access this when it's protected and it's a child
-    public void addDeclaration(Set<NamedNode> set) {
-        // Intentionally left blank
-    }
-
-    public void addCalculation(Set<CalculatedField> set) {
-        // Intentionally left blank;
+    public /*abstract*/ void checkSemantics(SymbolTable symbolTable, MessageList messageList) {
+        // TODO: make abstract and do the checks!
+        messageList.addError("checkSemantics unimplemented!");
     }
 
 }

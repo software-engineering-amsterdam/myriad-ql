@@ -159,7 +159,7 @@ public class QuestionFormTest {
 
     private void add(BlockNode blockNode) {
         Set<NamedNode> declarations = new LinkedHashSet<>();
-        blockNode.retrieveDeclarations(declarations);
+//        blockNode.retrieveDeclarations(declarations);
         mCachedDeclarations.addAll(declarations);
         addNode(blockNode);
     }

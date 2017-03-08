@@ -1,8 +1,7 @@
 package org.uva.taxfree.model.node.literal;
 
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
-
-import java.util.Set;
 
 public abstract class LiteralNode extends ExpressionNode {
     private final String mId;
@@ -17,8 +16,8 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    public void addUsedVariables(Set<String> set) {
-        set.add(mId);
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addVariable(mId);
     }
 
     @Override

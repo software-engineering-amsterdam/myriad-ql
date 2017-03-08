@@ -2,9 +2,10 @@ package test.org.uva.taxfree.ast;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.AbstractSyntaxTreeBuilder;
+import org.uva.taxfree.ast.AstBuilder;
 import org.uva.taxfree.main.SemanticsAnalyzer;
-import org.uva.taxfree.model.environment.Environment;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.blocks.BlockNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class ConditionTest {
     public void testLiteralExpression() throws Exception {
         assertSemantics("conditionLiteralForm.txt", 0, "A valid literal condition");
     }
+
     @Test
     public void testVariableLiteralExpression() throws Exception {
         assertSemantics("conditionVariableLiteralForm.txt", 0, "A valid variable literal condition");
@@ -53,8 +55,11 @@ public class ConditionTest {
     }
 
     private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        Environment environment = AbstractSyntaxTreeBuilder.generate(testFile(fileName));
-        return new SemanticsAnalyzer(environment);
+        AstBuilder builder = new AstBuilder(testFile(fileName));
+        BlockNode form = builder.generateTree();
+        SymbolTable symbolTable = new SymbolTable();
+        form.fillSymbolTable(symbolTable);
+        return new SemanticsAnalyzer(form, symbolTable);
     }
 
     private File testFile(String fileName) {

@@ -1,5 +1,6 @@
 package org.uva.taxfree.ast;
 
+import jdk.nashorn.internal.ir.Block;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -14,19 +15,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.BitSet;
 
-public class AbstractSyntaxTreeBuilder {
+public class AstBuilder {
     private final GrammarListener mListener;
     private final QLGrammarParser mGrammarParser;
 
-    public AbstractSyntaxTreeBuilder(File input) throws IOException {
+    public AstBuilder(File input) throws IOException {
         mListener = new GrammarListener();
         mGrammarParser = createGrammarParser(input);
-    }
-
-    // TODO: Fix this, backwards compatibility only
-    public static Environment generate(File input) throws IOException {
-        AbstractSyntaxTreeBuilder builder = new AbstractSyntaxTreeBuilder(input);
-        return builder.generateEnvironment();
     }
 
     private QLGrammarParser createGrammarParser(File inputFile) throws IOException {

@@ -1,19 +1,28 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.node.declarations.CalculatedField;
 import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class SymbolTable {
-    private final Set<NamedNode> mDeclarations; // All declarations
-    private final Set<String> mUsedVariables;
+    private final List<NamedNode> mDeclarations; // All declarations
+    private final List<String> mUsedVariables;
+    private final List<ExpressionNode> mExpressions;
+    private final List<CalculatedField> mCalculations;
+
 
     public SymbolTable() {
-        mDeclarations = new LinkedHashSet<>();
-        mUsedVariables = new LinkedHashSet<>();
+        mDeclarations = new ArrayList<>();
+        mUsedVariables = new ArrayList<>();
+        mExpressions = new ArrayList<>();
+        mCalculations = new ArrayList<>();
     }
 
     public void addDeclarations(Set<NamedNode> nodes) {
@@ -22,8 +31,16 @@ public class SymbolTable {
         }
     }
 
-    public void addDeclaration(NamedNode Node) {
-        mDeclarations.add(Node);
+    public void addExpression(ExpressionNode expression) {
+        mExpressions.add(expression);
+    }
+
+    public void addDeclaration(NamedNode node) {
+        mDeclarations.add(node);
+    }
+
+    public void addCalculation(CalculatedField calculation) {
+        mCalculations.add(calculation);
     }
 
     public void addVariable(String variableName) {

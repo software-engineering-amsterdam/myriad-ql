@@ -1,8 +1,7 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.types.Type;
-
-import java.util.Set;
 
 public abstract class BinaryExpressionNode extends ExpressionNode {
     private final ExpressionNode mLeft;
@@ -20,11 +19,13 @@ public abstract class BinaryExpressionNode extends ExpressionNode {
         return "(" + mLeft.resolveValue() + mOperator + mRight.resolveValue() + ")";
     }
 
+
     @Override
-    public void addUsedVariables(Set<String> set) {
-        mLeft.addUsedVariables(set);
-        mRight.addUsedVariables(set);
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        mLeft.fillSymbolTable(symbolTable);
+        mRight.fillSymbolTable(symbolTable);
     }
+
 
     @Override
     public boolean isValid() {

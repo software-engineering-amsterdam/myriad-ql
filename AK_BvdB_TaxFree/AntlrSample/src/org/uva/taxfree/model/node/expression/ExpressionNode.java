@@ -5,7 +5,6 @@ import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;
-import java.util.Set;
 
 public abstract class ExpressionNode extends Node {
 
@@ -26,8 +25,6 @@ public abstract class ExpressionNode extends Node {
     public abstract String resolveValue();
 
     public abstract boolean isValid();
-
-    public abstract void addUsedVariables(Set<String> set);
 
     public boolean isBoolean() {
         boolean isTrue = "true".equals(evaluate());
