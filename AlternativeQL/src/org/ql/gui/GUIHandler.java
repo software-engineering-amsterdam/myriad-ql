@@ -17,6 +17,7 @@ public class GUIHandler {
     private final BranchVisitor branchVisitor;
     private final QuestionValueVisitor questionValueVisitor;
     private final Form form;
+    public ValueTable valueTable;
 
     public GUIHandler(Stage primaryStage, Form form) {
         this.mainstage = new MainStage(primaryStage);
@@ -31,16 +32,22 @@ public class GUIHandler {
     }
 
     public void runGUI() {
-        ValueTable valueTable = questionValueVisitor.makeValueTable(form);
-        List<QuestionElement> visibleElements = branchVisitor.visitForm(form, questionValueVisitor.makeValueTable(form));
+        this.valueTable = questionValueVisitor.makeValueTable(form);
+        addWidgets(questionValueVisitor.makeValueTable(form));
+    }
 
+    public void updateGUI() {;
         mainstage.cleanRootPane();
+        addWidgets(valueTable);
+    }
+
+    public void addWidgets(ValueTable valueTable) {
+        List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
 
         for(QuestionElement questionElement : visibleElements) {
-            questionElement.getWidget().setValue(valueTable.lookup(questionElement.getQuestion().getId()));
+            questionElement.setValue(valueTable.lookup(questionElement.getQuestion().getId()));
             mainstage.addWidgetToRootPane(questionElement.getWidget());
         }
-
     }
 
 }

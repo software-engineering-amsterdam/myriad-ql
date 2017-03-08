@@ -3,9 +3,6 @@ package org.ql;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.ql.ast.Form;
-import org.ql.evaluator.Evaluator;
-import org.ql.evaluator.ValueTable;
-import org.ql.gui.GUIHandler;
 import org.ql.gui.GUIHandlerSingleton;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
@@ -33,7 +30,7 @@ public class Main extends Application {
         Form form = parser.parseForm(
                 "form TestForm {" +
                     "string yourName: \"What's your name?\" = \"testname\";" +
-                    "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = true;" +
+                    "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = false;" +
                     "if (hasSoldHouse) {" +
                         "boolean sellingPrice: \"What was the selling price?\" = true;" +
                     "}" +

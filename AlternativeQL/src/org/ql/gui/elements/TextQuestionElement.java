@@ -3,7 +3,6 @@ package org.ql.gui.elements;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.ql.ast.statement.Question;
-import org.ql.evaluator.value.StringValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.GUIHandler;
 import org.ql.gui.GUIHandlerSingleton;
@@ -19,7 +18,8 @@ public class TextQuestionElement extends QuestionElement {
                 setValue(widget.getValue());
 
                 GUIHandler guiHandler = new GUIHandlerSingleton(null, null).guiHandler;
-                guiHandler.runGUI();
+                guiHandler.valueTable.declare(question.getId(), widget.getValue());
+                guiHandler.updateGUI();
             }
         });
     }

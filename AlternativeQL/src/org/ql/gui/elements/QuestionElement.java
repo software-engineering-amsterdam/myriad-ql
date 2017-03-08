@@ -39,5 +39,6 @@ public abstract class QuestionElement {
 
     public void setValue(Value value) {
         this.value = value;
+        widget.setValue(value);
     }
 }
