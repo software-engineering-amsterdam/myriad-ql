@@ -4,27 +4,27 @@ require 'require_all'
 
 require_all 'lib'
 module QLS
-  module FormParser
+  module Parser
     describe FormParser do
-      let(:parser) { Parser.new }
+      let(:form_form_parser) { FormParser.new }
 
       describe 'question' do
         it 'parses' do
-          expect(parser.question).to parse('question hasBoughtHouse widget checkbox')
-          expect(parser.question).to parse('question hasMaintLoan')
-          expect(parser.question).to parse('question hasBoughtHouse {
+          expect(form_parser.question).to parse('question hasBoughtHouse widget checkbox')
+          expect(form_parser.question).to parse('question hasMaintLoan')
+          expect(form_parser.question).to parse('question hasBoughtHouse {
             widget checkbox
             width: 400
           }')
-          # expect(parser.question.parse('question hasBoughtHouse')).to eq('aa')
+          # expect(form_parser.question.parse('question hasBoughtHouse')).to eq('aa')
         end
       end
 
       describe 'section' do
         it 'parses' do
-          expect(parser.section).to parse('section "Buying" question hasBoughtHouse widget checkbox')
-          expect(parser.section).to parse('section "Selling" { question hasSoldHouse widget checkbox }')
-          expect(parser.section).to parse('section "You sold a house" {
+          expect(form_parser.section).to parse('section "Buying" question hasBoughtHouse widget checkbox')
+          expect(form_parser.section).to parse('section "Selling" { question hasSoldHouse widget checkbox }')
+          expect(form_parser.section).to parse('section "You sold a house" {
             question sellingPrice
             widget spinbox
             default money {
@@ -40,39 +40,39 @@ module QLS
 
       describe 'widget' do
         it 'parses' do
-          expect(parser.widget).to parse('widget radio("Yes", "No")')
-          expect(parser.widget).to parse('widget checkbox')
+          expect(form_parser.widget).to parse('widget radio("Yes", "No")')
+          expect(form_parser.widget).to parse('widget checkbox')
         end
       end
 
       describe 'radio button' do
         it 'parses' do
-          expect(parser.radio).to parse('radio("Yes", "No")')
+          expect(form_parser.radio).to parse('radio("Yes", "No")')
         end
       end
 
       describe 'default' do
         it 'parses' do
-          expect(parser.default).to parse('default money {
+          expect(form_parser.default).to parse('default money {
             width: 400
             font: "Arial"
             fontsize: 14
             color: #999999
             widget spinbox
           }')
-          expect(parser.default).to parse('default boolean widget radio("Yes", "No")')
+          expect(form_parser.default).to parse('default boolean widget radio("Yes", "No")')
         end
       end
 
       describe 'page' do
         it 'parses' do
-          expect(parser.page).to parse('page Housing {
+          expect(form_parser.page).to parse('page Housing {
             section "Buying" {
               question hasBoughtHouse
             }
           }')
 
-          expect(parser.page).to parse('page Housing {
+          expect(form_parser.page).to parse('page Housing {
             section "Buying"
               question hasBoughtHouse
                 widget checkbox
@@ -80,14 +80,14 @@ module QLS
               question hasMaintLoan
           }')
 
-          expect(parser.page).to parse('page Housing {
+          expect(form_parser.page).to parse('page Housing {
             section "Buying" {
               question hasBoughtHouse
             }
             default boolean widget radio("Yes", "No")
           }')
 
-          expect(parser.page).to parse('page Housing {
+          expect(form_parser.page).to parse('page Housing {
             section "Selling" {
               question hasSoldHouse
                 widget radio("Yes", "No")
@@ -102,7 +102,7 @@ module QLS
 
       describe 'stylesheet' do
         it 'parses' do
-          expect(parser.stylesheet).to parse('stylesheet taxOfficeExample
+          expect(form_parser.stylesheet).to parse('stylesheet taxOfficeExample
             page Housing {
               section "Buying"
                 question hasBoughtHouse
