@@ -22,6 +22,7 @@ pp ql_ast
 # pp ql_ast
 # ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
 # pp ql_notifications
+ql_notifications = nil
 
 
 
@@ -34,6 +35,6 @@ pp ql_ast
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 
-# qls_ast = nil
+qls_ast = nil
 
-# QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)

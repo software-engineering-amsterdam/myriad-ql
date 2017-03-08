@@ -8,10 +8,10 @@ module QL
       attr_accessor :questions
 
       def initialize(ql_ast, qls_ast, type_checker)
-        return if check(type_checker) == 'quit'
+        # return if check(type_checker) == 'quit'
         @questions = Hash.new
         FormBuilder.new(ql_ast, self)
-        StylesheetBuilder.new(qls_ast, ql_ast, self)
+        # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
         SubmitButton.new(self)
         Tk.mainloop

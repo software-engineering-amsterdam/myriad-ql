@@ -1,50 +1,55 @@
 module QL
   module AST
     class IfStatement
-      attr_reader :block
-      attr_accessor :expression
+      attr_reader :body, :condition
 
-      def initialize(expression, body)
-        @expression = expression
+      def initialize(condition, body)
+        @condition = condition
         @body      = body
       end
 
-      def accept(visitor)
-        visitor.visit_if_statement(self)
-      end
-
-      def accept_with_condition(visitor, condition)
+      def accept(visitor, condition=nil)
         visitor.visit_if_statement(self, condition)
       end
+
+      # def accept_with_condition(visitor, condition)
+      #   visitor.visit_if_statement(self, condition)
+      # end
     end
 
     class Question
       attr_reader :label, :variable, :type
-      attr_accessor :condition, :assignment
 
-      def initialize(label, variable, type, expression=nil, condition=nil)
+      def initialize(label, variable, type)
         @label      = label.to_s
         @variable   = variable
         @type       = type
-        @assignment = expression
-        @condition  = condition
       end
 
-      def accept(visitor)
-        visitor.visit_question(self)
-      end
-
-      # TODO gaan we hier wat aan doen?
-      def accept_with_condition(visitor, condition)
+      def accept(visitor, condition=nil)
         visitor.visit_question(self, condition)
       end
 
+      # TODO gaan we hier wat aan doen?
+      # def accept_with_condition(visitor, condition)
+      #   visitor.visit_question(self, condition)
+      # end
+
       def render(gui)
-        if @assignment
-          QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
-        else
-          @type.question_frame.new(gui: gui, question: self)
-        end
+        @type.question_frame.new(gui: gui, question: self)
+      end
+    end
+
+    class ComputedQuestion < Question
+      attr_reader :assignment
+
+      def initialize(label, variable, type, assignment)
+        super(label, variable, type)
+        @assignment = assignment
+      end
+
+      def render(gui)
+        QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
       end
     end
   end
