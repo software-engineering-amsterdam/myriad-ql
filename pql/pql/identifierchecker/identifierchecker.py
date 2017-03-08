@@ -6,13 +6,24 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class IdentifierChecker(FormVisitor):
     def __init__(self):
-        # TODO: Dictionary niet als instance variable (hoe dan wel? het is nu een "hidden" instance variable)
+        # TODO: Dictionary niet als instance variable (hoe dan wel? het is nu een "hidden" instance variable), je zou hem eventueel door kunnen spelen naar apply
         self.__identifier_dict = defaultdict(list)
 
     def visit(self, pql_ast):
         self.__identifier_dict.clear()
         [form.apply(self) for form in pql_ast]
-        return self.__compute_result(self.__identifier_dict)
+
+        normalized_dictionary = dict()
+        for key, value_list in self.__identifier_dict.items():
+            for value in value_list:
+                normalized_dictionary[key] = value
+
+        errors = list()
+        for key, value in self.__identifier_dict.items():
+            if len(value) > 1:
+                errors.append("Key: {} contained multiple entries, the following: {}".format(key, value))
+
+        return normalized_dictionary, errors
 
     def form(self, node):
         [statement.apply(self) for statement in node.statements]
@@ -26,16 +37,3 @@ class IdentifierChecker(FormVisitor):
 
     def field(self, node):
         self.__identifier_dict[node.name.name].append(node.data_type)
-
-    def __compute_result(self, dictionary):
-        def normalize_dictionary(dictionary_):
-            # TODO: Mooier maken evt?
-            dict_ = {}
-            for key, value_list in dictionary_.items():
-                for value in value_list:
-                    dict_[key] = value
-            return dict_
-
-        errors = ['Key: {} contained multiple entries, the following: {}'.format(key, value)
-                  for (key, value) in dictionary.items() if len(value) > 1]
-        return normalize_dictionary(dictionary), errors
