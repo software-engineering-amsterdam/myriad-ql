@@ -6,12 +6,6 @@ module QL
       def accept(visitor)
         visitor.visit_expression(self)
       end
-
-      # def call(left)
-      #   left  = left.eval
-      #   right = self.right.eval
-      #   to_corresponding_literal(self.eval(left.to_value, right.to_value))
-      # end
     end
 
     class Sequence
@@ -41,10 +35,7 @@ module QL
 
     class BooleanNegation < Negation
       def eval
-        # BooleanLiteral.new('true')
-        # [BooleanLiteral.new('true'),
-        #                               NotEqual.new(single)]
-        BooleanLiteral.new((!single.eval.to_value).to_s)
+        BooleanLiteral.new(!single.eval.to_value)
       end
 
       def accept_types
