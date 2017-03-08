@@ -26,10 +26,9 @@ class QuestionairWizard(QWizard):
 
 
 class Page(QWizardPage):
-    def __init__(self, title, subtitle, parent=None):
+    def __init__(self, title, parent=None):
         super(Page, self).__init__(parent)
         self.setTitle(title.name)
-        self.setSubTitle(subtitle)
         self.layout = QVBoxLayout()
 
     def add_layout(self, layout):

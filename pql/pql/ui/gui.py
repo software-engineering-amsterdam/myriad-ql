@@ -38,7 +38,7 @@ class Gui(FormVisitor, TypeVisitor):
         return self.ql_wizard
 
     def form(self, node):
-        page = Page(node.name, "Temp subtitle", self.ql_wizard)
+        page = Page(node.name, self.ql_wizard)
         layout = QVBoxLayout()
         widget = QWidget()
         scroll = QScrollArea()
