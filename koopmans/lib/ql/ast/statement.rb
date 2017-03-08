@@ -35,7 +35,7 @@ module QL
       #   visitor.visit_question(self, condition)
       # end
 
-      def render(gui)
+      def render(gui, condition)
         @type.question_frame.new(gui: gui, question: self)
       end
     end
@@ -48,7 +48,7 @@ module QL
         @assignment = assignment
       end
 
-      def render(gui)
+      def render(gui, condition)
         QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
       end
     end

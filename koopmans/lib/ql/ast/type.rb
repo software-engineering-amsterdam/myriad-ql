@@ -8,7 +8,7 @@ module QL
         [BooleanType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::BooleanQuestionFrame
       end
     end
@@ -18,7 +18,7 @@ module QL
         [IntegerType, MoneyType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::NumericQuestionFrame
       end
     end
@@ -28,7 +28,7 @@ module QL
         [DateType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::NumericQuestionFrame
       end
     end
@@ -38,7 +38,7 @@ module QL
         [DecimalType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::NumericQuestionFrame
       end
     end
@@ -48,7 +48,7 @@ module QL
         [StringType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::StringQuestionFrame
       end
     end
@@ -59,7 +59,7 @@ module QL
         [MoneyType, IntegerType]
       end
 
-      def self.question_frame
+      def question_frame
         QL::GUI::NumericQuestionFrame
       end
     end

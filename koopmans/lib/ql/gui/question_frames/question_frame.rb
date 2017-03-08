@@ -5,6 +5,7 @@ module QL
       attr_accessor :question
       attr_accessor :frame
       attr_accessor :enabled
+      attr_accessor :condition
       attr_accessor :variable # TODO remove
 
       def initialize(args)
@@ -18,10 +19,6 @@ module QL
         Label.new(question_frame: self)
 
         check_condition
-      end
-
-      def condition
-        @question.condition
       end
 
       def value

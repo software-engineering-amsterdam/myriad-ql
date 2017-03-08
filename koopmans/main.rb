@@ -16,9 +16,9 @@ require_rel 'lib'
 ql_contents = File.read('examples/simple_questionnaire.ql')
 # pp ql_contents
 ql_parse_tree = QL::Parser::FormParser.new.parse(ql_contents)
-pp ql_parse_tree
+# pp ql_parse_tree
 ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
-pp ql_ast
+# pp ql_ast
 # pp ql_ast
 # ql_notifications = QL::TypeChecker::TypeChecker.check(ql_ast)
 # pp ql_notifications
