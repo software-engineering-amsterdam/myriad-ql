@@ -2,7 +2,7 @@ import sys
 
 from QL.environment import Environment
 from QL.errorHandler import ErrorHandler
-from QL.GUI.initWidgets import InitWidgets
+from QL.GUI.drawGUI import DrawGUI
 from QL.stages.findCycles import FindCycles
 from QL.stages.parser import QuestionnaireParser
 from QL.stages.typeChecker import TypeChecker
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     error_handler.check_and_print_errors()
 
     # Finally, draw the GUI.
-    built_gui = InitWidgets(parsedAST, environment, error_handler)
-    built_gui.start_traversal()
-    gui = built_gui.get_initialized_gui()
-    gui.start()
+    # built_gui = InitWidgets(parsedAST, environment, error_handler)
+    # built_gui.start_traversal()
+    DrawGUI(parsedAST, environment).show()
+
