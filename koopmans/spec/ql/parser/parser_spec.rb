@@ -9,13 +9,6 @@ module QL
     describe Parser do
       let(:parser) { Parser.new }
 
-      describe 'negations' do
-        it 'parses' do
-          expect(parser.negation?).to parse('!')
-          expect(parser.negation?).to parse('-')
-        end
-      end
-
       describe 'literals and their negations' do
         context 'boolean' do
           it 'parses' do
@@ -43,11 +36,6 @@ module QL
           it 'parses' do
             expect(parser.variable).to parse('sellingPrice')
           end
-
-          it 'parses negation' do
-            expect(parser.negation?).to parse('!')
-            expect(parser.negation?).to parse('-')
-          end
         end
 
         context 'variable assignment' do
@@ -65,33 +53,41 @@ module QL
       end
 
       describe 'expressions' do
+        context 'expressions' do
+          it 'parses' do
+            expect(parser.expression).to parse('(-5 + !true * 5 || (sellingPrice > anotherVariable) + 5)')
+            expect(parser.expression).to parse('( - privateDebt / anotherVariable)')
+            expect(parser.expression).to_not parse('( -privateDebt / anotherVariable')
+          end
+        end
+
         context 'arithmetic' do
           it 'parses' do
-            expect(parser.operator).to parse('+')
-          end
-
-          it 'parses expression' do
-            expect(parser.expression).to parse('(sellingPrice - privateDebt + anotherVariable)')
+            expect(parser.expression).to parse('(5 + 10 * 5)')
+            expect(parser.expression).to parse('(sellingPrice - privateDebt / anotherVariable)')
           end
         end
 
         context 'boolean' do
           it 'parses' do
-            expect(parser.operator).to parse('&&')
-          end
-
-          it 'parses expression' do
             expect(parser.expression).to parse('(true && false)')
+            expect(parser.expression).to parse('false || false')
+            expect(parser.expression).to parse('sellingPrice || privateDebt')
           end
         end
 
         context 'comparison' do
           it 'parses' do
-            expect(parser.operator).to parse('<=')
-          end
-
-          it 'parses comparison' do
             expect(parser.expression).to parse('(5 < 10)')
+            expect(parser.expression).to parse('(8 != 10)')
+            expect(parser.expression).to parse('(sellingPrice == privateDebt)')
+          end
+        end
+
+        context 'negations' do
+          it 'parses' do
+            expect(parser.expression).to parse('(!true)')
+            expect(parser.expression).to parse('(-5)')
           end
         end
       end
