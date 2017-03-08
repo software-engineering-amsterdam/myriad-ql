@@ -14,16 +14,23 @@ public class ExpressionChecker extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(Parameter parameter) {
-        return super.visit(parameter);
+        System.out.println("parameter: " + parameter.getID());
+        return null;
     }
 
     @Override
     public Void visit(Addition addition) {
-        return super.visit(addition);
+        System.out.println("addition");
+        addition.getLeft().accept(this);
+        addition.getRight().accept(this);
+        return null;
     }
 
     @Override
     public Void visit(Subtraction subtraction) {
-        return super.visit(subtraction);
+        System.out.println("subtraction");
+        subtraction.getLeft().accept(this);
+        subtraction.getRight().accept(this);
+        return null;
     }
 }

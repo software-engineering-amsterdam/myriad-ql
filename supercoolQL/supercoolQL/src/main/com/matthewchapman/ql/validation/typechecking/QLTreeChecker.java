@@ -1,15 +1,16 @@
 package com.matthewchapman.ql.validation.typechecking;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.expression.binary.BinaryOperation;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.Question;
+import com.matthewchapman.ql.validation.AbstractQLVisitor;
 
 /**
  * Created by matt on 27/02/2017.
  *
  * Type checker for the QL AST.
  */
-public class QLTreeChecker {
+public class QLTreeChecker extends AbstractQLVisitor<Void> {
 
     private Form astRoot;
     private QuestionCollection questionCollection;
@@ -27,17 +28,19 @@ public class QLTreeChecker {
         questionCollection.gatherQuestions(astRoot);
         //find duplicates
         questionCollection.findDuplicates();
+        checkTypeCompatability();
 
-        //look at each "calculated" question
+    }
+
+    public void checkTypeCompatability() {
         for(Question question:questionCollection.getQuestionList()) {
-
+            question.accept(this);
         }
-            //get the expressions and leaf nodes
-                //check validity of types
     }
 
-    public void checkTypeCompatability(BinaryOperation op) {
-
+    @Override
+    public Void visit(CalculatedQuestion calculatedQuestion) {
+        calculatedQuestion.getCalculation().accept(expressionChecker);
+        return null;
     }
-
 }

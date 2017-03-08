@@ -86,4 +86,5 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
         typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
         return null;
     }
+
 }
