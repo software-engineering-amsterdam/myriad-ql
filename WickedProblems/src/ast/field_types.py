@@ -26,6 +26,30 @@ class Integer(FieldType):
         FieldType.__init__(self)
         self._value = int(value[0])
 
+    def __add__(self, other):
+        if(other.__class__ == Integer):
+            return (self.eval() + other.eval())
+        else:
+            return NotImplemented
+
+    def __sub__(self, other):
+        if(other.__class__ == Integer):
+            return (self.eval() - other.eval())
+        else:
+            return NotImplemented
+
+    def __mul__(self, other):
+        if(other.__class__ == Integer):
+            return (self.eval() * other.eval())
+        else:
+            return NotImplemented
+
+    def __truediv__(self, other):
+        if(other.__class__ == Integer):
+            return (self.eval() / other.eval())
+        else:
+            return NotImplemented
+
 class Date(FieldType):
     def __init__(self, identifier, value):
         FieldType.__init__(self)
