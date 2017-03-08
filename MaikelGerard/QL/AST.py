@@ -254,6 +254,7 @@ class TypeNode(Node):
         return self in [IntTypeNode(), MoneyTypeNode(),
                         DecimalTypeNode(), StringTypeNode()]
 
+
 class BoolTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
         super(BoolTypeNode, self).__init__(line, col)

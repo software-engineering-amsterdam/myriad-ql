@@ -8,7 +8,7 @@ from QL.stages import parser
 
 
 class TestParser(unittest.TestCase):
-    parser = parser.QuestionnaireParser()
+    parser = parser.Parser()
     q_parser = parser.question
     exp_parser = parser.expression
     cond_parser = parser.conditional

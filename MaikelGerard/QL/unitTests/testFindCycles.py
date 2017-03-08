@@ -1,4 +1,4 @@
-from QL.stages.parser import QuestionnaireParser as Parser
+from QL.stages.parser import Parser as Parser
 from QL.errorHandler import ErrorHandler
 from QL.stages.findCycles import FindCycles
 
