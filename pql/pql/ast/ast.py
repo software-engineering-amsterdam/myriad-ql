@@ -4,15 +4,9 @@
 class Node(object):
     def __init__(self, var_type):
         self.var_type = var_type
-        self.children = []
-
-    def add_child(self, node):
-        self.children.append(node)
 
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"
-        for child in self.children:
-            ret += child.__str__()
         return ret
 
     def __repr__(self):
@@ -23,7 +17,7 @@ class Form(Node):
     def __init__(self, form_identifier, form_statement_list):
         super(Form, self).__init__('form')
         self.name = form_identifier
-        self.children = form_statement_list
+        self.statements = form_statement_list
 
     def apply(self, visitor):
         return visitor.form(self)

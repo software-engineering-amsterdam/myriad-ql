@@ -15,7 +15,7 @@ class TestAst(unittest.TestCase):
         form_node = parse_result[0]
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children))
         self.assertEqual('field', field_node_1.var_type)
@@ -33,11 +33,10 @@ class TestAst(unittest.TestCase):
         form_node = parse_result[0]
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(2, len(form_node.children))
-        field_node_1 = form_node.children[0]
-        field_node_2 = form_node.children[1]
+        self.assertEqual(2, len(form_node.statements))
+        field_node_1 = form_node.statements[0]
+        field_node_2 = form_node.statements[1]
 
-        self.assertEqual(0, len(field_node_1.children))
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasBoughtHouse', field_node_1.name.name)
         self.assertEqual('Did you buy a house in 2010?', field_node_1.title)
@@ -56,9 +55,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -81,9 +80,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -113,9 +112,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -145,9 +144,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -178,9 +177,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -226,9 +225,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        conditional_node = form_node.children[0]
+        conditional_node = form_node.statements[0]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -260,9 +259,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        conditional_node = form_node.children[0]
+        conditional_node = form_node.statements[0]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -304,9 +303,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        conditional_node = form_node.children[0]
+        conditional_node = form_node.statements[0]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -355,9 +354,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        conditional_node = form_node.children[0]
+        conditional_node = form_node.statements[0]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -407,9 +406,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        conditional_node = form_node.children[0]
+        conditional_node = form_node.statements[0]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -473,9 +472,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        if_else_node = form_node.children[0]
+        if_else_node = form_node.statements[0]
         self.assertIsNotNone(if_else_node.else_statement_list,
                              'This test has an else block, else block should not be none')
         self.assertEqual('if_else', if_else_node.var_type,
@@ -488,7 +487,6 @@ class TestAst(unittest.TestCase):
 
         field_node_1 = if_else_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
@@ -521,9 +519,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(2, len(form_node.children), 'Should have one field and one conditional as children')
+        self.assertEqual(2, len(form_node.statements), 'Should have one field and one conditional as children')
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
@@ -531,7 +529,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
-        conditional_node = form_node.children[1]
+        conditional_node = form_node.statements[1]
         self.assertEqual('if', conditional_node.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node.statements),
@@ -565,9 +563,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.children), 'Should have two fields and one conditional as children')
+        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
@@ -575,7 +573,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
-        conditional_node = form_node.children[1]
+        conditional_node = form_node.statements[1]
         self.assertEqual(1, len(conditional_node.statements),
                          'This else block has one question inside, length should be 1')
         self.assertIsNotNone(conditional_node.condition, 'If block should have a condition')
@@ -589,7 +587,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
         self.assertEqual('What was the selling price?', field_node_2.title)
 
-        field_node_3 = form_node.children[2]
+        field_node_3 = form_node.statements[2]
         self.assertEqual(0, len(field_node_3.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_3.var_type)
         self.assertEqual('hasBoughtHouse', field_node_3.name.name)
@@ -616,9 +614,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.children), 'Should have two fields and one conditional as children')
+        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
@@ -626,7 +624,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
-        field_node_2 = form_node.children[1]
+        field_node_2 = form_node.statements[1]
 
         self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
@@ -634,7 +632,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_2.data_type.data_type)
         self.assertEqual('Did you buy a house in 2010?', field_node_2.title)
 
-        conditional_node_1 = form_node.children[2]
+        conditional_node_1 = form_node.statements[2]
         self.assertEqual('if', conditional_node_1.var_type,
                          'If node should have type if')
         self.assertEqual(1, len(conditional_node_1.statements),
@@ -676,9 +674,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.children), 'Should have two fields and one conditional as children')
+        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
 
         self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
@@ -686,7 +684,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
 
-        field_node_2 = form_node.children[1]
+        field_node_2 = form_node.statements[1]
 
         self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
@@ -694,7 +692,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual(DataTypes.boolean, field_node_2.data_type.data_type)
         self.assertEqual('Did you buy a house in 2010?', field_node_2.title)
 
-        conditional_node_1 = form_node.children[2]
+        conditional_node_1 = form_node.statements[2]
         self.assertEqual('if', conditional_node_1.var_type,
                          'If node should have type conditional')
         self.assertEqual(2, len(conditional_node_1.statements),
@@ -737,9 +735,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -767,9 +765,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -797,9 +795,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
@@ -827,16 +825,14 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(1, len(form_node.children))
+        self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.children[0]
+        field_node_1 = form_node.statements[0]
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('valueResidue', field_node_1.name.name)
         self.assertEqual('Value residue:', field_node_1.title)
 
         and_node = field_node_1.expression
-        self.assertEqual(0, len(and_node.children),
-                         'And node should have no nodes as children')
         self.assertEqual('and', and_node.var_type,
                          'And node should have type and')
 
