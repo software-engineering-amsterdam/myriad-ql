@@ -1,31 +1,23 @@
 module QL
   module AST
     class Expression
+      attr_reader :expression
+
+      def initialize(expression)
+        @expression = expression
+      end
+
+      # makes sure all (sub)expressions are calculated in correct order
+      def eval
+        expression.reduce { |left, operation| operation.call(left) }.eval
+      end
+
       def accept(visitor)
         visitor.visit_expression(self)
       end
     end
 
-    class Sequence
-      attr_reader :sequence
-
-      def initialize(sequence)
-        @sequence = sequence
-      end
-
-      # makes sure all sequences are calculated in correct order
-      def eval
-        sequence.reduce { |left, operation| operation.call(left) }.eval
-      end
-    end
-
     class Negation < Expression
-      attr_accessor :single
-
-      def initialize(single)
-        @single = single
-      end
-
       def accept(visitor)
         visitor.visit_negation(self)
       end
@@ -33,7 +25,7 @@ module QL
 
     class BooleanNegation < Negation
       def eval
-        BooleanLiteral.new(!single.eval.to_value)
+        BooleanLiteral.new(!expression.eval.to_value)
       end
 
       def accept_types
@@ -43,7 +35,7 @@ module QL
 
     class IntegerNegation < Negation
       def eval
-        IntegerLiteral.new(-single.eval.to_value)
+        IntegerLiteral.new(-expression.eval.to_value)
       end
 
       def accept_types
@@ -52,15 +44,9 @@ module QL
     end
 
     class BinaryExpression < Expression
-      attr_accessor :right
-
-      def initialize(right)
-        @right = right
-      end
-
       def call(left)
         left  = left.eval
-        right = self.right.eval
+        right = self.expression.eval
         to_corresponding_literal(self.eval(left.to_value, right.to_value))
       end
     end

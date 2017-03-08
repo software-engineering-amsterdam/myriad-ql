@@ -60,7 +60,7 @@ module QL
       rule(operator: '||', right: simple(:right)) { Or.new(right) }
       rule(left: simple(:integer_literal)) { integer_literal }
 
-      rule(sequence(:sequence)) { Sequence.new(sequence) }
+      rule(sequence(:expression)) { Expression.new(expression) }
     end
   end
 end
