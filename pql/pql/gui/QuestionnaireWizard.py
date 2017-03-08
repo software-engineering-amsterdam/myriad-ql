@@ -9,6 +9,9 @@ class QuestionnaireWizard(QWizard):
         super(QuestionnaireWizard, self).__init__(parent)
         self.init_uit()
 
+    def closeEvent(self, event):
+        event.accept()
+
     def init_uit(self):
         self.resize(800, 600)
         self.setWindowTitle('Leuker kunnen we het niet maken')
