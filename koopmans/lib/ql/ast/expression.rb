@@ -1,8 +1,6 @@
 module QL
   module AST
     class Expression
-      attr_accessor :right
-
       def accept(visitor)
         visitor.visit_expression(self)
       end
