@@ -37,4 +37,4 @@ ql_notifications = nil
 
 qls_ast = nil
 
-# QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)

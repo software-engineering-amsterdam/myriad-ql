@@ -1,20 +1,20 @@
 module QL
   module AST
     class IfStatement
-      attr_reader :block, :expression
+      attr_reader :body, :condition
 
-      def initialize(expression, body)
-        @expression = expression
+      def initialize(condition, body)
+        @condition = condition
         @body      = body
       end
 
-      def accept(visitor)
-        visitor.visit_if_statement(self)
-      end
-
-      def accept_with_condition(visitor, condition)
+      def accept(visitor, condition=nil)
         visitor.visit_if_statement(self, condition)
       end
+
+      # def accept_with_condition(visitor, condition)
+      #   visitor.visit_if_statement(self, condition)
+      # end
     end
 
     class Question
@@ -26,14 +26,14 @@ module QL
         @type       = type
       end
 
-      def accept(visitor)
-        visitor.visit_question(self)
+      def accept(visitor, condition=nil)
+        visitor.visit_question(self, condition)
       end
 
       # TODO gaan we hier wat aan doen?
-      def accept_with_condition(visitor, condition)
-        visitor.visit_question(self, condition)
-      end
+      # def accept_with_condition(visitor, condition)
+      #   visitor.visit_question(self, condition)
+      # end
 
       def render(gui)
         @type.question_frame.new(gui: gui, question: self)
