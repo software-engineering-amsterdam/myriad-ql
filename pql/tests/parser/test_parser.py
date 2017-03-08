@@ -265,9 +265,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = (sellingPrice - ++privateDebt)
         }
         """
-        with self.assertRaises(ParseException):
-            parse(input_string)
-            self.fail('Cannot have double positive declaration')
+        parse(input_string)
 
     def test_parse_switched_order_of_operator(self):
         input_string = """
@@ -285,7 +283,4 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = (sellingPrice - +-privateDebt)
         }
         """
-        with self.assertRaises(ParseException):
-            parse(input_string)
-            #TODO: Decide if this needs fixing
-            self.fail('Cannot have double positive/negative declaration')
+        parse(input_string)

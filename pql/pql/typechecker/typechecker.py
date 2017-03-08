@@ -71,6 +71,14 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def or_(self, node):
         return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
 
+    def negation(self, node):
+        allowed_types = DataTypes.boolean
+        rhs = node.rhs.apply(self)
+        if rhs is allowed_types:
+            return DataTypes.boolean
+        return None
+
+
     def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
         dominant_type = None
         if type_set.issubset(allowed_arithmetic_types):

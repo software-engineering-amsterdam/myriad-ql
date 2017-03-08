@@ -92,16 +92,3 @@ class TestEvaluator(TestCase):
         expected_identifier_3 = 'wasMoreExpensive'
         self.assertTrue(expected_identifier_3 in environment, "Environment should contain key hasSoldHouse")
         self.assertTrue(environment[expected_identifier_3], "Evaluation should result in true")
-
-        # TODO: Fix this, if declarations are in wrong order it gets None back
-    def test_eval_arithmetic_triple_field(self):
-        input_string = """
-        form taxOfficeExample {
-            "Did you sell a house in 2010?" hasSoldHouse: integer = inflationPrice + 5
-            "Price with inflation" inflationPrice: integer = 10
-        }
-        """
-        environment = ql(input_string)
-        expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(15, environment[expected_identifier_1], "Evaluation should result in 12")

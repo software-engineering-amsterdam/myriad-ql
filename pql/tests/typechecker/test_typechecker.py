@@ -393,3 +393,12 @@ class TestTypeChecker(TestCase):
         """
         type_checker_result = self.apply_type_checking(input_string)
         self.assertFalse(type_checker_result, "Error: %s" % type_checker_result)
+
+    def test_typecheck_not_on_plus(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = 1 + !2
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertTrue(type_checker_result, "Error: %s" % type_checker_result)
