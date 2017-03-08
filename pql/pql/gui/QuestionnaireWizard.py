@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWizard
 from PyQt5.QtWidgets import QWizardPage
@@ -29,7 +30,7 @@ class QuestionnaireWizard(QWizard):
         self.addPage(page)
 
 
-class Page(QWizardPage):
+class Page(QWizardPage, QMainWindow):
     def __init__(self, title, parent=None):
         super(Page, self).__init__(parent)
         self.setTitle(title.name)
