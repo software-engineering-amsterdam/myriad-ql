@@ -6,7 +6,7 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class IdentifierChecker(FormVisitor):
     def __init__(self):
-        # TODO: Dictionary niet als instance variable (hoe dan wel? het is nu een "hidden" instance variable), je zou hem eventueel door kunnen spelen naar apply
+        # TODO: Dictionary niet als instance variable (hoe dan wel? het is nu een "hidden" instance variable), het zelfde geval als in evaluator waar het heel snel heel dirty wordt
         self.__identifier_dict = defaultdict(list)
 
     def visit(self, pql_ast):

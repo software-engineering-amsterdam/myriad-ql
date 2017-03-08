@@ -11,7 +11,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.__environment = environment
 
     def visit(self, pql_ast):
-        # TODO Investigate whether environment can be passed as argument
+        # TODO Investigate whether environment can be passed as argument, this gets dirty very quickly because everything needs to pass the environment without actually needing it
         [form.apply(self) for form in pql_ast]
         return self.__environment
 
