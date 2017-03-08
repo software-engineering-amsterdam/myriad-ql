@@ -12,35 +12,46 @@ https://pyparsing.wikispaces.com/file/view/simpleArith.py
 class QL:
     # Booleans
     literal_and = Literal('&&').addParseAction(lambda \
-        left_hand_side, right_hand_side : LogicalAnd(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : LogicalAnd(left_hand_side,
+                                                     right_hand_side))
     literal_or = Literal('||').addParseAction(lambda \
-        left_hand_side, right_hand_side : LogicalOr(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : LogicalOr(left_hand_side,
+                                                    right_hand_side))
     # Unary
     literal_not = Literal('!').addParseAction(lambda child : LogicalNot(child))
 
     # Comparisons
     literal_greater_than = Literal('>').addParseAction(lambda \
-        left_hand_side, right_hand_side : GreaterThan(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : GreaterThan(left_hand_side,
+                                                      right_hand_side))
     literal_less_than = Literal('<').addParseAction(lambda \
-        left_hand_side, right_hand_side : LessThan(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : LessThan(left_hand_side,
+                                                   right_hand_side))
     literal_greater_than_equal = Literal('>=').addParseAction(lambda \
-        left_hand_side, right_hand_side : GreaterThanEquals(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : GreaterThanEquals(left_hand_side,
+                                                            right_hand_side))
     literal_less_than_equal = Literal('<=').addParseAction(lambda \
-        left_hand_side, right_hand_side : LessThanEquals(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : LessThanEquals(left_hand_side,
+                                                         right_hand_side))
     literal_equal = Literal('=').addParseAction(lambda \
-        left_hand_side, right_hand_side : Equality(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : Equality(left_hand_side,
+                                                   right_hand_side))
     literall_not_equal = Literal('!=').addParseAction(lambda \
-        left_hand_side, right_hand_side : Inequality(left_hand_side, right_hand_side))
-
+        left_hand_side, right_hand_side : Inequality(left_hand_side,
+                                                     right_hand_side))
     # Basic Arithmics
     literal_addition = Literal('+').addParseAction(lambda \
-        left_hand_side, right_hand_side : Addition(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : Addition(left_hand_side,
+                                                   right_hand_side))
     literal_substraction = Literal('-').addParseAction(lambda \
-        left_hand_side, right_hand_side : Substraction(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : Substraction(left_hand_side,
+                                                       right_hand_side))
     literal_multiplication = Literal('*').addParseAction(lambda \
-        left_hand_side, right_hand_side : Multiplication(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : Multiplication(left_hand_side,
+                                                         right_hand_side))
     literal_division = Literal('/').addParseAction(lambda \
-        left_hand_side, right_hand_side : Division(left_hand_side, right_hand_side))
+        left_hand_side, right_hand_side : Division(left_hand_side,
+                                                   right_hand_side))
 
     # Missing Unary Operators (plus, minus)
     literal_postitive = Literal('+').addParseAction(lambda : UnaryPlus)

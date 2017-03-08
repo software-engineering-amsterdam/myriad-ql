@@ -44,92 +44,94 @@ class UnaryOperation(Node):
 # Binary Operations
 class Inequality(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "inequality", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "inequality", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side != self.right_hand_side)
 
 class LogicalAnd(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "logical_and", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "logical_and", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side and self.right_hand_side)
 
 class Multiplication(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "multiplication", left_hand_side, right_hand_side)
+        BinaryOperation.__init__(self, "multiplication", left_hand_side,
+                                 right_hand_side)
 
     def eval(self):
         return (self.left_hand_side * self.right_hand_side)
 
 class Addition(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "addition", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "addition", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return (self.left_hand_side + self.right_hand_side)
 
 class Substraction(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "substraction", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "substraction", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return (self.left_hand_side - self.right_hand_side)
 
 class Division(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "division", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "division", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return (self.left_hand_side / self.right_hand_side)
 
 class LessThan(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "less_than", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "less_than", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side < self.right_hand_side)
 
 class LessThanEquals(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "less_than_equals", left_hand_side, right_hand_side)
+        BinaryOperation.__init__(self, "less_than_equals", left_hand_side,
+                                 right_hand_side)
 
     def eval(self):
         return bool(self.left_hand_side <= self.right_hand_side)
 
 class Assignment(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "assignment", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "assignment", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return self.left_hand_side
 
 class Equality(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "equality", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "equality", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side == self.right_hand_side)
 
 class GreaterThan(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "greater_than", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "greater_than", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side > self.right_hand_side)
 
 class GreaterThanEquals(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "greater_than_equals", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "greater_than_equals", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side >= self.right_hand_side)
 
 class LogicalOr(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "logical_or", left_hand_side, right_hand_side)
-
+        BinaryOperation.__init__(self, "logical_or", left_hand_side,
+                                 right_hand_side)
     def eval(self):
         return bool(self.left_hand_side or self.right_hand_side)
 
@@ -154,7 +156,7 @@ class UnaryNegation(UnaryOperation):
 
 class Evaluation(Node):
     def __init__(self, child):
-        UnaryOperation.__init__(self, "evaluation", child[0]) # it really sorta is
+        UnaryOperation.__init__(self, "evaluation", child[0])
         self.right_hand_side = child[0]
 
     def eval(self):
