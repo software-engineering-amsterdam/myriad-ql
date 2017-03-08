@@ -28,7 +28,7 @@ class Parser < Parslet::Parser
 
   rule(:expression) { term.as(:left) >> (addition | subtraction) >> expression.as(:right) | term }
   rule(:term) { factor.as(:left) >> (multiplication | division) >> term.as(:right) | factor }
-  rule(:factor) { lparen >> expression >> rparen | identifier | literal }
+  rule(:factor) { lparen >> expression >> rparen | literal | identifier }
 
   rule(:block) { (if_statement | question).repeat }
 
