@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/supercoolQL.iml" filepath="$PROJECT_DIR$/supercoolQL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/supercoolQL.iml" filepath="$PROJECT_DIR$/src/supercoolQL.iml" />
     </modules>
   </component>
 </project>
