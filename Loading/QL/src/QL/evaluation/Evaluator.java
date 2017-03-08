@@ -4,22 +4,7 @@ import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
-import QL.ast.expression.AddExpression;
-import QL.ast.expression.AndExpression;
-import QL.ast.expression.DivExpression;
-import QL.ast.expression.EqExpression;
-import QL.ast.expression.GEqExpression;
-import QL.ast.expression.GExpression;
-import QL.ast.expression.IdExpression;
-import QL.ast.expression.LEqExpression;
-import QL.ast.expression.LExpression;
-import QL.ast.expression.MinusExpression;
-import QL.ast.expression.MulExpression;
-import QL.ast.expression.NEqExpression;
-import QL.ast.expression.NotExpression;
-import QL.ast.expression.OrExpression;
-import QL.ast.expression.PlusExpression;
-import QL.ast.expression.SubExpression;
+import QL.ast.expression.*;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
@@ -63,15 +48,15 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
     public void visit(Statement statement) {
         Value value = statement.getExpression().accept(this);
         // Add to environment
-        statement.getBlock().accept(this); // TODO circulair dependencies?
+        statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
         Value value = statement.getExpression().accept(this);
         // Add to environment
-        statement.getBlock().accept(this); // TODO circulair dependencies?
-        statement.getElseBlock().accept(this); // TODO circulair dependencies?
+        statement.getBlock().accept(this);
+        statement.getElseBlock().accept(this);
     }
 
     @Override

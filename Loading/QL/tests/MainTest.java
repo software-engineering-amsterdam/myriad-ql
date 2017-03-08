@@ -2,6 +2,7 @@ import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -9,7 +10,7 @@ class MainTest {
     StringValue strABC2 = new StringValue("ABC");
     StringValue strBCD = new StringValue("BCD");
 
-    @Test
+       @Test
     public void constructor() {
 
         assertSame(strABC.getValue(), strABC.getValue());

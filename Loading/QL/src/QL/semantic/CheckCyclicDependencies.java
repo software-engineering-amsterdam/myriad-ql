@@ -11,11 +11,11 @@ import QL.Error;
 
 import java.util.List;
 
-public class checkCyclicDependencies implements FormVisitor, QL.ast.ExpressionVisitor<Type> {
+public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVisitor<Type> {
     private final Environment environment;
     private Question current;
 
-    public checkCyclicDependencies(Environment environment) {
+    public CheckCyclicDependencies(Environment environment) {
         this.environment = environment;
     }
 
