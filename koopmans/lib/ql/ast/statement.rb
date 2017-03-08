@@ -1,8 +1,7 @@
 module QL
   module AST
     class IfStatement
-      attr_reader :block
-      attr_accessor :expression
+      attr_reader :block, :expression
 
       def initialize(expression, body)
         @expression = expression
@@ -20,14 +19,11 @@ module QL
 
     class Question
       attr_reader :label, :variable, :type
-      attr_accessor :condition, :assignment
 
-      def initialize(label, variable, type, expression=nil, condition=nil)
+      def initialize(label, variable, type)
         @label      = label.to_s
         @variable   = variable
         @type       = type
-        @assignment = expression
-        @condition  = condition
       end
 
       def accept(visitor)
@@ -40,11 +36,20 @@ module QL
       end
 
       def render(gui)
-        if @assignment
-          QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
-        else
-          @type.question_frame.new(gui: gui, question: self)
-        end
+        @type.question_frame.new(gui: gui, question: self)
+      end
+    end
+
+    class ComputedQuestion < Question
+      attr_reader :assignment
+
+      def initialize(label, variable, type, assignment)
+        super(label, variable, type)
+        @assignment = assignment
+      end
+
+      def render(gui)
+        QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
       end
     end
   end
