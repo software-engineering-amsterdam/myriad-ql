@@ -5,7 +5,7 @@ import pyparsing as pp
 from QL import AST
 
 
-class QuestionnaireParser(object):
+class Parser(object):
     # Define the tokens used for parsing the input.
     IS = pp.Literal("=").suppress()
     COLON = pp.Literal(":").suppress()
@@ -38,15 +38,13 @@ class QuestionnaireParser(object):
         pp.ParserElement.enablePackrat()
 
         # Add parse actions to create AST nodes from parse results.
-        self.add_parse_actions()
-        self.TYPE_NAMES = (
-            self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^ self.MONEY_TYPE ^
-            self.DECIMAL_TYPE ^ self.STRING_TYPE ^ self.DATE_TYPE
-        )
-        self.TYPES = (
-            self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
-            self.STRING ^ self.DATE ^ self.VARIABLE
-        )
+        self.parse_literal_type_nodes()
+        self.parse_literal_nodes()
+        self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
+                           self.MONEY_TYPE ^ self.DECIMAL_TYPE ^
+                           self.STRING_TYPE ^ self.DATE_TYPE)
+        self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
+                      self.STRING ^ self.DATE ^ self.VARIABLE)
 
         # Create the grammar incrementally to simplify unit test creation.
         self.expression = self.define_expression()
@@ -56,16 +54,19 @@ class QuestionnaireParser(object):
 
         self.grammar = self.define_grammar()
 
-    def add_parse_actions(self):
-        def create_int(src, loc, tokens):
-            return int(tokens[0])
+    @staticmethod
+    def create_int(src, loc, tokens):
+        return int(tokens[0])
 
-        def create_decimal(src, loc, tokens):
-            return decimal.Decimal(tokens[0])
+    @staticmethod
+    def create_decimal(src, loc, tokens):
+        return decimal.Decimal(tokens[0])
 
-        def create_date(src, loc, tokens):
-            return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
+    @staticmethod
+    def create_date(src, loc, tokens):
+        return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
+    def parse_literal_type_nodes(self):
         self.BOOLEAN_TYPE.setParseAction(self.create_node(AST.BoolTypeNode))
         self.INTEGER_TYPE.setParseAction(self.create_node(AST.IntTypeNode))
         self.MONEY_TYPE.setParseAction(self.create_node(AST.MoneyTypeNode))
@@ -73,14 +74,17 @@ class QuestionnaireParser(object):
         self.STRING_TYPE.setParseAction(self.create_node(AST.StringTypeNode))
         self.DATE_TYPE.setParseAction(self.create_node(AST.DateTypeNode))
 
+    def parse_literal_nodes(self):
         self.BOOLEAN.setParseAction(self.create_node(AST.BoolNode))
-        self.INTEGER.setParseAction(create_int, self.create_node(AST.IntNode))
+        self.INTEGER.setParseAction(
+            self.create_int, self.create_node(AST.IntNode))
         self.VARIABLE.setParseAction(self.create_node(AST.VarNode))
         self.DECIMAL.setParseAction(
-            create_decimal, self.create_node(AST.DecimalNode))
+            self.create_decimal, self.create_node(AST.DecimalNode))
         self.STRING.setParseAction(
             pp.removeQuotes, self.create_node(AST.StringNode))
-        self.DATE.setParseAction(create_date, self.create_node(AST.DateNode))
+        self.DATE.setParseAction(
+            self.create_date, self.create_node(AST.DateNode))
 
     def create_node(self, ast_class):
         """
@@ -89,8 +93,9 @@ class QuestionnaireParser(object):
         """
         def create_args(src, loc, token):
             line, col = self.get_line_loc_info(src, loc)
-            args = token.asList() + [line, col]
-            return ast_class(*args)
+            args = token.asList()
+            kwargs = {"line": line, "col": col}
+            return ast_class(*args, **kwargs)
         return create_args
 
     @staticmethod
