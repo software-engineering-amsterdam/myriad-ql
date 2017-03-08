@@ -224,6 +224,9 @@ class Integer(object):
     def apply(self, visitor):
         return visitor.integer(self)
 
+    def default_value(self):
+        return 0
+
 
 class Boolean(object):
     def __init__(self, data):
@@ -232,6 +235,9 @@ class Boolean(object):
     def apply(self, visitor):
         return visitor.boolean(self)
 
+    def default_value(self):
+        return False
+
 
 class Money(object):
     def __init__(self, data):
@@ -239,3 +245,6 @@ class Money(object):
 
     def apply(self, visitor):
         return visitor.money(self)
+
+    def default_value(self):
+        return 0.00

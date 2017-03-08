@@ -6,6 +6,7 @@ from sys import exit
 
 from PyQt5.QtWidgets import QApplication
 
+from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
@@ -96,7 +97,8 @@ if __name__ == '__main__':
         exit(4)
 
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
-    environment = strip_keys_from_dict(ql_identifier_check_result)
+    environment_creator = EnvironmentCreator()
+    environment = environment_creator.visit(ql_ast)
     app = QApplication(argv)
 
     gui = Gui(environment)
