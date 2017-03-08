@@ -8,35 +8,35 @@ from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QVBoxLayout
 
 from pql.evaluator.evaluator import Evaluator
-from pql.gui.QuestionnaireWizard import QuestionnaireWizard, Page
+from pql.gui.Wizard import Wizard, Page
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
 
 class Gui(FormVisitor, TypeVisitor):
     def __init__(self, environment):
-        self.ql_wizard = QuestionnaireWizard()
+        self.wizard = Wizard()
         self.evaluator = Evaluator(environment)
-        self.pql_ast = None
+        self.ast = None
         self.conditional_if_list = list(tuple())
         self.conditional_if_else_list = list(tuple())
 
     def show(self):
-        self.ql_wizard.show()
+        self.wizard.show()
 
     def visit(self, ql_ast):
-        self.pql_ast = ql_ast
-        for form in self.pql_ast:
-            page = form.apply(self)
-            page.setParent(self.ql_wizard)
-            self.ql_wizard.add_page(page)
-            del page
+        self.ast = ql_ast
+        for form in self.ast:
+            self.wizard.add_page(form.apply(self))
+        self.render_conditionals()
+        return self.wizard
+
+    def render_conditionals(self):
         self.trigger_conditional_if()
         self.trigger_conditional_if_else()
-        return self.ql_wizard
 
     def form(self, node):
-        page = Page(node.name, self.ql_wizard)
+        page = Page(node.name, self.wizard)
         layout = QVBoxLayout()
         for statement in node.statements:
             statement.parent = page
@@ -112,30 +112,32 @@ class Gui(FormVisitor, TypeVisitor):
         return container
 
     def money(self, node):
-        widget = QDoubleSpinBox()
+        widget = self.numeric(float, QDoubleSpinBox)
         widget.setDecimals(2)
-        self.set_min_max(widget)
-        widget.valueChanged[float].connect(lambda value: self.update_trigger_numeric(widget, value, QDoubleSpinBox))
-        widget.valueChanged.connect(self.trigger_conditional_if)
-        widget.valueChanged.connect(self.trigger_conditional_if_else)
         return widget
 
     def integer(self, node):
-        widget = QSpinBox()
+        widget = self.numeric(int, QSpinBox)
         widget.setMaxLength(8)
-        self.set_min_max(widget)
-        widget.valueChanged[int].connect(lambda value: self.update_trigger_numeric(widget, value, QSpinBox))
-        widget.valueChanged.connect(self.trigger_conditional_if)
-        widget.valueChanged.connect(self.trigger_conditional_if_else)
         return widget
 
     def boolean(self, node):
         widget = QCheckBox()
         widget.setChecked(False)
         widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
-        widget.stateChanged.connect(self.trigger_conditional_if)
-        widget.stateChanged.connect(self.trigger_conditional_if_else)
+        self.connect_conditionals(widget.stateChanged)
         return widget
+
+    def numeric(self, value_type, widget_type):
+        widget = widget_type()
+        widget.valueChanged[value_type].connect(lambda value: self.update_trigger_numeric(widget, value, widget_type))
+        self.connect_conditionals(widget.valueChanged)
+        self.set_min_max(widget)
+        return widget
+
+    def connect_conditionals(self, signal):
+        signal.connect(self.trigger_conditional_if)
+        signal.connect(self.trigger_conditional_if_else)
 
     def set_min_max(self, widget, minimum=(-(10 ** 10)), maximum=(10**10)):
         widget.setMinimum(minimum)
@@ -150,9 +152,9 @@ class Gui(FormVisitor, TypeVisitor):
         self.update_visible_values(QCheckBox, self.update_value_boolean)
 
     def update_visible_values(self, widget_type, function):
-        environment = self.evaluator.visit(self.pql_ast)
+        environment = self.evaluator.visit(self.ast)
         for key, value in environment.items():
-            widget = self.ql_wizard.findChild(widget_type, key)
+            widget = self.wizard.findChild(widget_type, key)
             if widget is not None:
                 function(widget, value)
 

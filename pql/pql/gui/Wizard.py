@@ -1,20 +1,21 @@
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QScrollArea
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QWizard
 from PyQt5.QtWidgets import QWizardPage
 
 
-class QuestionnaireWizard(QWizard):
+class Wizard(QWizard):
     def __init__(self, parent=None):
-        super(QuestionnaireWizard, self).__init__(parent)
-        self.init_uit()
+        super(Wizard, self).__init__(parent)
+        self.init_ui()
 
     def closeEvent(self, event):
         event.accept()
 
-    def init_uit(self):
+    def init_ui(self):
         self.resize(800, 600)
         self.setWindowTitle('Leuker kunnen we het niet maken')
         self.center()
@@ -35,7 +36,6 @@ class Page(QWizardPage, QMainWindow):
     def __init__(self, title, parent=None):
         super(Page, self).__init__(parent)
         self.setTitle(title.name)
-        self.layout = QVBoxLayout()
 
     def set_layout(self, layout):
         widget = QWidget()
