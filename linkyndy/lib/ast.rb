@@ -7,8 +7,6 @@ module Ast
     end
   end
 
-  class Form < Struct.new(:identifier, :body)
-    include Visitable
   class Node < Struct
     def visit(visitor, parent = nil)
       visitor.send(method_name, self, parent)
@@ -34,38 +32,51 @@ module Ast
     end
   end
 
-  class Question < Struct.new(:string, :type, :identifier, :value)
-    include Visitable
+  class Form < Node.new(:identifier, :body)
   end
 
-  class IfStatement < Struct.new(:condition, :if_true, :if_false)
-    include Visitable
+  class Question < Node.new(:string, :type, :identifier, :value)
   end
 
-  class Identifier < Struct.new(:name)
+  class IfStatement < Node.new(:condition, :if_true, :if_false)
   end
 
-  class String < Struct.new(:value)
+  class Identifier < Node.new(:name)
   end
 
-  class Integer < Struct.new(:value)
+  class Literal < Node.new(:value)
   end
 
-  class Boolean < Struct.new(:value)
+  class StringLiteral < Literal
   end
 
-  class Type < Struct.new(:name)
+  class IntegerLiteral < Literal
   end
 
-  class Multiplication < Struct.new(:left, :right)
+  class BooleanLiteral < Literal
   end
 
-  class Division < Struct.new(:left, :right)
+  class Type < Node.new(:name)
   end
 
-  class Addition < Struct.new(:left, :right)
+  class Expression < Node
   end
 
-  class Subtraction < Struct.new(:left, :right)
+  class UnaryExpression < Expression.new(:value)
+  end
+
+  class BinaryExpression < Expression.new(:left, :right)
+  end
+
+  class Multiplication < BinaryExpression
+  end
+
+  class Division < BinaryExpression
+  end
+
+  class Addition < BinaryExpression
+  end
+
+  class Subtraction < BinaryExpression
   end
 end
