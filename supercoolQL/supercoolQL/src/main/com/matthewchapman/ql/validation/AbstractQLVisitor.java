@@ -4,6 +4,7 @@ import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -23,6 +24,11 @@ public abstract class AbstractQLVisitor<T> implements QLVisitor<T> {
 
     @Override
     public T visit(IfStatement ifStatement) {
+        return null;
+    }
+
+    @Override
+    public T visit(CalculatedQuestion calculatedQuestion) {
         return null;
     }
 

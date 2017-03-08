@@ -3,6 +3,7 @@ package com.matthewchapman.ql.validation.typechecking;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -76,6 +77,13 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
             statement.accept(this);
         }
 
+        return null;
+    }
+
+    @Override
+    public Void visit(CalculatedQuestion calculatedQuestion) {
+        questionList.add(calculatedQuestion);
+        typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
         return null;
     }
 }

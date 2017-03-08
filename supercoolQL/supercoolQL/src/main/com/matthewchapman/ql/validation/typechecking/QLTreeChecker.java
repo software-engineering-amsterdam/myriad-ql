@@ -2,6 +2,7 @@ package com.matthewchapman.ql.validation.typechecking;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.expression.binary.BinaryOperation;
+import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 27/02/2017.
@@ -28,6 +29,9 @@ public class QLTreeChecker {
         questionCollection.findDuplicates();
 
         //look at each "calculated" question
+        for(Question question:questionCollection.getQuestionList()) {
+
+        }
             //get the expressions and leaf nodes
                 //check validity of types
     }

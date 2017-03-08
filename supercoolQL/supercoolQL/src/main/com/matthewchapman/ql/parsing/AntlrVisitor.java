@@ -10,6 +10,7 @@ import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -44,11 +45,10 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
         if (ctx.calculatedValue() != null) {
             calculation = (Expression) visit(ctx.calculatedValue());
+            return new CalculatedQuestion(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } else {
-            calculation = null;
+            return new Question(questionID, questionContent, questionReturnType, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
-
-        return new Question(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
