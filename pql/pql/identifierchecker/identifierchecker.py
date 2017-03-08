@@ -31,9 +31,9 @@ class IdentifierChecker(FormVisitor):
         def normalize_dictionary(dictionary_):
             # TODO: Mooier maken evt?
             dict_ = {}
-            for key, value in dictionary_.items():
-                for v in value:
-                    dict_[key] = v
+            for key, value_list in dictionary_.items():
+                for value in value_list:
+                    dict_[key] = value
             return dict_
 
         errors = ['Key: {} contained multiple entries, the following: {}'.format(key, value)
