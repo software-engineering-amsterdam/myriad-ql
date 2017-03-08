@@ -8,9 +8,10 @@ module QL
       attr_accessor :condition
       attr_accessor :variable # TODO remove
 
-      def initialize(args)
-        @question                               = args[:question]
-        @gui                                    = args[:gui]
+      def initialize(gui, question, condition=nil)
+        @question                               = question
+        @gui                                    = gui
+        @condition                              = condition
         @enabled                                = true
         @variable                               = QL::GUI::Variable.new
         @gui.questions[@question.variable.name] = self

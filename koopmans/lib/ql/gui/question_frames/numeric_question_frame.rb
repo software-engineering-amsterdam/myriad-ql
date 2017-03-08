@@ -3,7 +3,7 @@ module QL
     class NumericQuestionFrame < QuestionFrame
       include AST
 
-      def initialize(args)
+      def initialize(gui, question, condition=nil)
         super
         @variable.value = 0
         @variable.type  = IntegerType

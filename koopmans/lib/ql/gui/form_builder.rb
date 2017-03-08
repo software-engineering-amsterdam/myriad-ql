@@ -12,6 +12,8 @@ module QL
 
       # stack if conditions if possible
       def visit_if_statement(if_statement, condition=nil)
+
+
         if condition
           condition = AST::Expression.new([condition, AST::And.new(if_statement.condition)])
         end
@@ -20,6 +22,7 @@ module QL
 
       # render question in gui
       def visit_question(question, condition=nil)
+        p condition
         question.render(@gui, condition)
       end
     end

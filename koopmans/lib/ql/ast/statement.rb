@@ -27,7 +27,11 @@ module QL
       end
 
       def accept(visitor, condition=nil)
-        visitor.visit_question(self, condition)
+        if condition
+          visitor.visit_question(self, condition)
+        else
+          visitor.visit_question(self)
+        end
       end
 
       # TODO gaan we hier wat aan doen?
@@ -36,7 +40,7 @@ module QL
       # end
 
       def render(gui, condition)
-        @type.question_frame.new(gui: gui, question: self)
+        @type.question_frame.new(gui, self, condition)
       end
     end
 
@@ -49,7 +53,7 @@ module QL
       end
 
       def render(gui, condition)
-        QL::GUI::ComputedQuestionFrame.new(gui: gui, question: self)
+        QL::GUI::ComputedQuestionFrame.new(gui, self, condition)
       end
     end
   end

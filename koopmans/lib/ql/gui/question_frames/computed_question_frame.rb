@@ -2,7 +2,7 @@ module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
 
-      def initialize(args)
+      def initialize(gui, question, condition=nil)
         super
         @variable.type = @question.type
         ComputedWidget.new(question_frame: self)

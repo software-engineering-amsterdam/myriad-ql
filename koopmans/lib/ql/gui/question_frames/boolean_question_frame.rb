@@ -3,7 +3,7 @@ module QL
     class BooleanQuestionFrame < QuestionFrame
       include AST
 
-      def initialize(args)
+      def initialize(gui, question, condition=nil)
         super
         @variable.value = true
         @variable.type  = BooleanType
