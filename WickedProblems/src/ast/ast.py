@@ -170,11 +170,13 @@ class Variable(Node):
         return self._value
 
     def __add__(self, other):
-        return self._value + other._value
+        return self.eval() + other.eval()
 
     def __sub__(self, other):
-        print(self._value)
-        print(other._value)
-        return self._value - other._value
-    # def __str__(self):
-    #     return self._identifier
+        return self.eval() - other.eval()
+
+    def __mul__(self, other):
+        return self.eval() * other.eval()
+
+    def __truediv__(self, other):
+        return self.eval() / other.eval()

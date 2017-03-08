@@ -63,7 +63,7 @@ class Interface(Frame):
     def construct_from_node(self,node):
         # Get possible displayables
         if(isinstance(node,Question)):
-            if(isinstance(node._field_type,Boolean)):
+            if(node._field_type == Boolean):
                 if not self.variable_is_defined(node._identifier._identifier):
                     self.__variables[node._identifier._identifier] = IntVar()
                 drawable = DrawableBoolean(node._identifier)
