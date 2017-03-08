@@ -1,14 +1,18 @@
 module QL
   module Visitor
-    class BaseVisitor
+    class BaseCollector
       # gather all labels from all questions and check for duplicates
       def visit_form(form)
-        @questions = form.statements.map { |statement| statement.accept(self) }.flatten
+        form.statements.map { |statement| statement.accept(self) }
       end
 
       # visit all statements of the if block
       def visit_if_statement(if_statement)
-        if_statement.block.map { |statement| statement.accept(self) }
+        if_statement.body.map { |statement| statement.accept(self) }
+      end
+
+      def visit_question(question)
+        question
       end
 
       # visit the calculations of both the left and right sides
@@ -16,7 +20,6 @@ module QL
         [expression.left.accept(self), expression.right.accept(self)]
       end
 
-      # return the variable
       def visit_variable(variable)
         [variable]
       end

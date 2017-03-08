@@ -25,7 +25,7 @@ module QL
       attr_reader :label, :variable, :type
 
       def initialize(label, variable, type)
-        @label      = label.to_s
+        @label      = label
         @variable   = variable
         @type       = type
       end

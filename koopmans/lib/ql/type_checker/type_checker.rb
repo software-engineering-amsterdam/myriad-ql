@@ -4,9 +4,10 @@ module QL
       include Visitor
 
       def self.check(ast)
-        { errors:   [DuplicateVariableChecker, UndefinedVariableChecker,
-                     OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new) }.flatten,
-          warnings: ast.accept(DuplicateLabelChecker.new) }
+        ast.accept(DuplicateLabelChecker.new)
+        # { errors:   [DuplicateVariableChecker, UndefinedVariableChecker,
+        #              OperandsTypeChecker, CyclicChecker].map { |checker| ast.accept(checker.new) }.flatten,
+        #   warnings: ast.accept(DuplicateLabelChecker.new) }
       end
     end
   end
