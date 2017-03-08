@@ -9,7 +9,11 @@ module QL
       end
 
       def accept(visitor, condition=nil)
-        visitor.visit_if_statement(self, condition)
+        if condition
+          visitor.visit_if_statement(self, condition)
+        else
+          visitor.visit_if_statement(self)
+        end
       end
 
       # def accept_with_condition(visitor, condition)

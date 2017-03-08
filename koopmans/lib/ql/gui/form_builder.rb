@@ -12,10 +12,10 @@ module QL
 
       # stack if conditions if possible
       def visit_if_statement(if_statement, condition=nil)
-
-
         if condition
           condition = AST::Expression.new([condition, AST::And.new(if_statement.condition)])
+        else
+          condition = if_statement.condition
         end
         if_statement.body.map { |statement| statement.accept(self, condition) }
       end
