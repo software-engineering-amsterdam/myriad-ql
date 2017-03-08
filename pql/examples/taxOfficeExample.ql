@@ -13,8 +13,16 @@ form taxOfficeExample {
 			sellingPrice: money
 		"Private debts for the sold house:"
 			privateDebt: money
+        if (hasBoughtHouse) {
+            "What was the buying price?"
+                buyingPrice: money
+        }
 		"Value residue:"
 			valueResidue: money =
 				(sellingPrice - privateDebt)
+	} else {
+        "Else block statement price?"	blockState: money
 	}
+		"This is a very nice placeholder" placeHolder1: money
+		"This is a THE BEST placeholder" placeHolder2: money
 }
