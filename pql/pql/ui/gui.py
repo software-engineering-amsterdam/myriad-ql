@@ -10,14 +10,14 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
 from pql.evaluator.evaluator import Evaluator
-from pql.gui.QuestionairWizard import QuestionairWizard, Page
+from pql.gui.QuestionnaireWizard import QuestionnaireWizard, Page
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
 
 class Gui(FormVisitor, TypeVisitor):
     def __init__(self, environment):
-        self.ql_wizard = QuestionairWizard()
+        self.ql_wizard = QuestionnaireWizard()
         self.evaluator = Evaluator(environment)
         self.pql_ast = None
         self.conditional_if_list = list(tuple())
