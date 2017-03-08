@@ -6,7 +6,7 @@ form taxOfficeExample {
     "Did you buy or sell a house in 2010?"
 		hasDoneEither: boolean = hasSoldHouse || hasBoughtHouse
 	"How big of a loan did you request?"
-		hasMaintLoan: money
+		hasMaintLoan: integer
 
 	if (hasSoldHouse) {
 		"What was the selling price?"

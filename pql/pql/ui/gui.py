@@ -114,11 +114,12 @@ class Gui(FormVisitor, TypeVisitor):
     def money(self, node):
         widget = self.numeric(float, QDoubleSpinBox)
         widget.setDecimals(2)
+        widget.setMaximum(10**10)
+        widget.setMinimum(-(10**10))
         return widget
 
     def integer(self, node):
         widget = self.numeric(int, QSpinBox)
-        widget.setMaxLength(8)
         return widget
 
     def boolean(self, node):
@@ -132,16 +133,11 @@ class Gui(FormVisitor, TypeVisitor):
         widget = widget_type()
         widget.valueChanged[value_type].connect(lambda value: self.update_trigger_numeric(widget, value, widget_type))
         self.connect_conditionals(widget.valueChanged)
-        self.set_min_max(widget)
         return widget
 
     def connect_conditionals(self, signal):
         signal.connect(self.trigger_conditional_if)
         signal.connect(self.trigger_conditional_if_else)
-
-    def set_min_max(self, widget, minimum=(-(10 ** 10)), maximum=(10**10)):
-        widget.setMinimum(minimum)
-        widget.setMaximum(maximum)
 
     def update_trigger_numeric(self, widget, value, type):
         self.evaluator.update_value(widget.objectName(), value)
