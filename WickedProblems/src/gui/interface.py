@@ -73,7 +73,7 @@ class Interface(Frame):
 
     def build_interface(self):
         # Title (based on identifier of root node)
-        self._root.title(self.__ast._identifier._identifier)
+        self._root.title(self.__ast._identifier)
 
         # construct widgets (frame content)
         self.construct_interface()

@@ -6,8 +6,8 @@ class FieldType(Node):
     def __init__(self):
         Node.__init__(self, "field_type")
 
-    def __str__(self):
-        return "{}".format(self._value)
+    # def __str__(self):
+        # return "{}".format(self._value)
 
     def eval(self):
         return self._value
@@ -31,9 +31,11 @@ class Boolean(FieldType):
 
     def draw(self, _interface, _parent):
         # TODO: SOMETHING IS BROKEN HERE!!
+        print(self)
+        print(_parent._text)
         labeledcb = LabeledCheckbutton(_interface._root)
         labeledcb.label.configure(text=str(_parent._text))
-        labeledcb.checkbutton.configure(variable=self.eval(),
+        labeledcb.checkbutton.configure(variable=self._value,
                                         command=_interface.refresh)
         labeledcb.grid(row=_interface.get_new_row(), columnspan=2, sticky=W)
 
@@ -45,6 +47,9 @@ class String(FieldType):
     def __call__(self, identifier, value):
         self._identifier = identifier
         self._value = value
+
+    def __str__(self):
+        return self._value
 
 class Integer(FieldType):
     def __init__(self, identifier, value = [0]):

@@ -75,7 +75,7 @@ class QL:
                 field_decimal | field_money
     word = Word(alphas)
     identifier = word.setResultsName("identifier")
-    identifier.addParseAction(lambda identifier : Variable(*identifier))
+    # identifier.addParseAction(lambda identifier : Variable(identifier))
 
     def parse_binary(self, content):
         left_hand_side, condition, right_hand_side = \
