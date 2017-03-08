@@ -1,5 +1,8 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.ast.atomic.BooleanType;
+import com.matthewchapman.ql.ast.atomic.IntegerType;
+import com.matthewchapman.ql.ast.atomic.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -19,6 +22,21 @@ public abstract class AbstractQLVisitor<T> implements QLVisitor<T> {
 
     @Override
     public T visit(Question question) {
+        return null;
+    }
+
+    @Override
+    public T visit(BooleanType booleanType) {
+        return null;
+    }
+
+    @Override
+    public T visit(IntegerType integerType) {
+        return null;
+    }
+
+    @Override
+    public T visit(StringType stringType) {
         return null;
     }
 

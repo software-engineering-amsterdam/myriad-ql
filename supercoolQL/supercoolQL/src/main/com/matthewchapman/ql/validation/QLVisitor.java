@@ -1,5 +1,8 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.ast.atomic.BooleanType;
+import com.matthewchapman.ql.ast.atomic.IntegerType;
+import com.matthewchapman.ql.ast.atomic.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -57,5 +60,12 @@ public interface QLVisitor<T> {
 
     //Unary
     T visit(Negation negation);
+
+    //Types
+    T visit(BooleanType booleanType);
+
+    T visit(IntegerType integerType);
+
+    T visit(StringType stringType);
 
 }

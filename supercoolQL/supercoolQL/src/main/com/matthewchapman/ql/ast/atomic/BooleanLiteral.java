@@ -1,27 +1,16 @@
 package com.matthewchapman.ql.ast.atomic;
 
-import com.matthewchapman.ql.ast.Type;
-
 /**
  * Created by matt on 27/02/2017.
  *
  * Boolean literal type implementation
  */
-public class BooleanLiteral extends Type {
+public class BooleanLiteral extends BooleanType {
 
     private String value;
 
     public BooleanLiteral() {
         this.value = "boolean";
-    }
-
-    public String getType() {
-        return this.value;
-    }
-
-    @Override
-    public boolean isCompatible(Type type) {
-        return type.getType() == "boolean";
     }
 
 }

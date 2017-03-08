@@ -15,7 +15,6 @@ public abstract class BinaryOperation extends Expression {
         this.right = right;
     }
 
-
     public Expression getLeft() {
         return this.left;
     }
@@ -23,6 +22,5 @@ public abstract class BinaryOperation extends Expression {
     public Expression getRight() {
         return this.right;
     }
-
 
 }

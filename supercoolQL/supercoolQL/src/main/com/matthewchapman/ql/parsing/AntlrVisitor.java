@@ -3,9 +3,7 @@ package com.matthewchapman.ql.parsing;
 import com.matthewchapman.antlr.QLBaseVisitor;
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.*;
-import com.matthewchapman.ql.ast.atomic.BooleanLiteral;
-import com.matthewchapman.ql.ast.atomic.IntegerLiteral;
-import com.matthewchapman.ql.ast.atomic.StringLiteral;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -173,16 +171,16 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitBooleanType(QLParser.BooleanTypeContext ctx) {
-        return new BooleanLiteral();
+        return new BooleanType();
     }
 
     @Override
     public TreeNode visitIntegerType(QLParser.IntegerTypeContext ctx) {
-        return new IntegerLiteral();
+        return new IntegerType();
     }
 
     @Override
     public TreeNode visitStringType(QLParser.StringTypeContext ctx) {
-        return new StringLiteral();
+        return new StringType();
     }
 }
