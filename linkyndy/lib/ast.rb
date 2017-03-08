@@ -1,10 +1,6 @@
-module Ast
-  module Visitable
-    def accept(visitor)
-      visitor.visit(self)
-    end
-  end
+require 'active_support/inflector'
 
+module Ast
   module Evaluatable
     def eval
       raise NotImplementedError
@@ -13,6 +9,29 @@ module Ast
 
   class Form < Struct.new(:identifier, :body)
     include Visitable
+  class Node < Struct
+    def visit(visitor, parent = nil)
+      visitor.send(method_name, self, parent)
+      children.each { |child| child.visit(visitor, self) }
+    end
+
+    def children
+      values.each_with_object([]) do |child, memo|
+        if child.kind_of? Node
+          memo << child
+        elsif child.kind_of? Array
+          child.each { |c| memo << c if c.kind_of? Node }
+        end
+      end
+    end
+
+    def node_name
+      ActiveSupport::Inflector.underscore ActiveSupport::Inflector.demodulize(self.class.name)
+    end
+
+    def method_name
+      "visit_#{node_name}"
+    end
   end
 
   class Question < Struct.new(:string, :type, :identifier, :value)
