@@ -2,6 +2,7 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.validation.QLVisitor;
 
 import java.util.List;
 
@@ -23,5 +24,10 @@ public class IfElseStatement extends IfStatement {
 
     public List<Statement> getElseCaseStatements() {
         return this.elseCaseStatements;
+    }
+
+    @Override
+    public <T> T accept(QLVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

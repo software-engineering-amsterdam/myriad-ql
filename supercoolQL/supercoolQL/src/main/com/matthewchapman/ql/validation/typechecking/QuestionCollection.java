@@ -8,10 +8,7 @@ import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.validation.AbstractQLVisitor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by matt on 03/03/2017.
@@ -20,7 +17,7 @@ import java.util.Set;
  */
 public class QuestionCollection extends AbstractQLVisitor<Void> {
 
-    private ArrayList<Question> questionList;
+    private List<Question> questionList;
     private HashMap<String, Type> typeTable;
 
     public QuestionCollection() {
@@ -34,7 +31,11 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
         }
     }
 
-    public ArrayList<Question> getQuestionList() {
+    public Map<String, Type> getTypeTable() {
+        return this.typeTable;
+    }
+
+    public List<Question> getQuestionList() {
         return this.questionList;
     }
 

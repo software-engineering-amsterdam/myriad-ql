@@ -15,10 +15,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
  * Contains core parsing logic, including building the QL AST from Antlr and handling type checking
  * before UI generation.
  */
-class CoreParser {
+public class CoreParser {
 
     //TODO this should not all be public
-    Form buildQLAST(String input) {
+    public Form buildQLAST(String input) {
         AntlrErrorListener errorListener = new AntlrErrorListener();
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
         lexer.removeErrorListeners();
