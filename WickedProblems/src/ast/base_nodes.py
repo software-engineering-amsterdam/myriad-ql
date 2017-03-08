@@ -35,10 +35,17 @@ class Root(Node):
 class Question(Node):
     def __init__(self, text, identifier, field_type):
         Node.__init__(self, "question")
+        print(text)
+        print(identifier)
+        print(field_type)
         text._identifier = identifier
         self._text = text
         self._identifier = identifier
-        self._field_type = field_type(identifier)
+        self._field_type = field_type
+        # self._field_type = field_type(identifier)
+        print(self._text)
+        print(self._identifier)
+        print(self._field_type)
 
     def __str__(self):
         return "{} \"{}\", {}, \"{}\"\n".format(
@@ -79,7 +86,8 @@ class Statement(Node):
         Node.__init__(self, "statement")
         text._identifier = identifier
         self._identifier = identifier
-        self._field_type = field_type(identifier)
+        self._field_type = field_type
+        # self._field_type = field_type(identifier)
         self._children = children
 
     def __str__(self):

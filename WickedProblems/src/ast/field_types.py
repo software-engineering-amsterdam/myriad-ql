@@ -1,6 +1,6 @@
 from .base_nodes import Node
 from gui.labeledcb import LabeledCheckbutton
-from tkinter import W
+from tkinter import W, IntVar
 
 class FieldType(Node):
     def __init__(self):
@@ -9,14 +9,17 @@ class FieldType(Node):
     # def __str__(self):
         # return "{}".format(self._value)
 
+    # def __call__(self, value):
+    #     self._value = value
+
     def eval(self):
         return self._value
 
 class Boolean(FieldType):
-    def __init__(self, identifier, value = [False]):
+    def __init__(self, identifier):
         FieldType.__init__(self)
         self._identifier = identifier
-        self._value = bool(value[0])
+        self._value = None
 
     def __or__(self, other):
         return (self.eval() | other.eval())
@@ -31,13 +34,17 @@ class Boolean(FieldType):
 
     def draw(self, _interface, _parent):
         # TODO: SOMETHING IS BROKEN HERE!!
-        print(self)
-        print(_parent._text)
+        if(self._value == None):
+            self._value = IntVar()
         labeledcb = LabeledCheckbutton(_interface._root)
         labeledcb.label.configure(text=str(_parent._text))
         labeledcb.checkbutton.configure(variable=self._value,
-                                        command=_interface.refresh)
+                                        onvalue=True,
+                                        offvalue=False,
+                                        command=_interface.refresh
+                                        )
         labeledcb.grid(row=_interface.get_new_row(), columnspan=2, sticky=W)
+        # print(self._value.get())
 
 class String(FieldType):
     def __init__(self, identifier, value = [""]):

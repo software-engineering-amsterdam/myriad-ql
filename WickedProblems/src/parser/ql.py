@@ -65,16 +65,22 @@ class QL:
     left_parenthesis = '('
     right_parenthesis = ')'
     form_type = oneOf('form')
-    field_boolean = Literal('boolean').addParseAction(lambda : Boolean)
-    field_string = Literal('string').addParseAction(lambda: String)
-    field_integer = Literal('integer').addParseAction(lambda: Integer)
-    field_data = Literal('data').addParseAction(lambda: Data)
-    field_decimal = Literal('decimal').addParseAction(lambda: Decimal)
-    field_money = Literal('money').addParseAction(lambda: Money)
-    field_type = field_boolean | field_string | field_integer | field_data | \
-                field_decimal | field_money
     word = Word(alphas)
     identifier = word.setResultsName("identifier")
+    field_boolean = Literal('boolean').addParseAction(lambda \
+                    identifier : Boolean(identifier))
+    field_string = Literal('string').addParseAction(lambda \
+                    identifier : String(identifier))
+    field_integer = Literal('integer').addParseAction(lambda \
+                    identifier : Integer(identifier))
+    field_date = Literal('date').addParseAction(lambda \
+                    identifier : Date(identifier))
+    field_decimal = Literal('decimal').addParseAction(lambda \
+                    identifier : Decimal(identifier))
+    field_money = Literal('money').addParseAction(lambda \
+                    identifier : Money(identifier))
+    field_type = field_boolean | field_string | field_integer | field_date | \
+                field_decimal | field_money
     # identifier.addParseAction(lambda identifier : Variable(identifier))
 
     def parse_binary(self, content):
