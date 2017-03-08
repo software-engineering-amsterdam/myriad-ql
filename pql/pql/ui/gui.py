@@ -1,17 +1,11 @@
 # coding=utf-8
-from PyQt5.QtCore import QLocale
-from PyQt5.QtCore import QObject
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QDoubleValidator
-from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QScrollArea
 from PyQt5.QtWidgets import QSpinBox
-from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
@@ -46,10 +40,17 @@ class Gui(FormVisitor, TypeVisitor):
     def form(self, node):
         page = Page(node.name, "Temp subtitle", self.ql_wizard)
         layout = QVBoxLayout()
+        widget = QWidget()
+        scroll = QScrollArea()
         for statement in node.statements:
             statement.parent = page
             layout.addWidget(statement.apply(self))
-        page.add_layout(layout)
+        widget.setLayout(layout)
+        scroll.setWidget(widget)
+        scroll.setWidgetResizable(True)
+        scroll_layout = QVBoxLayout()
+        scroll_layout.addWidget(scroll)
+        page.add_layout(scroll_layout)
         page.set_layout()
         return page
 
