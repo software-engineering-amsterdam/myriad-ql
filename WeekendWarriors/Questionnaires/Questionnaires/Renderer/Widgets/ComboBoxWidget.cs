@@ -63,16 +63,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-<<<<<<< HEAD
-            QuestionInputWidget.SelectionChanged += (sender, args) => inputChanged.Invoke(this, new BooleanType((String)QuestionInputWidget.SelectedValue == "Yes"));
-=======
             // string text = (sender as ComboBox).SelectedItem as string;
             QuestionInputWidget.SelectionChanged += (sender, args) =>
             {
                 bool value = (sender as ComboBox).SelectedItem as string == "Yes";
                 inputChanged.Invoke(this, new BooleanType(value));
             };
->>>>>>> origin/WeekendWarriors
         }
     }
 }
