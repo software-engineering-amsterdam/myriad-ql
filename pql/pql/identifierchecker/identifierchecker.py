@@ -6,13 +6,13 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class IdentifierChecker(FormVisitor):
     def __init__(self):
-        # TODO: Dictionary niet als instance variable
-        self.identifier_dict = defaultdict(list)
+        # TODO: Dictionary niet als instance variable (hoe dan wel? het is nu een "hidden" instance variable)
+        self.__identifier_dict = defaultdict(list)
 
     def visit(self, pql_ast):
-        self.identifier_dict.clear()
+        self.__identifier_dict.clear()
         [form.apply(self) for form in pql_ast]
-        return self.__compute_result(self.identifier_dict)
+        return self.__compute_result(self.__identifier_dict)
 
     def form(self, node):
         [statement.apply(self) for statement in node.statements]
@@ -25,7 +25,7 @@ class IdentifierChecker(FormVisitor):
         [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        self.identifier_dict[node.name.name].append(node.data_type)
+        self.__identifier_dict[node.name.name].append(node.data_type)
 
     def __compute_result(self, dictionary):
         def normalize_dictionary(dictionary_):
