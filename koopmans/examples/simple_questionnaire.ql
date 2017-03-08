@@ -8,16 +8,9 @@ form taxOfficeExample {
     "Did you enter a loan?"
         hasMaintLoan: boolean
 
-  if (true) {
+  if (true + 5 - 10) {
     "What was the selling price?"
       sellingPrice: money
-      if (true) {
-    "Private debts for the sold house:"
-      privateDebt: money
-    "Value residue:"
-      valueResidue: money =
-        (-5*5+5+(300*2))
-        }
   }
 
 }

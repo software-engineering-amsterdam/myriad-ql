@@ -6,4 +6,10 @@ module Notification
       @message = message
     end
   end
+
+  class Error < Notification
+  end
+
+  class Warning < Notification
+  end
 end

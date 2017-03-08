@@ -4,7 +4,7 @@ module QL
       attr_reader :expression
 
       def initialize(expression)
-        @expression = expression
+        @expression = Array(expression)
       end
 
       # makes sure all (sub)expressions are calculated in correct order
@@ -14,6 +14,10 @@ module QL
 
       def accept(visitor)
         visitor.visit_expression(self)
+      end
+
+      def accept_types
+        [BooleanType, IntegerType, MoneyType]
       end
     end
 
@@ -49,6 +53,21 @@ module QL
         right = self.expression.eval
         self.eval(left.to_value, right.to_value)
       end
+      #
+      # def type_check(left)
+      #   pp 'haloooo'
+      #   pp left
+      #   left_type = left.accept_types
+      #   pp left_type
+      #   pp self
+      #   operator_types = self.accept_types
+      #   pp "operator accepts: #{operator_types}"
+      #
+      #   right_type = self.expression.map { |expression| expression.accept_types}
+      #   pp right_type
+      #   # pp 'doeiiii'
+      #   # left = left.eval
+      # end
     end
 
     # booleans: && ||

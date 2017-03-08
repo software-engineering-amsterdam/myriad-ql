@@ -5,73 +5,98 @@ module QL
       include AST
       include Notification
 
-      def visit_form(form)
-        # get all variables and their types as defined by the questions
-        # e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>, "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
-        @types = form.accept(QuestionVisitor.new).map { |question| [question.variable.name, question.type] }.to_h
+      def visit_form(form, variable_type_hash)
+        @variable_type_hash = variable_type_hash
 
-        # do the actual operands type checking
-        form.statements.map { |statement| statement.accept(self) }.flatten.compact
+        form.statements.map { |statement| statement.accept(self) }
       end
 
-      # visit calculation of the question
-      def visit_question(question)
-        question.assignment.accept(self) if question.assignment
+      # nothing has to be done with a question
+      def visit_question(_)
       end
 
-      # visit calculation of if condition and visit all statements in if block
+      # visit the assignment of a computed question
+      def visit_computed_question(computed_question)
+        computed_question.assignment.accept(self)
+      end
+
+      # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
-        errors = []
-        errors.push(if_statement.expression.accept(self))
-        errors.push(if_statement.block.map { |statement| statement.accept(self) })
-      end
-
-      # variable is useless here
-      def visit_variable(_)
-      end
-
-      # nothing has to be done with a literal
-      def visit_literal(_)
+        if_statement.condition.accept(self) + if_statement.body.map { |statement| statement.accept(self) }
       end
 
       def visit_negation(negation)
-        expression_type = type(negation.expression)
-        error(negation.class, expression_type) if ([type(negation).accept_types].flatten & [expression_type.accept_types].flatten).empty?
+        []
+        # TODO
+        # expression_type = type(negation.expression)
+        # error(negation.class, expression_type) if ([type(negation).accept_types].flatten & [expression_type.accept_types].flatten).empty?
+      end
+
+      def visit_variable(variable)
+        @variable_type_hash[variable.name].class
+      end
+
+      def visit_literal(literal)
+        # pp 'joe'
+        # pp [literal.accept_types.first]
+        literal.to_type
       end
 
       # an expression is checked for correctness
       def visit_expression(expression)
-        left_type          = type(expression.left)
-        right_type         = type(expression.right)
-        correct_comparison = false
+        pp '---------------------------'
+        # pp expression
+        # expression_type = expression.expression.map{|e| type(e)}
+        # pp expression_type
+        # pp '================================'
+        # []
+        # left_type          = type(expression.left)
+        # right_type         = type(expression.right)
+        # correct_comparison = false
+        #
+        # errors = []
+        # # the left side does not match the operator
+        # errors.push(error(left_type, expression.class)) unless expression.accept_types.include? left_type
+        # # the right side does not match the operator
+        # errors.push(error(right_type, expression.class)) unless expression.accept_types.include? right_type
+        # # do the left and right side match?
+        # correct_comparison = left_type.accept_types.include? right_type if left_type
+        # errors.push(error(left_type, right_type)) unless correct_comparison
+        #
+        # errors.push([expression.left.accept(self), expression.right.accept(self)])
+        pp '1'
+        # pp expression
+        # pp expression.accept_types
+        expression.expression.reduce { |left, operation| operation.type_check(left) }
+        # pp expression.eval
+        # types = expression.expression.map { |expression| expression.accept(self) }
 
-        errors = []
-        # the left side does not match the operator
-        errors.push(error(left_type, expression.class)) unless expression.accept_types.include? left_type
-        # the right side does not match the operator
-        errors.push(error(right_type, expression.class)) unless expression.accept_types.include? right_type
-        # do the left and right side match?
-        correct_comparison = left_type.accept_types.include? right_type if left_type
-        errors.push(error(left_type, right_type)) unless correct_comparison
+        #
+        # pp 'aap'
+        # pp expression
+        # pp types
+        # pp expression.accept_types
+        # pp (types - expression.accept_types).empty?
 
-        errors.push([expression.left.accept(self), expression.right.accept(self)])
+
+        pp '2'
       end
 
       # get the type of a variable or other
-      def type(left_or_right)
-        if left_or_right.kind_of?(Variable)
-          @types[left_or_right.name]
-        else
-          left_or_right.accept_types.first
-        end
-      end
+      # def type(expression)
+      #   if expression.kind_of?(Variable)
+      #     @variable_type_hash[expression.name]
+      #   else
+      #     expression.accept_types.first
+      #   end
+      # end
 
-      # generate error message
-      def error(left, right)
-        left  = 'undefined' unless left
-        right = 'undefined' unless right
-        Notification.new("#{left} can not be used with #{right}")
-      end
+      # # generate error message
+      # def error(left, right)
+      #   left  = 'undefined' unless left
+      #   right = 'undefined' unless right
+      #   Notification.new("#{left} can not be used with #{right}")
+      # end
     end
   end
 end

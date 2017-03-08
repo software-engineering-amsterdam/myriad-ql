@@ -59,6 +59,10 @@ module QL
       def render(gui, condition)
         QL::GUI::ComputedQuestionFrame.new(gui, self, condition)
       end
+
+      def accept(visitor)
+        visitor.visit_computed_question(self)
+      end
     end
   end
 end

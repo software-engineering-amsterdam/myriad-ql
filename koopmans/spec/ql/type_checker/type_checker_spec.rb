@@ -23,9 +23,9 @@ module QL
         end
       end
 
-      describe UndefinedVariableChecker do
+      describe ExpressionVariableCollector do
         it 'detects error' do
-          expect(form_ast.accept(UndefinedVariableChecker.new).map(&:message))
+          expect(form_ast.accept(ExpressionVariableCollector.new).map(&:message))
             .to include('variable \'_\' is undefined')
         end
       end
