@@ -10,7 +10,7 @@ class QuestionnaireWizard(QWizard):
         self.init_uit()
 
     def init_uit(self):
-        self.resize(800 , 600)
+        self.resize(800, 600)
         self.setWindowTitle('Leuker kunnen we het niet maken')
         self.center()
 
