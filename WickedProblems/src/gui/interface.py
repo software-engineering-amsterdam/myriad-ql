@@ -112,7 +112,7 @@ class Interface(Frame):
             # evaluate condition
             evaluation = node._evaluation
             node.evaluate()
-            # print(evaluation.right_child.right_child._identifier)
+            # print(evaluation.right_hand_side.right_hand_side._identifier)
             return
             if(self.__variables[_var].get() == 1):
                 # recursive

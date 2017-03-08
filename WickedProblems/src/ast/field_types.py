@@ -77,3 +77,6 @@ class Undefined(FieldType):
     def __init__(self):
         FieldType.__init__(self)
         self._value = False
+
+    def __sub__(self, other):
+        return None

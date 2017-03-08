@@ -10,14 +10,14 @@ if __name__ == '__main__':
     # print(__parsed)
     eval_test = '(hasSoldHouse || (hasBoughtHouse && hasMaintLoan))'
     __parsed = QL.boolean_expression.parseString(eval_test)[0]
-    # print(__parsed.right_child)
-    # print(__parsed.right_child.right_child)
-    # print(__parsed.right_child.right_child.left_child)
-    # print(__parsed.right_child.right_child.right_child)
-    # print(__parsed.right_child.right_child.right_child.right_child)
-    left = __parsed.right_child.right_child.right_child.right_child.left_child
+    # print(__parsed.right_hand_side)
+    # print(__parsed.right_hand_side.right_hand_side)
+    # print(__parsed.right_hand_side.right_hand_side.left_hand_side)
+    # print(__parsed.right_hand_side.right_hand_side.right_hand_side)
+    # print(__parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side)
+    left = __parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side.left_hand_side
     print(left._identifier)
-    right = __parsed.right_child.right_child.right_child.right_child.right_child
+    right = __parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side.right_hand_side
     print(right._identifier)
     left._value = Integer(None, [1])
     right._value = Integer(None, [2])
@@ -28,5 +28,5 @@ if __name__ == '__main__':
     # eval_test = '(sellingPrice - privateDebt)'
     # __parsed = QL.arithmic_expression.parseString(eval_test)[0]
     # print(__parsed.eval())
-    # print(__parsed.left_child)
-    # print(__parsed.right_child)
+    # print(__parsed.left_hand_side)
+    # print(__parsed.right_hand_side)

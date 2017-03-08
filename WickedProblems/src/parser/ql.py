@@ -12,35 +12,35 @@ https://pyparsing.wikispaces.com/file/view/simpleArith.py
 class QL:
     # Booleans
     literal_and = Literal('&&').addParseAction(lambda \
-        left_child, right_child : LogicalAnd(left_child, right_child))
+        left_hand_side, right_hand_side : LogicalAnd(left_hand_side, right_hand_side))
     literal_or = Literal('||').addParseAction(lambda \
-        left_child, right_child : LogicalOr(left_child, right_child))
+        left_hand_side, right_hand_side : LogicalOr(left_hand_side, right_hand_side))
     # Unary
     literal_not = Literal('!').addParseAction(lambda child : LogicalNot(child))
 
     # Comparisons
     literal_greater_than = Literal('>').addParseAction(lambda \
-        left_child, right_child : GreaterThan(left_child, right_child))
+        left_hand_side, right_hand_side : GreaterThan(left_hand_side, right_hand_side))
     literal_less_than = Literal('<').addParseAction(lambda \
-        left_child, right_child : LessThan(left_child, right_child))
+        left_hand_side, right_hand_side : LessThan(left_hand_side, right_hand_side))
     literal_greater_than_equal = Literal('>=').addParseAction(lambda \
-        left_child, right_child : GreaterThanEquals(left_child, right_child))
+        left_hand_side, right_hand_side : GreaterThanEquals(left_hand_side, right_hand_side))
     literal_less_than_equal = Literal('<=').addParseAction(lambda \
-        left_child, right_child : LessThanEquals(left_child, right_child))
+        left_hand_side, right_hand_side : LessThanEquals(left_hand_side, right_hand_side))
     literal_equal = Literal('=').addParseAction(lambda \
-        left_child, right_child : Equality(left_child, right_child))
+        left_hand_side, right_hand_side : Equality(left_hand_side, right_hand_side))
     literall_not_equal = Literal('!=').addParseAction(lambda \
-        left_child, right_child : Inequality(left_child, right_child))
+        left_hand_side, right_hand_side : Inequality(left_hand_side, right_hand_side))
 
     # Basic Arithmics
     literal_addition = Literal('+').addParseAction(lambda \
-        left_child, right_child : Addition(left_child, right_child))
+        left_hand_side, right_hand_side : Addition(left_hand_side, right_hand_side))
     literal_substraction = Literal('-').addParseAction(lambda \
-        left_child, right_child : Substraction(left_child, right_child))
+        left_hand_side, right_hand_side : Substraction(left_hand_side, right_hand_side))
     literal_multiplication = Literal('*').addParseAction(lambda \
-        left_child, right_child : Multiplication(left_child, right_child))
+        left_hand_side, right_hand_side : Multiplication(left_hand_side, right_hand_side))
     literal_division = Literal('/').addParseAction(lambda \
-        left_child, right_child : Division(left_child, right_child))
+        left_hand_side, right_hand_side : Division(left_hand_side, right_hand_side))
 
     # Missing Unary Operators (plus, minus)
     literal_postitive = Literal('+').addParseAction(lambda : UnaryPlus)
@@ -67,9 +67,9 @@ class QL:
     identifier.addParseAction(lambda identifier : Variable(*identifier))
 
     def parse_binary(self, content):
-        left_child, condition, right_child = \
+        left_hand_side, condition, right_hand_side = \
                 content[0][0], content[0][1], content[0][2]
-        return condition(left_child, right_child)
+        return condition(left_hand_side, right_hand_side)
 
     def parse_unary(self, content):
         # TODO:
