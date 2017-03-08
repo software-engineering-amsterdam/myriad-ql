@@ -53,7 +53,7 @@ module QL
       end
 
       describe 'expressions' do
-        context 'expressions' do
+        context 'general' do
           it 'parses' do
             expect(form_parser.expression).to parse('(-5 + !true * 5 || (sellingPrice > anotherVariable) + 5)')
             expect(form_parser.expression).to parse('( - privateDebt / anotherVariable)')
