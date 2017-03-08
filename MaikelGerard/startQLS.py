@@ -36,4 +36,4 @@ if __name__ == '__main__':
     """
 
     client = Parser()
-    print client.parse(example)
+    print(client.parse(example))
