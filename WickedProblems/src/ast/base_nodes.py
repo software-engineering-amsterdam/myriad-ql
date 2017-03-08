@@ -11,6 +11,9 @@ class Node(object):
             raise TypeError("Child is not an instance of Node")
         self._children.append(child)
 
+    def draw(self, _interface, _parent = None):
+        return
+
 class Root(Node):
     def __init__(self, identifier, children):
         Node.__init__(self, "form")
@@ -43,7 +46,11 @@ class Question(Node):
             self._identifier,
             self._field_type,
             self._text)
+
     __repr__ = __str__
+
+    def draw(self, _interface, _parent = None):
+        return self._field_type.draw(_interface, self)
 
 class Conditional(Node):
     def __init__(self, evaluation, children):

@@ -171,6 +171,9 @@ class Variable(Node):
     def __str__(self):
         return "{}".format(self._value)
 
+    def __repr__(self):
+        return self
+
     def eval(self):
         return self._value
 
