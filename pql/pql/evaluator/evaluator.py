@@ -8,12 +8,12 @@ from pql.traversal.IdentifierVisitor import IdentifierVisitor
 
 class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def __init__(self, environment):
-        self.environment = environment
+        self.__environment = environment
 
     def visit(self, pql_ast):
         # TODO Investigate whether environment can be passed as argument
         [form.apply(self) for form in pql_ast]
-        return self.environment
+        return self.__environment
 
     def form(self, node):
         [statement.apply(self) for statement in node.statements]
@@ -33,11 +33,11 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def field(self, node):
         if node.expression is not None:
-            self.environment[node.name.name] = node.expression.apply(self)
+            self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):
-        if node.name in self.environment:
-            return self.environment[node.name]
+        if node.name in self.__environment:
+            return self.__environment[node.name]
         else:
             return None
 
@@ -95,5 +95,5 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def update_value(self, key, value):
         #TODO If environment is passed, this can be removed
-        self.environment[key] = value
-        print(self.environment)
+        self.__environment[key] = value
+        print(self.__environment)
