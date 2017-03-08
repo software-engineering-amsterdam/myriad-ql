@@ -22,19 +22,32 @@ if __name__ == '__main__':
     # Basic Arithmics
     left._value = Integer(None, [1])
     right._value = Integer(None, [2])
-    print(left + right)
-    print(left - right)
-    print(left * right)
-    print(left / right)
+    print("left: {}".format(left))
+    print("right: {}".format(right))
+    print("left + right: {}".format(left + right))
+    print("left - right: {}".format(left - right))
+    print("left * right: {}".format(left * right))
+    print("left / right: {}".format(left / right))
     # Boolean expression
     left._value = Boolean(None, [True])
     right._value = Boolean(None, [False])
-    print(left & right)
-    print(left | right)
-    print(~left)
-    print(~right)
-
+    print("left: {}".format(left))
+    print("right: {}".format(right))
+    print("left && right: {}".format(left & right))
+    print("left || right: {}".format(left | right))
+    print("!left: {}".format(~left))
+    print("!right: {}".format(~right))
     # Comparisons
+    left._value = Integer(None, [5])
+    right._value = Integer(None, [4])
+    print("left: {}".format(left))
+    print("right: {}".format(right))
+    print("left < right: {}".format(left < right))
+    print("left > right: {}".format(left > right))
+    print("left >= right: {}".format(left >= right))
+    print("left <= right: {}".format(left <= right))
+    print("left != right: {}".format(left != right))
+    print("left == right: {}".format(left == right))
 
     # eval_test = '(sellingPrice - privateDebt)'
     # __parsed = QL.arithmic_expression.parseString(eval_test)[0]

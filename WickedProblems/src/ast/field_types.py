@@ -4,6 +4,9 @@ class FieldType(Node):
     def __init__(self):
         Node.__init__(self, "field_type")
 
+    def __str__(self):
+        return "{}".format(self._value)
+
     def eval(self):
         return self._value
 
@@ -40,26 +43,52 @@ class Integer(FieldType):
     def __add__(self, other):
         if(other.__class__ == Integer):
             return (self.eval() + other.eval())
-        else:
-            return NotImplemented
+        return NotImplemented
 
     def __sub__(self, other):
         if(other.__class__ == Integer):
             return (self.eval() - other.eval())
-        else:
-            return NotImplemented
+        return NotImplemented
 
     def __mul__(self, other):
         if(other.__class__ == Integer):
             return (self.eval() * other.eval())
-        else:
-            return NotImplemented
+        return NotImplemented
 
     def __truediv__(self, other):
         if(other.__class__ == Integer):
             return (self.eval() / other.eval())
-        else:
-            return NotImplemented
+        return NotImplemented
+
+    def __lt__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() < other.eval()
+        return NotImplemented
+
+    def __gt__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() > other.eval()
+        return NotImplemented
+
+    def __ge__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() >= other.eval()
+        return NotImplemented
+
+    def ___le__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() <= other.eval()
+        return NotImplemented
+
+    def __ne__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() != other.eval()
+        return NotImplemented
+
+    def __eq__(self, other):
+        if(other.__class__ == Integer):
+            return self.eval() == other.eval()
+        return NotImplemented
 
 class Date(FieldType):
     def __init__(self, identifier, value):

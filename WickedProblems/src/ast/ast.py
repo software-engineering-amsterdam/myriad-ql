@@ -168,6 +168,9 @@ class Variable(Node):
         self._identifier = identifier
         self._value = Undefined()
 
+    def __str__(self):
+        return "{}".format(self._value)
+
     def eval(self):
         return self._value
 
@@ -191,3 +194,21 @@ class Variable(Node):
 
     def __invert__(self):
         return ~self.eval()
+
+    def __lt__(self, other):
+        return self.eval() < other.eval()
+
+    def __gt__(self, other):
+        return self.eval() > other.eval()
+
+    def __ge__(self, other):
+        return self.eval() >= other.eval()
+
+    def ___le__(self, other):
+        return self.eval() <= other.eval()
+
+    def __ne__(self, other):
+        return self.eval() != other.eval()
+
+    def __eq__(self, other):
+        return self.eval() == other.eval()
