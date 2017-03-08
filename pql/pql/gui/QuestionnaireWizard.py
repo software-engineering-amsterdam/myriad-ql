@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QScrollArea
 from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QWizard
 from PyQt5.QtWidgets import QWizardPage
 
@@ -35,8 +37,12 @@ class Page(QWizardPage):
         self.setTitle(title.name)
         self.layout = QVBoxLayout()
 
-    def add_layout(self, layout):
-        self.layout.addLayout(layout)
-
-    def set_layout(self):
-        self.setLayout(self.layout)
+    def set_layout(self, layout):
+        widget = QWidget()
+        scroll = QScrollArea()
+        widget.setLayout(layout)
+        scroll.setWidget(widget)
+        scroll.setWidgetResizable(True)
+        scroll_layout = QVBoxLayout()
+        scroll_layout.addWidget(scroll)
+        self.setLayout(scroll_layout)

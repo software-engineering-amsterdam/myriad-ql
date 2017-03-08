@@ -4,10 +4,8 @@ from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QScrollArea
 from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtWidgets import QWidget
 
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.QuestionnaireWizard import QuestionnaireWizard, Page
@@ -40,18 +38,10 @@ class Gui(FormVisitor, TypeVisitor):
     def form(self, node):
         page = Page(node.name, self.ql_wizard)
         layout = QVBoxLayout()
-        widget = QWidget()
-        scroll = QScrollArea()
         for statement in node.statements:
             statement.parent = page
             layout.addWidget(statement.apply(self))
-        widget.setLayout(layout)
-        scroll.setWidget(widget)
-        scroll.setWidgetResizable(True)
-        scroll_layout = QVBoxLayout()
-        scroll_layout.addWidget(scroll)
-        page.add_layout(scroll_layout)
-        page.set_layout()
+        page.set_layout(layout)
         return page
 
     def conditional_if_else(self, node):
