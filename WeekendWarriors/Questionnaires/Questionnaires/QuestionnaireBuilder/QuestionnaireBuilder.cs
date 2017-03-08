@@ -10,6 +10,7 @@ using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Types;
 using System.ComponentModel;
+using Questionnaires.Renderer.Style;
 
 namespace Questionnaires.QL.QuestionaireBuilder
 {
@@ -74,7 +75,7 @@ namespace Questionnaires.QL.QuestionaireBuilder
         public void Visit(AST.Question node, Func<bool> visibilityCondition)
         {
             // Add the question to the renderer
-            Renderer.AddQuestion(node);
+            Renderer.AddQuestion(node, new WidgetStyle());
             // And the variable store
             VariableStore.SetValue(node.Identifier, node.Type);
 

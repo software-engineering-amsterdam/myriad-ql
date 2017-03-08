@@ -1,4 +1,5 @@
-﻿using Questionnaires.Renderer.Widgets;
+﻿using Questionnaires.Renderer.Style;
+using Questionnaires.Renderer.Widgets;
 using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
@@ -31,13 +32,15 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Show();
         }
 
-        public void AddQuestion(QL.AST.Question question)
+        public void AddQuestion(QL.AST.Question question, WidgetStyle style)
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
             var questionWidget = WidgetFactory.BuildWidget(question.Type);
             questionWidget.SetLabel(question.Body);
             questionWidget.SetOnInputChanged(inputChangedDelegate);
+            questionWidget.SetStyle(style);
+
             Questions.Add(question.Identifier, questionWidget);
             QuestionnaireStack.Children.Add(questionWidget);
             WidgetNames[questionWidget] = question.Identifier;
