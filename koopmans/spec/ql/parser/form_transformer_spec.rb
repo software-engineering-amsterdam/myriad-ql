@@ -63,7 +63,7 @@ module QL
         context 'questions' do
           it 'transforms' do
             expect(form_transformer.apply(question: { label: '"How much is?"', id: 'hasSoldHouse', type: 'boolean' })).to be_a Question
-            expect(form_transformer.apply(question: { label: '"Value residue:"', id: 'valueResidue', type: 'money', assignment: '_' })).to be_a Question
+            expect(form_transformer.apply(question: { label: '"Value residue:"', id: 'valueResidue', type: 'money', assignment: '_' })).to be_a ComputedQuestion
           end
         end
 
