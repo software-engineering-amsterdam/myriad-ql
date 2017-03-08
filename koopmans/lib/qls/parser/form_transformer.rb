@@ -2,7 +2,7 @@ require 'parslet'
 
 module QLS
   module Parser
-    class Transformer < Parslet::Transform
+    class FormTransformer < Parslet::Transform
       include AST
       # stylesheet
       rule(stylesheet: { variable: simple(:variable), pages: subtree(:pages) }) { Stylesheet.new(variable, pages) }

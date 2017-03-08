@@ -7,8 +7,8 @@ require_all 'lib'
 module QL
   module Parser
     include AST
-    describe Transformer do
-      let(:transformer) { Transformer.new }
+    describe FormTransformer do
+      let(:transformer) { FormTransformer.new }
       let(:expression_transformer) { ExpressionTransformer.new }
 
       describe 'literals' do

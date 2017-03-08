@@ -5,8 +5,8 @@ require 'require_all'
 require_all 'lib'
 
 module QL
-  module Parser
-    describe Parser do
+  module FormParser
+    describe FormParser do
       let(:parser) { Parser.new }
 
       describe 'literals and their negations' do

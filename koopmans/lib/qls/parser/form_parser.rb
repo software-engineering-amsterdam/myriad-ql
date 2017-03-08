@@ -6,7 +6,7 @@ require_rel '../ast'
 # parser for forms
 module QLS
   module Parser
-    class Parser < Parslet::Parser
+    class FormParser < Parslet::Parser
       root(:stylesheet)
 
       # spaces

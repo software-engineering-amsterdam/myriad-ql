@@ -3,7 +3,7 @@ require 'parslet'
 module QL
   module Parser
     # parser for forms
-    class Parser < Parslet::Parser
+    class FormParser < Parslet::Parser
       root(:form)
 
       # spaces, breaks, tabs

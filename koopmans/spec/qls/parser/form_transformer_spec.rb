@@ -7,8 +7,8 @@ require_all 'lib'
 module QLS
   module Parser
     include AST
-    describe Transformer do
-      let(:transformer) { Transformer.new }
+    describe FormTransformer do
+      let(:transformer) { FormTransformer.new }
 
       describe 'widgets' do
         context 'spinbox' do
