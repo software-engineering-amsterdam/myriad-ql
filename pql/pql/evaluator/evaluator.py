@@ -16,7 +16,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.environment
 
     def form(self, node):
-        [statement.apply(self) for statement in node.children]
+        [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
         if node.condition.apply(self):

@@ -46,7 +46,7 @@ class Gui(FormVisitor, TypeVisitor):
     def form(self, node):
         page = Page(node.name, "Temp subtitle", self.ql_wizard)
         layout = QVBoxLayout()
-        for statement in node.children:
+        for statement in node.statements:
             statement.parent = page
             layout.addWidget(statement.apply(self))
         page.add_layout(layout)

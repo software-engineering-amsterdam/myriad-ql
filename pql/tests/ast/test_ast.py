@@ -17,7 +17,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         field_node_1 = form_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children))
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasSoldHouse', field_node_1.name.name)
         self.assertEqual('Did you sell a house in 2010?', field_node_1.title)
@@ -41,7 +40,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('hasBoughtHouse', field_node_1.name.name)
         self.assertEqual('Did you buy a house in 2010?', field_node_1.title)
 
-        self.assertEqual(0, len(field_node_2.children))
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('hasSoldHouse', field_node_2.name.name)
         self.assertEqual('Did you sell a house in 2010?', field_node_2.title)
@@ -63,8 +61,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         subtraction_node = field_node_1.expression
-        self.assertEqual(0, len(subtraction_node.children),
-                         'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
 
@@ -88,15 +84,11 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         subtraction_node = field_node_1.expression
-        self.assertEqual(0, len(subtraction_node.children),
-                         'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
         self.assertEqual('interest', subtraction_node.rhs.name)
 
         addition_node = subtraction_node.lhs
-        self.assertEqual(0, len(addition_node.children),
-                         'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
 
@@ -120,15 +112,11 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         addition_node = field_node_1.expression
-        self.assertEqual(0, len(addition_node.children),
-                         'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
 
         subtraction_node = addition_node.lhs
-        self.assertEqual(0, len(subtraction_node.children),
-                         'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
 
@@ -153,15 +141,11 @@ class TestAst(unittest.TestCase):
 
 
         multiplication_node = field_node_1.expression
-        self.assertEqual(0, len(multiplication_node.children),
-                         'Multiplication node should have no nodes as children')
         self.assertEqual('multiplication', multiplication_node.var_type,
                          'Multiplication node should have type multiplication')
         self.assertEqual('debt', multiplication_node.rhs.name)
 
         subtraction_node = multiplication_node.lhs
-        self.assertEqual(0, len(subtraction_node.children),
-                         'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
 
@@ -185,29 +169,21 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         addition_node = field_node_1.expression
-        self.assertEqual(0, len(addition_node.children),
-                         'Addition node should have no nodes as children')
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
 
         subtraction_node = addition_node.lhs
-        self.assertEqual(0, len(subtraction_node.children),
-                         'Subtraction node should have no nodes as children')
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
         self.assertEqual('sellingPrice', subtraction_node.lhs.name)
 
         multiplication_node_1 = subtraction_node.rhs
-        self.assertEqual(0, len(multiplication_node_1.children),
-                         'Multiplication node should have no nodes as children')
         self.assertEqual('multiplication', multiplication_node_1.var_type,
                          'Multiplication node should have type multiplication')
         self.assertEqual('salary', multiplication_node_1.rhs.name)
 
         multiplication_node_2 = multiplication_node_1.lhs
-        self.assertEqual(0, len(multiplication_node_2.children),
-                         'Multiplication node should have no nodes as children')
         self.assertEqual('multiplication', multiplication_node_2.var_type,
                          'Multiplication node should have type multiplication')
 
@@ -237,14 +213,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_1 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
         self.assertEqual('What was the selling price?', field_node_1.title)
 
         boolean_operand_node = conditional_node.condition
-        self.assertEqual(0, len(boolean_operand_node.children))
         self.assertEqual('hasSoldHouse', boolean_operand_node.name)
         self.assertEqual('identifier', boolean_operand_node.var_type)
 
@@ -271,7 +245,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_1 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
@@ -280,15 +253,12 @@ class TestAst(unittest.TestCase):
         boolean_and_node = conditional_node.condition
 
         self.assertEqual('and', boolean_and_node.var_type)
-        self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should have no children')
 
         identifier_node_1 = boolean_and_node.lhs
-        self.assertEqual(0, len(identifier_node_1.children))
         self.assertEqual('hasSoldHouse', identifier_node_1.name)
         self.assertEqual('identifier', identifier_node_1.var_type)
 
         identifier_node_2 = boolean_and_node.rhs
-        self.assertEqual(0, len(identifier_node_2.children))
         self.assertEqual('hasBoughtHouse', identifier_node_2.name)
         self.assertEqual('identifier', identifier_node_2.var_type)
 
@@ -315,7 +285,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_1 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
@@ -323,7 +292,6 @@ class TestAst(unittest.TestCase):
 
         or_node = conditional_node.condition
         self.assertEqual('or', or_node.var_type)
-        self.assertEqual(0, len(or_node.children), 'Boolean OR node should have no children')
 
         identifier_node_1 = or_node.lhs
         self.assertEqual('hasSoldHouse', identifier_node_1.name)
@@ -331,15 +299,12 @@ class TestAst(unittest.TestCase):
 
         and_node = or_node.rhs
         self.assertEqual('and', and_node.var_type)
-        self.assertEqual(0, len(and_node.children), 'Boolean AND node should have no children')
 
         identifier_node_2 = and_node.lhs
-        self.assertEqual(0, len(identifier_node_2.children))
         self.assertEqual('hasBoughtHouse', identifier_node_2.name)
         self.assertEqual('identifier', identifier_node_2.var_type)
 
         identifier_node_3 = and_node.rhs
-        self.assertEqual(0, len(identifier_node_3.children))
         self.assertEqual('wantsToBuyHouse', identifier_node_3.name)
         self.assertEqual('identifier', identifier_node_3.var_type)
 
@@ -366,7 +331,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_1 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
@@ -375,23 +339,18 @@ class TestAst(unittest.TestCase):
         boolean_and_node = conditional_node.condition
 
         self.assertEqual('and', boolean_and_node.var_type)
-        self.assertEqual(0, len(boolean_and_node.children), 'Boolean AND node should no children')
 
         identifier_node_1 = boolean_and_node.rhs
-        self.assertEqual(0, len(identifier_node_1.children))
         self.assertEqual('wantsToBuyHouse', identifier_node_1.name)
         self.assertEqual('identifier', identifier_node_1.var_type)
 
         and_node_2 = boolean_and_node.lhs
-        self.assertEqual(0, len(and_node_2.children))
 
         identifier_node_2 = and_node_2.lhs
-        self.assertEqual(0, len(identifier_node_2.children))
         self.assertEqual('hasSoldHouse', identifier_node_2.name)
         self.assertEqual('identifier', identifier_node_2.var_type)
 
         identifier_node_3 = and_node_2.rhs
-        self.assertEqual(0, len(identifier_node_3.children))
         self.assertEqual('hasBoughtHouse', identifier_node_3.name)
         self.assertEqual('identifier', identifier_node_3.var_type)
 
@@ -418,7 +377,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_1 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('sellingPrice', field_node_1.name.name)
         self.assertEqual(DataTypes.money, field_node_1.data_type.data_type)
@@ -427,34 +385,27 @@ class TestAst(unittest.TestCase):
         and_node_1 = conditional_node.condition
 
         self.assertEqual('and', and_node_1.var_type)
-        self.assertEqual(0, len(and_node_1.children), 'Boolean AND node should no children')
 
         and_node_2 = and_node_1.lhs
 
         self.assertEqual('and', and_node_2.var_type)
-        self.assertEqual(0, len(and_node_2.children), 'Boolean AND node should no children')
 
         or_node_1 = and_node_1.rhs
-        self.assertEqual(0, len(or_node_1.children))
         self.assertEqual('or', or_node_1.var_type)
 
         identifier_node_1 = and_node_2.lhs
-        self.assertEqual(0, len(identifier_node_1.children))
         self.assertEqual('hasSoldHouse', identifier_node_1.name)
         self.assertEqual('identifier', identifier_node_1.var_type)
 
         identifier_node_2 = and_node_2.rhs
-        self.assertEqual(0, len(identifier_node_2.children))
         self.assertEqual('hasBoughtHouse', identifier_node_2.name)
         self.assertEqual('identifier', identifier_node_2.var_type)
 
         identifier_node_4 = or_node_1.lhs
-        self.assertEqual(0, len(identifier_node_4.children))
         self.assertEqual('wantsToBuyHouse', identifier_node_4.name)
         self.assertEqual('identifier', identifier_node_4.var_type)
 
         identifier_node_5 = or_node_1.rhs
-        self.assertEqual(0, len(identifier_node_5.children))
         self.assertEqual('wantsToRentHouse', identifier_node_5.name)
         self.assertEqual('identifier', identifier_node_5.var_type)
 
@@ -500,7 +451,6 @@ class TestAst(unittest.TestCase):
 
         field_node_2 = else_statement_list[0]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('buyingPrice', field_node_2.name.name)
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
@@ -519,11 +469,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(2, len(form_node.statements), 'Should have one field and one conditional as children')
 
         field_node_1 = form_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasSoldHouse', field_node_1.name.name)
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
@@ -539,14 +487,12 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_2 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('sellingPrice', field_node_2.name.name)
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
         self.assertEqual('What was the selling price?', field_node_2.title)
 
         identifier_node_1 = conditional_node.condition
-        self.assertEqual(0, len(identifier_node_1.children))
         self.assertEqual('hasSoldHouse', identifier_node_1.name)
         self.assertEqual('identifier', identifier_node_1.var_type)
 
@@ -563,11 +509,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
         field_node_1 = form_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasSoldHouse', field_node_1.name.name)
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
@@ -581,21 +525,18 @@ class TestAst(unittest.TestCase):
         self.assertEqual(1, len(conditional_node.statements))
         field_node_2 = conditional_node.statements[0]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('sellingPrice', field_node_2.name.name)
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
         self.assertEqual('What was the selling price?', field_node_2.title)
 
         field_node_3 = form_node.statements[2]
-        self.assertEqual(0, len(field_node_3.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_3.var_type)
         self.assertEqual('hasBoughtHouse', field_node_3.name.name)
         self.assertEqual(DataTypes.boolean, field_node_3.data_type.data_type)
         self.assertEqual('Did you buy a house in 2010?', field_node_3.title)
 
         identifier_node_1 = conditional_node.condition
-        self.assertEqual(0, len(identifier_node_1.children))
         self.assertEqual('hasSoldHouse', identifier_node_1.name)
         self.assertEqual('identifier', identifier_node_1.var_type)
 
@@ -614,11 +555,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
         field_node_1 = form_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasSoldHouse', field_node_1.name.name)
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
@@ -626,7 +565,6 @@ class TestAst(unittest.TestCase):
 
         field_node_2 = form_node.statements[1]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('hasBoughtHouse', field_node_2.name.name)
         self.assertEqual(DataTypes.boolean, field_node_2.data_type.data_type)
@@ -652,7 +590,6 @@ class TestAst(unittest.TestCase):
 
         field_node_3 = conditional_node_2.statements[0]
 
-        self.assertEqual(0, len(field_node_3.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_3.var_type)
         self.assertEqual('sellingPrice', field_node_3.name.name)
         self.assertEqual(DataTypes.money, field_node_3.data_type.data_type)
@@ -674,11 +611,9 @@ class TestAst(unittest.TestCase):
         parse_result = parse(input_string).asList()
         form_node = parse_result[0]
         self.assertEqual('taxOfficeExample', form_node.name.name)
-        self.assertEqual(3, len(form_node.statements), 'Should have two fields and one conditional as children')
 
         field_node_1 = form_node.statements[0]
 
-        self.assertEqual(0, len(field_node_1.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_1.var_type)
         self.assertEqual('hasSoldHouse', field_node_1.name.name)
         self.assertEqual(DataTypes.boolean, field_node_1.data_type.data_type)
@@ -686,7 +621,6 @@ class TestAst(unittest.TestCase):
 
         field_node_2 = form_node.statements[1]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('hasBoughtHouse', field_node_2.name.name)
         self.assertEqual(DataTypes.boolean, field_node_2.data_type.data_type)
@@ -703,7 +637,6 @@ class TestAst(unittest.TestCase):
 
         field_node_2 = conditional_node_1.statements[0]
 
-        self.assertEqual(0, len(field_node_2.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_2.var_type)
         self.assertEqual('wasMarried', field_node_2.name.name)
         self.assertEqual(DataTypes.boolean, field_node_2.data_type.data_type)
@@ -720,7 +653,6 @@ class TestAst(unittest.TestCase):
 
         field_node_3 = conditional_node_2.statements[0]
 
-        self.assertEqual(0, len(field_node_3.children), 'Field node should have no child nodes')
         self.assertEqual('field', field_node_3.var_type)
         self.assertEqual('sellingPrice', field_node_3.name.name)
         self.assertEqual(DataTypes.money, field_node_3.data_type.data_type)
@@ -743,14 +675,10 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         positive_node = field_node_1.expression
-        self.assertEqual(0, len(positive_node.children),
-                         'Positive node should have no nodes as children')
         self.assertEqual('positive', positive_node.var_type,
                          'Positive node should have type positive')
 
         identifier_node = positive_node.rhs
-        self.assertEqual(0, len(identifier_node.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -773,14 +701,10 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         negative = field_node_1.expression
-        self.assertEqual(0, len(negative.children),
-                         'Negative node should have no nodes as children')
         self.assertEqual('negative', negative.var_type,
                          'Negative node should have type negative')
 
         identifier_node = negative.rhs
-        self.assertEqual(0, len(identifier_node.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -803,14 +727,10 @@ class TestAst(unittest.TestCase):
         self.assertEqual('Value residue:', field_node_1.title)
 
         negative = field_node_1.expression
-        self.assertEqual(0, len(negative.children),
-                         'Negation node should have no nodes as children')
         self.assertEqual('negation', negative.var_type,
                          'Negation node should have type negation')
 
         identifier_node = negative.rhs
-        self.assertEqual(0, len(identifier_node.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -837,36 +757,26 @@ class TestAst(unittest.TestCase):
                          'And node should have type and')
 
         identifier_node = and_node.lhs
-        self.assertEqual(0, len(identifier_node.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
         self.assertEqual('sellingPrice', identifier_node.name)
 
         or_node = and_node.rhs
-        self.assertEqual(0, len(or_node.children),
-                         'Or node should have no nodes as children')
         self.assertEqual('or', or_node.var_type,
                          'Or node should have type or')
 
         negation_node = or_node.lhs
-        self.assertEqual(0, len(negation_node.children),
-                         'Negation node should have no nodes as children')
         self.assertEqual('negation', negation_node.var_type,
                          'Negation node should have type negation')
 
         identifier_node_2 = negation_node.rhs
-        self.assertEqual(0, len(identifier_node_2.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node_2.var_type,
                          'Identifier node should have type identifier')
 
         self.assertEqual('privateDebt', identifier_node_2.name)
 
         identifier_node_3 = or_node.rhs
-        self.assertEqual(0, len(identifier_node_3.children),
-                         'Identifier node should have no nodes as children')
         self.assertEqual('identifier', identifier_node_3.var_type,
                          'Identifier node should have type identifier')
 
