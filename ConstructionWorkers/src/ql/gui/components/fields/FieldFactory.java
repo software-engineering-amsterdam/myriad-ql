@@ -48,7 +48,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
     public Field visit(ComputedQuestion statement) {
         Value result = evaluator.getValueComputedQuestion(statement);
         WidgetInterface widget = this.widgetFactory.getWidgetForComputedQuestion(statement, result);
-        return new ComputerQuestionField(updates, statement, widget, result);
+        return new ComputedQuestionField(updates, statement, widget, result);
     }
 
     @Override

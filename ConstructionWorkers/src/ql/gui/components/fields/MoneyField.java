@@ -37,27 +37,27 @@ public class MoneyField extends Field {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                boolean wasParsed = true;
-                BigDecimal decimal = new BigDecimal(0.00);
 
-                if(!(((MoneyTextField) widget).getInputText().equals(""))) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                    try {
-                        decimal = BigDecimal.valueOf(Double.parseDouble(((MoneyTextField) widget).getInputText()));
-                        //new MoneyValue(decimal);
-                    } catch (Exception ex) {
-                        System.out.println("Incorrect input value for money field!");
-                        wasParsed = false;
-                    }
+                    if (!(((MoneyTextField) widget).getInputText().equals(""))) {
 
-                    if (wasParsed) {
-                        if (Math.max(0, decimal.stripTrailingZeros().scale()) > 2) {
-                            System.out.println("Only two decimals are allowed!");
-                        } else {
-                            String value = ((MoneyTextField) widget).getInputText();
-                            MoneyValue newValue = new MoneyValue(new BigDecimal(value));
-                            setState(newValue);
+                        try {
+                            BigDecimal decimal = BigDecimal.valueOf(Double.parseDouble(((MoneyTextField) widget).getInputText()));
+
+                            if (Math.max(0, decimal.stripTrailingZeros().scale()) > 2) {
+                                System.out.println("Only two decimals are allowed!");
+                            } else {
+                                String value = ((MoneyTextField) widget).getInputText();
+                                MoneyValue newValue = new MoneyValue(new BigDecimal(value));
+                                setState(newValue);
+                            }
+
+                        } catch (Exception ex) {
+                            System.out.println("Incorrect input value for money field!");
+
                         }
+
                     }
                 }
             }

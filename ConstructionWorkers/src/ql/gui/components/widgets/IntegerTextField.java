@@ -15,27 +15,22 @@ import java.util.EventListener;
 
 public class IntegerTextField extends AbstractWidget{
 
-    private JFormattedTextField input;
+    private JTextField input;
 
     private static final int COLUMNS = 7;
 
-    public IntegerTextField(String label) {
-        JLabel questionLabel = new JLabel(label);
+    public IntegerTextField(String questionLabel) {
 
-        NumberFormat intFormat = NumberFormat.getIntegerInstance();
-        intFormat.setGroupingUsed(false);
-        intFormat.setParseIntegerOnly(true);
-
-        NumberFormatter numberFormatter = new NumberFormatter(intFormat);
-        numberFormatter.setValueClass(Integer.class);
-        numberFormatter.setAllowsInvalid(false);
-        numberFormatter.setOverwriteMode(true);
-
-        input = new JFormattedTextField(numberFormatter);
+        JLabel label = new JLabel(questionLabel);
+        input = new JTextField();
         input.setColumns(COLUMNS);
 
-        component.add(questionLabel);
+        component.add(label);
         component.add(input);
+    }
+
+    public String getInputText() {
+        return input.getText();
     }
 
     @Override

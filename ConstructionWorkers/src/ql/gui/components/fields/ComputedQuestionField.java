@@ -9,11 +9,11 @@ import ql.gui.formenvironment.values.Value;
 /**
  * Created by LGGX on 24-Feb-17.
  */
-public class ComputerQuestionField extends Field {
+public class ComputedQuestionField extends Field {
 
     private Value value;
 
-    public ComputerQuestionField(
+    public ComputedQuestionField(
             GUIInterface updates,
             ComputedQuestion question,
             WidgetInterface widget,

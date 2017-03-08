@@ -6,6 +6,7 @@ package ql.gui.components.fields;
 
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.GUIInterface;
+import ql.gui.components.widgets.IntegerTextField;
 import ql.gui.components.widgets.WidgetInterface;
 import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
@@ -35,8 +36,20 @@ public class IntegerField extends Field {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                IntegerValue newValue = (IntegerValue) widget.getValue();
-                setState(newValue);
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                    if (!(((IntegerTextField) widget).getInputText().equals(""))) {
+
+                        try {
+                            IntegerValue newValue = (IntegerValue) widget.getValue();
+                            setState(newValue);
+                        } catch (Exception ex) {
+                            System.out.println("Incorrect input value for integer field!");
+                        }
+
+                    }
+
+                }
             }
         });
     }

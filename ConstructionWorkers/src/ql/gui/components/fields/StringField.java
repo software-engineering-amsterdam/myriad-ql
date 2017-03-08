@@ -30,11 +30,13 @@ public class StringField extends Field {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                StringValue newValue = (StringValue) widget.getValue();
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    StringValue newValue = (StringValue) widget.getValue();
 
-                if (!newValue.equals(value)) {
-                    setState(newValue);
+                    if (!newValue.equals(value)) {
+                        setState(newValue);
 
+                    }
                 }
             }
 

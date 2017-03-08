@@ -2,8 +2,9 @@
  * GUIManager.java.
  */
 
-package ql.gui.components;
+package ql.gui;
 
+import ql.gui.components.FormFrame;
 import ql.gui.components.fields.Field;
 
 import java.util.ArrayList;
