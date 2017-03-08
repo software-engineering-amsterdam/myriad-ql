@@ -99,12 +99,12 @@ public class QuestionValueVisitorTest {
         assertTrue(expectedValueTable.equals(actualValueTable));
     }
 
-    private QuestionElementBuilder mockQuestionElementBuilder() {
-        QuestionElementBuilder elementBuilder = mock(QuestionElementBuilder.class);
+    private QuestionElementFactory mockQuestionElementBuilder() {
+        QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
         when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
             @Override
             public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(Question.class), new UnknownValue(), mock(Widget.class));
+                return new NumericQuestionElement(mock(Question.class), mock(Widget.class));
             }
         });
         return elementBuilder;

@@ -68,8 +68,6 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
 
         if (!questionElement.isDirty() && question.getValue() != null) {
             valueTable.declare(question.getId(), evaluator.evaluate(question.getValue(), valueTable));
-        } else {
-            valueTable.declare(question.getId(), questionElement.getValue());
         }
 
         return null;
