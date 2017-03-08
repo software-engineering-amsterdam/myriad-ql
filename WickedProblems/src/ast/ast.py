@@ -182,3 +182,12 @@ class Variable(Node):
 
     def __truediv__(self, other):
         return self.eval() / other.eval()
+
+    def __or__(self, other):
+        return (self.eval() | other.eval())
+
+    def __and__(self, other):
+        return (self.eval() & other.eval())
+
+    def __invert__(self):
+        return ~self.eval()

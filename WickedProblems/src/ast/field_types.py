@@ -12,6 +12,17 @@ class Boolean(FieldType):
         FieldType.__init__(self)
         self._value = bool(value[0])
 
+    def __or__(self, other):
+        return (self.eval() | other.eval())
+
+    def __and__(self, other):
+        return (self.eval() & other.eval())
+
+    def __invert__(self):
+        if(self._value == True):
+            return False
+        return True
+
 class String(FieldType):
     def __init__(self, identifier, value = [""]):
         FieldType.__init__(self)

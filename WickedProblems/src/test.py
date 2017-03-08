@@ -19,12 +19,23 @@ if __name__ == '__main__':
     print(left._identifier)
     right = __parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side.right_hand_side
     print(right._identifier)
+    # Basic Arithmics
     left._value = Integer(None, [1])
     right._value = Integer(None, [2])
     print(left + right)
     print(left - right)
     print(left * right)
     print(left / right)
+    # Boolean expression
+    left._value = Boolean(None, [True])
+    right._value = Boolean(None, [False])
+    print(left & right)
+    print(left | right)
+    print(~left)
+    print(~right)
+
+    # Comparisons
+
     # eval_test = '(sellingPrice - privateDebt)'
     # __parsed = QL.arithmic_expression.parseString(eval_test)[0]
     # print(__parsed.eval())
