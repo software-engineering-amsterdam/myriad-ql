@@ -20,15 +20,15 @@ namespace Questionnaires.QL.QuestionaireBuilder
         private Renderer.Renderer Renderer;
         private RuleContainer.RuleContainer RuleContainer;
         private ExpressionEvaluator.Evaluator ExpressionEvaluator;
-        public QuestionnaireBuilder(VariableStore.VariableStore variableStore, Renderer.Renderer renderer, RuleContainer.RuleContainer ruleContainer)
+        private Dictionary<string, Question> Questions;
+        public QuestionnaireBuilder(VariableStore.VariableStore variableStore, Renderer.Renderer renderer, RuleContainer.RuleContainer ruleContainer, Dictionary<string, Question> questions)
         {
             VariableStore = variableStore;
             Renderer = renderer;
             RuleContainer = ruleContainer;
             ExpressionEvaluator = new Questionnaires.ExpressionEvaluator.Evaluator(VariableStore);
-
-            // Connect runtime components
-            VariableStore.VariableChanged += VariableStore_VariableChanged;
+            Questions = questions;
+            
         }
 
         public void Build(Form node)
@@ -42,6 +42,9 @@ namespace Questionnaires.QL.QuestionaireBuilder
             // For a form all we want to do is just change the window title
             // you cannot change this later through user input
             Renderer.SetWindowTitle(node.Identifier);
+
+            // Connect runtime components
+            VariableStore.VariableChanged += VariableStore_VariableChanged;
         }
 
         
@@ -75,7 +78,7 @@ namespace Questionnaires.QL.QuestionaireBuilder
         public void Visit(AST.Question node, Func<bool> visibilityCondition)
         {
             // Add the question to the renderer
-            Renderer.AddQuestion(node, new WidgetStyle());
+            //Renderer.AddQuestion(node, new WidgetStyle());
             // And the variable store
             VariableStore.SetValue(node.Identifier, node.Type);
 
@@ -96,6 +99,8 @@ namespace Questionnaires.QL.QuestionaireBuilder
                     })
                 );
             }
+
+            Questions[node.Identifier] = node;
         }     
 
         public void Visit(Conditional node, Func<bool> visibilityCondition)

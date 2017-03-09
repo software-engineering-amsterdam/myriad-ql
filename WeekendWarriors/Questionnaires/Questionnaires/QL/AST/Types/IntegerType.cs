@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.Renderer.Widgets;
 
 namespace Questionnaires.Types
 {
@@ -125,6 +126,11 @@ namespace Questionnaires.Types
         public override BooleanType InequalTo(MoneyType value)
         {
             return new BooleanType(this.Val != value.GetValue());
+        }
+
+        public override QuestionWidget GetWidget()
+        {
+            return new IntegerPickerWidget();
         }
     }
 }

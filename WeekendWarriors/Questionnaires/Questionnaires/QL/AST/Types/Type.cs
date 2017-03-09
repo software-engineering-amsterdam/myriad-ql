@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.Renderer.Widgets;
 
 namespace Questionnaires.Types
 {
@@ -329,5 +330,7 @@ namespace Questionnaires.Types
         {
             return InequalTo((dynamic)value);
         }
+
+        public abstract QuestionWidget GetWidget();
     }
 }

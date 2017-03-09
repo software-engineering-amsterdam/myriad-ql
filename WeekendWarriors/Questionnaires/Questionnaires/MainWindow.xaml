@@ -18,66 +18,64 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="InputQL" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
 form Box1HouseOwning { 
-    hasSoldHouse: "Did you sell a house in 2010?" boolean
-    hasBoughtHouse: "Did you by a house in 2010?" boolean
-    hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?"
-boolean(true)
-
-}
+    intQ1: "Int question 1" int
+    intQ2: "Int question 2" int(intQ1)
+    moneyQ1: "Money question 1" money
+    moneyQ2: "Money question 2" money(moneyQ1)
+    boolQ1: "Boolean question 1" boolean
+    boolQ2: "Boolean question 2" boolean(boolQ1)
+    boolQ3: "Boolean question 3" boolean(boolQ2)
+    boolQ4: "Boolean question 4" boolean
+    boolQ5: "Boolean question 5" boolean
+    boolQ6: "Boolean question 6" boolean
+    boolQ7: "Boolean question 7" boolean
+    stringQ1: "Stringquestion 1" string
+    stringQ2: "Stringquestion 2" string(stringQ1)
+}     
         </TextBox>
         <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
 
 stylesheet taxOfficeExample 
 {
-	page Housing 
-	{
-		section "Buying"
-		{      
-			question hasBoughtHouse 
-			{
-				widget checkbox
-			}
-		} 
-		section "Loaning" 
-		{
-			question hasMaintLoan
-		}
-	}
-	page Selling 
-	{
-		section "Selling" 
-		{
-			question hasSoldHouse
-			{
-				widget radio
-			}
-		}
-		section "You sold a house" 
-		{
-			question sellingPrice
-			{
-				widget spinbox
-			}
-			question privateDebt
-			{
-				widget spinbox 
-			}
-			question valueResidue
-			default money 
-			{
-				width: 400
-				font: "Arial" 
-				fontsize: 14
-				color: #999999
-				widget spinbox
-			}
-        }        
-      
-		default boolean
-		{
-			widget radio
-		}
-	}
+ page Housing 
+ {
+  default boolean { widget dropdown }
+  section "Buying"
+  {
+   question boolQ1         
+   question boolQ2
+   {
+    widget checkbox
+   }
+   question boolQ3
+   {
+    widget radio
+   }
+   question moneyQ1
+   {
+    widget slider
+   }
+  } 
+ }
+ page Bla
+ {
+   default boolean{ widget radio }
+   section "BlaSection1"
+   {
+     question boolQ4
+   }
+   section "BlaSection2"
+   {
+      default boolean { widget dropdown }
+      question boolQ5
+   }
+   section "BlaSection3"
+   {
+      //default boolean { widget checkbox }
+      question boolQ6
+      question boolQ7
+   }
+ }
 }
         </TextBox>
         <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>

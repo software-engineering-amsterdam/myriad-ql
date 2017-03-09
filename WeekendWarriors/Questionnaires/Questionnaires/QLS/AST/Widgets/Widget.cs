@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.QLS.AST.Widgets
 {
-    class Widget : INode
+    public abstract class Widget : INode
     {
+        public abstract Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget();
     }
 }

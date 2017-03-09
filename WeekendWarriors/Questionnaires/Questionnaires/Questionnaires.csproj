@@ -108,6 +108,7 @@
     <Compile Include="QLS\Generated\QLSListener.cs" />
     <Compile Include="QLS\Generated\QLSParser.cs" />
     <Compile Include="QLS\Generated\QLSVisitor.cs" />
+    <Compile Include="QLS\Processing\SomeClass.cs" />
     <Compile Include="QL\AST\Operators\Addition.cs" />
     <Compile Include="QL\AST\Operators\And.cs" />
     <Compile Include="QL\AST\Operators\Division.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Renderer\Widgets\RadioWidget.cs" />
     <Compile Include="Renderer\Widgets\SliderWidget.cs" />
     <Compile Include="Renderer\Widgets\TextBoxWidget.cs" />
-    <Compile Include="Renderer\Widgets\WidgetFactory.cs" />
     <Compile Include="RuleContainer\RuleContainer.cs" />
     <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
     <Compile Include="QL\SemanticAnalysis\DeclarationValidator.cs" />
