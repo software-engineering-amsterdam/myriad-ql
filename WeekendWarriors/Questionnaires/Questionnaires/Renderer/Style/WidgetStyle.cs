@@ -13,10 +13,10 @@ namespace Questionnaires.Renderer.Style
             Width = 200;
             Font = "Arial";
             FontSize = 12;
-            Color = 0;
+            Color = "#000000";
         }
 
-        public WidgetStyle(int width, String font, int fontSize, int color)
+        public WidgetStyle(int width, String font, int fontSize, String color)
         {
             Width = width;
             Font = font;
@@ -27,6 +27,6 @@ namespace Questionnaires.Renderer.Style
         public int Width { get; set; }
         public String Font { get; set; }
         public int FontSize { get; set; }
-        public int Color { get; set; }
+        public String Color { get; set; }
     }
 }

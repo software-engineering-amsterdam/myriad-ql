@@ -73,7 +73,7 @@ namespace Questionnaires.Renderer.Widgets
         
         public override void SetStyle(WidgetStyle style)
         {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color.ToString()));
+            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
             FirstQuestionInputWidget.Width = style.Width;
             SecondQuestionInputWidget.Width = style.Width;
             QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
