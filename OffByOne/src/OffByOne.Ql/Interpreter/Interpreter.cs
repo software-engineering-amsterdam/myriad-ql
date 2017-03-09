@@ -1,10 +1,11 @@
 ﻿namespace OffByOne.Ql.Interpreter
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Interpreter.Controls;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Visitors.Contracts;
@@ -27,7 +28,22 @@
 
         public Control Visit(QuestionStatement expression, GuiEnvironment context)
         {
-            var question = new StringControl(expression, context);
+            Control question;
+            switch (expression.Type)
+            {
+                case BooleanValueType _:
+                    question = new BooleanControl(expression, context);
+                    break;
+                case DateValueType _:
+                    question = new DateControl(expression, context);
+                    break;
+                case StringValueType _:
+                    question = new StringControl(expression, context);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(expression.Type));
+            }
+
             return question;
         }
 

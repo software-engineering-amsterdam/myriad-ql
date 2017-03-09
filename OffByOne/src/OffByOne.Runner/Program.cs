@@ -60,13 +60,16 @@
             var interpreter = new Interpreter();
             ICharStream input = new AntlrInputStream(@"
                 form questionnaire { 
-                    ""String one:""
-                        stringone: string
+                    ""Is this a question?""
+                        existentialism: boolean
+
+                    ""When will this be finished?""
+                        deadline: date
 
                     ""String two:""
                         stringtwo: string
 
-                    if(stringone == ""Hello""){
+                    if(deadline == '10-03-2017'){
                     ""Concat:""
                         concat: string (stringone + stringtwo)
                     } else {
