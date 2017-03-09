@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.ql.ast.Form;
 import org.ql.gui.GUIHandler;
-import org.ql.gui.GUIHandlerSingleton;
 import org.ql.gui.MainStage;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
