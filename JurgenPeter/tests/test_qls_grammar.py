@@ -59,6 +59,7 @@ class TestGrammar(TestCase):
         (grammar.question, "question x color #663322"),
         (grammar.question, "question x color: #663322"),
         (grammar.question, "question x widget: spinbox"),
+        (grammar.question, "question x { widget: spinbox }"),
         (grammar.question, "question x widget radio(0, 1)"),
         (grammar.question, "question x widget dropdown(0, 1)"),
         (grammar.question, "question x widget: spinbox(\"0\",\"100\")"),

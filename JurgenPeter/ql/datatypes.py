@@ -4,6 +4,7 @@ class Datatype:
 
 
 class IntegerDatatype(Datatype):
+
     def __str__(self):
         return "integer"
 
@@ -12,6 +13,7 @@ class IntegerDatatype(Datatype):
 
 
 class DecimalDatatype(Datatype):
+
     def __str__(self):
         return "decimal"
 
@@ -20,6 +22,7 @@ class DecimalDatatype(Datatype):
 
 
 class BooleanDatatype(Datatype):
+
     def __str__(self):
         return "boolean"
 
@@ -28,6 +31,7 @@ class BooleanDatatype(Datatype):
 
 
 class StringDatatype(Datatype):
+
     def __str__(self):
         return "string"
 

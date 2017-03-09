@@ -5,6 +5,7 @@ from abc import abstractmethod
 
 
 class Widget:
+
     LABELPREFIX = "label_"
     ENTRYPREFIX = "entry_"
 
