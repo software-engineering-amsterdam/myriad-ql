@@ -56,6 +56,20 @@ class TestGrammar(TestCase):
             self.assertTrue(parser.parseString(sentence, parseAll=True))
 
     incorrectSentences = [
+        (grammar.question, "question x color #663322"),
+        (grammar.question, "question x color: #663322"),
+        (grammar.question, "question x widget: spinbox"),
+        (grammar.question, "question x { widget: spinbox }"),
+        (grammar.question, "question x widget radio(0, 1)"),
+        (grammar.question, "question x widget dropdown(0, 1)"),
+        (grammar.question, "question x widget: spinbox(\"0\",\"100\")"),
+        (grammar.question, "question x widget: slider(\"0\",\"100\")"),
+        (grammar.section, "section x {}"),
+        (grammar.section, "section \"x\" {default boolean widget radio question x}"),
+        (grammar.page, "page \"x\" {}"),
+        (grammar.page, "page x {default boolean widget radio question x}"),
+        (grammar.layout, "stylesheet \"x\" {}"),
+        (grammar.layout, "stylesheet x {default boolean widget radio question x}"),
     ]
 
     def testIncorrectSentences(self):
@@ -94,10 +108,10 @@ class TestGrammar(TestCase):
         (grammar.default, "default boolean {"
                           "     color: #663311"
                           "}",
-                          DefaultStyling(Datatypes.boolean,
+                          DefaultStyling(BooleanDatatype(),
                                          [ColorAttribute("#663311")])),
         (grammar.default, "default boolean widget checkbox",
-                          DefaultStyling(Datatypes.boolean,
+                          DefaultStyling(BooleanDatatype(),
                                          [WidgetTypeAttribute(
                                              CheckBoxWidget)])),
         (grammar.section, "section \"x\" {"
@@ -115,10 +129,10 @@ class TestGrammar(TestCase):
             StyledSection("x",
                           [QuestionAnchor("y"),
                            QuestionAnchor("z")],
-                          [DefaultStyling(Datatypes.boolean,
+                          [DefaultStyling(BooleanDatatype(),
                                           [WidgetTypeAttribute(
                                               CheckBoxWidget)]),
-                           DefaultStyling(Datatypes.integer,
+                           DefaultStyling(IntegerDatatype(),
                                           [WidgetTypeAttribute(
                                              IntegerEntryWidget)])])),
         (grammar.section, "section \"x\" {"
@@ -149,10 +163,10 @@ class TestGrammar(TestCase):
                        StyledPage("x",
                                   [QuestionAnchor("y"),
                                    QuestionAnchor("z")],
-                                  [DefaultStyling(Datatypes.boolean,
+                                  [DefaultStyling(BooleanDatatype(),
                                                   [WidgetTypeAttribute(
                                                       CheckBoxWidget)]),
-                                   DefaultStyling(Datatypes.integer,
+                                   DefaultStyling(IntegerDatatype(),
                                                   [WidgetTypeAttribute(
                                                       IntegerEntryWidget)])])),
         (grammar.layout, "stylesheet x {"
@@ -168,7 +182,7 @@ class TestGrammar(TestCase):
                          "}",
                          StyledLayout("x",
                                       [Page("y", [])],
-                                      [DefaultStyling(Datatypes.decimal,
+                                      [DefaultStyling(DecimalDatatype(),
                                                       [WidgetTypeAttribute(
                                                           DecimalEntryWidget)
                                                        ])]))

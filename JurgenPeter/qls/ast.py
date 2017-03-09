@@ -4,6 +4,7 @@ class Node:
 
 
 class Layout(Node):
+
     def __init__(self, name, body):
         self.name = name
         self.body = body
@@ -13,6 +14,7 @@ class Layout(Node):
 
 
 class StyledLayout(Layout):
+
     def __init__(self, name, body, stylings):
         super().__init__(name, body)
         self.stylings = stylings
@@ -22,6 +24,7 @@ class StyledLayout(Layout):
 
 
 class Page(Node):
+
     def __init__(self, name, body):
         self.name = name
         self.body = body
@@ -31,6 +34,7 @@ class Page(Node):
 
 
 class StyledPage(Page):
+
     def __init__(self, name, body, stylings):
         super().__init__(name, body)
         self.stylings = stylings
@@ -40,6 +44,7 @@ class StyledPage(Page):
 
 
 class Section(Node):
+
     def __init__(self, name, body):
         self.name = name
         self.body = body
@@ -49,6 +54,7 @@ class Section(Node):
 
 
 class StyledSection(Section):
+
     def __init__(self, name, body, stylings):
         super().__init__(name, body)
         self.stylings = stylings
@@ -58,6 +64,7 @@ class StyledSection(Section):
 
 
 class QuestionAnchor(Node):
+
     def __init__(self, name):
         self.name = name
 
@@ -66,6 +73,7 @@ class QuestionAnchor(Node):
 
 
 class StyledQuestionAnchor(QuestionAnchor):
+
     def __init__(self, name, attributes):
         super().__init__(name)
         self.styling = Styling(attributes)
@@ -75,6 +83,7 @@ class StyledQuestionAnchor(QuestionAnchor):
 
 
 class Styling(Node):
+
     def __init__(self, attributes):
         self.attributes = attributes
 
@@ -90,6 +99,7 @@ class Styling(Node):
 
 
 class DefaultStyling(Styling):
+
     def __init__(self, datatype, attributes):
         super().__init__(attributes)
         self.datatype = datatype
@@ -104,6 +114,7 @@ class Attribute(Node):
 
 
 class ColorAttribute(Attribute):
+
     def __init__(self, color):
         self.color = color
 
@@ -112,6 +123,7 @@ class ColorAttribute(Attribute):
 
 
 class FontSizeAttribute(Attribute):
+
     def __init__(self, size):
         self.size = size
 
@@ -120,6 +132,7 @@ class FontSizeAttribute(Attribute):
 
 
 class FontWeightAttribute(Attribute):
+
     def __init__(self, weight):
         self.weight = weight
 
@@ -128,6 +141,7 @@ class FontWeightAttribute(Attribute):
 
 
 class FontFamilyAttribute(Attribute):
+
     def __init__(self, family):
         self.family = family
 
@@ -136,6 +150,7 @@ class FontFamilyAttribute(Attribute):
 
 
 class WidthAttribute(Attribute):
+
     def __init__(self, width):
         self.width = width
 
@@ -144,6 +159,7 @@ class WidthAttribute(Attribute):
 
 
 class WidgetTypeAttribute(Attribute):
+
     def __init__(self, widget_constructor):
         self.widget_constructor = widget_constructor
 

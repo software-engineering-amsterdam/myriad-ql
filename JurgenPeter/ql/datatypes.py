@@ -1,33 +1,39 @@
-from enum import Enum
-
-
 class Datatype:
     def __eq__(self, other):
         return type(self) == type(other)
 
 
 class IntegerDatatype(Datatype):
-    def accept(self, visitor):
-        return visitor.visit_integer_datatype(self)
+
+    def __str__(self):
+        return "integer"
+
+    def accept(self, visitor, *args):
+        return visitor.visit_integer_datatype(self, *args)
 
 
 class DecimalDatatype(Datatype):
-    def accept(self, visitor):
-        return visitor.visit_decimal_datatype(self)
+
+    def __str__(self):
+        return "decimal"
+
+    def accept(self, visitor, *args):
+        return visitor.visit_decimal_datatype(self, *args)
 
 
 class BooleanDatatype(Datatype):
-    def accept(self, visitor):
-        return visitor.visit_boolean_datatype(self)
+
+    def __str__(self):
+        return "boolean"
+
+    def accept(self, visitor, *args):
+        return visitor.visit_boolean_datatype(self, *args)
 
 
 class StringDatatype(Datatype):
-    def accept(self, visitor):
-        return visitor.visit_string_datatype(self)
 
+    def __str__(self):
+        return "string"
 
-class Datatypes(Enum):
-    integer = IntegerDatatype()
-    decimal = DecimalDatatype()
-    boolean = BooleanDatatype()
-    string = StringDatatype()
+    def accept(self, visitor, *args):
+        return visitor.visit_string_datatype(self, *args)

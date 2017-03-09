@@ -13,11 +13,11 @@ class Printer:
 
     def visit_question(self, node):
         return "{}: \"{}\" {}".format(
-            node.name, node.label, node.datatype.name)
+            node.name, node.label, node.datatype)
 
     def visit_computed_question(self, node):
         return "{}: \"{}\" {} = {}".format(
-            node.name, node.label, node.datatype.name,
+            node.name, node.label, node.datatype,
             self.visit(node.computation))
 
     def visit_if_conditional(self, node):
