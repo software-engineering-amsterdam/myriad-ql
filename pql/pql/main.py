@@ -7,7 +7,6 @@ from sys import exit
 from PyQt5.QtWidgets import QApplication
 
 from gui.FileWindow import FileWindow
-from gui.Questionnaire import Questionnaire
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
@@ -90,6 +89,7 @@ def ql(ql_str):
 
     return evaluate(ql_ast, ql_identifier_check_result)
 
+
 if __name__ == '__main__':
     app = QApplication(argv)
     file_window = FileWindow()
@@ -97,6 +97,6 @@ if __name__ == '__main__':
     exit(app.exec_())
 
 
-#TODO: UI zo bouwen dat er een scherm komt waar een file ingeladen kan worden, dit zodat, we de errors kunnen tonen van het parsen/checken
-#TODO: Dit eerste scherm is vrij leeg buiten een knop met een eventueel overzicht van errors, als het goed gaat maak een QuestionairreWizard aan
-#TODO: Line numbers in het Node object stoppen en deze in error messages gebruiken
+# TODO: UI zo bouwen dat er een scherm komt waar een file ingeladen kan worden, dit zodat, we de errors kunnen tonen van het parsen/checken
+# TODO: Dit eerste scherm is vrij leeg buiten een knop met een eventueel overzicht van errors, als het goed gaat maak een QuestionairreWizard aan
+# TODO: Line numbers in het Node object stoppen en deze in error messages gebruiken
