@@ -6,11 +6,11 @@ from sys import exit
 
 from PyQt5.QtWidgets import QApplication
 
+from gui.gui import Gui
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import TypeChecker
-from pql.ui.gui import Gui
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
