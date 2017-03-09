@@ -2,7 +2,7 @@
  * Error.java.
  */
 
-package ql.semanticchecker.messagehandling.errors;
+package ql.semanticchecker.messagehandling.errors.qlerrors;
 
 import ql.astnodes.LineNumber;
 import ql.semanticchecker.messagehandling.Message;

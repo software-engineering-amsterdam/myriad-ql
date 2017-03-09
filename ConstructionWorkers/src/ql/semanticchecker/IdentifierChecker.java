@@ -5,29 +5,16 @@
 package ql.semanticchecker;
 
 import ql.astnodes.Form;
-import ql.astnodes.expressions.Expression;
-import ql.astnodes.expressions.binaries.equality.*;
-import ql.astnodes.expressions.binaries.logic.AND;
-import ql.astnodes.expressions.binaries.logic.OR;
-import ql.astnodes.expressions.binaries.numerical.Addition;
-import ql.astnodes.expressions.binaries.numerical.Division;
-import ql.astnodes.expressions.binaries.numerical.Multiplication;
-import ql.astnodes.expressions.binaries.numerical.Subtraction;
 import ql.astnodes.expressions.literals.*;
-import ql.astnodes.expressions.unaries.Negation;
-import ql.astnodes.expressions.unaries.Negative;
-import ql.astnodes.expressions.unaries.Parentheses;
-import ql.astnodes.expressions.unaries.Positive;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
 import ql.astnodes.types.Type;
-import ql.astnodes.visitors.ExpressionVisitor;
 import ql.astnodes.visitors.FormAndStatementVisitor;
 import ql.semanticchecker.messagehandling.MessageData;
-import ql.semanticchecker.messagehandling.errors.DuplicateIdentifierError;
-import ql.semanticchecker.messagehandling.errors.IfExpressionUndefinedError;
+import ql.semanticchecker.messagehandling.errors.qlerrors.DuplicateIdentifierError;
+import ql.semanticchecker.messagehandling.errors.qlerrors.IfExpressionUndefinedError;
 import ql.semanticchecker.messagehandling.warnings.DuplicateIdentifierWarning;
 import ql.semanticchecker.messagehandling.warnings.DuplicateLabelWarning;
 

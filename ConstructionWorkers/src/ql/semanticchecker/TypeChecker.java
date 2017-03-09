@@ -15,9 +15,9 @@ import ql.astnodes.types.*;
 import ql.astnodes.visitors.ExpressionVisitor;
 import ql.astnodes.visitors.FormAndStatementVisitor;
 import ql.semanticchecker.messagehandling.MessageData;
-import ql.semanticchecker.messagehandling.errors.CyclicDependencyError;
-import ql.semanticchecker.messagehandling.errors.InvalidTypeError;
-import ql.semanticchecker.messagehandling.errors.UndefinedQuestionError;
+import ql.semanticchecker.messagehandling.errors.qlerrors.CyclicDependencyError;
+import ql.semanticchecker.messagehandling.errors.qlerrors.InvalidTypeError;
+import ql.semanticchecker.messagehandling.errors.qlerrors.UndefinedQuestionError;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,6 +6,7 @@ import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.qlserrors.DuplicateQLSQuestionPlacementError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.NotAllQuestionsDefinedError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.UndefinedQuestionReferenceError;
+import ql.semanticchecker.messagehandling.errors.qlserrors.UnsupportedWidgetTypeError;
 import qls.astnodes.StyleQuestion;
 import qls.astnodes.StyleSheet;
 import qls.astnodes.sections.DefaultStyle;
@@ -26,16 +27,29 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
     private final List<StyleQuestion> qlsQuestions;
 
     public QLSTypeChecker(MessageData messages, Map<String, Type> identifierMap, StyleSheet st) {
-        this.messages = new MessageData();
+        this.messages = messages;
         this.identifierMap = identifierMap;
         this.qlsQuestions = new ArrayList<>();
 
         st.accept(this);
 
         checkQLSQuestionPlacement();
-
+        checkWidgetTypes();
     }
 
+    private void checkWidgetTypes() {
+
+        for (StyleQuestion question : qlsQuestions) {
+
+            QLSWidget widget = question.getWidget();
+            List<Type> supportedTypes = widget.getSupportedQuestionTypes();
+            Type questionType = identifierMap.get(question.getName());
+
+            if (questionType != null && !supportedTypes.contains(questionType)) {
+                messages.addError(new UnsupportedWidgetTypeError(question.getLineNumber(), question.getName()));
+            }
+        }
+    }
     private void checkQLSQuestionPlacement() {
 
         final Set<StyleQuestion> duplicateQuestions = new HashSet();

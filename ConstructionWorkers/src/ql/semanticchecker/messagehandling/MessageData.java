@@ -4,7 +4,7 @@
 
 package ql.semanticchecker.messagehandling;
 
-import ql.semanticchecker.messagehandling.errors.Error;
+import ql.semanticchecker.messagehandling.errors.qlerrors.Error;
 import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.util.ArrayList;

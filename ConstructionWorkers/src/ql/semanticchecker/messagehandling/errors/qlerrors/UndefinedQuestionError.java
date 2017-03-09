@@ -2,7 +2,7 @@
  * UndefinedQuestionError.java.
  */
 
-package ql.semanticchecker.messagehandling.errors;
+package ql.semanticchecker.messagehandling.errors.qlerrors;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.literals.Identifier;

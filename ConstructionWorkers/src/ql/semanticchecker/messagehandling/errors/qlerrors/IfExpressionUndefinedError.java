@@ -1,7 +1,6 @@
-package ql.semanticchecker.messagehandling.errors;
+package ql.semanticchecker.messagehandling.errors.qlerrors;
 
 import ql.astnodes.LineNumber;
-import ql.astnodes.expressions.literals.Identifier;
 
 /**
  * Created by LGGX on 22-Feb-17.
