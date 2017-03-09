@@ -28,39 +28,39 @@ string_arguments = Suppress("(") + string + Suppress(",") + string +\
                    Suppress(")")
 
 widget_text = Suppress("text").setParseAction(
-    lambda _: EntryWidget)
+    lambda _: WidgetTypeAttribute(EntryWidget))
 
 widget_whole_number = Suppress("whole-number").setParseAction(
-    lambda _: IntegerEntryWidget)
+    lambda _: WidgetTypeAttribute(IntegerEntryWidget))
 
 widget_real_number = Suppress("real-number").setParseAction(
-    lambda _: DecimalEntryWidget)
+    lambda _: WidgetTypeAttribute(DecimalEntryWidget))
 
 widget_checkbox = Suppress("checkbox").setParseAction(
-    lambda _: CheckBoxWidget)
+    lambda _: WidgetTypeAttribute(CheckBoxWidget))
 
 widget_spinbox = Suppress("spinbox") + Optional(integer_arguments)
 widget_spinbox.setParseAction(
-    lambda tokens: lambda question, app: SpinBoxWidget(question, app, *tokens))
+    lambda tokens: WidgetTypeAttribute(SpinBoxWidget, *tokens))
 
 widget_slider = Suppress("slider") + Optional(integer_arguments)
 widget_slider.setParseAction(
-    lambda tokens: lambda question, app: SliderWidget(question, app, *tokens))
+    lambda tokens: WidgetTypeAttribute(SliderWidget, *tokens))
 
 widget_radio = Suppress("radio") + Optional(string_arguments)
 widget_radio.setParseAction(
-    lambda tokens: lambda question, app: RadioWidget(question, app, *tokens))
+    lambda tokens: WidgetTypeAttribute(RadioWidget, *tokens))
 
 widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
 widget_drop_down.setParseAction(
-    lambda tokens: lambda question, app: DropDownWidget(question, app, *tokens))
+    lambda tokens: WidgetTypeAttribute(DropDownWidget, *tokens))
 
 widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^\
               widget_whole_number ^ widget_real_number ^ widget_drop_down ^\
               widget_slider
 
 widget_attribute = Suppress("widget") + widget_type
-widget_attribute.setParseAction(lambda tokens: WidgetTypeAttribute(*tokens))
+widget_attribute.setParseAction(lambda tokens: tokens[0])
 
 hexadecimal = Regex("#[0-9a-f]{6}")
 

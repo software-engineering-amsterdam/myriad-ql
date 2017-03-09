@@ -90,12 +90,12 @@ class Styling(Node):
     def applicable(self, datatype):
         return True
 
-    def modify_widget_constructor(self, datatype, widget_constructor):
+    def modify_widget_constructor(self, datatype, widget_constructor, widget_arguments):
         if self.applicable(datatype):
             for attribute in self.attributes:
-                widget_constructor = attribute.modify_widget_constructor(
-                    widget_constructor)
-        return widget_constructor
+                widget_constructor, widget_arguments = attribute.modify_widget_constructor(
+                    widget_constructor, widget_arguments)
+        return widget_constructor, widget_arguments
 
 
 class DefaultStyling(Styling):
@@ -109,8 +109,8 @@ class DefaultStyling(Styling):
 
 
 class Attribute(Node):
-    def modify_widget_constructor(self, widget):
-        return widget
+    def modify_widget_constructor(self, widget_constructor, widget_arguments):
+        return widget_constructor, widget_arguments
 
 
 class ColorAttribute(Attribute):
@@ -160,11 +160,13 @@ class WidthAttribute(Attribute):
 
 class WidgetTypeAttribute(Attribute):
 
-    def __init__(self, widget_constructor):
+    def __init__(self, widget_constructor, *args):
         self.widget_constructor = widget_constructor
+        self.widget_arguments = [arg for arg in args]
+        print(self.widget_arguments)
 
     def apply_on(self, _):
         pass
 
-    def modify_widget_constructor(self, widget):
-        return self.widget_constructor
+    def modify_widget_constructor(self, *_):
+        return self.widget_constructor, self.widget_arguments

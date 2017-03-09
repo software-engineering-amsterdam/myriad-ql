@@ -62,9 +62,9 @@ def main():
     else:
         layout = parse_qls(layout_file)
 
-    # TODO: symbol checking
-    layout_errors = []
-    QlsTypeChecker(symboltable, layout_errors).check(layout)
+        # TODO: symbol checking
+        layout_errors = []
+        QlsTypeChecker(symboltable, layout_errors).check(layout)
 
     for error in layout_errors:
         print(error)
