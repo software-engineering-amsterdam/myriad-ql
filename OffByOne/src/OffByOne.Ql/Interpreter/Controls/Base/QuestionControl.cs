@@ -1,26 +1,25 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls.Base
 {
     using System;
-    using System.Windows.Controls;
 
-    using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
-    public abstract class QuestionControl : Control, IObserver
+    using Windows = System.Windows.Controls;
+
+    public abstract class QuestionControl : Control
     {
         private IValue value;
+        private IDisposable unsubscriber;
 
-        public QuestionControl(string identifier, Expression computationExpression, GuiEnvironment guiEnvironment)
+        public QuestionControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
+            : base(guiEnvironment)
         {
-            this.Identifier = identifier;
-            this.Environment = guiEnvironment;
-            this.ComputationExpression = computationExpression;
+            this.Statement = statement;
         }
 
-        public Control ControlElement { get; protected set; }
-
-        public string Identifier { get; private set; }
+        public QuestionStatement Statement { get; }
 
         public IValue Value
         {
@@ -32,20 +31,20 @@
             protected set
             {
                 this.value = value;
-                this.Environment.UpdateValues(this.Identifier, this.value);
+                this.Environment.UpdateValues(this.Statement.Identifier, this.value);
             }
         }
 
-        public Expression ComputationExpression { get; }
-
-        public GuiEnvironment Environment { get; private set; }
-
-        public virtual void Notify(GuiChange change)
+        public override void OnNext(GuiChange value)
         {
-            if (this.ComputationExpression != null && change.Identifier != this.Identifier)
+            var hasExpression = this.Statement.ComputationExpression != null;
+            var isUpdateByOther = value.Identifier != this.Statement.Identifier;
+            if (hasExpression && isUpdateByOther)
             {
                 var evaluator = new Evaluator();
-                this.Value = evaluator.Evaluate(this.ComputationExpression, change.Environment.Evaluations);
+                this.Value = evaluator.Evaluate(
+                    this.Statement.ComputationExpression,
+                    value.Environment.Evaluations);
             }
         }
     }

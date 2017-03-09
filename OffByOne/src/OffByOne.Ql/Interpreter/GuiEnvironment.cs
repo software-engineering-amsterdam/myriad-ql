@@ -1,39 +1,28 @@
 ﻿namespace OffByOne.Ql.Interpreter
 {
+    using System;
     using System.Collections.Generic;
+    using System.Windows.Controls;
 
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class GuiEnvironment : IContext, IObservable
+    public class GuiEnvironment : IContext, IObservable<GuiChange>
     {
+        private List<IObserver<GuiChange>> observers;
+
         public GuiEnvironment(TypeEnvironment typeEnvironment)
         {
-            this.Controls = new Dictionary<string, QuestionControl>();
             this.Evaluations = typeEnvironment;
-            this.Observers = new List<IObserver>();
+            this.observers = new List<IObserver<GuiChange>>();
+            this.RootControl = new ListView();
         }
-
-        public IList<IObserver> Observers { get; private set; }
-
-        public IDictionary<string, QuestionControl> Controls { get; private set; }
 
         public TypeEnvironment Evaluations { get; }
 
-        public void Register(IObserver observer)
-        {
-            this.Observers.Add(observer);
-        }
-
-        public void NotifyObservers(GuiChange change)
-        {
-            foreach (IObserver observer in this.Observers)
-            {
-                observer.Notify(change);
-            }
-        }
+        public ListView RootControl { get; }
 
         public void UpdateValues(string identifier, IValue value)
         {
@@ -43,6 +32,24 @@
                 GuiChange change = new GuiChange(identifier, value, this);
                 this.NotifyObservers(change);
             }
+        }
+
+        public void NotifyObservers(GuiChange change)
+        {
+            foreach (var observer in this.observers)
+            {
+                observer.OnNext(change);
+            }
+        }
+
+        public IDisposable Subscribe(IObserver<GuiChange> observer)
+        {
+            if (!this.observers.Contains(observer))
+            {
+                this.observers.Add(observer);
+            }
+
+            return new Unsubscriber(this.observers, observer);
         }
     }
 }

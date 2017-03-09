@@ -76,9 +76,12 @@
             var env = new GuiEnvironment(typeEnv);
             var astCreator = new Ql.Ast.AstCreator();
             var tree = (FormStatement)astCreator.Visit(parser.form());
-            var form = interpreter.Visit(tree, env) as Window;
+
+            var form = interpreter.Visit(tree, env);
+            var window = new Window();
+            window.Content = form.RootControl;
             var application = new System.Windows.Application();
-            application.Run(form);
+            application.Run(window);
         }
 
         private static void TestQlGrammar()

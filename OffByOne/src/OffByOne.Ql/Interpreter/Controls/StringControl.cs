@@ -1,45 +1,47 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;
     using System.Windows.Controls;
 
-    using OffByOne.Ql.Ast.Expressions;
-    using OffByOne.Ql.Evaluator;
+    using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values;
 
     public class StringControl : QuestionControl
     {
-        public StringControl(string identifier, Expression computationExpression, GuiEnvironment guiEnvironment)
-            : base(identifier, computationExpression, guiEnvironment)
+        public StringControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
+            : base(statement, guiEnvironment)
         {
-            this.ControlElement = this.CreateElement();
+            this.CreateControl();
             this.Value = new StringValue(string.Empty);
         }
 
-        public override void Notify(GuiChange change)
+        public override void OnNext(GuiChange value)
         {
-            base.Notify(change);
-            ((TextBox)((ListView)this.ControlElement).Items[1]).Text = this.Value.ToString();
+            base.OnNext(value);
+            ((TextBox)this.RootControl.Items[1]).Text = this.Value.ToString();
         }
 
-        private Control CreateElement()
+        public override void OnCompleted()
         {
-            var container = new ListView();
-            var label = new Label() { Content = this.Identifier };
+            throw new NotImplementedException();
+        }
+
+        public override void OnError(Exception error)
+        {
+            throw error;
+        }
+
+        private void CreateControl()
+        {
+            var label = new Label() { Content = this.Statement.Label.ToString() };
             var input = new TextBox() { MinWidth = 200 };
             input.KeyUp += (target, eventArgs) =>
             {
                 this.Value = new StringValue(input.Text);
             };
-            var children = new List<Control> { label, input };
-            foreach (var child in children)
-            {
-                container.Items.Add(child);
-            }
-
-            return container;
+            this.RootControl.Items.Add(label);
+            this.RootControl.Items.Add(input);
         }
     }
 }

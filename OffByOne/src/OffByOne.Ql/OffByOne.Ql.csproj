@@ -135,10 +135,12 @@
     <Compile Include="Graphics\Widgets\LabelWidget.cs" />
     <Compile Include="Graphics\Widgets\TextBoxWidget.cs" />
     <Compile Include="Graphics\Widgets\WidgetStyle.cs" />
-    <Compile Include="Interpreter\Controls\Base\IObservable.cs" />
-    <Compile Include="Interpreter\Controls\Base\IObserver.cs" />
+    <Compile Include="Interpreter\Controls\Base\Control.cs" />
     <Compile Include="Interpreter\Controls\Base\QuestionControl.cs" />
+    <Compile Include="Interpreter\Controls\Base\Unsubscriber.cs" />
+    <Compile Include="Interpreter\Controls\FormControl.cs" />
     <Compile Include="Interpreter\Controls\StringControl.cs" />
+    <Compile Include="Interpreter\Controls\VisibilityControl.cs" />
     <Compile Include="Interpreter\GuiChange.cs" />
     <Compile Include="Interpreter\GuiEnvironment.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />

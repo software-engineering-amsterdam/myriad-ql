@@ -35,7 +35,7 @@
 
             if (this.values.ContainsKey(key))
             {
-                updated = this.values[key] == value;
+                updated = this.values[key] != value;
             }
 
             this.values[key] = value;

@@ -78,9 +78,9 @@
             Assert.IsType<QuestionStatement>(elseStatements.First());
             var computedQuestion = (QuestionStatement)elseStatements.First();
 
-            Assert.IsType<OrExpression>(computedQuestion.ComputedValue);
+            Assert.IsType<OrExpression>(computedQuestion.ComputationExpression);
 
-            var computedValue = (OrExpression)computedQuestion.ComputedValue;
+            var computedValue = (OrExpression)computedQuestion.ComputationExpression;
             Assert.IsType<VariableExpression>(computedValue.LeftExpression);
             Assert.IsAssignableFrom<Expression>(computedValue.RightExpression);
 
