@@ -6,6 +6,10 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
+from gui.Questionnaire import Questionnaire
+from pql.parser.parser import parse
+from pql.identifierchecker.identifierchecker import IdentifierChecker
+
 
 # class FileButton(QPushButton):
 #     def __init__(self, title, parent):
@@ -38,10 +42,41 @@ class FileWindow(QWidget):
     def handleButton(self):
         file_path, file_filter = QFileDialog.getOpenFileName(filter="*.ql")
 
+        open_file = self.openFile(file_path)
+
+        if open_file is not None:
+            ql_ast = self.parseFile(open_file)
+            ql_ids, ql_errors = self.checkIds(ql_ast)
+            if ql_errors:
+                self.list_errors.addItems(ql_errors)
+            else:
+                self.close()
+            self.showQuestionnaire(ql_ast)
+
+    def showQuestionnaire(self, ql_ast):
+        gui = Questionnaire()
+        gui.visit(ql_ast).show()
+
+    def checkIds(self, ql_ast):
         try:
-            file_read = open(file_path, 'r').read()
-        except FileNotFoundError:
-            self.list_errors.addItem("File not found.")
+            return IdentifierChecker().visit(ql_ast)
+        except Exception as e:
+            self.list_errors.addItem("Something went wrong with checking of the identifiers...\n\t{}".format(e))
+
+    def openFile(self, file_path):
+        try:
+            with open(file_path, 'r') as open_file:
+                return open_file.read()
+        except FileNotFoundError as fnfe:
+            pass
+        except Exception as e:
+            self.list_errors.addItem("Something went wrong with opening...\n\t{}".format(e))
+
+    def parseFile(self, ql_str):
+        try:
+            return parse(ql_str)
+        except Exception as e:
+            self.list_errors.addItem("Something went wrong with parsing...\n\t{}".format(e))
 
     def center(self):
         frame_geometry = self.frameGeometry()
