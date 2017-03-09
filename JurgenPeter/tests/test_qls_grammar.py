@@ -94,10 +94,10 @@ class TestGrammar(TestCase):
         (grammar.default, "default boolean {"
                           "     color: #663311"
                           "}",
-                          DefaultStyling(Datatypes.boolean,
+                          DefaultStyling(BooleanDatatype(),
                                          [ColorAttribute("#663311")])),
         (grammar.default, "default boolean widget checkbox",
-                          DefaultStyling(Datatypes.boolean,
+                          DefaultStyling(BooleanDatatype(),
                                          [WidgetTypeAttribute(
                                              CheckBoxWidget)])),
         (grammar.section, "section \"x\" {"
@@ -115,10 +115,10 @@ class TestGrammar(TestCase):
             StyledSection("x",
                           [QuestionAnchor("y"),
                            QuestionAnchor("z")],
-                          [DefaultStyling(Datatypes.boolean,
+                          [DefaultStyling(BooleanDatatype(),
                                           [WidgetTypeAttribute(
                                               CheckBoxWidget)]),
-                           DefaultStyling(Datatypes.integer,
+                           DefaultStyling(IntegerDatatype(),
                                           [WidgetTypeAttribute(
                                              IntegerEntryWidget)])])),
         (grammar.section, "section \"x\" {"
@@ -149,10 +149,10 @@ class TestGrammar(TestCase):
                        StyledPage("x",
                                   [QuestionAnchor("y"),
                                    QuestionAnchor("z")],
-                                  [DefaultStyling(Datatypes.boolean,
+                                  [DefaultStyling(BooleanDatatype(),
                                                   [WidgetTypeAttribute(
                                                       CheckBoxWidget)]),
-                                   DefaultStyling(Datatypes.integer,
+                                   DefaultStyling(IntegerDatatype(),
                                                   [WidgetTypeAttribute(
                                                       IntegerEntryWidget)])])),
         (grammar.layout, "stylesheet x {"
@@ -168,7 +168,7 @@ class TestGrammar(TestCase):
                          "}",
                          StyledLayout("x",
                                       [Page("y", [])],
-                                      [DefaultStyling(Datatypes.decimal,
+                                      [DefaultStyling(DecimalDatatype(),
                                                       [WidgetTypeAttribute(
                                                           DecimalEntryWidget)
                                                        ])]))

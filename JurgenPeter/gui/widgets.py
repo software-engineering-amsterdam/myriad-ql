@@ -1,5 +1,5 @@
 import re
-from ql.datatypes import Datatypes
+from ql.datatypes import *
 from tkinter.font import Font
 from abc import abstractmethod
 
@@ -97,7 +97,7 @@ class EntryWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.string
+        return StringDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getEntryWidget(self.entry_id)
@@ -117,7 +117,7 @@ class IntegerEntryWidget(EntryWidget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.integer
+        return IntegerDatatype()
 
 
 class DecimalEntryWidget(EntryWidget):
@@ -134,7 +134,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.decimal
+        return DecimalDatatype()
 
 
 class CheckBoxWidget(Widget):
@@ -166,7 +166,7 @@ class CheckBoxWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.boolean
+        return BooleanDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getCheckBoxWidget(self.entry_id)
@@ -209,7 +209,7 @@ class SpinBoxWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.integer
+        return IntegerDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getSpinBoxWidget(self.entry_id)
@@ -250,7 +250,7 @@ class RadioWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.boolean
+        return BooleanDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getRadioButtonWidget(self.entry_id)
@@ -311,7 +311,7 @@ class DropDownWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.boolean
+        return BooleanDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getOptionBoxWidget(self.entry_id)
@@ -361,7 +361,7 @@ class SliderWidget(Widget):
 
     @staticmethod
     def get_datatype():
-        return Datatypes.integer
+        return IntegerDatatype()
 
     def get_tkinter_widget(self):
         return self.app.getScaleWidget(self.entry_id)

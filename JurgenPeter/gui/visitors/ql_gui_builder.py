@@ -16,7 +16,7 @@ class QlGuiBuilder(GuiBuilder):
         self.create_exit_button()
 
     def visit_question(self, node):
-        widget_constructor = WidgetCreator().create(node.datatype.value)
+        widget_constructor = WidgetCreator().create(node.datatype)
         widget = widget_constructor(self.app, node)
         widget.set_listener(self.listener)
         self.widgets[node.name] = widget
@@ -34,5 +34,3 @@ class QlGuiBuilder(GuiBuilder):
             self.visit(element)
         for element in node.elsebody:
             self.visit(element)
-
-

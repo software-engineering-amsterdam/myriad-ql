@@ -4,7 +4,7 @@ from gui.visitors.gui_builder import GuiBuilder
 
 
 class QlsGuiBuilder(GuiBuilder):
-    
+
     def __init__(self, app, listener, exit, widgets, form):
         super().__init__(app, listener, exit, widgets)
         self.form = form
@@ -63,7 +63,7 @@ class QlsGuiBuilder(GuiBuilder):
         stylings.pop()
 
     def visit_question(self, node, stylings):
-        widget_constructor = WidgetCreator().create(node.datatype.value)
+        widget_constructor = WidgetCreator().create(node.datatype)
 
         for styling in stylings:
             widget_constructor = styling.modify_widget_constructor(
