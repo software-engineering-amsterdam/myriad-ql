@@ -25,9 +25,13 @@ form Box1HouseOwning {
     boolQ1: "Boolean question 1" boolean
     boolQ2: "Boolean question 2" boolean(boolQ1)
     boolQ3: "Boolean question 3" boolean(boolQ2)
+    boolQ4: "Boolean question 4" boolean
+    boolQ5: "Boolean question 5" boolean
+    boolQ6: "Boolean question 6" boolean
+    boolQ7: "Boolean question 7" boolean
     stringQ1: "Stringquestion 1" string
     stringQ2: "Stringquestion 2" string(stringQ1)
-}      
+}     
         </TextBox>
         <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
 
@@ -35,11 +39,13 @@ stylesheet taxOfficeExample
 {
  page Housing 
  {
+  default boolean { widget dropdown }
   section "Buying"
-  {      
+  {
+   question boolQ1         
    question boolQ2
    {
-    widget dropdown
+    widget checkbox
    }
    question boolQ3
    {
@@ -48,8 +54,27 @@ stylesheet taxOfficeExample
    question moneyQ1
    {
     widget slider
-   }   
+   }
   } 
+ }
+ page Bla
+ {
+   default boolean{ widget radio }
+   section "BlaSection1"
+   {
+     question boolQ4
+   }
+   section "BlaSection2"
+   {
+      default boolean { widget dropdown }
+      question boolQ5
+   }
+   section "BlaSection3"
+   {
+      //default boolean { widget checkbox }
+      question boolQ6
+      question boolQ7
+   }
  }
 }
         </TextBox>

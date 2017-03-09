@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,15 @@ namespace Questionnaires.QLS.Processing
 {   
     class SomeClass
     {
+        // A list of the questions parsed from the QL code
         Dictionary<string, QL.AST.Question> Questions;
+        // Stack of default styles
+        Stack Styles = new Stack();
 
         public SomeClass(Dictionary<string, QL.AST.Question> questions)
         {
             Questions = questions;
         }
-
 
         public void Process(StyleSheet styleSheet)
         {
@@ -25,38 +28,66 @@ namespace Questionnaires.QLS.Processing
             }
         }
 
-        void Visit(Page page)
+        private void Visit(Page page)
         {
-            foreach(var section in page.Sections)
+            /* Push the default style of this page into the stack
+            so child sections can use them */
+            AddStylesToStack(page.DefaultStyles);
+
+            foreach (var section in page.Sections)
             {
                 Visit((dynamic)section);
             }
+
+            /* Pop the styles specific from this page from the stack */
+            RemoveStylesFromStack(page.DefaultStyles);
         }
 
-        void Visit(Section section)
+        private void Visit(Section section)
         {
-            foreach(var question in section.Questions)
+            /* Push the default styles of this section onto the stack
+             * so child sections/questions can use them */
+            AddStylesToStack(section.Styles);
+
+            foreach (var question in section.Questions)
             {
                 Visit((dynamic)question);
-                // Option 1 a widget has been specified specifically for this question
-                
-                // Option 2 a widget has been specified for this type of question in this section
-
-                // Option 3 a widget has been specified for this type of question in one of the upwards sections
-
-                // Option 4 no widget has been specified for this type of question in QLS
             }
-            
+
+            RemoveStylesFromStack(section.Styles);
         }
 
-        void Visit(QuestionWithWidget question)
+        private void Visit(QuestionWithWidget question)
         {
             this.Questions[question.Name].Widget = question.Widget.CreateWidget();
         }
 
-        void Visit(Question question)
+        private void Visit(Question question)
         {
+            var QLQuestion = Questions[question.Name];
+            var stackCopy = (Stack)Styles.Clone();
 
+            while(stackCopy.Count > 0)
+            {
+                var style = (DefaultStyle)stackCopy.Pop();
+                if(style.Type.GetType() == QLQuestion.Type.GetType())
+                {
+                    QLQuestion.Widget = style.Widget.CreateWidget();
+                    break;
+                }
+            }
+        }
+
+        private void AddStylesToStack(List<DefaultStyle> styles)
+        {
+            foreach (var style in styles)
+                this.Styles.Push(style);
+        }
+
+        private void RemoveStylesFromStack(List<DefaultStyle> styles)
+        {
+            foreach (var style in styles)
+                this.Styles.Pop();
         }
     }
 }

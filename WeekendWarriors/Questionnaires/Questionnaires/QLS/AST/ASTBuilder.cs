@@ -82,7 +82,20 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context)
         {
-            var widget = context.widget().Accept(this);
+            Widgets.Widget widget = null;
+            var widgetType = context.widget().Widget().GetText();
+            switch (widgetType)
+            {
+                case "spinbox": widget = new Widgets.Spinbox(); break;
+                case "slider": widget = new Widgets.Slider(); break;
+                case "text": widget = new Widgets.Text(); break;
+                case "radio": widget = new Widgets.Radio(); break;
+                case "checkbox": widget = new Widgets.CheckBox(); break;
+                case "dropdown": widget = new Widgets.DropDown(); break;
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
             Questionnaires.Types.IType type; 
             switch(context.Type().GetText())
             {
