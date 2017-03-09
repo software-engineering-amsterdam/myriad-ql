@@ -93,7 +93,6 @@ def ql(ql_str):
 if __name__ == '__main__':
     app = QApplication(argv)
     file_window = FileWindow()
-    file_window.show()
 
     ql_str = acquire_text(argv)
     ql_ast = parse(ql_str)
@@ -103,7 +102,7 @@ if __name__ == '__main__':
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
 
     gui = Questionnaire()
-    # gui.visit(ql_ast).show()
+    gui.visit(ql_ast).show()
 
     exit(app.exec_())
 

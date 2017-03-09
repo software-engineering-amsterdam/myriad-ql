@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QListWidget
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
@@ -13,24 +15,33 @@ from PyQt5.QtWidgets import QWidget
 class FileWindow(QWidget):
     def __init__(self, parent=None):
         super(FileWindow, self).__init__(parent)
-        self.init_ui()
 
-    def init_ui(self):
-        self.resize(320, 180)
+        self.resize(280, 144)
         self.setWindowTitle("Leuker kunnen we het niet maken")
         self.center()
 
-        layout = QVBoxLayout()
-        button = QPushButton("Load file", self)
-        button.resize(button.sizeHint())
-        button.clicked.connect(self.handleButton)
-        layout.addWidget(button)
-        self.setLayout(layout)
+        self.button_load_file = QPushButton("Load file", self)
+        self.button_load_file.resize(self.button_load_file.sizeHint())
+        self.button_load_file.clicked.connect(self.handleButton)
+
+        self.list_errors = QListWidget()
+        self.list_errors.setStyleSheet("QListWidget {color: red}")
+
+        self.main_layout = QVBoxLayout()
+        self.main_layout.addWidget(self.button_load_file)
+        self.main_layout.addWidget(self.list_errors)
+
+        self.setLayout(self.main_layout)
+
+        self.show()
 
     def handleButton(self):
         file_path, file_filter = QFileDialog.getOpenFileName(filter="*.ql")
-        file_read = open(file_path, 'r').read()
-        print(file_read)
+
+        try:
+            file_read = open(file_path, 'r').read()
+        except FileNotFoundError:
+            self.list_errors.addItem("File not found.")
 
     def center(self):
         frame_geometry = self.frameGeometry()
