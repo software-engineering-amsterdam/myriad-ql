@@ -60,32 +60,28 @@ public class ExpressionChecker extends AbstractQLVisitor<Type> {
 
     @Override
     public Type visit(Parameter parameter) {
-        System.out.println("parameter: " + parameter.getID());
-        parameters.add(parameter);
         return typeTable.get(parameter.getID());
     }
 
     @Override
     public Type visit(Addition addition) {
         return verifyTypeCorrectness(addition);
-//        addition.getLeft().accept(this);
-//        addition.getRight().accept(this);
-
     }
 
     @Override
     public Type visit(Subtraction subtraction) {
         return verifyTypeCorrectness(subtraction);
-//        subtraction.getLeft().accept(this);
-//        subtraction.getRight().accept(this);
-
     }
 
     private Type verifyTypeCorrectness(BinaryOperation operation) {
-        Type leftType = operation.getLeft().accept(this);
-        Type rightType = operation.getRight().accept(this);
+        Type left = operation.getLeft().accept(this);
+        Type right = operation.getRight().accept(this);
 
-        return leftType;
+        if(!left.isCompatible(right)) {
+            System.err.println("incompatible types");
+        }
+
+        return left;
     }
 
     @Override
