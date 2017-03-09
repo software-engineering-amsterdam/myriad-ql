@@ -19,16 +19,16 @@ class Widget:
     def set_listener(self, listener):
         pass
 
-    @staticmethod
-    def get_datatype():
-        pass
+    @property
+    def datatype(self):
+        return None
 
     def get_tkinter_label(self):
         return self.app.getLabelWidget(self.label_id)
 
     @abstractmethod
     def get_tkinter_widget(self):
-        pass
+        return None
 
     def set_font_family(self, family):
         self.font["family"] = family
@@ -54,7 +54,7 @@ class Widget:
         self.get_tkinter_widget().config(width=width)
 
     def apply(self, styling):
-        if styling.applicable(self.get_datatype()):
+        if styling.applicable(self.datatype):
             for attribute in styling.attributes:
                 attribute.apply_on(self)
 
@@ -95,8 +95,8 @@ class EntryWidget(Widget):
     def get_value(self):
         return self.app.getEntry(self.entry_id)
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return StringDatatype()
 
     def get_tkinter_widget(self):
@@ -115,8 +115,8 @@ class IntegerEntryWidget(EntryWidget):
         except ValueError:
             return None
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return IntegerDatatype()
 
 
@@ -132,8 +132,8 @@ class DecimalEntryWidget(EntryWidget):
         except ValueError:
             return None
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return DecimalDatatype()
 
 
@@ -164,8 +164,8 @@ class CheckBoxWidget(Widget):
     def get_value(self):
         return self.app.getCheckBox(self.entry_id)
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
@@ -207,8 +207,8 @@ class SpinBoxWidget(Widget):
         except ValueError:
             return None
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return IntegerDatatype()
 
     def get_tkinter_widget(self):
@@ -248,8 +248,8 @@ class RadioWidget(Widget):
     def get_value(self):
         return self.app.getRadioButton(self.entry_id) == self.true_text
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
@@ -309,8 +309,8 @@ class DropDownWidget(Widget):
     def get_value(self):
         return self.app.getOptionBox(self.entry_id) == self.true_text
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
@@ -359,8 +359,8 @@ class SliderWidget(Widget):
         except ValueError:
             return None
 
-    @staticmethod
-    def get_datatype():
+    @property
+    def datatype(self):
         return IntegerDatatype()
 
     def get_tkinter_widget(self):
