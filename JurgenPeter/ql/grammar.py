@@ -13,19 +13,19 @@ variable = identifier.copy()
 variable.addParseAction(lambda tokens: Variable(tokens[0]))
 
 integer = pyparsing_common.integer
-integer.addParseAction(lambda tokens: Constant(tokens[0], IntegerDatatype()))
+integer.addParseAction(lambda tokens: IntegerConstant(tokens[0]))
 
 decimal = pyparsing_common.real
-decimal.addParseAction(lambda tokens: Constant(tokens[0], DecimalDatatype()))
+decimal.addParseAction(lambda tokens: DecimalConstant(tokens[0]))
 
 true = Literal("true")
-true.setParseAction(lambda _: Constant(True, BooleanDatatype()))
+true.setParseAction(lambda _: BooleanConstant(True))
 false = Literal("false")
-false.setParseAction(lambda _: Constant(False, BooleanDatatype()))
+false.setParseAction(lambda _: BooleanConstant(False))
 boolean = true ^ false
 
 string = QuotedString("\"")
-string.setParseAction(lambda tokens: Constant(tokens[0], StringDatatype()))
+string.setParseAction(lambda tokens: StringConstant(tokens[0]))
 
 literal = integer ^ decimal ^ boolean ^ string
 

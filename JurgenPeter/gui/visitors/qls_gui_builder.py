@@ -24,10 +24,7 @@ class QlsGuiBuilder(GuiBuilder):
         self.create_exit_button()
 
     def visit_styled_layout(self, node, stylings):
-        stylings += node.stylings
-        self.visit_layout(node, stylings)
-        for _ in node.stylings:
-            stylings.pop()
+        self.visit_layout(node, stylings + node.stylings)
 
     def visit_page(self, node, stylings):
         self.app.startTab(node.name)
@@ -36,10 +33,7 @@ class QlsGuiBuilder(GuiBuilder):
         self.app.stopTab()
 
     def visit_styled_page(self, node, stylings):
-        stylings += node.stylings
-        self.visit_page(node, stylings)
-        for _ in node.stylings:
-            stylings.pop()
+        self.visit_page(node, stylings + node.stylings)
 
     def visit_section(self, node, stylings):
         self.app.startLabelFrame(node.name)
@@ -48,19 +42,14 @@ class QlsGuiBuilder(GuiBuilder):
         self.app.stopLabelFrame()
 
     def visit_styled_section(self, node, stylings):
-        stylings += node.stylings
-        self.visit_section(node, stylings)
-        for _ in node.stylings:
-            stylings.pop()
+        self.visit_section(node, stylings + node.stylings)
 
     def visit_question_anchor(self, node, stylings):
         question = QuestionFinder(node.name).find(self.form)
         self.visit(question, stylings)
 
     def visit_styled_question_anchor(self, node, stylings):
-        stylings.append(node.styling)
-        self.visit_question_anchor(node, stylings)
-        stylings.pop()
+        self.visit_question_anchor(node, stylings + [node.styling])
 
     def visit_question(self, node, stylings):
         widget_constructor = WidgetCreator().create(node.datatype)

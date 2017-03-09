@@ -1,3 +1,6 @@
+from ql.datatypes import *
+
+
 class Node:
     def __eq__(self, other):
         return type(self) == type(other) and self.__dict__ == other.__dict__
@@ -155,9 +158,36 @@ class Variable(Expression):
 
 class Constant(Expression):
 
-    def __init__(self, value, datatype):
+    def __init__(self, value):
         self.value = value
-        self.datatype = datatype
 
     def accept(self, visitor, *args):
         return visitor.visit_constant(self, *args)
+
+
+class IntegerConstant(Constant):
+
+    @property
+    def datatype(self):
+        return IntegerDatatype()
+
+
+class DecimalConstant(Constant):
+
+    @property
+    def datatype(self):
+        return DecimalDatatype()
+
+
+class BooleanConstant(Constant):
+
+    @property
+    def datatype(self):
+        return BooleanDatatype()
+
+
+class StringConstant(Constant):
+
+    @property
+    def datatype(self):
+        return StringDatatype()
