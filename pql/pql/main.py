@@ -92,7 +92,7 @@ def ql(ql_str):
 
 if __name__ == '__main__':
     app = QApplication(argv)
-    file_window = FileWindow()
+    file_window = FileWindow(argv)
 
     exit(app.exec_())
 

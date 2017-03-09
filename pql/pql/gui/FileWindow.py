@@ -13,7 +13,7 @@ from pql.identifierchecker.identifierchecker import IdentifierChecker
 
 
 class FileWindow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, argv, parent=None):
         super(FileWindow, self).__init__(parent)
 
         self.resize(280, 144)
@@ -34,11 +34,19 @@ class FileWindow(QWidget):
 
         self.setLayout(self.main_layout)
 
-        self.show()
+        if len(argv) > 1:
+            self.handle_file(argv[1])
+            if self.list_errors.count():
+                self.show()
+        else:
+            self.show()
+        # self.show()
 
     def handle_button(self):
-        file_path, file_filter = QFileDialog.getOpenFileName(filter="*.ql")
+        file_path, _ = QFileDialog.getOpenFileName(filter="*.ql")
+        self.handle_file(file_path)
 
+    def handle_file(self, file_path):
         open_file = self.open_file(file_path)
 
         if open_file is not None:
