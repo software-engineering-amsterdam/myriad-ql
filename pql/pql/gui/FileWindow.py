@@ -57,6 +57,9 @@ class FileWindow(QWidget):
         gui = Questionnaire()
         gui.visit(ql_ast).show()
 
+    def closeEvent(self, event):
+        event.accept()
+
     def checkIds(self, ql_ast):
         try:
             return IdentifierChecker().visit(ql_ast)

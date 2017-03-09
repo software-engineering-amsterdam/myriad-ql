@@ -94,16 +94,6 @@ if __name__ == '__main__':
     app = QApplication(argv)
     file_window = FileWindow()
 
-    ql_str = acquire_text(argv)
-    ql_ast = parse(ql_str)
-    if ql_ast is None:
-        exit(4)
-
-    ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
-
-    gui = Questionnaire()
-    gui.visit(ql_ast).show()
-
     exit(app.exec_())
 
 
