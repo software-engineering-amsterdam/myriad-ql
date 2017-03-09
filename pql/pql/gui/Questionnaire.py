@@ -14,8 +14,8 @@ from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
 
-class Gui(FormVisitor, TypeVisitor):
-    def __init__(self, ):
+class Questionnaire(FormVisitor, TypeVisitor):
+    def __init__(self):
         self.wizard = Wizard()
         self.evaluator = None
         self.ast = None

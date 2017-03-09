@@ -6,7 +6,8 @@ from sys import exit
 
 from PyQt5.QtWidgets import QApplication
 
-from gui.gui import Gui
+from gui.FileWindow import FileWindow
+from gui.Questionnaire import Questionnaire
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
@@ -90,6 +91,10 @@ def ql(ql_str):
     return evaluate(ql_ast, ql_identifier_check_result)
 
 if __name__ == '__main__':
+    app = QApplication(argv)
+    file_window = FileWindow()
+    file_window.show()
+
     ql_str = acquire_text(argv)
     ql_ast = parse(ql_str)
     if ql_ast is None:
@@ -97,10 +102,8 @@ if __name__ == '__main__':
 
     ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
 
-    app = QApplication(argv)
-
-    gui = Gui()
-    gui.visit(ql_ast).show()
+    gui = Questionnaire()
+    # gui.visit(ql_ast).show()
 
     exit(app.exec_())
 
