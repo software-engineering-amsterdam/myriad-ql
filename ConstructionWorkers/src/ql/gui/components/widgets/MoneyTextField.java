@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 import java.util.EventListener;
 
-public class MoneyTextField extends AbstractWidget{
+public class MoneyTextField extends QLWidget {
 
     private JTextField input;
 

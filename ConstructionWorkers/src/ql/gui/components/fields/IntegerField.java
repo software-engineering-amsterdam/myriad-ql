@@ -7,7 +7,7 @@ package ql.gui.components.fields;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.GUIInterface;
 import ql.gui.components.widgets.IntegerTextField;
-import ql.gui.components.widgets.WidgetInterface;
+import ql.gui.components.widgets.QLWidget;
 import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
 
@@ -18,17 +18,10 @@ public class IntegerField extends Field {
 
     private IntegerValue value;
 
-    public IntegerField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+    public IntegerField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetState();
         addListenerToField();
-    }
-
-    @Override
-    public void resetState() {
-        IntegerValue zeroValue = new IntegerValue(0);
-        value = zeroValue;
-        widget.setValue(zeroValue);
     }
 
     private void addListenerToField() {
@@ -54,10 +47,6 @@ public class IntegerField extends Field {
         });
     }
 
-//    public WidgetInterface getField() {
-//        return this.widget;
-//    }
-
     @Override
     public Value getState() {
         return value;
@@ -69,4 +58,12 @@ public class IntegerField extends Field {
         this.value = (IntegerValue) value;
         getNewChanges();
     }
+
+    @Override
+    public void resetState() {
+        IntegerValue zeroValue = new IntegerValue(0);
+        value = zeroValue;
+        widget.setValue(zeroValue);
+    }
+
 }

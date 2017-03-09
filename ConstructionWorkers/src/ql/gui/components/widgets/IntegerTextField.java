@@ -8,12 +8,10 @@ import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.event.KeyListener;
-import java.text.NumberFormat;
 import java.util.EventListener;
 
-public class IntegerTextField extends AbstractWidget{
+public class IntegerTextField extends QLWidget {
 
     private JTextField input;
 

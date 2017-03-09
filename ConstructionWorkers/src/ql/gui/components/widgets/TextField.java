@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.util.EventListener;
 
-public class TextField extends AbstractWidget {
+public class TextField extends QLWidget {
 
     private JTextField input;
 

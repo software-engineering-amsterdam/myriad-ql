@@ -6,29 +6,19 @@ package ql.gui.components.fields;
 
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.GUIInterface;
-import ql.gui.components.FormFrame;
-import ql.gui.components.widgets.WidgetInterface;
+import ql.gui.components.widgets.QLWidget;
 import ql.gui.formenvironment.values.Value;
 
 public abstract class Field  {
 
-    protected WidgetInterface widget;
+    protected QLWidget widget;
     protected final SimpleQuestion question;
     private final GUIInterface guiInterface;
 
-    Field(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+    Field(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         this.guiInterface = guiInterface;
         this.question = question;
         this.widget = widget;
-    }
-
-    public void addToForm(FormFrame form) {
-        widget.render(form);
-    }
-
-    public void removeFromForm(FormFrame form) {
-        widget.suppress(form);
-        resetState();
     }
 
     protected void getNewChanges() {
@@ -37,7 +27,7 @@ public abstract class Field  {
 
     public abstract Value getState();
 
-    public WidgetInterface getWidget() {
+    public QLWidget getWidget() {
         return widget;
     }
 

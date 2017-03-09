@@ -8,8 +8,8 @@ import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
+import ql.gui.components.FormFrame;
 import ql.gui.evaluation.Evaluator;
-import ql.gui.components.fields.ComputedQuestionField;
 import ql.gui.components.fields.Field;
 import ql.gui.components.fields.FieldFactory;
 import ql.gui.formenvironment.Context;
@@ -24,17 +24,19 @@ import java.util.Objects;
 
 public class GUI implements GUIInterface{
 
-    private final GUIManager manager;
     private final Context context;
     private final Evaluator evaluator;
-//    private final FieldFactory fieldFactory;
     private final QuestionData questionData;
+
+    private FormFrame form;
 
     private List<ComputedQuestion> computedQuestions = new ArrayList<>();
     private final Map<Field, List<IfStatement>> questionsWithConditions;
 
     public GUI(Form form, Context context) {
-        manager = new GUIManager(form.getIdentifier().getName());
+
+        this.form = new FormFrame(form.getIdentifier().getName());
+
         this.context = context;
         evaluator = new Evaluator(context);
 
@@ -52,9 +54,9 @@ public class GUI implements GUIInterface{
     }
 
     public void showUI() {
-        this.evaluateComputedQuestion(this.computedQuestions);
+        this.evaluateComputedQuestions(this.computedQuestions);
         this.updateGUIData(this.questionsWithConditions);
-        this.manager.render();
+        this.form.showForm();
     }
 
     private void updateGUIData(Map<Field, List<IfStatement>> conditionsOfQuestions) {
@@ -62,28 +64,31 @@ public class GUI implements GUIInterface{
             for (Field field : conditionsOfQuestions.keySet()) {
                 if (Objects.equals(question.getIdentifier().getName(), field.getId())) {
                     if (this.checkIfConditionIsTrue(conditionsOfQuestions, field)) {
-                        this.manager.addField(field);
+                        form.addToFields(field);
+                        field.getWidget().render(form);
                     } else {
-                        this.manager.removeField(field);
+                        form.removeFromFields(field);
+                        field.getWidget().suppress(form);
+                        field.resetState();
                     }
                 }
             }
         }
     }
 
-    private void evaluateComputedQuestion(List<ComputedQuestion> questions) {
+    private void evaluateComputedQuestions(List<ComputedQuestion> questions) {
         for (ComputedQuestion question : questions) {
             Value result = this.evaluator.getValueComputedQuestion(question);
 
-            ComputedQuestionField cqField = null;
+            Field questionField = null;
             for (Field field : this.questionsWithConditions.keySet()) {
                 if (question.getIdentifier().getName().equals(field.getId())) {
-                    cqField = (ComputedQuestionField) field;
+                    questionField = field;
                 }
             }
 
-            if (cqField != null) {
-                cqField.setComputedValue(result);
+            if (questionField != null) {
+                questionField.getWidget().setValue(result);
             }
         }
     }

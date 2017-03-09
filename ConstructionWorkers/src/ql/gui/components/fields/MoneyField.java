@@ -7,7 +7,7 @@ package ql.gui.components.fields;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.gui.GUIInterface;
 import ql.gui.components.widgets.MoneyTextField;
-import ql.gui.components.widgets.WidgetInterface;
+import ql.gui.components.widgets.QLWidget;
 import ql.gui.formenvironment.values.MoneyValue;
 import ql.gui.formenvironment.values.Value;
 
@@ -19,17 +19,10 @@ public class MoneyField extends Field {
 
     private MoneyValue value;
 
-    public MoneyField(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+    public MoneyField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetState();
         addListenerToField();
-    }
-
-    @Override
-    public void resetState() {
-        MoneyValue zeroValue = new MoneyValue(new BigDecimal(0.00));
-        value = zeroValue;
-        widget.setValue(zeroValue);
     }
 
     private void addListenerToField() {
@@ -64,10 +57,6 @@ public class MoneyField extends Field {
         });
     }
 
-//    public WidgetInterface getField() {
-//        return this.widget;
-//    }
-
     @Override
     public Value getState() {
         return value;
@@ -78,5 +67,12 @@ public class MoneyField extends Field {
         widget.setValue(value);
         this.value = (MoneyValue) value;
         getNewChanges();
+    }
+
+    @Override
+    public void resetState() {
+        MoneyValue zeroValue = new MoneyValue(new BigDecimal(0.00));
+        value = zeroValue;
+        widget.setValue(zeroValue);
     }
 }

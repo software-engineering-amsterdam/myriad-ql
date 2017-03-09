@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.ItemListener;
 import java.util.EventListener;
 
-public class Checkbox extends AbstractWidget {
+public class Checkbox extends QLWidget {
 
     private JCheckBox checkBox;
 

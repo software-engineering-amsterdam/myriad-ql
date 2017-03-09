@@ -8,15 +8,15 @@ import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.types.*;
 import ql.astnodes.visitors.TypeVisitor;
 import ql.gui.GUIInterface;
-import ql.gui.components.widgets.WidgetInterface;
+import ql.gui.components.widgets.QLWidget;
 
 public class FieldTypeVisitor implements TypeVisitor<Field>{
 
     private final GUIInterface guiInterface;
     private final SimpleQuestion question;
-    private final WidgetInterface widget;
+    private final QLWidget widget;
 
-    public FieldTypeVisitor(GUIInterface guiInterface, SimpleQuestion question, WidgetInterface widget) {
+    public FieldTypeVisitor(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         this.guiInterface = guiInterface;
         this.question = question;
         this.widget = widget;

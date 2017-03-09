@@ -8,9 +8,8 @@ import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
-import ql.astnodes.statements.Statement;
 import ql.astnodes.visitors.FormAndStatementVisitor;
-import ql.gui.components.widgets.WidgetInterface;
+import ql.gui.components.widgets.QLWidget;
 import ql.gui.evaluation.Evaluator;
 import ql.gui.GUIInterface;
 import ql.gui.components.widgets.WidgetFactory;
@@ -31,28 +30,31 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
 
     @Override
     public Field visit(Form form) {
-        for (Statement statement : form.getStatements()) {
-            statement.accept(this);
-        }
         return null;
     }
 
     @Override
     public Field visit(SimpleQuestion question) {
-        WidgetInterface widget = widgetFactory.getWidgetForSimpleQuestion(question);
+        QLWidget widget = widgetFactory.getWidgetForQuestion(question);
         FieldTypeVisitor typeVisitor = new FieldTypeVisitor(guiInterface, question, widget);
         return question.getType().accept(typeVisitor);
     }
 
     @Override
-    public Field visit(ComputedQuestion statement) {
-        Value result = evaluator.getValueComputedQuestion(statement);
-        WidgetInterface widget = this.widgetFactory.getWidgetForComputedQuestion(statement, result);
-        return new ComputedQuestionField(guiInterface, statement, widget, result);
+    public Field visit(ComputedQuestion question) {
+        Value result = evaluator.getValueComputedQuestion(question);
+        QLWidget widget = this.widgetFactory.getWidgetForQuestion(question);
+
+        widget.setValue(result);
+        widget.setReadOnly(true);
+
+        FieldTypeVisitor typeVisitor = new FieldTypeVisitor(guiInterface, question, widget);
+        return question.getType().accept(typeVisitor);
     }
 
     @Override
     public Field visit(IfStatement statement) {
-        throw new AssertionError();
+        return null;
     }
+
 }

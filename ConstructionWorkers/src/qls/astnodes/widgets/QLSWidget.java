@@ -4,7 +4,6 @@ import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
 import ql.gui.components.FormFrame;
-import ql.gui.components.widgets.WidgetInterface;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.*;
 import qls.astnodes.visitors.StyleSheetVisitor;
