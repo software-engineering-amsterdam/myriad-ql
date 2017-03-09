@@ -66,15 +66,18 @@
                     ""When will this be finished?""
                         deadline: date
 
+                    ""What is your favourite decimal number?""
+                        favDecimal: decimal
+
                     ""String two:""
                         stringtwo: string
 
-                    if(deadline == '10-03-2017'){
-                    ""Concat:""
-                        concat: string (stringone + stringtwo)
+                    if(favDecimal == 3.1415){
+                    ""Do you like pie?""
+                        pie: boolean (existentialism)
                     } else {
-                    ""Reverse concat:""
-                        concatprime: string (stringtwo + stringone)
+                    ""Any comments?""
+                        comments: string
                     }
                 }
             ");

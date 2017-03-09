@@ -138,6 +138,7 @@
     <Compile Include="Interpreter\Controls\Base\Control.cs" />
     <Compile Include="Interpreter\Controls\Base\QuestionControl.cs" />
     <Compile Include="Interpreter\Controls\Base\Unsubscriber.cs" />
+    <Compile Include="Interpreter\Controls\DecimalControl.cs" />
     <Compile Include="Interpreter\Controls\DateControl.cs" />
     <Compile Include="Interpreter\Controls\FormControl.cs" />
     <Compile Include="Interpreter\Controls\BooleanControl.cs" />

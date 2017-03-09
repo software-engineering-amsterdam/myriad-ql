@@ -40,6 +40,9 @@
                 case StringValueType _:
                     question = new StringControl(expression, context);
                     break;
+                case DecimalValueType _:
+                    question = new DecimalControl(expression, context);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expression.Type));
             }
