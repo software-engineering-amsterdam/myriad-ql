@@ -22,7 +22,7 @@ if __name__ == '__main__':
                             widget spinbox
                         question valueResidue
                         default money {
-                            width: true
+                            width: 400
                             font: "Arial"
                             fontsize: 14
                             color: #999999

@@ -14,7 +14,7 @@ class Parser(QLParser):
     WIDGET = pp.Keyword("widget").suppress()
 
     # Add parsing logic for the color value literal.
-    COLOR_VALUE = pp.Regex("#[a-z\d]{6}")
+    COLOR_VALUE = pp.Regex("#[a-fA-F\d]{6}")
 
     # Define the style property names and widget type names.
     WIDTH = pp.Keyword("width").suppress()
@@ -37,7 +37,7 @@ class Parser(QLParser):
         # Add parse actions to create AST nodes from parse results.
         self.parse_literal_type_nodes()
         self.parse_literal_nodes()
-        self.parse_property_type_nodes()
+        self.PROPERTIES = self.parse_property_type_nodes()
         self.parse_widget_type_nodes()
 
         self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
@@ -45,8 +45,6 @@ class Parser(QLParser):
                            self.STRING_TYPE ^ self.DATE_TYPE)
         self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^ self.DATE ^
                       self.STRING ^ self.VARIABLE ^ self.COLOR_VALUE)
-        self.PROPERTY_TYPES = (self.WIDTH ^ self.HEIGHT ^ self.FONT ^
-                               self.FONTSIZE ^ self.COLOR)
         self.WIDGET_TYPES = (self.SLIDER ^ self.SPINBOX ^ self.TEXT ^
                              self.RADIO ^ self.CHECKBOX ^ self.DROPDOWN)
 
@@ -68,21 +66,25 @@ class Parser(QLParser):
         return r, g, b
 
     def parse_literal_nodes(self):
-        # Add parse action to all the 'base' literal nodes.
-        super(Parser, self).parse_literal_nodes()
-
-        self.COLOR_VALUE.setParseAction(self.create_node(AST.ColorNode))
+        self.INTEGER.setParseAction(self.create_int)
+        self.COLOR_VALUE.setParseAction(self.create_rgb_tuple)
+        self.DECIMAL.setParseAction(self.create_decimal)
+        self.STRING.setParseAction(pp.removeQuotes)
+        self.DATE.setParseAction(self.create_date)
 
     def parse_property_type_nodes(self):
-        self.WIDTH.setParseAction(
-            self.create_int, self.create_node(AST.WidthNode))
-        self.HEIGHT.setParseAction(
-            self.create_int, self.create_node(AST.HeightNode))
-        self.FONT.setParseAction(self.create_node(AST.FontNode))
-        self.FONTSIZE.setParseAction(
-            self.create_int, self.create_node(AST.FontSizeNode))
-        self.COLOR.setParseAction(
-            self.create_rgb_tuple, self.create_node(AST.ColorNode))
+        PROP_WIDTH = self.WIDTH + self.COLON + self.INTEGER
+        PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))
+        PROP_HEIGHT = self.HEIGHT + self.COLON + self.INTEGER
+        PROP_HEIGHT.setParseAction(self.create_node(AST.HeightNode))
+        PROP_FONT = self.FONT + self.COLON + self.STRING
+        PROP_FONT.setParseAction(self.create_node(AST.FontNode))
+        PROP_FONTSIZE = self.FONTSIZE + self.COLON + self.INTEGER
+        PROP_FONTSIZE.setParseAction(self.create_node(AST.FontSizeNode))
+        PROP_COLOR = self.COLOR + self.COLON + self.COLOR_VALUE
+        PROP_COLOR.setParseAction(self.create_node(AST.ColorNode))
+
+        return PROP_WIDTH ^ PROP_HEIGHT ^ PROP_FONT ^ PROP_FONTSIZE ^ PROP_COLOR
 
     def parse_widget_type_nodes(self):
         self.SLIDER.setParseAction(self.create_node(AST.SliderNode))
@@ -96,7 +98,7 @@ class Parser(QLParser):
         return self.WIDGET + self.WIDGET_TYPES
 
     def define_property_type(self):
-        return self.PROPERTY_TYPES + self.COLON + self.TYPES
+        return self.PROPERTIES
 
     def define_default(self):
         header = self.DEFAULT + self.TYPE_NAMES
