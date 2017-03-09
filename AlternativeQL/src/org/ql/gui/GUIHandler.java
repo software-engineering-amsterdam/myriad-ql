@@ -1,6 +1,5 @@
 package org.ql.gui;
 
-import javafx.stage.Stage;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.evaluator.ValueTable;
@@ -16,28 +15,36 @@ import java.util.List;
 
 public class GUIHandler implements GUIMediator {
 
-    private final MainStage mainstage;
+    private final MainStage stage;
     private final BranchVisitor branchVisitor;
     private final QuestionValueVisitor questionValueVisitor;
     private final Form form;
+    private final ValueTable valueTable;
 
-    private ValueTable valueTable;
-
-    public GUIHandler(Stage primaryStage, Form form) {
-        this.mainstage = new MainStage(primaryStage, form.getName().toString());
+    public GUIHandler(MainStage mainStage, Form form) {
         this.form = form;
 
+        stage = mainStage;
+        valueTable = new ValueTable();
+
         QuestionElementContainer questionElementContainer = new QuestionElementContainer(
-                new QuestionElementFactory());
+                new QuestionElementFactory(this));
 
         branchVisitor = new BranchVisitor(questionElementContainer);
         questionValueVisitor = new QuestionValueVisitor(questionElementContainer);
 
-        primaryStage.show();
     }
 
     public void runGUI() {
-        this.valueTable = questionValueVisitor.makeValueTable(form);
+        questionValueVisitor.updateValues(form, valueTable);
+        addWidgets(valueTable);
+    }
+
+    @Override
+    public void actualizeValue(Identifier identifier, Value newValue) {
+        valueTable.declare(identifier, newValue);
+        questionValueVisitor.updateValues(form, valueTable);
+        stage.resetStage();
         addWidgets(valueTable);
     }
 
@@ -45,15 +52,8 @@ public class GUIHandler implements GUIMediator {
         List<QuestionElement> visibleElements = branchVisitor.visitForm(form, valueTable);
 
         for(QuestionElement questionElement : visibleElements) {
-            questionElement.setValue(valueTable.lookup(questionElement.getQuestion().getId()));
-            mainstage.addWidgetToMainPane(questionElement.getWidget());
+            stage.addWidgetToMainPane(questionElement.getWidget());
         }
     }
 
-    @Override
-    public void actualizeValue(Identifier identifier, Value newValue) {
-        valueTable.declare(identifier, newValue);
-        mainstage.resetStage();
-        addWidgets(valueTable);
-    }
 }

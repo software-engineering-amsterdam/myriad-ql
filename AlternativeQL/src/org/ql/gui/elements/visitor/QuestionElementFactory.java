@@ -6,11 +6,18 @@ import org.ql.gui.elements.BooleanQuestionElement;
 import org.ql.gui.elements.NumericQuestionElement;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.TextQuestionElement;
+import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.CheckBoxWidget;
 import org.ql.gui.widgets.NumericWidget;
 import org.ql.gui.widgets.TextWidget;
 
 public class QuestionElementFactory implements TypeVisitor<QuestionElement, Question> {
+
+    private final GUIMediator mediator;
+
+    public QuestionElementFactory(GUIMediator mediator) {
+        this.mediator = mediator;
+    }
 
     public QuestionElement createQuestionElement(Question question) {
         return question.getType().accept(this, question);
@@ -18,7 +25,7 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
 
     @Override
     public BooleanQuestionElement visitBooleanType(BooleanType booleanType, Question question) {
-        return new BooleanQuestionElement(question, new CheckBoxWidget(question.getQuestionLabel().toString()));
+        return new BooleanQuestionElement(mediator, question, new CheckBoxWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
@@ -28,22 +35,22 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
 
     @Override
     public NumericQuestionElement visitFloatType(FloatType floatType, Question question) {
-        return new NumericQuestionElement(question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public NumericQuestionElement visitIntegerType(IntegerType integerType, Question question) {
-        return new NumericQuestionElement(question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public NumericQuestionElement visitMoneyType(MoneyType moneyType, Question question) {
-        return new NumericQuestionElement(question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public TextQuestionElement visitStringType(StringType stringType, Question question) {
-        return new TextQuestionElement(question, new TextWidget(question.getQuestionLabel().toString()));
+        return new TextQuestionElement(mediator, question, new TextWidget(question.getQuestionLabel().toString()));
     }
 
     @Override

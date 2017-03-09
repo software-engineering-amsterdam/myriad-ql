@@ -10,6 +10,8 @@ import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.IntegerType;
 import org.ql.ast.type.Type;
 import org.ql.gui.elements.visitor.QuestionElementFactory;
+import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.widgets.NumericWidget;
 import org.ql.gui.widgets.Widget;
 
 import static org.junit.Assert.*;
@@ -34,7 +36,7 @@ public class QuestionElementContainerTest {
         when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
             @Override
             public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(Question.class), mock(Widget.class));
+                return new NumericQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;

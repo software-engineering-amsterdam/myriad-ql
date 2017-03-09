@@ -9,7 +9,7 @@ public class GUIHandlerSingleton {
 
     public GUIHandlerSingleton(Stage stage, Form form) {
         if(guiHandler == null) {
-            this.guiHandler = new GUIHandler(stage, form);
+            //this.guiHandler = new GUIHandler(stage, form);
             System.out.println("Initialized the GUI handler.");
         }
     }

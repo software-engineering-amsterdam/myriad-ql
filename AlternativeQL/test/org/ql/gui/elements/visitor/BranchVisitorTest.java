@@ -19,7 +19,8 @@ import org.ql.evaluator.value.IntegerValue;
 import org.ql.gui.elements.NumericQuestionElement;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.QuestionElementContainer;
-import org.ql.gui.widgets.Widget;
+import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.widgets.NumericWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class BranchVisitorTest {
         when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
             @Override
             public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(Question.class), mock(Widget.class));
+                return new NumericQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;

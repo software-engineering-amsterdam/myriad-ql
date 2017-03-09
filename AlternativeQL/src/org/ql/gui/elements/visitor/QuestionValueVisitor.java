@@ -9,6 +9,8 @@ import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
 import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
+import org.ql.evaluator.value.UnknownValue;
+import org.ql.evaluator.value.Value;
 import org.ql.gui.elements.QuestionElementContainer;
 import org.ql.gui.elements.QuestionElement;
 
@@ -21,9 +23,7 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
         evaluator = new Evaluator();
     }
 
-    public ValueTable makeValueTable(Form form) {
-        ValueTable valueTable = new ValueTable();
-
+    public void updateValues(Form form, ValueTable valueTable) {
         while (true) {
             ValueTable oldValueTable = valueTable.copy();
             this.visitForm(form, valueTable);
@@ -31,8 +31,6 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
                 break;
             }
         }
-
-        return valueTable;
     }
 
     @Override
@@ -66,8 +64,14 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
     public Void visitQuestion(Question question, ValueTable valueTable) {
         QuestionElement questionElement = questionElementContainer.getQuestionElement(question);
 
-        if (!questionElement.isDirty() && question.getValue() != null) {
-            valueTable.declare(question.getId(), evaluator.evaluate(question.getValue(), valueTable));
+        if (!questionElement.isDirty()) {
+            Value value;
+            if (question.getValue() != null) {
+                value = evaluator.evaluate(question.getValue(), valueTable);
+            } else {
+                value = new UnknownValue();
+            }
+            valueTable.declare(question.getId(), value);
         }
 
         return null;

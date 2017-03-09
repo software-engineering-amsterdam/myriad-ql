@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.ql.gui.widgets.Widget;
 
+//
 public class MainStage extends Stage {
 
     private Stage stage;

@@ -19,6 +19,8 @@ import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.gui.elements.NumericQuestionElement;
 import org.ql.gui.elements.QuestionElementContainer;
+import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.widgets.NumericWidget;
 import org.ql.gui.widgets.Widget;
 
 import java.util.ArrayList;
@@ -35,10 +37,11 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(15));
 
         QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockQuestionElementBuilder()));
-        ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        ValueTable actualValueTable = new ValueTable();
+        visitor.updateValues(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new IntegerLiteral(15)));
-        }}));
+        }}), actualValueTable);
 
         assertTrue(expectedValueTable.equals(actualValueTable));
     }
@@ -50,10 +53,11 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("second"), new UnknownValue());
 
         QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockQuestionElementBuilder()));
-        ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        ValueTable actualValueTable = new ValueTable();
+        visitor.updateValues(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), null));
-        }}));
+        }}), actualValueTable);
 
         assertTrue(expectedValueTable.equals(actualValueTable));
     }
@@ -66,13 +70,14 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
         QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockQuestionElementBuilder()));
-        ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        ValueTable actualValueTable = new ValueTable();
+        visitor.updateValues(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new Parameter(new Identifier("third"))));
             add(new Question(new Identifier("third"), new QuestionLabel("Question2"), new IntegerType(), new Addition(
                     new IntegerLiteral(13), new IntegerLiteral(35)
             )));
-        }}));
+        }}), actualValueTable);
 
         assertTrue(expectedValueTable.equals(actualValueTable));
     }
@@ -85,7 +90,8 @@ public class QuestionValueVisitorTest {
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
         QuestionValueVisitor visitor = new QuestionValueVisitor(new QuestionElementContainer(mockQuestionElementBuilder()));
-        ValueTable actualValueTable = visitor.makeValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        ValueTable actualValueTable = new ValueTable();
+        visitor.updateValues(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
                 add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             }}, new ArrayList<Statement>() {{
@@ -94,17 +100,17 @@ public class QuestionValueVisitorTest {
                         new IntegerLiteral(13), new IntegerLiteral(35)
                 )));
             }}));
-        }}));
+        }}), actualValueTable);
 
         assertTrue(expectedValueTable.equals(actualValueTable));
     }
 
     private QuestionElementFactory mockQuestionElementBuilder() {
         QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
+        when(elementBuilder.createQuestionElement(any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
             @Override
             public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(Question.class), mock(Widget.class));
+                return new NumericQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;
