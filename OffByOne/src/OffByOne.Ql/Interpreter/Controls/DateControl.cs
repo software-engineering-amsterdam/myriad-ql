@@ -17,7 +17,7 @@
             : base(statement, guiEnvironment)
         {
             this.CreateControl();
-            this.Value = new BooleanValue(false);
+            this.Value = new DateValue(DateTime.Now);
         }
 
         public override void OnNext(GuiChange value)
