@@ -1,27 +1,25 @@
-from ql.visitors.question_finder import QuestionFinder
 from gui.visitors.widget_creator import WidgetCreator
-from gui.visitors.gui_builder import GuiBuilder
+from misc.messages import *
+from ql.visitors.question_finder import QuestionFinder
 
 
-class QlsGuiBuilder(GuiBuilder):
-    
-    def __init__(self, app, listener, exit, widgets, form):
-        super().__init__(app, listener, exit, widgets)
-        self.form = form
+class QlsTypeChecker:
+    def __init__(self, symbol_table, errors=[]):
+        self.symbol_table = symbol_table
+        self.errors = errors
 
-    def build(self, node):
+    def error(self, message):
+        self.errors.append(ErrorMessage(message))
+
+    def check(self, node):
         self.visit(node, [])
 
     def visit(self, node, stylings):
-        node.accept(self, stylings)
+        return node.accept(self, stylings)
 
     def visit_layout(self, node, stylings):
-        self.app.startTabbedFrame(node.name)
-        self.app.setTabbedFrameTabExpand(node.name, True)
         for element in node.body:
             self.visit(element, stylings)
-        self.app.stopTabbedFrame()
-        self.create_exit_button()
 
     def visit_styled_layout(self, node, stylings):
         stylings += node.stylings
@@ -30,10 +28,8 @@ class QlsGuiBuilder(GuiBuilder):
             stylings.pop()
 
     def visit_page(self, node, stylings):
-        self.app.startTab(node.name)
         for element in node.body:
             self.visit(element, stylings)
-        self.app.stopTab()
 
     def visit_styled_page(self, node, stylings):
         stylings += node.stylings
@@ -42,10 +38,8 @@ class QlsGuiBuilder(GuiBuilder):
             stylings.pop()
 
     def visit_section(self, node, stylings):
-        self.app.startLabelFrame(node.name)
         for element in node.body:
             self.visit(element, stylings)
-        self.app.stopLabelFrame()
 
     def visit_styled_section(self, node, stylings):
         stylings += node.stylings
@@ -54,8 +48,18 @@ class QlsGuiBuilder(GuiBuilder):
             stylings.pop()
 
     def visit_question_anchor(self, node, stylings):
-        question = QuestionFinder(node.name).find(self.form)
-        self.visit(question, stylings)
+        widget_constructor = WidgetCreator().create(self.symbol_table[node.name].value)
+
+        for styling in stylings:
+            widget_constructor = styling.modify_widget_constructor(
+                self.symbol_table[node.name].value, widget_constructor)
+
+        if widget_constructor.get_datatype() != self.symbol_table[node.name]:
+            self.error("Widget \"{}\" does not match "
+                       "question datatype".format(node.name))
+
+        # question = QuestionFinder(node.name).find(self.form)
+        # self.visit(question, stylings)
 
     def visit_styled_question_anchor(self, node, stylings):
         stylings.append(node.styling)
@@ -67,16 +71,8 @@ class QlsGuiBuilder(GuiBuilder):
 
         for styling in stylings:
             widget_constructor = styling.modify_widget_constructor(
-                node.datatype, widget_constructor)
+                node, widget_constructor)
 
-        widget = widget_constructor(self.app, node)
-        widget.set_listener(self.listener)
-
-        for styling in stylings:
-            widget.apply(styling)
-
-        self.widgets[node.name] = widget
-
-    def visit_computed_question(self, node, stylings):
-        self.visit_question(node, stylings)
-        self.widgets[node.name].disable()
+        if widget_constructor.get_datatype() != self.symbol_table[node.name]:
+            self.error("Widget \"{}\" does not match "
+                       "question datatype".format(node.name))

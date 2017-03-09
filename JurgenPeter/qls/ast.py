@@ -81,8 +81,8 @@ class Styling(Node):
     def applicable(self, datatype):
         return True
 
-    def modify_widget_constructor(self, node, widget_constructor):
-        if self.applicable(node.datatype):
+    def modify_widget_constructor(self, datatype, widget_constructor):
+        if self.applicable(datatype):
             for attribute in self.attributes:
                 widget_constructor = attribute.modify_widget_constructor(
                     widget_constructor)

@@ -10,6 +10,7 @@ from ql.visitors.printer import Printer
 from ql.visitors.symbol_checker import SymbolChecker
 from ql.visitors.type_checker import TypeChecker
 from qls.grammar import parse_file as parse_qls
+from qls.visitors.type_checker import *
 
 
 def export(filename, dictionary):
@@ -60,7 +61,16 @@ def main():
             "qls filename \"{}\" does not exist".format(layout_file)))
     else:
         layout = parse_qls(layout_file)
-    # TODO: typechecking
+
+    # TODO: symbol checking
+    layout_errors = []
+    QlsTypeChecker(symboltable, layout_errors).check(layout)
+
+    for error in layout_errors:
+        print(error)
+
+    if any(error.critical for error in layout_errors):
+        return
 
     app = FormApp(form, layout=layout, on_exit=lambda form_app: export(dump_file, form_app.environment))
     app.start()
