@@ -18,7 +18,7 @@
             this.Statement = statement;
             foreach (var control in controls)
             {
-                this.Controls = this.Controls.Union(control.Controls).ToList();
+                this.Controls = this.Controls.Concat(control.Controls).ToList();
             }
         }
 

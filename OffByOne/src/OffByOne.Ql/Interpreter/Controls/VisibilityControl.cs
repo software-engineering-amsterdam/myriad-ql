@@ -14,7 +14,7 @@
 
     public class VisibilityControl : Control, IObserver<GuiChange>
     {
-        public VisibilityControl(IfStatement statement, GuiEnvironment guiEnvironment, List<Control> ifControls, List<Control> elseControls)
+        public VisibilityControl(IfStatement statement, GuiEnvironment guiEnvironment, IList<Control> ifControls, IList<Control> elseControls)
             : base(guiEnvironment)
         {
             this.Statement = statement;
@@ -27,9 +27,9 @@
             this.EvaluateVisibility();
         }
 
-        public List<Control> IfControls { get; private set; }
+        public IList<Control> IfControls { get; private set; }
 
-        public List<Control> ElseControls { get; private set; }
+        public IList<Control> ElseControls { get; private set; }
 
         public IfStatement Statement { get; }
 
@@ -61,7 +61,7 @@
         {
             foreach (var control in controls)
             {
-                this.Controls = this.Controls.Union(control.Controls).ToList();
+                this.Controls = this.Controls.Concat(control.Controls).ToList();
             }
         }
 
@@ -69,13 +69,27 @@
         {
             if (conditionMet)
             {
-                this.IfControls.ForEach(x => x.Show());
-                this.ElseControls.ForEach(x => x.Hide());
+                foreach (var control in this.IfControls)
+                {
+                    control.Show();
+                }
+
+                foreach (var control in this.ElseControls)
+                {
+                    control.Hide();
+                }
             }
             else
             {
-                this.IfControls.ForEach(x => x.Hide());
-                this.ElseControls.ForEach(x => x.Show());
+                foreach (var control in this.IfControls)
+                {
+                    control.Hide();
+                }
+
+                foreach (var control in this.ElseControls)
+                {
+                    control.Show();
+                }
             }
         }
     }
