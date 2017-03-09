@@ -17,7 +17,7 @@ class StylesheetNode(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        self.body.accept(visitor, *args)
+        visitor.style_sheet_node(self, *args)
 
 
 class PageNode(Node):
@@ -27,7 +27,7 @@ class PageNode(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        self.body.accept(visitor, *args)
+        visitor.page_node(self, *args)
 
 
 class SectionNode(Node):
@@ -37,17 +37,25 @@ class SectionNode(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        self.body.accept(visitor, *args)
+        visitor.section_node(self, *args)
 
 
 class QuestionNode(Node):
-    def __init__(self, name, widget_type=None, line=0, col=0):
+    def __init__(self, name, line=0, col=0):
         super(QuestionNode, self).__init__(line, col)
         self.name = name
-        self.type = widget_type
 
     def accept(self, visitor, *args):
         visitor.question_node(self, *args)
+
+
+class WidgetQuestionNode(QuestionNode):
+    def __init__(self, name, widget_type, line=0, col=0):
+        super(WidgetQuestionNode, self).__init__(name, line, col)
+        self.type = widget_type
+
+    def accept(self, visitor, *args):
+        visitor.widget_question_node(self, *args)
 
 
 class WidgetNode(Node):
@@ -59,30 +67,48 @@ class SliderNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(SliderNode, self).__init__(line, col)
 
+    def accept(self, visitor, *args):
+        visitor.slider_node(self, *args)
+
 
 class SpinboxNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(SpinboxNode, self).__init__(line, col)
+
+    def accept(self, visitor, *args):
+        return visitor.spinbox_node(self, *args)
 
 
 class TextNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(TextNode, self).__init__(line, col)
 
+    def accept(self, visitor, *args):
+        return visitor.text_node(self, *args)
+
 
 class RadioNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(RadioNode, self).__init__(line, col)
+
+    def accept(self, visitor, *args):
+        return visitor.radio_node(self, *args)
 
 
 class CheckboxNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(CheckboxNode, self).__init__(line, col)
 
+    def accept(self, visitor, *args):
+        return visitor.checkbox_node(self, *args)
+
 
 class DropdownNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(DropdownNode, self).__init__(line, col)
+
+    def accept(self, visitor, *args):
+        return visitor.dropdown_node(self, *args)
 
 
 class DefaultNode(Node):
@@ -92,7 +118,7 @@ class DefaultNode(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        self.body.accept(visitor, *args)
+        return visitor.default_node(self, *args)
 
 
 class PropertyNode(Node):
@@ -106,7 +132,7 @@ class WidthNode(PropertyNode):
         super(WidthNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
-        visitor.width_node(self, *args)
+        return visitor.width_node(self, *args)
 
 
 class HeightNode(PropertyNode):
@@ -114,7 +140,7 @@ class HeightNode(PropertyNode):
         super(HeightNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
-        visitor.height_node(self, *args)
+        return visitor.height_node(self, *args)
 
 
 class FontNode(PropertyNode):
@@ -122,7 +148,7 @@ class FontNode(PropertyNode):
         super(FontNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
-        visitor.font_node(self, *args)
+        return visitor.font_node(self, *args)
 
 
 class FontSizeNode(PropertyNode):
@@ -130,7 +156,7 @@ class FontSizeNode(PropertyNode):
         super(FontSizeNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
-        visitor.font_size_node(self, *args)
+        return visitor.fontsize_node(self, *args)
 
 
 class ColorNode(PropertyNode):
@@ -138,4 +164,4 @@ class ColorNode(PropertyNode):
         super(ColorNode, self).__init__(value, line, col)
 
     def accept(self, visitor, *args):
-        visitor.color_node(self, *args)
+        return visitor.color_node(self, *args)

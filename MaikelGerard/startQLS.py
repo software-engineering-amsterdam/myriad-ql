@@ -1,4 +1,5 @@
 from QLS.Stages.parser import Parser
+from QLS.Stages.printHandler import PrintHandler
 
 if __name__ == '__main__':
     example = """
@@ -35,5 +36,6 @@ if __name__ == '__main__':
         }
     """
 
-    client = Parser()
-    print(client.parse(example))
+    qls_parser = Parser()
+    parsedAST = qls_parser.parse(example)
+    PrintHandler().print_ast(parsedAST)

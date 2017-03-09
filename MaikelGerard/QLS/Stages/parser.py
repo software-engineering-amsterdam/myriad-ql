@@ -104,7 +104,7 @@ class Parser(QLParser):
         header = self.DEFAULT + self.TYPE_NAMES
         body = pp.Group(
             pp.OneOrMore(self.property_type) + self.widget_type
-        ).setParseAction(AST.BlockNode)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         with_props = header + self.curly_embrace(body)
         without_props = header + self.widget_type
@@ -113,15 +113,22 @@ class Parser(QLParser):
         return default.setParseAction(self.create_node(AST.DefaultNode))
 
     def define_question(self):
-        question = self.QUESTION + self.VARIABLE + pp.Optional(self.widget_type)
-        return question.setParseAction(self.create_node(AST.QuestionNode))
+        def create_question():
+            return self.QUESTION + self.VARIABLE
+        widget_question = (create_question() + self.widget_type).setParseAction(
+            self.create_node(AST.WidgetQuestionNode)
+        )
+        question = create_question().setParseAction(
+            self.create_node(AST.QuestionNode)
+        )
+        return question ^ widget_question
 
     def define_section(self):
         section = pp.Forward()
         header = self.SECTION + self.STRING
         body = pp.Group(
             pp.OneOrMore(self.question | self.default | section)
-        ).setParseAction(AST.BlockNode)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         section << header + self.curly_embrace(body)
         return section.setParseAction(self.create_node(AST.SectionNode))
@@ -130,17 +137,19 @@ class Parser(QLParser):
         header = self.PAGE + self.VARIABLE
         body = pp.Group(
             pp.OneOrMore(self.section | self.default)
-        ).setParseAction(AST.BlockNode)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         page = header + self.curly_embrace(body)
         return page.setParseAction(self.create_node(AST.PageNode))
 
     def define_grammar(self):
         header = self.STYLESHEET + self.VARIABLE
-        body = pp.Group(pp.OneOrMore(self.page)).setParseAction(AST.BlockNode)
+        body = pp.Group(
+            pp.OneOrMore(self.page)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         stylesheet = header + self.curly_embrace(body)
         return stylesheet.setParseAction(self.create_node(AST.StylesheetNode))
 
     def parse(self, input_str):
-        return self.grammar.parseString(input_str, parseAll=True)[0].__str__()
+        return self.grammar.parseString(input_str, parseAll=True)[0]
