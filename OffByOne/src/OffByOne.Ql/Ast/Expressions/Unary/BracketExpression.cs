@@ -1,15 +1,14 @@
-﻿namespace OffByOne.Ql.Ast.Expressions
+﻿namespace OffByOne.Ql.Ast.Expressions.Unary
 {
+    using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class BracketExpression : Expression
+    public class BracketExpression : UnaryExpression
     {
         public BracketExpression(Expression expression)
+            : base(expression)
         {
-            this.Expression = expression;
         }
-
-        public Expression Expression { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

@@ -17,6 +17,7 @@
             : base(guiEnvironment)
         {
             this.Statement = statement;
+            this.Dependencies.UnionWith(statement.GetDependencies());
         }
 
         public QuestionStatement Statement { get; }
@@ -37,15 +38,15 @@
 
         public override void OnNext(GuiChange value)
         {
-            var hasExpression = this.Statement.ComputationExpression != null;
-            var isUpdateByOther = value.Identifier != this.Statement.Identifier;
-            if (hasExpression && isUpdateByOther)
+            if (!this.Statement.IsComputable(value.Identifier))
             {
-                var evaluator = new Evaluator();
-                this.Value = evaluator.Evaluate(
-                    this.Statement.ComputationExpression,
-                    value.Environment.Evaluations);
+                return;
             }
+
+            var evaluator = new Evaluator();
+            this.Value = evaluator.Evaluate(
+                this.Statement.ComputationExpression,
+                value.Environment.Evaluations);
         }
     }
 }

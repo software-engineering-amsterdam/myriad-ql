@@ -1,8 +1,9 @@
-﻿namespace OffByOne.Ql.Ast.Statements.Branch
+﻿namespace OffByOne.Ql.Ast.Statements
 {
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class IfStatement : Statement
@@ -28,6 +29,16 @@
             TContext context)
         {
             return visitor.Visit(this, context);
+        }
+
+        public override ISet<string> GetDependencies()
+        {
+            return this.Condition.GetDependencies();
+        }
+
+        public bool IsComputable(string key)
+        {
+            return this.GetDependencies().Contains(key);
         }
     }
 }

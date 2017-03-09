@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class FormStatement : Statement
@@ -21,6 +22,17 @@
             TContext context)
         {
             return visitor.Visit(this, context);
+        }
+
+        public override ISet<string> GetDependencies()
+        {
+            var identifiers = new SortedSet<string>();
+            foreach (var statement in this.Statements)
+            {
+                identifiers.UnionWith(statement.GetDependencies());
+            }
+
+            return identifiers;
         }
     }
 }

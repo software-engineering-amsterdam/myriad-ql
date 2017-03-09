@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls
 {
     using System;
+    using System.Linq;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
@@ -9,6 +10,9 @@
 
     public class StringControl : QuestionControl
     {
+        private TextBox input;
+        private Label label;
+
         public StringControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(statement, guiEnvironment)
         {
@@ -19,7 +23,7 @@
         public override void OnNext(GuiChange value)
         {
             base.OnNext(value);
-            ((TextBox)this.RootControl.Items[1]).Text = this.Value.ToString();
+            this.Controls.OfType<TextBox>().First().Text = this.Value.ToString();
         }
 
         public override void OnCompleted()
@@ -34,14 +38,14 @@
 
         private void CreateControl()
         {
-            var label = new Label() { Content = this.Statement.Label.ToString() };
-            var input = new TextBox() { MinWidth = 200 };
-            input.KeyUp += (target, eventArgs) =>
+            this.label = new Label() { Content = this.Statement.Label };
+            this.input = new TextBox() { MinWidth = 200 };
+            this.input.KeyUp += (target, eventArgs) =>
             {
-                this.Value = new StringValue(input.Text);
+                this.Value = new StringValue(this.input.Text);
             };
-            this.RootControl.Items.Add(label);
-            this.RootControl.Items.Add(input);
+            this.Controls.Add(this.label);
+            this.Controls.Add(this.input);
         }
     }
 }

@@ -10,7 +10,6 @@
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker;

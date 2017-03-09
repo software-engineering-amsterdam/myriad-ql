@@ -6,7 +6,6 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Tests.Parser.Base;
     using OffByOne.Ql.Values;
 
@@ -145,6 +144,40 @@
             var castAstTree = (FormStatement)astTree;
 
             Assert.True(castAstTree.Statements.All(x => x.SourceCode != null));
+        }
+
+        [Fact]
+        public void AstCreation_ContainsDependencies()
+        {
+            var astTree = this.GetAstNodesFromInput(@"
+                form questionnaire { 
+                    ""What is your birth date?"" 
+                        birthDate: date
+
+                    ""Do you want to continue?""
+                        continue: boolean
+
+                    if (birthDate < '31-12-1999' || continue) {
+                        ""How much money do you spend on alcoholic beverages?""
+                            alcoholicBeverages: money
+                    } else {
+                        ""Okay. Goodbye?""
+                            exit: boolean(continue || false)
+                    }
+                }
+            ");
+            var castAstTree = (FormStatement)astTree;
+            var statements = castAstTree.Statements.ToList();
+            var q1 = (QuestionStatement)statements[0];
+            var q2 = (QuestionStatement)statements[1];
+            var c1 = (IfStatement)statements[2];
+            var q3 = c1.ElseStatements.First();
+
+            Assert.Empty(q1.GetDependencies());
+            Assert.Empty(q2.GetDependencies());
+            Assert.Contains("birthDate", c1.GetDependencies());
+            Assert.Contains("continue", c1.GetDependencies());
+            Assert.Contains("continue", q3.GetDependencies());
         }
     }
 }

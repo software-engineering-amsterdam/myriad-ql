@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Ql.Visitors.Contracts
 {
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
 
     public interface IStatementVisitor<out TResult, in TContext> : IVisitor
         where TContext : IContext

@@ -5,12 +5,9 @@
     using System.Windows;
 
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
     using OffByOne.Ql.Interpreter.Controls;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Visitors.Contracts;
-
-    using Windows = System.Windows.Controls;
 
     public class Interpreter
         : IStatementVisitor<Control, GuiEnvironment>
@@ -36,10 +33,10 @@
 
         public Control Visit(IfStatement expression, GuiEnvironment context)
         {
-            IList<Control> ifControls = expression.Statements
+            var ifControls = expression.Statements
                 .Select(x => x.Accept(this, context))
                 .ToList();
-            IList<Control> elseControls = expression.ElseStatements
+            var elseControls = expression.ElseStatements
                 .Select(x => x.Accept(this, context))
                 .ToList();
 

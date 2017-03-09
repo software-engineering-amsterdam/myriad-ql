@@ -1,9 +1,10 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
-    using MoreDotNet.Extensions.Common;
+    using System.Collections.Generic;
 
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Literals;
+    using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
@@ -34,6 +35,24 @@
             TContext context)
         {
             return visitor.Visit(this, context);
+        }
+
+        public override ISet<string> GetDependencies()
+        {
+            var identifiers = new SortedSet<string>();
+            if (this.ComputationExpression != null)
+            {
+                identifiers.UnionWith(this.ComputationExpression.GetDependencies());
+            }
+
+            return identifiers;
+        }
+
+        public bool IsComputable(string key)
+        {
+            var hasExpression = this.ComputationExpression != null;
+            var hasDependency = this.GetDependencies().Contains(key);
+            return hasExpression && hasDependency;
         }
     }
 }

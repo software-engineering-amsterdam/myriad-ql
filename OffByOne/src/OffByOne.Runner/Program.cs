@@ -1,8 +1,8 @@
 ﻿namespace OffByOne.Runner
 {
     using System;
-    using System.Threading;
     using System.Windows;
+    using System.Windows.Controls;
 
     using Antlr4.Runtime;
 
@@ -66,8 +66,13 @@
                     ""String two:""
                         stringtwo: string
 
+                    if(stringone == ""Hello""){
                     ""Concat:""
                         concat: string (stringone + stringtwo)
+                    } else {
+                    ""Reverse concat:""
+                        concatprime: string (stringtwo + stringone)
+                    }
                 }
             ");
             QlLexer lexer = new QlLexer(input);
@@ -79,8 +84,14 @@
 
             var form = interpreter.Visit(tree, env);
             var window = new Window();
-            window.Content = form.RootControl;
-            var application = new System.Windows.Application();
+            var view = new ListView();
+            foreach (var control in form.Controls)
+            {
+                view.Items.Add(control);
+            }
+
+            window.Content = view;
+            var application = new Application();
             application.Run(window);
         }
 

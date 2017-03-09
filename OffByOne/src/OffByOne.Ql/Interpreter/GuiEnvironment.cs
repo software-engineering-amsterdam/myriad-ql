@@ -22,7 +22,7 @@
 
         public TypeEnvironment Evaluations { get; }
 
-        public ListView RootControl { get; }
+        public ItemsControl RootControl { get; }
 
         public void UpdateValues(string identifier, IValue value)
         {

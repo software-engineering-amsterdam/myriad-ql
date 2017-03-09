@@ -89,7 +89,7 @@
     <Compile Include="Ast\Expressions\Binary\NotEqualExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\OrExpression.cs" />
     <Compile Include="Ast\Expressions\Binary\SubtractExpression.cs" />
-    <Compile Include="Ast\Expressions\BracketExpression.cs" />
+    <Compile Include="Ast\Expressions\Unary\BracketExpression.cs" />
     <Compile Include="Ast\Expressions\Expression.cs" />
     <Compile Include="Ast\Expressions\Unary\Base\UnaryExpression.cs" />
     <Compile Include="Ast\Expressions\Unary\NegativeExpression.cs" />
@@ -105,10 +105,10 @@
     <Compile Include="Ast\Literals\MoneyLiteral.cs" />
     <Compile Include="Ast\Literals\StringLiteral.cs" />
     <Compile Include="Ast\SourceLocation.cs" />
-    <Compile Include="Ast\Statements\Branch\IfStatement.cs" />
+    <Compile Include="Ast\Statements\IfStatement.cs" />
     <Compile Include="Ast\Statements\FormStatement.cs" />
     <Compile Include="Ast\Statements\QuestionStatement.cs" />
-    <Compile Include="Ast\Statements\Statement.cs" />
+    <Compile Include="Ast\Statements\Base\Statement.cs" />
     <Compile Include="Ast\ValueTypes\Base\NumericalValueType.cs" />
     <Compile Include="Ast\ValueTypes\Base\ValueType.cs" />
     <Compile Include="Ast\ValueTypes\BooleanValueType.cs" />
