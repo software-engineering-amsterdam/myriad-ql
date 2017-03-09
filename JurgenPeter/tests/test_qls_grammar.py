@@ -56,6 +56,19 @@ class TestGrammar(TestCase):
             self.assertTrue(parser.parseString(sentence, parseAll=True))
 
     incorrectSentences = [
+        (grammar.question, "question x color #663322"),
+        (grammar.question, "question x color: #663322"),
+        (grammar.question, "question x widget: spinbox"),
+        (grammar.question, "question x widget radio(0, 1)"),
+        (grammar.question, "question x widget dropdown(0, 1)"),
+        (grammar.question, "question x widget: spinbox(\"0\",\"100\")"),
+        (grammar.question, "question x widget: slider(\"0\",\"100\")"),
+        (grammar.section, "section x {}"),
+        (grammar.section, "section \"x\" {default boolean widget radio question x}"),
+        (grammar.page, "page \"x\" {}"),
+        (grammar.page, "page x {default boolean widget radio question x}"),
+        (grammar.layout, "stylesheet \"x\" {}"),
+        (grammar.layout, "stylesheet x {default boolean widget radio question x}"),
     ]
 
     def testIncorrectSentences(self):
