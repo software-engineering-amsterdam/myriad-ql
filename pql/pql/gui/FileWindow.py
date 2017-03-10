@@ -47,6 +47,7 @@ class FileWindow(QWidget):
         self.handle_file(file_path)
 
     def handle_file(self, file_path):
+        self.list_errors.clear()
         open_file = self.open_file(file_path)
 
         if open_file is not None:
@@ -54,15 +55,16 @@ class FileWindow(QWidget):
             file_dict = {"file_path": file_path, "file_body": open_file}
             if self.list_errors:
                 list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
-                editor = Editor(file_dict, list_errors)
-                editor.show()
+                Editor(file_dict, list_errors, parent=self).show()
+                # self.close()
 
             if ql_ast is not None:
                 ql_ids, ql_errors = self.check_ids(ql_ast)
                 if ql_errors:
                     self.list_errors.addItems(ql_errors)
                     list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
-                    Editor(file_dict, list_errors)
+                    Editor(file_dict, list_errors, parent=self).show()
+                    # self.close()
                 else:
                     self.close()
                     self.show_questionnaire(ql_ast)

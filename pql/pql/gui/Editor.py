@@ -10,9 +10,10 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QWidget
 
 
-class Editor(QMainWindow):
+class Editor(QMainWindow, QWidget):
     def __init__(self, file_dict=None, list_errors=None, parent=None):
         super(Editor, self).__init__(parent)
         if list_errors is None:
@@ -26,7 +27,9 @@ class Editor(QMainWindow):
 
         menu_bar = self.menuBar()
         file = menu_bar.addMenu("File")
-        file.addAction(QAction("Evaluate", self))
+        evaluate = QAction("Evaluate", self)
+        evaluate.setShortcuts(["Ctrl+S", "Cmd+S"])
+        file.addAction(evaluate)
         file.triggered[QAction].connect(lambda q, file_path=file_dict["file_path"]: self.processtrigger(q, file_path))
 
         font = QFont()
@@ -63,6 +66,8 @@ class Editor(QMainWindow):
         with open(file_path, 'w') as open_file:
             open_file.truncate()
             open_file.write(contents)
+        self.parent().show()
+        self.parent().handle_file(file_path)
         self.close()
 
     def update_text_cursor_position(self):
