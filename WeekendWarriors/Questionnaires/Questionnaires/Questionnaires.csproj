@@ -108,7 +108,7 @@
     <Compile Include="QLS\Generated\QLSListener.cs" />
     <Compile Include="QLS\Generated\QLSParser.cs" />
     <Compile Include="QLS\Generated\QLSVisitor.cs" />
-    <Compile Include="QLS\Processing\SomeClass.cs" />
+    <Compile Include="QLS\Processing\Processor.cs" />
     <Compile Include="QL\AST\Operators\Addition.cs" />
     <Compile Include="QL\AST\Operators\And.cs" />
     <Compile Include="QL\AST\Operators\Division.cs" />
@@ -127,6 +127,7 @@
     <Compile Include="QL\AST\Operators\Negative.cs" />
     <Compile Include="QL\AST\Operators\Positive.cs" />
     <Compile Include="QL\ExpressionEvaluator\Evaluator.cs" />
+    <None Include="QL\Processing\Processor.cs" />
     <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />

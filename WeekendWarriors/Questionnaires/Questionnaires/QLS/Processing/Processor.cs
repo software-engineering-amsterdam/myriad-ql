@@ -8,14 +8,14 @@ using Questionnaires.QLS.AST;
 
 namespace Questionnaires.QLS.Processing
 {   
-    class SomeClass
+    class Processor
     {
         // A list of the questions parsed from the QL code
         Dictionary<string, QL.AST.Question> Questions;
         // Stack of default styles
         Stack Styles = new Stack();
 
-        public SomeClass(Dictionary<string, QL.AST.Question> questions)
+        public Processor(Dictionary<string, QL.AST.Question> questions)
         {
             Questions = questions;
         }

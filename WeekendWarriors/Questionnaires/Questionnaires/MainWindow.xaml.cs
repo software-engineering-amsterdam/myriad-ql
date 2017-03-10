@@ -49,7 +49,7 @@ namespace Questionnaires
             var questions = new Dictionary<string, Question>();
             var questionBuilder = new QuestionnaireBuilder(variableStore, renderer, ruleContainer, questions);
             questionBuilder.Build((Form)form); // Can casting to form here cause problems?
-            QLS.Processing.SomeClass something = new QLS.Processing.SomeClass(questions);
+            QLS.Processing.Processor something = new QLS.Processing.Processor(questions);
             something.Process((dynamic)Stylesheet);
 
             foreach (var question in questions.Values)
