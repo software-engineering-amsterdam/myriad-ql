@@ -1,26 +1,16 @@
 package org.ql.gui.widgets;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
-import org.ql.evaluator.value.StringValue;
+import javafx.scene.input.KeyEvent;
 import org.ql.evaluator.value.Value;
 
-public class TextWidget extends Widget {
+public class TextWidget extends Widget<KeyEvent> {
     private TextField textField;
 
     public TextWidget(String text) {
         textField = new TextField(text);
         addToPane();
-    }
-
-    public TextField getTextField() {
-        return textField;
-    }
-
-    @Override
-    public void setVisible() {
-        textField.setVisible(true);
     }
 
     @Override
@@ -34,12 +24,12 @@ public class TextWidget extends Widget {
     }
 
     @Override
-    public Value getValue() {
-        return new StringValue(textField.getText());
+    public String getValue() {
+        return textField.getText();
     }
 
     @Override
-    public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
-        textField.setOnAction(eventHandler);
+    public void addEventHandler(EventHandler<KeyEvent> eventHandler) {
+        textField.setOnKeyReleased(eventHandler);
     }
 }

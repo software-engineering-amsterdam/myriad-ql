@@ -33,10 +33,10 @@ public class QuestionElementContainerTest {
 
     private QuestionElementFactory mockQuestionElementBuilder() {
         QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
+        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerQuestionElement>() {
             @Override
-            public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
+            public IntegerQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;

@@ -6,7 +6,7 @@ import javafx.scene.control.CheckBox;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 
-public class CheckBoxWidget extends Widget {
+public class CheckBoxWidget extends Widget<ActionEvent> {
     private CheckBox checkBox;
 
     public CheckBoxWidget(String label) {
@@ -20,18 +20,13 @@ public class CheckBoxWidget extends Widget {
     }
 
     @Override
-    public void setVisible() {
-        checkBox.setVisible(true);
-    }
-
-    @Override
     public void setValue(Value value) {
         checkBox.setSelected((Boolean) value.getPlainValue());
     }
 
     @Override
-    public Value getValue() {
-        return new BooleanValue(checkBox.isSelected());
+    public Boolean getValue() {
+        return checkBox.isSelected();
     }
 
     @Override

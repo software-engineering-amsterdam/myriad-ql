@@ -16,7 +16,7 @@ import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.IntegerType;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.IntegerValue;
-import org.ql.gui.elements.NumericQuestionElement;
+import org.ql.gui.elements.IntegerQuestionElement;
 import org.ql.gui.elements.QuestionElement;
 import org.ql.gui.elements.QuestionElementContainer;
 import org.ql.gui.mediator.GUIMediator;
@@ -53,10 +53,10 @@ public class BranchVisitorTest {
 
     private QuestionElementFactory mockQuestionElementBuilder() {
         QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<NumericQuestionElement>() {
+        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerQuestionElement>() {
             @Override
-            public NumericQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new NumericQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
+            public IntegerQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;

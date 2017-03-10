@@ -72,6 +72,7 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
                 value = new UnknownValue();
             }
             valueTable.declare(question.getId(), value);
+            questionElement.getWidget().setValue(value);
         }
 
         return null;

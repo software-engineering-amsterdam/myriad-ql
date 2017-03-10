@@ -1,6 +1,7 @@
 package org.ql.gui.elements;
 
 import org.ql.ast.statement.Question;
+import org.ql.evaluator.value.Value;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.Widget;
 
@@ -32,7 +33,9 @@ public abstract class QuestionElement {
     private void attachWidgetEventHandler(GUIMediator mediator, Question question, Widget widget) {
         widget.addEventHandler(event -> {
             isDirty = true;
-            mediator.actualizeValue(question.getId(), widget.getValue());
+            mediator.actualizeValue(question.getId(), getValue());
         });
     }
+
+    public abstract Value getValue();
 }

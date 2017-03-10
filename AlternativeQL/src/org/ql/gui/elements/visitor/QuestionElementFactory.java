@@ -2,10 +2,7 @@ package org.ql.gui.elements.visitor;
 
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;
-import org.ql.gui.elements.BooleanQuestionElement;
-import org.ql.gui.elements.NumericQuestionElement;
-import org.ql.gui.elements.QuestionElement;
-import org.ql.gui.elements.TextQuestionElement;
+import org.ql.gui.elements.*;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.CheckBoxWidget;
 import org.ql.gui.widgets.NumericWidget;
@@ -34,18 +31,18 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
     }
 
     @Override
-    public NumericQuestionElement visitFloatType(FloatType floatType, Question question) {
-        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+    public DecimalQuestionElement visitFloatType(FloatType floatType, Question question) {
+        return new DecimalQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
-    public NumericQuestionElement visitIntegerType(IntegerType integerType, Question question) {
-        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+    public IntegerQuestionElement visitIntegerType(IntegerType integerType, Question question) {
+        return new IntegerQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
-    public NumericQuestionElement visitMoneyType(MoneyType moneyType, Question question) {
-        return new NumericQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+    public DecimalQuestionElement visitMoneyType(MoneyType moneyType, Question question) {
+        return new DecimalQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
@@ -57,5 +54,4 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
     public QuestionElement visitUnknownType(UnknownType unknownType, Question question) {
         return null;
     }
-
 }

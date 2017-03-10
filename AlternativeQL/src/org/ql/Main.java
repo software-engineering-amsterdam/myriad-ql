@@ -31,6 +31,8 @@ public class Main extends Application {
         Form form = parser.parseForm(
                 "form TestForm {" +
                     "string yourName: \"What's your name?\" = \"testname\";" +
+                    "money yourName3: \"What's your name?\";" +
+                    "money yourName2: \"What's your name?\" = yourName3 + 100.00;" +
                     "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = false;" +
                     "if (hasSoldHouse) {" +
                         "boolean sellingPrice: \"What was the selling price?\" = false;" +
