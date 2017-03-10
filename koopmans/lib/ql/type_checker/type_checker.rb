@@ -26,10 +26,10 @@ module QL
       end
 
       def undefined_variable_checker(questions, ast)
-        question_variables   = questions.map(&:variable).map(&:name)
-        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
-
-        (expression_variables - question_variables).map { |undefined_variable| Error.new("variable '#{undefined_variable}' is undefined") }
+        # question_variables   = questions.map(&:variable).map(&:name)
+        # expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
+        #
+        # (expression_variables - question_variables).map { |undefined_variable| Error.new("variable '#{undefined_variable}' is undefined") }
       end
 
       def operands_type_checker(questions, ast)

@@ -19,7 +19,12 @@ module QL
       end
 
       def accept(visitor)
+        # expression.reduce do |left, operation|
+        #   left.accept(visitor)
+        #   operation.accept(visitor)
+        # end
         visitor.visit_expression(self)
+        # expression.reduce { |left, operation| operation.call(left) }
       end
 
       def accept_types
@@ -75,6 +80,10 @@ module QL
         pp self
         self.eval_type(left, right)
       end
+
+      def accept(visitor)
+        visitor.visit_binary_expression(self)
+      end
     end
 
     # booleans: && ||
@@ -123,6 +132,10 @@ module QL
         else
           nil
         end
+      end
+
+      def accept(visitor)
+        visitor.visit_add(self)
       end
     end
 

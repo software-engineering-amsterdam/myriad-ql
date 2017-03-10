@@ -34,13 +34,31 @@ module QL
       def visit_variable(_)
       end
 
-      def visit_literal(_)
-      end
 
       # an expression is checked for correctness
       def visit_expression(expression)
+        expression.expression.reduce do |left, operation|
+          left.accept(self)
+          operation.accept(self)
+        end
+        pp 'jjjjjjjjj'
         # expression.expression.accept(self)
-        expression.eval_type
+        # expression.eval_type
+      end
+
+      # def visit_binary_expression(expression)
+      #   expression.expression.accept(self)
+      # end
+
+      def visit_literal(literal)
+        pp literal
+        pp 'visit literal'
+        literal
+      end
+
+      def visit_add(add)
+        pp '--------------------------------'
+        pp add
       end
     end
   end
