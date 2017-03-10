@@ -51,15 +51,18 @@ class FileWindow(QWidget):
 
         if open_file is not None:
             ql_ast = self.parse_file(open_file)
+            file_dict = {"file_path": file_path, "file_body": open_file}
             if self.list_errors:
-                editor = Editor(open_file, [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)])
+                list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
+                editor = Editor(file_dict, list_errors)
                 editor.show()
 
             if ql_ast is not None:
                 ql_ids, ql_errors = self.check_ids(ql_ast)
                 if ql_errors:
                     self.list_errors.addItems(ql_errors)
-                    Editor([error.text() for error in self.list_errors.findItems("", Qt.MatchContains)])
+                    list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
+                    Editor(file_dict, list_errors)
                 else:
                     self.close()
                     self.show_questionnaire(ql_ast)

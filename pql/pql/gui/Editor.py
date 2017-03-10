@@ -10,8 +10,13 @@ from PyQt5.QtWidgets import QTextEdit
 
 
 class Editor(QMainWindow):
-    def __init__(self, open_file=str(), list_errors=list(), parent=None):
+    def __init__(self, file_dict=None, list_errors=None, parent=None):
         super(Editor, self).__init__(parent)
+        if list_errors is None:
+            list_errors = list()
+        if file_dict is None:
+            file_dict = dict()
+
         self.resize(800, 600)
         self.setWindowTitle("Editor - Leuker kunnen we het niet maken")
         self.setFocusPolicy(Qt.StrongFocus)
@@ -19,7 +24,7 @@ class Editor(QMainWindow):
         bar = self.menuBar()
         file = bar.addMenu("File")
         file.addAction(QAction("Evaluate", self))
-        file.triggered[QAction].connect(self.processtrigger)
+        file.triggered[QAction].connect(lambda q, file_path=file_dict["file_path"]: self.processtrigger(q, file_path))
 
         font = QFont()
         font.setFamily("Courier")
@@ -32,7 +37,7 @@ class Editor(QMainWindow):
         self.text_editor.acceptRichText()
         self.text_editor.setFont(font)
         self.text_editor.setTabStopWidth(4 * metrics.width(' '))
-        self.text_editor.setText(open_file)
+        self.text_editor.setText(file_dict["file_body"])
         self.setCentralWidget(self.text_editor)
         self.items = QDockWidget("Error list", self)
         self.listWidget = QListWidget()
@@ -40,11 +45,14 @@ class Editor(QMainWindow):
         self.items.setWidget(self.listWidget)
         self.addDockWidget(Qt.BottomDockWidgetArea, self.items)
 
-    def processtrigger(self, q):
-        print(q.text() + " is triggered")
+    def processtrigger(self, q, file_path):
+        contents = self.text_editor.toPlainText()
+        with open(file_path, 'w') as open_file:
+            open_file.truncate()
+            open_file.write(contents)
+        self.close()
 
     def closeEvent(self, event):
-        print(event)
         event.accept()
 
     def center(self):
