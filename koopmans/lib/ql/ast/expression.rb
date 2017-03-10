@@ -33,24 +33,37 @@ module QL
     end
 
     class Negation < Expression
-      def accept(visitor)
+      # def accept(visitor)
+      #   visitor.visit_negation(self)
+      # end
+
+      def accept(_, visitor)
         visitor.visit_negation(self)
       end
     end
 
     class BooleanNegation < Negation
-      def eval
-        BooleanLiteral.new(!expression.eval.to_value)
+      def eval(x)
+        BooleanLiteral.new(!x)
       end
+
+      # def to_value
+      #   eval.to_value
+      # end
+
 
       def accept_types
         [BooleanType]
       end
+
+      # def accept(left, visitor)
+      #   visitor.visit_negation(left, self)
+      # end
     end
 
     class IntegerNegation < Negation
-      def eval
-        IntegerLiteral.new(-expression.eval.to_value)
+      def eval(x)
+        IntegerLiteral.new(-x)
       end
 
       def accept_types

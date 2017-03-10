@@ -25,8 +25,8 @@ module QL
       end
 
       def visit_negation(negation)
-        # value = negation.expression.accept(self)
-        negation.eval
+        expression = negation.expression.accept(self)
+        negation.eval(expression.to_value)
       end
 
       # visit operation in expression
