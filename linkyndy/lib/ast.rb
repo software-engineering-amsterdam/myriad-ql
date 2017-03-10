@@ -47,13 +47,13 @@ module Ast
   class Literal < Node.new(:value)
   end
 
-  class StringLiteral < Literal
+  class TextLiteral < Literal
   end
 
-  class IntegerLiteral < Literal
+  class NumberLiteral < Literal
   end
 
-  class BooleanLiteral < Literal
+  class BoolLiteral < Literal
   end
 
   class Type < Node.new(:name)

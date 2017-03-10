@@ -10,10 +10,10 @@ class Parser < Parslet::Parser
   rule(:qmark) { str('?') >> space? }
   rule(:hashrocket) { space? >> str('=>') >> space? }
 
-  rule(:string) { quote >> match['^"'].repeat.as(:string) >> quote }
-  rule(:integer) { match['0-9'].repeat(1).as(:integer) >> space? }
-  rule(:boolean) { (str('true') | str('false')).as(:boolean) >> space? }
-  rule(:literal) { string | integer | boolean }
+  rule(:text) { quote >> match['^"'].repeat.as(:text) >> quote }
+  rule(:number) { match['0-9'].repeat(1).as(:number) >> space? }
+  rule(:bool) { (str('true') | str('false')).as(:bool) >> space? }
+  rule(:literal) { text | number | bool }
 
   rule(:comment) { str('#') >> any.repeat >> space? }
 
@@ -34,7 +34,7 @@ class Parser < Parslet::Parser
 
   rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:if_true) >> (str('else') >> space >> block.as(:if_false)).maybe >> str('end')).as(:if_statement) >> space? }
 
-  rule(:question) { (string >> type >> identifier >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
+  rule(:question) { (text >> type >> identifier >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
 
   rule(:form) { (str('form') >> space >> identifier >> block.as(:body) >> str('end')).as(:form) >> space? }
 

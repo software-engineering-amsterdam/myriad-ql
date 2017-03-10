@@ -2,9 +2,9 @@ require 'parslet'
 require_relative 'ast'
 
 class Transform < Parslet::Transform
-  rule(string: simple(:x)) { Ast::StringLiteral.new(x) }
-  rule(integer: simple(:x)) { Ast::IntegerLiteral.new(x) }
-  rule(boolean: simple(:x)) { Ast::BooleanLiteral.new(x) }
+  rule(text: simple(:x)) { Ast::TextLiteral.new(x) }
+  rule(number: simple(:x)) { Ast::NumberLiteral.new(x) }
+  rule(bool: simple(:x)) { Ast::BoolLiteral.new(x) }
 
   rule(identifier: simple(:identifier)) { Ast::Identifier.new(identifier) }
 
@@ -13,8 +13,8 @@ class Transform < Parslet::Transform
   rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Ast::Addition.new(left, right) }
   rule(left: subtree(:left), operator: '-', right: subtree(:right)) { Ast::Subtraction.new(left, right) }
 
-  rule(question: { string: simple(:string), type: simple(:type), identifier: simple(:identifier) }) { Ast::Question.new(string, Ast::Type.new(type), Ast::Identifier.new(identifier)) }
-  rule(question: { string: simple(:string), type: simple(:type), identifier: simple(:identifier), value: subtree(:value) }) { Ast::Question.new(string, Ast::Type.new(type), Ast::Identifier.new(identifier), value) }
+  rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier) }) { Ast::Question.new(text, Ast::Type.new(type), Ast::Identifier.new(identifier)) }
+  rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier), value: subtree(:value) }) { Ast::Question.new(text, Ast::Type.new(type), Ast::Identifier.new(identifier), value) }
 
   rule(if_statement: { condition: subtree(:condition), if_true: subtree(:if_true) }) { Ast::IfStatement.new(condition, if_true) }
   rule(if_statement: { condition: subtree(:condition), if_true: subtree(:if_true), if_false: subtree(:if_false) }) { Ast::IfStatement.new(condition, if_true, if_false) }
