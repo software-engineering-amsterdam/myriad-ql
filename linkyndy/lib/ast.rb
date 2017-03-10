@@ -8,10 +8,18 @@ module Ast
   end
 
   class Node < Struct
+    prepend Enumerable
+
     def visit(visitor, parent = nil)
       visitor.send(method_name, self, parent)
       children.each { |child| child.visit(visitor, self) }
     end
+
+    def each(&block)
+      block.call(self)
+      children.each { |child| child.each(&block) }
+    end
+    alias walk each
 
     def children
       values.each_with_object([]) do |child, memo|
