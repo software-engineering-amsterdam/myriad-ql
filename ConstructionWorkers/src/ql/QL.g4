@@ -10,9 +10,9 @@ statement
     ;
 
 type
-    : 'boolean'     # boolType
+    : 'boolean'     # booleanType
     | 'string'      # stringType
-    | 'integer'     # intType
+    | 'integer'     # integerType
     | 'money'       # moneyType
     ;
 
@@ -35,22 +35,32 @@ BOOL
     : 'true'
     | 'false'
     ;
+
 STRING
-    : '"' (ESC | ~["\\])* '"';
+    : '"' (ESC | ~('\\'|'"'))* '"';
+
 INT
     : [0-9]+;
+
 MONEY
     : [0-9]+ '.' [0-9][0-9];
+
 IDENTIFIER
     : [a-zA-Z]+;
+
 LINE_COMMENT
     : '//' ~[\r\n]* '\r'? '\n' -> channel(HIDDEN);
+
 WS
-    : [ \r\t\u000C\n]+ -> channel(HIDDEN);
+    : [\t\r\n\f]+ -> channel(HIDDEN);
 
 fragment ESC
-    : '\\' (["\\/bfnrt] | UNICODE);
+    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
+    |   UNICODE
+    ;
+
 fragment UNICODE
     : 'u' HEX HEX HEX HEX;
+
 fragment HEX
     : [0-9a-fA-F];

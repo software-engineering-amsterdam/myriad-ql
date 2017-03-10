@@ -1,4 +1,4 @@
-package qls.astnodes;
+package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
@@ -8,7 +8,7 @@ import qls.astnodes.widgets.QLSWidget;
 /**
  * Created by LGGX on 02-Mar-17.
  */
-public class StyleQuestion extends Node{
+public class StyleQuestion extends AbstractSection{
 
     private final String identifierName;
     private QLSWidget widget;

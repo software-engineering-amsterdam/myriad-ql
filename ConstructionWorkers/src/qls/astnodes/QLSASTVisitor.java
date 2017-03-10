@@ -9,6 +9,7 @@ import qls.antlr.QLSBaseVisitor;
 import qls.antlr.QLSParser;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
+import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.styles.*;
 import qls.astnodes.widgets.*;
 

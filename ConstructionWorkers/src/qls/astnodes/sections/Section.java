@@ -1,7 +1,6 @@
 package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
-import qls.astnodes.StyleQuestion;
 import qls.astnodes.visitors.StyleSheetVisitor;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import ql.semanticchecker.messagehandling.errors.qlserrors.DuplicateQLSQuestionP
 import ql.semanticchecker.messagehandling.errors.qlserrors.NotAllQuestionsDefinedError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.UndefinedQuestionReferenceError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.UnsupportedWidgetTypeError;
-import qls.astnodes.StyleQuestion;
+import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.StyleSheet;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;

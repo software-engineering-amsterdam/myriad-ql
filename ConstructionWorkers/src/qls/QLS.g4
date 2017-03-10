@@ -27,34 +27,41 @@ widget
     ;
 
 style
-    : 'width:' NUMBER         # widthStyle
+    : 'width:' INTEGER         # widthStyle
     | 'font:' STRING          # fontStyle
-    | 'fontsize:' NUMBER      # fontsizeStyle
+    | 'fontsize:' INTEGER      # fontsizeStyle
     | 'color:' HEX            # colorStyle
     ;
 
 type
-    : 'boolean'         # boolType
-    | 'integer'         # intType
+    : 'boolean'         # booleanType
+    | 'integer'         # integerType
     | 'string'          # stringType
     | 'money'           # moneyType
     ;
 
 STRING
-    :  '"' (ESC | ~["\\])* '"' ;
+    :  '"' (ESC | ~('\\'|'"'))* '"';
+
 Identifier
     :   [a-zA-Z]+;
-NUMBER
-    : [0-9]+ ;
+
+INTEGER
+    : [0-9]+;
+
 HEX
-    : '#' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ;
+    : '#' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT;
+
 WS
-    :   [ \r\t\u000C\n]+ -> channel(HIDDEN)
-    ;
+    : [\t\r\n\f]+ -> channel(HIDDEN);
 
 fragment ESC
-    :   '\\' (["\\/bfnrt] | UNICODE) ;
+    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
+    |   UNICODE
+    ;
+
 fragment HEXDIGIT
-    : [0-9a-fA-F] ;
+    : [0-9a-fA-F];
+
 fragment UNICODE
-    : 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ;
+    : 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT;

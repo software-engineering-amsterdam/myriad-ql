@@ -38,7 +38,7 @@ public class QLS {
     private final String inputFileQLS;
 
     private static final String ALLOWED_EXTENSION_QL = "ql";
-    public static final String ALLOWED_EXTENSION_QLS = "qls";
+    private static final String ALLOWED_EXTENSION_QLS = "qls";
 
     private Map<String, Type> identifierMap;
 

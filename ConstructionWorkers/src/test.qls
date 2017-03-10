@@ -1,4 +1,5 @@
 stylesheet taxOfficeExample {
+
     section "Housing section" {
         section "Buying" {
           question hasBoughtHouse widget checkbox

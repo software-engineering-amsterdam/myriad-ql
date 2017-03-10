@@ -3,7 +3,7 @@ package qls.astnodes.visitors;
 import qls.astnodes.StyleSheet;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
-import qls.astnodes.StyleQuestion;
+import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.styles.Color;
 import qls.astnodes.styles.Font;
 import qls.astnodes.styles.FontSize;

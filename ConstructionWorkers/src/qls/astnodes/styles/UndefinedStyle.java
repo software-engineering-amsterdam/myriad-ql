@@ -10,6 +10,7 @@ public class UndefinedStyle extends Style {
     public UndefinedStyle(LineNumber lineNumber) {
         super(lineNumber);
     }
+
     @Override
     public boolean isUndefined() {
         return true;

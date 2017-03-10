@@ -17,8 +17,6 @@ public class Context {
         this.environment = new HashMap<>();
     }
 
-    public Map<String, Value> getEnvironment() { return environment; }
-
     public void addValue(String key, Value value) {
         environment.put(key, value);
     }
