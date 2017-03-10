@@ -37,7 +37,7 @@ module QL
       #   visitor.visit_negation(self)
       # end
 
-      def accept(_, visitor)
+      def accept(visitor)
         visitor.visit_negation(self)
       end
     end

@@ -16,7 +16,7 @@ form taxOfficeExample {
       privateDebt: boolean = hasSoldHouse
     "Value residue:"
       valueResidue: money =
-        (-sellingPrice + 5)
+        (-5 + 10)
         }
   }
 
