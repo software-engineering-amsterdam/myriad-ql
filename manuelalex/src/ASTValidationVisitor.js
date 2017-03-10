@@ -77,8 +77,10 @@ export class ASTValidationVisitor {
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
         let typeRightHand = this.memoryState.getType(condition.rightHand);
 
-        console.log(typeLeftHand)
-        if(condition.operator =="||" && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
+        console.log(typeLeftHand);
+
+
+        if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
             console.log("Expression invalid: " + condition.leftHand +"["+typeLeftHand+"]" + condition.operator + condition.rightHand+"["+typeRightHand+"]");
             //throw exception
         }
