@@ -24,7 +24,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     private final StyleSheet abstractSyntaxTree;
 
     public QLSASTVisitor(ParseTree parseTree) {
-        abstractSyntaxTree = (StyleSheet) parseTree.accept(this);
+        this.abstractSyntaxTree = (StyleSheet) parseTree.accept(this);
     }
 
     @Override
@@ -43,8 +43,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
             defaultStyles.add(defaultStyle);
         }
 
-        StyleSheet styleSheet = new StyleSheet(sections, defaultStyles, name, getLineNumber(ctx));
-        return styleSheet;
+        return new StyleSheet(sections, defaultStyles, name, getLineNumber(ctx));
     }
     
 
@@ -70,8 +69,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
             defaultStyles.add(defaultStyle);
         }
 
-        Section section = new Section(name, sections, defaultStyles, questions, getLineNumber(ctx));
-        return section;
+        return new Section(name, sections, defaultStyles, questions, getLineNumber(ctx));
     }
 
     @Override
@@ -81,16 +79,14 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
         QLSWidget widget = (QLSWidget) ctx.widget().accept(this);
         widget.setLabel(identifier);
 
-        StyleQuestion qlsQuestion = new StyleQuestion(identifier, widget, getLineNumber(ctx));
-        return qlsQuestion;
+        return new StyleQuestion(identifier, widget, getLineNumber(ctx));
     }
 
     @Override
     public Node visitNormalQuestion(QLSParser.NormalQuestionContext ctx) {
         String identifier = ctx.Identifier().getText();
 
-        StyleQuestion qlsQuestion = new StyleQuestion(identifier, new QLSUndefinedWidget(getLineNumber(ctx)), getLineNumber(ctx));
-        return qlsQuestion;
+        return new StyleQuestion(identifier, new QLSUndefinedWidget(getLineNumber(ctx)), getLineNumber(ctx));
     }
 
     @Override
@@ -98,10 +94,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
         Type questionType = (Type) ctx.type().accept(this);
         QLSWidget widget = (QLSWidget) ctx.widget().accept(this);
 
-        DefaultStyle defaultStyleDeclaration =
-                new DefaultStyle(new UndefinedStyle(getLineNumber(ctx)), widget.getType(), questionType, getLineNumber(ctx));
-
-        return defaultStyleDeclaration;
+        return new DefaultStyle(new UndefinedStyle(getLineNumber(ctx)), widget, questionType, getLineNumber(ctx));
     }
 
     @Override
@@ -117,16 +110,12 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
 
         Style style = new Style(styleProperties, getLineNumber(ctx));
 
-        DefaultStyle defaultStyleDeclaration =
-                new DefaultStyle(style, widget.getType(), questionType, getLineNumber(ctx));
-
-        return defaultStyleDeclaration;
+        return new DefaultStyle(style, widget, questionType, getLineNumber(ctx));
     }
 
     @Override
     public Node visitCheckbox(QLSParser.CheckboxContext ctx) {
-        QLSCheckBox widget = new QLSCheckBox(ctx.getText(), getLineNumber(ctx));
-        return widget;
+        return new QLSCheckBox(ctx.getText(), getLineNumber(ctx));
     }
 
     @Override
@@ -134,84 +123,69 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
         String yesLabel = ctx.yes.getText();
         String noLabel = ctx.no.getText();
 
-        QLSRadio widget = new QLSRadio(ctx.getText(), yesLabel, noLabel, getLineNumber(ctx));
-        return widget;
+        return new QLSRadio(ctx.getText(), yesLabel, noLabel, getLineNumber(ctx));
     }
 
     @Override
     public Node visitDropdown(QLSParser.DropdownContext ctx) {
         String yesLabel = ctx.yes.getText();
         String noLabel = ctx.no.getText();
-        QLSDropdown widget = new QLSDropdown(ctx.getText(), yesLabel, noLabel, getLineNumber(ctx));
-        return widget;
+        return new QLSDropdown(ctx.getText(), yesLabel, noLabel, getLineNumber(ctx));
     }
 
     @Override
     public Node visitSpinbox(QLSParser.SpinboxContext ctx) {
-        QLSSpinBox widget = new QLSSpinBox(ctx.getText(), getLineNumber(ctx));
-        return widget;
+        return new QLSSpinBox(ctx.getText(), getLineNumber(ctx));
     }
 
     @Override
     public Node visitSlider(QLSParser.SliderContext ctx) {
-        QLSSlider widget = new QLSSlider(ctx.getText(), getLineNumber(ctx));
-        return widget;
+        return new QLSSlider(ctx.getText(), getLineNumber(ctx));
     }
 
     @Override
     public Node visitTextbox(QLSParser.TextboxContext ctx) {
-        QLSTextBox widget = new QLSTextBox(ctx.getText(),getLineNumber(ctx));
-        return widget;
+        return new QLSTextBox(ctx.getText(),getLineNumber(ctx));
     }
 
     @Override
     public Node visitWidthStyle(QLSParser.WidthStyleContext ctx) {
-        Width style = new Width(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
-        return style;
+        return new Width(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
     }
 
     @Override
     public Node visitFontStyle(QLSParser.FontStyleContext ctx) {
-        Font style = new Font(ctx.STRING().getText(), getLineNumber(ctx));
-        return style;
+        return new Font(ctx.STRING().getText(), getLineNumber(ctx));
     }
 
     @Override
     public Node visitFontsizeStyle(QLSParser.FontsizeStyleContext ctx) {
-        FontSize style = new FontSize(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
-        return style;
+        return new FontSize(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
     }
 
     @Override
     public Node visitColorStyle(QLSParser.ColorStyleContext ctx) {
-        Color style = new Color(
-                Integer.decode(ctx.HEX().getText()), getLineNumber(ctx)
-        );
-        return style;
+        return new Color(Integer.decode(ctx.HEX().getText()), getLineNumber(ctx));
     }
 
     @Override
     public Node visitBoolType(QLSParser.BoolTypeContext ctx) {
-        BooleanType type = new BooleanType(getLineNumber(ctx));
-        return type;
+        return new BooleanType(getLineNumber(ctx));
     }
 
     @Override
     public Node visitIntType(QLSParser.IntTypeContext ctx) {
-        IntegerType type = new IntegerType(getLineNumber(ctx));
-        return type;
+        return new IntegerType(getLineNumber(ctx));
     }
 
     @Override
     public Node visitMoneyType(QLSParser.MoneyTypeContext ctx) {
-        MoneyType type = new MoneyType(getLineNumber(ctx));
-        return type;
+        return new MoneyType(getLineNumber(ctx));
     }
 
     @Override
     public Node visitStringType(QLSParser.StringTypeContext ctx) {
-        StringType type = new StringType(getLineNumber(ctx));
-        return type;
+        return new StringType(getLineNumber(ctx));
     }
 
     private LineNumber getLineNumber(ParserRuleContext ctx) {

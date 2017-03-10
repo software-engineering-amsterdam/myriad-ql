@@ -40,7 +40,6 @@ public class StyleSheet extends Node {
         this.defaultStyle.add(defaultStyle);
     }
 
-
     public <T> T accept(StyleSheetVisitor<T> visitor) {
         return visitor.visit(this);
     }

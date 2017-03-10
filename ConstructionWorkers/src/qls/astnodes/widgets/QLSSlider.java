@@ -7,13 +7,10 @@ import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.SliderType;
+
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.List;
 import java.util.*;
 
 /**
@@ -21,8 +18,8 @@ import java.util.*;
  */
 public class QLSSlider extends QLSWidget {
 
-    private static final int MIN = -1000;
-    private static final int MAX = 1000;
+    private static final int MIN = -100;
+    private static final int MAX = 100;
     private static final int STEP = 1;
 
     private JSlider slider;
@@ -32,10 +29,10 @@ public class QLSSlider extends QLSWidget {
 
     }
 
-    public QLSSlider(String _label, LineNumber lineNumber) {
+    public QLSSlider(String label, LineNumber lineNumber) {
         super(lineNumber);
 
-        this.componentLabel.setText(_label);
+        this.componentLabel.setText(label);
         this.valueLabel = new JLabel("0");
         this.slider = new JSlider(JSlider.HORIZONTAL, MIN, MAX, STEP);
 
@@ -43,7 +40,6 @@ public class QLSSlider extends QLSWidget {
         this.component.add(this.slider);
         this.component.add(this.valueLabel);
 
-        this.type = new SliderType();
     }
 
     @Override
@@ -70,14 +66,11 @@ public class QLSSlider extends QLSWidget {
     @Override
     public void addListener(EventListener listener) {
 
-        this.slider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                int v = source.getValue();
-                valueLabel.setText(Integer.toString(v));
+        this.slider.addChangeListener(e -> {
+            JSlider source = (JSlider)e.getSource();
+            int v = source.getValue();
+            valueLabel.setText(Integer.toString(v));
 
-            }
         });
     }
 
@@ -94,8 +87,8 @@ public class QLSSlider extends QLSWidget {
     }
 
     @Override
-    public void setReadOnly(boolean _isReadonly) {
-        this.slider.setEnabled(_isReadonly);
+    public void setReadOnly(boolean isReadonly) {
+        this.slider.setEnabled(isReadonly);
     }
 
     public java.util.List<Type> getSupportedQuestionTypes() {

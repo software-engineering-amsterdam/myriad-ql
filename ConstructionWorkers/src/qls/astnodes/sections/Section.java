@@ -48,6 +48,7 @@ public class Section extends AbstractSection {
     public void addDefaultStyle(DefaultStyle defaultStyle) {
         this.defaultStyles.add(defaultStyle);
     }
+
     public <T> T accept(StyleSheetVisitor<T> visitor) {
         return visitor.visit(this);
     }

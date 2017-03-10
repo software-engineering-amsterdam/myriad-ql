@@ -4,7 +4,7 @@ import ql.astnodes.LineNumber;
 import ql.astnodes.types.Type;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.WidgetType;
+import qls.astnodes.widgets.QLSWidget;
 
 /**
  * Created by LGGX on 02-Mar-17.
@@ -12,14 +12,14 @@ import qls.astnodes.widgets.widgettypes.WidgetType;
 public class DefaultStyle extends AbstractSection{
 
     private Style style;
-    private final WidgetType widgetType;
+    private final QLSWidget widget;
     private final Type questionType;
 
-    public DefaultStyle(Style style, WidgetType widgetType, Type questionType, LineNumber lineNumber)
+    public DefaultStyle(Style style, QLSWidget widget, Type questionType, LineNumber lineNumber)
     {
         super(lineNumber);
         this.style = style;
-        this.widgetType = widgetType;
+        this.widget = widget;
         this.questionType = questionType;
     }
 
@@ -31,8 +31,8 @@ public class DefaultStyle extends AbstractSection{
         this.style = style;
     }
 
-    public WidgetType getWidgetType() {
-        return widgetType;
+    public QLSWidget getWidget() {
+        return widget;
     }
 
     public Type getQuestionType() {

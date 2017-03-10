@@ -8,13 +8,9 @@ import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.SpinBoxType;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.List;
 import java.util.*;
 
 /**
@@ -22,8 +18,8 @@ import java.util.*;
  */
 public class QLSSpinBox extends QLSWidget {
 
-    private static final int MIN = -1000;
-    private static final int MAX = 1000;
+    private static final int MIN = -100;
+    private static final int MAX = 100;
     private static final int STEP = 1;
 
     private JSpinner spinbox;
@@ -32,9 +28,9 @@ public class QLSSpinBox extends QLSWidget {
 
     }
 
-    public QLSSpinBox(String _label, LineNumber lineNumber) {
+    public QLSSpinBox(String label, LineNumber lineNumber) {
         super(lineNumber);
-        this.componentLabel.setText(_label);
+        this.componentLabel.setText(label);
 
         SpinnerModel spinnerModel = new SpinnerNumberModel(0, MIN, MAX, STEP);
         this.spinbox = new JSpinner(spinnerModel);
@@ -42,7 +38,6 @@ public class QLSSpinBox extends QLSWidget {
         this.component.add(this.componentLabel);
         this.component.add(this.spinbox);
 
-        this.type = new SpinBoxType();
     }
 
     @Override
@@ -68,11 +63,8 @@ public class QLSSpinBox extends QLSWidget {
     public void addListener(EventListener listener) {
 
         this.spinbox.addChangeListener(
-                new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        
-                    }
+                e -> {
+
                 }
         );
     }
@@ -89,7 +81,7 @@ public class QLSSpinBox extends QLSWidget {
     }
 
     @Override
-    public void setReadOnly(boolean _isReadonly) {
+    public void setReadOnly(boolean isReadonly) {
         this.spinbox.setEnabled(false);
         JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinbox.getEditor();
         editor.getTextField().setEnabled( true );
@@ -107,8 +99,8 @@ public class QLSSpinBox extends QLSWidget {
     }
 
     @Override
-    public void setLabel(String _label) {
-        this.componentLabel.setText(_label);
+    public void setLabel(String label) {
+        this.componentLabel.setText(label);
     }
 
     public <T> T accept(StyleSheetVisitor<T> visitor) {

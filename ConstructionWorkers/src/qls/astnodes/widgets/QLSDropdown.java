@@ -7,22 +7,15 @@ import ql.gui.formenvironment.values.BooleanValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.DropdownType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 
 /**
  * Created by LGGX on 04-Mar-17.
  */
 public class QLSDropdown extends QLSWidget {
-
-    private static final String DEFAULT_YES_TEXT = "Yes";
-    private static final String DEFAULT_NO_TEXT = "No";
 
     private String yesLabel;
     private String noLabel;
@@ -32,12 +25,12 @@ public class QLSDropdown extends QLSWidget {
     public QLSDropdown(){
     }
 
-    public QLSDropdown(String _label, String _yes, String _no, LineNumber lineNumber) {
+    public QLSDropdown(String label, String yes, String no, LineNumber lineNumber) {
         super(lineNumber);
 
-        this.yesLabel = _yes;
-        this.noLabel = _no;
-        this.componentLabel.setText(_label);
+        this.componentLabel.setText(label);
+        this.yesLabel = yes;
+        this.noLabel = no;
 
         String[] valueArray = {this.yesLabel, this.noLabel};
         this.comboBox = new JComboBox(valueArray);
@@ -45,20 +38,19 @@ public class QLSDropdown extends QLSWidget {
         this.component.add(this.componentLabel);
         this.component.add(this.comboBox);
 
-        this.type = new DropdownType();
     }
 
     @Override
-    public void applyStyle(Style _style) {
-        _style.getInheritedStyle(this.getDefaultStyle());
+    public void applyStyle(Style style) {
+        style.getInheritedStyle(this.getDefaultStyle());
 
         Font font = new Font(
-                _style.getFont(this.getDefaultFont().getValue()), 0,
-                _style.getFontSize(Integer.parseInt(this.getDefaultFontSize().getValue()))
+                style.getFont(this.getDefaultFont().getValue()), 0,
+                style.getFontSize(Integer.parseInt(this.getDefaultFontSize().getValue()))
         );
         this.componentLabel.setFont(font);
 
-        Color color = _style.getColor(Integer.parseInt(this.getDefaultColor().getValue()));
+        Color color = style.getColor(Integer.parseInt(this.getDefaultColor().getValue()));
         this.componentLabel.setForeground(color);
 
         this.comboBox.setPreferredSize(
@@ -71,10 +63,7 @@ public class QLSDropdown extends QLSWidget {
 
     @Override
     public void addListener(EventListener _listener) {
-        this.comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
+        this.comboBox.addActionListener(e -> {
         });
     }
 
@@ -98,7 +87,7 @@ public class QLSDropdown extends QLSWidget {
     }
 
     @Override
-    public void setReadOnly(boolean _isReadonly) {
+    public void setReadOnly(boolean isReadonly) {
         this.comboBox.setEnabled(false);
     }
 

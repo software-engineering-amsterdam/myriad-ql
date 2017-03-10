@@ -8,22 +8,15 @@ import ql.gui.formenvironment.values.BooleanValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.RadioType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 
 /**
  * Created by LGGX on 04-Mar-17.
  */
 public class QLSRadio extends QLSWidget {
-
-    private static final String DEFAULT_YES_TEXT = "Yes";
-    private static final String DEFAULT_NO_TEXT = "No";
 
     private String actionCommandValue;
     private String yesLabel;
@@ -36,15 +29,16 @@ public class QLSRadio extends QLSWidget {
     public QLSRadio() {
 
     }
-    public QLSRadio(String _label, String _yes, String _no, LineNumber lineNumber) {
+
+    public QLSRadio(String label, String yes, String no, LineNumber lineNumber) {
         super(lineNumber);
-        this.yesLabel = _yes;
-        this.noLabel = _no;
+        this.yesLabel = yes;
+        this.noLabel = no;
 
-        this.componentLabel.setText(_label);
+        this.componentLabel.setText(label);
 
-        this.yesBtn = new JRadioButton(_yes);
-        this.noBtn = new JRadioButton(_no);
+        this.yesBtn = new JRadioButton(yes);
+        this.noBtn = new JRadioButton(no);
         this.radioButtonGroup = new ButtonGroup();
 
         this.radioButtonGroup.add(this.yesBtn);
@@ -53,7 +47,6 @@ public class QLSRadio extends QLSWidget {
         this.component.add(this.yesBtn);
         this.component.add(this.noBtn);
 
-        this.type = new RadioType();
     }
 
     @Override
@@ -81,19 +74,9 @@ public class QLSRadio extends QLSWidget {
 
     @Override
     public void addListener(EventListener listener) {
-        this.yesBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actionCommandValue = e.getActionCommand();
-            }
-        });
+        this.yesBtn.addActionListener(e -> actionCommandValue = e.getActionCommand());
 
-        this.noBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actionCommandValue = e.getActionCommand();
-            }
-        });
+        this.noBtn.addActionListener(e -> actionCommandValue = e.getActionCommand());
     }
 
     @Override

@@ -96,7 +96,9 @@ public class GUI implements GUIInterface{
     private boolean checkIfConditionIsTrue(Map<Field, List<IfStatement>> conditionsOfQuestions, Field field) {
         boolean condition = true;
 
+
         for (IfStatement ifStatement : conditionsOfQuestions.get(field)) {
+
             if (!(Boolean) this.evaluator.getValueIfStatement(ifStatement).getValue()) {
                 condition = false;
             }

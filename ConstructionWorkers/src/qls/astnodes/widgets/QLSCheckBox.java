@@ -6,15 +6,11 @@ import ql.astnodes.types.StringType;
 import ql.astnodes.types.Type;
 import ql.gui.formenvironment.values.BooleanValue;
 import ql.gui.formenvironment.values.Value;
-import qls.astnodes.styles.Font;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.CheckBoxType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.EventListener;
@@ -36,7 +32,6 @@ public class QLSCheckBox extends QLSWidget{
         this.checkBox = new JCheckBox(label);
         this.checkBox.setHorizontalTextPosition(SwingConstants.LEFT);
         this.component.add(this.checkBox);
-        this.type = new CheckBoxType();
     }
 
     @Override
@@ -62,10 +57,8 @@ public class QLSCheckBox extends QLSWidget{
     public void addListener(EventListener listener) {
 
         checkBox.addItemListener(
-                new ItemListener() {
-                    public void itemStateChanged(ItemEvent e) {
+                e -> {
 
-                    }
                 }
         );
     }

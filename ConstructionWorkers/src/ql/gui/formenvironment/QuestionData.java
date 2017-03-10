@@ -34,11 +34,11 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         return this.computedQuestions;
     }
 
-    public List<SimpleQuestion> getSimpleQuestions(){
+    private List<SimpleQuestion> getSimpleQuestions(){
         return this.simpleQuestions;
     }
 
-    public List<IfStatement> getIfStatements(){
+    List<IfStatement> getIfStatements(){
         return this.ifStatements;
     }
 
@@ -46,7 +46,7 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         return this.allQuestions;
     }
 
-    public List<SimpleQuestion> setAllQuestions(){
+    private List<SimpleQuestion> setAllQuestions(){
         List<SimpleQuestion> allQuestions = this.getSimpleQuestions();
 
         List<ComputedQuestion> computedQuestions = this.getComputedQuestions();

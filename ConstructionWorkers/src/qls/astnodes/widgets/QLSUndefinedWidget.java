@@ -1,6 +1,5 @@
 package qls.astnodes.widgets;
 
-import ql.astnodes.Form;
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.Type;
 import ql.gui.components.FormFrame;
@@ -8,7 +7,6 @@ import ql.gui.formenvironment.values.UndefinedValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.UndefinedWidgetType;
 
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -21,7 +19,6 @@ public class QLSUndefinedWidget extends QLSWidget {
 
     public QLSUndefinedWidget(LineNumber lineNumber) {
         super(lineNumber);
-        this.type = new UndefinedWidgetType();
     }
 
     @Override

@@ -7,8 +7,6 @@ import ql.gui.components.FormFrame;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.*;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.UndefinedWidgetType;
-import qls.astnodes.widgets.widgettypes.WidgetType;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -18,14 +16,13 @@ import java.util.List;
 /**
  * Created by LGGX on 03-Mar-17.
  */
-public abstract class QLSWidget extends Node implements WidgetInterface {
+public abstract class QLSWidget extends Node {
 
-    protected final static String DEFAULT_FONT = "Arial";
-    protected final static int DEFAULT_FONT_SIZE = 14;
-    protected final static int DEFAULT_COLOR = 0x000000;
-    protected final static int DEFAULT_WIDTH = 68;
+    private final static String DEFAULT_FONT = "Arial";
+    private final static int DEFAULT_FONT_SIZE = 14;
+    private final static int DEFAULT_COLOR = 0x000000;
+    private final static int DEFAULT_WIDTH = 68;
 
-    protected WidgetType type;
     protected JComponent component;
     protected JLabel componentLabel;
 
@@ -34,7 +31,6 @@ public abstract class QLSWidget extends Node implements WidgetInterface {
 
     public QLSWidget(LineNumber lineNumber) {
         super(lineNumber);
-        this.type   = new UndefinedWidgetType();
         this.component = new JPanel();
         this.componentLabel = new JLabel();
     }
@@ -62,37 +58,27 @@ public abstract class QLSWidget extends Node implements WidgetInterface {
     }
 
     public Width getDefaultWidth() {
-        return new Width(DEFAULT_WIDTH,getLineNumber());
+        return new Width(DEFAULT_WIDTH, getLineNumber());
     }
 
     public void setLabel(String _label) {
         this.componentLabel.setText(_label);
     }
 
-    public WidgetType getType() {
-        return this.type;
-    }
-
-    @Override
     public abstract void setValue(Value value);
 
-    @Override
     public abstract Value getValue();
 
-    @Override
     public abstract void addListener(EventListener listener);
 
-    @Override
     public void render(FormFrame form) {
         form.addWidget(this.component);
     }
 
-    @Override
     public void suppress(FormFrame form) {
         form.removeWidget(this.component);
     }
 
-    @Override
     public abstract void setReadOnly(boolean isReadonly);
 
     public void resetStyleToDefault() {

@@ -32,12 +32,11 @@ import java.util.List;
 
 public class IfStatementVisitor implements FormAndStatementVisitor<Void>, ExpressionVisitor<Void> {
 
-    private final List<String> identifierList;
+    private final List<String> identifierList = new ArrayList<>();
     private Boolean undefinedIdentifier;
 
     public IfStatementVisitor(IfStatement ifStatement, Expression expression) {
         this.undefinedIdentifier = false;
-        this.identifierList = new ArrayList<>();
         expression.accept(this);
         ifStatement.accept(this);
     }

@@ -76,9 +76,7 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             if (!qlsQuestions.contains(key)) {
                 messages.addError(new NotAllQuestionsDefinedError(new LineNumber(1), key));
             }
-
         }
-
     }
 
     @Override

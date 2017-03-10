@@ -35,6 +35,4 @@ public interface StyleSheetVisitor<T> {
     T visit(QLSDropdown widget);
     T visit(QLSUndefinedWidget widget);
 
-
-
 }

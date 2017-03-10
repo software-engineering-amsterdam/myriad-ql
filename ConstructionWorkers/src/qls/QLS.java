@@ -18,6 +18,7 @@ import qls.antlr.QLSLexer;
 import qls.antlr.QLSParser;
 import qls.astnodes.QLSASTVisitor;
 import qls.astnodes.StyleSheet;
+import qls.semanticchecker.QLSTypeChecker;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class QLS {
 
     private static final String ALLOWED_EXTENSION_QL = "ql";
     public static final String ALLOWED_EXTENSION_QLS = "qls";
+
+    private Map<String, Type> identifierMap;
 
     private QLS(String inputFileQL, String inputFileQLS) throws IOException, IllegalArgumentException {
         this.inputFileQL = inputFileQL;
@@ -65,20 +68,30 @@ public class QLS {
 
         MessageData messages = new MessageData();
 
-        Boolean semanticallyCorrect = checkSemanticCorrectness(qlAST, messages);
+        Boolean semanticallyCorrectQL = checkSemanticCorrectnessQL(qlAST, messages);
 
-        if(!semanticallyCorrect) {
-            System.out.println("QL form is semantically incorrect.");
+        if(!semanticallyCorrectQL) {
+            System.out.println("QL form is semantically incorrect!");
 
             for (Error error : messages.getErrors()) {
                 System.out.println(error.getMessage());
             }
-
             System.exit(1);
         }
 
         InputStream qlsInputStream = new FileInputStream(inputFileQLS);
         StyleSheet qlsAST = getASTQLS(qlsInputStream);
+
+        Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages);
+
+        if(!semanticallyCorrectQLS) {
+            System.out.println("QLS form is semantically incorrect!");
+
+            for (Error error : messages.getErrors()) {
+                System.out.println(error.getMessage());
+            }
+            System.exit(1);
+        }
 
         /*
         System.out.println("Create GUI...");
@@ -125,17 +138,26 @@ public class QLS {
         return (StyleSheet) nodeAST;
     }
 
-    private boolean checkSemanticCorrectness(Form qlAST, MessageData messages) {
+    private boolean checkSemanticCorrectnessQL(Form qlAST, MessageData messages) {
         Map<String, Type> identifierToTypeMap = new HashMap<>();
 
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
+
+        this.identifierMap = identifierToTypeMap;
 
         if (messages.containsWarnings()) {
             for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }
         }
+
+        return messages.containsErrors();
+    }
+
+    private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages) {
+
+        new QLSTypeChecker(messages, identifierMap, qlsAST);
 
         return messages.containsErrors();
     }

@@ -8,7 +8,6 @@ import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.styles.Width;
 import qls.astnodes.visitors.StyleSheetVisitor;
-import qls.astnodes.widgets.widgettypes.TextBoxType;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -21,7 +20,7 @@ import java.util.*;
  */
 public class QLSTextBox extends QLSWidget {
 
-    public final static int DEFAULT_WIDTH = 7;
+    public final static int WIDTH = 7;
 
     private JTextField input;
 
@@ -29,19 +28,18 @@ public class QLSTextBox extends QLSWidget {
 
     }
 
-    public QLSTextBox(String _label, LineNumber lineNumber) {
+    public QLSTextBox(String label, LineNumber lineNumber) {
         super(lineNumber);
         this.input = new JTextField();
-        this.componentLabel.setText(_label);
+        this.componentLabel.setText(label);
         this.component.add(componentLabel);
         this.component.add(input);
 
-        this.type = new TextBoxType();
     }
 
     @Override
-    public void setLabel(String _label) {
-        this.componentLabel.setText(_label);
+    public void setLabel(String label) {
+        this.componentLabel.setText(label);
     }
 
     @Override
@@ -85,13 +83,13 @@ public class QLSTextBox extends QLSWidget {
     }
 
     @Override
-    public void setReadOnly(boolean _isReadonly) {
+    public void setReadOnly(boolean isReadonly) {
         this.input.setEnabled(false);
     }
 
     @Override
     public Width getDefaultWidth() {
-        return new Width(DEFAULT_WIDTH, getLineNumber());
+        return new Width(WIDTH, getLineNumber());
     }
 
     public java.util.List<Type> getSupportedQuestionTypes() {
