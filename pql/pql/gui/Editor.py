@@ -4,8 +4,11 @@ from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QDockWidget
+from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QListWidget
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QSizePolicy
+from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QTextEdit
 
 
@@ -21,8 +24,8 @@ class Editor(QMainWindow):
         self.setWindowTitle("Editor - Leuker kunnen we het niet maken")
         self.setFocusPolicy(Qt.StrongFocus)
 
-        bar = self.menuBar()
-        file = bar.addMenu("File")
+        menu_bar = self.menuBar()
+        file = menu_bar.addMenu("File")
         file.addAction(QAction("Evaluate", self))
         file.triggered[QAction].connect(lambda q, file_path=file_dict["file_path"]: self.processtrigger(q, file_path))
 
@@ -38,6 +41,16 @@ class Editor(QMainWindow):
         self.text_editor.setFont(font)
         self.text_editor.setTabStopWidth(4 * metrics.width(' '))
         self.text_editor.setText(file_dict["file_body"])
+        self.text_editor.cursorPositionChanged.connect(self.update_text_cursor_position)
+
+        self.statusBar = QStatusBar()
+        self.cursor_position = QLabel()
+        self.cursor_position.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.cursor_position.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.cursor_position.setText(self.update_text_cursor_position())
+        self.statusBar.addWidget(self.cursor_position, 1)
+        self.setStatusBar(self.statusBar)
+
         self.setCentralWidget(self.text_editor)
         self.items = QDockWidget("Error list", self)
         self.listWidget = QListWidget()
@@ -51,6 +64,14 @@ class Editor(QMainWindow):
             open_file.truncate()
             open_file.write(contents)
         self.close()
+
+    def update_text_cursor_position(self):
+        text_cursor = self.text_editor.textCursor()
+        cursor_row = text_cursor.blockNumber()
+        cursor_column = text_cursor.positionInBlock()
+        position = "{}:{}".format(cursor_row, cursor_column)
+        self.cursor_position.setText(position)
+        return position
 
     def closeEvent(self, event):
         event.accept()
