@@ -31,7 +31,7 @@ module QL
 
       # visit operation in expression
       def visit_expression(expression)
-        if expression.expression.respond_to? :each
+        if expression.expression.respond_to? :reduce
           expression.expression.reduce do |left, operation|
             pp operation.accept(left, self)
           end
