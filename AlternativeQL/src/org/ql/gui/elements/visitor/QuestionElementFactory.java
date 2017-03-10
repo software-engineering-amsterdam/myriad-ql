@@ -22,7 +22,7 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
 
     @Override
     public BooleanQuestionElement visitBooleanType(BooleanType booleanType, Question question) {
-        return new BooleanQuestionElement(mediator, question, new CheckBoxWidget(question.getQuestionLabel().toString()));
+        return new BooleanQuestionElement(mediator, question.getId(), new CheckBoxWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
@@ -32,22 +32,22 @@ public class QuestionElementFactory implements TypeVisitor<QuestionElement, Ques
 
     @Override
     public DecimalQuestionElement visitFloatType(FloatType floatType, Question question) {
-        return new DecimalQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new DecimalQuestionElement(mediator, question.getId(), new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public IntegerQuestionElement visitIntegerType(IntegerType integerType, Question question) {
-        return new IntegerQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new IntegerQuestionElement(mediator, question.getId(), new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public DecimalQuestionElement visitMoneyType(MoneyType moneyType, Question question) {
-        return new DecimalQuestionElement(mediator, question, new NumericWidget(question.getQuestionLabel().toString()));
+        return new DecimalQuestionElement(mediator, question.getId(), new NumericWidget(question.getQuestionLabel().toString()));
     }
 
     @Override
     public TextQuestionElement visitStringType(StringType stringType, Question question) {
-        return new TextQuestionElement(mediator, question, new TextWidget(question.getQuestionLabel().toString()));
+        return new TextQuestionElement(mediator, question.getId(), new TextWidget(question.getQuestionLabel().toString()));
     }
 
     @Override

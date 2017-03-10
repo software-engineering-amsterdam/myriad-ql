@@ -2,6 +2,7 @@ package org.ql.gui.widgets;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import org.ql.evaluator.value.StringValue;
@@ -9,19 +10,18 @@ import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
 public class NumericWidget extends Widget<KeyEvent> {
+    private final Label label;
     private TextField numericField;
 
     public NumericWidget(String text) {
-        numericField = new TextField(text);
+        label = new Label(text);
+        numericField = new TextField();
         addToPane();
-    }
-
-    public TextField getNumericField() {
-        return numericField;
     }
 
     @Override
     public void addToPane() {
+        gridPane.getChildren().add(label);
         gridPane.getChildren().add(numericField);
     }
 

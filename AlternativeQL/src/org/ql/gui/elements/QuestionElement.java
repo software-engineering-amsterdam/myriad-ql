@@ -1,39 +1,34 @@
 package org.ql.gui.elements;
 
+import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.Widget;
 
 public abstract class QuestionElement {
-    private final Question question;
 
     private boolean isDirty = false;
     private Widget widget;
 
-    public QuestionElement(GUIMediator mediator, Question question, Widget widget) {
-        this.question = question;
+    public QuestionElement(GUIMediator mediator, Identifier identifier, Widget widget) {
         this.widget = widget;
 
-        attachWidgetEventHandler(mediator, question, widget);
+        attachWidgetEventHandler(mediator, identifier, widget);
     }
 
     public boolean isDirty() {
         return isDirty;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
     public Widget getWidget() {
         return widget;
     }
 
-    private void attachWidgetEventHandler(GUIMediator mediator, Question question, Widget widget) {
+    private void attachWidgetEventHandler(GUIMediator mediator, Identifier identifier, Widget widget) {
         widget.addEventHandler(event -> {
             isDirty = true;
-            mediator.actualizeValue(question.getId(), getValue());
+            mediator.actualizeValue(identifier, getValue());
         });
     }
 

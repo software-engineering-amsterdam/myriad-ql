@@ -109,7 +109,7 @@ public class QuestionValueVisitorTest {
         when(elementBuilder.createQuestionElement(any(Question.class))).thenAnswer(new Answer<IntegerQuestionElement>() {
             @Override
             public IntegerQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Question.class), mock(NumericWidget.class));
+                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Identifier.class), mock(NumericWidget.class));
             }
         });
         return elementBuilder;

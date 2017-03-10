@@ -1,20 +1,24 @@
 package org.ql.gui.widgets;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import org.ql.evaluator.value.Value;
 
 public class TextWidget extends Widget<KeyEvent> {
+    private final Label label;
     private TextField textField;
 
     public TextWidget(String text) {
-        textField = new TextField(text);
+        textField = new TextField();
+        label = new Label(text);
         addToPane();
     }
 
     @Override
     public void addToPane() {
+        gridPane.getChildren().add(label);
         gridPane.getChildren().add(textField);
     }
 
