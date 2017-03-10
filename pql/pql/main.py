@@ -95,6 +95,3 @@ if __name__ == '__main__':
     file_window = FileWindow(argv)
 
     exit(app.exec_())
-
-# TODO: Re-evaluate the modified (in QTextEdit) QL
-# TODO: Line numbers in het Node object stoppen en deze in error messages gebruiken
