@@ -7,9 +7,10 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
+from gui.Editor import Editor
 from gui.Questionnaire import Questionnaire
-from pql.parser.parser import parse
 from pql.identifierchecker.identifierchecker import IdentifierChecker
+from pql.parser.parser import parse
 
 
 class FileWindow(QWidget):
@@ -26,6 +27,7 @@ class FileWindow(QWidget):
         self.button_load_file.clicked.connect(self.handle_button)
 
         self.list_errors = QListWidget()
+        self.list_errors.clear()
         self.list_errors.setStyleSheet("QListWidget {color: red}")
 
         self.main_layout = QVBoxLayout()
@@ -36,11 +38,9 @@ class FileWindow(QWidget):
 
         if len(argv) > 1:
             self.handle_file(argv[1])
-            if self.list_errors.count():
-                self.show()
         else:
             self.show()
-        # self.show()
+            # self.show()
 
     def handle_button(self):
         file_path, _ = QFileDialog.getOpenFileName(filter="*.ql")
@@ -51,13 +51,18 @@ class FileWindow(QWidget):
 
         if open_file is not None:
             ql_ast = self.parse_file(open_file)
+            if self.list_errors:
+                editor = Editor(open_file, [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)])
+                editor.show()
+
             if ql_ast is not None:
                 ql_ids, ql_errors = self.check_ids(ql_ast)
                 if ql_errors:
                     self.list_errors.addItems(ql_errors)
+                    Editor([error.text() for error in self.list_errors.findItems("", Qt.MatchContains)])
                 else:
                     self.close()
-                self.show_questionnaire(ql_ast)
+                    self.show_questionnaire(ql_ast)
 
     @staticmethod
     def show_questionnaire(ql_ast):
@@ -77,8 +82,9 @@ class FileWindow(QWidget):
         try:
             with open(file_path, 'r') as open_file:
                 return open_file.read()
-        except FileNotFoundError:
-            pass
+        except FileNotFoundError as fnfe:
+            # self.list_errors.addItem("Given file could not be found:\n    {}".format(fnfe))
+            print("Given file could not be found:\n    {}".format(fnfe))
         except Exception as e:
             self.list_errors.addItem("Opening:\n    {}".format(e))
 

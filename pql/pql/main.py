@@ -6,8 +6,8 @@ from sys import exit
 
 from PyQt5.QtWidgets import QApplication
 
-from gui.FileWindow import FileWindow
 from pql.evaluator.evaluator import Evaluator
+from pql.gui.FileWindow import FileWindow
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
 from pql.typechecker.typechecker import TypeChecker
