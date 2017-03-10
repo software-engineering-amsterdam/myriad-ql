@@ -1,4 +1,6 @@
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QDockWidget
@@ -19,7 +21,17 @@ class Editor(QMainWindow):
         file.addAction(QAction("Evaluate", self))
         file.triggered[QAction].connect(self.processtrigger)
 
+        font = QFont()
+        font.setFamily("Courier")
+        font.setStyleHint(QFont.Monospace)
+        font.setFixedPitch(True)
+        font.setPointSize(12)
+        metrics = QFontMetrics(font)
+
         self.text_editor = QTextEdit()
+        self.text_editor.acceptRichText()
+        self.text_editor.setFont(font)
+        self.text_editor.setTabStopWidth(4 * metrics.width(' '))
         self.text_editor.setText(open_file)
         self.setCentralWidget(self.text_editor)
         self.items = QDockWidget("Error list", self)
@@ -32,6 +44,7 @@ class Editor(QMainWindow):
         print(q.text() + " is triggered")
 
     def closeEvent(self, event):
+        print(event)
         event.accept()
 
     def center(self):
