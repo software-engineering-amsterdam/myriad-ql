@@ -30,7 +30,7 @@ class Editor(QMainWindow, QWidget):
         evaluate = QAction("Evaluate", self)
         evaluate.setShortcuts(["Ctrl+S", "Cmd+S"])
         file.addAction(evaluate)
-        file.triggered[QAction].connect(lambda q, file_path=file_dict["file_path"]: self.processtrigger(q, file_path))
+        file.triggered[QAction].connect(lambda q, file_path=file_dict["file_path"]: self.evaluate(q, file_path))
 
         font = QFont()
         font.setFamily("Courier")
@@ -46,22 +46,23 @@ class Editor(QMainWindow, QWidget):
         self.text_editor.setText(file_dict["file_body"])
         self.text_editor.cursorPositionChanged.connect(self.update_text_cursor_position)
 
-        self.statusBar = QStatusBar()
+        statusBar = QStatusBar()
         self.cursor_position = QLabel()
         self.cursor_position.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.cursor_position.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.cursor_position.setText(self.update_text_cursor_position())
-        self.statusBar.addWidget(self.cursor_position, 1)
-        self.setStatusBar(self.statusBar)
+        statusBar.addWidget(self.cursor_position, 1)
+        self.setStatusBar(statusBar)
 
         self.setCentralWidget(self.text_editor)
-        self.items = QDockWidget("Error list", self)
-        self.listWidget = QListWidget()
-        self.listWidget.addItems(list_errors)
-        self.items.setWidget(self.listWidget)
-        self.addDockWidget(Qt.BottomDockWidgetArea, self.items)
+        items = QDockWidget("Error list", self)
+        list_widget = QListWidget()
+        list_widget.setStyleSheet("QListWidget {color:red;}")
+        list_widget.addItems(list_errors)
+        items.setWidget(list_widget)
+        self.addDockWidget(Qt.BottomDockWidgetArea, items)
 
-    def processtrigger(self, q, file_path):
+    def evaluate(self, q, file_path):
         contents = self.text_editor.toPlainText()
         with open(file_path, 'w') as open_file:
             open_file.truncate()

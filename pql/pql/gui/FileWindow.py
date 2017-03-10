@@ -22,25 +22,24 @@ class FileWindow(QWidget):
         self.center()
         self.setFocusPolicy(Qt.StrongFocus)
 
-        self.button_load_file = QPushButton("Load file", self)
-        self.button_load_file.resize(self.button_load_file.sizeHint())
-        self.button_load_file.clicked.connect(self.handle_button)
+        button_load_file = QPushButton("Load file", self)
+        button_load_file.resize(button_load_file.sizeHint())
+        button_load_file.clicked.connect(self.handle_button)
 
         self.list_errors = QListWidget()
         self.list_errors.clear()
-        self.list_errors.setStyleSheet("QListWidget {color: red}")
+        self.list_errors.setStyleSheet("QListWidget {color: red;}")
 
-        self.main_layout = QVBoxLayout()
-        self.main_layout.addWidget(self.button_load_file)
-        self.main_layout.addWidget(self.list_errors)
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(button_load_file)
+        main_layout.addWidget(self.list_errors)
 
-        self.setLayout(self.main_layout)
+        self.setLayout(main_layout)
 
         if len(argv) > 1:
             self.handle_file(argv[1])
         else:
             self.show()
-            # self.show()
 
     def handle_button(self):
         file_path, _ = QFileDialog.getOpenFileName(filter="*.ql")
@@ -51,20 +50,20 @@ class FileWindow(QWidget):
         open_file = self.open_file(file_path)
 
         if open_file is not None:
-            ql_ast = self.parse_file(open_file)
             file_dict = {"file_path": file_path, "file_body": open_file}
+            ql_ast = self.parse_file(open_file)
+
             if self.list_errors:
                 list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
                 Editor(file_dict, list_errors, parent=self).show()
-                # self.close()
 
             if ql_ast is not None:
                 ql_ids, ql_errors = self.check_ids(ql_ast)
+
                 if ql_errors:
                     self.list_errors.addItems(ql_errors)
                     list_errors = [error.text() for error in self.list_errors.findItems("", Qt.MatchContains)]
                     Editor(file_dict, list_errors, parent=self).show()
-                    # self.close()
                 else:
                     self.close()
                     self.show_questionnaire(ql_ast)
