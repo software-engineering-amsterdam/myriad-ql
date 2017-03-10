@@ -25,7 +25,8 @@ module QL
       end
 
       def visit_negation(negation)
-        negation.expression.eval_type
+        # value = negation.expression.accept(self)
+        negation.eval
       end
 
       # visit operation in expression
@@ -43,12 +44,14 @@ module QL
       # they can be for example literal, variable or another binary expression
       def visit_binary_expression(left, binary_expression)
         pp '--------------------------------'
+        pp left
         left  = left.accept(self)
         right = binary_expression.expression.accept(self)
         binary_expression.eval(left.to_value, right.to_value)
       end
 
-      def visit_variable(_)
+      def visit_variable(variable)
+        QuestionTable.find(variable.name)
         # TODO do variable lookup
       end
     end

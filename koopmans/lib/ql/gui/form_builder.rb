@@ -24,6 +24,10 @@ module QL
       def visit_question(question, condition=nil)
         question.render(@gui, condition)
       end
+
+      def visit_computed_question(question, condition=nil)
+        question.render(@gui, condition)
+      end
     end
   end
 end

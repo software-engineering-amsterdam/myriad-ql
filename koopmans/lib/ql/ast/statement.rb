@@ -61,8 +61,16 @@ module QL
         QL::GUI::ComputedQuestionFrame.new(gui, self, condition)
       end
 
-      def accept(visitor)
-        visitor.visit_computed_question(self)
+      # def accept(visitor)
+      #   visitor.visit_computed_question(self)
+      # end
+
+      def accept(visitor, condition=nil)
+        if condition
+          visitor.visit_computed_question(self, condition)
+        else
+          visitor.visit_computed_question(self)
+        end
       end
     end
   end
