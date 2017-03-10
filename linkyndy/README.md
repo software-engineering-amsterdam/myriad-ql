@@ -18,14 +18,14 @@ form festivalParticipationSurvey
       number numberOfFestivals
 
     "How much did you spend on average per tickets?"
-      money spendingOnTickets
+      number spendingOnTickets
 
     "How much did you spend on average on the festival site?"
-      money spendingAtFestival
+      number spendingAtFestival
 
     "This means you've spent a total of:"
       # Fields can have (dynamic) values!
-      money spendingTotal => (spendingOnTickets + spendingAtFestival)
+      number spendingTotal => (spendingOnTickets + spendingAtFestival)
   end
 end
 ```

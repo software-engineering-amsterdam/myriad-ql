@@ -17,7 +17,7 @@ class Parser < Parslet::Parser
 
   rule(:comment) { str('#') >> any.repeat >> space? }
 
-  rule(:type) { (str('text') | str('bool') | str('number') | str('money')).as(:type) >> space? }
+  rule(:type) { (str('text') | str('bool') | str('number')).as(:type) >> space? }
 
   rule(:identifier) { (match['a-zA-Z'] >> match['a-zA-z0-9'].repeat).as(:identifier) >> space? }
 
