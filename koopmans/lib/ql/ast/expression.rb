@@ -10,13 +10,13 @@ module QL
       end
 
       # makes sure all (sub)expressions are calculated in correct order
-      def eval
-        expression.reduce { |left, operation| operation.call(left) }.eval
-      end
-
-      def eval_type
-        expression.reduce { |left, operation| operation.type_check(left) }
-      end
+      # def eval
+      #   expression.reduce { |left, operation| operation.call(left) }.eval
+      # end
+      #
+      # def eval_type
+      #   expression.reduce { |left, operation| operation.type_check(left) }
+      # end
 
       def accept(visitor)
         # expression.reduce do |left, operation|
@@ -59,30 +59,30 @@ module QL
     end
 
     class BinaryExpression < Expression
-      def call(left)
-        pp left
-        pp self.expression
-        left  = left.eval
-        right = self.expression.eval
-        self.eval(left.to_value, right.to_value)
-      end
+      # def call(left)
+      #   pp left
+      #   pp self.expression
+      #   left  = left.eval
+      #   right = self.expression.eval
+      #   self.eval(left.to_value, right.to_value)
+      # end
+      #
+      # def type_check(left)
+      #   pp 'type checking'
+      #   pp left
+      #   pp self
+      #   pp self.expression #right side
+      #   pp 'calculating'
+      #   left  = left.eval_type
+      #   right = self.expression.eval_type
+      #   pp left
+      #   pp right
+      #   pp self
+      #   self.eval_type(left, right)
+      # end
 
-      def type_check(left)
-        pp 'type checking'
-        pp left
-        pp self
-        pp self.expression #right side
-        pp 'calculating'
-        left  = left.eval_type
-        right = self.expression.eval_type
-        pp left
-        pp right
-        pp self
-        self.eval_type(left, right)
-      end
-
-      def accept(visitor)
-        visitor.visit_binary_expression(self)
+      def accept(left, visitor)
+        visitor.visit_binary_expression(left, self)
       end
     end
 
@@ -132,10 +132,6 @@ module QL
         else
           nil
         end
-      end
-
-      def accept(visitor)
-        visitor.visit_add(self)
       end
     end
 

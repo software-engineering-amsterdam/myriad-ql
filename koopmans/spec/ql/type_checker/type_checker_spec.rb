@@ -30,9 +30,9 @@ module QL
         end
       end
 
-      describe OperandsTypeChecker do
+      describe Evaluator do
         it 'detects error' do
-          messages = form_ast.accept(OperandsTypeChecker.new).map(&:message)
+          messages = form_ast.accept(Evaluator.new).map(&:message)
           expect(messages).to include('QL::AST::BooleanType can not be used with QL::AST::Add')
           expect(messages).to include('QL::AST::IntegerType can not be used with QL::AST::BooleanType')
         end

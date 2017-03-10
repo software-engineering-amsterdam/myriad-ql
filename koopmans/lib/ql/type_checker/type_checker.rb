@@ -40,7 +40,7 @@ module QL
           QuestionTable.store(question.variable.name, question.type)
         end
 
-        ast.accept(OperandsTypeChecker.new)
+        # ast.accept(OperandsTypeChecker.new)
       end
 
       # helper functions

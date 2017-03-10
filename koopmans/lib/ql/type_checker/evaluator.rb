@@ -1,13 +1,11 @@
 module QL
   module TypeChecker
-    class OperandsTypeChecker
+    class Evaluator
       include Visitor
       include AST
       include Notification
 
       def visit_form(form)
-        # @variable_type_hash = variable_type_hash
-
         form.statements.map { |statement| statement.accept(self) }
       end
 
@@ -20,7 +18,7 @@ module QL
         computed_question.assignment.accept(self)
       end
 
-      # combine the visit of the condition and the visit of all statements of the if statement
+      # visit both the condition all statements of the if statement
       def visit_if_statement(if_statement)
         if_statement.condition.accept(self)
         if_statement.body.map { |statement| statement.accept(self) }
@@ -30,35 +28,28 @@ module QL
         negation.expression.eval_type
       end
 
-
-      def visit_variable(_)
-      end
-
-
-      # an expression is checked for correctness
+      # visit operation in expression
       def visit_expression(expression)
         expression.expression.reduce do |left, operation|
-          left.accept(self)
-          operation.accept(self)
+          pp operation.accept(left, self)
         end
-        pp 'jjjjjjjjj'
-        # expression.expression.accept(self)
-        # expression.eval_type
       end
 
-      # def visit_binary_expression(expression)
-      #   expression.expression.accept(self)
-      # end
-
       def visit_literal(literal)
-        pp literal
-        pp 'visit literal'
         literal
       end
 
-      def visit_add(add)
+      # visit both left and right sides of binary expression and perform calculation
+      # they can be for example literal, variable or another binary expression
+      def visit_binary_expression(left, binary_expression)
         pp '--------------------------------'
-        pp add
+        left  = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        binary_expression.eval(left.to_value, right.to_value)
+      end
+
+      def visit_variable(_)
+        # TODO do variable lookup
       end
     end
   end
