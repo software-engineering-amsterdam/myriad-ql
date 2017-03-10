@@ -8,7 +8,12 @@ import ql.astnodes.Form;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
+import ql.astnodes.types.BooleanType;
+import ql.astnodes.types.IntegerType;
+import ql.astnodes.types.MoneyType;
+import ql.astnodes.types.StringType;
 import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.astnodes.visitors.TypeVisitor;
 import ql.gui.components.widgets.QLWidget;
 import ql.gui.evaluation.Evaluator;
 import ql.gui.GUIInterface;
@@ -16,11 +21,14 @@ import ql.gui.components.widgets.WidgetFactory;
 import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.Value;
 
-public class FieldFactory implements FormAndStatementVisitor<Field>{
+public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor<Field> {
 
     private final GUIInterface guiInterface;
     private final Evaluator evaluator;
     private final WidgetFactory widgetFactory;
+
+    private QLWidget qlWidget;
+    private SimpleQuestion simpleQuestion;
 
     public FieldFactory(GUIInterface guiInterface, Context context) {
         this.guiInterface = guiInterface;
@@ -35,9 +43,11 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
 
     @Override
     public Field visit(SimpleQuestion question) {
-        QLWidget widget = widgetFactory.getWidgetForQuestion(question);
-        FieldTypeVisitor typeVisitor = new FieldTypeVisitor(guiInterface, question, widget);
-        return question.getType().accept(typeVisitor);
+
+        this.qlWidget = widgetFactory.getWidgetForQuestion(question);
+        this.simpleQuestion = question;
+
+        return question.getType().accept(this);
     }
 
     @Override
@@ -48,8 +58,10 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
         widget.setValue(result);
         widget.setReadOnly(true);
 
-        FieldTypeVisitor typeVisitor = new FieldTypeVisitor(guiInterface, question, widget);
-        return question.getType().accept(typeVisitor);
+        this.qlWidget = widget;
+        this.simpleQuestion = question;
+
+        return question.getType().accept(this);
     }
 
     @Override
@@ -57,4 +69,23 @@ public class FieldFactory implements FormAndStatementVisitor<Field>{
         return null;
     }
 
+    @Override
+    public Field visit(BooleanType type) {
+        return new BooleanField(guiInterface, simpleQuestion, qlWidget);
+    }
+
+    @Override
+    public Field visit(IntegerType type) {
+        return new IntegerField(guiInterface, simpleQuestion, qlWidget);
+    }
+
+    @Override
+    public Field visit(MoneyType type) {
+        return new MoneyField(guiInterface, simpleQuestion, qlWidget);
+    }
+
+    @Override
+    public Field visit(StringType type) {
+        return new StringField(guiInterface, simpleQuestion, qlWidget);
+    }
 }
