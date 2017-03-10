@@ -19,21 +19,20 @@ import ql.semanticchecker.messagehandling.errors.qlerrors.CyclicDependencyError;
 import ql.semanticchecker.messagehandling.errors.qlerrors.InvalidTypeError;
 import ql.semanticchecker.messagehandling.errors.qlerrors.UndefinedQuestionError;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVisitor<Type> {
 
     private Map<String, Type> identifierToTypeMap;
     private MessageData messages;
-    private final DependencyData dependencyList;
     private Identifier tempIdentifierLiteral;
+
+    private Map<String, List<String>> dependencyList = new HashMap<>();
 
     public TypeChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages) {
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
-        this.dependencyList = new DependencyData();
+
         ast.accept(this);
     }
 
@@ -256,50 +255,6 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         return identifierToTypeMap.get(identifier.getName());
     }
 
-    private void checkCyclicDependency(Identifier start) {
-        boolean revertedDependencyExists = checkRevertedDependency(start.getName());
-        if (revertedDependencyExists) {
-            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(), tempIdentifierLiteral, start));
-        }
-        updateDependencyData(start.getName());
-    }
-
-    private boolean checkRevertedDependency(String end) {
-        List<String> toDependencies = dependencyList.getDependencyNames(end);
-        return toDependencies.contains(tempIdentifierLiteral.getName());
-    }
-
-    private void updateDependencyData(String start) {
-        List<String> identifiersOfAffectedNodes = getIdentifiersWithDependency();
-
-        for (String newDependency : identifiersOfAffectedNodes) {
-            dependencyList.addDependency(newDependency, start);
-        }
-        addDependenciesForId(dependencyList.getDependencies(start));
-    }
-
-    private List<String> getIdentifiersWithDependency() {
-        List<String> newDependencyIdentifiers = new ArrayList<>();
-
-        for (String start : dependencyList.getKeys()) {
-            List<String> dependenciesForKey = dependencyList.getDependencyNames(start);
-
-            if (dependenciesForKey.contains(tempIdentifierLiteral.getName())) {
-                newDependencyIdentifiers.add(start);
-            }
-        }
-        newDependencyIdentifiers.add(tempIdentifierLiteral.getName());
-        return newDependencyIdentifiers;
-    }
-
-    private void addDependenciesForId(List<String> startIds) {
-        if (startIds != null) {
-            for (String newDependency : startIds) {
-                dependencyList.addDependency(tempIdentifierLiteral.getName(), newDependency);
-            }
-        }
-    }
-
     @Override
     public Type visit(MyBoolean literal) {
         return new BooleanType();
@@ -323,4 +278,71 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     private static boolean isEqual(Object o1, Object o2) {
         return o1 == o2 || (o1 != null && o1.equals(o2));
     }
+
+    // Cyclic Dependency functions...
+
+    private Boolean containsKey(String id) {
+        return dependencyList.get(id) != null;
+    }
+
+    private List<String> getDependencyNames(String id) {
+        List<String> names = new ArrayList<>();
+
+        if (containsKey(id)) {
+            for (String dependency : dependencyList.get(id)) {
+                names.add(dependency);
+            }
+        }
+        return names;
+    }
+
+    private void addDependency(String id, String dependant) {
+        List<String> dependList = dependencyList.get(id);
+
+        if (!containsKey(id)) {
+            dependList = new ArrayList<>();
+        }
+        dependList.add(dependant);
+        dependencyList.put(id, dependList);
+    }
+
+    private void checkCyclicDependency(Identifier start) {
+        List<String> toDependencies = getDependencyNames(start.getName());
+        boolean revertedDependencyExists = toDependencies.contains(tempIdentifierLiteral.getName());
+
+        if (revertedDependencyExists) {
+            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(), tempIdentifierLiteral, start));
+        }
+        updateDependencyData(start.getName());
+    }
+
+    private void updateDependencyData(String start) {
+        List<String> identifiersOfAffectedNodes = getIdentifiersWithDependency();
+
+        for (String newDependency : identifiersOfAffectedNodes) {
+            addDependency(newDependency, start);
+        }
+
+        if (dependencyList.get(start) != null) {
+            for (String newDependency : dependencyList.get(start)) {
+                addDependency(tempIdentifierLiteral.getName(), newDependency);
+            }
+        }
+    }
+
+    private List<String> getIdentifiersWithDependency() {
+        List<String> newDependencyIdentifiers = new ArrayList<>();
+
+        for (String start : dependencyList.keySet()) {
+            List<String> dependenciesForKey = getDependencyNames(start);
+
+            if (dependenciesForKey.contains(tempIdentifierLiteral.getName())) {
+                newDependencyIdentifiers.add(start);
+            }
+        }
+
+        newDependencyIdentifiers.add(tempIdentifierLiteral.getName());
+        return newDependencyIdentifiers;
+    }
+
 }
