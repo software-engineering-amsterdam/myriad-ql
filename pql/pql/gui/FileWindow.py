@@ -7,8 +7,8 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
-from gui.Editor import Editor
-from gui.Questionnaire import Questionnaire
+from pql.gui.Editor import Editor
+from pql.gui.Questionnaire import Questionnaire
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
 
