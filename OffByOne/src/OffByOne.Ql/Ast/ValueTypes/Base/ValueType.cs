@@ -23,8 +23,8 @@
 
         public abstract TResult Accept<TResult, TContext>(
             IValueTypeVisitor<TResult, TContext> visitor,
-            TContext context)
-            where TContext : IContext;
+            TContext environment)
+            where TContext : IEnvironment;
 
         public override int GetHashCode()
         {

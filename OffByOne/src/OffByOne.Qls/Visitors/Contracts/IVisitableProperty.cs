@@ -4,7 +4,7 @@
 
     public interface IVisitableProperty : IVisitable
     {
-        TResult Accept<TResult, TContext>(IPropertyVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        TResult Accept<TResult, TEnvironment>(IPropertyVisitor<TResult, TEnvironment> visitor, TEnvironment environment)
+            where TEnvironment : IEnvironment;
     }
 }

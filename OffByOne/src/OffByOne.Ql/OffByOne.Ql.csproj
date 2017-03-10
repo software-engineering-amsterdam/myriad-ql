@@ -157,12 +157,12 @@
     <Compile Include="Values\IntegerValue.cs" />
     <Compile Include="Values\MoneyValue.cs" />
     <Compile Include="Values\StringValue.cs" />
-    <Compile Include="Visitors\Contracts\IContext.cs" />
+    <Compile Include="Visitors\Contracts\IEnvironment.cs" />
     <Compile Include="Visitors\Contracts\IValueTypeVisitor.cs" />
     <Compile Include="Visitors\Contracts\IVisitable.cs" />
     <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
     <Compile Include="Visitors\Contracts\IVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IVisitorContext.cs" />
+    <Compile Include="Visitors\Contracts\IVisitorEnvironment.cs" />
     <Compile Include="Checker\TypeVisitor.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Graphics\Controls\Questions\BooleanControl.cs" />

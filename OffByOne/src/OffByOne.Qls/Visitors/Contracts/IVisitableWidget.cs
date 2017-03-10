@@ -4,7 +4,7 @@
 
     public interface IVisitableWidget : IVisitable
     {
-        TResult Accept<TResult, TContext>(IWidigetVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        TResult Accept<TResult, TEnvironment>(IWidigetVisitor<TResult, TEnvironment> visitor, TEnvironment environment)
+            where TEnvironment : IEnvironment;
     }
 }

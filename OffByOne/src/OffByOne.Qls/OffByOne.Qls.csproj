@@ -111,7 +111,7 @@
     <Compile Include="Visitors\Contracts\IVisitableWidget.cs" />
     <Compile Include="Visitors\Contracts\IVisitibleRule.cs" />
     <Compile Include="Visitors\Contracts\IWidigetVisitor.cs" />
-    <Compile Include="Checker\FormCheckerContext.cs" />
+    <Compile Include="Checker\FormCheckerEnvironment.cs" />
     <Compile Include="Checker\FormCheckerVisitor.cs" />
   </ItemGroup>
   <ItemGroup>

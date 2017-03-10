@@ -17,9 +17,9 @@
 
         public override TResult Accept<TResult, TContext>(
             IPropertyVisitor<TResult, TContext> visitor,
-            TContext context)
+            TContext environment)
         {
-            return visitor.Visit(this, context);
+            return visitor.Visit(this, environment);
         }
     }
 }

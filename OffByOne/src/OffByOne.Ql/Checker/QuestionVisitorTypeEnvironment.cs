@@ -7,7 +7,7 @@
 
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class QuestionVisitorTypeEnvironment : IContext
+    public class QuestionVisitorTypeEnvironment : IEnvironment
     {
         private readonly ISet<string> questionNames;
         private readonly ISet<string> questionLables;

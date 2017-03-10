@@ -18,30 +18,30 @@
 
         public CheckerReport Report { get; set; }
 
-        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment context)
+        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)
         {
             // TODO: change string primitives to StringValue?
             // [...].Value.Value is ugly. Since StringValues replace string primitives,
             // maybe we should replace them in the code too?
-            if (context.IsNameDuplicate(expression.Label.Value.Value))
+            if (environment.IsNameDuplicate(expression.Label.Value.Value))
             {
                 this.Report.Add(new DuplicateQuestionIdentifierMessage(expression));
             }
             else
             {
-                context.AddQuestionName(expression.Label.Value.Value);
+                environment.AddQuestionName(expression.Label.Value.Value);
             }
 
-            if (context.IsLableDuplicate(expression.Identifier))
+            if (environment.IsLableDuplicate(expression.Identifier))
             {
                 this.Report.Add(new DuplicateQuestionLabelMessage(expression));
             }
             else
             {
-                context.AddQuestionLabel(expression.Identifier);
+                environment.AddQuestionLabel(expression.Identifier);
             }
 
-            return base.Visit(expression, context);
+            return base.Visit(expression, environment);
         }
     }
 }

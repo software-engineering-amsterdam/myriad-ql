@@ -16,186 +16,186 @@
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class BaseQlVisitor<TResult, TContext>
-        : IValueTypeVisitor<TResult, TContext>,
-        IExpressionVisitor<TResult, TContext>,
-        IStatementVisitor<TResult, TContext>
-        where TContext : IContext
+    public class BaseQlVisitor<TResult, TEnvironment>
+        : IValueTypeVisitor<TResult, TEnvironment>,
+        IExpressionVisitor<TResult, TEnvironment>,
+        IStatementVisitor<TResult, TEnvironment>
+        where TEnvironment : IEnvironment
     {
-        public virtual TResult Visit(IntegerLiteral literal, TContext context)
+        public virtual TResult Visit(IntegerLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(MoneyLiteral literal, TContext context)
+        public virtual TResult Visit(MoneyLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(DecimalLiteral literal, TContext context)
+        public virtual TResult Visit(DecimalLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(BooleanLiteral literal, TContext context)
+        public virtual TResult Visit(BooleanLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(StringLiteral literal, TContext context)
+        public virtual TResult Visit(StringLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(DateLiteral literal, TContext context)
+        public virtual TResult Visit(DateLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(HexLiteral literal, TContext context)
+        public virtual TResult Visit(HexLiteral literal, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(IntegerValueType valueType, TContext context)
+        public virtual TResult Visit(IntegerValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(DecimalValueType valueType, TContext context)
+        public virtual TResult Visit(DecimalValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(MoneyValueType valueType, TContext context)
+        public virtual TResult Visit(MoneyValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(BooleanValueType valueType, TContext context)
+        public virtual TResult Visit(BooleanValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(StringValueType valueType, TContext context)
+        public virtual TResult Visit(StringValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(DateValueType valueType, TContext context)
+        public virtual TResult Visit(DateValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(VoidValueType valueType, TContext context)
+        public virtual TResult Visit(VoidValueType valueType, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(AddExpression expression, TContext context)
+        public virtual TResult Visit(AddExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(SubtractExpression expression, TContext context)
+        public virtual TResult Visit(SubtractExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(MultiplyExpression expression, TContext context)
+        public virtual TResult Visit(MultiplyExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(DivideExpression expression, TContext context)
+        public virtual TResult Visit(DivideExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(AndExpression expression, TContext context)
+        public virtual TResult Visit(AndExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(OrExpression expression, TContext context)
+        public virtual TResult Visit(OrExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(EqualExpression expression, TContext context)
+        public virtual TResult Visit(EqualExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(NotEqualExpression expression, TContext context)
+        public virtual TResult Visit(NotEqualExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(GreaterThanExpression expression, TContext context)
+        public virtual TResult Visit(GreaterThanExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(GreaterThanOrEqualExpression expression, TContext context)
+        public virtual TResult Visit(GreaterThanOrEqualExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(LessThanExpression expression, TContext context)
+        public virtual TResult Visit(LessThanExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(LessThanOrEqualExpression expression, TContext context)
+        public virtual TResult Visit(LessThanOrEqualExpression expression, TEnvironment environment)
         {
-            return this.Visit((BinaryExpression)expression, context);
+            return this.Visit((BinaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(NotExpression expression, TContext context)
+        public virtual TResult Visit(NotExpression expression, TEnvironment environment)
         {
-            return this.Visit((UnaryExpression)expression, context);
+            return this.Visit((UnaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(NegativeExpression expression, TContext context)
+        public virtual TResult Visit(NegativeExpression expression, TEnvironment environment)
         {
-            return this.Visit((UnaryExpression)expression, context);
+            return this.Visit((UnaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(PositiveExpression expression, TContext context)
+        public virtual TResult Visit(PositiveExpression expression, TEnvironment environment)
         {
-            return this.Visit((UnaryExpression)expression, context);
+            return this.Visit((UnaryExpression)expression, environment);
         }
 
-        public virtual TResult Visit(VariableExpression expression, TContext context)
+        public virtual TResult Visit(VariableExpression expression, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(BracketExpression expression, TContext context)
+        public virtual TResult Visit(BracketExpression expression, TEnvironment environment)
         {
-            expression.Expression.Accept(this, context);
+            expression.Expression.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(QuestionStatement expression, TContext context)
+        public virtual TResult Visit(QuestionStatement expression, TEnvironment environment)
         {
-            expression.Type.Accept(this, context);
-            expression.ComputationExpression?.Accept(this, context);
+            expression.Type.Accept(this, environment);
+            expression.ComputationExpression?.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(IfStatement expression, TContext context)
+        public virtual TResult Visit(IfStatement expression, TEnvironment environment)
         {
-            expression.Condition.Accept(this, context);
-            expression.Statements.ForEach(x => x.Accept(this, context));
-            expression.ElseStatements.ForEach(x => x.Accept(this, context));
+            expression.Condition.Accept(this, environment);
+            expression.Statements.ForEach(x => x.Accept(this, environment));
+            expression.ElseStatements.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public virtual TResult Visit(FormStatement expression, TContext context)
+        public virtual TResult Visit(FormStatement expression, TEnvironment environment)
         {
-            expression.Statements.ForEach(x => x.Accept(this, context));
+            expression.Statements.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
@@ -234,17 +234,17 @@
             return new StringValueType();
         }
 
-        private TResult Visit(BinaryExpression expression, TContext context)
+        private TResult Visit(BinaryExpression expression, TEnvironment environment)
         {
-            expression.RightExpression.Accept(this, context);
-            expression.LeftExpression.Accept(this, context);
+            expression.RightExpression.Accept(this, environment);
+            expression.LeftExpression.Accept(this, environment);
 
             return default(TResult);
         }
 
-        private TResult Visit(UnaryExpression expression, TContext context)
+        private TResult Visit(UnaryExpression expression, TEnvironment environment)
         {
-            expression.Expression.Accept(this, context);
+            expression.Expression.Accept(this, environment);
             return default(TResult);
         }
     }

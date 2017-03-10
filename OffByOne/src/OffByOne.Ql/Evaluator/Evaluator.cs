@@ -15,154 +15,154 @@
             return expression.Accept(new Evaluator(), environment);
         }
 
-        public IValue Visit(AddExpression expression, TypeEnvironment context)
+        public IValue Visit(AddExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Add(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Add(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(SubtractExpression expression, TypeEnvironment context)
+        public IValue Visit(SubtractExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Substract(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Substract(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(MultiplyExpression expression, TypeEnvironment context)
+        public IValue Visit(MultiplyExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Multiply(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Multiply(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(DivideExpression expression, TypeEnvironment context)
+        public IValue Visit(DivideExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Divide(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Divide(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(AndExpression expression, TypeEnvironment context)
+        public IValue Visit(AndExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .And(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .And(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(OrExpression expression, TypeEnvironment context)
+        public IValue Visit(OrExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Or(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Or(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(EqualExpression expression, TypeEnvironment context)
+        public IValue Visit(EqualExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Equals(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .Equals(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(NotEqualExpression expression, TypeEnvironment context)
+        public IValue Visit(NotEqualExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .Equals(expression.RightExpression.Accept(this, context))
+                .Accept(this, environment)
+                .Equals(expression.RightExpression.Accept(this, environment))
                 .Not();
         }
 
-        public IValue Visit(GreaterThanExpression expression, TypeEnvironment context)
+        public IValue Visit(GreaterThanExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .GreaterThan(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .GreaterThan(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(GreaterThanOrEqualExpression expression, TypeEnvironment context)
+        public IValue Visit(GreaterThanOrEqualExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .GreaterThanOrEqualTo(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .GreaterThanOrEqualTo(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(LessThanExpression expression, TypeEnvironment context)
+        public IValue Visit(LessThanExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .LessThan(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .LessThan(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(LessThanOrEqualExpression expression, TypeEnvironment context)
+        public IValue Visit(LessThanOrEqualExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression
-                .Accept(this, context)
-                .LessThanOrEqualTo(expression.RightExpression.Accept(this, context));
+                .Accept(this, environment)
+                .LessThanOrEqualTo(expression.RightExpression.Accept(this, environment));
         }
 
-        public IValue Visit(NotExpression expression, TypeEnvironment context)
+        public IValue Visit(NotExpression expression, TypeEnvironment environment)
         {
             return expression.Expression
-                .Accept(this, context)
+                .Accept(this, environment)
                 .Not();
         }
 
-        public IValue Visit(NegativeExpression expression, TypeEnvironment context)
+        public IValue Visit(NegativeExpression expression, TypeEnvironment environment)
         {
             return expression.Expression
-                .Accept(this, context)
+                .Accept(this, environment)
                 .Negative();
         }
 
-        public IValue Visit(PositiveExpression expression, TypeEnvironment context)
+        public IValue Visit(PositiveExpression expression, TypeEnvironment environment)
         {
             return expression.Expression
-                .Accept(this, context)
+                .Accept(this, environment)
                 .Positive();
         }
 
-        public IValue Visit(VariableExpression expression, TypeEnvironment context)
+        public IValue Visit(VariableExpression expression, TypeEnvironment environment)
         {
-            return context.GetValueOf(expression.Identifier);
+            return environment.GetValueOf(expression.Identifier);
         }
 
-        public IValue Visit(BracketExpression expression, TypeEnvironment context)
+        public IValue Visit(BracketExpression expression, TypeEnvironment environment)
         {
             return expression.Expression
-                .Accept(this, context);
+                .Accept(this, environment);
         }
 
-        public IValue Visit(IntegerLiteral literal, TypeEnvironment context)
+        public IValue Visit(IntegerLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(MoneyLiteral literal, TypeEnvironment context)
+        public IValue Visit(MoneyLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(DecimalLiteral literal, TypeEnvironment context)
+        public IValue Visit(DecimalLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(BooleanLiteral literal, TypeEnvironment context)
+        public IValue Visit(BooleanLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(StringLiteral literal, TypeEnvironment context)
+        public IValue Visit(StringLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(DateLiteral literal, TypeEnvironment context)
+        public IValue Visit(DateLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }
 
-        public IValue Visit(HexLiteral literal, TypeEnvironment context)
+        public IValue Visit(HexLiteral literal, TypeEnvironment environment)
         {
             return literal.Value;
         }

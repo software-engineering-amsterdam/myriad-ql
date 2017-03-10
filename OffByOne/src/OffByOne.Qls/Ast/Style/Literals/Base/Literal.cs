@@ -9,6 +9,6 @@
         public abstract TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,
             TContext context)
-            where TContext : IContext;
+            where TContext : IEnvironment;
     }
 }

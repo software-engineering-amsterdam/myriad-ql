@@ -7,7 +7,7 @@
     using OffByOne.Qls.Visitors;
     using OffByOne.Qls.Visitors.Base;
 
-    public class FormCheckerVisitor : BaseQlsVisitor<object, FormCheckerContext>
+    public class FormCheckerVisitor : BaseQlsVisitor<object, FormCheckerEnvironment>
     {
         public FormCheckerVisitor()
             : this(new CheckerReport())
@@ -21,60 +21,60 @@
 
         public CheckerReport Report { get; }
 
-        public override object Visit(StyleSheet expression, FormCheckerContext context)
+        public override object Visit(StyleSheet expression, FormCheckerEnvironment environment)
         {
-            if (context.StyleSheetNames.Contains(expression.Id))
+            if (environment.StyleSheetNames.Contains(expression.Id))
             {
                 this.Report.Add(new DuplicateStyleSheetMesssage(expression));
             }
             else
             {
-                context.StyleSheetNames.Add(expression.Id);
+                environment.StyleSheetNames.Add(expression.Id);
             }
 
-            return base.Visit(expression, context);
+            return base.Visit(expression, environment);
         }
 
-        public override object Visit(Page expression, FormCheckerContext context)
+        public override object Visit(Page expression, FormCheckerEnvironment environment)
         {
-            if (context.PageLabels.Contains(expression.Id))
+            if (environment.PageLabels.Contains(expression.Id))
             {
                 this.Report.Add(new DuplicatePageMessage(expression));
             }
             else
             {
-                context.PageLabels.Add(expression.Id);
+                environment.PageLabels.Add(expression.Id);
             }
 
-            return base.Visit(expression, context);
+            return base.Visit(expression, environment);
         }
 
-        public override object Visit(Section expression, FormCheckerContext context)
+        public override object Visit(Section expression, FormCheckerEnvironment environment)
         {
-            if (context.SectionNames.Contains(expression.Name.Value))
+            if (environment.SectionNames.Contains(expression.Name.Value))
             {
                 this.Report.Add(new DuplicateSectionNameMessage(expression));
             }
             else
             {
-                context.SectionNames.Add(expression.Name.Value);
+                environment.SectionNames.Add(expression.Name.Value);
             }
 
-            return base.Visit(expression, context);
+            return base.Visit(expression, environment);
         }
 
-        public override object Visit(QuestionRule expression, FormCheckerContext context)
+        public override object Visit(QuestionRule expression, FormCheckerEnvironment environment)
         {
-            if (context.SectionNames.Contains(expression.Name))
+            if (environment.SectionNames.Contains(expression.Name))
             {
                 this.Report.Add(new DuplicateQuestionLabelMessage(expression));
             }
             else
             {
-                context.SectionNames.Add(expression.Name);
+                environment.SectionNames.Add(expression.Name);
             }
 
-            return base.Visit(expression, context);
+            return base.Visit(expression, environment);
         }
     }
 }

@@ -10,13 +10,13 @@
 
     public class Renderer : BaseQlVisitor<UIElement, VisitorTypeEnvironment>
     {
-        public override UIElement Visit(FormStatement form, VisitorTypeEnvironment context)
+        public override UIElement Visit(FormStatement form, VisitorTypeEnvironment environment)
         {
             var questionnaire = new Window { Title = form.Identifier };
             var list = new ListView();
             foreach (var statement in form.Statements)
             {
-                list.Items.Add(statement.Accept(this, context));
+                list.Items.Add(statement.Accept(this, environment));
             }
 
             questionnaire.Content = list;
@@ -24,7 +24,7 @@
             return questionnaire;
         }
 
-        public override UIElement Visit(QuestionStatement statement, VisitorTypeEnvironment context)
+        public override UIElement Visit(QuestionStatement statement, VisitorTypeEnvironment environment)
         {
             var factory = new ControlFactory();
             return factory.CreateControl(statement).Control;
