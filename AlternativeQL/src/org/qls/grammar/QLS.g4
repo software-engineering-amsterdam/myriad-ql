@@ -9,8 +9,8 @@ page
     ;
 
 section
-    :   'section' STRING_LITERAL '{' (question | section | default) '}'
-    |   'section' STRING_LITERAL (question | section | default)*
+    :   'section' STRING_LITERAL '{' (question | section | default)* '}'
+    |   'section' STRING_LITERAL (question | section | default)
     ;
 
 question
