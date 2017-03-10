@@ -5,8 +5,8 @@ module QL
       include AST
       include Notification
 
-      def visit_form(form, variable_type_hash)
-        @variable_type_hash = variable_type_hash
+      def visit_form(form)
+        # @variable_type_hash = variable_type_hash
 
         form.statements.map { |statement| statement.accept(self) }
       end
@@ -22,85 +22,26 @@ module QL
 
       # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
-        # if_statement.condition.accept(self) + if_statement.body.map { |statement| statement.accept(self) }
+        if_statement.condition.accept(self)
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
       def visit_negation(negation)
-        []
-        # TODO
-        # expression_type = type(negation.expression)
-        # error(negation.class, expression_type) if ([type(negation).accept_types].flatten & [expression_type.accept_types].flatten).empty?
+        negation.expression.eval_type
       end
 
-      def visit_variable(variable)
-        # @variable_type_hash[variable.name].class
-        variable
+
+      def visit_variable(_)
       end
 
-      def visit_literal(literal)
-        # pp 'joe'
-        # pp [literal.accept_types.first]
-        literal
+      def visit_literal(_)
       end
 
       # an expression is checked for correctness
       def visit_expression(expression)
-        pp '---------------------------'
-        # pp expression
-        # expression_type = expression.expression.map{|e| type(e)}
-        # pp expression_type
-        # pp '================================'
-        # []
-        # left_type          = type(expression.left)
-        # right_type         = type(expression.right)
-        # correct_comparison = false
-        #
-        # errors = []
-        # # the left side does not match the operator
-        # errors.push(error(left_type, expression.class)) unless expression.accept_types.include? left_type
-        # # the right side does not match the operator
-        # errors.push(error(right_type, expression.class)) unless expression.accept_types.include? right_type
-        # # do the left and right side match?
-        # correct_comparison = left_type.accept_types.include? right_type if left_type
-        # errors.push(error(left_type, right_type)) unless correct_comparison
-        #
-        # errors.push([expression.left.accept(self), expression.right.accept(self)])
-        pp '1'
-        pp expression.eval
-        # pp expression.expression.flatten
-        # pp expression.accept_types
-        # expression.
-        # expression.expression.reduce { |left, operation| operation.eval }
-        # pp expression.expression.eval
-        # pp Array(expression.expression).map { |expression|  }
-
-        #
-        # pp 'aap'
-        # pp expression
-        # pp types
-        # pp expression.accept_types
-        # pp (types - expression.accept_types).empty?
-
-
-        pp '2'
+        # expression.expression.accept(self)
+        expression.eval_type
       end
-
-      # get the type of a variable or other
-      # def type(expression)
-      #   if expression.kind_of?(Variable)
-      #     @variable_type_hash[expression.name]
-      #   else
-      #     expression.accept_types.first
-      #   end
-      # end
-
-      # # generate error message
-      # def error(left, right)
-      #   left  = 'undefined' unless left
-      #   right = 'undefined' unless right
-      #   Notification.new("#{left} can not be used with #{right}")
-      # end
     end
   end
 end

@@ -16,7 +16,7 @@ form taxOfficeExample {
       privateDebt: money = 8
     "Value residue:"
       valueResidue: money =
-        (privateDebt * 10)
+        (privateDebt * 10 + 5)
         }
   }
 

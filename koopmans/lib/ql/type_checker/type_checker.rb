@@ -3,14 +3,14 @@ module QL
     class TypeChecker
       include Visitor
       include Notification
+      include QuestionTable
 
       def check(ast)
-        questions            = ast.accept(QuestionCollector.new).flatten
-        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact
+        questions = ast.accept(QuestionCollector.new).flatten
 
         [duplicate_label_checker(questions),
          duplicate_variable_checker(questions),
-         undefined_variable_checker(questions, expression_variables),
+         undefined_variable_checker(questions, ast),
          operands_type_checker(questions, ast)].map { |checker| checker }
       end
 
@@ -25,9 +25,9 @@ module QL
         duplicate_variables.map { |variable| Error.new("variable '#{variable}' is defined multiple times") }
       end
 
-      def undefined_variable_checker(questions, expression_variables)
+      def undefined_variable_checker(questions, ast)
         question_variables   = questions.map(&:variable).map(&:name)
-        expression_variables = expression_variables.map(&:name)
+        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
 
         (expression_variables - question_variables).map { |undefined_variable| Error.new("variable '#{undefined_variable}' is undefined") }
       end
@@ -35,10 +35,12 @@ module QL
       def operands_type_checker(questions, ast)
         # create hash with variable and type e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>,
         #                                          "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
-        variable_type_hash = questions.map { |question| [question.variable.name, question.type] }.to_h
 
+        questions.each do |question|
+          QuestionTable.store(question.variable.name, question.type)
+        end
 
-        ast.accept(OperandsTypeChecker.new, variable_type_hash)
+        ast.accept(OperandsTypeChecker.new)
       end
 
       # helper functions

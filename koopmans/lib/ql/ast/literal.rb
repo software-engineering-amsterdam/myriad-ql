@@ -14,6 +14,10 @@ module QL
       def eval
         self
       end
+
+      def eval_type
+        IntegerType
+      end
     end
 
     class BooleanLiteral < Literal

@@ -1,6 +1,8 @@
 module QL
   module AST
     class Expression
+      include Notification
+
       attr_reader :expression
 
       def initialize(expression)
@@ -10,6 +12,10 @@ module QL
       # makes sure all (sub)expressions are calculated in correct order
       def eval
         expression.reduce { |left, operation| operation.call(left) }.eval
+      end
+
+      def eval_type
+        expression.reduce { |left, operation| operation.type_check(left) }
       end
 
       def accept(visitor)
@@ -55,11 +61,19 @@ module QL
         right = self.expression.eval
         self.eval(left.to_value, right.to_value)
       end
-      #
+
       def type_check(left)
+        pp 'type checking'
         pp left
         pp self
         pp self.expression #right side
+        pp 'calculating'
+        left  = left.eval_type
+        right = self.expression.eval_type
+        pp left
+        pp right
+        pp self
+        self.eval_type(left, right)
       end
     end
 
@@ -99,11 +113,33 @@ module QL
       def eval(left, right)
         IntegerLiteral.new(left + right)
       end
+
+      def eval_type(left, right)
+        pp 'add'
+        pp left
+        pp right
+        if left != right
+          Error.new('je hebt een fout gemaakt')
+        else
+          nil
+        end
+      end
     end
 
     class Multiply < ArithmeticExpression
       def eval(left, right)
         IntegerLiteral.new(left * right)
+      end
+
+      def eval_type(left, right)
+        pp 'multiply'
+        pp left
+        pp right
+        if left != right
+          Error.new('je hebt een fout gemaakt')
+        else
+          left
+        end
       end
     end
 

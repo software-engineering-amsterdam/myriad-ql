@@ -15,6 +15,10 @@ module QL
         QuestionTable.find(name)
         # IntegerLiteral.new('1')
       end
+
+      def eval_type
+        QuestionTable.find(name)
+      end
     end
   end
 end
