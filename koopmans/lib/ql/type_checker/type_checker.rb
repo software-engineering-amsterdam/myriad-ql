@@ -10,9 +10,8 @@ module QL
 
         [duplicate_label_checker(questions),
          duplicate_variable_checker(questions),
-         undefined_variable_checker(questions, expression_variables)
-         # ,operands_type_checker(questions, ast)
-        ].map { |checker| checker }
+         undefined_variable_checker(questions, expression_variables),
+         operands_type_checker(questions, ast)].map { |checker| checker }
       end
 
       # checkers
@@ -37,6 +36,8 @@ module QL
         # create hash with variable and type e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>,
         #                                          "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
         variable_type_hash = questions.map { |question| [question.variable.name, question.type] }.to_h
+
+
         ast.accept(OperandsTypeChecker.new, variable_type_hash)
       end
 

@@ -22,7 +22,8 @@ module QL
 
       # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
-        if_statement.condition.accept(self) + if_statement.body.map { |statement| statement.accept(self) }
+        # if_statement.condition.accept(self) + if_statement.body.map { |statement| statement.accept(self) }
+        if_statement.body.map { |statement| statement.accept(self) }
       end
 
       def visit_negation(negation)
@@ -33,13 +34,14 @@ module QL
       end
 
       def visit_variable(variable)
-        @variable_type_hash[variable.name].class
+        # @variable_type_hash[variable.name].class
+        variable
       end
 
       def visit_literal(literal)
         # pp 'joe'
         # pp [literal.accept_types.first]
-        literal.to_type
+        literal
       end
 
       # an expression is checked for correctness
@@ -65,11 +67,13 @@ module QL
         #
         # errors.push([expression.left.accept(self), expression.right.accept(self)])
         pp '1'
-        # pp expression
+        pp expression.eval
+        # pp expression.expression.flatten
         # pp expression.accept_types
-        expression.expression.reduce { |left, operation| operation.type_check(left) }
-        # pp expression.eval
-        # types = expression.expression.map { |expression| expression.accept(self) }
+        # expression.
+        # expression.expression.reduce { |left, operation| operation.eval }
+        # pp expression.expression.eval
+        # pp Array(expression.expression).map { |expression|  }
 
         #
         # pp 'aap'

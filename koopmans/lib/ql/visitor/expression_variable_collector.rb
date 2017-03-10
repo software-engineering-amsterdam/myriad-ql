@@ -25,12 +25,12 @@ module QL
 
       # visit the expression
       def visit_expression(expression)
-        expression.expression.map { |expression| expression.accept(self) }
+        Array(expression.expression).map { |expression| expression.accept(self) }
       end
 
       # visit the negation
       def visit_negation(negation)
-        negation.expression.map{|negation| negation.accept(self)}
+        Array(negation.expression).map{|negation| negation.accept(self)}
       end
 
       # literal should return empty array

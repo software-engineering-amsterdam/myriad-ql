@@ -4,7 +4,7 @@ module QL
       attr_reader :expression
 
       def initialize(expression)
-        @expression = Array(expression)
+        @expression = expression
       end
 
       # makes sure all (sub)expressions are calculated in correct order
@@ -49,25 +49,18 @@ module QL
 
     class BinaryExpression < Expression
       def call(left)
+        pp left
+        pp self.expression
         left  = left.eval
         right = self.expression.eval
         self.eval(left.to_value, right.to_value)
       end
       #
-      # def type_check(left)
-      #   pp 'haloooo'
-      #   pp left
-      #   left_type = left.accept_types
-      #   pp left_type
-      #   pp self
-      #   operator_types = self.accept_types
-      #   pp "operator accepts: #{operator_types}"
-      #
-      #   right_type = self.expression.map { |expression| expression.accept_types}
-      #   pp right_type
-      #   # pp 'doeiiii'
-      #   # left = left.eval
-      # end
+      def type_check(left)
+        pp left
+        pp self
+        pp self.expression #right side
+      end
     end
 
     # booleans: && ||
