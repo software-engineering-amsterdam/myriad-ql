@@ -10,13 +10,18 @@ import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.IssuesStorage;
 
 public class Main extends Application {
+    private final String QL_SOURCE_PATH = "drafts/ExampleForm.aql";
+
     public static void main(String args[]) {
         launch();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Form form = runParser();
+        FileLoader fileLoader = new FileLoader();
+        String qlSource = fileLoader.getSourceFromResource(QL_SOURCE_PATH);
+
+        Form form = runParser(qlSource);
 
         if (hasFormTypeErrors(form)) {
             System.out.println("TypeChecker: An issue was found!");
@@ -26,23 +31,8 @@ public class Main extends Application {
     }
 
     // TODO: Get exampleForm file from the project.
-    public Form runParser() {
-        Parser parser = new Parser();
-        Form form = parser.parseForm(
-                "form TestForm {" +
-                    "string yourName: \"What's your name?\" = \"testname\";" +
-                    "money yourName3: \"What's your name?\";" +
-                    "money yourName2: \"What's your name?\" = yourName3 + 100.00;" +
-                    "boolean hasSoldHouse: \"Did you sell a house in 2010?\" = false;" +
-                    "if (hasSoldHouse) {" +
-                        "boolean sellingPrice: \"What was the selling price?\" = false;" +
-                        "if (sellingPrice) {" +
-                            "boolean anotherExample: \"Just another question hmm?\" = true;" +
-                        "}" +
-                    "}" +
-                "}");
-
-        return form;
+    public Form runParser(String src) {
+        return new Parser().parseForm(src);
     }
 
     public boolean hasFormTypeErrors(Form form) {
