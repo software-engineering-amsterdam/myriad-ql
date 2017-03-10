@@ -47,6 +47,7 @@ module QL
 
       def check_condition
         if condition
+          # question.accept(TypeChecker::Evaluator.new).to_value ? enable : disable
           # p condition.accept(TypeChecker::Evaluator.new)
           condition.accept(TypeChecker::Evaluator.new).to_value ? enable : disable
         end

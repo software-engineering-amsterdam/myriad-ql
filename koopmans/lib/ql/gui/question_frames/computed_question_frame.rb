@@ -18,9 +18,11 @@ module QL
       end
 
       def compute
+        literal_type = question.type.literal_type
+        # value = question.accept(TypeChecker::Evaluator.new).to_value
         value = @question.assignment.accept(TypeChecker::Evaluator.new).to_value
         @widget.set_value(value)
-        QuestionTable.store(question.variable.name, IntegerLiteral.new(value))
+        QuestionTable.store(question.variable.name, literal_type.new(value))
       end
     end
   end
