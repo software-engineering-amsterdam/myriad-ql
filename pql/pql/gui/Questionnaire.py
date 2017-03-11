@@ -116,6 +116,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         widget.setDecimals(2)
         widget.setMaximum(10**10)
         widget.setMinimum(-(10**10))
+        widget.setPrefix("\u20ac")
         return widget
 
     def integer(self, node):

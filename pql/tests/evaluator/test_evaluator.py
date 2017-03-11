@@ -85,7 +85,7 @@ class TestEvaluator(TestCase):
 
         expected_identifier_2 = 'sellingPriceWithInflation'
         self.assertTrue(expected_identifier_2 in environment, "Environment should contain key hasSoldHouse")
-        self.assertAlmostEqual(float(23000.87 * 1.1), environment[expected_identifier_2], "Output should equal 25300.957")
+        self.assertEqual(float(23000.87 * 1.1), environment[expected_identifier_2], "Output should equal 25300.957")
 
         expected_identifier_3 = 'wasMoreExpensive'
         self.assertTrue(expected_identifier_3 in environment, "Environment should contain key hasSoldHouse")
