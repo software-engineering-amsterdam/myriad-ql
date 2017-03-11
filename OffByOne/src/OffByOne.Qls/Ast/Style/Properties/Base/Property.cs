@@ -6,7 +6,7 @@
 
     public abstract class Property : AstNode, IVisitableProperty
     {
-        public abstract TResult Accept<TResult, TContext>(IPropertyVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IPropertyVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
     }
 }

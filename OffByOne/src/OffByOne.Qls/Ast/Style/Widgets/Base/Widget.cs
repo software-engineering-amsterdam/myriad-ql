@@ -6,7 +6,7 @@
 
     public abstract class Widget : AstNode, IVisitableWidget
     {
-        public abstract TResult Accept<TResult, TContext>(IWidigetVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IWidigetVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
     }
 }

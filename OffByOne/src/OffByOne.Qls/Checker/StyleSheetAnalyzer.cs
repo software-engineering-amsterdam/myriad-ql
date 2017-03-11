@@ -30,7 +30,7 @@
 
         public CheckerReport Check(StyleSheet node)
         {
-            this.formCheckerVisitor.Visit(node, new FormCheckerContext());
+            this.formCheckerVisitor.Visit(node, new FormCheckerEnvironment());
 
             var finalReport = new CheckerReport();
             finalReport.Add(this.formCheckerVisitor.Report.AllMessages.ToList());

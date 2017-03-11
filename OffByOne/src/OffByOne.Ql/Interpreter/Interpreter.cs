@@ -13,35 +13,35 @@
     public class Interpreter
         : IStatementVisitor<Control, GuiEnvironment>
     {
-        public Control Visit(FormStatement expression, GuiEnvironment context)
+        public Control Visit(FormStatement expression, GuiEnvironment environment)
         {
             var controls = new List<Control>(expression.Statements.Count());
             foreach (var s in expression.Statements)
             {
-                var control = (Control)s.Accept(this, context);
+                var control = (Control)s.Accept(this, environment);
                 controls.Add(control);
             }
 
-            var form = new FormControl(expression, context, controls);
+            var form = new FormControl(expression, environment, controls);
             return form;
         }
 
-        public Control Visit(QuestionStatement expression, GuiEnvironment context)
+        public Control Visit(QuestionStatement expression, GuiEnvironment environment)
         {
             Control question;
             switch (expression.Type)
             {
                 case BooleanValueType _:
-                    question = new BooleanControl(expression, context);
+                    question = new BooleanControl(expression, environment);
                     break;
                 case DateValueType _:
-                    question = new DateControl(expression, context);
+                    question = new DateControl(expression, environment);
                     break;
                 case StringValueType _:
-                    question = new StringControl(expression, context);
+                    question = new StringControl(expression, environment);
                     break;
                 case DecimalValueType _:
-                    question = new DecimalControl(expression, context);
+                    question = new DecimalControl(expression, environment);
                     break;
                 case IntegerValueType _:
                     question = new IntegerControl(expression, context);
@@ -56,16 +56,16 @@
             return question;
         }
 
-        public Control Visit(IfStatement expression, GuiEnvironment context)
+        public Control Visit(IfStatement expression, GuiEnvironment environment)
         {
             var ifControls = expression.Statements
-                .Select(x => x.Accept(this, context))
+                .Select(x => x.Accept(this, environment))
                 .ToList();
             var elseControls = expression.ElseStatements
-                .Select(x => x.Accept(this, context))
+                .Select(x => x.Accept(this, environment))
                 .ToList();
 
-            var control = new VisibilityControl(expression, context, ifControls, elseControls);
+            var control = new VisibilityControl(expression, environment, ifControls, elseControls);
             return control;
         }
     }

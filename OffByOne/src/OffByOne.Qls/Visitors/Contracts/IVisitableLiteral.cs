@@ -4,7 +4,7 @@
 
     public interface IVisitableLiteral : IVisitable
     {
-        TResult Accept<TResult, TContext>(ILiteralVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        TResult Accept<TResult, TEnvironment>(ILiteralVisitor<TResult, TEnvironment> visitor, TEnvironment environment)
+            where TEnvironment : IEnvironment;
     }
 }

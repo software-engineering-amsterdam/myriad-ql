@@ -7,7 +7,7 @@
 
     public abstract class Statement : AstNode, IVisitableStatement
     {
-        public abstract TResult Accept<TResult, TContext>(Visitors.Contracts.IStatementVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(Visitors.Contracts.IStatementVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
     }
 }

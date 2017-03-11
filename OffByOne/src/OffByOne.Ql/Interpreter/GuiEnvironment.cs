@@ -9,7 +9,7 @@
     using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class GuiEnvironment : IContext, IObservable<GuiChange>
+    public class GuiEnvironment : IEnvironment, IObservable<GuiChange>
     {
         private List<IObserver<GuiChange>> observers;
 

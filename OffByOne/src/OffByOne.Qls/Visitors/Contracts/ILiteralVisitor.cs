@@ -3,15 +3,15 @@
     using OffByOne.Ql.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Literals;
 
-    public interface ILiteralVisitor<out TResult, in TContext> : IVisitor
-        where TContext : IContext
+    public interface ILiteralVisitor<out TResult, in TEnvironment> : IVisitor
+        where TEnvironment : IEnvironment
     {
-        TResult Visit(IntegerLiteral literal, TContext context);
+        TResult Visit(IntegerLiteral literal, TEnvironment environment);
 
-        TResult Visit(DecimalLiteral literal, TContext context);
+        TResult Visit(DecimalLiteral literal, TEnvironment environment);
 
-        TResult Visit(StringLiteral literal, TContext context);
+        TResult Visit(StringLiteral literal, TEnvironment environment);
 
-        TResult Visit(HexLiteral literal, TContext context);
+        TResult Visit(HexLiteral literal, TEnvironment environment);
     }
 }

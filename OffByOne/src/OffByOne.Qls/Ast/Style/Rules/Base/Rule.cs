@@ -22,7 +22,7 @@
 
         public IEnumerable<Property> Properties { get; private set; }
 
-        public abstract TResult Accept<TResult, TContext>(IRuleVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IRuleVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
     }
 }

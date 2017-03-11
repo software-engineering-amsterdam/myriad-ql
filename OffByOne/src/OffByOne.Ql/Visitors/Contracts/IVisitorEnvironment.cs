@@ -2,7 +2,7 @@
 {
     using OffByOne.Ql.Ast.ValueTypes.Base;
 
-    public interface IVisitorContext : IContext
+    public interface IVisitorEnvironment : IEnvironment
     {
         void AddSymbol(string name, ValueType type);
 

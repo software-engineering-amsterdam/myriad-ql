@@ -4,7 +4,7 @@
 
     public interface IVisitibleRule : IVisitable
     {
-        TResult Accept<TResult, TContext>(IRuleVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        TResult Accept<TResult, TEnvironment>(IRuleVisitor<TResult, TEnvironment> visitor, TEnvironment environment)
+            where TEnvironment : IEnvironment;
     }
 }

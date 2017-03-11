@@ -4,9 +4,9 @@
 
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class FormCheckerContext : IContext
+    public class FormCheckerEnvironment : IEnvironment
     {
-        public FormCheckerContext()
+        public FormCheckerEnvironment()
         {
             this.StyleSheetNames = new HashSet<string>();
             this.PageLabels = new HashSet<string>();

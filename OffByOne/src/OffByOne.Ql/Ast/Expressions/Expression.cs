@@ -6,8 +6,8 @@
 
     public abstract class Expression : AstNode, IVisitableExpression
     {
-        public abstract TResult Accept<TResult, TContext>(IExpressionVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IExpressionVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
 
         public abstract ISet<string> GetDependencies();
     }

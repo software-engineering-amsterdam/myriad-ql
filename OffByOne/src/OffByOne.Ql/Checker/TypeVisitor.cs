@@ -40,84 +40,84 @@
 
         public CheckerReport Report { get; }
 
-        public ValueType Visit(AddExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(AddExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryMatematicalExpression(expression, context);
+            return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(SubtractExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(SubtractExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryMatematicalExpression(expression, context);
+            return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(MultiplyExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(MultiplyExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryMatematicalExpression(expression, context);
+            return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(DivideExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(DivideExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryMatematicalExpression(expression, context);
+            return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(AndExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(AndExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryBooleanLogicExpression(expression, context);
+            return this.CheckBinaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(OrExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(OrExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryBooleanLogicExpression(expression, context);
+            return this.CheckBinaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(EqualExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(EqualExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(NotEqualExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(NotEqualExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(GreaterThanExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(GreaterThanExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(GreaterThanOrEqualExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(GreaterThanOrEqualExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(LessThanExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(LessThanExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(LessThanOrEqualExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(LessThanOrEqualExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckBinaryComparisonExpression(expression, context);
+            return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(NotExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(NotExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckUnaryBooleanLogicExpression(expression, context);
+            return this.CheckUnaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(NegativeExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(NegativeExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckUnaryMatematicalExpression(expression, context);
+            return this.CheckUnaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(PositiveExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(PositiveExpression expression, VisitorTypeEnvironment environment)
         {
-            return this.CheckUnaryMatematicalExpression(expression, context);
+            return this.CheckUnaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(VariableExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(VariableExpression expression, VisitorTypeEnvironment environment)
         {
-            var quetionType = context.GetTypeOf(expression.Identifier);
+            var quetionType = environment.GetTypeOf(expression.Identifier);
             if (quetionType == null)
             {
                 this.Report.Add(new UndeclaredVariableMessage(expression));
@@ -127,64 +127,64 @@
             return quetionType;
         }
 
-        public ValueType Visit(BracketExpression expression, VisitorTypeEnvironment context)
+        public ValueType Visit(BracketExpression expression, VisitorTypeEnvironment environment)
         {
-            return expression.Expression.Accept(this, context);
+            return expression.Expression.Accept(this, environment);
         }
 
-        public VoidValueType Visit(QuestionStatement expression, VisitorTypeEnvironment context)
+        public VoidValueType Visit(QuestionStatement expression, VisitorTypeEnvironment environment)
         {
-            context.AddSymbol(expression.Identifier, expression.Type);
+            environment.AddSymbol(expression.Identifier, expression.Type);
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(IfStatement expression, VisitorTypeEnvironment context)
+        public VoidValueType Visit(IfStatement expression, VisitorTypeEnvironment environment)
         {
-            var result = this.CheckIfStatement(expression, context);
-            expression.Statements.ForEach(x => x.Accept(this, context));
-            expression.ElseStatements.ForEach(x => x.Accept(this, context));
-
-            return new VoidValueType();
-        }
-
-        public VoidValueType Visit(FormStatement expression, VisitorTypeEnvironment context)
-        {
-            expression.Statements.ForEach(x => x.Accept(this, context));
+            var result = this.CheckIfStatement(expression, environment);
+            expression.Statements.ForEach(x => x.Accept(this, environment));
+            expression.ElseStatements.ForEach(x => x.Accept(this, environment));
 
             return new VoidValueType();
         }
 
-        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
+        public VoidValueType Visit(FormStatement expression, VisitorTypeEnvironment environment)
+        {
+            expression.Statements.ForEach(x => x.Accept(this, environment));
+
+            return new VoidValueType();
+        }
+
+        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment environment)
         {
             return new IntegerValueType();
         }
 
-        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment environment)
         {
             return new MoneyValueType();
         }
 
-        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment environment)
         {
             return new DecimalValueType();
         }
 
-        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment environment)
         {
             return new BooleanValueType();
         }
 
-        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment environment)
         {
             return new StringValueType();
         }
 
-        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment environment)
         {
             return new DateValueType();
         }
 
-        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment environment)
         {
             return new StringValueType();
         }

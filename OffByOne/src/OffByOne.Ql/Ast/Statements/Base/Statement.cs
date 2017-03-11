@@ -6,8 +6,8 @@
 
     public abstract class Statement : AstNode, IVisitableStatement
     {
-        public abstract TResult Accept<TResult, TContext>(IStatementVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IStatementVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
 
         public abstract ISet<string> GetDependencies();
     }

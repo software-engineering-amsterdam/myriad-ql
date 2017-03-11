@@ -2,21 +2,21 @@
 {
     using OffByOne.Ql.Ast.ValueTypes;
 
-    public interface IValueTypeVisitor<out TResult, in TContext> : IVisitor
-        where TContext : IContext
+    public interface IValueTypeVisitor<out TResult, in TEnvironment> : IVisitor
+        where TEnvironment : IEnvironment
     {
-        TResult Visit(IntegerValueType valueType, TContext context);
+        TResult Visit(IntegerValueType valueType, TEnvironment environment);
 
-        TResult Visit(DecimalValueType valueType, TContext context);
+        TResult Visit(DecimalValueType valueType, TEnvironment environment);
 
-        TResult Visit(MoneyValueType valueType, TContext context);
+        TResult Visit(MoneyValueType valueType, TEnvironment environment);
 
-        TResult Visit(BooleanValueType valueType, TContext context);
+        TResult Visit(BooleanValueType valueType, TEnvironment environment);
 
-        TResult Visit(StringValueType valueType, TContext context);
+        TResult Visit(StringValueType valueType, TEnvironment environment);
 
-        TResult Visit(DateValueType valueType, TContext context);
+        TResult Visit(DateValueType valueType, TEnvironment environment);
 
-        TResult Visit(VoidValueType valueType, TContext context);
+        TResult Visit(VoidValueType valueType, TEnvironment environment);
     }
 }

@@ -10,7 +10,7 @@
     using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class TypeEnvironment : IContext
+    public class TypeEnvironment : IEnvironment
     {
         private readonly IDictionary<string, IValue> values;
 
