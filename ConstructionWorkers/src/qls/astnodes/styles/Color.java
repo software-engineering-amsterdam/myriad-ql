@@ -8,7 +8,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
  */
 public class Color extends StyleType{
 
-    public static final String NAME = "color";
+    private static final String NAME = "color";
 
     public Color(int value, LineNumber lineNumber) {
         super(NAME, Integer.toString(value), lineNumber);

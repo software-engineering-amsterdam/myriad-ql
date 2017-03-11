@@ -13,7 +13,6 @@ public class Style extends Node{
 
     private final List<StyleType> styleTypes;
 
-
     public Style(LineNumber lineNumber) {
         super(lineNumber);
         styleTypes = new ArrayList<>();
@@ -69,10 +68,10 @@ public class Style extends Node{
         return false;
     }
 
-    public void getInheritedStyle(Style baseStyle) {
-        for (StyleType baseStyleProperty : baseStyle.styleTypes) {
-            if (!this.styleTypes.contains(baseStyleProperty)) {
-                this.styleTypes.add(baseStyleProperty);
+    public void AddDefaultInheritedStyles(Style style) {
+        for (StyleType type : style.styleTypes) {
+            if (!this.styleTypes.contains(type)) {
+                this.styleTypes.add(type);
             }
         }
     }

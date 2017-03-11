@@ -8,7 +8,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
  */
 public class FontSize extends StyleType {
 
-    public static final String NAME = "fontsize";
+    private static final String NAME = "fontsize";
 
     public FontSize(Integer value, LineNumber lineNumber) {
         super(NAME, Integer.toString(value), lineNumber);

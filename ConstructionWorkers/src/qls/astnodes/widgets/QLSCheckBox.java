@@ -41,7 +41,7 @@ public class QLSCheckBox extends QLSWidget{
 
     @Override
     public void applyStyle(Style style) {
-        style.getInheritedStyle(this.getDefaultStyle());
+        style.AddDefaultInheritedStyles(this.getDefaultStyle());
 
         java.awt.Font font = new java.awt.Font(
                 style.getFont(this.getDefaultFont().getValue()), 0,
@@ -81,8 +81,8 @@ public class QLSCheckBox extends QLSWidget{
 
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedTypes = new ArrayList<>();
-        supportedTypes.add(new BooleanType());
         supportedTypes.add(new StringType());
+        supportedTypes.add(new BooleanType());
         return supportedTypes;
     }
 

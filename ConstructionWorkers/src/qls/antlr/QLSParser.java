@@ -20,7 +20,7 @@ public class QLSParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, STRING=24, 
-		Identifier=25, NUMBER=26, HEX=27, WS=28;
+		Identifier=25, INTEGER=26, HEX=27, WS=28;
 	public static final int
 		RULE_stylesheet = 0, RULE_defaultStyle = 1, RULE_section = 2, RULE_question = 3, 
 		RULE_widget = 4, RULE_style = 5, RULE_type = 6;
@@ -39,7 +39,7 @@ public class QLSParser extends Parser {
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"STRING", "Identifier", "NUMBER", "HEX", "WS"
+		"STRING", "Identifier", "INTEGER", "HEX", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -718,7 +718,7 @@ public class QLSParser extends Parser {
 		}
 	}
 	public static class WidthStyleContext extends StyleContext {
-		public TerminalNode NUMBER() { return getToken(QLSParser.NUMBER, 0); }
+		public TerminalNode INTEGER() { return getToken(QLSParser.INTEGER, 0); }
 		public WidthStyleContext(StyleContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -752,7 +752,7 @@ public class QLSParser extends Parser {
 		}
 	}
 	public static class FontsizeStyleContext extends StyleContext {
-		public TerminalNode NUMBER() { return getToken(QLSParser.NUMBER, 0); }
+		public TerminalNode INTEGER() { return getToken(QLSParser.INTEGER, 0); }
 		public FontsizeStyleContext(StyleContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -800,7 +800,7 @@ public class QLSParser extends Parser {
 				setState(81);
 				match(T__15);
 				setState(82);
-				match(NUMBER);
+				match(INTEGER);
 				}
 				break;
 			case T__16:
@@ -820,7 +820,7 @@ public class QLSParser extends Parser {
 				setState(85);
 				match(T__17);
 				setState(86);
-				match(NUMBER);
+				match(INTEGER);
 				}
 				break;
 			case T__18:
@@ -859,19 +859,35 @@ public class QLSParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class IntTypeContext extends TypeContext {
-		public IntTypeContext(TypeContext ctx) { copyFrom(ctx); }
+	public static class BooleanTypeContext extends TypeContext {
+		public BooleanTypeContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLSListener ) ((QLSListener)listener).enterIntType(this);
+			if ( listener instanceof QLSListener ) ((QLSListener)listener).enterBooleanType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLSListener ) ((QLSListener)listener).exitIntType(this);
+			if ( listener instanceof QLSListener ) ((QLSListener)listener).exitBooleanType(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLSVisitor ) return ((QLSVisitor<? extends T>)visitor).visitIntType(this);
+			if ( visitor instanceof QLSVisitor ) return ((QLSVisitor<? extends T>)visitor).visitBooleanType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntegerTypeContext extends TypeContext {
+		public IntegerTypeContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof QLSListener ) ((QLSListener)listener).enterIntegerType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof QLSListener ) ((QLSListener)listener).exitIntegerType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLSVisitor ) return ((QLSVisitor<? extends T>)visitor).visitIntegerType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -907,22 +923,6 @@ public class QLSParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class BoolTypeContext extends TypeContext {
-		public BoolTypeContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QLSListener ) ((QLSListener)listener).enterBoolType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QLSListener ) ((QLSListener)listener).exitBoolType(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLSVisitor ) return ((QLSVisitor<? extends T>)visitor).visitBoolType(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
@@ -932,7 +932,7 @@ public class QLSParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__19:
-				_localctx = new BoolTypeContext(_localctx);
+				_localctx = new BooleanTypeContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(91);
@@ -940,7 +940,7 @@ public class QLSParser extends Parser {
 				}
 				break;
 			case T__20:
-				_localctx = new IntTypeContext(_localctx);
+				_localctx = new IntegerTypeContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(92);

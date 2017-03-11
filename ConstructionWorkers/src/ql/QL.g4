@@ -52,12 +52,10 @@ LINE_COMMENT
     : '//' ~[\r\n]* '\r'? '\n' -> channel(HIDDEN);
 
 WS
-    : [\t\r\n\f]+ -> channel(HIDDEN);
+    : [ \r\t\u000C\n]+ -> channel(HIDDEN);
 
 fragment ESC
-    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
-    |   UNICODE
-    ;
+    : '\\' (["\\/bfnrt] | UNICODE);
 
 fragment UNICODE
     : 'u' HEX HEX HEX HEX;

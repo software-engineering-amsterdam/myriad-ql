@@ -12,6 +12,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by LGGX on 04-Mar-17.
@@ -51,7 +52,7 @@ public class QLSRadio extends QLSWidget {
 
     @Override
     public void applyStyle(Style style) {
-        style.getInheritedStyle(this.getDefaultStyle());
+        style.AddDefaultInheritedStyles(this.getDefaultStyle());
 
         Font font = new Font(
                 style.getFont(this.getDefaultFont().getValue()), 0,
@@ -106,15 +107,14 @@ public class QLSRadio extends QLSWidget {
         this.component.setEnabled(false);
     }
 
-    public java.util.List<Type> getSupportedQuestionTypes() {
-        java.util.List<Type> supportedTypes = new ArrayList<>(
-                Arrays.asList(
-                        new BooleanType(),
-                        new StringType()
-                )
-        );
+
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedTypes = new ArrayList<>();
+        supportedTypes.add(new StringType());
+        supportedTypes.add(new BooleanType());
         return supportedTypes;
     }
+
 
     public <T> T accept(StyleSheetVisitor<T> visitor) {
         return visitor.visit(this);

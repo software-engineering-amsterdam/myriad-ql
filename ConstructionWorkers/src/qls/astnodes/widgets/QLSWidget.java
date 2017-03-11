@@ -75,7 +75,7 @@ public abstract class QLSWidget extends Node {
         form.addWidget(this.component);
     }
 
-    public void suppress(FormFrame form) {
+    public void remove(FormFrame form) {
         form.removeWidget(this.component);
     }
 

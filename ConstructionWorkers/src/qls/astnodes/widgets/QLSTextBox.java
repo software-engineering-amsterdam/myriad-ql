@@ -14,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by LGGX on 04-Mar-17.
@@ -44,7 +45,7 @@ public class QLSTextBox extends QLSWidget {
 
     @Override
     public void applyStyle(Style style) {
-        style.getInheritedStyle(this.getDefaultStyle());
+        style.AddDefaultInheritedStyles(this.getDefaultStyle());
 
         Font font = new Font(
                 style.getFont(this.getDefaultFont().getValue()), 0,
@@ -92,10 +93,9 @@ public class QLSTextBox extends QLSWidget {
         return new Width(WIDTH, getLineNumber());
     }
 
-    public java.util.List<Type> getSupportedQuestionTypes() {
-        java.util.List<Type> supportedTypes = new ArrayList<>(
-                Arrays.asList(new StringType())
-        );
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedTypes = new ArrayList<>();
+        supportedTypes.add(new StringType());
         return supportedTypes;
     }
 

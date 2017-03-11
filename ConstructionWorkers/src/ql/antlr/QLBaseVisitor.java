@@ -1,4 +1,4 @@
-// Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/ql\QL.g4 by ANTLR 4.6
 package ql.antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -45,7 +45,7 @@ public class QLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QLV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBoolType(QLParser.BoolTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBooleanType(QLParser.BooleanTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -59,7 +59,7 @@ public class QLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QLV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntType(QLParser.IntTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntegerType(QLParser.IntegerTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

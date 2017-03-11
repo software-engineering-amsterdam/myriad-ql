@@ -93,7 +93,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public IntegerType visitIntType(QLParser.IntTypeContext ctx) {
+    public IntegerType visitIntegerType(QLParser.IntegerTypeContext ctx) {
         return new IntegerType(getLineNumber(ctx));
     }
 
@@ -103,7 +103,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     }
 
     @Override
-    public BooleanType visitBoolType(QLParser.BoolTypeContext ctx) {
+    public BooleanType visitBooleanType(QLParser.BooleanTypeContext ctx) {
         return new BooleanType(getLineNumber(ctx));
     }
 

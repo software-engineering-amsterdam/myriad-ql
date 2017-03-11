@@ -30,7 +30,7 @@ public abstract class QLWidget {
         form.addWidget(component);
     }
 
-    public void suppress(FormFrame form) {
+    public void remove(FormFrame form) {
         form.removeWidget(component);
     }
 

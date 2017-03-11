@@ -52,11 +52,16 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
     }
     private void checkQLSQuestionPlacement() {
 
+        List<String> styleQuestionList = new ArrayList<>();
+        for (StyleQuestion question : qlsQuestions) {
+            styleQuestionList.add(question.getName());
+        }
+
         final Set<StyleQuestion> duplicateQuestions = new HashSet();
-        final Set<StyleQuestion> set1 = new HashSet();
+        final Set<String> set1 = new HashSet();
 
         for (StyleQuestion question : qlsQuestions) {
-            if (!set1.add(question)) {
+            if (!set1.add(question.getName())) {
                 duplicateQuestions.add(question);
             }
         }
@@ -67,13 +72,8 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             }
         }
 
-        List<String> styleQuestionList = new ArrayList<>();
-        for (StyleQuestion question : qlsQuestions) {
-            styleQuestionList.add(question.getName());
-        }
-
-        for(String key: identifierMap.keySet()) {
-            if (!qlsQuestions.contains(key)) {
+        for(String key : identifierMap.keySet()) {
+            if (!styleQuestionList.contains(key)) {
                 messages.addError(new NotAllQuestionsDefinedError(new LineNumber(1), key));
             }
         }
@@ -81,11 +81,22 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
 
     @Override
     public Void visit(StyleSheet styleSheet) {
+        for (Section section : styleSheet.getSections()) {
+            section.accept(this);
+        }
         return null;
     }
 
     @Override
     public Void visit(Section section) {
+        for (Section subSection : section.getSections()) {
+            subSection.accept(this);
+        }
+
+        for (StyleQuestion question : section.getQuestions()) {
+            question.accept(this);
+        }
+
         return null;
     }
 

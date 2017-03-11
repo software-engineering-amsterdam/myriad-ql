@@ -39,7 +39,7 @@ public class QLSUndefinedWidget extends QLSWidget {
     public void render(FormFrame form) {}
 
     @Override
-    public void suppress(FormFrame canvas) {}
+    public void remove(FormFrame canvas) {}
 
     @Override
     public UndefinedValue getValue() {

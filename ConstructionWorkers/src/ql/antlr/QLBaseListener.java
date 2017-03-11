@@ -1,4 +1,4 @@
-// Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/ql\QL.g4 by ANTLR 4.6
 package ql.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -64,13 +64,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoolType(QLParser.BoolTypeContext ctx) { }
+	@Override public void enterBooleanType(QLParser.BooleanTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoolType(QLParser.BoolTypeContext ctx) { }
+	@Override public void exitBooleanType(QLParser.BooleanTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,13 +88,13 @@ public class QLBaseListener implements QLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntType(QLParser.IntTypeContext ctx) { }
+	@Override public void enterIntegerType(QLParser.IntegerTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntType(QLParser.IntTypeContext ctx) { }
+	@Override public void exitIntegerType(QLParser.IntegerTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

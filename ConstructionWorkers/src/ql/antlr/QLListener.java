@@ -1,4 +1,4 @@
-// Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/ql\QL.g4 by ANTLR 4.6
 package ql.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -54,17 +54,17 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(QLParser.IfStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code boolType}
+	 * Enter a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterBoolType(QLParser.BoolTypeContext ctx);
+	void enterBooleanType(QLParser.BooleanTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code boolType}
+	 * Exit a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitBoolType(QLParser.BoolTypeContext ctx);
+	void exitBooleanType(QLParser.BooleanTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stringType}
 	 * labeled alternative in {@link QLParser#type}.
@@ -78,17 +78,17 @@ public interface QLListener extends ParseTreeListener {
 	 */
 	void exitStringType(QLParser.StringTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code intType}
+	 * Enter a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntType(QLParser.IntTypeContext ctx);
+	void enterIntegerType(QLParser.IntegerTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code intType}
+	 * Exit a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntType(QLParser.IntTypeContext ctx);
+	void exitIntegerType(QLParser.IntegerTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code moneyType}
 	 * labeled alternative in {@link QLParser#type}.

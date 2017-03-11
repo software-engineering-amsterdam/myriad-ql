@@ -208,25 +208,25 @@ public class QLSBaseListener implements QLSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoolType(QLSParser.BoolTypeContext ctx) { }
+	@Override public void enterBooleanType(QLSParser.BooleanTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoolType(QLSParser.BoolTypeContext ctx) { }
+	@Override public void exitBooleanType(QLSParser.BooleanTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntType(QLSParser.IntTypeContext ctx) { }
+	@Override public void enterIntegerType(QLSParser.IntegerTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntType(QLSParser.IntTypeContext ctx) { }
+	@Override public void exitIntegerType(QLSParser.IntegerTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

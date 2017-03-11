@@ -39,7 +39,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value neq(Value valueArgument) {
-        return new BooleanValue(value.equals(valueArgument.getValue()));
+        return new BooleanValue(!value.equals(valueArgument.getValue()));
     }
 
     @Override

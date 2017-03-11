@@ -15,12 +15,8 @@ public class Section extends AbstractSection {
     private final List<DefaultStyle> defaultStyles;
     private final List<StyleQuestion> questions;
 
-    public Section(String name,
-                   List<Section> sections,
-                   List<DefaultStyle> defaultStyles,
-                   List<StyleQuestion> questions,
-                   LineNumber lineNumber)
-    {
+    public Section(String name, List<Section> sections, List<DefaultStyle> defaultStyles, List<StyleQuestion> questions,
+                   LineNumber lineNumber) {
         super(lineNumber);
         this.sectionName = name;
         this.sections = sections;

@@ -8,7 +8,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
  */
 public class Font extends StyleType{
 
-    public static final String NAME = "font";
+    private static final String NAME = "font";
 
     public Font(String value, LineNumber lineNumber) {
         super(NAME, value, lineNumber);

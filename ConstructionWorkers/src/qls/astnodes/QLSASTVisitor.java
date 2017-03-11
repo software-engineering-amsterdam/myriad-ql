@@ -151,7 +151,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
 
     @Override
     public Node visitWidthStyle(QLSParser.WidthStyleContext ctx) {
-        return new Width(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
+        return new Width(Integer.parseInt(ctx.INTEGER().getText()), getLineNumber(ctx));
     }
 
     @Override
@@ -161,7 +161,7 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
 
     @Override
     public Node visitFontsizeStyle(QLSParser.FontsizeStyleContext ctx) {
-        return new FontSize(Integer.parseInt(ctx.NUMBER().getText()), getLineNumber(ctx));
+        return new FontSize(Integer.parseInt(ctx.INTEGER().getText()), getLineNumber(ctx));
     }
 
     @Override
@@ -170,12 +170,12 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     }
 
     @Override
-    public Node visitBoolType(QLSParser.BoolTypeContext ctx) {
+    public Node visitBooleanType(QLSParser.BooleanTypeContext ctx) {
         return new BooleanType(getLineNumber(ctx));
     }
 
     @Override
-    public Node visitIntType(QLSParser.IntTypeContext ctx) {
+    public Node visitIntegerType(QLSParser.IntegerTypeContext ctx) {
         return new IntegerType(getLineNumber(ctx));
     }
 

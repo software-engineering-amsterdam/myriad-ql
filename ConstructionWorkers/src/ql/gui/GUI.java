@@ -68,7 +68,7 @@ public class GUI implements GUIInterface{
                         field.getWidget().render(form);
                     } else {
                         form.removeFromFields(field);
-                        field.getWidget().suppress(form);
+                        field.getWidget().remove(form);
                         field.resetState();
                     }
                 }

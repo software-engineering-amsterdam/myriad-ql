@@ -1,4 +1,4 @@
-// Generated from C:/Users/vince/Documents/Documenten/School/Jaar 5 (Master Software Engineering)/Software Construction/myriad-ql/ConstructionWorkers/src\QL.QL.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/ql\QL.g4 by ANTLR 4.6
 package ql.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -38,12 +38,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfStatement(QLParser.IfStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code boolType}
+	 * Visit a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolType(QLParser.BoolTypeContext ctx);
+	T visitBooleanType(QLParser.BooleanTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code stringType}
 	 * labeled alternative in {@link QLParser#type}.
@@ -52,12 +52,12 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringType(QLParser.StringTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code intType}
+	 * Visit a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIntType(QLParser.IntTypeContext ctx);
+	T visitIntegerType(QLParser.IntegerTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code moneyType}
 	 * labeled alternative in {@link QLParser#type}.

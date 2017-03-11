@@ -196,29 +196,29 @@ public interface QLSListener extends ParseTreeListener {
 	 */
 	void exitColorStyle(QLSParser.ColorStyleContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code boolType}
+	 * Enter a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterBoolType(QLSParser.BoolTypeContext ctx);
+	void enterBooleanType(QLSParser.BooleanTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code boolType}
+	 * Exit a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitBoolType(QLSParser.BoolTypeContext ctx);
+	void exitBooleanType(QLSParser.BooleanTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code intType}
+	 * Enter a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntType(QLSParser.IntTypeContext ctx);
+	void enterIntegerType(QLSParser.IntegerTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code intType}
+	 * Exit a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntType(QLSParser.IntTypeContext ctx);
+	void exitIntegerType(QLSParser.IntegerTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stringType}
 	 * labeled alternative in {@link QLSParser#type}.

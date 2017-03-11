@@ -11,6 +11,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by LGGX on 04-Mar-17.
@@ -42,7 +43,7 @@ public class QLSDropdown extends QLSWidget {
 
     @Override
     public void applyStyle(Style style) {
-        style.getInheritedStyle(this.getDefaultStyle());
+        style.AddDefaultInheritedStyles(this.getDefaultStyle());
 
         Font font = new Font(
                 style.getFont(this.getDefaultFont().getValue()), 0,
@@ -91,10 +92,9 @@ public class QLSDropdown extends QLSWidget {
         this.comboBox.setEnabled(false);
     }
 
-    public java.util.List<Type> getSupportedQuestionTypes() {
-        java.util.List<Type> supportedTypes = new ArrayList<>(
-                Arrays.asList(new BooleanType())
-        );
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedTypes = new ArrayList<>();
+        supportedTypes.add(new BooleanType());
         return supportedTypes;
     }
 

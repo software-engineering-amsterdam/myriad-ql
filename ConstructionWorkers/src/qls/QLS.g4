@@ -4,7 +4,7 @@ stylesheet
     : 'stylesheet' Identifier '{' (defaultStyle | section)* '}' ;
 
 defaultStyle
-    : 'default' type widget                   # defaultWithoutStyleDeclaration
+    : 'default' type widget           # defaultWithoutStyleDeclaration
     | 'default' type '{' style+ widget '}'    # defaultWithStyleDeclaration
     ;
 
@@ -27,9 +27,9 @@ widget
     ;
 
 style
-    : 'width:' INTEGER         # widthStyle
+    : 'width:' INTEGER        # widthStyle
     | 'font:' STRING          # fontStyle
-    | 'fontsize:' INTEGER      # fontsizeStyle
+    | 'fontsize:' INTEGER     # fontsizeStyle
     | 'color:' HEX            # colorStyle
     ;
 
@@ -53,12 +53,10 @@ HEX
     : '#' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT;
 
 WS
-    : [\t\r\n\f]+ -> channel(HIDDEN);
+    : [ \r\t\u000C\n]+ -> channel(HIDDEN);
 
 fragment ESC
-    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
-    |   UNICODE
-    ;
+    : '\\' (["\\/bfnrt] | UNICODE);
 
 fragment HEXDIGIT
     : [0-9a-fA-F];

@@ -12,6 +12,7 @@ import qls.astnodes.visitors.StyleSheetVisitor;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by LGGX on 04-Mar-17.
@@ -42,7 +43,7 @@ public class QLSSpinBox extends QLSWidget {
 
     @Override
     public void applyStyle(Style style) {
-        style.getInheritedStyle(this.getDefaultStyle());
+        style.AddDefaultInheritedStyles(this.getDefaultStyle());
 
         Font font = new Font(
                 style.getFont(this.getDefaultFont().getValue()), 0,
@@ -88,13 +89,10 @@ public class QLSSpinBox extends QLSWidget {
         editor.getTextField().setEditable( false );
     }
 
-    public java.util.List<Type> getSupportedQuestionTypes() {
-        java.util.List<Type> supportedTypes = new ArrayList<>(
-                Arrays.asList(
-                        new IntegerType(),
-                        new StringType()
-                )
-        );
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedTypes = new ArrayList<>();
+        supportedTypes.add(new StringType());
+        supportedTypes.add(new IntegerType());
         return supportedTypes;
     }
 

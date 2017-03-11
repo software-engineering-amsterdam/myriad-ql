@@ -121,19 +121,19 @@ public interface QLSVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitColorStyle(QLSParser.ColorStyleContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code boolType}
+	 * Visit a parse tree produced by the {@code booleanType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolType(QLSParser.BoolTypeContext ctx);
+	T visitBooleanType(QLSParser.BooleanTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code intType}
+	 * Visit a parse tree produced by the {@code integerType}
 	 * labeled alternative in {@link QLSParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIntType(QLSParser.IntTypeContext ctx);
+	T visitIntegerType(QLSParser.IntegerTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code stringType}
 	 * labeled alternative in {@link QLSParser#type}.
