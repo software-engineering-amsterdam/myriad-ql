@@ -95,3 +95,12 @@ if __name__ == '__main__':
     file_window = FileWindow(argv)
 
     exit(app.exec_())
+
+
+#TODO : Line numbers in AST Node object stoppen
+#TODO: Line numbers tonen in error messages van IdentifierChecker
+#TODO: Line numbers tonen in error messages van TypeChecker
+#TODO: Eventueel wanener Quiestionarre wordt afgesloten de FileWindow weer openen (of gewoon open laten)
+#TODO: IdentifierChecker laat nu in errors de objecten zien, niet de naam van property
+# e.g : Key: placeHolder2 contained multiple entries, the following: [<pql.ast.ast.Money object at 0x0000029DAA9BA9B0>, <pql.ast.ast.Money object at 0x0000029DAA9C9198>]
+
