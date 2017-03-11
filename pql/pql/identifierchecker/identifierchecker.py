@@ -5,35 +5,41 @@ from pql.traversal.FormVisitor import FormVisitor
 
 
 class IdentifierChecker(FormVisitor):
-    def __init__(self):
-        # TODO: Dictionary niet als instance variable , opbouwen op basis van return values van de methods
-        self.__identifier_dict = defaultdict(list)
-
     def visit(self, pql_ast):
-        self.__identifier_dict.clear()
-        [form.apply(self) for form in pql_ast]
+        def recursively_build_dictionary(items, dct):
+            for dictionary in items:
+                if isinstance(dictionary, list):
+                    recursively_build_dictionary(dictionary, dct)
+                else:
+                    for d_key, d_value in dictionary.items():
+                        dct[d_key].append(d_value)
 
-        normalized_dictionary = dict()
-        for key, value_list in self.__identifier_dict.items():
-            for value in value_list:
-                normalized_dictionary[key] = value
+        def build_error_list(identifiers):
+            errors = list()
+            for key, value in identifiers.items():
+                if len(value) > 1:
+                    errors.append("Key: {} contained multiple entries, the following: {}".format(key, value))
+            return errors
 
-        errors = list()
-        for key, value in self.__identifier_dict.items():
-            if len(value) > 1:
-                errors.append("Key: {} contained multiple entries, the following: {}".format(key, value))
+        def normalize(identifiers):
+            normalized_dictionary = dict()
+            for key, value_list in identifiers.items():
+                for value in value_list:
+                    normalized_dictionary[key] = value
+            return normalized_dictionary
 
-        return normalized_dictionary, errors
+        identifier_dictionary = defaultdict(list)
+        recursively_build_dictionary([form.apply(self) for form in pql_ast], identifier_dictionary)
+        return normalize(identifier_dictionary), build_error_list(identifier_dictionary)
 
     def form(self, node):
-        [statement.apply(self) for statement in node.statements]
+        return [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
-        self.conditional_if(node)
-        [statement.apply(self) for statement in node.else_statement_list]
+        return self.conditional_if(node) + [statement.apply(self) for statement in node.else_statement_list]
 
     def conditional_if(self, node):
-        [statement.apply(self) for statement in node.statements]
+        return [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        self.__identifier_dict[node.name.name].append(node.data_type)
+        return {node.name.name: node.data_type}
