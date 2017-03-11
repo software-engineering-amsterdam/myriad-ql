@@ -21,11 +21,9 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def field(self, node):
         if node.expression is not None:
             result = node.expression.apply(self)
-            if node.data_type.data_type is DataTypes.boolean:
-                if result is not node.data_type.data_type:
-                    self.errors.append(
-                        "Expression of field [{}] did not match declared type [{}]".format(result,
-                                                                                           node.data_type.data_type))
+            if node.data_type.data_type is DataTypes.boolean and (result is not node.data_type.data_type):
+                self.errors.append("Expression of field [{}] did not match declared type [{}]"
+                                   .format(result, node.data_type.data_type))
 
     def subtraction(self, node):
         return self.type_detection(node, self.arithmetic_type_detection)
