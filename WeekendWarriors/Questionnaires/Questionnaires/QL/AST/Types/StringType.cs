@@ -28,7 +28,6 @@ namespace Questionnaires.Types
             return new BooleanType(this.Val != value.GetValue());
         }
 
-
         public override QuestionWidget GetWidget()
         {
             return new TextBoxWidget();

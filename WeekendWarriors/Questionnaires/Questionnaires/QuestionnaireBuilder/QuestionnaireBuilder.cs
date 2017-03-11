@@ -9,7 +9,7 @@ using Questionnaires.VariableStore;
 using Questionnaires.Types;
 using System.ComponentModel;
 
-namespace Questionnaires.QuestionaireBuilder
+namespace Questionnaires.QuestionnaireBuilder
 {
     class QuestionnaireBuilder 
     {

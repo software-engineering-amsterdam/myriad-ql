@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Questionnaires.Types;
-//using Questionnaires.QL.QuestionaireBuilder;
 using System.Threading;
 using Questionnaires.Renderer.Style;
 
@@ -42,7 +41,7 @@ namespace Questionnaires
             var qlsFactory = new QLS.AST.ASTBuilder();
             var stylesheet = qlsFactory.Build(InputQLS.Text);
 
-            var QuestionnaireBuilder = new QuestionaireBuilder.QuestionnaireBuilder(form, stylesheet);
+            var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form, stylesheet);
             QuestionnaireBuilder.Build();
         }
     }
