@@ -9,7 +9,7 @@ using Questionnaires.SemanticAnalysis.Messages;
 
 namespace Questionnaires.QL.AST
 {
-    public class ComputedQuestion : INode
+    public class ComputedQuestion : IStatement
     {
         public ComputedQuestion(Question question, IExpression expression)
         {

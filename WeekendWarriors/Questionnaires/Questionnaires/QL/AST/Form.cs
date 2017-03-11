@@ -11,13 +11,13 @@ namespace Questionnaires.QL.AST
 
     public class Form : INode
     {
-        public Form(string identifier, List<INode> statements)
+        public Form(string identifier, List<IStatement> statements)
         {
             this.Identifier = identifier;
             Statements = statements;
         }   
 
-        public List<INode> Statements
+        public List<IStatement> Statements
         {
             get;
         }

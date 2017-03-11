@@ -10,9 +10,9 @@ using Questionnaires.Types;
 
 namespace Questionnaires.QL.AST
 {
-    public class Conditional : INode
+    public class Conditional : IStatement
     {
-        public Conditional(IExpression condition, List<INode> thenStatements, List<INode> elseStatements)
+        public Conditional(IExpression condition, List<IStatement> thenStatements, List<IStatement> elseStatements)
         {
             this.Condition = condition;
             this.ThenStatements = thenStatements;
@@ -24,12 +24,12 @@ namespace Questionnaires.QL.AST
             get;
         }
 
-        public List<INode> ThenStatements
+        public List<IStatement> ThenStatements
         {
             get;
         }
 
-        public List<INode> ElseStatements
+        public List<IStatement> ElseStatements
         {
             get;
         }

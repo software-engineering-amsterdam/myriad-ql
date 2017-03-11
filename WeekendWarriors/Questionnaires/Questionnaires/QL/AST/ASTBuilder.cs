@@ -15,12 +15,12 @@ namespace Questionnaires.QL.AST
         {
         }
 
-        private List<INode> GetStatements(QLParser.StatementContext[] context)
+        private List<IStatement> GetStatements(QLParser.StatementContext[] context)
         {            
-            List<INode> statements = new List<INode>();
+            var statements = new List<IStatement>();
             foreach (QLParser.StatementContext statement in context)
             {
-                statements.Add(statement.Accept(this));
+                statements.Add((dynamic)statement.Accept(this));
             }
 
             return statements;
@@ -29,7 +29,7 @@ namespace Questionnaires.QL.AST
         public override INode VisitForm([NotNull] QLParser.FormContext context)
         {                        
             string identifier = context.Identifier().GetText();
-            List<INode> statements = GetStatements(context.statement());
+            var statements = GetStatements(context.statement());
             Form form = new Form(identifier, statements);
 
             return form;
@@ -66,8 +66,8 @@ namespace Questionnaires.QL.AST
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)
         {
             INode expression = context.condition.Accept(this);
-            List<INode> thenStatements = GetStatements(context.thenBlock.statement());
-            List<INode> elseStatements = new List<INode>();
+            var thenStatements = GetStatements(context.thenBlock.statement());
+            var elseStatements = new List<IStatement>();
             if(context.elseBlock != null)
                 elseStatements = GetStatements(context.elseBlock.statement());
 

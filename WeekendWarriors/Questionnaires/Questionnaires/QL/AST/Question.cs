@@ -9,7 +9,7 @@ using Questionnaires.Types;
 
 namespace Questionnaires.QL.AST
 {
-    public class Question : INode
+    public class Question : IStatement
     {
         public Questionnaires.Renderer.Widgets.QuestionWidget Widget { get; set; }
 
