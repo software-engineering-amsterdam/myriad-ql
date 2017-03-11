@@ -12,28 +12,11 @@ namespace Questionnaires.Renderer.Widgets
 {
     class RadioWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private RadioButton FirstQuestionInputWidget = new RadioButton();
-        private RadioButton SecondQuestionInputWidget = new RadioButton();
+        private BinaryRadioGroup Buttons;
 
-        public RadioWidget()
-            : base()
+        public RadioWidget() : base(new BinaryRadioGroup("Yes", "No"))
         {
-            Orientation = Orientation.Horizontal;
-
-            FirstQuestionInputWidget.Content = "Yes";
-            SecondQuestionInputWidget.Content = "No";
-
-            Children.Add(QuestionLabelWidget);
-            Children.Add(FirstQuestionInputWidget);
-            Children.Add(SecondQuestionInputWidget);
-
-            SecondQuestionInputWidget.IsChecked = true;
-        }
-
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            Buttons = Control as BinaryRadioGroup;
         }
 
         public override void SetQuestionValue(IType value)
@@ -43,41 +26,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(BooleanType value)
         {
-            if (value.GetValue())
-            {
-                FirstQuestionInputWidget.IsChecked = true;
-            }
-            else
-            {
-                SecondQuestionInputWidget.IsChecked = true;
-            }
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
-            }
+            Buttons.SetValue(value.GetValue());
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            FirstQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(true));
-            SecondQuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(false));
-        }
-        
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            FirstQuestionInputWidget.Width = style.Width;
-            SecondQuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
+            Buttons.ValueChanged += (sender, args) => inputChanged.Invoke(this, new BooleanType(Buttons.GetValue()));
         }
     }
 }

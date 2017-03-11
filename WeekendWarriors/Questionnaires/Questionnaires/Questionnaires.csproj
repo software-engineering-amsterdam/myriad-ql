@@ -133,6 +133,7 @@
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Renderer\Style\WidgetStyle.cs" />
+    <Compile Include="Renderer\Widgets\BinaryRadioGroup.cs" />
     <Compile Include="Renderer\Widgets\CheckBoxWidget.cs" />
     <Compile Include="Renderer\Widgets\ComboBoxWidget.cs" />
     <Compile Include="Renderer\Widgets\DecimalPickerWidget.cs" />

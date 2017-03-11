@@ -6,15 +6,50 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Questionnaires.Types;
 using Questionnaires.Renderer.Style;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
     public abstract class QuestionWidget : StackPanel
     {
-        public abstract void SetLabel(string text);
+        protected TextBlock Label = new TextBlock();
+        protected FrameworkElement Control;
+        
+        public QuestionWidget(FrameworkElement control)
+        {
+            this.Control = control;
+            Orientation = Orientation.Horizontal;
+            Children.Add(Label);
+            Children.Add(Control);
+        }
+
+        public void SetLabel(string text)
+        {
+            Label.Text = text;
+        }
+        
+        public void SetVisibility(bool visible)
+        {
+            if (visible)
+            {
+                Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        public void SetStyle(WidgetStyle style)
+        {
+            Label.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
+            Label.FontFamily = new FontFamily(style.Font);
+            Label.FontSize = style.FontSize;
+            Control.Width = style.Width;
+        }
+
         public abstract void SetOnInputChanged(Renderer.InputChangedCallback inputChanged);
         public abstract void SetQuestionValue(IType value);
-        public abstract void SetVisibility(bool visible);
-        public abstract void SetStyle(WidgetStyle style);
     }
 }

@@ -12,25 +12,17 @@ namespace Questionnaires.Renderer.Widgets
 {
     class ComboBoxWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private ComboBox QuestionInputWidget = new ComboBox();
+        private ComboBox ComboBox;
 
-        public ComboBoxWidget()
-            : base()
+        public ComboBoxWidget() : base(new ComboBox())
         {
-            Orientation = Orientation.Horizontal;
-            Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
+            ComboBox = Control as ComboBox;
 
-            QuestionInputWidget.Items.Add("Yes");
-            QuestionInputWidget.Items.Add("No");
+            ComboBox.Items.Add("Yes");
+            ComboBox.Items.Add("No");
 
-            QuestionInputWidget.SelectedValue = "No";
-        }
-
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            // TODO: this should no longer be required once we support 'undefined' values. (Because all values would be initialized to 'undefined' and thus the first call to ApplyRules would lead to changes in all values and thus updates of the UI elements 
+            ComboBox.SelectedValue = "No";  
         }
 
         public override void SetQuestionValue(IType value)
@@ -42,42 +34,21 @@ namespace Questionnaires.Renderer.Widgets
         {
             if (value.GetValue())
             {
-                QuestionInputWidget.SelectedValue = "Yes";
+                ComboBox.SelectedValue = "Yes";
             }
             else
             {
-                QuestionInputWidget.SelectedValue = "No";
-            }
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
+                ComboBox.SelectedValue = "No";
             }
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            // string text = (sender as ComboBox).SelectedItem as string;
-            QuestionInputWidget.SelectionChanged += (sender, args) =>
+            ComboBox.SelectionChanged += (sender, args) =>
             {
                 bool value = (sender as ComboBox).SelectedItem as string == "Yes";
                 inputChanged.Invoke(this, new BooleanType(value));
             };
-        }
-
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            QuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
         }
     }
 }

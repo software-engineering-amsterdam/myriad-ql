@@ -12,20 +12,11 @@ namespace Questionnaires.Renderer.Widgets
 {
     class TextBoxWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private TextBox QuestionInputWidget = new TextBox();
+        private TextBox TextBox;
 
-        public TextBoxWidget()
-            : base()
+        public TextBoxWidget() : base(new TextBox())
         {
-            Orientation = Orientation.Horizontal;
-            Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
-        }
-
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            TextBox = Control as TextBox;
         }
 
         public override void SetQuestionValue(IType value)
@@ -35,32 +26,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(StringType value)
         {
-            QuestionInputWidget.Text = value.GetValue();
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
-            }
+            TextBox.Text = value.GetValue();
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.TextChanged += (sender, args) => inputChanged.Invoke(this, new StringType(QuestionInputWidget.Text));
-        }
-
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            QuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
+            TextBox.TextChanged += (sender, args) => inputChanged.Invoke(this, new StringType(TextBox.Text));
         }
     }
 }

@@ -13,24 +13,15 @@ namespace Questionnaires.Renderer.Widgets
 {
     class SliderWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private Slider QuestionInputWidget = new Slider();
+        private Slider Slider;
 
-        public SliderWidget()
-            : base()
+        public SliderWidget() : base(new Slider())
         {
-            Orientation = Orientation.Horizontal;
-            Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
-            
-            QuestionInputWidget.Maximum = 1E6;
-            QuestionInputWidget.Minimum = 0;
-            QuestionInputWidget.Width = 100;
-        }
+            Slider = Control as Slider;
 
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            Slider.Maximum = 1E6;
+            Slider.Minimum = 0;
+            Slider.Width = 100;
         }
 
         public override void SetQuestionValue(IType value)
@@ -40,32 +31,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(MoneyType value)
         {
-            QuestionInputWidget.Value = (double)value.GetValue();
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
-            }
+            Slider.Value = (double)value.GetValue();
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType((decimal)QuestionInputWidget.Value));
-        }
-
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            QuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
+            Slider.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType((decimal)Slider.Value));
         }
     }
 }

@@ -13,22 +13,12 @@ namespace Questionnaires.Renderer.Widgets
 {
     class DecimalPickerWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private DecimalUpDown QuestionInputWidget = new DecimalUpDown();
+        private DecimalUpDown SpinBox;
 
-        public DecimalPickerWidget()
-            : base()
+        public DecimalPickerWidget() : base(new DecimalUpDown())
         {
-            Orientation = Orientation.Horizontal;
-            Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
-            
-            QuestionInputWidget.AllowTextInput = false;
-        }
-
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            SpinBox = Control as DecimalUpDown;
+            SpinBox.AllowTextInput = false;
         }
 
         public override void SetQuestionValue(IType value)
@@ -38,32 +28,12 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(MoneyType value)
         {
-            QuestionInputWidget.Text = value.GetValue().ToString();
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
-            }
+            SpinBox.Text = value.GetValue().ToString();
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType(QuestionInputWidget.Value.Value));
-        }
-
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            QuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
+            SpinBox.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType(SpinBox.Value.Value));
         }
     }
 }

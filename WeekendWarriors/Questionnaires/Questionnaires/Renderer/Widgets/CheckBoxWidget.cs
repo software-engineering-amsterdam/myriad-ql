@@ -14,20 +14,11 @@ namespace Questionnaires.Renderer.Widgets
 {
     class CheckBoxWidget : QuestionWidget
     {
-        private TextBlock QuestionLabelWidget = new TextBlock();
-        private CheckBox QuestionInputWidget = new CheckBox();
+        private CheckBox CheckBox;
 
-        public CheckBoxWidget()
-            : base()
+        public CheckBoxWidget() : base(new CheckBox())
         {
-            Orientation = Orientation.Horizontal;
-            Children.Add(QuestionLabelWidget);
-            Children.Add(QuestionInputWidget);
-        }
-
-        public override void SetLabel(string text)
-        {
-            QuestionLabelWidget.Text = text;
+            CheckBox = Control as CheckBox;
         }
 
         public override void SetQuestionValue(IType value)
@@ -37,33 +28,13 @@ namespace Questionnaires.Renderer.Widgets
 
         public void SetQuestionValue(BooleanType value)
         {
-            QuestionInputWidget.IsChecked = value.GetValue();
-        }
-
-        public override void SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Visibility = System.Windows.Visibility.Hidden;
-            }
+            CheckBox.IsChecked = value.GetValue();
         }
 
         public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
         {
-            QuestionInputWidget.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
-            QuestionInputWidget.Unchecked += (sender, args) => inputChanged.Invoke(this, new BooleanType(QuestionInputWidget.IsChecked.Value));
-        }
-
-        public override void SetStyle(WidgetStyle style)
-        {
-            QuestionLabelWidget.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(style.Color));
-            QuestionInputWidget.Width = style.Width;
-            QuestionLabelWidget.FontFamily = new FontFamily(style.Font);
-            QuestionLabelWidget.FontSize = style.FontSize;
+            CheckBox.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(CheckBox.IsChecked.Value));
+            CheckBox.Unchecked += (sender, args) => inputChanged.Invoke(this, new BooleanType(CheckBox.IsChecked.Value));
         }
     }
 }
