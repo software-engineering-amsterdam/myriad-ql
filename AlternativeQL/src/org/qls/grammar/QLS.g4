@@ -5,12 +5,12 @@ stylesheet
     ;
 
 page
-    :   'page' id=identifier '{' (section | default)* '}'
+    :   'page' id=identifier '{' (section | defaultWidget)* '}'
     ;
 
 section
-    :   'section' STRING_LITERAL '{' (question | section | default)* '}'
-    |   'section' STRING_LITERAL (question | section | default)
+    :   'section' STRING_LITERAL '{' (question | section | defaultWidget)* '}'
+    |   'section' STRING_LITERAL (question | section | defaultWidget)
     ;
 
 question
@@ -31,7 +31,7 @@ widgetType
     | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdownWidget
     ;
 
-default
+defaultWidget
     : 'default' type widget                     #defaultNoStyle
     | 'default' type '{' styleRule+ widget '}'  #defaultWithStyle
     ;
