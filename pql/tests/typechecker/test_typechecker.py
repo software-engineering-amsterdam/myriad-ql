@@ -1,7 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
 from pql.parser.parser import parse
-from pql.main import check_type, acquire_identifiers
+from tests.shared import acquire_identifiers, check_type
 
 
 class TestTypeChecker(TestCase):

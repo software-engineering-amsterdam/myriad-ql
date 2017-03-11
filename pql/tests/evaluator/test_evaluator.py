@@ -1,6 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
-from pql.main import ql
+
+from tests.shared import ql
 
 
 class TestEvaluator(TestCase):
