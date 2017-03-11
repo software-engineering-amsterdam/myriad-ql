@@ -8,11 +8,13 @@ using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Types;
 using System.ComponentModel;
+using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires.QuestionnaireBuilder
 {
     class QuestionnaireBuilder 
     {
+        private DocumentModel DocumentModel;
         private List<QL.AST.Question> Questions = new List<QL.AST.Question>();
         private List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
         private QL.AST.Form Form;
@@ -38,10 +40,17 @@ namespace Questionnaires.QuestionnaireBuilder
             qlProcessor.Process(Form);
 
             // Optionally style the questions based on the QLS input
-            if(StyleSheet != null)
+            if (StyleSheet != null)
             {
                 QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions);
-                qlsProcessor.Process(StyleSheet);
+                DocumentModel = qlsProcessor.Process(StyleSheet);
+            }
+            else
+            {
+                DocumentModel = new DocumentModel();
+                DocumentModel.Pages = new List<Page>{ new Page() };
+                DocumentModel.Pages[0].Name = "Form";
+                DocumentModel.Pages[0].Questions = Questions;
             }
         }   
 
@@ -56,9 +65,10 @@ namespace Questionnaires.QuestionnaireBuilder
             foreach (var question in Questions)
             {
                 variableStore.SetValue(question.Identifier, question.Type);
-                renderer.AddQuestion(question);
+                //renderer.AddQuestion(question);
             }
 
+            renderer.AddModel(DocumentModel);
             foreach (var rule in Rules)
             {
                 ruleContainer.AddRule(rule);

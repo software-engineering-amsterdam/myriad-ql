@@ -34,6 +34,7 @@ form Box1HouseOwning {
 }     
         </TextBox>
         <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
+ 
 
 stylesheet taxOfficeExample 
 {
@@ -42,7 +43,11 @@ stylesheet taxOfficeExample
   default boolean { widget dropdown }
   section "Buying"
   {
-   question boolQ1         
+   question boolQ1
+   question intQ1
+   question intQ2         
+   question stringQ1
+   question stringQ2
    question boolQ2
    {
     widget checkbox
@@ -55,6 +60,7 @@ stylesheet taxOfficeExample
    {
     widget slider
    }
+   question moneyQ2
   } 
  }
  page Bla
@@ -98,6 +104,7 @@ stylesheet taxOfficeExample
    }
  }
 }
+        
         </TextBox>
         <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>
         <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">output</TextBlock>

@@ -130,6 +130,10 @@
     <Compile Include="QL\ExpressionEvaluator\Evaluator.cs" />
     <Compile Include="QL\Processing\Processor.cs" />
     <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
+    <Compile Include="Renderer\Containers\Container.cs" />
+    <Compile Include="Renderer\Containers\DocumentModel.cs" />
+    <Compile Include="Renderer\Containers\Page.cs" />
+    <Compile Include="Renderer\Containers\Section.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Renderer\Style\WidgetStyle.cs" />

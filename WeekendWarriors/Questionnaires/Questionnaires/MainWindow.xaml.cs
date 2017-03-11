@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Questionnaires.Types;
 using System.Threading;
 using Questionnaires.Renderer.Style;
+using Questionnaires.QLS.AST;
 
 namespace Questionnaires
 {
@@ -39,10 +40,18 @@ namespace Questionnaires
                 Output.Text += analysisEvent.ToString() + '\n';
 
             var qlsFactory = new QLS.AST.ASTBuilder();
-            var stylesheet = qlsFactory.Build(InputQLS.Text);
-
-            var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form, stylesheet);
-            QuestionnaireBuilder.Build();
+            if (InputQLS.Text != "")
+            {
+                var stylesheet = qlsFactory.Build(InputQLS.Text);
+                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form, stylesheet);
+                QuestionnaireBuilder.Build();
+            }
+            else
+            {
+                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form);
+                QuestionnaireBuilder.Build();
+            }
+            
         }
     }
 }

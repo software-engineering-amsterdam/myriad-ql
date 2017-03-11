@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.QLS.AST;
 using Questionnaires.Renderer.Style;
+using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires.QLS.Processing
 {   
@@ -22,49 +23,67 @@ namespace Questionnaires.QLS.Processing
             questions.ForEach((question) => { Questions[question.Identifier] = question; });
         }
 
-        public void Process(StyleSheet styleSheet)
+        public DocumentModel Process(StyleSheet styleSheet)
         {
+            var documentModel = new DocumentModel();
+            documentModel.Pages = new List<Renderer.Containers.Page>();
             foreach(var page in styleSheet.Pages)
             {
-                Visit((dynamic)page);                 
+                documentModel.Pages.Add(Visit((dynamic)page));  
             }
+            return documentModel;
         }
 
-        private void Visit(Page page)
+        private Renderer.Containers.Page Visit(QLS.AST.Page page)
         {
             /* Push the default style of this page into the stack
             so child sections can use them */
             AddStylesToStack(page.DefaultStyles);
 
+            var pageContainer = new Renderer.Containers.Page();
+            pageContainer.Sections = new List<Renderer.Containers.Section>();
             foreach (var section in page.Sections)
             {
-                Visit((dynamic)section);
+               pageContainer.Sections.Add(Visit((dynamic)section));
             }
+            pageContainer.Name = page.Name;
 
             /* Pop the styles specific from this page from the stack */
             RemoveStylesFromStack(page.DefaultStyles);
+
+            return pageContainer;
         }
 
-        private void Visit(Section section)
+        private Renderer.Containers.Section Visit(QLS.AST.Section section)
         {
             /* Push the default styles of this section onto the stack
              * so child sections/questions can use them */
             AddStylesToStack(section.Styles);
 
+            var sectionContainer = new Renderer.Containers.Section();
+            sectionContainer.Questions = new List<QL.AST.Question>();
             foreach (var question in section.Questions)
             {
-                Visit((dynamic)question);
+                sectionContainer.Questions.Add(Visit((dynamic)question));
             }
 
+            foreach (var sec in section.Sections)
+            {
+                sectionContainer.Sections.Add(Visit((dynamic)sec));
+            }
+            sectionContainer.Name = section.Name;
+
             RemoveStylesFromStack(section.Styles);
+            return sectionContainer;
         }
 
-        private void Visit(QuestionWithWidget question)
+        private QL.AST.Question Visit(QuestionWithWidget question)
         {
             this.Questions[question.Name].Widget = question.Widget.CreateWidget();
+            return this.Questions[question.Name];
         }
 
-        private void Visit(Question question)
+        private QL.AST.Question Visit(Question question)
         {
             var QLQuestion = Questions[question.Name];
             var stackCopy = (Stack)Styles.Clone();
@@ -92,6 +111,7 @@ namespace Questionnaires.QLS.Processing
                     break;
                 }
             }
+            return QLQuestion;
         }
 
         private void AddStylesToStack(List<DefaultStyle> styles)
