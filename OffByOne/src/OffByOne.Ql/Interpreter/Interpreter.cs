@@ -44,10 +44,10 @@
                     question = new DecimalControl(expression, environment);
                     break;
                 case IntegerValueType _:
-                    question = new IntegerControl(expression, context);
+                    question = new IntegerControl(expression, environment);
                     break;
                 case MoneyValueType _:
-                    question = new MoneyControl(expression, context);
+                    question = new MoneyControl(expression, environment);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expression.Type));

@@ -15,7 +15,7 @@
         : ILiteralVisitor<TResult, TEnvironment>,
         IValueTypeVisitor<TResult, TEnvironment>,
         IPropertyVisitor<TResult, TEnvironment>,
-        IRuleVisitor<TResult, TEnvironment>, 
+        IRuleVisitor<TResult, TEnvironment>,
         Contracts.IStatementVisitor<TResult, TEnvironment>,
         IWidigetVisitor<TResult, TEnvironment>
         where TEnvironment : IEnvironment
