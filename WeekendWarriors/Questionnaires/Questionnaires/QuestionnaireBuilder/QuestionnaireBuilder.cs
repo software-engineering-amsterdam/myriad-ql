@@ -56,7 +56,7 @@ namespace Questionnaires.QuestionnaireBuilder
             foreach (var question in Questions)
             {
                 variableStore.SetValue(question.Identifier, question.Type);
-                renderer.AddQuestion(question, new Renderer.Style.WidgetStyle());
+                renderer.AddQuestion(question);
             }
 
             foreach (var rule in Rules)

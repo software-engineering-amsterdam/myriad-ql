@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.QLS.AST;
+using Questionnaires.Renderer.Style;
 
 namespace Questionnaires.QLS.Processing
 {   
@@ -74,6 +75,20 @@ namespace Questionnaires.QLS.Processing
                 if(style.Type.GetType() == QLQuestion.Type.GetType())
                 {
                     QLQuestion.Widget = style.Widget.CreateWidget();
+                    WidgetStyle properties = new WidgetStyle();
+                    foreach(var property in style.Properties)
+                    {
+                        switch(property.Key)
+                        {
+                            case "width": properties.Width = int.Parse(property.Value); break;
+                            case "font": properties.Font = property.Value.Replace('"', ' ').Trim(); break; // TODO: OMG this is so horrible it makes my eyes bleed :'(
+                            case "fontsize": properties.FontSize = int.Parse(property.Value); break;
+                            case "color": properties.Color = property.Value; break;
+                        }
+                    }
+                                        
+                    QLQuestion.Widget.SetStyle(properties);
+
                     break;
                 }
             }

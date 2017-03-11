@@ -11,7 +11,7 @@ namespace Questionnaires.Renderer.Style
         public WidgetStyle()
         {
             Width = 200;
-            Font = "Arial";
+            Font = "Century Gothic";
             FontSize = 12;
             Color = "#000000";
         }

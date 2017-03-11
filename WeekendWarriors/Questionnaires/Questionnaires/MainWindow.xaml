@@ -59,19 +59,40 @@ stylesheet taxOfficeExample
  }
  page Bla
  {
-   default boolean{ widget radio }
+   default boolean
+   {
+     width: 100
+     font: "Courier New" 
+     fontsize: 12
+     color: #ff3300
+     widget radio 
+   }
    section "BlaSection1"
    {
      question boolQ4
    }
    section "BlaSection2"
    {
-      default boolean { widget dropdown }
+      default boolean 
+      { 
+        width: 400
+        font: "Arial Black" 
+        fontsize: 20
+        color: #ff0099
+        widget dropdown 
+      }
       question boolQ5
    }
    section "BlaSection3"
    {
-      //default boolean { widget checkbox }
+      default boolean 
+      {
+        width: 400
+        font: "Comic Sans MS" 
+        fontsize: 28
+        color: #009999
+        widget checkbox 
+      }
       question boolQ6
       question boolQ7
    }
