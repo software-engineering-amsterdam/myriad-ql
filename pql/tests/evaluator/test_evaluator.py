@@ -1,8 +1,5 @@
 # coding=utf-8
 from unittest import TestCase
-
-from decimal import Decimal
-
 from pql.main import ql
 
 
@@ -44,7 +41,7 @@ class TestEvaluator(TestCase):
 
         expected_identifier_2 = 'inflationPrice'
         self.assertTrue(expected_identifier_2 in environment, "Environment should contain key inflationPrice")
-        self.assertEqual(Decimal('13.2'), environment[expected_identifier_2], "Evaluation should result in 13.2")
+        self.assertEqual(float((10 + 2) * 1.1), environment[expected_identifier_2], "Evaluation should result in 13.2")
 
     def test_eval_boolean_and_simple(self):
         input_string = """
@@ -87,7 +84,7 @@ class TestEvaluator(TestCase):
 
         expected_identifier_2 = 'sellingPriceWithInflation'
         self.assertTrue(expected_identifier_2 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(Decimal('25300.957'), environment[expected_identifier_2], "Output should equal 25300.957")
+        self.assertAlmostEqual(float(23000.87 * 1.1), environment[expected_identifier_2], "Output should equal 25300.957")
 
         expected_identifier_3 = 'wasMoreExpensive'
         self.assertTrue(expected_identifier_3 in environment, "Environment should contain key hasSoldHouse")

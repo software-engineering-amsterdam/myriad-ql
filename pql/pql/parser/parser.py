@@ -1,6 +1,5 @@
 # coding=utf-8
-from decimal import Decimal
-from pyparsing import (Suppress, Literal, oneOf, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
+from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
                        QuotedString, Optional, Forward, Combine, ParserElement)
 
 from pql.ast import ast
@@ -62,7 +61,7 @@ def parse(input_string):
     integer = Word(nums).setParseAction(
         lambda parsed_tokens: ast.Value(int(parsed_tokens[0]), DataTypes.integer))
     money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
-        lambda parsed_tokens: ast.Value(Decimal(parsed_tokens[0]), DataTypes.money))
+        lambda parsed_tokens: ast.Value(float(parsed_tokens[0]), DataTypes.money))
     number = (money | integer)
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)

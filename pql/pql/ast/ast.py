@@ -225,7 +225,7 @@ class Integer(object):
         return visitor.integer(self)
 
     def default_value(self):
-        return 0
+        return int(0)
 
 
 class Boolean(object):
@@ -247,5 +247,4 @@ class Money(object):
         return visitor.money(self)
 
     def default_value(self):
-        return 0.00
-        #TODO: Either this needs to be a Decimal, which then also needs to be adjusted in Eval + GUI, or this is float and parser needs to be adjusted
+        return float(0.00)
