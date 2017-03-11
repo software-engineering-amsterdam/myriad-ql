@@ -19,9 +19,13 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        #TODO: Add type checking to field to see if expression type is compatible with declared type
         if node.expression is not None:
-            node.expression.apply(self)
+            result = node.expression.apply(self)
+            if node.data_type.data_type is DataTypes.boolean:
+                if result is not node.data_type.data_type:
+                    self.errors.append(
+                        "Expression of field [{}] did not match declared type [{}]".format(result,
+                                                                                           node.data_type.data_type))
 
     def subtraction(self, node):
         return self.type_detection(node, self.arithmetic_type_detection)
@@ -75,9 +79,22 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def negation(self, node):
         if node.rhs.apply(self) is DataTypes.boolean:
             return DataTypes.boolean
+        self.errors.append("Negation was passed a non-boolean value")
         return None
 
-    #TODO: Implement positive and negative, should only be possible with Integers and numbers
+    def positive(self, node):
+        result = node.rhs.apply(self)
+        if result is (DataTypes.integer or DataTypes.money):
+            return result
+        self.errors.append("Positive was passed a non-numeric value")
+        return None
+
+    def negative(self, node):
+        result = node.rhs.apply(self)
+        if result is (DataTypes.integer or DataTypes.money):
+            return result
+        self.errors.append("Negative was passed a non-numeric value")
+        return None
 
     def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
         dominant_type = None
