@@ -22,12 +22,13 @@ answer                  -> "answer" _ "'" sentence "'" _ allocation _           
 allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}
 
 
-expression                  -> and_expression | expression _ "||" _ expression                                 {% FormPostProcessor.expression %}
-and_expression              -> not_expression | and_expression _ "&&" _ and_expression                         {% FormPostProcessor.expression %}
-not_expression              -> comparison | "!" not_expression                                                 {% FormPostProcessor.expression %}
-comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% FormPostProcessor.expression %}
-plus_minus_expression       -> multiply_divide_expression | plus_minus_expression ("-"|"+") plus_minus_expression  {% FormPostProcessor.plusMinExpression %}
-multiply_divide_expression  -> factor | multiply_divide_expression ("/" | "*") multiply_divide_expression
+
+expression                  -> and_expression | expression _ "||" _ expression                                              {% FormPostProcessor.expression %}
+and_expression              -> not_expression | and_expression _ "&&" _ and_expression                                      {% FormPostProcessor.expression %}
+not_expression              -> comparison | "!" not_expression                                                              {% FormPostProcessor.notExpression %}
+comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% FormPostProcessor.deepExpression %}
+plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% FormPostProcessor.deepExpression %}
+multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression               {% FormPostProcessor.deepExpression %}
 factor                      -> digits | propertyName | "(" expression ")"
 digits                      -> [0-9]:+                                                                                                           {% (data)=> Number(data[0]) %}
 

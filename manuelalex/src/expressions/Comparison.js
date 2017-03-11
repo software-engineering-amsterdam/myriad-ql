@@ -5,10 +5,10 @@
 //TODO rename to conditional
 export class Comparison {
 
-    constructor(leftHand, comparisonOperator, rightHand, location) {
+    constructor(leftHand, operator, rightHand, location) {
 
         this.leftHand = leftHand;
-        this.comparisonOperator = comparisonOperator;
+        this.operator = operator;
         this.rightHand = rightHand;
 
         this.location = location;
@@ -18,8 +18,8 @@ export class Comparison {
         return this.leftHand;
     }
 
-    getComparisonOperator() {
-        return this.comparisonOperator;
+    getOperator() {
+        return this.operator;
     }
 
     getRightHand() {

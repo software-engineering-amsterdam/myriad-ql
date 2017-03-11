@@ -18,7 +18,7 @@ let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 
 
-if(visitor.hasDetectedErrors) {
+if(visitor.hasDetectedErrors()) {
     let gui = new GUI(null, null);
     gui.showErrors(visitor.errors);
 } else {

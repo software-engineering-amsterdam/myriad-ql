@@ -67,29 +67,46 @@ export class ASTValidationVisitor {
         // }
     }
 
+    findExpressionInArray(object){
+        if(object instanceof Array){
+            return this.findExpressionInArray(object[0]);
+        } else {
+            return object;
+        }
+    }
+
     visitExpression(condition) {
         if(condition.operator == undefined){
-            this.visitExpression(condition.leftHand);
+            //this.visitExpression(condition.leftHand);
+            let subExpression = this.findExpressionInArray(condition.leftHand);
+            subExpression.accept(this);
         } else {
 
+            this.validateBooleanOperator(condition);
 
+            let typeLeftHand = this.memoryState.getType(condition.leftHand);
+            let typeRightHand = this.memoryState.getType(condition.rightHand);
 
+            if(["<", ">", ">=", "<=", "!=", "=="].includes(condition.operator) && (typeLeftHand == "QLBoolean" || typeRightHand == "QLBoolean")){
 
-        let typeLeftHand = this.memoryState.getType(condition.leftHand);
-        let typeRightHand = this.memoryState.getType(condition.rightHand);
+                let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
+                this.errors.push(errorStatement);
 
-        console.log(typeLeftHand);
-
-
-        if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
-
-            let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
-            this.errors.push(errorStatement);
-            //throw exception
-        }
+            }
 
         }
     }
+
+    validateBooleanOperator(condition){
+        let typeLeftHand = this.memoryState.getType(condition.leftHand);
+        let typeRightHand = this.memoryState.getType(condition.rightHand);
+
+        if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
+            let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
+            this.errors.push(errorStatement);
+        }
+    }
+
 
     hasDetectedErrors(){
         return this.errors.length > 0;
