@@ -18,7 +18,12 @@ let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 
 
-/* Visitor has validated the AST */
-let memoryState = visitor.getMemoryState();
-let gui = new GUI(ast, memoryState);
-gui.createGUI();
+if(visitor.hasDetectedErrors) {
+    let gui = new GUI(null, null);
+    gui.showErrors(visitor.errors);
+} else {
+    /* Visitor has validated the AST */
+    let memoryState = visitor.getMemoryState();
+    let gui = new GUI(ast, memoryState);
+    gui.createGUI();
+}

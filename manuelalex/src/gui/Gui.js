@@ -52,4 +52,14 @@ export class GUI {
         let router = Injection.get(Router);
         router.go('QL', 'Index');
     }
+
+    showErrors(errors){
+        document.body.innerHTML = "The following errors have occurred during the validation:<ul>";
+
+        for (var errorStatement of errors) {
+            document.body.innerHTML = document.body.innerHTML + "<li>" + errorStatement + "</li>";
+        }
+        document.body.innerHTML = document.body.innerHTML + "</ul>";
+
+    }
 }

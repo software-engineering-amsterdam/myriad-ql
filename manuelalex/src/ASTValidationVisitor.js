@@ -10,9 +10,10 @@ import {MemoryState} from './memory/MemoryState.js'
 export class ASTValidationVisitor {
 
 
+
     constructor(options = {}) {
         this.memoryState = new MemoryState();
-        this.output = options.output;
+        this.errors = [];
     }
 
     getMemoryState(){
@@ -81,12 +82,16 @@ export class ASTValidationVisitor {
 
 
         if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
-            console.log("Expression invalid: " + condition.leftHand +"["+typeLeftHand+"]" + condition.operator + condition.rightHand+"["+typeRightHand+"]");
+
+            let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
+            this.errors.push(errorStatement);
             //throw exception
         }
 
         }
     }
 
-
+    hasDetectedErrors(){
+        return this.errors.length > 0;
+    }
 }
