@@ -9,8 +9,8 @@ page
     ;
 
 section
-    :   'section' STRING_LITERAL '{' (question | section | defaultWidget)* '}'
-    |   'section' STRING_LITERAL (question | section | defaultWidget)
+    :   'section' name=STRING_LITERAL '{' (question | section | defaultWidget)* '}'
+    |   'section' name=STRING_LITERAL (question | section | defaultWidget)
     ;
 
 question

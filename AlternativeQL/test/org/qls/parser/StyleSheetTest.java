@@ -1,7 +1,6 @@
 package org.qls.parser;
 
 import org.junit.Test;
-import org.ql.ast.Form;
 import org.qls.ast.StyleSheet;
 
 import static org.junit.Assert.assertEquals;
@@ -16,5 +15,20 @@ public class StyleSheetTest {
 
         assertTrue(styleSheet != null);
         assertEquals("exampleStyle", styleSheet.getName().toString());
+    }
+
+    @Test
+    public void shouldContainPages() {
+        Parser parser = new Parser();
+
+        StyleSheet styleSheet = parser.parseStyleSheet("stylesheet taxOfficeExample\n" +
+                "page Housing {\n" +
+                "}" +
+                "page AnotherPage {" +
+                "}");
+
+        assertEquals(2, styleSheet.getPages().size());
+        assertEquals("Housing", styleSheet.getPages().get(0).getIdentifier().toString());
+        assertEquals("AnotherPage", styleSheet.getPages().get(1).getIdentifier().toString());
     }
 }
