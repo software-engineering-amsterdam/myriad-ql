@@ -55,6 +55,7 @@ export class FormPostProcessor {
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
     }
 
+    /* needs to be adjusted */
     notExpression(data, location, reject) {
         console.log(data);
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
@@ -64,6 +65,14 @@ export class FormPostProcessor {
         return new Expression(_.flattenDeep(data[0])[0], data[2][0], _.flattenDeep(data[4])[0], location);
     }
 
+
+    factor(data, location, reject){
+        if(data.length > 1) {
+            return data[1];
+        } else {
+            return data;
+        }
+    }
 
     plusMinExpression(data, location, reject) {
         return new Expression(_.flattenDeep(data[0])[0],_.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);

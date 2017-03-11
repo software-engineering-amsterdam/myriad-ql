@@ -58,7 +58,7 @@ export let test6 =
     hasBoughtHouse: money
     question 'Did you enter a loan?'
     hasMaintLoan: string
-    if (hasSoldHouse && hasBoughtHouse) {
+    if ((hasBoughtHouse * hasSoldHouse) <= (hasBoughtHouse - hasSoldHouse)) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'

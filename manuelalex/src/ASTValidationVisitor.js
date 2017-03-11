@@ -4,6 +4,7 @@
 
 import {Form} from './Form.js'
 import {Question} from './Statements/Question.js'
+import {Expression} from './expressions/Expression.js'
 import {MemoryState} from './memory/MemoryState.js'
 
 
@@ -70,13 +71,21 @@ export class ASTValidationVisitor {
     findExpressionInArray(object){
         if(object instanceof Array){
             return this.findExpressionInArray(object[0]);
-        } else {
+        } else if (object instanceof Expression) {
             return object;
         }
     }
 
     visitExpression(condition) {
-        if(condition.operator == undefined){
+        if(condition.leftHand instanceof Expression){
+            condition.leftHand.accept(this);
+        }
+
+        if(condition.rightHand instanceof Expression){
+            condition.rightHand.accept(this);
+        }
+
+        if (condition.operator == undefined){
             //this.visitExpression(condition.leftHand);
             let subExpression = this.findExpressionInArray(condition.leftHand);
             subExpression.accept(this);
