@@ -5,10 +5,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
 import org.ql.ast.SourceLocation;
-import org.qls.ast.page.DefaultWidget;
-import org.qls.ast.page.Page;
-import org.qls.ast.page.Question;
-import org.qls.ast.page.Section;
+import org.qls.ast.page.*;
 import org.qls.ast.StyleSheet;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
@@ -30,49 +27,29 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     @Override
     public Node visitPage(QLSParser.PageContext ctx) {
-        List<Section> sections = new ArrayList<>();
-        List<DefaultWidget> defaultWidgets = new ArrayList<>();
-
-        for (QLSParser.SectionContext sectionContext : ctx.section()) {
-            sections.add((Section) visit(sectionContext));
-        }
-
-        for (QLSParser.DefaultWidgetContext defaultWidgetContext : ctx.defaultWidget()) {
-            defaultWidgets.add((DefaultWidget) visit(defaultWidgetContext));
-        }
+        List<Section> sections = getSections(ctx.section());
+        List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
 
         return new Page((Identifier) visit(ctx.identifier()), sections, defaultWidgets);
     }
 
     @Override
     public Node visitSection(QLSParser.SectionContext ctx) {
-        List<Question> questions = new ArrayList<>();
-        List<Section> sections = new ArrayList<>();
-        List<DefaultWidget> defaultWidgets = new ArrayList<>();
-
-        for(QLSParser.QuestionContext question : ctx.question()) {
-            questions.add((Question) visit(question));
-        }
-
-        for(QLSParser.SectionContext section : ctx.section()) {
-            sections.add((Section) visit(section));
-        }
-
-        for(QLSParser.DefaultWidgetContext defaultWidget : ctx.defaultWidget()) {
-            defaultWidgets.add((DefaultWidget) visit(defaultWidget));
-        }
+        List<Section> sections = getSections(ctx.section());
+        List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
+        List<Question> questions = getQuestions(ctx.question());
 
         return new Section(ctx.name.getText(), questions, sections, defaultWidgets);
     }
 
     @Override
     public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return null;
+        return new Question((Identifier) visit(ctx.identifier()), null);
     }
 
     @Override
     public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
-        return null;
+        return new Question((Identifier) visit(ctx.identifier()), (Widget) visit(ctx.widget()));
     }
 
     @Override
@@ -170,5 +147,35 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     private SourceLocation extractSourceLocation(ParserRuleContext context) {
         return new SourceLocation(context.start.getLine(), context.start.getCharPositionInLine());
+    }
+
+    private List<DefaultWidget> getDefaultWidgets(List<QLSParser.DefaultWidgetContext> defaultWidgetContexts) {
+        List<DefaultWidget> defaultWidgets = new ArrayList<>();
+
+        for(QLSParser.DefaultWidgetContext defaultWidget : defaultWidgetContexts) {
+            defaultWidgets.add((DefaultWidget) visit(defaultWidget));
+        }
+
+        return defaultWidgets;
+    }
+
+    private List<Section> getSections(List<QLSParser.SectionContext> sectionContexts) {
+        List<Section> sections = new ArrayList<>();
+
+        for(QLSParser.SectionContext section : sectionContexts) {
+            sections.add((Section) visit(section));
+        }
+
+        return sections;
+    }
+
+    private List<Question> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
+        List<Question> questions = new ArrayList<>();
+
+        for(QLSParser.QuestionContext question : questionContexts) {
+            questions.add((Question) visit(question));
+        }
+
+        return questions;
     }
 }
