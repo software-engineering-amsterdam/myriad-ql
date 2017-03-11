@@ -248,3 +248,4 @@ class Money(object):
 
     def default_value(self):
         return 0.00
+        #TODO: Either this needs to be a Decimal, which then also needs to be adjusted in Eval + GUI, or this is float and parser needs to be adjusted
