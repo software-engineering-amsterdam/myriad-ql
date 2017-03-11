@@ -1,4 +1,5 @@
 ﻿using Questionnaires.QL.AST;
+using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Questionnaires.QL.Processing
 
         public void Process(Form form)
         {
-            var defaultVisibilityFunction = new Func<bool>(() => { return true; });
+            var defaultVisibilityFunction = new Func<ExpressionEvaluator.Evaluator, bool>((evaluator) => { return true; });
 
             foreach (var statement in form.Statements)
             {
@@ -31,7 +32,7 @@ namespace Questionnaires.QL.Processing
             // TODO: We used to set the renderers window name here. I suppose this should now be part of the document model (or just set it to 'questionnaire'?
         }
 
-        public void Visit(ComputedQuestion node, Func<bool> visibilityCondition)
+        public void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
             // Make sure to visit the question child node to add it to the renderer
             Visit(node.Question, visibilityCondition);
@@ -39,7 +40,7 @@ namespace Questionnaires.QL.Processing
             Rules.Add(
                 new Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evaluator) =>
                 {
-                    if (visibilityCondition())
+                    if (visibilityCondition(evaluator))
                     {
                         variableStore.SetValue(node.Question.Identifier, evaluator.Evaluate(node.Expression));
                     }
@@ -51,66 +52,34 @@ namespace Questionnaires.QL.Processing
                 }));
         }
 
-        public void Visit(AST.Question node, Func<bool> visibilityCondition)
+        public void Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
-            // Add the question to the renderer
-            //Renderer.AddQuestion(node, new WidgetStyle());
-            // And the variable store
-            VariableStore.SetValue(node.Identifier, node.Type);
+            // Add a rule to the rule container that sets the visibility for this question
+            Rules.Add(
+                new Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evalutor) =>
+                {
+                    renderer.SetVisibility(node.Identifier, visibilityCondition(evalutor));                    
+                })
+            );            
 
-            if (visibilityCondition != null)
-            {
-                // Add a rule to the rule container that sets the visibility for this question
-                RuleContainer.AddRule(
-                    new Action<VariableStore.VariableStore, Renderer.Renderer>((variableStore, renderer) =>
-                    {
-                        if (visibilityCondition())
-                        {
-                            renderer.SetVisibility(node.Identifier, true);
-                        }
-                        else
-                        {
-                            renderer.SetVisibility(node.Identifier, false);
-                        }
-                    })
-                );
-            }
-
-            Questions[node.Identifier] = node;
+            Questions.Add(node);
         }
 
-        public void Visit(Conditional node, Func<bool> visibilityCondition)
+        public void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
             /* The conditional node. This is where we need to do some real work. We need to make function objects
              * That evaluate the condition and based on the outcome set the visibility of questions */
 
-            Func<bool> conditionFunctionThen = new Func<bool>(() =>
-            {
-                return visibilityCondition() && (ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
-            }
-            );
+            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionThen = 
+                (evaluator) => { return visibilityCondition(evaluator) && (evaluator.Evaluate(node.Condition) as BooleanType).GetValue(); };
 
-            Func<bool> conditionFunctionElse = new Func<bool>(() =>
-            {
-                return visibilityCondition() && !(ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
-            }
-            );
+            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionElse = (evaluator) => { return !conditionFunctionThen(evaluator); };
 
-            foreach (var thenStatement in node.ThenStatements)
-            {
-                Visit((dynamic)thenStatement, conditionFunctionThen);
-            }
+            foreach (var thenStatement in node.ThenStatements)            
+                Visit((dynamic)thenStatement, conditionFunctionThen);            
 
-            foreach (var elseStatement in node.ElseStatements)
-            {
-                Visit((dynamic)elseStatement, conditionFunctionElse);
-            }
-        }
-
-        private void VariableStore_VariableChanged(object sender, VariableChangedEventArgs arg)
-        {
-            Renderer.SetValue(arg.Name, arg.Value);
-            RuleContainer.ApplyRules(VariableStore, Renderer);
+            foreach (var elseStatement in node.ElseStatements)            
+                Visit((dynamic)elseStatement, conditionFunctionElse);            
         }
     }
 }

@@ -11,13 +11,14 @@ namespace Questionnaires.QLS.Processing
     class Processor
     {
         // A list of the questions parsed from the QL code
-        Dictionary<string, QL.AST.Question> Questions;
+        Dictionary<string, QL.AST.Question> Questions = new Dictionary<string, QL.AST.Question>();
         // Stack of default styles
         Stack Styles = new Stack();
 
-        public Processor(Dictionary<string, QL.AST.Question> questions)
+        public Processor(List<QL.AST.Question> questions)
         {
-            Questions = questions;
+            // Fill up the dictionary
+            questions.ForEach((question) => { Questions[question.Identifier] = question; });
         }
 
         public void Process(StyleSheet styleSheet)

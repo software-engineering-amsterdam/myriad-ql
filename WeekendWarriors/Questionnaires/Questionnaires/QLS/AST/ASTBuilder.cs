@@ -11,13 +11,17 @@ namespace Questionnaires.QLS.AST
 {
     class ASTBuilder : QLSBaseVisitor<INode>
     {
-        public INode Build(string input)
+        public StyleSheet Build(string input)
         {
             var inputStream = new AntlrInputStream(input);
             var lexer = new QLSLexer(inputStream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new QLSParser(tokens);
-            return Visit(parser.stylesheet());
+
+            var stylesheet = Visit(parser.stylesheet());
+            Debug.Assert(stylesheet.GetType() == typeof(StyleSheet));
+
+            return stylesheet as StyleSheet;
         }
 
         public override INode VisitStylesheet([NotNull] QLSParser.StylesheetContext context)

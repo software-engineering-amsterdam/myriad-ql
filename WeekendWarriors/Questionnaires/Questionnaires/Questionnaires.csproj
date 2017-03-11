@@ -127,8 +127,8 @@
     <Compile Include="QL\AST\Operators\Negative.cs" />
     <Compile Include="QL\AST\Operators\Positive.cs" />
     <Compile Include="QL\ExpressionEvaluator\Evaluator.cs" />
-    <None Include="QL\Processing\Processor.cs" />
-    <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
+    <Compile Include="QL\Processing\Processor.cs" />
+    <None Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Renderer\Style\WidgetStyle.cs" />
