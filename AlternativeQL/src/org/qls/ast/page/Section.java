@@ -1,7 +1,7 @@
 package org.qls.ast.page;
 
 import org.ql.ast.Node;
-import org.qls.ast.widget.DefaultWidget;
+import org.qls.ast.widget.defaultWidget.DefaultWidget;
 
 import java.util.List;
 

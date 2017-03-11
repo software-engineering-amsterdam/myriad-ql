@@ -1,6 +1,7 @@
-package org.qls.ast.widget;
+package org.qls.ast.widget.defaultWidget;
 
 import org.ql.ast.type.Type;
+import org.qls.ast.widget.Widget;
 
 public class DefaultWidgetNoStyle extends DefaultWidget {
 

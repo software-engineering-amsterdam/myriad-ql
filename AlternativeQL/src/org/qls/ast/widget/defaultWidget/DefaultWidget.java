@@ -1,7 +1,8 @@
-package org.qls.ast.widget;
+package org.qls.ast.widget.defaultWidget;
 
 import org.ql.ast.Node;
 import org.ql.ast.type.Type;
+import org.qls.ast.widget.Widget;
 
 public class DefaultWidget extends Node {
     private Type type;

@@ -10,6 +10,13 @@ import org.qls.ast.page.*;
 import org.qls.ast.StyleSheet;
 import org.qls.ast.page.Question;
 import org.qls.ast.widget.*;
+import org.qls.ast.widget.defaultWidget.DefaultWidget;
+import org.qls.ast.widget.defaultWidget.DefaultWidgetNoStyle;
+import org.qls.ast.widget.defaultWidget.DefaultWidgetWithStyle;
+import org.qls.ast.widget.defaultWidget.style.FontRule;
+import org.qls.ast.widget.defaultWidget.style.FontSizeRule;
+import org.qls.ast.widget.defaultWidget.style.StyleRule;
+import org.qls.ast.widget.defaultWidget.style.WidthRule;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
@@ -97,22 +104,28 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     @Override
     public Node visitDefaultWithStyle(QLSParser.DefaultWithStyleContext ctx) {
-        return null;
+        List<StyleRule> styleRules = new ArrayList<>();
+
+        for(QLSParser.StyleRuleContext styleRuleContext : ctx.styleRule()) {
+            styleRules.add((StyleRule) visit(styleRuleContext));
+        }
+
+        return new DefaultWidgetWithStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget()), styleRules);
     }
 
     @Override
     public Node visitWidthRule(QLSParser.WidthRuleContext ctx) {
-        return null;
+        return new WidthRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText()));
     }
 
     @Override
     public Node visitFontRule(QLSParser.FontRuleContext ctx) {
-        return null;
+        return new FontRule(ctx.STRING_LITERAL().getText());
     }
 
     @Override
     public Node visitFontSizeRule(QLSParser.FontSizeRuleContext ctx) {
-        return null;
+        return new FontSizeRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText()));
     }
 
     @Override
