@@ -51,7 +51,7 @@
         private void Validate(object target, RoutedEventArgs eventArgs)
         {
             var text = this.input.Text;
-            var filter = new Regex("^-?\\d+((\\.|,)\\d*)?$");
+            var filter = new Regex("^-?\\d+((\\.|,)\\d+)?$");
             var isValid = filter.IsMatch(text);
             if (!isValid)
             {
@@ -60,6 +60,7 @@
             else
             {
                 this.input.BorderBrush = new SolidColorBrush(Colors.Black);
+                this.Value = new DecimalValue(text);
             }
         }
     }

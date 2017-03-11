@@ -61,6 +61,7 @@
             else
             {
                 this.input.BorderBrush = new SolidColorBrush(Colors.Black);
+                this.Value = new IntegerValue(text);
             }
         }
     }
