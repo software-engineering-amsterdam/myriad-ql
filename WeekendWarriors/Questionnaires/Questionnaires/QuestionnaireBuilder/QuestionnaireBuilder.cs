@@ -4,138 +4,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.QL.AST;
-using Questionnaires.QL.AST.Operators;
 using Questionnaires.Renderer;
 using Questionnaires.VariableStore;
 using Questionnaires.Types;
 using System.ComponentModel;
-using Questionnaires.Renderer.Style;
 
-namespace Questionnaires.QL.QuestionaireBuilder
+namespace Questionnaires.QuestionaireBuilder
 {
     class QuestionnaireBuilder 
-    {        
-        private VariableStore.VariableStore VariableStore;
-        private Renderer.Renderer Renderer;
-        private RuleContainer.RuleContainer RuleContainer;
-        private ExpressionEvaluator.Evaluator ExpressionEvaluator;
-        private Dictionary<string, Question> Questions;
-        public QuestionnaireBuilder(VariableStore.VariableStore variableStore, Renderer.Renderer renderer, RuleContainer.RuleContainer ruleContainer, Dictionary<string, Question> questions)
+    {
+        private List<QL.AST.Question> Questions = new List<QL.AST.Question>();
+        private List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
+        private QL.AST.Form Form;
+        private QLS.AST.StyleSheet StyleSheet;
+
+        public QuestionnaireBuilder(QL.AST.Form form, QLS.AST.StyleSheet stylesheet = null)
         {
-            VariableStore = variableStore;
-            Renderer = renderer;
-            RuleContainer = ruleContainer;
-            ExpressionEvaluator = new Questionnaires.ExpressionEvaluator.Evaluator(VariableStore);
-            Questions = questions;
-            
+            this.Form = form;
+            this.StyleSheet = stylesheet;            
         }
 
-        public void Build(Form node)
+        public void Build()
         {
-            foreach (var statement in node.Statements)
+            ProcessASTs();
+            InstantiateRunTime();
+        }
+
+        // 'Flatten' the ASTs into lists of objects we can use to paramterize our run-time objects
+        private void ProcessASTs()
+        {
+            // Buil up a list of questions and run-time rules from the QL input
+            QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules);
+            qlProcessor.Process(Form);
+
+            // Optionally style the questions based on the QLS input
+            if(StyleSheet != null)
             {
-                // Visit all of the child nodes. Pass a dummy function that always returns true as the visibility function
-                Visit((dynamic)statement, new Func<bool>(() => { return true; }));
+                QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions);
+                qlsProcessor.Process(StyleSheet);
+            }
+        }   
+
+        private void InstantiateRunTime()
+        {
+            // Create the run-time objects 
+            var variableStore = new VariableStore.VariableStore();
+            var renderer = new Renderer.Renderer(variableStore);
+            var expressionEvaluator = new ExpressionEvaluator.Evaluator(variableStore);
+            var ruleContainer = new RuleContainer.RuleContainer(variableStore, renderer, expressionEvaluator);
+
+            foreach (var question in Questions)
+            {
+                variableStore.SetValue(question.Identifier, question.Type);
+                renderer.AddQuestion(question, new Renderer.Style.WidgetStyle());
             }
 
-            // For a form all we want to do is just change the window title
-            // you cannot change this later through user input
-            Renderer.SetWindowTitle(node.Identifier);
+            foreach (var rule in Rules)
+            {
+                ruleContainer.AddRule(rule);
+            }
 
-            // Connect runtime components
-            VariableStore.VariableChanged += VariableStore_VariableChanged;
+            // Connect the runtime objects
+            variableStore.VariableChanged += (sender, args) =>
+            {
+                renderer.SetValue(args.Name, args.Value);
+                ruleContainer.ApplyRules();
+            };
+
+            // Kick off initialization
+            ruleContainer.ApplyRules();
         }
-
         
-        public void Visit(ComputedQuestion node, Func<bool> visibilityCondition)
-        {
-            // Make sure to visit the question child node to add it to the renderer
-            Visit(node.Question, visibilityCondition);
-
-            // Add the question to the variable store. 
-            // Todo: We are using the expression validator to get the type of the expression here, but since we are not in runtime yet. That makes no sense
-            // it would make more sense to pass QLContext into this object and get the type from there. I do feel that we need to have an addValue function 
-            // to make a distinction between adding a variable (initialization time, no real value is know, just the type) and setting a value (run time, actual value is known)
-            // Second thing: If we add these things to the store at runtime (see rule below), do we really need to add it here as well?
-            VariableStore.SetValue(node.Question.Identifier, ExpressionEvaluator.Evaluate(node.Expression));            
-
-            RuleContainer.AddRule(
-                new Action<VariableStore.VariableStore, Renderer.Renderer>((variableStore, renderer) =>
-                {
-                    if (visibilityCondition())
-                    {
-                        variableStore.SetValue(node.Question.Identifier, ExpressionEvaluator.Evaluate(node.Expression));
-                    }
-                    else
-                    {
-                        // TODO: we are not quite ready for this since we don't handle values that are not present in the variableStore
-                        //variableStore.RemoveValue(node.Question.Identifier);
-                    }
-                }));
-        }
-        
-        public void Visit(AST.Question node, Func<bool> visibilityCondition)
-        {
-            // Add the question to the renderer
-            //Renderer.AddQuestion(node, new WidgetStyle());
-            // And the variable store
-            VariableStore.SetValue(node.Identifier, node.Type);
-
-            if(visibilityCondition != null)
-            {
-                // Add a rule to the rule container that sets the visibility for this question
-                RuleContainer.AddRule(
-                    new Action<VariableStore.VariableStore, Renderer.Renderer>((variableStore, renderer) =>
-                    {
-                        if (visibilityCondition())
-                        {
-                            renderer.SetVisibility(node.Identifier, true);
-                        }
-                        else
-                        {
-                            renderer.SetVisibility(node.Identifier, false);
-                        }
-                    })
-                );
-            }
-
-            Questions[node.Identifier] = node;
-        }     
-
-        public void Visit(Conditional node, Func<bool> visibilityCondition)
-        {
-            /* The conditional node. This is where we need to do some real work. We need to make function objects
-             * That evaluate the condition and based on the outcome set the visibility of questions */
-
-            Func<bool> conditionFunctionThen = new Func<bool>(() => 
-            {
-                return visibilityCondition() && (ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
-            }
-            );
-
-            Func<bool> conditionFunctionElse = new Func<bool>(() =>
-            {
-                return visibilityCondition() && !(ExpressionEvaluator.Evaluate(node.Condition) as BooleanType).GetValue();
-            }
-            );
-
-            foreach (var thenStatement in node.ThenStatements)
-            {
-                Visit((dynamic)thenStatement, conditionFunctionThen);               
-            }
-
-            foreach (var elseStatement in node.ElseStatements)
-            {
-                Visit((dynamic)elseStatement, conditionFunctionElse);
-            }            
-        }
-
-        private void VariableStore_VariableChanged(object sender, VariableChangedEventArgs arg)
-        {
-            Renderer.SetValue(arg.Name, arg.Value);
-            RuleContainer.ApplyRules(VariableStore, Renderer);
-        }
-
     }
 }
