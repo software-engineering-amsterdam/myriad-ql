@@ -19,6 +19,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
+        #TODO: Add type checking to field to see if expression type is compatible with declared type
         if node.expression is not None:
             node.expression.apply(self)
 
@@ -72,12 +73,11 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
 
     def negation(self, node):
-        allowed_types = DataTypes.boolean
-        rhs = node.rhs.apply(self)
-        if rhs is allowed_types:
+        if node.rhs.apply(self) is DataTypes.boolean:
             return DataTypes.boolean
         return None
 
+    #TODO: Implement positive and negative, should only be possible with Integers and numbers
 
     def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
         dominant_type = None
