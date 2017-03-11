@@ -2,6 +2,7 @@ package org.qls.parser.page;
 
 import org.junit.Test;
 import org.qls.ast.page.Page;
+import org.qls.ast.widget.CheckboxWidget;
 import org.qls.parser.Parser;
 
 import static org.junit.Assert.assertEquals;
@@ -37,33 +38,19 @@ public class PageTest {
     }
 
     @Test
-    public void shouldContainQuestionWithoutWidget() {
+    public void shouldContainNestedSections() {
         Parser parser = new Parser();
 
         Page page = parser.parsePage("page Housing {\n" +
-                "section \"Buying\"\n" +
-                "  question hasBoughtHouse\n" +
-                "}");
-
-        assertTrue(page != null);
-        assertEquals(1, page.getSections().get(0).getQuestions().size());
-        assertEquals("hasBoughtHouse", page.getSections().get(0).getQuestions().get(0).getIdentifier().toString());
-    }
-
-    @Test
-    public void shouldContainMultipleQuestionsWithoutWidget() {
-        Parser parser = new Parser();
-
-        Page page = parser.parsePage("page Housing {\n" +
-                "section \"Buying\"\n {" +
-                    "  question hasBoughtHouse\n" +
-                    "  question valueResidue\n" +
+                    "section \"Buying\" {" +
+                        "section \"Loaning\" {" +
+                        "}\n" +
                     "}\n" +
                 "}");
 
         assertTrue(page != null);
-        assertEquals(2, page.getSections().get(0).getQuestions().size());
-        assertEquals("hasBoughtHouse", page.getSections().get(0).getQuestions().get(0).getIdentifier().toString());
-        assertEquals("valueResidue", page.getSections().get(0).getQuestions().get(1).getIdentifier().toString());
+        assertEquals(1, page.getSections().size());
+        assertEquals("\"Buying\"", page.getSections().get(0).getName());
+        assertEquals("\"Loaning\"", page.getSections().get(0).getSections().get(0).getName());
     }
 }

@@ -2,6 +2,7 @@ package org.qls.ast.page;
 
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
+import org.qls.ast.widget.DefaultWidget;
 
 import java.util.List;
 

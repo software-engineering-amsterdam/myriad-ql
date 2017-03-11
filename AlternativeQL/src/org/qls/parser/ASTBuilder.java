@@ -5,8 +5,11 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
 import org.ql.ast.SourceLocation;
+import org.ql.ast.type.*;
 import org.qls.ast.page.*;
 import org.qls.ast.StyleSheet;
+import org.qls.ast.page.Question;
+import org.qls.ast.widget.*;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
@@ -54,42 +57,42 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     @Override
     public Node visitWidget(QLSParser.WidgetContext ctx) {
-        return null;
+        return (Widget) visit(ctx.widgetType());
     }
 
     @Override
     public Node visitSpinboxWidget(QLSParser.SpinboxWidgetContext ctx) {
-        return null;
+        return new SpinboxWidget();
     }
 
     @Override
     public Node visitSliderWidget(QLSParser.SliderWidgetContext ctx) {
-        return null;
+        return new SliderWidget();
     }
 
     @Override
     public Node visitTextWidget(QLSParser.TextWidgetContext ctx) {
-        return null;
+        return new TextWidget();
     }
 
     @Override
     public Node visitCheckboxWidget(QLSParser.CheckboxWidgetContext ctx) {
-        return null;
+        return new CheckboxWidget();
     }
 
     @Override
     public Node visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
-        return null;
+        return new RadioWidget(ctx.yes.getText(), ctx.no.getText());
     }
 
     @Override
     public Node visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
-        return null;
+        return new DropdownWidget(ctx.yes.getText(), ctx.no.getText());
     }
 
     @Override
     public Node visitDefaultNoStyle(QLSParser.DefaultNoStyleContext ctx) {
-        return null;
+        return new DefaultWidgetNoStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget()));
     }
 
     @Override
@@ -114,27 +117,42 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     @Override
     public Node visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
-        return null;
+        BooleanType booleanType = new BooleanType();
+        booleanType.setSourceLocation(extractSourceLocation(ctx));
+
+        return booleanType;
     }
 
     @Override
     public Node visitTypeFloat(QLSParser.TypeFloatContext ctx) {
-        return null;
+        FloatType floatType = new FloatType();
+        floatType.setSourceLocation(extractSourceLocation(ctx));
+
+        return floatType;
     }
 
     @Override
     public Node visitTypeInteger(QLSParser.TypeIntegerContext ctx) {
-        return null;
+        IntegerType integerType = new IntegerType();
+        integerType.setSourceLocation(extractSourceLocation(ctx));
+
+        return integerType;
     }
 
     @Override
     public Node visitTypeString(QLSParser.TypeStringContext ctx) {
-        return null;
+        StringType stringType = new StringType();
+        stringType.setSourceLocation(extractSourceLocation(ctx));
+
+        return stringType;
     }
 
     @Override
     public Node visitTypeMoney(QLSParser.TypeMoneyContext ctx) {
-        return null;
+        MoneyType moneyType = new MoneyType();
+        moneyType.setSourceLocation(extractSourceLocation(ctx));
+
+        return moneyType;
     }
 
     @Override

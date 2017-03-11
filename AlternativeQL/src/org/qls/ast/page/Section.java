@@ -1,6 +1,7 @@
 package org.qls.ast.page;
 
 import org.ql.ast.Node;
+import org.qls.ast.widget.DefaultWidget;
 
 import java.util.List;
 
@@ -39,5 +40,13 @@ public class Section extends Node {
 
     public void setDefaultWidgets(List<DefaultWidget> defaultWidgets) {
         this.defaultWidgets = defaultWidgets;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 }
