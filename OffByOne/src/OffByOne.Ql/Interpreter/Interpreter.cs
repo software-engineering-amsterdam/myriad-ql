@@ -43,6 +43,12 @@
                 case DecimalValueType _:
                     question = new DecimalControl(expression, context);
                     break;
+                case IntegerValueType _:
+                    question = new IntegerControl(expression, context);
+                    break;
+                case MoneyValueType _:
+                    question = new MoneyControl(expression, context);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expression.Type));
             }
