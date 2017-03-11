@@ -2,6 +2,7 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.IntegerType;
+import ql.astnodes.types.MoneyType;
 import ql.astnodes.types.Type;
 import ql.gui.formenvironment.values.IntegerValue;
 import ql.gui.formenvironment.values.Value;
@@ -97,6 +98,7 @@ public class QLSSlider extends QLSWidget {
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedTypes = new ArrayList<>();
         supportedTypes.add(new IntegerType());
+        supportedTypes.add(new MoneyType());
         return supportedTypes;
     }
 

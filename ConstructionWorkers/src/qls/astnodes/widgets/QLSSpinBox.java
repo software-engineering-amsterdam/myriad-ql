@@ -2,6 +2,7 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.IntegerType;
+import ql.astnodes.types.MoneyType;
 import ql.astnodes.types.StringType;
 import ql.astnodes.types.Type;
 import ql.gui.formenvironment.values.IntegerValue;
@@ -93,6 +94,7 @@ public class QLSSpinBox extends QLSWidget {
         List<Type> supportedTypes = new ArrayList<>();
         supportedTypes.add(new StringType());
         supportedTypes.add(new IntegerType());
+        supportedTypes.add(new MoneyType());
         return supportedTypes;
     }
 
