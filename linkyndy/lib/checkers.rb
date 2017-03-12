@@ -48,24 +48,33 @@ module Checkers
   end
 
   class DuplicateIdentifiers < Base
-    attr_reader :bag
-
-    def initialize
-      @bag = []
+    def initialize(ast)
+      @ast = ast
     end
 
     def check
-      bag.group_by(&:to_s).values.select { |identifiers| identifiers.count > 1 }.each do |identifiers|
+      defined_identifiers.group_by(&:to_s).values.select do |identifiers|
+        identifiers.count > 1
+      end.each do |identifiers|
         puts error_formatter(identifiers)
       end
     end
 
     def error_formatter(items)
-      "Identifier `#{items.first}` is defined multiple times (on #{items.map { |i| i.line_and_column.join(':') }.join(', ')})"
+      "Identifier `#{items.first}` is defined multiple times (on " \
+      "#{items.map { |i| i.line_and_column.join(':') }.join(', ')})"
     end
 
-    def visit_identifier(node, parent)
-      bag << node.name if Ast::Form === parent || Ast::Question === parent
+    private
+
+    attr_reader :ast
+
+    def defined_identifiers
+      ast.select do |node|
+        Ast::Question === node || Ast::Form === node
+      end.map do |question|
+        question.identifier.name
+      end
     end
   end
 
