@@ -10,22 +10,22 @@
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values;
 
-    public class DecimalControl : QuestionControl
+    public class MoneyControl : QuestionControl
     {
         private TextBox input;
         private Label label;
 
-        public DecimalControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public MoneyControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(statement, guiEnvironment)
         {
             this.CreateControl();
-            this.Value = new DecimalValue(0.0);
+            this.Value = new MoneyValue(0);
         }
 
         public override void OnNext(GuiChange value)
         {
             base.OnNext(value);
-            this.input.Text = ((DecimalValue)this.Value).ToString();
+            this.input.Text = ((MoneyValue)this.Value).ToString();
         }
 
         public override void OnCompleted()
@@ -51,7 +51,7 @@
         private void Validate(object target, RoutedEventArgs eventArgs)
         {
             var text = this.input.Text;
-            var filter = new Regex("^-?\\d+((\\.|,)\\d+)?$");
+            var filter = new Regex("^-?\\d+((\\.|,)\\d{2})?$");
             var isValid = filter.IsMatch(text);
             if (!isValid)
             {
@@ -60,7 +60,7 @@
             else
             {
                 this.input.BorderBrush = new SolidColorBrush(Colors.Black);
-                this.Value = new DecimalValue(text);
+                this.Value = new MoneyValue(text);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Controls;
@@ -10,22 +11,22 @@
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values;
 
-    public class DecimalControl : QuestionControl
+    public class IntegerControl : QuestionControl
     {
         private TextBox input;
         private Label label;
 
-        public DecimalControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public IntegerControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(statement, guiEnvironment)
         {
             this.CreateControl();
-            this.Value = new DecimalValue(0.0);
+            this.Value = new IntegerValue(0);
         }
 
         public override void OnNext(GuiChange value)
         {
             base.OnNext(value);
-            this.input.Text = ((DecimalValue)this.Value).ToString();
+            this.input.Text = ((IntegerValue)this.Value).ToString();
         }
 
         public override void OnCompleted()
@@ -51,7 +52,7 @@
         private void Validate(object target, RoutedEventArgs eventArgs)
         {
             var text = this.input.Text;
-            var filter = new Regex("^-?\\d+((\\.|,)\\d+)?$");
+            var filter = new Regex("^-?\\d+$");
             var isValid = filter.IsMatch(text);
             if (!isValid)
             {
@@ -60,7 +61,7 @@
             else
             {
                 this.input.BorderBrush = new SolidColorBrush(Colors.Black);
-                this.Value = new DecimalValue(text);
+                this.Value = new IntegerValue(text);
             }
         }
     }

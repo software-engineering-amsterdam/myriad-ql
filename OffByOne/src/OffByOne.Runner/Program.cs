@@ -69,15 +69,21 @@
                     ""What is your favourite decimal number?""
                         favDecimal: decimal
 
+                    ""Answer the following equation: 5 + 2 * 3""
+                        equation: integer
+
+                    ""How much money do you have?"" 
+                        account: money
+
                     ""String two:""
                         stringtwo: string
 
-                    if(favDecimal == 3.1415){
-                    ""Do you like pie?""
-                        pie: boolean (existentialism)
+                    if(equation == 11){
+                        ""Do you like pie?""
+                            pie: boolean (existentialism)
                     } else {
-                    ""Any comments?""
-                        comments: string
+                        ""Any comments?""
+                            comments: string
                     }
                 }
             ");
