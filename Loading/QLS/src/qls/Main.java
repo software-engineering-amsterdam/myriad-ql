@@ -10,11 +10,11 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "stylesheet taxOfficeExample "
 				 + "page Housing { "
-				 + "section \"Buying\""
+				 + "section \"Buying\" "
 				 + "question hasBoughtHouse "
-				 + "widget checkbox"
-		 		 + "section \"Loaning\""
-				 + "question hasMaintLoan"
+				 + "widget checkbox "
+		 		 //+ "section \"Loaning\" "
+				 //+ "question hasMaintLoan "
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -25,5 +25,6 @@ public class Main {
 
 		qlsParser parser = new qlsParser(tokens);
 		Stylesheet stylesheet = parser.stylesheet().result;
+		System.out.println(stylesheet);
 	}
 }
