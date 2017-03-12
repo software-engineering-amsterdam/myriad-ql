@@ -14,24 +14,26 @@ namespace Questionnaires.QLS.Processing
     {
         // A list of the questions parsed from the QL code
         Dictionary<string, QL.AST.Question> Questions = new Dictionary<string, QL.AST.Question>();
+        // Document model
+        DocumentModel DocumentModel = new DocumentModel();
         // Stack of default styles
         Stack Styles = new Stack();
 
-        public Processor(List<QL.AST.Question> questions)
+        public Processor(List<QL.AST.Question> questions, DocumentModel documentModel)
         {
             // Fill up the dictionary
             questions.ForEach((question) => { Questions[question.Identifier] = question; });
+            this.DocumentModel = documentModel;
         }
 
-        public DocumentModel Process(StyleSheet styleSheet)
+        public void Process(StyleSheet styleSheet)
         {
-            var documentModel = new DocumentModel();
-            documentModel.Pages = new List<Renderer.Containers.Page>();
+
+            DocumentModel.Pages = new List<Renderer.Containers.Page>();
             foreach(var page in styleSheet.Pages)
             {
-                documentModel.Pages.Add(Visit((dynamic)page));  
+                DocumentModel.Pages.Add(Visit((dynamic)page));  
             }
-            return documentModel;
         }
 
         private Renderer.Containers.Page Visit(QLS.AST.Page page)
@@ -79,7 +81,7 @@ namespace Questionnaires.QLS.Processing
 
         private QL.AST.Question Visit(QuestionWithWidget question)
         {
-            this.Questions[question.Name].Widget = question.Widget.CreateWidget();
+            this.Questions[question.Name].Widget = question.Widget.CreateWidget((dynamic)this.Questions[question.Name].Type);
             return this.Questions[question.Name];
         }
 
@@ -93,7 +95,7 @@ namespace Questionnaires.QLS.Processing
                 var style = (DefaultStyle)stackCopy.Pop();
                 if(style.Type.GetType() == QLQuestion.Type.GetType())
                 {
-                    QLQuestion.Widget = style.Widget.CreateWidget();
+                    QLQuestion.Widget = style.Widget.CreateWidget((dynamic)this.Questions[question.Name].Type);
                     WidgetStyle properties = new WidgetStyle();
                     foreach(var property in style.Properties)
                     {

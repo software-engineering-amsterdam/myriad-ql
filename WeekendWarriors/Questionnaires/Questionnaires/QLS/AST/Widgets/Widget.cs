@@ -8,6 +8,29 @@ namespace Questionnaires.QLS.AST.Widgets
 {
     public abstract class Widget : INode
     {
-        public abstract Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget();
+        public virtual Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget(Types.IType type)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget(Types.BooleanType type)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget(Types.StringType type)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget(Types.IntegerType type)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual Questionnaires.Renderer.Widgets.QuestionWidget CreateWidget(Types.MoneyType type)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

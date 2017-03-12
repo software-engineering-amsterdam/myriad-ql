@@ -9,9 +9,22 @@ namespace Questionnaires.QLS.AST.Widgets
 {
     class Text : Widget
     {
-        public override QuestionWidget CreateWidget()
+        // TODO: Add support for different textbox widget types
+        public override QuestionWidget CreateWidget(Types.StringType type)
         {
             return new TextBoxWidget();
         }
+
+        public override QuestionWidget CreateWidget(Types.IntegerType type)
+        {
+            return new TextBoxWidget();
+        }
+
+        public override QuestionWidget CreateWidget(Types.MoneyType type)
+        {
+            return new TextBoxWidget();
+        }
+
+       
     }
 }

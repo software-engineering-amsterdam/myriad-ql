@@ -109,6 +109,7 @@
     <Compile Include="QLS\Generated\QLSParser.cs" />
     <Compile Include="QLS\Generated\QLSVisitor.cs" />
     <Compile Include="QLS\Processing\Processor.cs" />
+    <Compile Include="QLS\SemanticAnalysis\Analyzer.cs" />
     <Compile Include="QL\AST\IStatement.cs" />
     <Compile Include="QL\AST\Operators\Addition.cs" />
     <Compile Include="QL\AST\Operators\And.cs" />

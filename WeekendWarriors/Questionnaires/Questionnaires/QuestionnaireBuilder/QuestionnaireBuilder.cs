@@ -14,7 +14,7 @@ namespace Questionnaires.QuestionnaireBuilder
 {
     class QuestionnaireBuilder 
     {
-        private DocumentModel DocumentModel;
+        private DocumentModel DocumentModel = new DocumentModel();
         private List<QL.AST.Question> Questions = new List<QL.AST.Question>();
         private List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
         private QL.AST.Form Form;
@@ -42,12 +42,11 @@ namespace Questionnaires.QuestionnaireBuilder
             // Optionally style the questions based on the QLS input
             if (StyleSheet != null)
             {
-                QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions);
-                DocumentModel = qlsProcessor.Process(StyleSheet);
+                QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions, DocumentModel);
+                qlsProcessor.Process(StyleSheet);
             }
             else
             {
-                DocumentModel = new DocumentModel();
                 DocumentModel.Pages = new List<Page>{ new Page() };
                 DocumentModel.Pages[0].Name = "Form";
                 DocumentModel.Pages[0].Questions = Questions;

@@ -39,10 +39,29 @@ namespace Questionnaires
             foreach (var analysisEvent in analysisResult.Events)
                 Output.Text += analysisEvent.ToString() + '\n';
 
+            if (analysisResult.IsError())
+                return;
+
             var qlsFactory = new QLS.AST.ASTBuilder();
             if (InputQLS.Text != "")
             {
+                /* THIS IS A HACK!!!! */
+                List<QL.AST.Question> Questions = new List<QL.AST.Question>();
+                List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
+                QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules);
+                qlProcessor.Process(form);
+                /* EOH */                
+
                 var stylesheet = qlsFactory.Build(InputQLS.Text);
+
+                var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(Questions);
+                var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheet);
+                foreach (var analysisEvent in semanticMessages.Events)
+                    Output.Text += analysisEvent.ToString() + '\n';
+
+                if (semanticMessages.IsError())
+                    return;
+
                 var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form, stylesheet);
                 QuestionnaireBuilder.Build();
             }

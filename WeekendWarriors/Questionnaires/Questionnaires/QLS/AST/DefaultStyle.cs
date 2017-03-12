@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.QLS.AST
 {
-    class DefaultStyle : INode
+    public class DefaultStyle : INode
     {
         public Questionnaires.Types.IType Type { get; }
         public Dictionary<string, string> Properties { get; }

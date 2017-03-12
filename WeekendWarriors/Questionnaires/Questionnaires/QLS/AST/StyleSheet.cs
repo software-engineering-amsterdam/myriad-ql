@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.QLS.AST
 {
-    class StyleSheet : INode
+    public class StyleSheet : INode
     {
         public string Name { get; }
         public List<Page> Pages { get; }
