@@ -32,7 +32,7 @@ public abstract class NamedNode extends Node {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addDeclaration(this);
+       symbolTable.addDeclaration(this);
     }
 
     public void setVisible(boolean isVisible) {

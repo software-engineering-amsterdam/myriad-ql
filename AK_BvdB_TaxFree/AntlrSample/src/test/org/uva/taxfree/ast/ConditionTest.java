@@ -1,16 +1,10 @@
 package test.org.uva.taxfree.ast;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
-import java.io.IOException;
 
-public class ConditionTest {
+public class ConditionTest extends SemanticsTester {
 
     @Test
     public void testLiteralExpression() throws Exception {
@@ -47,23 +41,8 @@ public class ConditionTest {
         assertSemantics("invalidConditionForm.txt", 1, "An invalid condition due to it's types");
     }
 
-    private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
-        boolean expectedValid = 0 == expectedErrorAmount;
-        FormNode ast = createAst(fileName);
-        MessageList semanticsMessages = new MessageList();
-        SymbolTable symbolTable = new SymbolTable();
-        ast.fillSymbolTable(symbolTable);
-        ast.checkSemantics(symbolTable, semanticsMessages);
-        Assert.assertEquals(semanticsMessages.isEmpty(), expectedValid, "Expecting errors: " + description);
-        Assert.assertEquals(semanticsMessages.size(), expectedErrorAmount, "Invalid error amount");
-    }
 
-    private FormNode createAst(String fileName) throws IOException {
-        AstBuilder builder = new AstBuilder(testFile(fileName));
-        return builder.generateTree();
-    }
-
-    private File testFile(String fileName) {
+    protected File testFile(String fileName) {
         return new File("src\\test\\org\\uva\\taxfree\\ast\\conditionTestFiles\\" + fileName);
     }
 
