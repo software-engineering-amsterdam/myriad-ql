@@ -46,7 +46,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Prophet.interpret('examples/sample.ql')
+```
 
 ## Development
 
