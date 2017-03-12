@@ -10,7 +10,7 @@
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class VisitorTypeEnvironment : IVisitorEnvironment
+    public class VisitorTypeEnvironment : IVisitorTypeEnvironment
     {
         private readonly IDictionary<string, ValueType> symbolMappings;
 

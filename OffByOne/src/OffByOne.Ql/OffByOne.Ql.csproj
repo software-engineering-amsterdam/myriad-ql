@@ -162,7 +162,7 @@
     <Compile Include="Visitors\Contracts\IVisitable.cs" />
     <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
     <Compile Include="Visitors\Contracts\IVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IVisitorEnvironment.cs" />
+    <Compile Include="Visitors\Contracts\IVisitorTypeEnvironment.cs" />
     <Compile Include="Checker\TypeVisitor.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Graphics\Controls\Questions\BooleanControl.cs" />
