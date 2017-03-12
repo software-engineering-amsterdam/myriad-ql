@@ -36,8 +36,8 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, location, title, identifier, data_type, expression=None):
-        super(Field, self).__init__('field', location)
+    def __init__(self, title, identifier, data_type, expression=None):
+        super(Field, self).__init__('field')
         self.name = identifier
         self.title = title
         self.data_type = data_type
