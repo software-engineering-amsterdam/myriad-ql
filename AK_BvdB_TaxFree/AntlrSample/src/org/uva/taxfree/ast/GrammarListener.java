@@ -2,7 +2,6 @@ package org.uva.taxfree.ast;
 
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
@@ -21,9 +20,8 @@ import org.uva.taxfree.model.types.IntegerType;
 import java.util.*;
 
 public class GrammarListener extends QLGrammarBaseListener {
-
-    private SymbolTable mSymbolTable;
     private FormNode mRootNode;
+    private final SymbolTable mSymbolTable;
 
     private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
@@ -33,8 +31,8 @@ public class GrammarListener extends QLGrammarBaseListener {
         mSymbolTable = new SymbolTable();
     }
 
-    public Environment getEnvironment() {
-        return new Environment(mSymbolTable, mRootNode);
+    public FormNode getAst() {
+        return mRootNode;
     }
 
     private ExpressionNode popCachedCondition() {

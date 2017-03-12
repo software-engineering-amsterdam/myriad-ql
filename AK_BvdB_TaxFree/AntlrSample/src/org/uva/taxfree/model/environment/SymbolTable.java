@@ -6,10 +6,7 @@ import org.uva.taxfree.model.node.declarations.NamedNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SymbolTable {
     private final List<NamedNode> mDeclarations; // All declarations
@@ -25,7 +22,7 @@ public class SymbolTable {
         mCalculations = new ArrayList<>();
     }
 
-    public void addDeclarations(Set<NamedNode> nodes) {
+    public void addDepencendies(Set<NamedNode> nodes) {
         for (NamedNode n : nodes) {
             addDeclaration(n);
         }
@@ -100,5 +97,26 @@ public class SymbolTable {
             }
         }
         return false;
+    }
+
+
+    public void generateDependencies(Set<String> usedVariables) {
+        Set<String> dependencies = new HashSet<>(usedVariables);
+        for (String variableName : usedVariables) {
+            addDepencendies(variableName, dependencies);
+        }
+
+        if (!usedVariables.equals(dependencies)) {
+            usedVariables.addAll(dependencies);
+            generateDependencies(usedVariables);
+        }
+    }
+
+    private void addDepencendies(String usedVariable, Set<String> usedVariables) {
+        for (CalculatedField calc : mCalculations) {
+            if (calc.getId().equals(usedVariable)) {
+                usedVariables.addAll(calc.getUsedVariables());
+            }
+        }
     }
 }

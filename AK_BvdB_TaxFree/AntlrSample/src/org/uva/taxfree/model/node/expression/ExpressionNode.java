@@ -5,6 +5,7 @@ import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;
+import java.util.Set;
 
 public abstract class ExpressionNode extends Node {
 
@@ -37,4 +38,7 @@ public abstract class ExpressionNode extends Node {
     }
 
     public abstract Type getType();
+
+    public abstract void getDependencies(Set<String> dependencies);
+
 }

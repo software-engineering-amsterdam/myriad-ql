@@ -5,6 +5,7 @@ import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 
 import javax.swing.*;
+import java.util.Set;
 
 public abstract class NamedNode extends Node {
     private final JPanel mPanel;
@@ -31,7 +32,7 @@ public abstract class NamedNode extends Node {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addDeclaration(this);
+       symbolTable.addDeclaration(this);
     }
 
     public void setVisible(boolean isVisible) {
@@ -51,4 +52,8 @@ public abstract class NamedNode extends Node {
     }
 
     public abstract Type getType();
+
+    protected void getDependencies(Set<String> depencencies){
+        depencencies.add(mId);
+    }
 }

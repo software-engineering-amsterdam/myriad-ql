@@ -3,6 +3,8 @@ package org.uva.taxfree.model.node.expression;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.types.Type;
 
+import java.util.Set;
+
 public abstract class BinaryExpressionNode extends ExpressionNode {
     private final ExpressionNode mLeft;
     private final String mOperator;
@@ -26,6 +28,12 @@ public abstract class BinaryExpressionNode extends ExpressionNode {
         mRight.fillSymbolTable(symbolTable);
     }
 
+
+    @Override
+    public void getDependencies(Set<String> dependencies) {
+        mLeft.getDependencies(dependencies);
+        mRight.getDependencies(dependencies);
+    }
 
     @Override
     public boolean isValid() {

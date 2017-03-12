@@ -1,16 +1,10 @@
 package test.org.uva.taxfree.ast;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.main.SemanticsAnalyzer;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.BlockNode;
 
 import java.io.File;
-import java.io.IOException;
 
-public class SemanticsAnalyzerTest {
+public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
         assertSemantics("duplicateQuestionLabelForm.txt", 1, "Duplicate question label expected");
@@ -56,22 +50,8 @@ public class SemanticsAnalyzerTest {
         assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculation");
     }
 
-    private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
-        boolean expectedValid = 0 == expectedErrorAmount;
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
-        Assert.assertEquals(semanticsAnalyzer.validSemantics(), expectedValid, "Expecting errors: " + description);
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
-    }
-
-    private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        AstBuilder builder = new AstBuilder(testFile(fileName));
-        BlockNode ast = builder.generateTree();
-        SymbolTable symbolTable = new SymbolTable();
-        ast.fillSymbolTable(symbolTable);
-        return new SemanticsAnalyzer(ast, symbolTable);
-    }
-
-    private File testFile(String fileName) {
+    @Override
+    protected File testFile(String fileName) {
         return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
     }
 

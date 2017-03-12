@@ -1,10 +1,7 @@
 package org.uva.taxfree.main;//package main;
 
 import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.gui.ErrorMessage;
-import org.uva.taxfree.gui.FileSelector;
-import org.uva.taxfree.gui.MessageWindow;
-import org.uva.taxfree.gui.QuestionForm;
+import org.uva.taxfree.gui.*;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 
@@ -33,6 +30,7 @@ public class Main {
         AstBuilder builder = new AstBuilder(inputFile);
         BlockNode ast = builder.generateTree();
         SymbolTable symbolTable = new SymbolTable();
+        MessageList sematicsMessages = new MessageList();
         ast.fillSymbolTable(symbolTable);
         QuestionForm taxForm = new QuestionForm(ast);
         taxForm.show();
