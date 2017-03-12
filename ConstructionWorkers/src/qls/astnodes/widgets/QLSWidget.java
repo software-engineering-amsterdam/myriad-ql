@@ -3,14 +3,12 @@ package qls.astnodes.widgets;
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
-import ql.gui.components.FormFrame;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.*;
 import qls.astnodes.visitors.StyleSheetVisitor;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -61,33 +59,15 @@ public abstract class QLSWidget extends Node {
         return new Width(DEFAULT_WIDTH, getLineNumber());
     }
 
-    public void setLabel(String _label) {
-        this.componentLabel.setText(_label);
+    public void setLabel(String label) {
+        this.componentLabel.setText(label);
     }
 
     public abstract void setValue(Value value);
 
     public abstract Value getValue();
 
-    public abstract void addListener(EventListener listener);
-
-    public void render(FormFrame form) {
-        form.addWidget(this.component);
-    }
-
-    public void remove(FormFrame form) {
-        form.removeWidget(this.component);
-    }
-
-    public abstract void setReadOnly(boolean isReadonly);
-
-    public void resetStyleToDefault() {
-        Style style = this.getDefaultStyle();
-        this.applyStyle(style);
-    }
-
-    public abstract void applyStyle(Style _style);
-
+    public abstract void applyStyle(Style style);
 
     public abstract List<Type> getSupportedQuestionTypes();
 

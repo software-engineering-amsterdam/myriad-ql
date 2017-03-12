@@ -90,18 +90,11 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
             if (isEqual(identifierToTypeMap.get(questionIdentifierName), question.getType())) {
                 messages.addWarning(new DuplicateIdentifierWarning(question.getLineNumber(), question.getIdentifier()));
                 return true;
-            } else {
-                messages.addError(new DuplicateIdentifierError(question.getLineNumber(), question.getIdentifier()));
-                return true;
             }
-        } else {
-            if (identifierToTypeMap.containsKey(questionIdentifierName)) {
-                System.out.println("Duplicate question identifier with null type!");
-                return true;
-            } else {
-                return false;
-            }
+            messages.addError(new DuplicateIdentifierError(question.getLineNumber(), question.getIdentifier()));
+            return true;
         }
+        return false;
     }
 
     private boolean duplicateQuestionLabels(SimpleQuestion question) {

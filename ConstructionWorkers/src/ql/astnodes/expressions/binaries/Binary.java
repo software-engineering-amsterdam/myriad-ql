@@ -6,7 +6,6 @@ package ql.astnodes.expressions.binaries;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.Expression;
-import ql.astnodes.types.Type;
 
 public abstract class Binary extends Expression {
 

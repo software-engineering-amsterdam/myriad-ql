@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.EventListener;
 
 /**
  * Created by LGGX on 04-Mar-17.
@@ -54,16 +53,6 @@ public class QLSCheckBox extends QLSWidget{
     }
 
     @Override
-    public void addListener(EventListener listener) {
-
-        checkBox.addItemListener(
-                e -> {
-
-                }
-        );
-    }
-
-    @Override
     public BooleanValue getValue() {
         return new BooleanValue(this.checkBox.isSelected());
     }
@@ -72,11 +61,6 @@ public class QLSCheckBox extends QLSWidget{
     public void setValue(Value nvalue) {
         BooleanValue value = (BooleanValue) nvalue;
         this.checkBox.setSelected(value.getValue());
-    }
-
-    @Override
-    public void setReadOnly(boolean isReadonly) {
-        this.checkBox.setEnabled(false);
     }
 
     public List<Type> getSupportedQuestionTypes() {

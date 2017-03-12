@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class QLSRadio extends QLSWidget {
 
-    private String actionCommandValue;
+    private String value;
     private String yesLabel;
     private String noLabel;
 
@@ -74,17 +74,10 @@ public class QLSRadio extends QLSWidget {
     }
 
     @Override
-    public void addListener(EventListener listener) {
-        this.yesBtn.addActionListener(e -> actionCommandValue = e.getActionCommand());
-
-        this.noBtn.addActionListener(e -> actionCommandValue = e.getActionCommand());
-    }
-
-    @Override
     public BooleanValue getValue() {
-        if (this.actionCommandValue.equals(this.yesLabel)) {
+        if (this.value.equals(this.yesLabel)) {
             return new BooleanValue(true);
-        } else if (this.actionCommandValue.equals(this.noLabel)) {
+        } else if (this.value.equals(this.noLabel)) {
             return new BooleanValue(false);
         }
         return new BooleanValue(false);
@@ -101,12 +94,6 @@ public class QLSRadio extends QLSWidget {
             this.noBtn.setSelected(true);
         }
     }
-
-    @Override
-    public void setReadOnly(boolean _isReadonly) {
-        this.component.setEnabled(false);
-    }
-
 
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedTypes = new ArrayList<>();

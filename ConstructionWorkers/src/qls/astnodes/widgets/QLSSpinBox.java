@@ -62,16 +62,6 @@ public class QLSSpinBox extends QLSWidget {
     }
 
     @Override
-    public void addListener(EventListener listener) {
-
-        this.spinbox.addChangeListener(
-                e -> {
-
-                }
-        );
-    }
-
-    @Override
     public IntegerValue getValue() {
         return new IntegerValue((int) this.spinbox.getValue());
     }
@@ -80,14 +70,6 @@ public class QLSSpinBox extends QLSWidget {
     public void setValue(Value nvalue) {
         IntegerValue value = (IntegerValue) nvalue;
         this.spinbox.setValue(value.getValue());
-    }
-
-    @Override
-    public void setReadOnly(boolean isReadonly) {
-        this.spinbox.setEnabled(false);
-        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinbox.getEditor();
-        editor.getTextField().setEnabled( true );
-        editor.getTextField().setEditable( false );
     }
 
     public List<Type> getSupportedQuestionTypes() {

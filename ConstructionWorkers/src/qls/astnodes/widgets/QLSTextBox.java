@@ -10,8 +10,6 @@ import qls.astnodes.styles.Width;
 import qls.astnodes.visitors.StyleSheetVisitor;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
  */
 public class QLSTextBox extends QLSWidget {
 
-    public final static int WIDTH = 7;
+    private final static int WIDTH = 7;
 
     private JTextField input;
 
@@ -59,20 +57,6 @@ public class QLSTextBox extends QLSWidget {
     }
 
     @Override
-    public void addListener(EventListener listener) {
-
-        this.input.getDocument().addDocumentListener(
-                new DocumentListener() {
-                    public void insertUpdate(DocumentEvent e) {
-
-                    }
-                    public void removeUpdate(DocumentEvent e) {}
-                    public void changedUpdate(DocumentEvent e) {}
-                }
-        );
-    }
-
-    @Override
     public StringValue getValue() {
         return new StringValue(this.input.getText());
     }
@@ -81,11 +65,6 @@ public class QLSTextBox extends QLSWidget {
     public void setValue(Value nvalue) {
         StringValue value = (StringValue) nvalue;
         this.input.setText(value.getValue());
-    }
-
-    @Override
-    public void setReadOnly(boolean isReadonly) {
-        this.input.setEnabled(false);
     }
 
     @Override

@@ -66,17 +66,6 @@ public class QLSSlider extends QLSWidget {
     }
 
     @Override
-    public void addListener(EventListener listener) {
-
-        this.slider.addChangeListener(e -> {
-            JSlider source = (JSlider)e.getSource();
-            int v = source.getValue();
-            valueLabel.setText(Integer.toString(v));
-
-        });
-    }
-
-    @Override
     public IntegerValue getValue() {
         return new IntegerValue(this.slider.getValue());
     }
@@ -87,13 +76,6 @@ public class QLSSlider extends QLSWidget {
         this.slider.setValue(value.getValue());
         this.valueLabel.setText(Integer.toString(value.getValue()));
     }
-
-    @Override
-    public void setReadOnly(boolean isReadonly) {
-        this.slider.setEnabled(isReadonly);
-    }
-
-
 
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedTypes = new ArrayList<>();

@@ -2,14 +2,12 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.Type;
-import ql.gui.components.FormFrame;
 import ql.gui.formenvironment.values.UndefinedValue;
 import ql.gui.formenvironment.values.Value;
 import qls.astnodes.styles.Style;
 import qls.astnodes.visitors.StyleSheetVisitor;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -36,12 +34,6 @@ public class QLSUndefinedWidget extends QLSWidget {
     }
 
     @Override
-    public void render(FormFrame form) {}
-
-    @Override
-    public void remove(FormFrame canvas) {}
-
-    @Override
     public UndefinedValue getValue() {
         return null;
     }
@@ -50,13 +42,7 @@ public class QLSUndefinedWidget extends QLSWidget {
     public void setValue(Value value) {}
 
     @Override
-    public void setReadOnly(boolean _isReadonly) {}
-
-    @Override
-    public void addListener(EventListener listener) {}
-
-    @Override
-    public void setLabel(String _label) {}
+    public void setLabel(String label) {}
 
     public <T> T accept(StyleSheetVisitor<T> visitor) {
         return visitor.visit(this);

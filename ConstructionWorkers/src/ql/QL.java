@@ -106,13 +106,13 @@ public class QL {
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
 
-        if (messages.containsWarnings()) {
+        if (messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }
         }
 
-        return messages.containsErrors();
+        return messages.containsNoErrors();
     }
 
     private void buildGUI(Form ast, Context context) {

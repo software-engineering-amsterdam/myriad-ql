@@ -19,7 +19,6 @@ public class UndefinedType extends Type {
 
     @Override
     public <T> T accept(TypeVisitor<T> visitor) {
-        new AssertionError("Undefined type found!");
         return null;
     }
 }

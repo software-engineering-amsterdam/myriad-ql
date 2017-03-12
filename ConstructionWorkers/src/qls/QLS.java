@@ -146,20 +146,20 @@ public class QLS {
 
         this.identifierMap = identifierToTypeMap;
 
-        if (messages.containsWarnings()) {
+        if (messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }
         }
 
-        return messages.containsErrors();
+        return messages.containsNoErrors();
     }
 
     private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages) {
 
         new QLSTypeChecker(messages, identifierMap, qlsAST);
 
-        return messages.containsErrors();
+        return messages.containsNoErrors();
     }
 
 }

@@ -36,17 +36,11 @@ public class MessageData {
         return errors;
     }
 
-    public Boolean containsErrors() {
-        if (this.errors.size() > 0) {
-            return false;
-        }
-        return true;
+    public Boolean containsNoErrors() {
+        return !(this.errors.size() > 0);
     }
 
-    public Boolean containsWarnings() {
-        if (this.warnings.size() > 0) {
-            return false;
-        }
-        return true;
+    public Boolean containsNoWarnings() {
+        return !(this.warnings.size() > 0);
     }
 }

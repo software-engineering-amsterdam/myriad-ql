@@ -63,12 +63,6 @@ public class QLSDropdown extends QLSWidget {
     }
 
     @Override
-    public void addListener(EventListener _listener) {
-        this.comboBox.addActionListener(e -> {
-        });
-    }
-
-    @Override
     public BooleanValue getValue() {
         String selectedValue = (String) this.comboBox.getSelectedItem();
         if (selectedValue.equals(this.yesLabel)) {
@@ -85,11 +79,6 @@ public class QLSDropdown extends QLSWidget {
         } else {
             this.comboBox.setSelectedItem(this.noLabel);
         }
-    }
-
-    @Override
-    public void setReadOnly(boolean isReadonly) {
-        this.comboBox.setEnabled(false);
     }
 
     public List<Type> getSupportedQuestionTypes() {
