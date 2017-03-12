@@ -4,8 +4,8 @@ import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.declarations.CalculatedField;
-import org.uva.taxfree.model.node.expression.ConditionNode;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -35,16 +35,17 @@ public class Environment {
     }
 
     public void getConditionErrors(MessageList messageList) {
-        Set<ConditionNode> conditions = new LinkedHashSet<>();
-        mAbstractSyntaxTree.retrieveConditions(conditions);
-        for (ConditionNode conditionNode : conditions) {
-            if (!conditionNode.isValid()) {
-                messageList.addError("Condition found with invalid types: " + conditionNode.resolveValue());
-            }
-            // isboolen
-        }
+        // Todo: Some fancy stuff with the Ast
+        //Set<ExpressionNode> conditions = new LinkedHashSet<>();
+        //mAbstractSyntaxTree.retrieveConditions(conditions);
+        //for (ExpressionNode expressionNode : conditions) {
+//            if (!expressionNode.isValid()) {
+//                messageList.addError("Condition found with invalid types: " + expressionNode.resolveValue());
+//            }
+//        }
     }
 
+    // checkcyclicdependencies
     public void getCyclicDependencyErrors(MessageList messageList) {
         for (CalculatedField calculation : getCalculations()) {
             if (hasCyclicDependency(calculation)) {
@@ -54,9 +55,10 @@ public class Environment {
     }
 
     private boolean hasCyclicDependency(CalculatedField calc) {
-        Set<String> dependencies = calc.getUsedVariables();
-        substituteVariables(dependencies);
-        return dependencies.contains(calc.getId());
+//        Set<String> dependencies = calc.getUsedVariables();
+//        substituteVariables(dependencies);
+//        return dependencies.contains(calc.getId());
+        return true;
     }
 
     private void substituteVariables(Set<String> usedVariables) {
@@ -74,17 +76,18 @@ public class Environment {
 
 
     private void addDeclarations(String usedVariable, Set<String> usedVariables) {
-        for (CalculatedField calc : getCalculations()) {
-            if (calc.getId().equals(usedVariable)) {
-                usedVariables.addAll(calc.getUsedVariables());
-            }
-        }
+//        for (CalculatedField calc : getCalculations()) {
+//            if (calc.getId().equals(usedVariable)) {
+//                usedVariables.addAll(calc.getUsedVariables());
+//            }
+//        }
     }
 
     private Set<CalculatedField> getCalculations() {
-        Set<CalculatedField> calculations = new LinkedHashSet<>();
-        mAbstractSyntaxTree.retrieveCalculations(calculations);
-        return calculations;
+//        Set<CalculatedField> calculations = new LinkedHashSet<>();
+//        mAbstractSyntaxTree.retrieveCalculations(calculations);
+//        return calculations;
+        return new HashSet<>();
     }
 }
 

@@ -1,27 +1,31 @@
 package org.uva.taxfree.model.node.declarations;
 
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.types.Type;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-public abstract class CalculatedField extends NamedNode {
-    private final ConditionNode mCondition;
+public class CalculatedField extends NamedNode {
+    private final ExpressionNode mExpression;
     private final JTextField mTextField;
+    private final Type mType;
 
-    public CalculatedField(String label, String id, ConditionNode condition) {
+    public CalculatedField(String label, String id, Type type, ExpressionNode expression) {
         super(label, id);
         mTextField = new JTextField();
         mTextField.setEditable(false);
         mTextField.setPreferredSize(new Dimension(100, 25));
-        mCondition = condition;
+        mType = type;
+        mExpression = expression;
     }
 
     @Override
-    public void addDeclaration(Set<NamedNode> set) {
-        set.add(this);
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addDeclaration(this);
+        symbolTable.addCalculation(this);
+        symbolTable.addExpression(mExpression);
     }
 
     @Override
@@ -30,7 +34,7 @@ public abstract class CalculatedField extends NamedNode {
     }
 
     public String toString() {
-        return mCondition.toString();
+        return mExpression.toString();
     }
 
     @Override
@@ -41,18 +45,12 @@ public abstract class CalculatedField extends NamedNode {
 
     @Override
     public String resolveValue() {
-        return mCondition.evaluate();
+        return mExpression.evaluate();
     }
-
 
     @Override
-    public void addCalculation(Set<CalculatedField> set) {
-        set.add(this);
+    public Type getType() {
+        return mType;
     }
 
-    public Set<String> getUsedVariables() {
-        Set<String> usedVariables = new LinkedHashSet<>();
-        mCondition.addUsedVariables(usedVariables);
-        return usedVariables;
-    }
 }

@@ -1,10 +1,12 @@
 package org.uva.taxfree.main;
 
 import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.environment.Environment;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.blocks.BlockNode;
 
 public class SemanticsAnalyzer {
-    private final Environment mEnvironment;
+    private final BlockNode mAbstractSyntaxTree;
+    private final SymbolTable mSymbolTable;
 
     /*
      * //UNDEFINES - reference to undefined questions
@@ -20,9 +22,12 @@ public class SemanticsAnalyzer {
      * - Check | if (1)
      */
 
-    public SemanticsAnalyzer(Environment environment) {
-        mEnvironment = environment;
+    public SemanticsAnalyzer(BlockNode abstractSyntaxTree, SymbolTable symbolTable) {
+        mAbstractSyntaxTree = abstractSyntaxTree;
+        mSymbolTable = symbolTable;
     }
+
+    // showMessages()
 
     public boolean validSemantics() {
         return !getSemanticErrors().fatalError();
@@ -32,15 +37,17 @@ public class SemanticsAnalyzer {
         return !getSemanticErrors().isEmpty();
     }
 
+    // kan naar main
     public MessageList getSemanticErrors() {
         MessageList semanticsMessages = new MessageList();
-        mEnvironment.getDuplicateDeclarationErrors(semanticsMessages);
-        mEnvironment.getDuplicateLabelErrors(semanticsMessages);
-        mEnvironment.getUndefinedDeclarationErrors(semanticsMessages);
-        mEnvironment.getCyclicDependencyErrors(semanticsMessages);
-        if (!semanticsMessages.fatalError()) {
-            mEnvironment.getConditionErrors(semanticsMessages);
-        }
+        mAbstractSyntaxTree.checkSemantics(mSymbolTable, semanticsMessages);
+//        mEnvironment.getDuplicateDeclarationErrors(semanticsMessages);
+//        mEnvironment.getDuplicateLabelErrors(semanticsMessages);
+//        mEnvironment.getUndefinedDeclarationErrors(semanticsMessages);
+//        mEnvironment.getCyclicDependencyErrors(semanticsMessages);
+//        if (!semanticsMessages.fatalError()) {
+//            mEnvironment.getConditionErrors(semanticsMessages);
+//        }
         return semanticsMessages;
     }
 }

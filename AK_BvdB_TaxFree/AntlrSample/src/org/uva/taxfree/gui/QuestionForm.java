@@ -1,12 +1,11 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.environment.Environment;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.declarations.NamedNode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -17,18 +16,10 @@ public class QuestionForm {
         mFormNode = formNode;
     }
 
-    public QuestionForm(Environment environment) {
-        mFormNode = environment.getRootNode();
-    }
-
     public void show() {
         generateForm();
         new FormRenderer(this);
         mFormNode.setVisible(true);
-    }
-
-    public void printDeclarations() {
-        mFormNode.printDeclarations();
     }
 
     private void generateForm() {
@@ -57,8 +48,8 @@ public class QuestionForm {
     }
 
     private Set<NamedNode> extractDeclarations() {
-        Set<NamedNode> questions = new LinkedHashSet<>();
-        mFormNode.retrieveDeclarations(questions);
+        Set<NamedNode> questions = new HashSet<>();
+//        mFormNode.retrieveDeclarations(questions);
         return questions;
     }
 
@@ -66,7 +57,4 @@ public class QuestionForm {
         mFormNode.setVisible(true);
     }
 
-    public void printValues() {
-        mFormNode.printValue();
-    }
 }

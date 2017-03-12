@@ -21,4 +21,5 @@ public class FormNode extends BlockNode {
     protected boolean isVisible() {
         return true;
     }
+
 }

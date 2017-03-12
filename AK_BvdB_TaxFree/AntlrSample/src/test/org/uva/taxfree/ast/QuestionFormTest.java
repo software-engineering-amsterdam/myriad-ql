@@ -14,6 +14,7 @@ import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.types.IntegerType;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -66,8 +67,8 @@ public class QuestionFormTest {
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mSymbolTable);
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
 
-        ExpressionNode expCalc = new CalculationExpressionNode(variableSold, "-", variableBought);
-        IntegerCalculatedField intCalc = new IntegerCalculatedField("Money balance:", "moneyBalance", expCalc);
+        BinaryExpressionNode expCalc = new CalculationBinaryExpressionNode(variableSold, "-", variableBought);
+        CalculatedField intCalc = new CalculatedField("Money balance:", "moneyBalance", new IntegerType(), expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
@@ -110,7 +111,7 @@ public class QuestionFormTest {
 
     @Test
     public void testBooleanIf() throws Exception {
-        ConditionNode condition = new BooleanLiteralNode("true");
+        ExpressionNode condition = new BooleanLiteralNode("true");
         Set<Node> questions = new LinkedHashSet<Node>() {{
             add(new BooleanQuestion("Hello, do you have a name?", "hasName"));
         }};
@@ -127,8 +128,8 @@ public class QuestionFormTest {
     @Test
     public void testConstantCondition() throws Exception {
 
-        ConditionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-        ConditionNode cond = new BooleanExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
+        ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
+        ExpressionNode cond = new BooleanBinaryExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
         Set<Node> questions = new LinkedHashSet<>();
         questions.add(cond);
         questions.add(new BooleanQuestion("Do you see me?", "amIVisible?"));
@@ -138,13 +139,13 @@ public class QuestionFormTest {
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
-        CalculatedField intField = new IntegerCalculatedField("I'm showing two:", "two", new IntegerLiteralNode("2"));
+        CalculatedField intField = new CalculatedField("I'm showing two:", "two", new IntegerType(), new IntegerLiteralNode("2"));
         add(intField);
     }
 
     @Test
     public void testIntFieldCalculation() throws Exception {
-        add(new IntegerCalculatedField("The result of 1 + 5:", "six", CalcOnePlusFive()));
+        add(new CalculatedField("The result of 1 + 5:", "six", new IntegerType(), CalcOnePlusFive()));
     }
 
     @Test
@@ -156,10 +157,9 @@ public class QuestionFormTest {
     }
 
 
-
     private void add(BlockNode blockNode) {
         Set<NamedNode> declarations = new LinkedHashSet<>();
-        blockNode.retrieveDeclarations(declarations);
+//        blockNode.retrieveDeclarations(declarations);
         mCachedDeclarations.addAll(declarations);
         addNode(blockNode);
     }
@@ -173,8 +173,8 @@ public class QuestionFormTest {
         mCachedNodes.add(n);
     }
 
-    private ConditionNode CalcOnePlusFive() {
-        ConditionNode calc = new CalculationExpressionNode(new IntegerLiteralNode("1"), "+", new IntegerLiteralNode("5"));
+    private ExpressionNode CalcOnePlusFive() {
+        ExpressionNode calc = new CalculationBinaryExpressionNode(new IntegerLiteralNode("1"), "+", new IntegerLiteralNode("5"));
         return calc;
     }
 }

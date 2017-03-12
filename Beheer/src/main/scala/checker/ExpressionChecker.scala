@@ -1,9 +1,9 @@
 package checker
 
 import ast._
-import model.FormModel
+import checker.Issue.Issues
 
-class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType: Type) extends Checker {
+class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: ExpressionNode, expectedType: Type) {
 
   def check: Issues = checkExpression(expression) match {
     case (Some(expressionType), Nil) => (expressionType, expectedType) match {
@@ -14,7 +14,7 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
     case (_, errors) => errors
   }
 
-  def checkExpression(expressionNode: ExpressionNode): (Option[Type], Issues) = expressionNode match {
+  private def checkExpression(expressionNode: ExpressionNode): (Option[Type], Issues) = expressionNode match {
     case _: DecimalLiteral => (Some(DecimalType), Nil)
     case _: IntegerLiteral => (Some(IntegerType), Nil)
     case _: BooleanLiteral => (Some(BooleanType), Nil)
@@ -40,14 +40,13 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
         case (_: Sub, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
         case (_: Mul, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
         case (_: Div, l: NumericType, r: NumericType) => (Some(mostGeneric(l, r)), errors)
-        case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Geq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Leq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
-        case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Gt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Lt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: And, BooleanType, BooleanType) => (Some(BooleanType), errors)
         case (_: Or, BooleanType, BooleanType) => (Some(BooleanType), errors)
+
         // Equality: Among different numbers, ok, otherwise: strict type match.
         case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
@@ -70,12 +69,12 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
     }
   }
 
-  private def identifierType(identifier: Identifier): (Option[Type], Issues) = {
-    db.identifiersWithType.filter { case (i, _) => identifier.value == i } match {
+  private def identifierType(identifier: Identifier): (Option[Type], Issues) =
+    identifiersWithType.filter { case (i, _) => identifier.value == i } match {
       case (_, identifierType) :: Nil => (Some(identifierType), Nil)
       case _ => (None, Seq(Error(s"Duplicate identifier found in expression check: ${identifier.value}")))
     }
-  }
+
   private def mostGeneric(left: NumericType, right: NumericType): NumericType =
     (left, right) match {
       case (MoneyType, _) => MoneyType
@@ -85,8 +84,8 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
       case (IntegerType, IntegerType) => IntegerType
     }
 
-  private def isSubType(candidate: NumericType, expectedType: NumericType): Boolean =
-    mostGeneric(candidate, expectedType) == expectedType
+  private def isSubType(candidateChild: NumericType, candidateParent: NumericType): Boolean =
+    mostGeneric(candidateChild, candidateParent) == candidateParent
 
   private def emitError(expressionNode: ExpressionNode, left: Type, right: Type, errors: Issues) =
     (None, Error(s"Types $left, $right not supported by operation ${expressionNode.getClass.getName}") +: errors)
@@ -97,6 +96,6 @@ class ExpressionChecker(db: FormModel, expression: ExpressionNode, expectedType:
 }
 
 object ExpressionChecker {
-  def apply(db: FormModel, expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
-    new ExpressionChecker(db, expressionNode, expectedType).check
+  def apply(identifiersWithType: Seq[(String, Type)], expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
+    new ExpressionChecker(identifiersWithType, expressionNode, expectedType).check
 }

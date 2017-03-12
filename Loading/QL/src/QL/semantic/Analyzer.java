@@ -17,8 +17,8 @@ public class Analyzer {
         VerifyExpressions verifyExpressions = new VerifyExpressions(environment);
         verifyExpressions.visit(form);
 
-        checkCyclicDependencies cyclicDependenciesVisitor = new checkCyclicDependencies(environment);
-        cyclicDependenciesVisitor.visit(form);
+        CheckCyclicDependencies cyclicVisitor = new CheckCyclicDependencies(environment);
+        cyclicVisitor.visit(form);
 
         return environment.getFaults();
 

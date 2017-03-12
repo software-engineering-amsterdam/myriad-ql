@@ -1,13 +1,12 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.types.Type;
 
-import java.util.Set;
+public class ParenthesizedExpressionNode extends ExpressionNode {
+    private final ExpressionNode mCondition;
 
-public class ParenthesizedExpressionNode extends ConditionNode {
-    private final ConditionNode mCondition;
-
-    public ParenthesizedExpressionNode(ConditionNode condition) {
+    public ParenthesizedExpressionNode(ExpressionNode condition) {
         super();
         mCondition = condition;
     }
@@ -18,8 +17,8 @@ public class ParenthesizedExpressionNode extends ConditionNode {
     }
 
     @Override
-    public void addUsedVariables(Set<String> set) {
-        mCondition.addUsedVariables(set);
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addExpression(mCondition);
     }
 
     @Override

@@ -12,7 +12,7 @@ public abstract class TextFieldQuestion extends NamedNode {
         mTextField = createTextField();
     }
 
-    private JFormattedTextField createTextField(){
+    private JFormattedTextField createTextField() {
         JFormattedTextField textField = new JFormattedTextField(getFormatObject());
         textField.setPreferredSize(new Dimension(100, 25));
         return textField;
@@ -24,11 +24,6 @@ public abstract class TextFieldQuestion extends NamedNode {
     @Override
     public void fillPanel(JPanel parentPanel) {
         parentPanel.add(mTextField);
-    }
-
-    @Override
-    public void printValue() {
-        System.out.println("Value of string: " + resolveValue());
     }
 
     @Override
