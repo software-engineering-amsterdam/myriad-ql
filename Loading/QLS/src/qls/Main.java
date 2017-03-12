@@ -3,7 +3,8 @@ package qls;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import QLS.QLSLexer;
+import qls.ast.Stylesheet;
+
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -18,11 +19,11 @@ public class Main {
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
 
-		QLSLexer lexer = new QLSLexer(input);
+		qlsLexer lexer = new qlsLexer(input);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		QLParser parser = new QLParser(tokens);
-		Form form = parser.form().result;
+		qlsParser parser = new qlsParser(tokens);
+		Stylesheet stylesheet = parser.stylesheet().result;
 	}
 }

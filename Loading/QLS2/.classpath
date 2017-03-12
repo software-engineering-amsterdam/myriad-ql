@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="target/generated-sources/antlr4/qls"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/Users/Nikki/Documents/workspace/myriad-ql/AK_BvdB_TaxFree/AntlrSample/libs/antlr-4.6-complete.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/QL"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

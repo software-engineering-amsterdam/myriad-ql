@@ -2,7 +2,7 @@ grammar qls;
 
 @parser::header
 {
-    import ql.ast.*;
+    import qls.ast.*;
     import qls.ast.widget.*;
 }
 
@@ -14,7 +14,7 @@ stylesheet returns [Stylesheet result]
  : 'page' ID '{' sections '}' { $result.add(new Page($ID.text, $sections.result, $ctx.start.getLine())); };
  
  sections returns [List<Section> result]
- : 'section' STRING '{' questions defaultType '}' { $result.add(new SectionWithDefault($STRING.text, $questions.result, $defaultType.result, $ctx.start.getLine())); }
+ : 'section' STRING '{' questions defaultStyle '}' { $result.add(new SectionWithDefault($STRING.text, $questions.result, $defaultStyle.result, $ctx.start.getLine())); }
    'section' STRING '{' questions '}' { $result.add(new Section($STRING.text, $questions.result, $ctx.start.getLine())); };
 
 questions returns [List<Question> result]
@@ -26,15 +26,21 @@ widget returns [Widget result]
   'widget' 'spinbox' { $result = new SpinBox($ctx.start.getLine()); }
   ;
   
-defaultType returns [DefaultType result]
-: 'default' ID defOptions widget { $result = new DefaultType($ID.text, $defOptions.result, $ctx.start.getLine()); };
+defaultStyle returns [DefaultStyle result]
+: 'default' ID 
+  'width:' width = INT
+  'font:' font = STRING
+  'fontsize:' fontSize = INT
+  'color:' color =  STRING
+  widget { $result = new DefaultStyle($ID.text, Integer.parseInt($width.text), $font.text, 
+  	Integer.parseInt($fontSize.text), $color.text, $ctx.start.getLine()); };
 
 // TODO you can specify the default width / font multiple times 
-defOptions returns [List<Option> result]
-: 'width:' INT { $result.add(new Width(Integer.parseInt($INT.text)); }
-  'font:' STRING { $result.add(new Font($STRING.text); }
-  'fontsize:' STRING { $result.add(new FontSize($STRING.text)); }
-  'color:' INT { $result.add(new Color(Integer.parseInt($INT.text))); };
+//defOptions returns [List<Option> result]
+//: 'width:' INT { $result.add(new Width(Integer.parseInt($INT.text)); }
+//  'font:' STRING { $result.add(new Font($STRING.text); }
+//  'fontsize:' STRING { $result.add(new FontSize($STRING.text)); }
+//  'color:' INT { $result.add(new Color(Integer.parseInt($INT.text))); };
  
 ID : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 

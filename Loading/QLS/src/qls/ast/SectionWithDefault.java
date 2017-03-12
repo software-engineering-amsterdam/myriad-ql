@@ -6,7 +6,7 @@ public class SectionWithDefault extends Section {
 	
 	private final DefaultStyle defaultStyle;
 	
-	SectionWithDefault(String name, List<Question> questions, DefaultStyle defaultStyle, int line) {
+	public SectionWithDefault(String name, List<Question> questions, DefaultStyle defaultStyle, int line) {
 		super(name, questions, line);
 		this.defaultStyle = defaultStyle;
 	}
