@@ -1,10 +1,15 @@
 package org.lemonade.visitors;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lemonade.gui.elements.GuiBody;
 import org.lemonade.gui.elements.GuiBooleanValue;
 import org.lemonade.gui.elements.GuiConditional;
 import org.lemonade.gui.elements.GuiDateValue;
 import org.lemonade.gui.elements.GuiDecimalValue;
 import org.lemonade.gui.elements.GuiElement;
+import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.gui.elements.GuiIdentifierValue;
 import org.lemonade.gui.elements.GuiIntegerValue;
 import org.lemonade.gui.elements.GuiLabelValue;
@@ -60,11 +65,15 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
     }
 
     @Override public GuiElement visit(final Form form) {
+        List<GuiBody> bodies = new ArrayList<>();
+        GuiIdentifierValue identifier = (GuiIdentifierValue) form.getIdentifier().accept(this);
+
         for (Body body : form.getBodies()) {
-            body.accept(this);
+            bodies.add((GuiBody) body.accept(this));
             rowCount++;
         }
-        return null;
+
+        return new GuiForm(identifier, bodies);
     }
 
     @Override public GuiElement visit(final Question question) {
@@ -79,6 +88,8 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
         GridPane.setConstraints(guiQuestion.getLabelValue().getWidget(), 0, 0);
         GridPane.setConstraints(guiQuestion.getValue().getWidget(), 1, 0);
         gridPane.getChildren().addAll(guiQuestion.getLabelValue().getWidget(), guiQuestion.getValue().getWidget());
+
+        gridPane.managedProperty().bind(gridPane.visibleProperty());
 
         pane.addRow(rowCount, gridPane);
 

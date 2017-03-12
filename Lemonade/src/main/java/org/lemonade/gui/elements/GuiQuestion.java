@@ -28,6 +28,7 @@ public class GuiQuestion extends GuiBody {
     @Override
     public void update() {
         value.update();
+        System.err.println("new value = " + value);
     }
 
     @Override

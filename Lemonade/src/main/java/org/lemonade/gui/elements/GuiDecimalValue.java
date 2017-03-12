@@ -27,6 +27,7 @@ public class GuiDecimalValue extends GuiValue<Double> {
     public void update() {
         double value = validate(textField.getText());
         setValue(value);
+        System.err.println("new value = " + value);
     }
 
     private double validate(String text) {

@@ -29,7 +29,7 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
     public Form visitForm(QLParser.FormContext ctx) {
         System.err.println("Entering form");
         IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
-        List<Body> bodies = new ArrayList<Body>();
+        List<Body> bodies = new ArrayList<>();
 
         for (QLParser.BodyContext body : ctx.body()) {
             bodies.add((Body) body.accept(this));

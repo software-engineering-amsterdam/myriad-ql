@@ -24,6 +24,7 @@ public class GuiIntegerValue extends GuiValue<Integer> {
     @Override public void update() {
         int value = validate(textField.getText());
         setValue(value);
+        System.err.println("new value = " + value);
     }
 
     private int validate(String text) {

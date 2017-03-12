@@ -11,14 +11,15 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
+import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.nodes.Form;
-import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,7 +61,7 @@ public class QLFxApp extends Application {
 
         AnchorPane anchorPane = new AnchorPane();
         HBox hBox = new HBox();
-//        hBox.setPadding(new Insets(0, 10, 10, 10));
+        //        hBox.setPadding(new Insets(0, 10, 10, 10));
         hBox.setSpacing(10);
         hBox.getChildren().addAll(openButton, submitButton, fileLabel);
         AnchorPane.setBottomAnchor(hBox, 10.0);
@@ -81,6 +82,7 @@ public class QLFxApp extends Application {
         String contents = null;
 
         try {
+            final Button submitButton = new Button("Submit form");
             final Button backButton = new Button("Select new questionnaire");
             backButton.setOnAction(e -> stage.setScene(selectionScene));
 
@@ -89,12 +91,14 @@ public class QLFxApp extends Application {
             gridPane.setVgap(6);
 
             final AnchorPane rootGroup = new AnchorPane();
+            AnchorPane.setBottomAnchor(submitButton, 10.0);
+            AnchorPane.setLeftAnchor(submitButton, 5.0);
             AnchorPane.setBottomAnchor(backButton, 10.0);
-            AnchorPane.setLeftAnchor(backButton, 5.0);
+            AnchorPane.setRightAnchor(backButton, 5.0);
             AnchorPane.setTopAnchor(gridPane, 10.0);
             AnchorPane.setLeftAnchor(gridPane, 5.0);
 
-            rootGroup.getChildren().addAll(gridPane, backButton);
+            rootGroup.getChildren().addAll(gridPane, backButton, submitButton);
             rootGroup.setPadding(new Insets(10, 10, 10, 10));
 
             questionnaireScene = new Scene(rootGroup);
@@ -115,17 +119,27 @@ public class QLFxApp extends Application {
             Form root = (Form) tree.accept(visitor);
 
             TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
-            EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             GuiVisitor guiVisitor = new GuiVisitor(gridPane);
 
             root.accept(typeCheckVisitor);
-            root.accept(guiVisitor);
-            //            root.accept(evaluateVisitor);
+            GuiForm guiRoot = (GuiForm) root.accept(guiVisitor);
+
+            submitButton.setOnAction(e -> submitForm(guiRoot, gridPane));
 
             stage.setScene(questionnaireScene);
 
         } catch (Exception e) {
             System.err.println("Error " + e.getMessage());
         }
+    }
+
+    // Something will happen here (evaluate visitor)
+    private void submitForm(GuiForm guiForm, GridPane gridPane) {
+        Node node = gridPane.getChildren().get(1);
+        if (node.isVisible())
+            node.setVisible(false);
+        else
+            node.setVisible(true);
+        System.err.println("In submit");
     }
 }

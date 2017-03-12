@@ -22,6 +22,7 @@ public class GuiDateValue extends GuiValue<LocalDate> {
     @Override
     public void setValue(final LocalDate value) {
         this.value = value;
+        System.err.println("new value = " + value);
     }
 
     @Override
