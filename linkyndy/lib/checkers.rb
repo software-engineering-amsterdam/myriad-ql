@@ -70,32 +70,33 @@ module Checkers
   end
 
   class UndefinedIdentifiers < Base
-    attr_reader :defined, :used
-
-    def initialize
-      @defined = []
-      @used = []
+    def initialize(ast)
+      @ast = ast
     end
 
     def check
-      undefined = used.reject do |identifier|
-        defined.map(&:to_s).include? identifier.to_s
-      end
-      undefined.each do |identifier|
+      ast.select do |node|
+        Ast::Identifier === node
+      end.reject do |identifier|
+        defined_identifiers.include? identifier.name.to_s
+      end.each do |identifier|
         puts error_formatter(identifier)
       end
     end
 
     def error_formatter(item)
-      "Identifier `#{item}` is not defined (used on #{item.line_and_column.join(':')})"
+      "Identifier `#{item.name}` is not defined (used on #{item.name.line_and_column.join(':')})"
     end
 
-    def visit_identifier(node, parent)
-      case parent
-      when Ast::Form, Ast::Question
-        defined << node.name
-      when Ast::UnaryExpression, Ast::BinaryExpression
-        used << node.name
+    private
+
+    attr_reader :ast
+
+    def defined_identifiers
+      ast.select do |node|
+        Ast::Question === node || Ast::Form === node
+      end.map do |question|
+        question.identifier.name.to_s
       end
     end
   end
