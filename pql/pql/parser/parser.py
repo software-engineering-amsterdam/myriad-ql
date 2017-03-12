@@ -67,7 +67,7 @@ def parse(input_string):
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
     name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
-        lambda parsed_tokens: ast.Identifier(parsed_tokens[0]))
+        lambda source, location, parsed_tokens: ast.Identifier({"src": source, "loc": location}, parsed_tokens[0]))
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)

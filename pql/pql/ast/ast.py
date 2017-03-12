@@ -1,9 +1,15 @@
 # coding=utf-8
+from collections import defaultdict
+
+from pyparsing import lineno, col
 
 
 class Node(object):
-    def __init__(self, var_type):
+    def __init__(self, var_type, location=defaultdict(int)):
         self.var_type = var_type
+        loc = location.get("loc", 0)
+        src = location.get("src", '')
+        self.location = {"line_no": lineno(loc, src), "col_no": col(loc, src)}
 
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"
@@ -30,8 +36,8 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, title, identifier, data_type, expression=None):
-        super(Field, self).__init__('field')
+    def __init__(self, location, title, identifier, data_type, expression=None):
+        super(Field, self).__init__('field', location)
         self.name = identifier
         self.title = title
         self.data_type = data_type
@@ -42,7 +48,7 @@ class Field(Node):
 
 
 class If(Node):
-    def __init__(self,  boolean_statement):
+    def __init__(self, boolean_statement):
         super(If, self).__init__('if')
         self.condition = boolean_statement[0]
         self.statements = boolean_statement[1]
@@ -52,7 +58,7 @@ class If(Node):
 
 
 class IfElse(Node):
-    def __init__(self,  boolean_statement):
+    def __init__(self, boolean_statement):
         super(IfElse, self).__init__('if_else')
         self.condition = boolean_statement[0]
         self.statements = boolean_statement[1]
@@ -133,7 +139,7 @@ class Negation(UnaryOperation):
 class And(BinaryOperation):
     eval_function = all
 
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(And, self).__init__('and', left, right)
 
     def apply(self, visitor):
@@ -143,7 +149,7 @@ class And(BinaryOperation):
 class Or(BinaryOperation):
     eval_function = any
 
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(Or, self).__init__('or', left, right)
 
     def apply(self, visitor):
@@ -151,7 +157,7 @@ class Or(BinaryOperation):
 
 
 class Equality(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(Equality, self).__init__('equality', left, right)
 
     def apply(self, visitor):
@@ -159,7 +165,7 @@ class Equality(BinaryOperation):
 
 
 class GreaterExclusive(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(GreaterExclusive, self).__init__('greater_exclusive', left, right)
 
     def apply(self, visitor):
@@ -167,7 +173,7 @@ class GreaterExclusive(BinaryOperation):
 
 
 class GreaterInclusive(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(GreaterInclusive, self).__init__('greater_inclusive', left, right)
 
     def apply(self, visitor):
@@ -175,7 +181,7 @@ class GreaterInclusive(BinaryOperation):
 
 
 class LowerInclusive(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(LowerInclusive, self).__init__('lower_inclusive', left, right)
 
     def apply(self, visitor):
@@ -183,7 +189,7 @@ class LowerInclusive(BinaryOperation):
 
 
 class LowerExclusive(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(LowerExclusive, self).__init__('lower_exclusive', left, right)
 
     def apply(self, visitor):
@@ -191,7 +197,7 @@ class LowerExclusive(BinaryOperation):
 
 
 class Inequality(BinaryOperation):
-    def __init__(self,  left, right):
+    def __init__(self, left, right):
         super(Inequality, self).__init__('inequality', left, right)
 
     def apply(self, visitor):
@@ -209,8 +215,8 @@ class Value(Node):
 
 
 class Identifier(Node):
-    def __init__(self, name):
-        super(Identifier, self).__init__('identifier')
+    def __init__(self, location, name):
+        super(Identifier, self).__init__('identifier', location)
         self.name = name
 
     def apply(self, visitor):
