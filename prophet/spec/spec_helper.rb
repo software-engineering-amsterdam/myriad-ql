@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "prophet"
 require 'parslet/rig/rspec'
 
 RSpec.configure do |config|

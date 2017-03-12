@@ -18,13 +18,13 @@ module Checkers
     def visit_identifier(node, parent)
     end
 
-    def visit_string_literal(node, parent)
+    def visit_text_literal(node, parent)
     end
 
-    def visit_integer_literal(node, parent)
+    def visit_number_literal(node, parent)
     end
 
-    def visit_boolean_literal(node, parent)
+    def visit_bool_literal(node, parent)
     end
 
     def visit_type(node, parent)

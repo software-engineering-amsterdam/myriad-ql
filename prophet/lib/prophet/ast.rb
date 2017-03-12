@@ -15,6 +15,13 @@ module Ast
       children.each { |child| child.visit(visitor, self) }
     end
 
+    # def walk(&block)
+    #   initial = block_given? && !block.call(self) ? [] : [self]
+    #   children.inject(initial) do |memo, child|
+    #     (memo << child.walk(&block)).flatten
+    #   end
+    # end
+
     def each(&block)
       block.call(self)
       children.each { |child| child.each(&block) }
