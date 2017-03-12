@@ -1,3 +1,5 @@
+require_relative './utils/dependency_hash'
+
 module Checkers
   class Base
     def check
@@ -109,6 +111,40 @@ module Checkers
       end
     end
   end
+
+  class CyclicDependencies < Base
+    def initialize(ast)
+      @ast = ast
+    end
+
+    def check
+      dependency_hash.tsort
+    rescue TSort::Cyclic
+      puts error_formatter
+    end
+
+    def error_formatter
+      "A cyclic dependency exists"
+    end
+
+    private
+
+    attr_reader :ast, :dependency_hash
+
+    def dependency_hash
+      @dependency_hash ||= DependencyHash[
+        ast.select do |node|
+          Ast::Question === node && node.value
+        end.map do |question|
+          identifiers = question.value.select do |node|
+            Ast::Identifier === node
+          end
+          [question.identifier.name.to_s, identifiers.map { |i| i.name.to_s }]
+        end
+      ]
+    end
+  end
+
   class InvalidOperands < Base
     def initialize(ast)
       @ast = ast
@@ -160,3 +196,4 @@ module Checkers
       end.to_h
     end
   end
+end
