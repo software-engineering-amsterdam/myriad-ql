@@ -14,5 +14,4 @@ public abstract class Node {
         // TODO: make abstract and do the checks!
         messageList.addError("checkSemantics unimplemented!");
     }
-
 }

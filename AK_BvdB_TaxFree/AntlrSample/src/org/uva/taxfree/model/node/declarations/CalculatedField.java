@@ -1,11 +1,14 @@
 package org.uva.taxfree.model.node.declarations;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CalculatedField extends NamedNode {
     private final ExpressionNode mExpression;
@@ -53,4 +56,19 @@ public class CalculatedField extends NamedNode {
         return mType;
     }
 
+
+    private void checkCyclicDependencies(SymbolTable symbolTable, MessageList messageList) {
+        Set<String> dependencies = getUsedVariables();
+        symbolTable.generateDependencies(dependencies);
+        if (dependencies.contains(getId())) {
+            messageList.addError("Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
+        }
+    }
+
+    public Set<String> getUsedVariables() {
+        Set<String> declarations = new HashSet<>();
+        getDependencies(declarations);
+        mExpression.getDependencies(declarations);
+        return declarations;
+    }
 }

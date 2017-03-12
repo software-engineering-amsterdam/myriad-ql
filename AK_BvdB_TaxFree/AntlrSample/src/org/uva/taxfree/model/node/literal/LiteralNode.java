@@ -3,6 +3,8 @@ package org.uva.taxfree.model.node.literal;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
+import java.util.Set;
+
 public abstract class LiteralNode extends ExpressionNode {
     private final String mId;
 
@@ -23,5 +25,10 @@ public abstract class LiteralNode extends ExpressionNode {
     @Override
     public boolean isValid() {
         return false;
+    }
+
+    @Override
+    public void getDependencies(Set<String> dependencies) {
+        dependencies.add(mId);
     }
 }

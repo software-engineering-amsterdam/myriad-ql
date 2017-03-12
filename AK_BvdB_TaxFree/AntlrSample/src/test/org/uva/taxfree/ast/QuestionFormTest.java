@@ -41,7 +41,7 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
-        mSymbolTable.addDeclarations(mCachedDeclarations);
+        mSymbolTable.addDepencendies(mCachedDeclarations);
         QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
         form.show();
     }
