@@ -3,9 +3,9 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.main.SemanticsAnalyzer;
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,17 +49,18 @@ public class ConditionTest {
 
     private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         boolean expectedValid = 0 == expectedErrorAmount;
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
-        Assert.assertEquals(semanticsAnalyzer.validSemantics(), expectedValid, "Expecting errors: " + description);
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
+        FormNode ast = createAst(fileName);
+        MessageList semanticsMessages = new MessageList();
+        SymbolTable symbolTable = new SymbolTable();
+        ast.fillSymbolTable(symbolTable);
+        ast.checkSemantics(symbolTable, semanticsMessages);
+        Assert.assertEquals(semanticsMessages.isEmpty(), expectedValid, "Expecting errors: " + description);
+        Assert.assertEquals(semanticsMessages.size(), expectedErrorAmount, "Invalid error amount");
     }
 
-    private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
+    private FormNode createAst(String fileName) throws IOException {
         AstBuilder builder = new AstBuilder(testFile(fileName));
-        BlockNode form = builder.generateTree();
-        SymbolTable symbolTable = new SymbolTable();
-        form.fillSymbolTable(symbolTable);
-        return new SemanticsAnalyzer(form, symbolTable);
+        return builder.generateTree();
     }
 
     private File testFile(String fileName) {

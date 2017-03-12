@@ -6,7 +6,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.FileReader;
@@ -29,7 +29,7 @@ public class AstBuilder {
     }
 
 
-    public BlockNode generateTree() throws IOException {
+    public FormNode generateTree() throws IOException {
         ANTLRErrorListener errorListener = new ANTLRErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
