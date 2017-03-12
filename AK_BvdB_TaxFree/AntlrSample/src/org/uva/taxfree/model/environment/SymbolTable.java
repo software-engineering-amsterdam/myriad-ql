@@ -48,6 +48,15 @@ public class SymbolTable {
         return findNode(variableId).resolveValue();
     }
 
+    public boolean contains(String variableId) {
+        for (NamedNode n : mDeclarations) {
+            if (variableId.equals(n.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Type resolveType(String variableId) {
         return findNode(variableId).getType();
     }

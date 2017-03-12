@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.literal;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
@@ -30,5 +31,10 @@ public abstract class LiteralNode extends ExpressionNode {
     @Override
     public void getDependencies(Set<String> dependencies) {
         dependencies.add(mId);
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        // intentionally left blank
     }
 }

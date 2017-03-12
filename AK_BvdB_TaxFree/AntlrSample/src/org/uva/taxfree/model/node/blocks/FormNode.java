@@ -1,5 +1,7 @@
 package org.uva.taxfree.model.node.blocks;
 
+import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 
 import java.util.Set;
@@ -22,4 +24,10 @@ public class FormNode extends BlockNode {
         return true;
     }
 
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        symbolTable.getDuplicateDeclarationErrors(semanticsMessages);
+        symbolTable.getDuplicateLabelErrors(semanticsMessages);
+        super.checkSemantics(symbolTable, semanticsMessages);
+    }
 }

@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.types.Type;
 
@@ -36,5 +37,10 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     @Override
     public void getDependencies(Set<String> dependencies) {
         mExpression.getDependencies(dependencies);
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        mExpression.checkSemantics(symbolTable, semanticsMessages);
     }
 }
