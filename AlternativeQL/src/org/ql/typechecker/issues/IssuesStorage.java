@@ -5,8 +5,8 @@ import java.util.List;
 
 public class IssuesStorage {
 
-    private List<Issue> errors = new ArrayList<>();
-    private List<Issue> warnings = new ArrayList<>();
+    private final List<Issue> errors = new ArrayList<>();
+    private final List<Issue> warnings = new ArrayList<>();
 
     public void addError(Issue error) {
         addIssue(error, errors);

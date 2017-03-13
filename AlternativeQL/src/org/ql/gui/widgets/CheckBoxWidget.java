@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import org.ql.evaluator.value.BooleanValue;
 
 public class CheckBoxWidget extends Widget<ActionEvent, Boolean> {
-    private CheckBox checkBox;
+    private final CheckBox checkBox;
 
     public CheckBoxWidget(String label) {
         this.checkBox = new CheckBox(label);

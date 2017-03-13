@@ -5,7 +5,7 @@ import org.ql.gui.elements.Element;
 
 public class Window {
 
-    private QuestionPane mainPane;
+    private final QuestionPane mainPane;
 
     public Window(Stage stage, String title) {
         stage.setTitle(title);

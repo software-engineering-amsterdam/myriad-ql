@@ -6,7 +6,7 @@ import org.ql.ast.expression.ExpressionVisitor;
 import java.math.BigDecimal;
 
 public class DecimalLiteral extends Expression {
-    private BigDecimal value;
+    private final BigDecimal value;
 
     public DecimalLiteral(BigDecimal value) {
         this.value = value;

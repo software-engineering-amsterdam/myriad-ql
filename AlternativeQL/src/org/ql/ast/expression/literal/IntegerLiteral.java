@@ -4,7 +4,7 @@ import org.ql.ast.Expression;
 import org.ql.ast.expression.ExpressionVisitor;
 
 public class IntegerLiteral extends Expression {
-    private int value;
+    private final int value;
 
     public IntegerLiteral(Integer value) {
         this.value = value;

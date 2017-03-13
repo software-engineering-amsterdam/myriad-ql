@@ -4,7 +4,7 @@ import org.ql.ast.Expression;
 import org.ql.ast.expression.ExpressionVisitor;
 
 public class BooleanLiteral extends Expression {
-    private boolean value;
+    private final boolean value;
 
     public BooleanLiteral(Boolean value) {
         this.value = value;
