@@ -34,11 +34,11 @@ public class BinaryExpressionNode extends ExpressionNode {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
-        if (!mLeft.isSameType(mRight)){
-            semanticsMessages.addError("Incompatible types in expression" + mLeft.getType() + " & " + mRight.getType());
+        if (!mLeft.isSameType(mRight)) {
+            semanticsMessages.addError("Incompatible types in expression: " + mLeft.getType() + " & " + mRight.getType());
         }
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
-            semanticsMessages.addError("Unsupported operator called:");
+            semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
         }
     }
 
