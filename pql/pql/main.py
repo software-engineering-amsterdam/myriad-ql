@@ -29,7 +29,6 @@ if __name__ == '__main__':
 # TODO: IdentifierChecker weer niet recursief maken
 # TODO: TypeChecker de TypeEnvironment meegeven
 # TODO: Environment een class maken en een update value methode geven
-# TODO: Unary operator rhs hernoemen naar lhs
 
 # TODO: Evaluator regel 92 de is None checks weghalen
 # TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten)

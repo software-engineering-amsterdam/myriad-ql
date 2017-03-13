@@ -678,7 +678,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('positive', positive_node.var_type,
                          'Positive node should have type positive')
 
-        identifier_node = positive_node.rhs
+        identifier_node = positive_node.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -704,7 +704,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('negative', negative.var_type,
                          'Negative node should have type negative')
 
-        identifier_node = negative.rhs
+        identifier_node = negative.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -730,7 +730,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('negation', negative.var_type,
                          'Negation node should have type negation')
 
-        identifier_node = negative.rhs
+        identifier_node = negative.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -770,7 +770,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('negation', negation_node.var_type,
                          'Negation node should have type negation')
 
-        identifier_node_2 = negation_node.rhs
+        identifier_node_2 = negation_node.operand
         self.assertEqual('identifier', identifier_node_2.var_type,
                          'Identifier node should have type identifier')
 
