@@ -56,7 +56,7 @@ import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.LiteralVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElement>, TypeVisitor<GuiElement> {
+public class GuiVisitor implements BaseVisitor<GuiElement>, TypeVisitor<GuiElement> {
 
     private GridPane pane;
     private int rowCount;
@@ -130,7 +130,4 @@ public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElemen
         return new GuiStringValue();
     }
 
-    @Override public GuiElement visit(final ASTNode astNode) {
-        return null;
-    }
 }
