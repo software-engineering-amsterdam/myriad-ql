@@ -1,6 +1,5 @@
 package org.uva.taxfree.model.node.expression;
 
-import com.sun.javafx.geom.AreaOp;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
@@ -35,7 +34,9 @@ public abstract class ExpressionNode extends Node {
     }
 
     public boolean isSameType(ExpressionNode other) {
-        return getType().equals(other.getType());
+        Type thisType = getType();
+        Type otherType = other.getType();
+        return thisType.equals(otherType);
     }
 
     public abstract Type getType();
