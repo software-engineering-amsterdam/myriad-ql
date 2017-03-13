@@ -5,7 +5,7 @@ import java.util.*;
 
 import QL.Faults;
 import QL.ast.Form;
-import QL.evaluation.Environment;
+import QL.Environment;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,14 +32,14 @@ public class Questionnaire extends Application implements Notifier {
 	
 	// TODO do not make static
 	private static Form form;
-	private static QL.evaluation.Environment env; // TODO rename
+	private static Environment environment;
 	private static GridPane grid;
 	private static Faults faults;
-	private static Stage pStage; // TODO
+	private static Stage pStage;
 	
-    public void main(Form f, Environment environment, Faults flts) {
+    public void main(Form f, Environment env, Faults flts) {
     	form = f;
-    	env = environment;
+    	environment = env;
     	faults = flts;
 
         launch();
@@ -104,7 +104,7 @@ public class Questionnaire extends Application implements Notifier {
         Button btn = renderButton(grid, activeQuestions.size() + 2);
 
         // TODO move to function submit
-        final Text actiontarget = new Text();
+        Text actiontarget = new Text();
         grid.add(actiontarget, 1, activeQuestions.size() + 2);
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -138,7 +138,7 @@ public class Questionnaire extends Application implements Notifier {
     
     private List<Row> createQuestions() {
         
-    	QEvaluator qVisitor = new QEvaluator(env, this);
+    	QEvaluator qVisitor = new QEvaluator(environment, this);
     	qVisitor.visit(form);
     	return qVisitor.getActiveQuestions();
     	
@@ -170,13 +170,10 @@ public class Questionnaire extends Application implements Notifier {
     }
     
 	public void updateQuestionnaire(String name, Value newValue) {
-    	Value oldAnswer = env.getAnswer(name);
-    	// TODO .equals()?
-    	System.out.println(oldAnswer);
-    	System.out.println(newValue);
-		if (!env.isAnswered(name) || !(oldAnswer.eq(newValue).getValue())) {
+    	Value oldAnswer = environment.getAnswer(name);
+		if (!environment.isAnswered(name) || !(oldAnswer.equals(newValue))) {
 
-			env.addAnswer(name, newValue); 
+			environment.addAnswer(name, newValue);
 	    	grid.getChildren().clear();
 	        renderQuestionnaire(grid);
 	        grid.lookup("#" + name).requestFocus();
@@ -207,7 +204,8 @@ public class Questionnaire extends Application implements Notifier {
             jsonWriter.close();
         } 
         catch (IOException ex) {
-            System.out.println("IOException save questionnaire..."); // TODO
+            throw new RuntimeException(
+                    "This should never happen, I know this file exists", ex);
         }
 	}
 

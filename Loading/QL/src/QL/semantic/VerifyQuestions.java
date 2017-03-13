@@ -69,8 +69,7 @@ public class VerifyQuestions implements FormVisitor {
 		}
 		environment.addVariableType(variable, type);
 	}
-	
-	// TODO better if it would print both line numbers
+
 	private void addLabel(String label, String variableName, int line) {
 		if (environment.labelExists(label)) {
 			environment.getFaults().add(new Warning("The question: " + label + 

@@ -23,7 +23,7 @@ blockItems returns [List<BlockItem> result]
 }
  : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $ctx.start.getLine())); }
  |   ID ':' STRING type expr { $result.add(new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result, $ctx.start.getLine())); }
- |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); } // TODO add else
+ |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); }
  |   'if' '(' expr ')' block { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); }
    )*
  ;
@@ -34,7 +34,6 @@ type returns [Type result]
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
 
-// TODO implement precedence
 expr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
  | lhs = expr '/'  rhs = expr { $result = new DivExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }

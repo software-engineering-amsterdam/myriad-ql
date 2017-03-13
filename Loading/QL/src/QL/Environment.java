@@ -1,4 +1,4 @@
-package QL.evaluation;
+package QL;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,6 @@ import java.util.Map;
 import QL.ast.type.Type;
 import QL.value.Value;
 
-// TODO move one level higher
 public class Environment {
 
 	private Map<String, Value> variableAnswer;
@@ -21,16 +20,11 @@ public class Environment {
 		variableAnswer.put(variable, answer);
 	}
 
-	public Map<String, Value> getAnswers() {
-		return variableAnswer;
-	}
-
 	public Value getAnswer(String variable) {
 		if (isAnswered(variable)) {
 			return variableAnswer.get(variable);
 		}
-		System.out.println("TODO an unset variable is returned");
-		return getType(variable).getValue(); // TODO throw here?
+		return getType(variable).getValue();
 	}
 	
 	public Type getType(String variable) {

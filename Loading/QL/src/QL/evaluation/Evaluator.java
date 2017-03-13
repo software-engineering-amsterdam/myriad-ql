@@ -1,5 +1,6 @@
 package QL.evaluation;
 
+import QL.Environment;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;

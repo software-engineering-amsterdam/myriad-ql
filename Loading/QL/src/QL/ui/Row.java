@@ -19,7 +19,6 @@ public class Row {
 		this.field = field;
 	}
 
-	// TODO default return statement
 	public Value getAnswer() {
 		return field.getAnswer();
 	}

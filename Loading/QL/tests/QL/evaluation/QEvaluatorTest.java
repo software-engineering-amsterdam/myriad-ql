@@ -1,4 +1,4 @@
-package QL.ui;
+package QL.evaluation;
 
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
@@ -39,6 +39,10 @@ class QEvaluatorTest extends Evaluator {
         Expression expr = new DivExpr(new IntegerAtom(8,1), new IntegerAtom(2,1), 1);
         Value v = expr.accept(this);
         assertEquals(v.convertToString(), "4");
+
+        expr = new DivExpr(new IntegerAtom(8,1), new IntegerAtom(0,1), 1);
+        v = expr.accept(this);
+        assertEquals(v.convertToString(), "0");
     }
 
     @Test
@@ -117,6 +121,12 @@ class QEvaluatorTest extends Evaluator {
     public void evaluateNot() throws IOException {
         Expression expr = new NotExpr(new BoolAtom(true,1),1);
         Value v = expr.accept(this);
+        assertEquals(v.convertToString(), "false");
+
+        Expression lhs = new AndExpr(new BoolAtom(true,1),new BoolAtom(false,1),1);
+        Expression rhs = new OrExpr(new BoolAtom(false,1),new BoolAtom(true,1),1);
+        expr = new NotExpr(new AndExpr(lhs, rhs,1),1);
+        v = expr.accept(this);
         assertEquals(v.convertToString(), "false");
     }
 
