@@ -7,18 +7,18 @@ from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
-    def flatten_binary_operators(flattened_tokens):
+    def flatten_binary_operators(position, source, flattened_tokens):
         while len(flattened_tokens) >= 3:
             lhs, type_call, rhs = flattened_tokens[:3]
-            flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
+            flattened_tokens = [type_call(position, source, lhs, rhs)] + flattened_tokens[3:]
         return flattened_tokens[0]
 
-    def flatten_unary_operators(source, position, flattened_tokens):
+    def flatten_unary_operators(position, source, flattened_tokens):
         type_call = flattened_tokens[0]
-        return type_call(source, position, flattened_tokens[1])
+        return type_call(position, source, flattened_tokens[1])
 
     # Packrat
-    ParserElement.enablePackrat()
+    # ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")
@@ -50,11 +50,11 @@ def parse(input_string):
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     type_money = Literal("money").setParseAction(
-        lambda source, position, parsed_tokens: ast.Money(DataTypes.money, position, source))
+        lambda source, position, parsed_tokens: ast.Money(position, source, DataTypes.money))
     type_integer = Literal("integer").setParseAction(
-        lambda source, position, parsed_tokens: ast.Integer(DataTypes.integer, position, source))
+        lambda source, position, parsed_tokens: ast.Integer(position, source, DataTypes.integer))
     type_boolean = Literal("boolean").setParseAction(
-        lambda source, position, parsed_tokens: ast.Boolean(DataTypes.boolean, position, source))
+        lambda source, position, parsed_tokens: ast.Boolean(position, source, DataTypes.boolean))
     data_types = type_money | type_integer | type_boolean
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
@@ -70,7 +70,7 @@ def parse(input_string):
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
     name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
-        lambda source, position, parsed_tokens: ast.Identifier(parsed_tokens[0], position, source))
+        lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
@@ -81,25 +81,25 @@ def parse(input_string):
          lambda source, position, flattened_tokens: flatten_unary_operators(position, source, *flattened_tokens)),
         (lit_op_multiplication | lit_op_division,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
         (lit_op_addition | lit_op_subtract,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
     ]
 
     operand_list_bool = [
         (lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive | lit_op_lower_exclusive,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
         (lit_op_equality | lit_op_inequality,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
         (lit_op_and,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
         (lit_op_or,
          2, opAssoc.LEFT,
-         lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
     ]
 
     operator_precendence = infixNotation(
