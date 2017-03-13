@@ -5,15 +5,10 @@ from pql.traversal.FormVisitor import FormVisitor
 
 
 class IdentifierChecker(FormVisitor):
-    def visit(self, pql_ast):
-        def recursively_build_dictionary(items, dct):
-            for dictionary in items:
-                if isinstance(dictionary, list):
-                    recursively_build_dictionary(dictionary, dct)
-                else:
-                    for d_key, d_value in dictionary.items():
-                        dct[d_key].append(d_value)
+    def __init__(self):
+        self.__symbol_table = defaultdict(list)
 
+    def visit(self, pql_ast):
         def build_error_list(identifiers):
             errors = list()
             for key, value in identifiers.items():
@@ -21,19 +16,19 @@ class IdentifierChecker(FormVisitor):
                     errors.append("Key: {} contained multiple entries, the following locations: {}"
                                   .format(key, [v.location for v in value]))
             return errors
-
-        identifier_dictionary = defaultdict(list)
-        recursively_build_dictionary([form.apply(self) for form in pql_ast], identifier_dictionary)
-        return build_error_list(identifier_dictionary)
+        self.__symbol_table.clear()
+        [form.apply(self) for form in pql_ast]
+        return build_error_list(self.__symbol_table)
 
     def form(self, node):
-        return [statement.apply(self) for statement in node.statements]
+        [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
-        return self.conditional_if(node) + [statement.apply(self) for statement in node.else_statement_list]
+        self.conditional_if(node)
+        [statement.apply(self) for statement in node.else_statement_list]
 
     def conditional_if(self, node):
-        return [statement.apply(self) for statement in node.statements]
+        [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        return {node.name.name: node.name}
+        self.__symbol_table[node.name.name].append(node.name)
