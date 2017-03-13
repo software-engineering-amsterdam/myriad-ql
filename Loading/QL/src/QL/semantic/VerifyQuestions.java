@@ -7,9 +7,11 @@ import QL.ast.type.Type;
 import QL.ast.FormVisitor;
 import QL.ast.Form;
 
-// Checks for duplicated questions
-// Duplicate Labels (warning)
-
+/**
+ * VerifyQuestions checks for
+ * <li> duplicated questions
+ * <li> duplicated labels
+ */
 public class VerifyQuestions implements FormVisitor {
 	
 	private Environment environment;
@@ -17,7 +19,6 @@ public class VerifyQuestions implements FormVisitor {
 	public VerifyQuestions(Environment environment) {
 		this.environment = environment;
 	}
-
 
 	@Override
 	public void visit(Form form) {
@@ -39,12 +40,12 @@ public class VerifyQuestions implements FormVisitor {
 
 	@Override
 	public void visit(Statement statement) {
-		statement.getBlock().accept(this); // TODO circulair dependencies?
+		statement.getBlock().accept(this);
 	}
 
 	@Override
 	public void visit(IfElseStatement statement) {
-		statement.getBlock().accept(this); // TODO circulair dependencies?
+		statement.getBlock().accept(this);
 		statement.getElseBlock().accept(this);
 	}
 	
@@ -54,7 +55,6 @@ public class VerifyQuestions implements FormVisitor {
 		addLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
-	// TODO computed question
 	@Override
 	public void visit(ComputedQuestion question) {
 		addVariableType(question.getVariable(), question.getType(), question.getLine());

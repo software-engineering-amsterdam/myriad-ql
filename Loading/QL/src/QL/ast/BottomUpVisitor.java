@@ -11,84 +11,84 @@
 //public abstract class BottomUpVisitor implements VerifyExpressions, TypeVisitor {
 //
 //    @Override
-//    public void visit(AddExpression expr) {
+//    public void visit(AddExpr expr) {
 //        expr.accept(this);
 //        expr.getLhs().accept(this);
 //        expr.getRhs().accept(this);
 //    }
 //
 //    @Override
-//    public void visit(AndExpression expr) {
+//    public void visit(AndExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(DivExpression expr) {
+//    public void visit(DivExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(EqExpression expr) {
+//    public void visit(EqExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(GEqExpression expr) {
+//    public void visit(GEqExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(GExpression expr) {
+//    public void visit(GExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(IdExpression expr) {
+//    public void visit(IdExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(LEqExpression expr) {
+//    public void visit(LEqExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(LExpression expr) {
+//    public void visit(LExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(MinusExpression expr) {
+//    public void visit(MinusExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(MulExpression expr) {
+//    public void visit(MulExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(NEqExpression expr) {
+//    public void visit(NEqExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(NotExpression expr) {
+//    public void visit(NotExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(OrExpression expr) {
+//    public void visit(OrExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(PlusExpression expr) {
+//    public void visit(PlusExpr expr) {
 //        expr.accept(this);
 //    }
 //
 //    @Override
-//    public void visit(SubExpression expr) {
+//    public void visit(SubExpr expr) {
 //        expr.accept(this);
 //    }
 //

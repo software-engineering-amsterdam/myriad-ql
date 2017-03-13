@@ -12,8 +12,7 @@ public class Form extends Node {
 	public Block getBlock() {
 		return block;
 	}
-	
-	// TODO move line to Node
+
 	public Form(String id, Block block, int line) {
 		super(line);
 		this.id = id;

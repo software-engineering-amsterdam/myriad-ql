@@ -11,6 +11,9 @@ import QL.Error;
 
 import java.util.List;
 
+/** CheckCyclicDependencies checks for
+ * <li> cyclic dependencies between the questions
+ */
 public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVisitor<Type> {
     private final Environment environment;
     private Question current;
@@ -57,7 +60,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(AddExpression expr) {
+    public Type visit(AddExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -65,7 +68,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(AndExpression expr) {
+    public Type visit(AndExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -73,7 +76,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(DivExpression expr) {
+    public Type visit(DivExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -81,7 +84,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(EqExpression expr) {
+    public Type visit(EqExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -89,7 +92,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(GEqExpression expr) {
+    public Type visit(GEqExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -97,7 +100,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(GExpression expr) {
+    public Type visit(GExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -105,7 +108,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(IdExpression id) {
+    public Type visit(IdExpr id) {
 
         environment.addReference(current.getVariable(), id.getName());
         check();
@@ -114,7 +117,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(LEqExpression expr) {
+    public Type visit(LEqExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -122,7 +125,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(LExpression expr) {
+    public Type visit(LExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -130,7 +133,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(MinusExpression expr) {
+    public Type visit(MinusExpr expr) {
         expr.getLhs().accept(this);
 
         return null;
@@ -138,15 +141,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
 
 
     @Override
-    public Type visit(MulExpression expr) {
-        expr.getLhs().accept(this);
-        expr.getRhs().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Type visit(NEqExpression expr) {
+    public Type visit(MulExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -154,14 +149,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(NotExpression expr) {
-        expr.getLhs().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Type visit(OrExpression expr) {
+    public Type visit(NEqExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 
@@ -169,14 +157,29 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     @Override
-    public Type visit(PlusExpression expr) {
+    public Type visit(NotExpr expr) {
         expr.getLhs().accept(this);
 
         return null;
     }
 
     @Override
-    public Type visit(SubExpression expr) {
+    public Type visit(OrExpr expr) {
+        expr.getLhs().accept(this);
+        expr.getRhs().accept(this);
+
+        return null;
+    }
+
+    @Override
+    public Type visit(PlusExpr expr) {
+        expr.getLhs().accept(this);
+
+        return null;
+    }
+
+    @Override
+    public Type visit(SubExpr expr) {
         expr.getLhs().accept(this);
         expr.getRhs().accept(this);
 

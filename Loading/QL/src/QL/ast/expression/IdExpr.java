@@ -2,11 +2,11 @@ package QL.ast.expression;
 
 import QL.ast.ExpressionVisitor;
 
-public class IdExpression extends Expression {
+public class IdExpr extends Expression {
 
 	private String name;
 	
-	public IdExpression(String name, int line) {
+	public IdExpr(String name, int line) {
 		super(line);
 		this.name = name;
 	}

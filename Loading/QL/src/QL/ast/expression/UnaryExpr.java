@@ -1,10 +1,10 @@
 package QL.ast.expression;
 
-public abstract class UnaryExpression extends Expression {
+public abstract class UnaryExpr extends Expression {
 
     private Expression lhs;
 
-	public UnaryExpression(Expression lhs, int line) {
+	public UnaryExpr(Expression lhs, int line) {
 		super(line);
 		this.lhs = lhs;
 	}

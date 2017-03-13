@@ -24,6 +24,5 @@ public class Statement extends BlockItem {
 	@Override
 	public void accept(FormVisitor v) {
 		v.visit(this);
-		
 	}
 }

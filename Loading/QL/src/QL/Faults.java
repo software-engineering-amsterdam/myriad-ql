@@ -9,8 +9,8 @@ public class Faults {
 	private List<Error> errors;
 	
 	public Faults() {
-		warnings = new ArrayList<Warning>();
-		errors = new ArrayList<Error>();
+		warnings = new ArrayList<>();
+		errors = new ArrayList<>();
 	}
 	
 	public boolean hasWarnings() {

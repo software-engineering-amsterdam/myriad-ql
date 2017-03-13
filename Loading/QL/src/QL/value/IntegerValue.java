@@ -64,11 +64,8 @@ public class IntegerValue extends Value {
 		if (!isSet() || !other.isSet()) {
 			return new BoolValue();
 		}
-		
-		System.out.println("TODO int eq Does this work?");
-//		return new BoolValue(this.equals(other));
-		
-		 return new BoolValue(value.equals(((IntegerValue) other).getValue()) );
+
+		return new BoolValue(value.equals(((IntegerValue) other).getValue()) );
 	}
 
 	@Override
@@ -77,11 +74,8 @@ public class IntegerValue extends Value {
 		if (!isSet() || !other.isSet()) {
 			return new BoolValue();
 		}
-		
-		System.out.println("TODO Does this work?");
-//		return new BoolValue(this.equals(other));
-		
-		 return new BoolValue(!value.equals(((IntegerValue) other).getValue()) );
+
+		return new BoolValue(!value.equals(((IntegerValue) other).getValue()) );
 	}
 	
 	@Override
