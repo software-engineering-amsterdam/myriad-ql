@@ -20,17 +20,29 @@ module QL
 
       # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
-        if_statement.condition.accept(self) + if_statement.body.map { |statement| statement.accept(self) }
+        [if_statement.condition.accept(self), if_statement.body.map { |statement| statement.accept(self) }]
       end
 
       # visit the expression
       def visit_expression(expression)
-        Array(expression.expression).map { |expression| expression.accept(self) }
+        if expression.expression.respond_to? :reduce
+          expression.expression.reduce do |left, operation|
+            operation.accept(left, self)
+          end
+        else
+          expression.expression.accept(self)
+        end
       end
 
       # visit the negation
       def visit_negation(negation)
-        Array(negation.expression).map{|negation| negation.accept(self)}
+        negation.expression.accept(self)
+      end
+
+      def visit_binary_expression(left, binary_expression)
+        left  = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        [left, right]
       end
 
       # literal should return empty array

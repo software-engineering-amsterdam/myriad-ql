@@ -9,10 +9,10 @@ module QL
       def check(ast)
         questions = ast.accept(QuestionCollector.new).flatten
 
-        duplicate_label_checker(questions)
-        duplicate_variable_checker(questions)
+        # duplicate_label_checker(questions)
+        # duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
-        operands_type_checker(questions, ast)
+        # operands_type_checker(questions, ast)
       end
 
       # checkers
@@ -31,10 +31,12 @@ module QL
       end
 
       def undefined_variable_checker(questions, ast)
-        # question_variables   = questions.map(&:variable).map(&:name)
-        # expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
+        question_variables   = questions.map(&:variable).map(&:name)
+        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact
 
-        # (expression_variables - question_variables).map { |undefined_variable| Error.new("variable '#{undefined_variable}' is undefined") }
+        (expression_variables - question_variables).each do |undefined_variable|
+          NotificationTable.store(Error.new("variable '#{undefined_variable}' is undefined"))
+        end
       end
 
       def operands_type_checker(questions, ast)
@@ -45,6 +47,10 @@ module QL
         end
 
         ast.accept(OperandsTypeChecker.new)
+      end
+
+      def cyclic_checker(questions, ast)
+
       end
 
       # helper functions

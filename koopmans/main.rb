@@ -22,7 +22,7 @@ ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 # pp ql_ast
 pp ql_ast
 QL::TypeChecker::TypeChecker.new.check(ql_ast)
-pp NotificationTable.index
+# pp NotificationTable.index
 # ql_notifications = nil
 
 
