@@ -62,13 +62,17 @@ updateMessages model =
 exampleDsl : String
 exampleDsl =
     """stylesheet taxOfficeExample
+
+
   page Housing {
     section "Buying"
       question hasBoughtHouse
         widget checkbox
     section "Loaning"
       question hasMaintLoan
+  }
 
+  page Selling {
     section "Selling" {
       question hasSoldHouse
       section "You sold a house" {

@@ -1,7 +1,8 @@
 module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3, pre, b)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, text, h3, pre, b, button)
+import Html.Attributes exposing (attribute, class, disabled)
+import Html.Events exposing (onClick)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -27,6 +28,8 @@ type alias Model =
 
 type Msg
     = OnFieldChange String Value
+    | NextPage
+    | PreviousPage
 
 
 init : Form -> StyleSheet -> Model
@@ -44,29 +47,39 @@ update msg model =
         OnFieldChange fieldId newValue ->
             { model | env = FormUpdater.updateValue fieldId newValue model.env model.form }
 
+        NextPage ->
+            { model | pagination = Maybe.map Pagination.next model.pagination }
+
+        PreviousPage ->
+            { model | pagination = Maybe.map Pagination.previous model.pagination }
+
 
 view : Model -> Html Msg
 view { form, styleSheet, pagination, env } =
     let
-        currentPage =
-            Maybe.map (Pagination.current) pagination
-
         visibleFields =
             Field.activeFields env form
     in
-        case currentPage of
-            Just page ->
-                div [ class "row" ]
-                    [ div [ class "col-md-6" ]
-                        [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
-                        , Html.form []
-                            [ (renderPage env visibleFields page) ]
+        case pagination of
+            Just pagination ->
+                let
+                    currentPage =
+                        Pagination.current pagination
+                in
+                    div []
+                        [ div [ class "row" ]
+                            [ div [ class "col-md-6" ]
+                                [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
+                                , Html.form []
+                                    [ (renderPage env visibleFields currentPage) ]
+                                , div [ class "row" ] [ renderPagination pagination ]
+                                ]
+                            , div [ class "col-md-6" ]
+                                [ h3 [] [ text "Result" ]
+                                , pre [] [ text <| toString env ]
+                                ]
+                            ]
                         ]
-                    , div [ class "col-md-6" ]
-                        [ h3 [] [ text "Result" ]
-                        , pre [] [ text <| toString env ]
-                        ]
-                    ]
 
             Nothing ->
                 div [] [ text "noCurrentPage TODO" ]
@@ -77,6 +90,16 @@ renderPage env visibleFields (Page title sections defaultValueConfigs) =
     div []
         [ h3 [] [ text title ]
         , div [] (List.map (renderSection env visibleFields (StyleContext.init defaultValueConfigs)) sections)
+        ]
+
+
+renderPagination : Pagination -> Html Msg
+renderPagination pagination =
+    div [ class "btn-group btn-group-justified" ]
+        [ div [ class "btn-group" ]
+            [ button [ class "btn btn-primary", onClick PreviousPage, disabled (Pagination.hasPrevious pagination) ] [ text "<< Previous" ] ]
+        , div [ class "btn-group" ]
+            [ button [ class "btn btn-primary", onClick NextPage, disabled (Pagination.hasNext pagination) ] [ text "Next >>" ] ]
         ]
 
 
