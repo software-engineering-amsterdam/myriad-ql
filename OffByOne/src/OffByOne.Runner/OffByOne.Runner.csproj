@@ -75,6 +75,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="LanguageSamples\structure.ql" />
+    <None Include="LanguageSamples\style.qls" />
     <None Include="OffByOne.Runner.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

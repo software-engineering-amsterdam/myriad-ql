@@ -18,7 +18,7 @@
             this.Value = new StringValue(value);
         }
 
-        public StringValue Value { get; private set; }
+        public StringValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

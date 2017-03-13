@@ -12,7 +12,7 @@
 
     using Xunit;
 
-    public class StringValueTestes
+    public class StringValueTests
     {
         public static IEnumerable<object[]> SimpleStringExpressionData => new List<object[]>
         {

@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Runner
 {
     using System;
+    using System.IO;
     using System.Windows;
 
     using OffByOne.Runner.Builder;
@@ -76,6 +77,9 @@
         [STAThread]
         public static void Main(string[] args)
         {
+            var qlCode = File.ReadAllText(Path.GetFullPath(@"..\..\LanguageSamples\structure.ql"));
+            var qlsCode = File.ReadAllText(Path.GetFullPath(@"..\..\LanguageSamples\style.qls"));
+
             var qlBuilder = new QlLanguageBuilder(sampleQlInput);
             var qlsBuilder = new QlsLanguageBuilder(sampleQlsInput);
             var appRunner = new AppRunner();
