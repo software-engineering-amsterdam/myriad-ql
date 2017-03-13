@@ -110,7 +110,7 @@ class Interface(Frame):
         elif(isinstance(node,Conditional)):
             # print(node)
             # evaluate condition
-            evaluation = node._evaluation
+            evaluation = node._condition
             node.evaluate()
             # print(evaluation.right_hand_side.right_hand_side._identifier)
             return

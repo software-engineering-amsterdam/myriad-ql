@@ -115,7 +115,7 @@ class QL:
 
     boolean_expression = operatorPrecedence(identifier,boolean_precedence)
     boolean_expression.addParseAction(lambda child : \
-            Evaluation(child))
+            Expression(child))
 
     comparison_expression = operatorPrecedence(identifier,comparison_precedence)
     arithmic_expression = operatorPrecedence(identifier,arithmic_precedence)

@@ -155,7 +155,7 @@ class UnaryNegation(UnaryOperation):
     def eval(self):
         return -child
 
-class Evaluation(Node):
+class Expression(Node):
     def __init__(self, child):
         UnaryOperation.__init__(self, "evaluation", child[0])
         self.right_hand_side = child[0]

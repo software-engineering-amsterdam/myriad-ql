@@ -46,15 +46,15 @@ class Question(Node):
     __repr__ = __str__
 
 class Conditional(Node):
-    def __init__(self, evaluation, children):
+    def __init__(self, condition, children):
         Node.__init__(self, "conditional")
-        self._evaluation = evaluation
+        self._condition = condition
         self._children = children
 
     def __str__(self):
         __ret = "{} \"{}\"\n".format(
             self.__class__,
-            self._evaluation)
+            self._condition)
         Node.indent += 1
         for __child in self._children:
             __ret += "{}{}\n".format("\t" * Node.indent, __child)
@@ -64,8 +64,8 @@ class Conditional(Node):
     __repr__ = __str__
 
     def evaluate(self):
-        __evaluation = self._evaluation
-        print(__evaluation)
+        __condition = self._condition
+        print(__condition)
 
 class Statement(Node):
     def __init__(self, text, identifier, field_type, children):
