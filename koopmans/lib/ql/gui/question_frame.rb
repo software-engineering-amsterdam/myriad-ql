@@ -1,6 +1,7 @@
 module QL
   module GUI
     class QuestionFrame
+      # include Widgets
       attr_reader :enabled, :tk_frame
 
       def initialize(ast_question, condition=nil)
@@ -9,8 +10,8 @@ module QL
         @enabled      = true
       end
 
-      def render(gui, row_position)
-        @gui      = gui
+      def render(row_position, &block)
+        @block = block
         @tk_frame = TkFrame.new.grid(row: row_position)
         Label.new(@tk_frame, label)
         create_widget
@@ -18,6 +19,11 @@ module QL
       end
 
       def create_widget
+        # create_radio_widget(@tk_frame) do |changed_value|
+        #   @value = changed_value
+        #   value_changed
+        # end
+
         widget_type.new(@tk_frame) do |changed_value|
           @value = changed_value
           value_changed
@@ -26,7 +32,10 @@ module QL
 
       def value_changed
         store_value
-        @gui.reload_questions
+        # yield
+        if @block
+          @block.call
+        end
       end
 
       def store_value

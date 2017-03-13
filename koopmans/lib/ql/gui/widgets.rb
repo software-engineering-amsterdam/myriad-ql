@@ -1,3 +1,32 @@
+# module QL
+#   module GUI
+#     module Widgets
+#       def create_radio_widget(tk_frame, options=nil, &block)
+#         shared_variable = TkVariable.new(true)
+#
+#         if options
+#           @true_label  = options[:true_value]
+#           @false_label = options[:false_value]
+#         end
+#
+#         radio_button          = TkRadioButton.new(tk_frame).pack
+#         radio_button.text     = @true_label
+#         radio_button.value    = true
+#         radio_button.variable = shared_variable
+#         radio_button.command  = proc { block.call(shared_variable.bool) }
+#
+#         radio_button          = TkRadioButton.new(tk_frame).pack
+#         radio_button.text     = @false_label
+#         radio_button.value    = false
+#         radio_button.variable = shared_variable
+#         radio_button.command  = proc { block.call(shared_variable.bool) }
+#
+#         block.call(shared_variable.bool)
+#       end
+#     end
+#   end
+# end
+
 module QL
   module GUI
     class Label
