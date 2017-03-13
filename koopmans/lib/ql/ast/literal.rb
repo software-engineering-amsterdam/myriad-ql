@@ -10,44 +10,36 @@ module QL
       def accept(visitor)
         visitor.visit_literal(self)
       end
-
-      def eval
-        self
-      end
-
-      def eval_type
-        IntegerType
-      end
     end
 
     class BooleanLiteral < Literal
-      def accept_types
-        [BooleanType]
-      end
-
       def to_value
         return true if value == 'true'
         return false if value == 'false'
       end
+
+      def to_type
+        BooleanType.new
+      end
     end
 
     class IntegerLiteral < Literal
-      def accept_types
-        [IntegerType]
-      end
-
       def to_value
         value.to_i
+      end
+
+      def to_type
+        IntegerType.new
       end
     end
 
     class StringLiteral < Literal
-      def accept_types
-        [StringType]
-      end
-
       def to_value
         value.to_s
+      end
+
+      def to_type
+        StringType.new
       end
     end
   end

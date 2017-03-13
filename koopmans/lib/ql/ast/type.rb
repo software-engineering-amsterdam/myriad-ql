@@ -1,13 +1,20 @@
 module QL
   module AST
     class Type
+      def ==(other_object)
+        self.class == other_object.class
+      end
+
+      def accept(visitor)
+        visitor.visit_type(self)
+      end
+    end
+
+    class ErrorType < Type
+
     end
 
     class BooleanType < Type
-      def self.accept_types
-        [BooleanType]
-      end
-
       def literal_type
         BooleanLiteral
       end
@@ -26,10 +33,6 @@ module QL
     end
 
     class IntegerType < Type
-      def self.accept_types
-        [IntegerType, MoneyType]
-      end
-
       def literal_type
         IntegerLiteral
       end
@@ -47,10 +50,6 @@ module QL
     end
 
     class DateType < Type
-      def self.accept_types
-        [DateType]
-      end
-
       def literal_type
         IntegerLiteral
       end
@@ -61,10 +60,6 @@ module QL
     end
 
     class DecimalType < Type
-      def self.accept_types
-        [DecimalType]
-      end
-
       def literal_type
         IntegerLiteral
       end
@@ -75,10 +70,6 @@ module QL
     end
 
     class StringType < Type
-      def self.accept_types
-        [StringType]
-      end
-
       def literal_type
         StringLiteral
       end
@@ -88,12 +79,7 @@ module QL
       end
     end
 
-    # TODO make money type allow +-/* operations
     class MoneyType < Type
-      def self.accept_types
-        [MoneyType, IntegerType]
-      end
-
       def literal_type
         IntegerLiteral
       end

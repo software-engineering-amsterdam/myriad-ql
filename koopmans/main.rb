@@ -9,6 +9,7 @@ require 'require_all'
 require 'pp'
 
 require_rel 'lib'
+include NotificationTable
 
 # read file
 
@@ -20,9 +21,9 @@ pp ql_parse_tree
 ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 # pp ql_ast
 pp ql_ast
-ql_notifications = QL::TypeChecker::TypeChecker.new.check(ql_ast)
-# pp ql_notifications
-ql_notifications = nil
+QL::TypeChecker::TypeChecker.new.check(ql_ast)
+pp NotificationTable.index
+# ql_notifications = nil
 
 
 
@@ -35,6 +36,6 @@ ql_notifications = nil
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 #
-qls_ast = nil
-#
-QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+# qls_ast = nil
+# #
+# QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
