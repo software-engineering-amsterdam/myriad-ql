@@ -181,7 +181,7 @@ asRenderable widget valueType =
             always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
 
         Radio labels ->
-            flip (RadioWidget.view) labels
+            flip RadioWidget.view labels
 
         Checkbox ->
             BooleanWidget.view
