@@ -24,7 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
-            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
+            reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
             //reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
@@ -53,17 +53,6 @@ public class Main extends Application {
             env.addEventListener(primaryStage::sizeToScene);
 /*
 
-            env.setVariableValue("hasBoughtHouse", new IntValue(6));
-            System.out.println("Value of expr: " + env.getVariableValue("test"));*/
-
-            /*FormGenerator formGenerator = new FormGenerator(env);*/
-
-/*            QLFormBox formBox = new QLFormBox("test");
-
-            NumType num = new NumType();
-            formBox.addQuestion("Did you sell a house in 2011?", num, null);
-            primaryStage.setScene(new Scene(formBox));
-            primaryStage.show();*/
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

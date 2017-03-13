@@ -1,0 +1,138 @@
+%package    qls.parser
+%class      QLSParser
+%interface  QLSTokens
+%start      stylesheet
+
+%token <QLSString>      STRING
+%token <QLSHex>         HEX
+%token <QLSInt>         INT
+%token <QLSIdent>       IDENT
+
+%token ':' '"' ','
+%token STYLESHEET PAGE SECTION DEFAULT
+%token TYPEBOOL TYPEFLOAT TYPEINT TYPESTRING
+%token QUESTION WIDGET
+%token SLIDER SPINBOX TEXT CHECKBOX RADIO
+%token WIDTH HEIGHT FONT FONTSIZE COLOR
+%token '(' ')'
+%token '{' '}' '#'
+
+
+%type <Stylesheet>          stylesheet
+%type <StylesheetPages>     stylesheetPages
+%type <Page>                page
+%type <PageStatements>      pageStatements
+%type <PageStatement>       pageStatement
+%type <Section>             section
+%type <SectionStatements>   sectionStatements
+%type <Statement>          statement
+%type <Default>             default
+%type <Attributes>          attributes
+%type <Attribute>           attribute
+%type <Widget>              widget
+%type <Statement>           question
+%type <Type>        type
+
+
+
+%{
+import qls.ast.*;
+import qls.ast.literals.*;
+import qls.ast.attributes.*;
+import qls.ast.types.*;
+import qls.ast.attributes.widgets.*;
+%}
+
+%%
+
+stylesheet  : STYLESHEET IDENT stylesheetPages                       { result = new Stylesheet($2, $3); }
+            ;
+
+stylesheetPages
+            : page stylesheetPages              { $$ = new StylesheetPages($1, $2, lexer.getRowNumber());      }
+            | page                              { $$ = new StylesheetPages($1, lexer.getRowNumber());      }
+            ;
+
+page
+            : PAGE IDENT '{' pageStatements '}'             { $$ = new Page($2, $4); }
+            ;
+
+pageStatements
+            : pageStatement pageStatements                  { $$ = new PageStatements($1, $2, lexer.getRowNumber()); }
+            | pageStatement                                 { $$ = new PageStatements($1, lexer.getRowNumber()); }
+            ;
+
+pageStatement
+            : section
+            | default
+            ;
+
+section
+            : SECTION STRING '{' sectionStatements '}'      { $$ = new Section($2, $4); }
+            | SECTION STRING question                       { $$ = new Section($2, new SectionStatements($3, lexer.getRowNumber())); }
+            ;
+
+sectionStatements
+            : statement sectionStatements                  { $$ = new SectionStatements($1, $2, lexer.getRowNumber());  }
+            | statement                                    { $$ = new SectionStatements($1, lexer.getRowNumber());  }
+            ;
+
+statement
+            : pageStatement                                 { $$ = $1; }
+            | question                                      { $$ = $1; }
+            ;
+
+default
+            : DEFAULT type '{' attributes '}'                { $$ = new Default($2, $4, lexer.getRowNumber()); }
+            | DEFAULT type attribute                         { $$ = new Default($2, new Attributes($3, lexer.getRowNumber()), lexer.getRowNumber()); }
+            ;
+
+attributes
+            : attribute attributes                          { $$ = new Attributes($1, $2, lexer.getRowNumber()); }
+            | attribute                                     { $$ = new Attributes($1, lexer.getRowNumber()); }
+            ;
+
+attribute
+            : WIDTH ':' INT                                 { $$ = new Width($3, lexer.getRowNumber()); }
+            | HEIGHT ':' INT                                { $$ = new Height($3, lexer.getRowNumber()); }
+            | FONT ':'  STRING                              { $$ = new Font($3, lexer.getRowNumber()); }
+            | FONTSIZE ':' INT                              { $$ = new FontSize($3, lexer.getRowNumber()); }
+            | COLOR ':' HEX                                 { $$ = new Color($3, lexer.getRowNumber()); }
+            | widget                                        { $$ = $1; }
+            ;
+
+type
+            : TYPEBOOL                                          { $$ = new BooleanType();   }
+            | TYPEINT                                           { $$ = new IntType();   }
+            | TYPESTRING                                        { $$ = new StringType();   }
+            | TYPEFLOAT                                         { $$ = new FloatType();   }
+            ;
+
+question
+            : QUESTION IDENT widget                             { $$ = new QuestionWidget($2, $3);  }
+            | QUESTION IDENT                                    { $$ = new Question($2); }
+            ;
+
+
+widget      : WIDGET SPINBOX                                    { $$ = new Spinbox(lexer.getRowNumber());  }
+            | WIDGET SLIDER '(' INT ',' INT ')'                 { $$ = new Slider($4, $6, lexer.getRowNumber());  }
+            | WIDGET RADIO '(' STRING ',' STRING ')'            { $$ = new Radio($4, $6, lexer.getRowNumber());  }
+            | WIDGET CHECKBOX                                   { $$ = new Checkbox(lexer.getRowNumber());  }
+            | WIDGET TEXT                                       { $$ = new Text(lexer.getRowNumber());  }
+            ;
+
+%%
+private QLSLexer lexer;
+private Stylesheet result;
+
+public Stylesheet getResult () {
+  return result;
+}
+
+public QLSParser (QLSLexer lexer) {
+  this.lexer = lexer;
+}
+
+private void yyerror (String msg) {
+  System.err.println(lexer.getRowNumber() + msg);
+}
