@@ -7,6 +7,9 @@ class Node(object):
         self.line = line
         self.col = col
 
+    def __hash__(self):
+        return hash(type(self))
+
     def __eq__(self, other):
         if type(self) != type(other):
             return False
@@ -37,6 +40,9 @@ class BlockNode(Node):
 
         for statement in block_body:
             self.children.append(statement)
+
+    def num_children(self):
+        return len(self.children)
 
     def accept(self, visitor, *args):
         for child in self.children:
