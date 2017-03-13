@@ -7,6 +7,7 @@
     using System.Windows.Media;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Common;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values;
 
@@ -26,8 +27,7 @@
         {
             base.OnNext(value);
 
-            // TODO: No need to cast I think
-            this.input.Text = ((MoneyValue)this.Value).ToString();
+            this.input.Text = this.Value.ToString();
         }
 
         public override void OnCompleted()
@@ -42,8 +42,8 @@
 
         private void CreateControl()
         {
-            this.label = new Label() { Content = this.Statement.Label };
-            this.input = new TextBox() { MinWidth = 200 };
+            this.label = new Label { Content = this.Statement.Label };
+            this.input = new TextBox { MinWidth = 200 };
 
             this.input.LostFocus += this.Validate;
             this.Controls.Add(this.label);
@@ -53,7 +53,7 @@
         private void Validate(object target, RoutedEventArgs eventArgs)
         {
             var text = this.input.Text;
-            var filter = new Regex("^-?\\d+((\\.|,)\\d{2})?$");
+            var filter = new Regex(GlobalConstants.MoneyRegEx);
             var isValid = filter.IsMatch(text);
             if (!isValid)
             {

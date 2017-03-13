@@ -13,7 +13,11 @@
 
     public class VisibilityControl : Control
     {
-        public VisibilityControl(IfStatement statement, GuiEnvironment guiEnvironment, IList<Control> ifControls, IList<Control> elseControls)
+        public VisibilityControl(
+            IfStatement statement,
+            GuiEnvironment guiEnvironment,
+            IList<Control> ifControls,
+            IList<Control> elseControls)
             : base(guiEnvironment)
         {
             this.Statement = statement;
@@ -26,9 +30,9 @@
             this.EvaluateVisibility();
         }
 
-        public IList<Control> IfControls { get; private set; }
+        public IList<Control> IfControls { get; }
 
-        public IList<Control> ElseControls { get; private set; }
+        public IList<Control> ElseControls { get; }
 
         public IfStatement Statement { get; }
 

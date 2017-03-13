@@ -21,7 +21,7 @@
     {
         private IDictionary<string, ValueType> qlQuestionMappings;
 
-        private IDictionary<Type, ICollection<ValueType>> widgetTypeRules = new Dictionary<Type, ICollection<ValueType>>()
+        private IDictionary<Type, ICollection<ValueType>> widgetTypeRules = new Dictionary<Type, ICollection<ValueType>>
         {
             {
                 typeof(DropDownWidget), new List<ValueType>

@@ -132,6 +132,7 @@
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\QuestionCollector.cs" />
     <Compile Include="Checker\SyntaxChecker.cs" />
+    <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />
     <Compile Include="Graphics\Renderer.cs" />

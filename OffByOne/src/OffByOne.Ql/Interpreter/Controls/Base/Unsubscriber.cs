@@ -14,6 +14,7 @@
             this.observer = observer;
         }
 
+        // TODO: Maybe repleace with destructor
         public void Dispose()
         {
             if (this.observer != null && this.observers.Contains(this.observer))
