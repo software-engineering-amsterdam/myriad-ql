@@ -35,9 +35,9 @@ public class Computed implements FormItem {
     }
 
     @Override
-    public void idChanged(Form root, String id, String value) {
-        if (expression.idChanged(id, value)) {
-            root.idChanged(this.id, this.expression.toString());
+    public void idChanged(Form root, FormItem changed, String value) {
+        if (expression.idChanged(changed.isDependencyOf(this), value)) {
+            root.idChanged(this, this.expression.toString());
         }
     }
 

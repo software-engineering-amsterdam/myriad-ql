@@ -50,11 +50,11 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public void idChanged(Form root, String id, String value) {
-        expression.idChanged(id, value);
+    public void idChanged(Form root, FormItem changed, String value) {
+        expression.idChanged(changed.isDependencyOf(this), value);
         screen.showCondition(this);
-        formItems.forEach(item -> item.idChanged(root, id, value));
-        elseBlockItems.forEach(item -> item.idChanged(root, id, value));
+        formItems.forEach(item -> item.idChanged(root, changed, value));
+        elseBlockItems.forEach(item -> item.idChanged(root, changed, value));
     }
 
     @Override

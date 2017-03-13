@@ -10,7 +10,7 @@ import UvA.Gamma.Validation.*;
 public interface FormItem extends ASTNode {
     void show(FXMLExampleController screen);
 
-    void idChanged(Form root, String id, String value);
+    void idChanged(Form root, FormItem changed, String value);
 
     void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException;
 

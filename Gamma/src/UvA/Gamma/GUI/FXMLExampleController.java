@@ -27,7 +27,7 @@ public class FXMLExampleController {
         TextField input = new TextField();
 
         input.textProperty().addListener((observable, oldValue, newValue) ->
-                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question.getId(), newValue))
+                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question, newValue))
         );
 
         grid.addRow(++rowCount, questionLabel, input);

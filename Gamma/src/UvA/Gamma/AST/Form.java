@@ -21,7 +21,7 @@ public class Form implements ASTNode {
         return formItems;
     }
 
-    public void idChanged(String id, String newValue) {
-        formItems.forEach(item -> item.idChanged(this, id, newValue));
+    public void idChanged(FormItem changed, String newValue) {
+        formItems.forEach(item -> item.idChanged(this, changed, newValue));
     }
 }
