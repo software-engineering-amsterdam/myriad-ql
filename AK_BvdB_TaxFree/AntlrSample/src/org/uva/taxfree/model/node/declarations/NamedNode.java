@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.declarations;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
@@ -32,7 +33,7 @@ public abstract class NamedNode extends Node {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-       symbolTable.addDeclaration(this);
+        symbolTable.addDeclaration(this);
     }
 
     public void setVisible(boolean isVisible) {
@@ -53,7 +54,12 @@ public abstract class NamedNode extends Node {
 
     public abstract Type getType();
 
-    protected void getDependencies(Set<String> depencencies){
+    protected void getDependencies(Set<String> depencencies) {
         depencencies.add(mId);
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        // intentionally left blank
     }
 }

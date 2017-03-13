@@ -41,7 +41,6 @@ public class ConditionTest extends SemanticsTester {
         assertSemantics("invalidConditionForm.txt", 1, "An invalid condition due to it's types");
     }
 
-
     protected File testFile(String fileName) {
         return new File("src\\test\\org\\uva\\taxfree\\ast\\conditionTestFiles\\" + fileName);
     }

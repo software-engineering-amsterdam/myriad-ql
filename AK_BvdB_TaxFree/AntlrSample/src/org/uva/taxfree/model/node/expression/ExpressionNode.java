@@ -1,6 +1,8 @@
 package org.uva.taxfree.model.node.expression;
 
+import com.sun.javafx.geom.AreaOp;
 import org.uva.taxfree.model.node.Node;
+import org.uva.taxfree.model.node.operators.AddOperator;
 import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
 
@@ -40,5 +42,4 @@ public abstract class ExpressionNode extends Node {
     public abstract Type getType();
 
     public abstract void getDependencies(Set<String> dependencies);
-
 }

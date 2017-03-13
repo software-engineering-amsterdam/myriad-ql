@@ -1,16 +1,22 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.operators.Operator;
 import org.uva.taxfree.model.types.Type;
 
 import java.util.Set;
 
 public abstract class BinaryExpressionNode extends ExpressionNode {
     private final ExpressionNode mLeft;
-    private final String mOperator;
+    private final Operator mOperator;
     private final ExpressionNode mRight;
 
     public BinaryExpressionNode(ExpressionNode right, String operator, ExpressionNode left) {
+        throw new RuntimeException("Invalid constructor!!!! fix the new ... Expression call");
+    }
+
+    public BinaryExpressionNode(ExpressionNode right, Operator operator, ExpressionNode left) {
         mRight = right;
         mOperator = operator;
         mLeft = left;
@@ -28,6 +34,20 @@ public abstract class BinaryExpressionNode extends ExpressionNode {
         mRight.fillSymbolTable(symbolTable);
     }
 
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        mLeft.checkSemantics(symbolTable, semanticsMessages);
+        mRight.checkSemantics(symbolTable, semanticsMessages);
+        if (mLeft.getType() != mRight.getType()) {
+            semanticsMessages.addError("Incompatible types in expression" + mLeft.getType() + " & " + mRight.getType());
+        }
+        if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
+            semanticsMessages.addError("Unsupported operator called:");
+        }
+
+
+    }
 
     @Override
     public void getDependencies(Set<String> dependencies) {

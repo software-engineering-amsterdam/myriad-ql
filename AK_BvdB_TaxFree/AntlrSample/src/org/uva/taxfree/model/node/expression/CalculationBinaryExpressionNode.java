@@ -1,8 +1,16 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.Operator;
+
 public class CalculationBinaryExpressionNode extends BinaryExpressionNode {
-    private String mOperator;
+    private Operator mOperator;
+
     public CalculationBinaryExpressionNode(ExpressionNode left, String operator, ExpressionNode right) {
+        super(left, operator, right);
+    }
+
+    public CalculationBinaryExpressionNode(ExpressionNode left, Operator operator, ExpressionNode right) {
         super(left, operator, right);
         mOperator = operator;
     }
