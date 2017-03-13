@@ -5,9 +5,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 import org.lemonade.nodes.Form;
-import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
+import org.lemonade.visitors.interfaces.BaseVisitor;
 
 import java.io.IOException;
 import java.io.StringReader;

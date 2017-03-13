@@ -2,6 +2,7 @@ package org.lemonade.nodes.types;
 
 import org.lemonade.nodes.ASTNode;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
 
 /**
  *
@@ -10,10 +11,6 @@ public abstract class QLType extends ASTNode {
 
     public boolean isOf(Class<?> other) {
         return this.getClass().equals(other);
-    }
-
-    public <T> T accept(ASTVisitor<T> visitor) {
-        return visitor.visit(this);
     }
 
     public boolean isNumeric() {
@@ -27,4 +24,6 @@ public abstract class QLType extends ASTNode {
     public boolean isComparable() {
         return false;
     }
+
+    public abstract <T> T accept(TypeVisitor<T> visitor);
 }

@@ -4,6 +4,8 @@ import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLBooleanType;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
@@ -18,7 +20,7 @@ public class BooleanLiteral extends Literal<Boolean> {
         super(new QLBooleanType(), value);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

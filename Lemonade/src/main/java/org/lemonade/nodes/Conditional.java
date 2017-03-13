@@ -1,7 +1,7 @@
 package org.lemonade.nodes;
 
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.BaseVisitor;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Conditional extends Body {
         return condition;
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(BaseVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

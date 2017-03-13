@@ -4,6 +4,7 @@ import org.lemonade.nodes.Position;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
 
 /**
  *
@@ -14,7 +15,7 @@ public class ProductBinary extends BinaryExpression {
         super(left, right);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

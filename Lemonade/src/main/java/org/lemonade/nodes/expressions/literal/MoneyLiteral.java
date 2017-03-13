@@ -2,6 +2,8 @@ package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
@@ -16,7 +18,7 @@ public class MoneyLiteral extends NumericLiteral<Double> implements Comparable<M
         super(new QLMoneyType(), value);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

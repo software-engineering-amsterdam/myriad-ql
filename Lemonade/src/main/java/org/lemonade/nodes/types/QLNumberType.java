@@ -1,6 +1,7 @@
 package org.lemonade.nodes.types;
 
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
 
 /**
  *
@@ -10,10 +11,6 @@ public abstract class QLNumberType extends QLType {
 
     public QLNumberType(int precedenceStrength) {
         this.precedenceStrength = precedenceStrength;
-    }
-
-    public <T> T accept(ASTVisitor<T> visitor) {
-        return visitor.visit(this);
     }
 
     @Override

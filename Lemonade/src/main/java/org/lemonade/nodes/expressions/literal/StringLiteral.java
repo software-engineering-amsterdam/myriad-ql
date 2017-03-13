@@ -3,6 +3,8 @@ package org.lemonade.nodes.expressions.literal;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
@@ -13,7 +15,7 @@ public class StringLiteral extends Literal<String> implements Comparable<StringL
         super(new QLStringType(), value);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

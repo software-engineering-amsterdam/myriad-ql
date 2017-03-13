@@ -22,7 +22,6 @@ import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
-import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.AndBinary;
 import org.lemonade.nodes.expressions.binary.DivideBinary;
 import org.lemonade.nodes.expressions.binary.EqBinary;
@@ -50,11 +49,14 @@ import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLStringType;
-import org.lemonade.nodes.types.QLType;
 
 import javafx.scene.layout.GridPane;
+import org.lemonade.visitors.interfaces.BaseVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
 
-public class GuiVisitor implements ASTVisitor<GuiElement> {
+public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElement>, ExpressionVisitor<GuiElement>, TypeVisitor<GuiElement> {
 
     private GridPane pane;
     private int rowCount;
@@ -72,12 +74,11 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
             bodies.add((GuiBody) body.accept(this));
             rowCount++;
         }
-
         return new GuiForm(identifier, bodies);
     }
 
     @Override public GuiElement visit(final Question question) {
-        GuiIdentifierValue identifier = (GuiIdentifierValue) question.getIdentifier().accept(this);
+        GuiIdentifierValue identifier = (GuiIdentifierValue) question.getIdentifier().accept( this);
         GuiValue<?> value = (GuiValue<?>) question.getType().accept(this);
         GuiLabelValue labelValue = new GuiLabelValue(question.getLabel());
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelValue, value);
@@ -98,10 +99,6 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
 
     @Override public GuiElement visit(final Conditional conditional) {
         return new GuiConditional((GuiIdentifierValue) conditional.getCondition().accept(this));
-    }
-
-    @Override public GuiElement visit(final Expression expression) {
-        return null;
     }
 
     @Override public GuiElement visit(final AndBinary andBinary) {
@@ -210,10 +207,6 @@ public class GuiVisitor implements ASTVisitor<GuiElement> {
 
     @Override public GuiElement visit(final QLStringType qlStringType) {
         return new GuiStringValue();
-    }
-
-    @Override public GuiElement visit(final QLType qlType) {
-        return null;
     }
 
     @Override public GuiElement visit(final ASTNode astNode) {

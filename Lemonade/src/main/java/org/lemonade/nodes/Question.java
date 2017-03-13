@@ -2,7 +2,7 @@ package org.lemonade.nodes;
 
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
 import org.lemonade.nodes.types.QLType;
-import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.BaseVisitor;
 
 public class Question extends Body {
     private IdentifierLiteral identifier;
@@ -28,7 +28,7 @@ public class Question extends Body {
         return type;
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(BaseVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

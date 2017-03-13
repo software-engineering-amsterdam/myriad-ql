@@ -11,8 +11,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
+import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.nodes.Form;
+import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
@@ -28,6 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.lemonade.visitors.interfaces.BaseVisitor;
 
 public class QLFxApp extends Application {
 
@@ -121,8 +124,8 @@ public class QLFxApp extends Application {
             TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
             GuiVisitor guiVisitor = new GuiVisitor(gridPane);
 
-            root.accept(typeCheckVisitor);
-            GuiForm guiRoot = (GuiForm) root.accept(guiVisitor);
+            root.accept((BaseVisitor<QLType>) typeCheckVisitor);
+            GuiForm guiRoot = (GuiForm) root.accept((BaseVisitor<GuiElement>) guiVisitor);
 
             submitButton.setOnAction(e -> submitForm(guiRoot, gridPane));
 

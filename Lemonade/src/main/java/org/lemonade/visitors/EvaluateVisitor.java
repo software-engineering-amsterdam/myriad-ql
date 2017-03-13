@@ -33,18 +33,14 @@ import org.lemonade.nodes.expressions.literal.NumericLiteral;
 import org.lemonade.nodes.expressions.literal.StringLiteral;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.types.QLBooleanType;
-import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.nodes.types.QLStringType;
-import org.lemonade.nodes.types.QLType;
+import org.lemonade.visitors.interfaces.BaseVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
  */
-public class EvaluateVisitor implements ASTVisitor<Expression> {
+public class EvaluateVisitor implements ASTVisitor<Expression>, BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>{
     Map<String, Literal<?>> environment;
 
     @Override
@@ -54,7 +50,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
         for (Body body : form.getBodies()) {
             body.accept(this);
         }
-        return form.accept(this);
+        return form.accept((BaseVisitor<Expression>) this);
     }
 
     @Override
@@ -70,11 +66,6 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     @Override
     public Expression visit(Conditional conditional) {
         conditional.getCondition().accept(this);
-        return null;
-    }
-
-    @Override
-    public Expression visit(Expression expression) {
         return null;
     }
 
@@ -224,36 +215,7 @@ public class EvaluateVisitor implements ASTVisitor<Expression> {
     }
 
     @Override
-    public Expression visit(QLType qlType) {
-        return null;
-    }
-
-    @Override
     public Expression visit(ASTNode astNode) {
-        return astNode.accept(this);
-    }
-
-    @Override public Expression visit(final QLIntegerType qlIntegerType) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLBooleanType qlBooleanType) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLDateType qlDateType) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLDecimalType qlDecimalType) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLMoneyType qlMoneyType) {
-        return null;
-    }
-
-    @Override public Expression visit(final QLStringType qlStringType) {
         return null;
     }
 }

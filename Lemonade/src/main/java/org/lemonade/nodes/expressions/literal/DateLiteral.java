@@ -7,6 +7,8 @@ import java.util.Date;
 import org.assertj.core.internal.cglib.core.Local;
 import org.lemonade.nodes.types.QLDateType;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
@@ -17,7 +19,7 @@ public class DateLiteral extends ComparableLiteral<LocalDate> implements Compara
         super(new QLDateType(), value);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
@@ -63,4 +65,5 @@ public class DateLiteral extends ComparableLiteral<LocalDate> implements Compara
 
         return this.getValue().equals(that.getValue());
     }
+
 }

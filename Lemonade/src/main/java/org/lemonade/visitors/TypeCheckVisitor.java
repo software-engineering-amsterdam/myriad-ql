@@ -15,6 +15,10 @@ import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLNumberType;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
+import org.lemonade.visitors.interfaces.BaseVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +28,9 @@ import java.util.Map;
 /**
  *
  */
-public class TypeCheckVisitor implements ASTVisitor<QLType> {
+public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<QLType>, TypeVisitor<QLType>{
     Map<String, QLType> symbolTable;
     private List<String> errors;
-
-
-    public QLType visit(Body body) {
-        return null;
-    }
 
 
     public List<String> getErrors() {
@@ -176,11 +175,6 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
         return dateLiteral.getType();
     }
 
-    @Override
-    public QLType visit(ASTNode astNode) {
-        return astNode.accept(this);
-    }
-
     private QLType checkBinaryNumeric(BinaryExpression binaryExpression) {
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
@@ -236,10 +230,4 @@ public class TypeCheckVisitor implements ASTVisitor<QLType> {
     @Override public QLType visit(final QLStringType qlStringType) {
         return qlStringType;
     }
-
-    @Override
-    public QLType visit(QLType type) {
-        return type;
-    }
-
 }

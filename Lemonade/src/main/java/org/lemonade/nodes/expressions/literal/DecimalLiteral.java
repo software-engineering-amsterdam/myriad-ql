@@ -2,6 +2,8 @@ package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.types.QLDecimalType;
 import org.lemonade.visitors.ASTVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *
@@ -16,7 +18,7 @@ public class DecimalLiteral extends NumericLiteral<Double> implements Comparable
         super(new QLDecimalType(), value);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
@@ -121,4 +123,5 @@ public class DecimalLiteral extends NumericLiteral<Double> implements Comparable
             return 0;
         }
     }
+
 }

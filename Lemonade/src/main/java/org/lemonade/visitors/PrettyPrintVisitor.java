@@ -1,7 +1,6 @@
 package org.lemonade.visitors;
 
 import org.lemonade.nodes.*;
-import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
@@ -13,11 +12,15 @@ import org.lemonade.nodes.types.QLIntegerType;
 import org.lemonade.nodes.types.QLMoneyType;
 import org.lemonade.nodes.types.QLStringType;
 import org.lemonade.nodes.types.QLType;
+import org.lemonade.visitors.interfaces.BaseVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.LiteralVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
 
 /**
  *
  */
-public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
+public class PrettyPrintVisitor implements ASTVisitor<ASTNode>, BaseVisitor<ASTNode>, ExpressionVisitor<ASTNode>, LiteralVisitor<ASTNode>, TypeVisitor<ASTNode> {
     private String tabLevel = "";
 
     public ASTNode visit(Form form) {
@@ -58,11 +61,6 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
         tabLevel.replaceFirst("\t", "");
         System.err.print(tabLevel + "}");
         return conditional;
-    }
-
-    @Override
-    public ASTNode visit(Expression expression) {
-        return null;
     }
 
     @Override
@@ -211,11 +209,6 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode> {
     public ASTNode visit(MoneyLiteral moneyValue) {
         System.err.print(moneyValue);
         return moneyValue;
-    }
-
-    @Override
-    public ASTNode visit(QLType type) {
-        return type;
     }
 
     @Override
