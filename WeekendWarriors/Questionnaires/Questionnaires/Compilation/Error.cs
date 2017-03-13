@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.SemanticAnalysis.Messages
+namespace Questionnaires.Compilation
 {
     class Error : Message
     {

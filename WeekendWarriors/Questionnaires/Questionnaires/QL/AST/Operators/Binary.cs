@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Questionnaires.SemanticAnalysis;
-using Questionnaires.SemanticAnalysis.Messages;
+using Questionnaires.Compilation;
 using Questionnaires.Types;
 
 namespace Questionnaires.QL.AST

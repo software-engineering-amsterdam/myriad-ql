@@ -86,7 +86,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AntlrErrorListener.cs" />
     <Compile Include="QLS\AST\ASTBuilder.cs" />
+    <Compile Include="QLS\AST\CSTBuilder.cs" />
     <Compile Include="QLS\AST\INode.cs" />
     <Compile Include="QLS\AST\Page.cs" />
     <Compile Include="QLS\AST\Question.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="QLS\Generated\QLSVisitor.cs" />
     <Compile Include="QLS\Processing\Processor.cs" />
     <Compile Include="QLS\SemanticAnalysis\Analyzer.cs" />
+    <Compile Include="QL\AST\CSTBuilder.cs" />
     <Compile Include="QL\AST\IStatement.cs" />
     <Compile Include="QL\AST\Operators\Addition.cs" />
     <Compile Include="QL\AST\Operators\And.cs" />
@@ -150,12 +153,12 @@
     <Compile Include="RuleContainer\RuleContainer.cs" />
     <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
     <Compile Include="QL\SemanticAnalysis\DeclarationValidator.cs" />
-    <Compile Include="QL\SemanticAnalysis\Result.cs" />
+    <Compile Include="Compilation\Result.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticAnalyzer.cs" />
     <Compile Include="QL\SemanticAnalysis\TypeChecker.cs" />
-    <Compile Include="QL\SemanticAnalysis\Messages\Error.cs" />
-    <Compile Include="QL\SemanticAnalysis\Messages\Message.cs" />
-    <Compile Include="QL\SemanticAnalysis\Messages\Warning.cs" />
+    <Compile Include="Compilation\Error.cs" />
+    <Compile Include="Compilation\Message.cs" />
+    <Compile Include="Compilation\Warning.cs" />
     <Compile Include="QL\AST\Types\BooleanType.cs" />
     <Compile Include="QL\AST\Types\MoneyType.cs" />
     <Compile Include="QL\AST\Types\IntegerType.cs" />
@@ -178,7 +181,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QL\AST\ASTFactory.cs" />
     <Compile Include="QL\AST\Node.cs" />
     <Compile Include="QL\AST\Operators\Binary.cs" />
     <Compile Include="QL\AST\Operators\Unary.cs" />

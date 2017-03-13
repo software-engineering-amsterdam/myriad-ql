@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.SemanticAnalysis.Messages;
+using Questionnaires.Compilation;
 using System.Diagnostics;
 using Questionnaires.SemanticAnalysis;
 using Questionnaires.Types;

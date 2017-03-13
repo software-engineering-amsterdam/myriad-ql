@@ -20,14 +20,15 @@ namespace Questionnaires.QLS.SemanticAnalysis
         private Dictionary<string, QL.AST.Question> QLQuestions = new Dictionary<string, QL.AST.Question>();
         private HashSet<QL.AST.Question> PlacedQuestions = new HashSet<QL.AST.Question>();
 
-        private Questionnaires.SemanticAnalysis.Result Result = new Questionnaires.SemanticAnalysis.Result();
+        private Questionnaires.Compilation.Result Result;
 
-        public Analyzer(List<QL.AST.Question> questions)
+        public Analyzer(Compilation.Result result, List<QL.AST.Question> questions)
         {
+            Result = result;
             questions.ForEach((question) => QLQuestions[question.Identifier] = question);
         }
 
-        public Questionnaires.SemanticAnalysis.Result Analyze(AST.StyleSheet stylesheet)
+        public Questionnaires.Compilation.Result Analyze(AST.StyleSheet stylesheet)
         {
             foreach(var page in stylesheet.Pages)
             {
@@ -38,7 +39,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             var QuestionInQlFile = new HashSet<QL.AST.Question>(QLQuestions.Values);
             if(!QuestionInQlFile.IsSubsetOf(PlacedQuestions))
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error("Not all question in the QL file have been placed by the QLS file"));
+                Result.AddEvent(new Questionnaires.Compilation.Error("Not all question in the QL file have been placed by the QLS file"));
             }
             return Result;
         }
@@ -74,7 +75,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             // Question with this name exists as QL question
             if (!QLQuestions.ContainsKey(question.Name))
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Question {0} defined in QLS is not defined in the QL file", question.Name)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Question {0} defined in QLS is not defined in the QL file", question.Name)));
                 return;
             }
 
@@ -83,7 +84,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             // Check the question has not been placed before
             if (PlacedQuestions.Contains(qlQuestion))
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Question {0} was already placed", question.Name)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Question {0} was already placed", question.Name)));
                 return;
             }
 
@@ -96,7 +97,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             }
             catch(NotSupportedException)
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Widget type {0} defined for question {1} is invalid for that question's type: {2} ", question.Widget, question.Name, qlQuestion.Type)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined for question {1} is invalid for that question's type: {2} ", question.Widget, question.Name, qlQuestion.Type)));
             }
             
         }
@@ -106,14 +107,14 @@ namespace Questionnaires.QLS.SemanticAnalysis
             // Question with this name exists as QL question
             if (!QLQuestions.ContainsKey(question.Name))
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Question {0} defined in QLS is not defined in the QL file", question.Name)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Question {0} defined in QLS is not defined in the QL file", question.Name)));
                 return;
             }
 
             // Check the question has not been placed before          
             if (PlacedQuestions.Contains(QLQuestions[question.Name]))
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Question {0} was already placed", question.Name)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Question {0} was already placed", question.Name)));
                 return;
             }
 
@@ -129,7 +130,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             }
             catch(NotSupportedException)
             {
-                Result.AddEvent(new Questionnaires.SemanticAnalysis.Messages.Error(string.Format("Widget type {0} defined as default for question type {1} is invalid.", style.Widget, style.Type)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined as default for question type {1} is invalid.", style.Widget, style.Type)));
             }
         }
     }

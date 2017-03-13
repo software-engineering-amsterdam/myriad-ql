@@ -11,8 +11,40 @@ namespace Questionnaires.QL.AST
 {
     public class ASTBuilder : QLBaseVisitor<INode>
     {
-        public ASTBuilder()
+        private Compilation.Result Messages;
+        private CSTBuilder CSTBuilder;
+
+        public ASTBuilder(Compilation.Result result)
         {
+            Messages = result;
+            CSTBuilder = new CSTBuilder(Messages);
+        }
+
+        public AST.Form BuildForm(string input)
+        {
+            var CST = CSTBuilder.BuildForm(input);
+            if (Messages.IsError())
+                throw new Exception();
+
+            return Visit(CST) as Form;
+        }
+
+        public AST.IExpression BuildExpression(string input)
+        {
+            var CST = CSTBuilder.BuildForm(input);
+            if (Messages.IsError())
+                throw new Exception();
+
+            return Visit(CST) as IExpression;
+        }
+
+        public AST.ComputedQuestion BuildComputedQuestion(string input)
+        {
+            var CST = CSTBuilder.BuildForm(input);
+            if (Messages.IsError())
+                throw new Exception();
+
+            return Visit(CST) as ComputedQuestion;
         }
 
         private List<IStatement> GetStatements(QLParser.StatementContext[] context)

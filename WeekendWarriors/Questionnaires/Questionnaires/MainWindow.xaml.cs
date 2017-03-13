@@ -30,47 +30,82 @@ namespace Questionnaires
 
         private void Interpret_Click(object sender, RoutedEventArgs e)
         {
-            Output.Text = "";
+            bool useStyling = !String.IsNullOrEmpty(InputQLS.Text);
+            ClearOutputWindow();
 
-            var astFactory = new QL.AST.ASTFactory();
-            var form = astFactory.CreateForm(InputQL.Text);
-            var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer();
-            var analysisResult = semanticAnalyzer.AnalyzeForm(form);
-            foreach (var analysisEvent in analysisResult.Events)
-                Output.Text += analysisEvent.ToString() + '\n';
+            Compilation.Result result = new Compilation.Result();
 
-            if (analysisResult.IsError())
-                return;
-
-            var qlsFactory = new QLS.AST.ASTBuilder();
-            if (InputQLS.Text != "")
+            // TODO: the way we use exceptions here is bad.
+            try
             {
-                /* THIS IS A HACK!!!! */
+                var FormAST = BuildFormAST(result);
+                AnalyzeFormAST(result, FormAST);
+
+                /* 'Flatten' the AST*/
                 List<QL.AST.Question> Questions = new List<QL.AST.Question>();
                 List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
                 QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules);
-                qlProcessor.Process(form);
-                /* EOH */                
+                qlProcessor.Process(FormAST);
+                StyleSheet stylesheetAST = null;
+                if (useStyling)
+                {
+                    stylesheetAST = BuildStylesheetAST(result);
+                    AnalyzeStylesheet(result, Questions, stylesheetAST);
+                }
 
-                var stylesheet = qlsFactory.Build(InputQLS.Text);
-
-                var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(Questions);
-                var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheet);
-                foreach (var analysisEvent in semanticMessages.Events)
-                    Output.Text += analysisEvent.ToString() + '\n';
-
-                if (semanticMessages.IsError())
-                    return;
-
-                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form, stylesheet);
+                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(FormAST, stylesheetAST);
                 QuestionnaireBuilder.Build();
+               
             }
-            else
+            catch(Exception)
             {
-                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(form);
-                QuestionnaireBuilder.Build();
+                PrintMessages(result);
             }
-            
+
+        }
+
+        private static void AnalyzeStylesheet(Compilation.Result result, List<QL.AST.Question> Questions, StyleSheet stylesheetAST)
+        {
+            var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
+            var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
+            if (result.IsError())
+                throw new Exception();
+        }
+
+        private StyleSheet BuildStylesheetAST(Compilation.Result result)
+        {
+            var qlsAstBuilder = new QLS.AST.ASTBuilder(result);
+            var stylesheetAST = qlsAstBuilder.BuildStylesheet(InputQLS.Text);
+            return stylesheetAST;
+        }
+
+        private void ClearOutputWindow()
+        {
+            Output.Text = "";
+        }
+
+        private static void AnalyzeFormAST(Compilation.Result result, Form FormAST)
+        {
+            if (result.IsError())
+                return;
+
+            var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer(result);
+            semanticAnalyzer.AnalyzeForm(FormAST);
+
+            if (result.IsError())
+                throw new Exception();
+        }
+
+        private QL.AST.Form BuildFormAST(Compilation.Result result)
+        {            
+            var qlAstBuilder = new QL.AST.ASTBuilder(result);
+            return qlAstBuilder.BuildForm(InputQL.Text);
+        }
+
+        private void PrintMessages(Compilation.Result result)
+        {
+            foreach (var message in result.Events)
+                Output.Text += message.ToString() + '\n';
         }
     }
 }

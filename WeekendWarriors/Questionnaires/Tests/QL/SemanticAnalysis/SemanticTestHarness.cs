@@ -27,7 +27,7 @@ namespace Tests.QL.SemanticAnalysis
         public void TestForm(string input, int exprectedErrorCount, string failureMessage)
         {
             SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
-            var node = ASTFactory.CreateForm(input);
+            var node = ASTFactory.CreateForm(input, new Questionnaires.Compilation.Result());
             var result = SemanticAnalyzer.AnalyzeForm(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);

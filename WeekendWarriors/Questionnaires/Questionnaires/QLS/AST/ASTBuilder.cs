@@ -11,14 +11,22 @@ namespace Questionnaires.QLS.AST
 {
     class ASTBuilder : QLSBaseVisitor<INode>
     {
-        public StyleSheet Build(string input)
-        {
-            var inputStream = new AntlrInputStream(input);
-            var lexer = new QLSLexer(inputStream);
-            var tokens = new CommonTokenStream(lexer);
-            var parser = new QLSParser(tokens);
+        private Compilation.Result Messages;
+        private CSTBuilder CSTBuilder;
 
-            var stylesheet = Visit(parser.stylesheet());
+        public ASTBuilder(Compilation.Result result)
+        {
+            Messages = result;
+            CSTBuilder = new CSTBuilder(Messages);
+        }
+
+        public StyleSheet BuildStylesheet(string input)
+        {
+            var CST = CSTBuilder.BuildStyleSheet(input);
+            if (Messages.IsError())
+                throw new Exception();
+
+            var stylesheet = Visit(CST);
             Debug.Assert(stylesheet.GetType() == typeof(StyleSheet));
 
             return stylesheet as StyleSheet;

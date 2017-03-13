@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Questionnaires.SemanticAnalysis.Messages;
+using Questionnaires.Compilation;
 using Questionnaires.SemanticAnalysis;
 using Questionnaires.Types;
 

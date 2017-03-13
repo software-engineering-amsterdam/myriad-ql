@@ -8,16 +8,20 @@ namespace Questionnaires.SemanticAnalysis
 {
     public class SemanticAnalyzer
     {
-        public SemanticAnalyzer()
+        private Compilation.Result Result;
+
+        public SemanticAnalyzer(Compilation.Result result)
         {
+            Result = result;
         }
 
-        public Result AnalyzeForm(QL.AST.Form form)
+        public void AnalyzeForm(QL.AST.Form form)
         {
-            return AnalyzeAstNode(form);
+            var message = AnalyzeAstNode(form);
+            Result.Combine(message);
         }
 
-        protected Result AnalyzeAstNode(QL.AST.INode node)
+        protected Compilation.Result AnalyzeAstNode(QL.AST.INode node)
         {
             QLContext Context = new QLContext();
 

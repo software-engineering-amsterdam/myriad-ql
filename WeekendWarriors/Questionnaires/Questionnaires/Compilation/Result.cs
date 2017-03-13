@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.SemanticAnalysis
+namespace Questionnaires.Compilation
 {
     public class Result
     {
         public Result()
         {
-            Events = new List<SemanticAnalysis.Messages.Message>();
+            Events = new List<Compilation.Message>();
         }
 
-        public List<SemanticAnalysis.Messages.Message> Events
+        public List<Compilation.Message> Events
         {
             get;
         }
 
         bool Error;
 
-        public void AddEvent(Messages.Message analysisEvent)
+        public void AddEvent(Compilation.Message analysisEvent)
         {
             if (analysisEvent.IsError())
                 Error = true;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Questionnaires.QL.AST;
 using Questionnaires.QL.AST.Operators;
 using Questionnaires.QL.AST.Visitor;
+using Questionnaires.Compilation;
 
 namespace Questionnaires.SemanticAnalysis
 {
@@ -56,9 +57,9 @@ namespace Questionnaires.SemanticAnalysis
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType == node.Type)
-                result.AddEvent(new Messages.Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
+                result.AddEvent(new Compilation.Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
             else
-                result.AddEvent(new Messages.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
+                result.AddEvent(new Compilation.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
         
         public void Visit(INode node)
