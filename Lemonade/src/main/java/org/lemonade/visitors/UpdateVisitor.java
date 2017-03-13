@@ -1,9 +1,9 @@
 package org.lemonade.visitors;
 
-import org.lemonade.gui.elements.GuiBody;
-import org.lemonade.gui.elements.GuiConditional;
-import org.lemonade.gui.elements.GuiForm;
-import org.lemonade.gui.elements.GuiQuestion;
+import org.lemonade.gui.GuiBody;
+import org.lemonade.gui.GuiConditional;
+import org.lemonade.gui.GuiForm;
+import org.lemonade.gui.GuiQuestion;
 
 public interface UpdateVisitor {
 

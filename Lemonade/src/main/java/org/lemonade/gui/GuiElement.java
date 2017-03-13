@@ -1,6 +1,6 @@
-package org.lemonade.gui.elements;
+package org.lemonade.gui;
 
-import org.lemonade.gui.elements.values.GuiValue;
+import org.lemonade.gui.values.GuiValue;
 
 import javafx.scene.control.Control;
 

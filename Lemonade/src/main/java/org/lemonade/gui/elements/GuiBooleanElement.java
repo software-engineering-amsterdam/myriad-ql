@@ -1,10 +1,10 @@
-package org.lemonade.gui.elements.elements;
+package org.lemonade.gui.elements;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.elements.values.GuiBooleanValue;
-import org.lemonade.gui.elements.values.GuiValue;
+import org.lemonade.gui.GuiElement;
+import org.lemonade.gui.values.GuiBooleanValue;
+import org.lemonade.gui.values.GuiValue;
 
 public class GuiBooleanElement implements GuiElement{
 

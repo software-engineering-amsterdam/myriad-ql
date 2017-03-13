@@ -11,7 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
-import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;

@@ -1,6 +1,4 @@
-package org.lemonade.gui.elements.values;
-
-import javafx.scene.control.TextField;
+package org.lemonade.gui.values;
 
 public class GuiDecimalValue extends GuiValue<Double> {
     private Double value;

@@ -1,4 +1,4 @@
-package org.lemonade.gui.elements.values;
+package org.lemonade.gui.values;
 
 import java.time.LocalDate;
 

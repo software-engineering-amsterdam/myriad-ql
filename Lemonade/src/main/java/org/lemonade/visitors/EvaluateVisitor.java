@@ -3,12 +3,12 @@ package org.lemonade.visitors;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lemonade.gui.elements.GuiBody;
-import org.lemonade.gui.elements.GuiConditional;
-import org.lemonade.gui.elements.GuiForm;
-import org.lemonade.gui.elements.values.GuiIdentifierValue;
-import org.lemonade.gui.elements.GuiQuestion;
-import org.lemonade.gui.elements.values.GuiValue;
+import org.lemonade.gui.GuiBody;
+import org.lemonade.gui.GuiConditional;
+import org.lemonade.gui.GuiForm;
+import org.lemonade.gui.values.GuiIdentifierValue;
+import org.lemonade.gui.GuiQuestion;
+import org.lemonade.gui.values.GuiValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;

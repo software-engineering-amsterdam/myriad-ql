@@ -1,9 +1,9 @@
-package org.lemonade.gui.elements.elements;
+package org.lemonade.gui.elements;
 
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.elements.values.GuiStringValue;
-import org.lemonade.gui.elements.values.GuiUndefinedValue;
-import org.lemonade.gui.elements.values.GuiValue;
+import org.lemonade.gui.GuiElement;
+import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
+import org.lemonade.gui.values.GuiValue;
 
 import javafx.scene.control.TextField;
 

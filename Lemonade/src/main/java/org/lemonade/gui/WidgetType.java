@@ -1,4 +1,4 @@
-package org.lemonade.gui.elements;
+package org.lemonade.gui;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;

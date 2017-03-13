@@ -1,17 +1,17 @@
-package org.lemonade.gui.elements.elements;
+package org.lemonade.gui.elements;
 
 import javafx.scene.control.TextField;
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.elements.values.GuiIntegerValue;
-import org.lemonade.gui.elements.values.GuiUndefinedValue;
-import org.lemonade.gui.elements.values.GuiValue;
+import org.lemonade.gui.GuiElement;
+import org.lemonade.gui.values.GuiDecimalValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
+import org.lemonade.gui.values.GuiValue;
 
-public class GuiIntegerElement implements GuiElement{
+public class GuiDecimalElement implements GuiElement{
 
     private GuiValue<?> value;
     private TextField textField;
 
-    public GuiIntegerElement() {
+    public GuiDecimalElement() {
         textField = new TextField();
         textField.setOnKeyReleased(e -> update());
     }
@@ -26,12 +26,12 @@ public class GuiIntegerElement implements GuiElement{
     }
 
     private void validate(String text) {
-        if (!text.matches("[-+]?[0-9]*")) {
+        if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")) {
             this.value = new GuiUndefinedValue();
         } else if (this.value.isDefined()){
-            ((GuiIntegerValue) this.value).update(Integer.parseInt(text));
+            ((GuiDecimalValue) this.value).update(Double.parseDouble(text));
         } else
-            this.value = new GuiIntegerValue(Integer.parseInt(text));
+            this.value = new GuiDecimalValue(Double.parseDouble(text));
     }
 
     @Override
