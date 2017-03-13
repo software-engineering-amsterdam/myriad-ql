@@ -15,4 +15,4 @@
 ---> Style clash with bootstrap
 
 -Other:
--> Pagination
+DONE: Pagination 
