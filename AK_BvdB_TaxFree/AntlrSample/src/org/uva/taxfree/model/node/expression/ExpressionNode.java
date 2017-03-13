@@ -2,7 +2,6 @@ package org.uva.taxfree.model.node.expression;
 
 import com.sun.javafx.geom.AreaOp;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.operators.AddOperator;
 import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
 

@@ -16,4 +16,17 @@ public abstract class Widget {
         widgetPanel.setVisible(false);
         return widgetPanel;
     }
+
+    public void create() {
+        fillPanel(mPanel);
+    }
+
+    protected abstract void fillPanel(JPanel panel);
+
+    public void setVisible(boolean isVisible) {
+        mPanel.setVisible(isVisible);
+    }
+
+    public abstract String resolveValue();
+
 }
