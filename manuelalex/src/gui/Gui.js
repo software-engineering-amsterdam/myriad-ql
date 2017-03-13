@@ -35,10 +35,7 @@ export class GUI {
         await this.application.start();
 
         this.renderGUI(this.application, this.ast, this.memoryState);
-
         this.memoryState.on('set', this.renderGUI.bind(this, this.application, this.ast, this.memoryState));
-
-        window.memoryState = this.memoryState;
     }
 
     renderGUI(program = {}, ast = {}, memoryState = {}) {

@@ -18,11 +18,9 @@ export class RenderVisitor {
         this.memoryState = memoryState;
     }
 
-    async visitProgram(program, view) {
+    visitProgram(program, view) {
         view = this._addMarginsToView(view);
-
         program.renderTitle(this, view);
-
         this.visitStatements(program.getStatements(), view);
     }
 

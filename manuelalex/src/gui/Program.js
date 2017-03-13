@@ -27,13 +27,11 @@ export class Program {
     }
 
     async start() {
-        console.log('start');
         this.application.defaultDataSource = (path = '/', options = {}) => {
             return new DataSource(path, options);
         };
 
         this.application.controllers = [QLController];
-
         await this._initialize();
     }
 
