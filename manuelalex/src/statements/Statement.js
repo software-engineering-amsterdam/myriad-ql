@@ -11,7 +11,7 @@ export class Statement {
     }
 
     getLocation(){
-        return this._location;
+        return this.location;
     }
 
     validate() {

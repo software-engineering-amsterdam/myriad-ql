@@ -14,27 +14,23 @@ export class Answer extends Statement {
         this.allocation = allocation;
     }
 
-    getLabel(){
+    getLabel() {
         return this.label;
     }
 
-    getAllocation(){
+    getAllocation() {
         return this.allocation;
     }
 
     validate() {
-
+        /* TODO */
     }
 
-    getGeneratedCode(type) {
-        return "<div>" + this.name + "<input type='" + type + "' id='" + this.propertyName + "'></div>";
-    }
-
-    accept(visitor){
+    accept(visitor) {
         visitor.visitAnswer(self);
     }
 
-    render(visitor, view){
+    render(visitor, view) {
         visitor.renderAnswer(this, view);
     }
 }
