@@ -37,11 +37,11 @@ export class Expression {
 
     evaluate(memoryState){
 
-        let leftValue = this.leftHand.evaluate(memoryState);
-        let rightValue = this.rightHand.evaluate(memoryState);
+        const leftValue = this.leftHand.evaluate(memoryState);
+        const rightValue = this.rightHand.evaluate(memoryState);
 
-        let leftHandValue = leftValue || undefined;
-        let rightHandValue = rightValue || undefined;
+        const leftHandValue = leftValue || undefined;
+        const rightHandValue = rightValue || undefined;
 
         return eval(`${leftHandValue} ${this.operator} ${rightHandValue}`);
     }
@@ -77,7 +77,7 @@ export class PrefixExpression {
     }
 
     evaluate(memoryState){
-        let value = this.expression.evaluate(memoryState);
+        const value = this.expression.evaluate(memoryState);
         return eval(`${this.prefix} ${value}`);
     }
 

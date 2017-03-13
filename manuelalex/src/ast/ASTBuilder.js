@@ -9,7 +9,6 @@ import {Question} from '../statements/Question.js';
 import {Answer} from '../statements/Answer.js';
 import {IfStatement} from '../statements/IFStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
-import {Comparison} from '../expressions/Comparison.js';
 import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
 import {PlusOperator, MinOperator, DivideOperator, MultiplyOperator} from '../operator/Operators.js';
@@ -73,10 +72,6 @@ export class ASTBuilder {
 
     booleanExpression(data) {
         return data;
-    }
-
-    comparison(data, location) {
-        return new Comparison(data[0], data[2][0], data[4], location);
     }
 
     and_test(data) {
