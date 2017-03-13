@@ -136,11 +136,7 @@
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Graphics\Widgets\Base\UiComponent.cs" />
-    <Compile Include="Graphics\Widgets\LabelWidget.cs" />
-    <Compile Include="Graphics\Widgets\TextBoxWidget.cs" />
-    <Compile Include="Graphics\Widgets\WidgetStyle.cs" />
+    <Compile Include="Interpreter\WidgetStyle.cs" />
     <Compile Include="Interpreter\Controls\Base\Control.cs" />
     <Compile Include="Interpreter\Controls\Base\QuestionControl.cs" />
     <Compile Include="Interpreter\Controls\Base\Unsubscriber.cs" />
@@ -173,14 +169,6 @@
     <Compile Include="Visitors\Contracts\IVisitorTypeEnvironment.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzer.cs" />
     <Compile Include="Ast\AstCreator.cs" />
-    <Compile Include="Graphics\Controls\Questions\BooleanControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\DateControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\FloatControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\IntegerControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\MoneyControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\ControlFactory.cs" />
-    <Compile Include="Graphics\Controls\Questions\QuestionControl.cs" />
-    <Compile Include="Graphics\Controls\Questions\StringControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\Base\BaseQlVisitor.cs" />
     <Compile Include="Resources\StringControl.xaml.cs">
