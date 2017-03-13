@@ -10,6 +10,7 @@ class PrintHandler(qlPrintHandler):
         ast.accept(self, 0)
         print(self.output)
 
+
     def add_indent(self, indent):
         self.output += indent * "    "
 

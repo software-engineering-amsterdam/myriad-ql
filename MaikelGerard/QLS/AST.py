@@ -67,6 +67,10 @@ class SliderNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(SliderNode, self).__init__(line, col)
 
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == IntTypeNode()
+
     def accept(self, visitor, *args):
         visitor.slider_node(self, *args)
 
@@ -74,6 +78,10 @@ class SliderNode(WidgetNode):
 class SpinboxNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(SpinboxNode, self).__init__(line, col)
+
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == IntTypeNode()
 
     def accept(self, visitor, *args):
         return visitor.spinbox_node(self, *args)
@@ -83,6 +91,23 @@ class TextNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(TextNode, self).__init__(line, col)
 
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == StringTypeNode()
+
+    def accept(self, visitor, *args):
+        return visitor.text_node(self, *args)
+
+
+class NumericNode(WidgetNode):
+    def __init__(self, line=0, col=0):
+        super(NumericNode, self).__init__(line, col)
+
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type in [IntTypeNode(), MoneyTypeNode(),
+                                DecimalTypeNode()]
+
     def accept(self, visitor, *args):
         return visitor.text_node(self, *args)
 
@@ -90,6 +115,10 @@ class TextNode(WidgetNode):
 class RadioNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(RadioNode, self).__init__(line, col)
+
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == BoolTypeNode()
 
     def accept(self, visitor, *args):
         return visitor.radio_node(self, *args)
@@ -99,6 +128,10 @@ class CheckboxNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(CheckboxNode, self).__init__(line, col)
 
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == BoolTypeNode()
+
     def accept(self, visitor, *args):
         return visitor.checkbox_node(self, *args)
 
@@ -106,6 +139,12 @@ class CheckboxNode(WidgetNode):
 class DropdownNode(WidgetNode):
     def __init__(self, line=0, col=0):
         super(DropdownNode, self).__init__(line, col)
+
+    @staticmethod
+    def is_compatible_type(literal_type):
+        # TODO: Not sure if we want date in here?
+        return literal_type in [BoolTypeNode(), StringTypeNode(), IntTypeNode(),
+                                DecimalTypeNode()]
 
     def accept(self, visitor, *args):
         return visitor.dropdown_node(self, *args)

@@ -165,7 +165,7 @@ class TypeChecker(object):
         return AST.BoolTypeNode()
 
     def var_node(self, var_node):
-        return self.env.get_var_type(var_node)
+        return self.env.get_var_type(var_node.name)
 
     @staticmethod
     def decimal_node(_):

@@ -12,22 +12,24 @@ class ErrorHandler(object):
 
     def add_warning(self, node, message):
         self.warn_count += 1
-        self.error_list.append("[{}] {} at line {}, column {}".format(
-            "WARNING", message, node.line, node.col
-        ))
+        message = "[WARNING] {}".format(message)
+        if node is not None:
+            message += " at line {}, column {}".format(node.line, node.col)
+        self.error_list.append(message)
 
     def add_error(self, node, message):
         self.error_count += 1
-        self.error_list.append("[{}] {} at line {}, column {}".format(
-            "ERROR", message, node.line, node.col
-        ))
+        message = "[ERROR] {}".format(message)
+        if node is not None:
+            message += " at line {}, column {}".format(node.line, node.col)
+        self.error_list.append(message)
 
     def add_zero_division_warning(self, node):
         message = "Division by zero found"
         self.add_warning(node, message)
 
     def add_dup_label_warning(self, question_node):
-        message = "Duplicate label found: '{}'".format(question_node.question)
+        message = "Duplicate label '{}' found".format(question_node.question)
         self.add_warning(question_node, message)
 
     def add_cycle_error(self, cycles):
@@ -59,7 +61,7 @@ class ErrorHandler(object):
         error_message = "Variable '{}' is not defined!".format(var_node.name)
         self.add_error(var_node, error_message)
 
-    def add_duplicate_error(self, node):
+    def add_duplicate_question_error(self, node):
         error_message = "Duplicate question declaration found: {}"\
                         .format(node.name)
         self.add_error(node, error_message)

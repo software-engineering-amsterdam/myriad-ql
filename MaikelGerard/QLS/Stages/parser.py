@@ -26,6 +26,7 @@ class Parser(QLParser):
     SLIDER = pp.Keyword("slider").suppress()
     SPINBOX = pp.Keyword("spinbox").suppress()
     TEXT = pp.Keyword("text").suppress()
+    NUMERIC = pp.Keyword("numeric").suppress()
     RADIO = pp.Keyword("radio").suppress()
     CHECKBOX = pp.Keyword("checkbox").suppress()
     DROPDOWN = pp.Keyword("dropdown").suppress()
@@ -45,7 +46,8 @@ class Parser(QLParser):
         self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^ self.DATE ^
                       self.STRING ^ self.VARIABLE ^ self.COLOR_VALUE)
         self.WIDGET_TYPES = (self.SLIDER ^ self.SPINBOX ^ self.TEXT ^
-                             self.RADIO ^ self.CHECKBOX ^ self.DROPDOWN)
+                             self.NUMERIC ^ self.RADIO ^ self.CHECKBOX ^
+                             self.DROPDOWN)
 
         # Create the grammar incrementally to simplify unit test creation.
         self.widget_type = self.define_widget_type()
@@ -75,6 +77,7 @@ class Parser(QLParser):
         self.SLIDER.setParseAction(self.create_node(AST.SliderNode))
         self.SPINBOX.setParseAction(self.create_node(AST.SpinboxNode))
         self.TEXT.setParseAction(self.create_node(AST.TextNode))
+        self.NUMERIC.setParseAction(self.create_node(AST.NumericNode))
         self.RADIO.setParseAction(self.create_node(AST.RadioNode))
         self.CHECKBOX.setParseAction(self.create_node(AST.CheckboxNode))
         self.DROPDOWN.setParseAction(self.create_node(AST.DropdownNode))
