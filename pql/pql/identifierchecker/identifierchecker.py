@@ -19,7 +19,7 @@ class IdentifierChecker(FormVisitor):
             for key, value in identifiers.items():
                 if len(value) > 1:
                     errors.append("Key: {} contained multiple entries, the following locations: {}"
-                                  .format(key, value))
+                                  .format(key, [v.location for v in value]))
             return errors
 
         identifier_dictionary = defaultdict(list)

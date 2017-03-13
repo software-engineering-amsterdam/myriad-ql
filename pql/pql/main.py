@@ -13,8 +13,6 @@ if __name__ == '__main__':
     exit(app.exec_())
 
 
-#TODO : Line numbers in AST Node object stoppen
-#TODO: Line numbers tonen in error messages van IdentifierChecker
 #TODO: Line numbers tonen in error messages van TypeChecker
 #TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
 #TODO: Export of values ?
