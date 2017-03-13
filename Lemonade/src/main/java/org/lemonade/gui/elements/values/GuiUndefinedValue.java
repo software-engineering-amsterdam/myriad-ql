@@ -19,4 +19,9 @@ public class GuiUndefinedValue extends GuiValue<String> {
     @Override void setValue(final String value) {
 
     }
+
+    @Override
+    public boolean isDefined() {
+        return false;
+    }
 }

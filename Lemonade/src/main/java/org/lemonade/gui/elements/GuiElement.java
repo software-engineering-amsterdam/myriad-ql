@@ -1,5 +1,7 @@
 package org.lemonade.gui.elements;
 
+import org.lemonade.gui.elements.values.GuiValue;
+
 import javafx.scene.control.Control;
 
 /**
@@ -7,8 +9,10 @@ import javafx.scene.control.Control;
  */
 public interface GuiElement {
 
-    void update();
+    GuiValue<?> getValue();
 
     Control getWidget();
+
+    void update();
 
 }

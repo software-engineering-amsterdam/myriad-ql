@@ -1,15 +1,11 @@
 package org.lemonade.gui.elements.values;
 
-import javafx.scene.control.TextField;
-
 public class GuiStringValue extends GuiValue<String> {
 
     private String value;
-    private TextField textField;
 
-    public GuiStringValue() {
-        textField = new TextField();
-        textField.setOnKeyReleased(e -> update());
+    public GuiStringValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -18,18 +14,8 @@ public class GuiStringValue extends GuiValue<String> {
     }
 
     @Override
-    public void setValue(String value) {
-        this.value = value;
+    public void update(String newValue) {
+        this.value = newValue;
     }
 
-    @Override
-    public void update() {
-        setValue(textField.getText());
-        System.err.println("new value = " + value);
-    }
-
-    @Override
-    public TextField getWidget() {
-        return textField;
-    }
 }
