@@ -2,7 +2,7 @@ from json import dump
 from sys import argv
 from os.path import isfile, splitext
 
-from gui.formapp import FormApp
+from gui.app import App
 from misc.messages import *
 from ql.grammar import parse_file as parse_ql
 from ql.visitors.dependency_checker import DependencyChecker
@@ -66,13 +66,13 @@ def main():
         layout_errors = []
         QlsTypeChecker(symboltable, layout_errors).check(layout)
 
-    for error in layout_errors:
-        print(error)
+        for error in layout_errors:
+            print(error)
 
-    if any(error.critical for error in layout_errors):
-        return
+        if any(error.critical for error in layout_errors):
+            return
 
-    app = FormApp(form, layout=layout, on_exit=lambda form_app: export(dump_file, form_app.environment))
+    app = App(form, layout=layout, on_exit=lambda app: export(dump_file, app.environment))
     app.start()
 
 if __name__ == "__main__":

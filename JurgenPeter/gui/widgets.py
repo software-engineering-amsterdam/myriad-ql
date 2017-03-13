@@ -9,12 +9,12 @@ class Widget:
     LABELPREFIX = "label_"
     ENTRYPREFIX = "entry_"
 
-    def __init__(self, app, question):
+    def __init__(self, gui, question):
         self.label_id = self.LABELPREFIX + question.name
         self.entry_id = self.ENTRYPREFIX + question.name
 
-        self.app = app
-        self.app.addLabel(self.label_id, question.label)
+        self.gui = gui
+        self.gui.addLabel(self.label_id, question.label)
         self.font = Font()
 
     def set_listener(self, listener):
@@ -25,7 +25,7 @@ class Widget:
         return None
 
     def get_tkinter_label(self):
-        return self.app.getLabelWidget(self.label_id)
+        return self.gui.getLabelWidget(self.label_id)
 
     @abstractmethod
     def get_tkinter_widget(self):
@@ -57,13 +57,13 @@ class Widget:
 
 class EntryWidget(Widget):
 
-    def __init__(self, app, question):
-        super().__init__(app, question)
-        self.app.addEntry(self.entry_id)
+    def __init__(self, gui, question):
+        super().__init__(gui, question)
+        self.gui.addEntry(self.entry_id)
         self.register_validator(self.validate)
 
     def register_validator(self, validate):
-        widget = self.app.getEntryWidget(self.entry_id)
+        widget = self.gui.getEntryWidget(self.entry_id)
         command = widget.register(validate)
         widget.config(validate="key", validatecommand=(command, "%P"))
 
@@ -72,31 +72,31 @@ class EntryWidget(Widget):
         return True
 
     def show(self):
-        self.app.showLabel(self.label_id)
-        self.app.showEntry(self.entry_id)
+        self.gui.showLabel(self.label_id)
+        self.gui.showEntry(self.entry_id)
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
-        self.app.hideEntry(self.entry_id)
+        self.gui.hideLabel(self.label_id)
+        self.gui.hideEntry(self.entry_id)
 
     def disable(self):
-        self.app.disableEntry(self.entry_id)
+        self.gui.disableEntry(self.entry_id)
 
     def set_value(self, value):
         if value is not None:
-            self.app.setEntry(self.entry_id, str(value))
+            self.gui.setEntry(self.entry_id, str(value))
         else:
-            self.app.setEntry(self.entry_id, "")
+            self.gui.setEntry(self.entry_id, "")
 
     def get_value(self):
-        return self.app.getEntry(self.entry_id)
+        return self.gui.getEntry(self.entry_id)
 
     @staticmethod
     def get_datatype():
         return StringDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getEntryWidget(self.entry_id)
+        return self.gui.getEntryWidget(self.entry_id)
 
 
 class IntegerEntryWidget(EntryWidget):
@@ -107,7 +107,7 @@ class IntegerEntryWidget(EntryWidget):
 
     def get_value(self):
         try:
-            return int(self.app.getEntry(self.entry_id))
+            return int(self.gui.getEntry(self.entry_id))
         except ValueError:
             return None
 
@@ -124,7 +124,7 @@ class DecimalEntryWidget(EntryWidget):
 
     def get_value(self):
         try:
-            return float(self.app.getEntry(self.entry_id))
+            return float(self.gui.getEntry(self.entry_id))
         except ValueError:
             return None
 
@@ -135,71 +135,71 @@ class DecimalEntryWidget(EntryWidget):
 
 class CheckBoxWidget(Widget):
 
-    def __init__(self, app, question):
-        super().__init__(app, question)
-        self.app.addCheckBox(self.entry_id)
+    def __init__(self, gui, question):
+        super().__init__(gui, question)
+        self.gui.addCheckBox(self.entry_id)
         self.get_tkinter_widget().config(text="")
 
     def set_listener(self, listener):
-        self.app.setCheckBoxFunction(self.entry_id, listener)
+        self.gui.setCheckBoxFunction(self.entry_id, listener)
 
     def show(self):
-        self.app.showLabel(self.label_id)
-        self.app.showCheckBox(self.entry_id)
+        self.gui.showLabel(self.label_id)
+        self.gui.showCheckBox(self.entry_id)
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
-        self.app.hideCheckBox(self.entry_id)
+        self.gui.hideLabel(self.label_id)
+        self.gui.hideCheckBox(self.entry_id)
 
     def disable(self):
-        self.app.disableCheckBox(self.entry_id)
+        self.gui.disableCheckBox(self.entry_id)
 
     def set_value(self, value):
-        self.app.setCheckBox(self.entry_id, ticked=bool(value))
+        self.gui.setCheckBox(self.entry_id, ticked=bool(value))
 
     def get_value(self):
-        return self.app.getCheckBox(self.entry_id)
+        return self.gui.getCheckBox(self.entry_id)
 
     @staticmethod
     def get_datatype():
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getCheckBoxWidget(self.entry_id)
+        return self.gui.getCheckBoxWidget(self.entry_id)
 
 
 class SpinBoxWidget(Widget):
-    def __init__(self, app, question, lower=0, upper=100):
-        super().__init__(app, question)
+    def __init__(self, gui, question, lower=0, upper=100):
+        super().__init__(gui, question)
         self.lower = lower
         self.upper = upper
-        self.app.addSpinBoxRange(self.entry_id, lower, upper)
+        self.gui.addSpinBoxRange(self.entry_id, lower, upper)
         self.set_value(lower)
 
     def set_listener(self, listener):
-        self.app.setSpinBoxFunction(self.entry_id, listener)
+        self.gui.setSpinBoxFunction(self.entry_id, listener)
 
     def show(self):
-        self.app.showLabel(self.label_id)
-        self.app.showSpinBox(self.entry_id)
+        self.gui.showLabel(self.label_id)
+        self.gui.showSpinBox(self.entry_id)
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
-        self.app.hideSpinBox(self.entry_id)
+        self.gui.hideLabel(self.label_id)
+        self.gui.hideSpinBox(self.entry_id)
 
     def disable(self):
-        self.app.disableSpinBox(self.entry_id)
+        self.gui.disableSpinBox(self.entry_id)
 
     def set_value(self, value):
         if value is not None:
             value = max(self.lower, min(self.upper, value))
-            self.app.setSpinBox(self.entry_id, value)
+            self.gui.setSpinBox(self.entry_id, value)
         else:
-            self.app.setSpinBox(self.entry_id, self.lower)
+            self.gui.setSpinBox(self.entry_id, self.lower)
 
     def get_value(self):
         try:
-            return int(self.app.getSpinBox(self.entry_id))
+            return int(self.gui.getSpinBox(self.entry_id))
         except ValueError:
             return None
 
@@ -208,48 +208,48 @@ class SpinBoxWidget(Widget):
         return IntegerDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getSpinBoxWidget(self.entry_id)
+        return self.gui.getSpinBoxWidget(self.entry_id)
 
 
 class RadioWidget(Widget):
-    def __init__(self, app, question, true_text="Yes", false_text="No"):
-        super().__init__(app, question)
+    def __init__(self, gui, question, true_text="Yes", false_text="No"):
+        super().__init__(gui, question)
         self.true_text = true_text
         self.false_text = false_text
-        self.app.addRadioButton(self.entry_id, false_text)
-        self.app.addRadioButton(self.entry_id, true_text)
+        self.gui.addRadioButton(self.entry_id, false_text)
+        self.gui.addRadioButton(self.entry_id, true_text)
 
     def set_listener(self, listener):
-        self.app.setRadioButtonFunction(self.entry_id, listener)
+        self.gui.setRadioButtonFunction(self.entry_id, listener)
 
     def show(self):
-        self.app.showLabel(self.label_id)
+        self.gui.showLabel(self.label_id)
         for widget in self.get_tkinter_widget():
             widget.grid()
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
+        self.gui.hideLabel(self.label_id)
         for widget in self.get_tkinter_widget():
             widget.grid_remove()
 
     def disable(self):
-        self.app.disableRadioButton(self.entry_id)
+        self.gui.disableRadioButton(self.entry_id)
 
     def set_value(self, value):
         if value:
-            self.app.setRadioButton(self.entry_id, self.true_text)
+            self.gui.setRadioButton(self.entry_id, self.true_text)
         else:
-            self.app.setRadioButton(self.entry_id, self.false_text)
+            self.gui.setRadioButton(self.entry_id, self.false_text)
 
     def get_value(self):
-        return self.app.getRadioButton(self.entry_id) == self.true_text
+        return self.gui.getRadioButton(self.entry_id) == self.true_text
 
     @staticmethod
     def get_datatype():
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getRadioButtonWidget(self.entry_id)
+        return self.gui.getRadioButtonWidget(self.entry_id)
 
     def set_font_familiy(self, family):
         self.font["family"] = family
@@ -276,82 +276,82 @@ class RadioWidget(Widget):
 
 
 class DropDownWidget(Widget):
-    def __init__(self, app, question, true_text="Yes", false_text="No"):
-        super().__init__(app, question)
+    def __init__(self, gui, question, true_text="Yes", false_text="No"):
+        super().__init__(gui, question)
         self.true_text = true_text
         self.false_text = false_text
-        self.app.addOptionBox(self.entry_id, [false_text, true_text])
+        self.gui.addOptionBox(self.entry_id, [false_text, true_text])
 
     def set_listener(self, listener):
-        self.app.setOptionBoxFunction(self.entry_id, listener)
+        self.gui.setOptionBoxFunction(self.entry_id, listener)
 
     def show(self):
-        self.app.showLabel(self.label_id)
-        self.app.showOptionBox(self.entry_id)
+        self.gui.showLabel(self.label_id)
+        self.gui.showOptionBox(self.entry_id)
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
-        self.app.hideOptionBox(self.entry_id)
+        self.gui.hideLabel(self.label_id)
+        self.gui.hideOptionBox(self.entry_id)
 
     def disable(self):
-        self.app.disableOptionBox(self.entry_id)
+        self.gui.disableOptionBox(self.entry_id)
 
     def set_value(self, value):
         if value:
-            self.app.setOptionBox(self.entry_id, self.true_text)
+            self.gui.setOptionBox(self.entry_id, self.true_text)
         else:
-            self.app.setOptionBox(self.entry_id, self.false_text)
+            self.gui.setOptionBox(self.entry_id, self.false_text)
 
     def get_value(self):
-        return self.app.getOptionBox(self.entry_id) == self.true_text
+        return self.gui.getOptionBox(self.entry_id) == self.true_text
 
     @staticmethod
     def get_datatype():
         return BooleanDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getOptionBoxWidget(self.entry_id)
+        return self.gui.getOptionBoxWidget(self.entry_id)
 
 
 class SliderWidget(Widget):
-    def __init__(self, app, question, lower=0, upper=100):
-        super().__init__(app, question)
+    def __init__(self, gui, question, lower=0, upper=100):
+        super().__init__(gui, question)
         self.lower = lower
         self.upper = upper
-        self.app.addScale(self.entry_id)
-        self.app.showScaleValue(self.entry_id)
-        self.app.setScaleRange(self.entry_id, lower, upper)
+        self.gui.addScale(self.entry_id)
+        self.gui.showScaleValue(self.entry_id)
+        self.gui.setScaleRange(self.entry_id, lower, upper)
         self.set_value(lower)
 
     def set_listener(self, listener):
-        self.app.setScaleFunction(self.entry_id, listener)
+        self.gui.setScaleFunction(self.entry_id, listener)
 
     def show(self):
-        self.app.showLabel(self.label_id)
-        self.app.showScale(self.entry_id)
+        self.gui.showLabel(self.label_id)
+        self.gui.showScale(self.entry_id)
 
     def hide(self):
-        self.app.hideLabel(self.label_id)
-        self.app.hideScale(self.entry_id)
+        self.gui.hideLabel(self.label_id)
+        self.gui.hideScale(self.entry_id)
 
     def disable(self):
-        self.app.disableScale(self.entry_id)
+        self.gui.disableScale(self.entry_id)
 
         """ Due to a Tkinter bug, the slider must be enabled again to allow it
             to be moved by set_value. However, after being enabled, the user
             will still be unable to move the slider manually. """
-        self.app.enableScale(self.entry_id)
+        self.gui.enableScale(self.entry_id)
 
     def set_value(self, value):
         if value is not None:
             value = max(self.lower, min(self.upper, value))
-            self.app.setScale(self.entry_id, value)
+            self.gui.setScale(self.entry_id, value)
         else:
-            self.app.setScale(self.entry_id, self.lower)
+            self.gui.setScale(self.entry_id, self.lower)
 
     def get_value(self):
         try:
-            return int(self.app.getScale(self.entry_id))
+            return int(self.gui.getScale(self.entry_id))
         except ValueError:
             return None
 
@@ -360,4 +360,4 @@ class SliderWidget(Widget):
         return IntegerDatatype()
 
     def get_tkinter_widget(self):
-        return self.app.getScaleWidget(self.entry_id)
+        return self.gui.getScaleWidget(self.entry_id)

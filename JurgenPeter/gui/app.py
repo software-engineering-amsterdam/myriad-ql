@@ -6,7 +6,7 @@ from gui.visitors.computation_updater import ComputationUpdater
 from gui.visitors.gui_updater import GuiUpdater
 
 
-class FormApp:
+class App:
 
     def __init__(self, form, layout=None, on_exit=None):
         self.form = form
@@ -14,23 +14,23 @@ class FormApp:
         self.widgets = {}
         self.on_exit = on_exit
 
-        self.app = gui(form.name)
-        self.app.setResizable(False)
-        self.app.setSticky("new")
-        self.app.setBg("white")
-        self.app.bindKey("<KeyPress>", self.update)
+        self.gui = gui(form.name)
+        self.gui.setResizable(False)
+        self.gui.setSticky("new")
+        self.gui.setBg("white")
+        self.gui.bindKey("<KeyPress>", self.update)
 
         if layout is None:
-            QlGuiBuilder(self.app, self.update, self.exit, self.widgets).build(form)
+            QlGuiBuilder(self.gui, self.update, self.exit, self.widgets).build(form)
         else:
-            QlsGuiBuilder(self.app, self.update, self.exit, self.widgets, self.form).build(layout)
+            QlsGuiBuilder(self.gui, self.update, self.exit, self.widgets, self.form).build(layout)
 
     def start(self):
         self.update(None)
-        self.app.go()
+        self.gui.go()
 
     def stop(self):
-        self.app.stop()
+        self.gui.stop()
 
     def update(self, _):
         for name, widget in self.widgets.items():
@@ -40,7 +40,7 @@ class FormApp:
         GuiUpdater(self, self.environment).update(self.form)
 
     def exit(self, _):
-        self.app.stop()
+        self.gui.stop()
         if self.on_exit is not None:
             self.on_exit(self)
 
