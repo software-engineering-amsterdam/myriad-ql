@@ -1,6 +1,5 @@
 package org.uva.taxfree.model.node.expression;
 
-import org.uva.taxfree.model.node.operators.AddOperator;
 import org.uva.taxfree.model.node.operators.Operator;
 
 public class CalculationBinaryExpressionNode extends BinaryExpressionNode {

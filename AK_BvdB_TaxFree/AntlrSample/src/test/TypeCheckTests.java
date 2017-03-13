@@ -8,7 +8,7 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.BooleanBinaryExpressionNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
-import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.NumericOperator;
 
 public class TypeCheckTests {
     private SymbolTable mSymbolTable;
@@ -23,7 +23,7 @@ public class TypeCheckTests {
     @Test
     public void testDifferentTypes() throws Exception {
 
-        ExpressionNode expr = new BooleanBinaryExpressionNode(new IntegerLiteralNode("5"), new AddOperator(), new IntegerLiteralNode("6"));
+        ExpressionNode expr = new BooleanBinaryExpressionNode(new IntegerLiteralNode("5"), new NumericOperator("+"), new IntegerLiteralNode("6"));
         expr.fillSymbolTable(mSymbolTable);
         expr.checkSemantics(mSymbolTable, mMessageList);
         Assert.assertTrue(mMessageList.isEmpty(), "Valid binary expression should result in no errors");

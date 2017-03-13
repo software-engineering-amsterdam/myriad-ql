@@ -133,12 +133,12 @@ public class QuestionFormTest {
     public void testConstantCondition() throws Exception {
 
         ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-        ExpressionNode cond = new BooleanBinaryExpressionNode(new IntegerLiteralNode("0"), "<", parenthesized);
+//        ExpressionNode cond = new BooleanBinaryExpressionNode(new IntegerLiteralNode("0"), new LessThanOperator(), parenthesized);
         Set<Node> questions = new LinkedHashSet<>();
-        questions.add(cond);
+//        questions.add(cond);
         questions.add(new DeclarationNode("Do you see me?", "amIVisible?", new BooleanType()));
-        IfStatementNode ifStatement = new IfStatementNode(cond, questions);
-        add(ifStatement);
+//        IfStatementNode ifStatement = new IfStatementNode(cond, questions);
+//        add(ifStatement);
     }
 
     @Test

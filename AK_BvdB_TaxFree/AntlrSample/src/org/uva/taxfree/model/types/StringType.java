@@ -1,22 +1,22 @@
 package org.uva.taxfree.model.types;
 
-import org.uva.taxfree.model.node.operators.AddOperator;
-import org.uva.taxfree.model.node.operators.AndOperator;
-import org.uva.taxfree.model.node.operators.OrOperator;
+import org.uva.taxfree.model.node.operators.CompareOperator;
+import org.uva.taxfree.model.node.operators.NumericOperator;
+import org.uva.taxfree.model.node.operators.BooleanOperator;
 
 public class StringType extends Type {
     @Override
-    public boolean supports(AddOperator add) {
+    public boolean supports(NumericOperator numericOperator) {
         return false;
     }
 
     @Override
-    public boolean supports(OrOperator or) {
+    public boolean supports(BooleanOperator booleanOperator) {
         return false;
     }
 
     @Override
-    public boolean supports(AndOperator and) {
+    public boolean supports(CompareOperator compareOperator) {
         return false;
     }
 }

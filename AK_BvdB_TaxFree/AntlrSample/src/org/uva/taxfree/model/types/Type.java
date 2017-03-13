@@ -1,19 +1,19 @@
 package org.uva.taxfree.model.types;
 
-import org.uva.taxfree.model.node.operators.AddOperator;
-import org.uva.taxfree.model.node.operators.AndOperator;
-import org.uva.taxfree.model.node.operators.OrOperator;
+import org.uva.taxfree.model.node.operators.BooleanOperator;
+import org.uva.taxfree.model.node.operators.CompareOperator;
+import org.uva.taxfree.model.node.operators.NumericOperator;
 
 public abstract class Type {
     public boolean equals(Type other) {
         return getClass().equals(other.getClass());
     }
 
-    public abstract boolean supports(AddOperator add);
+    public abstract boolean supports(CompareOperator compareOperator);
 
-    public abstract boolean supports(OrOperator or);
+    public abstract boolean supports(BooleanOperator booleanOperator);
 
-    public abstract boolean supports(AndOperator and);
+    public abstract boolean supports(NumericOperator numericOperator);
 
 
 }
