@@ -35,7 +35,7 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
     }
 
     public Void visit(Question node) {
-        if (environment.contains(node.getId())) {
+        if (environment.currentContains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
@@ -46,7 +46,7 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
 
 
     public Void visit(QuestionExpr node) {
-        if (environment.contains(node.getId())) {
+        if (environment.currentContains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 

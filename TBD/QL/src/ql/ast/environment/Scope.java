@@ -33,5 +33,9 @@ public class Scope {
         return result;
     }
 
+    public boolean contains(String key) {
+        return variables.containsKey(key);
+    }
+
 
 }

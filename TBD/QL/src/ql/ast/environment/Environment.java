@@ -20,7 +20,7 @@ public class Environment {
     public Scope currentScope = null;
     private HashMap<String, EnvironmentVariable> variables = new HashMap<>();
 
-    private final EvalASTVisitor evalASTVisitor = new EvalASTVisitor(this);
+    private final EvalASTVisitor evalASTVisitor = new EvalASTVisitor();
     private final List<EnvironmentEventListener> eventListeners = new ArrayList<>();
 
 
@@ -84,6 +84,10 @@ public class Environment {
             variables.get(key).setValue(value);
             updateEvent();
         }
+    }
+
+    public boolean currentContains(String key) {
+        return currentScope.contains(key);
     }
 
     public boolean contains(String key) {

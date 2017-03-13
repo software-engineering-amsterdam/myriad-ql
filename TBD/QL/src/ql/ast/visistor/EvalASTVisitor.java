@@ -13,13 +13,11 @@ import ql.ast.environment.Environment;
  * Created by Erik on 14-2-2017.
  */
 public class EvalASTVisitor extends ASTVisitor<Value> {
-    private final Environment environment;
+    private Environment environment;
 
-    public EvalASTVisitor(Environment environment) {
+
+    public Value startVisitor(Environment environment, ASTNode node) {
         this.environment = environment;
-    }
-
-    public Value startVisitor(ASTNode node) {
         return node.accept(this);
     }
 

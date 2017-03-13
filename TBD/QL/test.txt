@@ -4,9 +4,14 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
+
     if (hasMaintLoan) {
         "Did you sell a house in 2012?"
             hasSoldHouse2: int
+
+       "Did you enter a loan?"
+         hasMaintLoan: int =
+            hasSoldHouse2
     }else{
       "Did you enter a loan in 2012?"
         hasMaintLoan2: boolean

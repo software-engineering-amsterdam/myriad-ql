@@ -41,7 +41,7 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
 
 
     public VBox visit(Statements node) {
-
+        environment.setScope(node);
         List<Statement> statements = node.getItems();
         List<VBox> statementBoxes = new ArrayList<>();
         for (Statement statement: statements) {
