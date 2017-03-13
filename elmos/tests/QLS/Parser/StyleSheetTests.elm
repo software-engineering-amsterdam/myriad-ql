@@ -76,7 +76,8 @@ styleSheetTests =
                                     , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig Spinbox))
                                     , Field (Question ( "valueResidue", Location 18 16 ))
                                     ]
-                                    [ (DefaultValueConfig MoneyType
+                                    [ (DefaultValueConfig (Location 19 7)
+                                        MoneyType
                                         (MultiConfig
                                             [ Width 400
                                             , (Font "Arial")
@@ -91,7 +92,7 @@ styleSheetTests =
                             ]
                             []
                         ]
-                        [ DefaultValueConfig BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
+                        [ DefaultValueConfig (Location 28 3) BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
                     ]
                 }
           )
@@ -128,7 +129,7 @@ pageTests =
                     [ SingleChildSection "Selling"
                         (Field (Question ( "foo", Location 1 38 )))
                     ]
-                    [ DefaultValueConfig BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
+                    [ DefaultValueConfig (Location 1 42) BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
                 )
           )
         ]
@@ -147,7 +148,8 @@ sectionTests =
           , Just
                 (MultiChildSection "Selling"
                     []
-                    [ (DefaultValueConfig BooleanType
+                    [ (DefaultValueConfig (Location 1 20)
+                        BooleanType
                         (SingleConfig
                             (Radio [ "Yes", "No" ])
                         )

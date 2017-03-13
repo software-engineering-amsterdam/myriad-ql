@@ -4,7 +4,7 @@ import DictList exposing (DictList)
 import List.Extra as List
 import QL.AST exposing (Expression, Form, Id)
 import QL.AST.Collectors as Collectors
-import QL.TypeChecker.Messages as Messages exposing (Message)
+import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(DependencyCycle))
 import Set exposing (Set)
 
 
@@ -30,7 +30,7 @@ cyclicDependencies form =
     in
         List.concatMap (asCyclicDependencies [] dependencyTable) (DictList.keys dependencyTable)
             |> List.uniqueBy (Set.fromList >> toString)
-            |> List.map Messages.dependencyCycle
+            |> List.map (DependencyCycle >> Error)
 
 
 asCyclicDependencies : List String -> DependencyTable -> String -> List DependencyCycle

@@ -4,8 +4,8 @@ import QL.AST exposing (..)
 import Dict exposing (Dict)
 import List.Extra as List
 import QL.AST.Collectors as Collectors
-import QL.TypeChecker.Messages as Messages exposing (Message)
 import QL.TypeChecker.QuestionIndex as QuestionIndex exposing (QuestionIndex)
+import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(DuplicateQuestionDefinition))
 
 
 type alias Duplicate =
@@ -27,7 +27,7 @@ duplicateQuestions form =
     in
         List.filterMap (duplicateQuestionDeclarations questionIds) itemIds
             |> mergeOverlappingDuplicates
-            |> Dict.map Messages.duplicateQuestionDefinition
+            |> Dict.map (\k v -> DuplicateQuestionDefinition k v |> Error)
             |> Dict.values
 
 
