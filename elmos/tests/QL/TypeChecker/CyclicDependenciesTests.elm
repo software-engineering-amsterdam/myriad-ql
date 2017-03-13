@@ -2,9 +2,9 @@ module QL.TypeChecker.CyclicDependenciesTests exposing (all)
 
 import Expect
 import QL.AST exposing (..)
-import QL.ASTTestUtil exposing (emptyLoc, loc)
+import QL.ASTTestUtil exposing (emptyLoc)
 import QL.TypeChecker.CyclicDependencies exposing (cyclicDependencies)
-import QL.TypeChecker.Messages as Messages exposing (Message(Error), ErrorMessage(DependencyCycle))
+import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(DependencyCycle))
 import Test exposing (Test, describe, test)
 
 
@@ -36,8 +36,22 @@ all =
                 cyclicDependencies
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "label" ( "x", emptyLoc ) StringType (ComparisonExpression Equal emptyLoc (Var ( "y", emptyLoc )) (Var ( "p", emptyLoc )))
-                        , ComputedField "label" ( "y", emptyLoc ) StringType (ComparisonExpression Equal emptyLoc (Var ( "z", emptyLoc )) (Var ( "a", emptyLoc )))
+                        [ ComputedField "label"
+                            ( "x", emptyLoc )
+                            StringType
+                            (ComparisonExpression Equal
+                                emptyLoc
+                                (Var ( "y", emptyLoc ))
+                                (Var ( "p", emptyLoc ))
+                            )
+                        , ComputedField "label"
+                            ( "y", emptyLoc )
+                            StringType
+                            (ComparisonExpression Equal
+                                emptyLoc
+                                (Var ( "z", emptyLoc ))
+                                (Var ( "a", emptyLoc ))
+                            )
                         , ComputedField "label" ( "z", emptyLoc ) StringType (Var ( "x", emptyLoc ))
                         , ComputedField "label" ( "p", emptyLoc ) StringType (Var ( "y", emptyLoc ))
                         ]
@@ -53,7 +67,14 @@ all =
                         ( "", emptyLoc )
                         [ ComputedField "label" ( "x", emptyLoc ) StringType (Var ( "y", emptyLoc ))
                         , ComputedField "label" ( "y", emptyLoc ) StringType (Var ( "a", emptyLoc ))
-                        , ComputedField "label" ( "a", emptyLoc ) StringType (ComparisonExpression Equal emptyLoc (Var ( "x", emptyLoc )) (Var ( "y", emptyLoc )))
+                        , ComputedField "label"
+                            ( "a", emptyLoc )
+                            StringType
+                            (ComparisonExpression Equal
+                                emptyLoc
+                                (Var ( "x", emptyLoc ))
+                                (Var ( "y", emptyLoc ))
+                            )
                         ]
                     )
                     |> Expect.equal [ Error <| DependencyCycle [ "x", "y", "a", "x" ], Error <| DependencyCycle [ "y", "a", "y" ] ]

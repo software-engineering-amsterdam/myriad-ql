@@ -76,17 +76,16 @@ styleSheetTests =
                                     , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig Spinbox))
                                     , Field (Question ( "valueResidue", Location 18 16 ))
                                     ]
-                                    [ (DefaultValueConfig (Location 19 7)
+                                    [ DefaultValueConfig (Location 19 7)
                                         MoneyType
                                         (MultiConfig
                                             [ Width 400
-                                            , (Font "Arial")
-                                            , (FontSize 14)
-                                            , (Color "#999999")
+                                            , Font "Arial"
+                                            , FontSize 14
+                                            , Color "#999999"
                                             ]
                                             (Just Spinbox)
                                         )
-                                      )
                                     ]
                                 )
                             ]
@@ -148,12 +147,11 @@ sectionTests =
           , Just
                 (MultiChildSection "Selling"
                     []
-                    [ (DefaultValueConfig (Location 1 20)
+                    [ DefaultValueConfig (Location 1 20)
                         BooleanType
                         (SingleConfig
                             (Radio [ "Yes", "No" ])
                         )
-                      )
                     ]
                 )
           )
@@ -197,7 +195,7 @@ questionTests =
           , Just
                 (ConfiguredQuestion
                     ( "foo", Location 1 9 )
-                    (SingleConfig (Spinbox))
+                    (SingleConfig Spinbox)
                 )
           )
         , ( "question multi config"

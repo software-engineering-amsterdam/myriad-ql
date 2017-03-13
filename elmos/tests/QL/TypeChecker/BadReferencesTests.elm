@@ -170,7 +170,7 @@ parseAndFindExpectedBadReferences message input expectedBadReferences =
     test message <|
         \() ->
             parseAndGetBadReferences input
-                |> Expect.equal (Just (expectedBadReferences))
+                |> Expect.equal (Just expectedBadReferences)
 
 
 parseAndGetBadReferences : String -> Maybe (List Message)
