@@ -55,6 +55,8 @@ if __name__ == '__main__':
     print("Test Evaluation LogicalAnd: {}".format(test.eval()))
     test = LogicalOr(Boolean(None,[True]),Boolean(None,[False]))
     print("Test Evaluation LogicalOr: {}".format(test.eval()))
+    test = LogicalNot(Boolean(None,[False]))
+    print("Test Evaluation LogicalNot: {}".format(test.eval()))
     # eval_test = '(sellingPrice - privateDebt)'
     # __parsed = QL.arithmic_expression.parseString(eval_test)[0]
     # print(__parsed.eval())

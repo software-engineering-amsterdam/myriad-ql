@@ -139,9 +139,10 @@ class LogicalOr(BinaryOperation):
 class LogicalNot(UnaryOperation):
     def __init__(self, child):
         UnaryOperation.__init__(self, "logical_not", child)
+        self.right_hand_side = child
 
     def eval(self):
-        return not child
+        return ~self.right_hand_side
 
 class UnaryPlus(UnaryOperation):
     def __init__(self, child):
