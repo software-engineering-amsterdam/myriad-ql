@@ -36,7 +36,7 @@ public class IfElseStatementNode extends IfStatementNode {
     public void fillQuestionForm(QuestionForm form) {
         super.fillQuestionForm(form);
         for (Node n : mElseChildren) {
-            n.fillSymbolTable(form);
+            n.fillQuestionForm(form);
         }
     }
 }
