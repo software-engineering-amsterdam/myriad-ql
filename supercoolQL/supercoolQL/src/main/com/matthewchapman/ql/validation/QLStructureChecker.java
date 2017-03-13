@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Created by matt on 13/03/2017.
- *
+ * <p>
  * Provides type checking and missing parameter checking
  */
 public class QLStructureChecker extends AbstractQLVisitor<Void> {
@@ -41,8 +41,8 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     private void checkForMissingParameters(Map<String, Type> typeTable) {
         for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
-            for(Parameter parameter : entry.getValue()) {
-                if(!typeTable.containsKey(parameter.getID())) {
+            for (Parameter parameter : entry.getValue()) {
+                if (!typeTable.containsKey(parameter.getID())) {
                     System.err.println("something is missing: " + parameter.getID());    //TODO: Proper error
                 }
             }
@@ -52,7 +52,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(CalculatedQuestion calculatedQuestion, String context) {
 
-        if(!expressionMap.containsKey(calculatedQuestion.getName())) {
+        if (!expressionMap.containsKey(calculatedQuestion.getName())) {
             expressionMap.put(calculatedQuestion.getName(), new ArrayList<>());
         }
 
@@ -63,7 +63,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(IfStatement ifStatement, String context) {
 
-        for(Statement statement : ifStatement.getIfCaseStatements()) {
+        for (Statement statement : ifStatement.getIfCaseStatements()) {
             statement.accept(this, context);
         }
 
@@ -73,11 +73,11 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
 
-        for(Statement statement : ifElseStatement.getIfCaseStatements()) {
+        for (Statement statement : ifElseStatement.getIfCaseStatements()) {
             statement.accept(this, null);
         }
 
-        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
             statement.accept(this, null);
         }
 

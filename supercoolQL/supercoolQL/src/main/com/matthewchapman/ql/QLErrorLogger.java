@@ -10,7 +10,7 @@ public class QLErrorLogger {
     private List<QLError> errors;
 
     public void printErrors() {
-        for(QLError error : errors) {
+        for (QLError error : errors) {
             System.out.println(error);
         }
     }

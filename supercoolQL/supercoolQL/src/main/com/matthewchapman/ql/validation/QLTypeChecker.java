@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Created by matt on 03/03/2017. 222
- *
+ * <p>
  * Visitor to check expressions for validity (circular dependency, types, etc).
  */
 public class QLTypeChecker extends AbstractQLVisitor<Type> {
@@ -26,7 +26,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public void checkExpressionTypes(Form form, Map<String, Type> typeTable) {
         this.typeTable = typeTable;
 
-        for(Statement statement : form.getStatements()) {
+        for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
     }
@@ -35,7 +35,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type left = operation.getLeft().accept(this, null);
         Type right = operation.getRight().accept(this, null);
 
-        if(!left.isCompatible(right)) {
+        if (!left.isCompatible(right)) {
             System.err.println("incompatible types");   //TODO proper error
             return new ErrorType();
         }
@@ -47,7 +47,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type left = operation.getLeft().accept(this, null);
         Type right = operation.getRight().accept(this, null);
 
-        if(!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
+        if (!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
             System.err.println("Incorrect boolean expression");     //TODO proper error
             return new ErrorType();
         }
@@ -70,7 +70,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     @Override
     public Type visit(CalculatedQuestion calculatedQuestion, String context) {
         Type calculationType = calculatedQuestion.getCalculation().accept(this, null);
-        if(!calculatedQuestion.getType().isCompatible(calculationType)) {
+        if (!calculatedQuestion.getType().isCompatible(calculationType)) {
             System.err.println("Incorrect expression");     //TODO proper error
         }
 
@@ -166,7 +166,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(Negation negation, String context) {
         Type type = negation.getExpression().accept(this, null);
 
-        if(!type.getType().equals("boolean")) {
+        if (!type.getType().equals("boolean")) {
             return new ErrorType();
         }
 

@@ -5,7 +5,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
  * Created by matt on 24/02/2017.
- *
+ * <p>
  * String literal type implementation.
  */
 public class StringLiteral extends Expression {

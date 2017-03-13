@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by matt on 20/02/2017.
- *
+ * <p>
  * Base Form class. Acts as root note for the QL AST, contains all statements and a string identifier.
  */
 public class Form extends TreeNode {

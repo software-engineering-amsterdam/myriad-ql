@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 /**
  * Created by matt on 24/02/2017.
- *
+ * <p>
  * Contains core parsing logic, including building the QL AST from Antlr and handling type checking
  * before UI generation.
  */

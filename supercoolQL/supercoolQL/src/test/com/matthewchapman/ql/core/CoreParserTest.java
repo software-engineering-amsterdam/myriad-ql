@@ -45,7 +45,7 @@ public class CoreParserTest implements QLVisitor<Void> {
         final int EXPECTED_IFS = 2;
         final int EXPECTED_IF_ELSES = 1;
 
-        for(Statement statement : form.getStatements()) {
+        for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
 

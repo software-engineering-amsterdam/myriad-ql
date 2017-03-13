@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Created by matt on 03/03/2017.
- *
+ * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
 public class QuestionCollection extends AbstractQLVisitor<Void> {
@@ -26,7 +26,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     }
 
     public void gatherQuestions(Form form) {
-        for(Statement statement : form.getStatements()) {
+        for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
     }
@@ -43,8 +43,8 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     public void findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
 
-        for(Question question : questionList) {
-            if(!questionIDs.add(question.getName())) {
+        for (Question question : questionList) {
+            if (!questionIDs.add(question.getName())) {
                 System.err.println("Error: Duplicate Question found");  //TODO: Proper error
             }
         }
@@ -59,7 +59,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(IfStatement ifStatement, String context) {
-        for(Statement statement : ifStatement.getIfCaseStatements()) {
+        for (Statement statement : ifStatement.getIfCaseStatements()) {
             statement.accept(this, null);
         }
 
@@ -68,11 +68,11 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
-        for(Statement statement : ifElseStatement.getIfCaseStatements()) {
+        for (Statement statement : ifElseStatement.getIfCaseStatements()) {
             statement.accept(this, null);
         }
 
-        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
             statement.accept(this, null);
         }
 

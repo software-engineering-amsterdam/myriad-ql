@@ -5,7 +5,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
  * Created by matt on 27/02/2017.
- *
+ * <p>
  * Boolean literal type implementation
  */
 public class BooleanLiteral extends Expression {

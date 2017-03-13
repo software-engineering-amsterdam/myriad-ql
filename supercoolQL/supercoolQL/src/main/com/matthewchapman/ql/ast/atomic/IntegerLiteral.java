@@ -5,7 +5,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
  * Created by matt on 24/02/2017.
- *
+ * <p>
  * Integer Literal type implementation
  */
 public class IntegerLiteral extends Expression {
