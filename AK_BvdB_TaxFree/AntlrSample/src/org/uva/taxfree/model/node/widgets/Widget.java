@@ -4,9 +4,11 @@ import javax.swing.*;
 
 public abstract class Widget {
     private final JPanel mPanel;
+    private final String mId;
 
-    public Widget(String label) {
+    public Widget(String label, String id) {
         mPanel = createPanel(label);
+        mId = id;
     }
 
     private JPanel createPanel(String label) {
@@ -17,8 +19,8 @@ public abstract class Widget {
         return widgetPanel;
     }
 
-    public void create() {
-        fillPanel(mPanel);
+    public void registerToPanel(JPanel widgetPanel) {
+        widgetPanel.add(mPanel);
     }
 
     protected abstract void fillPanel(JPanel panel);
