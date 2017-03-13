@@ -1,17 +1,19 @@
 package qls.ast.attributes;
 
+import qls.ast.literals.QLSHex;
+
 /**
  * Created by rico on 7-3-17.
  */
 public class Color extends Attribute {
-    private final String color;
+    private final QLSHex color;
 
-    public Color(String color, int rowNumber) {
+    public Color(QLSHex color, int rowNumber) {
         super(rowNumber);
         this.color = color;
     }
 
-    public String getColor() {
+    public QLSHex getColor() {
         return color;
     }
 }

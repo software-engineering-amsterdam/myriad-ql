@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="jacc and beginning of ASt">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qls/ast/ObjectStatement.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/qls/ast/DefaultAttribute.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/qls/ast/DefaultWithAttributes.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/qls/ast/StylesheetStatement.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/Default.java" afterPath="$PROJECT_DIR$/src/qls/ast/Default.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/PageStatement.java" afterPath="$PROJECT_DIR$/src/qls/ast/PageStatement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/Question.java" afterPath="$PROJECT_DIR$/src/qls/ast/Question.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/Section.java" afterPath="$PROJECT_DIR$/src/qls/ast/Section.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/SectionStatements.java" afterPath="$PROJECT_DIR$/src/qls/ast/SectionStatements.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/Stylesheet.java" afterPath="$PROJECT_DIR$/src/qls/ast/Stylesheet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/widgets/Slider.java" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Slider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/widgets/Widget.java" afterPath="$PROJECT_DIR$/src/qls/ast/widgets/Widget.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/qls/ast/DefaultAttributes.java" afterPath="$PROJECT_DIR$/src/qls/ast/DefaultStatements.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/qls/ast/SectionStatement.java" afterPath="$PROJECT_DIR$/src/qls/ast/Statement.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/qls/ast/StylesheetStatements.java" afterPath="$PROJECT_DIR$/src/qls/ast/StylesheetPages.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/Color.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Color.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/Font.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Font.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/Height.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Height.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/attributes/Width.java" afterPath="$PROJECT_DIR$/src/qls/ast/attributes/Width.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,39 +23,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PageStatement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/PageStatement.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Section.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/Section.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Default.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/Default.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DefaultStatements.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DefaultStatements.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qls/ast/DefaultStatements.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="382">
@@ -81,6 +37,76 @@
                 <element signature="e#1176#1177#0" expanded="true" />
                 <element signature="e#1203#1204#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Font.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Font.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+              <folding>
+                <element signature="e#315#316#0" expanded="true" />
+                <element signature="e#342#343#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FontSize.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Height.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Height.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <folding>
+                <element signature="e#317#318#0" expanded="true" />
+                <element signature="e#346#347#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Width.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Width.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Color.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Color.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="method#Color#0;class#Color#0" expanded="false" />
+                <element signature="e#310#311#0" expanded="true" />
+                <element signature="e#338#339#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QLSHex.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSHex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,40 +137,8 @@
       <file leaf-file-name="Attribute.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PageStatements.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/PageStatements.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="29" column="59" lean-forward="true" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Question.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/Question.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="39" lean-forward="false" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Page.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/Page.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+              <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -219,11 +213,6 @@
         <option value="$PROJECT_DIR$/src/qls/ast/SectionStatements.java" />
         <option value="$PROJECT_DIR$/src/qls/DefaultWithAttributes.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/types/FloatType.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Color.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Font.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Height.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Width.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/Question.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/widgets/Radio.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/widgets/Spinbox.java" />
@@ -250,6 +239,11 @@
         <option value="$PROJECT_DIR$/src/qls/ast/widgets/Widget.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/DefaultStatements.java" />
+        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Color.java" />
+        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Font.java" />
+        <option value="$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java" />
+        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Height.java" />
+        <option value="$PROJECT_DIR$/src/qls/ast/attributes/Width.java" />
       </list>
     </option>
   </component>
@@ -377,7 +371,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="widgets" />
+              <option name="myItemId" value="literals" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -928,7 +922,7 @@
       <workItem from="1488883758184" duration="94000" />
       <workItem from="1488883949686" duration="4772000" />
       <workItem from="1488888750721" duration="15544000" />
-      <workItem from="1489399103604" duration="1377000" />
+      <workItem from="1489399103604" duration="1523000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -944,11 +938,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488909730043</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="ast structure altered">
+      <created>1489400495024</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1489400495024</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34263000" />
+    <option name="totallyTimeSpent" value="34409000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1023,7 +1024,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="jacc and beginning of ASt" />
-    <option name="LAST_COMMIT_MESSAGE" value="jacc and beginning of ASt" />
+    <MESSAGE value="ast structure altered" />
+    <option name="LAST_COMMIT_MESSAGE" value="ast structure altered" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1112,67 +1114,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSHex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/literals/QLLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="10" column="19" lean-forward="true" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Color.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-          <folding>
-            <element signature="method#Color#0;class#Color#0" expanded="false" />
-            <element signature="e#277#278#0" expanded="false" />
-            <element signature="e#305#306#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Font.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="25" lean-forward="false" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
-          <folding>
-            <element signature="e#270#271#0" expanded="false" />
-            <element signature="e#297#298#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Height.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="5" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="e#275#276#0" expanded="false" />
-            <element signature="e#304#305#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Width.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1469,14 +1414,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qls/ast/DefaultStatements.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
@@ -1490,6 +1427,72 @@
             <element signature="e#1176#1177#0" expanded="true" />
             <element signature="e#1203#1204#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSHex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Color.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="method#Color#0;class#Color#0" expanded="false" />
+            <element signature="e#310#311#0" expanded="true" />
+            <element signature="e#338#339#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Font.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+          <folding>
+            <element signature="e#315#316#0" expanded="true" />
+            <element signature="e#342#343#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/FontSize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Height.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding>
+            <element signature="e#317#318#0" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Attribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Width.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
