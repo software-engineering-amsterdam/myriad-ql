@@ -1,7 +1,6 @@
 module QL
   module TypeChecker
     class OperandsTypeChecker
-      include Visitor
       include AST
       include Notification
 
@@ -13,20 +12,17 @@ module QL
       def visit_question(_)
       end
 
-      # visit the assignment of a computed question
       def visit_computed_question(computed_question)
         computed_question.assignment.accept(self)
       end
 
-      # visit both the condition all statements of the if statement
       def visit_if_statement(if_statement)
-        if_statement.condition.accept(self)
+        # check if if condition is of boolean type
+        condition_type = if_statement.condition.accept(self)
+        unless condition_type.is_a?(BooleanType)
+          NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))
+        end
         if_statement.body.map { |statement| statement.accept(self) }
-      end
-
-      def visit_negation(negation)
-        expression = negation.expression.accept(self)
-        negation.eval_type(expression)
       end
 
       # visit operation in expression
@@ -40,6 +36,19 @@ module QL
         end
       end
 
+      # visit both left and right sides of binary expression and perform type check
+      # they can be for example BooleanType, IntegerType, StringType or ErrorType
+      def visit_binary_expression(left, binary_expression)
+        left  = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        binary_expression.eval_type(left, right)
+      end
+
+      def visit_negation(negation)
+        expression = negation.expression.accept(self)
+        negation.eval_type(expression)
+      end
+
       def visit_literal(literal)
         literal.to_type
       end
@@ -48,16 +57,8 @@ module QL
         type
       end
 
-      # visit both left and right sides of binary expression and perform calculation
-      # they can be for example literal, variable or another binary expression
-      def visit_binary_expression(left, binary_expression)
-        left  = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        binary_expression.eval_type(left, right)
-      end
-
       def visit_variable(variable)
-        QuestionTable.find(variable.name)
+        QuestionTypeTable.find(variable.name)
       end
     end
   end

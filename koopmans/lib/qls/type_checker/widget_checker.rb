@@ -1,7 +1,6 @@
 module QLS
   module TypeChecker
     class WidgetChecker
-      include QL::Visitor
       include Notification
 
       # gather all widgets with their variables and their associated types and check for errors

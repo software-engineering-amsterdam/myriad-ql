@@ -1,7 +1,6 @@
 module QLS
   module TypeChecker
     class QuestionChecker
-      include QL::Visitor
       include Notification
 
       # gather all variables from all questions of the QL and from the QLS and check for reference errors

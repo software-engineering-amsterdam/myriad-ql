@@ -1,18 +1,17 @@
 module QL
   module TypeChecker
     class TypeChecker
-      include Visitor
       include Notification
-      include QuestionTable
-      include NotificationTable
+      include AST
 
       def check(ast)
         questions = ast.accept(QuestionCollector.new).flatten
 
-        # duplicate_label_checker(questions)
-        # duplicate_variable_checker(questions)
+        duplicate_label_checker(questions)
+        duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
-        # operands_type_checker(questions, ast)
+        operands_type_checker(questions, ast)
+        cyclic_checker(questions, ast)
       end
 
       # checkers
@@ -32,7 +31,7 @@ module QL
 
       def undefined_variable_checker(questions, ast)
         question_variables   = questions.map(&:variable).map(&:name)
-        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact
+        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
 
         (expression_variables - question_variables).each do |undefined_variable|
           NotificationTable.store(Error.new("variable '#{undefined_variable}' is undefined"))
@@ -43,17 +42,26 @@ module QL
         # create hash with variable and type e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>,
         #                                          "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
         questions.each do |question|
-          QuestionTable.store(question.variable.name, question.type)
+          QuestionTypeTable.store(question.variable.name, question.type)
         end
 
         ast.accept(OperandsTypeChecker.new)
       end
 
       def cyclic_checker(questions, ast)
+        # get computed question assignment with dependency variables as hash
+        # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
+        #       "privateDebt"=>[#<Variable:0x007ff31e17eaf8 @name="sellingPrice">, #<Variable:0x007ff31e1868e8 @name="var2">]}
+        computed_questions = questions.select { |q| q.is_a?(ComputedQuestion) }
+        computed_questions.each do |computed_question|
+          assignment_variables = computed_question.assignment.accept(ExpressionVariableCollector.new).flatten.compact
+          CyclicDependencyTable.store(computed_question.variable.name, assignment_variables)
+        end
 
+        ast.accept(CyclicDependencyChecker.new)
       end
 
-      # helper functions
+      protected
       def select_duplicates(elements)
         elements.select { |element| elements.count(element) > 1 }.uniq
       end

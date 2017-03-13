@@ -1,10 +1,6 @@
 module QL
-  module Visitor
+  module TypeChecker
     class ExpressionVariableCollector
-      include Visitor
-      include Notification
-
-      # visit all statements of the form
       def visit_form(form)
         form.statements.map { |statement| statement.accept(self) }
       end
@@ -13,7 +9,6 @@ module QL
       def visit_question(_)
       end
 
-      # visit the assignment of a computed question
       def visit_computed_question(computed_question)
         computed_question.assignment.accept(self)
       end
@@ -23,7 +18,7 @@ module QL
         [if_statement.condition.accept(self), if_statement.body.map { |statement| statement.accept(self) }]
       end
 
-      # visit the expression
+      # visit operation in expression
       def visit_expression(expression)
         if expression.expression.respond_to? :reduce
           expression.expression.reduce do |left, operation|
@@ -34,15 +29,14 @@ module QL
         end
       end
 
-      # visit the negation
-      def visit_negation(negation)
-        negation.expression.accept(self)
-      end
-
       def visit_binary_expression(left, binary_expression)
         left  = left.accept(self)
         right = binary_expression.expression.accept(self)
         [left, right]
+      end
+
+      def visit_negation(negation)
+        negation.expression.accept(self)
       end
 
       # literal should return empty array
@@ -50,9 +44,8 @@ module QL
         []
       end
 
-      # return variable
       def visit_variable(variable)
-        variable
+        [variable]
       end
     end
   end
