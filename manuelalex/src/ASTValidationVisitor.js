@@ -2,6 +2,7 @@
  * Created by alexvanmanen on 24-02-17.
  */
 
+import find     from 'lodash/find';
 import {Form} from './Form.js'
 import {Question} from './Statements/Question.js'
 import {Expression} from './expressions/Expression.js'
@@ -16,6 +17,8 @@ export class ASTValidationVisitor {
     constructor(options = {}) {
         this.memoryState = new MemoryState();
         this.errors = [];
+        this.warnings = [];
+        this.labels = [];
     }
 
     getMemoryState(){
@@ -65,20 +68,29 @@ export class ASTValidationVisitor {
          if (!x) { a: "A?" boolean }
          */
 
-        //TODO: duplicate labels (warning)
-        /*
-         question 'duplicate'
-         hasSoldHouse: money
-         question 'duplicate'
-         hasBoughtHouse: money
-         */
 
+        this.checkDuplicateLabels(question);
+
+
+    }
+
+    checkDuplicateLabels(statement){
+        let localLabel = statement.getLabel();
+        let label = find(this.labels, (label)=>{
+           return label.contains(localLabel);
+        });
+
+        if(label){
+            this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
+        } else {
+            this.labels.push(statement.getLabel());
+        }
 
     }
 
     visitAnswer(answer) {
         //TODO: reference to undefined questions
-
+        this.checkDuplicateLabels(answer);
     }
 
     visitIfStatement(ifstatement) {
