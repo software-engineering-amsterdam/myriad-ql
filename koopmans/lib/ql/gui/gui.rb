@@ -11,7 +11,7 @@ module QL
         # return if check(type_checker) == 'quit'
         @questions = []
         FormBuilder.new(ql_ast, self)
-        pp @questions
+        # pp @questions
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
         SubmitButton.new(self)
@@ -23,7 +23,11 @@ module QL
       end
 
       def submit
-        pp @questions.each.select { |question| question.enabled }.map(&:to_json)
+        pp enabled_questions.map(&:to_json)
+      end
+
+      def enabled_questions
+        @questions.each.select { |question| question.enabled }
       end
 
       # TODO hier wat aan doen

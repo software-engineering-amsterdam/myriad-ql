@@ -11,12 +11,12 @@ form taxOfficeExample {
   if (5 + 100) {
     "What was the selling price?"
       sellingPrice: money
-      if (!hasMaintLoan) {
+      if (hasMaintLoan) {
     "Private debts for the sold house:"
-      privateDebt: boolean = hasSoldHouse
+      privateDebt: money = 1
     "Value residue:"
       valueResidue: money =
-        (-5 + sellingPrice)
+        (-5 + -sellingPrice + privateDebt)
         }
   }
 

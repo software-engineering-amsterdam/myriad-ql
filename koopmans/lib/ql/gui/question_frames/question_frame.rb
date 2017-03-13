@@ -8,7 +8,6 @@ module QL
       attr_accessor :enabled
       attr_accessor :condition
       attr_accessor :widget
-      # attr_accessor :variable # TODO remove
 
       def initialize(gui, question, condition=nil)
         @question  = question
@@ -26,7 +25,8 @@ module QL
       end
 
       def create_widget
-        @widget = @question.type.widget.new(self)
+        widget_type = @question.type.widget
+        @widget = widget_type.new(self)
       end
 
       def label
@@ -47,11 +47,7 @@ module QL
 
       def check_condition
         if condition
-          p '--'
-          pp condition.accept(TypeChecker::Evaluator.new)
           condition.accept(TypeChecker::Evaluator.new).to_value ? enable : disable
-          # p condition.accept(TypeChecker::Evaluator.new)
-          # condition.accept(TypeChecker::Evaluator.new).to_value ? enable : disable
         end
       end
 
@@ -65,10 +61,17 @@ module QL
         @enabled = true
       end
 
-      def store_value
-        literal_type = question.type.literal_type
-        QuestionTable.store(question.variable.name, literal_type.new(@widget.value))
+      def value_changed
+        store_value
         gui.reload_questions
+      end
+
+      def store_value
+        QuestionTable.store(question.variable.name, literal_type.new(@widget.value))
+      end
+
+      def literal_type
+        question.type.literal_type
       end
     end
   end

@@ -37,16 +37,6 @@ module QL
           visitor.visit_question(self)
         end
       end
-
-      # TODO gaan we hier wat aan doen?
-      # def accept_with_condition(visitor, condition)
-      #   visitor.visit_question(self, condition)
-      # end
-
-      def render(gui, condition)
-        # @type.question_frame.new(gui, self, condition)
-        QL::GUI::QuestionFrame.new(gui, self, condition)
-      end
     end
 
     class ComputedQuestion < Question
@@ -56,14 +46,6 @@ module QL
         super(label, variable, type)
         @assignment = assignment
       end
-
-      def render(gui, condition)
-        QL::GUI::ComputedQuestionFrame.new(gui, self, condition)
-      end
-
-      # def accept(visitor)
-      #   visitor.visit_computed_question(self)
-      # end
 
       def accept(visitor, condition=nil)
         if condition

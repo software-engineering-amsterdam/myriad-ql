@@ -7,14 +7,6 @@ module QL
         @question_frame = question_frame
       end
 
-      # def frame
-      #   @question_frame.frame
-      # end
-
-      # def variable
-      #   @question_frame.variable
-      # end
-
       def reload_questions
         @question_frame.gui.reload_questions
       end
@@ -38,9 +30,7 @@ module QL
         radio_button.variable = shared_variable
         radio_button.command  = proc do
           @value = shared_variable.bool
-          question_frame.store_value
-          # @question_frame.store_value_in_question_table(shared_variable.bool)
-          # reload_questions
+          question_frame.value_changed
         end
 
         radio_button          = TkRadioButton.new(question_frame.frame).pack
@@ -49,37 +39,48 @@ module QL
         radio_button.variable = shared_variable
         radio_button.command  = proc do
           @value = shared_variable.bool
-          question_frame.store_value
-          # @question_frame.store_value_in_question_table(shared_variable.bool)
-          # reload_questions
+          question_frame.value_changed
         end
-
-        # @question_frame.store_value_in_question_table(shared_variable.bool)
-
       end
-
-
     end
 
     class CheckboxWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        check_button          = TkCheckButton.new(frame).pack
-        # check_button.variable = variable
-        check_button.command  = proc { reload_questions }
+        @value = true
+        variable = TkVariable.new(@value)
+
+        check_button          = TkCheckButton.new(question_frame.frame).pack
+        check_button.variable = variable
+        check_button.command  = proc do
+          @value = variable.bool
+          question_frame.value_changed
+        end
       end
     end
 
     class DropdownWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        combobox        = Tk::Tile::Combobox.new(frame).pack
-        combobox.values = [args[:true_value], args[:false_value]]
-        combobox.value = args[:true_value]
+        @value = true
+        @true_label = 'true'
+        @false_label = 'false'
+
+        if args
+          @true_label = args[:true_value]
+          @false_label = args[:false_value]
+        end
+
+        combobox        = Tk::Tile::Combobox.new(question_frame.frame).pack
+        combobox.values = [@true_label, @false_label]
+        combobox.value = @true_label
         combobox.bind('<ComboboxSelected>') do
-          variable.value = true if combobox.value == args[:true_value]
-          variable.value = false if combobox.value == args[:false_value]
-          reload_questions
+          if combobox.value == @true_label
+            @value = true
+          else
+            @value = false
+          end
+          question_frame.value_changed
         end
       end
     end
@@ -96,29 +97,32 @@ module QL
         # spinbox.textvariable = variable
         spinbox.command      = proc do
           @value = spinbox.value
-          question_frame.store_value
+          question_frame.value_changed
         end
-        # @question_frame.store_value_in_question_table(spinbox.value)
       end
     end
 
     class SliderWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        scale          = TkScale.new(frame).pack
+        scale          = TkScale.new(question_frame.frame).pack
         scale.from     = args[:minimum]
         scale.to       = args[:maximum]
-        # scale.variable = variable
-        scale.command  = proc { reload_questions }
+        scale.command  = proc do
+          @value = scale.value
+          question_frame.value_changed
+        end
       end
     end
 
     class TextWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        entry              = TkEntry.new(frame).pack
-        # entry.textvariable = variable
-        entry.bind('KeyRelease') { reload_questions }
+        entry = TkEntry.new(question_frame.frame).pack
+        entry.bind('KeyRelease') do
+          @value = entry.value
+          question_frame.value_changed
+        end
       end
     end
 
@@ -129,14 +133,14 @@ module QL
         super
         @variable = TkVariable.new
 
-        @entry              = TkEntry.new(question_frame.frame).pack
-        @entry.textvariable = variable
-        @entry.state        = 'disabled'
+        entry              = TkEntry.new(question_frame.frame).pack
+        entry.textvariable = variable
+        entry.state        = 'disabled'
       end
 
       def set_value(value)
         @variable.value = value
-        value = value
+        @value = value
       end
     end
 

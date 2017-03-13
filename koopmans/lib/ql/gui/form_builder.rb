@@ -20,13 +20,12 @@ module QL
         if_statement.body.map { |statement| statement.accept(self, condition) }
       end
 
-      # render question in gui
       def visit_question(question, condition=nil)
-        question.render(@gui, condition)
+        QuestionFrame.new(@gui, question, condition)
       end
 
       def visit_computed_question(question, condition=nil)
-        question.render(@gui, condition)
+        ComputedQuestionFrame.new(@gui, question, condition)
       end
     end
   end

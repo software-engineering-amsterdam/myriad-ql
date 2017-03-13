@@ -12,18 +12,16 @@ module QL
         BooleanLiteral
       end
 
-      # def question_frame
-      #   QL::GUI::BooleanQuestionFrame
+      # def render_widget(question_frame)
+      #   # QL::GUI::RadioWidget.new(question_frame: question_frame, true_value: 'JAAAA', false_value: 'NEEEE')
+      #   CheckboxWidget.new(question_frame: question_frame)
+      #   # DropdownWidget.new(question: self, true_value: 'JAAA', false_value: 'NEEE')
       # end
 
-      def render_widget(question_frame)
-        QL::GUI::RadioWidget.new(question_frame: question_frame, true_value: 'JAAAA', false_value: 'NEEEE')
-        # CheckboxWidget.new(question: self)
-        # DropdownWidget.new(question: self, true_value: 'JAAA', false_value: 'NEEE')
-      end
-
       def widget
-        QL::GUI::RadioWidget
+        # QL::GUI::RadioWidget
+        # QL::GUI::CheckboxWidget
+        QL::GUI::DropdownWidget
       end
     end
 
@@ -36,14 +34,15 @@ module QL
         IntegerLiteral
       end
 
-      def render_widget(question_frame)
-        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
-        # TextWidget.new(question_frame: self)
-      end
+      # def render_widget(question_frame)
+      #   # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
+      #   QL::GUI::SpinboxWidget.new(question_frame: question_frame)
+      #   # TextWidget.new(question_frame: self)
+      # end
 
       def widget
-        QL::GUI::SpinboxWidget
+        # QL::GUI::SpinboxWidget
+        QL::GUI::SliderWidget
       end
     end
 
@@ -56,10 +55,8 @@ module QL
         IntegerLiteral
       end
 
-      def render_widget(question_frame)
-        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
-        # TextWidget.new(question_frame: self)
+      def widget
+        QL::GUI::SpinboxWidget
       end
     end
 
@@ -72,10 +69,8 @@ module QL
         IntegerLiteral
       end
 
-      def render_widget(question_frame)
-        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
-        # TextWidget.new(question_frame: self)
+      def widget
+        QL::GUI::SpinboxWidget
       end
     end
 
@@ -88,8 +83,8 @@ module QL
         StringLiteral
       end
 
-      def render_widget(question_frame)
-        QL::GUI::TextWidget.new(question_frame: question_frame)
+      def widget
+        QL::GUI::TextWidget
       end
     end
 
@@ -103,14 +98,10 @@ module QL
         IntegerLiteral
       end
 
-      def render_widget(question_frame)
-        # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-        QL::GUI::SpinboxWidget.new(question_frame: question_frame)
-        # TextWidget.new(question_frame: self)
-      end
-
       def widget
-        QL::GUI::SpinboxWidget
+        QL::GUI::TextWidget
+        # QL::GUI::SpinboxWidget
+        # QL::GUI::SliderWidget
       end
     end
   end
