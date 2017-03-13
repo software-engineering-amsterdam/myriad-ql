@@ -10,11 +10,13 @@
 -Widgets:
 --> Slider
 --> Spinbox
---> Radio
-
+-->  Radio --> DONE
+--> Radio for text (e.g. gender)
+--> DropDown
+--> DropDown for text (e.g. gender)
 ---> Style clash with bootstrap
 
 -Other:
 --> Don't show empty sectins
 --> Handle (Pagination = NOTHING) correctly
-DONE: Pagination
+--> Pagination --> DONE

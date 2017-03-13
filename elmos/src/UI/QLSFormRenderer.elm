@@ -3,6 +3,7 @@ module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 import Html exposing (Html, div, text, h3, pre, b, button)
 import Html.Attributes exposing (attribute, class, disabled)
 import Html.Events exposing (onClick)
+import UI.Widget.Radio as RadioWidget
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -179,8 +180,8 @@ asRenderable widget valueType =
         Spinbox ->
             always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
 
-        Radio _ ->
-            always (div [] [ text "TODO IMPLEMENT RADIO" ])
+        Radio labels ->
+            flip (RadioWidget.view) labels
 
         Checkbox ->
             BooleanWidget.view

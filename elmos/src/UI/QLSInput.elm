@@ -67,7 +67,7 @@ exampleDsl =
   page Housing {
     section "Buying"
       question hasBoughtHouse
-        widget checkbox
+        widget radio("yes", "no")
     section "Loaning"
       question hasMaintLoan
   }
