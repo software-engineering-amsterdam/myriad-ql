@@ -4,6 +4,18 @@ import Dict exposing (Dict)
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
 import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages as Messages exposing (Message)
+import QL.TypeChecker.Messages
+    exposing
+        ( Message(Error)
+        , ErrorMessage
+            ( InvalidComputedFieldType
+            , InvalidConditionType
+            , ArithmeticExpressionTypeMismatch
+            , RelationExpressionTypeMismatch
+            , LogicExpressionTypeMismatch
+            , ComparisonExpressionTypeMismatch
+            )
+        )
 
 
 typeCheckerErrors : Form -> List Message
@@ -23,7 +35,7 @@ computedFieldTypeErrors form questionTypes =
         |> List.filterMap (computationToType questionTypes)
         |> List.filterMap (withExpectedType questionTypes)
         |> List.filter badComputedField
-        |> List.map (\( id, actualType, expectedType ) -> Messages.invalidComputedFieldType id actualType expectedType)
+        |> List.map (\( id, actualType, expectedType ) -> Error <| InvalidComputedFieldType id actualType expectedType)
 
 
 badComputedField : ( Id, ValueType, ValueType ) -> Bool
@@ -42,7 +54,7 @@ conditionTypeErrors form questionTypes =
     Collectors.collectConditions form
         |> List.filterMap (conditionWithType questionTypes)
         |> List.filter (Tuple.second >> badConditional)
-        |> List.map (\( condition, conditionType ) -> Messages.invalidConditionType (locationOf condition) conditionType)
+        |> List.map (\( condition, conditionType ) -> Error <| InvalidConditionType (locationOf condition) conditionType)
 
 
 computationToType : QuestionTypes -> ( Id, Expression ) -> Maybe ( Id, ValueType )
@@ -126,7 +138,7 @@ getType variableTypes expression =
                             Ok MoneyType
 
                         ( l, r ) ->
-                            Err [ Messages.arithmeticExpressionTypeMismatch op loc l r ]
+                            Err [ Error <| ArithmeticExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
@@ -138,7 +150,7 @@ getType variableTypes expression =
                             Ok BooleanType
 
                         ( l, r ) ->
-                            Err [ Messages.relationExpressionTypeMismatch op loc l r ]
+                            Err [ Error <| RelationExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
@@ -150,7 +162,7 @@ getType variableTypes expression =
                             Ok BooleanType
 
                         ( l, r ) ->
-                            Err [ Messages.logicExpressionTypeMismatch op loc l r ]
+                            Err [ Error <| LogicExpressionTypeMismatch op loc l r ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 
@@ -160,7 +172,7 @@ getType variableTypes expression =
                     if leftType == rightType then
                         Ok BooleanType
                     else
-                        Err [ Messages.comparisonExpressionTypeMismatch op loc leftType rightType ]
+                        Err [ Error <| ComparisonExpressionTypeMismatch op loc leftType rightType ]
             in
                 combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
 

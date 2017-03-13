@@ -1,6 +1,6 @@
 module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3, pre, button)
+import Html exposing (Html, div, text, h3, pre, button, hr)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import UI.Widget.BooleanRadio as BooleanRadioWidget
@@ -18,6 +18,7 @@ import UI.FormUpdater as FormUpdater
 import UI.Field as Field exposing (Field(Editable, Computed))
 import UI.QLS.Pagination as Pagination exposing (Pagination)
 import UI.StyleContext as StyleContext exposing (StyleContext)
+import UI.Headings as Headings exposing (Heading)
 
 
 type alias Model =
@@ -72,6 +73,7 @@ view ({ form, env } as model) =
                         [ div [ class "row" ]
                             [ div [ class "col-md-6" ]
                                 [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
+                                , hr [] []
                                 , Html.form []
                                     [ renderPage env visibleFields currentPage ]
                                 , div [ class "row" ] [ renderPagination pagination ]
@@ -88,11 +90,8 @@ view ({ form, env } as model) =
 
 
 renderPage : Environment -> List Field -> Page -> Html Msg
-renderPage env visibleFields (Page title sections defaultValueConfigs) =
-    div []
-        [ h3 [] [ text title ]
-        , div [] (List.map (renderSection env visibleFields (StyleContext.init defaultValueConfigs)) sections)
-        ]
+renderPage env visibleFields (Page _ sections defaultValueConfigs) =
+    div [] (List.filterMap (renderSection env Headings.init visibleFields (StyleContext.init defaultValueConfigs)) sections)
 
 
 renderPagination : Pagination -> Html Msg
@@ -105,32 +104,46 @@ renderPagination pagination =
         ]
 
 
-renderSection : Environment -> List Field -> StyleContext -> Section -> Html Msg
-renderSection env visibleFields styleContext section =
+renderSection : Environment -> Heading -> List Field -> StyleContext -> Section -> Maybe (Html Msg)
+renderSection env heading visibleFields styleContext section =
     case section of
         SingleChildSection title sectionChild ->
-            div []
-                [ h3 [] [ text title ]
-                , renderSectionChild env visibleFields styleContext sectionChild
-                ]
+            renderSectionChild env heading visibleFields styleContext sectionChild
+                |> Maybe.map (List.singleton >> sectionFromLabelAndChildren heading title)
 
         MultiChildSection title sectionChilds configs ->
-            div []
-                [ h3 [] [ text title ]
-                , div [] (List.map (renderSectionChild env visibleFields (StyleContext.addDefaultConfigs configs styleContext)) sectionChilds)
-                ]
+            List.filterMap (renderSectionChild env heading visibleFields (StyleContext.addDefaultConfigs configs styleContext)) sectionChilds
+                |> nonEmptyList
+                |> Maybe.map (sectionFromLabelAndChildren heading title)
 
 
-renderSectionChild : Environment -> List Field -> StyleContext -> SectionChild -> Html Msg
-renderSectionChild env visibleFields styleContext sectionChild =
+nonEmptyList : List a -> Maybe (List a)
+nonEmptyList x =
+    case x of
+        [] ->
+            Nothing
+
+        _ ->
+            Just x
+
+
+sectionFromLabelAndChildren : Heading -> String -> List (Html Msg) -> Html Msg
+sectionFromLabelAndChildren heading title children =
+    div []
+        [ Headings.header heading [] [ text title ]
+        , div [] children
+        ]
+
+
+renderSectionChild : Environment -> Heading -> List Field -> StyleContext -> SectionChild -> Maybe (Html Msg)
+renderSectionChild env heading visibleFields styleContext sectionChild =
     case sectionChild of
         SubSection subSection ->
-            renderSection env visibleFields styleContext subSection
+            renderSection env (Headings.deeper heading) visibleFields styleContext subSection
 
         Field (Question ( name, _ )) ->
             Field.visibleFieldForName name visibleFields
                 |> Maybe.map (renderField env styleContext)
-                |> Maybe.withDefault (div [] [])
 
         Field (ConfiguredQuestion ( name, _ ) fieldConfig) ->
             Field.visibleFieldForName name visibleFields
@@ -138,7 +151,6 @@ renderSectionChild env visibleFields styleContext sectionChild =
                     (\field ->
                         renderField env (StyleContext.addValueTypeConfig (Field.fieldValueType field) fieldConfig styleContext) field
                     )
-                |> Maybe.withDefault (div [] [])
 
 
 renderField : Environment -> StyleContext -> Field -> Html Msg
