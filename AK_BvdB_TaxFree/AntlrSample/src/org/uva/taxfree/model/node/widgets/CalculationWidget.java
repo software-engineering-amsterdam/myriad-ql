@@ -1,9 +1,13 @@
 package org.uva.taxfree.model.node.widgets;
 
+import org.uva.taxfree.gui.FormListener;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class CalculationWidget extends Widget {
     private final ExpressionNode mExpression;
@@ -31,5 +35,10 @@ public class CalculationWidget extends Widget {
     @Override
     public String resolveValue() {
         return mExpression.resolveValue();
+    }
+
+    @Override
+    public void callOnUpdate(FormListener listener) {
+        mTextField.addPropertyChangeListener(evt -> listener.updateForm());
     }
 }

@@ -1,5 +1,7 @@
 package org.uva.taxfree.model.node.widgets;
 
+import org.uva.taxfree.gui.FormListener;
+
 import javax.swing.*;
 
 public class BooleanWidget extends Widget {
@@ -24,4 +26,8 @@ public class BooleanWidget extends Widget {
         return String.valueOf(isTrue());
     }
 
+    @Override
+    public void callOnUpdate(FormListener listener) {
+        mCheckbox.addActionListener(evt -> listener.updateForm());
+    }
 }

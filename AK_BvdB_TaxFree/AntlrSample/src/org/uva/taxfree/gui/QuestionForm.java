@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionForm {
+public class QuestionForm implements FormListener {
     private final JFrame mFrame;
     private final JPanel mWidgetPanel;
     private final List<Widget> mWidgets;
@@ -41,17 +41,17 @@ public class QuestionForm {
         mFrame.setPreferredSize(new Dimension(640, 480));
         mFrame.pack();
         mFrame.setLocationRelativeTo(null);
-        new FormRenderer(this);
-
+        updateForm();
     }
 
     public void addWidget(Widget widget) {
         widget.registerToPanel(mWidgetPanel);
+        widget.callOnUpdate(this);
         mWidgets.add(widget);
     }
 
-    public void updateVisibility() {
-        for(Widget w : mWidgets){
+    public void updateForm() {
+        for (Widget w : mWidgets) {
             w.setVisible(true);
         }
     }
