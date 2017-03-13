@@ -1,4 +1,4 @@
-class UndefinedVariableException(Exception):
+class UndefinedVariableError(Exception):
     pass
 
 
@@ -10,7 +10,7 @@ class Evaluator:
     def evaluate(self, node):
         try:
             return self.visit(node)
-        except (UndefinedVariableException, ZeroDivisionError):
+        except (UndefinedVariableError, ArithmeticError):
             return None
 
     def visit(self, node):
