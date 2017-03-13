@@ -15,8 +15,7 @@ import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.operators.AddOperator;
-import org.uva.taxfree.model.node.operators.Operator;
+import org.uva.taxfree.model.node.operators.*;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.IntegerType;
 import org.uva.taxfree.model.types.StringType;
@@ -24,8 +23,7 @@ import org.uva.taxfree.model.types.Type;
 
 import java.util.*;
 
-import static org.uva.taxfree.gen.QLGrammarParser.OPERATOR_MINUS;
-import static org.uva.taxfree.gen.QLGrammarParser.OPERATOR_PLUS;
+import static org.uva.taxfree.gen.QLGrammarParser.*;
 
 public class GrammarListener extends QLGrammarBaseListener {
     private FormNode mRootNode;
@@ -49,6 +47,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
         super.enterForm(ctx);
+        createStack();
     }
 
     @Override
@@ -149,38 +148,35 @@ public class GrammarListener extends QLGrammarBaseListener {
     }
 
     @Override
-    public void exitBooleanExpression(QLGrammarParser.BooleanExpressionContext ctx) {
-        super.exitBooleanExpression(ctx);
-        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+    public void exitBinaryExpression(BinaryExpressionContext ctx) {
+        super.exitBinaryExpression(ctx);
+        Operator operator = createOperator(ctx.op.getType(), ctx.op.getText());
+        ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, popCachedCondition());
         addToStack(booleanExpressionNode);
     }
 
-    @Override
-    public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
-        super.exitCalculationExpression(ctx);
-        int operatorTokenIndex = ctx.op.getTokenIndex();
-        Operator operator;
-        switch (operatorTokenIndex) {
-            case OPERATOR_PLUS:
-                operator = new AddOperator();
-                break;
-            case OPERATOR_MINUS:
-                // todo
-//                operator = new MinusOperator();
-//                break;
+    private Operator createOperator(int type, String operator) {
+        switch (type) {
+            case OP_MULTIPLY:
+            case OP_DIVIDE:
+            case OP_PLUS:
+            case OP_MINUS:
+                return new NumericOperator(operator);
+            case OP_SMALLER:
+            case OP_SMALLEROREQUAL:
+            case OP_BIGGER:
+            case OP_BIGGEROREQUAL:
+                return new CompareOperator(operator);
+            case OP_EQUALS:
+            case OP_NOTEQUALS:
+                return new UniformOperator(operator);
+            case OP_LOGICAL_AND:
+            case OP_LOGICAL_OR:
+                return new BooleanOperator(operator);
             default:
                 // TODO: bail out!
                 throw new RuntimeException("Unexpected operator");
         }
-        ExpressionNode calculationExpressionNode = new CalculationBinaryExpressionNode(popCachedCondition(), operator, popCachedCondition());
-        addToStack(calculationExpressionNode);
-    }
-
-    @Override
-    public void exitUniformExpression(QLGrammarParser.UniformExpressionContext ctx) {
-        super.exitUniformExpression(ctx);
-        ExpressionNode uniformExpressionNode = new UniformBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
-        addToStack(uniformExpressionNode);
     }
 
     @Override
