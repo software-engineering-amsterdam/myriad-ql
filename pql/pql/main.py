@@ -16,3 +16,4 @@ if __name__ == '__main__':
 #TODO: Line numbers tonen in error messages van TypeChecker
 #TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
 #TODO: Export of values ?
+#TODO: Make all fields mandatory
