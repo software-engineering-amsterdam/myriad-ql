@@ -18,6 +18,12 @@ radio =
         <$> (string "radio" *> widgetParams radioOption)
 
 
+dropdown : Parser state Widget
+dropdown =
+    Dropdown
+        <$> (string "dropdown" *> widgetParams radioOption)
+
+
 radioOption : Parser state String
 radioOption =
     quotedString
