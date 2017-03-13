@@ -168,7 +168,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_subtraction_2(self):
         input_string = """
@@ -177,7 +177,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_addition_1(self):
         input_string = """
@@ -186,7 +186,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_addition_2(self):
         input_string = """
@@ -195,7 +195,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_multiplication_1(self):
         input_string = """
@@ -204,7 +204,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_multiplication_2(self):
         input_string = """
@@ -213,7 +213,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_division_1(self):
         input_string = """
@@ -222,7 +222,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_division_2(self):
         input_string = """
@@ -231,7 +231,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_gt_1(self):
         input_string = """
@@ -240,7 +240,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_gt_2(self):
         input_string = """
@@ -249,7 +249,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_gte_1(self):
         input_string = """
@@ -258,7 +258,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_gte_2(self):
         input_string = """
@@ -267,7 +267,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_lt_1(self):
         input_string = """
@@ -276,7 +276,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_lt_2(self):
         input_string = """
@@ -285,7 +285,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_lte_1(self):
         input_string = """
@@ -294,7 +294,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_lte_2(self):
         input_string = """
@@ -303,7 +303,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_eq_1(self):
         input_string = """
@@ -312,7 +312,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_eq_2(self):
         input_string = """
@@ -321,7 +321,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_neq_1(self):
         input_string = """
@@ -330,7 +330,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_neq_2(self):
         input_string = """
@@ -339,7 +339,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_and_1(self):
         input_string = """
@@ -348,7 +348,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_and_2(self):
         input_string = """
@@ -357,7 +357,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_or_1(self):
         input_string = """
@@ -366,7 +366,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_fail_or_2(self):
         input_string = """
@@ -375,7 +375,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_success_if(self):
         input_string = """
@@ -405,7 +405,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_positive_on_true(self):
         input_string = """
@@ -414,7 +414,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_negative_on_true(self):
         input_string = """
@@ -423,7 +423,7 @@ class TestTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
     def test_typecheck_field_allowed_integer_money(self):
         input_string = """
