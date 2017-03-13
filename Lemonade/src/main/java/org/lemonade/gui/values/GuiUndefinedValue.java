@@ -1,6 +1,7 @@
 package org.lemonade.gui.values;
 
 import javafx.scene.control.Control;
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 public class GuiUndefinedValue extends GuiValue<String> {
 
@@ -23,5 +24,10 @@ public class GuiUndefinedValue extends GuiValue<String> {
     @Override
     public boolean isDefined() {
         return false;
+    }
+
+    @Override
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

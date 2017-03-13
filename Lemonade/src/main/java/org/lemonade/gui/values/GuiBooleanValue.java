@@ -1,5 +1,7 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
+
 public class GuiBooleanValue extends GuiValue<Boolean> {
 
     private Boolean value;
@@ -16,5 +18,10 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
     @Override
     public void update(Boolean newValue) {
         this.value = newValue;
+    }
+
+    @Override
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

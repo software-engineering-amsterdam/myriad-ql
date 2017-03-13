@@ -1,11 +1,12 @@
 package org.lemonade.gui.expressions;
 
 import org.lemonade.gui.GuiExpression;
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 /**
  *
  */
-public class GuiBinaryExpression implements GuiExpression{
+public abstract class GuiBinaryExpression implements GuiExpression{
 
     private GuiExpression left;
     private GuiExpression right;
@@ -22,4 +23,6 @@ public class GuiBinaryExpression implements GuiExpression{
     public GuiExpression getRight() {
         return right;
     }
+
+    public abstract <T> T accept(GuiExpressionVisitor<T> visitor);
 }

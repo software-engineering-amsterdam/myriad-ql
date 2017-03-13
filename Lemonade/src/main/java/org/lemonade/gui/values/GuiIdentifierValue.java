@@ -1,6 +1,7 @@
 package org.lemonade.gui.values;
 
 import javafx.scene.control.Control;
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 public class GuiIdentifierValue extends GuiValue<String> {
 
@@ -20,5 +21,10 @@ public class GuiIdentifierValue extends GuiValue<String> {
 
     @Override public Control getWidget() {
         return null;
+    }
+
+    @Override
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }
