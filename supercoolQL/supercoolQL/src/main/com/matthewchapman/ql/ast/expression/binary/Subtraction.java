@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class Subtraction extends BinaryOperation implements QLVisitable {
 
-    //TODO implement Subtraction
-
     public Subtraction(Expression left, Expression right) {
         super(left, right);
     }

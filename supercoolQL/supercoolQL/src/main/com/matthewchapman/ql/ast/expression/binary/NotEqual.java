@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class NotEqual extends BinaryOperation implements QLVisitable {
 
-    //TODO implement NotEqual
-
     public NotEqual(Expression left, Expression right) {
         super(left, right);
     }

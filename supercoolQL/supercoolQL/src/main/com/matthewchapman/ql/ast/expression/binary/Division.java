@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class Division extends BinaryOperation implements QLVisitable {
 
-    //TODO implement Division
-
     public Division(Expression left, Expression right) {
         super(left, right);
     }

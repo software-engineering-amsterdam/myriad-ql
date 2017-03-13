@@ -21,6 +21,7 @@ expression
     :   STRING                                          #stringLiteral
     |   NUMBER                                          #integerLiteral
     |   ID                                              #parameter
+    |   op=(TRUE|FALSE)                                 #booleanLiteral
     |   '(' expression ')'                              #parameterGroup
     |   '!' expression                                                       #negation
     |   left=expression op=('/'|'*') right=expression                        #mulDiv
@@ -42,7 +43,7 @@ type
 
 //lexer
 
-ID:   [a-zA-Z0-9$_]+ ;
+ID:   [a-zA-Z$_]+ ;
 
 STRING: '"' .*? '"';
 
@@ -61,6 +62,9 @@ MULTI_LINE_COMMENT
 SINGLE_LINE_COMMENT
     : '//' .*? -> channel(HIDDEN)
     ;
+
+TRUE: 'TRUE' ;
+FALSE: 'FALSE' ;
 
 OPEN_BRACKET :  '{' ;
 CLOSE_BRACKET : '}' ;

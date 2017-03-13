@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class GreaterThan extends BinaryOperation implements QLVisitable {
 
-    //TODO implement GreaterThan
-
     public GreaterThan(Expression left, Expression right) {
         super(left, right);
     }

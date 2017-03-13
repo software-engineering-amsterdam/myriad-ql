@@ -1,16 +1,23 @@
 package com.matthewchapman.ql.ast.atomic;
 
+import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.validation.QLVisitor;
+
 /**
  * Created by matt on 27/02/2017.
  *
  * Boolean literal type implementation
  */
-public class BooleanLiteral extends BooleanType {
+public class BooleanLiteral extends Expression {
 
-    private String value;
+    private Boolean value;
 
-    public BooleanLiteral() {
-        this.value = "boolean";
+    public BooleanLiteral(String value) {
+        this.value = Boolean.parseBoolean(value);
     }
 
+    @Override
+    public <T> T accept(QLVisitor<T> visitor, String context) {
+        return visitor.visit(this, context);
+    }
 }

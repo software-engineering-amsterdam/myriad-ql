@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class Addition extends BinaryOperation implements QLVisitable {
 
-    //TODO implement Addition
-
     public Addition(Expression left, Expression right) {
         super(left, right);
     }

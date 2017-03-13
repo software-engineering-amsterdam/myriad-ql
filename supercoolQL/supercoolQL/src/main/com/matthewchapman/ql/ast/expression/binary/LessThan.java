@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class LessThan extends BinaryOperation implements QLVisitable {
 
-    //TODO implement LessThan
-
     public LessThan(Expression left, Expression right) {
         super(left, right);
     }

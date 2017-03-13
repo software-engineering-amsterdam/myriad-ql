@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class Equal extends BinaryOperation implements QLVisitable {
 
-    //TODO Implement Equal
-
     public Equal(Expression left, Expression right) {
         super(left, right);
     }

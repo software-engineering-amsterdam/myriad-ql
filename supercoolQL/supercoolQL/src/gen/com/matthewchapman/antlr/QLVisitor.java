@@ -1,4 +1,4 @@
-// Generated from /Users/matt/Repos/myriad-ql/supercoolQL/grammar/QL.g4 by ANTLR 4.6
+// Generated from /Users/matt/Repos/myriad-ql/supercoolQL/supercoolQL/grammar/QL.g4 by ANTLR 4.6
 package com.matthewchapman.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -100,6 +100,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLogicalOr(QLParser.LogicalOrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code booleanLiteral}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanLiteral(QLParser.BooleanLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code mulDiv}
 	 * labeled alternative in {@link QLParser#expression}.

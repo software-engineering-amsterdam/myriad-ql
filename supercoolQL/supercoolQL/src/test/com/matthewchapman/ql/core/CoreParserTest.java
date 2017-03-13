@@ -2,9 +2,7 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.atomic.BooleanType;
-import com.matthewchapman.ql.ast.atomic.IntegerType;
-import com.matthewchapman.ql.ast.atomic.StringType;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -87,6 +85,21 @@ public class CoreParserTest implements QLVisitor<Void> {
 
     @Override
     public Void visit(ParameterGroup parameterGroup, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(StringLiteral stringLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(IntegerLiteral integerLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(BooleanLiteral booleanLiteral, String context) {
         return null;
     }
 

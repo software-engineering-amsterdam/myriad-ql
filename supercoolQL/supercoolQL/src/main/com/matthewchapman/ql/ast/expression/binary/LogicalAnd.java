@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class LogicalAnd extends BinaryOperation implements QLVisitable {
 
-    //TODO implement LogicalAnd
-
     public LogicalAnd(Expression left, Expression right) {
         super(left, right);
     }

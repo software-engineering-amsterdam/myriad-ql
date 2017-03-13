@@ -17,7 +17,7 @@ public class QLValidator {
     private Form astRoot;
     private QuestionCollection questionCollection;
     private QLTypeChecker qlTypeChecker;
-    private QLReferenceChecker qlReferenceChecker;
+    private QLStructureChecker qlStructureChecker;
 
     public List<Question> questionList;
     public Map<String, Type> typeTable;
@@ -26,20 +26,18 @@ public class QLValidator {
         this.astRoot = form;
         this.questionCollection = new QuestionCollection();
         this.qlTypeChecker = new QLTypeChecker();
-        this.qlReferenceChecker = new QLReferenceChecker();
+        this.qlStructureChecker = new QLStructureChecker();
     }
 
     public void runChecks() {
 
         questionCollection.gatherQuestions(astRoot);
-
         questionList = questionCollection.getQuestionList();
-
         questionCollection.findDuplicates();
 
-        qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        //qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
 
-        qlReferenceChecker.checkForCircularReferences(astRoot);
+        qlStructureChecker.checkForCircularReferences(astRoot, questionCollection.getTypeTable());
 
     }
 

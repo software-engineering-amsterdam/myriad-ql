@@ -2,9 +2,8 @@ package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.atomic.BooleanType;
-import com.matthewchapman.ql.ast.atomic.IntegerType;
-import com.matthewchapman.ql.ast.atomic.StringType;
+import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -17,24 +16,37 @@ import com.matthewchapman.ql.ast.statement.Question;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matt on 13/03/2017.
+ *
+ * Provides type checking and missing parameter checking
  */
-public class QLReferenceChecker implements QLVisitor<Void> {
+public class QLStructureChecker implements QLVisitor<Void> {
 
     HashMap<String, List<Parameter>> expressionMap;
 
-    public QLReferenceChecker() {
+    public QLStructureChecker() {
         this.expressionMap = new HashMap<>();
     }
 
-    public void checkForCircularReferences(Form form) {
+    public void checkForCircularReferences(Form form, Map<String, Type> typeTable) {
 
-        for(Statement statement : form.getStatements()) {
+        for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
+
+        for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
+            for(Parameter parameter : entry.getValue()) {
+                if(!typeTable.containsKey(parameter.getID())) {
+                    System.err.println("something is missing: " + parameter.getID());    //TODO: Proper error
+                }
+            }
+        }
+
     }
+
 
     @Override
     public Void visit(Question question, String context) {
@@ -85,6 +97,21 @@ public class QLReferenceChecker implements QLVisitor<Void> {
     @Override
     public Void visit(ParameterGroup parameterGroup, String context) {
         parameterGroup.getExpression().accept(this, context);
+        return null;
+    }
+
+    @Override
+    public Void visit(StringLiteral stringLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(IntegerLiteral integerLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(BooleanLiteral booleanLiteral, String context) {
         return null;
     }
 

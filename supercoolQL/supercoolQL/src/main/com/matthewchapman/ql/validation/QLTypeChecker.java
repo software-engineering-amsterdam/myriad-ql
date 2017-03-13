@@ -3,10 +3,7 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.ast.atomic.BooleanType;
-import com.matthewchapman.ql.ast.atomic.ErrorType;
-import com.matthewchapman.ql.ast.atomic.IntegerType;
-import com.matthewchapman.ql.ast.atomic.StringType;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -56,7 +53,7 @@ public class QLTypeChecker implements QLVisitor<Type> {
     public Type visit(CalculatedQuestion calculatedQuestion, String context) {
         Type calculationType = calculatedQuestion.getCalculation().accept(this, null);
         if(!calculatedQuestion.getType().isCompatible(calculationType)) {
-            System.err.println("Incorrect expression");
+            System.err.println("Incorrect expression");     //TODO proper error
         }
 
         return calculatedQuestion.getType();
@@ -70,6 +67,21 @@ public class QLTypeChecker implements QLVisitor<Type> {
     @Override
     public Type visit(ParameterGroup parameterGroup, String context) {
         return parameterGroup.getExpression().accept(this, null);
+    }
+
+    @Override
+    public Type visit(StringLiteral stringLiteral, String context) {
+        return new StringType();
+    }
+
+    @Override
+    public Type visit(IntegerLiteral integerLiteral, String context) {
+        return new IntegerType();
+    }
+
+    @Override
+    public Type visit(BooleanLiteral booleanLiteral, String context) {
+        return new BooleanType();
     }
 
     @Override
@@ -150,7 +162,7 @@ public class QLTypeChecker implements QLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if(!left.isCompatible(right)) {
-            System.err.println("incompatible types");
+            System.err.println("incompatible types");   //TODO proper error
             return new ErrorType();
         }
 
@@ -162,7 +174,7 @@ public class QLTypeChecker implements QLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if(!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
-            System.err.println("Incorrect boolean expression");
+            System.err.println("Incorrect boolean expression");     //TODO proper error
             return new ErrorType();
         }
 

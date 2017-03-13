@@ -1,8 +1,6 @@
 package com.matthewchapman.ql.validation;
 
-import com.matthewchapman.ql.ast.atomic.BooleanType;
-import com.matthewchapman.ql.ast.atomic.IntegerType;
-import com.matthewchapman.ql.ast.atomic.StringType;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -32,6 +30,12 @@ public interface QLVisitor<T> {
     T visit(Parameter parameter, String context);
 
     T visit(ParameterGroup parameterGroup, String context);
+
+    T visit(StringLiteral stringLiteral, String context);
+
+    T visit(IntegerLiteral integerLiteral, String context);
+
+    T visit(BooleanLiteral booleanLiteral, String context);
 
     //Binary
     T visit(Addition addition, String context);

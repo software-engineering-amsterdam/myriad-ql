@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class GreaterThanEqualTo extends BinaryOperation implements QLVisitable {
 
-    //TODO implement GreaterThan
-
     public GreaterThanEqualTo(Expression left, Expression right) {
         super(left, right);
     }

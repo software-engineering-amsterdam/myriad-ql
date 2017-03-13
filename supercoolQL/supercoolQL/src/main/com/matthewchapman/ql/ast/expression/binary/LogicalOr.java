@@ -11,8 +11,6 @@ import com.matthewchapman.ql.ast.QLVisitable;
  */
 public class LogicalOr extends BinaryOperation implements QLVisitable {
 
-    //TODO implement LogicalOr
-
     public LogicalOr(Expression left, Expression right) {
         super(left, right);
     }
