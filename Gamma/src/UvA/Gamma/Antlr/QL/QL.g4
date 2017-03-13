@@ -53,7 +53,7 @@ ID: [a-zA-Z][a-zA-Z0-9]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;
-
-
+ONE_LINE_COMMENT: ('//' .*? ('\n'|'\r')) -> skip;
+MULTI_LINE_COMMENT: ('/*' .*? '*/') -> skip;
 
 

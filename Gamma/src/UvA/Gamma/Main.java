@@ -26,9 +26,6 @@ public class Main extends Application {
         Parameters params = getParameters();
         if (params.getUnnamed().size() > 0) {
             try {
-                String inputString = new String(Files.readAllBytes(Paths.get(params.getUnnamed().get(0))));
-                System.out.println(inputString);
-
                 InputStream is = new ByteArrayInputStream(Files.readAllBytes(Paths.get(params.getUnnamed().get(0))));
                 ANTLRInputStream input = new ANTLRInputStream(is);
                 QLLexer lexer = new QLLexer(input);
@@ -52,11 +49,6 @@ public class Main extends Application {
         } else {
             System.err.println("No input file has been given");
         }
-
-        String test = "form test {" +
-                "\"First question\" first: date" +
-                "\"a computed one\" computed: integer = (computed2 - 5)" +
-                "if(first){ \"dependent\" computed2: integer = (computed + 5) }}";
     }
 
     public static void main(String[] args) throws IOException {
