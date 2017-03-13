@@ -3,7 +3,6 @@ package parser
 import java.io.{ Reader, StringReader }
 
 import ast._
-import model.FormModel
 
 class FormParser extends QLParser with ExpressionParser {
   def parseForm(input: Reader): Form = {
@@ -33,7 +32,7 @@ class FormParser extends QLParser with ExpressionParser {
 }
 
 object FormParser {
-  def apply(input: String): FormModel = apply(new StringReader(input))
+  def apply(input: String): Form = apply(new StringReader(input))
 
-  def apply(input: Reader): FormModel = new FormModel(new FormParser().parseForm(input))
+  def apply(input: Reader): Form = new FormParser().parseForm(input)
 }
