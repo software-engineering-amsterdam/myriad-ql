@@ -3,7 +3,8 @@ module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 import Html exposing (Html, div, text, h3, pre, button)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
-import UI.Widget.Radio as RadioWidget
+import UI.Widget.BooleanRadio as BooleanRadioWidget
+import UI.Widget.StringRadio as StringRadioWidget
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
@@ -181,7 +182,7 @@ asRenderable widget valueType =
             always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
 
         Radio labels ->
-            flip RadioWidget.view labels
+            radioWidgetRendererForValueType valueType labels
 
         Checkbox ->
             BooleanWidget.view
@@ -192,6 +193,19 @@ asRenderable widget valueType =
 
         Slider _ ->
             always (div [] [ text "TODO IMPLEMENT SLIDER" ])
+
+
+radioWidgetRendererForValueType : ValueType -> List String -> WidgetContext Msg -> Html Msg
+radioWidgetRendererForValueType valueType labels =
+    case valueType of
+        StringType ->
+            flip StringRadioWidget.view labels
+
+        BooleanType ->
+            flip BooleanRadioWidget.view labels
+
+        _ ->
+            Debug.crash "It is not possible to render a radio widget"
 
 
 textWidgetRendererForValueType : ValueType -> Maybe (WidgetContext Msg -> Html Msg)

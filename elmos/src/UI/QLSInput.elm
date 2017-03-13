@@ -63,11 +63,16 @@ exampleDsl : String
 exampleDsl =
     """stylesheet taxOfficeExample
 
+  page General {
+    section "General"
+      question gender
+        widget radio("Male","Female","_")
+  }
 
   page Housing {
     section "Buying"
       question hasBoughtHouse
-        widget radio("yes", "no")
+        widget radio("Yes", "No")
     section "Loaning"
       question hasMaintLoan
   }

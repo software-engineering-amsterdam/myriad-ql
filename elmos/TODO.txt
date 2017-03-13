@@ -1,17 +1,15 @@
-  QL:
+QL:
 -TypeChecker:
 --> Don't report type error if float field contains an int + tests
 
-  QLS:
--Typechecker:
---> Check if widget is compatible with type
+QLS:
 
   QLS UI:
 -Widgets:
 --> Slider
 --> Spinbox
--->  Radio --> DONE
---> Radio for text (e.g. gender)
+--> Radio --> DONE
+--> Radio for text (e.g. gender) --> DONE
 --> DropDown
 --> DropDown for text (e.g. gender)
 ---> Style clash with bootstrap

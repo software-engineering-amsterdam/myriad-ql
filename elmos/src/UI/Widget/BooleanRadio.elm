@@ -1,7 +1,7 @@
-module UI.Widget.Radio exposing (view)
+module UI.Widget.BooleanRadio exposing (view)
 
 import Html exposing (Html, div, label, input, text)
-import Html.Attributes exposing (type_, class, checked)
+import Html.Attributes exposing (type_, id, class, checked)
 import Html.Events exposing (onClick)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
@@ -18,7 +18,7 @@ view { identifier, env, onChange } labels =
     in
         div []
             (List.indexedMap
-                (\index optionLabel -> renderOption index optionLabel (Maybe.map ((==) index) checkedIndexN) onChange)
+                (\index label -> renderOption index label (Maybe.map ((==) index) checkedIndexN) onChange)
                 labels
             )
 
