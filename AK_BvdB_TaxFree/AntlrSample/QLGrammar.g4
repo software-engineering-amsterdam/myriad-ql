@@ -5,10 +5,10 @@ package org.uva.taxfree.gen;
 }
 
 form : 'form ' formId=VARIABLE_LITERAL '{' statement* '}';
-statement : LABEL_QUESTION '->' VARIABLE_LITERAL ':' varType #question
-          | LABEL_DESCRIPTION '->' VARIABLE_LITERAL ':' varType '=' expression #calculation
-          | 'if (' expression ')' '{' thenBlock=statement* '}' 'else' '{' elseBlock=statement* '}' #ifElseStatement
-          | 'if (' expression ')' '{' statement* '}' #ifStatement
+statement : LABEL '->' VARIABLE_LITERAL ':' varType #question
+          | LABEL '->' VARIABLE_LITERAL ':' varType '=' expression #calculation
+          | 'if (' expression ')' '{' thenBlock=statement* '}' #ifStatement
+          | 'if (' expression ')' '{' (thenBlocks+=statement)* '}' 'else' '{' (elseBlocks+=statement)* '}' #ifElseStatement
           ;
 
 expression : BOOLEAN_LITERAL                                #booleanLiteral
@@ -33,12 +33,6 @@ varType : 'boolean' # booleanType
 WS : [ \t\r\n]+ -> skip;
 // Comment layout
 COMMENT : [/][/]~[\n]* -> skip;
-// Types
-LABEL_QUESTION : '"'~[?]+'?"';
-LABEL_DESCRIPTION : '"'~[:]+':"';
-BOOLEAN_LITERAL : ('true' | 'false');
-INTEGER_LITERAL : [0-9]+;
-STRING_LITERAL : '"'~["]+'"';
 // Operators
 OP_MULTIPLY : '*';
 OP_DIVIDE : '/';
@@ -52,5 +46,9 @@ OP_EQUALS : '==';
 OP_NOTEQUALS : '!=';
 OP_LOGICAL_AND : '&&';
 OP_LOGICAL_OR : '||';
-// Variables
+// Types
+LABEL : '"'(~'"')+'"' ;
+BOOLEAN_LITERAL : ('true' | 'false');
+INTEGER_LITERAL : [0-9]+;
+STRING_LITERAL : '"'~["]+'"';
 VARIABLE_LITERAL : [a-zA-Z]+;

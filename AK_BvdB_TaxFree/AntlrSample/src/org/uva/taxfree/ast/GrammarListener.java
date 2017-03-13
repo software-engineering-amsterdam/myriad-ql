@@ -10,7 +10,9 @@ import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.node.expression.*;
+import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
@@ -53,7 +55,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        String questionText = ctx.LABEL_QUESTION().getText();
+        String questionText = ctx.LABEL().getText();
         String questionId = ctx.VARIABLE_LITERAL().getText();
         Type questionType;
         String parsedVarType = ctx.varType().getText();
@@ -131,7 +133,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
         super.exitCalculation(ctx);
-        String fieldDescription = ctx.LABEL_DESCRIPTION().getText();
+        String fieldDescription = ctx.LABEL().getText();
         String fieldId = ctx.VARIABLE_LITERAL().getText();
         Type fieldType;
 
