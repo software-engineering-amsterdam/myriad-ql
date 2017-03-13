@@ -24,7 +24,9 @@ class TestSymbolChecker(TestCase):
          "    b: \"label\" boolean }"
          "  else {"
          "    c: \"label\" decimal } }",
-         {"a": IntegerDatatype(), "b": BooleanDatatype(), "c": DecimalDatatype()})
+         {"a": IntegerDatatype(),
+          "b": BooleanDatatype(),
+          "c": DecimalDatatype()})
     ]
 
     def testSymbolTables(self):

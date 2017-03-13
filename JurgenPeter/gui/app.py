@@ -21,9 +21,11 @@ class App:
         self.gui.bindKey("<KeyPress>", self.update)
 
         if layout is None:
-            QlGuiBuilder(self.gui, self.update, self.exit, self.widgets).build(form)
+            QlGuiBuilder(self.gui, self.update, self.exit,
+                         self.widgets).build(form)
         else:
-            QlsGuiBuilder(self.gui, self.update, self.exit, self.widgets, self.form).build(layout)
+            QlsGuiBuilder(self.gui, self.update, self.exit, self.widgets,
+                          self.form).build(layout)
 
     def start(self):
         self.update(None)

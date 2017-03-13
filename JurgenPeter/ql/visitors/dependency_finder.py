@@ -6,9 +6,6 @@ class DependencyFinder(Visitor):
     def find(self, node):
         return self.visit(node)
 
-    def visit(self, node):
-        return node.accept(self)
-
     def visit_computed_question(self, node):
         return self.visit(node.computation)
 

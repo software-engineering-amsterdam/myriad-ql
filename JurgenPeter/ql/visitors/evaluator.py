@@ -16,9 +16,6 @@ class Evaluator(Visitor):
         except (UndefinedVariableError, ArithmeticError):
             return None
 
-    def visit(self, node):
-        return node.accept(self)
-
     def visit_plusop(self, node):
         return + self.visit(node.right)
 

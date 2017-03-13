@@ -9,9 +9,6 @@ class TypeChecker(CheckerVisitor):
     def check(self, node):
         self.visit(node, [])
 
-    def visit(self, node, stylings):
-        return node.accept(self, stylings)
-
     def visit_layout(self, node, stylings):
         for element in node.body:
             self.visit(element, stylings)
@@ -41,10 +38,11 @@ class TypeChecker(CheckerVisitor):
                 widget_type = styling.widget_type(self.symboltable[node.name])
 
         if widget_type != self.symboltable[node.name]:
-            self.error("widget datatype {} for question anchor \"{}\" does not "
-                       "match question datatype {}".format(widget_type,
-                                                           node.name,
-                                                           self.symboltable[node.name]))
+            self.error("widget datatype {} for question anchor "
+                       "\"{}\" does not match question "
+                       "datatype {}".format(widget_type,
+                                            node.name,
+                                            self.symboltable[node.name]))
 
     def visit_styled_question_anchor(self, node, stylings):
         self.visit_question_anchor(node, stylings + [node.styling])

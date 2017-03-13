@@ -1,25 +1,18 @@
-from abc import abstractmethod
-
 from misc.visitor import Visitor
 
 
 class GuiBuilder(Visitor):
 
-    def __init__(self, app, listener, exit, widgets):
+    def __init__(self, app, listener, on_exit, widgets):
         self.app = app
         self.listener = listener
-        self.exit = exit
+        self.on_exit = on_exit
         self.widgets = widgets
 
-    @abstractmethod
     def build(self, node):
-        pass
-
-    @abstractmethod
-    def visit(self, node):
-        pass
+        self.visit(node)
 
     def create_exit_button(self):
-        self.app.addButton("exit_button", self.exit)
+        self.app.addButton("exit_button", self.on_exit)
         self.app.setButtonSticky("exit_button", "s")
         self.app.getButtonWidget("exit_button").config(text="Save and exit")

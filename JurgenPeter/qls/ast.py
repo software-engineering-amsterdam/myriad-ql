@@ -190,4 +190,5 @@ class WidgetTypeAttribute(Attribute):
 
     @property
     def widget_constructor(self):
-        return lambda gui, question: self.widget(gui, question, *self.widget_arguments)
+        return lambda gui, question: self.widget(gui, question,
+                                                 *self.widget_arguments)

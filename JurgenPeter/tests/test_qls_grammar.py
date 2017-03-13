@@ -65,11 +65,15 @@ class TestGrammar(TestCase):
         (grammar.question, "question x widget: spinbox(\"0\",\"100\")"),
         (grammar.question, "question x widget: slider(\"0\",\"100\")"),
         (grammar.section, "section x {}"),
-        (grammar.section, "section \"x\" {default boolean widget radio question x}"),
+        (grammar.section, "section \"x\" {"
+                          "     default boolean widget radio question x"
+                          "}"),
         (grammar.page, "page \"x\" {}"),
         (grammar.page, "page x {default boolean widget radio question x}"),
         (grammar.layout, "stylesheet \"x\" {}"),
-        (grammar.layout, "stylesheet x {default boolean widget radio question x}"),
+        (grammar.layout, "stylesheet x {"
+                         "      default boolean widget radio question x"
+                         "}"),
     ]
 
     def testIncorrectSentences(self):

@@ -1,5 +1,5 @@
 from misc.visitor import Visitor
-from ql.visitors.evaluator import *
+from ql.visitors.evaluator import Evaluator
 
 
 class GuiUpdater(Visitor):
@@ -11,9 +11,6 @@ class GuiUpdater(Visitor):
 
     def update(self, node):
         self.visit(node, True)
-
-    def visit(self, node, visible):
-        node.accept(self, visible)
 
     def visit_form(self, node, visible):
         for element in node.body:

@@ -7,9 +7,6 @@ class WidgetCreator(Visitor):
     def create(self, node):
         return self.visit(node)
 
-    def visit(self, node):
-        return node.accept(self)
-
     def visit_integer_datatype(self, node):
         return IntegerEntryWidget
 

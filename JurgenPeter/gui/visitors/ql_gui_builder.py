@@ -4,12 +4,6 @@ from gui.visitors.gui_builder import GuiBuilder
 
 class QlGuiBuilder(GuiBuilder):
 
-    def build(self, node):
-        self.visit(node)
-
-    def visit(self, node):
-        node.accept(self)
-
     def visit_form(self, node):
         for element in node.body:
             self.visit(element)

@@ -5,15 +5,12 @@ from gui.visitors.gui_builder import GuiBuilder
 
 class QlsGuiBuilder(GuiBuilder):
 
-    def __init__(self, app, listener, exit, widgets, form):
-        super().__init__(app, listener, exit, widgets)
+    def __init__(self, app, listener, on_exit, widgets, form):
+        super().__init__(app, listener, on_exit, widgets)
         self.form = form
 
     def build(self, node):
         self.visit(node, [])
-
-    def visit(self, node, stylings):
-        node.accept(self, stylings)
 
     def visit_layout(self, node, stylings):
         self.app.startTabbedFrame(node.name)

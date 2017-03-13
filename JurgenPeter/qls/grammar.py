@@ -1,6 +1,5 @@
 from pyparsing import *
 from qls.ast import *
-from ql.datatypes import *
 from gui.widgets import *
 
 ParserElement.enablePackrat()
@@ -9,11 +8,16 @@ identifier = Word(alphas)
 identifier.addCondition(lambda tokens: tokens[0] not in "stylesheet page "
                         "section question default widget ".split())
 
-integer_datatype = Literal("integer").setParseAction(lambda _: IntegerDatatype())
-decimal_datatype = Literal("decimal").setParseAction(lambda _: DecimalDatatype())
-boolean_datatype = Literal("boolean").setParseAction(lambda _: BooleanDatatype())
-string_datatype = Literal("string").setParseAction(lambda _: StringDatatype())
-datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^ string_datatype
+integer_datatype = Literal("integer").setParseAction(
+    lambda _: IntegerDatatype())
+decimal_datatype = Literal("decimal").setParseAction(
+    lambda _: DecimalDatatype())
+boolean_datatype = Literal("boolean").setParseAction(
+    lambda _: BooleanDatatype())
+string_datatype = Literal("string").setParseAction(
+    lambda _: StringDatatype())
+datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
+           string_datatype
 
 """ pyparsing_common.integer does not support negative integers. """
 integer = Regex("-?[0-9]+")
@@ -153,5 +157,5 @@ def parse_file(filename):
     return layout.parseFile(filename)[0]
 
 
-def parse_string(string):
-    return layout.parseString(string, parseAll=True)[0]
+def parse_string(s):
+    return layout.parseString(s, parseAll=True)[0]

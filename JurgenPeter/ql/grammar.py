@@ -86,11 +86,16 @@ expression = infixNotation(
 
 block = Forward()
 
-integer_datatype = Literal("integer").setParseAction(lambda _: IntegerDatatype())
-decimal_datatype = Literal("decimal").setParseAction(lambda _: DecimalDatatype())
-boolean_datatype = Literal("boolean").setParseAction(lambda _: BooleanDatatype())
-string_datatype = Literal("string").setParseAction(lambda _: StringDatatype())
-datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^ string_datatype
+integer_datatype = Literal("integer").setParseAction(
+    lambda _: IntegerDatatype())
+decimal_datatype = Literal("decimal").setParseAction(
+    lambda _: DecimalDatatype())
+boolean_datatype = Literal("boolean").setParseAction(
+    lambda _: BooleanDatatype())
+string_datatype = Literal("string").setParseAction(
+    lambda _: StringDatatype())
+datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
+           string_datatype
 
 question = identifier + Suppress(":") + QuotedString("\"") + datatype
 question.setParseAction(lambda tokens: Question(*tokens))
@@ -121,5 +126,5 @@ def parse_file(filename):
     return form.parseFile(filename)[0]
 
 
-def parse_string(string):
-    return form.parseString(string)[0]
+def parse_string(s):
+    return form.parseString(s, parseAll=True)[0]

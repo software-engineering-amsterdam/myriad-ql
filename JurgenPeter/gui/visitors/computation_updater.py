@@ -1,4 +1,3 @@
-from misc.visitor import Visitor
 from ql.visitors.evaluator import *
 
 
@@ -12,9 +11,6 @@ class ComputationUpdater(Visitor):
         original = self.hash_dictionary(self.environment)
         self.visit(node)
         return original != self.hash_dictionary(self.environment)
-
-    def visit(self, node):
-        node.accept(self)
 
     def visit_form(self, node):
         for element in node.body:

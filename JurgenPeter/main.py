@@ -83,7 +83,8 @@ def main():
 
         print_errors(layout_errors)
 
-    app = App(form, layout=layout, on_exit=lambda app: export(dump_file, app.environment))
+    app = App(form, layout=layout, on_exit=lambda app: export(dump_file,
+                                                              app.environment))
     app.start()
 
 if __name__ == "__main__":

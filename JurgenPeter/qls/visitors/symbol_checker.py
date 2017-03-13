@@ -18,9 +18,6 @@ class SymbolChecker(CheckerVisitor):
             self.error("QLS question anchor name \"{}\" is not defined "
                        "in QL form".format(symbol))
 
-    def visit(self, node):
-        node.accept(self)
-
     def visit_layout(self, node):
         for element in node.body:
             self.visit(element)
@@ -46,7 +43,8 @@ class SymbolChecker(CheckerVisitor):
         if node.name not in self.qls_symbols:
             self.qls_symbols.add(node.name)
         else:
-            self.error("question anchor name \"{}\" is already used".format(node.name))
+            self.error("question anchor name \"{}\" "
+                       "is already used".format(node.name))
 
     def visit_styled_question_anchor(self, node):
         self.visit_question_anchor(node)

@@ -11,9 +11,6 @@ class QuestionFinder(Visitor):
         self.visit(node)
         return self.question
 
-    def visit(self, node):
-        node.accept(self)
-
     def visit_form(self, node):
         for element in node.body:
             self.visit(element)

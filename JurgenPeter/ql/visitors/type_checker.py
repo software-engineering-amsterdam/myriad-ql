@@ -10,12 +10,6 @@ class TypeChecker(CheckerVisitor):
         self.symboltable = symboltable
         self.errors = errors
 
-    def check(self, node):
-        self.visit(node)
-
-    def visit(self, node):
-        return node.accept(self)
-
     def visit_form(self, node):
         for element in node.body:
             self.visit(element)
