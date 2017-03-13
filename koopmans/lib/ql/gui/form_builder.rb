@@ -12,14 +12,18 @@ module QL
         form.statements.map { |statement| statement.accept(self) }.flatten
       end
 
-      # stack if conditions if possible
       def visit_if_statement(if_statement, condition=nil)
-        if condition
-          condition = AST::Expression.new([condition, AST::And.new(if_statement.condition)])
-        else
-          condition = if_statement.condition
-        end
+        condition = stack_conditions(condition, if_statement.condition)
         if_statement.body.map { |statement| statement.accept(self, condition) }
+      end
+
+      # stack conditions if possible
+      def stack_conditions(condition_1, condition_2)
+        if condition_1 && condition_2
+          AST::Expression.new([condition_1, AST::And.new(condition_2)])
+        else
+          condition_1 || condition_2
+        end
       end
 
       def visit_question(question, condition=nil)
