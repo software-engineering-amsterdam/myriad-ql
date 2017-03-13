@@ -10,6 +10,9 @@ import  './grammar.js';
 export class Parser {
 
     constructor() {
+        this.errorMessage;
+        this.parseString;
+
         window.ASTBuilder = new ASTBuilder();
     }
 
@@ -18,18 +21,23 @@ export class Parser {
         let result = [];
         try {
             /* Remove all line breaks from the parse string */
+            this.parseString = parseString;
             parseString = parseString.replace(/(\r\n|\n|\r)/gm, "");
 
             result = parser.feed(parseString).results;
         } catch (parseError) {
-            console.error(`Error at character ${parseError.offset}`);
+            this.errorMessage = `Error at character ${parseError.offset} `;
+            console.error(this.errorMessage);
+
         }
 
         if (result.length > 1) {
-            console.error(`Ambigious parsing: ${result.length} options. Choosing the first parsing`);
+            this.errorMessage = `Ambigious parsing: ${result.length} options. Choosing the first parsing`;
+            console.error(this.errorMessage);
             result = result[0];
         }
-        return result;
+
+        return {result, errors: this.errorMessage};
     }
 
     /**
@@ -39,6 +47,14 @@ export class Parser {
      */
     _createParser() {
         return new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
+    }
+
+    getErrorMessage(){
+        return this.errorMessage;
+    }
+
+    getParseString(){
+        return this.parseString;
     }
 
 }

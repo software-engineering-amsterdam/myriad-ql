@@ -67,11 +67,18 @@ export class ASTValidationVisitor {
          if (x) { a: "A?" boolean }
          if (!x) { a: "A?" boolean }
          */
-
-
+        this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
 
+    }
 
+    /* check duplicate question declarations with different types */
+    checkDuplicateDeclarations(question){
+        let memoryElement = this.memoryState.getElement(question.getPropertyName());
+        let propertyInMemory = memoryElement != undefined;
+        if(propertyInMemory && question.getPropertyType() != memoryElement.getType() ){
+            this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
+        }
     }
 
     checkDuplicateLabels(statement){
