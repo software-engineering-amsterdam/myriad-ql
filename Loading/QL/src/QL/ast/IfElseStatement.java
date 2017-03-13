@@ -15,7 +15,6 @@ public class IfElseStatement extends Statement {
 		return elseBlock;
 	}
 
-	// TODO end each class with overrides?
 	@Override
 	public void accept(FormVisitor v) {
 		v.visit(this);

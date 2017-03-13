@@ -25,10 +25,10 @@ public class AstBuilderExpressionTest {
         // if (true || false)
         ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
         ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
-        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanLiteralNodeFalse);
+//        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanLiteralNodeFalse);
         Set<Node> childNodes = new LinkedHashSet<>();
 
-        Node ifStatementNode = new IfStatementNode(booleanExpressionNode, childNodes);
+//        Node ifStatementNode = new IfStatementNode(booleanExpressionNode, childNodes);
     }
 
     @Test
@@ -36,10 +36,10 @@ public class AstBuilderExpressionTest {
         // if (true || false && true)
         ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
         ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
-        ExpressionNode booleanExpressionNodeAnd = new BooleanBinaryExpressionNode(booleanLiteralNodeFalse, "&&", booleanLiteralNodeTrue);
-        ExpressionNode booleanExpressionNodeOr = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanExpressionNodeAnd);
+//        ExpressionNode booleanExpressionNodeAnd = new BooleanBinaryExpressionNode(booleanLiteralNodeFalse, "&&", booleanLiteralNodeTrue);
+//        ExpressionNode booleanExpressionNodeOr = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanExpressionNodeAnd);
         Set<Node> childNodes = new LinkedHashSet<>();
 
-        Node ifStatementNode = new IfStatementNode(booleanExpressionNodeOr, childNodes);
+//        Node ifStatementNode = new IfStatementNode(booleanExpressionNodeOr, childNodes);
     }
 }

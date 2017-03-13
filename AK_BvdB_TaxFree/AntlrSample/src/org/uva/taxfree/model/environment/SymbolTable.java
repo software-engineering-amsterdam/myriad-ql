@@ -1,18 +1,18 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.node.declarations.CalculatedField;
-import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.node.declarations.CalculationNode;
+import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
 import java.util.*;
 
 public class SymbolTable {
-    private final List<NamedNode> mDeclarations; // All declarations
+    private final List<DeclarationNode> mDeclarations; // All declarations
     private final List<String> mUsedVariables;
     private final List<ExpressionNode> mExpressions;
-    private final List<CalculatedField> mCalculations;
+    private final List<CalculationNode> mCalculations;
 
 
     public SymbolTable() {
@@ -22,8 +22,8 @@ public class SymbolTable {
         mCalculations = new ArrayList<>();
     }
 
-    public void addDepencendies(Set<NamedNode> nodes) {
-        for (NamedNode n : nodes) {
+    public void addDepencendies(Set<DeclarationNode> nodes) {
+        for (DeclarationNode n : nodes) {
             addDeclaration(n);
         }
     }
@@ -32,11 +32,11 @@ public class SymbolTable {
         mExpressions.add(expression);
     }
 
-    public void addDeclaration(NamedNode node) {
+    public void addDeclaration(DeclarationNode node) {
         mDeclarations.add(node);
     }
 
-    public void addCalculation(CalculatedField calculation) {
+    public void addCalculation(CalculationNode calculation) {
         mCalculations.add(calculation);
     }
 
@@ -45,34 +45,36 @@ public class SymbolTable {
     }
 
     public String resolveValue(String variableId) {
-        return findNode(variableId).resolveValue();
+        throw new RuntimeException("Not implemented yet");
+        //return findNode(variableId).resolveValue();
     }
 
     public boolean contains(String variableId) {
-        for (NamedNode n : mDeclarations) {
+        return findNodes(variableId).size() > 0;
+    }
+
+    private DeclarationNode findNode(String variableId) {
+        assert findNodes(variableId).size() == 1;
+        return findNodes(variableId).get(0);
+    }
+
+    private List<DeclarationNode> findNodes(String variableId) {
+        List<DeclarationNode> declarationNodes = new ArrayList<>();
+        for (DeclarationNode n : mDeclarations) {
             if (variableId.equals(n.getId())) {
-                return true;
+                declarationNodes.add(n);
             }
         }
-        return false;
+        return declarationNodes;
     }
 
     public Type resolveType(String variableId) {
         return findNode(variableId).getType();
     }
 
-    private NamedNode findNode(String variableId) {
-        for (NamedNode n : mDeclarations) {
-            if (variableId.equals(n.getId())) {
-                return n;
-            }
-        }
-        throw new RuntimeException("Unresolvable identifier queried");
-    }
-
     public void getDuplicateLabelErrors(MessageList messageList) {
         Set<String> processedLabels = new LinkedHashSet<>();
-        for (NamedNode node : mDeclarations) {
+        for (DeclarationNode node : mDeclarations) {
             String questionLabel = node.getLabel();
             if (!processedLabels.add(questionLabel)) {
                 messageList.addWarning("Duplicate question label found: " + questionLabel);
@@ -82,7 +84,7 @@ public class SymbolTable {
 
     public void getDuplicateDeclarationErrors(MessageList messageList) {
         Set<String> processedDeclarations = new LinkedHashSet<>();
-        for (NamedNode node : mDeclarations) {
+        for (DeclarationNode node : mDeclarations) {
             String declaration = node.getId();
             if (!processedDeclarations.add(declaration)) {
                 messageList.addError("Duplicate declaration found: " + declaration);
@@ -100,7 +102,7 @@ public class SymbolTable {
     }
 
     private boolean validDeclaration(String identifier) {
-        for (NamedNode node : mDeclarations) {
+        for (DeclarationNode node : mDeclarations) {
             if (identifier.equals(node.getId())) {
                 return true;
             }
@@ -122,7 +124,7 @@ public class SymbolTable {
     }
 
     private void addDepencendies(String usedVariable, Set<String> usedVariables) {
-        for (CalculatedField calc : mCalculations) {
+        for (CalculationNode calc : mCalculations) {
             if (calc.getId().equals(usedVariable)) {
                 usedVariables.addAll(calc.getUsedVariables());
             }

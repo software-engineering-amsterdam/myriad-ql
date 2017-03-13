@@ -60,37 +60,37 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
     }
 
     @Override
-    public Value visit(AddExpression expr) {
+    public Value visit(AddExpr expr) {
         return expr.getLhs().accept(this).add(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(AndExpression expr) {
+    public Value visit(AndExpr expr) {
         return expr.getLhs().accept(this).and(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(DivExpression expr) {
+    public Value visit(DivExpr expr) {
         return expr.getLhs().accept(this).div(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(EqExpression expr) {
+    public Value visit(EqExpr expr) {
         return expr.getLhs().accept(this).eq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(GEqExpression expr) {
+    public Value visit(GEqExpr expr) {
         return expr.getLhs().accept(this).greaterEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(GExpression expr) {
+    public Value visit(GExpr expr) {
         return expr.getLhs().accept(this).greater(expr.getRhs().accept(this));
     }
 
     @Override
-	public Value visit(IdExpression id) {
+	public Value visit(IdExpr id) {
 
 		if (!environment.isAnswered(id.getName())) {
 			return environment.getType(id.getName()).getValue();
@@ -100,47 +100,47 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 	}
 
     @Override
-    public Value visit(LEqExpression expr) {
+    public Value visit(LEqExpr expr) {
         return expr.getLhs().accept(this).lessEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(LExpression expr) {
+    public Value visit(LExpr expr) {
         return expr.getLhs().accept(this).less(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(MinusExpression expr) {
+    public Value visit(MinusExpr expr) {
         return expr.getLhs().accept(this).min();
     }
 
     @Override
-    public Value visit(MulExpression expr) {
+    public Value visit(MulExpr expr) {
         return expr.getLhs().accept(this).mul(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(NEqExpression expr) {
+    public Value visit(NEqExpr expr) {
         return expr.getLhs().accept(this).notEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(NotExpression expr) {
+    public Value visit(NotExpr expr) {
         return expr.getLhs().accept(this).not();
     }
 
     @Override
-    public Value visit(OrExpression expr) {
+    public Value visit(OrExpr expr) {
         return expr.getLhs().accept(this).or(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(PlusExpression expr) {
+    public Value visit(PlusExpr expr) {
         return expr.getLhs().accept(this).plus();
     }
 
     @Override
-    public Value visit(SubExpression expr) {
+    public Value visit(SubExpr expr) {
         return expr.getLhs().accept(this).sub(expr.getRhs().accept(this));
     }
 
