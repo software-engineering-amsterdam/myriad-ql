@@ -98,10 +98,17 @@ view { rawInput, parsedForm, messages } =
                         ]
                     ]
                 , div [ class "col-md-6" ]
-                    [ h3 [] [ text "TypeChecker" ]
-                    , div []
+                    (if parsedForm == Nothing then
+                        [ UI.Messages.error
+                            [ text "Invalid Form" ]
+                        ]
+                     else if List.isEmpty messages then
+                        [ UI.Messages.success
+                            [ text "Everything seems OK!" ]
+                        ]
+                     else
                         (List.map renderMessage messages)
-                    ]
+                    )
                 ]
           )
         , ( "preview", pre [] [ text <| toString parsedForm ] )

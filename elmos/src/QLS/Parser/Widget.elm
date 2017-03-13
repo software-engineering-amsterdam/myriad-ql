@@ -9,7 +9,7 @@ import QLS.AST exposing (..)
 
 widget : Parser state Widget
 widget =
-    choice [ radio, spinbox, checkbox ]
+    choice [ radio, spinbox, checkbox, text, slider ]
 
 
 radio : Parser state Widget

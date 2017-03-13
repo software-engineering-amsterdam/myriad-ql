@@ -5,6 +5,7 @@ import QLS.AST exposing (StyleSheet)
 import QLS.TypeChecker.InvalidQuestionReferences as InvalidQuestionReferences
 import QLS.TypeChecker.UnplacedQuestion as UnplacedQuestion
 import QLS.TypeChecker.DuplicatePlacedQuestions as DuplicatePlacedQuestions
+import QLS.TypeChecker.QuestionWidgetType as QuestionWidgetType
 import QLS.TypeChecker.Messages exposing (Message)
 
 
@@ -20,4 +21,5 @@ check form styleSheet =
         [ InvalidQuestionReferences.check form styleSheet
         , UnplacedQuestion.check form styleSheet
         , DuplicatePlacedQuestions.check form styleSheet
+        , QuestionWidgetType.check form styleSheet
         ]

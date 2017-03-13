@@ -1,0 +1,136 @@
+module QLS.TypeChecker.QuestionWidgetType exposing (check)
+
+import QL.AST exposing (Form, Location, Id, ValueType(..))
+import QLS.AST exposing (StyleSheet, Question, Configuration(..), Widget(..))
+import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch), undefinedQuestionReference)
+import QLS.AST.Collectors as QLSCollectors
+import Dict exposing (Dict)
+import Dict.Extra as Dict
+import QL.AST.Collectors as QLCollectors exposing (QuestionTypes)
+import Maybe.Extra as Maybe
+
+
+check : Form -> StyleSheet -> List Message
+check form styleSheet =
+    let
+        questionTypes =
+            QLCollectors.collectQuestionTypes form
+    in
+        QLSCollectors.collectConfiguredQuestions styleSheet
+            |> List.filterMap (invalidWidgetConfiguration questionTypes)
+
+
+invalidWidgetConfiguration : QuestionTypes -> ( Id, Configuration ) -> Maybe Message
+invalidWidgetConfiguration questionTypes ( ( name, loc ), conf ) =
+    Maybe.map2 (,) (Dict.get name questionTypes) (configuredWidget conf)
+        |> Maybe.filter (not << allowedQuestionTypeWidgetPair)
+        |> Maybe.map (\( vt, widget ) -> WidgetConfigMismatch name loc vt widget)
+
+
+allowedQuestionTypeWidgetPair : ( ValueType, Widget ) -> Bool
+allowedQuestionTypeWidgetPair ( valueType, widget ) =
+    case valueType of
+        BooleanType ->
+            validWidgetForBooleanType widget
+
+        StringType ->
+            validWidgetForStringType widget
+
+        IntegerType ->
+            validWidgetForIntegerType widget
+
+        MoneyType ->
+            validWidgetForMoneyType widget
+
+
+validWidgetForBooleanType : Widget -> Bool
+validWidgetForBooleanType w =
+    case w of
+        Radio _ ->
+            True
+
+        Spinbox ->
+            False
+
+        Checkbox ->
+            True
+
+        Text ->
+            False
+
+        Slider _ ->
+            False
+
+
+validWidgetForStringType : Widget -> Bool
+validWidgetForStringType w =
+    case w of
+        Radio _ ->
+            False
+
+        Spinbox ->
+            False
+
+        Checkbox ->
+            False
+
+        Text ->
+            True
+
+        Slider _ ->
+            False
+
+
+validWidgetForIntegerType : Widget -> Bool
+validWidgetForIntegerType w =
+    case w of
+        Radio _ ->
+            False
+
+        Spinbox ->
+            True
+
+        Checkbox ->
+            False
+
+        Text ->
+            True
+
+        Slider _ ->
+            True
+
+
+validWidgetForMoneyType : Widget -> Bool
+validWidgetForMoneyType w =
+    case w of
+        Radio _ ->
+            False
+
+        Spinbox ->
+            True
+
+        Checkbox ->
+            False
+
+        Text ->
+            True
+
+        Slider _ ->
+            False
+
+
+configuredWidget : Configuration -> Maybe Widget
+configuredWidget c =
+    case c of
+        SingleConfig widget ->
+            Just widget
+
+        MultiConfig styleList widgetMaybe ->
+            widgetMaybe
+
+
+groupByLabel : List ( String, Location ) -> Dict String (List Location)
+groupByLabel x =
+    x
+        |> Dict.groupBy Tuple.first
+        |> Dict.map (\k v -> List.map Tuple.second v)

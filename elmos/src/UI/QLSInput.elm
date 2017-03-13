@@ -8,7 +8,7 @@ import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
 import QLS.Parser as Parser
 import QLS.TypeChecker as TypeChecker
-import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion))
+import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion, WidgetConfigMismatch))
 import UI.Messages
 
 
@@ -126,6 +126,10 @@ view { input, parsedStyleSheet, parsedForm, messages } =
                                 [ UI.Messages.error
                                     [ text "Could not parse the stylesheet" ]
                                 ]
+                            else if List.isEmpty messages then
+                                [ UI.Messages.success
+                                    [ text "Everything seems OK!" ]
+                                ]
                             else
                                 List.map (UI.Messages.error << renderMessage) messages
                         ]
@@ -157,4 +161,16 @@ renderMessage message =
             , text " at the following locations: [ "
             , UI.Messages.renderLocations locations
             , text "]"
+            ]
+
+        WidgetConfigMismatch name loc valueType widget ->
+            [ text "Question "
+            , UI.Messages.renderVarName name
+            , text " at "
+            , UI.Messages.renderLocation loc
+            , text " has type "
+            , UI.Messages.renderVarName (toString valueType)
+            , text " but is assigned an invalid widget "
+            , UI.Messages.renderVarName (toString widget)
+            , text "."
             ]

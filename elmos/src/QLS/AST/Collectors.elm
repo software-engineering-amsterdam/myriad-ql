@@ -1,7 +1,7 @@
-module QLS.AST.Collectors exposing (collectQuestionReferencesAsDict, collectQuestionReferences)
+module QLS.AST.Collectors exposing (collectQuestionReferencesAsDict, collectQuestionReferences, collectConfiguredQuestions)
 
-import QL.AST exposing (Form, Location)
-import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion))
+import QL.AST exposing (Form, Location, Id)
+import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion), Configuration)
 import QLS.StyleSheetVisitor as StyleSheetVisitor exposing (defaultConfig)
 import Dict exposing (Dict)
 
@@ -11,10 +11,10 @@ collectQuestionReferencesAsDict =
     Dict.fromList << collectQuestionReferences
 
 
-collectQuestionReferences : StyleSheet -> List ( String, Location )
+collectQuestionReferences : StyleSheet -> List Id
 collectQuestionReferences styleSheet =
     let
-        onQuestion : Question -> List ( String, Location ) -> List ( String, Location )
+        onQuestion : Question -> List Id -> List Id
         onQuestion question context =
             case question of
                 Question ref ->
@@ -27,3 +27,21 @@ collectQuestionReferences styleSheet =
             { defaultConfig | onQuestion = StyleSheetVisitor.post onQuestion }
             styleSheet
             []
+
+
+collectConfiguredQuestions : StyleSheet -> List ( Id, Configuration )
+collectConfiguredQuestions styleSheet =
+    StyleSheetVisitor.inspect
+        { defaultConfig
+            | onQuestion =
+                StyleSheetVisitor.post <|
+                    \question context ->
+                        case question of
+                            Question ref ->
+                                context
+
+                            ConfiguredQuestion ref configuration ->
+                                ( ref, configuration ) :: context
+        }
+        styleSheet
+        []
