@@ -5,6 +5,9 @@ module Notification
     def initialize(message)
       @message = message
     end
+
+    def accept(_)
+    end
   end
 
   class Error < Notification

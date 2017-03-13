@@ -16,19 +16,19 @@ module QLS
         @maximum = maximum
       end
 
-      def accept_types
+      def is_compatible_with
         [IntegerType, MoneyType, DecimalType]
       end
     end
 
     class SpinboxWidget < Widget
-      def accept_types
+      def is_compatible_with
         [IntegerType, MoneyType, DecimalType]
       end
     end
 
     class TextWidget < Widget
-      def accept_types
+      def is_compatible_with
         [IntegerType, DateType, DecimalType, StringType, MoneyType]
       end
     end
@@ -41,13 +41,13 @@ module QLS
         @false_text = false_text
       end
 
-      def accept_types
+      def is_compatible_with
         [BooleanType]
       end
     end
 
     class CheckboxWidget < Widget
-      def accept_types
+      def is_compatible_with
         [BooleanType]
       end
     end
@@ -60,7 +60,7 @@ module QLS
         @false_text = false_text
       end
 
-      def accept_types
+      def is_compatible_with
         [BooleanType]
       end
     end

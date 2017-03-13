@@ -9,26 +9,30 @@ module QL
         @expression = expression
       end
 
-      # makes sure all (sub)expressions are calculated in correct order
-      # def eval
-      #   expression.reduce { |left, operation| operation.call(left) }.eval
-      # end
-      #
-      # def eval_type
-      #   expression.reduce { |left, operation| operation.type_check(left) }
-      # end
-
       def accept(visitor)
-        # expression.reduce do |left, operation|
-        #   left.accept(visitor)
-        #   operation.accept(visitor)
-        # end
         visitor.visit_expression(self)
-        # expression.reduce { |left, operation| operation.call(left) }
       end
 
-      def accept_types
-        [BooleanType, IntegerType, MoneyType]
+      def eval_type(left_type, right_type)
+        errors = []
+        unless self.is_compatible_with.include?(left_type) and self.is_compatible_with.include?(right_type)
+          errors << Error.new("incompatible types at #{self}")
+        end
+
+        unless left_type == right_type
+          errors << Error.new("#{left_type} is not compatible with #{right_type}")
+        end
+
+        if errors.empty?
+          # return the left type if there are no errors
+          left_type
+        else
+          # return an error type if there are errors
+          errors.each do |error|
+            NotificationTable.store(error)
+          end
+          ErrorType.new
+        end
       end
     end
 
@@ -43,8 +47,8 @@ module QL
         BooleanLiteral.new(!expression)
       end
 
-      def accept_types
-        [BooleanType]
+      def is_compatible_with
+        [BooleanType.new]
       end
     end
 
@@ -53,34 +57,12 @@ module QL
         IntegerLiteral.new(-expression)
       end
 
-      def accept_types
-        [IntegerType, MoneyType]
+      def is_compatible_with
+        [IntegerType.new, MoneyType.new]
       end
     end
 
     class BinaryExpression < Expression
-      # def call(left)
-      #   pp left
-      #   pp self.expression
-      #   left  = left.eval
-      #   right = self.expression.eval
-      #   self.eval(left.to_value, right.to_value)
-      # end
-      #
-      # def type_check(left)
-      #   pp 'type checking'
-      #   pp left
-      #   pp self
-      #   pp self.expression #right side
-      #   pp 'calculating'
-      #   left  = left.eval_type
-      #   right = self.expression.eval_type
-      #   pp left
-      #   pp right
-      #   pp self
-      #   self.eval_type(left, right)
-      # end
-
       def accept(left, visitor)
         visitor.visit_binary_expression(left, self)
       end
@@ -88,8 +70,8 @@ module QL
 
     # booleans: && ||
     class BooleanExpression < BinaryExpression
-      def accept_types
-        [BooleanType]
+      def is_compatible_with
+        [BooleanType.new]
       end
     end
 
@@ -107,8 +89,8 @@ module QL
 
     # arithmetic: - + * /
     class ArithmeticExpression < BinaryExpression
-      def accept_types
-        [IntegerType, MoneyType]
+      def is_compatible_with
+        [IntegerType.new, MoneyType.new]
       end
     end
 
@@ -122,33 +104,11 @@ module QL
       def eval(left, right)
         IntegerLiteral.new(left + right)
       end
-
-      def eval_type(left, right)
-        pp 'add'
-        pp left
-        pp right
-        if left != right
-          Error.new('je hebt een fout gemaakt')
-        else
-          nil
-        end
-      end
     end
 
     class Multiply < ArithmeticExpression
       def eval(left, right)
         IntegerLiteral.new(left * right)
-      end
-
-      def eval_type(left, right)
-        pp 'multiply'
-        pp left
-        pp right
-        if left != right
-          Error.new('je hebt een fout gemaakt')
-        else
-          left
-        end
       end
     end
 
@@ -160,8 +120,8 @@ module QL
 
     # comparisons == !=
     class ComparisonEqual < BinaryExpression
-      def accept_types
-        [BooleanType, IntegerType, StringType, MoneyType]
+      def is_compatible_with
+        [BooleanType.new, IntegerType.new, StringType.new, MoneyType.new]
       end
     end
 
@@ -179,8 +139,8 @@ module QL
 
     # comparisons: < > <= >=
     class ComparisonOrdering < BinaryExpression
-      def accept_types
-        [IntegerType, MoneyType]
+      def is_compatible_with
+        [IntegerType.new, MoneyType.new]
       end
     end
 
