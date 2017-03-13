@@ -12,7 +12,7 @@ import {IfStatement} from '../statements/IfStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
 
 import {Comparison} from '../expressions/Comparison.js';
-import {Expression} from '../expressions/Expression.js';
+import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
 
 import {MinOperator} from '../operator/MinOperator.js';
@@ -52,14 +52,12 @@ export class FormPostProcessor {
     }
 
     expression(data, location, reject) {
-        console.log(data);
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
     }
 
     /* needs to be adjusted */
-    notExpression(data, location, reject) {
-        console.log(data);
-        return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
+    prefixExpression(data, location, reject) {
+        return new PrefixExpression(data[0], _.flattenDeep(data[1])[0], location);
     }
 
     deepExpression(data, location, reject) {

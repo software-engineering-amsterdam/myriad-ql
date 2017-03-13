@@ -71,7 +71,7 @@ export class RenderVisitor {
 
         let evaluation = expression.evaluate(this.memoryState);
 
-        /* Add a better condition so that 0 values are not ignored */
+        /* TODO: Add a better condition so that 0 values are not ignored */
         if (evaluation) {
             let label = answer.getLabel();
             let labelRenderable = label.render(this);
@@ -189,6 +189,7 @@ export class RenderVisitor {
         return new Surface();
     }
 
+    /* TODO, optional */
     _addMarginsToView(view) {
         return view;
     }

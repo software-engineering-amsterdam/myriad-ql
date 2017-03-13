@@ -53,12 +53,12 @@ export let test5 = 'put it on the floor';
 export let test6 =
     `form taxOfficeExample{
     question 'Did you sell a house in 2010?'
-    hasSoldHouse: money
+    hasSoldHouse: boolean
     question 'Did you buy a house in 2010?'
-    hasBoughtHouse: money
+    hasBoughtHouse: boolean
     question 'Did you enter a loan?'
     hasMaintLoan: string
-    if ((hasBoughtHouse * hasSoldHouse) >= (hasBoughtHouse - hasSoldHouse)) {
+    if (!(hasSoldHouse && hasBoughtHouse)) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'

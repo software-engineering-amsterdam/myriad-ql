@@ -172,7 +172,7 @@ var grammar = {
     {"name": "and_expression$string$1", "symbols": [{"literal":"&"}, {"literal":"&"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "and_expression", "symbols": ["and_expression", "_", "and_expression$string$1", "_", "and_expression"], "postprocess": FormPostProcessor.expression},
     {"name": "not_expression", "symbols": ["comparison"]},
-    {"name": "not_expression", "symbols": [{"literal":"!"}, "not_expression"], "postprocess": FormPostProcessor.notExpression},
+    {"name": "not_expression", "symbols": [{"literal":"!"}, "not_expression"], "postprocess": FormPostProcessor.prefixExpression},
     {"name": "comparison", "symbols": ["plus_minus_expression"]},
     {"name": "comparison$subexpression$1", "symbols": [{"literal":"<"}]},
     {"name": "comparison$subexpression$1", "symbols": [{"literal":">"}]},

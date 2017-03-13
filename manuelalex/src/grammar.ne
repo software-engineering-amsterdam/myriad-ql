@@ -27,7 +27,7 @@ allocation              -> propertyName ":" _ propertyType _ "=" _ (expression) 
 
 expression                  -> and_expression | expression _ "||" _ expression                                              {% FormPostProcessor.expression %}
 and_expression              -> not_expression | and_expression _ "&&" _ and_expression                                      {% FormPostProcessor.expression %}
-not_expression              -> comparison | "!" not_expression                                                              {% FormPostProcessor.notExpression %}
+not_expression              -> comparison | "!" not_expression                                                              {% FormPostProcessor.prefixExpression %}
 comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% FormPostProcessor.deepExpression %}
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% FormPostProcessor.deepExpression %}
 multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression               {% FormPostProcessor.deepExpression %}
