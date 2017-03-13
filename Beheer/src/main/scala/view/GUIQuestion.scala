@@ -11,15 +11,15 @@ import scalafx.scene.text.Text
 trait GUIQuestion {
   val question: DisplayQuestion
 
-  val textLabel = new Text(question.label)
+  private val textLabel = new Text(question.label)
 
-  val element = new VBox {
+  val displayBox = new VBox {
     children = Seq(textLabel)
     disable = isDisabled(question)
     visible <== isVisible(question)
   }
 
-  def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
+  protected def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
     bind(env)
 
     override def computeValue: String = Evaluator(env.toMap, question.value).toString

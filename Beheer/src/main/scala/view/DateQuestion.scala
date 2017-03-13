@@ -20,7 +20,7 @@ class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
     case o: OpenQuestion => datePicker.onAction = actionHandler(datePicker, o)
   }
 
-  element.children += datePicker
+  displayBox.children += datePicker
 
   private def actionHandler(datePicker: DatePicker, question: OpenQuestion) = () => {
     val value = question.`type` match {
