@@ -43,4 +43,4 @@ class IdentifierChecker(FormVisitor):
         return [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        return {node.name.name: node.name.location}
+        return {node.name.name: node.data_type}

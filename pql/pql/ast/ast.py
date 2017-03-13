@@ -215,7 +215,7 @@ class Value(Node):
 
 
 class Identifier(Node):
-    def __init__(self, location, name):
+    def __init__(self, name, location):
         super(Identifier, self).__init__('identifier', location)
         self.name = name
 
@@ -223,9 +223,10 @@ class Identifier(Node):
         return visitor.identifier(self)
 
 
-class Integer(object):
-    def __init__(self, data):
-        self.data_type = data
+class Integer(Node):
+    def __init__(self, data_type, location):
+        super(Integer, self).__init__("integer", location)
+        self.data_type = data_type
 
     def apply(self, visitor):
         return visitor.integer(self)
@@ -234,9 +235,10 @@ class Integer(object):
         return int(0)
 
 
-class Boolean(object):
-    def __init__(self, data):
-        self.data_type = data
+class Boolean(Node):
+    def __init__(self, data_type, location):
+        super(Boolean, self).__init__("boolean", location)
+        self.data_type = data_type
 
     def apply(self, visitor):
         return visitor.boolean(self)
@@ -245,9 +247,10 @@ class Boolean(object):
         return False
 
 
-class Money(object):
-    def __init__(self, data):
-        self.data_type = data
+class Money(Node):
+    def __init__(self, data_type, location):
+        super(Money, self).__init__("money", location)
+        self.data_type = data_type
 
     def apply(self, visitor):
         return visitor.money(self)

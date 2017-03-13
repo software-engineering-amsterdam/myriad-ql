@@ -1,6 +1,6 @@
 # coding=utf-8
 from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
-                       QuotedString, Optional, Forward, Combine, ParserElement)
+                       QuotedString, Optional, Forward, Combine)
 
 from pql.ast import ast
 from pql.typechecker.types import DataTypes
@@ -18,7 +18,7 @@ def parse(input_string):
         return type_call(flattened_tokens[1])
 
     # Packrat
-    ParserElement.enablePackrat()
+    # ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")
@@ -49,9 +49,12 @@ def parse(input_string):
     lit_op_and = Literal("&&").setParseAction(lambda _: ast.And)
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
-    type_money = Literal("money").setParseAction(lambda parsed_tokens: ast.Money(DataTypes.money))
-    type_integer = Literal("integer").setParseAction(lambda parsed_tokens: ast.Integer(DataTypes.integer))
-    type_boolean = Literal("boolean").setParseAction(lambda parsed_tokens: ast.Boolean(DataTypes.boolean))
+    type_money = Literal("money").setParseAction(
+        lambda source, location, parsed_tokens: ast.Money(DataTypes.money, {"src": source, "loc": location}))
+    type_integer = Literal("integer").setParseAction(
+        lambda source, location, parsed_tokens: ast.Integer(DataTypes.integer, {"src": source, "loc": location}))
+    type_boolean = Literal("boolean").setParseAction(
+        lambda source, location, parsed_tokens: ast.Boolean(DataTypes.boolean, {"src": source, "loc": location}))
     data_types = type_money | type_integer | type_boolean
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
@@ -67,7 +70,7 @@ def parse(input_string):
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
     name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
-        lambda source, location, parsed_tokens: ast.Identifier({"src": source, "loc": location}, parsed_tokens[0]))
+        lambda source, location, parsed_tokens: ast.Identifier(parsed_tokens[0], {"src": source, "loc": location}))
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
