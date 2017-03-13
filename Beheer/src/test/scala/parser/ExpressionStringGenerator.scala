@@ -5,7 +5,7 @@ import org.scalacheck.Gen
 /**
  * Created by jasper on 13/02/17.
  */
-trait ExpressionGenerator extends ValueGenerator {
+trait ExpressionStringGenerator extends ValueStringGenerator {
   def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size)) suchThat (_.nonEmpty)
 
   def genInfixExpression: Gen[String] = Gen.sized(size => sizedInfixExpression(size)) suchThat (_.nonEmpty)
