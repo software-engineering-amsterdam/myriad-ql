@@ -18,7 +18,7 @@ def parse(input_string):
         return type_call(position, source, flattened_tokens[1])
 
     # Packrat
-    # ParserElement.enablePackrat()
+    ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")
@@ -57,14 +57,16 @@ def parse(input_string):
         lambda source, position, parsed_tokens: ast.Boolean(position, source, DataTypes.boolean))
     data_types = type_money | type_integer | type_boolean
 
-    true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
-    false = Literal("false").setParseAction(lambda _: ast.Value(False, DataTypes.boolean))
+    true = Literal("true").setParseAction(
+        lambda source, position, _: ast.Value(position, source, True, DataTypes.boolean))
+    false = Literal("false").setParseAction(
+        lambda source, position, _: ast.Value(position, source, False, DataTypes.boolean))
     boolean = (true | false)
 
     integer = Word(nums).setParseAction(
-        lambda parsed_tokens: ast.Value(int(parsed_tokens[0]), DataTypes.integer))
+        lambda source, position, parsed_tokens: ast.Value(position, source, int(parsed_tokens[0]), DataTypes.integer))
     money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
-        lambda parsed_tokens: ast.Value(float(parsed_tokens[0]), DataTypes.money))
+        lambda source, position, parsed_tokens: ast.Value(position, source, float(parsed_tokens[0]), DataTypes.money))
     number = (money | integer)
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)

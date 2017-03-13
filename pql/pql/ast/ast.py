@@ -215,8 +215,8 @@ class Inequality(BinaryOperation):
 
 
 class Value(Node):
-    def __init__(self, value, data_type):
-        super(Value, self).__init__('value')
+    def __init__(self, position, source, value, data_type):
+        super(Value, self).__init__('value', position, source)
         self.value = value
         self.data_type = data_type
 
