@@ -5,8 +5,8 @@
 
     internal class Unsubscriber : IDisposable
     {
-        private List<IObserver<GuiChange>> observers;
-        private IObserver<GuiChange> observer;
+        private readonly List<IObserver<GuiChange>> observers;
+        private readonly IObserver<GuiChange> observer;
 
         public Unsubscriber(List<IObserver<GuiChange>> observers, IObserver<GuiChange> observer)
         {
