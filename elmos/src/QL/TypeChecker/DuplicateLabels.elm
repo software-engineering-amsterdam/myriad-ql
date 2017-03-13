@@ -4,7 +4,6 @@ import Dict exposing (Dict)
 import Dict.Extra as Dict
 import QL.AST exposing (Form, Id)
 import QL.AST.Collectors as Collectors
-import QL.TypeChecker.Messages as Messages exposing (Message)
 import QL.TypeChecker.Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
 
 

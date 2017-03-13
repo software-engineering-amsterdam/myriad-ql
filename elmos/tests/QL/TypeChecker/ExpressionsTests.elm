@@ -26,16 +26,16 @@ computedFieldTypeErrorsTests =
             \() ->
                 Expressions.computedFieldTypeErrors
                     (Form ( "form", emptyLoc )
-                        [ ComputedField "Label" ( "x", (Location 1 1) ) BooleanType (Str emptyLoc "test")
+                        [ ComputedField "Label" ( "x", Location 1 1 ) BooleanType (Str emptyLoc "test")
                         ]
                     )
                     (Dict.singleton "x" BooleanType)
-                    |> Expect.equal [ (Error (InvalidComputedFieldType ( "x", (Location 1 1) ) StringType BooleanType)) ]
+                    |> Expect.equal [ Error (InvalidComputedFieldType ( "x", Location 1 1 ) StringType BooleanType) ]
         , test "should not report an error on a Money field with an integerValue" <|
             \() ->
                 Expressions.computedFieldTypeErrors
                     (Form ( "form", emptyLoc )
-                        [ ComputedField "Label" ( "x", (Location 1 1) ) MoneyType (Integer emptyLoc 5)
+                        [ ComputedField "Label" ( "x", Location 1 1 ) MoneyType (Integer emptyLoc 5)
                         ]
                     )
                     (Dict.singleton "x" MoneyType)

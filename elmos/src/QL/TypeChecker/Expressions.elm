@@ -3,7 +3,6 @@ module QL.TypeChecker.Expressions exposing (typeCheckerErrors, computedFieldType
 import Dict exposing (Dict)
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
 import QL.AST.Collectors as Collectors exposing (QuestionTypes)
-import QL.TypeChecker.Messages as Messages exposing (Message)
 import QL.TypeChecker.Messages
     exposing
         ( Message(Error)

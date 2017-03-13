@@ -5,7 +5,7 @@ import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Expect
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.DuplicateLabels exposing (duplicateLabels)
-import QL.TypeChecker.Messages as Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
+import QL.TypeChecker.Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
 
 
 all : Test
