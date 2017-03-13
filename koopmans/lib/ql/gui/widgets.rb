@@ -1,86 +1,71 @@
 module QL
   module GUI
-    # class Frame
-    #   def initialize(question_frame, position)
-    #     question_frame.frame = TkFrame.new.grid(row: position)
-    #   end
-    # end
-
     class Label
-      def initialize(frame, label)
-        tk_label      = TkLabel.new(frame).pack
+      def initialize(tk_frame, label)
+        tk_label      = TkLabel.new(tk_frame).pack
         tk_label.text = label
       end
     end
 
-    # class SubmitButton
-    #   def initialize(gui)
-    #     position       = gui.number_of_questions + 1
-    #     button         = TkButton.new.grid(row: position)
-    #     button.text    = 'Submit'
-    #     button.command = proc { gui.submit }
-    #   end
-    # end
+    class SubmitButton
+      def initialize(position, &block)
+        button         = TkButton.new.grid(row: position)
+        button.text    = 'Submit'
+        button.command = proc { block.call}
+      end
+    end
 
     class RadioWidget
-      def initialize(frame, args=nil, &block)
+      def initialize(tk_frame, options=nil, &block)
         shared_variable = TkVariable.new(true)
 
-        if args
-          @true_label  = args[:true_value]
-          @false_label = args[:false_value]
+        if options
+          @true_label  = options[:true_value]
+          @false_label = options[:false_value]
         end
 
-        radio_button          = TkRadioButton.new(frame).pack
+        radio_button          = TkRadioButton.new(tk_frame).pack
         radio_button.text     = @true_label
         radio_button.value    = true
         radio_button.variable = shared_variable
-        radio_button.command  = proc do
-          block.call(shared_variable.bool)
-        end
+        radio_button.command  = proc { block.call(shared_variable.bool) }
 
-        radio_button          = TkRadioButton.new(frame).pack
+        radio_button          = TkRadioButton.new(tk_frame).pack
         radio_button.text     = @false_label
         radio_button.value    = false
         radio_button.variable = shared_variable
-        radio_button.command  = proc do
-          block.call(shared_variable.bool)
-        end
+        radio_button.command  = proc { block.call(shared_variable.bool) }
 
         block.call(shared_variable.bool)
       end
     end
 
     class CheckboxWidget
-      def initialize(frame, args=nil, &block)
+      def initialize(tk_frame, options=nil, &block)
         variable = TkVariable.new(true)
 
-        check_button          = TkCheckButton.new(frame).pack
+        check_button          = TkCheckButton.new(tk_frame).pack
         check_button.variable = variable
-        check_button.command  = proc do
-          block.call(variable.bool)
-        end
+        check_button.command  = proc { block.call(variable.bool) }
 
         block.call(variable.bool)
       end
     end
 
     class DropdownWidget
-      def initialize(frame, args=nil, &block)
+      def initialize(tk_frame, options=nil, &block)
         @true_label  = 'true'
         @false_label = 'false'
 
-        if args
-          @true_label  = args[:true_value]
-          @false_label = args[:false_value]
+        if options
+          @true_label  = options[:true_value]
+          @false_label = options[:false_value]
         end
 
-        combobox        = Tk::Tile::Combobox.new(frame).pack
+        combobox        = Tk::Tile::Combobox.new(tk_frame).pack
         combobox.values = [@true_label, @false_label]
         combobox.value  = @true_label
-        combobox.bind('<ComboboxSelected>') do
-          block.call(to_value(combobox.value))
-        end
+        combobox.bind('<ComboboxSelected>') { block.call(to_value(combobox.value)) }
 
         block.call(to_value(combobox.value))
       end
@@ -95,22 +80,21 @@ module QL
     end
 
     class SpinboxWidget
-      def initialize(frame, args=nil, &block)
-        @minimum  = 0
+      def initialize(tk_frame, options=nil, &block)
+        @minimum = 0
         @maximum = 100
 
-        if args
-          @minimum  = args[:minimum]
-          @maximum = args[:maximum]
+        if options
+          @minimum = options[:minimum]
+          @maximum = options[:maximum]
         end
 
-        spinbox         = TkSpinbox.new(frame).pack
+        spinbox         = TkSpinbox.new(tk_frame).pack
         spinbox.from    = @minimum
         spinbox.to      = @maximum
         spinbox.value   = 0
-        spinbox.command = proc do
-          block.call(spinbox.value)
-        end
+        spinbox.command = proc { block.call(spinbox.value) }
+
 
         block.call(spinbox.value)
       end
@@ -121,28 +105,27 @@ module QL
     # spinbox.textvariable = variable
 
     class SliderWidget
-      def initialize(frame, args=nil, &block)
-        @minimum  = 0
+      def initialize(tk_frame, options=nil, &block)
+        @minimum = 0
         @maximum = 100
 
-        if args
-          @minimum  = args[:minimum]
-          @maximum = args[:maximum]
+        if options
+          @minimum = options[:minimum]
+          @maximum = options[:maximum]
         end
 
-        scale         = TkScale.new(frame).pack
+        scale         = TkScale.new(tk_frame).pack
         scale.from    = @minimum
         scale.to      = @maximum
-        scale.command = proc do
-          block.call(scale.value)
-        end
+        scale.command = proc { block.call(scale.value) }
+
         block.call(scale.value)
       end
     end
 
     class TextWidget
-      def initialize(frame, args=nil, &block)
-        entry = TkEntry.new(frame).pack
+      def initialize(tk_frame, options=nil, &block)
+        entry = TkEntry.new(tk_frame).pack
         entry.bind('KeyRelease') do
           block.call(entry.value)
         end
@@ -151,13 +134,11 @@ module QL
     end
 
     class ComputedWidget
-      attr_accessor :variable
-
-      def initialize(frame, args=nil, &block)
+      def initialize(tk_frame, options=nil, &block)
         @variable = TkVariable.new
 
-        entry              = TkEntry.new(frame).pack
-        entry.textvariable = variable
+        entry              = TkEntry.new(tk_frame).pack
+        entry.textvariable = @variable
         entry.state        = 'disabled'
       end
 

@@ -1,7 +1,7 @@
 module QL
   module GUI
     class FormBuilder
-      attr_accessor :question_frames
+      attr_reader :question_frames
 
       def initialize(ast)
         @question_frames = []
@@ -23,7 +23,6 @@ module QL
       end
 
       def visit_question(question, condition=nil)
-        p condition
         @question_frames << QuestionFrame.new(question, condition)
       end
 
