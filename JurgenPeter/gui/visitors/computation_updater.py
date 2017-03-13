@@ -1,4 +1,5 @@
-from ql.visitors.evaluator import *
+from misc.visitor import Visitor
+from ql.visitors.evaluator import Evaluator
 
 
 class ComputationUpdater(Visitor):
