@@ -91,10 +91,11 @@ export class ASTValidationVisitor {
             let subExpression = this.findExpressionInArray(condition.leftHand);
             subExpression.accept(this);
         } else {
-
-            this.validateOperator(condition, ["||", "&&", "=="], "QLBoolean");
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], "QLMoney");
-
+            this.validateOperator(condition, ["||", "&&", "=="], QLBoolean.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLMoney.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLString.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLNumber.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLDate.name);
         }
     }
 
@@ -102,8 +103,6 @@ export class ASTValidationVisitor {
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
         let typeRightHand = this.memoryState.getType(condition.rightHand);
 
-        console.log(condition);
-        console.log(validType);
         if (validOperators.includes(condition.operator)) {
             if (typeLeftHand.constructor.name != validType || typeRightHand.constructor.name != validType) {
                 let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`;
