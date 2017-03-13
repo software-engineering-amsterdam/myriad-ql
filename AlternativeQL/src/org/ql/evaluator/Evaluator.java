@@ -1,8 +1,6 @@
 package org.ql.evaluator;
 
 import org.ql.ast.Expression;
-import org.ql.ast.Form;
-import org.ql.ast.Statement;
 import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
@@ -11,14 +9,7 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
-import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
 import org.ql.evaluator.value.*;
-
-import java.util.List;
 
 // TODO make value table to be passed as a context
 public class Evaluator implements ExpressionVisitor<Value, ValueTable> {

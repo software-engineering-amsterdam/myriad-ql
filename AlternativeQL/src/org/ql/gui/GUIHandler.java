@@ -11,8 +11,6 @@ import org.ql.gui.elements.visitor.QuestionValueVisitor;
 import org.ql.gui.elements.visitor.BranchVisitor;
 import org.ql.gui.mediator.GUIMediator;
 
-import java.util.List;
-
 public class GUIHandler implements GUIMediator {
 
     private final Window window;

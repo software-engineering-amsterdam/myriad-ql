@@ -1,12 +1,7 @@
 package org.ql.gui.widgets;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;

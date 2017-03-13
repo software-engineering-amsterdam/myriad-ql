@@ -6,7 +6,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.evaluator.value.BooleanValue;
-import org.ql.evaluator.value.Value;
 
 public class CheckBoxWidget extends Widget<ActionEvent, Boolean> {
     private CheckBox checkBox;

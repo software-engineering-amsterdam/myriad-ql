@@ -1,28 +1,18 @@
 package org.ql.evaluator;
 
 import org.junit.Test;
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.question.QuestionLabel;
-import org.ql.ast.type.BooleanType;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.DecimalValue;
 import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.StringValue;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

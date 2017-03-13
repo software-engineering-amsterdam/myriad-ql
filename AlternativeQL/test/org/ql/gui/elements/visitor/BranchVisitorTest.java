@@ -21,7 +21,6 @@ import org.ql.gui.elements.ElementContainer;
 import org.ql.gui.elements.IntegerElement;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.IntegerInputWidget;
-import org.ql.gui.widgets.TextInputWidget;
 
 import java.util.ArrayList;
 import java.util.List;

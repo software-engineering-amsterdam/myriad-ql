@@ -9,7 +9,6 @@ import org.ql.typechecker.issues.error.TypeMismatch;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 public class IssuesStorageTest {
     @Test

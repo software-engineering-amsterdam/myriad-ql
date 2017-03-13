@@ -8,7 +8,6 @@ import org.ql.ast.SourceLocation;
 import org.ql.ast.type.*;
 import org.qls.ast.page.*;
 import org.qls.ast.StyleSheet;
-import org.qls.ast.page.Question;
 import org.qls.ast.widget.*;
 import org.qls.ast.widget.defaultWidget.DefaultWidget;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetNoStyle;
@@ -64,7 +63,7 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVis
 
     @Override
     public Node visitWidget(QLSParser.WidgetContext ctx) {
-        return (Widget) visit(ctx.widgetType());
+        return visit(ctx.widgetType());
     }
 
     @Override

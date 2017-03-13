@@ -7,7 +7,6 @@ import org.ql.evaluator.value.Value;
 import org.ql.gui.QuestionPane;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.IntegerInputWidget;
-import org.ql.gui.widgets.TextInputWidget;
 
 public class IntegerElement extends Element {
     private final IntegerInputWidget widget;

@@ -12,7 +12,6 @@ import org.ql.ast.type.Type;
 import org.ql.gui.elements.visitor.QuestionElementFactory;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.IntegerInputWidget;
-import org.ql.gui.widgets.TextInputWidget;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

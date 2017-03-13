@@ -1,7 +1,6 @@
 package org.ql;
 
 import java.io.*;
-import java.nio.file.Files;
 
 public class FileLoader {
     public String getSourceFromResource(String resourcePath) {

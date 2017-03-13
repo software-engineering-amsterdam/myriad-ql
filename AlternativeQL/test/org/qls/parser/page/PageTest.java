@@ -2,7 +2,6 @@ package org.qls.parser.page;
 
 import org.junit.Test;
 import org.qls.ast.page.Page;
-import org.qls.ast.widget.CheckboxWidget;
 import org.qls.parser.Parser;
 
 import static org.junit.Assert.assertEquals;
