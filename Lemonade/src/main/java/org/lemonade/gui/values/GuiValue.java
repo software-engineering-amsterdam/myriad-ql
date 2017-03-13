@@ -1,6 +1,8 @@
 package org.lemonade.gui.values;
 
-public abstract class GuiValue<T> {
+import org.lemonade.gui.GuiExpression;
+
+public abstract class GuiValue<T> implements GuiExpression{
 
     abstract T getValue();
 

@@ -1,7 +1,7 @@
 package org.lemonade.gui;
 
-public class GuiExpression {
-
-
-
+/**
+ *
+ */
+public interface GuiExpression {
 }
