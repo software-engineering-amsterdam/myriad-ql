@@ -3,16 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
+
+    using MoreDotNet.Extensions.Collections;
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Interpreter.Controls.Base;
     using OffByOne.Ql.Values;
 
-    using Windows = System.Windows.Controls;
-
-    public class VisibilityControl : Control, IObserver<GuiChange>
+    public class VisibilityControl : Control
     {
         public VisibilityControl(IfStatement statement, GuiEnvironment guiEnvironment, IList<Control> ifControls, IList<Control> elseControls)
             : base(guiEnvironment)
@@ -69,27 +68,13 @@
         {
             if (conditionMet)
             {
-                foreach (var control in this.IfControls)
-                {
-                    control.Show();
-                }
-
-                foreach (var control in this.ElseControls)
-                {
-                    control.Hide();
-                }
+                this.IfControls.ForEach(x => x.Show());
+                this.ElseControls.ForEach(x => x.Hide());
             }
             else
             {
-                foreach (var control in this.IfControls)
-                {
-                    control.Hide();
-                }
-
-                foreach (var control in this.ElseControls)
-                {
-                    control.Show();
-                }
+                this.IfControls.ForEach(x => x.Hide());
+                this.ElseControls.ForEach(x => x.Show());
             }
         }
     }

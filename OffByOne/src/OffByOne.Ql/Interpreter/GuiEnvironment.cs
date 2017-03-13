@@ -11,7 +11,7 @@
 
     public class GuiEnvironment : IEnvironment, IObservable<GuiChange>
     {
-        private List<IObserver<GuiChange>> observers;
+        private readonly List<IObserver<GuiChange>> observers;
 
         public GuiEnvironment(TypeEnvironment typeEnvironment)
         {
@@ -29,7 +29,7 @@
             bool environmentChanged = this.Evaluations.AddOrUpdateValue(identifier, value);
             if (environmentChanged)
             {
-                GuiChange change = new GuiChange(identifier, value, this);
+                var change = new GuiChange(identifier, value, this);
                 this.NotifyObservers(change);
             }
         }

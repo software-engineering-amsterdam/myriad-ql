@@ -6,9 +6,6 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Interpreter.Controls.Base;
-    using OffByOne.Ql.Values;
-
-    using Windows = System.Windows.Controls;
 
     public class FormControl : Control
     {
@@ -31,7 +28,6 @@
 
         public override void OnNext(GuiChange value)
         {
-            return;
         }
     }
 }

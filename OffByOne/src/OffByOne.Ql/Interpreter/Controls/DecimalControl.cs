@@ -40,8 +40,8 @@
 
         private void CreateControl()
         {
-            this.label = new Label() { Content = this.Statement.Label };
-            this.input = new TextBox() { MinWidth = 200 };
+            this.label = new Label { Content = this.Statement.Label };
+            this.input = new TextBox { MinWidth = 200 };
 
             this.input.LostFocus += this.Validate;
             this.Controls.Add(this.label);
@@ -51,6 +51,8 @@
         private void Validate(object target, RoutedEventArgs eventArgs)
         {
             var text = this.input.Text;
+
+            // TODO: Extract to global constant.
             var filter = new Regex("^-?\\d+((\\.|,)\\d+)?$");
             var isValid = filter.IsMatch(text);
             if (!isValid)

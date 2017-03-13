@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls
 {
     using System;
-    using System.Linq;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
@@ -38,7 +37,7 @@
 
         private void CreateControl()
         {
-            this.label = new Label() { Content = this.Statement.Label };
+            this.label = new Label { Content = this.Statement.Label };
             this.input = new CheckBox();
             this.input.Checked += this.UpdateValue;
             this.input.Unchecked += this.UpdateValue;

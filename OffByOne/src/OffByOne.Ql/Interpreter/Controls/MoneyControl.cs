@@ -25,6 +25,8 @@
         public override void OnNext(GuiChange value)
         {
             base.OnNext(value);
+
+            // TODO: No need to cast I think
             this.input.Text = ((MoneyValue)this.Value).ToString();
         }
 

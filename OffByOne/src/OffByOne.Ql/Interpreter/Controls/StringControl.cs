@@ -38,8 +38,8 @@
 
         private void CreateControl()
         {
-            this.label = new Label() { Content = this.Statement.Label };
-            this.input = new TextBox() { MinWidth = 200 };
+            this.label = new Label { Content = this.Statement.Label };
+            this.input = new TextBox { MinWidth = 200 };
             this.input.KeyUp += (target, eventArgs) =>
             {
                 this.Value = new StringValue(this.input.Text);

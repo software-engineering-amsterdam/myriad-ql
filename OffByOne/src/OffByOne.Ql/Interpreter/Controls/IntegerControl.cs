@@ -41,8 +41,8 @@
 
         private void CreateControl()
         {
-            this.label = new Label() { Content = this.Statement.Label };
-            this.input = new TextBox() { MinWidth = 200 };
+            this.label = new Label { Content = this.Statement.Label };
+            this.input = new TextBox { MinWidth = 200 };
 
             this.input.LostFocus += this.Validate;
             this.Controls.Add(this.label);

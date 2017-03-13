@@ -10,7 +10,7 @@
         private IDisposable unsubscriber;
         private bool isVisible;
 
-        public Control(GuiEnvironment environment)
+        protected Control(GuiEnvironment environment)
         {
             this.Environment = environment;
             this.Controls = new List<Windows.Control>();

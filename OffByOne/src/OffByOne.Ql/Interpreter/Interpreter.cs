@@ -18,7 +18,7 @@
             var controls = new List<Control>(expression.Statements.Count());
             foreach (var s in expression.Statements)
             {
-                var control = (Control)s.Accept(this, environment);
+                var control = s.Accept(this, environment);
                 controls.Add(control);
             }
 

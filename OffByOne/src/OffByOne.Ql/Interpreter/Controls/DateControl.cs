@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Ql.Interpreter.Controls
 {
     using System;
-    using System.Linq;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
@@ -39,8 +38,11 @@
         private void CreateControl()
         {
             this.label = new Label() { Content = this.Statement.Label };
-            this.input = new DatePicker();
-            this.input.SelectedDateFormat = DatePickerFormat.Short;
+            this.input = new DatePicker
+            {
+                SelectedDateFormat = DatePickerFormat.Short
+            };
+
             this.input.SelectedDateChanged += this.UpdateValue;
             this.Controls.Add(this.label);
             this.Controls.Add(this.input);
