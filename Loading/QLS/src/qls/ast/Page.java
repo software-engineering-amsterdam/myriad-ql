@@ -14,5 +14,13 @@ public class Page extends Node {
 		this.name = name;
 		this.sections = sections;
 	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
+
+	public List<Section> getSections() {
+		return sections;
+	}
 
 }

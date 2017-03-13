@@ -4,11 +4,15 @@ import java.util.List;
 
 public class SectionWithDefault extends Section {
 	
-	private final DefaultStyle defaultStyle;
+	private final List<DefaultWidget> defaultWidget;
 	
-	public SectionWithDefault(String name, List<Question> questions, DefaultStyle defaultStyle, int line) {
+	public SectionWithDefault(String name, List<Question> questions, List<DefaultWidget> defaultWidget, int line) {
 		super(name, questions, line);
-		this.defaultStyle = defaultStyle;
+		this.defaultWidget = defaultWidget;
+	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
 	}
 
 }

@@ -34,13 +34,11 @@ public class Questionnaire extends Application implements Notifier {
 	private static Form form;
 	private static QL.evaluation.Environment env; // TODO rename
 	private static GridPane grid;
-	private static Faults faults;
 	private static Stage pStage; // TODO
 	
-    public void main(Form f, Environment environment, Faults flts) {
+    public void main(Form f, Environment environment) {
     	form = f;
     	env = environment;
-    	faults = flts;
 
         launch();
     }
@@ -49,10 +47,7 @@ public class Questionnaire extends Application implements Notifier {
     public void start(Stage primaryStage) {
 
         pStage = primaryStage;
-       
-    	if (checkFaults()) {
-    		return;
-    	}
+
 
         primaryStage.setTitle(form.getId());
         
@@ -65,20 +60,6 @@ public class Questionnaire extends Application implements Notifier {
         
         primaryStage.show();
 
-    }
-    
-    private boolean checkFaults() {
-    	if (faults.hasErrors()) {
-    		ErrorDialog dialog = new ErrorDialog(faults.getErrors());
-    		dialog.show();
-    		return true;
-    	}   	
-    	if (faults.hasWarnings()) {
-        	WarningDialog dialog = new WarningDialog(faults.getWarnings());
-        	dialog.show();
-    	}
-    	
-    	return false;
     }
     
     private GridPane initGrid() {

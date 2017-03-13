@@ -26,16 +26,26 @@ public class Number implements Field {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
+	    	  
+	    	  if (tooLarge(value)) {
+	    		  System.out.println("Too large");
+	    		  return;
+	    	  }
+	    	  
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
 	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
-	              field.positionCaret(newValue.length() - 1);
 	          } else {
 	        	  notifier.updateQuestionnaire(name, new IntegerValue());
 	          }
 	      }
     	});
+	}
+	
+	// TODO improve
+	private boolean tooLarge(Value value) {	
+		return field.getText().length() > 9;
 	}
 
 	@Override

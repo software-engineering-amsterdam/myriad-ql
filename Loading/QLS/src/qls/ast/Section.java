@@ -14,5 +14,13 @@ public class Section extends Node {
 		this.name = name;
 		this.questions = questions;
 	}
+	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
 
 }

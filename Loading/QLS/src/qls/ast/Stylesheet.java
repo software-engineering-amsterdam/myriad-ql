@@ -8,12 +8,20 @@ import qls.ast.Page;
 public class Stylesheet extends Node {
 	
 	private final String name;
-	private final List<Page> page;
+	private final List<Page> pages;
 
-	public Stylesheet(String name, List<Page> page, int line) {
+	public Stylesheet(String name, List<Page> pages, int line) {
 		super(line);
 		this.name = name;
-		this.page = page;
+		this.pages = pages;
+	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
+
+	public List<Page> getPages() {
+		return pages;
 	}
 
 }

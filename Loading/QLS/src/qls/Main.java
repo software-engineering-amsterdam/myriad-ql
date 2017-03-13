@@ -15,6 +15,7 @@ public class Main {
 				 + "widget checkbox "
 		 		 + "section \"Loaning\" "
 				 + "question hasMaintLoan "
+				 + "default boolean widget radio(\"Yes\", \"No\") "
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );

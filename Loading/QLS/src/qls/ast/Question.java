@@ -10,5 +10,9 @@ public class Question extends Node {
 		super(line);
 		this.name = name;
 	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
 
 }

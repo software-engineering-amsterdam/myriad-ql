@@ -10,5 +10,9 @@ public class QuestionWithWidget extends Question {
 		super(name, line);
 		this.widget = widget;
 	}
+	
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
 
 }
