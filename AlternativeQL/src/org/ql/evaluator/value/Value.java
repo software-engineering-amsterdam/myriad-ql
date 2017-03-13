@@ -63,4 +63,12 @@ public abstract class Value {
     }
 
     public abstract Object getPlainValue();
+
+    public int intValue() {
+        return (Integer) getPlainValue();
+    }
+
+    public boolean isNull() {
+        return getPlainValue() == null;
+    }
 }

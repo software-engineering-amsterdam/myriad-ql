@@ -7,16 +7,16 @@ import org.ql.gui.elements.visitor.QuestionElementFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestionElementContainer {
+public class ElementContainer {
 
-    private final Map<Identifier, QuestionElement> elementsMap = new HashMap<>();
+    private final Map<Identifier, Element> elementsMap = new HashMap<>();
     private final QuestionElementFactory questionElementFactory;
 
-    public QuestionElementContainer(QuestionElementFactory questionElementFactory) {
+    public ElementContainer(QuestionElementFactory questionElementFactory) {
         this.questionElementFactory = questionElementFactory;
     }
 
-    public QuestionElement getQuestionElement(Question question) {
+    public Element getQuestionElement(Question question) {
         if (!elementsMap.containsKey(question.getId())) {
             elementsMap.put(question.getId(), createQuestionElement(question));
         }
@@ -24,7 +24,7 @@ public class QuestionElementContainer {
         return elementsMap.get(question.getId());
     }
 
-    private QuestionElement createQuestionElement(Question question) {
+    private Element createQuestionElement(Question question) {
         return questionElementFactory.createQuestionElement(question);
     }
 }

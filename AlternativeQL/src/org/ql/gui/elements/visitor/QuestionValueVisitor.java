@@ -11,14 +11,14 @@ import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.elements.QuestionElementContainer;
-import org.ql.gui.elements.QuestionElement;
+import org.ql.gui.elements.ElementContainer;
+import org.ql.gui.elements.Element;
 
 public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {
-    private final QuestionElementContainer questionElementContainer;
+    private final ElementContainer questionElementContainer;
     private final Evaluator evaluator;
 
-    public QuestionValueVisitor(QuestionElementContainer questionElementContainer) {
+    public QuestionValueVisitor(ElementContainer questionElementContainer) {
         this.questionElementContainer = questionElementContainer;
         evaluator = new Evaluator();
     }
@@ -62,7 +62,7 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
 
     @Override
     public Void visitQuestion(Question question, ValueTable valueTable) {
-        QuestionElement questionElement = questionElementContainer.getQuestionElement(question);
+        Element questionElement = questionElementContainer.getQuestionElement(question);
 
         if (!questionElement.isDirty()) {
             Value value;
@@ -72,7 +72,7 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
                 value = new UnknownValue();
             }
             valueTable.declare(question.getId(), value);
-            questionElement.getWidget().setValue(value);
+            questionElement.updateValue(value);
         }
 
         return null;

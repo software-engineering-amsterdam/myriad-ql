@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.ql.ast.Form;
 import org.ql.gui.GUIHandler;
-import org.ql.gui.MainStage;
+import org.ql.gui.Window;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -44,7 +44,7 @@ public class Main extends Application {
 
     public void runGUI(Stage primaryStage, Form form) {
         primaryStage.show();
-        GUIHandler guiHandler = new GUIHandler(new MainStage(primaryStage, form.getName().toString()), form);
+        GUIHandler guiHandler = new GUIHandler(new Window(primaryStage, form.getName().toString()), form);
         guiHandler.runGUI();
     }
 }

@@ -1,13 +1,10 @@
 form TestForm {
-    string yourName: "What's your name?" = "testname";
-    money yourName3: "What's your name?"
-    money yourName2: "What's your name?" = yourName3 + 100.00;
-    boolean hasSoldHouse: "Did you sell a house in 2010?" = false;
-    if (hasSoldHouse) {
-        boolean sellingPrice: "What was the selling price?" = false;
-        if (sellingPrice) {
-            boolean anotherExample: "Just another question hmm?" = true;
-        }
+    integer firstName: "Enter your first name";
+    integer lastName: "Enter your first name";
+    boolean areYouSure: "Are you sure?" = false;
+
+    if (areYouSure) {
+        integer fullName: "This is your full name" = firstName + lastName;
     }
 }
 

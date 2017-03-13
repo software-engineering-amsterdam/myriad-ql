@@ -16,11 +16,12 @@ import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.IntegerType;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.IntegerValue;
-import org.ql.gui.elements.IntegerQuestionElement;
-import org.ql.gui.elements.QuestionElement;
-import org.ql.gui.elements.QuestionElementContainer;
+import org.ql.gui.elements.Element;
+import org.ql.gui.elements.ElementContainer;
+import org.ql.gui.elements.IntegerElement;
 import org.ql.gui.mediator.GUIMediator;
-import org.ql.gui.widgets.NumericWidget;
+import org.ql.gui.widgets.IntegerInputWidget;
+import org.ql.gui.widgets.TextInputWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,8 @@ public class BranchVisitorTest {
         valueTable.declare(new Identifier("second"), new IntegerValue(48));
         valueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        BranchVisitor visitor = new BranchVisitor(new QuestionElementContainer(mockQuestionElementBuilder()));
-        List<QuestionElement> visibleElements = visitor.visitForm(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        BranchVisitor visitor = new BranchVisitor(new ElementContainer(mockQuestionElementBuilder()));
+        List<Element> visibleElements = visitor.visitForm(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
                 add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             }}, new ArrayList<Statement>() {{
@@ -53,10 +54,10 @@ public class BranchVisitorTest {
 
     private QuestionElementFactory mockQuestionElementBuilder() {
         QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerQuestionElement>() {
+        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
             @Override
-            public IntegerQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Identifier.class), mock(NumericWidget.class));
+            public IntegerElement answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new IntegerElement(mock(GUIMediator.class), mock(Identifier.class), mock(IntegerInputWidget.class));
             }
         });
         return elementBuilder;

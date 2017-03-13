@@ -11,32 +11,32 @@ import org.ql.ast.type.IntegerType;
 import org.ql.ast.type.Type;
 import org.ql.gui.elements.visitor.QuestionElementFactory;
 import org.ql.gui.mediator.GUIMediator;
-import org.ql.gui.widgets.NumericWidget;
-import org.ql.gui.widgets.Widget;
+import org.ql.gui.widgets.IntegerInputWidget;
+import org.ql.gui.widgets.TextInputWidget;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class QuestionElementContainerTest {
+public class ElementContainerTest {
     @Test
     public void shouldPersistQuestionElementInMap() {
 
         QuestionElementFactory aQuestionElementFactory = mockQuestionElementBuilder();
         Question aQuestion = questionMock();
 
-        QuestionElementContainer container = new QuestionElementContainer(aQuestionElementFactory);
-        QuestionElement actualQuestionElement =  container.getQuestionElement(aQuestion);
-        QuestionElement actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
+        ElementContainer container = new ElementContainer(aQuestionElementFactory);
+        Element actualQuestionElement =  container.getQuestionElement(aQuestion);
+        Element actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
 
         assertSame(actualQuestionElement, actualRetrievedQuestionElement);
     }
 
     private QuestionElementFactory mockQuestionElementBuilder() {
         QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerQuestionElement>() {
+        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
             @Override
-            public IntegerQuestionElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new IntegerQuestionElement(mock(GUIMediator.class), mock(Identifier.class), mock(NumericWidget.class));
+            public IntegerElement answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return new IntegerElement(mock(GUIMediator.class), mock(Identifier.class), mock(IntegerInputWidget.class));
             }
         });
         return elementBuilder;

@@ -22,6 +22,11 @@ public class StringValue extends Value {
     }
 
     @Override
+    public StringValue addition(Value addition) {
+        return new StringValue(value + addition.getPlainValue());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

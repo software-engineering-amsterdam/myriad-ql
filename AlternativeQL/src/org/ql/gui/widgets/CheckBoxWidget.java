@@ -3,29 +3,29 @@ package org.ql.gui.widgets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 
-public class CheckBoxWidget extends Widget<ActionEvent> {
+public class CheckBoxWidget extends Widget<ActionEvent, Boolean> {
     private CheckBox checkBox;
 
     public CheckBoxWidget(String label) {
         this.checkBox = new CheckBox(label);
-
-        addToPane();
     }
 
-    public CheckBox getCheckBox() {
-        return checkBox;
-    }
-
-    @Override
-    public void setValue(Value value) {
-        checkBox.setSelected((Boolean) value.getPlainValue());
+    public void setValue(BooleanValue value) {
+        checkBox.setSelected(value.getPlainValue());
     }
 
     @Override
-    public Boolean getValue() {
+    public void setInputValue(Boolean value) {
+        checkBox.setSelected(value);
+    }
+
+    @Override
+    public Boolean getInputValue() {
         return checkBox.isSelected();
     }
 
@@ -35,7 +35,9 @@ public class CheckBoxWidget extends Widget<ActionEvent> {
     }
 
     @Override
-    public void addToPane() {
+    public Pane createGridPane() {
+        GridPane gridPane = new GridPane();
         gridPane.getChildren().add(checkBox);
+        return gridPane;
     }
 }

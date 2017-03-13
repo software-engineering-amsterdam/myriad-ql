@@ -1,7 +1,2 @@
-- QuestioNCollector<T extends Node> can be just Node. No need for the generics.
-
-- StatementVisitor<LIst<Question>> = also no need to make it generic. It just gives back the questions. THe interface implies that there are multiple implementations of different sutff.
-
-- get rid of the proxy, just use hte visit name
-
+- Fix name inconsistencies (float vs decimal) - probably just do not use float as a name of a type
 - assoc=left division is currently stronger than *. need to make it equally

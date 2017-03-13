@@ -12,27 +12,27 @@ import org.ql.evaluator.Evaluator;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.UnknownValue;
-import org.ql.gui.elements.QuestionElementContainer;
-import org.ql.gui.elements.QuestionElement;
+import org.ql.gui.elements.ElementContainer;
+import org.ql.gui.elements.Element;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BranchVisitor implements FormVisitor<List<QuestionElement>, ValueTable>,
+public class BranchVisitor implements FormVisitor<List<Element>, ValueTable>,
         StatementVisitor<Void, ValueTable> {
 
     private final Evaluator evaluator;
-    private final QuestionElementContainer elementContainer;
+    private final ElementContainer elementContainer;
 
-    private List<QuestionElement> elements;
+    private List<Element> elements;
 
-    public BranchVisitor(QuestionElementContainer elementContainer) {
+    public BranchVisitor(ElementContainer elementContainer) {
         this.elementContainer = elementContainer;
         evaluator = new Evaluator();
     }
 
     @Override
-    public List<QuestionElement> visitForm(Form form, ValueTable valueTable) {
+    public List<Element> visitForm(Form form, ValueTable valueTable) {
         elements = new ArrayList<>();
 
         for (Statement statement : form.getStatements())
