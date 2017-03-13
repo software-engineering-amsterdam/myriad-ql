@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.AST.Question;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -36,16 +38,9 @@ public class Boolean extends Value {
         return value;
     }
 
-    public boolean and(Boolean other) {
-        return this.value && other.getValue();
-    }
-
-    public boolean or(Boolean other) {
-        return this.value || other.getValue();
-    }
-
-    public boolean equals(Boolean other) {
-        return this.value == other.getValue();
+    @Override
+    public void showQuestion(FXMLExampleController screen, Question question) {
+        screen.showQuestion(question); //TODO: Show the boolean type of the question
     }
 
     @Override

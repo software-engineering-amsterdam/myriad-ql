@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.AST.Question;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -32,6 +34,11 @@ public class StringValue extends Value {
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return true; // String is always of a valid QL type String.
+    }
+
+    @Override
+    public void showQuestion(FXMLExampleController screen, Question question) {
+        screen.showQuestion(question); //TODO: Show the String type of the question
     }
 
     @Override

@@ -69,12 +69,17 @@ public class Question implements FormItem {
 
     @Override
     public void show(FXMLExampleController screen) {
-        screen.showQuestion(this);
+        value.showQuestion(screen, this);
     }
 
     @Override
     public boolean hasId(String id) {
         return this.id.equals(id);
+    }
+
+    @Override
+    public boolean containsId(String id) {
+        return hasId(id);
     }
 
     @Override

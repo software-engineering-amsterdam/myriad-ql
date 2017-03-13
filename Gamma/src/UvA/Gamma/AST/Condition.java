@@ -96,7 +96,8 @@ public class Condition implements FormItem {
 
     @Override
     public boolean isDependentOn(String id) {
-        return formItems.stream().anyMatch(item -> item.isDependentOn(id)) &&
+        return expression.isDependentOn(id) ||
+                formItems.stream().anyMatch(item -> item.isDependentOn(id)) ||
                 elseBlockItems.stream().anyMatch(item -> item.isDependentOn(id));
     }
 
@@ -108,16 +109,20 @@ public class Condition implements FormItem {
     @Override
     public boolean hasId(String id) {
         return false;
-//        return childHasId(formItems, id) || childHasId(elseBlockItems, id);
     }
 
-//    private boolean childHasId(List<FormItem> items, String id) {
-//        boolean hasId = false;
-//        for (FormItem item : items) {
-//            hasId = hasId || item.hasId(id);
-//        }
-//        return hasId;
-//    }
+    @Override
+    public boolean containsId(String id) {
+        return childHasId(formItems, id) || childHasId(elseBlockItems, id);
+    }
+
+    private boolean childHasId(List<FormItem> items, String id) {
+        boolean hasId = false;
+        for (FormItem item : items) {
+            hasId = hasId || item.hasId(id);
+        }
+        return hasId;
+    }
 
     @Override
     public void show(FXMLExampleController screen) {

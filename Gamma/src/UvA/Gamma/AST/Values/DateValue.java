@@ -1,6 +1,8 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.AST.Question;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.TypeChecker;
 
 import java.text.ParseException;
@@ -45,6 +47,11 @@ public class DateValue extends Value implements ASTNode {
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return typeChecker.checkDate(value);
+    }
+
+    @Override
+    public void showQuestion(FXMLExampleController screen, Question question) {
+        screen.showQuestion(question); //TODO: Show the date type of the question
     }
 
     @Override

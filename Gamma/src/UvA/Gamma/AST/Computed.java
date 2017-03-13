@@ -83,6 +83,11 @@ public class Computed implements FormItem {
         return this.id.equals(id);
     }
 
+    @Override
+    public boolean containsId(String id) {
+        return hasId(id);
+    }
+
     public StringProperty getStringValueProperty() {
         return expression.getStringValueProperty();
     }

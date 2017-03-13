@@ -37,7 +37,6 @@ public class FXMLExampleController {
         Text label = new Text(computed.getLabel());
         Text result = new Text(computed.getStringValueProperty().get());
 
-        //Bind the value of the evaluated expression to the label
         result.textProperty().bind(computed.getStringValueProperty());
 
         grid.addRow(++rowCount, label, result);
