@@ -9,5 +9,10 @@ namespace Questionnaires.Renderer.Containers
     public class DocumentModel
     {
         public List<Page> Pages { get; set; }
+
+        public DocumentModel()
+        {
+            Pages = new List<Page>();
+        }
     }
 }
