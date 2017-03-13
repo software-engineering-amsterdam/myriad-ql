@@ -83,7 +83,7 @@ class QLParser(object):
         self.parser = yacc.yacc(module=self)
 
     def parse(self, input):
-        self.parser.parse(input, debug=True)
+        self.parser.parse(input, debug=False)
 
     def p_start(self, p):
         """
@@ -254,4 +254,3 @@ class QLParser(object):
 
     def p_error(self, p):
         print(p)
-        pass
