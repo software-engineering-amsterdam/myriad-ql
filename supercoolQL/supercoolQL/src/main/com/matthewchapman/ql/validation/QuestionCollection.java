@@ -3,11 +3,6 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.ast.atomic.*;
-import com.matthewchapman.ql.ast.expression.Parameter;
-import com.matthewchapman.ql.ast.expression.ParameterGroup;
-import com.matthewchapman.ql.ast.expression.binary.*;
-import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
@@ -20,7 +15,7 @@ import java.util.*;
  *
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection implements QLVisitor<Void> {
+public class QuestionCollection extends AbstractQLVisitor<Void> {
 
     private List<Question> questionList;
     private HashMap<String, Type> typeTable;
@@ -88,111 +83,6 @@ public class QuestionCollection implements QLVisitor<Void> {
     public Void visit(CalculatedQuestion calculatedQuestion, String context) {
         questionList.add(calculatedQuestion);
         typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
-        return null;
-    }
-
-    @Override
-    public Void visit(Parameter parameter, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ParameterGroup parameterGroup, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(StringLiteral stringLiteral, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntegerLiteral integerLiteral, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(BooleanLiteral booleanLiteral, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Addition addition, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Division division, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Equal equal, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(GreaterThan greaterThan, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LessThan lessThan, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LessThanEqualTo lessThanEqualTo, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LogicalAnd logicalAnd, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(LogicalOr logicalOr, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Multiplication multiplication, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(NotEqual notEqual, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Subtraction subtraction, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Negation negation, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(BooleanType booleanType, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntegerType integerType, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(StringType stringType, String context) {
         return null;
     }
 

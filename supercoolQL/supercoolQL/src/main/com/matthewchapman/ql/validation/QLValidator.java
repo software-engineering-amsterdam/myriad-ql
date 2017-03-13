@@ -35,7 +35,7 @@ public class QLValidator {
         questionList = questionCollection.getQuestionList();
         questionCollection.findDuplicates();
 
-        //qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        //qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
 
         qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
 

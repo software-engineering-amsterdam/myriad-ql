@@ -11,7 +11,6 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
-import com.matthewchapman.ql.ast.statement.Question;
 
 import java.util.Map;
 
@@ -20,11 +19,11 @@ import java.util.Map;
  *
  * Visitor to check expressions for validity (circular dependency, types, etc).
  */
-public class QLTypeChecker implements QLVisitor<Type> {
+public class QLTypeChecker extends AbstractQLVisitor<Type> {
 
     private Map<String, Type> typeTable;
 
-    public void checkExpressions(Form form, Map<String, Type> typeTable) {
+    public void checkExpressionTypes(Form form, Map<String, Type> typeTable) {
         this.typeTable = typeTable;
 
         for(Statement statement : form.getStatements()) {
@@ -32,9 +31,28 @@ public class QLTypeChecker implements QLVisitor<Type> {
         }
     }
 
-    @Override
-    public Type visit(Question question, String context) {
-        return null;
+    private Type verifyTypeCorrectness(BinaryOperation operation) {
+        Type left = operation.getLeft().accept(this, null);
+        Type right = operation.getRight().accept(this, null);
+
+        if(!left.isCompatible(right)) {
+            System.err.println("incompatible types");   //TODO proper error
+            return new ErrorType();
+        }
+
+        return left;
+    }
+
+    private Type verifyBooleanExpression(BinaryOperation operation) {
+        Type left = operation.getLeft().accept(this, null);
+        Type right = operation.getRight().accept(this, null);
+
+        if(!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
+            System.err.println("Incorrect boolean expression");     //TODO proper error
+            return new ErrorType();
+        }
+
+        return new BooleanType();
     }
 
     @Override
@@ -60,16 +78,6 @@ public class QLTypeChecker implements QLVisitor<Type> {
     }
 
     @Override
-    public Type visit(Parameter parameter, String context) {
-        return typeTable.get(parameter.getID());
-    }
-
-    @Override
-    public Type visit(ParameterGroup parameterGroup, String context) {
-        return parameterGroup.getExpression().accept(this, null);
-    }
-
-    @Override
     public Type visit(StringLiteral stringLiteral, String context) {
         return new StringType();
     }
@@ -85,8 +93,28 @@ public class QLTypeChecker implements QLVisitor<Type> {
     }
 
     @Override
+    public Type visit(Parameter parameter, String context) {
+        return typeTable.get(parameter.getID());
+    }
+
+    @Override
+    public Type visit(ParameterGroup parameterGroup, String context) {
+        return parameterGroup.getExpression().accept(this, null);
+    }
+
+    @Override
     public Type visit(Addition addition, String context) {
         return verifyTypeCorrectness(addition);
+    }
+
+    @Override
+    public Type visit(Subtraction subtraction, String context) {
+        return verifyTypeCorrectness(subtraction);
+    }
+
+    @Override
+    public Type visit(Multiplication multiplication, String context) {
+        return verifyTypeCorrectness(multiplication);
     }
 
     @Override
@@ -97,6 +125,11 @@ public class QLTypeChecker implements QLVisitor<Type> {
     @Override
     public Type visit(Equal equal, String context) {
         return verifyTypeCorrectness(equal);
+    }
+
+    @Override
+    public Type visit(NotEqual notEqual, String context) {
+        return verifyTypeCorrectness(notEqual);
     }
 
     @Override
@@ -130,22 +163,6 @@ public class QLTypeChecker implements QLVisitor<Type> {
     }
 
     @Override
-    public Type visit(Multiplication multiplication, String context) {
-        return verifyTypeCorrectness(multiplication);
-    }
-
-    @Override
-    public Type visit(NotEqual notEqual, String context) {
-        return verifyTypeCorrectness(notEqual);
-    }
-
-
-    @Override
-    public Type visit(Subtraction subtraction, String context) {
-        return verifyTypeCorrectness(subtraction);
-    }
-
-    @Override
     public Type visit(Negation negation, String context) {
         Type type = negation.getExpression().accept(this, null);
 
@@ -154,31 +171,6 @@ public class QLTypeChecker implements QLVisitor<Type> {
         }
 
         return type;
-    }
-
-
-    private Type verifyTypeCorrectness(BinaryOperation operation) {
-        Type left = operation.getLeft().accept(this, null);
-        Type right = operation.getRight().accept(this, null);
-
-        if(!left.isCompatible(right)) {
-            System.err.println("incompatible types");   //TODO proper error
-            return new ErrorType();
-        }
-
-        return left;
-    }
-
-    private Type verifyBooleanExpression(BinaryOperation operation) {
-        Type left = operation.getLeft().accept(this, null);
-        Type right = operation.getRight().accept(this, null);
-
-        if(!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
-            System.err.println("Incorrect boolean expression");     //TODO proper error
-            return new ErrorType();
-        }
-
-        return new BooleanType();
     }
 
     @Override
@@ -195,4 +187,5 @@ public class QLTypeChecker implements QLVisitor<Type> {
     public Type visit(IntegerType integerType, String context) {
         return integerType;
     }
+
 }

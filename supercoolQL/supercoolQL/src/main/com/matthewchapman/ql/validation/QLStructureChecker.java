@@ -3,7 +3,6 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -11,7 +10,6 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
-import com.matthewchapman.ql.ast.statement.Question;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +21,7 @@ import java.util.Map;
  *
  * Provides type checking and missing parameter checking
  */
-public class QLStructureChecker implements QLVisitor<Void> {
+public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     HashMap<String, List<Parameter>> expressionMap;
 
@@ -37,6 +35,11 @@ public class QLStructureChecker implements QLVisitor<Void> {
             statement.accept(this, null);
         }
 
+        checkForMissingParameters(typeTable);
+
+    }
+
+    private void checkForMissingParameters(Map<String, Type> typeTable) {
         for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
             for(Parameter parameter : entry.getValue()) {
                 if(!typeTable.containsKey(parameter.getID())) {
@@ -44,12 +47,16 @@ public class QLStructureChecker implements QLVisitor<Void> {
                 }
             }
         }
-
     }
 
-
     @Override
-    public Void visit(Question question, String context) {
+    public Void visit(CalculatedQuestion calculatedQuestion, String context) {
+
+        if(!expressionMap.containsKey(calculatedQuestion.getName())) {
+            expressionMap.put(calculatedQuestion.getName(), new ArrayList<>());
+        }
+
+        calculatedQuestion.getCalculation().accept(this, calculatedQuestion.getName());
         return null;
     }
 
@@ -78,40 +85,8 @@ public class QLStructureChecker implements QLVisitor<Void> {
     }
 
     @Override
-    public Void visit(CalculatedQuestion calculatedQuestion, String context) {
-
-        if(!expressionMap.containsKey(calculatedQuestion.getName())) {
-            expressionMap.put(calculatedQuestion.getName(), new ArrayList<>());
-        }
-
-        calculatedQuestion.getCalculation().accept(this, calculatedQuestion.getName());
-        return null;
-    }
-
-    @Override
-    public Void visit(Parameter parameter, String context) {
-        expressionMap.get(context).add(parameter);
-        return null;
-    }
-
-    @Override
     public Void visit(ParameterGroup parameterGroup, String context) {
         parameterGroup.getExpression().accept(this, context);
-        return null;
-    }
-
-    @Override
-    public Void visit(StringLiteral stringLiteral, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntegerLiteral integerLiteral, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(BooleanLiteral booleanLiteral, String context) {
         return null;
     }
 
@@ -123,9 +98,30 @@ public class QLStructureChecker implements QLVisitor<Void> {
     }
 
     @Override
+    public Void visit(Subtraction subtraction, String context) {
+        subtraction.getLeft().accept(this, context);
+        subtraction.getRight().accept(this, context);
+        return null;
+    }
+
+    @Override
+    public Void visit(Multiplication multiplication, String context) {
+        multiplication.getLeft().accept(this, context);
+        multiplication.getRight().accept(this, context);
+        return null;
+    }
+
+    @Override
     public Void visit(Division division, String context) {
         division.getLeft().accept(this, context);
         division.getRight().accept(this, context);
+        return null;
+    }
+
+    @Override
+    public Void visit(NotEqual notEqual, String context) {
+        notEqual.getLeft().accept(this, context);
+        notEqual.getRight().accept(this, context);
         return null;
     }
 
@@ -179,44 +175,15 @@ public class QLStructureChecker implements QLVisitor<Void> {
     }
 
     @Override
-    public Void visit(Multiplication multiplication, String context) {
-        multiplication.getLeft().accept(this, context);
-        multiplication.getRight().accept(this, context);
-        return null;
-    }
-
-    @Override
-    public Void visit(NotEqual notEqual, String context) {
-        notEqual.getLeft().accept(this, context);
-        notEqual.getRight().accept(this, context);
-        return null;
-    }
-
-    @Override
-    public Void visit(Subtraction subtraction, String context) {
-        subtraction.getLeft().accept(this, context);
-        subtraction.getRight().accept(this, context);
-        return null;
-    }
-
-    @Override
     public Void visit(Negation negation, String context) {
         negation.getExpression().accept(this, context);
         return null;
     }
 
     @Override
-    public Void visit(BooleanType booleanType, String context) {
+    public Void visit(Parameter parameter, String context) {
+        expressionMap.get(context).add(parameter);
         return null;
     }
 
-    @Override
-    public Void visit(IntegerType integerType, String context) {
-        return null;
-    }
-
-    @Override
-    public Void visit(StringType stringType, String context) {
-        return null;
-    }
 }
