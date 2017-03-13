@@ -1,0 +1,18 @@
+  QL:
+-TypeChecker:
+--> Don't report type error if float field contains an int + tests
+
+  QLS:
+-Typechecker:
+--> Check if widget is compatible with type
+
+  QLS UI:
+-Widgets:
+--> Slider
+--> Spinbox
+--> Radio
+
+---> Style clash with bootstrap
+
+-Other:
+-> Pagination
