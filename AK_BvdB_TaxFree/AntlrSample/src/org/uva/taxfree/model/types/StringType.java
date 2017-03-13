@@ -1,6 +1,7 @@
 package org.uva.taxfree.model.types;
 
 import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.AndOperator;
 import org.uva.taxfree.model.node.operators.OrOperator;
 
 public class StringType extends Type {
@@ -11,6 +12,11 @@ public class StringType extends Type {
 
     @Override
     public boolean supports(OrOperator or) {
+        return false;
+    }
+
+    @Override
+    public boolean supports(AndOperator and) {
         return false;
     }
 }
