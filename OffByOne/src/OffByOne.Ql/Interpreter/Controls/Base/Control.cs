@@ -20,7 +20,7 @@
             this.isVisible = true;
         }
 
-        public GuiEnvironment Environment { get; private set; }
+        public GuiEnvironment Environment { get; }
 
         public IList<Windows.Control> Controls { get; set; }
 

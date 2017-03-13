@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Checker
+﻿namespace OffByOne.Ql.Checker.Analyzers
 {
     using System.Collections.Generic;
 
@@ -14,12 +14,16 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Checker.Analyzers.Contracts;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class TypeVisitor
+    public class TypeAnalyzer
         : IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
-        IStatementVisitor<VoidValueType, VisitorTypeEnvironment>
+        IStatementVisitor<VoidValueType, VisitorTypeEnvironment>,
+        IAnalyzer
     {
         private static readonly IEnumerable<ValueType> NumericValueTypes = new List<ValueType>()
         {
@@ -28,17 +32,22 @@
             new MoneyValueType()
         };
 
-        public TypeVisitor()
+        public TypeAnalyzer()
             : this(new CheckerReport())
         {
         }
 
-        public TypeVisitor(CheckerReport report)
+        public TypeAnalyzer(ICheckerReport report)
         {
             this.Report = report;
         }
 
-        public CheckerReport Report { get; }
+        public ICheckerReport Report { get; }
+
+        public void Analyze(FormStatement root)
+        {
+            this.Visit(root, new VisitorTypeEnvironment());
+        }
 
         public ValueType Visit(AddExpression expression, VisitorTypeEnvironment environment)
         {

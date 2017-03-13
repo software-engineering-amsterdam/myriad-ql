@@ -5,6 +5,7 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Graphics.Controls.Questions;
     using OffByOne.Ql.Visitors.Base;
 

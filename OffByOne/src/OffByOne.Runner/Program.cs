@@ -9,6 +9,7 @@
     using OffByOne.Ql.Ast.Statements;
 
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Graphics;
@@ -192,7 +193,7 @@
 
         private static void CheckTypes(FormStatement ast)
         {
-            var typeChcker = new TypeChecker();
+            var typeChcker = new SyntaxChecker();
             var report = typeChcker.Check(ast);
 
             foreach (var message in report.AllMessages)

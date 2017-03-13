@@ -118,7 +118,10 @@
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
     <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
+    <Compile Include="Checker\Analyzers\Contracts\IAnalyzer.cs" />
+    <Compile Include="Checker\Analyzers\CyclicDependencyAnalyzer.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
+    <Compile Include="Checker\Contracts\ICheckerReport.cs" />
     <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
     <Compile Include="Checker\Messages\Base\ErrorMessage.cs" />
     <Compile Include="Checker\Messages\Base\InfoMessage.cs" />
@@ -127,7 +130,7 @@
     <Compile Include="Checker\Messages\DuplicateQuestionIdentifierMessage.cs" />
     <Compile Include="Checker\Messages\InvalidTypeMessage.cs" />
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
-    <Compile Include="Checker\TypeChecker.cs" />
+    <Compile Include="Checker\SyntaxChecker.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />
     <Compile Include="Graphics\Renderer.cs" />
@@ -165,7 +168,7 @@
     <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
     <Compile Include="Visitors\Contracts\IVisitor.cs" />
     <Compile Include="Visitors\Contracts\IVisitorTypeEnvironment.cs" />
-    <Compile Include="Checker\TypeVisitor.cs" />
+    <Compile Include="Checker\Analyzers\TypeAnalyzer.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Graphics\Controls\Questions\BooleanControl.cs" />
     <Compile Include="Graphics\Controls\Questions\DateControl.cs" />
@@ -184,9 +187,9 @@
     <Compile Include="Visitors\Contracts\IStatementVisitor.cs" />
     <Compile Include="Visitors\Contracts\IVisitableExpression.cs" />
     <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
-    <Compile Include="Checker\QuestionVisitor.cs" />
-    <Compile Include="Checker\QuestionVisitorTypeEnvironment.cs" />
-    <Compile Include="Checker\VisitorTypeEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\QuestionAnalyzer.cs" />
+    <Compile Include="Checker\Analyzers\Environment\QuestionVisitorTypeEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\VisitorTypeEnvironment.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
   <ItemGroup>

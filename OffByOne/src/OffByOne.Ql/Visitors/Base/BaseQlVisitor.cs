@@ -13,6 +13,7 @@
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 

@@ -1,22 +1,30 @@
-﻿namespace OffByOne.Ql.Checker
+﻿namespace OffByOne.Ql.Checker.Analyzers
 {
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Checker.Analyzers.Contracts;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Base;
 
-    public class QuestionVisitor : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>
+    public class QuestionAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
     {
-        public QuestionVisitor(CheckerReport report)
+        public QuestionAnalyzer(ICheckerReport report)
         {
             this.Report = report;
         }
 
-        public QuestionVisitor()
+        public QuestionAnalyzer()
             : this(new CheckerReport())
         {
         }
 
-        public CheckerReport Report { get; set; }
+        public ICheckerReport Report { get; }
+
+        public void Analyze(FormStatement root)
+        {
+            this.Visit(root, new QuestionVisitorTypeEnvironment());
+        }
 
         public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)
         {

@@ -4,6 +4,7 @@
 
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Analyzers.Environment;
 
     using Xunit;
 

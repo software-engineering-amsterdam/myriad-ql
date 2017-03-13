@@ -6,9 +6,10 @@
 
     using MoreDotNet.Extensions.Collections;
 
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages.Base;
 
-    public class CheckerReport
+    public class CheckerReport : ICheckerReport
     {
         private readonly ISet<CheckerMessage> checkerMessages;
 
@@ -38,7 +39,7 @@
             this.checkerMessages.Add(message);
         }
 
-        public void Add(IList<CheckerMessage> messages)
+        public void Add(IEnumerable<CheckerMessage> messages)
         {
             if (messages == null)
             {
