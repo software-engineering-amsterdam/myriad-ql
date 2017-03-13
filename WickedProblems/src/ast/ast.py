@@ -54,7 +54,7 @@ class LogicalAnd(BinaryOperation):
         BinaryOperation.__init__(self, "logical_and", left_hand_side,
                                  right_hand_side)
     def eval(self):
-        return bool(self.left_hand_side and self.right_hand_side)
+        return bool(self.left_hand_side & self.right_hand_side)
 
 class Multiplication(BinaryOperation):
     def __init__(self, left_hand_side, right_hand_side):
