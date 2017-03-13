@@ -79,38 +79,38 @@ class IfElse(Node):
 
 
 class BinaryOperation(Node):
-    def __init__(self, var_type, left, right):
-        super(BinaryOperation, self).__init__(var_type)
+    def __init__(self, var_type, left, right, position, source):
+        super(BinaryOperation, self).__init__(var_type, position, source)
         self.lhs, self.rhs = left, right
 
 
 class Multiplication(BinaryOperation):
-    def __init__(self, lhs, rhs):
-        super(Multiplication, self).__init__('multiplication', lhs, rhs)
+    def __init__(self, position, source, lhs, rhs):
+        super(Multiplication, self).__init__('multiplication', lhs, rhs, position, source)
 
     def apply(self, visitor):
         return visitor.multiplication(self)
 
 
 class Addition(BinaryOperation):
-    def __init__(self, lhs, rhs):
-        super(Addition, self).__init__('addition', lhs, rhs)
+    def __init__(self, position, source, lhs, rhs):
+        super(Addition, self).__init__('addition', lhs, rhs, position, source)
 
     def apply(self, visitor):
         return visitor.addition(self)
 
 
 class Subtraction(BinaryOperation):
-    def __init__(self, lhs, rhs):
-        super(Subtraction, self).__init__('subtraction', lhs, rhs)
+    def __init__(self, position, source, lhs, rhs):
+        super(Subtraction, self).__init__('subtraction', lhs, rhs, position, source)
 
     def apply(self, visitor):
         return visitor.subtraction(self)
 
 
 class Division(BinaryOperation):
-    def __init__(self, lhs, rhs):
-        super(Division, self).__init__('division', lhs, rhs)
+    def __init__(self, position, source, lhs, rhs):
+        super(Division, self).__init__('division', lhs, rhs, position, source)
 
     def apply(self, visitor):
         return visitor.division(self)
@@ -149,8 +149,8 @@ class Negation(UnaryOperation):
 class And(BinaryOperation):
     eval_function = all
 
-    def __init__(self, left, right):
-        super(And, self).__init__('and', left, right)
+    def __init__(self, position, source, left, right):
+        super(And, self).__init__('and', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.and_(self)
@@ -159,56 +159,56 @@ class And(BinaryOperation):
 class Or(BinaryOperation):
     eval_function = any
 
-    def __init__(self, left, right):
-        super(Or, self).__init__('or', left, right)
+    def __init__(self, position, source, left, right):
+        super(Or, self).__init__('or', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.or_(self)
 
 
 class Equality(BinaryOperation):
-    def __init__(self, left, right):
-        super(Equality, self).__init__('equality', left, right)
+    def __init__(self, position, source, left, right):
+        super(Equality, self).__init__('equality', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.equality(self)
 
 
 class GreaterExclusive(BinaryOperation):
-    def __init__(self, left, right):
-        super(GreaterExclusive, self).__init__('greater_exclusive', left, right)
+    def __init__(self, position, source, left, right):
+        super(GreaterExclusive, self).__init__('greater_exclusive', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.greater_exclusive(self)
 
 
 class GreaterInclusive(BinaryOperation):
-    def __init__(self, left, right):
-        super(GreaterInclusive, self).__init__('greater_inclusive', left, right)
+    def __init__(self, position, source, left, right):
+        super(GreaterInclusive, self).__init__('greater_inclusive', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.greater_inclusive(self)
 
 
 class LowerInclusive(BinaryOperation):
-    def __init__(self, left, right):
-        super(LowerInclusive, self).__init__('lower_inclusive', left, right)
+    def __init__(self, position, source, left, right):
+        super(LowerInclusive, self).__init__('lower_inclusive', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.lower_inclusive(self)
 
 
 class LowerExclusive(BinaryOperation):
-    def __init__(self, left, right):
-        super(LowerExclusive, self).__init__('lower_exclusive', left, right)
+    def __init__(self, position, source, left, right):
+        super(LowerExclusive, self).__init__('lower_exclusive', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.lower_exclusive(self)
 
 
 class Inequality(BinaryOperation):
-    def __init__(self, left, right):
-        super(Inequality, self).__init__('inequality', left, right)
+    def __init__(self, position, source, left, right):
+        super(Inequality, self).__init__('inequality', left, right, position, source)
 
     def apply(self, visitor):
         return visitor.inequality(self)
@@ -225,7 +225,7 @@ class Value(Node):
 
 
 class Identifier(Node):
-    def __init__(self, name, position, source):
+    def __init__(self, position, source, name):
         super(Identifier, self).__init__('identifier', position, source)
         self.name = name
 
@@ -234,7 +234,7 @@ class Identifier(Node):
 
 
 class Integer(Node):
-    def __init__(self, data_type, position, source):
+    def __init__(self, position, source, data_type):
         super(Integer, self).__init__("integer", position, source)
         self.data_type = data_type
 
@@ -246,8 +246,8 @@ class Integer(Node):
 
 
 class Boolean(Node):
-    def __init__(self, data_type, position, source):
-        super(Boolean, self).__init__("boolean", position ,source)
+    def __init__(self, position, source, data_type):
+        super(Boolean, self).__init__("boolean", position, source)
         self.data_type = data_type
 
     def apply(self, visitor):
@@ -258,7 +258,7 @@ class Boolean(Node):
 
 
 class Money(Node):
-    def __init__(self, data_type, position, source):
+    def __init__(self, position, source, data_type):
         super(Money, self).__init__("money", position, source)
         self.data_type = data_type
 
