@@ -1,6 +1,5 @@
 package org.lemonade.gui.elements;
 
-import org.lemonade.gui.GuiElement;
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
@@ -13,6 +12,7 @@ public class GuiStringElement implements GuiElement {
     private TextField textField;
 
     public GuiStringElement() {
+        value = new GuiUndefinedValue();
         textField = new TextField();
         textField.setOnKeyReleased(e -> update());
     }

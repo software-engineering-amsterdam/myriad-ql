@@ -1,4 +1,4 @@
-package org.lemonade.gui;
+package org.lemonade.gui.elements;
 
 import org.lemonade.gui.values.GuiValue;
 

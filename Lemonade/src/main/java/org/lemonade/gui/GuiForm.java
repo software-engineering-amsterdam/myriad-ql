@@ -2,12 +2,13 @@ package org.lemonade.gui;
 
 import java.util.List;
 
+import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.scene.control.Control;
 
-public class GuiForm implements GuiElement {
+public class GuiForm extends GuiBody {
 
     private GuiIdentifierValue identifier;
     private List<GuiBody> bodies;
@@ -19,18 +20,6 @@ public class GuiForm implements GuiElement {
 
     public List<GuiBody> getBodies() {
         return this.bodies;
-    }
-
-    @Override public void update() {
-        for (GuiBody body : bodies) {
-            if (body.isConditional()) {
-
-            }
-        }
-    }
-
-    @Override public Control getWidget() {
-        return null;
     }
 
     public GuiForm accept(EvaluateVisitor visitor) {

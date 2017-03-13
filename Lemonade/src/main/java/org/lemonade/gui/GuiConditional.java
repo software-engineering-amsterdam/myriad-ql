@@ -20,18 +20,6 @@ public class GuiConditional extends GuiBody {
     }
 
     @Override
-    public void update() {
-        for (GuiBody body : bodies) {
-            body.update();
-        }
-    }
-
-    @Override
-    public Control getWidget() {
-        return null;
-    }
-
-    @Override
     public boolean isConditional() {
         return true;
     }

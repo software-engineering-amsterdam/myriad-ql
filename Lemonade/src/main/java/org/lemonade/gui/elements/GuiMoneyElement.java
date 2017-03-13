@@ -1,7 +1,7 @@
 package org.lemonade.gui.elements;
 
 import javafx.scene.control.TextField;
-import org.lemonade.gui.GuiElement;
+
 import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
@@ -12,6 +12,7 @@ public class GuiMoneyElement implements GuiElement {
     private TextField textField;
 
     public GuiMoneyElement() {
+        value = new GuiUndefinedValue();
         textField = new TextField();
         textField.setOnKeyReleased(e -> update());
     }

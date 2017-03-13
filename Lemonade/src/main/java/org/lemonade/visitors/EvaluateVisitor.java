@@ -237,7 +237,7 @@ public class EvaluateVisitor implements
     }
 
     @Override public GuiQuestion visit(final GuiQuestion question) {
-        guiEnvironment.put(question.getIdentifier(), question.getValue());
+//        guiEnvironment.put(question.getIdentifier(), question.getValue());
         return question;
     }
 

@@ -3,7 +3,7 @@ package org.lemonade.gui.elements;
 import java.time.LocalDate;
 
 import javafx.scene.control.DatePicker;
-import org.lemonade.gui.GuiElement;
+
 import org.lemonade.gui.values.GuiDateValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
@@ -14,6 +14,7 @@ public class GuiDateElement implements GuiElement {
     private DatePicker picker;
 
     public GuiDateElement() {
+        value = new GuiUndefinedValue();
         picker = new DatePicker();
         picker.setOnAction(e -> update());
     }

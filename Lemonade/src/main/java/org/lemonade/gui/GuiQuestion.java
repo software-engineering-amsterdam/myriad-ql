@@ -1,8 +1,8 @@
 package org.lemonade.gui;
 
+import org.lemonade.gui.elements.GuiElement;
+import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.gui.values.GuiLabelValue;
-import org.lemonade.gui.values.GuiValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.scene.control.Control;
@@ -14,35 +14,29 @@ public class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
 
-    private GuiLabelValue labelValue;
-    private GuiValue<?> value;
-    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelValue labelValue, GuiValue<?> value) {
+    private GuiLabelElement labelElement;
+    private GuiElement element;
+
+    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiElement element) {
         this.identifier = identifier;
-        this.labelValue = labelValue;
-        this.value = value;
+        this.labelElement = labelElement;
+        this.element = element;
     }
 
     public GuiIdentifierValue getIdentifier() {
         return identifier;
     }
 
-    public GuiLabelValue getLabelValue() {
-        return labelValue;
+    public GuiLabelElement getLabelElement() {
+        return labelElement;
     }
 
-    public GuiValue<?> getValue() {
-        return value;
+    public GuiElement getElement() {
+        return element;
     }
 
-    @Override
-    public void update() {
-        value.update();
-        System.err.println("new value = " + value);
-    }
-
-    @Override
     public Control getWidget() {
-        return value.getWidget();
+        return element.getWidget();
     }
 
     @Override
@@ -53,4 +47,5 @@ public class GuiQuestion extends GuiBody {
     public GuiQuestion accept(EvaluateVisitor visitor) {
         return visitor.visit(this);
     }
+
 }
