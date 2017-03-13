@@ -48,7 +48,7 @@ export class FormPostProcessor {
     }
 
     allocation(data, location) {
-        return new Allocation(data[0].trim(), data[3], _.flattenDeep(data[7])[0], location);
+        return new Allocation(data[0], data[3], _.flattenDeep(data[7])[0], location);
     }
 
     expression(data, location, reject) {

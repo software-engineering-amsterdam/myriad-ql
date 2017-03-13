@@ -195,7 +195,7 @@ var grammar = {
     {"name": "multiply_divide_expression", "symbols": ["multiply_divide_expression", "_", "multiply_divide_expression$subexpression$1", "_", "multiply_divide_expression"], "postprocess": FormPostProcessor.deepExpression},
     {"name": "factor", "symbols": ["digits"]},
     {"name": "factor", "symbols": ["propertyName"]},
-    {"name": "factor", "symbols": [{"literal":"("}, "expression", {"literal":")"}]},
+    {"name": "factor", "symbols": [{"literal":"("}, "expression", {"literal":")"}], "postprocess": (data)=> data[1]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/, "digits$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": (data)=> Number(data[0])},
