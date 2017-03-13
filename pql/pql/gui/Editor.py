@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtWidgets import QWidget
 
+from gui.CodeArea import CodeArea
 from pql.gui.Questionnaire import Questionnaire
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
@@ -32,7 +33,7 @@ class Editor(QMainWindow, QWidget):
         self.toolbar = self.addToolBar("Actions")
         self.run_action = self.add_run_action()
         self.open_action = self.add_open_action()
-        self.text_editor = QTextEdit()
+        self.text_editor = CodeArea()
         status_bar = self.init_status_bar()
         cursor_position = self.add_cursor_position(status_bar)
         self.init_text_editor(cursor_position)
@@ -55,7 +56,6 @@ class Editor(QMainWindow, QWidget):
         font.setFixedPitch(True)
         font.setPointSize(12)
         metrics = QFontMetrics(font)
-        self.text_editor.acceptRichText()
         self.text_editor.setFont(font)
         self.text_editor.setTabStopWidth(4 * metrics.width(' '))
         self.text_editor.cursorPositionChanged.\
@@ -148,7 +148,7 @@ class Editor(QMainWindow, QWidget):
         self.file_path = file_path
         file_contents = self.open_file(file_path)
         if file_contents is not None:
-            self.text_editor.setText(file_contents)
+            self.text_editor.setPlainText(file_contents)
 
     def check_ids(self, ql_ast):
         try:
