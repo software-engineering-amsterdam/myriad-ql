@@ -15,7 +15,6 @@ public class DeclarationNode extends Node {
     private final String mLabel;
     private final Type mType;
 
-
     public DeclarationNode(String label, String id, Type type) {
         super();
         mLabel = label;
@@ -26,7 +25,6 @@ public class DeclarationNode extends Node {
     public Type getType() {
         return mType;
     }
-
 
     public JComponent getWidget() {
         Widget a = new CalculationWidget("Test");
