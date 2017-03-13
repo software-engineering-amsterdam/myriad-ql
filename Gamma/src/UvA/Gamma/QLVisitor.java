@@ -103,7 +103,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
             case "date":
                 return new DateValue("");
             default:
-                System.out.println("The type " + ctx.getText() + " is not valid");
+                System.err.println("The type " + ctx.getText() + " is not a valid type in QL");
+                System.exit(1);
                 return null;
         }
     }

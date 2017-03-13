@@ -20,7 +20,8 @@ public class Validator {
             try {
                 item.accept(this);
             } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
-                System.out.println(ex.getMessage());
+                System.err.println(ex.getMessage());
+                System.exit(1);
             }
         }
     }
@@ -47,8 +48,8 @@ public class Validator {
     public void validateCyclicDependency(Computed computed) throws CyclicDependencyException {
         for (FormItem item : form.getFormItems()) {
             if (computed.isDependentOn(item.getId()) && item.isDependentOn(computed.getId())) {
-                throw new CyclicDependencyException("There exists a cyclic dependency between the items " +
-                        computed.getId() + " and " + item.getId());
+                throw new CyclicDependencyException("There exists a cyclic dependency between the items '" +
+                        computed.getId() + "' and '" + item.getId() + "'. Aborting..");
             }
         }
     }

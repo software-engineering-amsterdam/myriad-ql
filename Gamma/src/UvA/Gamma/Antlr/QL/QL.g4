@@ -1,9 +1,5 @@
 grammar QL;
 
-@members{
-    String intID = "";
-}
-
 form: 'form'  ID  '{' (formItem)*  '}';
 
 formItem: question
@@ -57,6 +53,7 @@ ID: [a-zA-Z][a-zA-Z0-9]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;
+
 
 
 

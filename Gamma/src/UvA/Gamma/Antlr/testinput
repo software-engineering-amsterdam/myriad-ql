@@ -1,11 +1,15 @@
+/*
+    Test Form for if statement and computation
+*/
+
 form Box1HouseOwning {
-   hasSoldHouse: “Did you sell a house in 2010?” boolean
-   hasBoughtHouse: “Did you by a house in 2010?” boolean
-     sellingPrice: “Price the house was sold for:” money
-}
-   hasMaintLoan: “Did you enter a loan for maintenance/reconstruction?”
-  boolean
-if (hasSoldHouse) {
-  }
-privateDebt: “Private debts for the sold house:” money
-  valueResidue: “Value residue:” money(sellingPrice - privateDebt)
+  "Did you sell a house in 2010?" hasSoldHouse:  boolean
+  "Did you by a house in 2010?"  hasBoughtHouse: boolean
+  "Price the house was sold for:" sellingPrice: money
+  "Did you enter a loan for maintenance/reconstruction?" hasMaintLoan:  boolean
+   if (hasSoldHouse) {
+        "Private debts for the sold house:" privateDebt:  money
+        "Value residue:" valueResidue:  money = (sellingPrice - privateDebt)
+    }
+ }
+
