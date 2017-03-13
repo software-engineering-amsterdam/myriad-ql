@@ -39,6 +39,7 @@ public class QLValidator {
 
         qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
 
+        qlReferenceChecker.checkForCircularReferences(astRoot);
 
     }
 
