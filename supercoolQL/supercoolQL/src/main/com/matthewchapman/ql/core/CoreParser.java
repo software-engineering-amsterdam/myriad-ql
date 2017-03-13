@@ -5,7 +5,7 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validation.typechecking.QLTreeChecker;
+import com.matthewchapman.ql.validation.QLValidator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -15,10 +15,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
  * Contains core parsing logic, including building the QL AST from Antlr and handling type checking
  * before UI generation.
  */
-class CoreParser {
+public class CoreParser {
 
     //TODO this should not all be public
-    Form buildQLAST(String input) {
+    public Form buildQLAST(String input) {
         AntlrErrorListener errorListener = new AntlrErrorListener();
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
         lexer.removeErrorListeners();
@@ -37,7 +37,7 @@ class CoreParser {
     }
 
     void visitAST(Form form) {
-        QLTreeChecker checker = new QLTreeChecker(form);
+        QLValidator checker = new QLValidator(form);
         checker.runChecks();
     }
 }

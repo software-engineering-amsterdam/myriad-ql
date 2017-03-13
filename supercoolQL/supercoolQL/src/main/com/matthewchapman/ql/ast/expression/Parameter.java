@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.validation.QLVisitor;
-import com.matthewchapman.ql.validation.Visitable;
+import com.matthewchapman.ql.ast.QLVisitable;
 
 /**
  * Created by matt on 24/02/2017.
@@ -11,7 +11,7 @@ import com.matthewchapman.ql.validation.Visitable;
 
 //TODO Parameter shouldn't extend Expression. Atomic type perhaps?
 
-public class Parameter extends Expression implements Visitable {
+public class Parameter extends Expression implements QLVisitable {
 
     private String ID;
 
@@ -28,7 +28,7 @@ public class Parameter extends Expression implements Visitable {
     }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> T accept(QLVisitor<T> visitor, String context) {
+        return visitor.visit(this, context);
     }
 }

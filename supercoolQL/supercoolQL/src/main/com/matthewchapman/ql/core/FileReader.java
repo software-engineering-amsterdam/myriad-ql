@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 
 
-class FileReader {
+public class FileReader {
 
     private String resultString = "";
 
@@ -43,7 +43,7 @@ class FileReader {
         return resultString;
     }
 
-    String readFile(File selectedFile) {
+    public String readFile(File selectedFile) {
         String fileContents = "";
         try (BufferedReader br = new BufferedReader(new java.io.FileReader(selectedFile))) {
             String line;

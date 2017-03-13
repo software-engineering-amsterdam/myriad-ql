@@ -1,11 +1,8 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.QLVisitable;
 import com.matthewchapman.ql.validation.QLVisitor;
-import com.matthewchapman.ql.validation.Visitable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by matt on 24/02/2017.
@@ -13,25 +10,18 @@ import java.util.List;
  * Contains multiple expressions to be evaluated in one block and return a single result
  */
 
-public class ParameterGroup extends Expression implements Visitable {
+public class ParameterGroup extends Expression implements QLVisitable {
 
-    //TODO implement ParameterGroup
-    private final List<Expression> expressions;
+    private final Expression expression;
 
-    public ParameterGroup() {
-        this.expressions = new ArrayList<>();
+    public ParameterGroup(Expression expression) {
+        this.expression = expression;
     }
 
-    public List<Expression> getParameters() {
-        return this.expressions;
-    }
-
-    public void addExpression(Expression e) {
-        this.expressions.add(e);
-    }
+    public Expression getExpression() { return this.expression; }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> T accept(QLVisitor<T> visitor, String context) {
+        return visitor.visit(this, context);
     }
 }
