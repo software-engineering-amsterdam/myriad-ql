@@ -14,9 +14,11 @@ statement               -> question                                             
 question                -> "question" _ "'" sentence "'" _ propertyName ":" _ propertyType _                  {% FormPostProcessor.question %}
 
 ifelse_statement        -> if_statement else_clause                                                           {% FormPostProcessor.ifElseStatement %}
-if_statement            -> "if" _ "(" expression ")" if_body                                                  {% FormPostProcessor.ifStatement %}
-if_body                 -> _ "{" _ statement:* "}" _
-else_clause             -> "else" _ "{" _ statement:* "}" _
+if_statement            -> "if" _ "(" expression ")" body                                                     {% FormPostProcessor.ifStatement %}
+else_clause             -> "else" body
+
+body                    -> _ "{" _ statement:* "}" _
+
 
 answer                  -> "answer" _ "'" sentence "'" _ allocation _                                         {% FormPostProcessor.answer %}
 allocation              -> propertyName ":" _ propertyType _ "=" _ (expression)                               {% FormPostProcessor.allocation %}

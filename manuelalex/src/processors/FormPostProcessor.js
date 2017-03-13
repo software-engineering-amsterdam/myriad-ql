@@ -38,7 +38,7 @@ export class FormPostProcessor {
 
     ifElseStatement(data, location) {
         let ifStatement = data[0];
-        return new IfElseStatement(ifStatement.getCondition(), ifStatement.getIfBody(), _.flattenDeep(data[1][4]), location);
+        return new IfElseStatement(ifStatement.getCondition(), ifStatement.getIfBody(), _.flattenDeep(data[1][1][3]), location);
     }
 
     // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
@@ -47,7 +47,7 @@ export class FormPostProcessor {
     }
 
     allocation(data, location) {
-        return new Allocation(data[0].trim(), data[3], _.flattenDeep(data[7])[1], location);
+        return new Allocation(data[0].trim(), data[3], _.flattenDeep(data[7])[0], location);
     }
 
     expression(data, location, reject) {
