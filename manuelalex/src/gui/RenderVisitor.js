@@ -25,34 +25,34 @@ export class RenderVisitor {
     }
 
     visitStatements(statements = [], view = {}) {
-        for (let statement of statements) {
+        for (const statement of statements) {
             statement.render && statement.render(this, view);
         }
     }
 
     renderProgamTitle(title = '', view) {
-        let titleRenderable = new Surface({
+        const titleRenderable = new Surface({
             content: title
         });
 
-        view.addRenderable(titleRenderable, 'programTitle', layout.dock.top(~20, 0, 10))
+        view.addRenderable(titleRenderable, 'programTitle', layout.dock.top(~20, 0, 10));
     }
 
     renderQuestion(question = {}, view = {}) {
-        let type = question.getPropertyType();
-        let label = question.getLabel();
-        let propertyName = question.getPropertyName();
-        let propertyElement = this.memoryState.getElement(propertyName.getName());
+        const type = question.getPropertyType();
+        const label = question.getLabel();
+        const propertyName = question.getPropertyName();
+        const propertyElement = this.memoryState.getElement(propertyName.getName());
 
-        let typeRenderable = type.render(this);
-        let labelRenderable = label.render(this);
+        const typeRenderable = type.render(this);
+        const labelRenderable = label.render(this);
 
         typeRenderable.setState(propertyElement.getValue() || undefined);
         typeRenderable.on('state', ({ value }) => {
             propertyElement.setValue(value);
         });
 
-        let subView = new View();
+        const subView = new View();
         subView.getSize = () => [undefined, 88];
 
         subView.addRenderable(labelRenderable, 'label', layout.dock.top(44, 0, 10), layout.stick.left());
@@ -63,21 +63,21 @@ export class RenderVisitor {
 
     renderAnswer(answer = {}, view = {}) {
 
-        let allocation = answer.getAllocation();
-        let expression = allocation.getExpression();
-        let type = allocation.getType();
+        const allocation = answer.getAllocation();
+        const expression = allocation.getExpression();
+        const type = allocation.getType();
 
-        let evaluation = expression.evaluate(this.memoryState);
+        const evaluation = expression.evaluate(this.memoryState);
 
         /* TODO: Add a better condition so that 0 values are not ignored */
         if (evaluation) {
-            let label = answer.getLabel();
-            let labelRenderable = label.render(this);
-            let typeRenderable = type.renderValue(this);
+            const label = answer.getLabel();
+            const labelRenderable = label.render(this);
+            const typeRenderable = type.renderValue(this);
 
             typeRenderable.setContent(evaluation);
 
-            let subView = new View();
+            const subView = new View();
             subView.getSize = () => [undefined, 88];
 
             subView.addRenderable(labelRenderable, 'label', layout.dock.left(~120, 0, 10), layout.stick.center());
@@ -95,27 +95,27 @@ export class RenderVisitor {
     }
 
     renderIfStatement(ifStatement, view) {
-        let condition = ifStatement.getCondition();
-        let ifBody = ifStatement.getIfBody();
+        const condition = ifStatement.getCondition();
+        const ifBody = ifStatement.getIfBody();
         if (condition.evaluate(this.memoryState)) {
             this.visitStatements(ifBody, view);
         }
     }
 
     renderIfElseStatement(ifElseStatement, view) {
-        let condition = ifElseStatement.getCondition();
-        let ifBody = ifElseStatement.getIfBody();
-        let elseBody = ifElseStatement.getElseBody();
+        const condition = ifElseStatement.getCondition();
+        const ifBody = ifElseStatement.getIfBody();
+        const elseBody = ifElseStatement.getElseBody();
 
         if (condition.evaluate(this.memoryState)) {
             this.visitStatements(ifBody, view);
         } else {
-            this.visitStatements(elseBody, view)
+            this.visitStatements(elseBody, view);
         }
     }
 
     renderBooleanInput(qlBoolean) {
-        let renderable = new Checkbox({
+        const renderable = new Checkbox({
             state: false,
             enabled: true
         });
@@ -134,7 +134,7 @@ export class RenderVisitor {
     }
 
     renderStringInput(qlString) {
-        let renderable = new SingleLineTextInput({});
+        const renderable = new SingleLineTextInput({});
         renderable.on('message', (message) => {
             renderable._eventOutput.emit('state', { value: message, type: qlString });
         });
@@ -145,7 +145,7 @@ export class RenderVisitor {
     }
 
     renderDateInput(qlData) {
-        let renderable = new SingleLineTextInput({
+        const renderable = new SingleLineTextInput({
             inputOptions: { type: 'date' }
         });
         renderable.on('message', (message) => {
@@ -158,7 +158,7 @@ export class RenderVisitor {
     }
 
     renderNumberInput(qlNumber) {
-        let renderable = new SingleLineTextInput({
+        const renderable = new SingleLineTextInput({
             inputOptions: { type: 'number' }
         });
         renderable.on('message', (message) => {
@@ -171,7 +171,7 @@ export class RenderVisitor {
     }
 
     renderMoneyInput(qlMoney) {
-        let renderable = new SingleLineTextInput({
+        const renderable = new SingleLineTextInput({
             inputOptions: { type: 'number' }
         });
         renderable.on('message', (message) => {

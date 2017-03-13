@@ -24,9 +24,7 @@ export class QLController extends Controller {
     }
 
     createMethod(methodName = '', view) {
-        this[methodName] = () => {
-            return this.views[methodName];
-        };
+        this[methodName] = () => this.views[methodName];
         if (view) {
             this.setViewForMethod(methodName, view);
         }

@@ -13,11 +13,11 @@ export class MemoryElement extends eventemitter3 {
         this.value = value;
     }
 
-    getValue(){
+    getValue() {
         return this.value;
     }
 
-    getType(){
+    getType() {
         return this.type;
     }
 
@@ -27,7 +27,6 @@ export class MemoryElement extends eventemitter3 {
 
     setValue(value) {
         this.value = value;
-
         this._onSetterTriggered(this.value);
     }
 
