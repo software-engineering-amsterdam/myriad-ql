@@ -18,7 +18,7 @@ def parse(input_string):
         return type_call(source, position, flattened_tokens[1])
 
     # Packrat
-    # ParserElement.enablePackrat()
+    ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")
