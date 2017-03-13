@@ -71,9 +71,7 @@ export class RenderVisitor {
 
         let evaluation = expression.evaluate(this.memoryState);
 
-        /* Do we have to check here if evaluation's type is the same as the allocation type? */
-        console.log(evaluation);
-
+        /* Add a better condition so that 0 values are not ignored */
         if (evaluation) {
             let label = answer.getLabel();
             let labelRenderable = label.render(this);
@@ -103,6 +101,18 @@ export class RenderVisitor {
         let ifBody = ifStatement.getIfBody();
         if (condition.evaluate(this.memoryState)) {
             this.visitStatements(ifBody, view);
+        }
+    }
+
+    renderIfElseStatement(ifElseStatement, view) {
+        let condition = ifElseStatement.getCondition();
+        let ifBody = ifElseStatement.getIfBody();
+        let elseBody = ifElseStatement.getElseBody();
+
+        if (condition.evaluate(this.memoryState)) {
+            this.visitStatements(ifBody, view);
+        } else {
+            this.visitStatements(elseBody, view);
         }
     }
 
@@ -175,7 +185,7 @@ export class RenderVisitor {
         return renderable;
     }
 
-    renderMoneyValue(qlMoney){
+    renderMoneyValue(qlMoney) {
         return new Surface();
     }
 

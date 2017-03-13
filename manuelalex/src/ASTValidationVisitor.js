@@ -24,8 +24,8 @@ export class ASTValidationVisitor {
 
 
     visitAST(ast){
-        this.visitForm(ast.program.name);
-        this.visitStatements(ast.program.statements);
+        this.visitForm(ast.getProgram());
+        this.visitStatements(ast.getStatements());
 
     }
 

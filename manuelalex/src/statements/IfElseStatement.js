@@ -7,7 +7,7 @@ import {IfStatement}  from './IfStatement.js';
 export class IfElseStatement extends IfStatement {
 
     constructor(condition, ifBody, elseBody, location) {
-        super(condition, ifBody, elseBody);
+        super(condition, ifBody, elseBody, location);
         this.elseBody = elseBody;
 
     }
@@ -19,4 +19,9 @@ export class IfElseStatement extends IfStatement {
     validate() {
 
     }
+
+    render(visitor, view){
+        visitor.renderIfElseStatement(this, view);
+    }
+
 };
