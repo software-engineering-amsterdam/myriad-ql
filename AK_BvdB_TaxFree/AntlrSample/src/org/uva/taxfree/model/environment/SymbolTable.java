@@ -1,6 +1,7 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
@@ -13,7 +14,6 @@ public class SymbolTable {
     private final List<String> mUsedVariables;
     private final List<ExpressionNode> mExpressions;
     private final List<CalculationNode> mCalculations;
-
 
     public SymbolTable() {
         mDeclarations = new ArrayList<>();
@@ -45,8 +45,7 @@ public class SymbolTable {
     }
 
     public String resolveValue(String variableId) {
-        throw new RuntimeException("Not implemented yet");
-        //return findNode(variableId).resolveValue();
+        throw new RuntimeException("Not implemented yet: " + variableId);
     }
 
     public boolean contains(String variableId) {
@@ -130,4 +129,9 @@ public class SymbolTable {
             }
         }
     }
+
+    void fillQuestionForm(QuestionForm form) {
+
+    }
+
 }

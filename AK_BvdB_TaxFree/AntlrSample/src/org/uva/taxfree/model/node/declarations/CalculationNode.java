@@ -1,8 +1,10 @@
 package org.uva.taxfree.model.node.declarations;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.node.widgets.CalculationWidget;
 import org.uva.taxfree.model.types.Type;
 
 import java.util.HashSet;
@@ -44,5 +46,10 @@ public class CalculationNode extends DeclarationNode {
         getDependencies(declarations);
         mExpression.getDependencies(declarations);
         return declarations;
+    }
+
+    @Override
+    public void fillQuestionForm(QuestionForm frame) {
+        frame.addWidget(new CalculationWidget(getLabel(), getId(), mExpression));
     }
 }

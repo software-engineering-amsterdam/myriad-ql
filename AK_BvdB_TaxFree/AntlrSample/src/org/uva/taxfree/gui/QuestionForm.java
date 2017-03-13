@@ -41,6 +41,8 @@ public class QuestionForm {
         mFrame.setPreferredSize(new Dimension(640, 480));
         mFrame.pack();
         mFrame.setLocationRelativeTo(null);
+        new FormRenderer(this);
+
     }
 
     public void addWidget(Widget widget) {
@@ -49,6 +51,8 @@ public class QuestionForm {
     }
 
     public void updateVisibility() {
-        throw new RuntimeException("Fix me!");
+        for(Widget w : mWidgets){
+            w.setVisible(true);
+        }
     }
 }

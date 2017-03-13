@@ -32,9 +32,9 @@ public class Main {
         AstBuilder builder = new AstBuilder(inputFile);
         FormNode ast = builder.generateTree();
         SymbolTable symbolTable = new SymbolTable();
-        MessageList sematicsMessages = new MessageList();
+        MessageList semanticsMessages = new MessageList();
         ast.fillSymbolTable(symbolTable);
-        ast.checkSemantics(symbolTable, sematicsMessages);
+        ast.checkSemantics(symbolTable, semanticsMessages);
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
         ast.fillQuestionForm(taxForm);
         taxForm.show();
