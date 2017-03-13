@@ -6,22 +6,22 @@ import java.util.List;
 /**
  * Created by rico on 7-3-17.
  */
-public class SectionStatements extends SectionStatement {
-    private final SectionStatement current;
+public class SectionStatements extends Statement {
+    private final Statement current;
     private final SectionStatements next;
 
-    public SectionStatements(SectionStatement current, SectionStatements next, int rowNumber) {
+    public SectionStatements(Statement current, SectionStatements next, int rowNumber) {
         super(rowNumber);
         this.current = current;
         this.next = next;
     }
 
-    public SectionStatements(SectionStatement current, int rowNumber) {
+    public SectionStatements(Statement current, int rowNumber) {
         this(current, null, rowNumber);
     }
 
-    public List<SectionStatement> getStatements(){
-        List<SectionStatement> statements = new ArrayList<>();
+    public List<Statement> getStatements(){
+        List<Statement> statements = new ArrayList<>();
         if(current == null){
             return statements;
         }
@@ -45,7 +45,7 @@ public class SectionStatements extends SectionStatement {
         return next;
     }
 
-    private SectionStatement getCurrentStatement(){
+    private Statement getCurrentStatement(){
         return current;
     }
 }

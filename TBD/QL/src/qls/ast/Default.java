@@ -1,25 +1,26 @@
 package qls.ast;
 
+import qls.ast.types.Type;
 import qls.ast.widgets.Widget;
 
 /**
  * Created by rico on 7-3-17.
  */
-public class Default extends ASTNode {
-    private final Widget widget;
-    private final String type;
+public class Default extends PageStatement {
+    private final Type type;
+    private final DefaultStatements attributes;
 
-    public Default(String type, Widget widget, int rowNumber) {
+    public Default(Type type, DefaultStatements attributes, int rowNumber) {
         super(rowNumber);
         this.type = type;
-        this.widget = widget;
+        this.attributes = attributes;
     }
 
-    public Widget getWidget() {
-        return widget;
-    }
-
-    public String getType() {
+    public Type getType() {
         return type;
+    }
+
+    public DefaultStatements getAttributes() {
+        return attributes;
     }
 }

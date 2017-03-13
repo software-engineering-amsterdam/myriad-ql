@@ -1,32 +1,34 @@
 package qls.ast;
 
+import qls.ast.attributes.Attribute;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by rico on 7-3-17.
  */
-public class DefaultAttributes extends DefaultAttribute {
-    private final DefaultAttribute current;
-    private final DefaultAttributes next;
+public class DefaultStatements extends ASTNode {
+    private final ObjectStatement current;
+    private final DefaultStatements next;
 
-    public DefaultAttributes(DefaultAttribute current, DefaultAttributes next, int rowNumber) {
+    public DefaultStatements(ObjectStatement current, DefaultStatements next, int rowNumber) {
         super(rowNumber);
         this.current = current;
         this.next = next;
     }
 
-    public DefaultAttributes(DefaultAttribute current, int rowNumber) {
+    public DefaultStatements(ObjectStatement current, int rowNumber) {
         this(current, null, rowNumber);
     }
 
-    public List<DefaultAttribute> getAttributes(){
-        List<DefaultAttribute> attributes = new ArrayList<>();
+    public List<ObjectStatement> getAttributes(){
+        List<ObjectStatement> attributes = new ArrayList<>();
         if(current == null){
             return attributes;
         }
 
-        DefaultAttributes currentEntry = this;
+        DefaultStatements currentEntry = this;
         attributes.add(currentEntry.getCurrentAttribute());
 
         while (currentEntry.hasNext()){
@@ -41,11 +43,11 @@ public class DefaultAttributes extends DefaultAttribute {
         return next != null;
     }
 
-    private DefaultAttributes next(){
+    private DefaultStatements next(){
         return next;
     }
 
-    private DefaultAttribute getCurrentAttribute(){
+    private ObjectStatement getCurrentAttribute(){
         return current;
     }
 

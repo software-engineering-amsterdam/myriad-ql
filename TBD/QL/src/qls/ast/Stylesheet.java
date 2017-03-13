@@ -1,6 +1,5 @@
 package qls.ast;
 
-import qls.ast.*;
 import qls.ast.literals.QLSIdent;
 
 /**
@@ -8,9 +7,9 @@ import qls.ast.literals.QLSIdent;
  */
 public class Stylesheet extends ASTNode {
     private final String name;
-    private final StylesheetStatements statements;
+    private final StylesheetPages statements;
 
-    public Stylesheet(QLSIdent name, StylesheetStatements statements) {
+    public Stylesheet(QLSIdent name, StylesheetPages statements) {
         super(name.getRowNumber());
         this.name = name.getValue();
         this.statements = statements;
@@ -20,7 +19,7 @@ public class Stylesheet extends ASTNode {
         return name;
     }
 
-    public StylesheetStatements getStylesheetStatements() {
+    public StylesheetPages getStylesheetStatements() {
         return statements;
     }
 }

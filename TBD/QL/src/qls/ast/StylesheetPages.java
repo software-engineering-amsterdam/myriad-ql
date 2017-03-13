@@ -6,27 +6,27 @@ import java.util.List;
 /**
  * Created by rico on 7-3-17.
  */
-public class StylesheetStatements extends ASTNode {
-    private final StylesheetStatement current;
-    private final StylesheetStatements next;
+public class StylesheetPages extends ASTNode {
+    private final Page current;
+    private final StylesheetPages next;
 
-    public StylesheetStatements(StylesheetStatement current, StylesheetStatements next, int rowNumber) {
+    public StylesheetPages(Page current, StylesheetPages next, int rowNumber) {
         super(rowNumber);
         this.current = current;
         this.next = next;
     }
 
-    public StylesheetStatements(StylesheetStatement current, int rowNumber) {
+    public StylesheetPages(Page current, int rowNumber) {
         this(current, null, rowNumber);
     }
 
-    public List<StylesheetStatement> getStatements(){
-        List<StylesheetStatement> statements = new ArrayList<>();
+    public List<Page> getStatements(){
+        List<Page> statements = new ArrayList<>();
         if(current == null){
             return statements;
         }
 
-        StylesheetStatements currentEntry = this;
+        StylesheetPages currentEntry = this;
         statements.add(currentEntry.getCurrentStatement());
 
         while (currentEntry.hasNext()){
@@ -41,11 +41,11 @@ public class StylesheetStatements extends ASTNode {
         return next != null;
     }
 
-    private StylesheetStatements next(){
+    private StylesheetPages next(){
         return next;
     }
 
-    private StylesheetStatement getCurrentStatement(){
+    private Page getCurrentStatement(){
         return current;
     }
 }

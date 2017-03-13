@@ -5,7 +5,7 @@ import qls.ast.literals.QLSIdent;
 /**
  * Created by rico on 7-3-17.
  */
-public class Section extends ASTNode {
+public class Section extends PageStatement {
     private final String name;
     private final SectionStatements statements;
 

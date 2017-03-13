@@ -6,7 +6,7 @@ import qls.ast.widgets.Widget;
 /**
  * Created by rico on 7-3-17.
  */
-public class Question extends SectionStatement {
+public class Question extends Statement {
     private final String id;
     private final Widget widget;
 
