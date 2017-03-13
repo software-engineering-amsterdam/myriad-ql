@@ -1,14 +1,13 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.BooleanExpression;
-import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.*;
-import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -51,21 +50,11 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public StringProperty getStringValueProperty() {
-        return null; //This item is not intended to be shown by itself
-    }
-
-    @Override
     public void idChanged(Form root, String id, String value) {
         expression.idChanged(id, value);
         screen.showCondition(this);
         formItems.forEach(item -> item.idChanged(root, id, value));
         elseBlockItems.forEach(item -> item.idChanged(root, id, value));
-    }
-
-    @Override
-    public String getId() {
-        return null; // Conditions do not have an identifier
     }
 
     @Override
@@ -79,8 +68,30 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public boolean conformsToType(Value.Type type) {
-        return true; // the children of the condition may contain the id, but the condition does conform to anything
+    public boolean validateIdentifierType(String identifier, Value.Type type) {
+        return formItems.stream().anyMatch(formItem -> formItem.validateIdentifierType(identifier, type));
+    }
+
+    @Override
+    public String validateRedeclaration(FormItem item) {
+        return null;
+    }
+
+    @Override
+    public Pair<String> validateCyclicDependency(FormItem item) {
+        Optional<FormItem> optionalResult = formItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
+        Optional<FormItem> optionalElseResult = elseBlockItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
+        if (optionalResult.isPresent()) {
+            return optionalResult.get().validateCyclicDependency(item);
+        } else if (optionalElseResult.isPresent()) {
+            return optionalElseResult.get().validateCyclicDependency(item);
+        } else {
+            return new Pair<>(null, null);
+        }
+    }
+
+    private boolean validateCyclicDependencyForChild(FormItem child, FormItem item) {
+        return !child.validateRedeclaration(item).isEmpty();
     }
 
     @Override
@@ -90,17 +101,23 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public boolean hasId(String id) {
-        return childHasId(formItems, id) || childHasId(elseBlockItems, id);
+    public String isDependencyOf(FormItem item) {
+        return null;
     }
 
-    private boolean childHasId(List<FormItem> items, String id) {
-        boolean hasId = false;
-        for (FormItem item : items) {
-            hasId = hasId || item.hasId(id);
-        }
-        return hasId;
+    @Override
+    public boolean hasId(String id) {
+        return false;
+//        return childHasId(formItems, id) || childHasId(elseBlockItems, id);
     }
+
+//    private boolean childHasId(List<FormItem> items, String id) {
+//        boolean hasId = false;
+//        for (FormItem item : items) {
+//            hasId = hasId || item.hasId(id);
+//        }
+//        return hasId;
+//    }
 
     @Override
     public void show(FXMLExampleController screen) {

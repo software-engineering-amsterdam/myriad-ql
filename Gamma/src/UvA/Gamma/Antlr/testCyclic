@@ -1,0 +1,4 @@
+form cyclic{
+    "input" bla: integer
+    "hello!" first: integer = (bla - 5)
+}

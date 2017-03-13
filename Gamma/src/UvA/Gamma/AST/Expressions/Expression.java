@@ -2,9 +2,13 @@ package UvA.Gamma.AST.Expressions;
 
 import UvA.Gamma.AST.ASTNode;
 import UvA.Gamma.AST.Values.Value;
+import UvA.Gamma.Validation.IdNotFoundException;
+import UvA.Gamma.Validation.IncompatibleTypesException;
+import UvA.Gamma.Validation.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -45,7 +49,18 @@ public abstract class Expression implements ASTNode {
         this.value = value;
     }
 
-    public String[] getIds() {
+    public void accept(Validator validator) throws IdNotFoundException, IncompatibleTypesException {
+        for (String id : getIds()) {
+            validator.validateId(id);
+            validator.validateIdentifierType(id, value.getType());
+        }
+    }
+
+    public boolean isDependentOn(String id) {
+        return Arrays.stream(getIds()).anyMatch(i -> i.equals(id));
+    }
+
+    private String[] getIds() {
         return ids.keySet().toArray(new String[0]);
     }
 
@@ -71,6 +86,7 @@ public abstract class Expression implements ASTNode {
         Matcher matcher = pattern.matcher(expr);
 
         while (matcher.find()) {
+            if (matcher.group().matches("^(?i)(true|false)$")) continue;
             ids.put(matcher.group(), null);
         }
     }

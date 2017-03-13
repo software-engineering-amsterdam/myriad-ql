@@ -28,7 +28,7 @@ public class Validator {
 
     public void validateIdentifierType(String id, Value.Type type) throws IncompatibleTypesException {
         for (FormItem item : form.getFormItems()) {
-            if (item.hasId(id) && !item.conformsToType(type)) {
+            if (item.validateIdentifierType(id, type)) {
                 throw new IncompatibleTypesException("The identifier " + id + " is of the type " + item.getType() +
                         ", which does not conform to the type " + type);
             }
@@ -36,10 +36,9 @@ public class Validator {
     }
 
     public void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
-        String id = formItem.getId();
-        if (id == null) return; // Condition items do not have an identifier
         for (FormItem item : form.getFormItems()) {
-            if (item.getId() != null && item != formItem && item.hasId(id)) {
+            String id = formItem.validateRedeclaration(item);
+            if (id != null) {
                 throw new IdRedeclaredException("The id: " + id + " is redeclared");
             }
         }
@@ -47,9 +46,10 @@ public class Validator {
 
     public void validateCyclicDependency(Computed computed) throws CyclicDependencyException {
         for (FormItem item : form.getFormItems()) {
-            if (computed.isDependentOn(item.getId()) && item.isDependentOn(computed.getId())) {
+            Pair<String> cyclicIds = computed.validateCyclicDependency(item);
+            if (cyclicIds.isComplete()) {
                 throw new CyclicDependencyException("There exists a cyclic dependency between the items '" +
-                        computed.getId() + "' and '" + item.getId() + "'. Aborting..");
+                        cyclicIds.firstValue + "' and '" + cyclicIds.secondValue + "'. Aborting..");
             }
         }
     }

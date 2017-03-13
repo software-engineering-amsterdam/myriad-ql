@@ -1,13 +1,10 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.Expression;
-import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.MainScreen;
+import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.*;
 import javafx.beans.property.StringProperty;
-
-import java.util.Arrays;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -38,11 +35,6 @@ public class Computed implements FormItem {
     }
 
     @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
     public void idChanged(Form root, String id, String value) {
         if (expression.idChanged(id, value)) {
             root.idChanged(this.id, this.expression.toString());
@@ -53,20 +45,32 @@ public class Computed implements FormItem {
     public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
         validator.validateRedeclaration(this);
         validator.validateCyclicDependency(this);
-        for (String id : expression.getIds()) {
-            validator.validateId(id);
-            validator.validateIdentifierType(id, getType());
-        }
+        expression.accept(validator);
     }
 
     @Override
-    public boolean conformsToType(Value.Type type) {
-        return expression.getValue().conformsToType(type);
+    public boolean validateIdentifierType(String identifier, Value.Type type) {
+        return id.equals(identifier) && !expression.getValue().conformsToType(type);
+    }
+
+    @Override
+    public String validateRedeclaration(FormItem item) {
+        return item != this && item.hasId(this.id) ? this.id : null;
+    }
+
+    @Override
+    public Pair<String> validateCyclicDependency(FormItem item) {
+        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
     }
 
     @Override
     public boolean isDependentOn(String id) {
-        return Arrays.stream(expression.getIds()).anyMatch(i -> i.equals(id));
+        return expression.isDependentOn(id);
+    }
+
+    @Override
+    public String isDependencyOf(FormItem item) {
+        return item.isDependentOn(this.id) ? this.id : null;
     }
 
     @Override
@@ -79,7 +83,6 @@ public class Computed implements FormItem {
         return this.id.equals(id);
     }
 
-    @Override
     public StringProperty getStringValueProperty() {
         return expression.getStringValueProperty();
     }

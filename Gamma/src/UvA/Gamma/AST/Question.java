@@ -1,14 +1,8 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.MainScreen;
-import UvA.Gamma.Validation.IdNotFoundException;
-import UvA.Gamma.Validation.IdRedeclaredException;
-import UvA.Gamma.Validation.IncompatibleTypesException;
-import UvA.Gamma.Validation.Validator;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.Validation.*;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -17,18 +11,17 @@ public class Question implements FormItem {
     private String question;
     private String id;
     private Value value;
-    private SimpleStringProperty stringValueProperty;
 
-    public Question() {
-        stringValueProperty = new SimpleStringProperty();
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public String getId() {
+        return id;
     }
 
     public void setId(String id) {
@@ -37,11 +30,6 @@ public class Question implements FormItem {
 
     public void setValue(Value value) {
         this.value = value;
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 
     @Override
@@ -55,8 +43,18 @@ public class Question implements FormItem {
     }
 
     @Override
-    public boolean conformsToType(Value.Type type) {
-        return value.conformsToType(type);
+    public String validateRedeclaration(FormItem item) {
+        return item != this && item.hasId(this.id) ? this.id : null;
+    }
+
+    @Override
+    public boolean validateIdentifierType(String identifier, Value.Type type) {
+        return this.id.equals(identifier) && !value.conformsToType(type);
+    }
+
+    @Override
+    public Pair<String> validateCyclicDependency(FormItem item) {
+        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
     }
 
     @Override
@@ -65,8 +63,8 @@ public class Question implements FormItem {
     }
 
     @Override
-    public StringProperty getStringValueProperty() {
-        return this.stringValueProperty;
+    public String isDependencyOf(FormItem item) {
+        return item.isDependentOn(this.id) ? this.id : null;
     }
 
     @Override
