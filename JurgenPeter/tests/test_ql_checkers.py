@@ -47,12 +47,12 @@ class TestSymbolChecker(TestCase):
     ]
 
     def testSymbolErrors(self):
-        for form, e in self.forms:
+        for form, expected_errors in self.forms:
             ast = parse_string(form)
             symboltable = {}
             errors = []
             SymbolChecker(symboltable, errors).check(ast)
-            self.assertEqual(len(errors), e)
+            self.assertEqual(len(errors), expected_errors)
 
 
 class TestTypeChecker(TestCase):
@@ -76,13 +76,13 @@ class TestTypeChecker(TestCase):
     ]
 
     def testTypeErrors(self):
-        for form, e, in self.forms:
+        for form, expected_errors in self.forms:
             ast = parse_string(form)
             symboltable = {}
             SymbolChecker(symboltable).check(ast)
             errors = []
             TypeChecker(symboltable, errors).check(ast)
-            self.assertEqual(len(errors), e)
+            self.assertEqual(len(errors), expected_errors)
 
 
 class TestDependencyChecker(TestCase):
@@ -124,11 +124,11 @@ class TestDependencyChecker(TestCase):
     ]
 
     def testDependencyErrors(self):
-        for form, e in self.forms:
+        for form, expected_errors in self.forms:
             ast = parse_string(form)
             errors = []
             DependencyChecker(errors).check(ast)
-            self.assertEqual(len(errors), e)
+            self.assertEqual(len(errors), expected_errors)
 
 if __name__ == "__main__":
     main()
