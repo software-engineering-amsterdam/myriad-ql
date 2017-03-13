@@ -29,7 +29,10 @@ class Editor(QMainWindow, QWidget):
         self.file_path = None
 
         self.menu_file = self.menuBar().addMenu("File")
-        self.action_evaluate = QAction("Evaluate", self)
+        # self.action_evaluate = QAction("Run", self)
+        self.toolbar = self.addToolBar("Actions")
+        self.run_action = self.add_run_action()
+        self.open_action = self.add_open_action()
         self.text_editor = QTextEdit()
 
         self.init_text_editor()
@@ -37,8 +40,6 @@ class Editor(QMainWindow, QWidget):
         self.list_errors = QListWidget()
         self.setCentralWidget(self.text_editor)
         self.set_error_list(self.list_errors)
-        self.add_eval_action()
-        self.add_load_action()
         if len(argv) > 1:
             self.load_file(argv[1])
 
@@ -72,18 +73,23 @@ class Editor(QMainWindow, QWidget):
         self.setStatusBar(statusBar)
 
     def on_text_changed(self):
-        self.action_evaluate.setEnabled(len(self.text_editor.toPlainText()) > 0)
+        self.run_action.setEnabled(len(self.text_editor.toPlainText()) > 0)
 
-    def add_load_action(self):
-        menu_bar_load_action = QAction("Load file", self)
-        menu_bar_load_action.setShortcuts(["Ctrl+L", "Cmd+L"])
-        menu_bar_load_action.triggered.connect(self.file_selection)
-        self.menu_file.addAction(menu_bar_load_action)
+    def add_open_action(self):
+        load_action = QAction("Load file", self)
+        load_action.setShortcuts(["Ctrl+O", "Cmd+O"])
+        load_action.triggered.connect(self.file_selection)
+        self.menu_file.addAction(load_action)
+        self.toolbar.addAction(load_action)
+        return load_action
 
-    def add_eval_action(self):
-        self.action_evaluate.setShortcuts(["Ctrl+E", "Cmd+E"])
-        self.menu_file.addAction(self.action_evaluate)
-        self.action_evaluate.triggered.connect(self.evaluate)
+    def add_run_action(self):
+        run_action = QAction("Run", self)
+        run_action.setShortcuts(["Ctrl+R", "Cmd+R"])
+        run_action.triggered.connect(self.evaluate)
+        self.menu_file.addAction(run_action)
+        self.toolbar.addAction(run_action)
+        return run_action
 
     def evaluate(self):
         self.list_errors.clear()
