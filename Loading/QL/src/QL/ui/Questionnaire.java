@@ -153,7 +153,6 @@ public class Questionnaire extends Application implements Notifier {
             grid.add(questionLabel, 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
-            // question.addListener(this);
             ++rowIndex;
         }
         
@@ -175,11 +174,12 @@ public class Questionnaire extends Application implements Notifier {
     	// TODO .equals()?
     	System.out.println(oldAnswer);
     	System.out.println(newValue);
-		if (oldAnswer == null || !(oldAnswer.eq(newValue).getValue())) {
+		if (!env.isAnswered(name) || !(oldAnswer.eq(newValue).getValue())) {
 
 			env.addAnswer(name, newValue); 
 	    	grid.getChildren().clear();
 	        renderQuestionnaire(grid);
+	        grid.lookup("#" + name).requestFocus();
 		}
 	}
 
@@ -189,24 +189,26 @@ public class Questionnaire extends Application implements Notifier {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(pStage);
-
-        if (file != null) {
-
-            try {
-                JsonObjectBuilder questionnaire = Json.createObjectBuilder();
-
-                for (Row question : activeQuestions) {
-                    questionnaire.add(question.getName(), question.getAnswer().convertToString());
-                }
-
-                OutputStream os = new FileOutputStream(file);
-                JsonWriter jsonWriter = Json.createWriter(os);
-                jsonWriter.writeObject(questionnaire.build());
-                jsonWriter.close();
-            } catch (IOException ex) {
-                System.out.println("IOException save questionnaire..."); // TODO
-            }
+        
+        if (file == null) {
+        	return;
         }
-    }
+
+        try {
+            JsonObjectBuilder questionnaire = Json.createObjectBuilder();
+
+            for (Row question : activeQuestions) {
+                questionnaire.add(question.getName(), question.getAnswer().convertToString());
+            }
+
+            OutputStream os = new FileOutputStream(file);
+            JsonWriter jsonWriter = Json.createWriter(os);
+            jsonWriter.writeObject(questionnaire.build());
+            jsonWriter.close();
+        } 
+        catch (IOException ex) {
+            System.out.println("IOException save questionnaire..."); // TODO
+        }
+	}
 
 }
