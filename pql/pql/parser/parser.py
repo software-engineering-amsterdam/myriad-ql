@@ -50,11 +50,11 @@ def parse(input_string):
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     type_money = Literal("money").setParseAction(
-        lambda source, location, parsed_tokens: ast.Money(DataTypes.money, {"src": source, "loc": location}))
+        lambda source, position, parsed_tokens: ast.Money(DataTypes.money, position, source))
     type_integer = Literal("integer").setParseAction(
-        lambda source, location, parsed_tokens: ast.Integer(DataTypes.integer, {"src": source, "loc": location}))
+        lambda source, position, parsed_tokens: ast.Integer(DataTypes.integer, position, source))
     type_boolean = Literal("boolean").setParseAction(
-        lambda source, location, parsed_tokens: ast.Boolean(DataTypes.boolean, {"src": source, "loc": location}))
+        lambda source, position, parsed_tokens: ast.Boolean(DataTypes.boolean, position, source))
     data_types = type_money | type_integer | type_boolean
 
     true = Literal("true").setParseAction(lambda _: ast.Value(True, DataTypes.boolean))
@@ -70,7 +70,7 @@ def parse(input_string):
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
     name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName('identifier').setParseAction(
-        lambda source, location, parsed_tokens: ast.Identifier(parsed_tokens[0], {"src": source, "loc": location}))
+        lambda source, position, parsed_tokens: ast.Identifier(parsed_tokens[0], position, source))
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)

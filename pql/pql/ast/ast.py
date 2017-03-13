@@ -5,11 +5,9 @@ from pyparsing import lineno, col
 
 
 class Node(object):
-    def __init__(self, var_type, location=defaultdict(int)):
+    def __init__(self, var_type, position=0, source=""):
         self.var_type = var_type
-        loc = location.get("loc", 0)
-        src = location.get("src", '')
-        self.location = {"line_no": lineno(loc, src), "col_no": col(loc, src)}
+        self.location = Location(position, source)
 
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"
@@ -17,6 +15,15 @@ class Node(object):
 
     def __repr__(self):
         return self.var_type
+
+
+class Location(object):
+    def __init__(self, position, source):
+        self.line_number = lineno(position, source)
+        self.column_number = col(position, source)
+
+    def __str__(self):
+        return "({}:{})".format(self.line_number, self.column_number)
 
 
 class Form(Node):
@@ -215,8 +222,8 @@ class Value(Node):
 
 
 class Identifier(Node):
-    def __init__(self, name, location):
-        super(Identifier, self).__init__('identifier', location)
+    def __init__(self, name, position, source):
+        super(Identifier, self).__init__('identifier', position, source)
         self.name = name
 
     def apply(self, visitor):
@@ -224,8 +231,8 @@ class Identifier(Node):
 
 
 class Integer(Node):
-    def __init__(self, data_type, location):
-        super(Integer, self).__init__("integer", location)
+    def __init__(self, data_type, position, source):
+        super(Integer, self).__init__("integer", position, source)
         self.data_type = data_type
 
     def apply(self, visitor):
@@ -236,8 +243,8 @@ class Integer(Node):
 
 
 class Boolean(Node):
-    def __init__(self, data_type, location):
-        super(Boolean, self).__init__("boolean", location)
+    def __init__(self, data_type, position, source):
+        super(Boolean, self).__init__("boolean", position ,source)
         self.data_type = data_type
 
     def apply(self, visitor):
@@ -248,8 +255,8 @@ class Boolean(Node):
 
 
 class Money(Node):
-    def __init__(self, data_type, location):
-        super(Money, self).__init__("money", location)
+    def __init__(self, data_type, position, source):
+        super(Money, self).__init__("money", position, source)
         self.data_type = data_type
 
     def apply(self, visitor):
