@@ -57,17 +57,16 @@ public class GrammarListener extends QLGrammarBaseListener {
         super.enterQuestion(ctx);
         String questionText = ctx.LABEL().getText();
         String questionId = ctx.VARIABLE_LITERAL().getText();
+        String varTypeText = ctx.varType().getText();
         Type questionType;
-        String parsedVarType = ctx.varType().getText();
-        if ("boolean".equals(parsedVarType)) {
+        if ("boolean".equals(varTypeText)) {
             questionType = new BooleanType();
-        } else if ("string".equals(parsedVarType)) {
+        } else if ("string".equals(varTypeText)) {
             questionType = new StringType();
-        } else if ("integer".equals(parsedVarType)) {
+        } else if ("integer".equals(varTypeText)) {
             questionType = new IntegerType();
         } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+            throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
         DeclarationNode questionNode = new DeclarationNode(questionText, questionId, questionType);
         addDeclaration(questionNode);
@@ -135,15 +134,15 @@ public class GrammarListener extends QLGrammarBaseListener {
         super.exitCalculation(ctx);
         String fieldDescription = ctx.LABEL().getText();
         String fieldId = ctx.VARIABLE_LITERAL().getText();
-        Type fieldType;
 
-        if ("boolean".equals(ctx.varType().getText())) {
+        String varTypeText = ctx.varType().getText();
+        Type fieldType;
+        if ("boolean".equals(varTypeText)) {
             fieldType = new BooleanType();
-        } else if ("integer".equals(ctx.varType().getText())) {
+        } else if ("integer".equals(varTypeText)) {
             fieldType = new IntegerType();
         } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+            throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
         DeclarationNode calculatedNode = new CalculationNode(fieldDescription, fieldId, fieldType, popCachedCondition());
         addDeclaration(calculatedNode);
@@ -176,8 +175,7 @@ public class GrammarListener extends QLGrammarBaseListener {
             case OP_LOGICAL_OR:
                 return new BooleanOperator(operator);
             default:
-                // TODO: bail out!
-                throw new RuntimeException("Unexpected operator");
+                throw new TypeNotPresentException(operator, new Throwable("This is an unsupported operator for QL!"));
         }
     }
 
@@ -215,7 +213,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popChildStack());
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().getText(), popChildStack());
         if (!mChildsStack.isEmpty()) {
             throw new AssertionError("Stack should be empty when we finished creating our AST.");
         }
