@@ -1,8 +1,7 @@
-from gui.visitors.widget_creator import WidgetCreator
 from misc.messages import *
 
 
-class QlsTypeChecker:
+class TypeChecker:
     def __init__(self, symbol_table, errors=[]):
         self.symboltable = symbol_table
         self.errors = errors

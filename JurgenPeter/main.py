@@ -1,5 +1,5 @@
 from json import dump
-from sys import argv
+from sys import argv, exit
 from os.path import isfile, splitext
 
 from gui.app import App
@@ -10,7 +10,8 @@ from ql.visitors.printer import Printer
 from ql.visitors.symbol_checker import SymbolChecker
 from ql.visitors.type_checker import TypeChecker
 from qls.grammar import parse_file as parse_qls
-from qls.visitors.type_checker import *
+from qls.visitors.type_checker import TypeChecker as QlsTypeChecker
+from qls.visitors.symbol_checker import SymbolChecker as QlsSymbolChecker
 
 
 def export(filename, dictionary):
@@ -21,6 +22,17 @@ def export(filename, dictionary):
 def qls_filename(ql_filename):
     root, extension = splitext(ql_filename)
     return root + ".qls"
+
+
+def print_errors(errors):
+    for error in errors:
+        print(error)
+
+
+def exit_on_errors(errors):
+    if any(error.critical for error in errors):
+        print_errors(errors)
+        exit()
 
 
 def main():
@@ -45,14 +57,13 @@ def main():
     symboltable = {}
 
     SymbolChecker(symboltable, errors).check(form)
+    exit_on_errors(errors)
+
     TypeChecker(symboltable, errors).check(form)
     DependencyChecker(errors).check(form)
+    exit_on_errors(errors)
 
-    for error in errors:
-        print(error)
-
-    if any(error.critical for error in errors):
-        return
+    print_errors(errors)
 
     layout_file = qls_filename(form_file)
     if not isfile(layout_file):
@@ -62,15 +73,15 @@ def main():
     else:
         layout = parse_qls(layout_file)
 
-        # TODO: symbol checking
         layout_errors = []
+
+        QlsSymbolChecker(symboltable, layout_errors).check(layout)
+        exit_on_errors(layout_errors)
+
         QlsTypeChecker(symboltable, layout_errors).check(layout)
+        exit_on_errors(layout_errors)
 
-        for error in layout_errors:
-            print(error)
-
-        if any(error.critical for error in layout_errors):
-            return
+        print_errors(layout_errors)
 
     app = App(form, layout=layout, on_exit=lambda app: export(dump_file, app.environment))
     app.start()
