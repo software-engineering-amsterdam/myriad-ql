@@ -111,7 +111,7 @@ export class ASTValidationVisitor {
         let typeRightHand = this.memoryState.getType(condition.rightHand);
 
         if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
-            let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
+            let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]";
             this.errors.push(errorStatement);
         }
     }
