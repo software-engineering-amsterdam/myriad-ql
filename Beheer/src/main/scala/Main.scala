@@ -23,5 +23,5 @@ object Main extends JFXApp {
   }
 
   printIssues(issues)
-  stage = GUI(issues, formModel, styleModel)
+  stage = GUI(issues, formModel.displayQuestions, styleModel.questionStyles)
 }
