@@ -12,37 +12,72 @@ public class DecimalValue extends Value {
 
     @Override
     public Value lowerThanOrEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) <= 0);
+        return comparable.lowerThanOrEqual(this);
+    }
+
+    @Override
+    public Value lowerThanOrEqual(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.floatValue() <= value.floatValue());
     }
 
     @Override
     public Value equal(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) == 0);
+        return comparable.equal(this);
     }
 
     @Override
-    public BooleanValue lowerThan(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) < 0);
+    public Value equal(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.equals(value));
     }
 
     @Override
-    public BooleanValue greaterThan(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) > 0);
+    public Value lowerThan(Value comparable) {
+        return comparable.lowerThan(this);
     }
 
     @Override
-    public BooleanValue greaterThanOrEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) >= 0);
+    public Value lowerThan(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.floatValue() < value.floatValue());
     }
 
     @Override
-    public BooleanValue notEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((BigDecimal) comparable.getPlainValue()) != 0);
+    public Value greaterThan(Value comparable) {
+        return comparable.greaterThan(this);
+    }
+
+    @Override
+    public Value greaterThan(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.floatValue() > value.floatValue());
+    }
+
+    @Override
+    public Value greaterThanOrEqual(Value comparable) {
+        return comparable.greaterThanOrEqual(this);
+    }
+
+    @Override
+    public Value greaterThanOrEqual(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.floatValue() >= value.floatValue());
+    }
+
+    @Override
+    public Value notEqual(Value comparable) {
+        return comparable.notEqual(this);
+    }
+
+    @Override
+    public Value notEqual(DecimalValue comparable) {
+        return new BooleanValue(comparable.value.equals(value.floatValue()));
     }
 
     @Override
     public Value product(Value comparable) {
-        return new DecimalValue(value.multiply((BigDecimal) comparable.getPlainValue()));
+        return comparable.product(this);
+    }
+
+    @Override
+    public Value product(DecimalValue comparable) {
+        return new DecimalValue(new BigDecimal(comparable.value.floatValue() * value.floatValue()));
     }
 
     @Override
@@ -57,16 +92,34 @@ public class DecimalValue extends Value {
 
     @Override
     public Value subtraction(Value subtraction) {
-        return new DecimalValue(value.subtract((BigDecimal) subtraction.getPlainValue()));
+        return subtraction.subtraction(this);
+    }
+
+    @Override
+    public Value subtraction(DecimalValue subtraction) {
+        return new DecimalValue(new BigDecimal(subtraction.value.floatValue() - value.floatValue()));
     }
 
     public Value division(Value division) {
-        return new DecimalValue(value.divide((BigDecimal) division.getPlainValue()));
+        return division.division(this);
+    }
+
+    public Value division(DecimalValue division) {
+        if (value.floatValue() == 0) {
+            return new UnknownValue();
+        }
+
+        return new DecimalValue(new BigDecimal(division.value.floatValue() / value.floatValue()));
     }
 
     @Override
     public Value addition(Value addition) {
-        return new DecimalValue(value.add((BigDecimal) addition.getPlainValue()));
+        return addition.addition(this);
+    }
+
+    @Override
+    public Value addition(DecimalValue addition) {
+        return new DecimalValue(new BigDecimal(addition.value.floatValue() + value.floatValue()));
     }
 
     @Override
