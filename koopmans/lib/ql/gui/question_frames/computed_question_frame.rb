@@ -18,7 +18,7 @@ module QL
       end
 
       def compute
-        value = @question.assignment.accept(TypeChecker::Evaluator.new).to_value
+        value = @question.assignment.accept(Evaluator.new).to_value
         @widget.set_value(value)
         store_value
       end
