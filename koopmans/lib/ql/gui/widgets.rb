@@ -16,13 +16,12 @@ module QL
       def initialize(question_frame, args=nil)
         super
         @value = true
+        shared_variable = TkVariable.new(@value)
 
         if args
           @true_label = args[:true_value]
           @false_label = args[:false_value]
         end
-
-        shared_variable = TkVariable.new(@value)
 
         radio_button          = TkRadioButton.new(question_frame.frame).pack
         radio_button.text     = @true_label
@@ -155,19 +154,25 @@ module QL
     class Frame < Widget
       def initialize(question_frame, args=nil)
         super
-        question_frame.frame = TkFrame.new.grid(row:  question_frame.gui.questions.size)
+        question_frame.frame = TkFrame.new.grid(row: position)
       end
 
-      # def position
-      #   question_frame.gui.questions.size
-      # end
+      def position
+        @question_frame.gui.number_of_questions
+      end
     end
 
     class SubmitButton
       def initialize(gui)
-        button         = TkButton.new.grid(row: gui.questions.size + 1)
+        @gui = gui
+
+        button         = TkButton.new.grid(row: position)
         button.text    = 'Submit'
         button.command = proc { gui.submit }
+      end
+
+      def position
+        @gui.number_of_questions + 1
       end
     end
   end

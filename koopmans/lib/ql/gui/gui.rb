@@ -30,6 +30,10 @@ module QL
         @questions.each.select { |question| question.enabled }
       end
 
+      def number_of_questions
+        questions.size
+      end
+
       # TODO hier wat aan doen
       def check(type_checker)
         if !type_checker[:errors].empty?
