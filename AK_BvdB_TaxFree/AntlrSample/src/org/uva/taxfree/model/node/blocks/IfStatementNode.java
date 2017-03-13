@@ -4,12 +4,12 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
-import java.util.Set;
+import java.util.List;
 
 public class IfStatementNode extends BlockNode {
     private final ExpressionNode expression;
 
-    public IfStatementNode(ExpressionNode expression, Set<Node> children) {
+    public IfStatementNode(ExpressionNode expression, List<Node> children) {
         super(children);
         this.expression = expression;
     }

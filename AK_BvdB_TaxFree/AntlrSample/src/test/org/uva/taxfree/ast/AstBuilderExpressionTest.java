@@ -6,15 +6,15 @@ import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AstBuilderExpressionTest {
     @Test
     public void testLiteralExpression() throws Exception {
         // if (true)
         ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
-        Set<Node> childNodes = new LinkedHashSet<>();
+        List<Node> childNodes = new ArrayList<>();
 
         Node ifStatementNode = new IfStatementNode(booleanLiteralNodeTrue, childNodes);
     }
@@ -25,7 +25,7 @@ public class AstBuilderExpressionTest {
         ExpressionNode booleanLiteralNodeTrue = new BooleanLiteralNode("true");
         ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
 //        ExpressionNode booleanExpressionNode = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanLiteralNodeFalse);
-        Set<Node> childNodes = new LinkedHashSet<>();
+        List<Node> childNodes = new ArrayList<>();
 
 //        Node ifStatementNode = new IfStatementNode(booleanExpressionNode, childNodes);
     }
@@ -37,7 +37,7 @@ public class AstBuilderExpressionTest {
         ExpressionNode booleanLiteralNodeFalse = new BooleanLiteralNode("false");
 //        ExpressionNode booleanExpressionNodeAnd = new BooleanBinaryExpressionNode(booleanLiteralNodeFalse, "&&", booleanLiteralNodeTrue);
 //        ExpressionNode booleanExpressionNodeOr = new BooleanBinaryExpressionNode(booleanLiteralNodeTrue, "||", booleanExpressionNodeAnd);
-        Set<Node> childNodes = new LinkedHashSet<>();
+        List<Node> childNodes = new ArrayList<>();
 
 //        Node ifStatementNode = new IfStatementNode(booleanExpressionNodeOr, childNodes);
     }

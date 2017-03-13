@@ -5,12 +5,12 @@ import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 
-import java.util.Set;
+import java.util.List;
 
 public abstract class BlockNode extends Node {
-    private final Set<Node> mChildren;
+    private final List<Node> mChildren;
 
-    public BlockNode(Set<Node> children) {
+    public BlockNode(List<Node> children) {
         mChildren = children; ///< preserves the order in which the items were inserted
     }
 

@@ -22,7 +22,7 @@ public class SymbolTable {
         mCalculations = new ArrayList<>();
     }
 
-    public void addDepencendies(Set<DeclarationNode> nodes) {
+    public void addDepencendies(List<DeclarationNode> nodes) {
         for (DeclarationNode n : nodes) {
             addDeclaration(n);
         }
