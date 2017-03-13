@@ -1,7 +1,7 @@
 module UI.Widget.StringRadio exposing (view)
 
 import Html exposing (Html, div, label, input, text)
-import Html.Attributes exposing (type_, id, class, checked)
+import Html.Attributes exposing (type_, class, checked)
 import Html.Events exposing (onClick)
 import List.Extra as List
 import UI.Widget.Base exposing (WidgetContext)
@@ -21,18 +21,18 @@ view { identifier, env, onChange } values =
     in
         div []
             (List.indexedMap
-                (\index value -> renderOption index value (isSelected index) onChange)
+                (\index value -> renderOption value (isSelected index) onChange)
                 values
             )
 
 
-renderOption : Int -> String -> Bool -> (Value -> msg) -> Html msg
-renderOption index value isSelected onChange =
+renderOption : String -> Bool -> (Value -> msg) -> Html msg
+renderOption value isSelected onChange =
     div [ class "radio" ]
         [ label []
             [ input
                 [ type_ "radio"
-                , checked (isSelected)
+                , checked isSelected
                 , onClick (onChange (Values.string value))
                 ]
                 []

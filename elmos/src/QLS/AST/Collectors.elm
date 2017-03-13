@@ -9,7 +9,7 @@ import Dict exposing (Dict)
 collectDefaultValueConfigs : StyleSheet -> List ( Location, ValueType, Configuration )
 collectDefaultValueConfigs styleSheet =
     StyleSheetVisitor.inspect
-        { defaultConfig | onDefaultValueConfig = StyleSheetVisitor.post (::) }
+        { defaultConfig | onDefaultValueConfig = StyleSheetVisitor.on (::) }
         styleSheet
         []
 
@@ -32,7 +32,7 @@ collectQuestionReferences styleSheet =
                     ref :: context
     in
         StyleSheetVisitor.inspect
-            { defaultConfig | onQuestion = StyleSheetVisitor.post onQuestion }
+            { defaultConfig | onQuestion = StyleSheetVisitor.on onQuestion }
             styleSheet
             []
 
@@ -42,7 +42,7 @@ collectConfiguredQuestions styleSheet =
     StyleSheetVisitor.inspect
         { defaultConfig
             | onQuestion =
-                StyleSheetVisitor.post <|
+                StyleSheetVisitor.on <|
                     \question context ->
                         case question of
                             Question _ ->
