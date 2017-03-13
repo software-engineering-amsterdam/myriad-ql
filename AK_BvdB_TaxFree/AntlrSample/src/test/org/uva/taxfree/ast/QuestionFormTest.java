@@ -15,6 +15,7 @@ import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.operators.NumericOperator;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.DateType;
 import org.uva.taxfree.model.types.IntegerType;
@@ -71,7 +72,7 @@ public class QuestionFormTest {
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mSymbolTable);
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
 
-        BinaryExpressionNode expCalc = new CalculationBinaryExpressionNode(variableSold, "-", variableBought);
+        BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new NumericOperator("-"), variableBought);
         CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
@@ -177,7 +178,7 @@ public class QuestionFormTest {
     }
 
     private ExpressionNode CalcOnePlusFive() {
-        ExpressionNode calc = new CalculationBinaryExpressionNode(new IntegerLiteralNode("1"), "+", new IntegerLiteralNode("5"));
+        ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode("1"), new NumericOperator("+"), new IntegerLiteralNode("5"));
         return calc;
     }
 }
