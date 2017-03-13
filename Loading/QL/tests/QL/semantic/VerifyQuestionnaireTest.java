@@ -18,9 +18,9 @@ class VerifyQuestionnaireTest {
     @Test
     public void validquestionnaire() throws IOException {
         Form form = createForm("QL/tests/assets/validquestionnaire.ql");
-        Analyzer Analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer();
 
-        Faults faults = Analyzer.analyze(form);
+        Faults faults = analyzer.analyze(form);
 
         assertEquals(0, faults.getErrors().size());
         assertEquals(0, faults.getWarnings().size());
@@ -29,9 +29,9 @@ class VerifyQuestionnaireTest {
     @Test
     public void cyclicdependencies() throws IOException {
         Form form = createForm("QL/tests/assets/cyclicdependencies.ql");
-        Analyzer Analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer();
 
-        Faults faults = Analyzer.analyze(form);
+        Faults faults = analyzer.analyze(form);
 
         assertEquals("Error: There is a cyclic dependency in the computed questions Name1 and Name0 on line 2", faults.getErrors().get(0).show());
         assertEquals(0, faults.getWarnings().size());
@@ -40,9 +40,9 @@ class VerifyQuestionnaireTest {
     @Test
     public void duplicateLabel() throws IOException {
         Form form = createForm("QL/tests/assets/duplicatelabel.ql");
-        Analyzer Analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer();
 
-        Faults faults = Analyzer.analyze(form);
+        Faults faults = analyzer.analyze(form);
 
         assertEquals("Warning: The question: \"Question\" exists twice in the questionnaire on line 2", faults.getWarnings().get(0).show());
         assertEquals(0, faults.getErrors().size());
@@ -51,9 +51,9 @@ class VerifyQuestionnaireTest {
     @Test
     public void duplicateVariable() throws IOException {
         Form form = createForm("QL/tests/assets/duplicatevariable.ql");
-        Analyzer Analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer();
 
-        Faults faults = Analyzer.analyze(form);
+        Faults faults = analyzer.analyze(form);
 
         assertEquals(0, faults.getWarnings().size());
         assertEquals("Error: The variable Name0 cannot be added, because it is already defined on line 2", faults.getErrors().get(0).show());
@@ -62,9 +62,9 @@ class VerifyQuestionnaireTest {
     @Test
     public void unreferencedVariable() throws IOException {
         Form form = createForm("QL/tests/assets/unreferenced.ql");
-        Analyzer Analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer();
 
-        Faults faults = Analyzer.analyze(form);
+        Faults faults = analyzer.analyze(form);
 
         assertEquals(0, faults.getWarnings().size());
         assertEquals("Error: The variable: Name3 is not defined on line 5", faults.getErrors().get(0).show());

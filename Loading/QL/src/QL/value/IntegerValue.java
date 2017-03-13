@@ -125,7 +125,7 @@ public class IntegerValue extends Value {
 			return new IntegerValue();
 		}
 		
-		return new IntegerValue(+ value );
+		return new IntegerValue(Math.abs(value));
 	}
 
 	@Override
