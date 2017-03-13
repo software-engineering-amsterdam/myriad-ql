@@ -29,14 +29,13 @@ class Editor(QMainWindow, QWidget):
         self.file_path = None
 
         self.menu_file = self.menuBar().addMenu("File")
-        # self.action_evaluate = QAction("Run", self)
         self.toolbar = self.addToolBar("Actions")
         self.run_action = self.add_run_action()
         self.open_action = self.add_open_action()
         self.text_editor = QTextEdit()
-
-        self.init_text_editor()
-        self.init_status_bar()
+        status_bar = self.init_status_bar()
+        cursor_position = self.add_cursor_position(status_bar)
+        self.init_text_editor(cursor_position)
         self.list_errors = QListWidget()
         self.setCentralWidget(self.text_editor)
         self.set_error_list(self.list_errors)
@@ -49,7 +48,7 @@ class Editor(QMainWindow, QWidget):
         items.setWidget(list_errors)
         self.addDockWidget(Qt.BottomDockWidgetArea, items)
 
-    def init_text_editor(self):
+    def init_text_editor(self, cursor_position_widget):
         font = QFont()
         font.setFamily("Courier")
         font.setStyleHint(QFont.Monospace)
@@ -59,18 +58,26 @@ class Editor(QMainWindow, QWidget):
         self.text_editor.acceptRichText()
         self.text_editor.setFont(font)
         self.text_editor.setTabStopWidth(4 * metrics.width(' '))
-        self.text_editor.cursorPositionChanged.connect(self.update_text_cursor_position)
+        self.text_editor.cursorPositionChanged.\
+            connect(lambda: self.update_cursor_position(cursor_position_widget, self.current_cursor_position()))
         self.text_editor.textChanged.connect(self.on_text_changed)
         self.on_text_changed()
 
     def init_status_bar(self):
-        statusBar = QStatusBar()
-        self.cursor_position = QLabel()
-        self.cursor_position.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.cursor_position.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.cursor_position.setText(self.update_text_cursor_position())
-        statusBar.addWidget(self.cursor_position, 1)
-        self.setStatusBar(statusBar)
+        status_bar = QStatusBar()
+        self.setStatusBar(status_bar)
+        return status_bar
+
+    def update_cursor_position(self, cursor_position, position_label):
+        cursor_position.setText(position_label)
+
+    def add_cursor_position(self, status_bar):
+        cursor_position = QLabel()
+        cursor_position.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        cursor_position.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        cursor_position.setText(self.current_cursor_position())
+        status_bar.addWidget(cursor_position, 1)
+        return cursor_position
 
     def on_text_changed(self):
         self.run_action.setEnabled(len(self.text_editor.toPlainText()) > 0)
@@ -118,12 +125,11 @@ class Editor(QMainWindow, QWidget):
         file_path, _ = QFileDialog.getOpenFileName(filter="*.ql")
         self.load_file(file_path)
 
-    def update_text_cursor_position(self):
+    def current_cursor_position(self):
         text_cursor = self.text_editor.textCursor()
         cursor_row = text_cursor.blockNumber()
         cursor_column = text_cursor.positionInBlock()
         position = "{}:{}".format(cursor_row, cursor_column)
-        self.cursor_position.setText(position)
         return position
 
     def closeEvent(self, event):
