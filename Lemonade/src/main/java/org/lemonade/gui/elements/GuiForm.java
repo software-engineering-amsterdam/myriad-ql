@@ -2,6 +2,8 @@ package org.lemonade.gui.elements;
 
 import java.util.List;
 
+import org.lemonade.visitors.EvaluateVisitor;
+
 import javafx.scene.control.Control;
 
 public class GuiForm implements GuiElement {
@@ -14,11 +16,24 @@ public class GuiForm implements GuiElement {
         this.bodies = bodies;
     }
 
-    @Override public void update() {
+    public List<GuiBody> getBodies() {
+        return this.bodies;
+    }
 
+    @Override public void update() {
+        for (GuiBody body : bodies) {
+            if (body.isConditional()) {
+
+            }
+        }
     }
 
     @Override public Control getWidget() {
         return null;
     }
+
+    public GuiForm accept(EvaluateVisitor visitor) {
+        return visitor.visit(this);
+    }
+
 }

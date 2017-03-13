@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.lemonade.QLBaseVisitor;
 import org.lemonade.QLParser;
-import org.lemonade.exeptions.QLOperatorException;
+import org.lemonade.exceptions.QLOperatorException;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;

@@ -3,6 +3,12 @@ package org.lemonade.visitors;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.lemonade.gui.elements.GuiBody;
+import org.lemonade.gui.elements.GuiConditional;
+import org.lemonade.gui.elements.GuiForm;
+import org.lemonade.gui.elements.GuiIdentifierValue;
+import org.lemonade.gui.elements.GuiQuestion;
+import org.lemonade.gui.elements.GuiValue;
 import org.lemonade.nodes.ASTNode;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
@@ -40,13 +46,19 @@ import org.lemonade.visitors.interfaces.LiteralVisitor;
 /**
  *
  */
-public class EvaluateVisitor implements ASTVisitor<Expression>, BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>{
-    Map<String, Literal<?>> environment;
+public class EvaluateVisitor implements
+        ASTVisitor<Expression>, BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
+
+    private Map<GuiIdentifierValue, GuiValue<?>> guiEnvironment;
+    private Map<String, Literal<?>> literalEnvironment;
+
+    public EvaluateVisitor() {
+        this.guiEnvironment = new HashMap<>();
+        this.literalEnvironment = new HashMap<>();
+    }
 
     @Override
     public Expression visit(Form form) {
-        environment = new HashMap<>();
-
         for (Body body : form.getBodies()) {
             body.accept(this);
         }
@@ -58,8 +70,8 @@ public class EvaluateVisitor implements ASTVisitor<Expression>, BaseVisitor<Expr
         IdentifierLiteral identifier = question.getIdentifier();
 //        Literal<?> literal = question.getValue();
 //
-//        assert !environment.containsKey(identifier);
-//        environment.put(identifier, new UndefinedValue(question.getType()));
+//        assert !literalEnvironment.containsKey(identifier);
+//        literalEnvironment.put(identifier, new UndefinedValue(question.getType()));
         return null;
     }
 
@@ -208,14 +220,35 @@ public class EvaluateVisitor implements ASTVisitor<Expression>, BaseVisitor<Expr
 
     @Override
     public Expression visit(IdentifierLiteral identifierValue) {
-        if (!environment.containsKey(identifierValue.getValue())) {
+        if (!literalEnvironment.containsKey(identifierValue.getValue())) {
             throw new RuntimeException("Symbol not found!");
         }
-        return environment.get(identifierValue.getValue());
+        return literalEnvironment.get(identifierValue.getValue());
     }
 
     @Override
     public Expression visit(ASTNode astNode) {
         return null;
+    }
+
+    @Override public GuiForm visit(final GuiForm form) {
+        for (GuiBody body : form.getBodies()) {
+            body.accept(this);
+        }
+        return null;
+    }
+
+    @Override public GuiBody visit(final GuiBody body) {
+        return body.accept(this);
+    }
+
+    @Override public GuiQuestion visit(final GuiQuestion question) {
+        guiEnvironment.put(question.getIdentifier(), question.getValue());
+        return question;
+    }
+
+    @Override public GuiConditional visit(final GuiConditional conditional) {
+//        if ()
+        return conditional;
     }
 }

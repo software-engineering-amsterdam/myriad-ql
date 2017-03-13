@@ -15,11 +15,14 @@ import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.types.QLType;
+import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
+import org.lemonade.visitors.interfaces.BaseVisitor;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -30,13 +33,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.lemonade.visitors.interfaces.BaseVisitor;
 
 public class QLFxApp extends Application {
 
     private File file;
     private Scene selectionScene;
     private Scene questionnaireScene;
+
+    private boolean isSubmitted = false;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -127,7 +131,23 @@ public class QLFxApp extends Application {
             root.accept((BaseVisitor<QLType>) typeCheckVisitor);
             GuiForm guiRoot = (GuiForm) root.accept((BaseVisitor<GuiElement>) guiVisitor);
 
-            submitButton.setOnAction(e -> submitForm(guiRoot, gridPane));
+            submitButton.setOnAction(e -> {
+                isSubmitted = true;
+                submitForm(guiRoot, gridPane);
+            });
+
+            Task task = new Task<Void>() {
+                EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
+
+                @Override protected Void call() throws Exception {
+                    while (!isSubmitted) {
+                        guiRoot.accept(evaluateVisitor);
+                    }
+                    return null;
+                }
+            };
+
+            new Thread(task).start();
 
             stage.setScene(questionnaireScene);
 

@@ -1,4 +1,4 @@
-package org.lemonade.exeptions;
+package org.lemonade.exceptions;
 
 /**
  *

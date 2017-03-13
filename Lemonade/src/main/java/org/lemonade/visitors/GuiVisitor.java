@@ -56,7 +56,7 @@ import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.LiteralVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElement>, ExpressionVisitor<GuiElement>, TypeVisitor<GuiElement> {
+public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElement>, TypeVisitor<GuiElement> {
 
     private GridPane pane;
     private int rowCount;
@@ -68,7 +68,7 @@ public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElemen
 
     @Override public GuiElement visit(final Form form) {
         List<GuiBody> bodies = new ArrayList<>();
-        GuiIdentifierValue identifier = (GuiIdentifierValue) form.getIdentifier().accept(this);
+        GuiIdentifierValue identifier = new GuiIdentifierValue(form.getIdentifier().getValue());
 
         for (Body body : form.getBodies()) {
             bodies.add((GuiBody) body.accept(this));
@@ -78,7 +78,7 @@ public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElemen
     }
 
     @Override public GuiElement visit(final Question question) {
-        GuiIdentifierValue identifier = (GuiIdentifierValue) question.getIdentifier().accept( this);
+        GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
         GuiValue<?> value = (GuiValue<?>) question.getType().accept(this);
         GuiLabelValue labelValue = new GuiLabelValue(question.getLabel());
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelValue, value);
@@ -97,92 +97,13 @@ public class GuiVisitor implements ASTVisitor<GuiElement>, BaseVisitor<GuiElemen
         return guiQuestion;
     }
 
+    // TODO: figure out how to store related identifiers
     @Override public GuiElement visit(final Conditional conditional) {
-        return new GuiConditional((GuiIdentifierValue) conditional.getCondition().accept(this));
-    }
-
-    @Override public GuiElement visit(final AndBinary andBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final OrBinary orBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final PlusBinary plusBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final ProductBinary productBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final MinusBinary minusBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final DivideBinary divideBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final EqBinary eqBinary) {
-        return (GuiIdentifierValue) eqBinary.getLeft().accept(this);
-    }
-
-    @Override public GuiElement visit(final NEqBinary nEqBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final GTBinary gtBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final GTEBinary gteBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final LTBinary ltBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final LTEBinary lteBinary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final BangUnary bangUnary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final NegUnary negUnary) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final BooleanLiteral booleanValue) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final DecimalLiteral decimalValue) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final DateLiteral dateLiteral) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final MoneyLiteral moneyValue) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final IntegerLiteral integerValue) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final StringLiteral stringValue) {
-        return null;
-    }
-
-    @Override public GuiElement visit(final IdentifierLiteral identifierValue) {
-        return new GuiIdentifierValue(identifierValue.getValue());
+        List<GuiBody> conditionalBodies = new ArrayList<>();
+        for (Body body : conditional.getBodies()) {
+            conditionalBodies.add((GuiBody) body.accept(this));
+        }
+        return new GuiConditional(conditionalBodies);
     }
 
     @Override public GuiElement visit(final QLIntegerType qlIntegerType) {
