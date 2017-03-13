@@ -1,10 +1,10 @@
 form TestForm {
-    integer firstName: "Enter your first name";
-    integer lastName: "Enter your first name";
+    string firstName: "Enter your first name";
+    string lastName: "Enter your first name";
     boolean areYouSure: "Are you sure?" = false;
 
     if (areYouSure) {
-        integer fullName: "This is your full name" = firstName + lastName;
+        string fullName: "This is your full name" = firstName + lastName;
     }
 }
 

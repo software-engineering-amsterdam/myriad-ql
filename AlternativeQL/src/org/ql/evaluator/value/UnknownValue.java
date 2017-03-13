@@ -12,4 +12,9 @@ public class UnknownValue extends Value {
         return !(o == null || getClass() != o.getClass());
 
     }
+
+    @Override
+    public boolean isUndefined() {
+        return true;
+    }
 }

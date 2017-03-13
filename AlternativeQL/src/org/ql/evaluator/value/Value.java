@@ -146,5 +146,9 @@ public abstract class Value {
         return new UnknownValue();
     }
 
+    public boolean isUndefined() {
+        return false;
+    }
+
     public abstract Object getPlainValue();
 }

@@ -27,6 +27,11 @@ public class BooleanElement extends Element {
 
     @Override
     public void updateValue(Value value) {
+
+        if (value.isUndefined()) {
+            return;
+        }
+
         checkBoxWidget.setInputValue((Boolean) value.getPlainValue());
     }
 

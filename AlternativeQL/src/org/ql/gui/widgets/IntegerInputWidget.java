@@ -6,7 +6,7 @@ import javafx.scene.control.TextFormatter;
 public class IntegerInputWidget extends InputWidget<Integer> {
 
     public IntegerInputWidget(String label) {
-        super(label, createTextFormatter());
+        super(label);
     }
 
     private static TextFormatter<Integer> createTextFormatter() {
