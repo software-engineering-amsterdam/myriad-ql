@@ -31,7 +31,7 @@ public class QLStructureChecker implements QLVisitor<Void> {
         this.expressionMap = new HashMap<>();
     }
 
-    public void checkForCircularReferences(Form form, Map<String, Type> typeTable) {
+    public void checkQLStructure(Form form, Map<String, Type> typeTable) {
 
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
