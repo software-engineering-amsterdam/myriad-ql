@@ -1,8 +1,11 @@
+from misc.visitor import Visitor
+
+
 class UndefinedVariableError(Exception):
     pass
 
 
-class Evaluator:
+class Evaluator(Visitor):
 
     def __init__(self, environment):
         self.environment = environment

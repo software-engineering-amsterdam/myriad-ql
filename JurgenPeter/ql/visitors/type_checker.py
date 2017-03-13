@@ -1,20 +1,14 @@
-from misc.messages import *
+from misc.visitor import CheckerVisitor
 from ql.datatypes import *
 
 
-class TypeChecker:
+class TypeChecker(CheckerVisitor):
 
     computable_datatypes = [IntegerDatatype(), DecimalDatatype()]
 
     def __init__(self, symboltable, errors=[]):
         self.symboltable = symboltable
         self.errors = errors
-
-    def error(self, message):
-        self.errors.append(ErrorMessage(message))
-
-    def warn(self, message):
-        self.errors.append(WarningMessage(message))
 
     def check(self, node):
         self.visit(node)

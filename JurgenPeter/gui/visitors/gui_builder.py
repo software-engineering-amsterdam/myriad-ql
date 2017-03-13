@@ -1,7 +1,9 @@
 from abc import abstractmethod
 
+from misc.visitor import Visitor
 
-class GuiBuilder:
+
+class GuiBuilder(Visitor):
 
     def __init__(self, app, listener, exit, widgets):
         self.app = app

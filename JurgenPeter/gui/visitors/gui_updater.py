@@ -1,7 +1,8 @@
+from misc.visitor import Visitor
 from ql.visitors.evaluator import *
 
 
-class GuiUpdater:
+class GuiUpdater(Visitor):
 
     def __init__(self, form_app, environment):
         self.form_app = form_app

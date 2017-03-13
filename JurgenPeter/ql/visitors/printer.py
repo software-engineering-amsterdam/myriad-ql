@@ -1,4 +1,7 @@
-class Printer:
+from misc.visitor import Visitor
+
+
+class Printer(Visitor):
 
     def print(self, node):
         print(self.visit(node))

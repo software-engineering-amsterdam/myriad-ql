@@ -1,20 +1,13 @@
+from misc.visitor import CheckerVisitor
 
-from misc.messages import *
 
-
-class SymbolChecker:
+class SymbolChecker(CheckerVisitor):
 
     def __init__(self, ql_symboltable, errors=[]):
         self.ql_symbols = set(ql_symboltable.keys())
         self.qls_symbols = set()
         self.labels = []
         self.errors = errors
-
-    def error(self, message):
-        self.errors.append(ErrorMessage(message))
-
-    def warn(self, message):
-        self.errors.append(WarningMessage(message))
 
     def check(self, node):
         self.visit(node)

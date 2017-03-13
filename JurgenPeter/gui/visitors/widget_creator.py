@@ -1,7 +1,8 @@
 from gui.widgets import *
+from misc.visitor import Visitor
 
 
-class WidgetCreator:
+class WidgetCreator(Visitor):
 
     def create(self, node):
         return self.visit(node)

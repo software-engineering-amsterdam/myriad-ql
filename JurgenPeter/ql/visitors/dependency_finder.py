@@ -1,4 +1,7 @@
-class DependencyFinder:
+from misc.visitor import Visitor
+
+
+class DependencyFinder(Visitor):
 
     def find(self, node):
         return self.visit(node)

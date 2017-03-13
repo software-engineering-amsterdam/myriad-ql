@@ -1,4 +1,7 @@
-class QuestionFinder:
+from misc.visitor import Visitor
+
+
+class QuestionFinder(Visitor):
 
     def __init__(self, name):
         self.name = name

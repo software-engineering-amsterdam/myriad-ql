@@ -1,7 +1,8 @@
+from misc.visitor import Visitor
 from ql.visitors.evaluator import *
 
 
-class ComputationUpdater:
+class ComputationUpdater(Visitor):
 
     def __init__(self, environment):
         self.environment = environment

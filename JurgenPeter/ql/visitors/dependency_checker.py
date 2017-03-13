@@ -1,18 +1,12 @@
-from misc.messages import *
+from misc.visitor import CheckerVisitor
 from ql.visitors.dependency_finder import DependencyFinder
 
 
-class DependencyChecker:
+class DependencyChecker(CheckerVisitor):
 
     def __init__(self, errors=[]):
         self.known_dependencies = {}
         self.errors = errors
-
-    def error(self, message):
-        self.errors.append(ErrorMessage(message))
-
-    def warn(self, message):
-        self.errors.append(WarningMessage(message))
 
     def check(self, node):
         self.visit(node)
@@ -54,7 +48,6 @@ class DependencyChecker:
     def visit_if_conditional(self, node):
         scope = sum([self.visit(element) for element in node.ifbody], [])
         return self.visit_conditional(node, scope)
-
 
     def visit_ifelse_conditional(self, node):
         scope = sum([self.visit(element) for element in node.ifbody +

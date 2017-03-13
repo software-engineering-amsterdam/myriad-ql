@@ -1,13 +1,10 @@
-from misc.messages import *
+from misc.visitor import CheckerVisitor
 
 
-class TypeChecker:
+class TypeChecker(CheckerVisitor):
     def __init__(self, symbol_table, errors=[]):
         self.symboltable = symbol_table
         self.errors = errors
-
-    def error(self, message):
-        self.errors.append(ErrorMessage(message))
 
     def check(self, node):
         self.visit(node, [])
