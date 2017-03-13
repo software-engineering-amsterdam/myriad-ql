@@ -1,7 +1,7 @@
 package org.ql.ast.statement;
 
-public interface StatementVisitor<T> {
-    T visit(IfThen ifThen);
-    T visit(IfThenElse ifThenElse);
-    T visit(Question question);
+public interface StatementVisitor<T, C> {
+    T visitIfThen(IfThen ifThen, C context);
+    T visitIfThenElse(IfThenElse ifThenElse, C context);
+    T visitQuestion(Question question, C context);
 }

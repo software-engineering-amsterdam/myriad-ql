@@ -41,6 +41,6 @@ public class IfThenTest {
         assertSame(expectedBodySize, actualIfThenElse.getThenStatements().size());
         assertTrue(actualQuestion.getType() instanceof MoneyType);
         assertEquals(expectedId, actualQuestion.getId().toString());
-        assertEquals(expectedQuestionText, actualQuestion.getQuestionText().toString());
+        assertEquals(expectedQuestionText, actualQuestion.getQuestionLabel().toString());
     }
 }

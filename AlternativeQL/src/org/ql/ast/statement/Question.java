@@ -1,21 +1,20 @@
 package org.ql.ast.statement;
 
-import com.sun.istack.internal.Nullable;
 import org.ql.ast.Expression;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
-import org.ql.ast.statement.question.QuestionText;
+import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.Type;
 
 public class Question extends Statement {
     private final Identifier id;
-    private final QuestionText questionText;
+    private final QuestionLabel questionLabel;
     private final Type type;
     private final Expression defaultValue;
 
-    public Question(Identifier id, QuestionText questionText, Type type, @Nullable Expression defaultValue) {
+    public Question(Identifier id, QuestionLabel questionLabel, Type type, Expression defaultValue) {
         this.id = id;
-        this.questionText = questionText;
+        this.questionLabel = questionLabel;
         this.type = type;
         this.defaultValue = defaultValue;
     }
@@ -24,20 +23,36 @@ public class Question extends Statement {
         return id;
     }
 
-    public QuestionText getQuestionText() {
-        return questionText;
+    public QuestionLabel getQuestionLabel() {
+        return questionLabel;
     }
 
     public Type getType() {
         return type;
     }
 
-    public Expression getDefaultValue() {
+    public Expression getValue() {
         return defaultValue;
     }
 
     @Override
-    public <T> T accept(StatementVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
+        return visitor.visitQuestion(this, context);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        return id != null ? id.equals(question.id) : question.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
