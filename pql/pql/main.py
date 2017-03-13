@@ -12,9 +12,9 @@ if __name__ == '__main__':
     file_window.show()
     exit(app.exec_())
 
+# Jeffrey TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
+# Adriaan TODO: Line numbers tonen in error messages van TypeChecker
 
-#TODO: Line numbers tonen in error messages van TypeChecker
-#TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
-#TODO: Export of values ?
-#TODO: Make all fields mandatory
-#TODO: Highlight betreffende error line
+# Adriaan TODO: Export of values ?
+# Adriaan TODO: Make all fields mandatory
+# Adriaan TODO: Highlight betreffende error line

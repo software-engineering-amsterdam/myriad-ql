@@ -40,22 +40,22 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.type_detection(node, self.arithmetic_type_detection)
 
     def conditional_if(self, node):
-        condition = node.condition.apply(self)
-        if condition.data_type is not DataTypes.boolean:
+        condition_result = node.condition.apply(self)
+        if condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
                 "Condition on location {} does not contain a boolean expression, it's result type is {}".format(
-                    node.location, condition))
+                    node.location, condition_result))
         [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
-        condition = node.condition.apply(self)
-        if condition is None:
+        condition_result = node.condition.apply(self)
+        if condition_result is None:
             self.errors.append(
-                "Condition on location {} does not contain a valid boolean expression".format(node.location))
-        elif condition.data_type is not DataTypes.boolean:
+                "Condition on location {} does not contain a valid boolean expression".format(node.condition.location))
+        elif condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
                 "Condition on location {} does not contain a valid boolean expression, it's result type is {}".format(
-                    condition.location, condition.data_type))
+                    node.condition.location, str(condition_result.data_type)))
         [statement.apply(self) for statement in node.statements]
         [statement.apply(self) for statement in node.else_statement_list]
 
