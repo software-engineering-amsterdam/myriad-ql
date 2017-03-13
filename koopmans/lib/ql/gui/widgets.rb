@@ -1,5 +1,28 @@
 module QL
   module GUI
+    class Frame
+      def initialize(question_frame)
+        position = question_frame.gui.number_of_questions
+        question_frame.frame = TkFrame.new.grid(row: position)
+      end
+    end
+
+    class Label
+      def initialize(question_frame)
+        label      = TkLabel.new(question_frame.frame).pack
+        label.text = question_frame.label
+      end
+    end
+
+    class SubmitButton
+      def initialize(gui)
+        position = gui.number_of_questions + 1
+        button         = TkButton.new.grid(row: position)
+        button.text    = 'Submit'
+        button.command = proc { gui.submit }
+      end
+    end
+
     class Widget
       attr_accessor :value
 
@@ -140,39 +163,6 @@ module QL
       def set_value(value)
         @variable.value = value
         @value = value
-      end
-    end
-
-    class Label < Widget
-      def initialize(question_frame, args=nil)
-        super
-        label      = TkLabel.new(question_frame.frame).pack
-        label.text = question_frame.label
-      end
-    end
-
-    class Frame < Widget
-      def initialize(question_frame, args=nil)
-        super
-        question_frame.frame = TkFrame.new.grid(row: position)
-      end
-
-      def position
-        @question_frame.gui.number_of_questions
-      end
-    end
-
-    class SubmitButton
-      def initialize(gui)
-        @gui = gui
-
-        button         = TkButton.new.grid(row: position)
-        button.text    = 'Submit'
-        button.command = proc { gui.submit }
-      end
-
-      def position
-        @gui.number_of_questions + 1
       end
     end
   end
