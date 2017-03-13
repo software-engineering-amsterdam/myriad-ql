@@ -63,6 +63,10 @@ public class IntegerValue extends Value {
 
     @Override
     public Value addition(Value addition) {
+        if (addition.isNull()) {
+            return addition;
+        }
+
         return new IntegerValue(value + (Integer) addition.getPlainValue());
     }
 
