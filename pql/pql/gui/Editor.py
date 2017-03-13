@@ -97,11 +97,11 @@ class Editor(QMainWindow, QWidget):
         self.write_contents_to_file(contents, self.file_path)
         ast = self.create_ast(contents)
         if ast is not None:
-            identifiers, identifier_errors = self.check_ids(ast)
+            identifier_errors = self.check_ids(ast)
             if identifier_errors:
                 self.list_errors.addItems(identifier_errors)
             else:
-                type_errors = self.check_type(identifiers, ast)
+                type_errors = self.check_type(ast)
                 if type_errors:
                     self.list_errors.addItems(type_errors)
                 else:
@@ -150,9 +150,9 @@ class Editor(QMainWindow, QWidget):
         except Exception as e:
             self.list_errors.addItem("Checking ids:\n    {}".format(e))
 
-    def check_type(self, ql_identifier_check_result, ql_ast):
+    def check_type(self, ql_ast):
         try:
-            return TypeChecker(ql_identifier_check_result).visit(ql_ast)
+            return TypeChecker().visit(ql_ast)
         except Exception as e:
             self.list_errors.addItem("Checking types:\n    {}".format(e))
 
