@@ -103,7 +103,7 @@ class IntegerEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        return bool(re.match("^(-|\+)?[0-9]*$", text))
+        return bool(re.match(r"^(-|\+)?[0-9]*$", text))
 
     def get_value(self):
         try:
@@ -120,7 +120,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        return bool(re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text))
+        return bool(re.match(r"^(-|\+)?[0-9]*\.?[0-9]*$", text))
 
     def get_value(self):
         try:
