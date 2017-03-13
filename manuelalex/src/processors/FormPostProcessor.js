@@ -12,7 +12,7 @@ import {IfStatement} from '../statements/IfStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
 
 import {Comparison} from '../expressions/Comparison.js';
-import {Expression} from '../expressions/Expression.js';
+import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
 
 import {MinOperator} from '../operator/MinOperator.js';
@@ -20,6 +20,7 @@ import {PlusOperator} from '../operator/PlusOperator.js';
 import {DivideOperator} from '../operator/DivideOperator.js';
 import {MultiplyOperator} from '../operator/MultiplyOperator.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
+import {Property} from '../types/Property.js';
 import {Label} from '../Label.js';
 
 export class FormPostProcessor {
@@ -47,18 +48,16 @@ export class FormPostProcessor {
     }
 
     allocation(data, location) {
-        return new Allocation(data[0].trim(), data[3], _.flattenDeep(data[7])[0], location);
+        return new Allocation(data[0], data[3], _.flattenDeep(data[7])[0], location);
     }
 
     expression(data, location, reject) {
-        console.log(data);
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
     }
 
     /* needs to be adjusted */
-    notExpression(data, location, reject) {
-        console.log(data);
-        return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
+    prefixExpression(data, location, reject) {
+        return new PrefixExpression(data[0], _.flattenDeep(data[1])[0], location);
     }
 
     deepExpression(data, location, reject) {
@@ -132,6 +131,10 @@ export class FormPostProcessor {
 
     boolean(data, location) {
         return new QLBoolean(location);
+    }
+
+    property(data, location){
+        return new Property(data[0].join(""), location);
     }
 
     toString(data) {

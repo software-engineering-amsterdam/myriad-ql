@@ -3,15 +3,11 @@
  */
 export class Allocation {
 
-    constructor(propertyName = '', type = null, expression = null, location) {
-
-
+    constructor(propertyName = {}, type = null, expression = null, location) {
         this.propertyName = propertyName;
         this.type = type;
         this.expression = expression;
-
         this.location = location;
-
     }
 
     getPropertyName(){
@@ -33,4 +29,4 @@ export class Allocation {
     validate() {
 
     }
-};
+}
