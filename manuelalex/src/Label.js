@@ -14,4 +14,12 @@ export class Label {
     render(visitor){
         return visitor.renderLabel(this);
     }
+
+    // localeCompare(otherLabel) {
+    //     return this.getValue().localeCompare(otherLabel.getValue());
+    // }
+
+    contains(obj) {
+        return this.getValue() === obj.getValue();
+    }
 }

@@ -2,6 +2,7 @@
  * Created by alexvanmanen on 24-02-17.
  */
 
+import find     from 'lodash/find';
 import {Form} from './Form.js'
 import {Question} from './Statements/Question.js'
 import {Expression} from './expressions/Expression.js'
@@ -16,6 +17,8 @@ export class ASTValidationVisitor {
     constructor(options = {}) {
         this.memoryState = new MemoryState();
         this.errors = [];
+        this.warnings = [];
+        this.labels = [];
     }
 
     getMemoryState(){
@@ -47,26 +50,51 @@ export class ASTValidationVisitor {
      * @param {Question} question
      */
     visitQuestion(question) {
-
-        console.log("The question is:" + question.name);
-        console.log("The question type is :" + question.propertyType);
         this.memoryState.set(question.propertyName, question.propertyType);
+        //TODO: duplicate question declarations with different types
+        /*
+         def a: "A?" boolean
+         if (x) { a }
+         if (!x) { a }
+         */
+
+        //TODO: cyclic dependencies between questions
+        /*
+         if (x) { y: "Y?" boolean }
+         if (y) { x: "X?" boolean }
+
+
+         if (x) { a: "A?" boolean }
+         if (!x) { a: "A?" boolean }
+         */
+
+
+        this.checkDuplicateLabels(question);
+
+
+    }
+
+    checkDuplicateLabels(statement){
+        let localLabel = statement.getLabel();
+        let label = find(this.labels, (label)=>{
+           return label.contains(localLabel);
+        });
+
+        if(label){
+            this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
+        } else {
+            this.labels.push(statement.getLabel());
+        }
 
     }
 
     visitAnswer(answer) {
-        console.log("The question is:" + answer.name);
-        console.log("The question type is :" + answer.propertyType);
+        //TODO: reference to undefined questions
+        this.checkDuplicateLabels(answer);
     }
 
     visitIfStatement(ifstatement) {
-        console.log("The question is:" + ifstatement.condition);
-        console.log("The question type is :" + ifstatement.ifBody);
-
         ifstatement.condition.accept(this);
-        // if(true){
-        //     this.visitStatements(ifstatement.ifBody);
-        // }
     }
 
     findExpressionInArray(object){
@@ -91,19 +119,22 @@ export class ASTValidationVisitor {
             let subExpression = this.findExpressionInArray(condition.leftHand);
             subExpression.accept(this);
         } else {
+            //Todo: add prefix operator !
 
-            this.validateOperator(condition, ["||", "&&", "=="], "QLBoolean");
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], "QLMoney");
-
+            this.validateOperator(condition, ["||", "&&", "=="], QLBoolean.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLMoney.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLString.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLNumber.name);
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLDate.name);
         }
     }
+
+
 
     validateOperator(condition, validOperators, validType) {
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
         let typeRightHand = this.memoryState.getType(condition.rightHand);
 
-        console.log(condition);
-        console.log(validType);
         if (validOperators.includes(condition.operator)) {
             if (typeLeftHand.constructor.name != validType || typeRightHand.constructor.name != validType) {
                 let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`;
