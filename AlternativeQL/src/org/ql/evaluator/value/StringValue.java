@@ -1,5 +1,6 @@
 package org.ql.evaluator.value;
 
+
 public class StringValue extends Value {
     private final String value;
 
@@ -22,8 +23,13 @@ public class StringValue extends Value {
     }
 
     @Override
-    public StringValue addition(Value addition) {
-        return new StringValue(value + addition.getPlainValue());
+    public Value addition(Value addition) {
+        return this.addition(this);
+    }
+
+    @Override
+    public Value addition(StringValue comparable) {
+        return new StringValue(comparable.value + value);
     }
 
     @Override

@@ -78,23 +78,7 @@ public abstract class Value {
         return new UnknownValue();
     }
 
-    public Value increment(IntegerValue comparable) {
-        return new UnknownValue();
-    }
-
-    public Value increment(DecimalValue comparable) {
-        return new UnknownValue();
-    }
-
     public Value decrement() {
-        return new UnknownValue();
-    }
-
-    public Value decrement(IntegerValue comparable) {
-        return new UnknownValue();
-    }
-
-    public Value decrement(DecimalValue comparable) {
         return new UnknownValue();
     }
 

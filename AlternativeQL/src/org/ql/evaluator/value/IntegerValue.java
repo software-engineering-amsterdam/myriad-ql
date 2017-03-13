@@ -1,5 +1,7 @@
 package org.ql.evaluator.value;
 
+import java.util.Objects;
+
 public class IntegerValue extends Value {
     private final Integer value;
 
@@ -8,38 +10,73 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public BooleanValue equal(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) == 0);
+    public Value equal(Value comparable) {
+        return comparable.equal(this);
     }
 
     @Override
-    public BooleanValue lowerThanOrEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) <= 0);
+    public Value equal(IntegerValue comparable) {
+        return new BooleanValue(value.equals(comparable.value));
     }
 
     @Override
-    public BooleanValue lowerThan(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) < 0);
+    public Value lowerThanOrEqual(Value comparable) {
+        return this.lowerThanOrEqual(this);
     }
 
     @Override
-    public BooleanValue greaterThan(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) > 0);
+    public Value lowerThanOrEqual(IntegerValue comparable) {
+        return new BooleanValue(comparable.value <= value);
     }
 
     @Override
-    public BooleanValue greaterThanOrEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) >= 0);
+    public Value lowerThan(Value comparable) {
+        return this.lowerThan(this);
     }
 
     @Override
-    public BooleanValue notEqual(Value comparable) {
-        return new BooleanValue(value.compareTo((Integer) comparable.getPlainValue()) != 0);
+    public Value lowerThan(IntegerValue comparable) {
+        return new BooleanValue(comparable.value < value);
+    }
+
+    @Override
+    public Value greaterThan(Value comparable) {
+        return this.greaterThan(this);
+    }
+
+    @Override
+    public Value greaterThan(IntegerValue comparable) {
+        return new BooleanValue(comparable.value > value);
+    }
+
+    @Override
+    public Value greaterThanOrEqual(Value comparable) {
+        return this.greaterThanOrEqual(this);
+    }
+
+    @Override
+    public Value greaterThanOrEqual(IntegerValue comparable) {
+        return new BooleanValue(comparable.value >= value);
+    }
+
+    @Override
+    public Value notEqual(Value comparable) {
+        return this.notEqual(this);
+    }
+
+    @Override
+    public Value notEqual(IntegerValue comparable) {
+        return new BooleanValue(!Objects.equals(comparable.value, value));
     }
 
     @Override
     public Value product(Value comparable) {
-        return new IntegerValue(value * ((Integer) comparable.getPlainValue()));
+        return this.product(this);
+    }
+
+    @Override
+    public Value product(IntegerValue comparable) {
+        return new IntegerValue(comparable.value * value);
     }
 
     @Override
@@ -54,16 +91,37 @@ public class IntegerValue extends Value {
 
     @Override
     public Value subtraction(Value subtraction) {
-        return new IntegerValue(value - (Integer) subtraction.getPlainValue());
+        return this.subtraction(this);
     }
 
+    @Override
+    public Value subtraction(IntegerValue comparable) {
+        return new IntegerValue(comparable.value - value);
+    }
+
+    @Override
     public Value division(Value division) {
-        return new IntegerValue(value / (Integer) division.getPlainValue());
+        return this.division(this);
+    }
+
+    @Override
+    public Value division(IntegerValue comparable) {
+
+        if (value == 0) {
+            return new UnknownValue();
+        }
+
+        return new IntegerValue(comparable.value / value);
     }
 
     @Override
     public Value addition(Value addition) {
-        return new IntegerValue(value + (Integer) addition.getPlainValue());
+        return this.addition(this);
+    }
+
+    @Override
+    public Value addition(IntegerValue comparable) {
+        return new IntegerValue(comparable.value + value);
     }
 
     @Override
