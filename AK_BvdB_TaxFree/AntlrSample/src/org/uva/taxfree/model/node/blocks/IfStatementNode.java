@@ -7,16 +7,16 @@ import org.uva.taxfree.model.node.expression.ExpressionNode;
 import java.util.List;
 
 public class IfStatementNode extends BlockNode {
-    private final ExpressionNode expression;
+    private final ExpressionNode mExpression;
 
     public IfStatementNode(ExpressionNode expression, List<Node> children) {
         super(children);
-        this.expression = expression;
+        mExpression = expression;
     }
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addExpression(expression);
+        symbolTable.addExpression(mExpression);
     }
 
 
