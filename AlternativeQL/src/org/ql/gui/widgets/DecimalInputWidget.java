@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 public class DecimalInputWidget extends InputWidget<BigDecimal> {
 
     DecimalInputWidget(String label) {
-        super(label, createFormatter());
+        super(label, createTextFormatter());
     }
 
-    private static TextFormatter<BigDecimal> createFormatter() {
+    private static TextFormatter<BigDecimal> createTextFormatter() {
         return new TextFormatter<>(new BigDecimalStringConverter(), new BigDecimal("0.0"), change -> {
             String text = change.getText();
 
