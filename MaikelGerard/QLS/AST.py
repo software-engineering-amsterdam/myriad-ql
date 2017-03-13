@@ -169,17 +169,19 @@ class DropdownNode(WidgetNode):
 
 
 class DefaultNode(Node):
-    def __init__(self, var_type, line=0, col=0):
+    def __init__(self, var_type, widget_type, line=0, col=0):
         super(DefaultNode, self).__init__(line, col)
         self.type = var_type
+        self.widget_type = widget_type
 
     def accept(self, visitor, *args):
         return visitor.default_node(self, *args)
 
 
 class DefaultWithPropsNode(DefaultNode):
-    def __init__(self, var_type, props, line, col):
-        super(DefaultWithPropsNode, self).__init__(var_type, line, col)
+    def __init__(self, var_type, props, widget_type, line, col):
+        super(DefaultWithPropsNode, self).__init__(var_type, widget_type,
+                                                   line, col)
         self.props = props
 
     def accept(self, visitor, *args):
