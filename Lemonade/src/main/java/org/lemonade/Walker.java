@@ -1,14 +1,17 @@
 package org.lemonade;
 
+import java.io.StringReader;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.types.QLType;
-import org.lemonade.visitors.*;
+import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.PrettyPrintVisitor;
+import org.lemonade.visitors.TypeCheckVisitor;
 import org.lemonade.visitors.interfaces.BaseVisitor;
-
-import java.io.StringReader;
 
 /**
  *

@@ -1,7 +1,5 @@
 package org.lemonade.visitors.interfaces;
 
-import org.lemonade.nodes.expressions.literal.*;
-
 /**
  *
  */

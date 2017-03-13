@@ -1,14 +1,9 @@
 package org.lemonade.nodes.expressions.literal;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
-import org.assertj.core.internal.cglib.core.Local;
 import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
-import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *

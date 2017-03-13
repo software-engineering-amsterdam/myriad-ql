@@ -1,7 +1,6 @@
 package org.lemonade.nodes.types;
 
 import org.lemonade.nodes.ASTNode;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
 /**

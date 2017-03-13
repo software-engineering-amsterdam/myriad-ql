@@ -3,9 +3,7 @@ package org.lemonade.nodes.expressions.literal;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
 import org.lemonade.nodes.types.QLBooleanType;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
-import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *

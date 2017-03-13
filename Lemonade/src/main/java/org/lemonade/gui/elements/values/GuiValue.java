@@ -1,4 +1,6 @@
-package org.lemonade.gui.elements;
+package org.lemonade.gui.elements.values;
+
+import org.lemonade.gui.elements.GuiElement;
 
 public abstract class GuiValue<T> implements GuiElement {
 

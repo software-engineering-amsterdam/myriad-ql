@@ -1,5 +1,8 @@
 package org.lemonade.gui.elements;
 
+import org.lemonade.gui.elements.values.GuiIdentifierValue;
+import org.lemonade.gui.elements.values.GuiLabelValue;
+import org.lemonade.gui.elements.values.GuiValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.scene.control.Control;

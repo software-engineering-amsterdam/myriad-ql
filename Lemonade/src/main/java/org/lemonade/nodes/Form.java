@@ -1,11 +1,9 @@
 package org.lemonade.nodes;
 
+import java.util.List;
 
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.BaseVisitor;
-
-import java.util.List;
 
 //Maybe everything inherits from the org.lemonade.nodes.ASTNode class so we can easily walk through
 //the constructed tree?
@@ -33,10 +31,6 @@ public class Form extends ASTNode{
     }
 
     public <T> T accept(BaseVisitor<T> visitor) {
-        return visitor.visit(this);
-    }
-
-    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

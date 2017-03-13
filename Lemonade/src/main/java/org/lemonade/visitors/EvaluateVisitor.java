@@ -6,10 +6,9 @@ import java.util.Map;
 import org.lemonade.gui.elements.GuiBody;
 import org.lemonade.gui.elements.GuiConditional;
 import org.lemonade.gui.elements.GuiForm;
-import org.lemonade.gui.elements.GuiIdentifierValue;
+import org.lemonade.gui.elements.values.GuiIdentifierValue;
 import org.lemonade.gui.elements.GuiQuestion;
-import org.lemonade.gui.elements.GuiValue;
-import org.lemonade.nodes.ASTNode;
+import org.lemonade.gui.elements.values.GuiValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
@@ -47,7 +46,7 @@ import org.lemonade.visitors.interfaces.LiteralVisitor;
  *
  */
 public class EvaluateVisitor implements
-        ASTVisitor<Expression>, BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
+        BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
 
     private Map<GuiIdentifierValue, GuiValue<?>> guiEnvironment;
     private Map<String, Literal<?>> literalEnvironment;
@@ -68,10 +67,10 @@ public class EvaluateVisitor implements
     @Override
     public Expression visit(Question question) {
         IdentifierLiteral identifier = question.getIdentifier();
-//        Literal<?> literal = question.getValue();
-//
-//        assert !literalEnvironment.containsKey(identifier);
-//        literalEnvironment.put(identifier, new UndefinedValue(question.getType()));
+        //        Literal<?> literal = question.getValue();
+        //
+        //        assert !literalEnvironment.containsKey(identifier);
+        //        literalEnvironment.put(identifier, new UndefinedValue(question.getType()));
         return null;
     }
 
@@ -226,11 +225,6 @@ public class EvaluateVisitor implements
         return literalEnvironment.get(identifierValue.getValue());
     }
 
-    @Override
-    public Expression visit(ASTNode astNode) {
-        return null;
-    }
-
     @Override public GuiForm visit(final GuiForm form) {
         for (GuiBody body : form.getBodies()) {
             body.accept(this);
@@ -248,7 +242,7 @@ public class EvaluateVisitor implements
     }
 
     @Override public GuiConditional visit(final GuiConditional conditional) {
-//        if ()
+        //        if ()
         return conditional;
     }
 }

@@ -2,6 +2,7 @@ package org.lemonade.gui.elements;
 
 import java.util.List;
 
+import org.lemonade.gui.elements.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.scene.control.Control;

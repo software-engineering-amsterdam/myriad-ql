@@ -8,6 +8,7 @@ import javafx.scene.control.Control;
 
 public class GuiConditional extends GuiBody {
 
+    private GuiExpression expression;
     private boolean isVisible;
     private List<GuiBody> bodies;
 
@@ -15,6 +16,7 @@ public class GuiConditional extends GuiBody {
     public GuiConditional(List<GuiBody> bodies) {
         this.isVisible = false;
         this.bodies = bodies;
+        this.expression = new GuiExpression();
     }
 
     @Override

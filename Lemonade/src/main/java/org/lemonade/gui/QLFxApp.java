@@ -11,15 +11,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiForm;
 import org.lemonade.nodes.Form;
-import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
-import org.lemonade.visitors.interfaces.BaseVisitor;
 
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -128,8 +125,8 @@ public class QLFxApp extends Application {
             TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
             GuiVisitor guiVisitor = new GuiVisitor(gridPane);
 
-            root.accept((BaseVisitor<QLType>) typeCheckVisitor);
-            GuiForm guiRoot = (GuiForm) root.accept((BaseVisitor<GuiElement>) guiVisitor);
+            root.accept(typeCheckVisitor);
+            GuiForm guiRoot = (GuiForm) root.accept(guiVisitor);
 
             submitButton.setOnAction(e -> {
                 isSubmitted = true;

@@ -1,19 +1,16 @@
 package org.lemonade;
 
-import org.antlr.v4.runtime.*;
+import java.io.IOException;
+import java.io.StringReader;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 import org.lemonade.nodes.Form;
-import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
-import org.lemonade.visitors.interfaces.BaseVisitor;
-
-import java.io.IOException;
-import java.io.StringReader;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParseTest {
 

@@ -5,7 +5,11 @@ import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.literal.BooleanLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
+import org.lemonade.nodes.expressions.literal.DecimalLiteral;
+import org.lemonade.nodes.expressions.literal.IntegerLiteral;
+import org.lemonade.nodes.expressions.literal.MoneyLiteral;
 import org.lemonade.nodes.expressions.literal.NumericLiteral;
 
 import static org.assertj.core.api.Assertions.assertThat;

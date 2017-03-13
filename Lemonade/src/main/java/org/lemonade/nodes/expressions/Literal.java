@@ -2,7 +2,6 @@ package org.lemonade.nodes.expressions;
 
 import org.lemonade.nodes.expressions.literal.BooleanLiteral;
 import org.lemonade.nodes.types.QLType;
-import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *

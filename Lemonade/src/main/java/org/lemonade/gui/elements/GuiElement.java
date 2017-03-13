@@ -1,7 +1,5 @@
 package org.lemonade.gui.elements;
 
-import org.lemonade.visitors.ASTVisitor;
-
 import javafx.scene.control.Control;
 
 /**
