@@ -3,13 +3,17 @@ module QL
     class ComputedQuestionFrame < QuestionFrame
       include AST
 
-      def initialize(gui, question, condition=nil)
+      def initialize(question, condition=nil)
+        super
+      end
+
+      def render(gui, position)
         super
         compute
       end
 
       def create_widget
-        @widget = ComputedWidget.new(self)
+        @widget = ComputedWidget.new(@frame)
       end
 
       def reload
@@ -18,9 +22,13 @@ module QL
       end
 
       def compute
-        value = @question.assignment.accept(Evaluator.new).to_value
+        value = assignment.accept(Evaluator.new).to_value
         @widget.set_value(value)
         store_value
+      end
+
+      def assignment
+        ast_question.assignment
       end
     end
   end

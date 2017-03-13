@@ -1,8 +1,10 @@
 module QL
   module GUI
     class FormBuilder
-      def initialize(ast, gui)
-        @gui = gui
+      attr_accessor :question_frames
+
+      def initialize(ast)
+        @question_frames = []
         visit_form(ast)
       end
 
@@ -21,11 +23,12 @@ module QL
       end
 
       def visit_question(question, condition=nil)
-        QuestionFrame.new(@gui, question, condition)
+        p condition
+        @question_frames << QuestionFrame.new(question, condition)
       end
 
       def visit_computed_question(question, condition=nil)
-        ComputedQuestionFrame.new(@gui, question, condition)
+        @question_frames << ComputedQuestionFrame.new(question, condition)
       end
     end
   end

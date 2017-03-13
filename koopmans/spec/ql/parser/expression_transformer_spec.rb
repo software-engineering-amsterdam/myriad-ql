@@ -8,14 +8,15 @@ module QL
   module Parser
     include AST
     describe ExpressionTransformer do
-      let(:form_parser) { FormParser.new }
-      let(:form_transformer) { FormTransformer.new }
+      # let(:form_parser) { FormParser.new }
+      let(:expression_transformer) { ExpressionTransformer.new }
 
       describe 'expressions' do
         context 'general' do
           it 'parses' do
-            expect(form_transformer.apply(form_parser.expression.parse('5 + 10')).expression).to include(Add)
-            expect(form_transformer.apply(form_parser.expression.parse('true == false')).expression).to include(Equal)
+            expression_1 = [{:left=>{:integer_literal=>'5'}}, {:operator=>'+', :right=>{:integer_literal=>'10'}}]
+            expect(expression_transformer.apply(expression_1).expression).to include(Add)
+            # expect(form_transformer.apply(form_parser.expression.parse('true == false')).expression).to include(Equal)
           end
         end
         #

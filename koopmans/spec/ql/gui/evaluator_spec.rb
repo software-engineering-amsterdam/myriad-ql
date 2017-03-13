@@ -56,6 +56,7 @@ module QL
           expect(expression_1.accept(evaluator).to_value).to eq(true)
 
           expression_2 = Expression.new(IntegerNegation.new(IntegerLiteral.new(5)))
+          expression_2 = Expression.new(IntegerNegation.new(IntegerLiteral.new(5)))
           expect(expression_2.accept(evaluator).to_value).to eq(-5)
         end
       end

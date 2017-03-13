@@ -21,9 +21,9 @@ pp ql_parse_tree
 ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 # pp ql_ast
 pp ql_ast
-QL::TypeChecker::TypeChecker.new.check(ql_ast)
+# QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # pp NotificationTable.index
-# ql_notifications = nil
+ql_notifications = nil
 
 
 
@@ -36,6 +36,6 @@ QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 #
-# qls_ast = nil
+qls_ast = nil
 # #
-# QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)

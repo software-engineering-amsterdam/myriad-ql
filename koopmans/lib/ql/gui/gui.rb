@@ -5,21 +5,28 @@ require 'tk'
 module QL
   module GUI
     class GUI
-      attr_accessor :questions
+      attr_accessor :question_frames
 
       def initialize(ql_ast, qls_ast, type_checker)
         # return if check(type_checker) == 'quit'
-        @questions = []
-        FormBuilder.new(ql_ast, self)
+        @question_frames = FormBuilder.new(ql_ast).question_frames
+
+        @question_frames.each_with_index do |question_frame, i|
+          question_frame.render(self, i)
+        end
+
+        # reload_questions
+        # FormBuilder.new(ql_ast, self)
         # pp @questions
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        SubmitButton.new(self)
+        # SubmitButton.new(self)
+        create_submit_button
         Tk.mainloop
       end
 
       def reload_questions
-        @questions.each(&:reload)
+        rendered_questions.each(&:reload)
       end
 
       def submit
@@ -27,11 +34,22 @@ module QL
       end
 
       def enabled_questions
-        @questions.each.select { |question| question.enabled }
+        rendered_questions.each.select { |question| question.enabled }
+      end
+
+      def rendered_questions
+        question_frames.each.select { |question| question.frame }
+      end
+
+      def create_submit_button
+        position       = question_frames.size + 1
+        button         = TkButton.new.grid(row: position)
+        button.text    = 'Submit'
+        button.command = proc { submit }
       end
 
       def number_of_questions
-        questions.size
+        question_frames.size
       end
 
       # TODO hier wat aan doen
