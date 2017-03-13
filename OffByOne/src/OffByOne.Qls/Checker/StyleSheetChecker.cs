@@ -15,11 +15,11 @@
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class StyleSheetAnalyzer
+    public class StyleSheetChecker
     {
         private readonly IEnumerable<IAnalyzer> analyzers;
 
-        public StyleSheetAnalyzer()
+        public StyleSheetChecker()
         {
             this.analyzers = new List<IAnalyzer>
             {
@@ -28,7 +28,7 @@
             };
         }
 
-        public StyleSheetAnalyzer(
+        public StyleSheetChecker(
             IEnumerable<IAnalyzer> analyzers)
         {
             if (analyzers == null)
@@ -41,11 +41,11 @@
 
         public ICheckerReport Check(FormStatement structureNode, StyleSheet styleNode)
         {
-            // TODO: Add mapings
-            var questionMappings = new Dictionary<string, ValueType>();
+            var collector = new QuestionCollector();
+            collector.Collect(structureNode);
             var finalReport = new CheckerReport();
 
-            this.analyzers.ForEach(x => x.Analyze(styleNode, questionMappings));
+            this.analyzers.ForEach(x => x.Analyze(styleNode, collector.Mappings));
             finalReport.Add(this.analyzers.SelectMany(x => x.Report.AllMessages));
 
             return finalReport;

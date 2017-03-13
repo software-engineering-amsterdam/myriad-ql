@@ -94,7 +94,7 @@
     <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
     <Compile Include="Checker\Messages\InvalidWidgetTypeMessage.cs" />
-    <Compile Include="Checker\StyleSheetAnalyzer.cs" />
+    <Compile Include="Checker\StyleSheetChecker.cs" />
     <Compile Include="Checker\Analyzers\Environment\TypeAnalyzerEnvironment.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzer.cs" />
     <Compile Include="Ast\AstCreator.cs" />

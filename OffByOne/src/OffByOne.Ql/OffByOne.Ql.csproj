@@ -130,6 +130,7 @@
     <Compile Include="Checker\Messages\DuplicateQuestionIdentifierMessage.cs" />
     <Compile Include="Checker\Messages\InvalidTypeMessage.cs" />
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
+    <Compile Include="Checker\QuestionCollector.cs" />
     <Compile Include="Checker\SyntaxChecker.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />

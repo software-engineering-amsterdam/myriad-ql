@@ -206,7 +206,7 @@
 
         private static void CheckTypes(FormStatement structureAst, StyleSheet styleAst)
         {
-            var typeChcker = new StyleSheetAnalyzer();
+            var typeChcker = new StyleSheetChecker();
             var report = typeChcker.Check(structureAst, styleAst);
 
             foreach (var message in report.AllMessages)
