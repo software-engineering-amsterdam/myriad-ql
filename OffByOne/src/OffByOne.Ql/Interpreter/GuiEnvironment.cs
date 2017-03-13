@@ -13,6 +13,11 @@
     {
         private readonly List<IObserver<GuiChange>> observers;
 
+        public GuiEnvironment()
+            : this(new TypeEnvironment())
+        {
+        }
+
         public GuiEnvironment(TypeEnvironment typeEnvironment)
         {
             this.Evaluations = typeEnvironment;
