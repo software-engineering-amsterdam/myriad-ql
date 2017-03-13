@@ -11,28 +11,28 @@ from PyQt5.QtWidgets import QWidget
 
 class LineNumberArea(QWidget):
     def __init__(self, editor):
-        super().__init__(editor)
-        self.myeditor = editor
+        super(LineNumberArea, self).__init__(editor)
+        self.editor = editor
 
     def sizeHint(self):
-        return QSize(self.editor.lineNumberAreaWidth(), 0)
+        return QSize(self.editor.line_number_area_width(), 0)
 
     def paintEvent(self, event):
-        self.myeditor.lineNumberAreaPaintEvent(event)
+        self.editor.line_number_area_paint_event(event)
 
 
 class CodeArea(QPlainTextEdit):
     def __init__(self):
-        super().__init__()
-        self.lineNumberArea = LineNumberArea(self)
+        super(CodeArea, self).__init__()
+        self.line_number_area = LineNumberArea(self)
 
-        self.blockCountChanged.connect(self.updateLineNumberAreaWidth)
-        self.updateRequest.connect(self.updateLineNumberArea)
-        self.cursorPositionChanged.connect(self.highlightCurrentLine)
+        self.blockCountChanged.connect(self.update_line_number_area_width)
+        self.updateRequest.connect(self.update_line_number_area)
+        self.cursorPositionChanged.connect(self.highlight_current_line)
 
-        self.updateLineNumberAreaWidth(0)
+        self.update_line_number_area_width(0)
 
-    def lineNumberAreaWidth(self):
+    def line_number_area_width(self):
         digits = 1
         count = max(1, self.blockCount())
         while count >= 10:
@@ -41,31 +41,29 @@ class CodeArea(QPlainTextEdit):
         space = 3 + self.fontMetrics().width('9') * digits
         return space
 
-    def updateLineNumberAreaWidth(self, _):
-        self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
+    def update_line_number_area_width(self, _):
+        self.setViewportMargins(self.line_number_area_width(), 0, 0, 0)
 
-    def updateLineNumberArea(self, rect, dy):
+    def update_line_number_area(self, rect, dy):
 
         if dy:
-            self.lineNumberArea.scroll(0, dy)
+            self.line_number_area.scroll(0, dy)
         else:
-            self.lineNumberArea.update(0, rect.y(), self.lineNumberArea.width(),
-                                       rect.height())
+            self.line_number_area.update(0, rect.y(), self.line_number_area.width(), rect.height())
 
         if rect.contains(self.viewport().rect()):
-            self.updateLineNumberAreaWidth(0)
+            self.update_line_number_area_width(0)
 
     def resizeEvent(self, event):
-        super().resizeEvent(event)
+        super(CodeArea, self).resizeEvent(event)
 
-        cr = self.contentsRect();
-        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(),
-                                              self.lineNumberAreaWidth(), cr.height()))
+        cr = self.contentsRect()
+        self.line_number_area.setGeometry(QRect(cr.left(), cr.top(), self.line_number_area_width(), cr.height()))
 
-    def lineNumberAreaPaintEvent(self, event):
-        mypainter = QPainter(self.lineNumberArea)
+    def line_number_area_paint_event(self, event):
+        painter = QPainter(self.line_number_area)
 
-        mypainter.fillRect(event.rect(), Qt.lightGray)
+        painter.fillRect(event.rect(), Qt.lightGray)
 
         block = self.firstVisibleBlock()
         blockNumber = block.blockNumber()
@@ -77,16 +75,16 @@ class CodeArea(QPlainTextEdit):
         while block.isValid() and (top <= event.rect().bottom()):
             if block.isVisible() and (bottom >= event.rect().top()):
                 number = str(blockNumber + 1)
-                mypainter.setPen(Qt.black)
-                mypainter.drawText(0, top, self.lineNumberArea.width(), height,
-                                   Qt.AlignRight, number)
+                painter.setPen(Qt.black)
+                painter.drawText(0, top, self.line_number_area.width(), height,
+                                 Qt.AlignRight, number)
 
             block = block.next()
             top = bottom
             bottom = top + self.blockBoundingRect(block).height()
             blockNumber += 1
 
-    def highlightCurrentLine(self):
+    def highlight_current_line(self):
         extraSelections = []
 
         if not self.isReadOnly():

@@ -10,7 +10,6 @@ from PyQt5.QtWidgets import QListWidget
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
-from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtWidgets import QWidget
 
 from gui.CodeArea import CodeArea
