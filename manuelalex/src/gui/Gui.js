@@ -53,13 +53,27 @@ export class GUI {
         router.go('QL', 'Index');
     }
 
-    showErrors(errors){
-        document.body.innerHTML = "The following errors have occurred during the validation:<ul>";
+    showValidationErrors(errors){
+        document.body.innerHTML = `The following errors have occurred during validation:`;
 
+        document.body.innerHTML = document.body.innerHTML + "<ul>";
         for (var errorStatement of errors) {
             document.body.innerHTML = document.body.innerHTML + "<li>" + errorStatement + "</li>";
         }
         document.body.innerHTML = document.body.innerHTML + "</ul>";
 
+    }
+
+
+    showParserErrors(parseString, errors){
+        document.body.innerHTML = `The following errors have occurred during parsing:`;
+
+
+        parseString = parseString.replace(/\n/g, "<br>");
+
+
+
+        document.body.innerHTML = `${document.body.innerHTML} <br> <div ="error"> ${errors}</div>`;
+        document.body.innerHTML = `${document.body.innerHTML} <br> <div>${parseString}</div>`;
     }
 }
