@@ -7,8 +7,8 @@ package org.uva.taxfree.gen;
 form : 'form ' formId=VARIABLE_LITERAL '{' statement* '}';
 statement : LABEL '->' VARIABLE_LITERAL ':' varType #question
           | LABEL '->' VARIABLE_LITERAL ':' varType '=' expression #calculation
-          | 'if (' expression ')' '{' thenBlock=statement* '}' #ifStatement
-          | 'if (' expression ')' '{' (thenBlocks+=statement)* '}' 'else' '{' (elseBlocks+=statement)* '}' #ifElseStatement
+          | 'if (' expression ')' '{' (thenStatements+=statement)* '}' #ifStatement
+          | 'if (' expression ')' '{' (thenStatements+=statement)* '}' 'else' '{' (elseStatements+=statement)* '}' #ifElseStatement
           ;
 
 expression : BOOLEAN_LITERAL                                #booleanLiteral

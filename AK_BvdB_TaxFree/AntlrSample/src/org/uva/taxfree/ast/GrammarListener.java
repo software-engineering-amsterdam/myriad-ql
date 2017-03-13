@@ -191,29 +191,32 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitIfStatement(QLGrammarParser.IfStatementContext ctx) {
         super.exitIfStatement(ctx);
-        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popChildStack());
+        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), new LinkedHashSet<>(popChildStack()));
         addToStack(ifStatementNode);
     }
 
-    private Set<Node> popChildStack() {
-        return new LinkedHashSet<>(mChildsStack.pop());
+    private List<Node> popChildStack() {
+        return mChildsStack.pop();
     }
 
     @Override
     public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.exitIfElseStatement(ctx);
-        Set<Node> content = popChildStack();
-        // TODO
-        BlockNode ifStatementNode = null;
+        List<Node> allChildes = popChildStack();
 
-        BlockNode ifElseStatementNode = new IfElseStatementNode(ifStatementNode, content);
+        int splitIndex= ctx.thenStatements.size();
+        List<Node> thenStatementNodes = new ArrayList<>(allChildes.subList(0, splitIndex));
+        List<Node> elseStatementNodes = new ArrayList<>(allChildes.subList(splitIndex, allChildes.size()));
+
+//        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes);
+        BlockNode ifElseStatementNode = new IfElseStatementNode(null, null);
         addToStack(ifElseStatementNode);
     }
 
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popChildStack());
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), new LinkedHashSet<>(popChildStack()));
         if (!mChildsStack.isEmpty()) {
             throw new AssertionError("Stack should be empty when we finished creating our AST.");
         }
