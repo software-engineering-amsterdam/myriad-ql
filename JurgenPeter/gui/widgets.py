@@ -62,9 +62,9 @@ class EntryWidget(Widget):
         self.gui.addEntry(self.entry_id)
         self.register_validator(self.validate)
 
-    def register_validator(self, validate):
+    def register_validator(self, validator):
         widget = self.gui.getEntryWidget(self.entry_id)
-        command = widget.register(validate)
+        command = widget.register(validator)
         widget.config(validate="key", validatecommand=(command, "%P"))
 
     @staticmethod
@@ -103,7 +103,7 @@ class IntegerEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        return bool(re.match("^(-|\+)?[0-9]*$", text))
+        return bool(re.match(r"^(-|\+)?[0-9]*$", text))
 
     def get_value(self):
         try:
@@ -120,7 +120,7 @@ class DecimalEntryWidget(EntryWidget):
 
     @staticmethod
     def validate(text):
-        return bool(re.match("^(-|\+)?[0-9]*\.?[0-9]*$", text))
+        return bool(re.match(r"^(-|\+)?[0-9]*\.?[0-9]*$", text))
 
     def get_value(self):
         try:

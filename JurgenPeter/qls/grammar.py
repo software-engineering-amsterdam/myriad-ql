@@ -20,8 +20,7 @@ datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
            string_datatype
 
 """ pyparsing_common.integer does not support negative integers. """
-integer = Regex("-?[0-9]+")
-integer.addParseAction(lambda tokens: int(tokens[0]))
+integer = Regex("-?[0-9]+").addParseAction(lambda tokens: int(tokens[0]))
 
 integer_arguments = Suppress("(") + integer + Suppress(",") + \
                     integer + Suppress(")")
@@ -43,112 +42,119 @@ widget_real_number = Suppress("real-number").setParseAction(
 widget_checkbox = Suppress("checkbox").setParseAction(
     lambda _: WidgetTypeAttribute(CheckBoxWidget))
 
-widget_spinbox = Suppress("spinbox") + Optional(integer_arguments)
-widget_spinbox.setParseAction(
+widget_spinbox = (Suppress("spinbox") +
+                  Optional(integer_arguments)).setParseAction(
     lambda tokens: WidgetTypeAttribute(SpinBoxWidget, *tokens))
 
-widget_slider = Suppress("slider") + Optional(integer_arguments)
-widget_slider.setParseAction(
+widget_slider = (Suppress("slider") +
+                 Optional(integer_arguments)).setParseAction(
     lambda tokens: WidgetTypeAttribute(SliderWidget, *tokens))
 
-widget_radio = Suppress("radio") + Optional(string_arguments)
-widget_radio.setParseAction(
+widget_radio = (Suppress("radio") +
+                Optional(string_arguments)).setParseAction(
     lambda tokens: WidgetTypeAttribute(RadioWidget, *tokens))
 
-widget_drop_down = Suppress("dropdown") + Optional(string_arguments)
-widget_drop_down.setParseAction(
+widget_drop_down = (Suppress("dropdown") +
+                    Optional(string_arguments)).setParseAction(
     lambda tokens: WidgetTypeAttribute(DropDownWidget, *tokens))
 
 widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^\
               widget_whole_number ^ widget_real_number ^ widget_drop_down ^\
               widget_slider
 
-widget_attribute = Suppress("widget") + widget_type
-widget_attribute.setParseAction(lambda tokens: tokens[0])
+widget_attribute = (Suppress("widget") +
+                    widget_type).setParseAction(
+    lambda tokens: tokens[0])
 
 hexadecimal = Regex("#[0-9a-f]{6}")
 
-color_attribute = Suppress("color") + Suppress(":") + hexadecimal
-color_attribute.setParseAction(lambda tokens: ColorAttribute(*tokens))
+color_attribute = (Suppress("color") + Suppress(":") +
+                   hexadecimal).setParseAction(
+    lambda tokens: ColorAttribute(*tokens))
 
-font_size_attribute = Suppress("size") + Suppress(":") + integer
-font_size_attribute.setParseAction(lambda tokens: FontSizeAttribute(*tokens))
+font_size_attribute = (Suppress("size") + Suppress(":") +
+                       integer).setParseAction(
+    lambda tokens: FontSizeAttribute(*tokens))
 
 weight = Literal("normal") ^ Literal("bold")
 
-font_weight_attribute = Suppress("weight") + Suppress(":") + weight
-font_weight_attribute.setParseAction(
+font_weight_attribute = (Suppress("weight") + Suppress(":") +
+                         weight).setParseAction(
     lambda tokens: FontWeightAttribute(*tokens))
 
-font_family_attribute = Suppress("family") + Suppress(":") + string
-font_family_attribute.setParseAction(
+font_family_attribute = (Suppress("family") + Suppress(":") +
+                         string).setParseAction(
     lambda tokens: FontFamilyAttribute(*tokens))
 
-width_attribute = Suppress("width") + Suppress(":") + integer
-width_attribute.setParseAction(lambda tokens: WidthAttribute(*tokens))
+width_attribute = (Suppress("width") + Suppress(":") +
+                   integer).setParseAction(
+    lambda tokens: WidthAttribute(*tokens))
 
 attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^\
             font_weight_attribute ^ font_family_attribute ^ width_attribute
 
-attributes = Suppress("{") + ZeroOrMore(attribute) + Suppress("}")
-attributes.setParseAction(lambda tokens: [tokens.asList()])
+attributes = (Suppress("{") + ZeroOrMore(attribute) +
+              Suppress("}")).setParseAction(
+    lambda tokens: [tokens.asList()])
 
-widget_styling = widget_attribute.copy()
-widget_styling.addParseAction(lambda tokens: [tokens.asList()])
+widget_styling = widget_attribute.copy().addParseAction(
+    lambda tokens: [tokens.asList()])
 
 styling = widget_styling ^ attributes
 
-unstyled_question = Suppress("question") + identifier
-unstyled_question.setParseAction(lambda tokens: QuestionAnchor(*tokens))
+unstyled_question = (Suppress("question") + identifier).setParseAction(
+    lambda tokens: QuestionAnchor(*tokens))
 
-styled_question = Suppress("question") + identifier + styling
-styled_question.setParseAction(lambda tokens: StyledQuestionAnchor(*tokens))
+styled_question = (Suppress("question") + identifier +
+                   styling).setParseAction(
+    lambda tokens: StyledQuestionAnchor(*tokens))
 
 question = unstyled_question ^ styled_question
 
-default = Suppress("default") + datatype + styling
-default.setParseAction(lambda tokens: DefaultStyling(*tokens))
+default = (Suppress("default") + datatype +
+           styling).setParseAction(
+    lambda tokens: DefaultStyling(*tokens))
 
-defaults = OneOrMore(default)
-defaults.setParseAction(lambda tokens: [tokens.asList()])
+defaults = OneOrMore(default).setParseAction(
+    lambda tokens: [tokens.asList()])
 
 sectionbody = Forward()
 
-unstyled_section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
-          sectionbody + Suppress("}")
-unstyled_section.setParseAction(lambda tokens: Section(*tokens))
+unstyled_section = (Suppress("section") + QuotedString("\"") + Suppress("{") +
+                    sectionbody + Suppress("}")).setParseAction(
+    lambda tokens: Section(*tokens))
 
-styled_section = Suppress("section") + QuotedString("\"") + Suppress("{") +\
-          sectionbody + defaults + Suppress("}")
-styled_section.setParseAction(lambda tokens: StyledSection(*tokens))
+styled_section = (Suppress("section") + QuotedString("\"") + Suppress("{") +
+                  sectionbody + defaults + Suppress("}")).setParseAction(
+    lambda tokens: StyledSection(*tokens))
 
 section = unstyled_section ^ styled_section
 
-sectionbody <<= ZeroOrMore(section ^ question)
-sectionbody.setParseAction(lambda tokens: [tokens.asList()])
+sectionbody <<= ZeroOrMore(section ^ question).setParseAction(
+    lambda tokens: [tokens.asList()])
 
 pagebody = sectionbody
 
-unstyled_page = Suppress("page") + identifier + Suppress("{") + pagebody +\
-                Suppress("}")
-unstyled_page.setParseAction(lambda tokens: Page(*tokens))
+unstyled_page = (Suppress("page") + identifier + Suppress("{") + pagebody +
+                 Suppress("}")).setParseAction(
+    lambda tokens: Page(*tokens))
 
-styled_page = Suppress("page") + identifier + Suppress("{") + pagebody +\
-              defaults + Suppress("}")
-styled_page.setParseAction(lambda tokens: StyledPage(*tokens))
+styled_page = (Suppress("page") + identifier + Suppress("{") + pagebody +
+               defaults + Suppress("}")).setParseAction(
+    lambda tokens: StyledPage(*tokens))
 
 page = unstyled_page ^ styled_page
 
-layoutbody = ZeroOrMore(page)
-layoutbody.setParseAction(lambda tokens: [tokens.asList()])
+layoutbody = ZeroOrMore(page).setParseAction(
+    lambda tokens: [tokens.asList()])
 
-unstyled_layout = Suppress("stylesheet") + identifier + Suppress("{") +\
-                  layoutbody + Suppress("}")
-unstyled_layout.setParseAction(lambda tokens: Layout(*tokens))
+unstyled_layout = (Suppress("stylesheet") + identifier + Suppress("{") +
+                   layoutbody + Suppress("}")).setParseAction(
+    lambda tokens: Layout(*tokens))
 
-styled_layout = Suppress("stylesheet") + identifier + Suppress("{") +\
-                layoutbody + defaults + Suppress("}")
-styled_layout.setParseAction(lambda tokens: StyledLayout(*tokens))
+styled_layout = (Suppress("stylesheet") + identifier + Suppress("{") +
+                 layoutbody + defaults + Suppress("}")).setParseAction(
+    lambda tokens: StyledLayout(*tokens))
 
 layout = unstyled_layout ^ styled_layout
 
