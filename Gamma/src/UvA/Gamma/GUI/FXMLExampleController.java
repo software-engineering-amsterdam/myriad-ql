@@ -28,15 +28,15 @@ public class FXMLExampleController {
     @FXML private GridPane grid;
 
     @FXML public void showQuestion(Question question) {
-//        Text questionLabel = new Text(question.getQuestion());
-//        TextField input = new TextField();
-//        input.textProperty().bindBidirectional(question.getStringValueProperty());
-//
-//        input.textProperty().addListener((observable, oldValue, newValue) ->
-//                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question.getId(), newValue))
-//        );
-//
-//        grid.addRow(++rowCount, questionLabel, input);
+        Text questionLabel = new Text(question.getQuestion());
+        TextField input = new TextField();
+        input.textProperty().bindBidirectional(question.getStringValueProperty());
+
+        input.textProperty().addListener((observable, oldValue, newValue) ->
+                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question.getId(), newValue))
+        );
+
+        grid.addRow(++rowCount, questionLabel, input);
     }
 
     public void showComputed(Computed computed) {
