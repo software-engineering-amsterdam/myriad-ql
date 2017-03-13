@@ -117,30 +117,30 @@ class Division(BinaryOperation):
 
 
 class UnaryOperation(Node):
-    def __init__(self, var_type, right):
-        super(UnaryOperation, self).__init__(var_type)
+    def __init__(self, var_type, right, position, source):
+        super(UnaryOperation, self).__init__(var_type, position, source)
         self.rhs = right
 
 
 class Positive(UnaryOperation):
-    def __init__(self, rhs):
-        super(Positive, self).__init__('positive', rhs)
+    def __init__(self, position, source, rhs):
+        super(Positive, self).__init__('positive', rhs, position, source)
 
     def apply(self, visitor):
         return visitor.positive(self)
 
 
 class Negative(UnaryOperation):
-    def __init__(self, rhs):
-        super(Negative, self).__init__('negative', rhs)
+    def __init__(self, position, source, rhs):
+        super(Negative, self).__init__('negative', rhs, position, source)
 
     def apply(self, visitor):
         return visitor.negative(self)
 
 
 class Negation(UnaryOperation):
-    def __init__(self, rhs):
-        super(Negation, self).__init__('negation', rhs)
+    def __init__(self, position, source, rhs):
+        super(Negation, self).__init__('negation', rhs, position, source)
 
     def apply(self, visitor):
         return visitor.negation(self)

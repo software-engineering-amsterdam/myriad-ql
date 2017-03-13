@@ -13,12 +13,12 @@ def parse(input_string):
             flattened_tokens = [type_call(lhs, rhs)] + flattened_tokens[3:]
         return flattened_tokens[0]
 
-    def flatten_unary_operators(flattened_tokens):
+    def flatten_unary_operators(source, position, flattened_tokens):
         type_call = flattened_tokens[0]
-        return type_call(flattened_tokens[1])
+        return type_call(source, position, flattened_tokens[1])
 
     # Packrat
-    ParserElement.enablePackrat()
+    # ParserElement.enablePackrat()
 
     lit_form = Suppress("form")
     lit_if = Suppress("if")
@@ -78,7 +78,7 @@ def parse(input_string):
     operand_list_arith = [
         (lit_op_positive | lit_op_negative | lit_op_not,
          1, opAssoc.RIGHT,
-         lambda flattened_tokens: flatten_unary_operators(*flattened_tokens)),
+         lambda source, position, flattened_tokens: flatten_unary_operators(position, source, *flattened_tokens)),
         (lit_op_multiplication | lit_op_division,
          2, opAssoc.LEFT,
          lambda flattened_tokens: flatten_binary_operators(*flattened_tokens)),
