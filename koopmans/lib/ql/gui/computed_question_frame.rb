@@ -3,7 +3,6 @@ module QL
     class ComputedQuestionFrame < QuestionFrame
       def render(gui, position)
         super
-        # compute
       end
 
       def create_widget

@@ -2,6 +2,7 @@ module QuestionTable
   @storage = {}
 
   module_function
+
   def find(id)
     # p "lookup #{id} #{@storage[id]}"
     @storage[id]

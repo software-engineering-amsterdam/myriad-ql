@@ -4,16 +4,17 @@ module QL
       attr_reader :enabled, :tk_frame
 
       def initialize(ast_question, condition=nil)
-        @ast_question  = ast_question
-        @condition = condition
-        @enabled = true
+        @ast_question = ast_question
+        @condition    = condition
+        @enabled      = true
       end
 
-      def render(gui, position)
-        @gui = gui
-        @tk_frame = TkFrame.new.grid(row: position)
+      def render(gui, row_position)
+        @gui      = gui
+        @tk_frame = TkFrame.new.grid(row: row_position)
         Label.new(@tk_frame, label)
         create_widget
+        reload
       end
 
       def create_widget

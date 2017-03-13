@@ -7,14 +7,14 @@ module QL
     class GUI
       def initialize(ql_ast, qls_ast, type_checker)
         @question_frames = FormBuilder.new(ql_ast).question_frames
-        @question_frames.each_with_index do |question_frame, i|
-          question_frame.render(self, i)
+        @question_frames.each_with_index do |question_frame, row_position|
+          question_frame.render(self, row_position)
         end
 
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        position = @question_frames.size
-        SubmitButton.new(position) do
+        row_position = @question_frames.size
+        SubmitButton.new(row_position) do
           print_form
         end
 

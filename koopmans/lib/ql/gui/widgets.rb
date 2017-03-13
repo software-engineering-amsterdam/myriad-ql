@@ -11,7 +11,7 @@ module QL
       def initialize(position, &block)
         button         = TkButton.new.grid(row: position)
         button.text    = 'Submit'
-        button.command = proc { block.call}
+        button.command = proc { block.call }
       end
     end
 
