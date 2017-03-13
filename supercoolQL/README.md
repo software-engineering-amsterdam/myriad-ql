@@ -65,3 +65,12 @@ form exampleForm {
   - [ ] Error output in GUI
 - [ ] GUI generation
 - [ ] Unit tests
+
+# ToDo
+
+- [ ] Tests for various parsing stages
+- [ ] Split QLVisitor Interface into smaller interfaces
+- [ ] Remove AbstractQLVisitor class
+- [ ] Create Runnable GUI class for Main()
+    - [ ] Move GUI logic out of FileReader
+    
