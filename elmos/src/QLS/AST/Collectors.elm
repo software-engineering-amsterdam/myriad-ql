@@ -1,9 +1,17 @@
-module QLS.AST.Collectors exposing (collectQuestionReferencesAsDict, collectQuestionReferences, collectConfiguredQuestions)
+module QLS.AST.Collectors exposing (collectDefaultValueConfigs, collectQuestionReferencesAsDict, collectQuestionReferences, collectConfiguredQuestions)
 
-import QL.AST exposing (Form, Location, Id)
+import QL.AST exposing (Form, Location, Id, ValueType)
 import QLS.AST exposing (StyleSheet, Question(Question, ConfiguredQuestion), Configuration)
 import QLS.StyleSheetVisitor as StyleSheetVisitor exposing (defaultConfig)
 import Dict exposing (Dict)
+
+
+collectDefaultValueConfigs : StyleSheet -> List ( Location, ValueType, Configuration )
+collectDefaultValueConfigs styleSheet =
+    StyleSheetVisitor.inspect
+        { defaultConfig | onDefaultValueConfig = StyleSheetVisitor.post (::) }
+        styleSheet
+        []
 
 
 collectQuestionReferencesAsDict : StyleSheet -> Dict String Location

@@ -33,7 +33,7 @@ addDefaultConfigs =
 
 
 addDefaultConfig : DefaultValueConfig -> StyleContext -> StyleContext
-addDefaultConfig (DefaultValueConfig vt conf) =
+addDefaultConfig (DefaultValueConfig _ vt conf) =
     addValueTypeConfig vt conf
 
 

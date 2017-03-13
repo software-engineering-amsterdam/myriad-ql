@@ -9,6 +9,7 @@ type Message
     | UnplacedQuestion String
     | DuplicatePlacedQuestion String (List Location)
     | WidgetConfigMismatch String Location ValueType Widget
+    | WidgetDefaultConfigMismatch Location ValueType Widget
 
 
 undefinedQuestionReference : String -> Location -> Message

@@ -44,7 +44,7 @@ init =
         { qlInput = qlInput
         , qlsInput = qlsInput
         , formRenderer = formRenderer
-        , activeTab = Preview
+        , activeTab = QLSTab
         }
 
 

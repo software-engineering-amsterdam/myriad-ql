@@ -1,6 +1,6 @@
 module QLS.AST exposing (..)
 
-import QL.AST exposing (ValueType, Id)
+import QL.AST exposing (Location, ValueType, Id)
 
 
 type alias StyleSheet =
@@ -29,7 +29,7 @@ type Question
 
 
 type DefaultValueConfig
-    = DefaultValueConfig ValueType Configuration
+    = DefaultValueConfig Location ValueType Configuration
 
 
 type Configuration

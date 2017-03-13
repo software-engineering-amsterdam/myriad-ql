@@ -8,6 +8,7 @@ import Dict exposing (Dict)
 import Dict.Extra as Dict
 import QL.AST.Collectors as QLCollectors exposing (QuestionTypes)
 import Maybe.Extra as Maybe
+import QLS.TypeChecker.WidgetCompatibility as WidgetCompatibility
 
 
 check : Form -> StyleSheet -> List Message
@@ -23,100 +24,8 @@ check form styleSheet =
 invalidWidgetConfiguration : QuestionTypes -> ( Id, Configuration ) -> Maybe Message
 invalidWidgetConfiguration questionTypes ( ( name, loc ), conf ) =
     Maybe.map2 (,) (Dict.get name questionTypes) (configuredWidget conf)
-        |> Maybe.filter (not << allowedQuestionTypeWidgetPair)
+        |> Maybe.filter (not << WidgetCompatibility.allowedValueTypeWidgetPair)
         |> Maybe.map (\( vt, widget ) -> WidgetConfigMismatch name loc vt widget)
-
-
-allowedQuestionTypeWidgetPair : ( ValueType, Widget ) -> Bool
-allowedQuestionTypeWidgetPair ( valueType, widget ) =
-    case valueType of
-        BooleanType ->
-            validWidgetForBooleanType widget
-
-        StringType ->
-            validWidgetForStringType widget
-
-        IntegerType ->
-            validWidgetForIntegerType widget
-
-        MoneyType ->
-            validWidgetForMoneyType widget
-
-
-validWidgetForBooleanType : Widget -> Bool
-validWidgetForBooleanType w =
-    case w of
-        Radio _ ->
-            True
-
-        Spinbox ->
-            False
-
-        Checkbox ->
-            True
-
-        Text ->
-            False
-
-        Slider _ ->
-            False
-
-
-validWidgetForStringType : Widget -> Bool
-validWidgetForStringType w =
-    case w of
-        Radio _ ->
-            False
-
-        Spinbox ->
-            False
-
-        Checkbox ->
-            False
-
-        Text ->
-            True
-
-        Slider _ ->
-            False
-
-
-validWidgetForIntegerType : Widget -> Bool
-validWidgetForIntegerType w =
-    case w of
-        Radio _ ->
-            False
-
-        Spinbox ->
-            True
-
-        Checkbox ->
-            False
-
-        Text ->
-            True
-
-        Slider _ ->
-            True
-
-
-validWidgetForMoneyType : Widget -> Bool
-validWidgetForMoneyType w =
-    case w of
-        Radio _ ->
-            False
-
-        Spinbox ->
-            True
-
-        Checkbox ->
-            False
-
-        Text ->
-            True
-
-        Slider _ ->
-            False
 
 
 configuredWidget : Configuration -> Maybe Widget

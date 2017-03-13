@@ -1,5 +1,6 @@
 module QLS.StyleSheetVisitor exposing (Config, defaultConfig, pre, post, inspect)
 
+import QL.AST exposing (ValueType, Location)
 import QLS.AST exposing (..)
 import QL.FormVisitor as FormVisitor exposing (actionLambda)
 
@@ -16,12 +17,14 @@ post =
 
 type alias Config context =
     { onQuestion : FormVisitor.Order context Question
+    , onDefaultValueConfig : FormVisitor.Order context ( Location, ValueType, Configuration )
     }
 
 
 defaultConfig : Config x
 defaultConfig =
     { onQuestion = FormVisitor.continue
+    , onDefaultValueConfig = FormVisitor.continue
     }
 
 
@@ -31,7 +34,30 @@ inspect config styleSheet context =
 
 
 inspectPage : Config a -> Page -> a -> a
-inspectPage config (Page _ sections _) context =
+inspectPage config (Page _ sections defaultValueConfigs) context =
+    context
+        |> inspectSections config sections
+        |> inspectDefaultValueConfigs config defaultValueConfigs
+
+
+inspectDefaultValueConfigs : Config a -> List DefaultValueConfig -> a -> a
+inspectDefaultValueConfigs config defaultValueConfigs context =
+    List.foldl
+        (inspectDefaultValueConfig config)
+        context
+        defaultValueConfigs
+
+
+inspectDefaultValueConfig : Config a -> DefaultValueConfig -> a -> a
+inspectDefaultValueConfig config (DefaultValueConfig location valueType configuration) context =
+    actionLambda config.onDefaultValueConfig
+        identity
+        ( location, valueType, configuration )
+        context
+
+
+inspectSections : Config a -> List Section -> a -> a
+inspectSections config sections context =
     List.foldl (inspectSection config) context sections
 
 
@@ -41,8 +67,9 @@ inspectSection config section context =
         SingleChildSection _ child ->
             (inspectSectionChild config child context)
 
-        MultiChildSection _ children _ ->
+        MultiChildSection _ children configs ->
             List.foldl (inspectSectionChild config) context children
+                |> inspectDefaultValueConfigs config configs
 
 
 inspectSectionChild : Config a -> SectionChild -> a -> a

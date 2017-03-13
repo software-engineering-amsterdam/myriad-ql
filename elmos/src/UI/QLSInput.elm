@@ -8,7 +8,7 @@ import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
 import QLS.Parser as Parser
 import QLS.TypeChecker as TypeChecker
-import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion, WidgetConfigMismatch))
+import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion, WidgetConfigMismatch, WidgetDefaultConfigMismatch))
 import UI.Messages
 
 
@@ -84,6 +84,7 @@ exampleDsl =
           font: "Arial"
           fontsize: 14
           color: #999999
+          widget checkbox
         }
       }
     }
@@ -175,6 +176,16 @@ renderMessage message =
             , text " has type "
             , UI.Messages.renderVarName (toString valueType)
             , text " but is assigned an invalid widget "
+            , UI.Messages.renderVarName (toString widget)
+            , text "."
+            ]
+
+        WidgetDefaultConfigMismatch loc valueType widget ->
+            [ text "Default configuration for value type "
+            , UI.Messages.renderVarName (toString valueType)
+            , text " at "
+            , UI.Messages.renderLocation loc
+            , text " has invalid widget configuration: "
             , UI.Messages.renderVarName (toString widget)
             , text "."
             ]

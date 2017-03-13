@@ -2,7 +2,7 @@ module QLS.Parser.StyleSheet exposing (..)
 
 import Combine exposing (..)
 import Combine.Extra exposing (trimmed, whitespace1)
-import QL.Parser.Token exposing (quotedString, identifier)
+import QL.Parser.Token exposing (quotedString, identifier, parseLocation)
 import QL.Parser.Form exposing (valueType)
 import QLS.AST exposing (..)
 import QLS.Parser.Configuration exposing (configuration)
@@ -59,7 +59,8 @@ sectionChild =
 defaultValueConfig : Parser s DefaultValueConfig
 defaultValueConfig =
     DefaultValueConfig
-        <$> (string "default" *> whitespace1 *> valueType)
+        <$> parseLocation
+        <*> (string "default" *> whitespace1 *> valueType)
         <*> (whitespace1 *> configuration)
 
 
