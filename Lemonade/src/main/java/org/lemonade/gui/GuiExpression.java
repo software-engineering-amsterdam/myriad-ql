@@ -1,7 +1,11 @@
 package org.lemonade.gui;
 
-public class GuiExpression {
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
+/**
+ *
+ */
+public interface GuiExpression {
 
-
+    <T> T accept(GuiExpressionVisitor<T> visitor);
 }

@@ -1,5 +1,7 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
+
 import java.time.LocalDate;
 
 public class GuiDateValue extends GuiValue<LocalDate> {
@@ -20,4 +22,8 @@ public class GuiDateValue extends GuiValue<LocalDate> {
         this.value = value;
     }
 
+    @Override
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
 }

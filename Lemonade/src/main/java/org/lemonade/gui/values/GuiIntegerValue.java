@@ -1,5 +1,7 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
+
 public class GuiIntegerValue extends GuiValue<Integer> {
 
     private Integer value;
@@ -18,4 +20,8 @@ public class GuiIntegerValue extends GuiValue<Integer> {
         this.value = newValue;
     }
 
+    @Override
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
 }
