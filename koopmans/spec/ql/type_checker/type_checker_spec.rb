@@ -9,13 +9,17 @@ module QL
     include AST
 
     describe TypeChecker do
-      # TypeChecker.new.check(form_ast)
-      # pp form_ast
-      it 'detects duplicate label' do
-        TypeChecker.new.check(form_ast)
-        expect(NotificationTable.index.map(&:message))
-          .to include('question with label \'Did you sell a house in 2010?\' is defined multiple times')
+      it 'detects duplicate label and variable' do
+        question_variable           = Variable.new('hasSoldHouse')
+        question                    = Question.new(StringLiteral.new('Did you sell a house in 2010?'), question_variable, BooleanType.new)
+
+        TypeChecker.new.check(Form.new('_', [question, question]))
+        messages = NotificationTable.index.map(&:message)
+        expect(messages).to include('question with label \'Did you sell a house in 2010?\' is defined multiple times')
+        expect(messages).to include('variable \'hasSoldHouse\' is defined multiple times')
       end
+
+
       #
       # describe DuplicateVariableChecker do
       #   it 'detects error' do
