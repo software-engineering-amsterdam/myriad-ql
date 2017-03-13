@@ -5,37 +5,19 @@ import javafx.scene.control.TextField;
 public class GuiIntegerValue extends GuiValue<Integer> {
 
     private Integer value;
-    private TextField textField;
 
-    public GuiIntegerValue() {
-        textField = new TextField();
-        textField.setOnAction(e -> update());
-    }
-
-    @Override Integer getValue() {
-        return value;
-    }
-
-    @Override void setValue(final Integer value) {
+    public GuiIntegerValue(int value) {
         this.value = value;
     }
 
-    //TODO: verify legal int value
-    @Override public void update() {
-        int value = validate(textField.getText());
-        setValue(value);
-        System.err.println("new value = " + value);
-    }
-
-    private int validate(String text) {
-        if (!text.matches("[-+]?[0-9]*")) {
-            return 0;
-        }
-        return Integer.valueOf(text);
+    @Override
+    Integer getValue() {
+        return value;
     }
 
     @Override
-    public TextField getWidget() {
-        return textField;
+    public void update(Integer newValue) {
+        this.value = newValue;
     }
+
 }
