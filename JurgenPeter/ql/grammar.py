@@ -9,23 +9,23 @@ identifier = Word(alphas)
 identifier.addCondition(lambda tokens: tokens[0] not in "form if else true "
                         "false boolean string integer decimal".split())
 
-variable = identifier.copy()
-variable.addParseAction(lambda tokens: Variable(tokens[0]))
+variable = identifier.copy().addParseAction(
+    lambda tokens: Variable(tokens[0]))
 
-integer = pyparsing_common.integer
-integer.addParseAction(lambda tokens: IntegerConstant(tokens[0]))
+integer = pyparsing_common.integer.addParseAction(
+    lambda tokens: IntegerConstant(tokens[0]))
 
-decimal = pyparsing_common.real
-decimal.addParseAction(lambda tokens: DecimalConstant(tokens[0]))
+decimal = pyparsing_common.real.addParseAction(
+    lambda tokens: DecimalConstant(tokens[0]))
 
-true = Literal("true")
-true.setParseAction(lambda _: BooleanConstant(True))
-false = Literal("false")
-false.setParseAction(lambda _: BooleanConstant(False))
+true = Literal("true").setParseAction(
+    lambda _: BooleanConstant(True))
+false = Literal("false").setParseAction(
+    lambda _: BooleanConstant(False))
 boolean = true ^ false
 
-string = QuotedString("\"")
-string.setParseAction(lambda tokens: StringConstant(tokens[0]))
+string = QuotedString("\"").setParseAction(
+    lambda tokens: StringConstant(tokens[0]))
 
 literal = integer ^ decimal ^ boolean ^ string
 
@@ -97,29 +97,29 @@ string_datatype = Literal("string").setParseAction(
 datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
            string_datatype
 
-question = identifier + Suppress(":") + QuotedString("\"") + datatype
-question.setParseAction(lambda tokens: Question(*tokens))
+question = (identifier + Suppress(":") + QuotedString("\"") +
+            datatype).setParseAction(lambda tokens: Question(*tokens))
 
-computed_question = identifier + Suppress(":") + QuotedString("\"") +\
-    datatype + Suppress("=") + expression
-computed_question.setParseAction(lambda tokens: ComputedQuestion(*tokens))
+computed_question = (identifier + Suppress(":") + QuotedString("\"") +\
+    datatype + Suppress("=") + expression).setParseAction(
+    lambda tokens: ComputedQuestion(*tokens))
 
-if_conditional = Suppress("if") + expression + block
-if_conditional.setParseAction(lambda tokens: IfConditional(*tokens))
+if_conditional = (Suppress("if") + expression + block).setParseAction(
+    lambda tokens: IfConditional(*tokens))
 
-ifelse_conditional = Suppress("if") + expression + block + Suppress("else") +\
-    block
-ifelse_conditional.setParseAction(lambda tokens: IfElseConditional(*tokens))
+ifelse_conditional = (Suppress("if") + expression + block + Suppress("else") +
+                      block).setParseAction(
+    lambda tokens: IfElseConditional(*tokens))
 
 conditional = if_conditional ^ ifelse_conditional
 
 statement = question ^ computed_question ^ conditional
 
-block <<= Suppress("{") + ZeroOrMore(statement) + Suppress("}")
-block.addParseAction(lambda tokens: [tokens.asList()])
+block <<= (Suppress("{") + ZeroOrMore(statement) +
+           Suppress("}")).addParseAction(lambda tokens: [tokens.asList()])
 
-form = Suppress("form") + identifier + block
-form.setParseAction(lambda tokens: Form(*tokens))
+form = (Suppress("form") + identifier + block).setParseAction(
+    lambda tokens: Form(*tokens))
 
 
 def parse_file(filename):
