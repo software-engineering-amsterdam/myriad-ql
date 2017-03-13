@@ -6,6 +6,14 @@ public abstract class Value {
         return new UnknownValue();
     }
 
+    public Value lowerThanOrEqual(IntegerValue comparable) {
+        return new UnknownValue();
+    }
+
+    public Value lowerThanOrEqual(DecimalValue comparable) {
+        return new UnknownValue();
+    }
+
     public Value lowerThan(Value comparable) {
         return new UnknownValue();
     }
@@ -19,14 +27,6 @@ public abstract class Value {
     }
 
     public Value equal(Value comparable) {
-        return new UnknownValue();
-    }
-
-    public Value or(Value or) {
-        return new UnknownValue();
-    }
-
-    public Value and(Value and) {
         return new UnknownValue();
     }
 
@@ -54,17 +54,21 @@ public abstract class Value {
         return new UnknownValue();
     }
 
-    public Value negation() {
-        return new UnknownValue();
-    }
-
     public Value notEqual(Value notEqual) {
         return new UnknownValue();
     }
 
-    public abstract Object getPlainValue();
-
-    public boolean isNull() {
-        return getPlainValue() == null;
+    public Value negation() {
+        return new UnknownValue();
     }
+
+    public Value or(Value or) {
+        return new UnknownValue();
+    }
+
+    public Value and(Value and) {
+        return new UnknownValue();
+    }
+
+    public abstract Object getPlainValue();
 }
