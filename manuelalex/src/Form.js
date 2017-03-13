@@ -11,19 +11,19 @@ export class Form {
         this.location = location;
     }
 
-    getStatements(){
+    getStatements() {
         return this.statements || [];
     }
 
-    getName(){
+    getName() {
         return this.name || '';
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 
-    renderTitle(visitor, view){
+    renderTitle(visitor, view) {
         return visitor.renderProgamTitle(this.getName(), view);
     }
 }

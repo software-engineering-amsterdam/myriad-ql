@@ -3,21 +3,17 @@
  */
 
 export class Label {
-    constructor(value){
+    constructor(value) {
         this.value = value;
     }
 
-    getValue(){
+    getValue() {
         return this.value;
     }
 
-    render(visitor){
+    render(visitor) {
         return visitor.renderLabel(this);
     }
-
-    // localeCompare(otherLabel) {
-    //     return this.getValue().localeCompare(otherLabel.getValue());
-    // }
 
     contains(obj) {
         return this.getValue() === obj.getValue();

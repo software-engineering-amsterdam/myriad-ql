@@ -4,21 +4,21 @@
 
 export class Property {
 
-    constructor(name, location){
+    constructor(name, location) {
         this.name = name;
         this.location = location;
     }
 
-    getName(){
-       return this.name;
+    getName() {
+        return this.name;
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 
-    evaluate(memoryState = {}){
-        let value = memoryState.getValue(this.getName()) || undefined;
+    evaluate(memoryState = {}) {
+        const value = memoryState.getValue(this.getName()) || undefined;
         return eval(value);
     }
 }
