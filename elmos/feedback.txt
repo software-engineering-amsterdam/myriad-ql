@@ -2,9 +2,6 @@ Feedback Tijs:
 semantics in Expression -> BinaryExpression
 -> ff testen hoe dat gaat
 
-rijtje van get/with bool in environment. 
--> Value.withX en Value.getX naar buiten trekken 
-
 constructors voor values wel exposen.
 -> Eens
 
@@ -28,5 +25,5 @@ overdesign van visitor
 -> pre/post wordt on
 
 Messages.elm met die useless functions
--> constructors exposen. 
+-> constructors exposen.
 -> Ui messages split error/warning case
