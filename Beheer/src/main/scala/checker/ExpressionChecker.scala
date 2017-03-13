@@ -53,7 +53,6 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
     }
   }
 
-
   private def checkPrefixExpression(prefixNode: PrefixNode): (Option[Type], Issues) = {
     val (operandType, errors) = checkExpression(prefixNode.operand)
     operandType match {

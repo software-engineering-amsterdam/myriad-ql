@@ -3,7 +3,6 @@ package parser
 import java.io.{ Reader, StringReader }
 
 import ast._
-import model.StyleModel
 
 class StylesheetParser extends QLParser {
 
@@ -82,7 +81,7 @@ class StylesheetParser extends QLParser {
 }
 
 object StylesheetParser {
-  def apply(input: String): StyleModel = apply(new StringReader(input))
+  def apply(input: String): Stylesheet = apply(new StringReader(input))
 
-  def apply(input: Reader): StyleModel = new StyleModel(new StylesheetParser().parse(input))
+  def apply(input: Reader): Stylesheet = new StylesheetParser().parse(input)
 }
