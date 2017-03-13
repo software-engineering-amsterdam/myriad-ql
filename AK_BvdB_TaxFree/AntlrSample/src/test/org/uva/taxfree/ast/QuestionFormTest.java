@@ -6,7 +6,6 @@ import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
@@ -51,7 +50,7 @@ public class QuestionFormTest {
 
     private void showForm() {
         mSymbolTable.addDepencendies(mCachedDeclarations);
-        QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
+        QuestionForm form = new QuestionForm("SimpleForm", mSymbolTable);
         form.show();
     }
 
