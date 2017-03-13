@@ -15,16 +15,16 @@ class Boolean(FieldType):
         FieldType.__init__(self)
         self._value = bool(value[0])
 
-    def __or__(self, other):
-        return (self.eval() | other.eval())
+    # def __or__(self, other):
+    #     return (self.eval() | other.eval())
+    #
+    # def __and__(self, other):
+    #     return (self.eval() & other.eval())
 
-    def __and__(self, other):
-        return (self.eval() & other.eval())
-
-    def __invert__(self):
-        if(self._value == True):
-            return False
-        return True
+    # def __invert__(self):
+    #     if(self._value == True):
+    #         return False
+    #     return True
 
 class String(FieldType):
     def __init__(self, identifier, value = [""]):
@@ -39,56 +39,6 @@ class Integer(FieldType):
     def __init__(self, identifier, value = [0]):
         FieldType.__init__(self)
         self._value = int(value[0])
-
-    def __add__(self, other):
-        if(other.__class__ == Integer):
-            return (self.eval() + other.eval())
-        return NotImplemented
-
-    def __sub__(self, other):
-        if(other.__class__ == Integer):
-            return (self.eval() - other.eval())
-        return NotImplemented
-
-    def __mul__(self, other):
-        if(other.__class__ == Integer):
-            return (self.eval() * other.eval())
-        return NotImplemented
-
-    def __truediv__(self, other):
-        if(other.__class__ == Integer):
-            return (self.eval() / other.eval())
-        return NotImplemented
-
-    def __lt__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() < other.eval()
-        return NotImplemented
-
-    def __gt__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() > other.eval()
-        return NotImplemented
-
-    def __ge__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() >= other.eval()
-        return NotImplemented
-
-    def ___le__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() <= other.eval()
-        return NotImplemented
-
-    def __ne__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() != other.eval()
-        return NotImplemented
-
-    def __eq__(self, other):
-        if(other.__class__ == Integer):
-            return self.eval() == other.eval()
-        return NotImplemented
 
 class Date(FieldType):
     def __init__(self, identifier, value):
@@ -117,6 +67,3 @@ class Undefined(FieldType):
     def __init__(self):
         FieldType.__init__(self)
         self._value = False
-
-    def __sub__(self, other):
-        return None
