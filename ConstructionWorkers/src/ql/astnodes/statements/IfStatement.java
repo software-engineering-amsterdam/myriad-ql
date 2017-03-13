@@ -5,7 +5,7 @@
 package ql.astnodes.statements;
 
 import ql.astnodes.LineNumber;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 import ql.astnodes.expressions.Expression;
 
 import java.util.List;

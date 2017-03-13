@@ -4,7 +4,7 @@
 
 package ql.astnodes.types;
 
-import ql.astnodes.visitors.TypeVisitor;
+import ql.visitorinterfaces.TypeVisitor;
 
 public class UndefinedType extends Type {
 

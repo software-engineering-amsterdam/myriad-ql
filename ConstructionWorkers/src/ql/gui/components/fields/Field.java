@@ -11,9 +11,11 @@ import ql.gui.formenvironment.values.Value;
 
 public abstract class Field  {
 
-    protected QLWidget widget;
-    protected final SimpleQuestion question;
     private final GUIInterface guiInterface;
+
+    protected final SimpleQuestion question;
+
+    protected QLWidget widget;
 
     Field(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         this.guiInterface = guiInterface;
@@ -25,17 +27,17 @@ public abstract class Field  {
         guiInterface.getGUIChanges(this);
     }
 
-    public abstract Value getState();
-
     public QLWidget getWidget() {
         return widget;
     }
 
-    public abstract void setState(Value value);
-
-    public abstract void resetState();
-
     public String getId() {
         return question.getIdentifier().getName();
     }
+
+    public abstract Value getValue();
+
+    public abstract void setValue(Value value);
+
+    public abstract void resetValue();
 }

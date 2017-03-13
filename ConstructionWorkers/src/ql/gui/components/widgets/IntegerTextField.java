@@ -18,7 +18,6 @@ public class IntegerTextField extends QLWidget {
     private static final int COLUMNS = 7;
 
     public IntegerTextField(String questionLabel) {
-
         JLabel label = new JLabel(questionLabel);
         input = new JTextField();
         input.setColumns(COLUMNS);
@@ -38,7 +37,8 @@ public class IntegerTextField extends QLWidget {
 
     @Override
     public void setValue(Value value) {
-        input.setText(Integer.toString(((IntegerValue) value).getValue()));
+        IntegerValue valueToSet = (IntegerValue) value;
+        input.setText(Integer.toString(valueToSet.getValue()));
     }
 
     @Override

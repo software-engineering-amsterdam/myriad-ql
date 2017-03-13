@@ -24,8 +24,8 @@ import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
-import ql.astnodes.visitors.ExpressionVisitor;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;

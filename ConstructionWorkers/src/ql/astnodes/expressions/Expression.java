@@ -6,7 +6,7 @@ package ql.astnodes.expressions;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 
 public abstract class Expression extends Node {
 

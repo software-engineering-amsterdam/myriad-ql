@@ -6,7 +6,7 @@ package ql.astnodes;
 
 import ql.astnodes.expressions.literals.Identifier;
 import ql.astnodes.statements.Statement;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 
 import java.util.List;
 

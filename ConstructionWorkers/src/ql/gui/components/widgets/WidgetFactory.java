@@ -6,7 +6,7 @@ package ql.gui.components.widgets;
 
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.types.*;
-import ql.astnodes.visitors.TypeVisitor;
+import ql.visitorinterfaces.TypeVisitor;
 
 public class WidgetFactory implements TypeVisitor<QLWidget> {
 

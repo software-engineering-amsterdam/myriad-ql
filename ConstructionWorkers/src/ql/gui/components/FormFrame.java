@@ -7,13 +7,14 @@ package ql.gui.components;
 import ql.gui.components.fields.Field;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FormFrame {
 
     private final JFrame formFrame;
-    private final QuestionPanel panel;
+    private final JPanel questionPanel;
 
     private List<Field> fields;
 
@@ -27,39 +28,41 @@ public class FormFrame {
         formFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         formFrame.setResizable(false);
 
-        this.fields = new ArrayList<>();
+        questionPanel = new JPanel();
+        GridLayout questionPanelLayout = new GridLayout(0, 1);
+        questionPanel.setLayout(questionPanelLayout);
+        formFrame.add(questionPanel);
 
-        panel = new QuestionPanel();
-        panel.render(formFrame);
+        this.fields = new ArrayList<>();
     }
 
     public void addToFields(Field field){
         if (!containsField(field)) {
-            this.fields.add(field);
+            fields.add(field);
         }
     }
 
     public void removeFromFields(Field field){
         if (containsField(field)) {
-            this.fields.remove(field);
+            fields.remove(field);
         }
     }
 
     public Boolean containsField(Field field) {
-        return this.fields.contains(field);
+        return fields.contains(field);
     }
 
     public void showForm() {
         formFrame.setVisible(true);
     }
 
-    public void addWidget(JComponent component) {
-        panel.add(component);
+    public void addWidget(JComponent widget) {
+        questionPanel.add(widget);
         formFrame.revalidate();
     }
 
-    public void removeWidget(JComponent component) {
-        panel.remove(component);
+    public void removeWidget(JComponent widget) {
+        questionPanel.remove(widget);
         formFrame.revalidate();
     }
 }

@@ -11,7 +11,7 @@ import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
 import ql.astnodes.types.Type;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 import ql.semanticchecker.messagehandling.MessageData;
 import ql.semanticchecker.messagehandling.errors.qlerrors.DuplicateIdentifierError;
 import ql.semanticchecker.messagehandling.errors.qlerrors.IfExpressionUndefinedError;

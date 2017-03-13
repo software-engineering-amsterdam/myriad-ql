@@ -6,7 +6,7 @@ package ql.astnodes.expressions.binaries.equality;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.Expression;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 
 public class LTEQ extends Equality {
 

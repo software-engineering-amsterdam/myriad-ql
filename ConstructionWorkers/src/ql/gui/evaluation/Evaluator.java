@@ -32,6 +32,8 @@ public class Evaluator {
         Expression condition = ifStatement.getExpression();
         Value conditionValue = condition.accept(expressionEvaluator);
 
+        // TODO: necessary?
+
         if(conditionValue.undefined()) {
             return new BooleanValue(false);
         }

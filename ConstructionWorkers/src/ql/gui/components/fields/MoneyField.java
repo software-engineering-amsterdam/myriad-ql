@@ -21,7 +21,7 @@ public class MoneyField extends Field {
 
     public MoneyField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
-        resetState();
+        resetValue();
         addListenerToField();
     }
 
@@ -32,25 +32,21 @@ public class MoneyField extends Field {
             public void keyReleased(KeyEvent e) {
 
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String inputText = ((MoneyTextField) widget).getInputText();
 
-                    if (!(((MoneyTextField) widget).getInputText().equals(""))) {
-
+                    if (!(inputText.equals(""))) {
                         try {
-                            BigDecimal decimal = BigDecimal.valueOf(Double.parseDouble(((MoneyTextField) widget).getInputText()));
+                            BigDecimal decimal = BigDecimal.valueOf(Double.parseDouble(inputText));
 
                             if (Math.max(0, decimal.stripTrailingZeros().scale()) > 2) {
                                 System.out.println("Only two decimals are allowed!");
                             } else {
-                                String value = ((MoneyTextField) widget).getInputText();
-                                MoneyValue newValue = new MoneyValue(new BigDecimal(value));
-                                setState(newValue);
+                                MoneyValue newValue = (MoneyValue) widget.getValue();
+                                setValue(newValue);
                             }
-
                         } catch (Exception ex) {
                             System.out.println("Incorrect input value for money field!");
-
                         }
-
                     }
                 }
             }
@@ -58,19 +54,19 @@ public class MoneyField extends Field {
     }
 
     @Override
-    public Value getState() {
+    public Value getValue() {
         return value;
     }
 
     @Override
-    public void setState(Value value) {
+    public void setValue(Value value) {
         widget.setValue(value);
         this.value = (MoneyValue) value;
         getNewChanges();
     }
 
     @Override
-    public void resetState() {
+    public void resetValue() {
         MoneyValue zeroValue = new MoneyValue(new BigDecimal(0.00));
         value = zeroValue;
         widget.setValue(zeroValue);

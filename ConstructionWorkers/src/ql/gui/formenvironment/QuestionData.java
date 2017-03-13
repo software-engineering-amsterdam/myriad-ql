@@ -9,7 +9,7 @@ import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,39 +19,31 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     private final List<SimpleQuestion> simpleQuestions;
     private final List<ComputedQuestion> computedQuestions;
     private final List<IfStatement> ifStatements;
-
     private final List<SimpleQuestion> allQuestions;
 
     public QuestionData(Form ast) {
-        this.simpleQuestions = new ArrayList<>();
-        this.computedQuestions = new ArrayList<>();
-        this.ifStatements = new ArrayList<>();
+        simpleQuestions = new ArrayList<>();
+        computedQuestions = new ArrayList<>();
+        ifStatements = new ArrayList<>();
         ast.accept(this);
-        this.allQuestions = setAllQuestions();
+        allQuestions = setAllQuestions();
+    }
+
+    private List<SimpleQuestion> setAllQuestions() {
+        List<SimpleQuestion> allQuestions = simpleQuestions;
+        allQuestions.addAll(computedQuestions);
+        return allQuestions;
     }
 
     public List<ComputedQuestion> getComputedQuestions(){
-        return this.computedQuestions;
+        return computedQuestions;
     }
 
-    private List<SimpleQuestion> getSimpleQuestions(){
-        return this.simpleQuestions;
-    }
-
-    List<IfStatement> getIfStatements(){
-        return this.ifStatements;
+    public List<IfStatement> getIfStatements(){
+        return ifStatements;
     }
 
     public List<SimpleQuestion> getAllQuestions(){
-        return this.allQuestions;
-    }
-
-    private List<SimpleQuestion> setAllQuestions(){
-        List<SimpleQuestion> allQuestions = this.getSimpleQuestions();
-
-        List<ComputedQuestion> computedQuestions = this.getComputedQuestions();
-
-        allQuestions.addAll(computedQuestions);
         return allQuestions;
     }
 
@@ -64,22 +56,22 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     }
 
     @Override
-    public Void visit(SimpleQuestion statement) {
-        simpleQuestions.add(statement);
+    public Void visit(SimpleQuestion simpleQuestion) {
+        simpleQuestions.add(simpleQuestion);
         return null;
     }
 
     @Override
-    public Void visit(ComputedQuestion statement) {
-        computedQuestions.add(statement);
+    public Void visit(ComputedQuestion computedQuestion) {
+        computedQuestions.add(computedQuestion);
         return null;
     }
 
     @Override
-    public Void visit(IfStatement statement) {
-        ifStatements.add(statement);
-        for (Statement subStatement : statement.getStatements()) {
-            subStatement.accept(this);
+    public Void visit(IfStatement ifStatement) {
+        ifStatements.add(ifStatement);
+        for (Statement bodyStatement : ifStatement.getStatements()) {
+            bodyStatement.accept(this);
         }
         return null;
     }

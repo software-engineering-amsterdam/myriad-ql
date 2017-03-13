@@ -1,3 +1,7 @@
+/**
+ * QuestionConditions.java.
+ */
+
 package ql.gui.formenvironment;
 
 import ql.astnodes.Form;
@@ -5,7 +9,7 @@ import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 import ql.gui.components.fields.Field;
 import ql.gui.components.fields.FieldFactory;
 
@@ -14,12 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by LGGX on 25-Feb-17.
- */
 public class QuestionConditions implements FormAndStatementVisitor <Void>{
 
-    private final Map<Field, List<IfStatement>> conditionQuestionMap;
+    private final Map<Field, List<IfStatement>> fieldToIfStatementsMap;
     private final Context context;
     private final FieldFactory fieldFactory;
 
@@ -28,42 +29,40 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
     public QuestionConditions(QuestionData questionData, Context context, FieldFactory fieldFactory) {
         this.context = context;
         this.fieldFactory = fieldFactory;
-        this.conditionQuestionMap = getQuestionsWithConditions(questionData, new HashMap<>());
+        fieldToIfStatementsMap = getFieldsWithIfStatements(questionData);
     }
 
-    public Map<Field, List<IfStatement>> getMap() {
-        return this.conditionQuestionMap;
-    }
-
-    private Map<Field, List<IfStatement>> getQuestionsWithConditions(QuestionData questionData,
-    Map<Field, List<IfStatement>> fieldMap) {
+    private Map<Field, List<IfStatement>> getFieldsWithIfStatements(QuestionData questionData) {
+        Map<Field, List<IfStatement>> fieldMap = new HashMap<>();
 
         for (SimpleQuestion question : questionData.getAllQuestions()) {
-            Field field = question.accept(this.fieldFactory);
-            this.context.addValue(field.getId(), field.getState());
+            Field field = question.accept(fieldFactory);
+            context.addValue(field.getId(), field.getValue());
             fieldMap.put(field, new ArrayList<>());
-            this.addIfStatementsToQuestion(questionData.getIfStatements(), question, fieldMap);
+            addIfStatements(questionData, question, fieldMap);
         }
-
         return fieldMap;
     }
 
-    private void addIfStatementsToQuestion(List<IfStatement> ifStatementsList, SimpleQuestion question,
-            Map<Field, List<IfStatement>> conditionsOfQuestions) {
-
-        for (IfStatement ifStatement : ifStatementsList) {
-
-            this.questionsInIfStatement.clear();
+    private void addIfStatements(QuestionData questionData, SimpleQuestion question,
+            Map<Field, List<IfStatement>> fieldMap) {
+        for (IfStatement ifStatement : questionData.getIfStatements()) {
+            questionsInIfStatement.clear();
             ifStatement.accept(this);
 
-            if (this.questionsInIfStatement.contains(question)) {
-                for (Field field : conditionsOfQuestions.keySet()) {
+            if (questionsInIfStatement.contains(question)) {
+                for (Field field : fieldMap.keySet()) {
+
                     if (question.getIdentifier().getName().equals(field.getId())) {
-                        conditionsOfQuestions.get(field).add(ifStatement);
+                        fieldMap.get(field).add(ifStatement);
                     }
                 }
             }
         }
+    }
+
+    public Map<Field, List<IfStatement>> getFieldToIfStatementsMap() {
+        return fieldToIfStatementsMap;
     }
 
     @Override
@@ -72,21 +71,21 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
     }
 
     @Override
-    public Void visit(SimpleQuestion statement) {
-        this.questionsInIfStatement.add(statement);
+    public Void visit(SimpleQuestion simpleQuestion) {
+        questionsInIfStatement.add(simpleQuestion);
         return null;
     }
 
     @Override
-    public Void visit(ComputedQuestion statement) {
-        this.questionsInIfStatement.add(statement);
+    public Void visit(ComputedQuestion computedQuestion) {
+        questionsInIfStatement.add(computedQuestion);
         return null;
     }
 
     @Override
-    public Void visit(IfStatement statement) {
-        for (Statement subStatement : statement.getStatements()) {
-            subStatement.accept(this);
+    public Void visit(IfStatement ifStatement) {
+        for (Statement bodyStatement : ifStatement.getStatements()) {
+            bodyStatement.accept(this);
         }
         return null;
     }

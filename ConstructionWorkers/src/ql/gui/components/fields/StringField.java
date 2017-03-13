@@ -1,3 +1,7 @@
+/**
+ * StringField.java.
+ */
+
 package ql.gui.components.fields;
 
 import ql.astnodes.statements.SimpleQuestion;
@@ -9,19 +13,13 @@ import ql.gui.formenvironment.values.StringValue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-/**
- * Created by LGGX on 23-Feb-17.
- */
-
 public class StringField extends Field {
 
     private StringValue value;
 
     public StringField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
-
-        this.resetState();
-
+        resetValue();
         addListenerToField();
     }
 
@@ -30,12 +28,12 @@ public class StringField extends Field {
 
             @Override
             public void keyReleased(KeyEvent e) {
+
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
                     StringValue newValue = (StringValue) widget.getValue();
 
                     if (!newValue.equals(value)) {
-                        setState(newValue);
-
+                        setValue(newValue);
                     }
                 }
             }
@@ -44,22 +42,21 @@ public class StringField extends Field {
     }
 
     @Override
-    public Value getState() {
+    public Value getValue() {
         return this.value;
     }
 
     @Override
-    public void setState(Value value) {
-        this.widget.setValue(value);
+    public void setValue(Value value) {
+        widget.setValue(value);
         this.value = (StringValue) value;
-        this.getNewChanges();
+        getNewChanges();
     }
 
     @Override
-    public void resetState() {
+    public void resetValue() {
         StringValue emptyValue = new StringValue("");
         this.value = emptyValue;
         this.widget.setValue(emptyValue);
     }
-
 }

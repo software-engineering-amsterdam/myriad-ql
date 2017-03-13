@@ -2,7 +2,7 @@
  * FormAndStatementVisitor.java.
  */
 
-package ql.astnodes.visitors;
+package ql.visitorinterfaces;
 
 import ql.astnodes.Form;
 import ql.astnodes.statements.*;

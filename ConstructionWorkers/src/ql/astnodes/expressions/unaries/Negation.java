@@ -5,7 +5,7 @@
 package ql.astnodes.expressions.unaries;
 
 import ql.astnodes.LineNumber;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 import ql.astnodes.expressions.Expression;
 
 public class Negation extends Unary {

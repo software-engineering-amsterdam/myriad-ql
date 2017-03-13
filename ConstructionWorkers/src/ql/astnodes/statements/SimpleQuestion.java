@@ -6,7 +6,7 @@ package ql.astnodes.statements;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.literals.Identifier;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 
 import ql.astnodes.types.Type;
 

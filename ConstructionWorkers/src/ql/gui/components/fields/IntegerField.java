@@ -20,7 +20,7 @@ public class IntegerField extends Field {
 
     public IntegerField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
-        resetState();
+        resetValue();
         addListenerToField();
     }
 
@@ -32,38 +32,34 @@ public class IntegerField extends Field {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 
                     if (!(((IntegerTextField) widget).getInputText().equals(""))) {
-
                         try {
                             IntegerValue newValue = (IntegerValue) widget.getValue();
-                            setState(newValue);
+                            setValue(newValue);
                         } catch (Exception ex) {
                             System.out.println("Incorrect input value for integer field!");
                         }
-
                     }
-
                 }
             }
         });
     }
 
     @Override
-    public Value getState() {
+    public Value getValue() {
         return value;
     }
 
     @Override
-    public void setState(Value value) {
+    public void setValue(Value value) {
         widget.setValue(value);
         this.value = (IntegerValue) value;
         getNewChanges();
     }
 
     @Override
-    public void resetState() {
+    public void resetValue() {
         IntegerValue zeroValue = new IntegerValue(0);
         value = zeroValue;
         widget.setValue(zeroValue);
     }
-
 }

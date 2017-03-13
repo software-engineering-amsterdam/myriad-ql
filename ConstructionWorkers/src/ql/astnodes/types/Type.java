@@ -6,7 +6,7 @@ package ql.astnodes.types;
 
 import ql.astnodes.Node;
 import ql.astnodes.LineNumber;
-import ql.astnodes.visitors.TypeVisitor;
+import ql.visitorinterfaces.TypeVisitor;
 
 public abstract class Type extends Node {
 

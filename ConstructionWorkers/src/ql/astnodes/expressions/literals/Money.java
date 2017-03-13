@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.MoneyType;
 import ql.astnodes.types.Type;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 
 public class Money extends Literal {
 

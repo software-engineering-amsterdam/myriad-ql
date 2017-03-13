@@ -5,7 +5,7 @@
 package ql.astnodes.expressions.literals;
 
 import ql.astnodes.LineNumber;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 
 public class Identifier extends Literal {
 

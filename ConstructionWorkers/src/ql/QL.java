@@ -117,6 +117,6 @@ public class QL {
 
     private void buildGUI(Form ast, Context context) {
         GUI gui = new GUI (ast, context);
-        gui.showUI();
+        gui.showGUI();
     }
 }

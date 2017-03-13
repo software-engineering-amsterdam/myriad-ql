@@ -19,7 +19,7 @@ public class BooleanField extends Field {
 
     public BooleanField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
-        resetState();
+        resetValue();
         addListenerToField();
     }
 
@@ -31,24 +31,24 @@ public class BooleanField extends Field {
                 newValue = new BooleanValue(true);
             }
 
-            setState(newValue);
+            setValue(newValue);
         });
     }
 
     @Override
-    public Value getState() {
+    public Value getValue() {
         return value;
     }
 
     @Override
-    public void setState(Value value) {
+    public void setValue(Value value) {
         widget.setValue(value);
         this.value = (BooleanValue) value;
         getNewChanges();
     }
 
     @Override
-    public void resetState() {
+    public void resetValue() {
         BooleanValue falseValue = new BooleanValue(false);
         value = falseValue;
         widget.setValue(falseValue);

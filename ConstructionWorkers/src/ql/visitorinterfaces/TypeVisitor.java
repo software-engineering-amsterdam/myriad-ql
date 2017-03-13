@@ -2,7 +2,7 @@
  * TypeVisitor.java.
  */
 
-package ql.astnodes.visitors;
+package ql.visitorinterfaces;
 
 import ql.astnodes.types.*;
 

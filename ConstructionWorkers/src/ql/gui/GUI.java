@@ -17,24 +17,21 @@ import ql.gui.formenvironment.QuestionConditions;
 import ql.gui.formenvironment.QuestionData;
 import ql.gui.formenvironment.values.Value;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class GUI implements GUIInterface{
 
+    private FormFrame form;
+
     private final Context context;
     private final Evaluator evaluator;
     private final QuestionData questionData;
-
-    private FormFrame form;
-
-    private List<ComputedQuestion> computedQuestions = new ArrayList<>();
-    private final Map<Field, List<IfStatement>> questionsWithConditions;
+    private final List<ComputedQuestion> computedQuestions;
+    private final Map<Field, List<IfStatement>> fieldToIfStatementsMap;
 
     public GUI(Form form, Context context) {
-
         this.form = new FormFrame(form.getIdentifier().getName());
 
         this.context = context;
@@ -44,45 +41,28 @@ public class GUI implements GUIInterface{
 
         questionData = new QuestionData(form);
         computedQuestions = questionData.getComputedQuestions();
-        questionsWithConditions = new QuestionConditions(questionData, context, fieldFactory).getMap();
+        fieldToIfStatementsMap = new QuestionConditions(questionData, context, fieldFactory).getFieldToIfStatementsMap();
     }
 
     @Override
     public void getGUIChanges(Field updateField) {
-        this.context.addValue(updateField.getId(), updateField.getState());
-        this.showUI();
+        context.addValue(updateField.getId(), updateField.getValue());
+        showGUI();
     }
 
-    public void showUI() {
-        this.evaluateComputedQuestions(this.computedQuestions);
-        this.updateGUIData(this.questionsWithConditions);
-        this.form.showForm();
+    public void showGUI() {
+        evaluateComputedQuestions();
+        updateGUIData();
+        form.showForm();
     }
 
-    private void updateGUIData(Map<Field, List<IfStatement>> conditionsOfQuestions) {
-        for (SimpleQuestion question : questionData.getAllQuestions()) {
-            for (Field field : conditionsOfQuestions.keySet()) {
-                if (Objects.equals(question.getIdentifier().getName(), field.getId())) {
-                    if (this.checkIfConditionIsTrue(conditionsOfQuestions, field)) {
-                        form.addToFields(field);
-                        field.getWidget().render(form);
-                    } else {
-                        form.removeFromFields(field);
-                        field.getWidget().remove(form);
-                        field.resetState();
-                    }
-                }
-            }
-        }
-    }
-
-    private void evaluateComputedQuestions(List<ComputedQuestion> questions) {
-        for (ComputedQuestion question : questions) {
-            Value result = this.evaluator.getValueComputedQuestion(question);
-
+    private void evaluateComputedQuestions() {
+        for (ComputedQuestion computedQuestion : computedQuestions) {
+            Value result = evaluator.getValueComputedQuestion(computedQuestion);
             Field questionField = null;
-            for (Field field : this.questionsWithConditions.keySet()) {
-                if (question.getIdentifier().getName().equals(field.getId())) {
+
+            for (Field field : fieldToIfStatementsMap.keySet()) {
+                if (computedQuestion.getIdentifier().getName().equals(field.getId())) {
                     questionField = field;
                 }
             }
@@ -93,16 +73,33 @@ public class GUI implements GUIInterface{
         }
     }
 
-    private boolean checkIfConditionIsTrue(Map<Field, List<IfStatement>> conditionsOfQuestions, Field field) {
+    private void updateGUIData() {
+        for (SimpleQuestion question : questionData.getAllQuestions()) {
+
+            for (Field field : fieldToIfStatementsMap.keySet()) {
+                if (Objects.equals(question.getIdentifier().getName(), field.getId())) {
+
+                    if (checkIfConditionIsTrue(field)) {
+                        form.addToFields(field);
+                        field.getWidget().render(form);
+                    } else {
+                        form.removeFromFields(field);
+                        field.getWidget().remove(form);
+                        field.resetValue();
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean checkIfConditionIsTrue(Field field) {
         boolean condition = true;
 
-        for (IfStatement ifStatement : conditionsOfQuestions.get(field)) {
-
-            if (!(Boolean) this.evaluator.getValueIfStatement(ifStatement).getValue()) {
+        for (IfStatement ifStatement : fieldToIfStatementsMap.get(field)) {
+            if (!(Boolean) evaluator.getValueIfStatement(ifStatement).getValue()) {
                 condition = false;
             }
         }
-
         return condition;
     }
 }

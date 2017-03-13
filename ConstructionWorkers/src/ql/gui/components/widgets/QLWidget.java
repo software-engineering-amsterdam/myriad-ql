@@ -33,5 +33,4 @@ public abstract class QLWidget {
     public void remove(FormFrame form) {
         form.removeWidget(component);
     }
-
 }

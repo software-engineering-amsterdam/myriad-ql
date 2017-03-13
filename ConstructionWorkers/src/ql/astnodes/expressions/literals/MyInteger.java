@@ -7,7 +7,7 @@ package ql.astnodes.expressions.literals;
 import ql.astnodes.types.Type;
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.IntegerType;
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 
 public class MyInteger extends Literal {
 

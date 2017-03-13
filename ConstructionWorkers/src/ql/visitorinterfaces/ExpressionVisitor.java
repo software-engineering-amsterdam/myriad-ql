@@ -2,7 +2,7 @@
  * ExpressionVisitor.java.
  */
 
-package ql.astnodes.visitors;
+package ql.visitorinterfaces;
 
 import ql.astnodes.expressions.binaries.equality.*;
 import ql.astnodes.expressions.binaries.logic.*;

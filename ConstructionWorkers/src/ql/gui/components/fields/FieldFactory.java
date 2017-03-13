@@ -12,8 +12,8 @@ import ql.astnodes.types.BooleanType;
 import ql.astnodes.types.IntegerType;
 import ql.astnodes.types.MoneyType;
 import ql.astnodes.types.StringType;
-import ql.astnodes.visitors.FormAndStatementVisitor;
-import ql.astnodes.visitors.TypeVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
+import ql.visitorinterfaces.TypeVisitor;
 import ql.gui.components.widgets.QLWidget;
 import ql.gui.evaluation.Evaluator;
 import ql.gui.GUIInterface;
@@ -28,7 +28,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
     private final WidgetFactory widgetFactory;
 
     private QLWidget qlWidget;
-    private SimpleQuestion simpleQuestion;
+    private SimpleQuestion question;
 
     public FieldFactory(GUIInterface guiInterface, Context context) {
         this.guiInterface = guiInterface;
@@ -43,24 +43,21 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
 
     @Override
     public Field visit(SimpleQuestion question) {
-
-        this.qlWidget = widgetFactory.getWidgetForQuestion(question);
-        this.simpleQuestion = question;
-
+        qlWidget = widgetFactory.getWidgetForQuestion(question);
+        this.question = question;
         return question.getType().accept(this);
     }
 
     @Override
     public Field visit(ComputedQuestion question) {
         Value result = evaluator.getValueComputedQuestion(question);
-        QLWidget widget = this.widgetFactory.getWidgetForQuestion(question);
+        QLWidget qlWidget = widgetFactory.getWidgetForQuestion(question);
 
-        widget.setValue(result);
-        widget.setReadOnly(true);
+        qlWidget.setValue(result);
+        qlWidget.setReadOnly(true);
 
-        this.qlWidget = widget;
-        this.simpleQuestion = question;
-
+        this.qlWidget = qlWidget;
+        this.question = question;
         return question.getType().accept(this);
     }
 
@@ -71,21 +68,21 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
 
     @Override
     public Field visit(BooleanType type) {
-        return new BooleanField(guiInterface, simpleQuestion, qlWidget);
+        return new BooleanField(guiInterface, question, qlWidget);
     }
 
     @Override
     public Field visit(IntegerType type) {
-        return new IntegerField(guiInterface, simpleQuestion, qlWidget);
+        return new IntegerField(guiInterface, question, qlWidget);
     }
 
     @Override
     public Field visit(MoneyType type) {
-        return new MoneyField(guiInterface, simpleQuestion, qlWidget);
+        return new MoneyField(guiInterface, question, qlWidget);
     }
 
     @Override
     public Field visit(StringType type) {
-        return new StringField(guiInterface, simpleQuestion, qlWidget);
+        return new StringField(guiInterface, question, qlWidget);
     }
 }

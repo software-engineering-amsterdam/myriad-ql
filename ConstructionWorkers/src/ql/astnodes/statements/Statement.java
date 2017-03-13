@@ -6,7 +6,7 @@ package ql.astnodes.statements;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import ql.astnodes.visitors.FormAndStatementVisitor;
+import ql.visitorinterfaces.FormAndStatementVisitor;
 
 public abstract class Statement extends Node {
 

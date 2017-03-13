@@ -4,7 +4,7 @@
 
 package ql.astnodes.expressions.unaries;
 
-import ql.astnodes.visitors.ExpressionVisitor;
+import ql.visitorinterfaces.ExpressionVisitor;
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.Expression;
 

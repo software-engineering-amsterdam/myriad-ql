@@ -38,7 +38,8 @@ public class MoneyTextField extends QLWidget {
 
     @Override
     public void setValue(Value value) {
-        input.setText(((MoneyValue) value).getValue().toString());
+        MoneyValue valueToSet = (MoneyValue) value;
+        input.setText(valueToSet.getValue().toString());
     }
 
     @Override
