@@ -12,7 +12,7 @@ if __name__ == '__main__':
     __parsed = QL.boolean_expression.parseString(eval_test)[0]
     print(__parsed.right_hand_side)
     print(__parsed.right_hand_side.right_hand_side)
-    print(__parsed.right_hand_side.right_hand_side.left_hand_side)
+    print(__parsed.right_hand_side.right_hand_side.left_hand_side.eval())
     print(__parsed.right_hand_side.right_hand_side.left_hand_side._identifier)
     print(__parsed.right_hand_side.right_hand_side.right_hand_side)
     print(__parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side)
@@ -50,6 +50,11 @@ if __name__ == '__main__':
     print("left != right: {}".format(left != right))
     print("left == right: {}".format(left == right))
 
+    print("\n")
+    test = LogicalAnd(Boolean(None,[True]),Boolean(None,[False]))
+    print("Test Evaluation LogicalAnd: {}".format(test.eval()))
+    test = LogicalOr(Boolean(None,[True]),Boolean(None,[False]))
+    print("Test Evaluation LogicalOr: {}".format(test.eval()))
     # eval_test = '(sellingPrice - privateDebt)'
     # __parsed = QL.arithmic_expression.parseString(eval_test)[0]
     # print(__parsed.eval())
