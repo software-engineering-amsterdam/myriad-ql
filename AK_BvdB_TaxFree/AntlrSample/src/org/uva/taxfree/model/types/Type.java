@@ -1,6 +1,7 @@
 package org.uva.taxfree.model.types;
 
 import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.OrOperator;
 
 public abstract class Type {
     public boolean equals(Type other) {
@@ -8,4 +9,7 @@ public abstract class Type {
     }
 
     public abstract boolean supports(AddOperator add);
+
+    public abstract boolean supports(OrOperator or);
+
 }
