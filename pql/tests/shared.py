@@ -2,23 +2,37 @@
 from io import open
 from os.path import join
 from sys import exit
+
+from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
+from pql.typechecker.type_environment import TypeEnvironment
 from pql.typechecker.typechecker import TypeChecker
 
 PATH_EXAMPLE = str(join("path", "to", "your", "file"))
 
 
-def acquire_identifiers(ql_ast):
-    identifier_checker = IdentifierChecker()
-    result = identifier_checker.visit(ql_ast)
-    del identifier_checker
-    return result
+def acquire_identifiers(ast):
+    return IdentifierChecker().visit(ast)
 
 
-def check_type(ql_ast, ql_identifier_check_result):
-    type_checker = TypeChecker(ql_identifier_check_result)
+# ast = self.create_ast(contents)
+#         if ast is not None:
+#             identifier_errors = self.check_ids(ast)
+#             if identifier_errors:
+#                 self.list_errors.addItems(identifier_errors)
+#             else:
+#                 type_errors = self.check_type(TypeEnvironment().visit(ast), ast)
+#                 if type_errors:
+#                     self.list_errors.addItems(type_errors)
+#                 else:
+#                     self.form = Questionnaire().visit(ast)
+#                     self.form.show()
+
+
+def check_type(ql_ast):
+    type_checker = TypeChecker(TypeEnvironment().visit(ql_ast))
     result = type_checker.visit(ql_ast)
     del type_checker
     return result
@@ -29,35 +43,21 @@ def evaluate(ql_ast, ql_identifier_check_result):
     return evaluator.visit(ql_ast)
 
 
-def strip_keys_from_dict(ql_identifier_check_result):
-    dict_ = dict()
-    for key in ql_identifier_check_result.keys():
-        dict_[key] = None
-    return dict_
-
-
 def ql(ql_str):
     ql_ast = parse(ql_str)
     if ql_ast is None:
         exit(4)
-    ql_identifier_check_result, identifier_result_errors = acquire_identifiers(ql_ast)
+    identifier_result_errors = acquire_identifiers(ql_ast)
 
     if identifier_result_errors:
         print_result('Identifier checker had errors', identifier_result_errors, 4)
 
-    ql_type_check_result = check_type(ql_ast, ql_identifier_check_result)
+    ql_type_check_result = check_type(ql_ast)
     if ql_type_check_result:
         print_result('Type checker had errors', ql_type_check_result, 5)
 
-    return evaluate(ql_ast, ql_identifier_check_result)
+    return evaluate(ql_ast, EnvironmentCreator().visit(ql_ast))
 
-
-def open_file(path):
-    try:
-        return open(path)
-    except FileNotFoundError:
-        print("The given file could not be found. Usage: python pql.py %s" % PATH_EXAMPLE)
-        exit(1)
 
 
 def print_result(main_message, error_list, exit_code):
@@ -66,20 +66,4 @@ def print_result(main_message, error_list, exit_code):
     exit(exit_code)
 
 
-def acquire_text(sys_args):
-    ql_file = None
 
-    try:
-        ql_file = open_file(sys_args[1])
-    except IndexError:
-        print("Usage: python pql.py %s" % PATH_EXAMPLE)
-        exit(2)
-
-    if ql_file is None:
-        print("No file was found:  usage: python pql.py %s" % PATH_EXAMPLE)
-        exit(3)
-
-    ql_str = ql_file.read()
-    ql_file.close()
-    del ql_file
-    return ql_str

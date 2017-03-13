@@ -22,16 +22,9 @@ class IdentifierChecker(FormVisitor):
                                   .format(key, value))
             return errors
 
-        def normalize(identifiers):
-            normalized_dictionary = dict()
-            for key, value_list in identifiers.items():
-                for value in value_list:
-                    normalized_dictionary[key] = value
-            return normalized_dictionary
-
         identifier_dictionary = defaultdict(list)
         recursively_build_dictionary([form.apply(self) for form in pql_ast], identifier_dictionary)
-        return normalize(identifier_dictionary), build_error_list(identifier_dictionary)
+        return build_error_list(identifier_dictionary)
 
     def form(self, node):
         return [statement.apply(self) for statement in node.statements]
@@ -43,4 +36,4 @@ class IdentifierChecker(FormVisitor):
         return [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        return {node.name.name: node.data_type}
+        return {node.name.name: node.name}
