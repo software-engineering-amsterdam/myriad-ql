@@ -18,12 +18,30 @@ namespace Questionnaires.QL.AST
 
         public QLParser.FormContext BuildForm(string input)
         {
+            QLParser parser = CreateParser(input);
+            return parser.form();
+        }
+
+        public QLParser.ExpressionContext BuildExpression(string input)
+        {
+            QLParser parser = CreateParser(input);
+            return parser.expression();
+        }
+
+        public QLParser.ComputedQuestionContext BuildComputedQuestion(string input)
+        {
+            QLParser parser = CreateParser(input);
+            return parser.computedQuestion();
+        }
+
+        private QLParser CreateParser(string input)
+        {
             var inputStream = new AntlrInputStream(input);
             var lexer = new QLLexer(inputStream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new QLParser(tokens);
             AddErrorListener(parser);
-            return parser.form();
+            return parser;
         }
 
         private void AddErrorListener(QLParser parser)

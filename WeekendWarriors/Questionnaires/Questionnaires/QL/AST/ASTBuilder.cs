@@ -31,7 +31,7 @@ namespace Questionnaires.QL.AST
 
         public AST.IExpression BuildExpression(string input)
         {
-            var CST = CSTBuilder.BuildForm(input);
+            var CST = CSTBuilder.BuildExpression(input);
             if (Messages.IsError())
                 throw new Exception();
 
@@ -40,7 +40,7 @@ namespace Questionnaires.QL.AST
 
         public AST.ComputedQuestion BuildComputedQuestion(string input)
         {
-            var CST = CSTBuilder.BuildForm(input);
+            var CST = CSTBuilder.BuildComputedQuestion(input);
             if (Messages.IsError())
                 throw new Exception();
 

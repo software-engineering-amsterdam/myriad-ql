@@ -13,31 +13,34 @@ namespace Tests.QL.SemanticAnalysis
     public class SemanticTestHarness
     {
         protected uint ErrorCount = 0;
-        protected ASTFactory ASTFactory = new ASTFactory();
+        protected ASTBuilder ASTFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
         
         public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
-            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer();            
-            var node = ASTFactory.CreateExpression(input);
-            var result = SemanticAnalyzer.AnalyzeAstNode(node);
+            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
+            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);            
+            var node = ASTFactory.BuildExpression(input);
+            SemanticAnalyzer.AnalyzeAstNode(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }
 
         public void TestForm(string input, int exprectedErrorCount, string failureMessage)
         {
-            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer();
-            var node = ASTFactory.CreateForm(input, new Questionnaires.Compilation.Result());
-            var result = SemanticAnalyzer.AnalyzeForm(node);
+            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
+            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer(result);
+            var node = ASTFactory.BuildForm(input);
+            SemanticAnalyzer.AnalyzeForm(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }
 
         public void TestComputedQuestion(string input, int exprectedErrorCount, string failureMessage)
         {
-            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer();
-            var node = ASTFactory.CreateComputedQuestion(input);
-            var result = SemanticAnalyzer.AnalyzeAstNode(node);
+            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
+            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
+            var node = ASTFactory.BuildComputedQuestion(input);
+            SemanticAnalyzer.AnalyzeAstNode(node);
 
             Assert.AreEqual(exprectedErrorCount, result.Events.Count, failureMessage);
         }

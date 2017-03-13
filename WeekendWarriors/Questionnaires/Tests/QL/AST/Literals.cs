@@ -8,17 +8,17 @@ namespace Tests.QL.AST
     [TestClass]
     public class Literals
     {
-        public ASTFactory astFactory;
+        public ASTBuilder astFactory;
 
         public T CreateASTNode<T>(string input) where T : INode
         {
-            return (T)astFactory.CreateExpression(input);
+            return (T)astFactory.BuildExpression(input);
         }
 
         [TestInitialize]
         public void SetupTestFactory()
         {
-            astFactory = new ASTFactory();
+            astFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
         }
 
         [TestMethod]
@@ -28,8 +28,7 @@ namespace Tests.QL.AST
             {
                 { "\"\"", "Test failure: Empty string" },
                 { "\"PieceOfText\"", "Test failure: Single word string" },
-                { "\"Piece Of Text\"", "Test failure: Multi word string" },
-                { "\"\"\"\"", "Test failure: Escape characters" }
+                { "\"Piece Of Text\"", "Test failure: Multi word string" }
             };
 
             foreach (var testCase in testCases)

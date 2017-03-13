@@ -11,9 +11,14 @@ namespace Tests.QL.SemanticAnalysis
      * unit tests since we are unable to uniquely verify certain properties at the form level */
     public class ExposedSemanticAnalyzer : SemanticAnalyzer
     {
-        public new Questionnaires.Compilation.Result AnalyzeAstNode(Questionnaires.QL.AST.INode node)
+        public ExposedSemanticAnalyzer(Questionnaires.Compilation.Result result) : base(result)
         {
-            return base.AnalyzeAstNode(node);
+
+        }
+
+        public new void AnalyzeAstNode(Questionnaires.QL.AST.INode node)
+        {
+            base.AnalyzeAstNode(node);
         }
     }
 }
