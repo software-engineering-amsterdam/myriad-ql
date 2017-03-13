@@ -37,7 +37,6 @@ class Parser(QLParser):
         # Add parse actions to create AST nodes from parse results.
         self.parse_literal_type_nodes()
         self.parse_literal_nodes()
-        self.PROPERTIES = self.parse_property_type_nodes()
         self.parse_widget_type_nodes()
 
         self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
@@ -72,7 +71,18 @@ class Parser(QLParser):
         self.STRING.setParseAction(pp.removeQuotes)
         self.DATE.setParseAction(self.create_date)
 
-    def parse_property_type_nodes(self):
+    def parse_widget_type_nodes(self):
+        self.SLIDER.setParseAction(self.create_node(AST.SliderNode))
+        self.SPINBOX.setParseAction(self.create_node(AST.SpinboxNode))
+        self.TEXT.setParseAction(self.create_node(AST.TextNode))
+        self.RADIO.setParseAction(self.create_node(AST.RadioNode))
+        self.CHECKBOX.setParseAction(self.create_node(AST.CheckboxNode))
+        self.DROPDOWN.setParseAction(self.create_node(AST.DropdownNode))
+
+    def define_widget_type(self):
+        return self.WIDGET + self.WIDGET_TYPES
+
+    def define_property_type(self):
         PROP_WIDTH = self.WIDTH + self.COLON + self.INTEGER
         PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))
         PROP_HEIGHT = self.HEIGHT + self.COLON + self.INTEGER
@@ -86,21 +96,8 @@ class Parser(QLParser):
 
         return PROP_WIDTH ^ PROP_HEIGHT ^ PROP_FONT ^ PROP_FONTSIZE ^ PROP_COLOR
 
-    def parse_widget_type_nodes(self):
-        self.SLIDER.setParseAction(self.create_node(AST.SliderNode))
-        self.SPINBOX.setParseAction(self.create_node(AST.SpinboxNode))
-        self.TEXT.setParseAction(self.create_node(AST.TextNode))
-        self.RADIO.setParseAction(self.create_node(AST.RadioNode))
-        self.CHECKBOX.setParseAction(self.create_node(AST.CheckboxNode))
-        self.DROPDOWN.setParseAction(self.create_node(AST.DropdownNode))
-
-    def define_widget_type(self):
-        return self.WIDGET + self.WIDGET_TYPES
-
-    def define_property_type(self):
-        return self.PROPERTIES
-
     def define_default(self):
+        # TODO: maybe split up in a default node with props and without.
         header = self.DEFAULT + self.TYPE_NAMES
         body = pp.Group(
             pp.OneOrMore(self.property_type) + self.widget_type
