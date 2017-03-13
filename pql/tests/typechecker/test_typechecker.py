@@ -1,18 +1,8 @@
 # coding=utf-8
-from unittest import TestCase
-from pql.parser.parser import parse
-from tests.shared import acquire_identifiers, check_type
+from tests.shared import Shared
 
 
-class TestTypeChecker(TestCase):
-
-    def apply_type_checking(self, input_string):
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
-        ql_identifier_check_result, errors = acquire_identifiers(form_node)
-        self.assertEqual(len(errors), 0, "There is a clone representation of a field.")
-        type_checker_result = check_type(form_node, ql_identifier_check_result)
-        return type_checker_result
+class TestTypeChecker(Shared):
 
     def test_parse_field(self):
         input_string = """

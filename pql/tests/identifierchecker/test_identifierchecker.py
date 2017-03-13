@@ -1,10 +1,9 @@
 # coding=utf-8
-from unittest import TestCase
 from pql.parser.parser import parse
-from tests.shared import acquire_identifiers
+from tests.shared import Shared
 
 
-class TestIdentifierChecker(TestCase):
+class TestIdentifierChecker(Shared):
     def test_duplicate_field(self):
         input_string = """
         form taxOfficeExample {
@@ -14,7 +13,7 @@ class TestIdentifierChecker(TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result
-        errors = acquire_identifiers(form_node)
+        errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
 
     def test_duplicate_field_inside_if(self):
@@ -28,7 +27,7 @@ class TestIdentifierChecker(TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result
-        errors = acquire_identifiers(form_node)
+        errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
 
     def test_duplicate_field_inside_if_and_else(self):
@@ -44,7 +43,7 @@ class TestIdentifierChecker(TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result
-        errors = acquire_identifiers(form_node)
+        errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
 
     def test_duplicate_field_inside_if_and_else_if(self):
@@ -62,5 +61,5 @@ class TestIdentifierChecker(TestCase):
         """
         parse_result = parse(input_string).asList()
         form_node = parse_result
-        errors = acquire_identifiers(form_node)
+        errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")

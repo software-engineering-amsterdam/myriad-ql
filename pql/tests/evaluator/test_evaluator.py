@@ -1,10 +1,8 @@
 # coding=utf-8
-from unittest import TestCase
-
-from tests.shared import ql
+from tests.shared import Shared
 
 
-class TestEvaluator(TestCase):
+class TestEvaluator(Shared):
 
     def test_eval_arithmetic_both_integers(self):
         input_string = """
@@ -12,7 +10,7 @@ class TestEvaluator(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: integer = 10 + 2
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
         self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
         self.assertEqual(12, environment[expected_identifier], "Evaluation should result in 12")
@@ -23,7 +21,7 @@ class TestEvaluator(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: integer = 10 + 2.0
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
         self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
         self.assertEqual(12.0, environment[expected_identifier], "Evaluation should result in 12.0")
@@ -35,7 +33,7 @@ class TestEvaluator(TestCase):
             "Price with inflation" inflationPrice: integer = hasSoldHouse * 1.1
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
         self.assertEqual(12, environment[expected_identifier_1], "Evaluation should result in 12")
@@ -50,7 +48,7 @@ class TestEvaluator(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: boolean = true && false
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
         self.assertFalse(environment[expected_identifier_1], "Evaluation should result in false")
@@ -62,7 +60,7 @@ class TestEvaluator(TestCase):
             "Did you sell a house in 2011?" hasSoldHouse11: boolean = (hasSoldHouse || false) && false
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
         self.assertTrue(environment[expected_identifier_1], "Evaluation should result in false")
@@ -78,7 +76,7 @@ class TestEvaluator(TestCase):
         "Did you pay more because of inflation?" wasMoreExpensive: boolean = sellingPriceWithInflation >= sellingPrice
         }
         """
-        environment = ql(input_string)
+        environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'sellingPrice'
         self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
         self.assertTrue(environment[expected_identifier_1], "Evaluation should result in false")

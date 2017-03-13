@@ -2,17 +2,19 @@
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.typechecker.type_environment import TypeEnvironment
 from pql.typechecker.types import DataTypes
 
 
 class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
-    def __init__(self, ql_identifier_check_result):
-        self.identifier_dict = ql_identifier_check_result
+    def __init__(self):
+        self.identifier_dict = dict()
         self.errors = list()
 
-    def visit(self, pql_ast):
+    def visit(self, ast):
         self.errors.clear()
-        [form.apply(self) for form in pql_ast]
+        self.identifier_dict = TypeEnvironment().visit(ast)
+        [form.apply(self) for form in ast]
         return self.errors
 
     def form(self, node):
