@@ -32,7 +32,6 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     public Type visit(Statements node) {
-        env.setScope(node);
         List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
             statement.accept(this);

@@ -28,10 +28,6 @@ public class EnvironmentVariable {
         return type;
     }
 
-    protected void setValue(Value value) {
-        this.value = value;
-    }
-
     protected Value getValue() {
         return value;
     }
@@ -42,5 +38,9 @@ public class EnvironmentVariable {
 
     protected Expr getExpr() {
         return expr;
+    }
+
+    protected void setValue(Value value) {
+        this.value = value;
     }
 }

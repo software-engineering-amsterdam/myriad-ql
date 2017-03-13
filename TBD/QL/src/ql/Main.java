@@ -51,7 +51,7 @@ public class Main extends Application {
 
             /* On update resize form. */
             env.addEventListener(primaryStage::sizeToScene);
-/*
+
 
 
         } catch (FileNotFoundException e) {

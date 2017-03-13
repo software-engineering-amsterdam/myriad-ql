@@ -25,8 +25,6 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
 
 
     public Void visit(Statements node) {
-        environment.addScope(node);
-        environment.setScope(node);
         List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
             statement.accept(this);
@@ -35,7 +33,7 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
     }
 
     public Void visit(Question node) {
-        if (environment.currentContains(node.getId())) {
+        if (environment.contains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
@@ -46,7 +44,7 @@ public class EnvASTVisitor extends ASTVisitor<Void> {
 
 
     public Void visit(QuestionExpr node) {
-        if (environment.currentContains(node.getId())) {
+        if (environment.contains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
