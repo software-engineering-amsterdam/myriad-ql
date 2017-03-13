@@ -1,9 +1,7 @@
 package org.lemonade.nodes.expressions.literal;
 
 import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
-import org.lemonade.visitors.interfaces.LiteralVisitor;
 
 /**
  *

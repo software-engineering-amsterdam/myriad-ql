@@ -20,7 +20,7 @@ import org.lemonade.visitors.interfaces.TypeVisitor;
 /**
  *
  */
-public class PrettyPrintVisitor implements ASTVisitor<ASTNode>, BaseVisitor<ASTNode>, ExpressionVisitor<ASTNode>, LiteralVisitor<ASTNode>, TypeVisitor<ASTNode> {
+public class PrettyPrintVisitor implements BaseVisitor<ASTNode>, ExpressionVisitor<ASTNode>, LiteralVisitor<ASTNode>, TypeVisitor<ASTNode> {
     private String tabLevel = "";
 
     public ASTNode visit(Form form) {
@@ -209,11 +209,6 @@ public class PrettyPrintVisitor implements ASTVisitor<ASTNode>, BaseVisitor<ASTN
     public ASTNode visit(MoneyLiteral moneyValue) {
         System.err.print(moneyValue);
         return moneyValue;
-    }
-
-    @Override
-    public ASTNode visit(ASTNode astNode) {
-        return null;
     }
 
     @Override public ASTNode visit(final QLIntegerType qlIntegerType) {

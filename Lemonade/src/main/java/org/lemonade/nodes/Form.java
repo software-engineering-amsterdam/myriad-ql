@@ -2,7 +2,6 @@ package org.lemonade.nodes;
 
 
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.visitors.ASTVisitor;
 import org.lemonade.visitors.interfaces.BaseVisitor;
 
 import java.util.List;
@@ -33,10 +32,6 @@ public class Form extends ASTNode{
     }
 
     public <T> T accept(BaseVisitor<T> visitor) {
-        return visitor.visit(this);
-    }
-
-    public <T> T accept(ASTVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

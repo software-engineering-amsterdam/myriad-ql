@@ -47,7 +47,7 @@ import org.lemonade.visitors.interfaces.LiteralVisitor;
  *
  */
 public class EvaluateVisitor implements
-        ASTVisitor<Expression>, BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
+        BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
 
     private Map<GuiIdentifierValue, GuiValue<?>> guiEnvironment;
     private Map<String, Literal<?>> literalEnvironment;
@@ -224,11 +224,6 @@ public class EvaluateVisitor implements
             throw new RuntimeException("Symbol not found!");
         }
         return literalEnvironment.get(identifierValue.getValue());
-    }
-
-    @Override
-    public Expression visit(ASTNode astNode) {
-        return null;
     }
 
     @Override public GuiForm visit(final GuiForm form) {
