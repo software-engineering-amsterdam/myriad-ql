@@ -18,7 +18,8 @@ class IdentifierChecker(FormVisitor):
             errors = list()
             for key, value in identifiers.items():
                 if len(value) > 1:
-                    errors.append("Key: {} contained multiple entries, the following: {}".format(key, value))
+                    errors.append("Key: {} contained multiple entries, the following locations: {}"
+                                  .format(key, value))
             return errors
 
         def normalize(identifiers):
@@ -42,4 +43,4 @@ class IdentifierChecker(FormVisitor):
         return [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        return {node.name.name: node.data_type}
+        return {node.name.name: node.name.location}
