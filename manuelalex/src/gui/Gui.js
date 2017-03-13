@@ -68,12 +68,10 @@ export class GUI {
     showParserErrors(parseString, errors){
         document.body.innerHTML = `The following errors have occurred during parsing:`;
 
-
         parseString = parseString.replace(/\n/g, "<br>");
-
-
-
-        document.body.innerHTML = `${document.body.innerHTML} <br> <div ="error"> ${errors}</div>`;
+        for(let error of errors){
+            document.body.innerHTML = `${document.body.innerHTML} <br> <div ="error"> ${error}</div>`;
+        }
         document.body.innerHTML = `${document.body.innerHTML} <br> <div>${parseString}</div>`;
     }
 }
