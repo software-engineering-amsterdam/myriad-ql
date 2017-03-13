@@ -38,9 +38,9 @@ module QL
         end
       end
 
-      describe CyclicChecker do
+      describe CyclicDependencyChecker do
         it 'detects error' do
-          messages = form_ast.accept(CyclicChecker.new).map(&:message)
+          messages = form_ast.accept(CyclicDependencyChecker.new).map(&:message)
           expect(messages).to include('question with variable \'privateDebt\' has a cyclic dependency')
           expect(messages).to include('question with variable \'sellingPrice\' has a cyclic dependency')
         end

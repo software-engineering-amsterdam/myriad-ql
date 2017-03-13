@@ -22,6 +22,10 @@ ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 # pp ql_ast
 pp ql_ast
 QL::TypeChecker::TypeChecker.new.check(ql_ast)
+
+# all errors
+pp NotificationTable.index.uniq{|notification| notification.message}
+
 # pp NotificationTable.index
 # ql_notifications = nil
 

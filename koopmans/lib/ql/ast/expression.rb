@@ -16,7 +16,7 @@ module QL
       def eval_type(left_type, right_type)
         # return the left type if there are no errors and else return an error
         if self.is_compatible_with.include?(left_type) and self.is_compatible_with.include?(right_type) and left_type == right_type
-          left_type
+          self.return_type(left_type)
         else
           NotificationTable.store(Error.new("incompatible types at #{self}"))
           ErrorType.new
@@ -46,6 +46,10 @@ module QL
       def is_compatible_with
         [BooleanType.new]
       end
+
+      def return_type(type=nil)
+        BooleanType.new
+      end
     end
 
     class IntegerNegation < Negation
@@ -55,6 +59,10 @@ module QL
 
       def is_compatible_with
         [IntegerType.new, MoneyType.new]
+      end
+
+      def return_type(type=nil)
+        IntegerType.new
       end
     end
 
@@ -68,6 +76,10 @@ module QL
     class BooleanExpression < BinaryExpression
       def is_compatible_with
         [BooleanType.new]
+      end
+
+      def return_type(type=nil)
+        BooleanType.new
       end
     end
 
@@ -87,6 +99,10 @@ module QL
     class ArithmeticExpression < BinaryExpression
       def is_compatible_with
         [IntegerType.new, MoneyType.new]
+      end
+
+      def return_type(type=nil)
+        type
       end
     end
 
@@ -119,6 +135,10 @@ module QL
       def is_compatible_with
         [BooleanType.new, IntegerType.new, StringType.new, MoneyType.new]
       end
+
+      def return_type(type=nil)
+        BooleanType.new
+      end
     end
 
     class Equal < ComparisonEqual
@@ -137,6 +157,10 @@ module QL
     class ComparisonOrdering < BinaryExpression
       def is_compatible_with
         [IntegerType.new, MoneyType.new]
+      end
+
+      def return_type(type=nil)
+        BooleanType.new
       end
     end
 
