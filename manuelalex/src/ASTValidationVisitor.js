@@ -6,6 +6,7 @@ import {Form} from './Form.js'
 import {Question} from './Statements/Question.js'
 import {Expression} from './expressions/Expression.js'
 import {MemoryState} from './memory/MemoryState.js'
+import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
 
 
 export class ASTValidationVisitor {
@@ -91,31 +92,25 @@ export class ASTValidationVisitor {
             subExpression.accept(this);
         } else {
 
-            this.validateBooleanOperator(condition);
-
-            let typeLeftHand = this.memoryState.getType(condition.leftHand);
-            let typeRightHand = this.memoryState.getType(condition.rightHand);
-
-            if(["<", ">", ">=", "<=", "!=", "=="].includes(condition.operator) && (typeLeftHand == "QLBoolean" || typeRightHand == "QLBoolean")){
-
-                let errorStatement = "Invalid expression. The operator "+condition.operator+" can not be applied to " + condition.leftHand +"[type:"+typeLeftHand+"] and "  + condition.rightHand+"[type:"+typeRightHand+"]";
-                this.errors.push(errorStatement);
-
-            }
+            this.validateOperator(condition, ["||", "&&", "=="], "QLBoolean");
+            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], "QLMoney");
 
         }
     }
 
-    validateBooleanOperator(condition){
+    validateOperator(condition, validOperators, validType) {
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
         let typeRightHand = this.memoryState.getType(condition.rightHand);
 
-        if(["||", "&&"].includes(condition.operator) && (typeLeftHand != "QLBoolean" || typeRightHand != "QLBoolean")){
-            let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`;
-            this.errors.push(errorStatement);
+        console.log(condition);
+        console.log(validType);
+        if (validOperators.includes(condition.operator)) {
+            if (typeLeftHand.constructor.name != validType || typeRightHand.constructor.name != validType) {
+                let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`;
+                this.errors.push(errorStatement);
+            }
         }
     }
-
 
     hasDetectedErrors(){
         return this.errors.length > 0;
