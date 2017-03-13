@@ -131,7 +131,9 @@ class Parser(QLParser):
         body = pp.Group(
             pp.OneOrMore(self.question ^ with_defaults ^ without_defaults)
         ).setParseAction(self.create_node(AST.BlockNode))
-        defaults = pp.OneOrMore(self.default)
+        defaults = pp.Group(
+            pp.OneOrMore(self.default)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         with_defaults << (header + self.curly_embrace(body + defaults))\
             .addParseAction(self.create_node(AST.SectionWithDefaultsNode))
@@ -142,9 +144,12 @@ class Parser(QLParser):
 
     def define_page(self):
         header = self.PAGE + self.VARIABLE
-        sections = pp.Group(pp.OneOrMore(self.section))\
-            .setParseAction(self.create_node(AST.BlockNode))
-        defaults = pp.OneOrMore(self.default)
+        sections = pp.Group(
+            pp.OneOrMore(self.section)
+        ).setParseAction(self.create_node(AST.BlockNode))
+        defaults = pp.Group(
+            pp.OneOrMore(self.default)
+        ).setParseAction(self.create_node(AST.BlockNode))
 
         with_defaults = (header + self.curly_embrace(sections + defaults))\
             .setParseAction(self.create_node(AST.PageWithDefaultsNode))
