@@ -1,4 +1,4 @@
-// Output created by jacc on Mon Mar 13 12:00:02 CET 2017
+// Output created by jacc on Mon Mar 13 12:31:16 CET 2017
 
 package qls.parser;
 
@@ -1290,11 +1290,11 @@ class QLSParser implements QLSTokens {
 
     private int yys19() {
         switch (yytok) {
-            case '{':
             case WIDTH:
             case HEIGHT:
             case WIDGET:
             case FONTSIZE:
+            case '{':
             case FONT:
             case COLOR:
                 return yyr25();
@@ -1304,11 +1304,11 @@ class QLSParser implements QLSTokens {
 
     private int yys20() {
         switch (yytok) {
-            case '{':
             case WIDTH:
             case HEIGHT:
             case WIDGET:
             case FONTSIZE:
+            case '{':
             case FONT:
             case COLOR:
                 return yyr28();
@@ -1318,11 +1318,11 @@ class QLSParser implements QLSTokens {
 
     private int yys21() {
         switch (yytok) {
-            case '{':
             case WIDTH:
             case HEIGHT:
             case WIDGET:
             case FONTSIZE:
+            case '{':
             case FONT:
             case COLOR:
                 return yyr26();
@@ -1332,11 +1332,11 @@ class QLSParser implements QLSTokens {
 
     private int yys22() {
         switch (yytok) {
-            case '{':
             case WIDTH:
             case HEIGHT:
             case WIDGET:
             case FONTSIZE:
+            case '{':
             case FONT:
             case COLOR:
                 return yyr27();

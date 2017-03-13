@@ -1,4 +1,4 @@
-// Output created by jacc on Mon Mar 13 12:00:02 CET 2017
+// Output created by jacc on Mon Mar 13 12:31:16 CET 2017
 
 package qls.parser;
 
@@ -30,6 +30,7 @@ interface QLSTokens {
     int WIDTH = 24;
     int error = 25;
     // '"' (code=34)
+    // '#' (code=35)
     // '(' (code=40)
     // ')' (code=41)
     // ',' (code=44)

@@ -47,7 +47,7 @@ public class QLSLexer implements QLSTokens {
         KEYWORDS.put("height", HEIGHT);
         KEYWORDS.put("font", FONT);
         KEYWORDS.put("fontsize", FONTSIZE);
-        KEYWORDS.put("color", DEFAULT);
+        KEYWORDS.put("color", COLOR);
     }
 
 
@@ -107,6 +107,12 @@ public class QLSLexer implements QLSTokens {
                     name = stringBuilder.toString();
                     this.yylval = new QLSString(name, rowNumber);
                     return token = STRING;
+                case ',':
+                    nextChar();
+                    return token = ',';
+                case ':':
+                    nextChar();
+                    return token = ':';
                 case '(':
                     nextChar();
                     return token = '(';

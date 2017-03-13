@@ -17,8 +17,6 @@ public class Main {
             reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\qls.txt");
             System.out.println("Lexer");
             QLSLexer lexer = new QLSLexer(reader);
-            lexer.nextToken();
-
             System.out.println("Lexer done");
 
             Parser parser = new Parser(lexer);

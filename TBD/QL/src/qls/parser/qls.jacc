@@ -8,14 +8,14 @@
 %token <QLSInt>         INT
 %token <QLSIdent>       IDENT
 
-%token ':' '"'
+%token ':' '"' ','
 %token STYLESHEET PAGE SECTION DEFAULT
 %token TYPEBOOL TYPEFLOAT TYPEINT TYPESTRING
 %token QUESTION WIDGET
 %token SLIDER SPINBOX TEXT CHECKBOX RADIO
 %token WIDTH HEIGHT FONT FONTSIZE COLOR
 %token '(' ')'
-%token '{' '}'
+%token '{' '}' '#'
 
 
 %type <Stylesheet>          stylesheet
