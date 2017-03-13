@@ -14,20 +14,23 @@ stylesheet returns [Stylesheet result]
  @ init {
 	$result = new ArrayList<Page>();
 }
- : 'page' ID '{' sections '}' { $result.add(new Page($ID.text, $sections.result, $ctx.start.getLine())); };
+ : ('page' ID '{' sections '}')+ { $result.add(new Page($ID.text, $sections.result, $ctx.start.getLine())); };
  
  sections returns [List<Section> result]
  @ init {
 	$result = new ArrayList<Section>();
 }
- : 'section' STRING '{'? questions defaultStyle '}'? { $result.add(new SectionWithDefault($STRING.text, $questions.result, $defaultStyle.result, $ctx.start.getLine())); }
-   | 'section' STRING '{'? questions '}'? { $result.add(new Section($STRING.text, $questions.result, $ctx.start.getLine())); };
+ : ('section' STRING '{'? questions defaultStyle '}'? { $result.add(new SectionWithDefault($STRING.text, $questions.result, $defaultStyle.result, $ctx.start.getLine())); }
+   | 'section' STRING '{'? questions '}'?)+ { $result.add(new Section($STRING.text, $questions.result, $ctx.start.getLine())); };
 
 questions returns [List<Question> result]
 @ init {
 	$result = new ArrayList<Question>();
 }
-: 'question' ID widget { $result.add(new Question($ID.text, $widget.result, $ctx.start.getLine())); };
+: ('question' ID widget { $result.add(new QuestionWithWidget($ID.text, $widget.result, $ctx.start.getLine())); }
+|  'question' ID)+ { $result.add(new Question($ID.text, $ctx.start.getLine())); }
+;
+
 
 widget returns [Widget result]
 : 'widget' 'checkbox' { $result = new Checkbox($ctx.start.getLine()); }

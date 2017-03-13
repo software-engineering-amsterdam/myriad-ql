@@ -13,8 +13,8 @@ public class Main {
 				 + "section \"Buying\" "
 				 + "question hasBoughtHouse "
 				 + "widget checkbox "
-		 		 //+ "section \"Loaning\" "
-				 //+ "question hasMaintLoan "
+		 		 + "section \"Loaning\" "
+				 + "question hasMaintLoan "
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
