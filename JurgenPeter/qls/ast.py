@@ -87,15 +87,27 @@ class Styling(Node):
     def __init__(self, attributes):
         self.attributes = attributes
 
-    def applicable(self, datatype):
+    def applicable_on(self, datatype):
         return True
 
-    def modify_widget_constructor(self, datatype, widget_constructor, widget_arguments):
-        if self.applicable(datatype):
+    def apply_on(self, widget):
+        if self.applicable_on(widget.get_datatype()):
             for attribute in self.attributes:
-                widget_constructor, widget_arguments = attribute.modify_widget_constructor(
-                    widget_constructor, widget_arguments)
-        return widget_constructor, widget_arguments
+                attribute.apply_on(widget)
+
+    def widget_type(self, datatype):
+        if self.applicable_on(datatype):
+            for attribute in self.attributes:
+                if attribute.widget_type:
+                    return attribute.widget_type
+        return None
+
+    def widget_constructor(self, datatype):
+        if self.applicable_on(datatype):
+            for attribute in self.attributes:
+                if attribute.widget_constructor:
+                    return attribute.widget_constructor
+        return None
 
 
 class DefaultStyling(Styling):
@@ -104,13 +116,18 @@ class DefaultStyling(Styling):
         super().__init__(attributes)
         self.datatype = datatype
 
-    def applicable(self, datatype):
+    def applicable_on(self, datatype):
         return self.datatype == datatype
 
 
 class Attribute(Node):
-    def modify_widget_constructor(self, widget_constructor, widget_arguments):
-        return widget_constructor, widget_arguments
+    @property
+    def widget_type(self):
+        return None
+
+    @property
+    def widget_constructor(self):
+        return None
 
 
 class ColorAttribute(Attribute):
@@ -160,13 +177,17 @@ class WidthAttribute(Attribute):
 
 class WidgetTypeAttribute(Attribute):
 
-    def __init__(self, widget_constructor, *args):
-        self.widget_constructor = widget_constructor
-        self.widget_arguments = [arg for arg in args]
-        print(self.widget_arguments)
+    def __init__(self, widget, *widget_arguments):
+        self.widget = widget
+        self.widget_arguments = list(widget_arguments)
 
     def apply_on(self, _):
         pass
 
-    def modify_widget_constructor(self, *_):
-        return self.widget_constructor, self.widget_arguments
+    @property
+    def widget_type(self):
+        return self.widget.get_datatype()
+
+    @property
+    def widget_constructor(self):
+        return lambda gui, question: self.widget(gui, question, *self.widget_arguments)

@@ -64,7 +64,7 @@ class Evaluator:
     def visit_variable(self, node):
         value = self.environment.get(node.name, None)
         if value is None:
-            raise UndefinedVariableException
+            raise UndefinedVariableError
         return value
 
     def visit_constant(self, node):

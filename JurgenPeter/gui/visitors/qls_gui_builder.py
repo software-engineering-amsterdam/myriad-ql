@@ -53,19 +53,16 @@ class QlsGuiBuilder(GuiBuilder):
 
     def visit_question(self, node, stylings):
         widget_constructor = WidgetCreator().create(node.datatype)
-        widget_arguments = []
 
         for styling in stylings:
-            widget_constructor, widget_arguments = \
-                styling.modify_widget_constructor(node.datatype,
-                                                  widget_constructor,
-                                                  widget_arguments)
+            if styling.widget_constructor(node.datatype):
+                widget_constructor = styling.widget_constructor(node.datatype)
 
-        widget = widget_constructor(self.app, node, *widget_arguments)
+        widget = widget_constructor(self.app, node)
         widget.set_listener(self.listener)
 
         for styling in stylings:
-            widget.apply(styling)
+            styling.apply_on(widget)
 
         self.widgets[node.name] = widget
 

@@ -38,19 +38,17 @@ class QlsTypeChecker:
         self.visit_section(node, stylings + node.stylings)
 
     def visit_question_anchor(self, node, stylings):
-        widget_constructor = WidgetCreator().create(self.symboltable[node.name])
+        widget_type = self.symboltable[node.name]
 
         for styling in stylings:
-            # TODO: refactor constructor argument pair
-            widget_constructor, _ = styling.modify_widget_constructor(self.symboltable[node.name], widget_constructor, None)
+            if styling.widget_type(self.symboltable[node.name]):
+                widget_type = styling.widget_type(self.symboltable[node.name])
 
-        widget_datatype = widget_constructor.get_datatype()
-        if widget_datatype != self.symboltable[node.name]:
+        if widget_type != self.symboltable[node.name]:
             self.error("widget datatype {} for question anchor \"{}\" does not "
-                       "match question datatype {}".format(widget_datatype,
+                       "match question datatype {}".format(widget_type,
                                                            node.name,
                                                            self.symboltable[node.name]))
-
 
     def visit_styled_question_anchor(self, node, stylings):
         self.visit_question_anchor(node, stylings + [node.styling])

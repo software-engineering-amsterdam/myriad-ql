@@ -54,11 +54,6 @@ class Widget:
         self.get_tkinter_label().config(width=width)
         self.get_tkinter_widget().config(width=width)
 
-    def apply(self, styling):
-        if styling.applicable(self.get_datatype()):
-            for attribute in styling.attributes:
-                attribute.apply_on(self)
-
 
 class EntryWidget(Widget):
 
