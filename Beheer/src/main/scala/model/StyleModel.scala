@@ -16,45 +16,43 @@ class StyleModel(stylesheet: Stylesheet, questionWithTypes: Map[String, Type]) {
   private def flattenStyles(blocks: Blocks, defaultStyles: Map[Type, DefaultStyle]): Blocks =
     blocks.flatMap(b => flattenStyles(b, defaultStyles))
 
-  private def flattenStyles(block: Block, defaultStyles: Map[Type, DefaultStyle]): Blocks =
-    block match {
-      case s @ Section(_, blocks, styles) => s +: flattenStyles(blocks, mergeDefaultStyles(styles, defaultStyles))
-      case QuestionStyle(identifier, styling, widget) => {
-        val questionType = questionWithTypes.get(identifier) match {
-          case Some(qt) => qt
-          case None => sys.error("Unable to determine question type for styling.")
-        }
-        defaultStyles.get(questionType) match {
-          case None => Seq(QuestionStyle(identifier, styling, widget))
-          case Some(DefaultStyle(t, defaultStyling, defaultWidget)) if t == questionType =>
-            Seq(QuestionStyle(identifier, defaultStyling ++ styling, mergeWidgetType(widget, defaultWidget)))
-          case _ => sys.error("Type mismatch during flattening of style hierarchy")
-        }
+  private def flattenStyles(block: Block, defaultStyles: Map[Type, DefaultStyle]): Blocks = block match {
+    case s @ Section(_, blocks, styles) => s +: flattenStyles(blocks, mergeDefaultStyles(styles, defaultStyles))
+    case QuestionStyle(identifier, styling, widget) => {
+      val questionType = questionWithTypes.get(identifier) match {
+        case Some(qt) => qt
+        case None => sys.error("Unable to determine question type for styling.")
+      }
+      defaultStyles.get(questionType) match {
+        case None => Seq(QuestionStyle(identifier, styling, widget))
+        case Some(DefaultStyle(t, defaultStyling, defaultWidget)) if t == questionType =>
+          Seq(QuestionStyle(identifier, defaultStyling ++ styling, updateWidget(widget, defaultWidget)))
+        case _ => sys.error("Type mismatch during flattening of style hierarchy")
       }
     }
+  }
 
   @tailrec
   private def mergeDefaultStyles(newStyles: DefaultStyles, knownStyles: Map[Type, DefaultStyle]): Map[Type, DefaultStyle] = newStyles match {
     case Nil => knownStyles
     case (d @ DefaultStyle(newType, newStyling, newWidget)) :: tail => {
-      val updatedStyles = knownStyles.get(newType) match {
-        case None => knownStyles + (newType -> d)
+      val mergedStyle = knownStyles.get(newType) match {
+        case None => d
         case Some(DefaultStyle(knownType, knownStyling, knownWidget)) if newType == knownType =>
-          knownStyles + (newType -> DefaultStyle(newType, knownStyling ++ newStyling, mergeWidgetType(newWidget, knownWidget)))
+          DefaultStyle(newType, knownStyling ++ newStyling, updateWidget(newWidget, knownWidget))
         case _ => sys.error("Type mismatch during flattening of style hierarchy")
       }
-      mergeDefaultStyles(tail, updatedStyles)
+      mergeDefaultStyles(tail, knownStyles + (newType -> mergedStyle))
     }
   }
 
-  private def mergeWidgetType(newW: Option[Widget], oldW: Option[Widget]): Option[Widget] = newW match {
+  private def updateWidget(newW: Option[Widget], oldW: Option[Widget]): Option[Widget] = newW match {
     case None => oldW
     case Some(w) => Some(w)
   }
 
-  private def extractDefaultStyles(page: Page): DefaultStyles = page match {
-    case Page(_, sections, default) => default ++ extractDefaultStyles(sections)
-  }
+  private def extractDefaultStyles(page: Page): DefaultStyles =
+    page.defaults ++ extractDefaultStyles(page.sections)
 
   private def extractDefaultStyles(blocks: Blocks): DefaultStyles =
     blocks.flatMap(b => extractDefaultStyles(b))
