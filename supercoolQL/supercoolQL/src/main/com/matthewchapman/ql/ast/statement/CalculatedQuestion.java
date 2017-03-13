@@ -19,7 +19,7 @@ public class CalculatedQuestion extends Question {
     public Expression getCalculation() { return this.calculatedValue; }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> T accept(QLVisitor<T> visitor, String context) {
+        return visitor.visit(this, context);
     }
 }

@@ -1,7 +1,8 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.Type;
 import com.matthewchapman.ql.ast.atomic.BooleanType;
 import com.matthewchapman.ql.ast.atomic.IntegerType;
 import com.matthewchapman.ql.ast.atomic.StringType;
@@ -13,70 +14,82 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.QLVisitor;
-import org.junit.Before;
-import org.junit.Test;
 
-import java.io.File;
-
-import static org.junit.Assert.assertEquals;
+import java.util.*;
 
 /**
- * Created by matt on 02/03/2017.
+ * Created by matt on 03/03/2017.
+ *
+ * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class CoreParserTest implements QLVisitor<Void> {
+public class QuestionCollection implements QLVisitor<Void> {
 
-    private String testInput;
-    private CoreParser parser = new CoreParser();
-    private int questionsCount = 0;
-    private int ifStatementCount = 0;
-    private int ifElseStatementCount = 0;
+    private List<Question> questionList;
+    private HashMap<String, Type> typeTable;
 
-    @Before
-    public void setUp() {
-        FileReader reader = new FileReader();
-        testInput = reader.readFile(new File("res/test.txt"));
+    public QuestionCollection() {
+        typeTable = new HashMap<>();
+        questionList = new ArrayList<>();
     }
 
-    @Test
-    public void buildQLAST() {
-        Form form = parser.buildQLAST(testInput);
-
-        final int EXPECTED_STATEMENTS = 9;
-        final int EXPECTED_QUESTIONS = 6;
-        final int EXPECTED_IFS = 2;
-        final int EXPECTED_IF_ELSES = 1;
-
+    public void gatherQuestions(Form form) {
         for(Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
+    }
 
-        assertEquals(EXPECTED_STATEMENTS, form.getStatements().size());
-        assertEquals(EXPECTED_QUESTIONS, questionsCount);
-        assertEquals(EXPECTED_IFS, ifStatementCount);
-        assertEquals(EXPECTED_IF_ELSES, ifElseStatementCount);
+    public Map<String, Type> getTypeTable() {
+        return this.typeTable;
+    }
+
+    public List<Question> getQuestionList() {
+        return this.questionList;
+    }
+
+    // hooray for O(n) complexity!
+    public void findDuplicates() {
+        Set<String> questionIDs = new HashSet<>();
+
+        for(Question question : questionList) {
+            if(!questionIDs.add(question.getName())) {
+                System.err.println("Error: Duplicate Question found");
+            }
+        }
     }
 
     @Override
     public Void visit(Question question, String context) {
-        ++questionsCount;
+        questionList.add(question);
+        typeTable.put(question.getName(), question.getType());
         return null;
     }
 
     @Override
     public Void visit(IfStatement ifStatement, String context) {
-        ++ifStatementCount;
+        for(Statement statement : ifStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
         return null;
     }
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
-        ++ifElseStatementCount;
+        for(Statement statement : ifElseStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
+        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+            statement.accept(this, null);
+        }
+
         return null;
     }
 
     @Override
     public Void visit(CalculatedQuestion calculatedQuestion, String context) {
+        questionList.add(calculatedQuestion);
+        typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
         return null;
     }
 
@@ -169,4 +182,5 @@ public class CoreParserTest implements QLVisitor<Void> {
     public Void visit(StringType stringType, String context) {
         return null;
     }
+
 }

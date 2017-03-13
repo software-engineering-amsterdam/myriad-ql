@@ -5,7 +5,7 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validation.typechecking.QLTreeChecker;
+import com.matthewchapman.ql.validation.QLValidator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -37,7 +37,7 @@ public class CoreParser {
     }
 
     void visitAST(Form form) {
-        QLTreeChecker checker = new QLTreeChecker(form);
+        QLValidator checker = new QLValidator(form);
         checker.runChecks();
     }
 }

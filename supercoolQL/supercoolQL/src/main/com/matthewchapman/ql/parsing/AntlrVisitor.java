@@ -63,9 +63,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
-        ParameterGroup parameterGroup = new ParameterGroup();
-        parameterGroup.addExpression((Expression) visit(ctx.expression()));
-        return parameterGroup;
+        return new ParameterGroup((Expression) visit(ctx.expression()));
     }
 
     @Override

@@ -20,52 +20,52 @@ import com.matthewchapman.ql.ast.statement.Question;
 public interface QLVisitor<T> {
 
     //Statement
-    T visit(Question question);
+    T visit(Question question, String context);
 
-    T visit(IfStatement ifStatement);
+    T visit(IfStatement ifStatement, String context);
 
-    T visit(IfElseStatement ifElseStatement);
+    T visit(IfElseStatement ifElseStatement, String context);
 
-    T visit(CalculatedQuestion calculatedQuestion);
+    T visit(CalculatedQuestion calculatedQuestion, String context);
 
     //Expression
-    T visit(Parameter parameter);
+    T visit(Parameter parameter, String context);
 
-    T visit(ParameterGroup parameterGroup);
+    T visit(ParameterGroup parameterGroup, String context);
 
     //Binary
-    T visit(Addition addition);
+    T visit(Addition addition, String context);
 
-    T visit(Division division);
+    T visit(Division division, String context);
 
-    T visit(Equal equal);
+    T visit(Equal equal, String context);
 
-    T visit(GreaterThan greaterThan);
+    T visit(GreaterThan greaterThan, String context);
 
-    T visit(GreaterThanEqualTo greaterThanEqualTo);
+    T visit(GreaterThanEqualTo greaterThanEqualTo, String context);
 
-    T visit(LessThan lessThan);
+    T visit(LessThan lessThan, String context);
 
-    T visit(LessThanEqualTo lessThanEqualTo);
+    T visit(LessThanEqualTo lessThanEqualTo, String context);
 
-    T visit(LogicalAnd logicalAnd);
+    T visit(LogicalAnd logicalAnd, String context);
 
-    T visit(LogicalOr logicalOr);
+    T visit(LogicalOr logicalOr, String context);
 
-    T visit(Multiplication multiplication);
+    T visit(Multiplication multiplication, String context);
 
-    T visit(NotEqual notEqual);
+    T visit(NotEqual notEqual, String context);
 
-    T visit(Subtraction subtraction);
+    T visit(Subtraction subtraction, String context);
 
     //Unary
-    T visit(Negation negation);
+    T visit(Negation negation, String context);
 
     //Types
-    T visit(BooleanType booleanType);
+    T visit(BooleanType booleanType, String context);
 
-    T visit(IntegerType integerType);
+    T visit(IntegerType integerType, String context);
 
-    T visit(StringType stringType);
+    T visit(StringType stringType, String context);
 
 }

@@ -1,10 +1,8 @@
-package com.matthewchapman.ql.validation.typechecking;
+package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.AbstractQLVisitor;
 
 import java.util.List;
 import java.util.Map;
@@ -14,19 +12,21 @@ import java.util.Map;
  *
  * Type checker for the QL AST.
  */
-public class QLTreeChecker extends AbstractQLVisitor<Void> {
+public class QLValidator {
 
     private Form astRoot;
     private QuestionCollection questionCollection;
-    private ExpressionChecker expressionChecker;
+    private QLTypeChecker qlTypeChecker;
+    private QLReferenceChecker qlReferenceChecker;
 
     public List<Question> questionList;
     public Map<String, Type> typeTable;
 
-    public QLTreeChecker(Form form) {
+    public QLValidator(Form form) {
         this.astRoot = form;
         this.questionCollection = new QuestionCollection();
-        this.expressionChecker = new ExpressionChecker();
+        this.qlTypeChecker = new QLTypeChecker();
+        this.qlReferenceChecker = new QLReferenceChecker();
     }
 
     public void runChecks() {
@@ -34,17 +34,12 @@ public class QLTreeChecker extends AbstractQLVisitor<Void> {
         questionCollection.gatherQuestions(astRoot);
 
         questionList = questionCollection.getQuestionList();
-        typeTable = questionCollection.getTypeTable();
 
         questionCollection.findDuplicates();
-        checkExpressions();
 
-    }
+        qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
 
-    private void checkExpressions() {
-        for(Statement statement:astRoot.getStatements()) {
-            expressionChecker.checkExpression(statement, questionCollection.getTypeTable());
-        }
+
     }
 
 }

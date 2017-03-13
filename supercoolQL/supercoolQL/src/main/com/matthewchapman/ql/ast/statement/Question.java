@@ -34,8 +34,8 @@ public class Question extends Statement {
 
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> T accept(QLVisitor<T> visitor, String context) {
+        return visitor.visit(this, context);
     }
 
 }

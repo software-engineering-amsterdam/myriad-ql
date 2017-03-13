@@ -3,7 +3,6 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.core.CoreParser;
 import com.matthewchapman.ql.core.FileReader;
-import com.matthewchapman.ql.validation.typechecking.QuestionCollection;
 import org.junit.Before;
 import org.junit.Test;
 
