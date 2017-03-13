@@ -30,6 +30,15 @@ class PageNode(Node):
         visitor.page_node(self, *args)
 
 
+class PageWithDefaultsNode(PageNode):
+    def __init__(self, name, body, defaults, line=0, col=0):
+        super(PageWithDefaultsNode, self).__init__(name, body, line, col)
+        self.defaults = defaults
+
+    def accept(self, visitor, *args):
+        visitor.page_with_defaults_node(self, *args)
+
+
 class SectionNode(Node):
     def __init__(self, name, body, line=0, col=0):
         super(SectionNode, self).__init__(line, col)
@@ -38,6 +47,15 @@ class SectionNode(Node):
 
     def accept(self, visitor, *args):
         visitor.section_node(self, *args)
+
+
+class SectionWithDefaultsNode(PageNode):
+    def __init__(self, name, body, defaults, line=0, col=0):
+        super(SectionWithDefaultsNode, self).__init__(name, body, line, col)
+        self.defaults = defaults
+
+    def accept(self, visitor, *args):
+        visitor.section_with_defaults_node(self, *args)
 
 
 class QuestionNode(Node):
@@ -151,13 +169,21 @@ class DropdownNode(WidgetNode):
 
 
 class DefaultNode(Node):
-    def __init__(self, var_type, body, line=0, col=0):
+    def __init__(self, var_type, line=0, col=0):
         super(DefaultNode, self).__init__(line, col)
         self.type = var_type
-        self.body = body
 
     def accept(self, visitor, *args):
         return visitor.default_node(self, *args)
+
+
+class DefaultWithPropsNode(DefaultNode):
+    def __init__(self, var_type, props, line, col):
+        super(DefaultWithPropsNode, self).__init__(var_type, line, col)
+        self.props = props
+
+    def accept(self, visitor, *args):
+        return visitor.default_with_props_node(self, *args)
 
 
 class PropertyNode(Node):

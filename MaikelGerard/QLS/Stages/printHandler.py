@@ -10,7 +10,6 @@ class PrintHandler(qlPrintHandler):
         ast.accept(self, 0)
         print(self.output)
 
-
     def add_indent(self, indent):
         self.output += indent * "    "
 
@@ -23,10 +22,18 @@ class PrintHandler(qlPrintHandler):
         self.output += "page {}:\n".format(page_node.name)
         page_node.body.accept(self, indent + 1)
 
+    def page_with_defaults_node(self, page_with_defaults_node, indent):
+        self.page_node(page_with_defaults_node, indent)
+        page_with_defaults_node.defaults.accept(self, indent + 1)
+
     def section_node(self, section_node, indent):
         self.add_indent(indent)
         self.output += "section '{}':\n".format(section_node.name)
         section_node.body.accept(self, indent + 1)
+
+    def section_with_defaults_node(self, section_with_defaults_node, indent):
+        self.section_node(section_with_defaults_node, indent)
+        section_with_defaults_node.defaults.accept(self, indent + 1)
 
     def widget_question_node(self, widget_question_node, indent):
         self.question_node(widget_question_node, indent)
@@ -63,7 +70,10 @@ class PrintHandler(qlPrintHandler):
     def default_node(self, default_node, indent):
         self.add_indent(indent)
         self.output += "default {}:\n".format(default_node.type.accept(self))
-        default_node.body.accept(self, indent + 1)
+
+    def default_with_props_node(self, default_node_with_props, indent):
+        self.default_node(default_node_with_props, indent)
+        default_node_with_props.body.accept(self, indent + 1)
 
     def width_node(self, width_node, indent):
         self.add_indent(indent)
