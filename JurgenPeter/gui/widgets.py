@@ -62,9 +62,9 @@ class EntryWidget(Widget):
         self.gui.addEntry(self.entry_id)
         self.register_validator(self.validate)
 
-    def register_validator(self, validate):
+    def register_validator(self, validator):
         widget = self.gui.getEntryWidget(self.entry_id)
-        command = widget.register(validate)
+        command = widget.register(validator)
         widget.config(validate="key", validatecommand=(command, "%P"))
 
     @staticmethod

@@ -121,6 +121,7 @@ class DefaultStyling(Styling):
 
 
 class Attribute(Node):
+
     @property
     def widget_type(self):
         return None
@@ -181,7 +182,7 @@ class WidgetTypeAttribute(Attribute):
         self.widget = widget
         self.widget_arguments = list(widget_arguments)
 
-    def apply_on(self, _):
+    def apply_on(self, widget):
         pass
 
     @property
