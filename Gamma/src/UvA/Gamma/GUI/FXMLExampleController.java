@@ -1,17 +1,10 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class FXMLExampleController {
     private int rowCount;
@@ -25,15 +18,16 @@ public class FXMLExampleController {
         }
     }
 
-    @FXML private GridPane grid;
+    @FXML
+    private GridPane grid;
 
-    @FXML public void showQuestion(Question question) {
+    @FXML
+    public void showQuestion(Question question) {
         Text questionLabel = new Text(question.getQuestion());
         TextField input = new TextField();
-        input.textProperty().bindBidirectional(question.getStringValueProperty());
 
         input.textProperty().addListener((observable, oldValue, newValue) ->
-                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question.getId(), newValue))
+                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question, newValue))
         );
 
         grid.addRow(++rowCount, questionLabel, input);
