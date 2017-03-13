@@ -21,7 +21,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value lowerThanOrEqual(Value comparable) {
-        return this.lowerThanOrEqual(this);
+        return comparable.lowerThanOrEqual(this);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value lowerThan(Value comparable) {
-        return this.lowerThan(this);
+        return comparable.lowerThan(this);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value greaterThan(Value comparable) {
-        return this.greaterThan(this);
+        return comparable.greaterThan(this);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value greaterThanOrEqual(Value comparable) {
-        return this.greaterThanOrEqual(this);
+        return comparable.greaterThanOrEqual(this);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value notEqual(Value comparable) {
-        return this.notEqual(this);
+        return comparable.notEqual(this);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value product(Value comparable) {
-        return this.product(this);
+        return comparable.product(this);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value subtraction(Value subtraction) {
-        return this.subtraction(this);
+        return subtraction.subtraction(this);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value division(Value division) {
-        return this.division(this);
+        return division.division(this);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value addition(Value addition) {
-        return this.addition(this);
+        return addition.addition(this);
     }
 
     @Override

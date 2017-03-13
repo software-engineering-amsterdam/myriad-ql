@@ -24,7 +24,7 @@ public class StringValue extends Value {
 
     @Override
     public Value addition(Value addition) {
-        return this.addition(this);
+        return addition.addition(this);
     }
 
     @Override
