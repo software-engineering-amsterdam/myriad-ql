@@ -16,7 +16,7 @@ public class GuiConditional extends GuiBody {
     public GuiConditional(List<GuiBody> bodies) {
         this.isVisible = false;
         this.bodies = bodies;
-        this.expression = new GuiExpression();
+//        this.expression = new GuiExpression();
     }
 
     @Override

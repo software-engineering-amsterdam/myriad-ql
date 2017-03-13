@@ -1,5 +1,7 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
+
 public class GuiDecimalValue extends GuiValue<Double> {
     private Double value;
 
@@ -16,4 +18,10 @@ public class GuiDecimalValue extends GuiValue<Double> {
     public void update(Double newValue) {
         this.value = newValue;
     }
+
+    @Override
+    public <T> T accept(final GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+
 }

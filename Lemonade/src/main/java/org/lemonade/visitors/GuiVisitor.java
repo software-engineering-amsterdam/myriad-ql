@@ -66,9 +66,9 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         gridPane.setVgap(6);
 
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(75);
+        col1.setPercentWidth(30);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(25);
+        col2.setPercentWidth(70);
         gridPane.getColumnConstraints().addAll(col1, col2);
 
         GridPane.setConstraints(labelElement.getWidget(), 0, 0);
