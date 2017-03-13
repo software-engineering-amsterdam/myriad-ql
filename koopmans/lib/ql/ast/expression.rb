@@ -14,23 +14,11 @@ module QL
       end
 
       def eval_type(left_type, right_type)
-        errors = []
-        unless self.is_compatible_with.include?(left_type) and self.is_compatible_with.include?(right_type)
-          errors << Error.new("incompatible types at #{self}")
-        end
-
-        unless left_type == right_type
-          errors << Error.new("#{left_type} is not compatible with #{right_type}")
-        end
-
-        if errors.empty?
-          # return the left type if there are no errors
+        # return the left type if there are no errors and else return an error
+        if self.is_compatible_with.include?(left_type) and self.is_compatible_with.include?(right_type) and left_type == right_type
           left_type
         else
-          # return an error type if there are errors
-          errors.each do |error|
-            NotificationTable.store(error)
-          end
+          NotificationTable.store(Error.new("incompatible types at #{self}"))
           ErrorType.new
         end
       end
@@ -39,6 +27,14 @@ module QL
     class Negation < Expression
       def accept(visitor)
         visitor.visit_negation(self)
+      end
+
+      def eval_type(expression)
+        if self.is_compatible_with.include?(expression)
+          expression
+        else
+          NotificationTable.store(Error.new("incompatible types at #{self}"))
+        end
       end
     end
 
