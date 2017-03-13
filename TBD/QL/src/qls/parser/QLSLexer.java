@@ -167,9 +167,7 @@ public class QLSLexer implements QLSTokens {
     public int getRowNumber() {
         return rowNumber;
     }
-    public int getColumn() {
-        return columnNumber;
-    }
+
     public int getToken() {
         return token;
     }

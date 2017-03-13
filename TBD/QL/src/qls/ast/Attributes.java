@@ -8,27 +8,27 @@ import java.util.List;
 /**
  * Created by rico on 7-3-17.
  */
-public class DefaultStatements extends ASTNode {
-    private final ObjectStatement current;
-    private final DefaultStatements next;
+public class Attributes extends ASTNode {
+    private final Attribute current;
+    private final Attributes next;
 
-    public DefaultStatements(ObjectStatement current, DefaultStatements next, int rowNumber) {
+    public Attributes(Attribute current, Attributes next, int rowNumber) {
         super(rowNumber);
         this.current = current;
         this.next = next;
     }
 
-    public DefaultStatements(ObjectStatement current, int rowNumber) {
+    public Attributes(Attribute current, int rowNumber) {
         this(current, null, rowNumber);
     }
 
-    public List<ObjectStatement> getAttributes(){
-        List<ObjectStatement> attributes = new ArrayList<>();
+    public List<Attribute> getAttributes(){
+        List<Attribute> attributes = new ArrayList<>();
         if(current == null){
             return attributes;
         }
 
-        DefaultStatements currentEntry = this;
+        Attributes currentEntry = this;
         attributes.add(currentEntry.getCurrentAttribute());
 
         while (currentEntry.hasNext()){
@@ -43,11 +43,11 @@ public class DefaultStatements extends ASTNode {
         return next != null;
     }
 
-    private DefaultStatements next(){
+    private Attributes next(){
         return next;
     }
 
-    private ObjectStatement getCurrentAttribute(){
+    private Attribute getCurrentAttribute(){
         return current;
     }
 

@@ -18,28 +18,43 @@
 %token '{' '}'
 
 
+%type <Stylesheet>          stylesheet
+%type <StylesheetPages>     stylesheetPages
+%type <Page>                page
+%type <PageStatements>      pageStatements
+%type <PageStatement>       pageStatement
+%type <Section>             section
+%type <SectionStatements>   sectionStatements
+%type <Statement>          statement
+%type <Default>             default
+%type <Attributes>          attributes
+%type <Attribute>           attribute
+%type <Widget>              widget
+%type <Statement>           question
+%type <Type>        type
+
+
 
 %{
 import qls.ast.*;
 import qls.ast.literals.*;
 import qls.ast.attributes.*;
 import qls.ast.types.*;
-import qls.ast.widgets.*;
+import qls.ast.attributes.widgets.*;
 %}
 
 %%
 
-stylesheet  : STYLESHEET IDENT stylesheetStatements                        { result = new Stylesheet($2, $3); }
+stylesheet  : STYLESHEET IDENT stylesheetPages                       { result = new Stylesheet($2, $3); }
             ;
 
-stylesheetStatements
-            : stylesheetStatement stylesheetStatements      { $$ = new StylesheetStatements($1, $2, lexer.getRowNumber());      }
-            | stylesheetStatement                           { $$ = new StylesheetStatements($1, lexer.getRowNumber());      }
+stylesheetPages
+            : page stylesheetPages              { $$ = new StylesheetPages($1, $2, lexer.getRowNumber());      }
+            | page                              { $$ = new StylesheetPages($1, lexer.getRowNumber());      }
             ;
 
-stylesheetStatement
-            : PAGE IDENT '{' pageStatements '}'             { $$ = new Page($2, $4, lexer.getRowNumber()); }
-            | default                                       { $$ = $1; }
+page
+            : PAGE IDENT '{' pageStatements '}'             { $$ = new Page($2, $4); }
             ;
 
 pageStatements
@@ -48,30 +63,37 @@ pageStatements
             ;
 
 pageStatement
-            : SECTION STRING '{' sectionStatements '}'      { $$ = new Section($2, $4, lexer.getRowNumber); }
+            : section
+            | default
+            ;
+
+section
+            : SECTION STRING '{' sectionStatements '}'      { $$ = new Section($2, $4); }
+            | SECTION STRING question                       { $$ = new Section($2, new SectionStatements($3, lexer.getRowNumber())); }
             ;
 
 sectionStatements
-            : sectionStatement sectionStatements            { $$ = new SectionStatements($1, $2, lexer.getRowNumber());  }
-            | sectionStatements                             { $$ = new SectionStatements($1, lexer.getRowNumber());  }
+            : statement sectionStatements                  { $$ = new SectionStatements($1, $2, lexer.getRowNumber());  }
+            | statement                                    { $$ = new SectionStatements($1, lexer.getRowNumber());  }
             ;
 
-sectionStatement
+statement
             : pageStatement                                 { $$ = $1; }
             | question                                      { $$ = $1; }
-            | default                                       { $$ = $1; }
             ;
 
 default
-            : DEFAULT type '{' attributes '}'                { $$ = new DefaultWithAttributes($2, $4, lexer.getRowNumber()); }
-            | DEFAULT type widget                            { $$ = new Default($2, $3, lexer.getRowNumber()); }
+            : DEFAULT type '{' attributes '}'                { $$ = new Default($2, $4, lexer.getRowNumber()); }
+            | DEFAULT type attribute                         { $$ = new Default($2, new Attributes($3, lexer.getRowNumber()), lexer.getRowNumber()); }
             ;
 
-attributes  : attribute attributes                          { $$ = new DefaultAttributes($1, $2, lexer.getRowNumber()); }
-            | attribute                                     { $$ = new DefaultAttributes($1, lexer.getRowNumber()); }
+attributes
+            : attribute attributes                          { $$ = new Attributes($1, $2, lexer.getRowNumber()); }
+            | attribute                                     { $$ = new Attributes($1, lexer.getRowNumber()); }
             ;
 
-attribute   : WIDTH ':' INT                                 { $$ = new Width($3, lexer.getRowNumber()); }
+attribute
+            : WIDTH ':' INT                                 { $$ = new Width($3, lexer.getRowNumber()); }
             | HEIGHT ':' INT                                { $$ = new Height($3, lexer.getRowNumber()); }
             | FONT ':'  STRING                              { $$ = new Font($3, lexer.getRowNumber()); }
             | FONTSIZE ':' INT                              { $$ = new FontSize($3, lexer.getRowNumber()); }
@@ -87,16 +109,16 @@ type
             ;
 
 question
-            : QUESTION IDENT widget                             { $$ = new Question($2, $3, lexer.getRowNumber());  }
-            | QUESTION IDENT                                    { $$ = new Question($2, lexer.getRowNumber()); }
+            : QUESTION IDENT widget                             { $$ = new QuestionWidget($2, $3);  }
+            | QUESTION IDENT                                    { $$ = new Question($2); }
             ;
 
 
-widget      : WIDGET SPINBOX                                    { $$ = new Spinbox();  }
-            | WIDGET SLIDER                                     { $$ = new Slider();  }
-            | WIDGET RADIO '(' STRING ',' STRING ')'            { $$ = new Radio();  }
-            | WIDGET CHECKBOX                                   { $$ = new Checkbox();  }
-            | WIDGET TEXT                                       { $$ = new Text();  }
+widget      : WIDGET SPINBOX                                    { $$ = new Spinbox(lexer.getRowNumber());  }
+            | WIDGET SLIDER '(' INT ',' INT ')'                 { $$ = new Slider($4, $6, lexer.getRowNumber());  }
+            | WIDGET RADIO '(' STRING ',' STRING ')'            { $$ = new Radio($4, $6, lexer.getRowNumber());  }
+            | WIDGET CHECKBOX                                   { $$ = new Checkbox(lexer.getRowNumber());  }
+            | WIDGET TEXT                                       { $$ = new Text(lexer.getRowNumber());  }
             ;
 
 %%

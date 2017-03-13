@@ -1,4 +1,4 @@
-// Output created by jacc on Tue Mar 07 13:07:51 CET 2017
+// Output created by jacc on Mon Mar 13 12:00:02 CET 2017
 
 package qls.parser;
 
@@ -9,25 +9,26 @@ interface QLSTokens {
     int DEFAULT = 3;
     int FONT = 4;
     int FONTSIZE = 5;
-    int HEX = 6;
-    int IDENT = 7;
-    int INT = 8;
-    int PAGE = 9;
-    int QUESTION = 10;
-    int RADIO = 11;
-    int SECTION = 12;
-    int SLIDER = 13;
-    int SPINBOX = 14;
-    int STRING = 15;
-    int STYLESHEET = 16;
-    int TEXT = 17;
-    int TYPEBOOL = 18;
-    int TYPEFLOAT = 19;
-    int TYPEINT = 20;
-    int TYPESTRING = 21;
-    int WIDGET = 22;
-    int WIDTH = 23;
-    int error = 24;
+    int HEIGHT = 6;
+    int HEX = 7;
+    int IDENT = 8;
+    int INT = 9;
+    int PAGE = 10;
+    int QUESTION = 11;
+    int RADIO = 12;
+    int SECTION = 13;
+    int SLIDER = 14;
+    int SPINBOX = 15;
+    int STRING = 16;
+    int STYLESHEET = 17;
+    int TEXT = 18;
+    int TYPEBOOL = 19;
+    int TYPEFLOAT = 20;
+    int TYPEINT = 21;
+    int TYPESTRING = 22;
+    int WIDGET = 23;
+    int WIDTH = 24;
+    int error = 25;
     // '"' (code=34)
     // '(' (code=40)
     // ')' (code=41)

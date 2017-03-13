@@ -1,4 +1,6 @@
-package qls.ast.widgets;
+package qls.ast.attributes.widgets;
+
+import qls.ast.literals.QLSInt;
 
 /**
  * Created by rico on 7-3-17.
@@ -6,10 +8,10 @@ package qls.ast.widgets;
 public class Slider extends Widget {
     private final int min, max;
 
-    public Slider(int min, int max, int rowNumber) {
+    public Slider(QLSInt min, QLSInt max, int rowNumber) {
         super(rowNumber);
-        this.min = min;
-        this.max = max;
+        this.min = min.getValue();
+        this.max = max.getValue();
     }
 
     public int getMin() {

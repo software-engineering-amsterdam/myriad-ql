@@ -1,16 +1,15 @@
 package qls.ast;
 
 import qls.ast.types.Type;
-import qls.ast.widgets.Widget;
 
 /**
  * Created by rico on 7-3-17.
  */
 public class Default extends PageStatement {
     private final Type type;
-    private final DefaultStatements attributes;
+    private final Attributes attributes;
 
-    public Default(Type type, DefaultStatements attributes, int rowNumber) {
+    public Default(Type type, Attributes attributes, int rowNumber) {
         super(rowNumber);
         this.type = type;
         this.attributes = attributes;
@@ -20,7 +19,7 @@ public class Default extends PageStatement {
         return type;
     }
 
-    public DefaultStatements getAttributes() {
+    public Attributes getAttributes() {
         return attributes;
     }
 }

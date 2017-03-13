@@ -1,4 +1,4 @@
-package qls.ast.widgets;
+package qls.ast.attributes.widgets;
 
 /**
  * Created by rico on 7-3-17.

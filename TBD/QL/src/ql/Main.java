@@ -48,19 +48,7 @@ public class Main extends Application {
             ViewASTVisitor viewASTVisitor = new ViewASTVisitor(env);
             primaryStage.setScene(viewASTVisitor.startVisitor(parser.getResult()));
             primaryStage.show();
-/*
 
-            env.setVariableValue("hasBoughtHouse", new IntValue(6));
-            System.out.println("Value of expr: " + env.getVariableValue("test"));*/
-
-            /*FormGenerator formGenerator = new FormGenerator(env);*/
-
-/*            QLFormBox formBox = new QLFormBox("test");
-
-            NumType num = new NumType();
-            formBox.addQuestion("Did you sell a house in 2011?", num, null);
-            primaryStage.setScene(new Scene(formBox));
-            primaryStage.show();*/
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
