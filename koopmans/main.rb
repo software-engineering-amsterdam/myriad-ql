@@ -3,6 +3,8 @@
 # TODO create Error & Warning classes
 # TODO rubocop
 # TODO eval tests
+# TODO add Visitable module
+# TODO inherit all NotificationTable, QuestionTable, ... from Table
 
 
 require 'require_all'
