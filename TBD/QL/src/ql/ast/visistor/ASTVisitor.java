@@ -14,15 +14,6 @@ import java.util.List;
  */
 public abstract class ASTVisitor<T> {
 
-    public T visit(Forms node) {
-        List<Form> forms = node.getItems();
-        for (Form form: forms) {
-            form.accept(this);
-        }
-        return null;
-    }
-
-
     public T visit(Form node) {
         node.getStatements().accept(this);
         return null;

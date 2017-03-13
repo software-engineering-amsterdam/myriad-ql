@@ -23,15 +23,6 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
         return new Scene(node.accept(this));
     }
 
-    public VBox visit(Forms node) {
-        List<Form> forms = node.getItems();
-        for (Form form: forms) {
-            // TODO fix this
-            return form.accept(this);
-        }
-        return null;
-    }
-
     public VBox visit(Form node) {
         VBox statements = node.getStatements().accept(this);
         QLFormBox formBox = new QLFormBox(node.getName(), statements);

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="parser and ast working for qls">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/ast/environment/Scope.java" afterPath="" />
+    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="environment working">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/ast/Forms.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/environment/Environment.java" afterPath="$PROJECT_DIR$/src/ql/ast/environment/Environment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/environment/EnvironmentVariable.java" afterPath="$PROJECT_DIR$/src/ql/ast/environment/EnvironmentVariable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.txt" afterPath="$PROJECT_DIR$/test.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLParser.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/ql.jacc" afterPath="$PROJECT_DIR$/src/ql/parser/ql.jacc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/parser/QLSParser.java" afterPath="$PROJECT_DIR$/src/qls/parser/QLSParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/parser/QLSTokens.java" afterPath="$PROJECT_DIR$/src/qls/parser/QLSTokens.java" />
     </list>
     <list id="76b6b3a2-7088-4438-a30c-090bb2c79e79" name="Revert: " comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,25 +27,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Environment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/Environment.java">
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/parser/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="56" column="5" lean-forward="false" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-              <folding>
-                <element signature="e#561#562#0" expanded="true" />
-                <element signature="e#594#595#0" expanded="true" />
-                <element signature="e#665#666#0" expanded="true" />
-                <element signature="e#709#710#0" expanded="true" />
-                <element signature="e#911#912#0" expanded="true" />
-                <element signature="e#976#977#0" expanded="true" />
-                <element signature="e#1516#1517#0" expanded="true" />
-                <element signature="e#1572#1573#0" expanded="true" />
-                <element signature="e#1790#1791#0" expanded="true" />
-                <element signature="e#1841#1842#0" expanded="true" />
-                <element signature="e#2078#2079#0" expanded="true" />
-                <element signature="e#2127#2128#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ql.jacc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="45" column="72" lean-forward="false" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QLLexer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3859">
+              <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -54,8 +60,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="262">
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,100 +69,84 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test.txt">
+      <file leaf-file-name="PrintASTVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+            <state relative-caret-position="187">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnvASTVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EvalASTVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-              <folding>
-                <element signature="e#481#482#0" expanded="true" />
-                <element signature="e#527#528#0" expanded="true" />
-                <element signature="e#574#575#0" expanded="true" />
-                <element signature="e#614#615#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QLIfBox.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/view/QLIfBox.java">
+      <file leaf-file-name="Form.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/Form.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnvironmentEventListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvironmentEventListener.java">
+      <file leaf-file-name="QLParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/parser/QLParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+            <state relative-caret-position="858">
+              <caret line="2386" column="12" lean-forward="false" selection-start-line="2386" selection-start-column="12" selection-end-line="2386" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypeASTVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java">
+      <file leaf-file-name="test.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
+            <state relative-caret-position="221">
+              <caret line="13" column="2" lean-forward="false" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnvironmentVariable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvironmentVariable.java">
+      <file leaf-file-name="ASTVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="45" column="1" lean-forward="false" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
+            <state relative-caret-position="136">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
-                <element signature="e#566#567#0" expanded="true" />
-                <element signature="e#593#594#0" expanded="true" />
-                <element signature="e#627#628#0" expanded="true" />
-                <element signature="e#655#656#0" expanded="true" />
-                <element signature="e#690#691#0" expanded="true" />
-                <element signature="e#725#726#0" expanded="true" />
-                <element signature="e#757#758#0" expanded="true" />
-                <element signature="e#784#785#0" expanded="true" />
-                <element signature="e#828#829#0" expanded="true" />
-                <element signature="e#862#863#0" expanded="true" />
+                <marker date="1489421036909" expanded="false" signature="1002:1013" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1025:1031" ph=" }" />
+                <marker date="1489421036909" expanded="false" signature="1173:1184" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1196:1202" ph=" }" />
+                <marker date="1489421036909" expanded="false" signature="1239:1250" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1262:1268" ph=" }" />
+                <marker date="1489421036909" expanded="false" signature="1301:1312" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1324:1330" ph=" }" />
+                <marker date="1489421036909" expanded="false" signature="1366:1377" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1389:1395" ph=" }" />
+                <marker date="1489421036909" expanded="false" signature="1430:1441" ph=" { " />
+                <marker date="1489421036909" expanded="false" signature="1453:1459" ph=" }" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewASTVisitor.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ViewASTVisitor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-30">
-              <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
-              <folding />
+            <state relative-caret-position="289">
+              <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+              <folding>
+                <element signature="e#404#405#0" expanded="true" />
+                <element signature="e#450#451#0" expanded="true" />
+                <element signature="e#497#498#0" expanded="true" />
+                <element signature="e#548#549#0" expanded="true" />
+                <element signature="e#1729#1730#0" expanded="true" />
+                <element signature="e#1816#1817#0" expanded="true" />
+                <element signature="e#1860#1861#0" expanded="true" />
+                <element signature="e#1947#1948#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -191,6 +181,7 @@
       <find>syntax</find>
       <find>error</find>
       <find>yyerror</find>
+      <find>VBox</find>
     </findStrings>
     <replaceStrings>
       <replace>Page</replace>
@@ -214,11 +205,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/qls/ast/widgets/Checkbox.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/types/types/FloatType.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/widgets/Slider.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/Stylesheet.java" />
-        <option value="$PROJECT_DIR$/src/qls/ast/Page.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/SectionStatement.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/PageStatement.java" />
         <option value="$PROJECT_DIR$/src/qls/ast/StylesheetPages.java" />
@@ -260,11 +246,16 @@
         <option value="$PROJECT_DIR$/src/ql/ast/environment/Scope.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" />
-        <option value="$PROJECT_DIR$/src/ql/Main.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" />
-        <option value="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" />
         <option value="$PROJECT_DIR$/src/ql/ast/environment/Environment.java" />
         <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/ql/view/QLConditionBox.java" />
+        <option value="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" />
+        <option value="$PROJECT_DIR$/src/ql/Main.java" />
+        <option value="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
+        <option value="$PROJECT_DIR$/src/ql/parser/ql.jacc" />
+        <option value="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" />
+        <option value="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" />
       </list>
     </option>
   </component>
@@ -378,6 +369,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -976,7 +989,7 @@
       <workItem from="1488883949686" duration="4772000" />
       <workItem from="1488888750721" duration="15544000" />
       <workItem from="1489399103604" duration="7009000" />
-      <workItem from="1489414407367" duration="3225000" />
+      <workItem from="1489414407367" duration="6566000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1020,11 +1033,18 @@
       <option name="project" value="LOCAL" />
       <updated>1489404783007</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="environment working">
+      <created>1489417644161</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1489417644161</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43124000" />
+    <option name="totallyTimeSpent" value="46465000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1074,7 +1094,8 @@
     <MESSAGE value="fixed literals" />
     <MESSAGE value="parser almost done for qls" />
     <MESSAGE value="parser and ast working for qls" />
-    <option name="LAST_COMMIT_MESSAGE" value="parser and ast working for qls" />
+    <MESSAGE value="environment working" />
+    <option name="LAST_COMMIT_MESSAGE" value="environment working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1087,10 +1108,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/Width.java" />
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/ObjectStatement.java" />
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/widgets/Widget.java" />
-    <entry file="file://$PROJECT_DIR$/src/qls/ast/Attributes.java" />
     <entry file="file://$PROJECT_DIR$/src/ql/ast/types/ErrorType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1136,43 +1153,13 @@
     <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/widgets/Slider.java" />
     <entry file="file://$PROJECT_DIR$/src/qls/ast/attributes/widgets/Radio.java" />
     <entry file="file://$PROJECT_DIR$/src/qls/ast/SectionStatements.java" />
-    <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="29" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qls/parser/QLSTokens.java" />
     <entry file="file://$PROJECT_DIR$/src/qls/parser/QLSParser.java" />
     <entry file="file://$PROJECT_DIR$/src/qls/parser/Parser.java" />
-    <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qls.txt" />
     <entry file="file://$PROJECT_DIR$/src/qls/parser/qls.jacc" />
     <entry file="file://$PROJECT_DIR$/src/qls/parser/QLSLexer.java" />
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="22" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qls/Main.java" />
-    <entry file="file://$PROJECT_DIR$/src/ql/parser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/view/QLStatementsBox.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1263,36 +1250,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/view/QLIfBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -1318,11 +1279,123 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/view/QLConditionBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/parser/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/view/QLFormBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3859">
+          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        <state relative-caret-position="221">
+          <caret line="13" column="2" lean-forward="false" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/Form.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/parser/QLParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="2386" column="12" lean-forward="false" selection-start-line="2386" selection-start-column="12" selection-end-line="2386" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="45" column="72" lean-forward="false" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <marker date="1489421036909" expanded="false" signature="1002:1013" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1025:1031" ph=" }" />
+            <marker date="1489421036909" expanded="false" signature="1173:1184" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1196:1202" ph=" }" />
+            <marker date="1489421036909" expanded="false" signature="1239:1250" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1262:1268" ph=" }" />
+            <marker date="1489421036909" expanded="false" signature="1301:1312" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1324:1330" ph=" }" />
+            <marker date="1489421036909" expanded="false" signature="1366:1377" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1389:1395" ph=" }" />
+            <marker date="1489421036909" expanded="false" signature="1430:1441" ph=" { " />
+            <marker date="1489421036909" expanded="false" signature="1453:1459" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+          <folding>
+            <element signature="e#404#405#0" expanded="true" />
+            <element signature="e#450#451#0" expanded="true" />
+            <element signature="e#497#498#0" expanded="true" />
+            <element signature="e#548#549#0" expanded="true" />
+            <element signature="e#1729#1730#0" expanded="true" />
+            <element signature="e#1816#1817#0" expanded="true" />
+            <element signature="e#1860#1861#0" expanded="true" />
+            <element signature="e#1947#1948#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
