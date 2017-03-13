@@ -1,6 +1,7 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.*;
+import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -9,7 +10,7 @@ import javafx.scene.text.Text;
 public class FXMLExampleController {
     private int rowCount;
     private Form form;
-
+    TypeChecker checker = new TypeChecker();
 
     public void addFormItem(Form form) {
         this.form = form;
@@ -26,10 +27,14 @@ public class FXMLExampleController {
         Text questionLabel = new Text(question.getQuestion());
         TextField input = new TextField();
 
-        input.textProperty().addListener((observable, oldValue, newValue) ->
-                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question, newValue))
-        );
-
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (question.check(checker, newValue)) {
+                input.setStyle("-fx-text-fill: green");
+                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question, newValue));
+            } else {
+                input.setStyle("-fx-text-fill: red");
+            }
+        });
         grid.addRow(++rowCount, questionLabel, input);
     }
 

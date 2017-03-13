@@ -32,6 +32,10 @@ public class Question implements FormItem {
         this.value = value;
     }
 
+    public boolean check(TypeChecker checker, String newValue) {
+        return checker.check(value, newValue);
+    }
+
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
         // I don't care about that, I am an independent formitem and don't need your help
