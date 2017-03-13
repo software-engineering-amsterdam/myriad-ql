@@ -8,7 +8,7 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
   def check: Issues = checkExpression(expression) match {
     case (Some(expressionType), Nil) => (expressionType, expectedType) match {
       case (detected: NumericType, expected: NumericType) if isSubType(detected, expected) => Nil
-      case (detected: Type, expected: Type) if detected == expected => Nil
+      case (detected, expected) if detected == expected => Nil
       case (detected, expected) => Seq(Error(s"Found $detected, expected $expected in $expression"))
     }
     case (_, errors) => errors
@@ -46,16 +46,13 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
         case (_: Lt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: And, BooleanType, BooleanType) => (Some(BooleanType), errors)
         case (_: Or, BooleanType, BooleanType) => (Some(BooleanType), errors)
-
-        // Equality: Among different numbers, ok, otherwise: strict type match.
-        case (_: Neq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
-        case (_: Eq, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
-        case (_: Neq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
-        case (_: Eq, t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
+        case (n: Neq, t1: Type, t2: Type) => checkEqualityOperator(n, t1, t2, errors)
+        case (n: Eq, t1: Type, t2: Type) => checkEqualityOperator(n, t1, t2, errors)
         case (n: InfixNode, l: Type, r: Type) => emitError(n, l, r, errors)
       }
     }
   }
+
 
   private def checkPrefixExpression(prefixNode: PrefixNode): (Option[Type], Issues) = {
     val (operandType, errors) = checkExpression(prefixNode.operand)
@@ -68,6 +65,14 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
       }
     }
   }
+
+  // Equality: Among different numbers, ok, otherwise: strict type match.
+  private def checkEqualityOperator(node: ExpressionNode, lhs: Type, rhs: Type, errors: Issues): (Option[Type], Issues) =
+    (lhs, rhs) match {
+      case (_: NumericType, _: NumericType) => (Some(BooleanType), errors)
+      case (t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
+      case (l, r) => emitError(node, l, r, errors)
+    }
 
   private def identifierType(identifier: Identifier): (Option[Type], Issues) =
     identifiersWithType.filter { case (i, _) => identifier.value == i } match {
