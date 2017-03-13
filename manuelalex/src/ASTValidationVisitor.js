@@ -47,26 +47,42 @@ export class ASTValidationVisitor {
      * @param {Question} question
      */
     visitQuestion(question) {
-
-        console.log("The question is:" + question.name);
-        console.log("The question type is :" + question.propertyType);
         this.memoryState.set(question.propertyName, question.propertyType);
+        //TODO: duplicate question declarations with different types
+        /*
+         def a: "A?" boolean
+         if (x) { a }
+         if (!x) { a }
+         */
+
+        //TODO: cyclic dependencies between questions
+        /*
+         if (x) { y: "Y?" boolean }
+         if (y) { x: "X?" boolean }
+
+
+         if (x) { a: "A?" boolean }
+         if (!x) { a: "A?" boolean }
+         */
+
+        //TODO: duplicate labels (warning)
+        /*
+         question 'duplicate'
+         hasSoldHouse: money
+         question 'duplicate'
+         hasBoughtHouse: money
+         */
+
 
     }
 
     visitAnswer(answer) {
-        console.log("The question is:" + answer.name);
-        console.log("The question type is :" + answer.propertyType);
+        //TODO: reference to undefined questions
+
     }
 
     visitIfStatement(ifstatement) {
-        console.log("The question is:" + ifstatement.condition);
-        console.log("The question type is :" + ifstatement.ifBody);
-
         ifstatement.condition.accept(this);
-        // if(true){
-        //     this.visitStatements(ifstatement.ifBody);
-        // }
     }
 
     findExpressionInArray(object){
@@ -91,6 +107,8 @@ export class ASTValidationVisitor {
             let subExpression = this.findExpressionInArray(condition.leftHand);
             subExpression.accept(this);
         } else {
+            //Todo: add prefix operator !
+
             this.validateOperator(condition, ["||", "&&", "=="], QLBoolean.name);
             this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLMoney.name);
             this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLString.name);
@@ -98,6 +116,8 @@ export class ASTValidationVisitor {
             this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLDate.name);
         }
     }
+
+
 
     validateOperator(condition, validOperators, validType) {
         let typeLeftHand = this.memoryState.getType(condition.leftHand);
