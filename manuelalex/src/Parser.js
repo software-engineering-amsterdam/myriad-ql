@@ -10,27 +10,28 @@ import  './grammar.js';
 export class Parser {
 
     constructor() {
+        /* Due to the nature of the nearly module, we have to assing our ASTBuilder to the window scope so we can reference it in the generated parser 'grammar.js' */
         window.ASTBuilder = new ASTBuilder();
     }
 
     parse(parseString = '') {
-        let parser = this._createParser();
+        const parser = this._createParser();
         let result = [];
-        let errors = [];
+        const errors = [];
         try {
             /* Remove all line breaks from the parse string */
-            parseString = parseString.replace(/(\r\n|\n|\r)/gm, "");
+            parseString = parseString.replace(/(\r\n|\n|\r)/gm, '');
             result = parser.feed(parseString).results;
         } catch (parseError) {
             errors.push(`Error at character ${parseError.offset}`);
         }
 
         if (result.length > 1) {
-            errors.push(`Ambigious parsing: ${result.length} options. Choosing the first parsing`);
-            result = result[0];
+            errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing`);
+            [result] = result;
         }
 
-        return {result, errors, parseString};
+        return { result, errors, parseString };
     }
 
     /**
@@ -39,6 +40,7 @@ export class Parser {
      * @private
      */
     _createParser() {
+        /* Grammar is defined on the window scope by grammar.js due to the nature of the nearley module */
         return new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
     }
 }
