@@ -8,27 +8,33 @@ import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
-import org.uva.taxfree.model.node.declarations.*;
+import org.uva.taxfree.model.node.declarations.CalculationNode;
+import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.node.expression.*;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.Operator;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.IntegerType;
+import org.uva.taxfree.model.types.StringType;
+import org.uva.taxfree.model.types.Type;
 
 import java.util.*;
 
+import static org.uva.taxfree.gen.QLGrammarParser.OPERATOR_MINUS;
+import static org.uva.taxfree.gen.QLGrammarParser.OPERATOR_PLUS;
+
 public class GrammarListener extends QLGrammarBaseListener {
     private FormNode mRootNode;
-    private final SymbolTable mSymbolTable;
 
     private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
-    private boolean insideIfElse = false;
 
     public GrammarListener() {
-        mSymbolTable = new SymbolTable();
+
     }
 
     public FormNode getAst() {
@@ -43,31 +49,30 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
         super.enterForm(ctx);
-        createStack();
     }
 
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        NamedNode questionNode;
-        String questionText = ctx.QUESTION().getText();
+        String questionText = ctx.LABEL_QUESTION().getText();
         String questionId = ctx.VARIABLE_LITERAL().getText();
-
-        if ("boolean".equals(ctx.varType().getText())) {
-            questionNode = new BooleanQuestion(questionText, questionId);
-        } else if ("string".equals(ctx.varType().getText())) {
-            questionNode = new StringQuestion(questionText, questionId);
-        } else if ("integer".equals(ctx.varType().getText())) {
-            questionNode = new IntegerQuestion(questionText, questionId);
+        Type questionType;
+        String parsedVarType = ctx.varType().getText();
+        if ("boolean".equals(parsedVarType)) {
+            questionType = new BooleanType();
+        } else if ("string".equals(parsedVarType)) {
+            questionType = new StringType();
+        } else if ("integer".equals(parsedVarType)) {
+            questionType = new IntegerType();
         } else {
             // TODO: Bail out!
             throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
         }
+        DeclarationNode questionNode = new DeclarationNode(questionText, questionId, questionType);
         addDeclaration(questionNode);
     }
 
-    private void addDeclaration(NamedNode node) {
-        mSymbolTable.addDeclaration(node);
+    private void addDeclaration(DeclarationNode node) {
         addToStack(node);
     }
 
@@ -103,9 +108,8 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), mSymbolTable);
+        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), new SymbolTable()); // TODO: VAR has no symboltable anymore!
         addToStack(varNameLiteral);
-        mSymbolTable.addVariable(ctx.getText());
     }
 
     @Override
@@ -117,7 +121,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
-        insideIfElse = true;
+        createStack();
     }
 
     private void createStack() {
@@ -128,19 +132,20 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
         super.exitCalculation(ctx);
-        NamedNode calculatedFieldNode;
-        String fieldDescription = ctx.DESCRIPTION().getText();
+        String fieldDescription = ctx.LABEL_DESCRIPTION().getText();
         String fieldId = ctx.VARIABLE_LITERAL().getText();
+        Type fieldType;
 
         if ("boolean".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new CalculatedField(fieldDescription, fieldId, new BooleanType(), popCachedCondition());
+            fieldType = new BooleanType();
         } else if ("integer".equals(ctx.varType().getText())) {
-            calculatedFieldNode = new CalculatedField(fieldDescription, fieldId, new IntegerType(), popCachedCondition());
+            fieldType = new IntegerType();
         } else {
             // TODO: Bail out!
             throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
         }
-        addDeclaration(calculatedFieldNode);
+        DeclarationNode calculatedNode = new CalculationNode(fieldDescription, fieldId, fieldType, popCachedCondition());
+        addDeclaration(calculatedNode);
     }
 
     @Override
@@ -153,7 +158,21 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitCalculationExpression(QLGrammarParser.CalculationExpressionContext ctx) {
         super.exitCalculationExpression(ctx);
-        ExpressionNode calculationExpressionNode = new CalculationBinaryExpressionNode(popCachedCondition(), ctx.operator.getText(), popCachedCondition());
+        int operatorTokenIndex = ctx.op.getTokenIndex();
+        Operator operator;
+        switch (operatorTokenIndex) {
+            case OPERATOR_PLUS:
+                operator = new AddOperator();
+                break;
+            case OPERATOR_MINUS:
+                // todo
+//                operator = new MinusOperator();
+//                break;
+            default:
+                // TODO: bail out!
+                throw new RuntimeException("Unexpected operator");
+        }
+        ExpressionNode calculationExpressionNode = new CalculationBinaryExpressionNode(popCachedCondition(), operator, popCachedCondition());
         addToStack(calculationExpressionNode);
     }
 
@@ -174,37 +193,29 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitIfStatement(QLGrammarParser.IfStatementContext ctx) {
         super.exitIfStatement(ctx);
-        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popStack());
+        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popChildStack());
         addToStack(ifStatementNode);
-        if (insideIfElse) {
-            createStack();
-            insideIfElse = false;
-        }
     }
 
-    private Set<Node> popStack() {
+    private Set<Node> popChildStack() {
         return new LinkedHashSet<>(mChildsStack.pop());
     }
 
     @Override
     public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.exitIfElseStatement(ctx);
-        Set<Node> content = popStack();
-        BlockNode ifStatementNode = lastBlock();
+        Set<Node> content = popChildStack();
+        // TODO
+        BlockNode ifStatementNode = null;
 
         BlockNode ifElseStatementNode = new IfElseStatementNode(ifStatementNode, content);
         addToStack(ifElseStatementNode);
     }
 
-    private BlockNode lastBlock() {
-        // TODO: Fix static cast
-        return (BlockNode) mChildsStack.peek().remove(mChildsStack.peek().size() - 1);
-    }
-
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popStack());
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popChildStack());
         if (!mChildsStack.isEmpty()) {
             throw new AssertionError("Stack should be empty when we finished creating our AST.");
         }
