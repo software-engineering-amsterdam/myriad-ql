@@ -15,7 +15,7 @@ class StringQuestion(val question: DisplayQuestion) extends GUIQuestion {
     case o: OpenQuestion => textField.onAction = actionHandler(textField, o)
   }
 
-  element.children += textField
+  displayBox.children += textField
 
   private def actionHandler(textField: TextField, question: OpenQuestion) = () => {
     val value = StringValue(textField.text.value)

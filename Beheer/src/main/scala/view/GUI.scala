@@ -2,7 +2,6 @@ package view
 
 import ast._
 import checker.Issue.Issues
-import checker.{ Error, Warning }
 import model.{ FormModel, StyleModel }
 
 import scalafx.application.JFXApp
@@ -14,17 +13,15 @@ import scalafx.scene.text.Text
 class GUI(issues: Issues, formModel: FormModel, styleModel: StyleModel) extends JFXApp.PrimaryStage {
   private val displayBoxes = formModel.displayQuestions.map { question =>
     question.`type` match {
-      case BooleanType => new BooleanQuestion(question).element
-      case DateType => new DateQuestion(question).element
-      case StringType => new StringQuestion(question).element
-      case _: NumericType => new NumericQuestion(question).element
+      case BooleanType => new BooleanQuestion(question)
+      case DateType => new DateQuestion(question)
+      case StringType => new StringQuestion(question)
+      case _: NumericType => new NumericQuestion(question)
     }
-  }
+  }.map(_.displayBox)
+
   private val issueBox = {
-    val issueMessages = issues.map {
-      case Warning(message) => new HBox(new Text(message))
-      case Error(message) => new HBox(new Text(message))
-    }
+    val issueMessages = issues.map(issue => new HBox(new Text(issue.message)))
     new VBox {
       children = issueMessages
     }

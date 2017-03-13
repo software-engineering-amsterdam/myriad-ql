@@ -10,7 +10,7 @@ import scalafx.scene.text.Text
 class BooleanQuestion(val question: DisplayQuestion) extends GUIQuestion {
   private val booleanToggle = new ToggleGroup {
     selectedToggle.onChange { (_, _, value) =>
-      value.getUserData.asInstanceOf[BooleanValue] match {
+      value.getUserData match {
         case b: BooleanValue => updateEnv(question.identifier, b)
         case _ => sys.error("Invalid value for BooleanQuestion")
       }
@@ -18,7 +18,7 @@ class BooleanQuestion(val question: DisplayQuestion) extends GUIQuestion {
     }
   }
 
-  element.children = Seq(
+  displayBox.children = Seq(
     new Text(question.label),
     new HBox {
       children = Seq(
