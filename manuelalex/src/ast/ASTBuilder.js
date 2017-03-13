@@ -7,14 +7,11 @@ import _    from 'lodash';
 import {Form} from '../Form.js';
 import {Question} from '../statements/Question.js';
 import {Answer} from '../statements/Answer.js';
-
-import {IfStatement} from '../statements/IfStatement.js';
+import {IfStatement} from '../statements/IFStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
-
 import {Comparison} from '../expressions/Comparison.js';
 import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
-
 import {MinOperator} from '../operator/MinOperator.js';
 import {PlusOperator} from '../operator/PlusOperator.js';
 import {DivideOperator} from '../operator/DivideOperator.js';
@@ -23,7 +20,7 @@ import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js'
 import {Property} from '../types/Property.js';
 import {Label} from '../Label.js';
 
-export class FormPostProcessor {
+export class ASTBuilder {
 
     form(data, location, reject) {
         return new Form(data[2][0], _.flattenDeep(data[6]), location);
@@ -65,8 +62,8 @@ export class FormPostProcessor {
     }
 
 
-    factor(data, location, reject){
-        if(data.length > 1) {
+    factor(data, location, reject) {
+        if (data.length > 1) {
             return data[1];
         } else {
             return data;
@@ -74,7 +71,7 @@ export class FormPostProcessor {
     }
 
     plusMinExpression(data, location, reject) {
-        return new Expression(_.flattenDeep(data[0])[0],_.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
+        return new Expression(_.flattenDeep(data[0])[0], _.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
     }
 
     booleanExpression(data) {
@@ -133,7 +130,7 @@ export class FormPostProcessor {
         return new QLBoolean(location);
     }
 
-    property(data, location){
+    property(data, location) {
         return new Property(data[0].join(""), location);
     }
 

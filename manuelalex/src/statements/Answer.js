@@ -37,6 +37,4 @@ export class Answer extends Statement {
     render(visitor, view){
         visitor.renderAnswer(this, view);
     }
-
-
 }

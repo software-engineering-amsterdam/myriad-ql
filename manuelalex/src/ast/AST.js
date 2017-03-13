@@ -19,15 +19,8 @@ export class AST {
     }
 
     validate() {
-        for(let statement of this.program.statements){
+        for(let statement of this.getStatements()){
             statement.validate();
         }
     }
-
-    validate() {
-        for(let statement of this.program.statements){
-            statement.validate();
-        }
-    }
-
-};
+}

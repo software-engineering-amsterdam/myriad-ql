@@ -1,5 +1,5 @@
-import nearley                                   from 'nearley';
-import {FormPostProcessor}                       from './processors/FormPostProcessor.js';
+import nearley                            from 'nearley';
+import {ASTBuilder}                       from './ast/ASTBuilder.js';
 import  './grammar.js';
 
 /**
@@ -10,7 +10,7 @@ import  './grammar.js';
 export class Parser {
 
     constructor() {
-        window.FormPostProcessor = new FormPostProcessor();
+        window.ASTBuilder = new ASTBuilder();
     }
 
     parse(parseString = '') {

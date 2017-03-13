@@ -65,5 +65,5 @@ export let test6 =
         privateDebt: date
         answer 'Value residue:'
         valueResidue: money = (hasSoldHouse-hasMaintLoan)
-    }
+    } else {question 'Secondlabel' sellingPrice: money}
      }`;
