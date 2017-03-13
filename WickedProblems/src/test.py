@@ -10,11 +10,12 @@ if __name__ == '__main__':
     # print(__parsed)
     eval_test = '(hasSoldHouse || (hasBoughtHouse && hasMaintLoan))'
     __parsed = QL.boolean_expression.parseString(eval_test)[0]
-    # print(__parsed.right_hand_side)
-    # print(__parsed.right_hand_side.right_hand_side)
-    # print(__parsed.right_hand_side.right_hand_side.left_hand_side)
-    # print(__parsed.right_hand_side.right_hand_side.right_hand_side)
-    # print(__parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side)
+    print(__parsed.right_hand_side)
+    print(__parsed.right_hand_side.right_hand_side)
+    print(__parsed.right_hand_side.right_hand_side.left_hand_side)
+    print(__parsed.right_hand_side.right_hand_side.left_hand_side._identifier)
+    print(__parsed.right_hand_side.right_hand_side.right_hand_side)
+    print(__parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side)
     left = __parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side.left_hand_side
     print(left._identifier)
     right = __parsed.right_hand_side.right_hand_side.right_hand_side.right_hand_side.right_hand_side
