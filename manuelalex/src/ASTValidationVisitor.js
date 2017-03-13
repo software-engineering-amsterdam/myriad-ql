@@ -51,12 +51,7 @@ export class ASTValidationVisitor {
      */
     visitQuestion(question) {
         this.memoryState.set(question.propertyName, question.propertyType);
-        //TODO: duplicate question declarations with different types
-        /*
-         def a: "A?" boolean
-         if (x) { a }
-         if (!x) { a }
-         */
+
 
         //TODO: cyclic dependencies between questions
         /*
