@@ -31,10 +31,10 @@ not_expression              -> comparison | "!" not_expression                  
 comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% FormPostProcessor.deepExpression %}
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% FormPostProcessor.deepExpression %}
 multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression               {% FormPostProcessor.deepExpression %}
-factor                      -> digits | propertyName | "(" expression ")"                                                   {% FormPostProcessor.factor %}
+factor                      -> digits | propertyName | "(" expression ")"
 digits                      -> [0-9]:+                                                                                      {% (data)=> Number(data[0]) %}
 
-propertyName            -> [A-Za-z0-9]:+                                                                      {% function(d) { return d[0].join("") } %}
+propertyName            -> [A-Za-z0-9]:+                                                                      {% FormPostProcessor.property %}
 propertyType            -> "boolean"                                                                          {% FormPostProcessor.boolean %}
                          | "string"                                                                           {% FormPostProcessor.string %}
                          | "integer"                                                                          {% FormPostProcessor.number %}

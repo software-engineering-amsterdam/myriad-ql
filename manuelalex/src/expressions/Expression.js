@@ -5,11 +5,10 @@
 export class Expression {
 
     constructor(leftHand, operator, rightHand, location){
-
         this.leftHand = leftHand;
         this.operator = operator;
         this.rightHand = rightHand;
-        this.location = location
+        this.location = location;
     }
 
     getLocation(){
@@ -28,6 +27,14 @@ export class Expression {
         return this.operator;
     }
 
+    accept(visitor){
+        visitor.visitExpression(this);
+    }
+
+    validate() {
+        throw new Error('Validate method should have been overwritten');
+    }
+
     evaluate(memoryState){
         let leftHandValue = memoryState.getValue(this.leftHand) || undefined;
         let rightHandValue = memoryState.getValue(this.rightHand) || undefined;
@@ -35,15 +42,9 @@ export class Expression {
         return eval(`${leftHandValue} ${this.operator} ${rightHandValue}`);
     }
 
-    validate() {
-        throw new Error('Validate method should have been overwritten');
-    }
 
     _throwError(errorText = ''){
         throw new Error(`Error at ${this._location}: ${errorText.toString()}`);
     }
 
-    accept(visitor){
-        visitor.visitExpression(this);
-    }
 }

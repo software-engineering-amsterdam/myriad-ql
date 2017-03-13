@@ -44,7 +44,7 @@ export class RenderVisitor {
         let type = question.getPropertyType();
         let label = question.getLabel();
         let propertyName = question.getPropertyName();
-        let propertyElement = this.memoryState.getElement(propertyName);
+        let propertyElement = this.memoryState.getElement(propertyName.getName());
 
         let typeRenderable = type.render(this);
         let labelRenderable = label.render(this);
@@ -57,9 +57,9 @@ export class RenderVisitor {
         let subView = new View();
         subView.getSize = () => [undefined, 88];
 
-        subView.addRenderable(labelRenderable, 'label', layout.dock.left(~120, 0, 10), layout.stick.center());
-        subView.addRenderable(typeRenderable, 'type', layout.dock.right(~120, 0, 10));
-        view.addRenderable(subView, `subView${this._viewCount++}`, layout.dock.top(44, 0, 10));
+        subView.addRenderable(labelRenderable, 'label', layout.dock.top(44, 0, 10), layout.stick.left());
+        subView.addRenderable(typeRenderable, 'type', layout.dock.top(44, 0, 10), layout.stick.left());
+        view.addRenderable(subView, `subView${this._viewCount++}`, layout.dock.top(88, 0, 10));
 
     }
 
@@ -112,7 +112,7 @@ export class RenderVisitor {
         if (condition.evaluate(this.memoryState)) {
             this.visitStatements(ifBody, view);
         } else {
-            this.visitStatements(elseBody, view);
+            this.visitStatements(elseBody, view)
         }
     }
 

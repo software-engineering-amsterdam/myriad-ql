@@ -20,6 +20,7 @@ import {PlusOperator} from '../operator/PlusOperator.js';
 import {DivideOperator} from '../operator/DivideOperator.js';
 import {MultiplyOperator} from '../operator/MultiplyOperator.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
+import {Property} from '../types/Property.js';
 import {Label} from '../Label.js';
 
 export class FormPostProcessor {
@@ -132,6 +133,10 @@ export class FormPostProcessor {
 
     boolean(data, location) {
         return new QLBoolean(location);
+    }
+
+    property(data, location){
+        return new Property(data[0].join(""), location);
     }
 
     toString(data) {
