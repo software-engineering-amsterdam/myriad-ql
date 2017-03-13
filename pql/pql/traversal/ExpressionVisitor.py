@@ -52,3 +52,15 @@ class ExpressionVisitor(metaclass=ABCMeta):
     @abstractmethod
     def or_(self, node):
         pass
+
+    @abstractmethod
+    def positive(self, node):
+        pass
+
+    @abstractmethod
+    def negative(self, node):
+        pass
+
+    @abstractmethod
+    def negation(self, node):
+        pass

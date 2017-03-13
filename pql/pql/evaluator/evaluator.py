@@ -93,6 +93,15 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         else:
             return operator_function(lhs_result, rhs_result)
 
+    def positive(self, node):
+        return +node.rhs.apply(self)
+
+    def negative(self, node):
+        return -node.rhs.apply(self)
+
+    def negation(self, node):
+        return not node.rhs.apply(self)
+
     def update_value(self, key, value):
         #TODO If environment is passed, this can be removed
         self.__environment[key] = value
