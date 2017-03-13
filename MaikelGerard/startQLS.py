@@ -61,19 +61,22 @@ if __name__ == '__main__':
             }
         }
     """
+    error_handler = ErrorHandler()
 
     qls_parser = QLSParser()
     qls_ast = qls_parser.parse(example_qls)
+    qls_env = Environment(error_handler)
 
     ql_parser = QLParser()
     ql_ast = ql_parser.parse(example_ql)
-
-    error_handler = ErrorHandler()
     ql_env = Environment(error_handler)
+
+    PrintHandler().print_ast(qls_ast)
+
     InitEnvironment(ql_ast, ql_env, error_handler).start_traversal()
 
-    TypeChecker(qls_ast, ql_env, error_handler).start_traversal()
+    TypeChecker(qls_ast, qls_env, ql_env, error_handler).start_traversal()
     error_handler.check_and_print_errors()
 
     # print ql_env.variables
-    # PrintHandler().print_ast(qls_ast)
+    PrintHandler().print_ast(qls_ast)

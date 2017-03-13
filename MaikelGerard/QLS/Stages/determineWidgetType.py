@@ -2,19 +2,19 @@
 
 
 class TypeChecker(object):
-    def __init__(self, qls_ast, qls_env, ql_env, error_handler):
+    def __init__(self, qls_ast, ql_env, error_handler):
         self.ast = qls_ast
-        self.env = qls_env
         self.ql_env = ql_env
         self.handler = error_handler
+        self.variables = []
 
     def start_traversal(self):
-        self.env.clear_env()
+        self.variables = []
         self.ast.accept(self)
 
         # Check if all QL questions are defined in QLS
         for var in self.ql_env.get_vars():
-            if var not in self.env.get_vars():
+            if var not in self.variables:
                 self.handler.add_question_not_in_qls_error(var)
 
     def style_sheet_node(self, style_sheet_node):
@@ -23,20 +23,11 @@ class TypeChecker(object):
     def page_node(self, page_node):
         page_node.body.accept(self)
 
-    def page_with_defaults_node(self, page_node):
-        page_node.body.accept(self)
-        page_node.defaults.accept(self)
-
     def section_node(self, section_node):
         section_node.body.accept(self)
 
-    def section_with_defaults_node(self, section_node):
-        section_node.body.accept(self)
-        section_node.defaults.accept(self)
-
     def widget_question_node(self, widget_question_node):
         self.question_node(widget_question_node)
-
         question_name = widget_question_node.name
         if not self.ql_env.exists(question_name):
             return
@@ -44,7 +35,10 @@ class TypeChecker(object):
         widget_question_node.type.accept(self, literal_type)
 
     def question_node(self, question_node):
-        self.env.add_var(question_node)
+        if question_node.name in self.variables:
+            self.handler.add_duplicate_question_error(question_node)
+        else:
+            self.variables.append(question_node.name)
 
         if not self.ql_env.exists(question_node.name):
             self.handler.add_question_not_in_ql_error(question_node)
@@ -77,7 +71,19 @@ class TypeChecker(object):
         self.check_widget_compatibility(dropdown_node, literal_type, "dropdown")
 
     def default_node(self, default_node):
-        default_node.widget_type.accept(self, default_node.type)
+        default_node.body.accept(self, default_node.type)
 
-    def default_with_props_node(self, default_node):
-        self.default_node(default_node)
+    def width_node(self, width_node, _):
+        pass
+
+    def height_node(self, height_node, _):
+        pass
+
+    def font_node(self, font_node, _):
+        pass
+
+    def fontsize_node(self, fontsize_node, _):
+        pass
+
+    def color_node(self, color_node, _):
+        pass

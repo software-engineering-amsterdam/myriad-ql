@@ -71,9 +71,9 @@ class PrintHandler(qlPrintHandler):
         self.add_indent(indent)
         self.output += "default {}:\n".format(default_node.type.accept(self))
 
-    def default_with_props_node(self, default_node_with_props, indent):
-        self.default_node(default_node_with_props, indent)
-        default_node_with_props.body.accept(self, indent + 1)
+    def default_with_props_node(self, default_with_props_node, indent):
+        self.default_node(default_with_props_node, indent)
+        default_with_props_node.props.accept(self, indent + 1)
 
     def width_node(self, width_node, indent):
         self.add_indent(indent)
