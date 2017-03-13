@@ -13,7 +13,7 @@ view { identifier, env, onChange, editable } =
     let
         textValue =
             Environment.getFormValue identifier env
-                |> Maybe.andThen (Values.asFloat)
+                |> Maybe.andThen Values.asFloat
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in

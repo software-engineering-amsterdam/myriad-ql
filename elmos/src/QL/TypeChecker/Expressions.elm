@@ -42,7 +42,7 @@ conditionTypeErrors form questionTypes =
     Collectors.collectConditions form
         |> List.filterMap (conditionWithType questionTypes)
         |> List.filter (Tuple.second >> badConditional)
-        |> List.map (\( condition, conditionType ) -> (Messages.invalidConditionType (locationOf condition) conditionType))
+        |> List.map (\( condition, conditionType ) -> Messages.invalidConditionType (locationOf condition) conditionType)
 
 
 computationToType : QuestionTypes -> ( Id, Expression ) -> Maybe ( Id, ValueType )

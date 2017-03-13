@@ -45,7 +45,7 @@ collectConfiguredQuestions styleSheet =
                 StyleSheetVisitor.post <|
                     \question context ->
                         case question of
-                            Question ref ->
+                            Question _ ->
                                 context
 
                             ConfiguredQuestion ref configuration ->

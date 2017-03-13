@@ -2,7 +2,7 @@ module QLS.TypeChecker.QuestionWidgetType exposing (check)
 
 import QL.AST exposing (Form, Location, Id, ValueType(..))
 import QLS.AST exposing (StyleSheet, Question, Configuration(..), Widget(..))
-import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch), undefinedQuestionReference)
+import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch))
 import QLS.AST.Collectors as QLSCollectors
 import Dict exposing (Dict)
 import Dict.Extra as Dict
@@ -34,12 +34,5 @@ configuredWidget c =
         SingleConfig widget ->
             Just widget
 
-        MultiConfig styleList widgetMaybe ->
+        MultiConfig _ widgetMaybe ->
             widgetMaybe
-
-
-groupByLabel : List ( String, Location ) -> Dict String (List Location)
-groupByLabel x =
-    x
-        |> Dict.groupBy Tuple.first
-        |> Dict.map (\k v -> List.map Tuple.second v)

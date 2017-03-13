@@ -1,8 +1,8 @@
 module UI.QLSInput exposing (Model, Msg, init, asStyleSheet, setForm, update, view)
 
-import Html exposing (Html, textarea, div, pre, text)
+import Html exposing (Html, textarea, div, text)
 import Html.Keyed exposing (node)
-import Html.Attributes exposing (class, defaultValue, rows, cols, class, style, id)
+import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
@@ -84,7 +84,6 @@ exampleDsl =
           font: "Arial"
           fontsize: 14
           color: #999999
-          widget checkbox
         }
       }
     }

@@ -14,9 +14,9 @@ type Message
 
 undefinedQuestionReference : String -> Location -> Message
 undefinedQuestionReference name location =
-    (UndefinedQuestionReference name location)
+    UndefinedQuestionReference name location
 
 
 unplacedQuestion : String -> Message
 unplacedQuestion name =
-    (UnplacedQuestion name)
+    UnplacedQuestion name

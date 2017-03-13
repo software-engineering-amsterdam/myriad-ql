@@ -41,7 +41,7 @@ section =
                     <*> (whitespace1 *> sectionChild)
                 , MultiChildSection
                     <$> (string "section" *> whitespace1 *> quotedString)
-                    <*> (whitespace1 *> string "{" *> whitespace *> (sepBy whitespace1 sectionChild))
+                    <*> (whitespace1 *> string "{" *> whitespace *> sepBy whitespace1 sectionChild)
                     <*> (whitespace *> sepBy whitespace1 defaultValueConfig <* whitespace <* string "}")
                 ]
 

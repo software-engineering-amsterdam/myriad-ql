@@ -23,28 +23,28 @@ current (Pagination _ current _) =
 
 
 next : Pagination -> Pagination
-next ((Pagination previous current remainder) as pagination) =
-    case remainder of
+next ((Pagination previous current after) as pagination) =
+    case after of
         [] ->
             pagination
 
-        next :: remainder ->
-            Pagination (current :: previous) next remainder
+        n :: remainder ->
+            Pagination (current :: previous) n remainder
 
 
 previous : Pagination -> Pagination
-previous ((Pagination previous current remainder) as pagination) =
+previous ((Pagination previous current after) as pagination) =
     case previous of
         [] ->
             pagination
 
         newCurrent :: newPrevious ->
-            Pagination newPrevious newCurrent (current :: remainder)
+            Pagination newPrevious newCurrent (current :: after)
 
 
 hasNext : Pagination -> Bool
-hasNext (Pagination _ _ remaining) =
-    List.isEmpty remaining
+hasNext (Pagination _ _ after) =
+    List.isEmpty after
 
 
 hasPrevious : Pagination -> Bool

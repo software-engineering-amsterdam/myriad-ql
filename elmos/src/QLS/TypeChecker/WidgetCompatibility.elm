@@ -23,7 +23,7 @@ allowedValueTypeWidgetPair ( valueType, widget ) =
 validWidgetForBooleanType : Widget -> Bool
 validWidgetForBooleanType w =
     case w of
-        Radio [ x, y ] ->
+        Radio [ _, _ ] ->
             True
 
         Radio _ ->

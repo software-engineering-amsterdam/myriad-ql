@@ -1,7 +1,7 @@
 module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields, visibleFieldForName)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
-import QL.Environment as Env exposing (Environment)
+import QL.Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
 import QL.Evaluator as Evaluator
 import List.Extra as List

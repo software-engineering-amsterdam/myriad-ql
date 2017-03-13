@@ -1,7 +1,7 @@
 module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3, pre, b, button)
-import Html.Attributes exposing (attribute, class, disabled)
+import Html exposing (Html, div, text, h3, pre, button)
+import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import UI.Widget.Radio as RadioWidget
 import UI.Widget.Boolean as BooleanWidget
@@ -37,7 +37,7 @@ init : Form -> StyleSheet -> Model
 init form styleSheet =
     { form = form
     , styleSheet = styleSheet
-    , pagination = Pagination.init (styleSheet.pages)
+    , pagination = Pagination.init styleSheet.pages
     , env = Env.empty
     }
 
@@ -56,12 +56,12 @@ update msg model =
 
 
 view : Model -> Html Msg
-view { form, styleSheet, pagination, env } =
+view ({ form, env } as model) =
     let
         visibleFields =
             Field.activeFields env form
     in
-        case pagination of
+        case model.pagination of
             Just pagination ->
                 let
                     currentPage =
@@ -72,7 +72,7 @@ view { form, styleSheet, pagination, env } =
                             [ div [ class "col-md-6" ]
                                 [ h3 [] [ text "Form: ", text (Tuple.first form.id) ]
                                 , Html.form []
-                                    [ (renderPage env visibleFields currentPage) ]
+                                    [ renderPage env visibleFields currentPage ]
                                 , div [ class "row" ] [ renderPagination pagination ]
                                 ]
                             , div [ class "col-md-6" ]
@@ -187,7 +187,7 @@ asRenderable widget valueType =
             BooleanWidget.view
 
         Text ->
-            (textWidgetRendererForValueType valueType)
+            textWidgetRendererForValueType valueType
                 |> Maybe.withDefault StringWidget.view
 
         Slider _ ->
@@ -219,7 +219,7 @@ visibleFieldWidgetConfig env styles field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = True
-            , style = (List.map styleAsPair styles)
+            , style = List.map styleAsPair styles
             }
 
         Computed label identifier _ _ ->
@@ -228,7 +228,7 @@ visibleFieldWidgetConfig env styles field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = False
-            , style = (List.map styleAsPair styles)
+            , style = List.map styleAsPair styles
             }
 
 

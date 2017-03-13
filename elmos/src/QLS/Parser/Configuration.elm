@@ -1,6 +1,6 @@
 module QLS.Parser.Configuration exposing (configuration)
 
-import Combine exposing (Parser, braces, choice, maybe, or, sepBy, string, whitespace, (<$>), (*>), (<*), (<*>))
+import Combine exposing (Parser, maybe, or, sepBy, string, whitespace, (<$>), (*>), (<*), (<*>))
 import QLS.AST exposing (Configuration(SingleConfig, MultiConfig), Widget)
 import QLS.Parser.Style exposing (style)
 import QLS.Parser.Widget exposing (widget)
@@ -12,8 +12,8 @@ configuration =
     or
         (SingleConfig <$> widgetConfig)
         (MultiConfig
-            <$> (string "{" *> (trimmed (sepBy whitespace1 style)))
-            <*> (whitespace *> (maybe widgetConfig) <* whitespace <* string "}")
+            <$> (string "{" *> trimmed (sepBy whitespace1 style))
+            <*> (whitespace *> maybe widgetConfig <* whitespace <* string "}")
         )
 
 

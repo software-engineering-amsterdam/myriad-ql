@@ -1,7 +1,7 @@
 module QL.Environment exposing (Environment, removeKeys, empty, withFormValue, getFormValue)
 
 import Dict exposing (Dict)
-import QL.Values as Values exposing (Value)
+import QL.Values exposing (Value)
 
 
 type Environment
@@ -16,17 +16,6 @@ removeKeys keys (Environment env) =
 empty : Environment
 empty =
     Environment Dict.empty
-
-
-withBoolean : String -> Bool -> Environment -> Environment
-withBoolean key val (Environment env) =
-    Environment (Dict.insert key (Values.bool val) env)
-
-
-getBoolean : String -> Environment -> Maybe Bool
-getBoolean key (Environment env) =
-    Dict.get key env
-        |> Maybe.andThen Values.asBool
 
 
 withFormValue : String -> Value -> Environment -> Environment

@@ -1,6 +1,6 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import Html exposing (Html, b, div, form, h3, pre, text, textarea)
+import Html exposing (Html, b, div, form, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style, id)
 import Html.Events exposing (onInput)
 import Html.Keyed exposing (node)
@@ -107,7 +107,7 @@ view { rawInput, parsedForm, messages } =
                             [ text "Everything seems OK!" ]
                         ]
                      else
-                        (List.map renderMessage messages)
+                        List.map renderMessage messages
                     )
                 ]
           )
@@ -178,9 +178,9 @@ renderErrorMessage message =
             , UI.Messages.renderType conditionType
             ]
 
-        InvalidComputedFieldType id computedType fieldType ->
+        InvalidComputedFieldType identifier computedType fieldType ->
             [ text "Question "
-            , UI.Messages.renderId id
+            , UI.Messages.renderId identifier
             , text " is defined as "
             , UI.Messages.renderType computedType
             , text " but it's computation is of type "
