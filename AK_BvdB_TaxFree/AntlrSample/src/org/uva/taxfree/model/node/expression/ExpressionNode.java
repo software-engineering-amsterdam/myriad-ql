@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.expression;
 
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
@@ -42,4 +43,9 @@ public abstract class ExpressionNode extends Node {
     public abstract Type getType();
 
     public abstract void getDependencies(Set<String> dependencies);
+
+    @Override
+    public void fillQuestionForm(QuestionForm form) {
+        // Intentionally left blank
+    }
 }

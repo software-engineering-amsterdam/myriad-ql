@@ -4,6 +4,8 @@ import org.uva.taxfree.ast.AstBuilder;
 import org.uva.taxfree.gui.*;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.gui.QuestionForm;
+import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +30,13 @@ public class Main {
         // etc.
 
         AstBuilder builder = new AstBuilder(inputFile);
-        BlockNode ast = builder.generateTree();
+        FormNode ast = builder.generateTree();
         SymbolTable symbolTable = new SymbolTable();
         MessageList sematicsMessages = new MessageList();
         ast.fillSymbolTable(symbolTable);
-        QuestionForm taxForm = new QuestionForm(ast);
+        ast.checkSemantics(symbolTable, sematicsMessages);
+        QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
+        ast.fillQuestionForm(taxForm);
         taxForm.show();
 
 //        Environment environment = AstBuilder.generate(inputFile); // , symboltable); // in main

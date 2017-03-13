@@ -5,8 +5,8 @@ import javax.swing.*;
 public class BooleanWidget extends Widget {
     private final JCheckBox mCheckbox;
 
-    public BooleanWidget(String label) {
-        super(label);
+    public BooleanWidget(String label, String id) {
+        super(label, id);
         mCheckbox = new JCheckBox("", false);
     }
 

@@ -3,7 +3,6 @@ package test.org.uva.taxfree.ast;
 import org.testng.annotations.Test;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
-import org.uva.taxfree.model.node.expression.BooleanBinaryExpressionNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 

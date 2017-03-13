@@ -15,17 +15,9 @@ public class IfStatementNode extends BlockNode {
     }
 
     @Override
-    protected boolean isVisible() {
-        return ("true".equals(expression.evaluate()));
-    }
-
-    @Override
-    public void setVisible(boolean isVisible) {
-        super.setVisible(isVisible() && isVisible);
-    }
-
-    @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
         symbolTable.addExpression(expression);
     }
+
+
 }

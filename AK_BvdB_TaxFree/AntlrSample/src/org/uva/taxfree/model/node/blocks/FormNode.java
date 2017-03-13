@@ -19,10 +19,6 @@ public class FormNode extends BlockNode {
         return mFormName;
     }
 
-    @Override
-    protected boolean isVisible() {
-        return true;
-    }
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
@@ -30,4 +26,5 @@ public class FormNode extends BlockNode {
         symbolTable.getDuplicateLabelErrors(semanticsMessages);
         super.checkSemantics(symbolTable, semanticsMessages);
     }
+
 }

@@ -6,8 +6,8 @@ import java.awt.*;
 public abstract class TextFieldWidget extends Widget {
     private final JFormattedTextField mTextField;
 
-    public TextFieldWidget(String label) {
-        super(label);
+    public TextFieldWidget(String label, String id) {
+        super(label, id);
         mTextField = createTextField();
     }
 
