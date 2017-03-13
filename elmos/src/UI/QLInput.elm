@@ -34,6 +34,9 @@ init =
 exampleDsl : String
 exampleDsl =
     """form taxOfficeExample {
+  "What is your gender?"
+    gender: string
+
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
