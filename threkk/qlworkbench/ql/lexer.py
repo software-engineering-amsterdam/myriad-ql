@@ -19,12 +19,9 @@ class QLLexer(object):
     # separately in order to substitute common string for reserved words.
     reserved = {
         'boolean': 'BOOLEAN',
-        'date': 'DATE',
         'decimal': 'DECIMAL',
         'form': 'FORM',
         'if': 'IF',
-        'integer': 'INTEGER',
-        'money': 'MONEY',
         'string': 'STRING'
     }
 
@@ -124,33 +121,3 @@ class QLLexer(object):
                     datefmt='%m/%d/%Y %I:%M:%S %p')
         self.log = getLogger()
         self.lexer = lex.lex(module=self, debug=0, **kwargs)
-
-
-if __name__ == '__main__':
-    data = """form taxOfficeExample {
-                "Did you sell a house in 2010?"
-                    hasSoldHouse: boolean
-                "Did you buy a house in 2010?"
-                    hasBoughtHouse: boolean
-                "Did you enter a loan?"
-                    hasMaintLoan: boolean
-
-                if (hasSoldHouse) {
-                    "What was the selling price?"
-                        sellingPrice: money
-                    "Private debts for the sold house:"
-                        privateDebt: money
-                    "Value residue:"
-                        valueResidue: money =
-                            (sellingPrice - privateDebt)
-                }
-
-            }"""
-
-    lexer = QLLexer()
-    lexer.lexer.input(data)
-    while True:
-            tok = lexer.lexer.token()
-            if not tok:
-                break
-            print(tok)
