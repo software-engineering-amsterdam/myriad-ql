@@ -1,39 +1,52 @@
 ﻿namespace OffByOne.Qls.Checker
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
+    using MoreDotNet.Extensions.Collections;
+
+    using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Qls.Ast.Style.Statements;
-    using OffByOne.Qls.Visitors;
+    using OffByOne.Qls.Checker.Analyzers;
+    using OffByOne.Qls.Checker.Analyzers.Contracts;
+
+    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
     public class StyleSheetAnalyzer
     {
-        // TODO: Extract interfaces!
-        private readonly FormCheckerVisitor formCheckerVisitor;
+        private readonly IEnumerable<IAnalyzer> analyzers;
 
         public StyleSheetAnalyzer()
-            : this(new FormCheckerVisitor())
         {
+            this.analyzers = new List<IAnalyzer>
+            {
+                new FormAnalyer(),
+                new TypeAnalyzer()
+            };
         }
 
         public StyleSheetAnalyzer(
-            FormCheckerVisitor formCheckerVisitor)
+            IEnumerable<IAnalyzer> analyzers)
         {
-            if (formCheckerVisitor == null)
+            if (analyzers == null)
             {
-                throw new ArgumentNullException(nameof(formCheckerVisitor), "A valid Type Visitor must provided.");
+                throw new ArgumentNullException(nameof(analyzers), "A valid collection of analyzers must provided.");
             }
 
-            this.formCheckerVisitor = formCheckerVisitor;
+            this.analyzers = analyzers;
         }
 
-        public CheckerReport Check(StyleSheet node)
+        public ICheckerReport Check(FormStatement structureNode, StyleSheet styleNode)
         {
-            this.formCheckerVisitor.Visit(node, new FormCheckerEnvironment());
-
+            // TODO: Add mapings
+            var questionMappings = new Dictionary<string, ValueType>();
             var finalReport = new CheckerReport();
-            finalReport.Add(this.formCheckerVisitor.Report.AllMessages.ToList());
+
+            this.analyzers.ForEach(x => x.Analyze(styleNode, questionMappings));
+            finalReport.Add(this.analyzers.SelectMany(x => x.Report.AllMessages));
 
             return finalReport;
         }

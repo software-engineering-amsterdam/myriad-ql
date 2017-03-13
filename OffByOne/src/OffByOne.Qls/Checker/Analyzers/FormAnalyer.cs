@@ -1,27 +1,36 @@
-﻿namespace OffByOne.Qls.Checker
+﻿namespace OffByOne.Qls.Checker.Analyzers
 {
+    using System.Collections.Generic;
+
+    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
+    using OffByOne.Qls.Checker.Analyzers.Contracts;
     using OffByOne.Qls.Checker.Messages;
-    using OffByOne.Qls.Visitors;
     using OffByOne.Qls.Visitors.Base;
 
-    public class FormCheckerVisitor : BaseQlsVisitor<object, FormCheckerEnvironment>
+    public class FormAnalyer : BaseQlsVisitor<object, FormAnalyzerEnvironment>, IAnalyzer
     {
-        public FormCheckerVisitor()
+        public FormAnalyer()
             : this(new CheckerReport())
         {
         }
 
-        public FormCheckerVisitor(CheckerReport report)
+        public FormAnalyer(ICheckerReport report)
         {
             this.Report = report;
         }
 
-        public CheckerReport Report { get; }
+        public ICheckerReport Report { get; }
 
-        public override object Visit(StyleSheet expression, FormCheckerEnvironment environment)
+        public void Analyze(StyleSheet root, IDictionary<string, ValueType> qlQuestionMappings)
+        {
+            this.Visit(root, new FormAnalyzerEnvironment());
+        }
+
+        public override object Visit(StyleSheet expression, FormAnalyzerEnvironment environment)
         {
             if (environment.StyleSheetNames.Contains(expression.Id))
             {
@@ -35,7 +44,7 @@
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(Page expression, FormCheckerEnvironment environment)
+        public override object Visit(Page expression, FormAnalyzerEnvironment environment)
         {
             if (environment.PageLabels.Contains(expression.Id))
             {
@@ -49,7 +58,7 @@
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(Section expression, FormCheckerEnvironment environment)
+        public override object Visit(Section expression, FormAnalyzerEnvironment environment)
         {
             if (environment.SectionNames.Contains(expression.Name.Value))
             {
@@ -63,7 +72,7 @@
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(QuestionRule expression, FormCheckerEnvironment environment)
+        public override object Visit(QuestionRule expression, FormAnalyzerEnvironment environment)
         {
             if (environment.SectionNames.Contains(expression.Name))
             {

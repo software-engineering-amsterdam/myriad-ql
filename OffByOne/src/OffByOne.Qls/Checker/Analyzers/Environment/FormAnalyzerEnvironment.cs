@@ -1,12 +1,12 @@
-﻿namespace OffByOne.Qls.Checker
+﻿namespace OffByOne.Qls.Checker.Analyzers
 {
     using System.Collections.Generic;
 
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class FormCheckerEnvironment : IEnvironment
+    public class FormAnalyzerEnvironment : IEnvironment
     {
-        public FormCheckerEnvironment()
+        public FormAnalyzerEnvironment()
         {
             this.StyleSheetNames = new HashSet<string>();
             this.PageLabels = new HashSet<string>();

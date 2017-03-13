@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Qls.Checker
+﻿namespace OffByOne.Qls.Checker.Analyzers
 {
     using System;
     using System.Collections.Generic;
@@ -6,17 +6,20 @@
 
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Qls.Ast.Style.Rules;
+    using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Ast.Style.Widgets;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
+    using OffByOne.Qls.Checker.Analyzers.Contracts;
     using OffByOne.Qls.Checker.Messages;
     using OffByOne.Qls.Visitors.Base;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class TypeCheckerVisitor : BaseQlsVisitor<object, TypeCheckerEnvironment>
+    public class TypeAnalyzer : BaseQlsVisitor<object, TypeAnalyzerEnvironment>, IAnalyzer
     {
-        private readonly IDictionary<string, ValueType> qlQuestionMappings;
+        private IDictionary<string, ValueType> qlQuestionMappings;
 
         private IDictionary<Type, ICollection<ValueType>> widgetTypeRules = new Dictionary<Type, ICollection<ValueType>>()
         {
@@ -66,19 +69,17 @@
             }
         };
 
-        public TypeCheckerVisitor(IDictionary<string, ValueType> qlQuestionMappings)
-            : this(qlQuestionMappings, new CheckerReport())
+        public TypeAnalyzer()
+            : this(new CheckerReport())
         {
-            this.qlQuestionMappings = qlQuestionMappings;
         }
 
-        public TypeCheckerVisitor(IDictionary<string, ValueType> qlQuestionMappings, CheckerReport report)
+        public TypeAnalyzer(ICheckerReport report)
         {
-            this.qlQuestionMappings = qlQuestionMappings;
             this.Report = report;
         }
 
-        public CheckerReport Report { get; }
+        public ICheckerReport Report { get; }
 
         public IDictionary<Type, ICollection<ValueType>> WidgetTypeRules
         {
@@ -86,7 +87,13 @@
             set { this.widgetTypeRules = value; }
         }
 
-        public override object Visit(QuestionRule expression, TypeCheckerEnvironment environment)
+        public void Analyze(StyleSheet root, IDictionary<string, ValueType> questionMappings)
+        {
+            this.qlQuestionMappings = questionMappings;
+            this.Visit(root, new TypeAnalyzerEnvironment());
+        }
+
+        public override object Visit(QuestionRule expression, TypeAnalyzerEnvironment environment)
         {
             var questionType = this.qlQuestionMappings[expression.Name];
             this.CheckWidgetTyping(expression.Widget, questionType);
@@ -94,7 +101,7 @@
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(ValueTypeRule expression, TypeCheckerEnvironment environment)
+        public override object Visit(ValueTypeRule expression, TypeAnalyzerEnvironment environment)
         {
             this.CheckWidgetTyping(expression.Widget, expression.ValueType);
 

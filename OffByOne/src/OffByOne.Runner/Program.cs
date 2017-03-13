@@ -204,10 +204,10 @@
             Console.WriteLine("Type check done!");
         }
 
-        private static void CheckTypes(StyleSheet ast)
+        private static void CheckTypes(FormStatement structureAst, StyleSheet styleAst)
         {
             var typeChcker = new StyleSheetAnalyzer();
-            var report = typeChcker.Check(ast);
+            var report = typeChcker.Check(structureAst, styleAst);
 
             foreach (var message in report.AllMessages)
             {
