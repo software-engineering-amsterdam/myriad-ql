@@ -15,4 +15,6 @@
 ---> Style clash with bootstrap
 
 -Other:
-DONE: Pagination 
+--> Don't show empty sectins
+--> Handle (Pagination = NOTHING) correctly
+DONE: Pagination
