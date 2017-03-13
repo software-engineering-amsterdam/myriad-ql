@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using MoreDotNet.Extensions.Collections;
+
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Messages.Base;
@@ -21,16 +23,8 @@
             AstNode node,
             IEnumerable<ValueType> expected,
             ValueType actual)
-            : base($"Invalid type at: {node.SourceCode}. Expected [{GetListStringValue(expected)}], got \"{actual}\"")
+            : base($"Invalid type at: {node.SourceCode}. Expected [{expected.ToString(x => x.ToString(), ",")}], got \"{actual}\"")
         {
-        }
-
-        // TODO: Move to a different place?
-        private static string GetListStringValue(IEnumerable<ValueType> input)
-        {
-            return input
-                .Select(x => x.ToString())
-                .Aggregate((x, y) => x.ToString() + "," + y.ToString());
         }
     }
 }

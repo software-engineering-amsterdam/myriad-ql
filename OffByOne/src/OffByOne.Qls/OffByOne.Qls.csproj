@@ -92,7 +92,9 @@
     <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
+    <Compile Include="Checker\Messages\InvalidWidgetTypeMessage.cs" />
     <Compile Include="Checker\StyleSheetAnalyzer.cs" />
+    <Compile Include="Checker\TypeCheckerEnvironment.cs" />
     <Compile Include="Checker\TypeCheckerVisitor.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="obj\Debug\QlsGrammarBaseVisitor.cs" />
