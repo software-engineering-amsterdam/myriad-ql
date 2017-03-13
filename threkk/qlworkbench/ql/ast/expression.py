@@ -11,6 +11,9 @@ class Expression(object):
     def read(self, context):
         pass
 
+    def depends_on(self):
+        return self.lnode.depends_on() + self.rnode.depends_on()
+
     def __str__(self):
         return '{} {} {}'.format(self.lnode, self.operation,
                                  self.rnode)
@@ -134,6 +137,9 @@ class IdExpression(Expression):
 
     def read(self, context):
         return context.get_value(self.id)
+
+    def depends_on(self):
+        return [self.id]
 
     def get_type(self, context):
         return context.get_type(self.id)
