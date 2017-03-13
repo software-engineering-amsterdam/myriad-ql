@@ -1,14 +1,13 @@
-package org.uva.taxfree.model.node.declarations;
+package org.uva.taxfree.model.node.widgets;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class TextFieldQuestion extends NamedNode {
-
+public abstract class TextFieldWidget extends Widget {
     private final JFormattedTextField mTextField;
 
-    public TextFieldQuestion(String description, String id) {
-        super(description, id);
+    public TextFieldWidget(String label) {
+        super(label);
         mTextField = createTextField();
     }
 
@@ -18,8 +17,7 @@ public abstract class TextFieldQuestion extends NamedNode {
         return textField;
     }
 
-    // abstract to force instantiation of a correct format
-    protected abstract Object getFormatObject();
+    public abstract Object getFormatObject();
 
     @Override
     public void fillPanel(JPanel parentPanel) {
@@ -30,5 +28,4 @@ public abstract class TextFieldQuestion extends NamedNode {
     public String resolveValue() {
         return mTextField.getValue().toString();
     }
-
 }

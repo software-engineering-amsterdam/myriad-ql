@@ -5,22 +5,14 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CalculatedField extends NamedNode {
+public class CalculationNode extends DeclarationNode {
     private final ExpressionNode mExpression;
-    private final JTextField mTextField;
-    private final Type mType;
 
-    public CalculatedField(String label, String id, Type type, ExpressionNode expression) {
-        super(label, id);
-        mTextField = new JTextField();
-        mTextField.setEditable(false);
-        mTextField.setPreferredSize(new Dimension(100, 25));
-        mType = type;
+    public CalculationNode(String label, String id, Type type, ExpressionNode expression) {
+        super(label, id, type);
         mExpression = expression;
     }
 
@@ -31,31 +23,13 @@ public class CalculatedField extends NamedNode {
         symbolTable.addExpression(mExpression);
     }
 
-    @Override
-    protected void fillPanel(JPanel parent) {
-        parent.add(mTextField);
-    }
-
     public String toString() {
         return mExpression.toString();
     }
 
-    @Override
-    public void setVisible(boolean isVisible) {
-        mTextField.setText(resolveValue());
-        super.setVisible(isVisible);
-    }
-
-    @Override
     public String resolveValue() {
         return mExpression.evaluate();
     }
-
-    @Override
-    public Type getType() {
-        return mType;
-    }
-
 
     private void checkCyclicDependencies(SymbolTable symbolTable, MessageList messageList) {
         Set<String> dependencies = getUsedVariables();

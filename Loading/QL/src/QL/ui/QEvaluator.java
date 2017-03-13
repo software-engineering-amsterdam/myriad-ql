@@ -43,9 +43,7 @@ public class QEvaluator extends Evaluator {
         Value value = question.getComputedQuestion().accept(this);
 
         // TODO only works with integers...
-        if (value.isSet()) {
-            answers.addAnswer(question.getVariable(), value);
-        }
+        answers.addAnswer(question.getVariable(), value);
 
         activeQuestions.add(createRow(question));
     }

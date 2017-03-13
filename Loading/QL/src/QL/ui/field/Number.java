@@ -10,13 +10,16 @@ import QL.value.Value;
 public class Number implements Field {
 	
 	private TextField field;
-	// private IntegerValue QL.value;
 	
 	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
 		
+		field.setId(name);
+		
 		if (value.isSet()) {
-			field.setText(Integer.toString(value.getValue()));
+			String valueText = Integer.toString(value.getValue());
+			field.setText(valueText);
+			field.positionCaret(valueText.length());
 		}
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
@@ -27,7 +30,9 @@ public class Number implements Field {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
 	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
-
+	              field.positionCaret(newValue.length() - 1);
+	          } else {
+	        	  notifier.updateQuestionnaire(name, new IntegerValue());
 	          }
 	      }
     	});

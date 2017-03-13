@@ -37,22 +37,22 @@ type returns [Type result]
 // TODO implement precedence
 expr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
- | lhs = expr '/'  rhs = expr { $result = new DivExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '*'  rhs = expr { $result = new MulExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '+'  rhs = expr { $result = new AddExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '-'  rhs = expr { $result = new SubExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '==' rhs = expr { $result = new EqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '!=' rhs = expr { $result = new NEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '<=' rhs = expr { $result = new LEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '>=' rhs = expr { $result = new GEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '>'  rhs = expr { $result = new GExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '<'  rhs = expr { $result = new LExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '&&' rhs = expr { $result = new AndExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '||' rhs = expr { $result = new OrExpression($lhs.result, $rhs.result, $lhs.start.getLine()); } 
- | '!' expr { $result = new NotExpression($expr.result, $expr.start.getLine()); }
- | '+' expr { $result = new PlusExpression($expr.result, $expr.start.getLine()); }
- | '-' expr { $result = new MinusExpression($expr.result, $expr.start.getLine()); } 
- | ID  { $result = new IdExpression($ID.text, $ctx.start.getLine()); }
+ | lhs = expr '/'  rhs = expr { $result = new DivExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '*'  rhs = expr { $result = new MulExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '+'  rhs = expr { $result = new AddExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '-'  rhs = expr { $result = new SubExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '==' rhs = expr { $result = new EqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '!=' rhs = expr { $result = new NEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '<=' rhs = expr { $result = new LEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '>=' rhs = expr { $result = new GEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '>'  rhs = expr { $result = new GExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '<'  rhs = expr { $result = new LExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '&&' rhs = expr { $result = new AndExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '||' rhs = expr { $result = new OrExpr($lhs.result, $rhs.result, $lhs.start.getLine()); } 
+ | '!' expr { $result = new NotExpr($expr.result, $expr.start.getLine()); }
+ | '+' expr { $result = new PlusExpr($expr.result, $expr.start.getLine()); }
+ | '-' expr { $result = new MinusExpr($expr.result, $expr.start.getLine()); } 
+ | ID  { $result = new IdExpr($ID.text, $ctx.start.getLine()); }
  | atom { $result = $atom.result; }
  ;
 

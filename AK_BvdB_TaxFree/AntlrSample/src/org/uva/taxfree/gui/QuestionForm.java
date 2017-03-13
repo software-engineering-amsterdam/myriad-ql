@@ -1,7 +1,7 @@
 package org.uva.taxfree.gui;
 
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.declarations.NamedNode;
+import org.uva.taxfree.model.node.declarations.DeclarationNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,22 +33,19 @@ public class QuestionForm {
         frame.setLocationRelativeTo(null);
     }
 
-    private JPanel createComponents() {
-        JPanel widgetPanel = new JPanel();
-        widgetPanel.setLayout(new BoxLayout(widgetPanel, BoxLayout.Y_AXIS));
-        fillWidgetPanel(widgetPanel);
-        widgetPanel.setVisible(true);
-        return widgetPanel;
+    public JPanel createComponents(){
+        throw new RuntimeException("Unimplemented");
     }
 
     private void fillWidgetPanel(JPanel parentPanel) {
-        for (NamedNode q : extractDeclarations()) {
+        for (DeclarationNode q : extractDeclarations()) {
             parentPanel.add(q.getWidget());
         }
     }
 
-    private Set<NamedNode> extractDeclarations() {
-        Set<NamedNode> questions = new HashSet<>();
+
+    private Set<DeclarationNode> extractDeclarations() {
+        Set<DeclarationNode> questions = new HashSet<>();
 //        mFormNode.retrieveDeclarations(questions);
         return questions;
     }
