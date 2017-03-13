@@ -18,3 +18,26 @@ if __name__ == '__main__':
 # Adriaan TODO: Export of values ?
 # Adriaan TODO: Make all fields mandatory
 # Adriaan TODO: Highlight betreffende error line
+
+
+
+
+# NOTES:
+# Value opsplitsen in aparte objecten voor de literals
+# Field opsplitsen in assignment en question
+# value hernoemen naar literal
+# List comprehension eventueel bekijken
+# Loopen over ast voor form weghalen
+# Eventueel If / IfElse logic combineren in typechecker
+# Typechecker kijken naar ons check systeem en evt minder generic maken
+# Identifier_dict naar symbol_table
+# ast.apply(typevisitor) ipv Typenvironment
+# IdentifierChecker weer niet recursief maken
+# TypeChecker de TypeEnvironment meegeven
+# Environment een class maken en een update value methode geven
+# Unary operator rhs hernoemen naar lhs
+# Evaluator regel 92 de is None checks weghalen
+# Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten)
+# Identifier regel 39 check kan weg, identifier bestaat altijd
+# String support toevoegen
+# Dynamic types in operators ipv python operators
