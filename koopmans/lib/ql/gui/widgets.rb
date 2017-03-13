@@ -2,7 +2,7 @@ module QL
   module GUI
     class Frame
       def initialize(question_frame)
-        position = question_frame.gui.number_of_questions
+        position             = question_frame.gui.number_of_questions
         question_frame.frame = TkFrame.new.grid(row: position)
       end
     end
@@ -16,7 +16,7 @@ module QL
 
     class SubmitButton
       def initialize(gui)
-        position = gui.number_of_questions + 1
+        position       = gui.number_of_questions + 1
         button         = TkButton.new.grid(row: position)
         button.text    = 'Submit'
         button.command = proc { gui.submit }
@@ -38,11 +38,11 @@ module QL
     class RadioWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        @value = true
+        @value          = true
         shared_variable = TkVariable.new(@value)
 
         if args
-          @true_label = args[:true_value]
+          @true_label  = args[:true_value]
           @false_label = args[:false_value]
         end
 
@@ -69,7 +69,7 @@ module QL
     class CheckboxWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        @value = true
+        @value   = true
         variable = TkVariable.new(@value)
 
         check_button          = TkCheckButton.new(question_frame.frame).pack
@@ -84,18 +84,18 @@ module QL
     class DropdownWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        @value = true
-        @true_label = 'true'
+        @value       = true
+        @true_label  = 'true'
         @false_label = 'false'
 
         if args
-          @true_label = args[:true_value]
+          @true_label  = args[:true_value]
           @false_label = args[:false_value]
         end
 
         combobox        = Tk::Tile::Combobox.new(question_frame.frame).pack
         combobox.values = [@true_label, @false_label]
-        combobox.value = @true_label
+        combobox.value  = @true_label
         combobox.bind('<ComboboxSelected>') do
           if combobox.value == @true_label
             @value = true
@@ -110,14 +110,14 @@ module QL
     class SpinboxWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        spinbox              = TkSpinbox.new(question_frame.frame).pack
-        spinbox.from         = -(2**(0.size * 8 -2)) # system's min
-        spinbox.to           = (2**(0.size * 8 -2) -1) # system's max
-        spinbox.value        = 0
+        spinbox         = TkSpinbox.new(question_frame.frame).pack
+        spinbox.from    = -(2**(0.size * 8 -2)) # system's min
+        spinbox.to      = (2**(0.size * 8 -2) -1) # system's max
+        spinbox.value   = 0
         # spinbox.increment  = 0.1
         # spinbox.format     = "%.2f"
         # spinbox.textvariable = variable
-        spinbox.command      = proc do
+        spinbox.command = proc do
           @value = spinbox.value
           question_frame.value_changed
         end
@@ -127,10 +127,10 @@ module QL
     class SliderWidget < Widget
       def initialize(question_frame, args=nil)
         super
-        scale          = TkScale.new(question_frame.frame).pack
-        scale.from     = args[:minimum]
-        scale.to       = args[:maximum]
-        scale.command  = proc do
+        scale         = TkScale.new(question_frame.frame).pack
+        scale.from    = args[:minimum]
+        scale.to      = args[:maximum]
+        scale.command = proc do
           @value = scale.value
           question_frame.value_changed
         end
@@ -162,7 +162,7 @@ module QL
 
       def set_value(value)
         @variable.value = value
-        @value = value
+        @value          = value
       end
     end
   end
