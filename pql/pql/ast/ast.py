@@ -25,6 +25,9 @@ class Location(object):
     def __str__(self):
         return "({}:{})".format(self.line_number, self.column_number)
 
+    def __repr__(self):
+        return str(self)
+
 
 class Form(Node):
     def __init__(self, form_identifier, form_statement_list):
