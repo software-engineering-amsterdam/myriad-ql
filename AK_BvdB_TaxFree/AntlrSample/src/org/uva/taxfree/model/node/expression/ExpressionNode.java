@@ -6,6 +6,7 @@ import org.uva.taxfree.model.types.Type;
 import org.uva.taxfree.util.Evaluator;
 
 import javax.script.ScriptException;
+import java.util.List;
 import java.util.Set;
 
 public abstract class ExpressionNode extends Node {
@@ -26,14 +27,6 @@ public abstract class ExpressionNode extends Node {
 
     public abstract String resolveValue();
 
-    public abstract boolean isValid();
-
-    public boolean isBoolean() {
-        boolean isTrue = "true".equals(evaluate());
-        boolean isFalse = "false".equals(evaluate());
-        return isTrue || isFalse;
-    }
-
     public boolean isSameType(ExpressionNode other) {
         Type thisType = getType();
         Type otherType = other.getType();
@@ -46,6 +39,11 @@ public abstract class ExpressionNode extends Node {
 
     @Override
     public void fillQuestionForm(QuestionForm form) {
+        // Intentionally left blank
+    }
+
+    @Override
+    public void generateVisibleIds(List<String> visibleIds) {
         // Intentionally left blank
     }
 }

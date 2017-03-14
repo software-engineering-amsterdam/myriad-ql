@@ -9,11 +9,6 @@ public class BooleanLiteralNode extends LiteralNode {
     }
 
     @Override
-    public boolean isValid() {
-        return true;
-    }
-
-    @Override
     public Type getType() {
         return new BooleanType();
     }
