@@ -62,7 +62,7 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             }
         }
     }
-    
+
     private void checkDuplicateQuestionPlacement() {
 
         final Set<StyleQuestion> duplicateQuestions = new HashSet<>();

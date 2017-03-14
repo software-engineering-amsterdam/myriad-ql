@@ -1,5 +1,5 @@
 /**
- * MessageTest.java.
+ * QLMessageTest.java.
  */
 
 package ql.unittests;
@@ -11,6 +11,7 @@ import ql.astnodes.expressions.literals.MyBoolean;
 import ql.astnodes.expressions.literals.MyString;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
+import ql.astnodes.statements.SimpleQuestion;
 import ql.astnodes.statements.Statement;
 import ql.astnodes.types.BooleanType;
 import ql.astnodes.types.StringType;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MessageTest {
+public class QLMessageTest {
 
     @Test
     public void testInvalidTypeError() {
@@ -53,8 +54,13 @@ public class MessageTest {
     @Test
     public void testIfExpressionUndefinedError() {
 
+        SimpleQuestion question = new SimpleQuestion(new Identifier("anIdentifier", new LineNumber(1)),
+                "question label", new BooleanType(new LineNumber(1)), new LineNumber(1));
+
+        List<Statement> ifStatementContent = new ArrayList<>();
+        ifStatementContent.add(question);
         IfStatement ifStat = new IfStatement(new Identifier("anIdentifier", new LineNumber(1)),
-                new ArrayList<>(), new LineNumber(1));
+                ifStatementContent, new LineNumber(1));
 
         List<Statement> statements = new ArrayList<>();
         statements.add(ifStat);
@@ -69,7 +75,7 @@ public class MessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Identifier anIdentifier at line 1 in IF statement condition is undefined.");
+                "ERROR: Identifier at line 1 in IF statement condition is undefined.");
     }
 
     @Test

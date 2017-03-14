@@ -14,6 +14,6 @@ form taxOfficeExample {
             money valueResid("Value resid:");
         }
         money privateDebt("Private debts for the sold house:");
-        money valueResidue("Value residue:") : (sellingPrice - privateDebt);
+        money valueResidue("Value residue:") : (aj - privateDebt);
     }
 }
