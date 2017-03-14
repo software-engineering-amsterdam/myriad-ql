@@ -1,31 +1,22 @@
 package org.uva.taxfree.model.node.blocks;
 
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.expression.ConditionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 
-import java.util.Set;
+import java.util.List;
 
 public class IfStatementNode extends BlockNode {
-    private final ConditionNode mCondition;
+    private final ExpressionNode mExpression;
 
-    public IfStatementNode(ConditionNode condition, Set<Node> children) {
+    public IfStatementNode(ExpressionNode expression, List<Node> children) {
         super(children);
-        mCondition = condition;
+        mExpression = expression;
     }
 
     @Override
-    protected boolean isVisible() {
-        return ("true".equals(mCondition.evaluate()));
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addExpression(mExpression);
     }
 
-    @Override
-    public void setVisible(boolean isVisible) {
-        System.out.println("I evaluate to " + isVisible());
-        super.setVisible(isVisible() && isVisible);
-    }
-
-    @Override
-    public void addCondition(Set<Node> set) {
-        set.add(mCondition);
-    }
 }

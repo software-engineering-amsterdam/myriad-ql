@@ -1,37 +1,42 @@
 package values
 
-trait Value {
-  def ==(other: Value): Value = BooleanValue(this.equals(other))
+import java.text.SimpleDateFormat
+import java.util.Date
 
-  def !=(other: Value): Value = BooleanValue(!this.equals(other))
+import scala.math.BigDecimal.RoundingMode
 
-  def +(other: Value): Value = UndefinedValue
+sealed trait Value
 
-  def -(other: Value): Value = UndefinedValue
+case class BooleanValue(value: Boolean) extends Value {
+  override def toString = value.toString
+}
 
-  def *(other: Value): Value = UndefinedValue
+case class DateValue(value: Date) extends Value {
+  private val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
 
-  def /(other: Value): Value = UndefinedValue
+  override def toString = dateFormat.format(value)
+}
 
-  def >(other: Value): Value = UndefinedValue
+sealed trait NumericValue extends Value {
+  val value: BigDecimal
+}
 
-  def <(other: Value): Value = UndefinedValue
+case class IntegerValue(value: BigDecimal) extends NumericValue {
+  override def toString = value.toString
+}
 
-  def >=(other: Value): Value = UndefinedValue
+case class DecimalValue(value: BigDecimal) extends NumericValue {
+  override def toString = value.toString
+}
 
-  def <=(other: Value): Value = UndefinedValue
+case class MoneyValue(value: BigDecimal) extends NumericValue {
+  override def toString = s"€${value.setScale(2, RoundingMode.HALF_EVEN)}"
+}
 
-  def &&(other: Value): Value = UndefinedValue
+case class StringValue(value: String) extends Value {
+  override def toString = value
+}
 
-  def ||(other: Value): Value = UndefinedValue
-
-  def ! = Not
-
-  private def Not: Value = UndefinedValue
-
-  def - = Neg
-
-  private def Neg: Value = UndefinedValue
-
-  def display: String
+case object UndefinedValue extends Value {
+  override def toString = "Value not defined"
 }

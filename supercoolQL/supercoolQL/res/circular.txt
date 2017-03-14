@@ -1,0 +1,17 @@
+form exampleForm {
+
+      "Param1:"
+        var1:integer;
+      "Param2:"
+        var2:integer;
+      "Param3:"
+        var3:integer;
+
+
+      "Math question 1:"
+        mathQuestion1:integer = var1 + var2;
+
+      "Math question 2:"
+        mathQuestion2:integer = mathQuestion1 + var3;
+
+}

@@ -2,7 +2,7 @@ package org.lemonade.gui.values;
 
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-public class GuiDecimalValue extends GuiValue<Double> {
+public class GuiDecimalValue extends GuiNumericalValue<Double> implements Comparable<GuiDecimalValue> {
     private Double value;
 
     public GuiDecimalValue(Double value) {
@@ -18,7 +18,6 @@ public class GuiDecimalValue extends GuiValue<Double> {
     public void update(Double newValue) {
         this.value = newValue;
     }
-
 
     public GuiDecimalValue plus(GuiIntegerValue that) {
         return new GuiDecimalValue(this.getValue() + that.getValue());
@@ -57,7 +56,7 @@ public class GuiDecimalValue extends GuiValue<Double> {
     }
 
     public GuiDecimalValue divide(final GuiIntegerValue that) {
-        return new GuiDecimalValue((int) (this.getValue() / that.getValue()));
+        return new GuiDecimalValue((Double) (this.getValue() / that.getValue()));
     }
 
     public GuiDecimalValue divide(final GuiDecimalValue that) {
@@ -69,26 +68,22 @@ public class GuiDecimalValue extends GuiValue<Double> {
     }
 
     @Override
-    public GuiBooleanValue gT(final ComparableValue<?> that) {
-        evaluateType(that);
+    public GuiBooleanValue gT(final GuiComparableValue<?> that) {
         return new GuiBooleanValue(this.compareTo((GuiDecimalValue) that) == 1);
     }
 
     @Override
-    public GuiBooleanValue gTEq(final ComparableValue<?> that) {
-        evaluateType(that);
+    public GuiBooleanValue gTEq(final GuiComparableValue<?> that) {
         return new GuiBooleanValue(this.compareTo((GuiDecimalValue) that) >= 0);
     }
 
     @Override
-    public GuiBooleanValue lT(final ComparableValue<?> that) {
-        evaluateType(that);
+    public GuiBooleanValue lT(final GuiComparableValue<?> that) {
         return new GuiBooleanValue(this.compareTo((GuiDecimalValue) that) == -1);
     }
 
     @Override
-    public GuiBooleanValue lTEq(final ComparableValue<?> that) {
-        evaluateType(that);
+    public GuiBooleanValue lTEq(final GuiComparableValue<?> that) {
         return new GuiBooleanValue(this.compareTo((GuiDecimalValue) that) <= 0);
     }
 
@@ -101,8 +96,6 @@ public class GuiDecimalValue extends GuiValue<Double> {
     public String toString() {
         return Double.toString(this.getValue());
     }
-
-
 
 
     public <T> T accept(GuiExpressionVisitor<T> visitor) {
@@ -118,4 +111,14 @@ public class GuiDecimalValue extends GuiValue<Double> {
         return this.getValue() == that.getValue();
     }
 
+    @Override
+    public int compareTo(GuiDecimalValue that) {
+        if (this.getValue() < that.getValue()) {
+            return -1;
+        } else if (this.getValue() > that.getValue()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

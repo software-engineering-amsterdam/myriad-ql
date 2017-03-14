@@ -1,0 +1,6 @@
+form InvalidCondition {
+  "Did I make a mistake?" -> madeMistake : boolean
+  if (10 > true) {
+    
+  }
+}

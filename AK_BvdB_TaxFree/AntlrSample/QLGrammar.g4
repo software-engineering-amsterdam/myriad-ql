@@ -5,34 +5,23 @@ package org.uva.taxfree.gen;
 }
 
 form : 'form ' formId=VARIABLE_LITERAL '{' statement* '}';
-statement : question
-          | calculation
-          | ifStatement
-          | ifElseStatement
+statement : LABEL '->' VARIABLE_LITERAL ':' varType #question
+          | LABEL '->' VARIABLE_LITERAL ':' varType '=' expression #calculation
+          | 'if (' expression ')' '{' (thenStatements+=statement)* '}' #ifStatement
+          | 'if (' expression ')' '{' (thenStatements+=statement)* '}' 'else' '{' (elseStatements+=statement)* '}' #ifElseStatement
           ;
-
-question : QUESTION '->' VARIABLE_LITERAL ':' varType;
-calculation : DESCRIPTION '->' VARIABLE_LITERAL ':' varType '=' expression;
-ifStatement : 'if (' expression ')' '{' statement* '}';
-ifElseStatement : ifStatement 'else' '{' statement* '}';
 
 expression : BOOLEAN_LITERAL                                #booleanLiteral
            | INTEGER_LITERAL                                #integerLiteral
            | STRING_LITERAL                                 #stringLiteral
            | VARIABLE_LITERAL                               #varNameLiteral
            | '(' expression ')'                             #parenthesizedExpression
-           | left=expression operator='/' right=expression  #calculationExpression
-           | left=expression operator='*' right=expression  #calculationExpression
-           | left=expression operator='-' right=expression  #calculationExpression
-           | left=expression operator='+' right=expression  #calculationExpression
-           | left=expression operator='<' right=expression  #calculationExpression
-           | left=expression operator='>' right=expression  #calculationExpression
-           | left=expression operator='>=' right=expression #calculationExpression
-           | left=expression operator='<=' right=expression #calculationExpression
-           | left=expression operator='||' right=expression #booleanExpression
-           | left=expression operator='&&' right=expression #booleanExpression
-           | left=expression operator='!=' right=expression #uniformExpression
-           | left=expression operator='==' right=expression #uniformExpression
+           | left=expression op=(OP_MULTIPLY|OP_DIVIDE) right=expression                                    #binaryExpression
+           | left=expression op=(OP_PLUS|OP_MINUS) right=expression                                         #binaryExpression
+           | left=expression op=(OP_SMALLER|OP_SMALLEROREQUAL|OP_BIGGER|OP_BIGGEROREQUAL) right=expression  #binaryExpression
+           | left=expression op=(OP_EQUALS|OP_NOTEQUALS) right=expression                                   #binaryExpression
+           | left=expression op=OP_LOGICAL_AND right=expression                                             #binaryExpression
+           | left=expression op=OP_LOGICAL_OR right=expression                                              #binaryExpression
            ;
 
 varType : 'boolean' # booleanType
@@ -44,11 +33,22 @@ varType : 'boolean' # booleanType
 WS : [ \t\r\n]+ -> skip;
 // Comment layout
 COMMENT : [/][/]~[\n]* -> skip;
+// Operators
+OP_MULTIPLY : '*';
+OP_DIVIDE : '/';
+OP_PLUS : '+';
+OP_MINUS : '-';
+OP_SMALLEROREQUAL : '<=';
+OP_BIGGEROREQUAL : '>=';
+OP_SMALLER : '<';
+OP_BIGGER : '>';
+OP_EQUALS : '==';
+OP_NOTEQUALS : '!=';
+OP_LOGICAL_AND : '&&';
+OP_LOGICAL_OR : '||';
 // Types
-QUESTION : '"'~[?]+'?"';
-DESCRIPTION : '"'~[:]+':"';
+LABEL : '"'(~'"')+'"' ;
 BOOLEAN_LITERAL : ('true' | 'false');
 INTEGER_LITERAL : [0-9]+;
 STRING_LITERAL : '"'~["]+'"';
-//FORMID : [a-zA-Z]+;
 VARIABLE_LITERAL : [a-zA-Z]+;

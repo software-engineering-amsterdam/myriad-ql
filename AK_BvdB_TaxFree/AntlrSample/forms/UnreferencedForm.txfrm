@@ -1,0 +1,8 @@
+form TheirTaxFreeSolution {
+  "Do you see this label?" -> myLabel : boolean
+  if (hasSoldHouse) {
+    "Did you know that I'm an inside an undeclared identifier?" -> knewItWasNotDeclared : boolean
+  }
+  "Do you see this label?" -> myDuplicateLabel : boolean 
+  "Did you sell my house?" -> hasSoldHouse : boolean
+}

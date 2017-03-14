@@ -3,11 +3,12 @@ package sc.ql.checkform;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import sc.ql.model.form_elements.*;
 import sc.ql.model.Form;
 import sc.ql.model.Node;
 import sc.ql.model.atoms.AtomId;
+import sc.ql.model.form_elements.Question;
 
 public class CheckForm {
 	public CheckForm(Form form) throws Exception {
@@ -19,8 +20,8 @@ public class CheckForm {
 		checkDependencies(form_elements);
 	}
 	
-	private HashMap<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
-		HashMap<String, Question.Type> identifier_types = new HashMap<String, Question.Type>();
+	private Map<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
+		Map<String, Question.Type> identifier_types = new HashMap<String, Question.Type>();
 		
 		for (Question question : questions) {
 			identifier_types.put(question.getId().getValue(), question.getType());
@@ -52,12 +53,12 @@ public class CheckForm {
 	}
 	
 	private void checkQuestions(List<Question> questions) throws Exception {
-		HashMap<AtomId, Question> identifier_hm = new HashMap<AtomId, Question>();
-		HashMap<String, Question> question_hm = new HashMap<String, Question>();
+		Map<AtomId, Question> identifier_hm = new HashMap<AtomId, Question>();
+		Map<String, Question> question_hm = new HashMap<String, Question>();
 		
 		for (Question question : questions) {
 			if (question.getQuestion().isEmpty()) {
-				throw new Exception("Undefined question '"+question.getId().getValue()+"' at line: "+question.getLineNumber());
+				throw new Exception("Undefined question '"+question +"' at line: "+question.getLineNumber());
 			}
 			
 			// Check for duplicate identifiers

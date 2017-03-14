@@ -1,13 +1,15 @@
 package org.uva.taxfree.model.node.blocks;
 
+import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 
-import java.util.Set;
+import java.util.List;
 
 public class FormNode extends BlockNode {
     private final String mFormName;
 
-    public FormNode(String label, Set<Node> children) {
+    public FormNode(String label, List<Node> children) {
         super(children);
         mFormName = label;
     }
@@ -17,8 +19,12 @@ public class FormNode extends BlockNode {
         return mFormName;
     }
 
+
     @Override
-    protected boolean isVisible() {
-        return true;
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        symbolTable.getDuplicateDeclarationErrors(semanticsMessages);
+        symbolTable.getDuplicateLabelErrors(semanticsMessages);
+        super.checkSemantics(symbolTable, semanticsMessages);
     }
+
 }

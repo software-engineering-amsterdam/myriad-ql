@@ -5,9 +5,8 @@ import java.text.SimpleDateFormat
 import ast._
 
 import scala.util.matching.Regex
-import scala.util.parsing.combinator.JavaTokenParsers
 
-trait ExpressionParser extends JavaTokenParsers {
+trait ExpressionParser extends QLParser {
   type InfixMatcher = (ExpressionNode, ~[String, ExpressionNode]) => ExpressionNode
 
   //We do one date: yyyy-mm-dd.
@@ -39,7 +38,7 @@ trait ExpressionParser extends JavaTokenParsers {
     case (lhs, "/" ~ rhs) => Div(lhs, rhs)
   }
 
-  private def factor: Parser[ExpressionNode] = literal | prefix | "(" ~> expression <~ ")"
+  private def factor: Parser[ExpressionNode] = literal | prefix | parentheses(expression)
 
   private def prefix: Parser[ExpressionNode] =
     """-|!""".r ~ factor ^^ {

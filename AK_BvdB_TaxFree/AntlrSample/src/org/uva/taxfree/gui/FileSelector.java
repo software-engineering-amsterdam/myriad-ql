@@ -9,7 +9,7 @@ public class FileSelector {
     public static File select() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File
-                ("D:\\myriad-ql\\AK_BvdB_TaxFree\\AntlrSample\\forms"));
+                (".\\forms"));
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Tax forms (.txfrm)", "txfrm");
         chooser.setFileFilter(filter);

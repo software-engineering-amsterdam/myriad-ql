@@ -3,7 +3,7 @@ package org.ql.parser.expression.arithmetic;
 import org.junit.Test;
 import org.ql.parser.Parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AdditionTest {
     @Test

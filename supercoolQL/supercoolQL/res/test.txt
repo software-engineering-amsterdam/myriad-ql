@@ -1,0 +1,43 @@
+form exampleForm {
+  "Test question 1"
+    testQuestioni: boolean;
+  "Test question 2"
+    testQuestionii: boolean;
+  "Test question 3"
+    testQuestioniii: boolean;
+
+  if (testQuestioni && testQuestionii || testQuestioniii) {
+    "Conditional question 1"
+      conditionalQuestioni: integer;
+    "Conditional question 2"
+      conditionalQuestionii: integer;
+    "Math question 1:"
+      mathQuestioni:integer =
+        conditionalQuestioni - (conditionalQuestionii + conditionalQuestioni);
+  }
+
+  if (simpleCondition) {
+    "Simple conditional question 1"
+      simpleConditionalQuestion: boolean;
+  }
+
+  if (complexConditional) {
+    "if Question"
+        complexConditionalQuestioni: boolean;
+  } else {
+    "else Question"
+        complexConditionalQuestionii: boolean;
+  }
+
+  "Math question 2:"
+    mathQuestionii:integer = testQuestioni + 12;
+
+  "Duplicate question 1"
+    duplicateQuestion : boolean;
+   "Duplicate question 2"
+    duplicateQuestion : boolean;
+
+  "Non existing question"
+    nonexistingi:integer =
+        nonexisti + nonexistii;
+}

@@ -4,10 +4,14 @@ import sc.ql.antlr.*;
 import sc.ql.ast.*;
 import sc.ql.model.*;
 import sc.ql.checkform.*;
+import sc.ql.gui.*;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.*;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Main {
 	
@@ -25,6 +29,20 @@ public class Main {
         catch(Exception e) {
         	System.out.println(e.getMessage());
         }
+        
+        SwingUtilities.invokeLater(new Runnable() {
+        	public void run() {
+        		GUI gui = new GUI(form);
+            	
+            	JFrame frame = new JFrame("QL Form");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().add(gui);
+                frame.setResizable(false);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
     }
 	
 }
