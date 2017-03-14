@@ -1,4 +1,4 @@
-package org.uva.taxfree.model.node.widgets;
+package org.uva.taxfree.gui.widgets;
 
 public class StringWidget extends TextFieldWidget {
     public StringWidget(String label, String id) {

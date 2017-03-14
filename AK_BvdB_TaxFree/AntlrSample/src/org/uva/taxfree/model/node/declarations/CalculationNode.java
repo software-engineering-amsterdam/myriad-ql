@@ -2,9 +2,9 @@ package org.uva.taxfree.model.node.declarations;
 
 import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.gui.QuestionForm;
+import org.uva.taxfree.gui.widgets.CalculationWidget;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
-import org.uva.taxfree.model.node.widgets.CalculationWidget;
 import org.uva.taxfree.model.types.Type;
 
 import java.util.HashSet;
@@ -33,11 +33,12 @@ public class CalculationNode extends DeclarationNode {
         return mExpression.evaluate();
     }
 
-    private void checkCyclicDependencies(SymbolTable symbolTable, MessageList messageList) {
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         Set<String> dependencies = getUsedVariables();
         symbolTable.generateDependencies(dependencies);
         if (dependencies.contains(getId())) {
-            messageList.addError("Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
+            semanticsMessages.addError("Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
         }
     }
 

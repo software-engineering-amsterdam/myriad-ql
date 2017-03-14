@@ -4,7 +4,7 @@ import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.operators.BooleanOperator;
 import org.uva.taxfree.model.node.operators.CompareOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
-import org.uva.taxfree.model.node.widgets.StringWidget;
+import org.uva.taxfree.gui.widgets.StringWidget;
 
 public class StringType extends Type {
     @Override

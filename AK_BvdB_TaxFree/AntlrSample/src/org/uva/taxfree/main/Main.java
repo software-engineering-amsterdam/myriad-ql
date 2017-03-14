@@ -6,6 +6,7 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.blocks.FormNode;
+import test.org.uva.taxfree.ast.SemanticsTester;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,9 +36,16 @@ public class Main {
         MessageList semanticsMessages = new MessageList();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
-        QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
-        ast.fillQuestionForm(taxForm);
-        taxForm.show();
+
+        if(semanticsMessages.hasMessages()){
+            MessageWindow.showMessages(semanticsMessages);
+        }
+
+        if(!semanticsMessages.fatalErrors()) {
+            QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
+            ast.fillQuestionForm(taxForm);
+            taxForm.show();
+        }
 
 //        Environment environment = AstBuilder.generate(inputFile); // , symboltable); // in main
 //        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
