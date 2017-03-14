@@ -106,7 +106,7 @@ public class QL {
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
 
-        if (messages.containsNoWarnings()) {
+        if (!messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }
