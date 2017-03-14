@@ -8,9 +8,6 @@ module QL
         @ast_question = ast_question
         @condition = condition
         @enabled = true
-        @tk_frame = TkFrame.new.grid
-        Label.new(@tk_frame, label)
-        create_corresponding_widget
       end
 
       def create_corresponding_widget
@@ -18,6 +15,10 @@ module QL
       end
 
       def render
+        @tk_frame = TkFrame.new.grid
+        Label.new(@tk_frame, label)
+        create_corresponding_widget
+
         store_default_value
         listen_to_widget
       end
