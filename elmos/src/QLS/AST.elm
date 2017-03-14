@@ -46,6 +46,7 @@ type Style
 
 type Widget
     = Radio (List String)
+    | Dropdown (List String)
     | Spinbox
     | Checkbox
     | Text
