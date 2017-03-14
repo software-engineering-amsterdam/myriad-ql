@@ -143,15 +143,14 @@ class Questionnaire(FormVisitor, TypeVisitor):
         signal.connect(self.trigger_conditional_if_else)
 
     def update_trigger_numeric(self, widget, value, type):
-        self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(type, self.update_value_numeric)
+        environment = self.evaluator.update_value(widget.objectName(), value)
+        self.update_visible_values(type, self.update_value_numeric, environment)
 
     def update_trigger_boolean(self, widget, value):
-        self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(QCheckBox, self.update_value_boolean)
+        environment = self.evaluator.update_value(widget.objectName(), value)
+        self.update_visible_values(QCheckBox, self.update_value_boolean, environment)
 
-    def update_visible_values(self, widget_type, function):
-        environment = self.evaluator.visit()
+    def update_visible_values(self, widget_type, function, environment):
         for key, value in environment.items():
             widget = self.wizard.findChild(widget_type, key)
             if widget is not None:

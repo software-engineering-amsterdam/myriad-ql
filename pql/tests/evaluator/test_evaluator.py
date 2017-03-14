@@ -1,4 +1,6 @@
 # coding=utf-8
+from environment.environmentcreator import EnvironmentCreator
+from evaluator.evaluator import Evaluator
 from tests.shared import Shared
 
 
@@ -88,3 +90,28 @@ class TestEvaluator(Shared):
         expected_identifier_3 = 'wasMoreExpensive'
         self.assertTrue(expected_identifier_3 in environment, "Environment should contain key hasSoldHouse")
         self.assertTrue(environment[expected_identifier_3], "Evaluation should result in true")
+
+    def test_eval_cyclic_value_dependency(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = v2 * 2
+            "q2" v2: integer
+        }
+        """
+        ast = self.acquire_ast(input_string)
+        evaluator = Evaluator(EnvironmentCreator, ast)
+        environment = evaluator.visit()
+
+        expected_identifier_1 = 'v1'
+        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key v1")
+        self.assertEqual(0, environment[expected_identifier_1], "Evaluation should result in 0")
+        expected_identifier_2 = 'v2'
+        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key v2")
+        self.assertEqual(0, environment[expected_identifier_2], "Evaluation should result in 0")
+
+        new_evaluator = evaluator.update_value(expected_identifier_2, 2)
+        self.assertTrue(expected_identifier_1 in new_evaluator, "Environment should contain key v1")
+        self.assertEqual(4, environment[expected_identifier_1], "Evaluation should result in 0")
+        expected_identifier_2 = 'v2'
+        self.assertTrue(expected_identifier_2 in new_evaluator, "Environment should contain key v2")
+        self.assertEqual(2, environment[expected_identifier_2], "Evaluation should result in 0")
