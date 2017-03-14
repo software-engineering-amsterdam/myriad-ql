@@ -4,6 +4,7 @@ import Html exposing (Html, div, text, h3, pre, button, hr)
 import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import UI.Widget.BooleanRadio as BooleanRadioWidget
+import UI.Widget.BooleanDropdown as BooleanDropdownWidget
 import UI.Widget.StringRadio as StringRadioWidget
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
@@ -206,6 +207,9 @@ asRenderable widget valueType =
         Slider _ ->
             always (div [] [ text "TODO IMPLEMENT SLIDER" ])
 
+        QLS.AST.Dropdown values ->
+            dropdownWidgetRendererForValueType valueType values
+
 
 radioWidgetRendererForValueType : ValueType -> List String -> WidgetContext Msg -> Html Msg
 radioWidgetRendererForValueType valueType labels =
@@ -215,6 +219,19 @@ radioWidgetRendererForValueType valueType labels =
 
         BooleanType ->
             flip BooleanRadioWidget.view labels
+
+        _ ->
+            Debug.crash "It is not possible to render a radio widget"
+
+
+dropdownWidgetRendererForValueType : ValueType -> List String -> WidgetContext Msg -> Html Msg
+dropdownWidgetRendererForValueType valueType labels =
+    case valueType of
+        StringType ->
+            always (div [] [ text "TODO IMPLEMENT SLIDER" ])
+
+        BooleanType ->
+            flip BooleanDropdownWidget.view labels
 
         _ ->
             Debug.crash "It is not possible to render a radio widget"

@@ -72,7 +72,7 @@ exampleDsl =
   page Housing {
     section "Buying"
       question hasBoughtHouse
-        widget radio("Yes", "No")
+        widget dropdown("Yes", "No")
     section "Loaning"
       question hasMaintLoan
   }
@@ -80,6 +80,7 @@ exampleDsl =
   page Selling {
     section "Selling" {
       question hasSoldHouse
+        widget dropdown("Yes", "No")
       section "You sold a house" {
         question sellingPrice
         question privateDebt

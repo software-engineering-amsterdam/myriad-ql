@@ -11,6 +11,7 @@ QLS:
 --> Radio --> DONE
 --> Radio for text (e.g. gender) --> DONE
 --> DropDown
+--> Boolean Radio and Boolean Dropdown share code that could be abstracted
 --> DropDown for text (e.g. gender)
 ---> Style clash with bootstrap
 

@@ -29,6 +29,12 @@ validWidgetForBooleanType w =
         Radio _ ->
             False
 
+        Dropdown [ _, _ ] ->
+            True
+
+        Dropdown _ ->
+            False
+
         Spinbox ->
             False
 
@@ -46,6 +52,9 @@ validWidgetForStringType : Widget -> Bool
 validWidgetForStringType w =
     case w of
         Radio _ ->
+            True
+
+        Dropdown _ ->
             True
 
         Spinbox ->
@@ -67,6 +76,9 @@ validWidgetForIntegerType w =
         Radio _ ->
             False
 
+        Dropdown _ ->
+            False
+
         Spinbox ->
             True
 
@@ -84,6 +96,9 @@ validWidgetForMoneyType : Widget -> Bool
 validWidgetForMoneyType w =
     case w of
         Radio _ ->
+            False
+
+        Dropdown _ ->
             False
 
         Spinbox ->

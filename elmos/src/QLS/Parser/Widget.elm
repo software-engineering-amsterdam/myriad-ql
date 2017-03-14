@@ -9,23 +9,23 @@ import QLS.AST exposing (..)
 
 widget : Parser state Widget
 widget =
-    choice [ radio, spinbox, checkbox, text, slider ]
+    choice [ radio, spinbox, checkbox, text, slider, dropdown ]
 
 
 radio : Parser state Widget
 radio =
     Radio
-        <$> (string "radio" *> widgetParams radioOption)
+        <$> (string "radio" *> widgetParams option)
 
 
 dropdown : Parser state Widget
 dropdown =
     Dropdown
-        <$> (string "dropdown" *> widgetParams radioOption)
+        <$> (string "dropdown" *> widgetParams option)
 
 
-radioOption : Parser state String
-radioOption =
+option : Parser state String
+option =
     quotedString
 
 
