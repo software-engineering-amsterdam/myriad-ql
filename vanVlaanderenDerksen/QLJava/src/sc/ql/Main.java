@@ -9,6 +9,7 @@ import sc.ql.gui.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.*;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -23,12 +24,13 @@ public class Main {
         
         AstVisitor visitor = new AstVisitor();
         Form form = (Form) visitor.visit(tree);
-        try {
-        	new CheckForm(form);
-        }
-        catch(Exception e) {
-        	System.out.println(e.getMessage());
-        }
+
+    	CheckForm checkForm = new CheckForm(form);    	
+    	List<Message> messages = checkForm.getMessages();
+    	
+    	for(Message message : messages) {
+    		System.out.println(message.toString());
+    	}
         
         SwingUtilities.invokeLater(new Runnable() {
         	public void run() {

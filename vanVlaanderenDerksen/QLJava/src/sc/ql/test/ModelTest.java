@@ -19,11 +19,12 @@ import sc.ql.antlr.QLParser;
 import sc.ql.ast.AstVisitor;
 import sc.ql.checkform.CheckForm;
 import sc.ql.checkform.QuestionsVisitor;
-import sc.ql.model.atoms.AtomId;
 import sc.ql.model.Form;
+import sc.ql.model.FormElement;
 import sc.ql.model.Node;
 import sc.ql.model.form_elements.Question;
 import sc.ql.model.expressions.Expression;
+import sc.ql.model.expressions.literals.IdLiteral;
 
 public class ModelTest {
 
@@ -43,7 +44,7 @@ public class ModelTest {
 		//setup
 		Form form = getModel("form \"This is a question\" buyingPrice MONEY endform");
 		//excution
-		List<Node> form_elements = form.getFormElements();
+		List<FormElement> form_elements = form.getFormElements();
 		List<Question> questions = new ArrayList<Question>();
 		for (Node form_element : form_elements) {
 			questions.addAll(form_element.accept(new QuestionsVisitor()));
@@ -58,7 +59,7 @@ public class ModelTest {
 	@Test
 	public void SingleQuestionTest() throws Exception{
 		String vraag			= "This is a question";
-		AtomId id 				= new AtomId("buyingPrice", 0);
+		IdLiteral id 				= new IdLiteral("buyingPrice", 0);
 		Question.Type type 		= Question.Type.MONEY;
 		Expression expression	= (Expression) null;
 		Integer getal			= 1;

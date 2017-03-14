@@ -1,38 +1,26 @@
 package sc.ql.checkform;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import sc.ql.model.ConditionalBlock;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.atoms.AtomBoolean;
-import sc.ql.model.atoms.AtomId;
-import sc.ql.model.atoms.AtomInteger;
-import sc.ql.model.atoms.AtomMoney;
-import sc.ql.model.atoms.AtomString;
 import sc.ql.model.expressions.CalcExpression;
 import sc.ql.model.expressions.NotExpression;
-import sc.ql.model.expressions.OpExpression;
+import sc.ql.model.expressions.BinaryExpression;
+import sc.ql.model.expressions.literals.BooleanLiteral;
+import sc.ql.model.expressions.literals.IdLiteral;
+import sc.ql.model.expressions.literals.IntegerLiteral;
+import sc.ql.model.expressions.literals.AtomMoney;
+import sc.ql.model.expressions.literals.StringLiteral;
 import sc.ql.model.form_elements.IfStatement;
 import sc.ql.model.form_elements.Question;
 import sc.ql.model.form_elements.Question.Type;
 
-public class ConditionsVisitor implements NodeVisitor<Question.Type> {
-	public Map<String, Question.Type> identifier_types;
+public class ConditionsVisitor implements ExpressionVisitor<Question.Type> {
+	public Map<String, Question.Type> identifierTypes;
 	
 	public ConditionsVisitor(Map<String, Question.Type> identifier_types) {
-		this.identifier_types = identifier_types;
-	}
-	
-	@Override
-	public Question.Type visit(ConditionalBlock conditional_block) throws Exception {
-		Type type = conditional_block.getExpression().accept(this);
-		
-		if (type != Type.BOOLEAN) {
-			throw new Exception("Condition on line "+conditional_block.getLineNumber()+" is not of type Boolean.");
-		}
-		
-		return type;
+		this.identifierTypes = identifierTypes;
 	}
 
 	@Override
@@ -56,7 +44,7 @@ public class ConditionsVisitor implements NodeVisitor<Question.Type> {
 	}
 	
 	@Override
-	public Question.Type visit(OpExpression op_expression) throws Exception {
+	public Question.Type visit(BinaryExpression op_expression) throws Exception {
 		Type left_side = op_expression.getLeft().accept(this);
 		Type right_side = op_expression.getRight().accept(this);
 		String operator = op_expression.getOperator();
@@ -91,17 +79,17 @@ public class ConditionsVisitor implements NodeVisitor<Question.Type> {
 	}
 
 	@Override
-	public Question.Type visit(AtomBoolean atom_boolean) {
+	public Question.Type visit(BooleanLiteral atom_boolean) {
 		return Type.BOOLEAN;
 	}
 
 	@Override
-	public Question.Type visit(AtomId atom_id) {
+	public Question.Type visit(IdLiteral atom_id) {
 		return this.identifier_types.get(atom_id.getValue());
 	}
 
 	@Override
-	public Question.Type visit(AtomInteger atom_integer) {
+	public Question.Type visit(IntegerLiteral atom_integer) {
 		return Type.INTEGER;
 	}
 
@@ -111,7 +99,7 @@ public class ConditionsVisitor implements NodeVisitor<Question.Type> {
 	}
 
 	@Override
-	public Question.Type visit(AtomString atom_string) {
+	public Question.Type visit(StringLiteral atom_string) {
 		return Type.STRING;
 	}
 
