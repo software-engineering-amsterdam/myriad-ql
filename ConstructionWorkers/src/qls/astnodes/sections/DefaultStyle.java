@@ -1,14 +1,22 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/section/DefaultStyle.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.Type;
 import qls.astnodes.styles.Style;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleSheetVisitor;
 import qls.astnodes.widgets.QLSWidget;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
 public class DefaultStyle extends AbstractSection{
 
     private Style style;
@@ -25,10 +33,6 @@ public class DefaultStyle extends AbstractSection{
 
     public Style getStyle() {
         return this.style;
-    }
-
-    public void setStyle(Style style) {
-        this.style = style;
     }
 
     public QLSWidget getWidget() {

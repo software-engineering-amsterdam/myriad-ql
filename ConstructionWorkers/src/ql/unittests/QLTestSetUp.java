@@ -1,5 +1,12 @@
-/**
- * QLTestSetUp.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/unittests/QLTestSetUp.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.unittests;
@@ -15,8 +22,6 @@ import ql.astnodes.Form;
 import org.junit.Before;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
-import ql.gui.formenvironment.Context;
-import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.MessageData;
 
@@ -27,12 +32,8 @@ import java.util.Map;
 public abstract class QLTestSetUp {
 
     protected Form form;
-    protected Context formContext;
-    protected IdentifierChecker identifierChecker;
-    protected TypeChecker typeChecker;
-    protected String inputFileName;
-
-    private static final String PATH = "./src/ql/unittests/qltestforms/";
+    TypeChecker typeChecker;
+    String inputFileName;
 
     @Before
     public void setUp() throws IOException {
@@ -42,6 +43,7 @@ public abstract class QLTestSetUp {
             System.exit(-1);
         }
 
+        String PATH = "./src/ql/unittests/";
         String inputFilePath = PATH.concat(inputFileName);
 
         InputStream qlInputStream = new FileInputStream(inputFilePath);
@@ -56,12 +58,10 @@ public abstract class QLTestSetUp {
         Node nodeAST = parseTree.accept(astVisitor);
 
         form = (Form) nodeAST;
-        formContext =  new Context();
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
 
-        identifierChecker = new IdentifierChecker(form, identifierToTypeMap, messages);
         typeChecker= new TypeChecker(form, identifierToTypeMap, messages);
     }
 }

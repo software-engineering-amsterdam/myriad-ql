@@ -1,16 +1,24 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/StyleSheet.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleSheetVisitor;
 
 import java.util.List;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
 public class StyleSheet extends Node {
 
     private final String styleSheetName;
@@ -34,10 +42,6 @@ public class StyleSheet extends Node {
 
     public List<DefaultStyle> getDefaultStyle() {
         return this.defaultStyle;
-    }
-
-    public void addDefaultStyle(DefaultStyle defaultStyle) {
-        this.defaultStyle.add(defaultStyle);
     }
 
     public <T> T accept(StyleSheetVisitor<T> visitor) {

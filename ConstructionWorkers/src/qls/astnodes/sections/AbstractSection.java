@@ -1,12 +1,20 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/sections/AbstractSection.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleSheetVisitor;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
 public abstract class AbstractSection extends Node{
 
     public AbstractSection(LineNumber lineNumber) {

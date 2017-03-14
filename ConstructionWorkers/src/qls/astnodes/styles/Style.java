@@ -1,3 +1,14 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/styles/Style.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
@@ -6,9 +17,6 @@ import ql.astnodes.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LGGX on 03-Mar-17.
- */
 public class Style extends Node{
 
     private final List<StyleType> styleTypes;
@@ -18,14 +26,9 @@ public class Style extends Node{
         styleTypes = new ArrayList<>();
     }
 
-
     public Style(List<StyleType> styleTypes, LineNumber lineNumber) {
         super(lineNumber);
         this.styleTypes = styleTypes;
-    }
-
-    public List<StyleType> getStyleTypes() {
-        return this.styleTypes;
     }
 
     public int getWidth(int styleValue) {
@@ -66,14 +69,6 @@ public class Style extends Node{
 
     public boolean isUndefined() {
         return false;
-    }
-
-    public void AddDefaultInheritedStyles(Style style) {
-        for (StyleType type : style.styleTypes) {
-            if (!this.styleTypes.contains(type)) {
-                this.styleTypes.add(type);
-            }
-        }
     }
 
 }

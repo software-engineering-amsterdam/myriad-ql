@@ -13,8 +13,8 @@ import java.util.List;
 
 public class FormFrame {
 
-    private final JFrame formFrame;
-    private final JPanel questionPanel;
+    protected final JFrame formFrame;
+    protected final JPanel questionPanel;
 
     private List<Field> fields;
 

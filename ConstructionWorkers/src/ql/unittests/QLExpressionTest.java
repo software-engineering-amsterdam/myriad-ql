@@ -1,7 +1,12 @@
-/**
- * ExpressionTest.java.
+/*
+ * Software Construction - University of Amsterdam
  *
- * TODO: add more tests?
+ * ./src/ql/unittests/QLExpressionTest.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.unittests;
@@ -33,7 +38,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ExpressionTest extends QLTestSetUp {
+public class QLExpressionTest extends QLTestSetUp {
 
     private Context context = new Context();
     private ExpressionEvaluator expressionEvaluator;

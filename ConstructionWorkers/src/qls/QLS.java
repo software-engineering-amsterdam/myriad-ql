@@ -29,9 +29,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
 public class QLS {
 
     private final String inputFileQL;
@@ -132,7 +129,7 @@ public class QLS {
         QLSParser parser = new QLSParser(tokens);
 
         ParseTree parseTree = parser.stylesheet();
-        QLSASTVisitor astVisitor = new QLSASTVisitor(parseTree);
+        QLSASTVisitor astVisitor = new QLSASTVisitor();
         Node nodeAST = parseTree.accept(astVisitor);
 
         return (StyleSheet) nodeAST;

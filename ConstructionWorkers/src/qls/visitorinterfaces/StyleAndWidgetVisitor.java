@@ -1,26 +1,23 @@
-package qls.astnodes.visitors;
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/visitorinterfaces/StyleAndWidgetVisitor.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
 
-import qls.astnodes.StyleSheet;
-import qls.astnodes.sections.DefaultStyle;
-import qls.astnodes.sections.Section;
-import qls.astnodes.sections.StyleQuestion;
+package qls.visitorinterfaces;
+
 import qls.astnodes.styles.Color;
 import qls.astnodes.styles.Font;
 import qls.astnodes.styles.FontSize;
 import qls.astnodes.styles.Width;
 import qls.astnodes.widgets.*;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
-public interface StyleSheetVisitor<T> {
-
-    T visit(StyleSheet styleSheet);
-
-    T visit(Section section);
-    T visit(DefaultStyle section);
-
-    T visit(StyleQuestion question);
+public interface StyleAndWidgetVisitor<T> {
 
     T visit(Color style);
     T visit(Width style);
@@ -34,5 +31,4 @@ public interface StyleSheetVisitor<T> {
     T visit(QLSTextBox widget);
     T visit(QLSDropdown widget);
     T visit(QLSUndefinedWidget widget);
-
 }
