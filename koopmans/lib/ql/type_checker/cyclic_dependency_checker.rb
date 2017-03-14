@@ -52,6 +52,8 @@ module QL
 
       def visit_variable(variable)
         cyclic_dependency_check(variable)
+        # return variable for the sake of .accept
+        variable
       end
 
       # check if the visited variable is in the dependency hash
@@ -74,8 +76,6 @@ module QL
             end
           end
         end
-        # return variable for the sake of .accept
-        variable
       end
     end
   end
