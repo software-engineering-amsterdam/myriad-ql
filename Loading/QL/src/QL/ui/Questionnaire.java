@@ -89,31 +89,49 @@ public class Questionnaire extends Application implements Notifier {
         
     	renderQuestions(activeQuestions);
     	
-        Button btn = renderButton(grid, activeQuestions.size() + 2);
-
-        // TODO move to function submit
+        Button btn = renderButton(grid, activeQuestions.size() + 2);       
+              
+        submit(btn, activeQuestions);
+    }
+    
+    private void submit(Button btn, List<Row> activeQuestions) {
+    	
         Text actiontarget = new Text();
         grid.add(actiontarget, 1, activeQuestions.size() + 2);
-
+    	
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
+            	
             	for (Row activeQuestion : activeQuestions) {
             		
-            		Value answer = activeQuestion.getAnswer();
-            		if (!answer.isSet()) {
-                        actiontarget.setFill(Color.FIREBRICK);
-                        actiontarget.setText("Please Fill in all Fields");
-                        return;
-            		}
+            		if (isIncomplete(activeQuestion.getAnswer(), actiontarget)) {
+            			return;
+            		}            		
             	}  
-                actiontarget.setFill(Color.SPRINGGREEN);
-                actiontarget.setText("Thank you for filling\n in the questionnaire");
-
-                exportQuestionnaire(activeQuestions);
+            	complete(actiontarget, activeQuestions);
             }
         });
+    }
+    
+    private void complete(Text actiontarget, List<Row> activeQuestions) {
+        
+    	actiontarget.setFill(Color.GREEN);
+        actiontarget.setText("Thank you for filling in the questionnaire");
+
+        exportQuestionnaire(activeQuestions);
+    	
+    }
+    
+    private boolean isIncomplete(Value answer, Text actiontarget) {
+		
+    	if (!answer.isSet()) {
+            actiontarget.setFill(Color.FIREBRICK);
+            actiontarget.setText("Please fill in all Fields");
+            return true;
+		}
+    	return false;
     }
     
     private void renderTitle(GridPane grid, String title) {
