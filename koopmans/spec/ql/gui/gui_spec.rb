@@ -6,14 +6,19 @@ require_all 'lib'
 
 module QL
   module GUI
+    include AST
+
     describe GUI do
-      let(:gui) { GUI.new }
-      # context 'question' do
-      #   it 'parses' do
-      #     expect(1).to 1
-      #     # gui.launch
-      #
-      #     # expect(parser.label).to parse('"How much is?"')
+      let(:ast_question) { Question.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), BooleanType.new) }
+      let(:question_frame) { QuestionFrame.new(ast_question) }
+      let(:gui) { GUI.new([question_frame]) }
+
+      # context 'submit' do
+      #   it 'question frame should have default value' do
+      #     thread = Thread.new do
+      #       gui.run
+      #     end
+      #     thread.join
       #   end
       # end
     end

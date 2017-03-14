@@ -1,12 +1,6 @@
 module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
-
-      def render
-        super
-        compute
-      end
-
       def create_widget
         @widget = ComputedWidget.new(@tk_frame)
       end

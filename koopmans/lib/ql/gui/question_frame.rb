@@ -3,7 +3,7 @@ module QL
     class QuestionFrame
       include Callback
 
-      attr_reader :enabled, :tk_frame
+      attr_reader :enabled, :condition
 
       def initialize(ast_question, condition=nil)
         @ast_question = ast_question
@@ -14,10 +14,11 @@ module QL
       def render
         @tk_frame = TkFrame.new.grid
         Label.new(@tk_frame, label)
+
         widget = create_widget
-        listen_to_widget(widget)
         @value = widget.default_value
         value_changed
+        listen_to_widget(widget)
       end
 
       def create_widget

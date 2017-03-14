@@ -38,4 +38,6 @@ ql_notifications = nil
 #
 qls_ast = nil
 # #
-QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
+gui = QL::GUI::GUI.new(question_frames)
+gui.run

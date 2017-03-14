@@ -2,9 +2,7 @@ module QL
   module GUI
     class FormBuilder
       def visit_form(form)
-        @question_frames = []
         form.statements.map { |statement| statement.accept(self) }.flatten
-        @question_frames
       end
 
       def visit_if_statement(if_statement, condition=nil)
@@ -22,11 +20,11 @@ module QL
       end
 
       def visit_question(question, condition=nil)
-        @question_frames << QuestionFrame.new(question, condition)
+        QuestionFrame.new(question, condition)
       end
 
       def visit_computed_question(question, condition=nil)
-        @question_frames << ComputedQuestionFrame.new(question, condition)
+        ComputedQuestionFrame.new(question, condition)
       end
     end
   end
