@@ -30,12 +30,12 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if node.expression is not None:
             children = node.expression.apply(self)
             bad_reference = []
-            for c in children:
-                if c.name not in self.properties:
-                    bad_reference.append(c)
+            for child in children:
+                if child.name not in self.properties:
+                    bad_reference.append(child)
             if len(bad_reference) > 0:
                 self.errors.append("Field at {} had the following references that were not resolvable: {} "
-                                   .format(node.location, ["{}: {}".format(b.name, b.location) for b in bad_reference]))
+                                   .format(node.location, ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]))
 
     def identifier(self, node):
         return [node]
