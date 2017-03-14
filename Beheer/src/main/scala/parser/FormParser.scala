@@ -13,7 +13,7 @@ class FormParser extends QLParser with ExpressionParser {
   }
 
   private def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeName ~ opt(parentheses(expression)) ^^ {
+    ident ~ ":" ~ quotedString ~ typeName ~ opt(parentheses(expression)) ^^ {
       case identifier ~ _ ~ label ~ typeName ~ expr =>
         Question(identifier, label, typeName, expr)
     }

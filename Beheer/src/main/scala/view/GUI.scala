@@ -1,5 +1,6 @@
 package view
 
+import ast.Stylesheet.Blocks
 import ast._
 import checker.Issue.Issues
 import model.DisplayQuestion
@@ -7,13 +8,13 @@ import model.DisplayQuestion
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.layout.{ HBox, TilePane, VBox }
+import scalafx.scene.layout.{HBox, TilePane, VBox}
 import scalafx.scene.text.Text
 
-class GUI(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles: Seq[QuestionStyle]) extends JFXApp.PrimaryStage {
+class GUI(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles: Seq[(Page, Blocks)]) extends JFXApp.PrimaryStage {
   private val displayBoxes = displayQuestions.map { question =>
     question.`type` match {
-      case BooleanType => new BooleanQuestion(question, Some(QuestionStyle("x", Map.empty, Some(Widget(Dropdown("Opt1", "Opt2"))))))
+      case BooleanType => new BooleanQuestion(question)
       case DateType => new DateQuestion(question)
       case StringType => new StringQuestion(question)
       case _: NumericType => new NumericQuestion(question)
@@ -42,6 +43,6 @@ class GUI(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles
 }
 
 object GUI extends JFXApp {
-  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles: Seq[QuestionStyle]) =
+  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles: Seq[(Page, Blocks)]) =
     new GUI(issues, displayQuestions, questionStyles)
 }

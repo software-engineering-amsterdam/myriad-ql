@@ -23,8 +23,15 @@ class StylesheetParser extends QLParser {
       case identifier ~ (sections ~ default) => Page(identifier, sections, default)
     }
 
-  private def section: Parser[Section] =
-    "section" ~> label ~ curlyBrackets(rep(question | section) ~ rep(default)) ^^ {
+  private def section: Parser[Section] = singleBlockSection | multiBlockSection
+
+  private def singleBlockSection: Parser[Section] =
+    "section" ~> quotedString ~ (question | section) ^^ {
+      case label ~ block => Section(label, Seq(block), Nil)
+    }
+
+  private def multiBlockSection: Parser[Section] =
+    "section" ~> quotedString ~ curlyBrackets(rep(question | section) ~ rep(default)) ^^ {
       case label ~ (blocks ~ default) => Section(label, blocks, default)
     }
 
@@ -39,10 +46,7 @@ class StylesheetParser extends QLParser {
       case typeName ~ (styling ~ widget) => DefaultStyle(typeName, styling.toMap, widget)
     }
 
-  private def widget: Parser[Widget] =
-    "widget" ~> widgetType ^^ (widgetType => Widget(widgetType))
-
-  private def widgetType: Parser[WidgetType] = (
+  private def widget: Parser[Widget] = "widget" ~> (
     "checkbox" ^^^ Checkbox
     | "spinbox" ^^^ Spinbox
     | "datepicker" ^^^ DatePicker
@@ -53,12 +57,12 @@ class StylesheetParser extends QLParser {
   )
 
   private def radio: Parser[Radio] =
-    "radio" ~> parentheses(label ~ "," ~ label) ^^ {
+    "radio" ~> parentheses(quotedString ~ "," ~ quotedString) ^^ {
       case trueText ~ _ ~ falseText => Radio(trueText, falseText)
     }
 
   private def dropdown: Parser[Dropdown] =
-    "dropdown" ~> parentheses(label ~ "," ~ label) ^^ {
+    "dropdown" ~> parentheses(quotedString ~ "," ~ quotedString) ^^ {
       case trueText ~ _ ~ falseText => Dropdown(trueText, falseText)
     }
 
@@ -67,17 +71,28 @@ class StylesheetParser extends QLParser {
       case min ~ _ ~ max => Slider(min, max)
     }
 
-  private def style: Parser[(String, Style)] =
-    ident ~ ":" ~ (colorStyle | numericStyle | stringStyle) ^^ {
-      case identifier ~ _ ~ style => identifier -> style
-    }
+  private def style: Parser[(String, Style)] = (
+    width
+    | font
+    | fontSize
+    | color
+  )
 
-  private def colorStyle: Parser[ColorStyle] = """#\p{XDigit}{6}""".r ^^ (c => ColorStyle(c))
+  private def width: Parser[(String, Width)] = "width" ~ ":" ~ number ^^ {
+    case width ~ _ ~ number => width -> Width(number)
+  }
 
-  private def numericStyle: Parser[NumericStyle] = number ^^ (n => NumericStyle(n))
+  private def font: Parser[(String, Font)] = "font" ~ ":" ~ quotedString ^^ {
+    case font ~ _ ~ string => font -> Font(string)
+  }
 
-  private def stringStyle: Parser[StringStyle] = label ^^ (l => StringStyle(l))
+  private def fontSize: Parser[(String, FontSize)] = "fontsize" ~ ":" ~ number ^^ {
+    case fontSize ~ _ ~ number => fontSize -> FontSize(number)
+  }
 
+  private def color: Parser[(String, Color)] = "color" ~ ":" ~ """#\p{XDigit}{6}""".r ^^ {
+    case color ~ _ ~ hex => color -> Color(hex)
+  }
 }
 
 object StylesheetParser {

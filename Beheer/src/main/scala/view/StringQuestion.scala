@@ -1,14 +1,16 @@
 package view
 
+import ast.QuestionStyle
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
 
 import scalafx.Includes._
 import scalafx.scene.control.TextField
 
-class StringQuestion(val question: DisplayQuestion) extends GUIQuestion {
+class StringQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
 
   val textField = new TextField()
+  textField.setPrefWidth(width)
 
   question match {
     case c: ComputedQuestion => textField.text <== computeValue(c)

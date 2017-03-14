@@ -1,18 +1,18 @@
 package view
 
-import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
+import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
 import java.util.Date
 import javafx.beans.binding.ObjectBinding
 
-import ast.{ DateType, ExpressionNode }
-import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
+import ast.{DateType, QuestionStyle}
+import model.{ComputedQuestion, DisplayQuestion, OpenQuestion}
 import values._
 
 import scala.language.implicitConversions
 import scalafx.Includes._
 import scalafx.scene.control.DatePicker
 
-class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
+class DateQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
   val datePicker = new DatePicker()
 
   question match {
