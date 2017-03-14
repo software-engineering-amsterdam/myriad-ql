@@ -8,8 +8,6 @@ module QL
       # negation: ! -
       rule([operator: '-', single: simple(:single)]) { IntegerNegation.new(single) }
       rule([operator: '!', single: simple(:single)]) { BooleanNegation.new(single) }
-      # rule([operator: '!', single: simple(:single)]) { [BooleanLiteral.new('true'), NotEqual.new(single)] }
-      # rule([operator: '!', single: simple(:single)]) { [left: 'true', operator: '!=', right: single] }
 
       # arithmetic: + - / *
       rule(operator: '*', right: simple(:right)) { Multiply.new(right) }
