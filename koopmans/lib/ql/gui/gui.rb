@@ -10,7 +10,6 @@ module QL
       end
 
       def run
-        check_notifications
         render_questions
         render_submit_button
         Tk.mainloop
@@ -47,10 +46,6 @@ module QL
 
       def enabled_questions
         @question_frames.each.select(&:enabled)
-      end
-
-      def check_notifications
-
       end
     end
   end
