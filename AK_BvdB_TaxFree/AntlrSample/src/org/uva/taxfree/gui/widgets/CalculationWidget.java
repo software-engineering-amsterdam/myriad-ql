@@ -36,6 +36,6 @@ public class CalculationWidget extends Widget {
 
     @Override
     public void updateValues(SymbolTable symbolTable) {
-        mTextField.setText(readFromtable(symbolTable));
+        mTextField.setText(readFromTable(symbolTable));
     }
 }
