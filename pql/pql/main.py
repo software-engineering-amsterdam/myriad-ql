@@ -17,15 +17,12 @@ if __name__ == '__main__':
 # TODO: Value opsplitsen in aparte objecten voor de literals / value hernoemen naar literal
 # TODO: Field opsplitsen in assignment en question
 # TODO: String support toevoegen
-# TODO: List comprehension eventueel bekijken / andere manier/  refactoren
 # TODO: Loopen over ast voor form weghalen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
-# TODO: Identifier_dict naar symbol_table
 # TODO: TypeChecker de TypeEnvironment meegeven
 # TODO: Environment een class maken en een update value methode geven
 # TODO: Evaluator regel 92 de is None checks weghalen
 # TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten)
-# TODO: Identifier regel 39 check kan weg, identifier bestaat altijd
 
 # NICE TO HAVES ---------------------------------
 # TODO: LOW PRIO: Eventueel If / IfElse logic combineren in typechecker

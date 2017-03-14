@@ -8,12 +8,12 @@ from pql.typechecker.types import DataTypes
 
 class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def __init__(self):
-        self.identifier_dict = dict()
+        self.symbol_table = dict()
         self.errors = list()
 
     def visit(self, ast):
         self.errors.clear()
-        self.identifier_dict = TypeEnvironment().visit(ast)
+        self.symbol_table = TypeEnvironment().visit(ast)
         [form.apply(self) for form in ast]
         return self.errors
 
@@ -143,7 +143,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return func(allowed_arithmetic_types, allowed_boolean_types, type_set)
 
     def identifier(self, node):
-        return self.identifier_dict[node.name]
+        return self.symbol_table[node.name]
 
     def value(self, node):
         return node

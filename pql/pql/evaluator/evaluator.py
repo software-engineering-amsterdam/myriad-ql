@@ -16,17 +16,21 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.__environment
 
     def form(self, node):
-        [statement.apply(self) for statement in node.statements]
+        for statement in node.statements:
+            statement.apply(self)
 
     def conditional_if_else(self, node):
         if node.condition.apply(self):
-            [statement.apply(self) for statement in node.statements]
+            for statement in node.statements:
+                statement.apply(self)
         else:
-            [statement.apply(self) for statement in node.else_statement_list]
+            for statement in node.else_statement_list:
+                statement.apply(self)
 
     def conditional_if(self, node):
         if node.condition.apply(self):
-            [statement.apply(self) for statement in node.statements]
+            for statement in node.statements:
+                statement.apply(self)
 
     def expression(self, node):
         return node.apply(self)
@@ -36,10 +40,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
             self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):
-        if node.name in self.__environment:
-            return self.__environment[node.name]
-        else:
-            return None
+        return self.__environment[node.name]
 
     def value(self, node):
         return node.value
