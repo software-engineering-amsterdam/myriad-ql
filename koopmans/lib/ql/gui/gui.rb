@@ -56,14 +56,6 @@ module QL
 end
 
 
-
-
-
-
-
-
-
-
 # return if check(type_checker) == 'quit'
 
 # TODO hier wat aan doen
