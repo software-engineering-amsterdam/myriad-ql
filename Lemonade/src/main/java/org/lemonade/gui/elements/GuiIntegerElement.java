@@ -28,7 +28,7 @@ public class GuiIntegerElement implements GuiElement {
     }
 
     private void validate(String text) {
-        if (!text.matches("[-+]?[0-9]*")) {
+        if (!text.matches("[-+]?[0-9]+")) {
             this.value = new GuiUndefinedValue();
         } else if (this.value.isDefined()) {
             ((GuiIntegerValue) this.value).update(Integer.parseInt(text));

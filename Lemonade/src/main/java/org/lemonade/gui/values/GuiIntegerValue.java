@@ -43,6 +43,7 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
     }
 
     public GuiIntegerValue product(GuiIntegerValue that) {
+        System.err.println(String.format("%d * %d", this.getValue(), that.getValue()));
         return new GuiIntegerValue(this.getValue() * that.getValue());
     }
 
