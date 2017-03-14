@@ -267,7 +267,6 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 		check(expected, rhs);
 	}
 
-
     private void check(Type expected, Type current) {
     	if (!expected.equals(current)) {
         	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "

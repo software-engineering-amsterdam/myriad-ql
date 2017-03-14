@@ -15,7 +15,6 @@ block returns [Block result]
  : '{' blockItems { $result = new Block($blockItems.result, $blockItems.start.getLine()); } '}'
  ;
 
-// TODO decide on maximum characters on one line
 blockItems returns [List<BlockItem> result]
 @ init {
 	$result = new ArrayList<BlockItem>();

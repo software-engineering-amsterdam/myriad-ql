@@ -3,6 +3,7 @@ package QL.value;
 public class BoolValue extends Value {
 
 	private final Boolean value;
+	private final static boolean defaultValue = false;
 
     public BoolValue(Boolean value) {
     	this.value = value;
@@ -10,7 +11,7 @@ public class BoolValue extends Value {
 
     // TODO default false ?
     public BoolValue() {
-    	this.value = false;
+    	this.value = defaultValue;
     }
     
     @Override

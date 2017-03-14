@@ -10,8 +10,8 @@ import QL.ui.Questionnaire;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
-				 + "Name1: \"Question0\" integer "
-				 + "Name1: \"Question1\"boolean "
+				 + "Name0: \"Question0\" integer "
+				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
 				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"

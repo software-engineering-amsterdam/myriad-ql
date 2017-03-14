@@ -8,7 +8,10 @@ import QL.ast.expression.*;
 import QL.ast.type.*;
 import QL.errorhandling.Error;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** CheckCyclicDependencies checks for
  * <li> cyclic dependencies between the questions
@@ -17,8 +20,11 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     private final Environment environment;
     private Question current;
 
+    private Map<String, List<String>> dependencies ;
+
     public CheckCyclicDependencies(Environment environment) {
         this.environment = environment;
+        dependencies = new HashMap<>();
     }
 
     @Override
@@ -109,7 +115,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     @Override
     public Type visit(IdExpr id) {
 
-        environment.addReference(current.getVariable(), id.getName());
+        addReference(current.getVariable(), id.getName());
         check();
 
         return null;
@@ -201,10 +207,10 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     private void check() {
-        List<String> references = environment.getReferences(current.getVariable());
+        List<String> references = getReferences(current.getVariable());
 
         for (String reference: references) {
-            List<String> cycleReferences = environment.getReferences(reference);
+            List<String> cycleReferences = getReferences(reference);
             if (cycleReferences != null && cycleReferences.contains(current.getVariable())) {
             	environment.getFaults().add(new Error("There is a cyclic dependency in "
             			+ "the computed questions " + current.getVariable() + " and " + reference, 
@@ -212,4 +218,25 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
             }
         }
     }
+
+    public void addReference(String name, String reference){
+        List<String> references;
+
+        if (dependencies.containsKey(name)) {
+            references = dependencies.get(name);
+        } else {
+            references = new ArrayList<>();
+        }
+
+        references.add(reference);
+        dependencies.put(name, references);
+    }
+    public List<String> getReferences(String name){
+        if (dependencies.containsKey(name)) {
+            return dependencies.get(name);
+        } else {
+            return null;
+        }
+    }
+
 }
