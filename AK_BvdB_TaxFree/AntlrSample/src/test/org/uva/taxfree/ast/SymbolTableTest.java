@@ -7,7 +7,9 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.types.BooleanType;
 
-public class SymbolTableTest {
+import java.io.File;
+
+public class SymbolTableTest extends SemanticsTester {
     SymbolTable mSymbolTable;
 
     @BeforeMethod
@@ -25,5 +27,15 @@ public class SymbolTableTest {
     @Test(expectedExceptions = RuntimeException.class)
     public void testUnknownVariable() throws Exception {
         mSymbolTable.resolveValue("giveMeARuntimeException!");
+    }
+
+    @Test
+    public void testSymbolContents() throws Exception {
+        assertSemantics("SimpleForm.txfrm", 0, "Simple tax form without errors");
+    }
+
+    @Override
+    protected File testFile(String fileName) {
+        return new File("forms\\" + fileName);
     }
 }
