@@ -82,7 +82,7 @@ public class SymbolTable {
         return findDeclaration(variableId).getType();
     }
 
-    public void getDuplicateLabelErrors(MessageList messageList) {
+    public void checkDuplicateLabels(MessageList messageList) {
         Set<String> processedLabels = new LinkedHashSet<>();
         for (Declaration declaration : mDeclarations) {
             String label = declaration.getLabel();
@@ -92,7 +92,7 @@ public class SymbolTable {
         }
     }
 
-    public void getDuplicateDeclarationErrors(MessageList messageList) {
+    public void checkDuplicateDeclarations(MessageList messageList) {
         Set<String> processedDeclarations = new LinkedHashSet<>();
         for (Declaration declaration : mDeclarations) {
             String id = declaration.getId();
