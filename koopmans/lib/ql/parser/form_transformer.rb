@@ -4,6 +4,7 @@ module QL
   module Parser
     class FormTransformer < Parslet::Transform
       include AST
+
       # variable
       rule(variable: simple(:name)) { Variable.new(name) }
 
