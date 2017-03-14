@@ -34,8 +34,8 @@ class Form(Node):
         self.name = form_identifier
         self.statements = form_statement_list
 
-    def apply(self, visitor):
-        return visitor.form(self)
+    def apply(self, visitor, args=None):
+        return visitor.form(self, args)
 
     def __str__(self, level=0):
         ret = "\t" * level + repr(self.var_type) + "\n"

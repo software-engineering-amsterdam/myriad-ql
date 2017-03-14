@@ -22,7 +22,7 @@ class IdentifierChecker(FormVisitor):
         self.ast.apply(self)
         return build_error_list(self.__symbol_table)
 
-    def form(self, node):
+    def form(self, node, args=None):
         for statement in node.statements:
             statement.apply(self)
 

@@ -12,7 +12,7 @@ if __name__ == '__main__':
     file_window.show()
     exit(app.exec_())
 
-# TODO: String support toevoegen
+# TODO: String support toevoegen - equality en inequality moeten ook nog
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
 # TODO: Environment een class maken en een update value methode geven
 # TODO: Error messages aan parser toevoegen

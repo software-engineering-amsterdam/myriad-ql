@@ -10,16 +10,18 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
         self.errors = list()
 
     def visit(self):
-        self.ast.apply(self)
+        properties = self.ast.apply(self, dict())
+        self.errors.clear()
+        self.ast.apply(self, properties)
         return self.errors
 
-    def form(self, node):
-        properties = dict()
+    def form(self, node, properties=None):
         for statement in node.statements:
             result = statement.apply(self, properties)
             if result is not None:
                 key, value = result
                 properties[key] = value
+        return properties
 
     def conditional_if_else(self, node, local_properties=None):
         self.conditional_if(node, local_properties.copy())
@@ -50,6 +52,7 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
             self.errors.append("Field at {} had the following references that were not resolvable: {} "
                                .format(node.location,
                                        ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]))
+        return node.name.name, node.name
 
     def identifier(self, node):
         return [node]

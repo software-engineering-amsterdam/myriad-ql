@@ -13,9 +13,9 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         self.__environment = environment_type(ast).visit()
         self.ast = ast
 
-    def visit(self):
-        #TODO make environment receive and return environment instead of having it as instance variable
-        environment = self.__environment
+    def visit(self, environment=None):
+        if environment is None:
+            environment = self.__environment
         self.ast.apply(self)
 
         while set(self.__environment.items()) ^ set(environment.items()):
@@ -24,7 +24,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
 
         return self.__environment
 
-    def form(self, node):
+    def form(self, node, args=None):
         for statement in node.statements:
             statement.apply(self)
 
@@ -124,8 +124,5 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         return not node.rhs.apply(self)
 
     def update_value(self, key, value):
-        #TODO If environment is passed, this can be removed
         self.__environment[key] = value
-        visit = self.visit()
-        print(visit)
-        return visit
+        return self.visit()

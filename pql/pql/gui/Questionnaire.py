@@ -33,7 +33,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.trigger_conditional_if()
         self.trigger_conditional_if_else()
 
-    def form(self, node):
+    def form(self, node, args=None):
         page = Page(node.name, self.wizard)
         layout = QVBoxLayout()
         for statement in node.statements:
@@ -149,32 +149,32 @@ class Questionnaire(FormVisitor, TypeVisitor):
         signal.connect(self.trigger_conditional_if)
         signal.connect(self.trigger_conditional_if_else)
 
-    def update_trigger_numeric(self, widget, value, type):
-        environment = self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(type, self.update_value_numeric, environment)
+    def update_trigger_numeric(self, widget, value, widget_type):
+        self.update(value, widget, widget_type, self.__update_value_numeric)
 
     def update_trigger_boolean(self, widget, value):
-        environment = self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(QCheckBox, self.update_value_boolean, environment)
+        self.update(value, widget, QCheckBox, self.__update_value_boolean)
 
     def update_trigger_string(self, widget, value):
+        self.update(value, widget, QLineEdit, self.__update_value_string)
+
+    def update(self, value, widget, widget_type, update_method):
         environment = self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(QLineEdit, self.update_value_string, environment)
+        self.update_visible_values(widget_type, update_method, environment)
 
     def update_visible_values(self, widget_type, function, environment):
         for key, value in environment.items():
             widget = self.wizard.findChild(widget_type, key)
-            if widget is not None:
-                function(widget, value)
+            function(widget, value)
 
-    def update_value_boolean(self, widget, value):
-        if value is not None:
-            widget.setChecked(value)
+    @staticmethod
+    def __update_value_boolean(widget, value):
+        widget.setChecked(value)
 
-    def update_value_numeric(self, widget, value):
-        if value is not None:
-            widget.setValue(value)
+    @staticmethod
+    def __update_value_numeric(widget, value):
+        widget.setValue(value)
 
-    def update_value_string(self, widget, value):
-        if value is not None:
-            widget.setText(value)
+    @staticmethod
+    def __update_value_string(widget, value):
+        widget.setText(value)

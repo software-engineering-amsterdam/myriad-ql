@@ -19,7 +19,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         self.ast.apply(self)
         return self.errors
 
-    def form(self, node):
+    def form(self, node, args=None):
         for statement in node.statements:
             statement.apply(self)
 
