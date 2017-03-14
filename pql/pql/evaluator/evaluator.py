@@ -115,4 +115,4 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def update_value(self, key, value):
         #TODO If environment is passed, this can be removed
         self.__environment[key] = value
-        print(self.__environment)
+        return self.visit()
