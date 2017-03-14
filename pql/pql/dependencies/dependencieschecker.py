@@ -23,15 +23,19 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if local_properties is None:
             local_properties = dict()
         for statement in node.else_statement_list:
-            key, value = statement.apply(self, local_properties)
-            local_properties[key] = value
+            result = statement.apply(self, local_properties)
+            if result is not None:
+                key, value = result
+                local_properties[key] = value
 
     def conditional_if(self, node, local_properties=None):
         if local_properties is None:
             local_properties = dict()
         for statement in node.statements:
-            key, value = statement.apply(self, local_properties)
-            local_properties[key] = value
+            result = statement.apply(self, local_properties)
+            if result is not None:
+                key, value = result
+                local_properties[key] = value
 
     def field(self, node, scope_properties=None):
         if scope_properties is None:
