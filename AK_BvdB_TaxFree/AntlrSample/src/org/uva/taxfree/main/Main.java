@@ -10,6 +10,12 @@ import java.io.IOException;
 
 public class Main {
 
+    {
+//        QuestionForm taxForm = new QuestionForm(ast);
+//        taxForm.show();
+    }
+//        if(semanticsAnalyzer.validSemantics())
+
     public static void main(String[] args) throws IOException {
         File inputFile = FileSelector.select();
         if (!inputFile.exists()) {
@@ -49,12 +55,6 @@ public class Main {
         // sematicsAnalyzer.check();
 //        if (semanticsAnalyzer.hasMessages()) {
 //        MessageWindow.showMessages(semanticsAnalyzer.getSemanticErrors());
-    }
-//        if(semanticsAnalyzer.validSemantics())
-
-    {
-//        QuestionForm taxForm = new QuestionForm(ast);
-//        taxForm.show();
     }
 
 }

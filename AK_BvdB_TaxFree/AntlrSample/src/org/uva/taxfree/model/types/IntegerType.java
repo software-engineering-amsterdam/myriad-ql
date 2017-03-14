@@ -1,10 +1,10 @@
 package org.uva.taxfree.model.types;
 
 import org.uva.taxfree.gui.QuestionForm;
+import org.uva.taxfree.gui.widgets.IntegerWidget;
+import org.uva.taxfree.model.node.operators.BooleanOperator;
 import org.uva.taxfree.model.node.operators.CompareOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
-import org.uva.taxfree.model.node.operators.BooleanOperator;
-import org.uva.taxfree.gui.widgets.IntegerWidget;
 
 public class IntegerType extends Type {
     @Override

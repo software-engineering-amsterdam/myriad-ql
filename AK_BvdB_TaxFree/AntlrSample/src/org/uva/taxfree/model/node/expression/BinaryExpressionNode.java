@@ -24,7 +24,7 @@ public class BinaryExpressionNode extends ExpressionNode {
         String leftHand = mLeft.resolveValue();
         String rightHand = mRight.resolveValue();
         String operator = mOperator.resolveValue();
-        if(!leftHand.isEmpty() && !rightHand.isEmpty()) {
+        if (!leftHand.isEmpty() && !rightHand.isEmpty()) {
             return "(" + leftHand + operator + rightHand + ")";
         }
         return "";
