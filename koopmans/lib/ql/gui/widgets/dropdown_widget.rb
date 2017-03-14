@@ -2,7 +2,7 @@ module QL
   module GUI
     class DropdownWidget < Widget
       def initialize(tk_frame, options=nil)
-        @default_value = true
+        @default_value = false
 
         @true_label = 'true'
         @false_label = 'false'

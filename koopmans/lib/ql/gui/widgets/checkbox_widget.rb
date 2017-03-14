@@ -2,7 +2,7 @@ module QL
   module GUI
     class CheckboxWidget < Widget
       def initialize(tk_frame, options=nil)
-        @default_value = true
+        @default_value = false
 
         variable = TkVariable.new(@default_value)
 
