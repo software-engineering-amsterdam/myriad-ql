@@ -1,6 +1,6 @@
 form taxOfficeExample {
 	"Did you sell a house in 2010?"
-		hasSoldHouse: boolean
+		hasSoldHouse: boolean = hasBoughtHouse && hasMaintLoan
 	"Did you buy a house in 2010?"
 		hasBoughtHouse: boolean
     "Did you buy or sell a house in 2010?"
@@ -25,5 +25,5 @@ form taxOfficeExample {
 	}
 		"This is a very nice placeholder" placeHolder1: money
 		"This is a very nice placeholder too!" placeHolder2: money
-		"This is a THE BEST placeholder" placeHolder2: money
+		
 }

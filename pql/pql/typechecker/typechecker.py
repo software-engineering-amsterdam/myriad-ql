@@ -1,4 +1,5 @@
 # coding=utf-8
+from pql.ast.ast import Money, Integer, Boolean
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -24,7 +25,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if node.expression is not None:
             result = node.expression.apply(self)
             if (result is not None) and (node.data_type.data_type is DataTypes.boolean) and (
-                        result is not node.data_type.data_type):
+                        result.data_type is not node.data_type.data_type):
                 self.errors.append(
                     "Expression of field [{}] did not match declared type [{}], at location: {}"
                         .format(result, node.data_type.data_type, node.expression.location))
@@ -113,9 +114,9 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
         if type_set_data_types.issubset(allowed_types):
             if DataTypes.money in type_set_data_types:
-                dominant_type = DataTypes.money
+                dominant_type = Money(0, '', 0)
             else:
-                dominant_type = DataTypes.integer
+                dominant_type = Integer(0, '', 0)
         else:
             self.add_leaf_error(allowed_types, type_set)
         return dominant_type
@@ -124,14 +125,14 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
                                allowed_boolean_types={DataTypes.boolean}):
         dominant_type = None
         allowed_types = allowed_arithmetic_types.union(allowed_boolean_types)
-        type_set = {node.lhs.apply(self), node.rhs.apply(self)}
+        type_set = [node.lhs.apply(self), node.rhs.apply(self)]
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
 
         if type_set_data_types.issubset(allowed_types):
             if type_set_data_types.issubset(allowed_arithmetic_types):
-                dominant_type = DataTypes.boolean
+                dominant_type = Boolean(0, '', False)
             elif type_set_data_types.issubset(allowed_boolean_types):
-                dominant_type = DataTypes.boolean
+                dominant_type = Boolean(0, '', False)
             else:
                 self.add_leaf_error(allowed_types, type_set)
         else:
