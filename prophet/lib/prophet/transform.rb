@@ -12,7 +12,7 @@ module Prophet
     rule(left: subtree(:left), operator: '-', right: subtree(:right)) { Ast::Subtraction.new(left, right) }
 
     rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier) }) { Ast::Question.new(text, Ast::Type.new(type), Ast::Identifier.new(identifier)) }
-    rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier), value: subtree(:value) }) { Ast::Question.new(text, Ast::Type.new(type), Ast::Identifier.new(identifier), value) }
+    rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier), value: subtree(:value) }) { Ast::QuestionWithValue.new(text, Ast::Type.new(type), Ast::Identifier.new(identifier), value) }
 
     rule(if_statement: { condition: subtree(:condition), true_branch: subtree(:true_branch) }) { Ast::IfStatement.new(condition, true_branch) }
     rule(if_statement: { condition: subtree(:condition), true_branch: subtree(:true_branch), false_branch: subtree(:false_branch) }) { Ast::IfElseStatement.new(condition, true_branch, false_branch) }

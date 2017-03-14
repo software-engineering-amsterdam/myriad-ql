@@ -3,7 +3,10 @@ module Prophet
     class Form < Node.new(:identifier, :body)
     end
 
-    class Question < Node.new(:string, :type, :identifier, :value)
+    class Question < Node.new(:string, :type, :identifier)
+    end
+
+    class QuestionWithValue < Node.new(:string, :type, :identifier, :value)
     end
 
     class IfStatement < Node.new(:condition, :true_branch)
