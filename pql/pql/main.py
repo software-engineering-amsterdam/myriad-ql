@@ -12,13 +12,12 @@ if __name__ == '__main__':
     file_window.show()
     exit(app.exec_())
 
-# Jeffrey TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
+# TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
 # TODO: Field opsplitsen in assignment en question / Evaluator regel 92 de is None checks weghalen
+# TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten tot environment niet veranderd is)
 # TODO: String support toevoegen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
 # TODO: Environment een class maken en een update value methode geven
-# TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten)
-
 # NICE TO HAVES ---------------------------------
 # TODO: LOW PRIO: Eventueel If / IfElse logic combineren in typechecker
 # TODO: LOWEST PRIO : ast.apply(typevisitor) ipv Typenvironment
