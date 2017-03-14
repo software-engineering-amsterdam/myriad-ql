@@ -18,12 +18,12 @@ module QL
         [if_body_questions, else_body_questions]
       end
 
-      # negate for else
+      # negate for condition for else body of if else statement
       def negate(condition)
         AST::BooleanNegation.new(condition)
       end
 
-      # stack conditions if possible
+      # stack conditions if possible for nested if (else) statements
       def stack_conditions(condition_1, condition_2)
         if condition_1 && condition_2
           AST::Expression.new([condition_1, AST::And.new(condition_2)])
