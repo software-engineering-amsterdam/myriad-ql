@@ -11,11 +11,11 @@ import {AST}                                     from './ast/AST.js';
 import {test1, test2, test3, test4, test5, test6}       from './test/TestStrings.js';
 
 let parser = new Parser();
-let {result, errors} = parser.parse(test6);
+let { result, errors, parseString } = parser.parse(test6);
 
-if (errors) {
+if (errors.length) {
     let gui = new GUI(null, null);
-    gui.showParserErrors(parser.getParseString(), parser.getErrorMessage());
+    gui.showParserErrors(parseString, errors);
     throw new Error("Parser error: " + parser.error);
 }
 

@@ -23,7 +23,7 @@ export class IfStatement extends Statement {
     }
 
     validate() {
-
+        /* TODO */
     }
 
     accept(visitor){

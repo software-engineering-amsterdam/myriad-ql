@@ -3,18 +3,13 @@
  */
 
 import find     from 'lodash/find';
-import {Form} from './Form.js'
-import {Question} from './Statements/Question.js'
-import {Expression} from './expressions/Expression.js'
-import {MemoryState} from './memory/MemoryState.js'
+import {Expression} from './expressions/Expression.js';
+import {MemoryState} from './memory/MemoryState.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
-
 
 export class ASTValidationVisitor {
 
-
-
-    constructor(options = {}) {
+    constructor() {
         this.memoryState = new MemoryState();
         this.errors = [];
         this.warnings = [];
@@ -25,30 +20,22 @@ export class ASTValidationVisitor {
         return this.memoryState;
     }
 
-
     visitAST(ast){
         this.visitForm(ast.getProgram());
         this.visitStatements(ast.getStatements());
-
     }
 
-    /**
-     * @param {Form} form
-     */
+    /* TODO, and fix visitor pattern */
     visitForm(form) {
         console.log(form.name);
     }
 
     visitStatements(statements) {
-        for (let statement of statements) {
-            console.log(statement);
+        for (const statement of statements) {
             statement.accept(this);
         }
     }
 
-    /**
-     * @param {Question} question
-     */
     visitQuestion(question) {
         this.memoryState.set(question.propertyName, question.propertyType);
 
@@ -67,20 +54,21 @@ export class ASTValidationVisitor {
 
     }
 
-    /* check duplicate question declarations with different types */
+    /**
+     * Check duplicate question declarations with different types
+     * @param question
+     */
     checkDuplicateDeclarations(question){
-        let memoryElement = this.memoryState.getElement(question.getPropertyName());
-        let propertyInMemory = memoryElement != undefined;
-        if(propertyInMemory && question.getPropertyType() != memoryElement.getType() ){
+        const memoryElement = this.memoryState.getElement(question.getPropertyName());
+        const propertyInMemory = memoryElement !== undefined;
+        if(propertyInMemory && question.getPropertyType() !== memoryElement.getType() ){
             this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
         }
     }
 
     checkDuplicateLabels(statement){
-        let localLabel = statement.getLabel();
-        let label = find(this.labels, (label)=>{
-           return label.contains(localLabel);
-        });
+        const localLabel = statement.getLabel();
+        const label = find(this.labels, (label) => label.contains(localLabel));
 
         if(label){
             this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
@@ -99,12 +87,14 @@ export class ASTValidationVisitor {
         ifstatement.condition.accept(this);
     }
 
+    /* TODO remove, bad code.  */
     findExpressionInArray(object){
         if(object instanceof Array){
             return this.findExpressionInArray(object[0]);
         } else if (object instanceof Expression) {
             return object;
         }
+        return {};
     }
 
     visitPreExpression(condition){
@@ -120,31 +110,30 @@ export class ASTValidationVisitor {
             condition.rightHand.accept(this);
         }
 
-        if (condition.operator == undefined){
+        if (condition.operator === undefined){
             //this.visitExpression(condition.leftHand);
-            let subExpression = this.findExpressionInArray(condition.leftHand);
+            const subExpression = this.findExpressionInArray(condition.leftHand);
             subExpression.accept(this);
         } else {
             //Todo: add prefix operator !
 
-            this.validateOperator(condition, ["||", "&&", "=="], QLBoolean.name);
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLMoney.name);
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLString.name);
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "==", "*", "/", "+", "-"], QLNumber.name);
-            this.validateOperator(condition, ["<", ">", ">=", "<=", "!=", "=="], QLDate.name);
+            this.validateOperator(condition, ['||', '&&', '=='], QLBoolean.name);
+            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney.name);
+            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '=='], QLString.name);
+            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber.name);
+            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '=='], QLDate.name);
         }
     }
 
 
 
     validateOperator(condition, validOperators, validType) {
-        let typeLeftHand = this.memoryState.getType(condition.leftHand);
-        let typeRightHand = this.memoryState.getType(condition.rightHand);
+        const typeLeftHand = this.memoryState.getType(condition.leftHand);
+        const typeRightHand = this.memoryState.getType(condition.rightHand);
 
         if (validOperators.includes(condition.operator)) {
-            if (typeLeftHand.constructor.name != validType || typeRightHand.constructor.name != validType) {
-                let errorStatement = `Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`;
-                this.errors.push(errorStatement);
+            if (typeLeftHand.constructor.name !== validType || typeRightHand.constructor.name !== validType) {
+                this.errors.push(`Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`);
             }
         }
     }

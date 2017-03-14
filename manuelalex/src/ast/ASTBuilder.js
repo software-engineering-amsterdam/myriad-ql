@@ -9,13 +9,9 @@ import {Question} from '../statements/Question.js';
 import {Answer} from '../statements/Answer.js';
 import {IfStatement} from '../statements/IFStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
-import {Comparison} from '../expressions/Comparison.js';
 import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
-import {MinOperator} from '../operator/MinOperator.js';
-import {PlusOperator} from '../operator/PlusOperator.js';
-import {DivideOperator} from '../operator/DivideOperator.js';
-import {MultiplyOperator} from '../operator/MultiplyOperator.js';
+import {PlusOperator, MinOperator, DivideOperator, MultiplyOperator} from '../operator/Operators.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
 import {Property} from '../types/Property.js';
 import {Label} from '../Label.js';
@@ -35,7 +31,7 @@ export class ASTBuilder {
     }
 
     ifElseStatement(data, location) {
-        let ifStatement = data[0];
+        const ifStatement = data[0];
         return new IfElseStatement(ifStatement.getCondition(), ifStatement.getIfBody(), _.flattenDeep(data[1][1][3]), location);
     }
 
@@ -78,10 +74,6 @@ export class ASTBuilder {
         return data;
     }
 
-    comparison(data, location) {
-        return new Comparison(data[0], data[2][0], data[4], location);
-    }
-
     and_test(data) {
         return data;
     }
@@ -111,7 +103,7 @@ export class ASTBuilder {
     }
 
     money(data, location) {
-        return new QLMoney(location)
+        return new QLMoney(location);
     }
 
     string(data, location) {
@@ -123,7 +115,7 @@ export class ASTBuilder {
     }
 
     date(data, location) {
-        return new QLDate(location)
+        return new QLDate(location);
     }
 
     boolean(data, location) {
@@ -131,11 +123,11 @@ export class ASTBuilder {
     }
 
     property(data, location) {
-        return new Property(data[0].join(""), location);
+        return new Property(data[0].join(''), location);
     }
 
     toString(data) {
-        return data.join().split(",").join("");
+        return data.join().split(',').join('');
     }
 
     toNull() {

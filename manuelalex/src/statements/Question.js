@@ -27,8 +27,9 @@ export class Question extends Statement {
     }
 
     validate() {
+        /* TODO check this */
         if (!this.name.length) {
-            this._throwError(`Name should be defined`);
+            this._throwError('Name should be defined');
         }
     }
 

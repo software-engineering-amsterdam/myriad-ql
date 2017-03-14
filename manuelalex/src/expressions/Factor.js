@@ -5,4 +5,4 @@ export class Factor {
     constructor(options = {}) {
 
     }
-};
+}

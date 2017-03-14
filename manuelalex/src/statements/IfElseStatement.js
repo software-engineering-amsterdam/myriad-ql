@@ -17,11 +17,11 @@ export class IfElseStatement extends IfStatement {
     }
 
     validate() {
-
+        /* TODO */
     }
 
     render(visitor, view){
         visitor.renderIfElseStatement(this, view);
     }
 
-};
+}
