@@ -79,3 +79,23 @@ class TestDependenciesChecker(Shared):
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+
+    def test_circular(self):
+        input_string = """
+        form taxOfficeExample {
+            if (hasSoldHouse) {
+                "What was the selling price?"
+                    sellingPrice: money
+                "Private debts for the sold house:"
+                    privateDebt: money
+                if (hasBoughtHouse) {
+                    "What was the buying price?"
+                        buyingPrice: money
+                }
+                "Value residue:" valueResidue: money = (sellingPrice - privateDebt)
+            }
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_circular_references(form_node)
+        self.assertEqual(len(errors), 0, "There should be no errors")

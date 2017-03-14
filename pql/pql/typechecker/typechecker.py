@@ -3,10 +3,11 @@ from pql.ast.ast import Money, Integer, Boolean
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
 from pql.typechecker.types import DataTypes
 
 
-class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
+class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor, TypeVisitor):
     def __init__(self, ast, environment_type):
         self.symbol_table = environment_type(ast).visit()
         self.ast = ast

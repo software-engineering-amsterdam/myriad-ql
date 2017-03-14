@@ -97,12 +97,3 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def positive(self, node):
         pass
-
-    def integer(self, node):
-        pass
-
-    def boolean(self, node):
-        pass
-
-    def money(self, node):
-        pass
