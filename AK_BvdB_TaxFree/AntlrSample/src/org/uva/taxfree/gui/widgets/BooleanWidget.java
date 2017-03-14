@@ -2,11 +2,13 @@ package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
 import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.types.BooleanType;
+import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 
 public class BooleanWidget extends Widget {
-    private final JCheckBox mCheckbox;
+    private JCheckBox mCheckbox;
 
     public BooleanWidget(String label, String id) {
         super(label, id);
@@ -35,5 +37,13 @@ public class BooleanWidget extends Widget {
     @Override
     public void update(SymbolTable symbolTable) {
         writeToTable(symbolTable);
+    }
+
+    @Override
+    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
+        super.applyStyle(panel, label, qlsStyle);
+        qlsStyle.applyStyle(new BooleanType(), panel);
+        qlsStyle.applyStyle(new BooleanType(), label);
+        qlsStyle.applyStyle(new BooleanType(), mCheckbox);
     }
 }

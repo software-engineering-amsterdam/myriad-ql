@@ -2,14 +2,17 @@ package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
 import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 
 public abstract class Widget {
     private final JPanel mPanel;
+    private final JLabel mLabel;
     private final String mId;
 
     public Widget(String label, String id) {
+        mLabel = new JLabel(label);
         mPanel = createPanel(label);
         mId = id;
     }
@@ -17,8 +20,8 @@ public abstract class Widget {
     private JPanel createPanel(String label) {
         JPanel widgetPanel = new JPanel();
         widgetPanel.setName(label);
-        widgetPanel.add(new JLabel(label));
-        widgetPanel.setVisible(false);
+        widgetPanel.add(mLabel);
+        widgetPanel.setVisible(true);
         return widgetPanel;
     }
 
@@ -46,4 +49,13 @@ public abstract class Widget {
     protected String readFromtable(SymbolTable symbolTable){
         return symbolTable.resolveValue(mId);
     }
+
+    public void updateStyle(QlsStyle qlsStyle) {
+        applyStyle(mPanel, mLabel, qlsStyle);
+    }
+
+    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
+        // TODO: make abstract
+    }
+
 }

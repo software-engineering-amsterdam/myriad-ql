@@ -2,6 +2,8 @@ package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
 import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.types.StringType;
+import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,5 +42,13 @@ public abstract class TextFieldWidget extends Widget {
     @Override
     public void update(SymbolTable symbolTable) {
         writeToTable(symbolTable);
+    }
+
+    @Override
+    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
+        super.applyStyle(panel, label, qlsStyle);
+        qlsStyle.applyStyle(new StringType(), panel);
+        qlsStyle.applyStyle(new StringType(), label);
+        qlsStyle.applyStyle(new StringType(), mTextField);
     }
 }
