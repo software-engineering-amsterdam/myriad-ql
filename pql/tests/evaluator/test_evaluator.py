@@ -1,6 +1,6 @@
 # coding=utf-8
-from environment.environmentcreator import EnvironmentCreator
-from evaluator.evaluator import Evaluator
+from pql.environment.environmentcreator import EnvironmentCreator
+from pql.evaluator.evaluator import Evaluator
 from tests.shared import Shared
 
 
