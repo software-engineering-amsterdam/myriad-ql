@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import ql.ast.environment.Env;
 import ql.ast.visistor.*;
+import ql.logger.ErrorHandler;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
 
@@ -39,11 +40,13 @@ public class Main extends Application {
             ASTVisitor<Void> printVisitor = new PrintASTVisitor();
             printVisitor.visit(parser.getResult());
 
+            ErrorHandler errorHandler = new ErrorHandler();
+
             EnvASTVisitor envASTVisitor = new EnvASTVisitor();
-            Env env = envASTVisitor.startVisitor(parser.getResult());
+            Env env = envASTVisitor.startVisitor(errorHandler, parser.getResult());
 
             TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
-            typeVisitor.startVisitor(parser.getResult());
+            typeVisitor.startVisitor(errorHandler, parser.getResult());
 
             ViewASTVisitor viewASTVisitor = new ViewASTVisitor(env);
             primaryStage.setScene(viewASTVisitor.startVisitor(parser.getResult()));

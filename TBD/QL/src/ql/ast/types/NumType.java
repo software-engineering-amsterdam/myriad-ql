@@ -21,12 +21,12 @@ public class NumType extends Type {
 
     @Override
     protected Type checkTypesEval(RelationalOp op, IntType other) {
-        return this;
+        return new BooleanType();
     }
 
     @Override
     protected Type checkTypesEval(RelationalOp op, FloatType other) {
-        return new FloatType();
+        return new BooleanType();
     }
 
     @Override

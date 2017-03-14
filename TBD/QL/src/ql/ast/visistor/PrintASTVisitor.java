@@ -60,11 +60,11 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(Question node) {
         System.out.print("\"");
-        System.out.print(node.getId());
-        System.out.print("\" \n ");
         System.out.print(node.getQuestion());
+        System.out.print("\" \n ");
+        System.out.print(node.getId());
         System.out.print(" : ");
-        System.out.print(typeToString(node.getType()));
+        System.out.print(node.getType().toString());
 
         return null;
     }
@@ -73,11 +73,11 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
     @Override
     public Void visit(QuestionExpr node) {
         System.out.print("\"");
-        System.out.print(node.getId());
-        System.out.print("\" \n ");
         System.out.print(node.getQuestion());
+        System.out.print("\" \n ");
+        System.out.print(node.getId());
         System.out.print(" : ");
-        System.out.print(typeToString(node.getType()));
+        System.out.print(node.getType().toString());
         System.out.print(" =\n");
         node.getExpr().accept(this);
 
@@ -259,23 +259,5 @@ public class PrintASTVisitor extends ASTVisitor<Void> {
         node.getExpr().accept(this);
         System.out.print(")");
         return null;
-    }
-
-    private String typeToString(Type type) {
-        /*switch (type) {
-            case TYPESTRING:
-                return "string";
-            case TYPEBOOL:
-                return "boolean";
-            case TYPEINT:
-                return "int";
-            case TYPEDATE:
-                return "date";
-            case TYPEFLOAT:
-                return "float";
-            case TYPEMONEY:
-                return "money";
-        }*/
-        return "unknown";
     }
 }

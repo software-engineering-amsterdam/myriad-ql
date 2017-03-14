@@ -8,19 +8,33 @@ import java.util.List;
  */
 public class ErrorHandler {
     private List<Error> errors = new ArrayList<>();
+    private final boolean debugMode;
+
+    public ErrorHandler() {
+        this.debugMode = false;
+    }
+
+    public ErrorHandler(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
 
     public void addError(Error error) {
         errors.add(error);
     }
 
-    private boolean foundErrors(){
+    public boolean foundErrors(){
         return !errors.isEmpty();
     }
 
     public void showErrors(){
+        if (debugMode) {
+            return;
+        }
+
         for (Error error : errors) {
             System.err.println("Line " + error.getRow() + ": " + error.getMessage());
         }
+
         if(foundErrors()) {
             System.exit(1);
         }

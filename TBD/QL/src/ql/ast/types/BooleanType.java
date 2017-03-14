@@ -31,7 +31,11 @@ public class BooleanType extends Type {
 
     @Override
     protected Type checkTypesEval(EqualityOp op, BooleanType other) {
-        return this;
+        return new BooleanType();
     }
 
+    @Override
+    public String toString() {
+        return "boolean";
+    }
 }

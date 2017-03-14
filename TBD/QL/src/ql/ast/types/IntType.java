@@ -25,6 +25,11 @@ public class IntType extends NumType {
 
     @Override
     protected Type checkTypesEval(EqualityOp op, IntType other) {
-        return this;
+        return new BooleanType();
+    }
+
+    @Override
+    public String toString() {
+        return "int";
     }
 }

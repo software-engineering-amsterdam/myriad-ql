@@ -15,6 +15,11 @@ public class StringType extends Type {
 
     @Override
     protected Type checkTypesEval(EqualityOp op, StringType other) {
-        return this;
+        return new BooleanType();
+    }
+
+    @Override
+    public String toString() {
+        return "string";
     }
 }

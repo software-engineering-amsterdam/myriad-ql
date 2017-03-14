@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class TypeASTVisitor extends ASTVisitor<Type>{
 
-    private final ErrorHandler errorHandler = new ErrorHandler();
+    private ErrorHandler errorHandler;
     private final Env env;
     private Scope currentScope = null;
 
@@ -27,7 +27,8 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
         this.env = env;
     }
 
-    public void startVisitor(ASTNode node) {
+    public void startVisitor(ErrorHandler errorHandler, ASTNode node) {
+        this.errorHandler = errorHandler;
         node.accept(this);
         errorHandler.showErrors();
     }
@@ -68,7 +69,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
         }
 
         if (!expr.equals(new BooleanType())) {
-            errorHandler.addError(new Error("Condition Should be a boolean",  node.getCondition().getRowNumber()));
+            errorHandler.addError(new Error("Condition Should be a boolean found " + expr.toString(),  node.getCondition().getRowNumber()));
         }
 
         node.getIfBlock().accept(this);
@@ -80,7 +81,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     public Type visit(QuestionExpr node) {
         Type expr = node.getExpr().accept(this);
         if (!expr.equals(node.getType())) {
-            errorHandler.addError(new Error("Wrong type for assignment!", node.getRowNumber()));
+            errorHandler.addError(new Error("Wrong type for assignment expected " + node.getType() + " found " + expr, node.getRowNumber()));
         }
 
         if (expr.equals(new ErrorType())) {

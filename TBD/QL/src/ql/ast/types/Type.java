@@ -76,6 +76,10 @@ public class Type {
         return new ErrorType();
     }
 
+    protected Type checkTypesEval(EqualityOp op, FloatType other)  {
+        return new ErrorType();
+    }
+
     protected Type checkTypesEval(EqualityOp op, IntType other)  {
         return new ErrorType();
     }

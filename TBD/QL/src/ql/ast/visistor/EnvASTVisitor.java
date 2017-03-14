@@ -14,12 +14,14 @@ import java.util.List;
  */
 public class EnvASTVisitor extends ASTVisitor<Void> {
     private Env env;
-    private final ErrorHandler errorHandler = new ErrorHandler();
     private Scope currentScope = null;
+    private ErrorHandler errorHandler;
 
 
-    public Env startVisitor(ASTNode node){
-        env = new Env();
+    public Env startVisitor(ErrorHandler errorHandler, ASTNode node){
+        this.env = new Env();
+        this.errorHandler = errorHandler;
+
         node.accept(this);
         errorHandler.showErrors();
         return env;

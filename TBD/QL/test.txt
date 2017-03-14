@@ -2,10 +2,9 @@ form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
 
-
     if (hasSoldHouse) {
         "Did you sell a house in 2012?"
-            hasSoldHouse2: int
+            hasSoldHouse2: int = 1 * 5
     }else{
       "Did you enter a loan in 2012?"
         hasMaintLoan2: boolean
@@ -13,3 +12,21 @@ form taxOfficeExample {
        hasMaintLoan3: boolean = hasMaintLoan2
     }
 }
+
+form ParseTest {
+    "test question1?"
+        testQuestion1: int
+    if (testQuestion1 > 0) {
+    "test question2?"
+        testQuestion2: int
+     }
+}
+
+"form ParseTest1 {   " +
+                "\"test question1?\"\n" +
+                "    testQuestion1: int" +
+                "if (testQuestion1 > 0) {" +
+                "\"test question2?\"\n" +
+                "    testQuestion2: int" +
+                "}" +
+                "}"
