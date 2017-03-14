@@ -12,6 +12,7 @@
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Checker.Contracts;
+    using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Base;
 
     public class CyclicDependencyAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
@@ -34,7 +35,9 @@
         public void Analyze(FormStatement root)
         {
             this.Visit(root, new QuestionVisitorTypeEnvironment());
-            var result = this.circularDependencyChecker.CircularDependencies;
+            var errors = this.circularDependencyChecker.CircularDependencies;
+
+            errors.ForEach(x => this.Report.Add(new CircularDependencyMessage(x.StartPointId)));
         }
 
         public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)

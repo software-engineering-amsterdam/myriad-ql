@@ -128,6 +128,7 @@
     <Compile Include="Checker\Messages\Base\ErrorMessage.cs" />
     <Compile Include="Checker\Messages\Base\InfoMessage.cs" />
     <Compile Include="Checker\Messages\Base\WarningMessage.cs" />
+    <Compile Include="Checker\Messages\CircularDependencyMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateQuestionLabelMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateQuestionIdentifierMessage.cs" />
     <Compile Include="Checker\Messages\InvalidTypeMessage.cs" />
