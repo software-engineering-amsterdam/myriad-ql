@@ -31,7 +31,7 @@ module Prophet
 
     rule(:block) { (if_statement | question).repeat }
 
-    rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:if_true) >> (str('else') >> space >> block.as(:if_false)).maybe >> str('end')).as(:if_statement) >> space? }
+    rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:true_branch) >> (str('else') >> space >> block.as(:false_branch)).maybe >> str('end')).as(:if_statement) >> space? }
 
     rule(:question) { (text >> type >> identifier >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
 

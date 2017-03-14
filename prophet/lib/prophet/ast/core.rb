@@ -6,7 +6,10 @@ module Prophet
     class Question < Node.new(:string, :type, :identifier, :value)
     end
 
-    class IfStatement < Node.new(:condition, :if_true, :if_false)
+    class IfStatement < Node.new(:condition, :true_branch)
+    end
+
+    class IfElseStatement < Node.new(:condition, :true_branch, :false_branch)
     end
 
     class Identifier < Node.new(:name)
