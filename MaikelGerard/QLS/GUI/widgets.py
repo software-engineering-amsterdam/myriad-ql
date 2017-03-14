@@ -180,7 +180,9 @@ class SliderWidget(Widget):
         )
 
         self.main.addScale(self.identifier, row=row, column=1)
-        self.main.setScaleRange(self.identifier, 0, 100, curr=None)
+        self.main.setScaleRange(self.identifier, 0, 100000, curr=None)
+        self.main.showScaleIntervals(identifier, 25000)
+        self.main.showScaleValue(identifier, show=True)
         self.add_listener(self.main.getScaleWidget(self.identifier))
 
     def get_entry(self):
