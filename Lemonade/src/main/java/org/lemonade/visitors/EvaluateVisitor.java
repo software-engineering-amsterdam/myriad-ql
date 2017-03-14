@@ -51,6 +51,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public void visit(final GuiForm form) {
+        System.err.println("Evaluate starts");
         for (GuiBody body : form.getBodies()) {
             body.accept(this);
         }
@@ -58,11 +59,13 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public void visit(final GuiQuestion question) {
+        System.err.println(question.getElement().getValue());
         guiEnvironment.put(question.getIdentifier().getValue(), question.getElement().getValue());
     }
 
     @Override
     public void visit(final GuiConditional conditional) {
+        System.err.println("entering condition");
         GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
         if (condition.isDefined() && ((GuiBooleanValue) condition).getValue()) {
             conditional.isVisible(true);
@@ -77,8 +80,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiAndBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiBooleanValue left = (GuiBooleanValue) guiAndBinary.getLeft();
-        GuiBooleanValue right = (GuiBooleanValue) guiAndBinary.getRight();
+        GuiBooleanValue left = (GuiBooleanValue) guiAndBinary.getLeft().accept(this);
+        GuiBooleanValue right = (GuiBooleanValue) guiAndBinary.getRight().accept(this);
         return left.and(right);
     }
 
@@ -87,13 +90,14 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiDivideBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiDivideBinary.getLeft();
-        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiDivideBinary.getRight();
+        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiDivideBinary.getLeft().accept(this);
+        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiDivideBinary.getRight().accept(this);
         return left.divide(right);
     }
 
     @Override
     public GuiExpression visit(final GuiEqBinary guiEqBinary) {
+        System.err.println("entering equal");
         if (!guiEqBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
@@ -107,8 +111,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiGtBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGtBinary.getLeft();
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGtBinary.getRight();
+        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGtBinary.getLeft().accept(this);
+        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGtBinary.getRight().accept(this);
         return left.gT(right);
     }
 
@@ -117,8 +121,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiGteBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGteBinary.getLeft();
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGteBinary.getRight();
+        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGteBinary.getLeft().accept(this);
+        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGteBinary.getRight().accept(this);
         return left.gTEq(right);
     }
 
@@ -127,8 +131,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiLtBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLtBinary.getLeft();
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLtBinary.getRight();
+        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLtBinary.getLeft().accept(this);
+        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLtBinary.getRight().accept(this);
         return left.lT(right);
     }
 
@@ -137,8 +141,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiLteBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLteBinary.getLeft();
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLteBinary.getRight();
+        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLteBinary.getLeft().accept(this);
+        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLteBinary.getRight().accept(this);
         return left.lTEq(right);
     }
 
@@ -147,8 +151,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiMinusBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiMinusBinary.getLeft();
-        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiMinusBinary.getRight();
+        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiMinusBinary.getLeft().accept(this);
+        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiMinusBinary.getRight().accept(this);
         return left.minus(right);
     }
 
@@ -157,8 +161,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiNEqBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiValue<?> left = (GuiValue<?>) guiNEqBinary.getLeft();
-        GuiValue<?> right = (GuiValue<?>) guiNEqBinary.getRight();
+        GuiValue<?> left = (GuiValue<?>) guiNEqBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiNEqBinary.getRight().accept(this);
         return new GuiBooleanValue(left.equals(right)); //TODO Wrap this!
     }
 
@@ -167,8 +171,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiOrBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiBooleanValue left = (GuiBooleanValue) guiOrBinary.getLeft();
-        GuiBooleanValue right = (GuiBooleanValue) guiOrBinary.getRight();
+        GuiBooleanValue left = (GuiBooleanValue) guiOrBinary.getLeft().accept(this);
+        GuiBooleanValue right = (GuiBooleanValue) guiOrBinary.getRight().accept(this);
         return left.or(right);
     }
 
@@ -177,19 +181,21 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiPlusBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiPlusBinary.getLeft();
-        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiPlusBinary.getRight();
+        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiPlusBinary.getLeft().accept(this);
+        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiPlusBinary.getRight().accept(this);
         return left.plus(right);
     }
 
     @Override
     public GuiExpression visit(final GuiProductBinary guiProductBinary) {
+        System.err.println("product");
         if (!guiProductBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiProductBinary.getLeft();
-        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiProductBinary.getRight();
-        return null;
+        GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiProductBinary.getLeft().accept(this);
+        GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiProductBinary.getRight().accept(this);
+
+        return left.product(right);
     }
 
     @Override
@@ -197,7 +203,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiBangUnary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiBooleanValue expression = (GuiBooleanValue) guiBangUnary.getExpression();
+        GuiBooleanValue expression = (GuiBooleanValue) guiBangUnary.getExpression().accept(this);
         return expression.bang();
     }
 
