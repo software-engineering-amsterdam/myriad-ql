@@ -50,7 +50,6 @@ module QL
         cyclic_dependency_check(variable)
       end
 
-      protected
       # check if the visited variable is in the dependency hash
       # for each of the dependencies, check their dependencies
       # check if the variable from the dependency is in the dependency hash

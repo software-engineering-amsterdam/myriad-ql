@@ -14,7 +14,6 @@ module QL
         cyclic_checker(questions, ast)
       end
 
-      protected
       # checkers
       def duplicate_label_checker(questions)
         duplicate_labels = select_duplicates(questions.map(&:label).map(&:to_value))

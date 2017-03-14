@@ -60,7 +60,6 @@ module QL
         @variable_types[variable.name]
       end
 
-      protected
       def check_if_condition(if_statement, condition_type)
         unless condition_type.is_a?(BooleanType)
           NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))
