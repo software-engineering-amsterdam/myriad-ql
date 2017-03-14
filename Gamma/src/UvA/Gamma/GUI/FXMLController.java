@@ -8,6 +8,7 @@ import UvA.Gamma.Validation.TypeChecker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -95,6 +96,7 @@ public class FXMLController {
 
     public GridPane startRenderCondition() {
         rootGrid = new GridPane();
+        GridPane.setHalignment(rootGrid, HPos.RIGHT);
         conditionStack.push(rootGrid);
         rootGrid.managedProperty().bind(rootGrid.visibleProperty());
         return rootGrid;
