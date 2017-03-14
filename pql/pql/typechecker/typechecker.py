@@ -24,8 +24,8 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         if node.expression is not None:
             result = node.expression.apply(self)
             if result is not None and node.data_type.data_type is DataTypes.boolean and (result is not node.data_type.data_type):
-                self.errors.append("Expression of field [{}] did not match declared type [{}]"
-                                   .format(result, node.data_type.data_type))
+                self.errors.append("Expression of field [{}] did not match declared type [{}], at the following location: {}"
+                                   .format(result, node.data_type.data_type, node.expression.location))
 
     def subtraction(self, node):
         return self.type_detection(node, self.arithmetic_type_detection)

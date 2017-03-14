@@ -19,10 +19,10 @@ class Node(object):
 class Location(object):
     def __init__(self, position, source):
         self.line_number = lineno(position, source)
-        self.column_number = col(position, source)
+        # self.column_number = col(position, source)
 
     def __str__(self):
-        return "({}:{})".format(self.line_number, self.column_number)
+        return "(Line number: {})".format(self.line_number)
 
     def __repr__(self):
         return str(self)

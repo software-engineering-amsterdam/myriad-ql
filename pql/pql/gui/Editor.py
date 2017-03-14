@@ -126,8 +126,8 @@ class Editor(QMainWindow, QWidget):
 
     def current_cursor_position(self):
         text_cursor = self.text_editor.textCursor()
-        cursor_row = text_cursor.blockNumber()
-        cursor_column = text_cursor.positionInBlock()
+        cursor_row = text_cursor.blockNumber() + 1
+        cursor_column = text_cursor.columnNumber() + 1
         position = "{}:{}".format(cursor_row, cursor_column)
         return position
 

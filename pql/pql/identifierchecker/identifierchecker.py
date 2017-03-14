@@ -13,7 +13,7 @@ class IdentifierChecker(FormVisitor):
             errors = list()
             for key, value in identifiers.items():
                 if len(value) > 1:
-                    errors.append("Key: {} contained multiple entries, the following locations: {}"
+                    errors.append("Key: {} contained multiple entries, at the following locations: {}"
                                   .format(key, [v.location for v in value]))
             return errors
         self.__symbol_table.clear()
