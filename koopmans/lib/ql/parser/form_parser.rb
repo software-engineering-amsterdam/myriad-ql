@@ -29,8 +29,6 @@ module QL
       rule(:boolean_operator) { (str('&&') | str('||')).as(:operator) >> _ }
       rule(:negation_operator) { (str('!') | str('-')).as(:operator) >> _ }
 
-
-
       # expression
       # precedence order: booolean, order, equals, addition, multiplication, literal
       rule(:expression) { boolean_expression.as(:expression) }
