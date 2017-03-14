@@ -6,13 +6,14 @@ import org.lemonade.gui.expressions.binary.GuiEqBinary;
 import org.lemonade.gui.expressions.binary.GuiGTBinary;
 import org.lemonade.gui.expressions.binary.GuiGTEBinary;
 import org.lemonade.gui.expressions.binary.GuiLTBinary;
+import org.lemonade.gui.expressions.binary.GuiLTEBinary;
 import org.lemonade.gui.expressions.binary.GuiMinusBinary;
 import org.lemonade.gui.expressions.binary.GuiNEqBinary;
 import org.lemonade.gui.expressions.binary.GuiOrBinary;
 import org.lemonade.gui.expressions.binary.GuiPlusBinary;
 import org.lemonade.gui.expressions.binary.GuiProductBinary;
-import org.lemonade.gui.expressions.unary.BangUnary;
-import org.lemonade.gui.expressions.unary.NegUnary;
+import org.lemonade.gui.expressions.unary.GuiBangUnary;
+import org.lemonade.gui.expressions.unary.GuiNegUnary;
 import org.lemonade.gui.values.GuiBooleanValue;
 import org.lemonade.gui.values.GuiDateValue;
 import org.lemonade.gui.values.GuiDecimalValue;
@@ -39,6 +40,8 @@ public interface GuiExpressionVisitor<T> {
 
     T visit(GuiLTBinary guiLtBinary);
 
+    T visit(GuiLTEBinary guiLteBinary);
+
     T visit(GuiMinusBinary guiMinusBinary);
 
     T visit(GuiNEqBinary guiNEqBinary);
@@ -49,9 +52,9 @@ public interface GuiExpressionVisitor<T> {
 
     T visit(GuiProductBinary guiProductBinary);
 
-    T visit(BangUnary bangUnary);
+    T visit(GuiBangUnary guiBangUnary);
 
-    T visit(NegUnary negUnary);
+    T visit(GuiNegUnary guiNegUnary);
 
     T visit(GuiBooleanValue booleanValue);
 

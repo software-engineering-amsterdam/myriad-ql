@@ -18,10 +18,18 @@ import org.lemonade.gui.elements.GuiMoneyElement;
 import org.lemonade.gui.elements.GuiStringElement;
 import org.lemonade.gui.expressions.binary.GuiAndBinary;
 import org.lemonade.gui.expressions.binary.GuiDivideBinary;
+import org.lemonade.gui.expressions.binary.GuiEqBinary;
+import org.lemonade.gui.expressions.binary.GuiGTBinary;
+import org.lemonade.gui.expressions.binary.GuiGTEBinary;
+import org.lemonade.gui.expressions.binary.GuiLTBinary;
+import org.lemonade.gui.expressions.binary.GuiLTEBinary;
 import org.lemonade.gui.expressions.binary.GuiMinusBinary;
+import org.lemonade.gui.expressions.binary.GuiNEqBinary;
 import org.lemonade.gui.expressions.binary.GuiOrBinary;
 import org.lemonade.gui.expressions.binary.GuiPlusBinary;
 import org.lemonade.gui.expressions.binary.GuiProductBinary;
+import org.lemonade.gui.expressions.unary.GuiBangUnary;
+import org.lemonade.gui.expressions.unary.GuiNegUnary;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
@@ -196,42 +204,56 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
     @Override
     public GuiExpression visit(final EqBinary eqBinary) {
-        return null;
+        GuiExpression left = eqBinary.getLeft().accept(this);
+        GuiExpression right = eqBinary.getRight().accept(this);
+        return new GuiEqBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final NEqBinary nEqBinary) {
-        return null;
+        GuiExpression left = nEqBinary.getLeft().accept(this);
+        GuiExpression right = nEqBinary.getRight().accept(this);
+        return new GuiNEqBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final GTBinary gtBinary) {
-        return null;
+        GuiExpression left = gtBinary.getLeft().accept(this);
+        GuiExpression right = gtBinary.getRight().accept(this);
+        return new GuiGTBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final GTEBinary gteBinary) {
-        return null;
+        GuiExpression left = gteBinary.getLeft().accept(this);
+        GuiExpression right = gteBinary.getRight().accept(this);
+        return new GuiGTEBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final LTBinary ltBinary) {
-        return null;
+        GuiExpression left = ltBinary.getLeft().accept(this);
+        GuiExpression right = ltBinary.getRight().accept(this);
+        return new GuiLTBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final LTEBinary lteBinary) {
-        return null;
+        GuiExpression left = lteBinary.getLeft().accept(this);
+        GuiExpression right = lteBinary.getRight().accept(this);
+        return new GuiLTEBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final BangUnary bangUnary) {
-        return null;
+        GuiExpression expression = bangUnary.getExpression().accept(this);
+        return new GuiBangUnary(expression);
     }
 
     @Override
     public GuiExpression visit(final NegUnary negUnary) {
-        return null;
+        GuiExpression expression = negUnary.getExpression().accept(this);
+        return new GuiNegUnary(expression);
     }
 
     @Override
