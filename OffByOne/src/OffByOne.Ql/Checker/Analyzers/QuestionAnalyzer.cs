@@ -26,30 +26,30 @@
             this.Visit(root, new QuestionVisitorTypeEnvironment());
         }
 
-        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
         {
             // TODO: change string primitives to StringValue?
             // [...].Value.Value is ugly. Since StringValues replace string primitives,
             // maybe we should replace them in the code too?
-            if (environment.IsNameDuplicate(expression.Label.Value.Value))
+            if (environment.IsNameDuplicate(statement.Label.Value.Value))
             {
-                this.Report.Add(new DuplicateQuestionIdentifierMessage(expression));
+                this.Report.Add(new DuplicateQuestionIdentifierMessage(statement));
             }
             else
             {
-                environment.AddQuestionName(expression.Label.Value.Value);
+                environment.AddQuestionName(statement.Label.Value.Value);
             }
 
-            if (environment.IsLableDuplicate(expression.Identifier))
+            if (environment.IsLableDuplicate(statement.Identifier))
             {
-                this.Report.Add(new DuplicateQuestionLabelMessage(expression));
+                this.Report.Add(new DuplicateQuestionLabelMessage(statement));
             }
             else
             {
-                environment.AddQuestionLabel(expression.Identifier);
+                environment.AddQuestionLabel(statement.Identifier);
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
     }
 }

@@ -18,16 +18,16 @@
     public class Interpreter
         : IStatementVisitor<Widget, GuiEnvironment>
     {
-        public Widget Visit(FormStatement expression, GuiEnvironment environment)
+        public Widget Visit(FormStatement statement, GuiEnvironment environment)
         {
-            var controls = new List<Widget>(expression.Statements.Count());
-            foreach (var s in expression.Statements)
+            var controls = new List<Widget>(statement.Statements.Count());
+            foreach (var s in statement.Statements)
             {
                 var control = s.Accept(this, environment);
                 controls.Add(control);
             }
 
-            var form = new FormWidget(expression, environment, controls);
+            var form = new FormWidget(statement, environment, controls);
             return form;
         }
 
@@ -67,22 +67,22 @@
             return question;
         }
 
-        public Widget Visit(IfStatement expression, GuiEnvironment environment)
+        public Widget Visit(IfStatement statement, GuiEnvironment environment)
         {
-            var ifControls = expression.Statements
+            var ifControls = statement.Statements
                 .Select(x => x.Accept(this, environment))
                 .ToList();
-            var elseControls = expression.ElseStatements
+            var elseControls = statement.ElseStatements
                 .Select(x => x.Accept(this, environment))
                 .ToList();
 
-            var control = new VisibilityWidget(expression, environment, ifControls, elseControls);
+            var control = new VisibilityWidget(statement, environment, ifControls, elseControls);
             return control;
         }
 
-        public Widget Visit(Statement expression, GuiEnvironment environment)
+        public Widget Visit(Statement statement, GuiEnvironment environment)
         {
-            return expression.Accept(this, environment);
+            return statement.Accept(this, environment);
         }
     }
 }

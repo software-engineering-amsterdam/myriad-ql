@@ -40,27 +40,27 @@
             errors.ForEach(x => this.Report.Add(new CircularDependencyMessage(x.StartPointId)));
         }
 
-        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
         {
-            if (expression.ComputationExpression != null)
+            if (statement.ComputationExpression != null)
             {
-                this.GetVariables(expression.ComputationExpression).ForEach(x => this.circularDependencyChecker
-                    .AddDependency(new Dependency(x, expression.Identifier)));
+                this.GetVariables(statement.ComputationExpression).ForEach(x => this.circularDependencyChecker
+                    .AddDependency(new Dependency(x, statement.Identifier)));
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
 
-        public override object Visit(IfStatement expression, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(IfStatement statement, QuestionVisitorTypeEnvironment environment)
         {
-            var conditionVars = this.GetVariables(expression.Condition);
-            var ifBodyVars = expression.Statements.SelectMany(this.GetVariables);
-            var elseBodyVars = expression.ElseStatements.SelectMany(this.GetVariables);
+            var conditionVars = this.GetVariables(statement.Condition);
+            var ifBodyVars = statement.Statements.SelectMany(this.GetVariables);
+            var elseBodyVars = statement.ElseStatements.SelectMany(this.GetVariables);
 
             this.circularDependencyChecker.AddDependencies(ifBodyVars, conditionVars);
             this.circularDependencyChecker.AddDependencies(elseBodyVars, conditionVars);
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
 
         private ISet<string> GetVariables(Expression expression)

@@ -147,30 +147,30 @@
             return expression.Expression.Accept(this, environment);
         }
 
-        public VoidValueType Visit(QuestionStatement expression, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(QuestionStatement statement, VisitorTypeEnvironment environment)
         {
-            environment.AddSymbol(expression.Identifier, expression.Type);
+            environment.AddSymbol(statement.Identifier, statement.Type);
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(IfStatement expression, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(IfStatement statement, VisitorTypeEnvironment environment)
         {
-            var result = this.CheckIfStatement(expression, environment);
-            expression.Statements.ForEach(x => x.Accept(this, environment));
-            expression.ElseStatements.ForEach(x => x.Accept(this, environment));
+            var result = this.CheckIfStatement(statement, environment);
+            statement.Statements.ForEach(x => x.Accept(this, environment));
+            statement.ElseStatements.ForEach(x => x.Accept(this, environment));
 
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(Statement expression, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(Statement statement, VisitorTypeEnvironment environment)
         {
-            expression.Accept(this, environment);
+            statement.Accept(this, environment);
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(FormStatement expression, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(FormStatement statement, VisitorTypeEnvironment environment)
         {
-            expression.Statements.ForEach(x => x.Accept(this, environment));
+            statement.Statements.ForEach(x => x.Accept(this, environment));
 
             return new VoidValueType();
         }
