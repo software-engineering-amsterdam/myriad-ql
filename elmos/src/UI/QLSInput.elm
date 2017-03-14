@@ -101,9 +101,9 @@ exampleDsl =
     default boolean
       widget radio("Yes", "No")
     default money {
-      width: 35
+      width: 400
       font: "Arial"
-      fontsize: 25
+      fontsize: 20
       color: red
     }
 }
