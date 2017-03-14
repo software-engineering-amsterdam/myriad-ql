@@ -1,4 +1,5 @@
 from QL.GUI.widgets import CheckBoxWidget as QLCheckBox
+from QL.GUI.widgets import SpinBoxWidget as QLSpinBox
 from QL.GUI.widgets import EntryWidget as QLEntry
 from QL.GUI.widgets import NumericWidget as QLNumeric
 from QL.GUI.widgets import ComputedLabelWidget as QLComputed
@@ -54,6 +55,34 @@ class EntryWidget(QLEntry, Widget):
     def set_font_color(self, color):
         super(EntryWidget, self).set_font_color(color)
         self.main.setEntryFg(self.identifier)
+
+
+class SpinBoxWidget(QLSpinBox, Widget):
+    def __init__(self, form_gui, identifier, question, row):
+        super(SpinBoxWidget, self).__init__(form_gui, identifier, question, row)
+
+    def set_width(self, width):
+        super(SpinBoxWidget, self).set_width(width)
+        self.main.setSpinBoxWidth(self.identifier, width)
+
+    def set_height(self, height):
+        super(SpinBoxWidget, self).set_height(height)
+        self.main.setSpinBoxHeight(self.identifier, height)
+
+    def set_font_size(self, size):
+        super(SpinBoxWidget, self).set_font_size(size)
+        widget = self.main.getSpinBoxWidget(self.identifier)
+        family = widget["font"]
+        widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(SpinBoxWidget, self).set_font_family(family)
+        widget = self.main.getSpinBoxWidget(self.identifier)
+        widget.config(font="{}".format(family))
+
+    def set_font_color(self, color):
+        super(SpinBoxWidget, self).set_font_color(color)
+        self.main.setSpinBoxFg(self.identifier)
 
 
 class NumericWidget(QLNumeric, Widget):
