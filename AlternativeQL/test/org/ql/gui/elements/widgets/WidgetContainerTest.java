@@ -1,35 +1,30 @@
-package org.ql.gui.elements;
+package org.ql.gui.elements.widgets;
 
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.BooleanType;
-import org.ql.ast.type.IntegerType;
-import org.ql.ast.type.Type;
+import org.ql.gui.widgets.CheckBoxWidget;
+import org.ql.gui.widgets.Widget;
 import org.ql.gui.widgets.WidgetContainer;
-import org.ql.gui.mediator.GUIMediator;
-import org.ql.gui.widgets.IntegerInputWidget;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class ElementContainerTest {
+public class WidgetContainerTest {
     @Test
-    public void shouldPersistQuestionElementInMap() {
+    public void shouldRetrieveWidgetFromMap() {
 
-        WidgetContainer aWidgetContainer = mockQuestionElementBuilder();
-        Question aQuestion = questionMock();
+        Question question = new Question(new Identifier("hasSoldHouse"), new QuestionLabel("question"), new BooleanType(), null);
+        WidgetContainer container = new WidgetContainer(null);
+        Widget widget = container.retrieveWidget(question);
 
-        ElementContainer container = new ElementContainer(aWidgetContainer);
-        Element actualQuestionElement =  container.getQuestionElement(aQuestion);
-        Element actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
+        assertTrue(widget != null);
+        assertTrue(widget instanceof CheckBoxWidget);
 
-        assertSame(actualQuestionElement, actualRetrievedQuestionElement);
     }
-
+/*
     private WidgetContainer mockQuestionElementBuilder() {
         WidgetContainer elementBuilder = mock(WidgetContainer.class);
         when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
@@ -62,5 +57,5 @@ public class ElementContainerTest {
             }
         });
         return aQuestion;
-    }
+    }*/
 }
