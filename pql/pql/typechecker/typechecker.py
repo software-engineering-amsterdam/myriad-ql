@@ -133,9 +133,8 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
 
         if type_set_data_types.issubset(allowed_types):
-            if type_set_data_types.issubset(allowed_arithmetic_types):
-                dominant_type = Boolean(0, '', False)
-            elif type_set_data_types.issubset(allowed_boolean_types):
+            if type_set_data_types.issubset(allowed_arithmetic_types) or \
+                    type_set_data_types.issubset(allowed_boolean_types):
                 dominant_type = Boolean(0, '', False)
             else:
                 self.add_leaf_error(allowed_types, type_set)
