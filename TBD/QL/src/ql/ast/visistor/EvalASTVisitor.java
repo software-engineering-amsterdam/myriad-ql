@@ -1,6 +1,8 @@
 package ql.ast.visistor;
 
 import ql.ast.ASTNode;
+import ql.ast.environment.Env;
+import ql.ast.environment.Scope;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
@@ -13,10 +15,10 @@ import ql.ast.environment.Environment;
  * Created by Erik on 14-2-2017.
  */
 public class EvalASTVisitor extends ASTVisitor<Value> {
-    private final Environment environment;
+    private final Env env;
 
-    public EvalASTVisitor(Environment environment) {
-        this.environment = environment;
+    public EvalASTVisitor(Env env) {
+        this.env = env;
     }
 
     public Value startVisitor(ASTNode node) {
@@ -26,7 +28,7 @@ public class EvalASTVisitor extends ASTVisitor<Value> {
 
     @Override
     public Value visit(QLIdent node) {
-        return environment.getVariableValue(node.getValue());
+        return env.getQuestionValue(node.getValue());
     }
 
     @Override

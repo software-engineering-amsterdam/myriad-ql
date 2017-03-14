@@ -1,41 +1,41 @@
 package ql.view;
 
 import javafx.beans.value.ChangeListener;
+import ql.ast.environment.Env;
 import ql.ast.values.*;
-import ql.ast.environment.Environment;
 
 /**
  * Created by rico on 27-2-17.
  */
 public abstract class QLChangeListener<T> implements ChangeListener<T> {
     private final String key;
-    private final Environment environment;
+    private final Env env;
 
-    public QLChangeListener(Environment environment, String key) {
-        this.environment = environment;
+    public QLChangeListener(Env env, String key) {
+        this.env = env;
         this.key = key;
     }
 
     public void setValue(String value) {
         if (value.isEmpty() || value.equals("")){
-            environment.setVariableValue(key, new UndefinedValue());
+            env.setQuestionValue(key, new UndefinedValue());
         }
-        environment.setVariableValue(key, new StringValue(value));
+        env.setQuestionValue(key, new StringValue(value));
     }
 
     public void setValue(boolean value) {
-        environment.setVariableValue(key, new BooleanValue(value));
+        env.setQuestionValue(key, new BooleanValue(value));
     }
 
     public void setValue(int value) {
-        environment.setVariableValue(key, new IntValue(value));
+        env.setQuestionValue(key, new IntValue(value));
     }
 
     public void setValue(float value) {
-        environment.setVariableValue(key, new FloatValue(value));
+        env.setQuestionValue(key, new FloatValue(value));
     }
 
     public void setValueUndefined() {
-        environment.setVariableValue(key, new UndefinedValue());
+        env.setQuestionValue(key, new UndefinedValue());
     }
 }

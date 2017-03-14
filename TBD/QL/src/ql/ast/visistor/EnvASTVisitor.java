@@ -1,7 +1,8 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
-import ql.ast.environment.Environment;
+import ql.ast.environment.Env;
+import ql.ast.environment.Scope;
 import ql.logger.ErrorHandler;
 import ql.logger.Error;
 
@@ -12,43 +13,48 @@ import java.util.List;
  * Created by Erik on 27-2-2017.
  */
 public class EnvASTVisitor extends ASTVisitor<Void> {
-    private Environment environment;
+    private Env env;
     private final ErrorHandler errorHandler = new ErrorHandler();
+    private Scope currentScope = null;
 
 
-    public Environment startVisitor(ASTNode node){
-        environment = new Environment();
+    public Env startVisitor(ASTNode node){
+        env = new Env();
         node.accept(this);
         errorHandler.showErrors();
-        return environment;
+        return env;
     }
 
 
     public Void visit(Statements node) {
+        currentScope = new Scope(currentScope);
+        env.addScope(node, currentScope);
         List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
             statement.accept(this);
         }
+        currentScope = currentScope.getParent();
         return null;
     }
 
+
     public Void visit(Question node) {
-        if (environment.contains(node.getId())) {
+        if (env.contains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
-        environment.addVariable(node.getId(), node.getType());
+        env.addQuestion(currentScope, node);
         return null;
     }
 
 
 
     public Void visit(QuestionExpr node) {
-        if (environment.contains(node.getId())) {
+        if (env.contains(node.getId())) {
             errorHandler.addError(new Error("Identifier " + node.getId() + " already exist!", node.getRowNumber()));
         }
 
-        environment.addVariable(node.getId(), node.getType(), node.getExpr());
+        env.addQuestion(currentScope, node);
 
         node.getExpr().accept(this);
         return null;

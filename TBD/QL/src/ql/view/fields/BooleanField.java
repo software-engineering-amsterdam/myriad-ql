@@ -6,7 +6,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import ql.ast.environment.Environment;
+
+import ql.ast.environment.Env;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
@@ -19,11 +20,11 @@ public class BooleanField extends ToggleGroup implements QLField{
     final RadioButton rbYes = new RadioButton("Yes");
     final RadioButton rbNo = new RadioButton("No");
 
-    public BooleanField(Environment environment, String variableName) {
+    public BooleanField(Env env, String variableName) {
         rbYes.setToggleGroup(this);
         rbNo.setToggleGroup(this);
 
-        this.selectedToggleProperty().addListener(new QLChangeListener<Toggle>(environment, variableName) {
+        this.selectedToggleProperty().addListener(new QLChangeListener<Toggle>(env, variableName) {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if (newValue == null) {
@@ -41,10 +42,8 @@ public class BooleanField extends ToggleGroup implements QLField{
             }
         });
 
-        if (environment.hasExpr(variableName)) {
-            environment.addEventListener(() -> {
-                update(environment.getVariableValue(variableName));
-            });
+        if (env.hasQuestionExpr(variableName)) {
+            env.addEventListener(() -> update(env.getQuestionValue(variableName)));
         }
     }
 

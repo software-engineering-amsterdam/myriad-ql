@@ -2,8 +2,10 @@ package ql.view;
 
 import javafx.scene.layout.VBox;
 import ql.ast.Expr;
+import ql.ast.environment.Env;
 import ql.ast.environment.Environment;
 import ql.ast.environment.EnvironmentEventListener;
+import ql.ast.environment.Scope;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
@@ -15,11 +17,11 @@ import ql.ast.values.Value;
 public class QLIfBox extends VBox {
     private final VBox ifStatements;
 
-    public QLIfBox(Environment environment, Expr condition, VBox ifStatements) {
+    public QLIfBox(Env env, Expr condition, VBox ifStatements) {
         this.ifStatements = ifStatements;
 
-        environment.addEventListener(() -> {
-            update(environment.evalExpr(condition));
+        env.addEventListener(() -> {
+            update(env.evalExpr(condition));
         });
     }
 

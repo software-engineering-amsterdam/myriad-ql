@@ -1,13 +1,14 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
+import ql.ast.environment.Env;
+import ql.ast.environment.Scope;
 import ql.ast.types.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.environment.Environment;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 
@@ -19,23 +20,25 @@ import java.util.List;
 public class TypeASTVisitor extends ASTVisitor<Type>{
 
     private final ErrorHandler errorHandler = new ErrorHandler();
-    private final Environment env;
+    private final Env env;
+    private Scope currentScope = null;
 
-    public TypeASTVisitor(Environment env) {
+    public TypeASTVisitor(Env env) {
         this.env = env;
     }
 
-    public Type startVisitor(ASTNode node) {
+    public void startVisitor(ASTNode node) {
         node.accept(this);
         errorHandler.showErrors();
-        return null;
     }
 
     public Type visit(Statements node) {
+        currentScope = env.getScope(node);
         List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
             statement.accept(this);
         }
+        currentScope = currentScope.getParent();
         return null;
     }
 
@@ -90,11 +93,17 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
 
     @Override
     public Type visit(QLIdent node) {
-        if (env.contains(node.getValue())) {
-            return env.getVariableType(node.getValue());
+        if (!env.contains(node.getValue())) {
+            errorHandler.addError(new Error("Identifier " + node.getValue() + " doesn't exist!", node.getRowNumber()));
+            return new ErrorType();
         }
-        errorHandler.addError(new Error("Identifier " + node.getValue() + " doesn't exist!", node.getRowNumber()));
-        return new ErrorType();
+
+        if (!currentScope.getScopes().contains(env.getQuestionScope(node.getValue()))) {
+            errorHandler.addError(new Error("Identifier " + node.getValue() + " doesn't exist in this scope!", node.getRowNumber()));
+            return new ErrorType();
+        }
+
+        return env.getQuestionType(node.getValue());
     }
 
     @Override

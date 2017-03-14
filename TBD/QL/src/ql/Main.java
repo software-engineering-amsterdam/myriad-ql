@@ -2,6 +2,7 @@ package ql;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import ql.ast.environment.Env;
 import ql.ast.visistor.*;
 import ql.ast.environment.Environment;
 import ql.parser.Parser;
@@ -24,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Reader reader = null;
         try {
-            reader = new FileReader("D:\\UvA\\SC\\myriad-ql\\TBD\\QL\\test.txt");
+            reader = new FileReader("C:\\Users\\Erik\\Documents\\uva\\SC\\QL\\myriad-ql\\TBD\\QL\\test.txt");
             //reader = new FileReader("/home/rico/Desktop/test.txt");
             QLLexer lexer = new QLLexer(reader);
             lexer.nextToken();
@@ -40,7 +41,7 @@ public class Main extends Application {
             printVisitor.visit(parser.getResult());
 
             EnvASTVisitor envASTVisitor = new EnvASTVisitor();
-            Environment env = envASTVisitor.startVisitor(parser.getResult());
+            Env env = envASTVisitor.startVisitor(parser.getResult());
 
             TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
             typeVisitor.startVisitor(parser.getResult());
