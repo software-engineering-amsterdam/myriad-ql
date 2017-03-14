@@ -8,18 +8,12 @@ trait ExpressionAstGenerator extends ValueAstGenerator {
   private type PrefixNodeGenerator = ExpressionNode => Gen[ExpressionNode]
   private type SizedChildGenerator = Int => Gen[ExpressionNode]
 
-  def genNumeric = Gen.sized(genSizedNumeric)
-  def genBoolean = Gen.sized(genSizedBoolean)
-  def genComparison = Gen.sized(genSizedComparison)
+  def genNumeric: Gen[ExpressionNode] = Gen.sized(genSizedNumeric)
+  def genBoolean: Gen[ExpressionNode] = Gen.sized(genSizedBoolean)
 
   private def genSizedBoolean(size: Int): Gen[ExpressionNode] = size match {
-    case 0 => Gen.frequency((1, boolIdentifier), (6, booleanLiteral))
-    case s => Gen.oneOf(genSizedComparison(s), genSizedBooleanInfix(s), genSizedBooleanPrefix(s))
-  }
-
-  private def genSizedComparison(size: Int): Gen[ExpressionNode] = size match {
-    case 0 => genNumericLiteral
-    case s => genSizedRelationalComparison(s)
+    case 0 => genBooleanLiteral
+    case s => Gen.oneOf(genSizedBooleanInfix(s), genSizedBooleanPrefix(s), genSizedRelationalComparison(s), genSizedEquality(s))
   }
 
   private def genSizedNumeric(size: Int): Gen[ExpressionNode] = size match {
@@ -27,6 +21,10 @@ trait ExpressionAstGenerator extends ValueAstGenerator {
     case s => Gen.oneOf(genSizedNumericInfix(s), genSizedNumericPrefix(s))
   }
 
+  // 6/7 literals, 1/7 identifiers, this assures enough cases are generated for the 'contains at least 1 identifier' case
+  // and also enough for the 'contains no identifiers' case.
+  private def genBooleanLiteral: Gen[ExpressionNode] =
+    Gen.frequency((1, boolIdentifier), (6, booleanLiteral))
   private def genNumericLiteral: Gen[ExpressionNode] =
     Gen.frequency((2, integerLiteral), (2, decimalLiteral), (2, moneyLiteral), (1, numericIdentifier))
 
@@ -35,6 +33,9 @@ trait ExpressionAstGenerator extends ValueAstGenerator {
 
   private def genSizedBooleanPrefix(size: Int): Gen[ExpressionNode] =
     genSizedPrefix(size, genSizedBoolean, op => Not(op))
+
+  private def genSizedEquality(size: Int): Gen[ExpressionNode] =
+    genSizedInfix(size, genSizedNumeric, (lhs, rhs) => Gen.oneOf(Eq(lhs, rhs), Neq(lhs, rhs)))
 
   private def genSizedRelationalComparison(size: Int): Gen[ExpressionNode] =
     genSizedInfix(size, genSizedNumeric, (lhs, rhs) => Gen.oneOf(Gt(lhs, rhs), Lt(lhs, rhs), Geq(lhs, rhs), Leq(lhs, rhs)))
