@@ -18,6 +18,10 @@ public abstract class Type extends Node {
 	public String getKeyWord() {
 		return keyWord;
 	}
+	
+	public boolean equals(Type other) {
+		return keyWord.equals(other.getKeyWord());
+	}
 
 	// TODO field and QL.value in here?
 	public abstract Field getField(String name, Notifier notifier, Value value);

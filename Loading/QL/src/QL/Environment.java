@@ -27,6 +27,10 @@ public class Environment {
 		return getType(variable).getValue();
 	}
 	
+	public boolean isAnswered(String variable) {
+		return variableAnswer.containsKey(variable);
+	}
+	
 	public Type getType(String variable) {
 		if (!variableType.containsKey(variable)) {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
@@ -34,9 +38,5 @@ public class Environment {
 		}
 		return variableType.get(variable);
 		
-	}
-	
-	public boolean isAnswered(String variable) {
-		return variableAnswer.containsKey(variable);
 	}
 }

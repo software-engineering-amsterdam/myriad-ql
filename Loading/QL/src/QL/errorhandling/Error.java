@@ -1,4 +1,4 @@
-package QL;
+package QL.errorhandling;
 
 public class Error extends Fault {
 	

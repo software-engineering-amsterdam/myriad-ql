@@ -18,8 +18,7 @@ public class Analyzer {
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
 		
-		// TODO implement
-		return new Faults();
+		return environment.getFaults();
 	}
 
 }

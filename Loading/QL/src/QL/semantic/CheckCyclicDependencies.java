@@ -6,8 +6,7 @@ import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
 import QL.ast.type.*;
-
-import QL.Error;
+import QL.errorhandling.Error;
 
 import java.util.List;
 

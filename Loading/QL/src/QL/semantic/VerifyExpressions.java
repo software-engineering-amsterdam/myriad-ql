@@ -1,7 +1,6 @@
 package QL.semantic;
 
 
-import QL.Error;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
@@ -13,6 +12,7 @@ import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
 import QL.ast.type.Type;
 import QL.ast.type.UnknownType;
+import QL.errorhandling.Error;
 
 
 /**
@@ -269,7 +269,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
 
     private void check(Type expected, Type current) {
-        if (!expected.getKeyWord().equals(current.getKeyWord())) {
+    	if (!expected.equals(current)) {
         	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
     			+ expected.getKeyWord(), current.getLine()));
         }

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import QL.Faults;
-import QL.Error;
 import QL.ast.type.Type;
+import QL.errorhandling.Error;
 
 public class Environment {
 	
@@ -20,6 +20,10 @@ public class Environment {
 			variableCovered.put(variable, false);
 		}
 		this.faults = new Faults(); // TODO move to analyzing part
+	}
+	
+	public Faults getFaults() {
+		return faults;
 	}
 	
 	public void isCovered(String name, int line) {

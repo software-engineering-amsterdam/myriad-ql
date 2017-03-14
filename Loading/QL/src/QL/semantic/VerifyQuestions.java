@@ -1,9 +1,9 @@
 package QL.semantic;
 
-import QL.Warning;
-import QL.Error;
 import QL.ast.*;
 import QL.ast.type.Type;
+import QL.errorhandling.Error;
+import QL.errorhandling.Warning;
 import QL.ast.FormVisitor;
 import QL.ast.Form;
 

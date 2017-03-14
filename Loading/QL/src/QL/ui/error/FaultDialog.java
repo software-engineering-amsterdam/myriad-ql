@@ -2,7 +2,7 @@ package QL.ui.error;
 
 import java.util.List;
 
-import QL.Fault;
+import QL.errorhandling.Fault;
 import javafx.scene.control.Alert;
 
 public abstract class FaultDialog  {

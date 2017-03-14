@@ -11,6 +11,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 
 import QL.Environment;
+import QL.Faults;
 import QL.ast.Form;
 import QL.value.Value;
 import javafx.application.Application;
@@ -37,11 +38,13 @@ public class Questionnaire extends Application implements Notifier {
 	private static Environment environment;
 	private static GridPane grid;
 	private static Stage pStage; // TODO
+	private static Faults faults;
 	
-    public void main(Form f, Environment env) {
+    public void main(Form f, Environment env, Faults flts) {
     	form = f;
     	environment = env;
-
+    	faults = flts;
+ 
         launch();
     }
     
@@ -49,7 +52,9 @@ public class Questionnaire extends Application implements Notifier {
     public void start(Stage primaryStage) {
 
         pStage = primaryStage;
-
+        
+    	// TODO improve with http://www-acad.sheridanc.on.ca/~jollymor/prog24178/javafx7.html
+    	faults.check();
 
         primaryStage.setTitle(form.getId());
         
