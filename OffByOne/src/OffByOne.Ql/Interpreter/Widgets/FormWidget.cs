@@ -8,7 +8,10 @@
 
     public class FormWidget : Widget
     {
-        public FormWidget(FormStatement statement, GuiEnvironment guiEnvironment, IList<Widget> controls)
+        public FormWidget(
+            FormStatement statement,
+            GuiEnvironment guiEnvironment,
+            IList<Widget> controls)
             : base(guiEnvironment)
         {
             this.Statement = statement;

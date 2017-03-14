@@ -13,8 +13,13 @@
     {
         private IValidator<string> validator;
 
-        public ValidatedTextFieldWidget(IValue value, IValidator<string> validator, QuestionStatement statement, GuiEnvironment guiEnvironment)
-            : base(value, statement, guiEnvironment)
+        public ValidatedTextFieldWidget(
+            IValue value,
+            IValidator<string> validator,
+            QuestionStatement statement,
+            GuiEnvironment guiEnvironment,
+            WidgetStyle style)
+            : base(value, statement, guiEnvironment, style)
         {
             this.validator = validator;
         }

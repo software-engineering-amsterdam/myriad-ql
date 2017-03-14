@@ -29,7 +29,7 @@
         {
             new IntegerValueType(),
             new DecimalValueType(),
-            new MoneyValueType()
+            new MoneyValueType(),
         };
 
         public TypeAnalyzer()
