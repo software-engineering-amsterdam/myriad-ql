@@ -58,7 +58,10 @@ class NumericWidget(Widget):
         entry.isNumeric = False
 
     def get_entry(self):
-        return self.main.getEntry(self.identifier)
+        value = self.main.getEntry(self.identifier)
+        if value == "-":
+            value = "-0"
+        return value
 
     def set_entry(self, value):
         self.main.setEntry(self.identifier, value)
