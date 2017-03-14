@@ -8,7 +8,7 @@ import QL.value.BoolValue;
 import QL.value.Value;
 
 public class BooleanType extends Type {
-
+	
 	public BooleanType(int line) {
 		super("boolean", line);
 	}
@@ -26,7 +26,7 @@ public class BooleanType extends Type {
 
 	@Override
 	public Value getValue() {
-		return new BoolValue();
+		return new BoolValue(false);
 	}
 
 }

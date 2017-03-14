@@ -25,7 +25,7 @@ public class StringType extends Type {
 
 	@Override
 	public Value getValue() {
-		return new StringValue();
+		return new StringValue("");
 	}
 
 }

@@ -25,7 +25,7 @@ public class IntegerType extends Type {
 
 	@Override
 	public Value getValue() {
-		return new IntegerValue();
+		return new IntegerValue(0);
 	}
 	
 }
