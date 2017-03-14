@@ -27,29 +27,4 @@ public class BooleanLiteral extends Literal<Boolean> {
         return Boolean.toString(this.getValue());
     }
 
-    public BooleanLiteral and(BooleanLiteral that) {
-        return new BooleanLiteral(this.getValue() && that.getValue());
-    }
-
-    public BooleanLiteral or(BooleanLiteral that) {
-        return new BooleanLiteral(this.getValue() || that.getValue());
-    }
-
-    public BooleanLiteral not() {
-        return new BooleanLiteral(!this.getValue());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof BooleanLiteral)) {
-            return false;
-        }
-        BooleanLiteral that = (BooleanLiteral) obj;
-        return this.getValue() == that.getValue();
-    }
-
-    public Expression bang() {
-        return new BooleanLiteral(!this.getValue());
-    }
-
 }

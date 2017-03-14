@@ -10,7 +10,7 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     }
 
     @Override
-    Double getValue() {
+    public Double getValue() {
         return value;
     }
 

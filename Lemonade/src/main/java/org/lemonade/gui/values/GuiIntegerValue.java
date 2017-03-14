@@ -11,7 +11,7 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
     }
 
     @Override
-    Integer getValue() {
+    public Integer getValue() {
         return value;
     }
 

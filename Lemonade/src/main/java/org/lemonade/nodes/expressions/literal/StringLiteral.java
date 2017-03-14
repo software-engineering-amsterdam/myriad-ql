@@ -7,7 +7,7 @@ import org.lemonade.visitors.interfaces.ExpressionVisitor;
 /**
  *
  */
-public class StringLiteral extends Literal<String> implements Comparable<StringLiteral> {
+public class StringLiteral extends Literal<String> {
 
     public StringLiteral(String value) {
         super(new QLStringType(), value);
@@ -20,19 +20,5 @@ public class StringLiteral extends Literal<String> implements Comparable<StringL
     @Override
     public String toString() {
         return this.getValue();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof StringLiteral)) {
-            return false;
-        }
-        StringLiteral that = (StringLiteral) obj;
-        return this.getValue() == that.getValue();
-    }
-
-    @Override
-    public int compareTo(StringLiteral that) {
-        return this.getValue().compareTo(that.getValue());
     }
 }
