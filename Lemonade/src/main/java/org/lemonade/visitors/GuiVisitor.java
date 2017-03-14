@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lemonade.gui.GuiBody;
 import org.lemonade.gui.GuiConditional;
+import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.GuiForm;
 import org.lemonade.gui.GuiQuestion;
 import org.lemonade.gui.elements.GuiBooleanElement;
@@ -15,6 +16,20 @@ import org.lemonade.gui.elements.GuiIntegerElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.elements.GuiMoneyElement;
 import org.lemonade.gui.elements.GuiStringElement;
+import org.lemonade.gui.expressions.binary.GuiAndBinary;
+import org.lemonade.gui.expressions.binary.GuiDivideBinary;
+import org.lemonade.gui.expressions.binary.GuiEqBinary;
+import org.lemonade.gui.expressions.binary.GuiGTBinary;
+import org.lemonade.gui.expressions.binary.GuiGTEBinary;
+import org.lemonade.gui.expressions.binary.GuiLTBinary;
+import org.lemonade.gui.expressions.binary.GuiLTEBinary;
+import org.lemonade.gui.expressions.binary.GuiMinusBinary;
+import org.lemonade.gui.expressions.binary.GuiNEqBinary;
+import org.lemonade.gui.expressions.binary.GuiOrBinary;
+import org.lemonade.gui.expressions.binary.GuiPlusBinary;
+import org.lemonade.gui.expressions.binary.GuiProductBinary;
+import org.lemonade.gui.expressions.unary.GuiBangUnary;
+import org.lemonade.gui.expressions.unary.GuiNegUnary;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
@@ -54,7 +69,7 @@ import org.lemonade.visitors.interfaces.TypeVisitor;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>, ExpressionVisitor<GuiElement> {
+public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>, ExpressionVisitor<GuiExpression> {
 
     private GridPane pane;
     private int rowCount;
@@ -146,108 +161,133 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
     }
 
     @Override
-    public GuiElement visit(final AndBinary andBinary) {
+    public GuiExpression visit(final AndBinary andBinary) {
+        GuiExpression left = andBinary.getLeft().accept(this);
+        GuiExpression right = andBinary.getRight().accept(this);
+        return new GuiAndBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final OrBinary orBinary) {
+        GuiExpression left = orBinary.getLeft().accept(this);
+        GuiExpression right = orBinary.getRight().accept(this);
+        return new GuiOrBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final PlusBinary plusBinary) {
+        GuiExpression left = plusBinary.getLeft().accept(this);
+        GuiExpression right = plusBinary.getRight().accept(this);
+        return new GuiPlusBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final ProductBinary productBinary) {
+        GuiExpression left = productBinary.getLeft().accept(this);
+        GuiExpression right = productBinary.getRight().accept(this);
+        return new GuiProductBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final MinusBinary minusBinary) {
+        GuiExpression left = minusBinary.getLeft().accept(this);
+        GuiExpression right = minusBinary.getRight().accept(this);
+        return new GuiMinusBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final DivideBinary divideBinary) {
+        GuiExpression left = divideBinary.getLeft().accept(this);
+        GuiExpression right = divideBinary.getRight().accept(this);
+        return new GuiDivideBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final EqBinary eqBinary) {
+        GuiExpression left = eqBinary.getLeft().accept(this);
+        GuiExpression right = eqBinary.getRight().accept(this);
+        return new GuiEqBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final NEqBinary nEqBinary) {
+        GuiExpression left = nEqBinary.getLeft().accept(this);
+        GuiExpression right = nEqBinary.getRight().accept(this);
+        return new GuiNEqBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final GTBinary gtBinary) {
+        GuiExpression left = gtBinary.getLeft().accept(this);
+        GuiExpression right = gtBinary.getRight().accept(this);
+        return new GuiGTBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final GTEBinary gteBinary) {
+        GuiExpression left = gteBinary.getLeft().accept(this);
+        GuiExpression right = gteBinary.getRight().accept(this);
+        return new GuiGTEBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final LTBinary ltBinary) {
+        GuiExpression left = ltBinary.getLeft().accept(this);
+        GuiExpression right = ltBinary.getRight().accept(this);
+        return new GuiLTBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final LTEBinary lteBinary) {
+        GuiExpression left = lteBinary.getLeft().accept(this);
+        GuiExpression right = lteBinary.getRight().accept(this);
+        return new GuiLTEBinary(left, right);
+    }
+
+    @Override
+    public GuiExpression visit(final BangUnary bangUnary) {
+        GuiExpression expression = bangUnary.getExpression().accept(this);
+        return new GuiBangUnary(expression);
+    }
+
+    @Override
+    public GuiExpression visit(final NegUnary negUnary) {
+        GuiExpression expression = negUnary.getExpression().accept(this);
+        return new GuiNegUnary(expression);
+    }
+
+    @Override
+    public GuiExpression visit(final BooleanLiteral booleanValue) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final OrBinary orBinary) {
+    public GuiExpression visit(final DecimalLiteral decimalValue) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final PlusBinary plusBinary) {
+    public GuiExpression visit(final DateLiteral dateLiteral) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final ProductBinary productBinary) {
+    public GuiExpression visit(final MoneyLiteral moneyValue) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final MinusBinary minusBinary) {
+    public GuiExpression visit(final IntegerLiteral integerValue) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final DivideBinary divideBinary) {
+    public GuiExpression visit(final StringLiteral stringValue) {
         return null;
     }
 
     @Override
-    public GuiElement visit(final EqBinary eqBinary) {
+    public GuiExpression visit(final IdentifierLiteral identifierValue) {
         return null;
-    }
-
-    @Override
-    public GuiElement visit(final NEqBinary nEqBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final GTBinary gtBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final GTEBinary gteBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final LTBinary ltBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final LTEBinary lteBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final BangUnary bangUnary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final NegUnary negUnary) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final BooleanLiteral booleanValue) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final DecimalLiteral decimalValue) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final DateLiteral dateLiteral) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final MoneyLiteral moneyValue) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final IntegerLiteral integerValue) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final StringLiteral stringValue) {
-        return null;
-    }
-
-    @Override
-    public GuiElement visit(final IdentifierLiteral identifierValue) {
-        return null;
-
     }
 }

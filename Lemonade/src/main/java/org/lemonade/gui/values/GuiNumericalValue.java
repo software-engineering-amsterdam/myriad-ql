@@ -1,5 +1,9 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+
 /**
  *
  */

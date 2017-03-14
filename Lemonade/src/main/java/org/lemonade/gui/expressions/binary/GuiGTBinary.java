@@ -7,9 +7,9 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 /**
  *
  */
-public class OrBinary extends GuiBinaryExpression {
+public class GuiGTBinary extends GuiBinaryExpression {
 
-    public OrBinary(GuiExpression left, GuiExpression right) {
+    public GuiGTBinary(GuiExpression left, GuiExpression right) {
         super(left, right);
     }
 

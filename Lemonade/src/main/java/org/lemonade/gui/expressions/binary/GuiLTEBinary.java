@@ -7,13 +7,12 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 /**
  *
  */
-public class GTEBinary extends GuiBinaryExpression {
+public class GuiLTEBinary extends GuiBinaryExpression {
 
-    public GTEBinary(GuiExpression left, GuiExpression right) {
+    public GuiLTEBinary(GuiExpression left, GuiExpression right) {
         super(left, right);
     }
 
-    @Override
     public <T> T accept(GuiExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }

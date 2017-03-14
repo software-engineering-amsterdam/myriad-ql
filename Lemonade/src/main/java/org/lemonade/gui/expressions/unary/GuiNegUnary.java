@@ -7,9 +7,9 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 /**
  *
  */
-public class BangUnary extends GuiUnaryExpression {
+public class GuiNegUnary extends GuiUnaryExpression {
 
-    public BangUnary(GuiExpression expression) {
+    public GuiNegUnary(GuiExpression expression) {
         super(expression);
     }
 
