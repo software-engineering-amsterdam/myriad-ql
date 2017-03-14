@@ -12,9 +12,9 @@ module QL
         undefined_variable_checker(questions, ast)
         operands_type_checker(questions, ast)
         cyclic_checker(questions, ast)
-        pp NotificationTable.index
       end
 
+      protected
       # checkers
       def duplicate_label_checker(questions)
         duplicate_labels = select_duplicates(questions.map(&:label).map(&:to_value))
@@ -63,7 +63,7 @@ module QL
         ast.accept(CyclicDependencyChecker.new, variable_dependencies)
       end
 
-      protected
+      # helper
       def select_duplicates(elements)
         elements.select { |element| elements.count(element) > 1 }.uniq
       end

@@ -49,7 +49,7 @@ module QL
         negation.expression.accept(self)
       end
 
-      # nothing has to be done with a question
+      # nothing has to be done with a literal
       def visit_literal(_)
         []
       end
