@@ -262,7 +262,7 @@ class Money(Value):
 
 
 class String(Value):
-    def __init__(self, position: object, source: object, value: object) -> object:
+    def __init__(self, position, source, value):
         super(String, self).__init__("string", position, source, value, DataTypes.string)
 
     def apply(self, visitor):
