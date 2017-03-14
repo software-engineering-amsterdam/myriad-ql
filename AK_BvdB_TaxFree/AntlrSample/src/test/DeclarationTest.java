@@ -8,7 +8,7 @@ import org.uva.taxfree.model.types.IntegerType;
 
 public class DeclarationTest {
     @Test
-    void testEquals() throws Exception {
+    public void testEquals() throws Exception {
         Declaration declaration = new Declaration(new DeclarationNode("This is number one", "numberOne", new IntegerType()));
         Assert.assertTrue(declaration.equals("NumberOne"), "equals should compare the string to the variableId");
     }
