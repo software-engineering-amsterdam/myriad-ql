@@ -78,7 +78,7 @@ public abstract class Expression implements ASTNode {
 
     protected void parseExpression() {
         // add the ID's to the map
-        Pattern pattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*");
+        Pattern pattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
         Matcher matcher = pattern.matcher(expr);
 
         while (matcher.find()) {

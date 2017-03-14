@@ -1,7 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 
 /**
@@ -60,7 +60,7 @@ public class Question implements FormItem {
     }
 
     @Override
-    public void show(FXMLExampleController screen) {
+    public void show(FXMLController screen) {
         value.showQuestion(screen, this);
     }
 

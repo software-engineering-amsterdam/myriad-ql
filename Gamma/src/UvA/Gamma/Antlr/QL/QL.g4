@@ -27,6 +27,7 @@ expression: BOOL '=' '('boolExpr')'       # booleanExpression
 boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
         | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
         | '('numExpr')'
+        | '!'boolExpr
         | ID
         | ('true' | 'false')
         ;

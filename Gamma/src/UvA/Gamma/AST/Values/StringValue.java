@@ -1,7 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -37,7 +37,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public void showQuestion(FXMLExampleController screen, Question question) {
+    public void showQuestion(FXMLController screen, Question question) {
         screen.showQuestion(question); //TODO: Show the String type of the question
     }
 

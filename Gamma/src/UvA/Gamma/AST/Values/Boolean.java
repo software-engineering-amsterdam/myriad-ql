@@ -1,7 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -39,7 +39,7 @@ public class Boolean extends Value {
     }
 
     @Override
-    public void showQuestion(FXMLExampleController screen, Question question) {
+    public void showQuestion(FXMLController screen, Question question) {
         screen.showBoolean(question); //TODO: Show the boolean type of the question
     }
 

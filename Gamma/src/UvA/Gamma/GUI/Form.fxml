@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <GridPane
         fx:id="grid"
-        fx:controller="UvA.Gamma.GUI.FXMLExampleController"
+        fx:controller="UvA.Gamma.GUI.FXMLController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="15" vgap="8"
           styleClass="root">
     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>

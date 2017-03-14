@@ -2,7 +2,7 @@ package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.ASTNode;
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -28,7 +28,7 @@ public abstract class Value implements ASTNode {
 
     public abstract boolean validate(String value, TypeChecker typeChecker);
 
-    public abstract void showQuestion(FXMLExampleController screen, Question question);
+    public abstract void showQuestion(FXMLController screen, Question question);
 
     public abstract String toString();
 }

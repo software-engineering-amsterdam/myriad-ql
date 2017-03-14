@@ -16,7 +16,7 @@ public class Validator {
     }
 
     public void visit() {
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             try {
                 item.accept(this);
             } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
@@ -27,7 +27,7 @@ public class Validator {
     }
 
     public void validateIdentifierType(String id, Value.Type type) throws IncompatibleTypesException {
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             Value.Type invalidType = item.validateIdentifierType(id, type);
             if (invalidType != null) {
                 throw new IncompatibleTypesException("The identifier " + id + " is of the type " + invalidType +
@@ -37,7 +37,7 @@ public class Validator {
     }
 
     public void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             String id = formItem.validateRedeclaration(item);
             if (id != null) {
                 throw new IdRedeclaredException("The id: " + id + " is redeclared");
@@ -46,7 +46,7 @@ public class Validator {
     }
 
     public void validateCyclicDependency(Computed computed) throws CyclicDependencyException {
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             Pair<String> cyclicIds = computed.validateCyclicDependency(item);
             if (cyclicIds.isComplete()) {
                 throw new CyclicDependencyException("There exists a cyclic dependency between the items '" +
@@ -57,7 +57,7 @@ public class Validator {
 
     public void validateId(String id) throws IdNotFoundException {
         boolean isValid = false;
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             isValid = isValid || item.containsId(id);
         }
         if (!isValid) {

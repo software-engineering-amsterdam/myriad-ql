@@ -1,7 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 import java.math.BigDecimal;
@@ -55,26 +55,6 @@ public class Number extends Value {
         return value.doubleValue() % 1 == 0;
     }
 
-    public Number add(Number toAdd) {
-        this.value = this.value.add(toAdd.value);
-        return this;
-    }
-
-    public Number subtract(Number toSubtract) {
-        this.value = this.value.subtract(toSubtract.value);
-        return this;
-    }
-
-    public Number divide(Number toDivide) {
-        this.value = this.value.divide(toDivide.value);
-        return this;
-    }
-
-    public Number multiply(Number toMultiply) {
-        this.value = this.value.multiply(toMultiply.value);
-        return this;
-    }
-
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return this.isInteger() ? typeChecker.checkInteger(value) : typeChecker.checkDouble(value);
@@ -86,7 +66,7 @@ public class Number extends Value {
     }
 
     @Override
-    public void showQuestion(FXMLExampleController screen, Question question) {
+    public void showQuestion(FXMLController screen, Question question) {
         screen.showQuestion(question); //TODO: Show the number type of the question
     }
 
