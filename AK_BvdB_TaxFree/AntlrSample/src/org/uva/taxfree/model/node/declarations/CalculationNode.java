@@ -44,7 +44,6 @@ public class CalculationNode extends DeclarationNode {
 
     public Set<String> getUsedVariables() {
         Set<String> declarations = new HashSet<>();
-        getDependencies(declarations);
         mExpression.getDependencies(declarations);
         return declarations;
     }

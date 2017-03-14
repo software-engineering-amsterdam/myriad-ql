@@ -30,7 +30,7 @@ public abstract class LiteralNode extends ExpressionNode {
 
     @Override
     public void getDependencies(Set<String> dependencies) {
-        dependencies.add(mId);
+        // Intentionally left blank
     }
 
     @Override

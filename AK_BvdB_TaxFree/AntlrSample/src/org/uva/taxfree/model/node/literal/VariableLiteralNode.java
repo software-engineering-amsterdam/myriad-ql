@@ -4,17 +4,21 @@ import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.types.Type;
 
-public class VariableLiteralNode extends LiteralNode {
-    private final SymbolTable mSymbolTable;
+import java.util.Set;
 
-    public VariableLiteralNode(String id, SymbolTable symbolTable) {
+public class VariableLiteralNode extends LiteralNode {
+    public VariableLiteralNode(String id) {
         super(id);
-        mSymbolTable = symbolTable;
     }
 
     @Override
     public String resolveValue() {
-        return mSymbolTable.resolveValue(super.resolveValue());
+        System.out.println("resolveValue not implemented in VariableLiteralNode");
+        throw new RuntimeException("VariableLiteralNode @ resolveValue");
+    }
+
+    public String resolveValue(SymbolTable symbolTable) {
+        return symbolTable.resolveValue(super.resolveValue());
     }
 
     @Override
@@ -22,9 +26,18 @@ public class VariableLiteralNode extends LiteralNode {
         return super.isBoolean();
     }
 
-    @Override
     public Type getType() {
-        return mSymbolTable.resolveType(super.resolveValue());
+        System.out.println("getType not implemented in VariableLiteralNode");
+        throw new RuntimeException("variableLiteralNode @ getType");
+    }
+
+    public Type getType(SymbolTable symbolTable) {
+        return symbolTable.resolveType(super.resolveValue());
+    }
+
+    @Override
+    public void getDependencies(Set<String> dependencies) {
+        dependencies.add(super.resolveValue());
     }
 
     @Override
@@ -34,3 +47,4 @@ public class VariableLiteralNode extends LiteralNode {
         }
     }
 }
+

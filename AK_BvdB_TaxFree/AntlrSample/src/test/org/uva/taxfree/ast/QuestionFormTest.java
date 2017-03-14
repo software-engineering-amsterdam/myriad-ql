@@ -49,7 +49,7 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
-        mSymbolTable.addDepencendies(mCachedDeclarations);
+        mSymbolTable.addDependencies(mCachedDeclarations);
         QuestionForm form = new QuestionForm("SimpleForm", mSymbolTable);
         form.show();
     }
@@ -72,8 +72,8 @@ public class QuestionFormTest {
         add(QuestionSold);
         add(QuestionBought);
 
-        VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mSymbolTable);
-        VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mSymbolTable);
+        VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
+        VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue");
 
         BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new NumericOperator("-"), variableBought);
         CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc);
@@ -104,14 +104,14 @@ public class QuestionFormTest {
     private BlockNode createNestedIfStatement() {
         DeclarationNode boolQuestion = new DeclarationNode("Do you want to see the if declarations?", "hasSoldHouse", new BooleanType());
         add(boolQuestion);
-        VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse", mSymbolTable);
+        VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse");
         List<Node> questions = new ArrayList<>();
         questions.add(soldHouseLiteral);
         questions.add(new DeclarationNode("Toggle me on and off by selling your house", "sellYourHouse", new StringType()));
         IfStatementNode questionIfStatement = new IfStatementNode(soldHouseLiteral, questions);
         add(questionIfStatement);
         add(new DeclarationNode("Am I inbetween two if's?", "isInBetween", new StringType()));
-        VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse", mSymbolTable);
+        VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse");
 
         questions.clear();
         questions.add(condition);
