@@ -1,7 +1,7 @@
-module UI.Widget.Integer exposing (view)
+module UI.Widget.Spinbox exposing (..)
 
-import Html exposing (Html, input)
-import Html.Attributes exposing (type_, class, defaultValue, id, disabled)
+import Html exposing (Html, div, input, span, text)
+import Html.Attributes as HA exposing (type_, class, step, defaultValue, title, id)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
@@ -10,20 +10,18 @@ import UI.Widget.Values as Values
 
 
 view : WidgetContext msg -> Html msg
-view { identifier, env, onChange, editable } =
+view { identifier, env, onChange } =
     let
-        textValue =
+        currentValue =
             Environment.getFormValue identifier env
                 |> Maybe.andThen Values.asInt
-                |> Maybe.map toString
-                |> Maybe.withDefault ""
     in
         input
-            [ type_ "text"
+            [ type_ "number"
             , class "form-control"
-            , defaultValue textValue
             , id identifier
-            , disabled (not editable)
+            , step "1"
+            , defaultValue (Maybe.withDefault "" <| Maybe.map toString currentValue)
             , onInput (Values.parseIntegerInput >> onChange)
             ]
             []

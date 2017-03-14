@@ -6,6 +6,7 @@ import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
 import QL.Values as Values exposing (Value)
+import UI.Widget.Values as Values
 
 
 type alias SliderProperties =
@@ -28,7 +29,7 @@ view sliderProperties { identifier, env, onChange } =
             (toString start)
             (toString end)
             (Maybe.withDefault "" <| Maybe.map toString currentValue)
-            (parseIntegerInput >> onChange)
+            (Values.parseIntegerInput >> onChange)
 
 
 renderSlider : String -> String -> String -> (String -> msg) -> Html msg
@@ -61,10 +62,3 @@ startEndPair props =
         ( props.min, props.max )
     else
         ( props.max, props.min )
-
-
-parseIntegerInput : String -> Value
-parseIntegerInput =
-    String.toInt
-        >> Result.map Values.int
-        >> Result.withDefault Values.undefined
