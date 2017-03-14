@@ -1,9 +1,8 @@
+# TODO rubocop, cmd+alt+l
+# TODO catch errors
 # TODO if-else-then?
 # TODO create Undefined class
-# TODO create Error & Warning classes
-# TODO rubocop
-# TODO eval tests
-
+# TODO gui tests
 
 require 'require_all'
 require 'pp'
