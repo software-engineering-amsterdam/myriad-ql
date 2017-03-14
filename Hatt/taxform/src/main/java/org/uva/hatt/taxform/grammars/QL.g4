@@ -13,18 +13,18 @@ package org.uva.hatt.taxform.grammars;
 form            : 'form' Identifier '{' items* '}';
 
 items           : question
+                | computedQuestion
                 | ifThen
                 | ifThenElse;
 
-question        : StringLiteral Identifier ':' valueType computedValue?;
+question        : StringLiteral Identifier ':' valueType;
+computedQuestion: StringLiteral Identifier ':' valueType '=' expression;
 
 ifThen          : ifBlock;
 ifThenElse      : ifBlock elseBlock;
 
 ifBlock         : 'if (' expression ') {' items* '}';
 elseBlock       : 'else {' items* '}';
-
-computedValue   : '=' expression;
 
 valueType       : 'boolean'                                                 # boolean
                 | 'integer'                                                 # integer
