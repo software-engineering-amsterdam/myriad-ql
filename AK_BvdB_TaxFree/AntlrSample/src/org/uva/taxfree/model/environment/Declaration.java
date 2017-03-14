@@ -1,13 +1,15 @@
 package org.uva.taxfree.model.environment;
 
+import org.antlr.v4.codegen.model.decl.Decl;
+import org.uva.taxfree.model.node.declarations.DeclarationNode;
+import org.uva.taxfree.model.types.Type;
+
 public class Declaration {
     private String mValue;
-    private String mId;
-    private String mLabel;
+    private DeclarationNode mNode;
 
-    public Declaration(String label, String id) {
-        mLabel = label;
-        mId = id;
+    public Declaration(DeclarationNode node) {
+        mNode = node;
     }
 
     public void setValue(String value) {
@@ -29,10 +31,14 @@ public class Declaration {
     }
 
     public String getId() {
-        return mId;
+        return mNode.getId();
     }
 
     public String getLabel() {
-        return mLabel;
+        return mNode.getLabel();
+    }
+
+    public Type getType() {
+        return mNode.getType();
     }
 }
