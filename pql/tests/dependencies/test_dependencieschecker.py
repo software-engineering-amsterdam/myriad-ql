@@ -79,3 +79,20 @@ class TestDependenciesChecker(Shared):
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+
+    def test_circular_inside_nested_if_2(self):
+        input_string = """
+        form taxOfficeExample {
+            if(hasBought){
+                "Did you buy a house in 2010?" hasCar: boolean
+                if(hasCar){
+                    "Did you buy a house in 2010?" hasBike: boolean
+                }
+                "Did you buy a house in 2010?" hasNewBike: boolean = hasBike
+            }
+            "Did you buy a house in 2010?" hasBought: boolean
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_circular_references(form_node)
+        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
