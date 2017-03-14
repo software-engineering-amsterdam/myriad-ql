@@ -20,7 +20,7 @@ public class Launcher {
 
         //TODO This feels messy. Candidate for refactoring
         if (args.length > 0 && args[0].equals("-debug")) {
-            inputContent = QLFileReader.readFile(new File("/Users/matt/Repos/myriad-ql/supercoolQL/supercoolQL/res/test.txt"));
+            inputContent = QLFileReader.readFile(new File("/Users/matt/Repos/myriad-ql/supercoolQL/supercoolQL/res/circular.txt"));
         } else {
             try {
                 inputContent = new FileReader().QlRead();

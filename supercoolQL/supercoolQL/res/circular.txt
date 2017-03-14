@@ -8,10 +8,13 @@ form exampleForm {
         var3:integer;
 
 
-      "Math question 1:"
-        mathQuestion1:integer = var1 + var2;
+      "Math question 1"
+        mathQuestion1:integer = mathQuestion2 + var2;
 
-      "Math question 2:"
+      "Math question 2"
         mathQuestion2:integer = mathQuestion1 + var3;
+
+      "Math question 3"
+        mathQuestion3:integer = mathQuestion1 + mathQuestion2;
 
 }

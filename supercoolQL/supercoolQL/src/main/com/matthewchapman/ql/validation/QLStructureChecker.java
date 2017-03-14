@@ -11,10 +11,7 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by matt on 13/03/2017.
@@ -36,7 +33,8 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
         }
 
         checkForMissingParameters(typeTable);
-
+        checkForCircularDependencies();
+        System.out.println();
     }
 
     private void checkForMissingParameters(Map<String, Type> typeTable) {
@@ -44,6 +42,27 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
             for (Parameter parameter : entry.getValue()) {
                 if (!typeTable.containsKey(parameter.getID())) {
                     System.err.println("something is missing: " + parameter.getID());    //TODO: Proper error
+                }
+            }
+        }
+    }
+
+    //TODO it works, but it's not nice.
+    private void checkForCircularDependencies() {
+
+        for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
+
+            List<Parameter> parameters = new ArrayList<>(entry.getValue());
+
+            for(Parameter parameter : parameters) {
+                if(expressionMap.containsKey(parameter.getID())) {
+                    expressionMap.get(parameter.getID()).addAll(parameters);
+
+                    if(expressionMap.get(parameter.getID()).contains(parameter.getID())) {
+                        System.err.println(expressionMap.);
+                        break;
+                    }
+
                 }
             }
         }

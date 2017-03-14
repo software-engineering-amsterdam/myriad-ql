@@ -43,7 +43,7 @@ type
 
 //lexer
 
-ID:   [a-zA-Z$_]+ ;
+ID:   [a-zA-Z_]+[a-zA-Z0-9_]? ;
 
 STRING: '"' .*? '"';
 
