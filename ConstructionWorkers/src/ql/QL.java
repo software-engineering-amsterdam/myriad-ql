@@ -19,7 +19,7 @@ import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
 import ql.semanticchecker.messagehandling.MessageData;
-import ql.semanticchecker.messagehandling.errors.qlerrors.Error;
+import ql.semanticchecker.messagehandling.errors.Error;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -94,7 +94,7 @@ public class QL {
         QLParser parser = new QLParser(tokens);
 
         ParseTree parseTree = parser.form();
-        ASTVisitor astVisitor = new ASTVisitor(parseTree);
+        ASTVisitor astVisitor = new ASTVisitor();
         Node nodeAST = parseTree.accept(astVisitor);
 
         return (Form) nodeAST;

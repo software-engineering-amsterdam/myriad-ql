@@ -1,5 +1,12 @@
-/**
- * MyString.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/expressions/literals/MyString.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.expressions.literals;
@@ -16,8 +23,8 @@ public class MyString extends Literal {
 
     public MyString(String value, LineNumber lineNumber) {
         super(lineNumber);
-        this.value = value;
         this.type = new StringType(lineNumber);
+        this.value = value;
     }
 
     public Type getType() {

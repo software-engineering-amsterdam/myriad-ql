@@ -1,5 +1,12 @@
-/**
- * Equality.java
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/expressions/binaries/equality/Equality.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.expressions.binaries.equality;
@@ -10,7 +17,7 @@ import ql.astnodes.expressions.binaries.Binary;
 
 public abstract class Equality extends Binary {
 
-    public Equality(Expression left, Expression right, LineNumber lineNumber) {
+    Equality(Expression left, Expression right, LineNumber lineNumber) {
         super(left, right, lineNumber);
     }
 }

@@ -1,11 +1,19 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/messagehandling/errors/qlserrors/UnsupportedWidgetTypeError.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package ql.semanticchecker.messagehandling.errors.qlserrors;
 
 import ql.astnodes.LineNumber;
-import ql.semanticchecker.messagehandling.errors.qlerrors.Error;
+import ql.semanticchecker.messagehandling.errors.Error;
 
-/**
- * Created by LGGX on 09-Mar-17.
- */
 public class UnsupportedWidgetTypeError extends Error{
 
     private final String name;
@@ -16,7 +24,7 @@ public class UnsupportedWidgetTypeError extends Error{
     }
 
     public String getMessage() {
-        return "ERROR: Widget assignment of " + name + " at line " +  getLineNumber().getStartingLine() + " is not" +
-                " compatible with question type.";
+        return "ERROR: Widget assignment of " + name + " at line " +  getLineNumber().getStartingLine() +
+                " in QLS stylesheet is not compatible with question type.";
     }
 }

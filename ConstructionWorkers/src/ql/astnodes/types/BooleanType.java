@@ -1,9 +1,15 @@
-/**
- * BooleanType.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/types/BooleanType.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.types;
-
 
 import ql.astnodes.LineNumber;
 import ql.visitorinterfaces.TypeVisitor;

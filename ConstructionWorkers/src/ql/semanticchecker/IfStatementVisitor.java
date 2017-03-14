@@ -1,13 +1,17 @@
-/**
- * Created by LGGX on 07-Mar-17.
+/*
+ * Software Construction - University of Amsterdam
  *
- * TODO: Possibly rename this class.
+ * ./src/ql/semanticchecker/IfStatementVisitor.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker;
 
 import ql.astnodes.Form;
-import ql.astnodes.expressions.Expression;
 import ql.astnodes.expressions.binaries.equality.*;
 import ql.astnodes.expressions.binaries.logic.AND;
 import ql.astnodes.expressions.binaries.logic.OR;
@@ -32,17 +36,18 @@ import java.util.List;
 
 public class IfStatementVisitor implements FormAndStatementVisitor<Void>, ExpressionVisitor<Void> {
 
-    private final List<String> identifierList = new ArrayList<>();
-    private Boolean undefinedIdentifier;
+    private Boolean identifierDefinedInBody;
 
-    public IfStatementVisitor(IfStatement ifStatement, Expression expression) {
-        this.undefinedIdentifier = false;
-        expression.accept(this);
+    private final List<String> identifierList = new ArrayList<>();
+
+    IfStatementVisitor(IfStatement ifStatement) {
+        identifierDefinedInBody = false;
+        ifStatement.getExpression().accept(this);
         ifStatement.accept(this);
     }
 
-    public Boolean getUndefinedIdentifier() {
-        return this.undefinedIdentifier;
+    Boolean getIdentifierDefinedInBody() {
+        return identifierDefinedInBody;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
     @Override
     public Void visit(SimpleQuestion statement) {
         if(identifierList.contains(statement.getIdentifier().getName())) {
-            this.undefinedIdentifier = true;
+            identifierDefinedInBody = true;
         }
         return null;
     }
@@ -61,7 +66,7 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
     @Override
     public Void visit(ComputedQuestion statement) {
         if(identifierList.contains(statement.getIdentifier().getName())) {
-            this.undefinedIdentifier = true;
+            this.identifierDefinedInBody = true;
         }
         return null;
     }
@@ -71,6 +76,12 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
         for (Statement subStatement : statement.getStatements()) {
             subStatement.accept(this);
         }
+        return null;
+    }
+
+    @Override
+    public Void visit(Identifier literal) {
+        identifierList.add(literal.getName());
         return null;
     }
 
@@ -86,12 +97,6 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
 
     @Override
     public Void visit(MyString literal) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Identifier literal) {
-        identifierList.add(literal.getName());
         return null;
     }
 

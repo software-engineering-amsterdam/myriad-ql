@@ -1,10 +1,17 @@
-/**
- * MessageData.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/messagehandling/MessageData.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker.messagehandling;
 
-import ql.semanticchecker.messagehandling.errors.qlerrors.Error;
+import ql.semanticchecker.messagehandling.errors.Error;
 import ql.semanticchecker.messagehandling.warnings.Warning;
 
 import java.util.ArrayList;
@@ -37,10 +44,10 @@ public class MessageData {
     }
 
     public Boolean containsNoErrors() {
-        return !(this.errors.size() > 0);
+        return !(errors.size() > 0);
     }
 
     public Boolean containsNoWarnings() {
-        return !(this.warnings.size() > 0);
+        return !(warnings.size() > 0);
     }
 }

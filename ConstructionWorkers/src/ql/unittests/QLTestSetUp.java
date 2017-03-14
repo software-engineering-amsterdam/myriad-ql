@@ -32,7 +32,7 @@ public abstract class QLTestSetUp {
     protected TypeChecker typeChecker;
     protected String inputFileName;
 
-    private final String PATH = "./src/ql/unittests/qltestforms/";
+    private static final String PATH = "./src/ql/unittests/qltestforms/";
 
     @Before
     public void setUp() throws IOException {
@@ -52,7 +52,7 @@ public abstract class QLTestSetUp {
         QLParser parser = new QLParser(tokens);
 
         ParseTree parseTree = parser.form();
-        ASTVisitor astVisitor = new ASTVisitor(parseTree);
+        ASTVisitor astVisitor = new ASTVisitor();
         Node nodeAST = parseTree.accept(astVisitor);
 
         form = (Form) nodeAST;

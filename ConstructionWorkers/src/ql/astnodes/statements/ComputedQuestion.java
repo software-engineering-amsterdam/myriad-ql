@@ -1,5 +1,12 @@
-/**
- * ComputedQuestion.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/statements/ComputedQuestion.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.statements;
@@ -14,8 +21,7 @@ public class ComputedQuestion extends SimpleQuestion {
 
     private final Expression expression;
 
-    public ComputedQuestion(Identifier identifier, String label, Type type, Expression expression,
-                            LineNumber lineNumber) {
+    public ComputedQuestion(Identifier identifier, String label, Type type, Expression expression, LineNumber lineNumber) {
         super(identifier, label, type, lineNumber);
         this.expression = expression;
     }

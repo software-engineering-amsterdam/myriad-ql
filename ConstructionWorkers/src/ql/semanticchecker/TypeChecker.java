@@ -1,5 +1,12 @@
-/**
- * TypeChecker.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/TypeChecker.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker;
@@ -32,8 +39,54 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     public TypeChecker(Form ast, Map<String, Type> identifierToTypeMap, MessageData messages) {
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
-
         ast.accept(this);
+    }
+
+    @Override
+    public Void visit(Form form) {
+        for (Statement statement : form.getStatements()) {
+            statement.accept(this);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(IfStatement statement) {
+        Type expressionType = statement.getExpression().accept(this);
+        Type statementType = getTypeIfStatement(expressionType);
+
+        if (new UndefinedType().equals(statementType)) {
+            messages.addError(new InvalidTypeError(statement.getLineNumber(), new BooleanType()));
+        }
+
+        for (Statement subStatement : statement.getStatements()) {
+            subStatement.accept(this);
+        }
+        return null;
+    }
+
+    private Type getTypeIfStatement(Type expressionType) {
+        if (new BooleanType().equals(expressionType)) {
+            return expressionType;
+        }
+        return new UndefinedType();
+    }
+
+    @Override
+    public Void visit(SimpleQuestion statement) {
+        return null;
+    }
+
+    @Override
+    public Void visit(ComputedQuestion statement) {
+        tempIdentifierLiteral = statement.getIdentifier();
+        Type expressionType = statement.getExpression().accept(this);
+        tempIdentifierLiteral = null;
+
+        if (!(statement.getType()).equals(expressionType)) {
+            messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
+        }
+        return null;
     }
 
     @Override
@@ -191,71 +244,6 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     @Override
-    public Void visit(Form form) {
-        for (Statement statement : form.getStatements()) {
-            statement.accept(this);
-        }
-        return null;
-    }
-
-    @Override
-    public Void visit(IfStatement statement) {
-        Type expressionType = statement.getExpression().accept(this);
-
-        Type statementType = getTypeIfStatement(expressionType);
-        if (new UndefinedType().equals(statementType)) {
-            messages.addError(new InvalidTypeError(statement.getLineNumber(), new BooleanType()));
-        }
-
-        for (Statement subStatement : statement.getStatements()) {
-            subStatement.accept(this);
-        }
-        return null;
-    }
-
-    private Type getTypeIfStatement(Type expressionType) {
-        if ( new BooleanType().equals(expressionType)) {
-            return expressionType;
-        }
-        return new UndefinedType();
-    }
-
-    @Override
-    public Void visit(SimpleQuestion statement) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ComputedQuestion statement) {
-        tempIdentifierLiteral = statement.getIdentifier();
-        Type expressionType = statement.getExpression().accept(this);
-        tempIdentifierLiteral = null;
-
-        if (!isEqual(expressionType, statement.getType())) {
-            messages.addError(new InvalidTypeError(statement.getLineNumber(), statement.getType()));
-        }
-
-        return null;
-    }
-
-    @Override
-    public Type visit(Identifier identifier) {
-        if (identifierToTypeMap.get(identifier.getName()) == null) {
-            messages.addError(new UndefinedQuestionError(identifier.getLineNumber(), identifier));
-        }
-
-        if (tempIdentifierLiteral != null) {
-            if (tempIdentifierLiteral.getName().equals(identifier.getName())) {
-                messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(),
-                        tempIdentifierLiteral, identifier));
-            } else {
-                checkCyclicDependency(identifier);
-            }
-        }
-        return identifierToTypeMap.get(identifier.getName());
-    }
-
-    @Override
     public Type visit(MyBoolean literal) {
         return new BooleanType();
     }
@@ -275,69 +263,60 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         return new StringType();
     }
 
-    private static boolean isEqual(Object o1, Object o2) {
-        return o1 == o2 || (o1 != null && o1.equals(o2));
-    }
+    @Override
+    public Type visit(Identifier identifier) {
+        if (identifierToTypeMap.get(identifier.getName()) == null) {
+            messages.addError(new UndefinedQuestionError(identifier.getLineNumber(), identifier));
+        }
 
-    // Cyclic Dependency functions...
-
-    private Boolean containsKey(String id) {
-        return dependencyList.get(id) != null;
-    }
-
-    private List<String> getDependencyNames(String id) {
-        List<String> names = new ArrayList<>();
-
-        if (containsKey(id)) {
-            for (String dependency : dependencyList.get(id)) {
-                names.add(dependency);
+        if (tempIdentifierLiteral != null) {
+            if (tempIdentifierLiteral.getName().equals(identifier.getName())) {
+                messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(),
+                        tempIdentifierLiteral, identifier));
+            } else {
+                checkCyclicDependency(identifier);
             }
         }
-        return names;
+        return identifierToTypeMap.get(identifier.getName());
     }
 
-    private void addDependency(String id, String dependant) {
-        List<String> dependList = dependencyList.get(id);
+    // Cyclic dependency functions.
 
-        if (!containsKey(id)) {
-            dependList = new ArrayList<>();
-        }
-        dependList.add(dependant);
-        dependencyList.put(id, dependList);
-    }
-
-    private void checkCyclicDependency(Identifier start) {
-        List<String> toDependencies = getDependencyNames(start.getName());
+    // Checks for cyclic dependencies for the specified identifier.
+    private void checkCyclicDependency(Identifier identifier) {
+        List<String> toDependencies = getDependencyNames(identifier.getName());
         boolean revertedDependencyExists = toDependencies.contains(tempIdentifierLiteral.getName());
 
         if (revertedDependencyExists) {
-            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(), tempIdentifierLiteral, start));
+            messages.addError(new CyclicDependencyError(tempIdentifierLiteral.getLineNumber(), tempIdentifierLiteral, identifier));
         }
-        updateDependencyData(start.getName());
+        updateDependencyData(identifier.getName());
     }
 
-    private void updateDependencyData(String start) {
+    private void updateDependencyData(String identifierName) {
         List<String> identifiersOfAffectedNodes = getIdentifiersWithDependency();
 
         for (String newDependency : identifiersOfAffectedNodes) {
-            addDependency(newDependency, start);
+            addDependency(newDependency, identifierName);
         }
 
-        if (dependencyList.get(start) != null) {
-            for (String newDependency : dependencyList.get(start)) {
+        if (dependencyList.get(identifierName) != null) {
+            for (String newDependency : dependencyList.get(identifierName)) {
                 addDependency(tempIdentifierLiteral.getName(), newDependency);
             }
         }
     }
 
+    // Returns a list with all the identifier names that have a dependency with 'tempIdentifierLiteral', including
+    // 'tempIdentifierLiteral'.
     private List<String> getIdentifiersWithDependency() {
         List<String> newDependencyIdentifiers = new ArrayList<>();
 
-        for (String start : dependencyList.keySet()) {
-            List<String> dependenciesForKey = getDependencyNames(start);
+        for (String key : dependencyList.keySet()) {
+            List<String> dependenciesForKey = getDependencyNames(key);
 
             if (dependenciesForKey.contains(tempIdentifierLiteral.getName())) {
-                newDependencyIdentifiers.add(start);
+                newDependencyIdentifiers.add(key);
             }
         }
 
@@ -345,4 +324,35 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
         return newDependencyIdentifiers;
     }
 
+    // Returns a a list with all the identifier names with which the specified identifier has a dependency.
+    private List<String> getDependencyNames(String identifierName) {
+        List<String> names = new ArrayList<>();
+
+        if (isKey(identifierName)) {
+            for (String dependency : dependencyList.get(identifierName)) {
+                names.add(dependency);
+            }
+        }
+        return names;
+    }
+
+    // Adds the identifier 'dependant' to the dependency list of the identifier 'id'. If the identifier 'id' is not
+    // a key in 'dependencyList', add it with a dependency list that contains the identifier 'dependant'.
+    private void addDependency(String id, String dependant) {
+        List<String> dependList = dependencyList.get(id);
+
+        if (!isKey(id)) {
+            dependList = new ArrayList<>();
+        }
+        dependList.add(dependant);
+        dependencyList.put(id, dependList);
+    }
+
+    private Boolean isKey(String identifierName) {
+        return dependencyList.get(identifierName) != null;
+    }
+
+    private static boolean isEqual(Object o1, Object o2) {
+        return o1 == o2 || (o1 != null && o1.equals(o2));
+    }
 }

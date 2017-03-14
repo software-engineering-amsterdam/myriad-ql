@@ -1,5 +1,12 @@
-/**
- * Money.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/expressions/literals/Money.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.expressions.literals;
@@ -17,8 +24,8 @@ public class Money extends Literal {
 
     public Money(BigDecimal value, LineNumber lineNumber) {
         super(lineNumber);
-        this.value = value;
         this.type = new MoneyType(lineNumber);
+        this.value = value;
     }
 
     public Type getType() {

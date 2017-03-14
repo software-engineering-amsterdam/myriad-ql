@@ -1,5 +1,12 @@
-/**
- * DuplicateLabelWarning.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/messagehandling/warnings/DuplicateLabelWarning.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker.messagehandling.warnings;
@@ -24,6 +31,6 @@ public class DuplicateLabelWarning extends Warning {
 
     public String getMessage() {
         return "WARNING: Question " + identifier.getName() + " at line " + getLineNumber().getStartingLine() +
-                " has a duplicate label: " + label + ".";
+                " in QL form has a duplicate label: " + label + ".";
     }
 }

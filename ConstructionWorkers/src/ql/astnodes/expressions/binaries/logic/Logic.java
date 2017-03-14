@@ -1,5 +1,12 @@
-/**
- * Logic.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/expressions/binaries/logic/Logic.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.expressions.binaries.logic;
@@ -10,7 +17,7 @@ import ql.astnodes.LineNumber;
 
 public abstract class Logic extends Binary {
 
-    public Logic(Expression left, Expression right, LineNumber lineNumber) {
+    Logic(Expression left, Expression right, LineNumber lineNumber) {
         super(left, right, lineNumber);
     }
 }

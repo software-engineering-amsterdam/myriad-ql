@@ -1,5 +1,12 @@
-/**
- * IdentifierChecker.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/IdentifierChecker.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker;
@@ -33,7 +40,6 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
         this.identifierToTypeMap = identifierToTypeMap;
         this.messages = messages;
         this.questionLabels = new HashSet<>();
-
         ast.accept(this);
     }
 
@@ -46,39 +52,39 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     }
 
     @Override
-    public Identifier visit(IfStatement statement) {
-        IfStatementVisitor visitor = new IfStatementVisitor(statement, statement.getExpression());
+    public Identifier visit(IfStatement ifStatement) {
+        IfStatementVisitor visitor = new IfStatementVisitor(ifStatement);
 
-        if(visitor.getUndefinedIdentifier()) {
-            messages.addError(new IfExpressionUndefinedError(statement.getLineNumber()));
+        if(visitor.getIdentifierDefinedInBody()) {
+            messages.addError(new IfExpressionUndefinedError(ifStatement.getLineNumber()));
         }
 
-        for (Statement subStatement : statement.getStatements()) {
+        for (Statement subStatement : ifStatement.getStatements()) {
             subStatement.accept(this);
         }
         return null;
     }
 
     @Override
-    public Identifier visit(SimpleQuestion statement) {
-        if (!duplicateQuestionIdentifiers(statement)) {
-            identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
+    public Identifier visit(SimpleQuestion simpleQuestion) {
+        if (!duplicateQuestionIdentifiers(simpleQuestion)) {
+            identifierToTypeMap.put(simpleQuestion.getIdentifier().getName(), simpleQuestion.getType());
         }
 
-        if (!duplicateQuestionLabels(statement)) {
-            questionLabels.add(statement.getLabel());
+        if (!duplicateQuestionLabels(simpleQuestion)) {
+            questionLabels.add(simpleQuestion.getLabel());
         }
         return null;
     }
 
     @Override
-    public Identifier visit(ComputedQuestion statement) {
-        if (!duplicateQuestionIdentifiers(statement)) {
-            identifierToTypeMap.put(statement.getIdentifier().getName(), statement.getType());
+    public Identifier visit(ComputedQuestion computedQuestion) {
+        if (!duplicateQuestionIdentifiers(computedQuestion)) {
+            identifierToTypeMap.put(computedQuestion.getIdentifier().getName(), computedQuestion.getType());
         }
 
-        if (!duplicateQuestionLabels(statement)) {
-            questionLabels.add(statement.getLabel());
+        if (!duplicateQuestionLabels(computedQuestion)) {
+            questionLabels.add(computedQuestion.getLabel());
         }
         return null;
     }
@@ -87,7 +93,9 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
         String questionIdentifierName = question.getIdentifier().getName();
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {
-            if (isEqual(identifierToTypeMap.get(questionIdentifierName), question.getType())) {
+//            TODO: decide.
+//            if (isEqual(identifierToTypeMap.get(questionIdentifierName), question.getType())) {
+            if ((identifierToTypeMap.get(questionIdentifierName)).equals(question.getType())) {
                 messages.addWarning(new DuplicateIdentifierWarning(question.getLineNumber(), question.getIdentifier()));
                 return true;
             }
@@ -108,7 +116,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
         return false;
     }
 
-    private static boolean isEqual(Object o1, Object o2) {
-        return o1 == o2 || (o1 != null && o1.equals(o2));
-    }
+//    private static boolean isEqual(Object o1, Object o2) {
+//        return o1 == o2 || (o1 != null && o1.equals(o2));
+//    }
 }

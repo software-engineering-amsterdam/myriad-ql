@@ -1,5 +1,12 @@
-/**
- * NEQ.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/expressions/binaries/equality/NEQ.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes.expressions.binaries.equality;

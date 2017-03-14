@@ -1,5 +1,12 @@
-/**
- * ASTVisitor.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/astnodes/ASTVisitor.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.astnodes;
@@ -22,7 +29,6 @@ import ql.antlr.QLBaseVisitor;
 import ql.antlr.QLParser;
 import ql.antlr.QLVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
@@ -31,21 +37,7 @@ import java.util.List;
 
 public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
 
-    private final Form abstractSyntaxTree;
-
-    private static final String GRAMMAR_ERROR = "Why u no work!";
-
-    public ASTVisitor(ParseTree parseTree) {
-        abstractSyntaxTree = (Form) parseTree.accept(this);
-    }
-
-    public Form getAbstractSyntaxTree() {
-        return abstractSyntaxTree;
-    }
-
-    public String getGrammarErrorMessage(String expression) {
-        return MessageFormat.format(ASTVisitor.GRAMMAR_ERROR, expression);
-    }
+    private static final String GRAMMAR_ERROR = "Grammar error!";
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
@@ -227,6 +219,10 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     @Override
     public MyString visitStringExpression(QLParser.StringExpressionContext ctx) {
         return new MyString(ctx.getText().substring(1, ctx.getText().length() - 1), getLineNumber(ctx));
+    }
+
+    private String getGrammarErrorMessage(String expression) {
+        return MessageFormat.format(ASTVisitor.GRAMMAR_ERROR, expression);
     }
 
     private LineNumber getLineNumber(ParserRuleContext ctx) {

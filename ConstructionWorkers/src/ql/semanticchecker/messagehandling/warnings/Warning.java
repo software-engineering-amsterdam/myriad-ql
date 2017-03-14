@@ -1,5 +1,12 @@
-/**
- * Warning.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/messagehandling/warnings/Warning.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.semanticchecker.messagehandling.warnings;
@@ -11,7 +18,7 @@ public abstract class Warning extends Message {
 
     private final String type;
 
-    public Warning(LineNumber lineNumber) {
+    Warning(LineNumber lineNumber) {
         super(lineNumber);
         this.type = "Warning";
     }

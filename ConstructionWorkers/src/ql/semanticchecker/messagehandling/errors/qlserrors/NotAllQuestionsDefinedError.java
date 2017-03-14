@@ -1,11 +1,19 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/semanticchecker/messagehandling/errors/qlserrors/NotAllQuestionsDefinedError.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package ql.semanticchecker.messagehandling.errors.qlserrors;
 
 import ql.astnodes.LineNumber;
-import ql.semanticchecker.messagehandling.errors.qlerrors.Error;
+import ql.semanticchecker.messagehandling.errors.Error;
 
-/**
- * Created by LGGX on 07-Mar-17.
- */
 public class NotAllQuestionsDefinedError extends Error{
 
     private final String name;
@@ -16,6 +24,6 @@ public class NotAllQuestionsDefinedError extends Error{
     }
 
     public String getMessage() {
-        return "ERROR: Question " + name + " from QL has not been defined in the QLS stylesheet.";
+        return "ERROR: Question " + name + " from QL form has not been defined in the QLS stylesheet.";
     }
 }
