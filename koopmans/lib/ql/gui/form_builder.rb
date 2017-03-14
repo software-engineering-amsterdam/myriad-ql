@@ -10,6 +10,19 @@ module QL
         if_statement.body.map { |statement| statement.accept(self, condition) }
       end
 
+      def visit_if_else_statement(if_else_statement, condition=nil)
+        if_condition = stack_conditions(condition, if_else_statement.condition)
+        else_condition = stack_conditions(condition, negate(if_else_statement.condition))
+        if_body_questions = if_else_statement.if_body.map { |statement| statement.accept(self, if_condition) }
+        else_body_questions = if_else_statement.else_body.map { |statement| statement.accept(self, else_condition) }
+        [if_body_questions, else_body_questions]
+      end
+
+      # negate for else
+      def negate(condition)
+        AST::BooleanNegation.new(condition)
+      end
+
       # stack conditions if possible
       def stack_conditions(condition_1, condition_2)
         if condition_1 && condition_2
