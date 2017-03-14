@@ -13,7 +13,8 @@ class NumericTextWidget(numberType: NumericType)(implicit val changeHandler: Val
   private val textfield = new TextField()
 
   textfield.onAction = handle {
-    val qlValue = Try(BigDecimal(textfield.text.value)) match {
+    val rawValue = textfield.text.value.trim.stripPrefix("€")
+    val qlValue = Try(BigDecimal(rawValue)) match {
       case Success(parsedValue) => NumericValue.bigDecimalToNumericValue(parsedValue, numberType)
       case Failure(_) => UndefinedValue
     }
