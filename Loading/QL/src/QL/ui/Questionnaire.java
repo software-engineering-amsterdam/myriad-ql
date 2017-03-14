@@ -53,9 +53,10 @@ public class Questionnaire extends Application implements Notifier {
 
         pStage = primaryStage;
         
-    	// TODO improve with http://www-acad.sheridanc.on.ca/~jollymor/prog24178/javafx7.html
-    	faults.check();
-
+    	if (!faults.showAndContinue()) {
+    		return;
+    	}
+    	
         primaryStage.setTitle(form.getId());
         
         grid = initGrid();
