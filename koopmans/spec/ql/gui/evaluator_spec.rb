@@ -10,8 +10,6 @@ module QL
     include Parser
     describe Evaluator do
       let(:evaluator) { Evaluator.new }
-      let(:form_parser) { FormParser.new }
-      let(:form_transformer) { FormTransformer.new }
 
       context 'arithmetic' do
         it 'evaluates' do
