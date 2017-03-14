@@ -16,6 +16,7 @@ from gui.CodeArea import CodeArea
 from pql.gui.Questionnaire import Questionnaire
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
+from pql.typechecker.type_environment import TypeEnvironment
 from pql.typechecker.typechecker import TypeChecker
 
 
@@ -157,7 +158,7 @@ class Editor(QMainWindow, QWidget):
 
     def check_type(self, ast):
         try:
-            return TypeChecker(ast).visit()
+            return TypeChecker(ast, TypeEnvironment).visit()
         except Exception as e:
             self.list_errors.addItem("Checking types:\n    {}".format(e))
 

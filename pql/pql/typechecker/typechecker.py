@@ -17,7 +17,8 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.errors
 
     def form(self, node):
-        [statement.apply(self) for statement in node.statements]
+        for statement in node.statements:
+            statement.apply(self)
 
     def field(self, node):
         if node.expression is not None:
