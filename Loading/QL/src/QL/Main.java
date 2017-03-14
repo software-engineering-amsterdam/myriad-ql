@@ -6,14 +6,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import QL.ast.Form;
 import QL.semantic.Analyzer;
 import QL.ui.Questionnaire;
-import QL.ui.error.ErrorDialog;
-import QL.ui.error.WarningDialog;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\"boolean "
+				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
 				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
@@ -56,26 +54,8 @@ public class Main {
 
 		Environment env = new Environment(analyzer.getVariableTypes());
 		
-	   	if (checkFaults(faults)) {
-    		return;
-    	}
-		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, env);
+		questionnaire.main(form, env, faults);
 	}
-	
-    private static boolean checkFaults(Faults faults) {
-    	if (faults.hasErrors()) {
-    		ErrorDialog dialog = new ErrorDialog(faults.getErrors());
-    		dialog.show();
-    		return true;
-    	}   	
-    	if (faults.hasWarnings()) {
-        	WarningDialog dialog = new WarningDialog(faults.getWarnings());
-        	dialog.show();
-    	}   	
-    	return false;
-    }
-	
 	
 }

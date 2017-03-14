@@ -3,10 +3,7 @@ package org.uva.taxfree.main;//package main;
 import org.uva.taxfree.ast.AstBuilder;
 import org.uva.taxfree.gui.*;
 import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.blocks.FormNode;
-import test.org.uva.taxfree.ast.SemanticsTester;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,11 +34,11 @@ public class Main {
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
 
-        if(semanticsMessages.hasMessages()){
+        if (semanticsMessages.hasMessages()) {
             MessageWindow.showMessages(semanticsMessages);
         }
 
-        if(!semanticsMessages.fatalErrors()) {
+        if (!semanticsMessages.fatalErrors()) {
             QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
             ast.fillQuestionForm(taxForm);
             taxForm.show();

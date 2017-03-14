@@ -15,7 +15,7 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
 	private final Environment environment;
 
-	public Evaluator(Environment environment) {
+	protected Evaluator(Environment environment) {
 		this.environment = environment;
 	}
 
@@ -42,20 +42,18 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
     @Override
     public void visit(ComputedQuestion question) {
-        Value value = question.getComputedQuestion().accept(this);
+        question.getComputedQuestion().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
+	    statement.getExpression().accept(this);
         statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
+	    statement.getExpression().accept(this);
         statement.getBlock().accept(this);
         statement.getElseBlock().accept(this);
     }

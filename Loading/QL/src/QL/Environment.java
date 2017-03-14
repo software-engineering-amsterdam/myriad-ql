@@ -8,8 +8,8 @@ import QL.value.Value;
 
 public class Environment {
 
-	private Map<String, Value> variableAnswer;
-	private Map<String, Type> variableType;
+	private final Map<String, Value> variableAnswer;
+	private final Map<String, Type> variableType;
 	
 	public Environment(Map<String, Type> variableType) {
 		this.variableAnswer = new HashMap<>(); 
@@ -27,6 +27,10 @@ public class Environment {
 		return getType(variable).getValue();
 	}
 	
+	public boolean isAnswered(String variable) {
+		return variableAnswer.containsKey(variable);
+	}
+	
 	public Type getType(String variable) {
 		if (!variableType.containsKey(variable)) {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
@@ -34,9 +38,5 @@ public class Environment {
 		}
 		return variableType.get(variable);
 		
-	}
-	
-	public boolean isAnswered(String variable) {
-		return variableAnswer.containsKey(variable);
 	}
 }

@@ -15,14 +15,12 @@ block returns [Block result]
  : '{' blockItems { $result = new Block($blockItems.result, $blockItems.start.getLine()); } '}'
  ;
 
-// TODO decide on maximum characters on one line
-// TODO these string have quotes
 blockItems returns [List<BlockItem> result]
 @ init {
 	$result = new ArrayList<BlockItem>();
 }
- : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $ctx.start.getLine())); }
- |   ID ':' STRING type expr { $result.add(new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result, $ctx.start.getLine())); }
+ : ( ID ':' str type      { $result.add(new Question($ID.text, $str.result, $type.result, $ctx.start.getLine())); }
+ |   ID ':' str type expr { $result.add(new ComputedQuestion($ID.text, $str.result, $type.result, $expr.result, $ctx.start.getLine())); }
  |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); }
  |   'if' '(' expr ')' block { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); }
    )*
@@ -57,8 +55,12 @@ expr returns [Expression result]
 
 atom returns [Atom result]
  : INT    { $result = new IntegerAtom(Integer.parseInt($INT.text), $ctx.start.getLine()); }
- | STRING { $result = new StringAtom($STRING.text.substring(1, $STRING.text.length()-1), $ctx.start.getLine()); }
+ | str { $result = new StringAtom($str.result, $ctx.start.getLine()); }
  | BOOL   { $result = new BoolAtom(Boolean.valueOf($BOOL.text), $ctx.start.getLine()); }
+ ;
+
+str returns [String result]
+ : STRING { $result = $STRING.text.substring(1, $STRING.text.length()-1); }
  ;
 
 BOOL: 'true' | 'false';

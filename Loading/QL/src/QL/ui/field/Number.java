@@ -9,7 +9,7 @@ import QL.value.Value;
 
 public class Number implements Field {
 	
-	private TextField field;
+	private final TextField field;
 	
 	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
@@ -26,12 +26,7 @@ public class Number implements Field {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
-	    	  
-	    	  if (tooLarge(value)) {
-	    		  System.out.println("Too large");
-	    		  return;
-	    	  }
-	    	  
+
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
@@ -41,11 +36,6 @@ public class Number implements Field {
 	          }
 	      }
     	});
-	}
-	
-	// TODO improve
-	private boolean tooLarge(Value value) {	
-		return field.getText().length() > 9;
 	}
 
 	@Override

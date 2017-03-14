@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Block extends Node { 
 	
-	private List<BlockItem> blockItems;
+	private final List<BlockItem> blockItems;
 	
 	public List<BlockItem> getBlockItems() {
 		return blockItems;

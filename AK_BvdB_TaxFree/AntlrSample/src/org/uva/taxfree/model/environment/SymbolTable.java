@@ -23,7 +23,7 @@ public class SymbolTable {
         mCalculations = new ArrayList<>();
     }
 
-    public void addDepencendies(List<DeclarationNode> nodes) {
+    public void addDependencies(List<DeclarationNode> nodes) {
         for (DeclarationNode n : nodes) {
             addDeclaration(n);
         }
@@ -35,7 +35,7 @@ public class SymbolTable {
 
     public void addDeclaration(DeclarationNode node) {
         mDeclarationNodes.add(node);
-        mDeclarations.add(new Declaration(node.getLabel(), node.getId()));
+        mDeclarations.add(new Declaration(node));
     }
 
     public void addCalculation(CalculationNode calculation) {
@@ -66,26 +66,26 @@ public class SymbolTable {
     }
 
     public boolean contains(String variableId) {
-        return findNodes(variableId).size() > 0;
+        return findDeclarations(variableId).size() > 0;
     }
 
-    private DeclarationNode findNode(String variableId) {
-        assert findNodes(variableId).size() == 1;
-        return findNodes(variableId).get(0);
+    private Declaration findDeclaration(String variableId) {
+        assert findDeclarations(variableId).size() == 1;
+        return findDeclarations(variableId).get(0);
     }
 
-    private List<DeclarationNode> findNodes(String variableId) {
-        List<DeclarationNode> declarationNodes = new ArrayList<>();
-        for (DeclarationNode n : mDeclarationNodes) {
-            if (variableId.equals(n.getId())) {
-                declarationNodes.add(n);
+    private List<Declaration> findDeclarations(String variableId) {
+        List<Declaration> declarations = new ArrayList<>();
+        for (Declaration decl : mDeclarations) {
+            if (decl.equals(variableId)) {
+                declarations.add(decl);
             }
         }
-        return declarationNodes;
+        return declarations;
     }
 
     public Type resolveType(String variableId) {
-        return findNode(variableId).getType();
+        return findDeclaration(variableId).getType();
     }
 
     public void getDuplicateLabelErrors(MessageList messageList) {
@@ -126,11 +126,10 @@ public class SymbolTable {
         return false;
     }
 */
-
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
-            addDepencendies(variableName, dependencies);
+            addDependencies(variableName, dependencies);
         }
 
         if (!usedVariables.equals(dependencies)) {
@@ -139,7 +138,7 @@ public class SymbolTable {
         }
     }
 
-    private void addDepencendies(String usedVariable, Set<String> usedVariables) {
+    private void addDependencies(String usedVariable, Set<String> usedVariables) {
         for (CalculationNode calc : mCalculations) {
             if (calc.getId().equals(usedVariable)) {
                 usedVariables.addAll(calc.getUsedVariables());

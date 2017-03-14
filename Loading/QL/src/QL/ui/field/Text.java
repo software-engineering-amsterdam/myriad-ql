@@ -1,6 +1,5 @@
 package QL.ui.field;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
@@ -10,7 +9,7 @@ import QL.value.Value;
 
 public class Text implements Field {
 	
-	private TextField field;
+	private final TextField field;
 	
 	public Text(String name, Notifier notifier, StringValue value) {
 		this.field = new TextField();
