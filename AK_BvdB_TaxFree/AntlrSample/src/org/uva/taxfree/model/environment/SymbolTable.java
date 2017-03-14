@@ -6,6 +6,8 @@ import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.types.Type;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class SymbolTable {
@@ -130,4 +132,15 @@ public class SymbolTable {
         return visibleDeclarations;
     }
 
+    public void export(String fileName) {
+        try {
+            FileWriter results = new FileWriter(fileName);
+            for (Declaration declaration : mDeclarations) {
+                results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
+            }
+            results.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

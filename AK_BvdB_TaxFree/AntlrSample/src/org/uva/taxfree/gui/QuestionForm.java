@@ -6,6 +6,8 @@ import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class QuestionForm implements FormListener {
     private JFrame createFrame(String caption) {
         JFrame frame = new JFrame(caption);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mSymbolTable.export(caption + ".txdata");
+            }
+        });
         return frame;
     }
 
@@ -63,4 +71,6 @@ public class QuestionForm implements FormListener {
             w.updateStyle(qlsStyle);
         }
     }
+
+
 }
