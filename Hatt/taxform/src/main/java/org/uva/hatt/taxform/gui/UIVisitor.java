@@ -14,6 +14,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
+import org.uva.hatt.taxform.ast.nodes.items.ComputedQuestion;
 import org.uva.hatt.taxform.ast.nodes.items.IfThen;
 import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
@@ -70,6 +71,11 @@ public class UIVisitor implements Visitor<Pane> {
         question.addField(widget);
 
         return question;
+    }
+
+    @Override
+    public Pane visit(ComputedQuestion computedQuestion) {
+        return null;
     }
 
     @Override

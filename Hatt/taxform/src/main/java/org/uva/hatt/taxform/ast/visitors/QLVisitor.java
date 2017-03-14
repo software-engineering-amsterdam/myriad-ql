@@ -5,10 +5,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
-import org.uva.hatt.taxform.ast.nodes.items.IfThen;
-import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
-import org.uva.hatt.taxform.ast.nodes.items.Item;
-import org.uva.hatt.taxform.ast.nodes.items.Question;
+import org.uva.hatt.taxform.ast.nodes.items.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
@@ -48,11 +45,18 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         question.setValue(ctx.Identifier().getText());
         question.setType((ValueType) visit(ctx.valueType()));
 
-        if (ctx.computedValue() != null) {
-            question.setComputedValue((Expression) visit(ctx.computedValue()));
-        }
-
         return question;
+    }
+
+    @Override
+    public ASTNode visitComputedQuestion(QLParser.ComputedQuestionContext ctx) {
+        ComputedQuestion computedQuestion = new ComputedQuestion(ctx.start.getLine());
+        computedQuestion.setQuestion(ctx.StringLiteral().getText());
+        computedQuestion.setValue(ctx.Identifier().getText());
+        computedQuestion.setType((ValueType) visit(ctx.valueType()));
+        computedQuestion.setComputedValue((Expression) visit(ctx.expression()));
+
+        return computedQuestion;
     }
 
     @Override

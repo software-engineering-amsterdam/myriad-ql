@@ -11,10 +11,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.items.IfThen;
-import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
-import org.uva.hatt.taxform.ast.nodes.items.Item;
-import org.uva.hatt.taxform.ast.nodes.items.Question;
+import org.uva.hatt.taxform.ast.nodes.items.*;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
@@ -62,6 +59,11 @@ public class TypeChecker implements Visitor{
 
         declarations.put(node.getValue(), node.getType());
         questions.add(node.getQuestion().toLowerCase());
+        return null;
+    }
+
+    @Override
+    public ComputedQuestion visit(ComputedQuestion computedQuestion) {
         return null;
     }
 

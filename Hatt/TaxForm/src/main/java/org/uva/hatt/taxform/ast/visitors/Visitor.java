@@ -19,6 +19,7 @@ public interface Visitor<T> {
     T visit(Form node);
     T visit(FormId node);
     T visit(Question node);
+    T visit(ComputedQuestion node);
     T visit(IfThen node);
     T visit(IfThenElse node);
     T visit(Boolean node);
