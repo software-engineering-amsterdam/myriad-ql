@@ -4,7 +4,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ql.ast.environment.Env;
 import ql.ast.types.*;
-import ql.ast.environment.Environment;
 import ql.view.fields.*;
 
 /**

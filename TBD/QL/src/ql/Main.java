@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import ql.ast.environment.Env;
 import ql.ast.visistor.*;
-import ql.ast.environment.Environment;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
 

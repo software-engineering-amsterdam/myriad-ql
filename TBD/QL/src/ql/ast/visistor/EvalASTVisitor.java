@@ -2,14 +2,12 @@ package ql.ast.visistor;
 
 import ql.ast.ASTNode;
 import ql.ast.environment.Env;
-import ql.ast.environment.Scope;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.values.Value;
-import ql.ast.environment.Environment;
 
 /**
  * Created by Erik on 14-2-2017.
