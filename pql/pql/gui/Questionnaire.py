@@ -145,7 +145,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.update_visible_values(QCheckBox, self.update_value_boolean)
 
     def update_visible_values(self, widget_type, function):
-        environment = self.evaluator.visit(self.ast)
+        environment = self.evaluator.visit()
         for key, value in environment.items():
             widget = self.wizard.findChild(widget_type, key)
             if widget is not None:
