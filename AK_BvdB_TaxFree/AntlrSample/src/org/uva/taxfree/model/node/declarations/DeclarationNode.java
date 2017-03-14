@@ -6,6 +6,8 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 
+import java.util.List;
+
 public class DeclarationNode extends Node {
     private final String mId;
     private final String mLabel;
@@ -44,5 +46,10 @@ public class DeclarationNode extends Node {
         if (!symbolTable.contains(mId)) {
             semanticsMessages.addError("Declaration not present in symbolTable:" + mId);
         }
+    }
+
+    @Override
+    public void generateVisibleIds(List<String> visibleIds) {
+        visibleIds.add(mId);
     }
 }

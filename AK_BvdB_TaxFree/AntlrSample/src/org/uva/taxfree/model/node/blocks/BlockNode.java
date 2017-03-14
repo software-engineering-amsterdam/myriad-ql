@@ -34,4 +34,14 @@ public abstract class BlockNode extends Node {
             child.fillQuestionForm(form);
         }
     }
+
+    public void generateVisibleIds(List<String> visibleIds) {
+        if (conditionTrue()) {
+            for (Node child : mChildren) {
+                child.generateVisibleIds(visibleIds);
+            }
+        }
+    }
+
+    protected abstract boolean conditionTrue();
 }

@@ -33,6 +33,17 @@ public class IfElseStatementNode extends IfStatementNode {
     }
 
     @Override
+    public void generateVisibleIds(List<String> visibleIds) {
+        if (conditionTrue()) {
+            super.generateVisibleIds(visibleIds);
+        } else {
+            for (Node n : mElseChildren) {
+                n.generateVisibleIds(visibleIds);
+            }
+        }
+    }
+
+    @Override
     public void fillQuestionForm(QuestionForm form) {
         super.fillQuestionForm(form);
         for (Node n : mElseChildren) {
