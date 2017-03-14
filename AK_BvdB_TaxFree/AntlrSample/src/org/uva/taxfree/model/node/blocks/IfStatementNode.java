@@ -16,7 +16,14 @@ public class IfStatementNode extends BlockNode {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addExpression(mExpression);
+        super.fillSymbolTable(symbolTable);
+        mExpression.fillSymbolTable(symbolTable);
     }
+
+    @Override
+    public boolean conditionTrue() {
+        return mExpression.evaluate().equals("true");
+    }
+
 
 }
