@@ -9,31 +9,17 @@ public class StringValue extends Value {
     }
     
     public StringValue() {
-    	this.value = null;
-    }
-    
-    @Override
-    public boolean isSet() {
-    	return value != null;
+    	this.value = "";
     }
 
     @Override
 	public BoolValue eq(Value other) {
-    	
-    	if (!isSet() || !other.isSet()) {
-    		return new BoolValue();
-    	}
 
     	return new BoolValue(value.equals(((StringValue) other).getValue()) );
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
-		
-		
-    	if (!isSet() || !other.isSet()) {
-    		return new BoolValue();
-    	}
 
 		return new BoolValue(!value.equals(((StringValue) other).getValue()) );
 	}

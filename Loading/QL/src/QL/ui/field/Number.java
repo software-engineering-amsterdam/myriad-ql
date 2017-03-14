@@ -16,11 +16,10 @@ public class Number implements Field {
 		
 		field.setId(name);
 		
-		if (value.isSet()) {
-			String valueText = Integer.toString(value.getValue());
-			field.setText(valueText);
-			field.positionCaret(valueText.length());
-		}
+		
+		String valueText = Integer.toString(value.getValue());
+		field.setText(valueText);
+		field.positionCaret(valueText.length());
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override

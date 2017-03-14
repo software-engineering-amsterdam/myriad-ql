@@ -25,9 +25,7 @@ public abstract class Type extends Node {
 
 	// TODO field and QL.value in here?
 	public abstract Field getField(String name, Notifier notifier, Value value);
-	
-	public abstract Value getValue();
 
-	public abstract void accept(TypeVisitor v);
+	public abstract <T> T accept(TypeVisitor<T> v);
 
 }

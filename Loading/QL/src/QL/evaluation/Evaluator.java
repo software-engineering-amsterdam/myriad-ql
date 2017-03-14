@@ -6,12 +6,17 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
+import QL.ast.type.BooleanType;
+import QL.ast.type.IntegerType;
+import QL.ast.type.StringType;
+import QL.ast.type.Type;
+import QL.ast.type.UnknownType;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
 import QL.value.Value;
 
-public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
+public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, TypeVisitor<Value> {
 
 	private final Environment environment;
 
@@ -90,12 +95,12 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
     @Override
 	public Value visit(IdExpr id) {
-
-		if (!environment.isAnswered(id.getName())) {
-			return environment.getType(id.getName()).getValue();
-		}
-
-		return environment.getAnswer(id.getName());
+    	    	
+		//if (!environment.isAnswered(id.getName())) {
+			return environment.getType(id.getName()).accept(this);
+//		}
+//
+//		return environment.getAnswer(id.getName());
 	}
 
     @Override
@@ -157,6 +162,27 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
     public Value visit(StringAtom expr) {
 	    return new StringValue(expr.getAtom());
     }
+
+	@Override
+	public Value visit(BooleanType type) {
+		return new BoolValue();
+	}
+
+	@Override
+	public Value visit(IntegerType type) {
+		return new IntegerValue();
+	}
+
+	@Override
+	public Value visit(StringType type) {
+		return new StringValue();
+	}
+	
+	// TODO does this not throw a nullpointer exception?
+	@Override
+	public Value visit(UnknownType unknownType) {
+		return null;
+	}
 }
 
 

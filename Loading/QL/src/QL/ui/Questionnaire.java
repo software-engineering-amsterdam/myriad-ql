@@ -101,12 +101,6 @@ public class Questionnaire extends Application implements Notifier {
             @Override
             public void handle(ActionEvent e) {
             	
-            	for (Row activeQuestion : activeQuestions) {
-            		
-            		if (isIncomplete(activeQuestion.getAnswer(), actiontarget)) {
-            			return;
-            		}            		
-            	}  
             	complete(activeQuestions, actiontarget);
             }
         });
@@ -119,16 +113,6 @@ public class Questionnaire extends Application implements Notifier {
 
         exportQuestionnaire(activeQuestions);
     	
-    }
-    
-    private boolean isIncomplete(Value answer, Text actiontarget) {
-		
-    	if (!answer.isSet()) {
-            actiontarget.setFill(Color.FIREBRICK);
-            actiontarget.setText("Please fill in all Fields");
-            return true;
-		}
-    	return false;
     }
     
     private void renderTitle(String title) {

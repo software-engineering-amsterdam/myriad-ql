@@ -45,7 +45,16 @@ public class QEvaluator extends Evaluator {
     }
     
     private Row createRow(Question question) {
-        Value answer = answers.getAnswer(question.getVariable());
+    	
+    	Value answer;
+    	if (answers.isAnswered(question.getVariable())) {
+    		answer = answers.getAnswer(question.getVariable());
+    	}
+    	else {
+    		answer = question.getType().accept(this);
+    	}
+    	
+ 
         Field field = question.getType().getField(question.getVariable(), notifier, answer);
         
         return new Row(question.getVariable(), question.getLabel(), field);
@@ -55,7 +64,7 @@ public class QEvaluator extends Evaluator {
     public void visit(Statement statement) {
         Value value = statement.getExpression().accept(this);
 
-        if (value.isSet() && ((BoolValue) value).getValue()) {
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         }
     }
@@ -64,7 +73,7 @@ public class QEvaluator extends Evaluator {
     public void visit(IfElseStatement statement) {
         Value value = statement.getExpression().accept(this);
 
-        if (value.isSet() && ((BoolValue) value).getValue()) {
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         } else {
             statement.getElseBlock().accept(this);

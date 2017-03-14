@@ -15,12 +15,8 @@ public class Text implements Field {
 		this.field = new TextField();
 		
 		field.setId(name);
-		
-		if (value.isSet()) {
-			field.setText(value.getValue());
-			field.positionCaret(value.getValue().length());
-		}
-		
+		field.setText(value.getValue());
+		field.positionCaret(value.getValue().length());
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override

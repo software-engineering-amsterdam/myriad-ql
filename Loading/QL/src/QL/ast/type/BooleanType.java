@@ -14,19 +14,13 @@ public class BooleanType extends Type {
 	}
 
 	@Override
-	public void accept(TypeVisitor v) {
-		v.visit(this);
-		
+	public <T> T accept(TypeVisitor<T> v) {
+		return v.visit(this);	
 	}
 
 	@Override
 	public Field getField(String name, Notifier notifier, Value value) {
 		return new Check(name, notifier, (BoolValue) value);
-	}
-
-	@Override
-	public Value getValue() {
-		return new BoolValue(false);
 	}
 
 }

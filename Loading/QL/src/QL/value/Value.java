@@ -1,8 +1,7 @@
 package QL.value;
 
 public abstract class Value {
-		
-	public abstract boolean isSet();
+	
 	public abstract String convertToString();
 	
 	// Binary Operators
