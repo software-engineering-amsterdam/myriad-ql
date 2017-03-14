@@ -107,6 +107,10 @@ export class ASTValidationVisitor {
         }
     }
 
+    visitPreExpression(condition){
+        condition.expression.accept(this);
+    }
+
     visitExpression(condition) {
         if(condition.leftHand instanceof Expression){
             condition.leftHand.accept(this);

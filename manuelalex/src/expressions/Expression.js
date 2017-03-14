@@ -69,7 +69,7 @@ export class PrefixExpression {
     }
 
     accept(visitor){
-       return null; /* TODO */
+        visitor.visitPreExpression(this);
     }
 
     validate() {
