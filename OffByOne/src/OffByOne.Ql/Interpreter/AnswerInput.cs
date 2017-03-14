@@ -3,9 +3,9 @@
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
-    public class GuiChange
+    public class AnswerInput
     {
-        public GuiChange(string identifier, IValue value, GuiEnvironment env)
+        public AnswerInput(string identifier, IValue value, GuiEnvironment env)
         {
             this.Identifier = identifier;
             this.Value = value;

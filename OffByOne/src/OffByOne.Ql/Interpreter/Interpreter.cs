@@ -6,57 +6,59 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.ValueTypes;
-    using OffByOne.Ql.Interpreter.Controls;
-    using OffByOne.Ql.Interpreter.Controls.Base;
+    using OffByOne.Ql.Interpreter.Validators;
+    using OffByOne.Ql.Interpreter.Widgets;
+    using OffByOne.Ql.Interpreter.Widgets.Base;
+    using OffByOne.Ql.Values;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class Interpreter
-        : IStatementVisitor<Control, GuiEnvironment>
+        : IStatementVisitor<Widget, GuiEnvironment>
     {
-        public Control Visit(FormStatement expression, GuiEnvironment environment)
+        public Widget Visit(FormStatement expression, GuiEnvironment environment)
         {
-            var controls = new List<Control>(expression.Statements.Count());
+            var controls = new List<Widget>(expression.Statements.Count());
             foreach (var s in expression.Statements)
             {
                 var control = s.Accept(this, environment);
                 controls.Add(control);
             }
 
-            var form = new FormControl(expression, environment, controls);
+            var form = new FormWidget(expression, environment, controls);
             return form;
         }
 
-        public Control Visit(QuestionStatement expression, GuiEnvironment environment)
+        public Widget Visit(QuestionStatement statement, GuiEnvironment environment)
         {
-            Control question;
-            switch (expression.Type)
+            Widget question;
+            switch (statement.Type)
             {
                 case BooleanValueType _:
-                    question = new BooleanControl(expression, environment);
+                    question = new CheckBoxWidget(new BooleanValue(false), statement, environment);
                     break;
                 case DateValueType _:
-                    question = new DateControl(expression, environment);
+                    question = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment);
                     break;
                 case StringValueType _:
-                    question = new StringControl(expression, environment);
+                    question = new TextFieldWidget(new StringValue(string.Empty), statement, environment);
                     break;
                 case DecimalValueType _:
-                    question = new DecimalControl(expression, environment);
+                    question = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment);
                     break;
                 case IntegerValueType _:
-                    question = new IntegerControl(expression, environment);
+                    question = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment);
                     break;
                 case MoneyValueType _:
-                    question = new MoneyControl(expression, environment);
+                    question = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expression.Type));
+                    throw new ArgumentOutOfRangeException(nameof(statement.Type));
             }
 
             return question;
         }
 
-        public Control Visit(IfStatement expression, GuiEnvironment environment)
+        public Widget Visit(IfStatement expression, GuiEnvironment environment)
         {
             var ifControls = expression.Statements
                 .Select(x => x.Accept(this, environment))
@@ -65,7 +67,7 @@
                 .Select(x => x.Accept(this, environment))
                 .ToList();
 
-            var control = new VisibilityControl(expression, environment, ifControls, elseControls);
+            var control = new VisibilityWidget(expression, environment, ifControls, elseControls);
             return control;
         }
     }
