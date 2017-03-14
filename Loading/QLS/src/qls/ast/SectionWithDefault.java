@@ -11,8 +11,8 @@ public class SectionWithDefault extends Section {
 		this.defaultWidget = defaultWidget;
 	}
 	
-	public void accept(StylesheetVisitor v) {
-		v.visit(this);
-	}
+//	public void accept(StylesheetVisitor v) {
+//		v.visit(this);
+//	}
 
 }

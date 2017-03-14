@@ -11,8 +11,8 @@ public class Analyzer {
 
     public Faults analyze(Form form) {
         this.environment = new Environment();
-        VerifyQuestions QVisitor = new VerifyQuestions(environment);
-        QVisitor.visit(form);
+        VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
+        verifyQuestions.visit(form);
 
         VerifyExpressions verifyExpressions = new VerifyExpressions(environment);
         verifyExpressions.visit(form);

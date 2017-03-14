@@ -16,7 +16,7 @@ public class PageWithDefault extends Page {
 		return defaultWidgets;
 	}
 	
-	public void accept(StylesheetVisitor v) {
-		v.visit(this);
-	}
+//	public void accept(StylesheetVisitor v) {
+//		v.visit(this);
+//	}
 }

@@ -11,6 +11,10 @@ public class Question extends Node {
 		this.name = name;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void accept(StylesheetVisitor v) {
 		v.visit(this);
 	}
