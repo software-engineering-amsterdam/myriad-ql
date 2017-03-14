@@ -8,48 +8,48 @@ module QL
   module Parser
     include AST
     describe ExpressionTransformer do
-      # let(:form_parser) { FormParser.new }
       let(:expression_transformer) { ExpressionTransformer.new }
 
-      describe 'expressions' do
-        context 'general' do
-          it 'parses' do
-            expression_1 = [{:left=>{:integer_literal=>'5'}}, {:operator=>'+', :right=>{:integer_literal=>'10'}}]
-            expect(expression_transformer.apply(expression_1).expression).to include(Add)
-            # expect(form_transformer.apply(form_parser.expression.parse('true == false')).expression).to include(Equal)
-          end
+      context 'arithmetic' do
+        it 'parses Add' do
+          expression = { operator: '+', right: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(Add)
         end
-        #
-        # context 'arithmetic' do
-        #   it 'parses' do
-        #     expect(form_transformer.apply(form_parser.expression.parse('(5 + 10 * 5)')).eval.value).to eq('55')
-        #     expect(form_transformer.apply(form_parser.expression.parse('(10 / 2 - 4 * 10)')).eval.value).to eq('-35')
-        #     expect(form_transformer.apply(form_parser.expression.parse('(10 / (2 - 4) * 10)')).eval.value).to eq('-50')
-        #   end
-        # end
-        #
-        # context 'boolean' do
-        #   it 'parses' do
-        #     expect(form_transformer.apply(form_parser.expression.parse('(true && false)')).eval.value).to eq('false')
-        #     expect(form_transformer.apply(form_parser.expression.parse('false || false')).eval.value).to eq('false')
-        #     expect(form_transformer.apply(form_parser.expression.parse('true && (false || true)')).eval.value).to eq('true')
-        #   end
-        # end
-        #
-        # context 'comparison' do
-        #   it 'parses' do
-        #     expect(form_transformer.apply(form_parser.expression.parse('(5 < 10)')).eval.value).to eq('true')
-        #     expect(form_transformer.apply(form_parser.expression.parse('(8 != 10)')).eval.value).to eq('true')
-        #     expect(form_transformer.apply(form_parser.expression.parse('(8 == 10)')).eval.value).to eq('false')
-        #   end
-        # end
-        #
-        # context 'negations' do
-        #   it 'parses' do
-        #     expect(form_transformer.apply(form_parser.expression.parse('(!true)')).eval.value).to eq('false')
-        #     expect(form_transformer.apply(form_parser.expression.parse('(-5)')).eval.value).to eq('-5')
-        #   end
-        # end
+      end
+
+      context 'boolean' do
+        it 'parses And' do
+          expression = { operator: '&&', right: BooleanLiteral.new('true') }
+          expect(expression_transformer.apply(expression)).to be_a(And)
+        end
+      end
+
+      context 'comparison' do
+        it 'parses Equality' do
+          expression = { operator: '==', right: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(Equal)
+        end
+      end
+
+      context 'negation' do
+        it 'parses boolean' do
+          expression = [operator: '!', single: BooleanLiteral.new('true')]
+          expect(expression_transformer.apply(expression)).to be_a(BooleanNegation)
+        end
+      end
+
+      context 'left' do
+        it 'parses integer' do
+          expression = { left: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(IntegerLiteral)
+        end
+      end
+
+      context 'expression' do
+        it 'parses' do
+          expression = [IntegerLiteral.new('5'), { operator: '+', right: IntegerLiteral.new('10') }]
+          expect(expression_transformer.apply(expression)).to be_a(Expression)
+        end
       end
     end
   end
