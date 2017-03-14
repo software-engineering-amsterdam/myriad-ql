@@ -12,6 +12,7 @@ module QL
         undefined_variable_checker(questions, ast)
         operands_type_checker(questions, ast)
         cyclic_checker(questions, ast)
+        pp NotificationTable.index
       end
 
       # checkers
@@ -41,24 +42,26 @@ module QL
       def operands_type_checker(questions, ast)
         # create hash with variable and type e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>,
         #                                          "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
+        variable_types = {}
         questions.each do |question|
-          QuestionTypeTable.store(question.variable.name, question.type)
+          variable_types[question.variable.name] = question.type
         end
 
-        ast.accept(OperandsTypeChecker.new)
+        ast.accept(OperandsTypeChecker.new, variable_types)
       end
 
       def cyclic_checker(questions, ast)
         # get computed question assignment with dependency variables as hash
         # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
         #       "privateDebt"=>[#<Variable:0x007ff31e17eaf8 @name="sellingPrice">, #<Variable:0x007ff31e1868e8 @name="var2">]}
+        variable_dependencies = {}
         computed_questions = questions.select { |q| q.is_a?(ComputedQuestion) }
         computed_questions.each do |computed_question|
           assignment_variables = computed_question.assignment.accept(ExpressionVariableCollector.new).flatten.compact
-          CyclicDependencyTable.store(computed_question.variable.name, assignment_variables)
+          variable_dependencies[computed_question.variable.name] = assignment_variables
         end
 
-        ast.accept(CyclicDependencyChecker.new)
+        ast.accept(CyclicDependencyChecker.new, variable_dependencies)
       end
 
       protected

@@ -1,7 +1,7 @@
 module QL
   module TypeChecker
     class ExpressionVariableCollector
-      def visit_form(form)
+      def visit_form(form, collected_data=nil)
         form.statements.map { |statement| statement.accept(self) }
       end
 
