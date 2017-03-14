@@ -8,7 +8,7 @@ import model.DisplayQuestion
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.layout.{HBox, TilePane, VBox}
+import scalafx.scene.layout.{ HBox, TilePane, VBox }
 import scalafx.scene.text.Text
 
 class GUI(issues: Issues, displayQuestions: Seq[DisplayQuestion], questionStyles: Seq[(Page, Blocks)]) extends JFXApp.PrimaryStage {
