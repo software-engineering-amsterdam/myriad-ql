@@ -16,8 +16,8 @@ public abstract class SemanticsTester {
         MessageList semanticsMessages = new MessageList();
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
-        Assert.assertEquals(semanticsMessages.isEmpty(), expectedValid, "Expecting errors: " + description);
-        Assert.assertEquals(semanticsMessages.size(), expectedErrorAmount, "Invalid error amount");
+        Assert.assertEquals(!semanticsMessages.hasMessages(), expectedValid, "Expecting errors: " + description);
+        Assert.assertEquals(semanticsMessages.messageAmount(), expectedErrorAmount, "Invalid error amount");
     }
 
     private FormNode createAst(String fileName) throws IOException {

@@ -1,7 +1,6 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
@@ -10,12 +9,14 @@ import org.uva.taxfree.model.types.Type;
 import java.util.*;
 
 public class SymbolTable {
-    private final List<DeclarationNode> mDeclarations; // All declarations
+    private final List<DeclarationNode> mDeclarationNodes; // All declaration nodes
+    private final List<Declaration> mDeclarations;
     private final List<String> mUsedVariables;
     private final List<ExpressionNode> mExpressions;
     private final List<CalculationNode> mCalculations;
 
     public SymbolTable() {
+        mDeclarationNodes = new ArrayList<>();
         mDeclarations = new ArrayList<>();
         mUsedVariables = new ArrayList<>();
         mExpressions = new ArrayList<>();
@@ -33,7 +34,8 @@ public class SymbolTable {
     }
 
     public void addDeclaration(DeclarationNode node) {
-        mDeclarations.add(node);
+        mDeclarationNodes.add(node);
+        mDeclarations.add(new Declaration(node.getLabel(), node.getId()));
     }
 
     public void addCalculation(CalculationNode calculation) {
@@ -44,8 +46,23 @@ public class SymbolTable {
         mUsedVariables.add(variableName);
     }
 
+    public void updateValue(String variableId, String updatedValue) {
+        for (Declaration decl : mDeclarations) {
+            if (decl.equals(variableId)) {
+                decl.setValue(updatedValue);
+                return;
+            }
+        }
+        throw new RuntimeException("Trying to set unknown variable in SymbolTable");
+    }
+
     public String resolveValue(String variableId) {
-        throw new RuntimeException("Not implemented yet: " + variableId);
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(variableId)) {
+                return declaration.getValue();
+            }
+        }
+        throw new RuntimeException("Unknown variable queried in SymbolTable");
     }
 
     public boolean contains(String variableId) {
@@ -59,7 +76,7 @@ public class SymbolTable {
 
     private List<DeclarationNode> findNodes(String variableId) {
         List<DeclarationNode> declarationNodes = new ArrayList<>();
-        for (DeclarationNode n : mDeclarations) {
+        for (DeclarationNode n : mDeclarationNodes) {
             if (variableId.equals(n.getId())) {
                 declarationNodes.add(n);
             }
@@ -73,25 +90,25 @@ public class SymbolTable {
 
     public void getDuplicateLabelErrors(MessageList messageList) {
         Set<String> processedLabels = new LinkedHashSet<>();
-        for (DeclarationNode node : mDeclarations) {
-            String questionLabel = node.getLabel();
-            if (!processedLabels.add(questionLabel)) {
-                messageList.addWarning("Duplicate question label found: " + questionLabel);
+        for (Declaration declaration : mDeclarations) {
+            String label = declaration.getLabel();
+            if (!processedLabels.add(label)) {
+                messageList.addWarning("Duplicate question label found: " + label);
             }
         }
     }
 
     public void getDuplicateDeclarationErrors(MessageList messageList) {
         Set<String> processedDeclarations = new LinkedHashSet<>();
-        for (DeclarationNode node : mDeclarations) {
-            String declaration = node.getId();
-            if (!processedDeclarations.add(declaration)) {
-                messageList.addError("Duplicate declaration found: " + declaration);
+        for (Declaration declaration : mDeclarations) {
+            String id = declaration.getId();
+            if (!processedDeclarations.add(id)) {
+                messageList.addError("Duplicate declaration found: " + id);
             }
         }
     }
 
-
+    /*
     public void getUndefinedDeclarationErrros(MessageList messageList) {
         for (String identifier : mUsedVariables) {
             if (!validDeclaration(identifier)) {
@@ -101,14 +118,14 @@ public class SymbolTable {
     }
 
     private boolean validDeclaration(String identifier) {
-        for (DeclarationNode node : mDeclarations) {
-            if (identifier.equals(node.getId())) {
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(identifier)) {
                 return true;
             }
         }
         return false;
     }
-
+*/
 
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
@@ -128,10 +145,6 @@ public class SymbolTable {
                 usedVariables.addAll(calc.getUsedVariables());
             }
         }
-    }
-
-    void fillQuestionForm(QuestionForm form) {
-
     }
 
 }
