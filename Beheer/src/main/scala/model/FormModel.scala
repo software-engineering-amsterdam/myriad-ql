@@ -12,15 +12,16 @@ class FormModel(form: Form) {
   val referencedIdentifiers: Set[String] = expressions.map { case (e, _) => extractIdentifiers(e) }.reduce(_ ++ _)
 
   val displayQuestions: Seq[DisplayQuestion] = questionsWithShowConditions.map {
-    case (Question(i, l, t, Some(e)), conditions) => ComputedQuestion(i, l, t, conditions, e)
-    case (Question(i, l, t, None), conditions) => OpenQuestion(i, l, t, conditions)
+    case (Question(identifier, label, questionType, None), conditions) => OpenQuestion(identifier, label, questionType, conditions)
+    case (Question(identifier, label, questionType, Some(expr)), conditions) => ComputedQuestion(identifier, label, questionType, conditions, expr)
   }
   val questionsWithReferences: Map[String, Set[String]] = questionsWithShowConditions.map {
-    case (Question(identifier, _, _, None), conditionals) => (identifier, extractIdentifiers(conditionals))
-    case (Question(identifier, _, _, Some(expr)), conditionals) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditionals))
+    case (Question(identifier, _, _, None), conditions) => (identifier, extractIdentifiers(conditions))
+    case (Question(identifier, _, _, Some(expr)), conditions) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditions))
   }.toMap
 
-  private def extractExpressions(statements: Seq[Statement]): Seq[(ExpressionNode, Type)] = statements.flatMap(e => extractExpressions(e))
+  private def extractExpressions(statements: Seq[Statement]): Seq[(ExpressionNode, Type)] =
+    statements.flatMap(e => extractExpressions(e))
 
   private def extractExpressions(statement: Statement): Seq[(ExpressionNode, Type)] = statement match {
     case Conditional(condition, statements) => (condition, BooleanType) +: extractExpressions(statements)
@@ -28,7 +29,8 @@ class FormModel(form: Form) {
     case _ => Nil
   }
 
-  private def extractIdentifiers(expressionNodes: Seq[ExpressionNode]): Set[String] = expressionNodes.flatMap(e => extractIdentifiers(e)).toSet
+  private def extractIdentifiers(expressionNodes: Seq[ExpressionNode]): Set[String] =
+    expressionNodes.flatMap(e => extractIdentifiers(e)).toSet
 
   private def extractIdentifiers(expressionNode: ExpressionNode): Set[String] = expressionNode match {
     case Identifier(value) => Set(value)
