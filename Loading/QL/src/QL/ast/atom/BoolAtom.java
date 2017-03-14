@@ -4,7 +4,7 @@ import QL.ast.ExpressionVisitor;
 
 public class BoolAtom extends Atom {
 
-	private boolean atom;
+	private final boolean atom;
 
 	public BoolAtom(boolean atom, int line) {
 		super(line);

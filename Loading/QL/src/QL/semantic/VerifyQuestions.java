@@ -4,8 +4,6 @@ import QL.ast.*;
 import QL.ast.type.Type;
 import QL.errorhandling.Error;
 import QL.errorhandling.Warning;
-import QL.ast.FormVisitor;
-import QL.ast.Form;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +15,8 @@ import java.util.Map;
  */
 public class VerifyQuestions implements FormVisitor {
 	
-	private Environment environment;
-	private Map<String, String> labelVariable;
+	private final Environment environment;
+	private final Map<String, String> labelVariable;
 	
 	public VerifyQuestions(Environment environment) {
 		this.environment = environment;

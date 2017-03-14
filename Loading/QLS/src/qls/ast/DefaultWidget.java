@@ -6,8 +6,8 @@ import qls.ast.widget.Widget;
 
 public class DefaultWidget extends Node {
 	
-	private Type type;
-	private Widget widget;
+	private final Type type;
+	private final Widget widget;
 	
 	public DefaultWidget(Type type, Widget widget, int line) {
 		super(line);

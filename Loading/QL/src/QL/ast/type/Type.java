@@ -10,7 +10,7 @@ public abstract class Type extends Node {
 	
 	final private String keyWord;
 	
-	public Type(String keyWord, int line) {
+	Type(String keyWord, int line) {
 		super(line);
 		this.keyWord = keyWord;
 	}

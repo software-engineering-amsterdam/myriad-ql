@@ -2,7 +2,7 @@ package QL.ast;
 
 public abstract class BlockItem extends Node {
 	
-	public BlockItem(int line) {
+	BlockItem(int line) {
 		super(line);
 	}
 

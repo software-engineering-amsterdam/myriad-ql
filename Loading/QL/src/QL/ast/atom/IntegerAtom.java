@@ -4,7 +4,7 @@ import QL.ast.ExpressionVisitor;
 
 public class IntegerAtom extends Atom {
 		
-	private int atom;
+	private final int atom;
 
 	public IntegerAtom(int atom, int line) {
 		super(line);

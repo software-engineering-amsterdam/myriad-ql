@@ -20,7 +20,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     private final Environment environment;
     private Question current;
 
-    private Map<String, List<String>> dependencies ;
+    private final Map<String, List<String>> dependencies ;
 
     public CheckCyclicDependencies(Environment environment) {
         this.environment = environment;
@@ -219,7 +219,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
         }
     }
 
-    public void addReference(String name, String reference){
+    private void addReference(String name, String reference){
         List<String> references;
 
         if (dependencies.containsKey(name)) {
@@ -231,7 +231,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
         references.add(reference);
         dependencies.put(name, references);
     }
-    public List<String> getReferences(String name){
+    private List<String> getReferences(String name){
         if (dependencies.containsKey(name)) {
             return dependencies.get(name);
         } else {

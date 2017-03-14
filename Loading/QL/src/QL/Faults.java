@@ -10,8 +10,8 @@ import QL.ui.error.WarningDialog;
 
 public class Faults {
 	
-	private List<Warning> warnings;
-	private List<Error> errors;
+	private final List<Warning> warnings;
+	private final List<Error> errors;
 	
 	public Faults() {
 		warnings = new ArrayList<>();

@@ -9,8 +9,8 @@ import javafx.stage.Modality;
 
 public class ErrorDialog extends FaultDialog {
 
-	List<Error> errors;
-	Alert dialog;
+	private final List<Error> errors;
+	private final Alert dialog;
 	
 	public ErrorDialog(List<Error> errors) {
 

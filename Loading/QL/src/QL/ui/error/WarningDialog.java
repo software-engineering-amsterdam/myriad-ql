@@ -9,8 +9,8 @@ import javafx.stage.Modality;
 
 public class WarningDialog extends FaultDialog {
 
-	List<Warning> warnings;
-	Alert dialog;
+	private final List<Warning> warnings;
+	private final Alert dialog;
 	
 	public WarningDialog(List<Warning> warnings) {
 

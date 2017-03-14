@@ -2,9 +2,9 @@ package QL.ast;
 
 public abstract class Node {
 
-	private int line;
+	private final int line;
 
-	public Node(int line) {
+	protected Node(int line) {
 		this.line = line;
 	}
 

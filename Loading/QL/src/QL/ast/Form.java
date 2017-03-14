@@ -3,7 +3,7 @@ package QL.ast;
 public class Form extends Node {
 	
 	private final String id;
-	private Block block;
+	private final Block block;
 
 	public String getId() {
 		return id;

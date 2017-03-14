@@ -6,7 +6,6 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.ast.expression.AddExpr;
 import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
