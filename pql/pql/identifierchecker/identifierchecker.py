@@ -26,12 +26,12 @@ class IdentifierChecker(FormVisitor):
         for statement in node.statements:
             statement.apply(self)
 
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         self.conditional_if(node)
         for statement in node.else_statement_list:
             statement.apply(self)
 
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         for statement in node.statements:
             statement.apply(self)
 

@@ -44,7 +44,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def addition(self, node):
         return self.arithmetic_type_detection(node)
 
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         condition_result = node.condition.apply(self)
         if condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
@@ -52,7 +52,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
                 "received [{}], at location {}".format(condition_result, node.condition.location))
         [statement.apply(self) for statement in node.statements]
 
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         condition_result = node.condition.apply(self)
         if condition_result is None:
             self.errors.append(

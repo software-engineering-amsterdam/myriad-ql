@@ -15,19 +15,28 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.errors
 
     def form(self, node):
-        return [statement.apply(self) for statement in node.statements]
-
-    def conditional_if_else(self, node):
-        self.conditional_if(node)
-        [statement.apply(self, node) for statement in node.else_statement_list]
-
-    def conditional_if(self, node):
-        local_properties = dict()
         for statement in node.statements:
-            key, value = statement.apply(self, node)
+            statement.apply(self)
 
-    def field(self, node, args=None):
-        self.properties[node.name.name].append(node.name)
+    def conditional_if_else(self, node, local_properties=None):
+        self.conditional_if(node)
+        if local_properties is None:
+            local_properties = dict()
+        for statement in node.else_statement_list:
+            key, value = statement.apply(self, local_properties)
+            local_properties[key] = value
+
+    def conditional_if(self, node, local_properties=None):
+        if local_properties is None:
+            local_properties = dict()
+        for statement in node.statements:
+            key, value = statement.apply(self, local_properties)
+            local_properties[key] = value
+
+    def field(self, node, scope_properties=None):
+        if scope_properties is None:
+            self.properties[node.name.name] = node.name
+        return node.name.name, node.name
 
     def assignment(self, node):
         children = node.expression.apply(self)
@@ -96,5 +105,3 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def money(self, node):
         pass
-
-
