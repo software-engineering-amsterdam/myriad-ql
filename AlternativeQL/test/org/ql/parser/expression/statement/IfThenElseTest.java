@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.parser.Parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 public class IfThenElseTest {
 

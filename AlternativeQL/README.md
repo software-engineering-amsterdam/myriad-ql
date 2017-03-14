@@ -3,7 +3,7 @@
 #### TODO
 
 1. Use interfaces for lists <array list example>
-2. Fix small grammar issues
+2. Fix small grammar issuesStorage
     - spelling mistakes
     - assoc
     - PARENT

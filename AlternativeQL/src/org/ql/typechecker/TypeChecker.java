@@ -1,41 +1,33 @@
 package org.ql.typechecker;
 
 import org.ql.ast.Form;
-import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
-import org.ql.typechecker.expression.SymbolTable;
-import org.ql.typechecker.statement.QuestionCollector;
+import org.ql.typechecker.issues.*;
+import org.ql.typechecker.visitor.CircularDependencyVisitor;
+import org.ql.typechecker.visitor.QuestionsVisitor;
+import org.ql.typechecker.visitor.TypeMismatchVisitor;
 
-public class TypeChecker implements FormVisitor<Void>, StatementVisitor<Void> {
+public class TypeChecker {
 
-    private final QuestionCollector questionCollector;
+    private final QuestionsVisitor questionsVisitor;
+    private final TypeMismatchVisitor typeMismatchVisitor;
+    private final CircularDependencyVisitor circularDependenciesVisitor;
 
-    public TypeChecker(QuestionCollector questionCollector) {
-        this.questionCollector = questionCollector;
+    private final IssuesStorage issuesStorage;
+
+    public TypeChecker() {
+        this.issuesStorage = new IssuesStorage();
+
+        questionsVisitor = new QuestionsVisitor(issuesStorage);
+        typeMismatchVisitor = new TypeMismatchVisitor(issuesStorage);
+        circularDependenciesVisitor = new CircularDependencyVisitor(issuesStorage);
     }
 
-    @Override
-    public Void visit(Form form) {
-        new SymbolTable(questionCollector.collect(form));
+    public IssuesStorage checkForm(Form form) {
+        SymbolTable symbolTable = new SymbolTable();
+        questionsVisitor.visitForm(form, symbolTable);
+        typeMismatchVisitor.visitForm(form, symbolTable);
+        circularDependenciesVisitor.visitForm(form, null);
 
-        return null;
-    }
-
-    @Override
-    public Void visit(IfThen ifThen) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IfThenElse ifThenElse) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Question question) {
-        return null;
+        return issuesStorage;
     }
 }

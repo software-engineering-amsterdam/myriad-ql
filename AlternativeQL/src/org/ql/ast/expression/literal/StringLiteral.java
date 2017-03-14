@@ -1,14 +1,26 @@
 package org.ql.ast.expression.literal;
 
+import org.ql.ast.Expression;
 import org.ql.ast.expression.ExpressionVisitor;
 
-public class StringLiteral extends AbstractLiteral<String> {
+public class StringLiteral extends Expression {
+    private final String value;
+
     public StringLiteral(String value) {
-        super(value);
+        this.value = value;
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+        return visitor.visitString(this, context);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }
