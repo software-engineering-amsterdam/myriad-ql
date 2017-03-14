@@ -1,6 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
 
+from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
@@ -11,16 +12,22 @@ from pql.typechecker.typechecker import TypeChecker
 
 class Shared(TestCase):
     def acquire_identifiers(self, ast):
-        return IdentifierChecker().visit(ast)
+        return IdentifierChecker(ast).visit()
 
     def check_type(self, ast):
-        return TypeChecker().visit(ast)
+        return TypeChecker(ast, TypeEnvironment).visit()
 
     def evaluate(self, ast):
-        return Evaluator(EnvironmentCreator().visit(ast)).visit(ast)
+        return Evaluator(EnvironmentCreator, ast).visit()
 
     def acquire_types(self, ast):
-        return TypeEnvironment().visit(ast)
+        return TypeEnvironment(ast).visit()
+
+    def acquire_environment(self, ast):
+        return EnvironmentCreator(ast).visit()
+
+    def acquire_circular_references(self, ast):
+        return DependenciesChecker(ast).visit()
 
     def apply_type_checking(self, input_string):
         form_node = parse(input_string).asList()

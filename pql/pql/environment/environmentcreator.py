@@ -5,12 +5,13 @@ from pql.traversal.FormVisitor import FormVisitor
 
 
 class EnvironmentCreator(FormVisitor):
-    def __init__(self):
+    def __init__(self, ast):
         self.__symbol_table = defaultdict(list)
+        self.ast = ast
 
-    def visit(self, pql_ast):
+    def visit(self):
         self.__symbol_table.clear()
-        [form.apply(self) for form in pql_ast]
+        [form.apply(self) for form in self.ast]
         return self.__symbol_table
 
     def form(self, node):

@@ -19,7 +19,6 @@ if __name__ == '__main__':
 # TODO: String support toevoegen
 # TODO: Loopen over ast voor form weghalen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
-# TODO: TypeChecker de TypeEnvironment meegeven
 # TODO: Environment een class maken en een update value methode geven
 # TODO: Evaluator regel 92 de is None checks weghalen
 # TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten)

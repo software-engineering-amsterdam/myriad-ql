@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 # noinspection PyCompatibility
 class FormVisitor(metaclass=ABCMeta):
     @abstractmethod
-    def visit(self, pql_ast):
+    def visit(self):
         pass
 
     @abstractmethod

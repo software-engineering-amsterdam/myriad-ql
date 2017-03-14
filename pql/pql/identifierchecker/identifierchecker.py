@@ -5,10 +5,11 @@ from pql.traversal.FormVisitor import FormVisitor
 
 
 class IdentifierChecker(FormVisitor):
-    def __init__(self):
+    def __init__(self, ast):
         self.__symbol_table = defaultdict(list)
+        self.ast = ast
 
-    def visit(self, pql_ast):
+    def visit(self):
         def build_error_list(identifiers):
             errors = list()
             for key, value in identifiers.items():
@@ -16,8 +17,9 @@ class IdentifierChecker(FormVisitor):
                     errors.append("Key: {} contained multiple entries, the following locations: {}"
                                   .format(key, [v.location for v in value]))
             return errors
+
         self.__symbol_table.clear()
-        [form.apply(self) for form in pql_ast]
+        [form.apply(self) for form in self.ast]
         return build_error_list(self.__symbol_table)
 
     def form(self, node):
