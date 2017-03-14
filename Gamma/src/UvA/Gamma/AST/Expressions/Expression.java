@@ -45,10 +45,6 @@ public abstract class Expression implements ASTNode {
         return value;
     }
 
-    public void setValue(Value value) {
-        this.value = value;
-    }
-
     public void accept(Validator validator) throws IdNotFoundException, IncompatibleTypesException {
         for (String id : getIds()) {
             validator.validateId(id);

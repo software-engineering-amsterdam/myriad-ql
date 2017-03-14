@@ -4,6 +4,7 @@ import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.*;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Condition implements FormItem {
     /* can be empty if no elseBlock is specified */
     private List<FormItem> elseBlockItems;
     private BooleanExpression expression;
+    private GridPane thenBlockPane;
 
     public Condition(BooleanExpression expression) {
         this.thenBlockItems = new ArrayList<>();
@@ -48,6 +50,12 @@ public class Condition implements FormItem {
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
         expression.idChanged(changed.isDependencyOf(this), value);
+        if (evaluateExpression()) {
+            thenBlockPane.setVisible(true);
+        } else {
+            thenBlockPane.setVisible(false);
+        }
+
         thenBlockItems.forEach(item -> item.idChanged(root, changed, value));
         elseBlockItems.forEach(item -> item.idChanged(root, changed, value));
     }
@@ -129,9 +137,12 @@ public class Condition implements FormItem {
 
     @Override
     public void show(FXMLExampleController screen) {
-        if (evaluateExpression()) {
-            thenBlockItems.forEach(formItem -> formItem.show(screen));
-        } else {
+        this.thenBlockPane = screen.startRenderCondition();
+        thenBlockItems.forEach(formItem -> formItem.show(screen));
+        screen.stopRenderCondition();
+
+        if (!evaluateExpression()) {
+            thenBlockPane.setVisible(false);
             elseBlockItems.forEach(formItem -> formItem.show(screen));
         }
     }

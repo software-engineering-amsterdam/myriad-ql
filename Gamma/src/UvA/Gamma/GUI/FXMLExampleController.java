@@ -1,6 +1,9 @@
 package UvA.Gamma.GUI;
 
-import UvA.Gamma.AST.*;
+import UvA.Gamma.AST.Computed;
+import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.FormItem;
+import UvA.Gamma.AST.Question;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -13,6 +16,7 @@ public class FXMLExampleController {
     TypeChecker checker = new TypeChecker();
 
     public void addFormItem(Form form) {
+        rootGrid = grid;
         this.form = form;
         for (FormItem item : form.getFormItems()) {
             item.show(this);
@@ -21,9 +25,11 @@ public class FXMLExampleController {
 
     @FXML
     private GridPane grid;
+    private GridPane rootGrid;
 
     @FXML
     public void showQuestion(Question question) {
+        assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
         TextField input = new TextField();
 
@@ -35,20 +41,26 @@ public class FXMLExampleController {
                 input.setStyle("-fx-text-fill: red");
             }
         });
-        grid.addRow(++rowCount, questionLabel, input);
+        rootGrid.addRow(++rowCount, questionLabel, input);
     }
 
     public void showComputed(Computed computed) {
+        assert rootGrid != null;
         Text label = new Text(computed.getLabel());
         Text result = new Text(computed.getStringValueProperty().get());
 
         result.textProperty().bind(computed.getStringValueProperty());
 
-        grid.addRow(++rowCount, label, result);
+        rootGrid.addRow(++rowCount, label, result);
     }
 
-    public void showCondition(Condition condition) {
-
+    public GridPane startRenderCondition() {
+        rootGrid = new GridPane();
+        return rootGrid;
     }
 
+    public void stopRenderCondition() {
+        grid.addRow(++rowCount, rootGrid);
+        rootGrid = grid;
+    }
 }

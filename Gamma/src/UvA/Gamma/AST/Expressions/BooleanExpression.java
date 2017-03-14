@@ -14,7 +14,7 @@ public class BooleanExpression extends Expression {
 
     public BooleanExpression(String expr) {
         super(expr);
-        setValue(new Boolean(false));
+        this.value = new Boolean(false);
     }
 
     private Boolean evaluateBool() throws ScriptException {
@@ -24,6 +24,7 @@ public class BooleanExpression extends Expression {
         return new Boolean(engine.eval(expr).toString());
     }
 
+    @Override
     public Boolean getValue() {
         return (Boolean) value;
     }
