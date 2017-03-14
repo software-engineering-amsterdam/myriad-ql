@@ -51,12 +51,11 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
     @Override
     public void visit(final GuiConditional conditional) {
         GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
-        if (condition.isDefined()){
-            for (GuiBody body : conditional.getBodies()){
+        if (condition.isDefined()) {
+            for (GuiBody body : conditional.getBodies()) {
                 body.accept(this);
             }
         }
-
     }
 
     @Override
@@ -151,8 +150,11 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiNegUnary guiNegUnary) {
-        GuiNumericalValue<?> expression = (GuiNumericalValue<?>) guiNegUnary.getExpression();
-        return expression.neg();
+        GuiValue<?> expression = (GuiValue<?>) guiNegUnary.getExpression().accept(this);
+        if (!expression.isDefined()) {
+            return expression;
+        }
+        return ((GuiNumericalValue<?>) expression).neg();
     }
 
     @Override
@@ -188,7 +190,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
     @Override
     public GuiExpression visit(final GuiIdentifierValue guiIdentifierValue) {
         //TODO add in additional checks if variable is in the environment.
-        return null;
+        GuiValue<?> value = guiEnvironment.get(guiIdentifierValue);
+        return value;
     }
 
     @Override
