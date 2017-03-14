@@ -7,12 +7,12 @@ import org.lemonade.gui.GuiQuestion;
 
 public interface UpdateVisitor {
 
-    GuiForm visit(GuiForm form);
+    void visit(GuiForm form);
 
-    GuiBody visit(GuiBody body);
+    void visit(GuiBody body);
 
-    GuiQuestion visit(GuiQuestion question);
+    void visit(GuiQuestion question);
 
-    GuiConditional visit(GuiConditional conditional);
+    void visit(GuiConditional conditional);
 
 }

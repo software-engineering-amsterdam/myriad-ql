@@ -24,8 +24,8 @@ public class GuiConditional extends GuiBody {
         return true;
     }
 
-    public GuiConditional accept(EvaluateVisitor visitor) {
-        return visitor.visit(this);
+    public void accept(EvaluateVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

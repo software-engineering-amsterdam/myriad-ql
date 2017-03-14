@@ -6,7 +6,6 @@ import java.util.Map;
 import org.lemonade.gui.GuiBody;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiForm;
-import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.GuiQuestion;
 import org.lemonade.gui.values.GuiValue;
 import org.lemonade.nodes.Body;
@@ -48,7 +47,7 @@ import org.lemonade.visitors.interfaces.LiteralVisitor;
 public class EvaluateVisitor implements
         BaseVisitor<Expression>, ExpressionVisitor<Expression>, LiteralVisitor<Expression>, UpdateVisitor {
 
-    private Map<GuiIdentifierValue, GuiValue<?>> guiEnvironment;
+    private Map<String, GuiValue<?>> guiEnvironment;
     private Map<String, Literal<?>> literalEnvironment;
 
     public EvaluateVisitor() {
@@ -61,7 +60,7 @@ public class EvaluateVisitor implements
         for (Body body : form.getBodies()) {
             body.accept(this);
         }
-        return form.accept((BaseVisitor<Expression>) this);
+        return form.accept(this);
     }
 
     @Override
@@ -225,24 +224,25 @@ public class EvaluateVisitor implements
         return literalEnvironment.get(identifierValue.getValue());
     }
 
-    @Override public GuiForm visit(final GuiForm form) {
+    @Override
+    public void visit(final GuiForm form) {
         for (GuiBody body : form.getBodies()) {
             body.accept(this);
         }
-        return null;
     }
 
-    @Override public GuiBody visit(final GuiBody body) {
-        return body.accept(this);
+    @Override
+    public void visit(final GuiBody body) {
+        body.accept(this);
     }
 
-    @Override public GuiQuestion visit(final GuiQuestion question) {
-//        guiEnvironment.put(question.getIdentifier(), question.getValue());
-        return question;
+    @Override
+    public void visit(final GuiQuestion question) {
+        guiEnvironment.put(question.getIdentifier().getValue(), question.getElement().getValue());
     }
 
-    @Override public GuiConditional visit(final GuiConditional conditional) {
+    @Override
+    public void visit(final GuiConditional conditional) {
         //        if ()
-        return conditional;
     }
 }

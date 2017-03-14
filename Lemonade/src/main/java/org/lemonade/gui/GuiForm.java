@@ -2,11 +2,8 @@ package org.lemonade.gui;
 
 import java.util.List;
 
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
-
-import javafx.scene.control.Control;
 
 public class GuiForm extends GuiBody {
 
@@ -22,8 +19,8 @@ public class GuiForm extends GuiBody {
         return this.bodies;
     }
 
-    public GuiForm accept(EvaluateVisitor visitor) {
-        return visitor.visit(this);
+    public void accept(EvaluateVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

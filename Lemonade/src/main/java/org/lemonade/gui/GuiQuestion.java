@@ -13,7 +13,6 @@ import javafx.scene.control.Control;
 public class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
-
     private GuiLabelElement labelElement;
     private GuiElement element;
 
@@ -35,17 +34,13 @@ public class GuiQuestion extends GuiBody {
         return element;
     }
 
-    public Control getWidget() {
-        return element.getWidget();
-    }
-
     @Override
     public boolean isQuestion() {
         return true;
     }
 
-    public GuiQuestion accept(EvaluateVisitor visitor) {
-        return visitor.visit(this);
+    public void accept(EvaluateVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

@@ -6,7 +6,7 @@ import org.lemonade.gui.values.GuiIntegerValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-public class GuiIntegerElement implements GuiElement{
+public class GuiIntegerElement implements GuiElement {
 
     private GuiValue<?> value;
     private TextField textField;
