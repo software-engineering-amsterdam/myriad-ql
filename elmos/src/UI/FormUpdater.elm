@@ -1,10 +1,10 @@
 module UI.FormUpdater exposing (updateValue)
 
-import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
+import QL.AST exposing (Form, Label, ValueType, Expression, FormItem)
 import QL.Environment as Env exposing (Environment)
-import QL.Values as Values exposing (Value)
+import QL.Values exposing (Value)
 import QL.Evaluator as Evaluator
-import UI.Field as Field exposing (Field(Computed, Editable))
+import UI.Field as Field exposing (Field(Computed))
 
 
 updateValue : String -> Value -> Environment -> Form -> Environment

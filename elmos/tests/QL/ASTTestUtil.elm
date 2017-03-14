@@ -82,5 +82,5 @@ removeLocactionFromExpression expr =
 
 
 removeLocactionFromId : Id -> Id
-removeLocactionFromId ( a, b ) =
+removeLocactionFromId ( a, _ ) =
     ( a, Location 0 0 )

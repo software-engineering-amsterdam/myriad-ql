@@ -18,11 +18,11 @@ asExpression =
 sampleData : Environment
 sampleData =
     Env.empty
-        |> Env.withString "a" "A"
-        |> Env.withString "b" "B"
-        |> Env.withInteger "x" 1
-        |> Env.withInteger "y" 2
-        |> Env.withInteger "z" 3
+        |> Env.withFormValue "a" (Values.string "A")
+        |> Env.withFormValue "b" (Values.string "B")
+        |> Env.withFormValue "x" (Values.int 1)
+        |> Env.withFormValue "y" (Values.int 2)
+        |> Env.withFormValue "z" (Values.int 3)
 
 
 all : Test

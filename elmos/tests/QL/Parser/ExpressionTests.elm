@@ -4,7 +4,18 @@ import QL.Parser.Expression exposing (expression)
 import Test exposing (Test, describe)
 import QL.AST
     exposing
-        ( Expression(Var, Integer, Decimal, Str, Boolean, ParensExpression, ArithmeticExpression, ComparisonExpression, LogicExpression, RelationExpression)
+        ( Expression
+            ( Var
+            , Integer
+            , Decimal
+            , Str
+            , Boolean
+            , ParensExpression
+            , ArithmeticExpression
+            , ComparisonExpression
+            , LogicExpression
+            , RelationExpression
+            )
         , Operator(Plus, Minus, Divide, Multiply)
         , Relation(LessThan, GreaterThan, GreaterThanOrEqual, LessThanOrEqual)
         , Comparison(Equal, NotEqual)
@@ -36,7 +47,10 @@ whitespaceTests =
         , ( "Should not parse whitespace before", " 1", Nothing )
         , ( "Should not parse whitespace after", "1 ", Nothing )
         , ( "Should not parse whitespace within parens", "( 1 )", Just (ParensExpression (Location 0 0) (Integer (Location 0 0) 1)) )
-        , ( "Should parse whitespace within operators", "1 + 2", Just (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 2)) )
+        , ( "Should parse whitespace within operators"
+          , "1 + 2"
+          , Just (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 2))
+          )
         ]
 
 
@@ -60,9 +74,33 @@ arithmeticTests =
         removeLocactionFromExpression
         "arithmeticTests"
         [ ( "Should parse simple add", "2+3", Just (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) )
-        , ( "Should parse bigger add", "2+3+4", Just (ArithmeticExpression Plus (Location 0 0) (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) (Integer (Location 0 0) 4)) )
-        , ( "Should parse plus and multiplication", "2+3*4", Just (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (ArithmeticExpression Multiply (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))) )
-        , ( "Should parse minus and division", "2-3/4", Just (ArithmeticExpression Minus (Location 0 0) (Integer (Location 0 0) 2) (ArithmeticExpression Divide (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))) )
+        , ( "Should parse bigger add"
+          , "2+3+4"
+          , Just
+                (ArithmeticExpression Plus
+                    (Location 0 0)
+                    (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3))
+                    (Integer (Location 0 0) 4)
+                )
+          )
+        , ( "Should parse plus and multiplication"
+          , "2+3*4"
+          , Just
+                (ArithmeticExpression Plus
+                    (Location 0 0)
+                    (Integer (Location 0 0) 2)
+                    (ArithmeticExpression Multiply (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))
+                )
+          )
+        , ( "Should parse minus and division"
+          , "2-3/4"
+          , Just
+                (ArithmeticExpression Minus
+                    (Location 0 0)
+                    (Integer (Location 0 0) 2)
+                    (ArithmeticExpression Divide (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))
+                )
+          )
         , ( "Should parse variables", "x+y", Just (ArithmeticExpression Plus (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
         ]
 
@@ -72,10 +110,42 @@ relationalTests =
     testWithParserAndMap expression
         removeLocactionFromExpression
         "relationalTests"
-        [ ( "Should parse less than relation", "x < y", Just (RelationExpression LessThan (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
-        , ( "Should parse greater than relation", "x > y", Just (RelationExpression GreaterThan (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
-        , ( "Should parse less than equal relation", "x <= y", Just (RelationExpression LessThanOrEqual (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
-        , ( "Should parse greater than equal relation", "x >= y", Just (RelationExpression GreaterThanOrEqual (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
+        [ ( "Should parse less than relation"
+          , "x < y"
+          , Just
+                (RelationExpression LessThan
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
+        , ( "Should parse greater than relation"
+          , "x > y"
+          , Just
+                (RelationExpression GreaterThan
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
+        , ( "Should parse less than equal relation"
+          , "x <= y"
+          , Just
+                (RelationExpression LessThanOrEqual
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
+        , ( "Should parse greater than equal relation"
+          , "x >= y"
+          , Just
+                (RelationExpression GreaterThanOrEqual
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
         , ( "Should parse relation with arithmetic"
           , "x+y < z * a"
           , Just
@@ -94,8 +164,24 @@ comparisonTests =
     testWithParserAndMap expression
         removeLocactionFromExpression
         "comparisonTests"
-        [ ( "Should parse equal comparison", "x == y", Just (ComparisonExpression Equal (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
-        , ( "Should parse not equal comparison", "x != y", Just (ComparisonExpression NotEqual (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
+        [ ( "Should parse equal comparison"
+          , "x == y"
+          , Just
+                (ComparisonExpression Equal
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
+        , ( "Should parse not equal comparison"
+          , "x != y"
+          , Just
+                (ComparisonExpression NotEqual
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
         , ( "Should parse comparison with correct precedence"
           , "x + y == y < z"
           , Just
@@ -115,6 +201,22 @@ logicalTests =
         "logicalTests"
         [ ( "Should parse AND", "x&&y", Just (LogicExpression And (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
         , ( "Should parse OR", "x||y", Just (LogicExpression Or (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
-        , ( "AND should preced OR", "x && y || z", Just (LogicExpression Or (Location 0 0) (LogicExpression And (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) (Var ( "z", Location 0 0 ))) )
-        , ( "OR should be preceded by AND", "x || y && z", Just (LogicExpression Or (Location 0 0) (Var ( "x", Location 0 0 )) (LogicExpression And (Location 0 0) (Var ( "y", Location 0 0 )) (Var ( "z", Location 0 0 )))) )
+        , ( "AND should preced OR"
+          , "x && y || z"
+          , Just
+                (LogicExpression Or
+                    (Location 0 0)
+                    (LogicExpression And (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 )))
+                    (Var ( "z", Location 0 0 ))
+                )
+          )
+        , ( "OR should be preceded by AND"
+          , "x || y && z"
+          , Just
+                (LogicExpression Or
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (LogicExpression And (Location 0 0) (Var ( "y", Location 0 0 )) (Var ( "z", Location 0 0 )))
+                )
+          )
         ]

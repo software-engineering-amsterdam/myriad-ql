@@ -1,4 +1,4 @@
-module UI.FormRenderer exposing (Model, Msg, init, update, view)
+module UI.QLFormRenderer exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, div, text, h3, pre)
 import Html.Attributes exposing (class)

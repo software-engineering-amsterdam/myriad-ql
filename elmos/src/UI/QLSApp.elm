@@ -3,7 +3,7 @@ module UI.QLSApp exposing (Model, Msg, init, update, view)
 import Html exposing (Html, div, text, h3, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
-import UI.FormRenderer as FormRenderer
+import UI.QLSFormRenderer as FormRenderer
 import UI.QLInput as QLInput
 import UI.QLSInput as QLSInput
 
@@ -32,13 +32,19 @@ type Msg
 init : Model
 init =
     let
-        formDslInput =
+        qlInput =
             QLInput.init
+
+        qlsInput =
+            QLSInput.init (QLInput.asForm qlInput)
+
+        formRenderer =
+            Maybe.map2 FormRenderer.init (QLInput.asForm qlInput) (QLSInput.asStyleSheet qlsInput)
     in
-        { qlInput = formDslInput
-        , qlsInput = QLSInput.init (QLInput.asForm formDslInput)
-        , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
-        , activeTab = QLTab
+        { qlInput = qlInput
+        , qlsInput = qlsInput
+        , formRenderer = formRenderer
+        , activeTab = Preview
         }
 
 
@@ -58,19 +64,31 @@ update msg model =
 
                 newQLSInput =
                     QLSInput.setForm maybeNewForm model.qlsInput
+
+                maybeNewStyleSheet =
+                    QLSInput.asStyleSheet newQLSInput
             in
                 { model
                     | qlInput = newQLInput
                     , qlsInput = newQLSInput
-                    , formRenderer = Maybe.map FormRenderer.init maybeNewForm
+                    , formRenderer = Maybe.map2 FormRenderer.init maybeNewForm maybeNewStyleSheet
                 }
 
         QLSInputMsg subMsg ->
             let
+                maybeForm =
+                    QLInput.asForm model.qlInput
+
                 newQLSInput =
                     QLSInput.update subMsg model.qlsInput
+
+                maybeNewStyleSheet =
+                    QLSInput.asStyleSheet newQLSInput
             in
-                { model | qlsInput = QLSInput.update subMsg model.qlsInput }
+                { model
+                    | qlsInput = QLSInput.update subMsg model.qlsInput
+                    , formRenderer = Maybe.map2 FormRenderer.init maybeForm maybeNewStyleSheet
+                }
 
         FormRendererMsg subMsg ->
             { model | formRenderer = Maybe.map (FormRenderer.update subMsg) model.formRenderer }

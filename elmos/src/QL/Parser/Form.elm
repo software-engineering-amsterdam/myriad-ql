@@ -59,7 +59,7 @@ ifThen =
     lazy <|
         \() ->
             succeed IfThen
-                <*> (string "if" *> trimmed (parens Expression.expression))
+                <*> (string "if" *> trimmed (parens (trimmed Expression.expression)))
                 <*> block
 
 
@@ -68,7 +68,7 @@ ifThenElse =
     lazy <|
         \() ->
             succeed IfThenElse
-                <*> (string "if" *> trimmed (parens Expression.expression))
+                <*> (string "if" *> trimmed (parens (trimmed Expression.expression)))
                 <*> block
                 <*> (trimmed (string "else") *> block)
 
