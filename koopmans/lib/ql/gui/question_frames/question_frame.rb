@@ -29,7 +29,6 @@ module QL
 
       def listen_to_widget
         @widget.listen do |changed_value|
-          p changed_value
           @value = changed_value
           value_changed
         end
