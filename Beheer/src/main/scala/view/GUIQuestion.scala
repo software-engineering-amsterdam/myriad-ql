@@ -1,12 +1,13 @@
 package view
 
-import javafx.beans.binding.{ BooleanBinding, StringBinding }
+import javafx.beans.binding.BooleanBinding
 
 import ast.Stylesheet.Styling
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.Evaluator
 
+import scalafx.beans.binding.{ Bindings, StringBinding }
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
 
@@ -24,11 +25,8 @@ trait GUIQuestion {
     case Width(value) => value
   }.lastOption.map(_.toDouble)).getOrElse(100.0)
 
-  protected def computeValue(question: ComputedQuestion): StringBinding = new StringBinding {
-    bind(env)
-
-    override def computeValue: String = Evaluator(env.toMap, question.value).toString
-  }
+  protected def computeValue(question: ComputedQuestion): StringBinding =
+    Bindings.createStringBinding(() => Evaluator(env.toMap, question.value).toString, env)
 
   private def createLabel: Text = {
     questionStyle match {
@@ -56,9 +54,6 @@ trait GUIQuestion {
     case _: ComputedQuestion => true
   }
 
-  private def isVisible(question: DisplayQuestion): BooleanBinding = new BooleanBinding {
-    bind(env)
-
-    override def computeValue: Boolean = question.show(env.toMap)
-  }
+  private def isVisible(question: DisplayQuestion): BooleanBinding =
+    Bindings.createBooleanBinding(() => question.show(env.toMap), env)
 }

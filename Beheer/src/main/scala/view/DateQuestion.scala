@@ -1,11 +1,11 @@
 package view
 
-import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
+import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util.Date
 import javafx.beans.binding.ObjectBinding
 
-import ast.{DateType, QuestionStyle}
-import model.{ComputedQuestion, DisplayQuestion, OpenQuestion}
+import ast.{ DateType, QuestionStyle }
+import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
 
 import scala.language.implicitConversions
