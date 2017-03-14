@@ -5,6 +5,7 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.operators.Operator;
 import org.uva.taxfree.model.types.Type;
 
+import java.util.List;
 import java.util.Set;
 
 public class BinaryExpressionNode extends ExpressionNode {
@@ -20,9 +21,14 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public String resolveValue() {
-        return "(" + mLeft.resolveValue() + mOperator + mRight.resolveValue() + ")";
+        String leftHand = mLeft.resolveValue();
+        String rightHand = mRight.resolveValue();
+        String operator = mOperator.resolveValue();
+        if(!leftHand.isEmpty() && !rightHand.isEmpty()) {
+            return "(" + leftHand + operator + rightHand + ")";
+        }
+        return "";
     }
-
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
@@ -49,15 +55,12 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public boolean isValid() {
-        return mLeft.isSameType(mRight);
+    public void generateVisibleIds(List<String> visibleIds) {
+        // intentionally left blank
     }
 
     @Override
     public Type getType() {
-        if (!isValid()) {
-            throw new AssertionError("Either side works since the expression isn't valid anyway.");
-        }
         return mLeft.getType();
     }
 }
