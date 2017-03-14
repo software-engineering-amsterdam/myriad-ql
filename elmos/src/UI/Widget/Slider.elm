@@ -1,7 +1,7 @@
 module UI.Widget.Slider exposing (..)
 
 import Html exposing (Html, div, input, span, text)
-import Html.Attributes as HA exposing (type_, class, step, value, title)
+import Html.Attributes as HA exposing (type_, class, step, value, title, disabled)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
@@ -16,7 +16,7 @@ type alias SliderProperties =
 
 
 view : SliderProperties -> WidgetContext msg -> Html msg
-view sliderProperties { identifier, env, onChange } =
+view sliderProperties { identifier, env, onChange, editable } =
     let
         currentValue =
             Environment.getFormValue identifier env
@@ -26,14 +26,15 @@ view sliderProperties { identifier, env, onChange } =
             startEndPair sliderProperties
     in
         renderSlider
+            editable
             (toString start)
             (toString end)
             (Maybe.withDefault "" <| Maybe.map toString currentValue)
             (Values.parseIntegerInput >> onChange)
 
 
-renderSlider : String -> String -> String -> (String -> msg) -> Html msg
-renderSlider start end currentValue onChange =
+renderSlider : Bool -> String -> String -> String -> (String -> msg) -> Html msg
+renderSlider editable start end currentValue onChange =
     div [ class "row" ]
         [ div [ class "col-md-2 col-sm-2 col-xs-2" ]
             [ span [] [ text start ]
@@ -47,6 +48,7 @@ renderSlider start end currentValue onChange =
                 , value currentValue
                 , title ("Value: " ++ currentValue)
                 , onInput onChange
+                , disabled (not editable)
                 ]
                 []
             ]

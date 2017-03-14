@@ -1,7 +1,7 @@
 module UI.Widget.Spinbox exposing (..)
 
 import Html exposing (Html, div, input, span, text)
-import Html.Attributes as HA exposing (type_, class, step, defaultValue, title, id)
+import Html.Attributes as HA exposing (type_, class, step, defaultValue, title, id, disabled)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
@@ -10,7 +10,7 @@ import UI.Widget.Values as Values
 
 
 view : WidgetContext msg -> Html msg
-view { identifier, env, onChange } =
+view { identifier, env, onChange, editable } =
     let
         currentValue =
             Environment.getFormValue identifier env
@@ -23,5 +23,6 @@ view { identifier, env, onChange } =
             , step "1"
             , defaultValue (Maybe.withDefault "" <| Maybe.map toString currentValue)
             , onInput (Values.parseIntegerInput >> onChange)
+            , disabled (not editable)
             ]
             []

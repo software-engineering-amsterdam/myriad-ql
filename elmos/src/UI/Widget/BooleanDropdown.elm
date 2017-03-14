@@ -1,7 +1,7 @@
 module UI.Widget.BooleanDropdown exposing (view)
 
 import Html exposing (Html, select)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, disabled)
 import UI.Widget.Base exposing (WidgetContext)
 import UI.Widget.DropdownBase exposing (selectEventHandler, renderPlaceholder, renderOption)
 import QL.Environment as Environment
@@ -9,7 +9,7 @@ import QL.Values as Values exposing (Value)
 
 
 view : WidgetContext msg -> List String -> Html msg
-view { identifier, env, onChange } labels =
+view { identifier, env, onChange, editable } labels =
     let
         selectedIndex =
             Environment.getFormValue identifier env
@@ -17,7 +17,7 @@ view { identifier, env, onChange } labels =
                 |> indexFromValue
     in
         -- index of labels starts with 0, however 0 = the default option, 1 = true, 2 = false
-        select [ class "form-control", selectEventHandler (onChange << indexToBoolValue) ]
+        select [ class "form-control", selectEventHandler (onChange << indexToBoolValue), disabled (not editable) ]
             (renderPlaceholder
                 :: List.indexedMap
                     (\index optionLabel -> renderOption ((index + 1) == selectedIndex) optionLabel)

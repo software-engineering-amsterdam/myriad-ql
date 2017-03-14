@@ -69,7 +69,14 @@ exampleDsl =
         widget radio("Male","Female","_")
       question age
         widget spinbox
+      question lifeRating
+        widget slider(-1,11)
+      question marritalStatus
+        widget radio("Yes", "No", "Maybe", "I don't know", "Can you repeat the question?")
+      question birthYear
+      question uselessStatement
     }
+
   }
 
   page Housing {
@@ -88,15 +95,18 @@ exampleDsl =
         question sellingPrice
         question privateDebt
         question valueResidue
-        default money {
-          width: 400
-          font: "Arial"
-          fontsize: 14
-          color: #999999
-        }
       }
     }
-  }
+
+    default boolean
+      widget radio("Yes", "No")
+    default money {
+      width: 35
+      font: "Arial"
+      fontsize: 25
+      color: red
+    }
+}
 
 
 """
