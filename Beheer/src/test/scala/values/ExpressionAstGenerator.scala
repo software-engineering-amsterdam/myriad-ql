@@ -4,28 +4,31 @@ import ast._
 import org.scalacheck.Gen
 
 trait ExpressionAstGenerator extends ValueAstGenerator {
-  type InfixNodeGenerator = (ExpressionNode, ExpressionNode) => Gen[ExpressionNode]
-  type PrefixNodeGenerator = ExpressionNode => Gen[ExpressionNode]
-  type SizedChildGenerator = Int => Gen[ExpressionNode]
+  private type InfixNodeGenerator = (ExpressionNode, ExpressionNode) => Gen[ExpressionNode]
+  private type PrefixNodeGenerator = ExpressionNode => Gen[ExpressionNode]
+  private type SizedChildGenerator = Int => Gen[ExpressionNode]
 
   def genNumeric = Gen.sized(genSizedNumeric)
   def genBoolean = Gen.sized(genSizedBoolean)
   def genComparison = Gen.sized(genSizedComparison)
 
   private def genSizedBoolean(size: Int): Gen[ExpressionNode] = size match {
-    case 0 => Gen.oneOf(boolIdentifier, booleanLiteral)
+    case 0 => Gen.frequency((1, boolIdentifier), (6, booleanLiteral))
     case s => Gen.oneOf(genSizedComparison(s), genSizedBooleanInfix(s), genSizedBooleanPrefix(s))
   }
 
   private def genSizedComparison(size: Int): Gen[ExpressionNode] = size match {
-    case 0 => Gen.oneOf(integerLiteral, decimalLiteral, moneyLiteral, numericIdentifier)
+    case 0 => genNumericLiteral
     case s => genSizedRelationalComparison(s)
   }
 
   private def genSizedNumeric(size: Int): Gen[ExpressionNode] = size match {
-    case 0 => Gen.oneOf(integerLiteral, decimalLiteral, moneyLiteral, numericIdentifier)
+    case 0 => genNumericLiteral
     case s => Gen.oneOf(genSizedNumericInfix(s), genSizedNumericPrefix(s))
   }
+
+  private def genNumericLiteral: Gen[ExpressionNode] =
+    Gen.frequency((2, integerLiteral), (2, decimalLiteral), (2, moneyLiteral), (1, numericIdentifier))
 
   private def genSizedBooleanInfix(size: Int): Gen[ExpressionNode] =
     genSizedInfix(size, genSizedBoolean, (lhs, rhs) => Gen.oneOf(And(lhs, rhs), Or(lhs, rhs)))

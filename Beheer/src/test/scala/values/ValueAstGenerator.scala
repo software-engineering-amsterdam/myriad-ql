@@ -4,8 +4,8 @@ import ast._
 import org.scalacheck.Gen
 
 trait ValueAstGenerator {
-  val numericIdentifiers: Seq[String]
-  val boolIdentifiers: Seq[String]
+  protected val numericIdentifiers: Seq[String]
+  protected val boolIdentifiers: Seq[String]
 
   def numericIdentifier: Gen[Identifier] = for {
     id <- Gen.oneOf(numericIdentifiers)
@@ -27,7 +27,9 @@ trait ValueAstGenerator {
     number <- decimal
   } yield MoneyLiteral(number)
 
-  private def decimal: Gen[BigDecimal] = Gen.choose[BigDecimal](0, 99999)
+  private def decimal: Gen[BigDecimal] = for {
+    number <- Gen.choose[Double](0.0, 99999.0)
+  } yield BigDecimal(number)
 
   def booleanLiteral: Gen[BooleanLiteral] = for {
     bool <- Gen.oneOf(false, true)
