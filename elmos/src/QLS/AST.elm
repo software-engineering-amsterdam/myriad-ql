@@ -50,4 +50,9 @@ type Widget
     | Spinbox
     | Checkbox
     | Text
-    | Slider (List Int)
+    | Slider SliderArgs
+
+
+type SliderArgs
+    = SliderMax Int
+    | SliderMinMax Int Int

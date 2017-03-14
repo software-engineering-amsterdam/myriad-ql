@@ -64,9 +64,12 @@ exampleDsl =
     """stylesheet taxOfficeExample
 
   page General {
-    section "General"
+    section "General" {
       question gender
         widget radio("Male","Female","_")
+      question age
+        widget slider(1, 10)
+    }
   }
 
   page Housing {

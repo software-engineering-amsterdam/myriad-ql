@@ -36,6 +36,8 @@ exampleDsl =
     """form taxOfficeExample {
   "What is your gender?"
     gender: string
+  "Some slider?"
+    age: integer
 
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean

@@ -10,6 +10,7 @@ import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Float as FloatWidget
+import UI.Widget.Slider as SliderWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import QL.Environment as Env exposing (Environment)
 import QL.Values exposing (Value)
@@ -204,11 +205,21 @@ asRenderable widget valueType =
             textWidgetRendererForValueType valueType
                 |> Maybe.withDefault StringWidget.view
 
-        Slider _ ->
-            always (div [] [ text "TODO IMPLEMENT SLIDER" ])
+        Slider args ->
+            SliderWidget.view (sliderArgsAsProperties args)
 
         QLS.AST.Dropdown values ->
             dropdownWidgetRendererForValueType valueType values
+
+
+sliderArgsAsProperties : SliderArgs -> SliderWidget.SliderProperties
+sliderArgsAsProperties sliderArgs =
+    case sliderArgs of
+        SliderMax x ->
+            { min = 0, max = x }
+
+        SliderMinMax x y ->
+            { min = x, max = y }
 
 
 radioWidgetRendererForValueType : ValueType -> List String -> WidgetContext Msg -> Html Msg

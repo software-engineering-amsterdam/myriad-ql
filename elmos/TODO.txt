@@ -2,20 +2,9 @@ QL:
 -TypeChecker:
 --> Don't report type error if float field contains an int + tests
 
-QLS:
-
-  QLS UI:
+QLS UI:
 -Widgets:
 --> Slider
 --> Spinbox
---> Radio --> DONE
---> Radio for text (e.g. gender) --> DONE
---> DropDown
---> Boolean Radio and Boolean Dropdown share code that could be abstracted
 --> DropDown for text (e.g. gender)
----> Style clash with bootstrap
-
--Other:
---> Don't show empty sectins
---> Handle (Pagination = NOTHING) correctly
---> Pagination --> DONE
+--> Style clash with bootstrap

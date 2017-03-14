@@ -1,6 +1,6 @@
 module QLS.Parser.Widget exposing (widget)
 
-import Combine exposing ((*>), (<$), (<$>), Parser, choice, parens, sepBy1, string)
+import Combine exposing ((*>), (<$), (<$>), (>>=), Parser, choice, parens, sepBy1, string, fail, succeed)
 import Combine.Extra exposing (trimmed)
 import Combine.Num exposing (int)
 import QL.Parser.Token exposing (quotedString)
@@ -42,7 +42,20 @@ spinbox =
 slider : Parser state Widget
 slider =
     Slider
-        <$> (string "slider" *> widgetParams int)
+        <$> (string "slider" *> (widgetParams int >>= asSliderArgs))
+
+
+asSliderArgs : List Int -> Parser state SliderArgs
+asSliderArgs args =
+    case args of
+        [ x ] ->
+            succeed (SliderMax x)
+
+        [ x, y ] ->
+            succeed (SliderMinMax x y)
+
+        _ ->
+            fail ("Incorrect arguments for slider. Expected one or two arguments, but got " ++ toString (List.length args))
 
 
 text : Parser state Widget
