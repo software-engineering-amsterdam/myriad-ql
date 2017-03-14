@@ -23,9 +23,11 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def field(self, node):
         if node.expression is not None:
             result = node.expression.apply(self)
-            if result is not None and node.data_type.data_type is DataTypes.boolean and (result is not node.data_type.data_type):
-                self.errors.append("Expression of field [{}] did not match declared type [{}], at the following location: {}"
-                                   .format(result, node.data_type.data_type, node.expression.location))
+            if (result is not None) and (node.data_type.data_type is DataTypes.boolean) and (
+                        result is not node.data_type.data_type):
+                self.errors.append(
+                    "Expression of field [{}] did not match declared type [{}], at location: {}"
+                        .format(result, node.data_type.data_type, node.expression.location))
 
     def subtraction(self, node):
         return self.type_detection(node, self.arithmetic_type_detection)
@@ -43,19 +45,20 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         condition_result = node.condition.apply(self)
         if condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
-                "Condition on location {} does not contain a boolean expression, it's result type is {}".format(
-                    node.location, condition_result))
+                "Invalid expression in a conditional statement, it expected a [DataTypes.boolean] expression but "
+                "received [{}], at location {}".format(condition_result, node.condition.location))
         [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
         condition_result = node.condition.apply(self)
         if condition_result is None:
             self.errors.append(
-                "Condition on location {} does not contain a valid boolean expression".format(node.condition.location))
+                "Invalid expression in a conditional statement, it expected a [DataTypes.boolean] expression but "
+                "received [{}], at location {}".format(condition_result, node.condition.location))
         elif condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
-                "Condition on location {} does not contain a valid boolean expression, it's result type is {}".format(
-                    node.condition.location, str(condition_result.data_type)))
+                "Invalid expression in a conditional statement, it expected a [DataTypes.boolean] expression but "
+                "received [{}], at location {}".format(condition_result, node.condition.location))
         [statement.apply(self) for statement in node.statements]
         [statement.apply(self) for statement in node.else_statement_list]
 
