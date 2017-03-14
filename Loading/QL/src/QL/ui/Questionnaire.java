@@ -37,7 +37,6 @@ public class Questionnaire extends Application implements Notifier {
 	private static Form form;
 	private static Environment environment;
 	private static GridPane grid;
-	private static Stage pStage; // TODO
 	private static Faults faults;
 	
     public void main(Form f, Environment env, Faults flts) {
@@ -50,21 +49,18 @@ public class Questionnaire extends Application implements Notifier {
     
     @Override
     public void start(Stage primaryStage) {
-
-        pStage = primaryStage;
         
     	if (!faults.showAndContinue()) {
     		return;
     	}
     	
         primaryStage.setTitle(form.getId());
-        
-        grid = initGrid();
-        
+
+        initGrid();
         Scene scene = new Scene(grid, 500, 275);
         primaryStage.setScene(scene);
         
-        renderQuestionnaire(grid);
+        renderQuestionnaire();
         
         primaryStage.show();
 
@@ -72,7 +68,7 @@ public class Questionnaire extends Application implements Notifier {
     
     private GridPane initGrid() {
     	
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -82,15 +78,15 @@ public class Questionnaire extends Application implements Notifier {
     }
     
     
-    private void renderQuestionnaire(GridPane grid) {
+    private void renderQuestionnaire() {
     	
-        renderTitle(grid, form.getId());
+        renderTitle(form.getId());
         
         List<Row> activeQuestions = createQuestions();
         
     	renderQuestions(activeQuestions);
     	
-        Button btn = renderButton(grid, activeQuestions.size() + 2);       
+        Button btn = renderButton(activeQuestions.size() + 2);
               
         submit(btn, activeQuestions);
     }
@@ -135,9 +131,8 @@ public class Questionnaire extends Application implements Notifier {
     	return false;
     }
     
-    private void renderTitle(GridPane grid, String title) {
-        Text scenetitle;
-        scenetitle = new Text(title);
+    private void renderTitle(String title) {
+        Text scenetitle = new Text(title);
         
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
@@ -165,7 +160,7 @@ public class Questionnaire extends Application implements Notifier {
         
     }
     
-    private Button renderButton(GridPane grid, int rowIndex) {
+    private Button renderButton(int rowIndex) {
     	 
         Button btn = new Button("Submit");
         HBox hbBtn = new HBox(10);
@@ -182,7 +177,7 @@ public class Questionnaire extends Application implements Notifier {
 
 			environment.addAnswer(name, newValue);
 	    	grid.getChildren().clear();
-	        renderQuestionnaire(grid);
+	        renderQuestionnaire();
 	        grid.lookup("#" + name).requestFocus();
 		}
 	}
@@ -192,7 +187,10 @@ public class Questionnaire extends Application implements Notifier {
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showSaveDialog(pStage);
+
+        Stage qStage = new Stage();
+
+        File file = fileChooser.showSaveDialog(qStage);
         
         if (file == null) {
         	return;
