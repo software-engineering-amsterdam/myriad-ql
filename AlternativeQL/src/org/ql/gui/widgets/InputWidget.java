@@ -5,36 +5,38 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.ql.evaluator.value.StringValue;
+import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
+import org.ql.gui.mediator.GUIMediator;
 
 abstract class InputWidget extends Widget {
     private final Label label;
     private final TextField textField;
 
-    InputWidget(String label, TextFormatter textFormatter) {
-        this(label);
+
+    public InputWidget(GUIMediator mediator, Question question) {
+        label = new Label(question.getQuestionLabel().toString());
+        textField = new TextField();
+        textField.setOnKeyReleased(event -> mediator.actualizeValue(question.getId(), value(textField.getText())));
+    }
+
+    public InputWidget(GUIMediator mediator, Question question, TextFormatter textFormatter) {
+        this(mediator, question);
         textField.setTextFormatter(textFormatter);
     }
 
-    InputWidget(String label) {
-        this.label = new Label(label);
-        textField = new TextField();
-    }
+    protected abstract Value value(String textFieldText);
 
     @Override
     public void updateValue(Value value) {
         textField.setText(value.toString());
     }
 
+    @Override
     public Pane createGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.add(label, 0, 0);
         gridPane.add(textField, 1, 0);
         return gridPane;
-    }
-
-    private Value getValue() {
-        return new StringValue(textField.getText());
     }
 }

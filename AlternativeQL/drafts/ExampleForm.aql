@@ -1,10 +1,10 @@
 form TestForm {
-    string firstName: "Enter your first name";
-    string lastName: "Enter your first name";
+    float firstName: "Enter your first name";
+    float lastName: "Enter your last name";
     boolean areYouSure: "Are you sure?" = false;
 
     if (areYouSure) {
-        string fullName: "This is your full name" = firstName + lastName;
+        float fullName: "This is your full name" = firstName + lastName;
     }
 }
 

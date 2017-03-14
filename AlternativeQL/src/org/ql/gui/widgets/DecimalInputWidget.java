@@ -1,15 +1,19 @@
 package org.ql.gui.widgets;
 
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.BigDecimalStringConverter;
+import org.ql.ast.statement.Question;
+import org.ql.evaluator.value.DecimalValue;
+import org.ql.evaluator.value.UnknownValue;
+import org.ql.evaluator.value.Value;
+import org.ql.gui.mediator.GUIMediator;
 
 import java.math.BigDecimal;
 
 public class DecimalInputWidget extends InputWidget {
 
-    DecimalInputWidget(String label) {
-        super(label, createTextFormatter());
+    public DecimalInputWidget(GUIMediator mediator, Question question) {
+        super(mediator, question, createTextFormatter());
     }
 
     private static TextFormatter<BigDecimal> createTextFormatter() {
@@ -20,7 +24,16 @@ public class DecimalInputWidget extends InputWidget {
                 return change;
             }
 
-            return null;
+            return change;
         });
+    }
+
+    @Override
+    protected Value value(String textFieldText) {
+        if (textFieldText.isEmpty()) {
+            return new UnknownValue();
+        }
+
+        return new DecimalValue(new BigDecimal(textFieldText));
     }
 }

@@ -42,17 +42,17 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public Widget visitFloatType(FloatType floatType, Question question) {
-        return null;
+        return new DecimalInputWidget(mediator, question);
     }
 
     @Override
     public Widget visitIntegerType(IntegerType integerType, Question question) {
-        return null;
+        return new IntegerInputWidget(mediator, question);
     }
 
     @Override
     public Widget visitMoneyType(MoneyType moneyType, Question question) {
-        return null;
+        return new DecimalInputWidget(mediator, question);
     }
 
     @Override
@@ -62,6 +62,6 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public Widget visitUnknownType(UnknownType unknownType, Question question) {
-        return null;
+        throw new AssertionError();
     }
 }

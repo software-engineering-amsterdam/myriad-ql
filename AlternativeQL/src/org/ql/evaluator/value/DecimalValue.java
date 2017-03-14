@@ -139,6 +139,11 @@ public class DecimalValue extends Value {
     }
 
     @Override
+    public String toString() {
+        return value.toPlainString();
+    }
+
+    @Override
     public int hashCode() {
         return value != null ? value.hashCode() : 0;
     }
