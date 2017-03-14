@@ -1,14 +1,14 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
 public interface FormItem extends ASTNode {
-    void show(FXMLExampleController screen);
+    void show(FXMLController screen);
 
     void idChanged(Form root, FormItem changed, String value);
 

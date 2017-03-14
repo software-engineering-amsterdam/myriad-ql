@@ -2,7 +2,7 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.AST.Values.Value;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 import javafx.scene.layout.GridPane;
 
@@ -135,7 +135,7 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public void show(FXMLExampleController screen) {
+    public void show(FXMLController screen) {
         thenBlockPane = screen.startRenderCondition();
         thenBlockItems.forEach(formItem -> formItem.show(screen));
         screen.stopRenderCondition();

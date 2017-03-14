@@ -5,19 +5,23 @@ import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.Validation.TypeChecker;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
 import java.util.Stack;
 
-public class FXMLExampleController {
+public class FXMLController {
     private Form form;
     TypeChecker checker = new TypeChecker();
 
@@ -75,12 +79,19 @@ public class FXMLExampleController {
     }
 
 
-//    @FXML
-//    public void showDateValue(Question question) {
-//        Text questionLabel = new Text(question.getQuestion());
-//        CheckBox input = new CheckBox();
-//        grid.addRow(++rowCount, questionLabel, input);
-//    }
+    @FXML
+    public void showDateValue(Question question) {
+        assert rootGrid != null;
+        Text questionLabel = new Text(question.getQuestion());
+        final DatePicker datePicker = new DatePicker();
+
+        datePicker.setOnAction(t -> {
+            LocalDate date = datePicker.getValue();
+            System.err.println("Selected date: " + date);
+        });
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, datePicker);
+    }
+
 
 
     public void showComputed(Computed computed) {
@@ -98,6 +109,7 @@ public class FXMLExampleController {
         rootGrid.getColumnConstraints().addAll(grid.getColumnConstraints());
 
         conditionStack.push(rootGrid);
+        rootGrid.managedProperty().bind(rootGrid.visibleProperty());
         return rootGrid;
     }
 

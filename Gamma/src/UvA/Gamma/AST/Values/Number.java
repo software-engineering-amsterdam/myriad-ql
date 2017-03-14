@@ -1,7 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 import java.math.BigDecimal;
@@ -66,7 +66,7 @@ public class Number extends Value {
     }
 
     @Override
-    public void showQuestion(FXMLExampleController screen, Question question) {
+    public void showQuestion(FXMLController screen, Question question) {
         screen.showQuestion(question); //TODO: Show the number type of the question
     }
 

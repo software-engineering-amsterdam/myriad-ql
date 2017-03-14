@@ -19,12 +19,12 @@ public class MainScreen {
     }
 
     public void initUI(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml_example.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
         root = loader.load();
-        FXMLExampleController controller = loader.getController();
+        FXMLController controller = loader.getController();
         System.out.println(controller);
         controller.addFormItem(form);
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Tax Questionnaire");
         stage.setScene(new Scene(root, 300, 275));
         stage.sizeToScene();
         stage.show();

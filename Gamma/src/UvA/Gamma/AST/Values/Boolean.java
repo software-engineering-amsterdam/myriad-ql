@@ -1,7 +1,7 @@
 package UvA.Gamma.AST.Values;
 
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.FXMLExampleController;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 /**
@@ -38,11 +38,13 @@ public class Boolean extends Value {
         return value;
     }
 
-    @Override
-    public void showQuestion(FXMLExampleController screen, Question question) {
-        screen.showBoolean(question);
-    }
 
+    @Override
+    public void showQuestion(FXMLController screen, Question question) {
+        screen.showBoolean(question);
+
+    }
+    
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return typeChecker.checkBool(value);
