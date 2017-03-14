@@ -108,7 +108,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), new SymbolTable()); // TODO: VAR has no symboltable anymore!
+        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText()); // TODO: VAR has no symboltable anymore!
         addToStack(varNameLiteral);
     }
 
