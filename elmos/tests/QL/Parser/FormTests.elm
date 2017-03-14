@@ -137,6 +137,14 @@ ifBlockTests =
               , "if (x) {\"label\" id: integer} else {\"label\" id: integer}"
               , Just (IfThenElse (Var ( "x", Location 0 0 )) basicBlockContent basicBlockContent)
               )
+            , ( "should allow whitespace between parens in condition for if block"
+              , "if( x ){\"label\" id:integer}"
+              , Just (IfThen (Var ( "x", Location 0 0 )) basicBlockContent)
+              )
+            , ( "should allow whitespace between parens in condition for if else block"
+              , "if ( x ) {\"label\" id: integer} else {\"label\" id: integer}"
+              , Just (IfThenElse (Var ( "x", Location 0 0 )) basicBlockContent basicBlockContent)
+              )
             ]
 
 
