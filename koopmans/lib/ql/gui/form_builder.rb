@@ -1,15 +1,10 @@
 module QL
   module GUI
     class FormBuilder
-      attr_reader :question_frames
-
-      def initialize(ast)
-        @question_frames = []
-        visit_form(ast)
-      end
-
       def visit_form(form)
+        @question_frames = []
         form.statements.map { |statement| statement.accept(self) }.flatten
+        @question_frames
       end
 
       def visit_if_statement(if_statement, condition=nil)

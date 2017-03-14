@@ -6,7 +6,7 @@ module QL
   module GUI
     class GUI
       def initialize(ql_ast, qls_ast, type_checker)
-        @question_frames = FormBuilder.new(ql_ast).question_frames
+        @question_frames = ql_ast.accept(FormBuilder.new)
         @question_frames.each_with_index do |question_frame, row_position|
           question_frame.render(row_position) do
             reload_questions

@@ -1,7 +1,7 @@
 # module QL
 #   module GUI
 #     module Widgets
-#       def create_radio_widget(tk_frame, options=nil, &block)
+#       def create_radio_widget(tk_frame, options=nil)
 #         shared_variable = TkVariable.new(true)
 #
 #         if options
@@ -13,15 +13,15 @@
 #         radio_button.text     = @true_label
 #         radio_button.value    = true
 #         radio_button.variable = shared_variable
-#         radio_button.command  = proc { block.call(shared_variable.bool) }
+#         radio_button.command  = proc { yield(shared_variable.bool) }
 #
 #         radio_button          = TkRadioButton.new(tk_frame).pack
 #         radio_button.text     = @false_label
 #         radio_button.value    = false
 #         radio_button.variable = shared_variable
-#         radio_button.command  = proc { block.call(shared_variable.bool) }
+#         radio_button.command  = proc { yield(shared_variable.bool) }
 #
-#         block.call(shared_variable.bool)
+#         yield(shared_variable.bool)
 #       end
 #     end
 #   end
@@ -37,15 +37,15 @@ module QL
     end
 
     class SubmitButton
-      def initialize(position, &block)
+      def initialize(position)
         button         = TkButton.new.grid(row: position)
         button.text    = 'Submit'
-        button.command = proc { block.call }
+        button.command = proc { yield }
       end
     end
 
     class RadioWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         shared_variable = TkVariable.new(true)
 
         if options
@@ -57,32 +57,32 @@ module QL
         radio_button.text     = @true_label
         radio_button.value    = true
         radio_button.variable = shared_variable
-        radio_button.command  = proc { block.call(shared_variable.bool) }
+        radio_button.command  = proc { yield(shared_variable.bool) }
 
         radio_button          = TkRadioButton.new(tk_frame).pack
         radio_button.text     = @false_label
         radio_button.value    = false
         radio_button.variable = shared_variable
-        radio_button.command  = proc { block.call(shared_variable.bool) }
+        radio_button.command  = proc { yield(shared_variable.bool) }
 
-        block.call(shared_variable.bool)
+        yield(shared_variable.bool)
       end
     end
 
     class CheckboxWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         variable = TkVariable.new(true)
 
         check_button          = TkCheckButton.new(tk_frame).pack
         check_button.variable = variable
-        check_button.command  = proc { block.call(variable.bool) }
+        check_button.command  = proc { yield(variable.bool) }
 
-        block.call(variable.bool)
+        yield(variable.bool)
       end
     end
 
     class DropdownWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         @true_label  = 'true'
         @false_label = 'false'
 
@@ -94,9 +94,9 @@ module QL
         combobox        = Tk::Tile::Combobox.new(tk_frame).pack
         combobox.values = [@true_label, @false_label]
         combobox.value  = @true_label
-        combobox.bind('<ComboboxSelected>') { block.call(to_value(combobox.value)) }
+        combobox.bind('<ComboboxSelected>') { yield(to_value(combobox.value)) }
 
-        block.call(to_value(combobox.value))
+        yield(to_value(combobox.value))
       end
 
       def to_value(textual_value)
@@ -109,7 +109,7 @@ module QL
     end
 
     class SpinboxWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         @minimum = 0
         @maximum = 100
 
@@ -122,10 +122,9 @@ module QL
         spinbox.from    = @minimum
         spinbox.to      = @maximum
         spinbox.value   = 0
-        spinbox.command = proc { block.call(spinbox.value) }
+        spinbox.command = proc { yield(spinbox.value) }
 
-
-        block.call(spinbox.value)
+        yield(spinbox.value)
       end
     end
 
@@ -134,7 +133,7 @@ module QL
     # spinbox.textvariable = variable
 
     class SliderWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         @minimum = 0
         @maximum = 100
 
@@ -146,24 +145,23 @@ module QL
         scale         = TkScale.new(tk_frame).pack
         scale.from    = @minimum
         scale.to      = @maximum
-        scale.command = proc { block.call(scale.value) }
+        scale.command = proc { yield(scale.value) }
 
-        block.call(scale.value)
+        yield(scale.value)
       end
     end
 
     class TextWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         entry = TkEntry.new(tk_frame).pack
-        entry.bind('KeyRelease') do
-          block.call(entry.value)
-        end
-        block.call(entry.value)
+        entry.bind('KeyRelease') { yield(entry.value) }
+
+        yield(entry.value)
       end
     end
 
     class ComputedWidget
-      def initialize(tk_frame, options=nil, &block)
+      def initialize(tk_frame, options=nil)
         @variable = TkVariable.new
 
         entry              = TkEntry.new(tk_frame).pack
