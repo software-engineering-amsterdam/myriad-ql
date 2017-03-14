@@ -30,7 +30,7 @@ module QL
       end
 
       def visit_variable(variable)
-        QuestionTable.find(variable.name)
+        VariableTable.find(variable.name)
       end
     end
   end

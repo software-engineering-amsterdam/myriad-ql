@@ -21,7 +21,7 @@ module QL
             widget = boolean_question_frame.create_widget
             boolean_question_frame.listen_to_widget(widget)
             widget.callback(true)
-            stored = QuestionTable.find(variable_name)
+            stored = VariableTable.find(variable_name)
 
             expect(stored).to be_a(BooleanLiteral)
             expect(stored.to_value).to be(true)
@@ -35,7 +35,7 @@ module QL
             variable_name = integer_question_frame.variable_name
             widget = integer_question_frame.create_widget
             widget.callback(true)
-            stored = QuestionTable.find(variable_name)
+            stored = VariableTable.find(variable_name)
 
             expect(stored).to be(nil)
           end

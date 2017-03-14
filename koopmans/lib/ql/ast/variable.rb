@@ -12,12 +12,11 @@ module QL
       end
 
       def eval
-        QuestionTable.find(name)
-        # IntegerLiteral.new('1')
+        VariableTable.find(name)
       end
 
       def eval_type
-        QuestionTable.find(name)
+        VariableTable.find(name)
       end
     end
   end

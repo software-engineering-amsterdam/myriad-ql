@@ -39,7 +39,7 @@ module QL
       end
 
       def store_value
-        QuestionTable.store(variable_name, literal_type.new(@value))
+        VariableTable.store(variable_name, literal_type.new(@value))
       end
 
       def reload
