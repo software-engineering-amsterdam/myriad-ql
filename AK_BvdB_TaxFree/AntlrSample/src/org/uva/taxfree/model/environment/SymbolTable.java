@@ -23,7 +23,7 @@ public class SymbolTable {
         mCalculations = new ArrayList<>();
     }
 
-    public void addDepencendies(List<DeclarationNode> nodes) {
+    public void addDependencies(List<DeclarationNode> nodes) {
         for (DeclarationNode n : nodes) {
             addDeclaration(n);
         }
@@ -126,11 +126,10 @@ public class SymbolTable {
         return false;
     }
 */
-
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
-            addDepencendies(variableName, dependencies);
+            addDependencies(variableName, dependencies);
         }
 
         if (!usedVariables.equals(dependencies)) {
@@ -139,7 +138,7 @@ public class SymbolTable {
         }
     }
 
-    private void addDepencendies(String usedVariable, Set<String> usedVariables) {
+    private void addDependencies(String usedVariable, Set<String> usedVariables) {
         for (CalculationNode calc : mCalculations) {
             if (calc.getId().equals(usedVariable)) {
                 usedVariables.addAll(calc.getUsedVariables());
