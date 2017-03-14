@@ -9,6 +9,11 @@ module QL
     include AST
 
     describe TypeChecker do
+      let(:notification_messages) {
+        TypeChecker.new.check(generate_form)
+        NotificationTable.index.map(&:message)
+      }
+
       describe 'duplicate questions' do
         it 'should detect duplicate label' do
           expect(notification_messages).to include('question with label \'Did you sell a house in 2010?\' is defined multiple times')
@@ -42,7 +47,7 @@ module QL
       end
 
       # example ast for form with errors
-      def notification_messages
+      def generate_form
         # create question
         question_variable           = Variable.new('hasSoldHouse')
         question                    = Question.new(StringLiteral.new('Did you sell a house in 2010?'), question_variable, BooleanType.new)
@@ -66,9 +71,7 @@ module QL
         if_statement                = IfStatement.new(undefined_question_variable, [question])
 
         # create the ast with all the errors
-        form_ast = Form.new('_', [question, question, undefined_question, if_statement, computed_question, cyclic_question, cyclic_question2])
-        TypeChecker.new.check(form_ast)
-        NotificationTable.index.map(&:message)
+        Form.new('_', [question, question, undefined_question, if_statement, computed_question, cyclic_question, cyclic_question2])
       end
     end
   end
