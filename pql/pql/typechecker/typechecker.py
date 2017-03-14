@@ -30,16 +30,16 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
                         .format(result, node.data_type.data_type, node.expression.location))
 
     def subtraction(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
+        return self.arithmetic_type_detection(node)
 
     def division(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
+        return self.arithmetic_type_detection(node)
 
     def multiplication(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
+        return self.arithmetic_type_detection(node)
 
     def addition(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
+        return self.arithmetic_type_detection(node)
 
     def conditional_if(self, node):
         condition_result = node.condition.apply(self)
@@ -63,28 +63,28 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         [statement.apply(self) for statement in node.else_statement_list]
 
     def greater_exclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def greater_inclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def lower_inclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def lower_exclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def equality(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def inequality(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        return self.boolean_type_detection(node)
 
     def and_(self, node):
-        return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
+        return self.boolean_type_detection(node, allowed_arithmetic_types=set())
 
     def or_(self, node):
-        return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
+        return self.boolean_type_detection(node, allowed_arithmetic_types=set())
 
     def negation(self, node):
         if node.operand.apply(self) is DataTypes.boolean:
@@ -106,23 +106,27 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.errors.append("Negative was passed a non-numeric value on location {} ".format(node.location))
         return None
 
-    def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
+    def arithmetic_type_detection(self, node, allowed_types={DataTypes.integer, DataTypes.money}):
         dominant_type = None
+        type_set = {node.lhs.apply(self), node.rhs.apply(self)}
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
-        if type_set_data_types.issubset(allowed_arithmetic_types):
+
+        if type_set_data_types.issubset(allowed_types):
             if DataTypes.money in type_set_data_types:
                 dominant_type = DataTypes.money
             else:
                 dominant_type = DataTypes.integer
         else:
-            self.add_leaf_error(allowed_arithmetic_types, type_set)
+            self.add_leaf_error(allowed_types, type_set)
         return dominant_type
 
-    def boolean_type_detection(self, allowed_arithmetic_types, allowed_boolean_types, type_set):
+    def boolean_type_detection(self, node, allowed_arithmetic_types={DataTypes.integer, DataTypes.money},
+                               allowed_boolean_types={DataTypes.boolean}):
         dominant_type = None
-
         allowed_types = allowed_arithmetic_types.union(allowed_boolean_types)
+        type_set = {node.lhs.apply(self), node.rhs.apply(self)}
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
+
         if type_set_data_types.issubset(allowed_types):
             if type_set_data_types.issubset(allowed_arithmetic_types):
                 dominant_type = DataTypes.boolean
@@ -139,11 +143,6 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.errors.append("Type mismatch: the following types were incompatible {}, only {} is allowed "
                            .format(['{}: {}'.format(t.location, t.data_type) for t in type_set],
                                    [str(a) for a in allowed_types]))
-
-    def type_detection(self, node, func, allowed_arithmetic_types={DataTypes.integer, DataTypes.money},
-                       allowed_boolean_types={DataTypes.boolean}):
-        type_set = {node.lhs.apply(self), node.rhs.apply(self)}
-        return func(allowed_arithmetic_types, allowed_boolean_types, type_set)
 
     def identifier(self, node):
         return self.symbol_table[node.name]
