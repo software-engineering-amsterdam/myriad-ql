@@ -22,11 +22,11 @@ if __name__ == '__main__':
 
             if (hasSoldHouse) {
                 "What was the selling price?"
-                    sellingPrice: integer
+                    sellingPrice: money
                 "Private debts for the sold house:"
                     privateDebt: integer
                 "Value residue:"
-                    valueResidue: integer = (sellingPrice - privateDebt)
+                    valueResidue: money = (sellingPrice - privateDebt)
             }
         }
         """
@@ -47,16 +47,15 @@ if __name__ == '__main__':
                         widget radio
                     section "You sold a house" {
                         question sellingPrice
-                            widget spinbox
                         question privateDebt
-                            widget spinbox
+                            widget slider
                         question valueResidue
-                        default integer {
-                            width: 400
+                        default money {
+                            width: 50
                             font: "Arial"
                             fontsize: 14
-                            color: #999999
-                            widget spinbox
+                            color: #00FF00
+                            widget numeric
                         }
                     }
                 }

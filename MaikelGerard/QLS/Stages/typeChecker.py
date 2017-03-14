@@ -1,9 +1,13 @@
+from QLS.Stages.determineIsComputed import DetermineIsComputed
+
+
 class TypeChecker(object):
     def __init__(self, qls_ast, qls_env, ql_env, error_handler):
         self.ast = qls_ast
         self.env = qls_env
         self.ql_env = ql_env
         self.handler = error_handler
+        self.is_computed_visitor = DetermineIsComputed()
 
     def start_traversal(self):
         self.env.clear_env()
@@ -41,10 +45,13 @@ class TypeChecker(object):
         widget_question_node.type.accept(self, literal_type)
 
     def question_node(self, question_node):
-        self.env.add_var(question_node)
-
         if not self.ql_env.exists(question_node.name):
             self.handler.add_question_not_in_ql_error(question_node)
+            return
+
+        ql_node = self.ql_env.get_node(question_node.name)
+        is_computed = ql_node.accept(self.is_computed_visitor)
+        self.env.add_var(question_node, is_computed)
 
     def check_widget_compatibility(self, widget_node, literal_type, widget_name):
         if not widget_node.is_compatible_type(literal_type):

@@ -58,17 +58,8 @@ class Parser(QLParser):
         self.page = self.define_page()
         self.grammar = self.define_grammar()
 
-    @staticmethod
-    def create_rgb_tuple(src, loc, tokens):
-        hex_string = tokens[0][1:]
-        r = int(hex_string[0:2], 16)
-        g = int(hex_string[2:4], 16)
-        b = int(hex_string[4:6], 16)
-        return r, g, b
-
     def parse_literal_nodes(self):
         self.INTEGER.setParseAction(self.create_int)
-        self.COLOR_VALUE.setParseAction(self.create_rgb_tuple)
         self.DECIMAL.setParseAction(self.create_decimal)
         self.STRING.setParseAction(pp.removeQuotes)
         self.DATE.setParseAction(self.create_date)

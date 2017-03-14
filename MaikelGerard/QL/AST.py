@@ -57,7 +57,7 @@ class QuestionNode(Node):
         self.type = var_type
 
     def accept(self, visitor, *args):
-        visitor.question_node(self, *args)
+        return visitor.question_node(self, *args)
 
 
 class ComputedQuestionNode(QuestionNode):
@@ -68,7 +68,7 @@ class ComputedQuestionNode(QuestionNode):
         self.expression = expression
 
     def accept(self, visitor, *args):
-        visitor.comp_question_node(self, *args)
+        return visitor.comp_question_node(self, *args)
 
 
 class IfNode(Node):

@@ -74,10 +74,14 @@ class PrintHandler(qlPrintHandler):
     def default_node(self, default_node, indent):
         self.add_indent(indent)
         self.output += "default {}:\n".format(default_node.type.accept(self))
+        default_node.widget_type.accept(self, indent + 1)
 
     def default_with_props_node(self, default_with_props_node, indent):
-        self.default_node(default_with_props_node, indent)
+        self.add_indent(indent)
+        default_type = default_with_props_node.type.accept(self)
+        self.output += "default {}:\n".format(default_type)
         default_with_props_node.props.accept(self, indent + 1)
+        default_with_props_node.widget_type.accept(self, indent + 1)
 
     def width_node(self, width_node, indent):
         self.add_indent(indent)
@@ -97,4 +101,4 @@ class PrintHandler(qlPrintHandler):
 
     def color_node(self, color_node, indent):
         self.add_indent(indent)
-        self.output += "color: RGB {}\n".format(color_node.val)
+        self.output += "color: {}\n".format(color_node.val)

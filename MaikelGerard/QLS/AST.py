@@ -127,7 +127,7 @@ class NumericNode(WidgetNode):
                                 DecimalTypeNode()]
 
     def accept(self, visitor, *args):
-        return visitor.text_node(self, *args)
+        return visitor.numeric_node(self, *args)
 
 
 class RadioNode(WidgetNode):

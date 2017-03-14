@@ -54,7 +54,7 @@ class EntryWidget(QLEntry, Widget):
 
     def set_font_color(self, color):
         super(EntryWidget, self).set_font_color(color)
-        self.main.setEntryFg(self.identifier)
+        self.main.setEntryFg(self.identifier, color)
 
 
 class SpinBoxWidget(QLSpinBox, Widget):
@@ -82,7 +82,7 @@ class SpinBoxWidget(QLSpinBox, Widget):
 
     def set_font_color(self, color):
         super(SpinBoxWidget, self).set_font_color(color)
-        self.main.setSpinBoxFg(self.identifier)
+        self.main.setSpinBoxFg(self.identifier, color)
 
 
 class NumericWidget(QLNumeric, Widget):
@@ -110,7 +110,7 @@ class NumericWidget(QLNumeric, Widget):
 
     def set_font_color(self, color):
         super(NumericWidget, self).set_font_color(color)
-        self.main.setEntryFg(self.identifier)
+        self.main.setEntryFg(self.identifier, color)
 
 
 class CheckBoxWidget(QLCheckBox, Widget):
@@ -140,7 +140,7 @@ class CheckBoxWidget(QLCheckBox, Widget):
 
     def set_font_color(self, color):
         super(CheckBoxWidget, self).set_font_color(color)
-        self.main.setCheckBoxFg(self.identifier)
+        self.main.setCheckBoxFg(self.identifier, color)
 
 
 class ComputedLabelWidget(QLComputed, Widget):
@@ -170,7 +170,7 @@ class ComputedLabelWidget(QLComputed, Widget):
 
     def set_font_color(self, color):
         super(ComputedLabelWidget, self).set_font_color(color)
-        self.main.setLabelFg(self.computed_identifier)
+        self.main.setLabelFg(self.computed_identifier, color)
 
 
 class SliderWidget(Widget):
@@ -218,20 +218,23 @@ class SliderWidget(Widget):
 
     def set_font_color(self, color):
         super(SliderWidget, self).set_font_color(color)
-        self.main.setScaleFg(self.identifier)
+        self.main.setScaleFg(self.identifier, color)
 
 
 class RadioButtonWidget(Widget):
     def __init__(self, form_gui, identifier, question, row=0):
+
+        form_gui.main.startFrame(identifier)
+        # Create label
         super(RadioButtonWidget, self).__init__(
             form_gui, identifier, question, row=row
         )
-
-        self.main.startFrame(self.identifier)
-        self.main.addRadioButton(self.identifier, "Yes", row=row, column=1)
         self.main.addRadioButton(self.identifier, "No",  row=row, column=2)
+        self.main.addRadioButton(self.identifier, "Yes", row=row, column=1)
         self.main.stopFrame()
-        self.add_listener(self.main.getRadioButtonWidget(self.identifier))
+
+        self.add_listener(self.main.getRadioButtonWidget(self.identifier)[0])
+        self.add_listener(self.main.getRadioButtonWidget(self.identifier)[1])
 
     def get_entry(self):
         value = self.main.getRadioButton(self.identifier)
@@ -272,7 +275,7 @@ class RadioButtonWidget(Widget):
 
     def set_font_color(self, color):
         super(RadioButtonWidget, self).set_font_color(color)
-        self.main.setRadioButtonFg(self.identifier)
+        self.main.setRadioButtonFg(self.identifier, color)
 
 
 class DropDownWidget(Widget):
@@ -322,4 +325,4 @@ class DropDownWidget(Widget):
 
     def set_font_color(self, color):
         super(DropDownWidget, self).set_font_color(color)
-        self.main.setOptionBoxFg(self.identifier)
+        self.main.setOptionBoxFg(self.identifier, color)

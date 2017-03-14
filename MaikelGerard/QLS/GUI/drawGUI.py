@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 from QL.GUI.drawGUI import DrawGUI as QLDrawGUI
-from appJar import gui
-from collections import OrderedDict
 
 from QL.undefined import Undefined
-from QL.GUI.evaluateDrawState import EvaluateDrawState
-from QL.GUI.saveQuestionaire import SaveQuestionaire
-from QL.stages.updateComputedVars import UpdateComputedVars
 import QLS.GUI.widgets as Widgets
 
 """
@@ -54,60 +49,65 @@ class DrawGUI(QLDrawGUI):
     def section_with_defaults_node(self, section_node):
         self.section_node(section_node)
 
-    def question_node(self, question_node):
+    def define_widget_class(self, ql_node, styling):
+        identifier = ql_node.name
+
+        if self.qls_env.is_computed(identifier):
+            return Widgets.ComputedLabelWidget
+        elif styling == Undefined:
+            return ql_node.type.accept(self)
+        elif styling != None:
+            return styling.widget_type.accept(self)
+        else:
+            assert False
+
+    def apply_styling(self, identifier, styling):
+        if styling != Undefined:
+            styling.accept(self, self.widgets[identifier])
+
+    def question_node(self, question_node, is_visited=False):
         # Create a frame around the question to improve interface.
-        self.main.startFrame("frame_" + question_node.name)
+        self.main.startFrame("@frame_" + question_node.name)
 
         # Retrieve QL question, determine if there is default styling.
         ql_node = self.env.get_node(question_node.name)
         identifier = ql_node.name
         question = ql_node.question
 
-        styling = self.qls_env.get_styling(question_node.name)
-        if styling == Undefined:
-            widget_class = ql_node.type.accept(self)
-        else:
-            widget_class = styling.widget_type.accept(self)
+        styling = self.qls_env.get_styling(identifier)
+        widget_class = self.define_widget_class(ql_node, styling)
         self.add_widget(widget_class, identifier, question)
 
+        self.apply_styling(identifier, styling)
         self.main.stopFrame()
-
-        # TODO: Create node with appropriate widget? (Call super?)
-        # TODO: Seems not to be possible; redefine creation of widgets here?
-        # TODO: Determine here if the question has a QLS Default styling
-        # attached; use WidgetNode to return correct Widget function?
-        # TODO: If no styling, visit (parent's) question type function to
-        # get the default Widget function.
-        # TODO: Perhaps could still use parent.create_widget, when all
-        # data is gathered.
-        # TODO: Apply styling to the widget.
 
     def widget_question_node(self, question_node):
-        # TODO: Here only apply styling, not QLS Default widget type, if
-        # there is a QLS Default styling available.
         # Create a frame around the question to improve interface.
-        self.main.startFrame("frame_" + question_node.name)
+        self.main.startFrame("@frame_" + question_node.name)
 
         # Retrieve QL question, determine if there is default styling.
         ql_node = self.env.get_node(question_node.name)
         identifier = ql_node.name
         question = ql_node.question
 
-        styling = self.qls_env.get_styling(question_node.name)
-        if styling == Undefined:
-            print("styling undefined")
-            widget_class = question_node.type.accept(self)
+        if self.qls_env.is_computed(identifier):
+            widget_class = Widgets.ComputedLabelWidget
         else:
-            # Add styling from Default (styling) node.
-            print("styling defined")
             widget_class = question_node.type.accept(self)
-        print(widget_class)
         self.add_widget(widget_class, identifier, question)
+
+        styling = self.qls_env.get_styling(identifier)
+        self.apply_styling(identifier, styling)
 
         self.main.stopFrame()
 
+    def default_node(self, _, widget):
+        pass
+
+    def default_with_props_node(self, default_node, widget):
+        default_node.props.accept(self, widget)
+
     def slider_node(self, _):
-        print("ik ben een slider")
         return Widgets.SliderWidget
 
     def spinbox_node(self, _):
@@ -141,4 +141,4 @@ class DrawGUI(QLDrawGUI):
         widget.set_font_size(fontsize_node.val)
 
     def color_node(self, color_node, widget):
-        widget.set_font_size(color_node.val)
+        widget.set_font_color(color_node.val)
