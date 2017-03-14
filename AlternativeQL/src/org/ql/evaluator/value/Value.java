@@ -62,15 +62,15 @@ public abstract class Value {
         return new UnknownValue();
     }
 
-    public Value product(Value product) {
+    public Value product(Value multiplicand) {
         return new UnknownValue();
     }
 
-    public Value product(IntegerValue comparable) {
+    public Value product(IntegerValue multiplier) {
         return new UnknownValue();
     }
 
-    public Value product(DecimalValue comparable) {
+    public Value product(DecimalValue multiplier) {
         return new UnknownValue();
     }
 
@@ -82,47 +82,47 @@ public abstract class Value {
         return new UnknownValue();
     }
 
-    public Value subtraction(Value subtraction) {
+    public Value subtraction(Value subtrahend) {
         return new UnknownValue();
     }
 
-    public Value subtraction(IntegerValue comparable) {
+    public Value subtraction(IntegerValue minuend) {
         return new UnknownValue();
     }
 
-    public Value subtraction(DecimalValue comparable) {
+    public Value subtraction(DecimalValue minuend) {
         return new UnknownValue();
     }
 
-    public Value division(Value division) {
+    public Value division(Value divisor) {
         return new UnknownValue();
     }
 
-    public Value division(IntegerValue comparable) {
+    public Value division(IntegerValue dividend) {
         return new UnknownValue();
     }
 
-    public Value division(DecimalValue comparable) {
+    public Value division(DecimalValue dividend) {
         return new UnknownValue();
     }
 
-    public Value addition(Value addition) {
+    public Value addition(Value augend) {
         return new UnknownValue();
     }
 
-    public Value addition(IntegerValue comparable) {
+    public Value addition(IntegerValue addend) {
         return new UnknownValue();
     }
 
-    public Value addition(DecimalValue comparable) {
+    public Value addition(DecimalValue addend) {
         return new UnknownValue();
     }
 
-    public Value addition(StringValue comparable) {
+    public Value addition(StringValue addend) {
         return new UnknownValue();
     }
 
-    public Value notEqual(Value notEqual) {
+    public Value notEqual(Value comparable) {
         return new UnknownValue();
     }
 
@@ -138,16 +138,20 @@ public abstract class Value {
         return new UnknownValue();
     }
 
-    public Value or(Value or) {
+    public Value or(Value value) {
         return new UnknownValue();
     }
 
-    public Value and(Value and) {
+    public Value and(Value value) {
         return new UnknownValue();
     }
 
-    public boolean isUndefined() {
+    public boolean isUnknown() {
         return false;
+    }
+
+    public boolean isKnown() {
+        return !isUnknown();
     }
 
     public String toString() {
@@ -155,6 +159,14 @@ public abstract class Value {
     }
 
     public boolean toBoolean() {
+        throw new AssertionError();
+    }
+
+    public Double toDouble() {
+        throw new AssertionError();
+    }
+
+    public Integer toInteger() {
         throw new AssertionError();
     }
 

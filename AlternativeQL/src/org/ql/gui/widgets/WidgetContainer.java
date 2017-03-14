@@ -41,18 +41,18 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
     }
 
     @Override
-    public Widget visitFloatType(FloatType floatType, Question question) {
-        return new DecimalInputWidget(mediator, question);
+    public DecimalSpinnerWidget visitFloatType(FloatType floatType, Question question) {
+        return new DecimalSpinnerWidget(mediator, question);
     }
 
     @Override
-    public Widget visitIntegerType(IntegerType integerType, Question question) {
-        return new IntegerInputWidget(mediator, question);
+    public IntegerSpinnerWidget visitIntegerType(IntegerType integerType, Question question) {
+        return new IntegerSpinnerWidget(mediator, question);
     }
 
     @Override
     public Widget visitMoneyType(MoneyType moneyType, Question question) {
-        return new DecimalInputWidget(mediator, question);
+        return new DecimalSpinnerWidget(mediator, question);
     }
 
     @Override

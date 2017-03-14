@@ -56,10 +56,10 @@ public class GUIHandler implements GUIMediator {
 
     private void insertWidget(Question question) {
         Widget widget = widgetContainer.retrieveWidget(question);
-        Identifier questionId = question.getId();
+        Value value = valueTable.lookup(question.getId());
 
-        if (!modifiedQuestions.contains(questionId)) {
-            widget.updateValue(valueTable.lookup(questionId));
+        if (value.isKnown() && !modifiedQuestions.contains(question.getId())) {
+            widget.updateValue(value);
         }
 
         window.attachWidgetToPane(widget);
