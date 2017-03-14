@@ -1,29 +1,28 @@
-package org.ql.gui.elements.visitor;
+package org.ql.evaluator;
 
 import org.ql.ast.Form;
+import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
-import org.ql.evaluator.Evaluator;
-import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.elements.ElementContainer;
-import org.ql.gui.elements.Element;
 
-public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {
-    private final ElementContainer questionElementContainer;
-    private final Evaluator evaluator;
+import java.util.Set;
 
-    public QuestionValueVisitor(ElementContainer questionElementContainer) {
-        this.questionElementContainer = questionElementContainer;
-        evaluator = new Evaluator();
+public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {
+    private final ExpressionEvaluator expressionEvaluator;
+    private final Set<Identifier> modifiedQuestions;
+
+    public QuestionEvaluator(Set<Identifier> modifiedQuestions) {
+        this.modifiedQuestions = modifiedQuestions;
+        expressionEvaluator = new ExpressionEvaluator();
     }
 
-    public void updateValues(Form form, ValueTable valueTable) {
+    public void updateValueTable(Form form, ValueTable valueTable) {
         while (true) {
             ValueTable oldValueTable = valueTable.copy();
             this.visitForm(form, valueTable);
@@ -62,17 +61,8 @@ public class QuestionValueVisitor implements FormVisitor<Void, ValueTable>, Stat
 
     @Override
     public Void visitQuestion(Question question, ValueTable valueTable) {
-        Element questionElement = questionElementContainer.getQuestionElement(question);
-
-        if (!questionElement.isDirty()) {
-            Value value;
-            if (question.getValue() != null) {
-                value = evaluator.evaluate(question.getValue(), valueTable);
-            } else {
-                value = new UnknownValue();
-            }
-            valueTable.declare(question.getId(), value);
-            questionElement.updateValue(value);
+        if (!modifiedQuestions.contains(question.getId())) {
+            valueTable.declare(question.getId(), expressionEvaluator.evaluate(question.getValue(), valueTable));
         }
 
         return null;

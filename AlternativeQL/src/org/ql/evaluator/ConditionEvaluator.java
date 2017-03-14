@@ -1,4 +1,4 @@
-package org.ql.gui.elements.visitor;
+package org.ql.evaluator;
 
 import org.ql.ast.Expression;
 import org.ql.ast.Form;
@@ -8,37 +8,30 @@ import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.StatementVisitor;
-import org.ql.evaluator.Evaluator;
-import org.ql.evaluator.ValueTable;
-import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.UnknownValue;
-import org.ql.gui.elements.ElementContainer;
-import org.ql.gui.elements.Element;
+import org.ql.evaluator.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BranchVisitor implements FormVisitor<List<Element>, ValueTable>,
+public class ConditionEvaluator implements FormVisitor<List<Question>, ValueTable>,
         StatementVisitor<Void, ValueTable> {
 
-    private final Evaluator evaluator;
-    private final ElementContainer elementContainer;
+    private final ExpressionEvaluator expressionEvaluator;
+    private List<Question> visibleQuestions;
 
-    private List<Element> elements;
-
-    public BranchVisitor(ElementContainer elementContainer) {
-        this.elementContainer = elementContainer;
-        evaluator = new Evaluator();
+    public ConditionEvaluator() {
+        expressionEvaluator = new ExpressionEvaluator();
     }
 
     @Override
-    public List<Element> visitForm(Form form, ValueTable valueTable) {
-        elements = new ArrayList<>();
+    public List<Question> visitForm(Form form, ValueTable valueTable) {
+        visibleQuestions = new ArrayList<>();
 
         for (Statement statement : form.getStatements())
             statement.accept(this, valueTable);
 
-        return elements;
+        return visibleQuestions;
     }
 
     @Override
@@ -65,22 +58,18 @@ public class BranchVisitor implements FormVisitor<List<Element>, ValueTable>,
 
     @Override
     public Void visitQuestion(Question question, ValueTable valueTable) {
-        elements.add(elementContainer.getQuestionElement(question));
+        visibleQuestions.add(question);
         return null;
     }
 
     public boolean evaluateIfCondition(Expression expression, ValueTable valueTable) {
-        if (evaluator.evaluate(expression, valueTable) instanceof UnknownValue) {
+        Value value = expressionEvaluator.evaluate(expression, valueTable);
+
+        if (value instanceof UnknownValue) {
             return false;
         }
 
-        BooleanValue value = ((BooleanValue) evaluator.evaluate(expression, valueTable));
-
-        if(value == null) {
-            return false;
-        }
-
-        return value.getPlainValue();
+        return (Boolean) value.getPlainValue();
     }
 
 }

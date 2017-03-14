@@ -6,7 +6,7 @@ import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
 
-public class DecimalInputWidget extends InputWidget<BigDecimal> {
+public class DecimalInputWidget extends InputWidget {
 
     DecimalInputWidget(String label) {
         super(label, createTextFormatter());
@@ -22,10 +22,5 @@ public class DecimalInputWidget extends InputWidget<BigDecimal> {
 
             return null;
         });
-    }
-
-    @Override
-    protected BigDecimal extractValue(TextField textField) {
-        return new BigDecimal(textField.getText());
     }
 }

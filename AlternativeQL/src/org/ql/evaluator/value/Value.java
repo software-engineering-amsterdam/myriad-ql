@@ -150,5 +150,14 @@ public abstract class Value {
         return false;
     }
 
+    public String toString() {
+        throw new AssertionError();
+    }
+
+    public boolean toBoolean() {
+        throw new AssertionError();
+    }
+
     public abstract Object getPlainValue();
+
 }

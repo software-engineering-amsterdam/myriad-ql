@@ -1,12 +1,11 @@
 package org.ql.gui.widgets;
 
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class IntegerInputWidget extends InputWidget<Integer> {
+public class IntegerInputWidget extends InputWidget {
 
     public IntegerInputWidget(String label) {
-        super(label);
+        super(label, createTextFormatter());
     }
 
     private static TextFormatter<Integer> createTextFormatter() {
@@ -18,10 +17,4 @@ public class IntegerInputWidget extends InputWidget<Integer> {
             return null;
         });
     }
-
-    @Override
-    protected Integer extractValue(TextField textField) {
-        return Integer.valueOf(textField.getText());
-    }
-
 }

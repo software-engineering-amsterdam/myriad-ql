@@ -44,6 +44,11 @@ public class StringValue extends Value {
     }
 
     @Override
+    public String toString() {
+        return getPlainValue();
+    }
+
+    @Override
     public int hashCode() {
         return value != null ? value.hashCode() : 0;
     }

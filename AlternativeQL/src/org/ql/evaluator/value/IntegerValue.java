@@ -141,6 +141,11 @@ public class IntegerValue extends Value {
     }
 
     @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    @Override
     public int hashCode() {
         return value != null ? value.hashCode() : 0;
     }

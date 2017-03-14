@@ -9,7 +9,7 @@ import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.BooleanType;
 import org.ql.ast.type.IntegerType;
 import org.ql.ast.type.Type;
-import org.ql.gui.elements.visitor.QuestionElementFactory;
+import org.ql.gui.widgets.WidgetContainer;
 import org.ql.gui.mediator.GUIMediator;
 import org.ql.gui.widgets.IntegerInputWidget;
 
@@ -20,18 +20,18 @@ public class ElementContainerTest {
     @Test
     public void shouldPersistQuestionElementInMap() {
 
-        QuestionElementFactory aQuestionElementFactory = mockQuestionElementBuilder();
+        WidgetContainer aWidgetContainer = mockQuestionElementBuilder();
         Question aQuestion = questionMock();
 
-        ElementContainer container = new ElementContainer(aQuestionElementFactory);
+        ElementContainer container = new ElementContainer(aWidgetContainer);
         Element actualQuestionElement =  container.getQuestionElement(aQuestion);
         Element actualRetrievedQuestionElement =  container.getQuestionElement(aQuestion);
 
         assertSame(actualQuestionElement, actualRetrievedQuestionElement);
     }
 
-    private QuestionElementFactory mockQuestionElementBuilder() {
-        QuestionElementFactory elementBuilder = mock(QuestionElementFactory.class);
+    private WidgetContainer mockQuestionElementBuilder() {
+        WidgetContainer elementBuilder = mock(WidgetContainer.class);
         when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
             @Override
             public IntegerElement answer(InvocationOnMock invocationOnMock) throws Throwable {

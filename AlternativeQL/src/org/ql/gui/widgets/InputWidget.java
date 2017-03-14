@@ -1,18 +1,18 @@
 package org.ql.gui.widgets;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.ql.evaluator.value.StringValue;
+import org.ql.evaluator.value.Value;
 
-abstract class InputWidget<V> extends Widget<KeyEvent, V> {
+abstract class InputWidget extends Widget {
     private final Label label;
     private final TextField textField;
 
-    InputWidget(String label, TextFormatter<V> textFormatter) {
+    InputWidget(String label, TextFormatter textFormatter) {
         this(label);
         textField.setTextFormatter(textFormatter);
     }
@@ -23,16 +23,10 @@ abstract class InputWidget<V> extends Widget<KeyEvent, V> {
     }
 
     @Override
-    public void setInputValue(V value) {
-        textField.setText(String.valueOf(value));
+    public void updateValue(Value value) {
+        textField.setText(value.toString());
     }
 
-    @Override
-    public void addEventHandler(EventHandler<KeyEvent> eventHandler) {
-        textField.setOnKeyReleased(eventHandler);
-    }
-
-    @Override
     public Pane createGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.add(label, 0, 0);
@@ -40,11 +34,7 @@ abstract class InputWidget<V> extends Widget<KeyEvent, V> {
         return gridPane;
     }
 
-    @Override
-    public V getInputValue() {
-        String input = textField.getText();
-        return input.isEmpty() ? null : extractValue(textField);
+    private Value getValue() {
+        return new StringValue(textField.getText());
     }
-
-    protected abstract V extractValue(TextField textField);
 }

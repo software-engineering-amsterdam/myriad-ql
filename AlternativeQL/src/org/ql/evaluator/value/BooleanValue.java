@@ -37,6 +37,11 @@ public class BooleanValue extends Value {
     }
 
     @Override
+    public boolean toBoolean() {
+        return value;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
