@@ -13,7 +13,7 @@ public class Main {
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
-				 + "if (Name0 == 4) {"
+				 + "if (Name99 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "} else { "
 				 + "Name9: \"Question9\" boolean } } "

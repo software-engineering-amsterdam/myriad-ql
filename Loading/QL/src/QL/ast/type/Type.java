@@ -23,9 +23,6 @@ public abstract class Type extends Node {
 		return keyWord.equals(other.getKeyWord());
 	}
 
-	// TODO field and QL.value in here?
-
-
 	public abstract <T> T accept(TypeVisitor<T> v);
 
 }

@@ -21,16 +21,14 @@ public class Environment {
 	}
 
 	public Value getAnswer(String variable) {
-		
-		// TODO how do we use asserts in our code?
-		// or throw
-		assert(variableAnswer.containsKey(variable));
+		if (!variableAnswer.containsKey(variable)) {
+			throw new AssertionError("The answer of variable " + variable + " is requested, " +
+					"but is not answered");
+		}
 		
 		return variableAnswer.get(variable);
 	}
-	
-	
-	// TODO remove
+
 	public boolean isAnswered(String variable) {
 		return variableAnswer.containsKey(variable);
 	}
