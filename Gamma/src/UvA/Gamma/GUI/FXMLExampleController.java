@@ -48,11 +48,7 @@ public class FXMLExampleController {
     }
 
     public void showCondition(Condition condition) {
-        if (condition.evaluateExpression()) {
-            condition.getFormItems().forEach(item -> item.show(this));
-        } else {
-            condition.getElseBlockItems().forEach(item -> item.show(this));
-        }
+
     }
 
 }
