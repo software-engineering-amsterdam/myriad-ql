@@ -127,7 +127,9 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         for (Body body : conditional.getBodies()) {
             conditionalBodies.add(body.accept(this));
         }
-        return new GuiConditional(conditionalBodies);
+
+        GuiExpression expression = conditional.getCondition().accept(this);
+        return new GuiConditional(conditionalBodies, expression);
     }
 
     @Override
@@ -267,7 +269,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
     }
 
     @Override
-    public GuiExpression visit(final DateLiteral dateLiteral) {
+    public GuiExpression visit(final DateLiteral dateValue) {
         return null;
     }
 

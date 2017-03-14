@@ -42,7 +42,7 @@ public interface ExpressionVisitor<T> {
 
     T visit(DecimalLiteral decimalValue);
 
-    T visit(DateLiteral dateLiteral);
+    T visit(DateLiteral dateValue);
 
     T visit(MoneyLiteral moneyValue);
 
