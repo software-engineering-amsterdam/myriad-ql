@@ -90,14 +90,14 @@ class Questionnaire(FormVisitor, TypeVisitor):
                 if_container.hide()
                 else_container.show()
 
-    def field(self, node):
+    def create_container(self, node, enabled):
         container = QGroupBox(node.parent)
         layout = QHBoxLayout()
         label = QLabel(node.title)
 
         widget = node.data_type.apply(self)
         widget.setParent(node.parent)
-        widget.setEnabled(node.expression is None)
+        widget.setEnabled(enabled)
         widget.setObjectName(node.name.name)
         node.parent.registerField(node.name.name, widget)
 
@@ -106,6 +106,12 @@ class Questionnaire(FormVisitor, TypeVisitor):
         layout.addWidget(widget)
         container.setLayout(layout)
         return container
+
+    def field(self, node):
+        return self.create_container(node, True)
+
+    def assignment(self, node):
+        return self.create_container(node, (node.expression is None))
 
     def money(self, node):
         widget = self.numeric(float, QDoubleSpinBox)
