@@ -17,7 +17,6 @@ if __name__ == '__main__':
 # TODO: Value opsplitsen in aparte objecten voor de literals / value hernoemen naar literal
 # TODO: Field opsplitsen in assignment en question
 # TODO: String support toevoegen
-# TODO: List comprehension eventueel bekijken / andere manier/  refactoren
 # TODO: Loopen over ast voor form weghalen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
 # TODO: Identifier_dict naar symbol_table
