@@ -1,10 +1,10 @@
 form TestForm {
-    boolean firstName: "Enter your first name";
-    boolean lastName: "Enter your first name";
+    string firstName: "Enter your first name";
+    string lastName: "Enter your first name";
     boolean areYouSure: "Are you sure?" = false;
 
     if (areYouSure) {
-        boolean fullName: "This is your full name" = !lastName;
+        string fullName: "This is your full name" = firstName + lastName;
     }
 }
 

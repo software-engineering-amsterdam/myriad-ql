@@ -57,7 +57,7 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public Widget visitStringType(StringType stringType, Question question) {
-        return null;
+        return new TextInputWidget(mediator, question);
     }
 
     @Override

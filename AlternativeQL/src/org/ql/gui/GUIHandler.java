@@ -38,22 +38,30 @@ public class GUIHandler implements GUIMediator {
 
     public void runGUI() {
         questionEvaluator.updateValueTable(form, valueTable);
-        addWidgets(valueTable);
+        addWidgets();
     }
 
     @Override
     public void actualizeValue(Identifier identifier, Value newValue) {
         modifiedQuestions.add(identifier);
         valueTable.declare(identifier, newValue);
-        runGUI();
+        questionEvaluator.updateValueTable(form, valueTable);
+        addWidgets();
     }
 
-    private void addWidgets(ValueTable valueTable) {
+    private void addWidgets() {
         window.resetStage();
-        for (Question question : conditionEvaluator.visitForm(form, valueTable)) {
-            Widget widget = widgetContainer.retrieveWidget(question);
-            widget.updateValue(valueTable.lookup(question.getId()));
-            window.attachWidgetToPane(widget);
+        conditionEvaluator.visitForm(form, valueTable).forEach(this::insertWidget);
+    }
+
+    private void insertWidget(Question question) {
+        Widget widget = widgetContainer.retrieveWidget(question);
+        Identifier questionId = question.getId();
+
+        if (!modifiedQuestions.contains(questionId)) {
+            widget.updateValue(valueTable.lookup(questionId));
         }
+
+        window.attachWidgetToPane(widget);
     }
 }
