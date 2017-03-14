@@ -30,10 +30,12 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
  */
 public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, UpdateVisitor {
 
-    private Map<String, GuiValue<?>> guiEnvironment;
+    public Map<String, GuiValue<?>> guiEnvironment;
+    public ExpressionDefinedCheck definedCheckVisitor;
 
     public EvaluateVisitor() {
         this.guiEnvironment = new HashMap<>();
+        this.definedCheckVisitor = new ExpressionDefinedCheck(guiEnvironment);
     }
 
     @Override
@@ -60,6 +62,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiAndBinary guiAndBinary) {
+        if (!guiAndBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiBooleanValue left = (GuiBooleanValue) guiAndBinary.getLeft();
         GuiBooleanValue right = (GuiBooleanValue) guiAndBinary.getRight();
         return left.and(right);
@@ -67,6 +72,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiDivideBinary guiDivideBinary) {
+        if (!guiDivideBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiDivideBinary.getLeft();
         GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiDivideBinary.getRight();
         return left.divide(right);
@@ -74,6 +82,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiEqBinary guiEqBinary) {
+        if (!guiEqBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft();
         GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight();
         return new GuiBooleanValue(left.equals(right));//TODO Wrap this
@@ -81,6 +92,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiGTBinary guiGtBinary) {
+        if (!guiGtBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiComparableValue<?> left = (GuiComparableValue<?>) guiGtBinary.getLeft();
         GuiComparableValue<?> right = (GuiComparableValue<?>) guiGtBinary.getRight();
         return left.gT(right);
@@ -88,6 +102,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiGTEBinary guiGteBinary) {
+        if (!guiGteBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiComparableValue<?> left = (GuiComparableValue<?>) guiGteBinary.getLeft();
         GuiComparableValue<?> right = (GuiComparableValue<?>) guiGteBinary.getRight();
         return left.gTEq(right);
@@ -95,6 +112,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiLTBinary guiLtBinary) {
+        if (!guiLtBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiComparableValue<?> left = (GuiComparableValue<?>) guiLtBinary.getLeft();
         GuiComparableValue<?> right = (GuiComparableValue<?>) guiLtBinary.getRight();
         return left.lT(right);
@@ -102,6 +122,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiLTEBinary guiLteBinary) {
+        if (!guiLteBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiComparableValue<?> left = (GuiComparableValue<?>) guiLteBinary.getLeft();
         GuiComparableValue<?> right = (GuiComparableValue<?>) guiLteBinary.getRight();
         return left.lTEq(right);
@@ -109,6 +132,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiMinusBinary guiMinusBinary) {
+        if (!guiMinusBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiMinusBinary.getLeft();
         GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiMinusBinary.getRight();
         return left.minus(right);
@@ -116,6 +142,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiNEqBinary guiNEqBinary) {
+        if (!guiNEqBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiValue<?> left = (GuiValue<?>) guiNEqBinary.getLeft();
         GuiValue<?> right = (GuiValue<?>) guiNEqBinary.getRight();
         return new GuiBooleanValue(left.equals(right)); //TODO Wrap this!
@@ -123,6 +152,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiOrBinary guiOrBinary) {
+        if (!guiOrBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiBooleanValue left = (GuiBooleanValue) guiOrBinary.getLeft();
         GuiBooleanValue right = (GuiBooleanValue) guiOrBinary.getRight();
         return left.or(right);
@@ -130,6 +162,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiPlusBinary guiPlusBinary) {
+        if (!guiPlusBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiPlusBinary.getLeft();
         GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiPlusBinary.getRight();
         return left.plus(right);
@@ -137,6 +172,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiProductBinary guiProductBinary) {
+        if (!guiProductBinary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiNumericalValue<?> left = (GuiNumericalValue<?>) guiProductBinary.getLeft();
         GuiNumericalValue<?> right = (GuiNumericalValue<?>) guiProductBinary.getRight();
         return null;
@@ -144,17 +182,20 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiBangUnary guiBangUnary) {
+        if (!guiBangUnary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
+        }
         GuiBooleanValue expression = (GuiBooleanValue) guiBangUnary.getExpression();
         return expression.bang();
     }
 
     @Override
     public GuiExpression visit(final GuiNegUnary guiNegUnary) {
-        GuiValue<?> expression = (GuiValue<?>) guiNegUnary.getExpression().accept(this);
-        if (!expression.isDefined()) {
-            return expression;
+        if (!guiNegUnary.accept(definedCheckVisitor)) {
+            return new GuiUndefinedValue();
         }
-        return ((GuiNumericalValue<?>) expression).neg();
+        GuiNumericalValue<?> expression = (GuiNumericalValue<?>) guiNegUnary.getExpression().accept(this);
+        return expression.neg();
     }
 
     @Override

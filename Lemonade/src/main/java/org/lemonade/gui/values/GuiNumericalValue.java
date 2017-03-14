@@ -1,9 +1,5 @@
 package org.lemonade.gui.values;
 
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-
 /**
  *
  */
@@ -35,56 +31,66 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
 
     public abstract GuiNumericalValue<?> neg();
 
-    public boolean isInteger(){
+    public boolean isInteger() {
         return false;
     }
 
-    public boolean isDecimal(){
+    public boolean isDecimal() {
         return false;
     }
 
-    public boolean isMoney(){
+    public boolean isMoney() {
         return false;
     }
 
-    public GuiNumericalValue<?> plus(final GuiNumericalValue<?> that) {
-        if (that.isInteger()) {
+    public GuiValue<?> plus(final GuiNumericalValue<?> that) {
+        if (!that.isDefined()) {
+            return that;
+        } else if (that.isInteger()) {
             return this.plus((GuiIntegerValue) that);
         } else if (that.isDecimal()) {
             return this.plus((GuiDecimalValue) that);
         } else if (that.isMoney()) {
             return this.plus((GuiMoneyValue) that);
         } else {
-            throw new IllegalArgumentException();
+            return new GuiUndefinedValue();
         }
     }
 
-    public GuiNumericalValue<?> product(final GuiNumericalValue<?> that) {
-        if (that.isInteger()) {
+    public GuiValue<?> product(final GuiNumericalValue<?> that) {
+        if (!that.isDefined()) {
+            return that;
+        } else if (!that.isDefined()) {
+            return that;
+        } else if (that.isInteger()) {
             return this.product((GuiIntegerValue) that);
         } else if (that.isDecimal()) {
             return this.product((GuiDecimalValue) that);
         } else if (that.isMoney()) {
             return this.product((GuiMoneyValue) that);
         } else {
-            throw new IllegalArgumentException();
+            return new GuiUndefinedValue();
         }
     }
 
-    public GuiNumericalValue<?> minus(final GuiNumericalValue<?> that) {
-        if (that.isInteger()) {
+    public GuiValue<?> minus(final GuiNumericalValue<?> that) {
+        if (!that.isDefined()) {
+            return that;
+        } else if (that.isInteger()) {
             return this.minus((GuiIntegerValue) that);
         } else if (that.isDecimal()) {
             return this.minus((GuiDecimalValue) that);
         } else if (that.isMoney()) {
             return this.minus((GuiMoneyValue) that);
         } else {
-            throw new IllegalArgumentException();
+            return new GuiUndefinedValue();
         }
     }
 
-    public GuiNumericalValue<?> divide(final GuiNumericalValue<?> that) {
-        if (that.isInteger()) {
+    public GuiValue<?> divide(final GuiNumericalValue<?> that) {
+        if (!that.isDefined()) {
+            return that;
+        } else if (that.isInteger()) {
             return this.divide((GuiIntegerValue) that);
         } else if (that.isDecimal()) {
             return this.divide((GuiDecimalValue) that);
@@ -92,7 +98,7 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
             return this.divide((GuiMoneyValue) that);
 
         } else {
-            throw new IllegalArgumentException();
+            return new GuiUndefinedValue();
         }
     }
 }

@@ -25,10 +25,16 @@ public class GuiBooleanValue extends GuiValue<Boolean> {
     }
 
     public GuiBooleanValue and(GuiBooleanValue that) {
+        if (!that.isDefined()){
+            return that;
+        }
         return new GuiBooleanValue(this.value && that.getValue());
     }
 
     public GuiBooleanValue or(GuiBooleanValue that) {
+        if (!that.isDefined()){
+            return that;
+        }
         return new GuiBooleanValue(this.value || that.getValue());
     }
 
