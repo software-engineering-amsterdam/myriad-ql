@@ -10,13 +10,3 @@ type Message
     | DuplicatePlacedQuestion String (List Location)
     | WidgetConfigMismatch String Location ValueType Widget
     | WidgetDefaultConfigMismatch Location ValueType Widget
-
-
-undefinedQuestionReference : String -> Location -> Message
-undefinedQuestionReference name location =
-    UndefinedQuestionReference name location
-
-
-unplacedQuestion : String -> Message
-unplacedQuestion name =
-    UnplacedQuestion name

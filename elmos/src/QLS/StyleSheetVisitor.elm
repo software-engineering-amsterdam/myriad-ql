@@ -1,18 +1,13 @@
-module QLS.StyleSheetVisitor exposing (Config, defaultConfig, pre, post, inspect)
+module QLS.StyleSheetVisitor exposing (Config, defaultConfig, on, inspect)
 
 import QL.AST exposing (ValueType, Location)
 import QLS.AST exposing (..)
 import QL.FormVisitor as FormVisitor exposing (actionLambda)
 
 
-pre : (node -> context -> context) -> FormVisitor.Order context node
-pre =
-    FormVisitor.pre
-
-
-post : (node -> context -> context) -> FormVisitor.Order context node
-post =
-    FormVisitor.post
+on : (node -> context -> context) -> FormVisitor.Order context node
+on =
+    FormVisitor.on
 
 
 type alias Config context =

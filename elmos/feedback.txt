@@ -2,9 +2,6 @@ Feedback Tijs:
 semantics in Expression -> BinaryExpression
 -> ff testen hoe dat gaat
 
-rijtje van get/with bool in environment. 
--> Value.withX en Value.getX naar buiten trekken 
-
 constructors voor values wel exposen.
 -> Eens
 
@@ -16,17 +13,8 @@ Collectors, zouden we die moeten samenvoegen? meegeven aan typecheckers.
 (duplicateQuestions, badreferences, etc zouden in een travelsal kunnen)
 -> Later evaluaren/beargumenteren
 
-
-
 collectTopLevelExpressions
 -> rename
 
 expressions.elm moet beter
 -> o.a. renamen van functies
-
-overdesign van visitor
--> pre/post wordt on
-
-Messages.elm met die useless functions
--> constructors exposen. 
--> Ui messages split error/warning case
