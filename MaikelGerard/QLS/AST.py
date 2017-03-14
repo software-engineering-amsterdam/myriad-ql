@@ -90,7 +90,7 @@ class SliderNode(WidgetNode):
         return literal_type == IntTypeNode()
 
     def accept(self, visitor, *args):
-        visitor.slider_node(self, *args)
+        return visitor.slider_node(self, *args)
 
 
 class SpinboxNode(WidgetNode):

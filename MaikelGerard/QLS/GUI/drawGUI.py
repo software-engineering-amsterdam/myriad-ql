@@ -95,15 +95,19 @@ class DrawGUI(QLDrawGUI):
 
         styling = self.qls_env.get_styling(question_node.name)
         if styling == Undefined:
-            widget_class = ql_node.type.accept(self)
+            print("styling undefined")
+            widget_class = question_node.type.accept(self)
         else:
             # Add styling from Default (styling) node.
+            print("styling defined")
             widget_class = question_node.type.accept(self)
+        print(widget_class)
         self.add_widget(widget_class, identifier, question)
 
         self.main.stopFrame()
 
     def slider_node(self, _):
+        print("ik ben een slider")
         return Widgets.SliderWidget
 
     def spinbox_node(self, _):
