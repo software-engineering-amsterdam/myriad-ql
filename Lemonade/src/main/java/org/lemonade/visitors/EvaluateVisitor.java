@@ -41,11 +41,9 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, UpdateVisitor {
 
     private Map<String, GuiValue<?>> guiEnvironment;
-    private Map<String, Literal<?>> literalEnvironment;
 
     public EvaluateVisitor() {
         this.guiEnvironment = new HashMap<>();
-        this.literalEnvironment = new HashMap<>();
     }
 
     @Override
