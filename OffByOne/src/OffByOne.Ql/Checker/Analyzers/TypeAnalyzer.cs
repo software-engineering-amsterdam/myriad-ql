@@ -12,6 +12,7 @@
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
@@ -158,6 +159,12 @@
             expression.Statements.ForEach(x => x.Accept(this, environment));
             expression.ElseStatements.ForEach(x => x.Accept(this, environment));
 
+            return new VoidValueType();
+        }
+
+        public VoidValueType Visit(Statement expression, VisitorTypeEnvironment environment)
+        {
+            expression.Accept(this, environment);
             return new VoidValueType();
         }
 

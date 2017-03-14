@@ -7,6 +7,7 @@
     using System.Windows.Media;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Interpreter.Validators;
     using OffByOne.Ql.Interpreter.Widgets;
@@ -77,6 +78,11 @@
 
             var control = new VisibilityWidget(expression, environment, ifControls, elseControls);
             return control;
+        }
+
+        public Widget Visit(Statement expression, GuiEnvironment environment)
+        {
+            return expression.Accept(this, environment);
         }
     }
 }
