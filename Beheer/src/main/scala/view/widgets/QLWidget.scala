@@ -4,10 +4,10 @@ import values.Value
 
 import scalafx.scene.Node
 
-trait QLWidget[T] {
+trait QLWidget {
   val changeHandler: Value => Unit
 
-  def setValue(newVal: T): Unit
+  def setValue(newVal: Value): Unit
 
   def getSFXNode: Node
 }

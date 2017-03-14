@@ -1,17 +1,15 @@
 package view
 
-import javafx.beans.binding.BooleanBinding
-
 import ast.Stylesheet.Styling
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.{ Evaluator, Value }
 
-import scalafx.beans.binding.{ Bindings, StringBinding }
+import scalafx.beans.binding.{ Bindings, BooleanBinding, ObjectBinding, StringBinding }
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
-
 import scala.language.implicitConversions
+import scalafx.event.subscriptions.Subscription
 
 trait GUIQuestion {
   val question: DisplayQuestion
@@ -28,6 +26,9 @@ trait GUIQuestion {
   protected val width: Double = questionStyle.flatMap(_.styling.values.collect {
     case Width(value) => value
   }.lastOption.map(_.toDouble)).getOrElse(100.0)
+
+  protected def createValueBinding(c: ComputedQuestion)(changeHandler: Value => Unit): Subscription =
+    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap, c.value), env).onChange((newValue, _, _) => changeHandler(newValue.value))
 
   protected def computeValue(question: ComputedQuestion): StringBinding =
     Bindings.createStringBinding(() => Evaluator(env.toMap, question.value).toString, env)

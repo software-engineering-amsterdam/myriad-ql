@@ -1,16 +1,11 @@
 package view
 
 import ast.{ Checkbox, Dropdown, QuestionStyle, Radio }
-import model.DisplayQuestion
-import values.BooleanValue
+import model.{ ComputedQuestion, DisplayQuestion }
 import view.widgets.{ CheckboxWidget, DropDownWidget, QLWidget, RadioWidget }
 
-import scala.language.implicitConversions
-
 class BooleanQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
-  private def defaultWidget = new RadioWidget("Yes", "No")
-
-  private val widget: QLWidget[BooleanValue] = questionStyle match {
+  private val widget: QLWidget = questionStyle match {
     case Some(q) => q.widget match {
       case Some(w) => w match {
         case Checkbox => new CheckboxWidget
@@ -22,6 +17,14 @@ class BooleanQuestion(val question: DisplayQuestion, val questionStyle: Option[Q
     }
     case None => defaultWidget
   }
+
+  //If computed: Bind to env.
+  question match {
+    case c: ComputedQuestion => createValueBinding(c) { value => widget.setValue(value) }
+    case _ => Unit
+  }
+
+  private def defaultWidget = new RadioWidget("Yes", "No")
 
   displayBox.children add widget.getSFXNode
 }

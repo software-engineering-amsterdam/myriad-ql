@@ -5,7 +5,7 @@ import values.{ BooleanValue, UndefinedValue, Value }
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.ChoiceBox
 
-class DropDownWidget(trueText: String, falseText: String)(implicit val changeHandler: Value => Unit) extends QLWidget[BooleanValue] {
+class DropDownWidget(trueText: String, falseText: String)(implicit val changeHandler: Value => Unit) extends QLWidget {
 
   private val options = ObservableBuffer(trueText, falseText)
   private val dropDownBox = new ChoiceBox(options)
@@ -21,12 +21,12 @@ class DropDownWidget(trueText: String, falseText: String)(implicit val changeHan
     }
   }
 
-  override def setValue(newVal: BooleanValue) =
-    if (newVal.value) {
-      dropDownBox.selectionModel.select(trueText)
-    } else {
-      dropDownBox.selectionModel.select(falseText)
-    }
+  override def setValue(newVal: Value) = newVal match {
+    case BooleanValue(true) => dropDownBox.selectionModel.select(trueText)
+    case BooleanValue(false) => dropDownBox.selectionModel.select(falseText)
+    case UndefinedValue => dropDownBox.selectionModel.select("")
+    case v => sys.error(s"Incompatible value for widget: $v")
+  }
 
   override def getSFXNode = dropDownBox
 

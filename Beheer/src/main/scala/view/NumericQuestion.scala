@@ -1,36 +1,27 @@
 package view
 
 import ast._
-import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
-import values.{ DecimalValue, IntegerValue, MoneyValue, UndefinedValue }
-
-import scala.util.{ Failure, Success, Try }
-import scalafx.Includes._
-import scalafx.scene.control.TextField
+import model.{ ComputedQuestion, DisplayQuestion }
+import view.widgets.NumericTextWidget
 
 class NumericQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
-
-  val textField = new TextField()
-  textField.setPrefWidth(width)
+  private def questionType = question.`type` match {
+    case n: NumericType => n
+    case _ => sys.error(s"Constructing numericQuestion for non numeric question $question")
+  }
+  private def defaultWidget = new NumericTextWidget(questionType)
+  private val widget = questionStyle match {
+    case Some(q) => q.widget match {
+      case Some(w) => defaultWidget
+      case None => defaultWidget
+    }
+    case None => defaultWidget
+  }
 
   question match {
-    case c: ComputedQuestion => textField.text <== computeValue(c)
-    case o: OpenQuestion => textField.onAction = actionHandler(textField, o)
+    case c: ComputedQuestion => createValueBinding(c) { newVal => widget.setValue(newVal) }
+    case _ => Unit
   }
 
-  displayBox.children += textField
-
-  private def actionHandler(textField: TextField, question: OpenQuestion) = () => {
-    val value = Try(textField.text.value.toDouble) match {
-      case Success(d) => question.`type` match {
-        case MoneyType => MoneyValue(d)
-        case DecimalType => DecimalValue(d)
-        case IntegerType => IntegerValue(d)
-        case _ => UndefinedValue
-      }
-      case Failure(_) => UndefinedValue
-    }
-
-    updateEnv(question.identifier, value)
-  }
+  displayBox.children add widget.getSFXNode
 }

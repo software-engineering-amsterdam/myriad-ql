@@ -6,7 +6,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.{ RadioButton, ToggleGroup }
 import scalafx.scene.layout.HBox
 
-class RadioWidget(trueText: String, falseText: String)(implicit val changeHandler: Value => Unit) extends QLWidget[BooleanValue] {
+class RadioWidget(trueText: String, falseText: String)(implicit val changeHandler: Value => Unit) extends QLWidget {
   private val toggle = new ToggleGroup()
   private val trueButton = new RadioButton {
     text = trueText
@@ -19,18 +19,19 @@ class RadioWidget(trueText: String, falseText: String)(implicit val changeHandle
     userData = BooleanValue(false)
   }
 
-  toggle.selectedToggle.onChange({
+  toggle.selectedToggle.onChange {
     toggle.selectedToggle.value.getUserData match {
       case b: BooleanValue => changeHandler(b)
       case _ => sys.error("Wrong type in radiobutton userdata field.")
     }
-  })
+  }
 
-  override def setValue(newVal: BooleanValue): Unit = {
-    if (newVal.value) {
-      trueButton.selected = true
-    } else {
-      falseButton.selected = true
+  override def setValue(newVal: Value): Unit = newVal match {
+    case BooleanValue(true) => trueButton.selected = true
+    case BooleanValue(false) => falseButton.selected = true
+    case _ => { //clear
+      trueButton.selected = false
+      falseButton.selected = false
     }
   }
 
