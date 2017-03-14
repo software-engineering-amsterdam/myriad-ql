@@ -22,8 +22,9 @@ class Widget(object):
 
 class EntryWidget(Widget):
     def __init__(self, form_gui, identifier, question, row=0):
-        super(EntryWidget, self).__init__(form_gui, identifier,
-                                          question, row=row)
+        super(EntryWidget, self).__init__(
+            form_gui, identifier, question, row=row
+        )
 
         self.main.addEntry(self.identifier, row=row, column=1)
         self.add_listener(self.main.getEntryWidget(self.identifier))

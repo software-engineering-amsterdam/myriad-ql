@@ -43,27 +43,31 @@ class PrintHandler(qlPrintHandler):
         self.add_indent(indent)
         self.output += "question {}\n".format(question_node.name)
 
-    def slider_node(self, slider_node, indent):
+    def slider_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget slider\n"
 
-    def spinbox_node(self, spinbox_node, indent):
+    def spinbox_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget spinbox\n"
 
-    def text_node(self, text_node, indent):
+    def text_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget text\n"
 
-    def radio_node(self, radio_node, indent):
+    def numeric_node(self, _, indent):
+        self.add_indent(indent)
+        self.output += "widget numeric\n"
+
+    def radio_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget radio\n"
 
-    def checkbox_node(self, checkbox, indent):
+    def checkbox_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget checkbox\n"
 
-    def dropdown_node(self, dropdown, indent):
+    def dropdown_node(self, _, indent):
         self.add_indent(indent)
         self.output += "widget dropdown\n"
 

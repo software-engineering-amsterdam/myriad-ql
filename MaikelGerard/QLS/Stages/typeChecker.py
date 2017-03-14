@@ -1,6 +1,3 @@
-# TODO: check form name?
-
-
 class TypeChecker(object):
     def __init__(self, qls_ast, qls_env, ql_env, error_handler):
         self.ast = qls_ast
