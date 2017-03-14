@@ -1,3 +1,14 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/semanticchecker/QLSTypehecker.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.semanticchecker;
 
 import ql.astnodes.LineNumber;
@@ -11,11 +22,7 @@ import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.StyleSheet;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
-import qls.astnodes.styles.Color;
-import qls.astnodes.styles.Font;
-import qls.astnodes.styles.FontSize;
-import qls.astnodes.styles.Width;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleSheetVisitor;
 import qls.astnodes.widgets.*;
 
 import java.util.*;
@@ -28,24 +35,25 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
 
     private QLSWidget currentDefaultWidget = new QLSUndefinedWidget(null);
 
-    public QLSTypeChecker(MessageData messages, Map<String, Type> identifierMap, StyleSheet st) {
+    public QLSTypeChecker(MessageData messages, Map<String, Type> identifierMap, StyleSheet styleSheet) {
         this.messages = messages;
         this.identifierMap = identifierMap;
         this.qlsQuestions = new ArrayList<>();
 
-        st.accept(this);
+        styleSheet.accept(this);
 
-        checkQLSQuestionPlacement();
-        checkWidgetTypes();
+        checkWidgetsWithDefinedTypes();
+        checkDuplicateQuestionPlacement();
+        checkForUndefinedQuestions();
     }
 
-    private void checkWidgetTypes() {
+    private void checkWidgetsWithDefinedTypes() {
 
         for (StyleQuestion question : qlsQuestions) {
 
             QLSWidget widget = question.getWidget();
             if (!widget.isUndefined()) {
-                List<Type> supportedTypes = widget.getSupportedQuestionTypes();
+                List<Type> supportedTypes = widget.getQuestionTypes();
                 Type questionType = identifierMap.get(question.getName());
 
                 if (questionType != null && !supportedTypes.contains(questionType)) {
@@ -54,15 +62,10 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             }
         }
     }
-    private void checkQLSQuestionPlacement() {
+    private void checkDuplicateQuestionPlacement() {
 
-        List<String> styleQuestionList = new ArrayList<>();
-        for (StyleQuestion question : qlsQuestions) {
-            styleQuestionList.add(question.getName());
-        }
-
-        final Set<StyleQuestion> duplicateQuestions = new HashSet();
-        final Set<String> set1 = new HashSet();
+        final Set<StyleQuestion> duplicateQuestions = new HashSet<>();
+        final Set<String> set1 = new HashSet<>();
 
         for (StyleQuestion question : qlsQuestions) {
             if (!set1.add(question.getName())) {
@@ -76,7 +79,16 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             }
         }
 
-        for(String key : identifierMap.keySet()) {
+    }
+
+    private void checkForUndefinedQuestions() {
+
+        List<String> styleQuestionList = new ArrayList<>();
+        for (StyleQuestion question : qlsQuestions) {
+            styleQuestionList.add(question.getName());
+        }
+
+        for (String key : identifierMap.keySet()) {
             if (!styleQuestionList.contains(key)) {
                 messages.addError(new NotAllQuestionsDefinedError(new LineNumber(1), key));
             }
@@ -132,7 +144,7 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
         QLSWidget widget = question.getWidget();
 
         if (widget.isUndefined()) {
-            List<Type> supportedTypes = currentDefaultWidget.getSupportedQuestionTypes();
+            List<Type> supportedTypes = currentDefaultWidget.getQuestionTypes();
             Type questionType = identifierMap.get(question.getName());
 
             if (questionType != null && !supportedTypes.contains(questionType)) {
@@ -143,58 +155,4 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
         return null;
     }
 
-    @Override
-    public Void visit(Color style) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Width style) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Font style) {
-        return null;
-    }
-
-    @Override
-    public Void visit(FontSize style) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSCheckBox widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSRadio widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSSlider widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSSpinBox widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSTextBox widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSDropdown widget) {
-        return null;
-    }
-
-    @Override
-    public Void visit(QLSUndefinedWidget widget) {
-        return null;
-    }
 }

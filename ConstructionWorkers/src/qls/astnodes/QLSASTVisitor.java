@@ -1,7 +1,17 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/QLSASTVisitor.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import ql.astnodes.types.*;
@@ -16,17 +26,7 @@ import qls.astnodes.widgets.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LGGX on 04-Mar-17.
- */
-
 public class QLSASTVisitor extends QLSBaseVisitor<Node> {
-
-    private final StyleSheet abstractSyntaxTree;
-
-    public QLSASTVisitor(ParseTree parseTree) {
-        this.abstractSyntaxTree = (StyleSheet) parseTree.accept(this);
-    }
 
     @Override
     public Node visitStylesheet(QLSParser.StylesheetContext ctx) {

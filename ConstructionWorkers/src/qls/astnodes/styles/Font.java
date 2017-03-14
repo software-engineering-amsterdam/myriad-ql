@@ -1,11 +1,19 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/styles/Font.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleAndWidgetVisitor;
 
-/**
- * Created by LGGX on 03-Mar-17.
- */
 public class Font extends StyleType{
 
     private static final String NAME = "font";
@@ -14,7 +22,7 @@ public class Font extends StyleType{
         super(NAME, value, lineNumber);
     }
 
-    public <T> T accept(StyleSheetVisitor<T> visitor) {
+    public <T> T accept(StyleAndWidgetVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

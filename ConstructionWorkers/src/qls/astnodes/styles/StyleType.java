@@ -1,19 +1,29 @@
-/**
- * StyleType.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/styles/StyleType.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
+
 
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleAndWidgetVisitor;
+
+import java.util.Objects;
 
 public abstract class StyleType extends Node{
 
     private final String name;
     private final String value;
 
-    public StyleType(String name, String value, LineNumber lineNumber) {
+    StyleType(String name, String value, LineNumber lineNumber) {
         super(lineNumber);
         this.name = name;
         this.value = value;
@@ -27,8 +37,6 @@ public abstract class StyleType extends Node{
         return this.value;
     }
 
-    public abstract <T> T accept(StyleSheetVisitor<T> visitor);
-
     @Override
     public boolean equals(Object o){
         if (o == null) {
@@ -40,6 +48,8 @@ public abstract class StyleType extends Node{
         }
 
         StyleType other = (StyleType) o;
-        return this.name == other.name;
+        return Objects.equals(this.name, other.name);
     }
+
+    public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);
 }

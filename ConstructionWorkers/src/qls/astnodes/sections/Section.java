@@ -1,13 +1,21 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/qls/astnodes/section/Section.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
-import qls.astnodes.visitors.StyleSheetVisitor;
+import qls.visitorinterfaces.StyleSheetVisitor;
 
 import java.util.List;
 
-/**
- * Created by LGGX on 02-Mar-17.
- */
 public class Section extends AbstractSection {
 
     private final String sectionName;
@@ -38,10 +46,6 @@ public class Section extends AbstractSection {
 
     public List<DefaultStyle> getDefaultStyles() {
         return this.defaultStyles;
-    }
-
-    public void addDefaultStyle(DefaultStyle defaultStyle) {
-        this.defaultStyles.add(defaultStyle);
     }
 
     public <T> T accept(StyleSheetVisitor<T> visitor) {

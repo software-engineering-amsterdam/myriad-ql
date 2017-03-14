@@ -52,6 +52,7 @@ public class MessageTest {
 
     @Test
     public void testIfExpressionUndefinedError() {
+
         IfStatement ifStat = new IfStatement(new Identifier("anIdentifier", new LineNumber(1)),
                 new ArrayList<>(), new LineNumber(1));
 
