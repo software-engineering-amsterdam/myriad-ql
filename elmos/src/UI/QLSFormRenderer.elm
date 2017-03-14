@@ -80,7 +80,8 @@ view ({ form, env } as model) =
                                 , hr [] []
                                 , Html.form []
                                     [ renderPage env visibleFields currentPage ]
-                                , div [ class "row" ] [ renderPagination pagination ]
+                                , hr [] []
+                                , renderPagination pagination
                                 ]
                             , div [ class "col-md-6" ]
                                 [ h3 [] [ text "Result" ]
