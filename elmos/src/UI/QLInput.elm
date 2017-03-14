@@ -36,11 +36,11 @@ exampleDsl =
     """form taxOfficeExample {
   "What is your gender?"
     gender: string
-  "What is your age?"
+  "What was your age on new year's eve in 2016"
     age: integer
   if (age > 0) {
-    "You were born in +-"
-    birthYear: integer = 2017 - age
+    "You were born in "
+    birthYear: integer = 2016 - age
 
     if (age > 50){
       "Damn you're old!"
@@ -49,8 +49,8 @@ exampleDsl =
   }
   "Are you married?"
     marritalStatus: string
-  "What is the rating you give your life at this moment?"
-    lifeRating : integer
+  "How do you rate the above questions?"
+    rating : integer
 
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean

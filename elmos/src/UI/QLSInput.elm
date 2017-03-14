@@ -67,12 +67,14 @@ exampleDsl =
     section "General" {
       question gender
         widget radio("Male","Female","_")
-      question age
-        widget spinbox
-      question lifeRating
+      question rating
         widget slider(-1,11)
       question marritalStatus
         widget radio("Yes", "No", "Maybe", "I don't know", "Can you repeat the question?")
+      question age {
+          width: 100
+          widget spinbox
+      }
       question birthYear
       question uselessStatement
     }
