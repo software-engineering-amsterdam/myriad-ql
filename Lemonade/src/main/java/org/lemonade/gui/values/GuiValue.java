@@ -5,7 +5,7 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 public abstract class GuiValue<T> implements GuiExpression {
 
-    abstract T getValue();
+    public abstract T getValue();
 
     abstract void update(T value);
 
@@ -14,4 +14,13 @@ public abstract class GuiValue<T> implements GuiExpression {
     }
 
     public abstract <T> T accept(GuiExpressionVisitor<T> visitor);
+
+    public GuiValue<Boolean> eq(GuiValue<?> that) {
+        return new GuiBooleanValue(that.equals(this));
+    }
+
+    public GuiValue<Boolean> nEq(GuiValue<?> that) {
+        return new GuiBooleanValue(!that.equals(this));
+    }
+
 }

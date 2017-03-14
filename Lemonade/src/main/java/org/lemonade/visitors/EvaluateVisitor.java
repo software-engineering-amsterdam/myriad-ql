@@ -103,7 +103,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         }
         GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft().accept(this);
         GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight().accept(this);
-        return new GuiBooleanValue(left.equals(right));//TODO Wrap this
+        return left.eq(right);
     }
 
     @Override
@@ -163,7 +163,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         }
         GuiValue<?> left = (GuiValue<?>) guiNEqBinary.getLeft().accept(this);
         GuiValue<?> right = (GuiValue<?>) guiNEqBinary.getRight().accept(this);
-        return new GuiBooleanValue(left.equals(right)); //TODO Wrap this!
+        return left.nEq(right);
     }
 
     @Override

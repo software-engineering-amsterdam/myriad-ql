@@ -24,14 +24,6 @@ public abstract class Literal<T> extends Expression {
         return value;
     }
 
-    public Literal<Boolean> eq(Literal<?> that) {
-        return new BooleanLiteral(that.equals(this));
-    }
-
-    public Literal<Boolean> nEq(Literal<?> that) {
-        return new BooleanLiteral(!that.equals(this));
-    }
-
     @Override
     public int hashCode() {
         return getValue().hashCode();

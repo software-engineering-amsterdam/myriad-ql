@@ -11,7 +11,7 @@ public class GuiLabelValue extends GuiValue<String> {
     }
 
     @Override
-    String getValue() {
+    public String getValue() {
         return value;
     }
 
