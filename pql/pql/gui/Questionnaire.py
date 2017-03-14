@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QVBoxLayout
 
@@ -133,6 +134,11 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.connect_conditionals(widget.stateChanged)
         return widget
 
+    def string(self, node):
+        widget = QLineEdit()
+        widget.textChanged.connect(lambda value: self.update_trigger_string(widget, str(value)))
+        return widget
+
     def numeric(self, value_type, widget_type):
         widget = widget_type()
         widget.valueChanged[value_type].connect(lambda value: self.update_trigger_numeric(widget, value, widget_type))
@@ -151,6 +157,10 @@ class Questionnaire(FormVisitor, TypeVisitor):
         environment = self.evaluator.update_value(widget.objectName(), value)
         self.update_visible_values(QCheckBox, self.update_value_boolean, environment)
 
+    def update_trigger_string(self, widget, value):
+        environment = self.evaluator.update_value(widget.objectName(), value)
+        self.update_visible_values(QLineEdit, self.update_value_string, environment)
+
     def update_visible_values(self, widget_type, function, environment):
         for key, value in environment.items():
             widget = self.wizard.findChild(widget_type, key)
@@ -164,3 +174,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def update_value_numeric(self, widget, value):
         if value is not None:
             widget.setValue(value)
+
+    def update_value_string(self, widget, value):
+        if value is not None:
+            widget.setText(value)

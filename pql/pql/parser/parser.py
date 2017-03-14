@@ -55,7 +55,11 @@ def parse(input_string):
         lambda source, position, parsed_tokens: ast.Integer(position, source, DataTypes.integer))
     type_boolean = Literal("boolean").setParseAction(
         lambda source, position, parsed_tokens: ast.Boolean(position, source, DataTypes.boolean))
-    data_types = type_money | type_integer | type_boolean
+
+    type_string = Literal("string").setParseAction(
+        lambda source, position, parsed_tokens: ast.String(position, source, DataTypes.string))
+
+    data_types = type_money | type_integer | type_boolean | type_string
 
     true = Literal("true").setParseAction(
         lambda source, position, _: ast.Boolean(position, source, True))
@@ -69,6 +73,11 @@ def parse(input_string):
         lambda source, position, parsed_tokens: ast.Money(position, source, float(parsed_tokens[0])))
     number = (money | integer)
 
+    string = QuotedString("'", unquoteResults=True).setParseAction(
+        lambda source, position, parsed_tokens:
+        ast.String(position, source, str(parsed_tokens[0]))
+    )
+
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
     name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName(
@@ -77,6 +86,7 @@ def parse(input_string):
 
     operand_arith = (number | name)
     operand_bool = (boolean | operand_arith)
+    operand_string = (operand_arith | string)
 
     operand_list_arith = [
         (lit_op_positive | lit_op_negative | lit_op_not,
@@ -105,13 +115,31 @@ def parse(input_string):
          lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
     ]
 
+    operand_list_string = [
+        (lit_op_addition,
+         2, opAssoc.LEFT,
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
+    ]
+
     operator_precendence = infixNotation(
         operand_bool,
         (operand_list_arith + operand_list_bool)
     )
 
+    string_precedence = infixNotation(
+        operand_string,
+        operand_list_string
+    )
+
     expression = \
-        OneOrMore(operator_precendence | (lit_l_paren + operator_precendence + lit_r_paren))
+        OneOrMore(
+            operator_precendence |
+            string_precedence |
+            (lit_l_paren +
+             (operator_precendence |
+              string_precedence) +
+             lit_r_paren)
+        )
 
     field = Forward()
     field_assignment = Forward()
@@ -120,11 +148,17 @@ def parse(input_string):
         QuotedString('"', unquoteResults=True).setResultsName("title") +
         name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type")
     )
+
     field <<= field_statement
     field.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
     field_assignment <<= field_statement + lit_assign_op + expression
-    field_assignment.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
+    field_assignment.setParseAction(
+        lambda parsed_tokens:
+        ast.Assignment(*parsed_tokens)
+    )
+
+    field_order = field_assignment | field
 
     conditional_if = Forward()
     conditional_if_else = Forward()
@@ -143,12 +177,12 @@ def parse(input_string):
 
     conditional = conditional_if_else | conditional_if
 
-    statement <<= (field_assignment | field | conditional)
+    statement <<= (field_order | conditional)
 
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
 
-    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens)).setResultsName(
-        'form')
+    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens)).\
+        setResultsName('form')
     return form.parseString(input_string).form

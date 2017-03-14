@@ -6,3 +6,4 @@ class DataTypes(Enum):
     boolean = "boolean"
     money = "money"
     integer = "integer"
+    string = "string"

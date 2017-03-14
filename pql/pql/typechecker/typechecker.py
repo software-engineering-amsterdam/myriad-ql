@@ -1,5 +1,5 @@
 # coding=utf-8
-from pql.ast.ast import Money, Integer, Boolean
+from pql.ast.ast import Money, Integer, Boolean, String
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -109,13 +109,16 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.errors.append("Negative was passed a non-numeric value on location {} ".format(node.location))
         return None
 
-    def arithmetic_type_detection(self, node, allowed_types={DataTypes.integer, DataTypes.money}):
+    def arithmetic_type_detection(self, node, allowed_arithmetic_types={DataTypes.integer, DataTypes.money}, allowed_special_tyepes={DataTypes.string}):
         dominant_type = None
+        allowed_types = allowed_arithmetic_types.union(allowed_special_tyepes)
         type_set = {node.lhs.apply(self), node.rhs.apply(self)}
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
 
         if type_set_data_types.issubset(allowed_types):
-            if DataTypes.money in type_set_data_types:
+            if DataTypes.string in type_set_data_types:
+                dominant_type = String(0, '', '')
+            elif DataTypes.money in type_set_data_types:
                 dominant_type = Money(0, '', 0)
             else:
                 dominant_type = Integer(0, '', 0)
@@ -156,4 +159,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return node
 
     def boolean(self, node):
+        return node
+
+    def string(self, node):
         return node

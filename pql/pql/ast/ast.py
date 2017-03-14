@@ -262,6 +262,17 @@ class Money(Value):
         return float(0.00)
 
 
+class String(Value):
+    def __init__(self, position: object, source: object, value: object) -> object:
+        super(String, self).__init__("string", position, source, value, DataTypes.string)
+
+    def apply(self, visitor):
+        return visitor.string(self)
+
+    def default_value(self):
+        return ""
+
+
 class Identifier(Node):
     def __init__(self, position, source, name):
         super(Identifier, self).__init__('identifier', position, source)

@@ -57,6 +57,9 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def boolean(self, node):
         return node.value
 
+    def string(self, node):
+        return node.value
+
     def money(self, node):
         return node.value
 
