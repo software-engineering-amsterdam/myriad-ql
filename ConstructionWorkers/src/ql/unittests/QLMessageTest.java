@@ -55,7 +55,7 @@ public class QLMessageTest {
 
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Invalid type at line 1. Type should be Boolean.");
+                "ERROR: Invalid type at line 1 in QL form. Type should be Boolean.");
     }
 
     @Test
@@ -82,7 +82,7 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Identifier at line 1 in IF statement condition is undefined.");
+                "ERROR: Identifier in if-statement condition at line 1 in QL form is undefined.");
     }
 
     @Test
@@ -113,7 +113,7 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Cyclomatic dependency between testQuestion2 and testQuestion1 at line 2.");
+                "ERROR: Cyclomatic dependency between testQuestion2 and testQuestion1 at line 2 in QL form.");
     }
 
     @Test
@@ -144,7 +144,7 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Question testQuestion1 at line 2 has a duplicate identifier with a different type.");
+                "ERROR: Question testQuestion1 at line 2 in QL form has a duplicate identifier with a different type.");
     }
 
 
@@ -169,7 +169,7 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Question testQuestion2 at line 2 is undefined.");
+                "ERROR: Question testQuestion2 at line 2 in QL form is undefined.");
     }
 
     @Test
@@ -200,7 +200,7 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getWarnings().get(0).getMessage(),
-                "WARNING: Question testQuestion1 at line 2 has a duplicate identifier with the same type.");
+                "WARNING: Question testQuestion1 at line 2 in QL form has a duplicate identifier with the same type.");
     }
 
     @Test
@@ -231,6 +231,6 @@ public class QLMessageTest {
         new TypeChecker(form, identifierToTypeMap, messages);
 
         Assert.assertEquals(messages.getWarnings().get(0).getMessage(),
-                "WARNING: Question testQuestion2 at line 2 has a duplicate label: Question text.");
+                "WARNING: Question testQuestion2 at line 2 in QL form has a duplicate label: Question text.");
     }
 }
