@@ -1,13 +1,8 @@
 package org.uva.hatt.taxform.gui;
 
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.FormId;
@@ -21,12 +16,13 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
 import org.uva.hatt.taxform.ast.nodes.items.IfThen;
 import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
-import org.uva.hatt.taxform.ast.nodes.items.Question;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.gui.fields.*;
 
 import javax.script.ScriptException;
 import java.util.List;
@@ -35,9 +31,11 @@ import java.util.stream.Collectors;
 public class UIVisitor implements Visitor<Pane> {
 
     private Stage stage;
+    private EnvironmentsTable environmentsTable;
 
-    public UIVisitor(Stage stage) {
+    public UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
         this.stage = stage;
+        this.environmentsTable = environmentsTable;
     }
 
     @Override
@@ -63,15 +61,15 @@ public class UIVisitor implements Visitor<Pane> {
     }
 
     @Override
-    public Pane visit(Question node) {
-        VBox vBox = new VBox();
-        vBox.getChildren().add(new Text(node.getQuestion()));
+    public Pane visit(org.uva.hatt.taxform.ast.nodes.items.Question node) {
+        Field widget = (Field) node.getType().accept(this);
+        widget.setIdentifier(node.getValue());
+        widget.setLabel(node.getQuestion());
 
-        Pane widget = node.getType().accept(this);
+        Question question = new Question(environmentsTable);
+        question.addField(widget);
 
-        vBox.getChildren().add(widget);
-
-        return vBox;
+        return question;
     }
 
     @Override
@@ -79,7 +77,7 @@ public class UIVisitor implements Visitor<Pane> {
         VBox vBox = new VBox();
         java.lang.Boolean condition = null;
         try {
-            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate());
+            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate(environmentsTable));
         } catch (ScriptException e) {
             e.printStackTrace();
         }
@@ -97,7 +95,7 @@ public class UIVisitor implements Visitor<Pane> {
         VBox vBox = new VBox();
         java.lang.Boolean condition = null;
         try {
-            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate());
+            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate(environmentsTable));
         } catch (ScriptException e) {
             e.printStackTrace();
         }
@@ -115,42 +113,22 @@ public class UIVisitor implements Visitor<Pane> {
 
     @Override
     public Pane visit(Boolean node) {
-        HBox pane = new HBox();
-        ToggleGroup group = new ToggleGroup();
-
-        RadioButton yes = new RadioButton("Yes");
-        yes.setToggleGroup(group);
-
-        RadioButton no = new RadioButton("No");
-        no.setToggleGroup(group);
-
-        pane.getChildren().addAll(yes, no);
-
-        return pane;
+        return new QLCheckBox();
     }
 
     @Override
     public Pane visit(Integer node) {
-        VBox pane = new VBox();
-        pane.getChildren().add(new TextField("Vul in!"));
-
-        return pane;
+        return new QLInteger();
     }
 
     @Override
     public Pane visit(Money node) {
-        VBox pane = new VBox();
-        pane.getChildren().add(new TextField("Vul in!"));
-
-        return pane;
+        return new QLMoney();
     }
 
     @Override
     public Pane visit(String node) {
-        VBox pane = new VBox();
-        pane.getChildren().add(new TextField("Vul in!"));
-
-        return pane;
+        return new QLTextField();
     }
 
     @Override
