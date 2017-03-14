@@ -68,7 +68,7 @@ exampleDsl =
       question gender
         widget radio("Male","Female","_")
       question age
-        widget slider(1, 10)
+        widget spinbox
     }
   }
 

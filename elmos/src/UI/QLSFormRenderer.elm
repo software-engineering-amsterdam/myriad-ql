@@ -12,6 +12,7 @@ import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
 import UI.Widget.Float as FloatWidget
 import UI.Widget.Slider as SliderWidget
+import UI.Widget.Spinbox as SpinboxWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import QL.Environment as Env exposing (Environment)
 import QL.Values exposing (Value)
@@ -194,7 +195,7 @@ asRenderable : Widget -> ValueType -> (WidgetContext Msg -> Html Msg)
 asRenderable widget valueType =
     case widget of
         Spinbox ->
-            always (div [] [ text "TODO IMPLEMENT SPINBOX" ])
+            SpinboxWidget.view
 
         Radio labels ->
             radioWidgetRendererForValueType valueType labels

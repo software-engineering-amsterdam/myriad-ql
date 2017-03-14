@@ -3,5 +3,4 @@ QL:
 
 QLS UI:
 -Widgets:
---> Spinbox
 --> Style clash with bootstrap
