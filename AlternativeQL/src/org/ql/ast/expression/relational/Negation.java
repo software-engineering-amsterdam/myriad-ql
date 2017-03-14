@@ -20,7 +20,7 @@ public class Negation extends Expression {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+        return visitor.visitNegation(this, context);
     }
 }

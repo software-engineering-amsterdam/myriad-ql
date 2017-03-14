@@ -1,18 +1,14 @@
 package QL;
 
 
-public class Warning {
-	
-	private final String message;
-	private final int line;
+public class Warning extends Fault {
 	
 	public Warning(String message, int line) {
-		this.message = message;
-		this.line = line;
+		super(message, line);
 	}
-	
+
 	public String show() {
-		return "Warning: " + message + " on line " + line;
+		return "Warning: " + getFault();
 	}
 	
 }

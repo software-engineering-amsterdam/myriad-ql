@@ -1,5 +1,8 @@
 from QL import AST
 
+# TODO: Double dispatch in AST --> make it work here.
+# TODO: Remove context, remove clear errors, clear env <-- dangerous.
+# TODO: Add a pass to collect variables --> out of order questions.
 
 class TypeChecker(object):
     def __init__(self, ast, env, error_handler):
@@ -13,22 +16,9 @@ class TypeChecker(object):
         self.labels = []
 
         self.handler = error_handler
-        self.context = "TypeChecker"
 
     def start_traversal(self):
-        # Clear all the traversal variables.
-        self.env.clear_env()
-        self.labels = []
-        self.handler.clear_errors()
-
-        # Set context for outputting errors; start traversal.
-        prev_context = self.env.context
-        self.env.context = self.context
         self.ast.root.accept(self)
-
-        # Output errors afterwards.
-        self.handler.print_errors()
-        self.env.context = prev_context
 
     @staticmethod
     def highest_number_type(left, right):
@@ -50,27 +40,18 @@ class TypeChecker(object):
 
     def question_node(self, question_node):
         """ :type question_node: AST.QuestionNode """
-        if question_node.get_question() in self.labels:
-            self.handler.add_dup_label_warning(self.context, question_node)
-        self.labels.append(question_node.get_question())
-
-        self.env.add_var(question_node)
+        pass
 
     def comp_question_node(self, comp_question_node):
         """ :type comp_question_node: AST.CompQuestionNode """
-        if comp_question_node.get_question() in self.labels:
-            self.handler.add_dup_label_warning(self.context, comp_question_node)
-        self.labels.append(comp_question_node.get_question())
-
         comp_question_node.expression.accept(self)
-        self.env.add_var(comp_question_node)
 
     def if_node(self, if_node):
         """ :type if_node: AST.IfNode """
         expr_type = if_node.expression.accept(self)
 
         if not expr_type.is_boolean():
-            self.handler.add_if_cond_error(self.context, if_node)
+            self.handler.add_if_cond_error(if_node)
         if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
@@ -78,7 +59,7 @@ class TypeChecker(object):
         expr_type = if_else_node.expression.accept(self)
 
         if not expr_type.is_boolean():
-            self.handler.add_if_cond_error(self.context, if_else_node)
+            self.handler.add_if_cond_error(if_else_node)
         if_else_node.if_block.accept(self)
         if_else_node.else_block.accept(self)
 
@@ -86,7 +67,7 @@ class TypeChecker(object):
         """ Default behavior for monOps. """
         var_type = self.get_monop_type(mon_op_node)
         if not var_type.is_numeric():
-            self.handler.add_monop_error(self.context, mon_op_node, var_type)
+            self.handler.add_monop_error(mon_op_node, var_type)
             return AST.DecimalTypeNode()
         return var_type
 
@@ -94,7 +75,7 @@ class TypeChecker(object):
         """ '!' has different behavior than the other monOps."""
         var_type = self.get_monop_type(neg_node)
         if not var_type.is_boolean():
-            self.handler.add_monop_error(self.context, neg_node, var_type)
+            self.handler.add_monop_error(neg_node, var_type)
         return AST.BoolTypeNode()
 
     def min_node(self, min_node):
@@ -107,7 +88,7 @@ class TypeChecker(object):
         """ Default behavior for arithmetic binOps. """
         left, right = self.get_binop_types(expr_node)
         if not (left.is_numeric() and right.is_numeric()):
-            self.handler.add_binop_error(self.context, expr_node, left, right)
+            self.handler.add_binop_error(expr_node, left, right)
             return AST.DecimalTypeNode()
         return self.highest_number_type(left, right)
 
@@ -118,7 +99,7 @@ class TypeChecker(object):
         different_types = left.is_numeric() ^ right.is_numeric()
 
         if not valid_types or different_types:
-            self.handler.add_binop_error(self.context, add_node, left, right)
+            self.handler.add_binop_error(add_node, left, right)
             return AST.DecimalTypeNode()
         if left.is_numeric() and right.is_numeric():
             return self.highest_number_type(left, right)
@@ -140,7 +121,7 @@ class TypeChecker(object):
         same_types = left == right or left.is_numeric() and right.is_numeric()
 
         if not valid_types or not same_types:
-            self.handler.add_binop_error(self.context, expr_node, left, right)
+            self.handler.add_binop_error(expr_node, left, right)
         return AST.BoolTypeNode()
 
     def lt_node(self, lt_node):
@@ -164,7 +145,7 @@ class TypeChecker(object):
     def logical_expr_node(self, expr_node):
         left, right = self.get_binop_types(expr_node)
         if not (left.is_boolean() and right.is_boolean()):
-            self.handler.add_binop_error(self.context, expr_node, left, right)
+            self.handler.add_binop_error(expr_node, left, right)
         return AST.BoolTypeNode()
 
     def and_node(self, and_node):

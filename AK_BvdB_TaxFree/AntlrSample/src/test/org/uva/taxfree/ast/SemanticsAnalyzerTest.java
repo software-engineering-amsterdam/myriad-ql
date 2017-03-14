@@ -1,50 +1,33 @@
 package test.org.uva.taxfree.ast;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.main.SemanticsAnalyzer;
-import org.uva.taxfree.model.environment.Environment;
 
 import java.io.File;
-import java.io.IOException;
 
-public class SemanticsAnalyzerTest {
+public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionLabelForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
+        assertSemantics("duplicateQuestionLabelForm.txt", 1, "Duplicate question label expected");
     }
 
     @Test
     public void testHasMultipleDuplicateQuestionLabels() throws Exception {
-        Environment environment = Ast.generateAst(testFile("duplicateQuestionLabelsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
+        assertSemantics("duplicateQuestionLabelsForm.txt", 2, "Duplicate question labels expected");
     }
 
     @Test
     public void testHasDuplicateDeclarations() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdForm.txt");
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
+        assertSemantics("duplicateQuestionIdForm.txt", 1, "Duplicate question id expected");
     }
 
     @Test
     public void testHasMultipleDuplicateQuestionIds() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsForm.txt");
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
+        assertSemantics("duplicateQuestionIdsForm.txt", 2, "Duplicate question id");
     }
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer("duplicateQuestionIdsAndLabelsForm.txt");
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
+        assertSemantics("duplicateQuestionIdsAndLabelsForm.txt", 4, "Duplicated questions and labels");
     }
 
     @Test
@@ -64,21 +47,11 @@ public class SemanticsAnalyzerTest {
 
     @Test
     void testCyclicDependency() throws Exception {
-        assertSemantics("cyclicDependencyCalculations.txt", 1, "Cyclic dependency in calculation");
+        assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculation");
     }
 
-    private void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
-        SemanticsAnalyzer semanticsAnalyzer = createAnalyzer(fileName);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Expecting errors: " + description);
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), expectedErrorAmount, "Invalid error amount");
-    }
-
-    private SemanticsAnalyzer createAnalyzer(String fileName) throws IOException {
-        Environment environment = Ast.generateAst(testFile(fileName));
-        return new SemanticsAnalyzer(environment);
-    }
-
-    private File testFile(String fileName) {
+    @Override
+    protected File testFile(String fileName) {
         return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
     }
 
