@@ -1,16 +1,16 @@
 package org.lemonade.visitors.interfaces;
 
-import org.lemonade.gui.expressions.binary.AndBinary;
-import org.lemonade.gui.expressions.binary.DivideBinary;
-import org.lemonade.gui.expressions.binary.EqBinary;
-import org.lemonade.gui.expressions.binary.GTBinary;
-import org.lemonade.gui.expressions.binary.GTEBinary;
-import org.lemonade.gui.expressions.binary.LTBinary;
-import org.lemonade.gui.expressions.binary.MinusBinary;
-import org.lemonade.gui.expressions.binary.NEqBinary;
-import org.lemonade.gui.expressions.binary.OrBinary;
-import org.lemonade.gui.expressions.binary.PlusBinary;
-import org.lemonade.gui.expressions.binary.ProductBinary;
+import org.lemonade.gui.expressions.binary.GuiAndBinary;
+import org.lemonade.gui.expressions.binary.GuiDivideBinary;
+import org.lemonade.gui.expressions.binary.GuiEqBinary;
+import org.lemonade.gui.expressions.binary.GuiGTBinary;
+import org.lemonade.gui.expressions.binary.GuiGTEBinary;
+import org.lemonade.gui.expressions.binary.GuiLTBinary;
+import org.lemonade.gui.expressions.binary.GuiMinusBinary;
+import org.lemonade.gui.expressions.binary.GuiNEqBinary;
+import org.lemonade.gui.expressions.binary.GuiOrBinary;
+import org.lemonade.gui.expressions.binary.GuiPlusBinary;
+import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.expressions.unary.BangUnary;
 import org.lemonade.gui.expressions.unary.NegUnary;
 import org.lemonade.gui.values.GuiBooleanValue;
@@ -27,27 +27,27 @@ import org.lemonade.gui.values.GuiUndefinedValue;
  *
  */
 public interface GuiExpressionVisitor<T> {
-    T visit(AndBinary andBinary);
+    T visit(GuiAndBinary guiAndBinary);
 
-    T visit(DivideBinary divideBinary);
+    T visit(GuiDivideBinary guiDivideBinary);
 
-    T visit(EqBinary eqBinary);
+    T visit(GuiEqBinary guiEqBinary);
 
-    T visit(GTBinary gtBinary);
+    T visit(GuiGTBinary guiGtBinary);
 
-    T visit(GTEBinary gteBinary);
+    T visit(GuiGTEBinary guiGteBinary);
 
-    T visit(LTBinary ltBinary);
+    T visit(GuiLTBinary guiLtBinary);
 
-    T visit(MinusBinary minusBinary);
+    T visit(GuiMinusBinary guiMinusBinary);
 
-    T visit(NEqBinary nEqBinary);
+    T visit(GuiNEqBinary guiNEqBinary);
 
-    T visit(OrBinary orBinary);
+    T visit(GuiOrBinary guiOrBinary);
 
-    T visit(PlusBinary plusBinary);
+    T visit(GuiPlusBinary guiPlusBinary);
 
-    T visit(ProductBinary productBinary);
+    T visit(GuiProductBinary guiProductBinary);
 
     T visit(BangUnary bangUnary);
 

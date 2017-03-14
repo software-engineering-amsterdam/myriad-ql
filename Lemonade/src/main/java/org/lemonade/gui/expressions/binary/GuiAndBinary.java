@@ -7,9 +7,9 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 /**
  *
  */
-public class NEqBinary extends GuiBinaryExpression {
+public class GuiAndBinary extends GuiBinaryExpression {
 
-    public NEqBinary(GuiExpression left, GuiExpression right) {
+    public GuiAndBinary(GuiExpression left, GuiExpression right) {
         super(left, right);
     }
 
