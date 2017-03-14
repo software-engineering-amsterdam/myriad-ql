@@ -5,32 +5,38 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values;
+    using OffByOne.Ql.Values.Base;
     using OffByOne.Ql.Values.Contracts;
 
     public class CheckBoxWidget : QuestionWidget
     {
-        private CheckBox input;
-        private Label label;
-
-        public CheckBoxWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public CheckBoxWidget(BooleanValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(value, statement, guiEnvironment)
         {
             this.CreateControls(statement);
         }
 
-        private void CreateControls(QuestionStatement statement)
+        protected CheckBox Input { get; private set; }
+
+        public override void OnObserve(AnswerInput value)
         {
-            this.label = new Label { Content = statement.Label };
-            this.input = new CheckBox();
-            this.input.Checked += this.UpdateValue;
-            this.input.Unchecked += this.UpdateValue;
-            this.Controls.Add(this.label);
-            this.Controls.Add(this.input);
+            base.OnObserve(value);
+            this.Input.IsChecked = ((BooleanValue)this.Value).Value;
         }
 
-        private void UpdateValue(object target, object eventArgs)
+        protected virtual void UpdateValue(object target, object eventArgs)
         {
-            this.Value = new BooleanValue(this.input.IsChecked.Value);
+            this.Value = new BooleanValue(this.Input.IsChecked.Value);
+        }
+
+        private void CreateControls(QuestionStatement statement)
+        {
+            var label = new Label { Content = statement.Label };
+            this.Input = new CheckBox();
+            this.Input.Checked += this.UpdateValue;
+            this.Input.Unchecked += this.UpdateValue;
+            this.Controls.Add(label);
+            this.Controls.Add(this.Input);
         }
     }
 }

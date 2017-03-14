@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
+    using System;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
@@ -9,27 +10,51 @@
 
     public class TextFieldWidget : QuestionWidget
     {
-        private TextBox input;
-        private Label label;
-
         public TextFieldWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(value, statement, guiEnvironment)
         {
             this.CreateControls(statement);
         }
 
-        private void CreateControls(QuestionStatement statement)
+        protected TextBox Input { get; private set; }
+
+        public override void OnObserve(AnswerInput value)
         {
-            this.label = new Label { Content = statement.Label };
-            this.input = new TextBox();
-            this.input.KeyUp += this.UpdateValue;
-            this.Controls.Add(this.label);
-            this.Controls.Add(this.input);
+            base.OnObserve(value);
+            this.Input.Text = this.Value.ToString();
         }
 
-        private void UpdateValue(object target, object eventArgs)
+        protected void CreateControls(QuestionStatement statement)
         {
-            this.Value = new StringValue(this.input.Text);
+            var label = new Label { Content = statement.Label };
+            this.Input = new TextBox();
+            this.Input.KeyUp += this.UpdateValue;
+            this.Controls.Add(label);
+            this.Controls.Add(this.Input);
+        }
+
+        protected virtual void UpdateValue(object target, object eventArgs)
+        {
+            IValue value;
+            switch (this.Value)
+            {
+                case StringValue _:
+                    value = new StringValue(this.Input.Text);
+                    break;
+                case DecimalValue _:
+                    value = new DecimalValue(this.Input.Text);
+                    break;
+                case IntegerValue _:
+                    value = new IntegerValue(this.Input.Text);
+                    break;
+                case MoneyValue _:
+                    value = new MoneyValue(this.Input.Text);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this.Value));
+            }
+
+            this.Value = value;
         }
     }
 }

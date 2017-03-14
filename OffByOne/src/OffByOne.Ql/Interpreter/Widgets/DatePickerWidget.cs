@@ -10,27 +10,32 @@
 
     public class DatePickerWidget : QuestionWidget
     {
-        private DatePicker input;
-        private Label label;
-
-        public DatePickerWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public DatePickerWidget(DateValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(value, statement, guiEnvironment)
         {
             this.CreateControls(statement);
         }
 
-        private void CreateControls(QuestionStatement statement)
+        protected DatePicker Input { get; private set; }
+
+        public override void OnObserve(AnswerInput value)
         {
-            this.label = new Label { Content = statement.Label };
-            this.input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
-            this.input.SelectedDateChanged += this.UpdateValue;
-            this.Controls.Add(this.label);
-            this.Controls.Add(this.input);
+            base.OnObserve(value);
+            this.Input.SelectedDate = ((DateValue)this.Value).Value;
         }
 
-        private void UpdateValue(object target, object eventArgs)
+        protected virtual void UpdateValue(object target, object eventArgs)
         {
-            this.Value = new DateValue(this.input.SelectedDate.Value);
+            this.Value = new DateValue(this.Input.SelectedDate.Value);
+        }
+
+        private void CreateControls(QuestionStatement statement)
+        {
+            var label = new Label { Content = statement.Label };
+            this.Input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
+            this.Input.SelectedDateChanged += this.UpdateValue;
+            this.Controls.Add(label);
+            this.Controls.Add(this.Input);
         }
     }
 }
