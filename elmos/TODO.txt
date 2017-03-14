@@ -4,7 +4,5 @@ QL:
 
 QLS UI:
 -Widgets:
---> Slider
 --> Spinbox
---> DropDown for text (e.g. gender)
 --> Style clash with bootstrap
