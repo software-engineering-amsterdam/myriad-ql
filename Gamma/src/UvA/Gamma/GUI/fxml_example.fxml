@@ -13,7 +13,4 @@
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="15" vgap="8"
           styleClass="root">
     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-    <Button mnemonicParsing="false"  prefWidth="-1.0" text="Button"/>
-    <TextField
-            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 </GridPane>

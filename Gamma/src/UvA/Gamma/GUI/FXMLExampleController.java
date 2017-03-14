@@ -1,8 +1,10 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.*;
+import UvA.Gamma.AST.Values.Boolean;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -37,6 +39,30 @@ public class FXMLExampleController {
         });
         grid.addRow(++rowCount, questionLabel, input);
     }
+
+    @FXML
+    public void showBoolean(Question question) {
+        Text questionLabel = new Text(question.getQuestion());
+        CheckBox input = new CheckBox();
+
+        input.selectedProperty().addListener((observable, oldValue, newValue) ->
+                form.getFormItems().parallelStream().forEach(
+                        formItem -> formItem.idChanged(form, question, String.valueOf(newValue))));
+
+        grid.addRow(++rowCount, questionLabel, input);
+    }
+
+
+
+
+//    @FXML
+//    public void showDateValue(Question question) {
+//        Text questionLabel = new Text(question.getQuestion());
+//        CheckBox input = new CheckBox();
+//        grid.addRow(++rowCount, questionLabel, input);
+//    }
+
+
 
     public void showComputed(Computed computed) {
         Text label = new Text(computed.getLabel());
