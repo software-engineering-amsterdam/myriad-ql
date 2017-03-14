@@ -43,7 +43,7 @@ public abstract class QLTestSetUp {
             System.exit(-1);
         }
 
-        String PATH = "./src/ql/unittests/qltestforms/";
+        String PATH = "./src/ql/unittests/";
         String inputFilePath = PATH.concat(inputFileName);
 
         InputStream qlInputStream = new FileInputStream(inputFilePath);
