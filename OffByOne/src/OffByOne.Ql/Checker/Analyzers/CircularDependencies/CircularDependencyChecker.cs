@@ -44,16 +44,16 @@
 
             while (true)
             {
-                var newEdges = this.GenerateEdges(transitiveClosure);
+                var generateEdges = this.GenerateEdges(transitiveClosure);
 
-                newEdges.AddRange(transitiveClosure);
+                generateEdges.AddRange(transitiveClosure);
 
-                if (newEdges.SequenceEqual(transitiveClosure))
+                if (generateEdges.SequenceEqual(transitiveClosure))
                 {
                     break;
                 }
 
-                transitiveClosure = newEdges;
+                transitiveClosure = generateEdges;
             }
 
             return transitiveClosure;

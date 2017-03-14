@@ -21,10 +21,10 @@
             this.Visit(root, new QuestionVisitorTypeEnvironment());
         }
 
-        public override object Visit(QuestionStatement expression, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
         {
-            this.Mappings[expression.Identifier] = expression.Type;
-            return base.Visit(expression, environment);
+            this.Mappings[statement.Identifier] = statement.Type;
+            return base.Visit(statement, environment);
         }
     }
 }

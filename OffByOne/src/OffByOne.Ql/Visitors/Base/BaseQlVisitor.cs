@@ -185,64 +185,64 @@
             return default(TResult);
         }
 
-        public virtual TResult Visit(QuestionStatement expression, TEnvironment environment)
+        public virtual TResult Visit(QuestionStatement statement, TEnvironment environment)
         {
-            expression.Type.Accept(this, environment);
-            expression.ComputationExpression?.Accept(this, environment);
+            statement.Type.Accept(this, environment);
+            statement.ComputationExpression?.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(IfStatement expression, TEnvironment environment)
+        public virtual TResult Visit(IfStatement statement, TEnvironment environment)
         {
-            expression.Condition.Accept(this, environment);
-            expression.Statements.ForEach(x => x.Accept(this, environment));
-            expression.ElseStatements.ForEach(x => x.Accept(this, environment));
+            statement.Condition.Accept(this, environment);
+            statement.Statements.ForEach(x => x.Accept(this, environment));
+            statement.ElseStatements.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public TResult Visit(Statement expression, TEnvironment environment)
+        public TResult Visit(Statement statement, TEnvironment environment)
         {
-            expression.Accept(this, environment);
+            statement.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(FormStatement expression, TEnvironment environment)
+        public virtual TResult Visit(FormStatement statement, TEnvironment environment)
         {
-            expression.Statements.ForEach(x => x.Accept(this, environment));
+            statement.Statements.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment environment)
         {
             return new IntegerValueType();
         }
 
-        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment environment)
         {
             return new MoneyValueType();
         }
 
-        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment environment)
         {
             return new DecimalValueType();
         }
 
-        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment environment)
         {
             return new BooleanValueType();
         }
 
-        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment environment)
         {
             return new StringValueType();
         }
 
-        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment environment)
         {
             return new DateValueType();
         }
 
-        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment context)
+        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment environment)
         {
             return new StringValueType();
         }

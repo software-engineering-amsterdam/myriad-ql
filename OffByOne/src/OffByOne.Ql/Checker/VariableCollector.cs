@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Ql.Checker
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Statements;
@@ -34,10 +33,10 @@
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(QuestionStatement expression, VisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, VisitorTypeEnvironment environment)
         {
-            this.Variables.Add(expression.Identifier);
-            return base.Visit(expression, environment);
+            this.Variables.Add(statement.Identifier);
+            return base.Visit(statement, environment);
         }
     }
 }
