@@ -1,39 +1,30 @@
-﻿namespace OffByOne.Ql.Interpreter.Controls.Base
+﻿namespace OffByOne.Ql.Interpreter.Widgets.Base
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows;
-    using Windows = System.Windows.Controls;
+    using System.Windows.Controls;
 
-    public abstract class Control : IObserver<GuiChange>
+    using OffByOne.Ql.Common;
+
+    public abstract class Widget : IObserver<AnswerInput>
     {
-        private IDisposable unsubscriber;
         private bool isVisible;
 
-        protected Control(GuiEnvironment environment)
+        protected Widget(GuiEnvironment environment)
         {
             this.Environment = environment;
-            this.Controls = new List<Windows.Control>();
+            this.Controls = new List<Control>();
             this.Dependencies = new SortedSet<string>();
 
-            this.unsubscriber = this.Environment.Subscribe(this);
+            this.Environment.RegisterObserver(this);
             this.isVisible = true;
         }
 
         public GuiEnvironment Environment { get; }
 
-        public IList<Windows.Control> Controls { get; set; }
+        public IList<Control> Controls { get; set; }
 
         protected ISet<string> Dependencies { get; }
-
-        public abstract void OnCompleted();
-
-        public virtual void OnError(Exception error)
-        {
-            throw error;
-        }
-
-        public abstract void OnNext(GuiChange value);
 
         public void Show()
         {
@@ -46,6 +37,8 @@
             this.isVisible = false;
             this.UpdateControlVisibility();
         }
+
+        public abstract void OnObserve(AnswerInput observation);
 
         private void UpdateControlVisibility()
         {

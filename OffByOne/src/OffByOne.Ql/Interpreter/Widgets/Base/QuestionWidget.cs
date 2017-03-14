@@ -1,22 +1,19 @@
-﻿namespace OffByOne.Ql.Interpreter.Controls.Base
+﻿namespace OffByOne.Ql.Interpreter.Widgets.Base
 {
-    using System;
-
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Common;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
-    using Windows = System.Windows.Controls;
-
-    public abstract class QuestionControl : Control
+    public abstract class QuestionWidget : Widget, IObserver<AnswerInput>
     {
         private IValue value;
-        private IDisposable unsubscriber;
 
-        public QuestionControl(QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public QuestionWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(guiEnvironment)
         {
             this.Statement = statement;
+            this.Value = value;
             this.Dependencies.UnionWith(statement.GetDependencies());
         }
 
@@ -36,7 +33,7 @@
             }
         }
 
-        public override void OnNext(GuiChange value)
+        public override void OnObserve(AnswerInput value)
         {
             if (!this.Statement.IsComputable(value.Identifier))
             {

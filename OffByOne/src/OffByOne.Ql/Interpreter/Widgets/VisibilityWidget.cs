@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Interpreter.Controls
+﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
     using System;
     using System.Collections.Generic;
@@ -8,16 +8,16 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Evaluator;
-    using OffByOne.Ql.Interpreter.Controls.Base;
+    using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values;
 
-    public class VisibilityControl : Control
+    public class VisibilityWidget : Widget
     {
-        public VisibilityControl(
+        public VisibilityWidget(
             IfStatement statement,
             GuiEnvironment guiEnvironment,
-            IList<Control> ifControls,
-            IList<Control> elseControls)
+            IList<Widget> ifControls,
+            IList<Widget> elseControls)
             : base(guiEnvironment)
         {
             this.Statement = statement;
@@ -30,18 +30,13 @@
             this.EvaluateVisibility();
         }
 
-        public IList<Control> IfControls { get; }
+        public IList<Widget> IfControls { get; }
 
-        public IList<Control> ElseControls { get; }
+        public IList<Widget> ElseControls { get; }
 
         public IfStatement Statement { get; }
 
-        public override void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnNext(GuiChange value)
+        public override void OnObserve(AnswerInput value)
         {
             if (!this.Statement.IsComputable(value.Identifier))
             {
@@ -60,7 +55,7 @@
             this.UpdateControlVisibility(condition.Value);
         }
 
-        private void AddToControls(IEnumerable<Control> controls)
+        private void AddToControls(IEnumerable<Widget> controls)
         {
             foreach (var control in controls)
             {

@@ -1,17 +1,17 @@
 ﻿namespace OffByOne.Ql.Interpreter
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows.Controls;
 
+    using OffByOne.Ql.Common;
     using OffByOne.Ql.Evaluator;
-    using OffByOne.Ql.Interpreter.Controls.Base;
+    using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 
-    public class GuiEnvironment : IEnvironment, IObservable<GuiChange>
+    public class GuiEnvironment : IEnvironment, IObservable<AnswerInput>
     {
-        private readonly List<IObserver<GuiChange>> observers;
+        private readonly List<IObserver<AnswerInput>> observers;
 
         public GuiEnvironment()
             : this(new TypeEnvironment())
@@ -21,7 +21,7 @@
         public GuiEnvironment(TypeEnvironment typeEnvironment)
         {
             this.Evaluations = typeEnvironment;
-            this.observers = new List<IObserver<GuiChange>>();
+            this.observers = new List<IObserver<AnswerInput>>();
             this.RootControl = new ListView();
         }
 
@@ -34,27 +34,25 @@
             bool environmentChanged = this.Evaluations.AddOrUpdateValue(identifier, value);
             if (environmentChanged)
             {
-                var change = new GuiChange(identifier, value, this);
+                var change = new AnswerInput(identifier, value, this);
                 this.NotifyObservers(change);
             }
         }
 
-        public void NotifyObservers(GuiChange change)
+        public void NotifyObservers(AnswerInput change)
         {
             foreach (var observer in this.observers)
             {
-                observer.OnNext(change);
+                observer.OnObserve(change);
             }
         }
 
-        public IDisposable Subscribe(IObserver<GuiChange> observer)
+        public void RegisterObserver(IObserver<AnswerInput> observer)
         {
             if (!this.observers.Contains(observer))
             {
                 this.observers.Add(observer);
             }
-
-            return new Unsubscriber(this.observers, observer);
         }
     }
 }

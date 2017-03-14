@@ -1,15 +1,14 @@
-﻿namespace OffByOne.Ql.Interpreter.Controls
+﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Interpreter.Controls.Base;
+    using OffByOne.Ql.Interpreter.Widgets.Base;
 
-    public class FormControl : Control
+    public class FormWidget : Widget
     {
-        public FormControl(FormStatement statement, GuiEnvironment guiEnvironment, IList<Control> controls)
+        public FormWidget(FormStatement statement, GuiEnvironment guiEnvironment, IList<Widget> controls)
             : base(guiEnvironment)
         {
             this.Statement = statement;
@@ -21,12 +20,7 @@
 
         public FormStatement Statement { get; }
 
-        public override void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnNext(GuiChange value)
+        public override void OnObserve(AnswerInput observation)
         {
         }
     }

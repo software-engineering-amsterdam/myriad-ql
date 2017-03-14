@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Graphics.Widgets
+﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
     using System.Windows;
     using System.Windows.Media;
