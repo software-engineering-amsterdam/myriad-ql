@@ -60,7 +60,7 @@ public class FXMLExampleController {
                 form.getFormItems().parallelStream().forEach(
                         formItem -> formItem.idChanged(form, question, String.valueOf(newValue))));
 
-        grid.addRow(++rowCount, questionLabel, input);
+        rootGrid.addRow(++rowCount, questionLabel, input);
     }
 
 
