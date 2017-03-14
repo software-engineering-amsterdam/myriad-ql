@@ -118,6 +118,8 @@
     <Compile Include="Ast\ValueTypes\MoneyValueType.cs" />
     <Compile Include="Ast\ValueTypes\StringValueType.cs" />
     <Compile Include="Ast\ValueTypes\VoidValueType.cs" />
+    <Compile Include="Checker\Analyzers\CircularDependency\Dependency.cs" />
+    <Compile Include="Checker\Analyzers\CircularDependency\DependencySet.cs" />
     <Compile Include="Checker\Analyzers\Contracts\IAnalyzer.cs" />
     <Compile Include="Checker\Analyzers\CyclicDependencyAnalyzer.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
