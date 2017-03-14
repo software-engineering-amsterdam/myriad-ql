@@ -1,3 +1,4 @@
+# coding=utf-8
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QFontMetrics
@@ -12,7 +13,8 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QWidget
 
-from gui.CodeArea import CodeArea
+from pql.gui.CodeArea import CodeArea
+from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.gui.Questionnaire import Questionnaire
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
@@ -108,12 +110,16 @@ class Editor(QMainWindow, QWidget):
             if identifier_errors:
                 self.list_errors.addItems(identifier_errors)
             else:
-                type_errors = self.check_type(ast)
-                if type_errors:
-                    self.list_errors.addItems(type_errors)
+                dependencies_errors = self.check_dependencies(ast)
+                if not dependencies_errors:
+                    type_errors = self.check_type(ast)
+                    if type_errors:
+                        self.list_errors.addItems(type_errors)
+                    else:
+                        form = Questionnaire(ast).visit()
+                        form.show()
                 else:
-                    self.form = Questionnaire(ast).visit()
-                    self.form.show()
+                    self.list_errors.addItems(dependencies_errors)
 
     def write_contents_to_file(self, contents, file_path):
         if file_path is not None:
@@ -161,6 +167,12 @@ class Editor(QMainWindow, QWidget):
             return TypeChecker(ast, TypeEnvironment).visit()
         except Exception as e:
             self.list_errors.addItem("Checking types:\n    {}".format(e))
+
+    def check_dependencies(self, ast):
+        try:
+            return DependenciesChecker(ast).visit()
+        except Exception as e:
+            self.list_errors.addItem("Checking dependencies:\n    {}".format(e))
 
     def open_file(self, file_path):
         try:
