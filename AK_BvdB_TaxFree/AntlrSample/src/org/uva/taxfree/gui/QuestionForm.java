@@ -1,7 +1,7 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.gui.widgets.Widget;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,9 +51,9 @@ public class QuestionForm implements FormListener {
     }
 
     public void updateForm() {
-
         for (Widget w : mWidgets) {
-            w.update(mSymbolTable);
+            w.updateValues(mSymbolTable);
+            w.updateVisibility(mSymbolTable.visibleIds());
         }
     }
 }

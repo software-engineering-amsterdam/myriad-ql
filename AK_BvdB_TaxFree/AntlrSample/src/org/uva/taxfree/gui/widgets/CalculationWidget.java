@@ -25,12 +25,6 @@ public class CalculationWidget extends Widget {
     }
 
     @Override
-    public void setVisible(boolean isVisible) {
-        mTextField.setText(resolveValue());
-        super.setVisible(isVisible);
-    }
-
-    @Override
     public String resolveValue() {
         return mExpression.resolveValue();
     }
@@ -41,7 +35,7 @@ public class CalculationWidget extends Widget {
     }
 
     @Override
-    public void update(SymbolTable symbolTable) {
-        writeToTable(symbolTable);
+    public void updateValues(SymbolTable symbolTable) {
+        mTextField.setText(readFromtable(symbolTable));
     }
 }

@@ -4,6 +4,7 @@ import org.uva.taxfree.gui.FormListener;
 import org.uva.taxfree.model.environment.SymbolTable;
 
 import javax.swing.*;
+import java.util.List;
 
 public abstract class Widget {
     private final JPanel mPanel;
@@ -18,7 +19,7 @@ public abstract class Widget {
         JPanel widgetPanel = new JPanel();
         widgetPanel.setName(label);
         widgetPanel.add(new JLabel(label));
-        widgetPanel.setVisible(false);
+        widgetPanel.setVisible(true);
         return widgetPanel;
     }
 
@@ -29,21 +30,22 @@ public abstract class Widget {
 
     protected abstract void fillPanel(JPanel widgetPanel);
 
-    public void setVisible(boolean isVisible) {
-        mPanel.setVisible(isVisible);
-    }
-
     public abstract String resolveValue();
 
     public abstract void callOnUpdate(FormListener listener);
 
-    public abstract void update(SymbolTable symbolTable);
+    public abstract void updateValues(SymbolTable symbolTable);
 
-    protected void writeToTable(SymbolTable symbolTable){
+    public void updateVisibility(List<String> visibleIds) {
+        mPanel.setVisible(visibleIds.contains(mId));
+    }
+
+
+    protected void writeToTable(SymbolTable symbolTable) {
         symbolTable.updateValue(mId, resolveValue());
     }
 
-    protected String readFromtable(SymbolTable symbolTable){
+    protected String readFromtable(SymbolTable symbolTable) {
         return symbolTable.resolveValue(mId);
     }
 }

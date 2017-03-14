@@ -38,7 +38,7 @@ public abstract class TextFieldWidget extends Widget {
     }
 
     @Override
-    public void update(SymbolTable symbolTable) {
+    public void updateValues(SymbolTable symbolTable) {
         writeToTable(symbolTable);
     }
 }
