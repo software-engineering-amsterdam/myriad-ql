@@ -15,9 +15,14 @@ class Widget(QLWidget):
     def set_height(self, height):
         self.main.setLabelWidth(self.identifier, height)
 
-    def set_font(self, family, size):
+    def set_font_size(self, size):
         widget = self.main.getLabelWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        widget = self.main.getLabelWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         self.main.setLabelFg(self.identifier, color)
@@ -35,10 +40,16 @@ class EntryWidget(QLEntry, Widget):
         super(EntryWidget, self).set_height(height)
         self.main.setEntryHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(EntryWidget, self).set_font(family, size)
+    def set_font_size(self, size):
+        super(EntryWidget, self).set_font_size(size)
         widget = self.main.getEntryWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(EntryWidget, self).set_font_family(family)
+        widget = self.main.getEntryWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(EntryWidget, self).set_font_color(color)
@@ -57,10 +68,16 @@ class NumericWidget(QLNumeric, Widget):
         super(NumericWidget, self).set_height(height)
         self.main.setEntryHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(NumericWidget, self).set_font(family, size)
+    def set_font_size(self, size):
+        super(NumericWidget, self).set_font_size(size)
         widget = self.main.getEntryWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(NumericWidget, self).set_font_family(family)
+        widget = self.main.getEntryWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(NumericWidget, self).set_font_color(color)
@@ -81,10 +98,16 @@ class CheckBoxWidget(QLCheckBox, Widget):
         super(CheckBoxWidget, self).set_height(height)
         self.main.setCheckBoxHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(CheckBoxWidget, self).set_font(family, size)
+    def set_font_size(self, size):
+        super(CheckBoxWidget, self).set_font_size(size)
         widget = self.main.getCheckBoxWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(CheckBoxWidget, self).set_font_family(family)
+        widget = self.main.getCheckBoxWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(CheckBoxWidget, self).set_font_color(color)
@@ -105,10 +128,16 @@ class ComputedLabelWidget(QLComputed, Widget):
         super(ComputedLabelWidget, self).set_height(height)
         self.main.setLabelHeight(self.computed_identifier, height)
 
-    def set_font(self, family, size):
-        super(ComputedLabelWidget, self).set_font(family, size)
+    def set_font_size(self, size):
+        super(ComputedLabelWidget, self).set_font_size(size)
         widget = self.main.getLabelWidget(self.computed_identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(ComputedLabelWidget, self).set_font_family(family)
+        widget = self.main.getLabelWidget(self.computed_identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(ComputedLabelWidget, self).set_font_color(color)
@@ -147,10 +176,16 @@ class SliderWidget(Widget):
         super(SliderWidget, self).set_height(height)
         self.main.setScaleHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(SliderWidget, self).set_font(family, size)
+    def set_font_size(self, size):
+        super(SliderWidget, self).set_font_size(size)
         widget = self.main.getScaleWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(SliderWidget, self).set_font_family(family)
+        widget = self.main.getScaleWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(SliderWidget, self).set_font_color(color)
@@ -193,10 +228,18 @@ class RadioButtonWidget(Widget):
         super(RadioButtonWidget, self).set_height(height)
         self.main.setRadioButtonHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(RadioButtonWidget, self).set_font(family, size)
-        widget = self.main.getRadioButtonWidget(self.identifier)
-        widget.config(font="{} {}".format(family, size))
+    def set_font_size(self, size):
+        super(RadioButtonWidget, self).set_font_size(size)
+        radio_widgets = self.main.getRadioButtonWidget(self.identifier)
+        family = radio_widgets[0]["font"]
+        for widget in radio_widgets:
+            widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(RadioButtonWidget, self).set_font_family(family)
+        radio_widgets = self.main.getRadioButtonWidget(self.identifier)
+        for widget in radio_widgets:
+            widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(RadioButtonWidget, self).set_font_color(color)
@@ -237,10 +280,16 @@ class DropDownWidget(Widget):
         super(DropDownWidget, self).set_height(height)
         self.main.setOptionBoxHeight(self.identifier, height)
 
-    def set_font(self, family, size):
-        super(DropDownWidget, self).set_font(family, size)
-        widget = self.main.getOptionBoxWidget(self.identifier)
+    def set_font_size(self, size):
+        super(DropDownWidget, self).set_font_size(size)
+        widget = self.main.getDropDownWidget(self.identifier)
+        family = widget["font"]
         widget.config(font="{} {}".format(family, size))
+
+    def set_font_family(self, family):
+        super(DropDownWidget, self).set_font_family(family)
+        widget = self.main.getDropDownWidget(self.identifier)
+        widget.config(font="{}".format(family))
 
     def set_font_color(self, color):
         super(DropDownWidget, self).set_font_color(color)

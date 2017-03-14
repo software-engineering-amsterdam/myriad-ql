@@ -9,6 +9,7 @@ class InitEnvironment(object):
 
     def start_traversal(self):
         # Ensure the environment and error log are empty.
+        self.env.clear_env()
         self.conditional_vars = {}
         self.labels = []
 
