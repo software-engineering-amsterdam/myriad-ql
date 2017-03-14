@@ -18,7 +18,7 @@ all =
                     (Form ( "form", emptyLoc )
                         [ IfThen (Str emptyLoc "test") [ Field "Label" ( "t", Location 1 1 ) BooleanType ] ]
                     )
-                    (Dict.empty)
+                    Dict.empty
                     |> Expect.equal [ Error (InvalidConditionType (Location 0 0) StringType) ]
         , test "should detect condition with var value with non-boolean type" <|
             \() ->

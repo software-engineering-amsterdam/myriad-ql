@@ -6,7 +6,7 @@ import Dict
 import Expect
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.Messages exposing (..)
-import QL.TypeChecker.Expressions.ExpressionType as ExpressionType exposing (getType)
+import QL.TypeChecker.Expressions.ExpressionType as ExpressionType
 
 
 all : Test
