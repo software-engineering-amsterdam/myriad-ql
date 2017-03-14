@@ -17,6 +17,11 @@ import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.elements.GuiMoneyElement;
 import org.lemonade.gui.elements.GuiStringElement;
 import org.lemonade.gui.expressions.binary.GuiAndBinary;
+import org.lemonade.gui.expressions.binary.GuiDivideBinary;
+import org.lemonade.gui.expressions.binary.GuiMinusBinary;
+import org.lemonade.gui.expressions.binary.GuiOrBinary;
+import org.lemonade.gui.expressions.binary.GuiPlusBinary;
+import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
@@ -156,27 +161,37 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
     @Override
     public GuiExpression visit(final OrBinary orBinary) {
-        return null;
+        GuiExpression left = orBinary.getLeft().accept(this);
+        GuiExpression right = orBinary.getRight().accept(this);
+        return new GuiOrBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final PlusBinary plusBinary) {
-        return null;
+        GuiExpression left = plusBinary.getLeft().accept(this);
+        GuiExpression right = plusBinary.getRight().accept(this);
+        return new GuiPlusBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final ProductBinary productBinary) {
-        return null;
+        GuiExpression left = productBinary.getLeft().accept(this);
+        GuiExpression right = productBinary.getRight().accept(this);
+        return new GuiProductBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final MinusBinary minusBinary) {
-        return null;
+        GuiExpression left = minusBinary.getLeft().accept(this);
+        GuiExpression right = minusBinary.getRight().accept(this);
+        return new GuiMinusBinary(left, right);
     }
 
     @Override
     public GuiExpression visit(final DivideBinary divideBinary) {
-        return null;
+        GuiExpression left = divideBinary.getLeft().accept(this);
+        GuiExpression right = divideBinary.getRight().accept(this);
+        return new GuiDivideBinary(left, right);
     }
 
     @Override
