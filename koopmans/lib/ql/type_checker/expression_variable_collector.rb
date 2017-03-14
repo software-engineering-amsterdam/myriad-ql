@@ -33,9 +33,8 @@ module QL
       end
 
       def visit_binary_expression(left, binary_expression)
-        if left.kind_of?(Array)
-          left = left
-        else
+        # check if left and binary_expression.expression are an array (of variables), if so, don't call .accept
+        unless left.kind_of?(Array)
           left = left.accept(self)
         end
         if binary_expression.expression.kind_of?(Array)
