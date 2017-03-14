@@ -20,7 +20,6 @@ class Node(object):
 class Location(object):
     def __init__(self, position, source):
         self.line_number = lineno(position, source)
-        # self.column_number = col(position, source)
 
     def __str__(self):
         return "(Line number: {})".format(self.line_number)
@@ -46,8 +45,8 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, title, name, data_type, var_type='field'):
-        super(Field, self).__init__(var_type)
+    def __init__(self, position, source, title, name, data_type, var_type='field'):
+        super(Field, self).__init__(var_type, position, source)
         self.title = title
         self.name = name
         self.data_type = data_type
@@ -57,12 +56,12 @@ class Field(Node):
 
 
 class Assignment(Field):
-    def __init__(self, title, name, data_type, expression):
-        super(Assignment, self).__init__(title, name, data_type, 'assignment')
+    def __init__(self, position, source, title, name, data_type, expression):
+        super(Assignment, self).__init__(position, source, title, name, data_type, 'assignment')
         self.expression = expression
 
     def apply(self, visitor, args=None):
-        return visitor.assignment(self)
+        return visitor.assignment(self, args)
 
 
 class If(Node):

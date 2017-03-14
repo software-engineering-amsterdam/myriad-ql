@@ -96,3 +96,18 @@ class TestDependenciesChecker(Shared):
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+
+    def test_reference_simple(self):
+        input_string = """
+        form taxOfficeExample {
+            "Did you sell a house in 2010?"
+                hasSoldHouse: boolean
+            "Did you buy a house in 2010?"
+                hasBoughtHouse: boolean
+            "Did you buy or sell a house in 2010?"
+                hasDoneEither: boolean = hasSoldHouse || hasBoughtHouse
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_circular_references(form_node)
+        self.assertEqual(len(errors), 0, "There should be no errors")

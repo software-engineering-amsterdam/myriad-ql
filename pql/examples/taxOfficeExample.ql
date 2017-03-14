@@ -1,8 +1,8 @@
 form taxOfficeExample {
 	"Did you sell a house in 2010?"
-		hasSoldHouse: boolean = hasBoughtHouse && hasMaintLoan
+		hasSoldHouse: boolean = hasBoughtHouse
 	"Did you buy a house in 2010?"
-		hasBoughtHouse: boolean
+		hasBoughtHouse: boolean = hasSoldHouse
     "Did you buy or sell a house in 2010?"
 		hasDoneEither: boolean = hasSoldHouse || hasBoughtHouse
 	"How big of a loan did you request??"

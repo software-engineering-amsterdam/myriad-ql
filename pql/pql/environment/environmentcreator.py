@@ -30,5 +30,5 @@ class EnvironmentCreator(FormVisitor):
     def field(self, node, args=None):
         self.__symbol_table[node.name.name] = node.data_type.default_value()
 
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         self.field(node)

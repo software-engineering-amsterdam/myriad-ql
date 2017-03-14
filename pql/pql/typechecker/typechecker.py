@@ -1,12 +1,14 @@
 # coding=utf-8
 from pql.ast.ast import Money, Integer, Boolean, String
-from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 from pql.typechecker.types import DataTypes
 
 
-class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
+class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor, UnaryExpressionVisitor):
     def __init__(self, ast, environment_type):
         self.symbol_table = environment_type(ast).visit()
         self.ast = ast
@@ -24,7 +26,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def field(self, node, args=None):
         return node.data_type
 
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         result = node.expression.apply(self)
         if (result is not None) and (node.data_type.data_type is DataTypes.boolean) and (
                     result.data_type is not node.data_type.data_type):

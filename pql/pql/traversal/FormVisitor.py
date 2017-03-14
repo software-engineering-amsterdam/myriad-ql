@@ -17,7 +17,7 @@ class FormVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         pass
 
     @abstractmethod
