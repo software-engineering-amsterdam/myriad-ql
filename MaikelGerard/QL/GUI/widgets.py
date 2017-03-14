@@ -15,6 +15,7 @@ class Widget(object):
         self.hidden = False
 
     def add_listener(self, tkinter_obj):
+        tkinter_obj.bind("<Key>", self.form_gui.redraw)
         tkinter_obj.bind("<FocusOut>", self.form_gui.redraw)
         tkinter_obj.bind("<ButtonRelease-1>", self.form_gui.redraw)
 

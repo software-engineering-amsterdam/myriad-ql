@@ -1,10 +1,12 @@
-from QLS.Stages.parser import Parser as QLSParser
-from QLS.Stages.printHandler import PrintHandler
+from QLS.environment import Environment as QLSEnvironment
 from QLS.errorHandler import ErrorHandler
+from QLS.Stages.parser import Parser as QLSParser
 from QLS.Stages.typeChecker import TypeChecker
+from QLS.Stages.determineWidgetType import DetermineWidgetType
+from QLS.Stages.printHandler import PrintHandler
 
+from QL.environment import Environment as QLEnvironment
 from QL.stages.parser import Parser as QLParser
-from QL.environment import Environment
 from QL.stages.initEnvironment import InitEnvironment
 
 if __name__ == '__main__':
@@ -61,19 +63,25 @@ if __name__ == '__main__':
             }
         }
     """
+    error_handler = ErrorHandler()
 
     qls_parser = QLSParser()
     qls_ast = qls_parser.parse(example_qls)
+    qls_env = QLSEnvironment(error_handler)
 
     ql_parser = QLParser()
     ql_ast = ql_parser.parse(example_ql)
+    ql_env = QLEnvironment(error_handler)
 
-    error_handler = ErrorHandler()
-    ql_env = Environment(error_handler)
+    PrintHandler().print_ast(qls_ast)
+
     InitEnvironment(ql_ast, ql_env, error_handler).start_traversal()
 
-    TypeChecker(qls_ast, ql_env, error_handler).start_traversal()
+    TypeChecker(qls_ast, qls_env, ql_env, error_handler).start_traversal()
     error_handler.check_and_print_errors()
+    DetermineWidgetType(
+        qls_ast, qls_env, ql_env, error_handler
+    ).start_traversal()
 
     # print ql_env.variables
-    # PrintHandler().print_ast(qls_ast)
+    PrintHandler().print_ast(qls_ast)

@@ -100,17 +100,17 @@ class Parser(QLParser):
         return PROP_WIDTH ^ PROP_HEIGHT ^ PROP_FONT ^ PROP_FONTSIZE ^ PROP_COLOR
 
     def define_default(self):
-        # TODO: maybe split up in a default node with props and without.
         header = self.DEFAULT + self.TYPE_NAMES
-        body = pp.Group(
-            pp.OneOrMore(self.property_type) + self.widget_type
+        props = pp.Group(
+            pp.OneOrMore(self.property_type)
         ).setParseAction(self.create_node(AST.BlockNode))
 
-        with_props = header + self.curly_embrace(body)
-        without_props = header + self.widget_type
+        with_props = (header + self.curly_embrace(props + self.widget_type))\
+            .setParseAction(self.create_node(AST.DefaultWithPropsNode))
+        without_props = (header + self.widget_type)\
+            .setParseAction(self.create_node(AST.DefaultNode))
 
-        default = with_props | without_props
-        return default.setParseAction(self.create_node(AST.DefaultNode))
+        return with_props ^ without_props
 
     def define_question(self):
         def create_question():
@@ -124,23 +124,39 @@ class Parser(QLParser):
         return question ^ widget_question
 
     def define_section(self):
-        section = pp.Forward()
+        with_defaults = pp.Forward()
+        without_defaults = pp.Forward()
+
         header = self.SECTION + self.STRING
         body = pp.Group(
-            pp.OneOrMore(self.question | self.default | section)
+            pp.OneOrMore(self.question ^ with_defaults ^ without_defaults)
+        ).setParseAction(self.create_node(AST.BlockNode))
+        defaults = pp.Group(
+            pp.OneOrMore(self.default)
         ).setParseAction(self.create_node(AST.BlockNode))
 
-        section << header + self.curly_embrace(body)
-        return section.setParseAction(self.create_node(AST.SectionNode))
+        with_defaults << (header + self.curly_embrace(body + defaults))\
+            .addParseAction(self.create_node(AST.SectionWithDefaultsNode))
+        without_defaults << (header + self.curly_embrace(body))\
+            .addParseAction(self.create_node(AST.SectionNode))
+
+        return with_defaults ^ without_defaults
 
     def define_page(self):
         header = self.PAGE + self.VARIABLE
-        body = pp.Group(
-            pp.OneOrMore(self.section | self.default)
+        sections = pp.Group(
+            pp.OneOrMore(self.section)
+        ).setParseAction(self.create_node(AST.BlockNode))
+        defaults = pp.Group(
+            pp.OneOrMore(self.default)
         ).setParseAction(self.create_node(AST.BlockNode))
 
-        page = header + self.curly_embrace(body)
-        return page.setParseAction(self.create_node(AST.PageNode))
+        with_defaults = (header + self.curly_embrace(sections + defaults))\
+            .setParseAction(self.create_node(AST.PageWithDefaultsNode))
+        without_defaults = (header + self.curly_embrace(sections))\
+            .setParseAction(self.create_node(AST.PageNode))
+
+        return with_defaults ^ without_defaults
 
     def define_grammar(self):
         header = self.STYLESHEET + self.VARIABLE

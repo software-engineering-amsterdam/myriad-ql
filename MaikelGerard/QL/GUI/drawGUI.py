@@ -14,15 +14,12 @@ class DrawGUI(object):
         self.ast = ast
         self.env = env
 
-        self.update_computed_variables = UpdateComputedVars(ast, env)
-
         self.main = gui("QL Language Form - © 2017")
         self.main.addLabel("header", "Please fill in the form!", 0, 0, 2)
         self.row = 1
 
         self.widgets = OrderedDict()
-        self.build_gui()
-
+        self.update_computed_variables = UpdateComputedVars(ast, env)
         self.set_draw_state = EvaluateDrawState(self.widgets, ast, env)
 
     def show(self):
