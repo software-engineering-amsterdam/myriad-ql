@@ -18,9 +18,5 @@ public class IntegerType extends Type {
 		return v.visit(this);
 	}
 
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Number(name, notifier, (IntegerValue) value);
-	}
 	
 }

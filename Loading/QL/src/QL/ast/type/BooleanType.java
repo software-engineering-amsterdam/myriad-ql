@@ -18,9 +18,6 @@ public class BooleanType extends Type {
 		return v.visit(this);	
 	}
 
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Check(name, notifier, (BoolValue) value);
-	}
+
 
 }

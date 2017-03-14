@@ -18,9 +18,5 @@ public class StringType extends Type {
 		return v.visit(this);
 	}
 
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Text(name, notifier, (StringValue) value);
-	}
 
 }

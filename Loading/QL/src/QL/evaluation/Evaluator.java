@@ -9,7 +9,6 @@ import QL.ast.expression.*;
 import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
-import QL.ast.type.Type;
 import QL.ast.type.UnknownType;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
