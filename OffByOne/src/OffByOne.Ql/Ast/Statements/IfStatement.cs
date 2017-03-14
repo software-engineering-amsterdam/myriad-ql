@@ -18,11 +18,11 @@
             this.ElseStatements = elseStatements;
         }
 
-        public Expression Condition { get; private set; }
+        public Expression Condition { get; }
 
-        public IEnumerable<Statement> Statements { get; private set; }
+        public IEnumerable<Statement> Statements { get; }
 
-        public IEnumerable<Statement> ElseStatements { get; private set; }
+        public IEnumerable<Statement> ElseStatements { get; }
 
         public override TResult Accept<TResult, TContext>(
             IStatementVisitor<TResult, TContext> visitor,

@@ -35,6 +35,16 @@
                         ""Any comments?""
                             comments: string
                     }
+
+                    if (x){ 
+                        ""Y?"" 
+                            y: boolean 
+                    }
+
+                    if (y) { 
+                        ""X?"" 
+                            x: boolean 
+                    }
                 }
             ";
 
