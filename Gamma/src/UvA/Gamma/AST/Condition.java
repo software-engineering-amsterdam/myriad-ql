@@ -19,19 +19,12 @@ public class Condition implements FormItem {
     private List<FormItem> elseBlockItems;
     private BooleanExpression expression;
     private GridPane thenBlockPane;
+    private GridPane elseBlockPane;
 
     public Condition(BooleanExpression expression) {
         this.thenBlockItems = new ArrayList<>();
         this.elseBlockItems = new ArrayList<>();
         this.expression = expression;
-    }
-
-    public List<FormItem> getThenBlockItems() {
-        return thenBlockItems;
-    }
-
-    public List<FormItem> getElseBlockItems() {
-        return elseBlockItems;
     }
 
     public void addThenBlockItem(FormItem item) {
@@ -52,8 +45,10 @@ public class Condition implements FormItem {
         expression.idChanged(changed.isDependencyOf(this), value);
         if (evaluateExpression()) {
             thenBlockPane.setVisible(true);
+            elseBlockPane.setVisible(false);
         } else {
             thenBlockPane.setVisible(false);
+            elseBlockPane.setVisible(true);
         }
 
         thenBlockItems.forEach(item -> item.idChanged(root, changed, value));
@@ -137,13 +132,18 @@ public class Condition implements FormItem {
 
     @Override
     public void show(FXMLExampleController screen) {
-        this.thenBlockPane = screen.startRenderCondition();
+        thenBlockPane = screen.startRenderCondition();
         thenBlockItems.forEach(formItem -> formItem.show(screen));
+        screen.stopRenderCondition();
+
+        elseBlockPane = screen.startRenderCondition();
+        elseBlockItems.forEach(formItem -> formItem.show(screen));
         screen.stopRenderCondition();
 
         if (!evaluateExpression()) {
             thenBlockPane.setVisible(false);
-            elseBlockItems.forEach(formItem -> formItem.show(screen));
+        } else {
+            elseBlockPane.setVisible(false);
         }
     }
 

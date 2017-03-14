@@ -49,7 +49,7 @@ MONEY:  'money';
 NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
 STRING_LITERAL: '"'(~'"')+'"' ;
-ID: [a-zA-Z][a-zA-Z0-9]*;
+ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 //Skipping and hiding
 WHITESPACE: (' ' | '\n' | '\r' | '\t' | '\u000C')+ -> skip;

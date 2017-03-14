@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.util.Stack;
+
 public class FXMLExampleController {
     private int rowCount;
     private Form form;
@@ -18,6 +20,8 @@ public class FXMLExampleController {
 
     public void addFormItem(Form form) {
         rootGrid = grid;
+        conditionStack = new Stack<>();
+        conditionStack.push(rootGrid);
         this.form = form;
         for (FormItem item : form.getFormItems()) {
             item.show(this);
@@ -27,6 +31,8 @@ public class FXMLExampleController {
     @FXML
     private GridPane grid;
     private GridPane rootGrid;
+    private Stack<GridPane> conditionStack;
+
 
     @FXML
     public void showQuestion(Question question) {
@@ -81,11 +87,13 @@ public class FXMLExampleController {
 
     public GridPane startRenderCondition() {
         rootGrid = new GridPane();
+        conditionStack.push(rootGrid);
         return rootGrid;
     }
 
     public void stopRenderCondition() {
-        grid.addRow(++rowCount, rootGrid);
-        rootGrid = grid;
+        GridPane pane = conditionStack.pop();
+        rootGrid = conditionStack.peek();
+        rootGrid.add(pane, 0, ++rowCount, 2, 1);
     }
 }
