@@ -19,7 +19,7 @@ class IdentifierChecker(FormVisitor):
             return errors
 
         self.__symbol_table.clear()
-        [form.apply(self) for form in self.ast]
+        self.ast.apply(self)
         return build_error_list(self.__symbol_table)
 
     def form(self, node):

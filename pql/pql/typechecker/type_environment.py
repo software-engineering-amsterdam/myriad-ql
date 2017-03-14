@@ -11,7 +11,7 @@ class TypeEnvironment(FormVisitor):
 
     def visit(self):
         self.__symbol_table.clear()
-        [form.apply(self) for form in self.ast]
+        self.ast.apply(self)
         return self.__symbol_table
 
     def form(self, node):

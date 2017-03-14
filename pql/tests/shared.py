@@ -14,6 +14,9 @@ class Shared(TestCase):
     def acquire_identifiers(self, ast):
         return IdentifierChecker(ast).visit()
 
+    def acquire_ast(self, input_string):
+        return parse(input_string)
+
     def check_type(self, ast):
         return TypeChecker(ast, TypeEnvironment).visit()
 
@@ -30,13 +33,13 @@ class Shared(TestCase):
         return DependenciesChecker(ast).visit()
 
     def apply_type_checking(self, input_string):
-        form_node = parse(input_string).asList()
+        form_node = parse(input_string)
         errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 0, "There are multiple declarations of a field.")
         return self.check_type(form_node)
 
     def apply_evaluate(self, input_string):
-        form_node = parse(input_string).asList()
+        form_node = parse(input_string)
         errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 0, "There are multiple declarations of a field.")
         type_errors = self.check_type(form_node)

@@ -64,7 +64,7 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         pass
     
     def visit(self):
-        [form.apply(self) for form in pql_ast]
+        self.ast.apply(self)
         b = True
 
     def form(self, node):

@@ -1,18 +1,16 @@
 # coding=utf-8
-import unittest
+from pql.typechecker.types import DataTypes
+from tests.shared import Shared
 
-from pql.parser.parser import *
 
-
-class TestAst(unittest.TestCase):
+class TestAst(Shared):
     def test_ast_single_question(self):
         input_string = """
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
         field_node_1 = form_node.statements[0]
@@ -28,8 +26,7 @@ class TestAst(unittest.TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(2, len(form_node.statements))
@@ -50,8 +47,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -73,8 +69,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice + privateDebt - interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -101,8 +96,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt + interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -129,8 +123,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  (sellingPrice - privateDebt) * debt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -158,8 +151,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt * debt *  salary + interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -198,8 +190,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -230,8 +221,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -270,8 +260,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -316,8 +305,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -362,8 +350,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -420,8 +407,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -466,8 +452,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -506,8 +491,7 @@ class TestAst(unittest.TestCase):
                 "Did you buy a house in 2010?" hasBoughtHouse: boolean
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -552,8 +536,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -608,8 +591,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -664,8 +646,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  +privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -690,8 +671,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  -privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -716,8 +696,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  !privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -742,8 +721,7 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice && (!privateDebt || hasLoans)
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 

@@ -23,8 +23,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.conditional_if_else_list = list(tuple())
 
     def visit(self):
-        for form in self.ast:
-            self.wizard.add_page(form.apply(self))
+        self.wizard.add_page(self.ast.apply(self))
         self.render_conditionals()
         return self.wizard
 

@@ -13,7 +13,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def visit(self):
         self.errors.clear()
-        [form.apply(self) for form in self.ast]
+        self.ast.apply(self)
         return self.errors
 
     def form(self, node):

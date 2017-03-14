@@ -13,7 +13,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def visit(self):
         #TODO make environment receive and return environment instead of having it as instance variable
-        [form.apply(self) for form in self.ast]
+        self.ast.apply(self)
         return self.__environment
 
     def form(self, node):
