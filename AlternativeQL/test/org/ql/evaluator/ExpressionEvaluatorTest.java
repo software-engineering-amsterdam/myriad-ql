@@ -224,7 +224,9 @@ public class ExpressionEvaluatorTest {
     public void shouldReturnBooleanTrueValueOnNotEqualsUsingDecimals() {
         ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
-        NotEqual actualNotEquals = new NotEqual(new DecimalLiteral(new BigDecimal(5)), new DecimalLiteral(new BigDecimal(4)));
+        NotEqual actualNotEquals = new NotEqual(
+                new DecimalLiteral(new BigDecimal(5)),
+                new DecimalLiteral(new BigDecimal(4)));
         BooleanValue actualBooleanValue = (BooleanValue) expressionEvaluator.visitNotEqual(actualNotEquals, null);
 
         assertTrue(actualBooleanValue.getPlainValue());

@@ -1,4 +1,4 @@
-package org.ql.gui.elements.visitor;
+package org.ql.evaluator;
 
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -38,7 +38,7 @@ public class ConditionEvaluatorTest {
         valueTable.declare(new Identifier("third"), new IntegerValue(48));
 
         ConditionEvaluator visitor = new ConditionEvaluator();
-        List<Element> visibleElements = visitor.visitForm(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
+        List<Question> visibleElements = visitor.visitForm(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
                 add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
             }}, new ArrayList<Statement>() {{
@@ -48,16 +48,5 @@ public class ConditionEvaluatorTest {
                 )));
             }}));
         }}), valueTable);
-    }
-
-    private WidgetContainer mockQuestionElementBuilder() {
-        WidgetContainer elementBuilder = mock(WidgetContainer.class);
-        when(elementBuilder.visitIntegerType(any(IntegerType.class), any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
-            @Override
-            public IntegerElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new IntegerElement(mock(GUIMediator.class), mock(Identifier.class), mock(IntegerInputWidget.class));
-            }
-        });
-        return elementBuilder;
     }
 }

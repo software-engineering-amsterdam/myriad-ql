@@ -5,6 +5,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.BooleanValue;
+import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.mediator.GUIMediator;
 
@@ -22,6 +23,10 @@ public class CheckBoxWidget extends Widget {
 
     @Override
     public void updateValue(Value value) {
+        if (value.isUndefined()) {
+            return;
+        }
+
         checkBox.setSelected(value.toBoolean());
     }
 

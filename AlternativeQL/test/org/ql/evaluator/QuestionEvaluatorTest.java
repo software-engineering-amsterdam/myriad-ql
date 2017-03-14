@@ -1,4 +1,4 @@
-package org.ql.gui.elements.visitor;
+package org.ql.evaluator;
 
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -23,6 +23,7 @@ import org.ql.gui.widgets.IntegerInputWidget;
 import org.ql.gui.widgets.WidgetContainer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -35,7 +36,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(15));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(modifiedQuestions);
+        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
@@ -51,7 +52,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new UnknownValue());
 
-        QuestionEvaluator visitor = new QuestionEvaluator(modifiedQuestions);
+        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
@@ -68,7 +69,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(modifiedQuestions);
+        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
@@ -88,7 +89,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(modifiedQuestions);
+        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
@@ -102,16 +103,5 @@ public class QuestionEvaluatorTest {
         }}), actualValueTable);
 
         assertTrue(expectedValueTable.equals(actualValueTable));
-    }
-
-    private WidgetContainer mockQuestionElementBuilder() {
-        WidgetContainer elementBuilder = mock(WidgetContainer.class);
-        when(elementBuilder.retrieveWidget(any(Question.class))).thenAnswer(new Answer<IntegerElement>() {
-            @Override
-            public IntegerElement answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return new IntegerElement(mock(GUIMediator.class), mock(Identifier.class), mock(IntegerInputWidget.class));
-            }
-        });
-        return elementBuilder;
     }
 }

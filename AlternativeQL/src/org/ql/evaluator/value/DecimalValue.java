@@ -67,7 +67,7 @@ public class DecimalValue extends Value {
 
     @Override
     public Value notEqual(DecimalValue comparable) {
-        return new BooleanValue(comparable.value.equals(value.floatValue()));
+        return new BooleanValue(comparable.value.floatValue() != value.floatValue());
     }
 
     @Override
