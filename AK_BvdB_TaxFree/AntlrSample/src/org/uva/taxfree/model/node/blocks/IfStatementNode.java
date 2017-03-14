@@ -1,5 +1,6 @@
 package org.uva.taxfree.model.node.blocks;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
@@ -12,6 +13,12 @@ public class IfStatementNode extends BlockNode {
     public IfStatementNode(ExpressionNode expression, List<Node> children) {
         super(children);
         mExpression = expression;
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        super.checkSemantics(symbolTable, semanticsMessages);
+        mExpression.checkSemantics(symbolTable, semanticsMessages);
     }
 
     @Override

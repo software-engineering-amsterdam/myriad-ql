@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,11 @@ public class QuestionForm implements FormListener {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                mSymbolTable.export(caption + ".txdata");
+                try {
+                    mSymbolTable.export(caption + ".txdata");
+                } catch (IOException error) {
+                    MessageWindow.showMessage("Unable to write results to file:\r\n" + error.getMessage());
+                }
             }
         });
         return frame;

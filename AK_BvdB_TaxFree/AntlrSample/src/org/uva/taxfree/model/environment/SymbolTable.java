@@ -132,15 +132,11 @@ public class SymbolTable {
         return visibleDeclarations;
     }
 
-    public void export(String fileName) {
-        try {
-            FileWriter results = new FileWriter(fileName);
-            for (Declaration declaration : mDeclarations) {
-                results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
-            }
-            results.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void export(String fileName) throws IOException {
+        FileWriter results = new FileWriter(fileName);
+        for (Declaration declaration : mDeclarations) {
+            results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
         }
+        results.close();
     }
 }
