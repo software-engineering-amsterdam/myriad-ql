@@ -23,4 +23,7 @@ public class GuiForm extends GuiBody {
         visitor.visit(this);
     }
 
+    // TODO irrelevant method for form
+    @Override
+    public void isVisible(final boolean flag) {}
 }

@@ -14,4 +14,6 @@ public abstract class GuiBody {
 
     public abstract void accept(EvaluateVisitor visitor);
 
+    public abstract void isVisible(boolean flag);
+
 }

@@ -41,4 +41,9 @@ public class GuiQuestion extends GuiBody {
         visitor.visit(this);
     }
 
+    @Override
+    public void isVisible(final boolean flag) {
+        labelElement.getWidget().setVisible(flag);
+        element.getWidget().setVisible(flag);
+    }
 }

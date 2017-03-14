@@ -22,7 +22,18 @@ import org.lemonade.gui.expressions.binary.GuiPlusBinary;
 import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.expressions.unary.GuiBangUnary;
 import org.lemonade.gui.expressions.unary.GuiNegUnary;
-import org.lemonade.gui.values.*;
+import org.lemonade.gui.values.GuiBooleanValue;
+import org.lemonade.gui.values.GuiComparableValue;
+import org.lemonade.gui.values.GuiDateValue;
+import org.lemonade.gui.values.GuiDecimalValue;
+import org.lemonade.gui.values.GuiIdentifierValue;
+import org.lemonade.gui.values.GuiIntegerValue;
+import org.lemonade.gui.values.GuiLabelValue;
+import org.lemonade.gui.values.GuiMoneyValue;
+import org.lemonade.gui.values.GuiNumericalValue;
+import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
+import org.lemonade.gui.values.GuiValue;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 /**
@@ -53,7 +64,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
     @Override
     public void visit(final GuiConditional conditional) {
         GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
-        if (condition.isDefined()) {
+        if (condition.isDefined() && ((GuiBooleanValue) condition).getValue()) {
+            conditional.isVisible(true);
             for (GuiBody body : conditional.getBodies()) {
                 body.accept(this);
             }
@@ -85,8 +97,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         if (!guiEqBinary.accept(definedCheckVisitor)) {
             return new GuiUndefinedValue();
         }
-        GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft();
-        GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight();
+        GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight().accept(this);
         return new GuiBooleanValue(left.equals(right));//TODO Wrap this
     }
 
@@ -230,9 +242,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiIdentifierValue guiIdentifierValue) {
-        //TODO add in additional checks if variable is in the environment.
-        GuiValue<?> value = guiEnvironment.get(guiIdentifierValue);
-        return value;
+        return guiEnvironment.containsKey(guiIdentifierValue.getValue()) ? guiEnvironment.get(guiIdentifierValue.getValue()) : new GuiUndefinedValue();
     }
 
     @Override

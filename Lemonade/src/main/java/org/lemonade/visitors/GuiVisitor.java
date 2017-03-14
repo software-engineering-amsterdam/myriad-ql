@@ -120,14 +120,14 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GridPane.setConstraints(element.getWidget(), 1, 0);
         gridPane.getChildren().addAll(labelElement.getWidget(), element.getWidget());
 
-        gridPane.managedProperty().bind(gridPane.visibleProperty());
+        labelElement.getWidget().managedProperty().bind(labelElement.getWidget().visibleProperty());
+        element.getWidget().managedProperty().bind(element.getWidget().visibleProperty());
 
         pane.addRow(rowCount, gridPane);
 
         return guiQuestion;
     }
 
-    // TODO: figure out how to store related identifiers
     @Override
     public GuiBody visit(final Conditional conditional) {
         List<GuiBody> conditionalBodies = new ArrayList<>();
@@ -136,7 +136,9 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         }
 
         GuiExpression expression = conditional.getCondition().accept(this);
-        return new GuiConditional(conditionalBodies, expression);
+        GuiConditional guiConditional = new GuiConditional(conditionalBodies, expression);
+        guiConditional.isVisible(false);
+        return guiConditional;
     }
 
     @Override
