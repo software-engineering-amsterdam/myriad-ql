@@ -1,6 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.expressions;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.utils.ScriptEngineUtils;
 
@@ -40,12 +41,12 @@ public class Expression extends ASTNode{
         this.operator = operator;
     }
 
-    public String evaluateExpression() {
-        return "(" + this.left.evaluateExpression() + operator + this.right.evaluateExpression() + ")";
+    public String evaluateExpression(EnvironmentsTable environmentsTable) {
+        return "(" + this.left.evaluateExpression(environmentsTable) + operator + this.right.evaluateExpression(environmentsTable) + ")";
     }
 
-    public String evaluate() throws ScriptException {
-        return evaluate(evaluateExpression());
+    public String evaluate(EnvironmentsTable environmentsTable) throws ScriptException {
+        return evaluate(evaluateExpression(environmentsTable));
     }
 
     protected String evaluate(String exp) throws ScriptException {

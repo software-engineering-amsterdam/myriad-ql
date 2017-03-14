@@ -1,5 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes.expressions.literals;
 
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 import javax.script.ScriptException;
@@ -11,16 +12,8 @@ public class Identifier extends Literal{
     }
 
     @Override
-    public String evaluateExpression() {
-        String eval= null;
-
-        try {
-            eval =  evaluate(this.getId());
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
-
-        return eval;
+    public String evaluateExpression(EnvironmentsTable environmentsTable) {
+        return environmentsTable.find(getId());
     }
 
     @Override

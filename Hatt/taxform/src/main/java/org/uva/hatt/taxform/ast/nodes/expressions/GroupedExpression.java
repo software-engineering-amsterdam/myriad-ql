@@ -1,5 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes.expressions;
 
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 public class GroupedExpression extends Expression{
@@ -19,8 +20,8 @@ public class GroupedExpression extends Expression{
     }
 
     @Override
-    public String evaluateExpression() {
-        return expression.evaluateExpression();
+    public String evaluateExpression(EnvironmentsTable environmentsTable) {
+        return expression.evaluateExpression(environmentsTable);
     }
 
     @Override
