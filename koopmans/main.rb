@@ -13,6 +13,8 @@ include NotificationTable
 
 # read file
 
+gui = QL::GUI::GUI.new
+
 # parse content
 ql_contents = File.read('examples/simple_questionnaire.ql')
 # pp ql_contents
@@ -21,6 +23,9 @@ pp ql_parse_tree
 ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 # pp ql_ast
 pp ql_ast
+question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
+gui.question_frames = question_frames
+gui.run
 # QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # pp NotificationTable.index
 ql_notifications = nil
@@ -38,6 +43,6 @@ ql_notifications = nil
 #
 qls_ast = nil
 # #
-question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
-gui = QL::GUI::GUI.new(question_frames)
-gui.run
+# question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
+# gui.question_frames = question_frames
+# gui.run

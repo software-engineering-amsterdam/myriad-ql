@@ -3,11 +3,14 @@ require 'tk'
 module QL
   module GUI
     class GUI
+      attr_writer :question_frames
+
       def initialize(question_frames=nil)
         @question_frames = question_frames
       end
 
       def run
+        check_notifications
         render_questions
         render_submit_button
         Tk.mainloop
@@ -44,6 +47,10 @@ module QL
 
       def enabled_questions
         @question_frames.each.select(&:enabled)
+      end
+
+      def check_notifications
+
       end
     end
   end
