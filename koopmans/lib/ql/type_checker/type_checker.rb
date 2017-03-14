@@ -60,7 +60,6 @@ module QL
           assignment_variables = computed_question.assignment.accept(ExpressionVariableCollector.new).flatten.compact
           variable_dependencies[computed_question.variable.name] = assignment_variables
         end
-
         ast.accept(CyclicDependencyChecker.new, variable_dependencies)
       end
 

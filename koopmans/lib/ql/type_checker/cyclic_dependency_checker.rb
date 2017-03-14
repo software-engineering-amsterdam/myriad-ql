@@ -42,8 +42,8 @@ module QL
         binary_expression.expression.accept(self)
       end
 
-      # nothing has to be done with a literal
-      def visit_literal(_)
+      def visit_literal(literal)
+        literal
       end
 
       def visit_variable(variable)
@@ -71,6 +71,8 @@ module QL
             end
           end
         end
+        # return variable for the sake of .accept
+        variable
       end
     end
   end

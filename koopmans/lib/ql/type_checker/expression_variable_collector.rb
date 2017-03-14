@@ -1,6 +1,8 @@
 module QL
   module TypeChecker
     class ExpressionVariableCollector
+      include AST
+
       def visit_form(form, collected_data=nil)
         form.statements.map { |statement| statement.accept(self) }
       end
@@ -15,7 +17,8 @@ module QL
 
       # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
-        [if_statement.condition.accept(self), if_statement.body.map { |statement| statement.accept(self) }]
+        if_statement.condition.accept(self)
+        if_statement.body.map { |statement| statement.accept(self) }
       end
 
       # visit operation in expression
@@ -30,8 +33,16 @@ module QL
       end
 
       def visit_binary_expression(left, binary_expression)
-        left  = left.accept(self)
-        right = binary_expression.expression.accept(self)
+        if left.kind_of?(Array)
+          left = left
+        else
+          left = left.accept(self)
+        end
+        if binary_expression.expression.kind_of?(Array)
+          right = binary_expression.expression
+        else
+          right = binary_expression.expression.accept(self)
+        end
         [left, right]
       end
 
@@ -39,7 +50,7 @@ module QL
         negation.expression.accept(self)
       end
 
-      # literal should return empty array
+      # nothing has to be done with a question
       def visit_literal(_)
         []
       end
