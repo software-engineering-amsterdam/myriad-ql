@@ -35,12 +35,24 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
 
     public abstract GuiNumericalValue<?> neg();
 
+    public boolean isInteger(){
+        return false;
+    }
+
+    public boolean isDecimal(){
+        return false;
+    }
+
+    public boolean isMoney(){
+        return false;
+    }
+
     public GuiNumericalValue<?> plus(final GuiNumericalValue<?> that) {
-        if (that.getType().isOf(new QLIntegerType().getClass())) {
+        if (that.isInteger()) {
             return this.plus((GuiIntegerValue) that);
-        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
+        } else if (that.isDecimal()) {
             return this.plus((GuiDecimalValue) that);
-        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
+        } else if (that.isMoney()) {
             return this.plus((GuiMoneyValue) that);
         } else {
             throw new IllegalArgumentException();
@@ -48,11 +60,11 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
     }
 
     public GuiNumericalValue<?> product(final GuiNumericalValue<?> that) {
-        if (that.getType().isOf(new QLIntegerType().getClass())) {
+        if (that.isInteger()) {
             return this.product((GuiIntegerValue) that);
-        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
+        } else if (that.isDecimal()) {
             return this.product((GuiDecimalValue) that);
-        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
+        } else if (that.isMoney()) {
             return this.product((GuiMoneyValue) that);
         } else {
             throw new IllegalArgumentException();
@@ -60,11 +72,11 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
     }
 
     public GuiNumericalValue<?> minus(final GuiNumericalValue<?> that) {
-        if (that.getType().isOf(QLIntegerType.class)) {
+        if (that.isInteger()) {
             return this.minus((GuiIntegerValue) that);
-        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
+        } else if (that.isDecimal()) {
             return this.minus((GuiDecimalValue) that);
-        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
+        } else if (that.isMoney()) {
             return this.minus((GuiMoneyValue) that);
         } else {
             throw new IllegalArgumentException();
@@ -72,11 +84,11 @@ public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
     }
 
     public GuiNumericalValue<?> divide(final GuiNumericalValue<?> that) {
-        if (that.getType().isOf(new QLIntegerType().getClass())) {
+        if (that.isInteger()) {
             return this.divide((GuiIntegerValue) that);
-        } else if (that.getType().isOf(new QLDecimalType().getClass())) {
+        } else if (that.isDecimal()) {
             return this.divide((GuiDecimalValue) that);
-        } else if (that.getType().isOf(new QLMoneyType().getClass())) {
+        } else if (that.isMoney()) {
             return this.divide((GuiMoneyValue) that);
 
         } else {
