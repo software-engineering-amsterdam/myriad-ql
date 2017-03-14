@@ -48,7 +48,7 @@ public abstract class Widget {
         symbolTable.updateValue(mId, resolveValue());
     }
 
-    protected String readFromtable(SymbolTable symbolTable) {
+    protected String readFromTable(SymbolTable symbolTable) {
         return symbolTable.resolveValue(mId);
     }
 

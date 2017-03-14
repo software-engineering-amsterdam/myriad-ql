@@ -12,12 +12,12 @@ public class Declaration {
         mNode = node;
     }
 
-    public void setValue(String value) {
-        mValue = value;
-    }
-
     public String getValue() {
         return mValue;
+    }
+
+    public void setValue(String value) {
+        mValue = value;
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.uva.taxfree.ast;
 
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.blocks.FormNode;
@@ -23,15 +22,16 @@ import org.uva.taxfree.model.types.IntegerType;
 import org.uva.taxfree.model.types.StringType;
 import org.uva.taxfree.model.types.Type;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import static org.uva.taxfree.gen.QLGrammarParser.*;
 
 public class GrammarListener extends QLGrammarBaseListener {
-    private FormNode mRootNode;
-
     private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
+    private FormNode mRootNode;
 
     public GrammarListener() {
 
@@ -202,7 +202,7 @@ public class GrammarListener extends QLGrammarBaseListener {
         super.exitIfElseStatement(ctx);
         List<Node> allChildes = popChildStack();
 
-        int splitIndex= ctx.thenStatements.size();
+        int splitIndex = ctx.thenStatements.size();
         List<Node> thenStatementNodes = new ArrayList<>(allChildes.subList(0, splitIndex));
         List<Node> elseStatementNodes = new ArrayList<>(allChildes.subList(splitIndex, allChildes.size()));
 
