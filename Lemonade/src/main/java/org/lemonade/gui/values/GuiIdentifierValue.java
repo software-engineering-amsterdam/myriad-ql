@@ -12,7 +12,6 @@ public class GuiIdentifierValue extends GuiValue<String> {
 
     @Override
     public String getValue() {
-
         return value;
     }
 

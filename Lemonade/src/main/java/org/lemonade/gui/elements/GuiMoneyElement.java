@@ -29,11 +29,17 @@ public class GuiMoneyElement implements GuiElement {
 
     private void validate(String text) {
         if (!text.matches("[-+]?[0-9]*\\.?[0-9]+"))
-            this.value = new GuiUndefinedValue();
-        else if (this.value.isDefined())
-            ((GuiMoneyValue) this.value).update(Double.valueOf(text));
+            value = new GuiUndefinedValue();
+        else if (value.isDefined())
+            ((GuiMoneyValue) value).update(Double.valueOf(text));
         else
-            this.value = new GuiMoneyValue(Double.valueOf(text));
+            value = new GuiMoneyValue(Double.valueOf(text));
+    }
+
+    @Override
+    public void clear() {
+        value = new GuiUndefinedValue();
+        textField.setText("");
     }
 
     @Override

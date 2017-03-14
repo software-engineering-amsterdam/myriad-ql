@@ -28,11 +28,17 @@ public class GuiDateElement implements GuiElement {
     public void update() {
         LocalDate pickerValue = picker.getValue();
         if (pickerValue == null)
-            this.value = new GuiUndefinedValue();
-        else if (this.value.isDefined())
-            ((GuiDateValue) this.value).update(pickerValue);
+            value = new GuiUndefinedValue();
+        else if (value.isDefined())
+            ((GuiDateValue) value).update(pickerValue);
         else
-            this.value = new GuiDateValue(pickerValue);
+            value = new GuiDateValue(pickerValue);
+    }
+
+    @Override
+    public void clear() {
+        value = new GuiUndefinedValue();
+        picker.setValue(null);
     }
 
     @Override

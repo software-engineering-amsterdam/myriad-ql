@@ -108,7 +108,6 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
         final GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(3, 6, 3, 6));
-        //        gridPane.setMaxWidth(560);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
@@ -119,9 +118,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GridPane.setConstraints(labelElement.getWidget(), 0, 0);
         GridPane.setConstraints(element.getWidget(), 1, 0);
         gridPane.getChildren().addAll(labelElement.getWidget(), element.getWidget());
-
-        labelElement.getWidget().managedProperty().bind(labelElement.getWidget().visibleProperty());
-        element.getWidget().managedProperty().bind(element.getWidget().visibleProperty());
+        gridPane.managedProperty().bind(gridPane.visibleProperty());
 
         pane.addRow(rowCount, gridPane);
 
@@ -133,6 +130,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         List<GuiBody> conditionalBodies = new ArrayList<>();
         for (Body body : conditional.getBodies()) {
             conditionalBodies.add(body.accept(this));
+            rowCount++;
         }
 
         GuiExpression expression = conditional.getCondition().accept(this);

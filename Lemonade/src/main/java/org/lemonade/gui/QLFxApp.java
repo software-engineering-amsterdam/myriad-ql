@@ -18,12 +18,15 @@ import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 import javafx.application.Application;
-import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -83,7 +86,7 @@ public class QLFxApp extends Application {
     }
 
     private void goToQuestionnaire(File file, Stage stage) {
-        String contents = null;
+        String contents;
 
         try {
             final Button submitButton = new Button("Submit form");
@@ -126,9 +129,9 @@ public class QLFxApp extends Application {
             Form root = (Form) tree.accept(visitor);
 
             TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
-            GuiVisitor guiVisitor = new GuiVisitor(gridPane);
-
             root.accept(typeCheckVisitor);
+
+            GuiVisitor guiVisitor = new GuiVisitor(gridPane);
             GuiForm guiRoot = (GuiForm) root.accept(guiVisitor);
 
             submitButton.setOnAction(e -> {
@@ -136,19 +139,9 @@ public class QLFxApp extends Application {
                 submitForm(guiRoot, gridPane);
             });
 
-            Task task = new Task<Void>() {
-                EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
-
-                @Override
-                protected Void call() throws Exception {
-                    while (!isSubmitted) {
-                        guiRoot.accept(evaluateVisitor);
-                    }
-                    return null;
-                }
-            };
-
-            new Thread(task).start();
+            EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
+            rootGroup.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> guiRoot.accept(evaluateVisitor));
+            rootGroup.addEventFilter(KeyEvent.KEY_RELEASED, e -> guiRoot.accept(evaluateVisitor));
 
             stage.setScene(questionnaireScene);
 

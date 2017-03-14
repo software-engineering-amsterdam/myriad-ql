@@ -15,4 +15,6 @@ public interface GuiElement {
 
     void update();
 
+    void clear();
+
 }

@@ -26,11 +26,17 @@ public class GuiStringElement implements GuiElement {
     public void update() {
         String textFieldValue = textField.getText();
         if (textFieldValue.equals(""))
-            this.value = new GuiUndefinedValue();
-        else if (this.value.isDefined())
-            ((GuiStringValue) this.value).update(textFieldValue);
+            value = new GuiUndefinedValue();
+        else if (value.isDefined())
+            ((GuiStringValue) value).update(textFieldValue);
         else
-            this.value = new GuiStringValue(textFieldValue);
+            value = new GuiStringValue(textFieldValue);
+    }
+
+    @Override
+    public void clear() {
+        value = new GuiUndefinedValue();
+        textField.setText("");
     }
 
     @Override

@@ -34,7 +34,9 @@ public class GuiConditional extends GuiBody {
     @Override
     public void isVisible(final boolean flag) {
         bodies.forEach(body -> {
-            if (body.isQuestion())
+            if (body.isQuestion() && flag)
+                body.isVisible(flag);
+            else if (!flag)
                 body.isVisible(flag);
         });
     }
