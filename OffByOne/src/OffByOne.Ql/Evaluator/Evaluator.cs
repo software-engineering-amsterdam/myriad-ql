@@ -15,6 +15,11 @@
             return expression.Accept(new Evaluator(), environment);
         }
 
+        public IValue Visit(Expression expression, TypeEnvironment environment)
+        {
+            return expression.Accept(this, environment);
+        }
+
         public IValue Visit(AddExpression expression, TypeEnvironment environment)
         {
             return expression.LeftExpression

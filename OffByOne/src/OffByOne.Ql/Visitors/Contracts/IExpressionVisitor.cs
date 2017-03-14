@@ -8,6 +8,8 @@
     public interface IExpressionVisitor<out TResult, in TEnvironment> : IVisitor
         where TEnvironment : IEnvironment
     {
+        TResult Visit(Expression expression, TEnvironment environment);
+
         TResult Visit(AddExpression expression, TEnvironment environment);
 
         TResult Visit(SubtractExpression expression, TEnvironment environment);
