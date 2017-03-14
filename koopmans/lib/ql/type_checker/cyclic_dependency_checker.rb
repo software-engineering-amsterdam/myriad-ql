@@ -1,8 +1,6 @@
 module QL
   module TypeChecker
     class CyclicDependencyChecker
-      include Notification
-
       def visit_form(form, collected_data=nil)
         @variable_dependencies = collected_data
         form.statements.map { |statement| statement.accept(self) }
@@ -69,7 +67,7 @@ module QL
             if next_dependent_variables
               @variable_dependencies[variable.name] = dependent_variables | next_dependent_variables
               if @variable_dependencies[variable.name].map(&:name).include?(variable.name)
-                NotificationTable.store(Error.new("question '#{variable.name}' has a cyclic dependency"))
+                NotificationTable.store(Notification::Error.new("question '#{variable.name}' has a cyclic dependency"))
               else
                 visit_variable(dependent_variable)
               end

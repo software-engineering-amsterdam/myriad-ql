@@ -1,9 +1,6 @@
 module QL
   module TypeChecker
     class OperandsTypeChecker
-      include AST
-      include Notification
-
       def visit_form(form, collected_data=nil)
         @variable_types = collected_data
         form.statements.map { |statement| statement.accept(self) }
@@ -70,8 +67,8 @@ module QL
 
       # check if if condition is of boolean type
       def check_if_condition(if_statement, condition_type)
-        unless condition_type.is_a?(BooleanType)
-          NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))
+        unless condition_type.is_a?(AST::BooleanType)
+          NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
         end
       end
     end
