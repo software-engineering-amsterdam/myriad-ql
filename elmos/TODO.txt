@@ -1,6 +1,5 @@
 QL:
--TypeChecker:
---> Don't report type error if float field contains an int + tests
+
 
 QLS UI:
 -Widgets:

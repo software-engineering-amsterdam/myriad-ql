@@ -2,7 +2,7 @@ module QL.TypeChecker.Expressions.ComputedFieldTypes exposing (computedFieldType
 
 import Dict exposing (Dict)
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
-import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType, Location)
+import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(MoneyType, IntegerType), Location)
 import QL.AST.Collectors as Collectors exposing (QuestionTypes)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidComputedFieldType))
 
@@ -26,12 +26,17 @@ computationToType questionTypes ( name, computation ) =
             Nothing
 
 
-badComputedField : ( Id, ValueType, ValueType ) -> Bool
-badComputedField ( _, computedType, fieldType ) =
-    computedType /= fieldType
-
-
 withExpectedType : QuestionTypes -> ( Id, ValueType ) -> Maybe ( Id, ValueType, ValueType )
 withExpectedType questionTypes ( ( name, _ ) as id, actualType ) =
     Dict.get name questionTypes
         |> Maybe.map (\expectedType -> ( id, actualType, expectedType ))
+
+
+badComputedField : ( Id, ValueType, ValueType ) -> Bool
+badComputedField ( _, computationType, fieldType ) =
+    case ( computationType, fieldType ) of
+        ( IntegerType, MoneyType ) ->
+            False
+
+        _ ->
+            computationType /= fieldType
