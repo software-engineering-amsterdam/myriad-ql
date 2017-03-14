@@ -83,8 +83,9 @@
     <Compile Include="Ast\Literals\MoneyLiteralTests.cs" />
     <Compile Include="Ast\Literals\StringLiteralTests.cs" />
     <Compile Include="Checker\CheckerReportTests.cs" />
-    <Compile Include="Checker\QuestionVisitorTypeEnvironmentTests.cs" />
-    <Compile Include="Checker\VisitorTypeEnvironmentTests.cs" />
+    <Compile Include="Checker\Analyzers\Environment\QuestionVisitorTypeEnvironmentTests.cs" />
+    <Compile Include="Checker\Analyzers\Environment\VisitorTypeEnvironmentTests.cs" />
+    <Compile Include="Checker\TypeAnalyzerTests.cs" />
     <Compile Include="Evaluator\BooleanValueTests.cs" />
     <Compile Include="Evaluator\DateValueTests.cs" />
     <Compile Include="Evaluator\DecimalValueTests.cs" />

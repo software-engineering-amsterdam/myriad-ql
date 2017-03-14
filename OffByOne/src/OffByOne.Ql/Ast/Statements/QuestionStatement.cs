@@ -39,7 +39,7 @@
 
         public override ISet<string> GetDependencies()
         {
-            var identifiers = new SortedSet<string> { this.Identifier };
+            var identifiers = new SortedSet<string>();
             if (this.ComputationExpression != null)
             {
                 identifiers.UnionWith(this.ComputationExpression.GetDependencies());

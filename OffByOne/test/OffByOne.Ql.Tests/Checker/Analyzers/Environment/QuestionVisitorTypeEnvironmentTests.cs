@@ -1,8 +1,7 @@
-﻿namespace OffByOne.Ql.Tests.Checker
+﻿namespace OffByOne.Ql.Tests.Checker.Analyzers.Environment
 {
     using System;
 
-    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Analyzers.Environment;
 
     using Xunit;

@@ -34,22 +34,22 @@
 
         public override IValue Add(IntegerValue other)
         {
-            return new StringValue(this.Value + other.Value);
+            return new StringValue(this.Value + other.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         public override IValue Add(DecimalValue other)
         {
-            return new StringValue(this.Value + other.Value);
+            return new StringValue(this.Value + other.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         public override IValue Add(MoneyValue other)
         {
-            return new StringValue(this.Value + other.Value);
+            return new StringValue(this.Value + other.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         public override IValue Add(DateValue other)
         {
-            return new StringValue(this.Value + other.Value);
+            return new StringValue(this.Value + other.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         public override IValue Add(StringValue other)

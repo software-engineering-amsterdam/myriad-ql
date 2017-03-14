@@ -48,7 +48,7 @@
 
         public override IValue Add(StringValue other)
         {
-            return new StringValue(other.Value + this.Value);
+            return new StringValue(other.Value + this.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         public override IValue Substract(IValue other)
