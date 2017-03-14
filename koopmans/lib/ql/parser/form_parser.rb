@@ -46,6 +46,7 @@ module QL
       rule(:body) { _ >> (question | if_else_statement | if_statement).repeat(1).as(:body) }
       rule(:if_statement) { (str('if') >> _ >> expression.as(:condition) >> str('{') >> body >> str('}')).as(:if_statement) >> _ }
       rule(:if_else_statement) { (if_statement >> _ >> str('else') >> _ >> str('{') >> body >> str('}')).as(:if_else_statement) >> _ }
+
       # form
       rule(:form) { _ >> (str('form') >> _ >> variable.as(:id) >> _ >> str('{') >> body >> str('}')).as(:form) }
     end
