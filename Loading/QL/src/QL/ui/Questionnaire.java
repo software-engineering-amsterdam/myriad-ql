@@ -107,12 +107,12 @@ public class Questionnaire extends Application implements Notifier {
             			return;
             		}            		
             	}  
-            	complete(actiontarget, activeQuestions);
+            	complete(activeQuestions, actiontarget);
             }
         });
     }
     
-    private void complete(Text actiontarget, List<Row> activeQuestions) {
+    private void complete(List<Row> activeQuestions, Text actiontarget) {
         
     	actiontarget.setFill(Color.GREEN);
         actiontarget.setText("Thank you for filling in the questionnaire");
