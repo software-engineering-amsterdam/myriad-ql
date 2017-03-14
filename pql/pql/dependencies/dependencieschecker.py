@@ -12,9 +12,6 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         self.ast_stack = list()
         self.properties = defaultdict(list)
 
-    def value(self, node):
-        pass
-
     def identifier(self, node):
         return node.name
 

@@ -1,7 +1,8 @@
 # coding=utf-8
-from collections import defaultdict
 
-from pyparsing import lineno, col
+from pyparsing import lineno
+
+from pql.typechecker.types import DataTypes
 
 
 class Node(object):
@@ -214,13 +215,43 @@ class Inequality(BinaryOperation):
 
 
 class Value(Node):
-    def __init__(self, position, source, value, data_type):
-        super(Value, self).__init__('value', position, source)
+    def __init__(self, var_type, position, source, value, data_type):
+        super(Value, self).__init__(var_type, position, source)
         self.value = value
         self.data_type = data_type
 
+
+class Integer(Value):
+    def __init__(self, position, source, value):
+        super(Integer, self).__init__("integer", position, source, value, DataTypes.integer)
+
     def apply(self, visitor):
-        return visitor.value(self)
+        return visitor.integer(self)
+
+    def default_value(self):
+        return int(0)
+
+
+class Boolean(Value):
+    def __init__(self, position, source, value):
+        super(Boolean, self).__init__("boolean", position, source, value, DataTypes.boolean)
+
+    def apply(self, visitor):
+        return visitor.boolean(self)
+
+    def default_value(self):
+        return False
+
+
+class Money(Value):
+    def __init__(self, position, source, value):
+        super(Money, self).__init__("money", position, source, value, DataTypes.money)
+
+    def apply(self, visitor):
+        return visitor.money(self)
+
+    def default_value(self):
+        return float(0.00)
 
 
 class Identifier(Node):
@@ -230,39 +261,3 @@ class Identifier(Node):
 
     def apply(self, visitor):
         return visitor.identifier(self)
-
-
-class Integer(Node):
-    def __init__(self, position, source, data_type):
-        super(Integer, self).__init__("integer", position, source)
-        self.data_type = data_type
-
-    def apply(self, visitor):
-        return visitor.integer(self)
-
-    def default_value(self):
-        return int(0)
-
-
-class Boolean(Node):
-    def __init__(self, position, source, data_type):
-        super(Boolean, self).__init__("boolean", position, source)
-        self.data_type = data_type
-
-    def apply(self, visitor):
-        return visitor.boolean(self)
-
-    def default_value(self):
-        return False
-
-
-class Money(Node):
-    def __init__(self, position, source, data_type):
-        super(Money, self).__init__("money", position, source)
-        self.data_type = data_type
-
-    def apply(self, visitor):
-        return visitor.money(self)
-
-    def default_value(self):
-        return float(0.00)

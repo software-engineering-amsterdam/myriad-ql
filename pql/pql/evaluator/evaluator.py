@@ -43,7 +43,13 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def identifier(self, node):
         return self.__environment[node.name]
 
-    def value(self, node):
+    def integer(self, node):
+        return node.value
+
+    def boolean(self, node):
+        return node.value
+
+    def money(self, node):
         return node.value
 
     def or_(self, node):

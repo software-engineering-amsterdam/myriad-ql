@@ -14,7 +14,6 @@ if __name__ == '__main__':
 
 # Jeffrey TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
 # Adrian TODO: Line numbers tonen in error messages van TypeChecker
-# TODO: Value opsplitsen in aparte objecten voor de literals / value hernoemen naar literal
 # TODO: Field opsplitsen in assignment en question
 # TODO: String support toevoegen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken

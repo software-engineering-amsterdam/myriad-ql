@@ -148,5 +148,11 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def identifier(self, node):
         return self.symbol_table[node.name]
 
-    def value(self, node):
+    def integer(self, node):
+        return node
+
+    def money(self, node):
+        return node
+
+    def boolean(self, node):
         return node

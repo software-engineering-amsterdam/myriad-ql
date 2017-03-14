@@ -58,15 +58,15 @@ def parse(input_string):
     data_types = type_money | type_integer | type_boolean
 
     true = Literal("true").setParseAction(
-        lambda source, position, _: ast.Value(position, source, True, DataTypes.boolean))
+        lambda source, position, _: ast.Boolean(position, source, True))
     false = Literal("false").setParseAction(
-        lambda source, position, _: ast.Value(position, source, False, DataTypes.boolean))
+        lambda source, position, _: ast.Boolean(position, source, False))
     boolean = (true | false)
 
     integer = Word(nums).setParseAction(
-        lambda source, position, parsed_tokens: ast.Value(position, source, int(parsed_tokens[0]), DataTypes.integer))
+        lambda source, position, parsed_tokens: ast.Integer(position, source, int(parsed_tokens[0])))
     money = Combine(Word(nums) + Literal(".") + Word(nums)).setParseAction(
-        lambda source, position, parsed_tokens: ast.Value(position, source, float(parsed_tokens[0]), DataTypes.money))
+        lambda source, position, parsed_tokens: ast.Money(position, source, float(parsed_tokens[0])))
     number = (money | integer)
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)

@@ -9,5 +9,13 @@ class IdentifierVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def value(self, node):
+    def integer(self, node):
+        pass
+
+    @abstractmethod
+    def money(self, node):
+        pass
+
+    @abstractmethod
+    def boolean(self, node):
         pass
