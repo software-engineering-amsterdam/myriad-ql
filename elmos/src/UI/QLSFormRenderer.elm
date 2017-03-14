@@ -5,6 +5,7 @@ import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import UI.Widget.BooleanRadio as BooleanRadioWidget
 import UI.Widget.BooleanDropdown as BooleanDropdownWidget
+import UI.Widget.StringDropdown as StringDropdownWidget
 import UI.Widget.StringRadio as StringRadioWidget
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
@@ -239,7 +240,7 @@ dropdownWidgetRendererForValueType : ValueType -> List String -> WidgetContext M
 dropdownWidgetRendererForValueType valueType labels =
     case valueType of
         StringType ->
-            always (div [] [ text "TODO IMPLEMENT SLIDER" ])
+            flip StringDropdownWidget.view labels
 
         BooleanType ->
             flip BooleanDropdownWidget.view labels

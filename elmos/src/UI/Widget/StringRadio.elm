@@ -11,13 +11,13 @@ import QL.Values as Values exposing (Value)
 view : WidgetContext msg -> List String -> Html msg
 view { identifier, env, onChange } values =
     let
-        selectedLabel =
+        selectedValue =
             Environment.getFormValue identifier env
                 |> Maybe.andThen Values.asString
     in
         div []
             (List.map
-                (\value -> renderOption value (Just value == selectedLabel) onChange)
+                (\value -> renderOption value (Just value == selectedValue) onChange)
                 values
             )
 
