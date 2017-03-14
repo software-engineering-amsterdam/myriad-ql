@@ -1,10 +1,13 @@
 package org.lemonade.gui.elements;
 
+<<<<<<< Updated upstream
+=======
+import javafx.scene.control.TextField;
+import org.lemonade.gui.GuiElement;
+>>>>>>> Stashed changes
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
-
-import javafx.scene.control.TextField;
 
 public class GuiStringElement implements GuiElement {
 

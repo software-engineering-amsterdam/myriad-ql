@@ -8,5 +8,6 @@ public abstract class Expression extends ASTNode {
     public Expression() {
         super();
     }
+
     public abstract <T> T accept(ExpressionVisitor<T> visitor);
 }

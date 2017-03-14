@@ -1,53 +1,29 @@
 package org.lemonade.visitors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.binary.AndBinary;
-import org.lemonade.nodes.expressions.binary.DivideBinary;
-import org.lemonade.nodes.expressions.binary.EqBinary;
-import org.lemonade.nodes.expressions.binary.GTBinary;
-import org.lemonade.nodes.expressions.binary.GTEBinary;
-import org.lemonade.nodes.expressions.binary.LTBinary;
-import org.lemonade.nodes.expressions.binary.LTEBinary;
-import org.lemonade.nodes.expressions.binary.MinusBinary;
-import org.lemonade.nodes.expressions.binary.NEqBinary;
-import org.lemonade.nodes.expressions.binary.OrBinary;
-import org.lemonade.nodes.expressions.binary.PlusBinary;
-import org.lemonade.nodes.expressions.binary.ProductBinary;
-import org.lemonade.nodes.expressions.literal.BooleanLiteral;
-import org.lemonade.nodes.expressions.literal.DateLiteral;
-import org.lemonade.nodes.expressions.literal.DecimalLiteral;
-import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.nodes.expressions.literal.IntegerLiteral;
-import org.lemonade.nodes.expressions.literal.MoneyLiteral;
-import org.lemonade.nodes.expressions.literal.StringLiteral;
+import org.lemonade.nodes.expressions.binary.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.types.QLBooleanType;
-import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.nodes.types.QLNumberType;
-import org.lemonade.nodes.types.QLStringType;
-import org.lemonade.nodes.types.QLType;
+import org.lemonade.nodes.types.*;
 import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  */
-public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<QLType>, TypeVisitor<QLType>{
+public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<QLType>, TypeVisitor<QLType> {
     Map<String, QLType> symbolTable;
     private List<String> errors;
 
@@ -56,7 +32,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         return errors;
     }
 
-    public boolean hasErrors(){
+    public boolean hasErrors() {
         return !errors.isEmpty();
     }
 
@@ -73,14 +49,14 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         IdentifierLiteral identifier = question.getIdentifier();
         QLType type = question.getType();
 
-        if (symbolTable.containsKey(identifier.getValue())){
+        if (symbolTable.containsKey(identifier.getValue())) {
             errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
         symbolTable.put(identifier.getValue(), type);
         return null;
     }
 
-    public QLType visit(Conditional conditional){
+    public QLType visit(Conditional conditional) {
 
         for (Body body : conditional.getBodies()) {
             body.accept(this);
@@ -177,7 +153,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
 
     public QLType visit(IdentifierLiteral identifierValue) {
         if (!symbolTable.containsKey(identifierValue.getValue())) {
-            errors.add("Identifier "+ identifierValue.getValue() + " at " + identifierValue.getPosition() + " not found!");
+            errors.add("Identifier " + identifierValue.getValue() + " at " + identifierValue.getPosition() + " not found!");
         }
         return symbolTable.get(identifierValue.getValue());
     }
@@ -226,27 +202,33 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         return leftType;
     }
 
-    @Override public QLType visit(final QLIntegerType qlIntegerType) {
+    @Override
+    public QLType visit(final QLIntegerType qlIntegerType) {
         return qlIntegerType;
     }
 
-    @Override public QLType visit(final QLBooleanType qlBooleanType) {
+    @Override
+    public QLType visit(final QLBooleanType qlBooleanType) {
         return qlBooleanType;
     }
 
-    @Override public QLType visit(final QLDateType qlDateType) {
+    @Override
+    public QLType visit(final QLDateType qlDateType) {
         return qlDateType;
     }
 
-    @Override public QLType visit(final QLDecimalType qlDecimalType) {
+    @Override
+    public QLType visit(final QLDecimalType qlDecimalType) {
         return qlDecimalType;
     }
 
-    @Override public QLType visit(final QLMoneyType qlMoneyType) {
+    @Override
+    public QLType visit(final QLMoneyType qlMoneyType) {
         return qlMoneyType;
     }
 
-    @Override public QLType visit(final QLStringType qlStringType) {
+    @Override
+    public QLType visit(final QLStringType qlStringType) {
         return qlStringType;
     }
 }

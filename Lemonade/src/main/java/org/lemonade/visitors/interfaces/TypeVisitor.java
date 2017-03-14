@@ -1,11 +1,6 @@
 package org.lemonade.visitors.interfaces;
 
-import org.lemonade.nodes.types.QLBooleanType;
-import org.lemonade.nodes.types.QLDateType;
-import org.lemonade.nodes.types.QLDecimalType;
-import org.lemonade.nodes.types.QLIntegerType;
-import org.lemonade.nodes.types.QLMoneyType;
-import org.lemonade.nodes.types.QLStringType;
+import org.lemonade.nodes.types.*;
 
 /**
  *

@@ -19,9 +19,17 @@ public class GuiDecimalValue extends GuiValue<Double> {
         this.value = newValue;
     }
 
-    @Override
-    public <T> T accept(final GuiExpressionVisitor<T> visitor) {
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof GuiDecimalValue)) {
+            return false;
+        }
+        GuiDecimalValue that = (GuiDecimalValue) obj;
+        return this.getValue() == that.getValue();
     }
 
 }

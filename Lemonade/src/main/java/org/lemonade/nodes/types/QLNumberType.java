@@ -10,6 +10,10 @@ public abstract class QLNumberType extends QLType {
         this.precedenceStrength = precedenceStrength;
     }
 
+    public static QLNumberType precedence(QLNumberType left, QLNumberType right) {
+        return left.precedenceStrength >= right.precedenceStrength ? left : right;
+    }
+
     @Override
     public boolean isOf(Class<?> other) {
         return this.getClass().equals(other);
@@ -23,9 +27,5 @@ public abstract class QLNumberType extends QLType {
     @Override
     public boolean isComparable() {
         return true;
-    }
-
-    public static QLNumberType precedence(QLNumberType left, QLNumberType right) {
-        return left.precedenceStrength >= right.precedenceStrength ? left : right;
     }
 }

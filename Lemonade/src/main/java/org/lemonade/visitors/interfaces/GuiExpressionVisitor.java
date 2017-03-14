@@ -61,13 +61,20 @@ public interface GuiExpressionVisitor<T> {
 
     T visit(GuiIntegerValue guiIntegerValue);
 
+<<<<<<< Updated upstream
     T visit(GuiDecimalValue guiDecimalValue);
 
+=======
+>>>>>>> Stashed changes
     T visit(GuiStringValue guiStringValue);
 
     T visit(GuiIdentifierValue guiIdentifierValue);
 
     T visit(GuiUndefinedValue guiUndefinedValue);
 
+<<<<<<< Updated upstream
     T visit(GuiLabelValue guiLabelValue);
+=======
+    T visit(GuiDecimalValue guiDecimalValue);
+>>>>>>> Stashed changes
 }

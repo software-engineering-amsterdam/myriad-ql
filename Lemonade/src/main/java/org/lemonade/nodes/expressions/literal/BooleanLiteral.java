@@ -35,13 +35,13 @@ public class BooleanLiteral extends Literal<Boolean> {
         return new BooleanLiteral(this.getValue() || that.getValue());
     }
 
-    public BooleanLiteral not(){
+    public BooleanLiteral not() {
         return new BooleanLiteral(!this.getValue());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BooleanLiteral)){
+        if (!(obj instanceof BooleanLiteral)) {
             return false;
         }
         BooleanLiteral that = (BooleanLiteral) obj;

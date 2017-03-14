@@ -1,13 +1,10 @@
 package org.lemonade.visitors;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.lemonade.gui.GuiBody;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiForm;
-import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.GuiQuestion;
+import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.values.GuiValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
@@ -15,32 +12,16 @@ import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.Literal;
-import org.lemonade.nodes.expressions.binary.AndBinary;
-import org.lemonade.nodes.expressions.binary.DivideBinary;
-import org.lemonade.nodes.expressions.binary.EqBinary;
-import org.lemonade.nodes.expressions.binary.GTBinary;
-import org.lemonade.nodes.expressions.binary.GTEBinary;
-import org.lemonade.nodes.expressions.binary.LTBinary;
-import org.lemonade.nodes.expressions.binary.LTEBinary;
-import org.lemonade.nodes.expressions.binary.MinusBinary;
-import org.lemonade.nodes.expressions.binary.NEqBinary;
-import org.lemonade.nodes.expressions.binary.OrBinary;
-import org.lemonade.nodes.expressions.binary.PlusBinary;
-import org.lemonade.nodes.expressions.binary.ProductBinary;
-import org.lemonade.nodes.expressions.literal.BooleanLiteral;
-import org.lemonade.nodes.expressions.literal.ComparableLiteral;
-import org.lemonade.nodes.expressions.literal.DateLiteral;
-import org.lemonade.nodes.expressions.literal.DecimalLiteral;
-import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.nodes.expressions.literal.IntegerLiteral;
-import org.lemonade.nodes.expressions.literal.MoneyLiteral;
-import org.lemonade.nodes.expressions.literal.NumericLiteral;
-import org.lemonade.nodes.expressions.literal.StringLiteral;
+import org.lemonade.nodes.expressions.binary.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.LiteralVisitor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -225,23 +206,32 @@ public class EvaluateVisitor implements
         return literalEnvironment.get(identifierValue.getValue());
     }
 
-    @Override public GuiForm visit(final GuiForm form) {
+    @Override
+    public GuiForm visit(final GuiForm form) {
         for (GuiBody body : form.getBodies()) {
             body.accept(this);
         }
         return null;
     }
 
-    @Override public GuiBody visit(final GuiBody body) {
+    @Override
+    public GuiBody visit(final GuiBody body) {
         return body.accept(this);
     }
 
+<<<<<<< Updated upstream
     @Override public GuiQuestion visit(final GuiQuestion question) {
 //        guiEnvironment.put(question.getIdentifier(), question.getValue());
+=======
+    @Override
+    public GuiQuestion visit(final GuiQuestion question) {
+        guiEnvironment.put(question.getIdentifier(), question.getValue());
+>>>>>>> Stashed changes
         return question;
     }
 
-    @Override public GuiConditional visit(final GuiConditional conditional) {
+    @Override
+    public GuiConditional visit(final GuiConditional conditional) {
         //        if ()
         return conditional;
     }

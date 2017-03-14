@@ -1,12 +1,12 @@
 package org.lemonade.gui;
 
+
 import java.util.List;
 
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.scene.control.Control;
+import org.lemonade.gui.values.GuiIdentifierValue;
+import org.lemonade.visitors.EvaluateVisitor;
 
 public class GuiForm extends GuiBody {
 

@@ -3,7 +3,7 @@ package org.lemonade.gui.values;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-public abstract class GuiValue<T> implements GuiExpression{
+public abstract class GuiValue<T> implements GuiExpression {
 
     abstract T getValue();
 

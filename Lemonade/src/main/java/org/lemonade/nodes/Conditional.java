@@ -1,9 +1,9 @@
 package org.lemonade.nodes;
 
-import java.util.List;
-
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.visitors.interfaces.BaseVisitor;
+
+import java.util.List;
 
 public class Conditional extends Body {
 

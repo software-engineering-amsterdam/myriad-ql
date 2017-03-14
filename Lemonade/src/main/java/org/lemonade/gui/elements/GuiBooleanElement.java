@@ -7,7 +7,7 @@ import org.lemonade.gui.values.GuiBooleanValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-public class GuiBooleanElement implements GuiElement{
+public class GuiBooleanElement implements GuiElement {
 
     private GuiValue<Boolean> value;
     private CheckBox checkBox;

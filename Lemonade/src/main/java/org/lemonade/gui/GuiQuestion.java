@@ -5,8 +5,6 @@ import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
-import javafx.scene.control.Control;
-
 /**
  *
  */
@@ -33,10 +31,6 @@ public class GuiQuestion extends GuiBody {
 
     public GuiElement getElement() {
         return element;
-    }
-
-    public Control getWidget() {
-        return element.getWidget();
     }
 
     @Override

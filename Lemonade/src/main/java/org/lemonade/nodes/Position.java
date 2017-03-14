@@ -20,7 +20,7 @@ public class Position {
         return column;
     }
 
-    public String toString(){
+    public String toString() {
         return Integer.toString(line) + ":" + Integer.toString(column);
     }
 }

@@ -12,10 +12,12 @@ public class GuiIdentifierValue extends GuiValue<String> {
 
     @Override
     public String getValue() {
+
         return value;
     }
 
     @Override
+
     public void update(String value) {
         this.value = value;
     }

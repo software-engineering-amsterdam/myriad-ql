@@ -11,8 +11,22 @@ public class GuiLabelValue extends GuiValue<String> {
     }
 
     @Override
+<<<<<<< Updated upstream
     String getValue() {
         return value;
+=======
+    public void update() {
+
+    }
+
+    @Override
+    String getValue() {
+        return label.getText();
+    }
+
+    @Override
+    void setValue(final String value) {
+>>>>>>> Stashed changes
     }
 
     @Override
