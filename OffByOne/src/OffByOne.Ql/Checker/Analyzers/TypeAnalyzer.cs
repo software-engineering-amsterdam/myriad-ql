@@ -49,6 +49,11 @@
             this.Visit(root, new VisitorTypeEnvironment());
         }
 
+        public ValueType Visit(Expression expression, VisitorTypeEnvironment environment)
+        {
+            return expression.Accept(this, environment);
+        }
+
         public ValueType Visit(AddExpression expression, VisitorTypeEnvironment environment)
         {
             return this.CheckBinaryMatematicalExpression(expression, environment);

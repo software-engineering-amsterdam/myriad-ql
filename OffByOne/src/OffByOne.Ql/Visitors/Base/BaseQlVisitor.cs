@@ -23,6 +23,11 @@
         IStatementVisitor<TResult, TEnvironment>
         where TEnvironment : IEnvironment
     {
+        public TResult Visit(Expression expression, TEnvironment environment)
+        {
+            return expression.Accept(this, environment);
+        }
+
         public virtual TResult Visit(IntegerLiteral literal, TEnvironment environment)
         {
             return default(TResult);

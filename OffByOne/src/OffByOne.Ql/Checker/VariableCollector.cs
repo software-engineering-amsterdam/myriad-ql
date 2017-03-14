@@ -19,7 +19,7 @@
 
         public IEnumerable<string> VariableIds => this.Variables.Select(x => x.Identifier);
 
-        public void Collect(FormStatement root)
+        public void Collect(Expression root)
         {
             this.Visit(root, new VisitorTypeEnvironment());
         }
