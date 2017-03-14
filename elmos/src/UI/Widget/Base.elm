@@ -1,6 +1,6 @@
 module UI.Widget.Base exposing (WidgetContext, container)
 
-import Html exposing (Html, div, label, text)
+import Html exposing (Html, label, text)
 import Html.Keyed exposing (node)
 import Html.Attributes exposing (class, for, style)
 import QL.Environment exposing (Environment)

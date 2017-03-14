@@ -1,7 +1,7 @@
 module UI.Widget.Spinbox exposing (..)
 
-import Html exposing (Html, div, input, span, text)
-import Html.Attributes as HA exposing (type_, class, step, defaultValue, title, id, disabled)
+import Html exposing (Html, input)
+import Html.Attributes exposing (type_, class, step, defaultValue, id, disabled)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
