@@ -1,10 +1,10 @@
 module QL
   module TypeChecker
     class CyclicDependencyChecker
-      include CyclicDependencyTable
       include Notification
 
-      def visit_form(form)
+      def visit_form(form, collected_data=nil)
+        @variable_dependencies = collected_data
         form.statements.map { |statement| statement.accept(self) }
       end
 
@@ -42,28 +42,27 @@ module QL
         binary_expression.expression.accept(self)
       end
 
-      # nothing has to be done with a literal
-      def visit_literal(_)
+      def visit_literal(literal)
+        literal
       end
 
       def visit_variable(variable)
         cyclic_dependency_check(variable)
       end
 
-      protected
       # check if the visited variable is in the dependency hash
       # for each of the dependencies, check their dependencies
       # check if the variable from the dependency is in the dependency hash
       # add new dependency to original dependency hash, don't add duplicates
       # check for cyclic dependency if there is a dependency on itself, else visit the next variable
       def cyclic_dependency_check(variable)
-        dependent_variables = CyclicDependencyTable.find(variable.name)
+        dependent_variables = @variable_dependencies[variable.name]
         if dependent_variables
           dependent_variables.each do |dependent_variable|
-            next_dependent_variables = CyclicDependencyTable.find(dependent_variable.name)
+            next_dependent_variables = @variable_dependencies[dependent_variable.name]
             if next_dependent_variables
-              CyclicDependencyTable.store(variable.name, dependent_variables | next_dependent_variables)
-              if CyclicDependencyTable.find(variable.name).map(&:name).include?(variable.name)
+              @variable_dependencies[variable.name] = dependent_variables | next_dependent_variables
+              if @variable_dependencies[variable.name].map(&:name).include?(variable.name)
                 NotificationTable.store(Error.new("question '#{variable.name}' has a cyclic dependency"))
               else
                 visit_variable(dependent_variable)
@@ -71,6 +70,8 @@ module QL
             end
           end
         end
+        # return variable for the sake of .accept
+        variable
       end
     end
   end

@@ -4,7 +4,8 @@ module QL
       include AST
       include Notification
 
-      def visit_form(form)
+      def visit_form(form, collected_data=nil)
+        @variable_types = collected_data
         form.statements.map { |statement| statement.accept(self) }
       end
 
@@ -17,11 +18,9 @@ module QL
       end
 
       def visit_if_statement(if_statement)
-        # check if if condition is of boolean type
         condition_type = if_statement.condition.accept(self)
-        unless condition_type.is_a?(BooleanType)
-          NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))
-        end
+        # check if if condition is of boolean type
+        check_if_condition(if_statement, condition_type)
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
@@ -58,7 +57,13 @@ module QL
       end
 
       def visit_variable(variable)
-        QuestionTypeTable.find(variable.name)
+        @variable_types[variable.name]
+      end
+
+      def check_if_condition(if_statement, condition_type)
+        unless condition_type.is_a?(BooleanType)
+          NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))
+        end
       end
     end
   end
