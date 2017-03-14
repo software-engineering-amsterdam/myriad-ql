@@ -10,8 +10,7 @@ class TestTypeEnvironment(Shared):
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
         type_dict = self.acquire_types(form_node)
         self.assertEqual(len(type_dict), 1, "There should be exactly 1 identifier")
         self.assertEqual('boolean', type_dict['hasSoldHouse'].var_type, "hasSoldHouse should have type boolean")
@@ -22,8 +21,7 @@ class TestTypeEnvironment(Shared):
             "How much money did you sell your house for?" sellAmount: money
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
         type_dict = self.acquire_types(form_node)
         self.assertEqual(len(type_dict), 1, "There should be exactly 1 identifier")
         self.assertEqual('money', type_dict['sellAmount'].var_type, "sellAmount should have type money")
@@ -34,8 +32,7 @@ class TestTypeEnvironment(Shared):
             "How much years ago did you sell your house?" sellYear: integer
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
         type_dict = self.acquire_types(form_node)
         self.assertEqual(len(type_dict), 1, "There should be exactly 1 identifier")
         self.assertEqual('integer', type_dict['sellYear'].var_type, "sellYear should have type money")

@@ -1,11 +1,9 @@
 # coding=utf-8
-from unittest import TestCase
-
-from pql.environment.environmentcreator import EnvironmentCreator
 from pql.parser.parser import parse
+from tests.shared import Shared
 
 
-class TestEnvironmentCreator(TestCase):
+class TestEnvironmentCreator(Shared):
 
     def test_parse_field_money_default(self):
         input_string = """
@@ -13,11 +11,10 @@ class TestEnvironmentCreator(TestCase):
             "Value residue:" valueResidue: money
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
 
-        environemnt = EnvironmentCreator().visit(form_node)
-        self.assertEqual(environemnt['valueResidue'], float(0.0), 'valueResidue should be in environment')
+        environment = self.acquire_environment(form_node)
+        self.assertEqual(environment['valueResidue'], float(0.0), 'valueResidue should be in environment')
 
     def test_parse_field_integer_default(self):
         input_string = """
@@ -25,10 +22,9 @@ class TestEnvironmentCreator(TestCase):
             "Value residue:" valueResidue: integer
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
 
-        environemnt = EnvironmentCreator().visit(form_node)
+        environemnt = self.acquire_environment(form_node)
         self.assertEqual(environemnt['valueResidue'], int(0), 'valueResidue should be in environment')
 
     def test_parse_field_boolean_default(self):
@@ -37,8 +33,7 @@ class TestEnvironmentCreator(TestCase):
             "Value residue:" valueResidue: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result
+        form_node = self.acquire_ast(input_string)
 
-        environemnt = EnvironmentCreator().visit(form_node)
+        environemnt = self.acquire_environment(form_node)
         self.assertEqual(environemnt['valueResidue'], False, 'valueResidue should be in environment')

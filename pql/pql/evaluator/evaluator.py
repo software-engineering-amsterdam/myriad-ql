@@ -7,12 +7,13 @@ from pql.traversal.IdentifierVisitor import IdentifierVisitor
 
 
 class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
-    def __init__(self, environment):
-        self.__environment = environment
+    def __init__(self, environment_type, ast):
+        self.__environment = environment_type(ast).visit()
+        self.ast = ast
 
-    def visit(self, pql_ast):
+    def visit(self):
         #TODO make environment receive and return environment instead of having it as instance variable
-        [form.apply(self) for form in pql_ast]
+        self.ast.apply(self)
         return self.__environment
 
     def form(self, node):

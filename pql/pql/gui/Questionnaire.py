@@ -15,19 +15,15 @@ from pql.traversal.TypeVisitor import TypeVisitor
 
 
 class Questionnaire(FormVisitor, TypeVisitor):
-    def __init__(self):
+    def __init__(self, ast):
         self.wizard = Wizard()
-        self.evaluator = None
-        self.ast = None
+        self.evaluator = Evaluator(EnvironmentCreator, ast)
+        self.ast = ast
         self.conditional_if_list = list(tuple())
         self.conditional_if_else_list = list(tuple())
 
-    def visit(self, ql_ast):
-        environment_creator = EnvironmentCreator()
-        self.evaluator = Evaluator(environment_creator.visit(ql_ast))
-        self.ast = ql_ast
-        for form in self.ast:
-            self.wizard.add_page(form.apply(self))
+    def visit(self):
+        self.wizard.add_page(self.ast.apply(self))
         self.render_conditionals()
         return self.wizard
 

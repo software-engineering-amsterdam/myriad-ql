@@ -111,7 +111,7 @@ class Editor(QMainWindow, QWidget):
                 if type_errors:
                     self.list_errors.addItems(type_errors)
                 else:
-                    self.form = Questionnaire().visit(ast)
+                    self.form = Questionnaire(ast).visit()
                     self.form.show()
 
     def write_contents_to_file(self, contents, file_path):
