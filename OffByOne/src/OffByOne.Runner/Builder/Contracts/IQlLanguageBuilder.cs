@@ -1,13 +1,13 @@
 ﻿namespace OffByOne.Runner.Builder.Contracts
 {
-    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Checker.Contracts;
 
     public interface IQlLanguageBuilder
     {
         FormStatement BuildAst();
 
-        void CheckSyntax(FormStatement root);
+        ICheckerReport CheckSyntax(FormStatement root);
 
         void RunApplication(FormStatement structureNode);
     }

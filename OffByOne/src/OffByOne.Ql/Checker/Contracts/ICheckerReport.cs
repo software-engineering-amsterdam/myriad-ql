@@ -17,5 +17,7 @@
         void Add(CheckerMessage message);
 
         void Add(IEnumerable<CheckerMessage> messages);
+
+        bool ContainsErrors();
     }
 }

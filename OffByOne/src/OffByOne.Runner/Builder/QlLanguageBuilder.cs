@@ -11,6 +11,7 @@ namespace OffByOne.Runner.Builder
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Interpreter;
     using OffByOne.Runner.Builder.Contracts;
@@ -37,10 +38,10 @@ namespace OffByOne.Runner.Builder
             return astTree.As<FormStatement>();
         }
 
-        public void CheckSyntax(FormStatement root)
+        public ICheckerReport CheckSyntax(FormStatement root)
         {
-            var typeChcker = new SyntaxChecker();
-            var report = typeChcker.Check(root);
+            var typeChecker = new SyntaxChecker();
+            var report = typeChecker.Check(root);
 
             foreach (var message in report.AllMessages)
             {
@@ -48,6 +49,7 @@ namespace OffByOne.Runner.Builder
             }
 
             Console.WriteLine("QL Type check done!");
+            return report;
         }
 
         public void RunApplication(FormStatement structureNode)

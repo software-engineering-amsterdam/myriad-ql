@@ -95,6 +95,9 @@
             var appRunner = new AppRunner();
             appRunner.Run(qlBuilder);
             ////appRunner.Run(qlBuilder, qlsBuilder);
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }

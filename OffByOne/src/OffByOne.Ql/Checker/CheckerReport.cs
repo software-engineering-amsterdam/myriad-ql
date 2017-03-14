@@ -48,5 +48,10 @@
 
             messages.ForEach(this.Add);
         }
+
+        public bool ContainsErrors()
+        {
+            return this.Errors.Count() > 0;
+        }
     }
 }

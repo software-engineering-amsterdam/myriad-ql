@@ -7,8 +7,11 @@
         public void Run(IQlLanguageBuilder qlLanguageBuilder)
         {
             var astTree = qlLanguageBuilder.BuildAst();
-            qlLanguageBuilder.CheckSyntax(astTree);
-            qlLanguageBuilder.RunApplication(astTree);
+            var report = qlLanguageBuilder.CheckSyntax(astTree);
+            if (!report.ContainsErrors())
+            {
+                qlLanguageBuilder.RunApplication(astTree);
+            }
         }
 
         public void Run(IQlLanguageBuilder qlLanguageBuilder, IQlsLanguageBuilder qlsLanguageBuilder)
