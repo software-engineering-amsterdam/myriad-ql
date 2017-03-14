@@ -40,10 +40,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
             self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):
-        if node.name in self.__environment:
-            return self.__environment[node.name]
-        else:
-            return None
+        return self.__environment[node.name]
 
     def value(self, node):
         return node.value
