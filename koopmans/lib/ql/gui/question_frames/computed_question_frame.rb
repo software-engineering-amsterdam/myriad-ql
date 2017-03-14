@@ -1,7 +1,7 @@
 module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
-      def create_widget
+      def create_corresponding_widget
         @widget = ComputedWidget.new(@tk_frame)
       end
 
@@ -16,7 +16,6 @@ module QL
         store_value
       end
 
-      # helpers
       def assignment
         @ast_question.assignment
       end

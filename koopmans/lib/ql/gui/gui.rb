@@ -9,9 +9,13 @@ module QL
         @question_frames = question_frames
       end
 
-      def run
+      def render
         render_questions
-        render_submit_button
+        listen_to_questions
+
+        @submit_button = SubmitButton.new
+        listen_to_submit_button
+
         Tk.mainloop
       end
 
@@ -19,19 +23,19 @@ module QL
         @question_frames.each do |question_frame|
           question_frame.render
         end
+        reload_questions
+      end
 
+      def listen_to_questions
         @question_frames.each do |question_frame|
           question_frame.listen do
             reload_questions
           end
         end
-
-        reload_questions
       end
 
-      def render_submit_button
-        submit_button = SubmitButton.new
-        submit_button.listen do
+      def listen_to_submit_button
+        @submit_button.listen do
           print_form
         end
       end

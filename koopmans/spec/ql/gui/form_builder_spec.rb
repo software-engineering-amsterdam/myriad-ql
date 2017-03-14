@@ -9,8 +9,8 @@ module QL
     include AST
     describe FormBuilder do
       let(:form_builder) { FormBuilder.new }
-      let(:question) { Question.new('Did you sell a house in 2010?', Variable.new('hasSoldHouse'), BooleanType.new) }
-      let(:computed_question) { ComputedQuestion.new('Did you sell a house in 2010?', Variable.new('hasSoldHouse'), MoneyType, IntegerLiteral.new(1))}
+      let(:question) { Question.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), BooleanType.new) }
+      let(:computed_question) { ComputedQuestion.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), MoneyType, IntegerLiteral.new(1))}
       let(:condition) { BooleanLiteral.new(true) }
       let(:if_statement) { IfStatement.new(condition, [question])}
       let(:if_else_statement) { IfElseStatement.new(condition, [question], [question])}

@@ -18,9 +18,9 @@ module QL
         context 'listen to widget' do
           it 'stores value in table' do
             variable_name = boolean_question_frame.variable_name
-            widget = boolean_question_frame.create_widget
-            boolean_question_frame.listen_to_widget(widget)
-            widget.callback(true)
+            boolean_question_frame.create_corresponding_widget
+            boolean_question_frame.listen_to_widget
+            boolean_question_frame.widget.callback(true)
             stored = VariableTable.find(variable_name)
 
             expect(stored).to be_a(BooleanLiteral)
@@ -33,8 +33,8 @@ module QL
         context 'do not listen to widget' do
           it 'does not store value in table' do
             variable_name = integer_question_frame.variable_name
-            widget = integer_question_frame.create_widget
-            widget.callback(true)
+            integer_question_frame.create_corresponding_widget
+            boolean_question_frame.widget.callback(true)
             stored = VariableTable.find(variable_name)
 
             expect(stored).to be(nil)

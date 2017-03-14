@@ -2,31 +2,33 @@ module QL
   module GUI
     class QuestionFrame
       include Callback
-
-      attr_reader :enabled, :condition
+      attr_reader :enabled, :condition, :widget
 
       def initialize(ast_question, condition=nil)
         @ast_question = ast_question
-        @condition    = condition
-        @enabled      = true
+        @condition = condition
+        @enabled = true
+        @tk_frame = TkFrame.new.grid
+        Label.new(@tk_frame, label)
+        create_corresponding_widget
+      end
+
+      def create_corresponding_widget
+        @widget = widget_type.new(@tk_frame)
       end
 
       def render
-        @tk_frame = TkFrame.new.grid
-        Label.new(@tk_frame, label)
+        store_default_value
+        listen_to_widget
+      end
 
-        widget = create_widget
-        @value = widget.default_value
+      def store_default_value
+        @value = @widget.default_value
         value_changed
-        listen_to_widget(widget)
       end
 
-      def create_widget
-        widget_type.new(@tk_frame)
-      end
-
-      def listen_to_widget(widget)
-        widget.listen do |changed_value|
+      def listen_to_widget
+        @widget.listen do |changed_value|
           p changed_value
           @value = changed_value
           value_changed
@@ -66,8 +68,6 @@ module QL
         { label => @value }
       end
 
-
-      # helpers
       def variable_name
         @ast_question.variable.name
       end

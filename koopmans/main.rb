@@ -24,7 +24,7 @@ ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 pp ql_ast
 question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
 gui.question_frames = question_frames
-gui.run
+gui.render
 # QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # pp NotificationTable.index
 ql_notifications = nil

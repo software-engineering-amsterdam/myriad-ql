@@ -6,7 +6,7 @@ require_all 'lib'
 module QLS
   module Parser
     describe FormParser do
-      let(:form_form_parser) { FormParser.new }
+      let(:form_parser) { FormParser.new }
 
       describe 'question' do
         it 'parses' do
