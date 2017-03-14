@@ -1,7 +1,8 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.Control;
 import org.lemonade.gui.values.GuiValue;
+
+import javafx.scene.control.Control;
 
 /**
  *

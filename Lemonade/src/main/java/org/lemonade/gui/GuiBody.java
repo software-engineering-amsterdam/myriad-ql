@@ -1,6 +1,5 @@
 package org.lemonade.gui;
 
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.visitors.EvaluateVisitor;
 
 public abstract class GuiBody {
@@ -13,7 +12,8 @@ public abstract class GuiBody {
         return false;
     }
 
-    public GuiBody accept(EvaluateVisitor visitor) {
-        return visitor.visit(this);
+    public void accept(EvaluateVisitor visitor) {
+        visitor.visit(this);
     }
+
 }
