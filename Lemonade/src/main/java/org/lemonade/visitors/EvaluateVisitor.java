@@ -72,6 +72,8 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
             for (GuiBody body : conditional.getBodies()) {
                 body.accept(this);
             }
+        } else {
+            conditional.isVisible(false);
         }
     }
 
