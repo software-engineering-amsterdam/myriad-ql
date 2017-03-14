@@ -71,8 +71,8 @@ class If(Node):
         self.condition = boolean_statement[0]
         self.statements = boolean_statement[1]
 
-    def apply(self, visitor):
-        return visitor.conditional_if(self)
+    def apply(self, visitor, args=None):
+        return visitor.conditional_if(self, args)
 
 
 class IfElse(Node):
@@ -82,8 +82,8 @@ class IfElse(Node):
         self.statements = boolean_statement[1]
         self.else_statement_list = boolean_statement.else_statement[0]
 
-    def apply(self, visitor):
-        return visitor.conditional_if_else(self)
+    def apply(self, visitor, args=None):
+        return visitor.conditional_if_else(self, args)
 
 
 class BinaryOperation(Node):

@@ -26,7 +26,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         for statement in node.statements:
             statement.apply(self)
 
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         if node.condition.apply(self):
             for statement in node.statements:
                 statement.apply(self)
@@ -34,7 +34,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
             for statement in node.else_statement_list:
                 statement.apply(self)
 
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         if node.condition.apply(self):
             for statement in node.statements:
                 statement.apply(self)

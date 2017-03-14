@@ -21,9 +21,9 @@ class FormVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         pass
 
     @abstractmethod
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         pass

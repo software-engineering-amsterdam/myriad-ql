@@ -14,6 +14,7 @@ from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
 
+# TODO Overal waar node.parent gebruikt wordt, vervangen door de mogelijkheid om nu een argument mee te kunnen geven
 class Questionnaire(FormVisitor, TypeVisitor):
     def __init__(self, ast):
         self.wizard = Wizard()
@@ -40,7 +41,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         page.set_layout(layout)
         return page
 
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         if_else_container = QGroupBox(node.parent)
         if_else_layout = QVBoxLayout()
 
@@ -53,7 +54,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.conditional_if_else_list.append((if_container, else_container, node))
         return if_else_container
 
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         container = self.create_conditional_container(node, node.statements)
         self.conditional_if_list.append((container, node))
         return container
