@@ -84,20 +84,20 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
 
     def negation(self, node):
-        if node.rhs.apply(self) is DataTypes.boolean:
+        if node.operand.apply(self) is DataTypes.boolean:
             return DataTypes.boolean
         self.errors.append("Negation was passed a non-boolean value on location {} ".format(node.location))
         return None
 
     def positive(self, node):
-        result = node.rhs.apply(self)
+        result = node.operand.apply(self)
         if result is (DataTypes.integer or DataTypes.money):
             return result
         self.errors.append("Positive was passed a non-numeric value on location {} ".format(node.location))
         return None
 
     def negative(self, node):
-        result = node.rhs.apply(self)
+        result = node.operand.apply(self)
         if result is (DataTypes.integer or DataTypes.money):
             return result
         self.errors.append("Negative was passed a non-numeric value on location {} ".format(node.location))
