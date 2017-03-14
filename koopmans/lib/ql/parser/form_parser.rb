@@ -29,10 +29,7 @@ module QL
       rule(:boolean_operator) { (str('&&') | str('||')).as(:operator) >> _ }
       rule(:negation_operator) { (str('!') | str('-')).as(:operator) >> _ }
 
-
-
-      # expression
-      # precedence order: booolean, order, equals, addition, multiplication, literal
+      # expression (order: booolean, order, equals, addition, multiplication, negation, literal )
       rule(:expression) { boolean_expression.as(:expression) }
       rule(:expression_with_parenthesis) { str('(') >> _ >> expression >> str(')') }
       rule(:boolean_expression) { comparison_order_expression.as(:left) >> (boolean_operator >> comparison_order_expression.as(:right)).repeat(1) | comparison_order_expression }
@@ -49,6 +46,7 @@ module QL
       rule(:body) { _ >> (question | if_else_statement | if_statement).repeat(1).as(:body) }
       rule(:if_statement) { (str('if') >> _ >> expression.as(:condition) >> str('{') >> body >> str('}')).as(:if_statement) >> _ }
       rule(:if_else_statement) { (if_statement >> _ >> str('else') >> _ >> str('{') >> body >> str('}')).as(:if_else_statement) >> _ }
+
       # form
       rule(:form) { _ >> (str('form') >> _ >> variable.as(:id) >> _ >> str('{') >> body >> str('}')).as(:form) }
     end

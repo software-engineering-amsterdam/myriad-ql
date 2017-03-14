@@ -3,8 +3,8 @@ form taxOfficeExample {
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
     hasBoughtHouse: money = 2
-    if (!hasSoldHouse){
-     "Did you buy a house in 2010?"
+    if (hasSoldHouse){
+     "Did yoIF VRAAG?"
         xx: money = hasBoughtHouse * 2
     } else {
         "Did you buy a house in 2015?"

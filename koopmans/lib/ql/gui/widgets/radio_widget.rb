@@ -2,7 +2,7 @@ module QL
   module GUI
     class RadioWidget < Widget
       def initialize(tk_frame, options=nil)
-        @default_value = true
+        @default_value = false
 
         if options
           @true_label = options[:true_value]
