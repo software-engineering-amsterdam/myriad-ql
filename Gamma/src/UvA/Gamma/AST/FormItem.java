@@ -14,7 +14,8 @@ public interface FormItem extends ASTNode {
 
     void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException;
 
-    boolean validateIdentifierType(String identifier, Value.Type type);
+    /* Returns the invalid type, or null if the the type is valid */
+    Value.Type validateIdentifierType(String identifier, Value.Type type);
 
     /* Returns the redeclared identifier, or null if the identifier is not redeclared */
     String validateRedeclaration(FormItem item);
@@ -30,6 +31,4 @@ public interface FormItem extends ASTNode {
 
     /* Returns the the identifier of the item this method is called on if it is a dependency of the the parameter */
     String isDependencyOf(FormItem item);
-
-    Value.Type getType();
 }

@@ -12,34 +12,22 @@ public class Question implements FormItem {
     private String id;
     private Value value;
 
-    public void setQuestion(String question) {
+    public Question(String question, String id, Value value) {
         this.question = question;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
         this.id = id;
-    }
-
-    public void setValue(Value value) {
         this.value = value;
     }
 
+    public String getQuestion() {
+        assert question != null;
+        return question;
+    }
+
     public boolean check(TypeChecker checker, String newValue) {
+        assert value != null;
         return checker.check(value, newValue);
     }
 
-    @Override
-    public void idChanged(Form root, FormItem changed, String value) {
-        // I don't care about that, I am an independent formitem and don't need your help
-    }
 
     @Override
     public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
@@ -52,8 +40,8 @@ public class Question implements FormItem {
     }
 
     @Override
-    public boolean validateIdentifierType(String identifier, Value.Type type) {
-        return this.id.equals(identifier) && !value.conformsToType(type);
+    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+        return this.id.equals(identifier) && !value.conformsToType(type) ? value.getType() : null;
     }
 
     @Override
@@ -87,12 +75,12 @@ public class Question implements FormItem {
     }
 
     @Override
-    public String toString() {
-        return "<Question>: " + question + " " + id + ": " + value.getType();
+    public void idChanged(Form root, FormItem changed, String value) {
+        // I don't care about that, I am an independent formitem and don't need your help
     }
 
     @Override
-    public Value.Type getType() {
-        return value.getType();
+    public String toString() {
+        return "<Question>: " + question + " " + id + ": " + value.getType();
     }
 }

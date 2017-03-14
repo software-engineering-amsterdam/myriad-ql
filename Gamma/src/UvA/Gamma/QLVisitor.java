@@ -37,29 +37,26 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Question visitQuestion(QLParser.QuestionContext ctx) {
-        Question question = new Question();
-        question.setQuestion(ctx.STRING_LITERAL().getText());
-        question.setId(ctx.ID().getText());
-        question.setValue((Value) visit(ctx.type()));
-        return question;
+        String questionString = ctx.STRING_LITERAL().getText();
+        String id = ctx.ID().getText();
+        Value value = (Value) visit(ctx.type());
+        return new Question(questionString, id, value);
     }
 
     @Override
     public Computed visitComputed(QLParser.ComputedContext ctx) {
-        Computed computed = new Computed();
-        computed.setLabel(ctx.STRING_LITERAL().getText());
-        computed.setId(ctx.ID().getText());
-        computed.setExpression((Expression) visit(ctx.expression()));
-
-        return computed;
+        String label = ctx.STRING_LITERAL().getText();
+        String id = ctx.ID().getText();
+        Expression expression = (Expression) visit(ctx.expression());
+        return new Computed(label, id, expression);
     }
 
     @Override
     public Condition visitCondition(QLParser.ConditionContext ctx) {
-        Condition condition = new Condition();
-        condition.setExpression(new BooleanExpression(ctx.boolExpr().getText()));
+        BooleanExpression expression = new BooleanExpression(ctx.boolExpr().getText());
+        Condition condition = new Condition(expression);
         for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
-            condition.addFormItem((FormItem) visit(formItemContext));
+            condition.addThenBlockItem((FormItem) visit(formItemContext));
         }
 
         if (ctx.elseblock() != null) {

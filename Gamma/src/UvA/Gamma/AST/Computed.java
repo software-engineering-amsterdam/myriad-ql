@@ -14,24 +14,15 @@ public class Computed implements FormItem {
     private String id;
     public Expression expression;
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
+    public Computed(String label, String id, Expression expression) {
         this.label = label;
-    }
-
-    public void setId(String id) {
         this.id = id;
-    }
-
-    public void setValue(Value value) {
-        this.expression.setValue(value);
-    }
-
-    public void setExpression(Expression expression) {
         this.expression = expression;
+    }
+
+    public String getLabel() {
+        assert label != null;
+        return label;
     }
 
     @Override
@@ -49,8 +40,8 @@ public class Computed implements FormItem {
     }
 
     @Override
-    public boolean validateIdentifierType(String identifier, Value.Type type) {
-        return id.equals(identifier) && !expression.getValue().conformsToType(type);
+    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+        return id.equals(identifier) && !expression.getValue().conformsToType(type) ? expression.getValue().getType() : null;
     }
 
     @Override
@@ -71,11 +62,6 @@ public class Computed implements FormItem {
     @Override
     public String isDependencyOf(FormItem item) {
         return item.isDependentOn(this.id) ? this.id : null;
-    }
-
-    @Override
-    public Value.Type getType() {
-        return expression.getValue().getType();
     }
 
     @Override

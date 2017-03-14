@@ -26,12 +26,12 @@ public class Boolean extends Value {
 
     @Override
     public Type getType() {
-        return Type.BOOL;
+        return Type.BOOLEAN;
     }
 
     @Override
     public boolean conformsToType(Type type) {
-        return type == Type.BOOL;
+        return type == Type.BOOLEAN;
     }
 
     public boolean getValue() {

@@ -10,7 +10,7 @@ import UvA.Gamma.Validation.TypeChecker;
  */
 public abstract class Value implements ASTNode {
     public enum Type {
-        INTEGER, DECIMAL, MONEY, STRING, DATE, BOOL, CONDITION;
+        INTEGER, DECIMAL, MONEY, STRING, DATE, BOOLEAN, CONDITION;
 
         @Override
         public String toString() {
@@ -27,7 +27,7 @@ public abstract class Value implements ASTNode {
     public abstract String computableString(); //Return a string which can be used in an expression
 
     public abstract boolean validate(String value, TypeChecker typeChecker);
-    
+
     public abstract void showQuestion(FXMLExampleController screen, Question question);
 
     public abstract String toString();

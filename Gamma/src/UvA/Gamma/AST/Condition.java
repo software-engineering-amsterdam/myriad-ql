@@ -4,6 +4,7 @@ import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.FXMLExampleController;
 import UvA.Gamma.Validation.*;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,35 +14,32 @@ import java.util.Optional;
  * Created by Tjarco, 14-02-17.
  */
 public class Condition implements FormItem {
-    private List<FormItem> formItems;
+    private List<FormItem> thenBlockItems;
     /* can be empty if no elseBlock is specified */
     private List<FormItem> elseBlockItems;
     private BooleanExpression expression;
-    private FXMLExampleController screen;
+    private GridPane thenBlockPane;
 
-    public Condition() {
-        this.formItems = new ArrayList<>();
+    public Condition(BooleanExpression expression) {
+        this.thenBlockItems = new ArrayList<>();
         this.elseBlockItems = new ArrayList<>();
+        this.expression = expression;
     }
 
-    public List<FormItem> getFormItems() {
-        return formItems;
+    public List<FormItem> getThenBlockItems() {
+        return thenBlockItems;
     }
 
     public List<FormItem> getElseBlockItems() {
         return elseBlockItems;
     }
 
-    public void addFormItem(FormItem item) {
-        this.formItems.add(item);
+    public void addThenBlockItem(FormItem item) {
+        this.thenBlockItems.add(item);
     }
 
     public void addElseBlockItem(FormItem item) {
         this.elseBlockItems.add(item);
-    }
-
-    public void setExpression(BooleanExpression expression) {
-        this.expression = expression;
     }
 
     public boolean evaluateExpression() {
@@ -52,14 +50,19 @@ public class Condition implements FormItem {
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
         expression.idChanged(changed.isDependencyOf(this), value);
-        screen.showCondition(this);
-        formItems.forEach(item -> item.idChanged(root, changed, value));
+        if (evaluateExpression()) {
+            thenBlockPane.setVisible(true);
+        } else {
+            thenBlockPane.setVisible(false);
+        }
+
+        thenBlockItems.forEach(item -> item.idChanged(root, changed, value));
         elseBlockItems.forEach(item -> item.idChanged(root, changed, value));
     }
 
     @Override
     public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
-        for (FormItem item : formItems) {
+        for (FormItem item : thenBlockItems) {
             item.accept(validator);
         }
         for (FormItem item : elseBlockItems) {
@@ -68,8 +71,16 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public boolean validateIdentifierType(String identifier, Value.Type type) {
-        return formItems.stream().anyMatch(formItem -> formItem.validateIdentifierType(identifier, type));
+    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+        Optional<FormItem> thenItem = thenBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
+        Optional<FormItem> elseItem = elseBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
+        if (thenItem.isPresent()) {
+            return thenItem.get().validateIdentifierType(identifier, type);
+        } else if (elseItem.isPresent()) {
+            return elseItem.get().validateIdentifierType(identifier, type);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -79,7 +90,7 @@ public class Condition implements FormItem {
 
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
-        Optional<FormItem> optionalResult = formItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
+        Optional<FormItem> optionalResult = thenBlockItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
         Optional<FormItem> optionalElseResult = elseBlockItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
         if (optionalResult.isPresent()) {
             return optionalResult.get().validateCyclicDependency(item);
@@ -97,7 +108,7 @@ public class Condition implements FormItem {
     @Override
     public boolean isDependentOn(String id) {
         return expression.isDependentOn(id) ||
-                formItems.stream().anyMatch(item -> item.isDependentOn(id)) ||
+                thenBlockItems.stream().anyMatch(item -> item.isDependentOn(id)) ||
                 elseBlockItems.stream().anyMatch(item -> item.isDependentOn(id));
     }
 
@@ -113,7 +124,7 @@ public class Condition implements FormItem {
 
     @Override
     public boolean containsId(String id) {
-        return childHasId(formItems, id) || childHasId(elseBlockItems, id);
+        return childHasId(thenBlockItems, id) || childHasId(elseBlockItems, id);
     }
 
     private boolean childHasId(List<FormItem> items, String id) {
@@ -126,20 +137,21 @@ public class Condition implements FormItem {
 
     @Override
     public void show(FXMLExampleController screen) {
-        this.screen = screen;
-        screen.showCondition(this);
+        this.thenBlockPane = screen.startRenderCondition();
+        thenBlockItems.forEach(formItem -> formItem.show(screen));
+        screen.stopRenderCondition();
+
+        if (!evaluateExpression()) {
+            thenBlockPane.setVisible(false);
+            elseBlockItems.forEach(formItem -> formItem.show(screen));
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        formItems.forEach(builder::append);
+        thenBlockItems.forEach(builder::append);
         elseBlockItems.forEach(builder::append);
         return "<Condition>: (" + expression + ")" + builder;
-    }
-
-    @Override
-    public Value.Type getType() {
-        return Value.Type.CONDITION;
     }
 }

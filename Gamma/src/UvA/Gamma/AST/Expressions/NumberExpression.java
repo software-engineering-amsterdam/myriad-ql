@@ -14,7 +14,7 @@ public class NumberExpression extends Expression {
 
     public NumberExpression(String expr) {
         super(expr);
-        setValue(new Number(0));
+        this.value = new Number(0);
     }
 
     private Number evaluateNumber() throws ScriptException {
@@ -24,6 +24,7 @@ public class NumberExpression extends Expression {
         return new Number(engine.eval(expr).toString());
     }
 
+    @Override
     public Number getValue() {
         return (Number) value;
     }
