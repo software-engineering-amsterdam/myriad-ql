@@ -121,10 +121,11 @@ def parse(input_string):
         name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type")
     )
     field <<= field_statement
-    field.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
+    field.setParseAction(lambda source, position, parsed_tokens: ast.Field(position, source, *parsed_tokens))
 
     field_assignment <<= field_statement + lit_assign_op + expression
-    field_assignment.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
+    field_assignment.setParseAction(
+        lambda source, position, parsed_tokens: ast.Assignment(position, source, *parsed_tokens))
 
     conditional_if = Forward()
     conditional_if_else = Forward()
