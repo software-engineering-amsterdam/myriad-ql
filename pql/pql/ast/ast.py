@@ -52,8 +52,8 @@ class Field(Node):
         self.name = name
         self.data_type = data_type
 
-    def apply(self, visitor):
-        return visitor.field(self)
+    def apply(self, visitor, args=None):
+        return visitor.field(self, args)
 
 
 class Assignment(Field):
@@ -61,7 +61,7 @@ class Assignment(Field):
         super(Assignment, self).__init__(title, name, data_type, 'assignment')
         self.expression = expression
 
-    def apply(self, visitor):
+    def apply(self, visitor, args=None):
         return visitor.assignment(self)
 
 

@@ -1,6 +1,4 @@
 # coding=utf-8
-from collections import defaultdict
-
 from pql.traversal.ExpressionVisitor import ExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -9,7 +7,7 @@ from pql.traversal.IdentifierVisitor import IdentifierVisitor
 class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def __init__(self, ast):
         self.ast = ast
-        self.properties = defaultdict(list)
+        self.properties = dict()
         self.errors = list()
 
     def visit(self):
@@ -20,12 +18,15 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node):
-        return self.conditional_if(node) + [statement.apply(self) for statement in node.else_statement_list]
+        self.conditional_if(node)
+        [statement.apply(self, node) for statement in node.else_statement_list]
 
     def conditional_if(self, node):
-        return [statement.apply(self) for statement in node.statements]
+        local_properties = dict()
+        for statement in node.statements:
+            key, value = statement.apply(self, node)
 
-    def field(self, node):
+    def field(self, node, args=None):
         self.properties[node.name.name].append(node.name)
 
     def assignment(self, node):

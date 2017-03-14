@@ -13,7 +13,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+        self.assertEqual(len(errors), 2, "There should be exactly 2 errors")
 
     def test_circular_multiple(self):
         input_string = """
@@ -27,7 +27,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 2, "There should be exactly 2 errors")
+        self.assertEqual(len(errors), 5, "There should be exactly 2 errors")
 
     def test_circular_inside_if(self):
         input_string = """

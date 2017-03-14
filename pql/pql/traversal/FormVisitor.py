@@ -13,7 +13,7 @@ class FormVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def field(self, node):
+    def field(self, node, args=None):
         pass
 
     @abstractmethod

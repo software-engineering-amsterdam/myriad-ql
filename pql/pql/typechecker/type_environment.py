@@ -27,8 +27,8 @@ class TypeEnvironment(FormVisitor):
         for statement in node.statements:
             statement.apply(self)
 
-    def field(self, node):
+    def field(self, node, args=None):
         self.__symbol_table[node.name.name] = node.data_type
 
     def assignment(self, node):
-        pass
+        self.field(node)

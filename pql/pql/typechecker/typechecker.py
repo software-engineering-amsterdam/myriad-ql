@@ -21,7 +21,7 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         for statement in node.statements:
             statement.apply(self)
 
-    def field(self, node):
+    def field(self, node, args=None):
         return node.data_type
 
     def assignment(self, node):
