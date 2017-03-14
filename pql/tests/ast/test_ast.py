@@ -132,7 +132,6 @@ class TestAst(Shared):
         self.assertEqual('valueResidue', assignment_node_1.name.name)
         self.assertEqual('Value residue:', assignment_node_1.title)
 
-
         multiplication_node = assignment_node_1.expression
         self.assertEqual('multiplication', multiplication_node.var_type,
                          'Multiplication node should have type multiplication')

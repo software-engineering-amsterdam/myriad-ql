@@ -36,7 +36,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def expression(self, node):
         return node.apply(self)
 
-    def field(self, node):
+    def field(self, node, args=None):
         pass
 
     def assignment(self, node):

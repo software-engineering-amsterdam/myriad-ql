@@ -107,7 +107,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         container.setLayout(layout)
         return container
 
-    def field(self, node):
+    def field(self, node, args=None):
         return self.create_container(node, True)
 
     def assignment(self, node):
