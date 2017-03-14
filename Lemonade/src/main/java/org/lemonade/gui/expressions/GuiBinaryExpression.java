@@ -6,7 +6,7 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 /**
  *
  */
-public abstract class GuiBinaryExpression implements GuiExpression{
+public abstract class GuiBinaryExpression implements GuiExpression {
 
     private GuiExpression left;
     private GuiExpression right;

@@ -22,14 +22,15 @@ public class GuiDecimalElement implements GuiElement {
         return value;
     }
 
-    @Override public void update() {
+    @Override
+    public void update() {
         validate(textField.getText());
     }
 
     private void validate(String text) {
         if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")) {
             this.value = new GuiUndefinedValue();
-        } else if (this.value.isDefined()){
+        } else if (this.value.isDefined()) {
             ((GuiDecimalValue) this.value).update(Double.parseDouble(text));
         } else
             this.value = new GuiDecimalValue(Double.parseDouble(text));

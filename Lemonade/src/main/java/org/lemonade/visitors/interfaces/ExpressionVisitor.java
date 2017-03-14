@@ -1,24 +1,7 @@
 package org.lemonade.visitors.interfaces;
 
-import org.lemonade.nodes.expressions.binary.AndBinary;
-import org.lemonade.nodes.expressions.binary.DivideBinary;
-import org.lemonade.nodes.expressions.binary.EqBinary;
-import org.lemonade.nodes.expressions.binary.GTBinary;
-import org.lemonade.nodes.expressions.binary.GTEBinary;
-import org.lemonade.nodes.expressions.binary.LTBinary;
-import org.lemonade.nodes.expressions.binary.LTEBinary;
-import org.lemonade.nodes.expressions.binary.MinusBinary;
-import org.lemonade.nodes.expressions.binary.NEqBinary;
-import org.lemonade.nodes.expressions.binary.OrBinary;
-import org.lemonade.nodes.expressions.binary.PlusBinary;
-import org.lemonade.nodes.expressions.binary.ProductBinary;
-import org.lemonade.nodes.expressions.literal.BooleanLiteral;
-import org.lemonade.nodes.expressions.literal.DateLiteral;
-import org.lemonade.nodes.expressions.literal.DecimalLiteral;
-import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
-import org.lemonade.nodes.expressions.literal.IntegerLiteral;
-import org.lemonade.nodes.expressions.literal.MoneyLiteral;
-import org.lemonade.nodes.expressions.literal.StringLiteral;
+import org.lemonade.nodes.expressions.binary.*;
+import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 

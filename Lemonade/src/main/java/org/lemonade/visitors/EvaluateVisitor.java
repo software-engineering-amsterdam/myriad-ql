@@ -225,6 +225,7 @@ public class EvaluateVisitor implements
     }
 
     @Override
+
     public void visit(final GuiForm form) {
         for (GuiBody body : form.getBodies()) {
             body.accept(this);

@@ -5,6 +5,7 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 public class GuiUndefinedValue extends GuiValue<Void> {
 
     @Override
+
     public Void getValue() {
         return null;
     }

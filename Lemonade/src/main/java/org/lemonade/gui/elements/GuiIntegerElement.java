@@ -22,14 +22,15 @@ public class GuiIntegerElement implements GuiElement {
         return value;
     }
 
-    @Override public void update() {
+    @Override
+    public void update() {
         validate(textField.getText());
     }
 
     private void validate(String text) {
         if (!text.matches("[-+]?[0-9]*")) {
             this.value = new GuiUndefinedValue();
-        } else if (this.value.isDefined()){
+        } else if (this.value.isDefined()) {
             ((GuiIntegerValue) this.value).update(Integer.parseInt(text));
         } else
             this.value = new GuiIntegerValue(Integer.parseInt(text));

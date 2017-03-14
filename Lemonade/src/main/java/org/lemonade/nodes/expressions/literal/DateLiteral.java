@@ -1,9 +1,9 @@
 package org.lemonade.nodes.expressions.literal;
 
-import java.time.LocalDate;
-
 import org.lemonade.nodes.types.QLDateType;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
+
+import java.time.LocalDate;
 
 /**
  *

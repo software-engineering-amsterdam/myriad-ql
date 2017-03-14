@@ -1,10 +1,9 @@
 package org.lemonade.gui;
 
-import java.util.List;
-
+import javafx.scene.control.Control;
 import org.lemonade.visitors.EvaluateVisitor;
 
-import javafx.scene.control.Control;
+import java.util.List;
 
 public class GuiConditional extends GuiBody {
 

@@ -1,22 +1,5 @@
 package org.lemonade.gui;
 
-import java.io.File;
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.lemonade.QLLexer;
-import org.lemonade.QLParser;
-import org.lemonade.QLParserErrorListener;
-import org.lemonade.nodes.Form;
-import org.lemonade.visitors.EvaluateVisitor;
-import org.lemonade.visitors.FormVisitor;
-import org.lemonade.visitors.GuiVisitor;
-import org.lemonade.visitors.TypeCheckVisitor;
-
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -29,6 +12,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.lemonade.QLLexer;
+import org.lemonade.QLParser;
+import org.lemonade.QLParserErrorListener;
+import org.lemonade.nodes.Form;
+import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.GuiVisitor;
+import org.lemonade.visitors.TypeCheckVisitor;
+
+import java.io.File;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class QLFxApp extends Application {
 
@@ -135,7 +134,8 @@ public class QLFxApp extends Application {
             Task task = new Task<Void>() {
                 EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
 
-                @Override protected Void call() throws Exception {
+                @Override
+                protected Void call() throws Exception {
                     while (!isSubmitted) {
                         guiRoot.accept(evaluateVisitor);
                     }

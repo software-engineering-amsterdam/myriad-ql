@@ -70,4 +70,5 @@ public interface GuiExpressionVisitor<T> {
     T visit(GuiUndefinedValue guiUndefinedValue);
 
     T visit(GuiLabelValue guiLabelValue);
+
 }

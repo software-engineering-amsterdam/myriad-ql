@@ -5,8 +5,6 @@ import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
 
-import javafx.scene.control.Control;
-
 /**
  *
  */
