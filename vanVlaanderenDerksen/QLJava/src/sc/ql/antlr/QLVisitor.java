@@ -87,6 +87,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthesis(QLParser.ParenthesisContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code moneyLiteral}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyLiteral(QLParser.MoneyLiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code lessThenEqual}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
