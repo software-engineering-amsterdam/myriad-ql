@@ -47,6 +47,8 @@ public class DeclarationNode extends Node {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        // intentionally left blank
+        if (!symbolTable.contains(mId)) {
+            semanticsMessages.addError("Declaration not present in symbolTable:" + mId);
+        }
     }
 }
