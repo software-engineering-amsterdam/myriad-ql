@@ -19,6 +19,16 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
         this.value = newValue;
     }
 
+
+    public <T> T accept(GuiExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+
+    @Override
+    public boolean isDecimal() {
+        return true;
+    }
+
     public GuiDecimalValue plus(GuiIntegerValue that) {
         return new GuiDecimalValue(this.getValue() + that.getValue());
     }
@@ -95,11 +105,6 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     @Override
     public String toString() {
         return Double.toString(this.getValue());
-    }
-
-
-    public <T> T accept(GuiExpressionVisitor<T> visitor) {
-        return visitor.visit(this);
     }
 
     @Override

@@ -25,6 +25,11 @@ public class GuiMoneyValue extends GuiNumericalValue<Double> implements Comparab
         return visitor.visit(this);
     }
 
+    @Override
+    public boolean isMoney() {
+        return true;
+    }
+
     public GuiMoneyValue plus(GuiIntegerValue that) {
         return new GuiMoneyValue(this.getValue() + that.getValue());
     }

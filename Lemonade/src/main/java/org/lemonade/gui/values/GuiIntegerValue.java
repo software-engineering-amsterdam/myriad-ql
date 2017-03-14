@@ -25,6 +25,10 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
         return visitor.visit(this);
     }
 
+    @Override
+    public boolean isInteger() {
+        return true;
+    }
 
     public GuiIntegerValue plus(GuiIntegerValue that) {
         return new GuiIntegerValue(this.getValue() + that.getValue());
