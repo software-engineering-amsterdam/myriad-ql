@@ -1,6 +1,7 @@
-package org.uva.taxfree.model.node.widgets;
+package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 import javax.swing.*;
 
@@ -28,6 +29,11 @@ public class BooleanWidget extends Widget {
 
     @Override
     public void callOnUpdate(FormListener listener) {
-        mCheckbox.addActionListener(evt -> listener.updateForm());
+        mCheckbox.addActionListener(unusedEvent -> listener.updateForm());
+    }
+
+    @Override
+    public void update(SymbolTable symbolTable) {
+        writeToTable(symbolTable);
     }
 }

@@ -24,7 +24,7 @@ public class MessageWindow {
     }
 
     private static int messageType(MessageList messageList) {
-        if (messageList.fatalError()) {
+        if (messageList.fatalErrors()) {
             return JOptionPane.ERROR_MESSAGE;
         }
         return JOptionPane.WARNING_MESSAGE;

@@ -1,15 +1,13 @@
-package org.uva.taxfree.model.node.widgets;
+package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import java.awt.event.FocusListener;
 
 public abstract class Widget {
     private final JPanel mPanel;
     private final String mId;
-    private FormListener listener;
 
     public Widget(String label, String id) {
         mPanel = createPanel(label);
@@ -39,4 +37,13 @@ public abstract class Widget {
 
     public abstract void callOnUpdate(FormListener listener);
 
+    public abstract void update(SymbolTable symbolTable);
+
+    protected void writeToTable(SymbolTable symbolTable){
+        symbolTable.updateValue(mId, resolveValue());
+    }
+
+    protected String readFromtable(SymbolTable symbolTable){
+        return symbolTable.resolveValue(mId);
+    }
 }

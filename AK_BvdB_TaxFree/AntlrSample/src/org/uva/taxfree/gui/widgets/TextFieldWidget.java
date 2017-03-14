@@ -1,15 +1,10 @@
-package org.uva.taxfree.model.node.widgets;
+package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
+import org.uva.taxfree.model.environment.SymbolTable;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 
 public abstract class TextFieldWidget extends Widget {
     private final JFormattedTextField mTextField;
@@ -39,6 +34,11 @@ public abstract class TextFieldWidget extends Widget {
 
     @Override
     public void callOnUpdate(FormListener listener) {
-        mTextField.addPropertyChangeListener(evt -> listener.updateForm());
+        mTextField.addPropertyChangeListener(unusedEvent -> listener.updateForm());
+    }
+
+    @Override
+    public void update(SymbolTable symbolTable) {
+        writeToTable(symbolTable);
     }
 }

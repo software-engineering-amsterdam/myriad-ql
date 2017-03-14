@@ -1,13 +1,11 @@
-package org.uva.taxfree.model.node.widgets;
+package org.uva.taxfree.gui.widgets;
 
 import org.uva.taxfree.gui.FormListener;
+import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class CalculationWidget extends Widget {
     private final ExpressionNode mExpression;
@@ -39,6 +37,11 @@ public class CalculationWidget extends Widget {
 
     @Override
     public void callOnUpdate(FormListener listener) {
-        mTextField.addPropertyChangeListener(evt -> listener.updateForm());
+        mTextField.addPropertyChangeListener(unusedEvent -> listener.updateForm());
+    }
+
+    @Override
+    public void update(SymbolTable symbolTable) {
+        writeToTable(symbolTable);
     }
 }
