@@ -15,7 +15,7 @@ module QL
       # visit both left and right sides of binary expression and perform calculation
       # they can be for example literal, variable or another binary expression
       def visit_binary_expression(left, binary_expression)
-        left  = left.accept(self)
+        left = left.accept(self)
         right = binary_expression.expression.accept(self)
         binary_expression.eval(left.to_value, right.to_value)
       end
@@ -28,7 +28,6 @@ module QL
       def visit_literal(literal)
         literal
       end
-
 
       def visit_variable(variable)
         VariableTable.find(variable.name)
