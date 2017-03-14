@@ -1,13 +1,14 @@
 # coding=utf-8
 import operator
 
-from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 
 
-class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor, TypeVisitor):
+class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor, UnaryExpressionVisitor):
     def __init__(self, environment_type, ast):
         self.__environment = environment_type(ast).visit()
         self.ast = ast
@@ -46,7 +47,7 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor, TypeVisitor):
     def field(self, node, args=None):
         pass
 
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):

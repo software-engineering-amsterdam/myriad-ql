@@ -62,7 +62,7 @@ class Assignment(Field):
         self.expression = expression
 
     def apply(self, visitor, args=None):
-        return visitor.assignment(self)
+        return visitor.assignment(self, args)
 
 
 class If(Node):

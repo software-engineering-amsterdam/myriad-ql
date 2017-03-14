@@ -1,13 +1,12 @@
 # coding=utf-8
-from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
 
 
-class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
+class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor):
     def __init__(self, ast):
         self.ast = ast
-        self.properties = dict()
         self.errors = list()
 
     def visit(self):
@@ -15,8 +14,12 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.errors
 
     def form(self, node):
+        properties = dict()
         for statement in node.statements:
-            statement.apply(self)
+            result = statement.apply(self, properties)
+            if result is not None:
+                key, value = result
+                properties[key] = value
 
     def conditional_if_else(self, node, local_properties=None):
         self.conditional_if(node)
@@ -35,15 +38,13 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
                 local_properties[key] = value
 
     def field(self, node, scope_properties=None):
-        if scope_properties is None:
-            self.properties[node.name.name] = node.name
         return node.name.name, node.name
 
-    def assignment(self, node):
-        children = node.expression.apply(self)
+    def assignment(self, node, scope_properties=None):
         bad_reference = []
+        children = node.expression.apply(self)
         for child in children:
-            if child.name not in self.properties:
+            if child.name not in scope_properties:
                 bad_reference.append(child)
         if len(bad_reference) > 0:
             self.errors.append("Field at {} had the following references that were not resolvable: {} "
@@ -88,12 +89,3 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def equality(self, node):
         return node.lhs.apply(self) + node.rhs.apply(self)
-
-    def negative(self, node):
-        pass
-
-    def negation(self, node):
-        pass
-
-    def positive(self, node):
-        pass

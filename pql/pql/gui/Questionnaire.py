@@ -111,7 +111,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def field(self, node, args=None):
         return self.create_container(node, True)
 
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         return self.create_container(node, (node.expression is None))
 
     def money(self, node):

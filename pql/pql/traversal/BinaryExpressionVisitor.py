@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 
 # noinspection PyCompatibility,PyMissingOrEmptyDocstring
-class ExpressionVisitor(metaclass=ABCMeta):
+class BinaryExpressionVisitor(metaclass=ABCMeta):
 
     @abstractmethod
     def subtraction(self, node):
@@ -51,16 +51,4 @@ class ExpressionVisitor(metaclass=ABCMeta):
 
     @abstractmethod
     def or_(self, node):
-        pass
-
-    @abstractmethod
-    def positive(self, node):
-        pass
-
-    @abstractmethod
-    def negative(self, node):
-        pass
-
-    @abstractmethod
-    def negation(self, node):
         pass
