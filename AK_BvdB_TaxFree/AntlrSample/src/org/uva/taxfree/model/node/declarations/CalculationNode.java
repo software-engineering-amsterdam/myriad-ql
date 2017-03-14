@@ -20,9 +20,9 @@ public class CalculationNode extends DeclarationNode {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addDeclaration(this);
+        super.fillSymbolTable(symbolTable);
         symbolTable.addCalculation(this);
-        symbolTable.addExpression(mExpression);
+        mExpression.fillSymbolTable(symbolTable);
     }
 
     public String toString() {

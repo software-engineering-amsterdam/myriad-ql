@@ -30,6 +30,7 @@ expression
 	| left=expression '||' right=expression		#Or
 	| literal=BOOLEAN_LITERAL					#booleanLiteral
 	| literal=INTEGER_LITERAL					#integerLiteral
+	| literal=MONEY_LITERAL						#moneyLiteral
 	| literal=ID_LITERAL						#idLiteral
 	| literal=STRING_LITERAL					#stringLiteral
 	;

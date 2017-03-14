@@ -16,6 +16,7 @@ import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.operators.CompareOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.DateType;
@@ -23,13 +24,9 @@ import org.uva.taxfree.model.types.IntegerType;
 import org.uva.taxfree.model.types.StringType;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class QuestionFormTest {
-    private final List<Node> mCachedNodes = new ArrayList<>();
-    private final List<DeclarationNode> mCachedDeclarations = new ArrayList<>();
     private final SymbolTable mSymbolTable = new SymbolTable();
 
 
@@ -49,7 +46,6 @@ public class QuestionFormTest {
     }
 
     private void showForm() {
-        mSymbolTable.addDependencies(mCachedDeclarations);
         QuestionForm form = new QuestionForm("SimpleForm", mSymbolTable);
         form.show();
     }
@@ -139,14 +135,13 @@ public class QuestionFormTest {
 
     @Test
     public void testConstantCondition() throws Exception {
-
+        List<Node> questions = new ArrayList<>();
         ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-//        ExpressionNode cond = new BooleanBinaryExpressionNode(new IntegerLiteralNode("0"), new LessThanOperator(), parenthesized);
-        Set<Node> questions = new LinkedHashSet<>();
-//        questions.add(cond);
+        ExpressionNode cond = new BinaryExpressionNode(new IntegerLiteralNode("0"), new CompareOperator(">"), parenthesized);
+        questions.add(cond);
         questions.add(new DeclarationNode("Do you see me?", "amIVisible?", new BooleanType()));
-//        IfStatementNode ifStatement = new IfStatementNode(cond, questions);
-//        add(ifStatement);
+        IfStatementNode ifStatement = new IfStatementNode(cond, questions);
+        add(ifStatement);
     }
 
     @Test
@@ -167,25 +162,14 @@ public class QuestionFormTest {
         add(new DeclarationNode("What date did you buy your last car?", "lastBoughtCar", new DateType()));
     }
 
-
-    private void add(BlockNode blockNode) {
-        Set<DeclarationNode> declarations = new LinkedHashSet<>();
-//        blockNode.retrieveDeclarations(declarations);
-        mCachedDeclarations.addAll(declarations);
-        addNode(blockNode);
-    }
-
-    private void add(DeclarationNode declarationNode) {
-        mCachedDeclarations.add(declarationNode);
-        addNode(declarationNode);
-    }
-
-    private void addNode(Node n) {
-        mCachedNodes.add(n);
+    private void add(Node n) {
+        n.fillSymbolTable(mSymbolTable);
     }
 
     private ExpressionNode CalcOnePlusFive() {
-        ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode("1"), new NumericOperator("+"), new IntegerLiteralNode("5"));
+        ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode("1"),
+                new NumericOperator("+"),
+                new IntegerLiteralNode("5"));
         return calc;
     }
 }

@@ -27,4 +27,16 @@ public class FormNode extends BlockNode {
         super.checkSemantics(symbolTable, semanticsMessages);
     }
 
+    @Override
+    public boolean conditionTrue() {
+        return true;
+    }
+
+    @Override
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        super.fillSymbolTable(symbolTable);
+        symbolTable.addBlock(this);
+    }
+
+
 }
