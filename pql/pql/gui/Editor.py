@@ -149,15 +149,15 @@ class Editor(QMainWindow, QWidget):
         if file_contents is not None:
             self.text_editor.setPlainText(file_contents)
 
-    def check_ids(self, ql_ast):
+    def check_ids(self, ast):
         try:
-            return IdentifierChecker().visit(ql_ast)
+            return IdentifierChecker(ast).visit()
         except Exception as e:
             self.list_errors.addItem("Checking ids:\n    {}".format(e))
 
-    def check_type(self, ql_ast):
+    def check_type(self, ast):
         try:
-            return TypeChecker().visit(ql_ast)
+            return TypeChecker(ast).visit()
         except Exception as e:
             self.list_errors.addItem("Checking types:\n    {}".format(e))
 
