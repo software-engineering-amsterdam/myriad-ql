@@ -8,6 +8,7 @@ public class Declaration {
     private DeclarationNode mNode;
 
     public Declaration(DeclarationNode node) {
+        mValue = "";
         mNode = node;
     }
 

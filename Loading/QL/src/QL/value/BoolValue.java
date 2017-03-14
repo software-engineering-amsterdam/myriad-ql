@@ -9,7 +9,6 @@ public class BoolValue extends Value {
     	this.value = value;
     }
 
-    // TODO default false ?
     public BoolValue() {
     	this.value = defaultValue;
     }

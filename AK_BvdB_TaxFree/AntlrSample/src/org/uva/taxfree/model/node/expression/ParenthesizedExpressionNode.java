@@ -21,12 +21,7 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addExpression(mExpression);
-    }
-
-    @Override
-    public boolean isValid() {
-        return true;
+        mExpression.fillSymbolTable(symbolTable);
     }
 
     @Override

@@ -19,15 +19,17 @@ public class Faults {
 	}
 	
 	// TODO this class now depends on the GUI
-    public void check() {
+    public boolean showAndContinue() {
     	if (hasErrors()) {
     		ErrorDialog dialog = new ErrorDialog(errors);
     		dialog.show();
+    		return false;
     	}   	
     	if (hasWarnings()) {
         	WarningDialog dialog = new WarningDialog(warnings);
         	dialog.show();
-    	}   	
+    	} 
+    	return true;
     }
 	
 	private boolean hasWarnings() {
