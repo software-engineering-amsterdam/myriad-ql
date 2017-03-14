@@ -7,6 +7,7 @@ import org.ql.gui.GUIHandler;
 import org.ql.gui.Window;
 import org.ql.parser.Parser;
 import org.ql.typechecker.TypeChecker;
+import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 
 public class Main extends Application {
@@ -18,31 +19,29 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FileLoader fileLoader = new FileLoader();
-        String qlSource = fileLoader.getSourceFromResource(QL_SOURCE_PATH);
+        Form form = runParser(getSourceFile(QL_SOURCE_PATH));
 
-        Form form = runParser(qlSource);
-
-        if (hasFormTypeErrors(form)) {
-            System.out.println("TypeChecker: An issue was found!");
+        IssuesStorage issueStorage = getTypeCheckerIssues(form);
+        if (issueStorage.hasErrors()) {
+            issueStorage.printIssues();
         } else {
             runGUI(primaryStage, form);
         }
     }
 
-    // TODO: Get exampleForm file from the project.
-    public Form runParser(String src) {
+    private String getSourceFile(String sourceFile) {
+        return new FileLoader().getSourceFromResource(sourceFile);
+    }
+
+    private Form runParser(String src) {
         return new Parser().parseForm(src);
     }
 
-    public boolean hasFormTypeErrors(Form form) {
-        TypeChecker typeChecker = new TypeChecker();
-        IssuesStorage issues = typeChecker.checkForm(form);
-
-        return issues.hasErrors();
+    private IssuesStorage getTypeCheckerIssues(Form form) {
+        return new TypeChecker().checkForm(form);
     }
 
-    public void runGUI(Stage primaryStage, Form form) {
+    private void runGUI(Stage primaryStage, Form form) {
         primaryStage.show();
         GUIHandler guiHandler = new GUIHandler(new Window(primaryStage, form.getName().toString()), form);
         guiHandler.runGUI();
