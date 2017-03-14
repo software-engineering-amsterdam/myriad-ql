@@ -110,7 +110,7 @@ def parse(input_string):
         (operand_list_arith + operand_list_bool)
     )
 
-    boolean_expression = \
+    expression = \
         OneOrMore(operator_precendence | (lit_l_paren + operator_precendence + lit_r_paren))
 
     field_statement = (
@@ -121,7 +121,7 @@ def parse(input_string):
     field_assignment_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
         name.setResultsName("identifier") + lit_colon + data_types.setResultsName(
-            "data_type") + lit_assign_op + boolean_expression
+            "data_type") + lit_assign_op + expression
     )
 
     field_assignment_statement.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
@@ -132,7 +132,7 @@ def parse(input_string):
     statement = Forward()
     body = Forward()
 
-    if_statement = lit_if + lit_l_paren + boolean_expression + lit_r_paren + body
+    if_statement = lit_if + lit_l_paren + expression + lit_r_paren + body
     conditional_if <<= if_statement
     conditional_if.setParseAction(ast.If)
 
