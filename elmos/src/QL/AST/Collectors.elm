@@ -4,7 +4,7 @@ module QL.AST.Collectors
         , collectConditions
         , collectComputedFields
         , collectDeclaredIds
-        , collectExpressions
+        , collectTopLevelExpressions
         , collectQuestionLabels
         , collectQuestionReferences
         , collectQuestionTypes
@@ -62,8 +62,8 @@ collectDeclaredIds form =
         []
 
 
-collectExpressions : Form -> List Expression
-collectExpressions form =
+collectTopLevelExpressions : Form -> List Expression
+collectTopLevelExpressions form =
     FormVisitor.inspect
         { defaultConfig | onExpression = FormVisitor.on (::) }
         form

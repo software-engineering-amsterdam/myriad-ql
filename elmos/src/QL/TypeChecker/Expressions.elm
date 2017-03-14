@@ -83,7 +83,7 @@ badConditional =
 
 operandTypeErrors : Form -> QuestionTypes -> List Message
 operandTypeErrors form questionTypes =
-    Collectors.collectExpressions form
+    Collectors.collectTopLevelExpressions form
         |> List.concatMap (checkExpression questionTypes)
 
 
