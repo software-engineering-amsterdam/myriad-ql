@@ -19,21 +19,12 @@ module QL
         BooleanLiteral
       end
 
-      # def render_widget(question_frame)
-      #   # QL::GUI::RadioWidget.new(question_frame: question_frame, true_value: 'JAAAA', false_value: 'NEEEE')
-      #   CheckboxWidget.new(question_frame: question_frame)
-      #   # DropdownWidget.new(question: self, true_value: 'JAAA', false_value: 'NEEE')
-      # end
-
       def widget
         QL::GUI::RadioWidget
         # QL::GUI::CheckboxWidget
         # QL::GUI::DropdownWidget
       end
 
-      def default_value
-        true
-      end
     end
 
     class IntegerType < Type
@@ -41,19 +32,9 @@ module QL
         IntegerLiteral
       end
 
-      # def render_widget(question_frame)
-      #   # SliderWidget.new(question_frame: self, minimum: 0, maximum: 10)
-      #   QL::GUI::SpinboxWidget.new(question_frame: question_frame)
-      #   # TextWidget.new(question_frame: self)
-      # end
-
       def widget
         # QL::GUI::SpinboxWidget
         QL::GUI::SliderWidget
-      end
-
-      def default_value
-        0
       end
     end
 
@@ -65,10 +46,6 @@ module QL
       def widget
         QL::GUI::SpinboxWidget
       end
-
-      def default_value
-        0
-      end
     end
 
     class DecimalType < Type
@@ -79,10 +56,6 @@ module QL
       def widget
         QL::GUI::SpinboxWidget
       end
-
-      def default_value
-        0.0
-      end
     end
 
     class StringType < Type
@@ -92,10 +65,6 @@ module QL
 
       def widget
         QL::GUI::TextWidget
-      end
-
-      def default_value
-        ''
       end
     end
 
@@ -108,10 +77,6 @@ module QL
         QL::GUI::TextWidget
         # QL::GUI::SpinboxWidget
         # QL::GUI::SliderWidget
-      end
-
-      def default_value
-        0
       end
     end
   end
