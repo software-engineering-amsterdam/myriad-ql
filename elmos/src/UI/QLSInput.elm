@@ -66,7 +66,7 @@ exampleDsl =
   page General {
     section "General"
       question gender
-        widget radio("Male","Female","_")
+        widget dropdown("Male","Female","_")
   }
 
   page Housing {
