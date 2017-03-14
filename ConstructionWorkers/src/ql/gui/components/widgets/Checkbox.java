@@ -1,5 +1,12 @@
-/**
- * Checkbox.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/widgets/Checkbox.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.widgets;
@@ -15,7 +22,7 @@ public class Checkbox extends QLWidget {
 
     private JCheckBox checkBox;
 
-    public Checkbox(String questionLabel) {
+    Checkbox(String questionLabel) {
         checkBox = new JCheckBox(questionLabel);
         checkBox.setHorizontalTextPosition(SwingConstants.LEFT);
         component.add(checkBox);
@@ -33,8 +40,8 @@ public class Checkbox extends QLWidget {
     }
 
     @Override
-    public void setReadOnly(boolean isReadOnly) {
-        checkBox.setEnabled(!isReadOnly);
+    public void setReadOnly() {
+        checkBox.setEnabled(false);
     }
 
     @Override

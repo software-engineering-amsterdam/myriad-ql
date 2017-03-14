@@ -1,5 +1,12 @@
-/**
- * WidgetFactory.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/widgets/WidgetFactory.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.widgets;
@@ -13,8 +20,8 @@ public class WidgetFactory implements TypeVisitor<QLWidget> {
     private String questionLabel;
 
     public QLWidget getWidgetForQuestion(SimpleQuestion question) {
-        Type type = question.getType();
         questionLabel = question.getLabel();
+        Type type = question.getType();
         return type.accept(this);
     }
 

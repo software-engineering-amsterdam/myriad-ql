@@ -1,5 +1,12 @@
-/**
- * GUI.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/GUI.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui;

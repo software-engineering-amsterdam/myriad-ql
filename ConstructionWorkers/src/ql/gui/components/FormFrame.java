@@ -1,5 +1,12 @@
-/**
- * FormFrame.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/FormFrame.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components;
@@ -13,15 +20,17 @@ import java.util.List;
 
 public class FormFrame {
 
-    protected final JFrame formFrame;
-    protected final JPanel questionPanel;
-
     private List<Field> fields;
+
+    private final JFrame formFrame;
+    private final JPanel questionPanel;
 
     private static final int DEFAULT_WIN_WIDTH = 480;
     private static final int DEFAULT_WIN_HEIGHT = 640;
 
     public FormFrame(String formTitle) {
+        fields = new ArrayList<>();
+
         formFrame = new JFrame(formTitle);
         formFrame.setSize(DEFAULT_WIN_WIDTH, DEFAULT_WIN_HEIGHT);
         formFrame.setLocationRelativeTo(null);
@@ -32,8 +41,6 @@ public class FormFrame {
         GridLayout questionPanelLayout = new GridLayout(0, 1);
         questionPanel.setLayout(questionPanelLayout);
         formFrame.add(questionPanel);
-
-        this.fields = new ArrayList<>();
     }
 
     public void addToFields(Field field){
@@ -48,7 +55,7 @@ public class FormFrame {
         }
     }
 
-    public Boolean containsField(Field field) {
+    private Boolean containsField(Field field) {
         return fields.contains(field);
     }
 

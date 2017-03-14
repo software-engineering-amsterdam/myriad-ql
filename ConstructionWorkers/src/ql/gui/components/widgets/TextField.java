@@ -1,5 +1,12 @@
-/**
- * TextField.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/widgets/TextField.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.widgets;
@@ -17,11 +24,11 @@ public class TextField extends QLWidget {
 
     private static final int COLUMNS = 7;
 
-    public TextField(String questionLabel) {
-        JLabel label = new JLabel(questionLabel);
-
+    TextField(String questionLabel) {
         input = new JTextField();
         input.setColumns(COLUMNS);
+
+        JLabel label = new JLabel(questionLabel);
 
         component.add(label);
         component.add(input);
@@ -38,8 +45,8 @@ public class TextField extends QLWidget {
     }
 
     @Override
-    public void setReadOnly(boolean isReadOnly) {
-        input.setEditable(!isReadOnly);
+    public void setReadOnly() {
+        input.setEditable(false);
     }
 
     @Override

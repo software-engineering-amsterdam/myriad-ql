@@ -1,5 +1,12 @@
-/**
- * QL.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/QL.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql;
@@ -46,7 +53,7 @@ public class QL {
         ql.testFunctionality();
     }
 
-    private void testFunctionality() throws IOException, IllegalArgumentException{
+    private void testFunctionality() throws IOException, IllegalArgumentException {
         if (!fileExists()) {
             throw new IOException();
         }
@@ -70,7 +77,7 @@ public class QL {
             System.exit(1);
         }
 
-        System.out.println("Create GUI...");
+        System.out.println("Creating GUI.");
         Context context =  new Context();
         buildGUI(qlAST, context);
     }
@@ -84,8 +91,6 @@ public class QL {
         String fileExtension = inputFile.substring(inputFile.lastIndexOf(".") + 1, inputFile.length());
         return fileExtension.equals(ALLOWED_EXTENSION);
     }
-
-    // TODO: duplicate code; refactor!
 
     private Form getAST(InputStream inputStream) throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(inputStream);

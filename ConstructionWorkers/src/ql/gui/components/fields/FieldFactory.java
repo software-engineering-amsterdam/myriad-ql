@@ -54,7 +54,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
         QLWidget qlWidget = widgetFactory.getWidgetForQuestion(question);
 
         qlWidget.setValue(result);
-        qlWidget.setReadOnly(true);
+        qlWidget.setReadOnly();
 
         this.qlWidget = qlWidget;
         this.question = question;
