@@ -74,7 +74,7 @@ public class TypeCheckTests {
     public void testTypes() throws Exception {
         BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode("5"), new CompareOperator(">"), new IntegerLiteralNode("10"));
         Type expressionType = b.getType();
-        Assert.assertEquals(expressionType, new BooleanType(), "Comparing ints should yield boolean");
+        Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing ints should yield boolean");
     }
 
 }
