@@ -35,12 +35,26 @@ public class CalculationNode extends DeclarationNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+
         Set<String> dependencies = getUsedVariables();
         symbolTable.generateDependencies(dependencies);
+
         if (dependencies.contains(getId())) {
             semanticsMessages.addError("Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
         }
+
+        for (String dependency : dependencies) {
+            if (!symbolTable.contains(dependency)) {
+                semanticsMessages.addError("Unresolved variable: " + dependency);
+            }
+        }
+
+        mExpression.checkSemantics(symbolTable, semanticsMessages);
+        if (!getType().equals(mExpression.getType())) {
+            semanticsMessages.addError("Type of calculation and expression do not match: " + getType() + " " + mExpression.getType());
+        }
     }
+
 
     public Set<String> getUsedVariables() {
         Set<String> declarations = new HashSet<>();
