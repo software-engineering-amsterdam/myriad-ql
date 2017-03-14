@@ -10,9 +10,12 @@ import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
+import org.uva.taxfree.model.node.operators.CompareOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
 import org.uva.taxfree.model.node.operators.UniformOperator;
+import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.IntegerType;
+import org.uva.taxfree.model.types.Type;
 
 public class TypeCheckTests {
     private SymbolTable mSymbolTable;
@@ -66,4 +69,19 @@ public class TypeCheckTests {
         node.checkSemantics(mSymbolTable, mMessageList);
         Assert.assertEquals(mMessageList.messageAmount(), expectedErrorAmount, "Invalid amount of messaged received");
     }
+
+    @Test
+    public void testTypes() throws Exception {
+        BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode("5"), new CompareOperator(">"), new IntegerLiteralNode("10"));
+        Type expressionType = b.getType();
+        Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing ints should yield boolean");
+    }
+
+    @Test
+    public void testBooleanTypes() throws Exception {
+        BinaryExpressionNode b = new BinaryExpressionNode(new BooleanLiteralNode("false"), new UniformOperator("=="), new BooleanLiteralNode("true"));
+        Type expressionType = b.getType();
+        Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing booleans should yield booleans");
+    }
+
 }

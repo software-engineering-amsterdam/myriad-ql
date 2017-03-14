@@ -61,6 +61,6 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public Type getType() {
-        return mLeft.getType();
+        return mOperator.getType();
     }
 }

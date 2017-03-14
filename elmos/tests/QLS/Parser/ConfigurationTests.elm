@@ -12,22 +12,22 @@ all =
         "configuration"
         [ ( "single configuration widget"
           , "widget spinbox"
-          , Just (SingleConfig (WidgetConfig Spinbox))
+          , Just (SingleConfig Spinbox)
           )
-        , ( "single configuration property"
+        , ( "single configuration property only allowed for widget"
           , "width: 400"
-          , Just (SingleConfig (StyleConfig (Width 400)))
+          , Nothing
           )
         , ( "multi configuration property"
           , "{width: 400}"
-          , Just (MultiConfig [ StyleConfig (Width 400) ])
+          , Just (MultiConfig [ Width 400 ] Nothing)
           )
         , ( "multi configuration widget"
           , "{ widget spinbox }"
-          , Just (MultiConfig [ WidgetConfig Spinbox ])
+          , Just (MultiConfig [] (Just Spinbox))
           )
         , ( "multi configuration property spacing"
           , "{ width: 400 }"
-          , Just (MultiConfig [ StyleConfig (Width 400) ])
+          , Just (MultiConfig [ Width 400 ] Nothing)
           )
         ]
