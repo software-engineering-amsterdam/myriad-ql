@@ -1,5 +1,6 @@
 package org.lemonade.visitors;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,13 @@ import org.lemonade.gui.expressions.binary.GuiPlusBinary;
 import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.expressions.unary.GuiBangUnary;
 import org.lemonade.gui.expressions.unary.GuiNegUnary;
+import org.lemonade.gui.values.GuiBooleanValue;
+import org.lemonade.gui.values.GuiDateValue;
+import org.lemonade.gui.values.GuiDecimalValue;
 import org.lemonade.gui.values.GuiIdentifierValue;
+import org.lemonade.gui.values.GuiIntegerValue;
+import org.lemonade.gui.values.GuiMoneyValue;
+import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.nodes.Body;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
@@ -85,7 +92,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GuiIdentifierValue identifier = new GuiIdentifierValue(form.getIdentifier().getValue());
 
         for (Body body : form.getBodies()) {
-            bodies.add((GuiBody) body.accept(this));
+            bodies.add(body.accept(this));
             rowCount++;
         }
         return new GuiForm(identifier, bodies);
@@ -260,36 +267,43 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
     @Override
     public GuiExpression visit(final BooleanLiteral booleanValue) {
-        return null;
+        Boolean value = booleanValue.getValue();
+        return new GuiBooleanValue(value);
     }
 
     @Override
     public GuiExpression visit(final DecimalLiteral decimalValue) {
-        return null;
+        Double value = decimalValue.getValue();
+        return new GuiDecimalValue(value);
     }
 
     @Override
     public GuiExpression visit(final DateLiteral dateValue) {
-        return null;
+        LocalDate value = dateValue.getValue();
+        return new GuiDateValue(value);
     }
 
     @Override
     public GuiExpression visit(final MoneyLiteral moneyValue) {
-        return null;
+        Double value = moneyValue.getValue();
+        return new GuiMoneyValue(value);
     }
 
     @Override
     public GuiExpression visit(final IntegerLiteral integerValue) {
-        return null;
+        Integer value = integerValue.getValue();
+        return new GuiIntegerValue(value);
     }
 
     @Override
     public GuiExpression visit(final StringLiteral stringValue) {
-        return null;
+        String value = stringValue.getValue();
+        return new GuiStringValue(value);
     }
 
     @Override
     public GuiExpression visit(final IdentifierLiteral identifierValue) {
-        return null;
+        String value = identifierValue.getValue();
+        return new GuiIdentifierValue(value);
     }
 }

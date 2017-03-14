@@ -35,7 +35,7 @@ public class SymbolTable {
 
     public void addDeclaration(DeclarationNode node) {
         mDeclarationNodes.add(node);
-        mDeclarations.add(new Declaration(node.getLabel(), node.getId()));
+        mDeclarations.add(new Declaration(node));
     }
 
     public void addCalculation(CalculationNode calculation) {
@@ -66,26 +66,26 @@ public class SymbolTable {
     }
 
     public boolean contains(String variableId) {
-        return findNodes(variableId).size() > 0;
+        return findDeclarations(variableId).size() > 0;
     }
 
-    private DeclarationNode findNode(String variableId) {
-        assert findNodes(variableId).size() == 1;
-        return findNodes(variableId).get(0);
+    private Declaration findDeclaration(String variableId) {
+        assert findDeclarations(variableId).size() == 1;
+        return findDeclarations(variableId).get(0);
     }
 
-    private List<DeclarationNode> findNodes(String variableId) {
-        List<DeclarationNode> declarationNodes = new ArrayList<>();
-        for (DeclarationNode n : mDeclarationNodes) {
-            if (variableId.equals(n.getId())) {
-                declarationNodes.add(n);
+    private List<Declaration> findDeclarations(String variableId) {
+        List<Declaration> declarations = new ArrayList<>();
+        for (Declaration decl : mDeclarations) {
+            if (decl.equals(variableId)) {
+                declarations.add(decl);
             }
         }
-        return declarationNodes;
+        return declarations;
     }
 
     public Type resolveType(String variableId) {
-        return findNode(variableId).getType();
+        return findDeclaration(variableId).getType();
     }
 
     public void getDuplicateLabelErrors(MessageList messageList) {

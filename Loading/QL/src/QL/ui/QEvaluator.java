@@ -15,9 +15,9 @@ import QL.value.Value;
 
 public class QEvaluator extends Evaluator {
 
-	private List<Row> activeQuestions;
-    private Environment answers;
-    private Notifier notifier;
+	private final List<Row> activeQuestions;
+    private final Environment answers;
+    private final Notifier notifier;
 
 	public QEvaluator(Environment answers, Notifier notifier) {
 		super(answers);

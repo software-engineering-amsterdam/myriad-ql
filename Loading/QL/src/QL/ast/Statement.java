@@ -4,8 +4,8 @@ import QL.ast.expression.Expression;
 
 public class Statement extends BlockItem {
 
-	private Expression expression;
-	private Block block;
+	private final Expression expression;
+	private final Block block;
 	
 	public Statement(Expression expression, Block block, int line) {
 		super(line);

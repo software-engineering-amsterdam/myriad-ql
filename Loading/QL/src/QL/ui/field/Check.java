@@ -9,7 +9,7 @@ import QL.value.Value;
 
 public class Check implements Field {
 
-	private CheckBox field;
+	private final CheckBox field;
 	
 	public Check(String name, Notifier notifier, BoolValue value) {
 		

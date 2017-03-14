@@ -8,8 +8,8 @@ import QL.value.Value;
 
 public class Environment {
 
-	private Map<String, Value> variableAnswer;
-	private Map<String, Type> variableType;
+	private final Map<String, Value> variableAnswer;
+	private final Map<String, Type> variableType;
 	
 	public Environment(Map<String, Type> variableType) {
 		this.variableAnswer = new HashMap<>(); 

@@ -6,7 +6,7 @@ import QL.ast.Node;
 
 public abstract class Expression extends Node {
 	
-	public Expression(int line) {
+	protected Expression(int line) {
 		super(line);
 	}
 

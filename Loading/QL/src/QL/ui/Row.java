@@ -5,12 +5,12 @@ import javafx.scene.control.Control;
 import QL.ui.field.Field;
 import QL.value.Value;
 
-public class Row {
+class Row {
 
-	private String name;
-	private String label;
-	private Type type;
-	private Field field;
+	private final String name;
+	private final String label;
+	private final Type type;
+	private final Field field;
 
 	public Row(String name, String label, Type type, Field field) {
 		this.name = name;
@@ -29,10 +29,6 @@ public class Row {
 
 	public String getLabel() {
 		return label;
-	}
-
-	public Type getType() {
-		return type;
 	}
 
 	public Control getControl() {

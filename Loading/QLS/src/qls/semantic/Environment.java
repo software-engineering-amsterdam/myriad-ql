@@ -7,15 +7,15 @@ import QL.Faults;
 import QL.ast.type.Type;
 import QL.errorhandling.Error;
 
-public class Environment {
+class Environment {
 	
 	private final Map<String, Type> variableTypes;
-	private Map<String, Boolean> variableCovered;
-	private Faults faults;
+	private final Map<String, Boolean> variableCovered;
+	private final Faults faults;
 	
 	public Environment(Map<String, Type> variableTypes) {
 		this.variableTypes = variableTypes;
-		this.variableCovered = new HashMap<String, Boolean>();
+		this.variableCovered = new HashMap<>();
 		for (String variable : variableTypes.keySet()) {
 			variableCovered.put(variable, false);
 		}

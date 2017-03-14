@@ -15,7 +15,7 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
 	private final Environment environment;
 
-	public Evaluator(Environment environment) {
+	protected Evaluator(Environment environment) {
 		this.environment = environment;
 	}
 

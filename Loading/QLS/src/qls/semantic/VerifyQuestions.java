@@ -11,7 +11,7 @@ import qls.ast.StylesheetVisitor;
 // no references to questions that are not in the QL program
 public class VerifyQuestions implements StylesheetVisitor {
 	
-	private Environment environment;
+	private final Environment environment;
 	
 	public VerifyQuestions(Environment environment) {
 		this.environment = environment;

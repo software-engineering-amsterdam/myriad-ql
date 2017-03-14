@@ -9,7 +9,7 @@ import QL.value.Value;
 
 public class Number implements Field {
 	
-	private TextField field;
+	private final TextField field;
 	
 	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
