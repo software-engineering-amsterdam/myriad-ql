@@ -40,7 +40,7 @@ public class Boolean extends Value {
 
     @Override
     public void showQuestion(FXMLExampleController screen, Question question) {
-        screen.showBoolean(question); //TODO: Show the boolean type of the question
+        screen.showBoolean(question);
     }
 
     @Override

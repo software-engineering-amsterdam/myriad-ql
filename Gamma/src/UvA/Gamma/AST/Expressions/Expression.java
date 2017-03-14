@@ -66,12 +66,10 @@ public abstract class Expression implements ASTNode {
 
     protected String computableExpression() {
         String parsedExpr = expr;
-        try {
-            for (Map.Entry<String, Value> entry : ids.entrySet()) {
-                parsedExpr = parsedExpr.replaceAll(entry.getKey(), entry.getValue().computableString());
+        for (Map.Entry<String, Value> entry : ids.entrySet()) {
+            if (entry.getValue() != null) {
+                parsedExpr = parsedExpr.replaceFirst(entry.getKey(), entry.getValue().computableString());
             }
-        } catch (NullPointerException ex) {
-            //Not all values are known
         }
         return parsedExpr;
     }

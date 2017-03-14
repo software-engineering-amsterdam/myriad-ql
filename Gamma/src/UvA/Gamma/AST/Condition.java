@@ -36,12 +36,16 @@ public class Condition implements FormItem {
     }
 
     public boolean evaluateExpression() {
+        assert expression != null;
         expression.evaluate();
         return expression.getValue() != null && expression.getValue().getValue();
     }
 
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
+        assert expression != null;
+        assert thenBlockPane != null;
+        assert elseBlockPane != null;
         expression.idChanged(changed.isDependencyOf(this), value);
         if (evaluateExpression()) {
             thenBlockPane.setVisible(true);
@@ -125,7 +129,7 @@ public class Condition implements FormItem {
     private boolean childHasId(List<FormItem> items, String id) {
         boolean hasId = false;
         for (FormItem item : items) {
-            hasId = hasId || item.hasId(id);
+            hasId = hasId || item.containsId(id);
         }
         return hasId;
     }
