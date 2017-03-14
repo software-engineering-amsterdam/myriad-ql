@@ -1,6 +1,5 @@
 package org.uva.taxfree.model.environment;
 
-import org.antlr.v4.codegen.model.decl.Decl;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.types.Type;
 

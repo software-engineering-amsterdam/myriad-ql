@@ -6,8 +6,6 @@ import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.types.Type;
 
-import java.util.Set;
-
 public class DeclarationNode extends Node {
     private final String mId;
     private final String mLabel;
@@ -39,10 +37,6 @@ public class DeclarationNode extends Node {
 
     public String getLabel() {
         return mLabel;
-    }
-
-    protected void getDependencies(Set<String> dependencies) {
-        dependencies.add(mId);
     }
 
     @Override
