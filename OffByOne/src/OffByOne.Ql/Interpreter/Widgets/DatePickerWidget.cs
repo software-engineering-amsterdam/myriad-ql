@@ -10,10 +10,14 @@
 
     public class DatePickerWidget : QuestionWidget
     {
-        public DatePickerWidget(DateValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public DatePickerWidget(
+            DateValue value,
+            QuestionStatement statement,
+            GuiEnvironment guiEnvironment,
+            WidgetStyle style)
             : base(value, statement, guiEnvironment)
         {
-            this.CreateControls(statement);
+            this.CreateControls(statement, style);
         }
 
         protected DatePicker Input { get; private set; }
@@ -29,11 +33,15 @@
             this.Value = new DateValue(this.Input.SelectedDate.Value);
         }
 
-        private void CreateControls(QuestionStatement statement)
+        private void CreateControls(QuestionStatement statement, WidgetStyle style)
         {
             var label = new Label { Content = statement.Label };
             this.Input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
             this.Input.SelectedDateChanged += this.UpdateValue;
+
+            style.Apply(label);
+            style.Apply(this.Input);
+
             this.Controls.Add(label);
             this.Controls.Add(this.Input);
         }

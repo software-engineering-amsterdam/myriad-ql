@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows;
+    using System.Windows.Media;
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Base;
@@ -32,25 +34,31 @@
         public Widget Visit(QuestionStatement statement, GuiEnvironment environment)
         {
             Widget question;
+            var style = new WidgetStyle
+            {
+                Color = Colors.Black,
+                Width = 200,
+            };
+
             switch (statement.Type)
             {
                 case BooleanValueType _:
-                    question = new CheckBoxWidget(new BooleanValue(false), statement, environment);
+                    question = new CheckBoxWidget(new BooleanValue(false), statement, environment, style);
                     break;
                 case DateValueType _:
-                    question = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment);
+                    question = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment, style);
                     break;
                 case StringValueType _:
-                    question = new TextFieldWidget(new StringValue(string.Empty), statement, environment);
+                    question = new TextFieldWidget(new StringValue(string.Empty), statement, environment, style);
                     break;
                 case DecimalValueType _:
-                    question = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment);
+                    question = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment, style);
                     break;
                 case IntegerValueType _:
-                    question = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment);
+                    question = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment, style);
                     break;
                 case MoneyValueType _:
-                    question = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment);
+                    question = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment, style);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(statement.Type));

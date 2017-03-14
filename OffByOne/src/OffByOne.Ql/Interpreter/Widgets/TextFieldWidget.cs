@@ -10,10 +10,14 @@
 
     public class TextFieldWidget : QuestionWidget
     {
-        public TextFieldWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public TextFieldWidget(
+            IValue value,
+            QuestionStatement statement,
+            GuiEnvironment guiEnvironment,
+            WidgetStyle style)
             : base(value, statement, guiEnvironment)
         {
-            this.CreateControls(statement);
+            this.CreateControls(statement, style);
         }
 
         protected TextBox Input { get; private set; }
@@ -24,11 +28,15 @@
             this.Input.Text = this.Value.ToString();
         }
 
-        protected void CreateControls(QuestionStatement statement)
+        protected void CreateControls(QuestionStatement statement, WidgetStyle style)
         {
             var label = new Label { Content = statement.Label };
             this.Input = new TextBox();
             this.Input.KeyUp += this.UpdateValue;
+
+            style.Apply(label);
+            style.Apply(this.Input);
+
             this.Controls.Add(label);
             this.Controls.Add(this.Input);
         }

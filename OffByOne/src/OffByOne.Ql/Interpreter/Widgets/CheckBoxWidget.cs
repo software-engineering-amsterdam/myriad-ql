@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
+    using System;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
@@ -10,10 +11,14 @@
 
     public class CheckBoxWidget : QuestionWidget
     {
-        public CheckBoxWidget(BooleanValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        public CheckBoxWidget(
+            BooleanValue value,
+            QuestionStatement statement,
+            GuiEnvironment guiEnvironment,
+            WidgetStyle style)
             : base(value, statement, guiEnvironment)
         {
-            this.CreateControls(statement);
+            this.CreateControls(statement, style);
         }
 
         protected CheckBox Input { get; private set; }
@@ -29,12 +34,16 @@
             this.Value = new BooleanValue(this.Input.IsChecked.Value);
         }
 
-        private void CreateControls(QuestionStatement statement)
+        private void CreateControls(QuestionStatement statement, WidgetStyle style)
         {
             var label = new Label { Content = statement.Label };
             this.Input = new CheckBox();
             this.Input.Checked += this.UpdateValue;
             this.Input.Unchecked += this.UpdateValue;
+
+            style.Apply(label);
+            style.Apply(this.Input);
+
             this.Controls.Add(label);
             this.Controls.Add(this.Input);
         }

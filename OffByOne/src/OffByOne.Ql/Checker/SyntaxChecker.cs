@@ -21,18 +21,13 @@
             {
                 new TypeAnalyzer(),
                 new QuestionAnalyzer(),
-                new CyclicDependencyAnalyzer()
+                new CyclicDependencyAnalyzer(),
             };
         }
 
         public SyntaxChecker(IEnumerable<IAnalyzer> analyzers)
         {
-            if (analyzers == null)
-            {
-                throw new ArgumentNullException(nameof(analyzers), "A valid Collection of analyzers must provided.");
-            }
-
-            this.analyzers = analyzers;
+            this.analyzers = analyzers ?? throw new ArgumentNullException(nameof(analyzers), "A valid Collection of analyzers must provided.");
         }
 
         public ICheckerReport Check(FormStatement node)
