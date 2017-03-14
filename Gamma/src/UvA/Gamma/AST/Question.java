@@ -32,6 +32,10 @@ public class Question implements FormItem {
         this.value = value;
     }
 
+    public boolean check(TypeChecker checker, String newValue) {
+        return checker.check(value, newValue);
+    }
+
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
         // I don't care about that, I am an independent formitem and don't need your help
@@ -69,12 +73,17 @@ public class Question implements FormItem {
 
     @Override
     public void show(FXMLExampleController screen) {
-        screen.showQuestion(this);
+        value.showQuestion(screen, this);
     }
 
     @Override
     public boolean hasId(String id) {
         return this.id.equals(id);
+    }
+
+    @Override
+    public boolean containsId(String id) {
+        return hasId(id);
     }
 
     @Override

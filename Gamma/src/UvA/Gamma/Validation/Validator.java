@@ -57,7 +57,7 @@ public class Validator {
     public void validateId(String id) throws IdNotFoundException {
         boolean isValid = false;
         for (FormItem item : form.getFormItems()) {
-            isValid = isValid || item.hasId(id);
+            isValid = isValid || item.containsId(id);
         }
         if (!isValid) {
             throw new IdNotFoundException("The id " + id + " is referenced but not present in the form");
