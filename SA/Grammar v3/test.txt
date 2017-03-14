@@ -4,16 +4,16 @@ form taxOfficeExample {
   "Did you buy a house in 2010?"
     hasBoughtHouse: boolean
   "Did you enter a loan?"
-    hasMaintLoan: integer
+    id: string
 
-  if ( 11<hasMaintLoan ) {
+  if ( hasSoldHouse OR hasSoldHouse ) {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"
       privateDebt: money
     "Value residue:"
       valueResidue: money =
-        (sellingPrice + privateDebt)
+        (PrivateDebt - sellingPrice + 11)
   }
 
 }
