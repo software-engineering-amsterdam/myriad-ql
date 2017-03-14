@@ -15,7 +15,7 @@ badReferences form =
             QuestionIndex.questionIndexFromForm form |> Dict.keys |> Set.fromList
 
         expressions =
-            Collectors.collectExpressions form
+            Collectors.collectTopLevelExpressions form
     in
         List.concatMap (badReferencesInExpression ids) expressions
 

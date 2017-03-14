@@ -1,15 +1,46 @@
 package org.uva.taxfree.model.node.expression;
 
-public class ParenthesizedExpressionNode extends ConditionNode {
-    private final ConditionNode mCondition;
+import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.types.Type;
 
-    public ParenthesizedExpressionNode(ConditionNode condition) {
+import java.util.Set;
+
+public class ParenthesizedExpressionNode extends ExpressionNode {
+    private final ExpressionNode mExpression;
+
+    public ParenthesizedExpressionNode(ExpressionNode expression) {
         super();
-        mCondition = condition;
+        mExpression = expression;
     }
 
     @Override
     public String resolveValue() {
-        return mCondition.resolveValue();
+        return mExpression.resolveValue();
+    }
+
+    @Override
+    public void fillSymbolTable(SymbolTable symbolTable) {
+        symbolTable.addExpression(mExpression);
+    }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @Override
+    public Type getType() {
+        return mExpression.getType();
+    }
+
+    @Override
+    public void getDependencies(Set<String> dependencies) {
+        mExpression.getDependencies(dependencies);
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        mExpression.checkSemantics(symbolTable, semanticsMessages);
     }
 }

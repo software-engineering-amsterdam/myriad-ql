@@ -1,43 +1,59 @@
 package org.uva.taxfree.main;//package main;
 
-import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.model.environment.Environment;
+import org.uva.taxfree.ast.AstBuilder;
+import org.uva.taxfree.gui.*;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.gui.QuestionForm;
+import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Alex on 7-2-2017.
- */
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("** Starting our parser **");
-        System.out.println("- Parsing the input");
+        File inputFile = FileSelector.select();
+        if (!inputFile.exists()) {
+            if (MessageWindow.retryDialog(new ErrorMessage("No file selected...\nRetry?"))) {
+                main(args);
+            }
+            return;
+        }
+        // parse
+        // AST =
+        // Symboltable = new symboltable
+        // checker
+        // errors = new errors
+        // checker check(symbolTable, errorList)
+        // if isEmpty () {
+        // etc.
 
-//        try {
-//            Ast ast = Ast.generateAst(new File("input"));
-//            System.out.println("Rootnode name: " + ast.getFormName());
-//            SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-//            semanticsAnalyzer.validSemantics();
-////            new QuestionForm(ast.getRootNode()).show();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Ast ast2 = null;
-//        try {
-//            ast2 = Ast.generateAst("form {}");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Rootnode name: " + ast2.getRootNode().toString());
-        Environment environment = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\validForms\\questionForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment);
-        semanticsAnalyzer.validSemantics();
+        AstBuilder builder = new AstBuilder(inputFile);
+        FormNode ast = builder.generateTree();
+        SymbolTable symbolTable = new SymbolTable();
+        MessageList semanticsMessages = new MessageList();
+        ast.fillSymbolTable(symbolTable);
+        ast.checkSemantics(symbolTable, semanticsMessages);
+        QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
+        ast.fillQuestionForm(taxForm);
+        taxForm.show();
+
+//        Environment environment = AstBuilder.generate(inputFile); // , symboltable); // in main
+//        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
+        // sematicsAnalyzer.check();
+//        if (semanticsAnalyzer.hasMessages()) {
+//        MessageWindow.showMessages(semanticsAnalyzer.getSemanticErrors());
+    }
+//        if(semanticsAnalyzer.validSemantics())
+
+    {
+//        QuestionForm taxForm = new QuestionForm(ast);
+//        taxForm.show();
     }
 
 }
+
+
 
 

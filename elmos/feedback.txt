@@ -13,8 +13,5 @@ Collectors, zouden we die moeten samenvoegen? meegeven aan typecheckers.
 (duplicateQuestions, badreferences, etc zouden in een travelsal kunnen)
 -> Later evaluaren/beargumenteren
 
-collectTopLevelExpressions
--> rename
-
 expressions.elm moet beter
 -> o.a. renamen van functies
