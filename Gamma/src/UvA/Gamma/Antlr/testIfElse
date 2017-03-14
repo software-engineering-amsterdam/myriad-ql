@@ -1,0 +1,14 @@
+/*
+    Test various, nested if-else blocks
+*/
+
+form ifelse{
+    "show block 1" block1: boolean
+    "show block 2" block2: boolean
+    if(true){
+        "show block 1_1" block1_1: boolean
+        if(true){
+            "Block 1_1!" maxdepth: boolean = (block1 && block1_1)
+        }
+    }
+}
