@@ -15,32 +15,33 @@ view { identifier, env, onChange } labels =
             Environment.getFormValue identifier env
                 |> Maybe.andThen Values.asBool
                 |> Maybe.map boolToIndex
+
+        selections =
+            [ ( checkedIndexN == Just 0, Values.bool True )
+            , ( checkedIndexN == Just 1, Values.bool False )
+            ]
+
+        opts =
+            List.map2 (,) labels selections
+                |> List.map (\( optionLabel, ( selected, value ) ) -> renderOption optionLabel selected (onChange value))
     in
         div []
-            (List.indexedMap
-                (\index label -> renderOption index label (Maybe.map ((==) index) checkedIndexN) onChange)
-                labels
-            )
+            opts
 
 
-renderOption : Int -> String -> Maybe Bool -> (Value -> msg) -> Html msg
-renderOption index optionLabel isChecked onChange =
+renderOption : String -> Bool -> msg -> Html msg
+renderOption optionLabel isSelected onChange =
     div [ class "radio" ]
         [ label []
             [ input
                 [ type_ "radio"
-                , checked (Maybe.withDefault False isChecked)
-                , onClick (onChange (Values.bool (indexToBool index)))
+                , checked isSelected
+                , onClick onChange
                 ]
                 []
             , text optionLabel
             ]
         ]
-
-
-indexToBool : Int -> Bool
-indexToBool index =
-    index == 0
 
 
 boolToIndex : Bool -> Int
