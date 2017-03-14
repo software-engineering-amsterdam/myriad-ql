@@ -10,7 +10,6 @@ import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
-import org.uva.taxfree.model.node.operators.BooleanOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
 import org.uva.taxfree.model.node.operators.UniformOperator;
 import org.uva.taxfree.model.types.IntegerType;
@@ -34,14 +33,14 @@ public class TypeCheckTests {
 
     }
 
-    @Test
-    public void testCalcualtionSemantics() throws Exception {
+    @Test(timeOut = 10000L)
+    public void testCalculationSemantics() throws Exception {
         assertTypes(new CalculationNode("MyCalc", "intCalculation",
                         new IntegerType(),
                         new BinaryExpressionNode(new IntegerLiteralNode("10"),
-                                new BooleanOperator("||"),
+                                new NumericOperator("+"),
                                 new IntegerLiteralNode("5"))),
-                1);
+                0);
 
     }
 
