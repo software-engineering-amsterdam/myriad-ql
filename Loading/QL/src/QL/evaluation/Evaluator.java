@@ -96,11 +96,11 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, 
     @Override
 	public Value visit(IdExpr id) {
     	    	
-		//if (!environment.isAnswered(id.getName())) {
+		if (!environment.isAnswered(id.getName())) {
 			return environment.getType(id.getName()).accept(this);
-//		}
-//
-//		return environment.getAnswer(id.getName());
+		}
+
+		return environment.getAnswer(id.getName());
 	}
 
     @Override
