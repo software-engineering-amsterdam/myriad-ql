@@ -6,7 +6,7 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class EnvironmentCreator(FormVisitor):
     def __init__(self, ast):
-        self.__symbol_table = defaultdict(list)
+        self.__symbol_table = dict()
         self.ast = ast
 
     def visit(self):
