@@ -31,12 +31,19 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ifStatement}
+	 * Visit a parse tree produced by the {@code ifThenElseStatement}
 	 * labeled alternative in {@link QLParser#formElement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIfStatement(QLParser.IfStatementContext ctx);
+	T visitIfThenElseStatement(QLParser.IfThenElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ifThenStatement}
+	 * labeled alternative in {@link QLParser#formElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfThenStatement(QLParser.IfThenStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code add}
 	 * labeled alternative in {@link QLParser#expression}.

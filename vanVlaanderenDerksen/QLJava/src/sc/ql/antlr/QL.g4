@@ -7,9 +7,10 @@ form
 	;
 
 formElement																			
-	: label=STRING_LITERAL id=ID_LITERAL type ('=' expression)? 			#calculatedQuestion
-	| label=STRING_LITERAL id=ID_LITERAL type								#question
-	| 'if' '('expression')' formElement+ ('else' formElement+)? 'endif' 	#ifStatement
+	: label=STRING_LITERAL id=ID_LITERAL type '=' expression 									#calculatedQuestion
+	| label=STRING_LITERAL id=ID_LITERAL type													#question
+	| 'if' '('expression')' (thenBody+=formElement)+ 'else' (elseBody+=formElement)+ 'endif' 	#ifThenElseStatement
+	| 'if' '('expression')' (thenBody+=formElement)+ 'endif'									#ifThenStatement
 	;
 
 expression
