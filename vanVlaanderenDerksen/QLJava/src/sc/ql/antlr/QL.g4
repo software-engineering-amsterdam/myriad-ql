@@ -46,6 +46,10 @@ BOOLEAN_LITERAL
 	: ('true'|'false')
 	;
 
+MONEY_LITERAL
+	: ('0'..'9')+ ',' ('0'..'9')+
+	;
+	
 INTEGER_LITERAL
 	: ('0'..'9')+
 	;
