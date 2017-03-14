@@ -27,27 +27,50 @@ class DrawGUI(QLDrawGUI):
         self.qls_env = qls_env
 
     def start_traversal(self):
-        self.ast.accept(self)
+        self.qls_ast.accept(self)
+
+        self.show()
 
     def style_sheet_node(self, style_sheet_node):
-        # TODO: Add stuff to self.main to create awesome design/styling.
+        self.main.startPagedWindow("Dit is vet leuk")
         style_sheet_node.body.accept(self)
+        self.main.stopPagedWindow()
 
     def page_node(self, page_node):
+        self.main.startPage()
+        self.main.setSticky("ew")
         page_node.body.accept(self)
+        self.main.stopPage()
 
     def page_with_defaults_node(self, page_node):
         self.page_node(page_node)
 
     def section_node(self, section_node):
+        self.main.startLabelFrame(section_node.name)
+        self.main.setSticky("ew")
         section_node.body.accept(self)
+        self.main.stopLabelFrame()
 
     def section_with_defaults_node(self, section_node):
         self.section_node(section_node)
 
     def question_node(self, question_node):
-        # Retrieve QL question type.
-        ql_node = self.env.get_var_node(question_node.name)
+        # Create a frame around the question to improve interface.
+        self.main.startFrame("frame_" + question_node.name)
+
+        # Retrieve QL question, determine if there is default styling.
+        ql_node = self.env.get_node(question_node.name)
+        identifier = ql_node.name
+        question = ql_node.question
+
+        styling = self.qls_env.get_styling(question_node.name)
+        if styling == Undefined:
+            widget_class = ql_node.type.accept(self)
+        else:
+            widget_class = styling.widget_type.accept(self)
+        self.add_widget(widget_class, identifier, question)
+
+        self.main.stopFrame()
 
         # TODO: Create node with appropriate widget? (Call super?)
         # TODO: Seems not to be possible; redefine creation of widgets here?
@@ -62,7 +85,23 @@ class DrawGUI(QLDrawGUI):
     def widget_question_node(self, question_node):
         # TODO: Here only apply styling, not QLS Default widget type, if
         # there is a QLS Default styling available.
-        self.question_node(question_node)
+        # Create a frame around the question to improve interface.
+        self.main.startFrame("frame_" + question_node.name)
+
+        # Retrieve QL question, determine if there is default styling.
+        ql_node = self.env.get_node(question_node.name)
+        identifier = ql_node.name
+        question = ql_node.question
+
+        styling = self.qls_env.get_styling(question_node.name)
+        if styling == Undefined:
+            widget_class = ql_node.type.accept(self)
+        else:
+            # Add styling from Default (styling) node.
+            widget_class = question_node.type.accept(self)
+        self.add_widget(widget_class, identifier, question)
+
+        self.main.stopFrame()
 
     # TODO: Functions to return correct Widget type based on QLS Default.
     def slider_node(self, slider_node):

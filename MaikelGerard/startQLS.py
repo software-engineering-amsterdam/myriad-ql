@@ -4,6 +4,7 @@ from QLS.Stages.parser import Parser as QLSParser
 from QLS.Stages.typeChecker import TypeChecker
 from QLS.Stages.determineWidgetType import DetermineWidgetType
 from QLS.Stages.printHandler import PrintHandler
+from QLS.GUI.drawGUI import DrawGUI
 
 from QL.environment import Environment as QLEnvironment
 from QL.stages.parser import Parser as QLParser
@@ -79,9 +80,8 @@ if __name__ == '__main__':
 
     TypeChecker(qls_ast, qls_env, ql_env, error_handler).start_traversal()
     error_handler.check_and_print_errors()
-    DetermineWidgetType(
-        qls_ast, qls_env, ql_env, error_handler
-    ).start_traversal()
+    DetermineWidgetType(qls_ast, qls_env, ql_env).start_traversal()
+    DrawGUI(qls_ast, qls_env, ql_ast, ql_env).start_traversal()
 
     # print ql_env.variables
     PrintHandler().print_ast(qls_ast)
