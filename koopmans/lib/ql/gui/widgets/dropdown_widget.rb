@@ -14,7 +14,7 @@ module QL
 
         combobox = Tk::Tile::Combobox.new(tk_frame).pack
         combobox.values = [@true_label, @false_label]
-        combobox.value = @true_label
+        combobox.value = @false_label
         combobox.bind('<ComboboxSelected>') { callback(to_value(combobox.value)) }
 
         callback(to_value(combobox.value))
