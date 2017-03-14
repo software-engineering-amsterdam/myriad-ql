@@ -9,60 +9,12 @@ from pql.traversal.IdentifierVisitor import IdentifierVisitor
 class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def __init__(self, ast):
         self.ast = ast
-        self.ast_stack = list()
         self.properties = defaultdict(list)
+        self.errors = list()
 
-    def identifier(self, node):
-        return node.name
-
-    def greater_inclusive(self, node):
-        pass
-
-    def positive(self, node):
-        pass
-
-    def addition(self, node):
-        pass
-
-    def and_(self, node):
-        pass
-
-    def subtraction(self, node):
-        pass
-
-    def lower_inclusive(self, node):
-        pass
-
-    def inequality(self, node):
-        pass
-
-    def lower_exclusive(self, node):
-        pass
-
-    def negation(self, node):
-        pass
-
-    def or_(self, node):
-        pass
-
-    def multiplication(self, node):
-        pass
-
-    def greater_exclusive(self, node):
-        pass
-
-    def division(self, node):
-        pass
-
-    def negative(self, node):
-        pass
-
-    def equality(self, node):
-        pass
-    
     def visit(self):
         self.ast.apply(self)
-        b = True
+        return self.errors
 
     def form(self, node):
         return [statement.apply(self) for statement in node.statements]
@@ -74,7 +26,72 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return [statement.apply(self) for statement in node.statements]
 
     def field(self, node):
-        self.properties[node.name.apply(self)].append(node.name)
+        self.properties[node.name.name].append(node.name)
         if node.expression is not None:
             children = node.expression.apply(self)
-            stop = True
+            bad_reference = []
+            for c in children:
+                if c.name not in self.properties:
+                    bad_reference.append(c)
+            if len(bad_reference) > 0:
+                self.errors.append("Field at {} had the following references that were not resolvable: {} "
+                                   .format(node.location, ["{}: {}".format(b.name, b.location) for b in bad_reference]))
+
+    def identifier(self, node):
+        return [node]
+
+    def greater_inclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def addition(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def and_(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def subtraction(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def lower_inclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def inequality(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def lower_exclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def or_(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def multiplication(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def greater_exclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def division(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def equality(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def negative(self, node):
+        pass
+
+    def negation(self, node):
+        pass
+
+    def positive(self, node):
+        pass
+
+    def integer(self, node):
+        pass
+
+    def boolean(self, node):
+        pass
+
+    def money(self, node):
+        pass
+
+
