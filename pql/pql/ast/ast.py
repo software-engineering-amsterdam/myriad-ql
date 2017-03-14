@@ -10,11 +10,10 @@ class Node(object):
         self.location = Location(position, source)
 
     def __str__(self, level=0):
-        ret = "\t" * level + repr(self.var_type) + "\n"
-        return ret
+        return self.var_type
 
     def __repr__(self):
-        return self.var_type
+        return str(self)
 
 
 class Location(object):
