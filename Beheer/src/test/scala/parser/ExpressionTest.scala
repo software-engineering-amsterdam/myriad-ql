@@ -2,14 +2,14 @@ package parser
 
 import ast._
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{Inside, Matchers, PropSpec}
+import org.scalatest.{ Inside, Matchers, PropSpec }
 
 import scala.annotation.tailrec
 import scala.util.matching.Regex
 
-class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionStringGenerator with ValueGenerator {
-  type NodePair = (ExpressionNode, ExpressionNode)
-  type NodeRel = Set[NodePair]
+class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionStringGenerator {
+  private type NodePair = (ExpressionNode, ExpressionNode)
+  private type NodeRel = Set[NodePair]
   private val parser = ConcreteExpressionParser
 
   property("Integer literal scale should be 0") {
