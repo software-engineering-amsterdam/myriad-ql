@@ -30,6 +30,10 @@ module QL
         # QL::GUI::CheckboxWidget
         # QL::GUI::DropdownWidget
       end
+
+      def default_value
+        true
+      end
     end
 
     class IntegerType < Type
@@ -47,6 +51,10 @@ module QL
         # QL::GUI::SpinboxWidget
         QL::GUI::SliderWidget
       end
+
+      def default_value
+        0
+      end
     end
 
     class DateType < Type
@@ -56,6 +64,10 @@ module QL
 
       def widget
         QL::GUI::SpinboxWidget
+      end
+
+      def default_value
+        0
       end
     end
 
@@ -67,6 +79,10 @@ module QL
       def widget
         QL::GUI::SpinboxWidget
       end
+
+      def default_value
+        0.0
+      end
     end
 
     class StringType < Type
@@ -76,6 +92,10 @@ module QL
 
       def widget
         QL::GUI::TextWidget
+      end
+
+      def default_value
+        ''
       end
     end
 
@@ -88,6 +108,10 @@ module QL
         QL::GUI::TextWidget
         # QL::GUI::SpinboxWidget
         # QL::GUI::SliderWidget
+      end
+
+      def default_value
+        0
       end
     end
   end

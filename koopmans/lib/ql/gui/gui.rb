@@ -1,22 +1,24 @@
 require 'tk'
-@aap = 'asdsd'
 
-# TODO move out of QL module
 module QL
   module GUI
     class GUI
       def initialize(ql_ast, qls_ast, type_checker)
         @question_frames = ql_ast.accept(FormBuilder.new)
-        @question_frames.each_with_index do |question_frame, row_position|
-          question_frame.render(row_position) do
+        @question_frames.each do |question_frame|
+          question_frame.render
+          question_frame.listen do
             reload_questions
           end
         end
 
         # StylesheetBuilder.new(qls_ast, ql_ast, self)
 
-        row_position = @question_frames.size
-        SubmitButton.new(row_position) do
+        reload_questions
+
+        # row_position = @question_frames.size
+        submit_button = SubmitButton.new
+        submit_button.listen do
           print_form
         end
 
