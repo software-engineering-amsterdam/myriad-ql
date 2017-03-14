@@ -5,15 +5,19 @@ import javafx.beans.binding.BooleanBinding
 import ast.Stylesheet.Styling
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
-import values.Evaluator
+import values.{ Evaluator, Value }
 
 import scalafx.beans.binding.{ Bindings, StringBinding }
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
 
+import scala.language.implicitConversions
+
 trait GUIQuestion {
   val question: DisplayQuestion
   val questionStyle: Option[QuestionStyle]
+
+  implicit protected def widgetUpdateHandler(newVal: Value): Unit = updateEnv(question.identifier, newVal)
 
   val displayBox = new VBox {
     children = Seq(createLabel)
