@@ -13,7 +13,13 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def visit(self):
         #TODO make environment receive and return environment instead of having it as instance variable
+        environment = self.__environment
         self.ast.apply(self)
+
+        while (set(self.__environment.items()) ^ set(environment.items())):
+            environment = self.__environment
+            self.ast.apply(self)
+
         return self.__environment
 
     def form(self, node):
@@ -115,4 +121,6 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def update_value(self, key, value):
         #TODO If environment is passed, this can be removed
         self.__environment[key] = value
-        return self.visit()
+        visit = self.visit()
+        print(visit)
+        return visit

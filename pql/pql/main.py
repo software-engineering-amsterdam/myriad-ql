@@ -13,7 +13,6 @@ if __name__ == '__main__':
     exit(app.exec_())
 
 # TODO: Checken of alle properties die in een Expression zitten bestaan (circular reference ding)
-# TODO: Evaluator latere declaraties die worden niet meegeven ( in een loop evaluaten tot environment niet veranderd is)
 # TODO: String support toevoegen
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
 # TODO: Environment een class maken en een update value methode geven
