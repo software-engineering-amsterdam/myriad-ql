@@ -71,7 +71,7 @@ def parse(input_string):
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
-    name = Combine(~reserved_words + Word(alphas, alphanums + '_') + Optional(Word("*"))).setResultsName(
+    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName(
         'identifier').setParseAction(
         lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
