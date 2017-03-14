@@ -386,6 +386,22 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class OrContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public OrContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitOr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class GreaterThenEqualContext extends ExpressionContext {
 		public ExpressionContext left;
 		public ExpressionContext right;
@@ -402,22 +418,6 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class LogicalAndContext extends ExpressionContext {
-		public ExpressionContext left;
-		public ExpressionContext right;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public LogicalAndContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitLogicalAnd(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class NotExpressionContext extends ExpressionContext {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -430,7 +430,7 @@ public class QLParser extends Parser {
 		}
 	}
 	public static class IdLiteralContext extends ExpressionContext {
-		public Token atom;
+		public Token literal;
 		public TerminalNode ID_LITERAL() { return getToken(QLParser.ID_LITERAL, 0); }
 		public IdLiteralContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -483,12 +483,28 @@ public class QLParser extends Parser {
 		}
 	}
 	public static class StringLiteralContext extends ExpressionContext {
-		public Token atom;
+		public Token literal;
 		public TerminalNode STRING_LITERAL() { return getToken(QLParser.STRING_LITERAL, 0); }
 		public StringLiteralContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitStringLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AndContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public AndContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitAnd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -509,7 +525,7 @@ public class QLParser extends Parser {
 		}
 	}
 	public static class IntegerLiteralContext extends ExpressionContext {
-		public Token atom;
+		public Token literal;
 		public TerminalNode INTEGER_LITERAL() { return getToken(QLParser.INTEGER_LITERAL, 0); }
 		public IntegerLiteralContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -566,24 +582,8 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class LogicalOrContext extends ExpressionContext {
-		public ExpressionContext left;
-		public ExpressionContext right;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public LogicalOrContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitLogicalOr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class BooleanLiteralContext extends ExpressionContext {
-		public Token atom;
+		public Token literal;
 		public TerminalNode BOOLEAN_LITERAL() { return getToken(QLParser.BOOLEAN_LITERAL, 0); }
 		public BooleanLiteralContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -673,7 +673,7 @@ public class QLParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(63);
-				((BooleanLiteralContext)_localctx).atom = match(BOOLEAN_LITERAL);
+				((BooleanLiteralContext)_localctx).literal = match(BOOLEAN_LITERAL);
 				}
 				break;
 			case INTEGER_LITERAL:
@@ -682,7 +682,7 @@ public class QLParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(64);
-				((IntegerLiteralContext)_localctx).atom = match(INTEGER_LITERAL);
+				((IntegerLiteralContext)_localctx).literal = match(INTEGER_LITERAL);
 				}
 				break;
 			case ID_LITERAL:
@@ -691,7 +691,7 @@ public class QLParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(65);
-				((IdLiteralContext)_localctx).atom = match(ID_LITERAL);
+				((IdLiteralContext)_localctx).literal = match(ID_LITERAL);
 				}
 				break;
 			case STRING_LITERAL:
@@ -700,7 +700,7 @@ public class QLParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(66);
-				((StringLiteralContext)_localctx).atom = match(STRING_LITERAL);
+				((StringLiteralContext)_localctx).literal = match(STRING_LITERAL);
 				}
 				break;
 			default:
@@ -850,28 +850,28 @@ public class QLParser extends Parser {
 						break;
 					case 11:
 						{
-						_localctx = new LogicalAndContext(new ExpressionContext(_parentctx, _parentState));
-						((LogicalAndContext)_localctx).left = _prevctx;
+						_localctx = new AndContext(new ExpressionContext(_parentctx, _parentState));
+						((AndContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(99);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(100);
 						match(T__19);
 						setState(101);
-						((LogicalAndContext)_localctx).right = expression(7);
+						((AndContext)_localctx).right = expression(7);
 						}
 						break;
 					case 12:
 						{
-						_localctx = new LogicalOrContext(new ExpressionContext(_parentctx, _parentState));
-						((LogicalOrContext)_localctx).left = _prevctx;
+						_localctx = new OrContext(new ExpressionContext(_parentctx, _parentState));
+						((OrContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(102);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(103);
 						match(T__20);
 						setState(104);
-						((LogicalOrContext)_localctx).right = expression(6);
+						((OrContext)_localctx).right = expression(6);
 						}
 						break;
 					}

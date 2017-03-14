@@ -1,10 +1,10 @@
 package QL;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import QL.ast.type.Type;
 import QL.value.Value;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Environment {
 
