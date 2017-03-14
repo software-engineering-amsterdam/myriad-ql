@@ -7,9 +7,10 @@ form
 	;
 
 formElement																			
-	: label=STRING_LITERAL id=ID_LITERAL type ('=' expression)? 			#calculatedQuestion
-	| label=STRING_LITERAL id=ID_LITERAL type								#question
-	| 'if' '('expression')' formElement+ ('else' formElement+)? 'endif' 	#ifStatement
+	: label=STRING_LITERAL id=ID_LITERAL type '=' expression 									#calculatedQuestion
+	| label=STRING_LITERAL id=ID_LITERAL type													#question
+	| 'if' '('expression')' (thenBody+=formElement)+ 'else' (elseBody+=formElement)+ 'endif' 	#ifThenElseStatement
+	| 'if' '('expression')' (thenBody+=formElement)+ 'endif'									#ifThenStatement
 	;
 
 expression
@@ -25,12 +26,12 @@ expression
 	| left=expression '>=' right=expression 	#greaterThenEqual
 	| left=expression '==' right=expression 	#equals
 	| left=expression '!=' right=expression 	#equalsNot
-	| left=expression '&&' right=expression		#logicalAnd
-	| left=expression '||' right=expression		#logicalOr
-	| atom=BOOLEAN_LITERAL						#booleanLiteral
-	| atom=INTEGER_LITERAL						#integerLiteral
-	| atom=ID_LITERAL							#idLiteral
-	| atom=STRING_LITERAL						#stringLiteral
+	| left=expression '&&' right=expression		#And
+	| left=expression '||' right=expression		#Or
+	| literal=BOOLEAN_LITERAL					#booleanLiteral
+	| literal=INTEGER_LITERAL					#integerLiteral
+	| literal=ID_LITERAL						#idLiteral
+	| literal=STRING_LITERAL					#stringLiteral
 	;
 
 type

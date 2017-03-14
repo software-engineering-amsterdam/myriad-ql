@@ -31,12 +31,19 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuestion(QLParser.QuestionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ifStatement}
+	 * Visit a parse tree produced by the {@code ifThenElseStatement}
 	 * labeled alternative in {@link QLParser#formElement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIfStatement(QLParser.IfStatementContext ctx);
+	T visitIfThenElseStatement(QLParser.IfThenElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ifThenStatement}
+	 * labeled alternative in {@link QLParser#formElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfThenStatement(QLParser.IfThenStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code add}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -45,19 +52,19 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAdd(QLParser.AddContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Or}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOr(QLParser.OrContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code greaterThenEqual}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGreaterThenEqual(QLParser.GreaterThenEqualContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code logicalAnd}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalAnd(QLParser.LogicalAndContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code notExpression}
 	 * labeled alternative in {@link QLParser#expression}.
@@ -101,6 +108,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringLiteral(QLParser.StringLiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code And}
+	 * labeled alternative in {@link QLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(QLParser.AndContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code equals}
 	 * labeled alternative in {@link QLParser#expression}.
 	 * @param ctx the parse tree
@@ -135,13 +149,6 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMultiply(QLParser.MultiplyContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code logicalOr}
-	 * labeled alternative in {@link QLParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalOr(QLParser.LogicalOrContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code booleanLiteral}
 	 * labeled alternative in {@link QLParser#expression}.
