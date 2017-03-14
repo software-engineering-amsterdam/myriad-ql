@@ -113,19 +113,18 @@ def parse(input_string):
     expression = \
         OneOrMore(operator_precendence | (lit_l_paren + operator_precendence + lit_r_paren))
 
+    field = Forward()
+    field_assignment = Forward()
+
     field_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
         name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type")
     )
+    field <<= field_statement
+    field.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
-    field_assignment_statement = (
-        QuotedString('"', unquoteResults=True).setResultsName("title") +
-        name.setResultsName("identifier") + lit_colon + data_types.setResultsName(
-            "data_type") + lit_assign_op + expression
-    )
-
-    field_assignment_statement.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
-    field_statement.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
+    field_assignment <<= field_statement + lit_assign_op + expression
+    field_assignment.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
 
     conditional_if = Forward()
     conditional_if_else = Forward()
@@ -144,7 +143,7 @@ def parse(input_string):
 
     conditional = conditional_if_else | conditional_if
 
-    statement <<= (field_assignment_statement | field_statement | conditional)
+    statement <<= (field_assignment | field | conditional)
 
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
